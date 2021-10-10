@@ -59,6 +59,8 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
     public VolumetricWeightColumnHeader: string;
     public IsDSVTenant: boolean = false;
     public FromPort: string;
+    public ShowAddDocument: boolean = false;
+    public ChangePageButton: string = "Next";
     constructor() {
         super(); 
         this.InitializeServices();
@@ -316,7 +318,19 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
         }
 
     }
-      
+     
+    NextButtonClicked() {
+        this.ShowAddDocument = !this.ShowAddDocument;
+        this.SetChangeButtonTitle();
+    }
+
+    private SetChangeButtonTitle() {
+        if (this.ShowAddDocument)
+            this.ChangePageButton = "Back";
+        else
+            this.ChangePageButton = "Next";
+    }
+
     private InsertShipment() {
         this.shipmentPMService.insert(this.EntityPM).subscribe((serviceResponse: ServiceResponse) => {
             this.CurrentSession.StopBusyIndicator();
@@ -366,8 +380,9 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
             if (!myResult.HasError) {
 
                 this.SetShipmentStatus(myResult);
-                this.SetForwarderPartner();
-                this.InsertShipment();
+                this.SetForwarderPartner(); 
+                this.SetDocumentFilingIds(); 
+                this.InsertShipment(); 
             }
             else {
                 this.ValidationErrorsList = myResult.ErrorsArray;
@@ -378,6 +393,13 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
 
     }
    
+    private SetDocumentFilingIds() {
+        this.EntityPM.DocumentFilingIds = "";
+        this.documentsFilings.forEach((item) => {
+            this.EntityPM.DocumentFilingIds += (item.Id + ",");
+        });
+    }
+
     private SetShipmentStatus(myResult: any) {
         this.StatusId = myResult.Result.filter(a => a.Code == "OPOP")[0]?.Id;
         this.EntityProgressStatusId = myResult.Result.filter(a => a.Code == "INPS")[0]?.Id;
@@ -405,6 +427,10 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
 
         if (AppTool.IsNullOrEmpty(this.MainCarriageToPortId)) {
             this.PushErrorMessage("Destination");  
+        }
+
+        if (!this.documentsFilings || this.documentsFilings.filter(d => d.IsSharedWithForwarder == true).length == 0) {
+            this.ValidationErrorsList.push("You should have at least one document shared with agent");
         }
     }
 

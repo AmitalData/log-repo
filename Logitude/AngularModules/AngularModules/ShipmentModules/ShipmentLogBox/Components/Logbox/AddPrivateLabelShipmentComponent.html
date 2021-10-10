@@ -201,7 +201,7 @@
 													<input [attr.id]="'DirectionRadio_' + SessionIndex + item.Code" [attr.name]="'DirectionsRadio' + SessionIndex" type="radio" [checked]="DirectionId == item.Code" (click)="changeDirection(item.Code)" />
 													<label [attr.for]="'DirectionRadio_' + SessionIndex + item.Code" style="text-indent: 40px; font-size: 12px" [ngStyle]="{color: DirectionId == item.Code ? '#287828':'#282E30'}">
 														<img class="LeftCenter" style="margin-left: 20px;" [attr.src]="item.Code == 'C'? './Images/Directions/I.png' : './Images/Directions/' + item.Code + '.png'" />
-														 
+
 														{{item.Name}}
 													</label>
 												</div>
@@ -244,7 +244,7 @@
 									<td>
 										<div class="ScrollViewer" style="padding: 10px; padding-top: 5px; top: 3px; right: 3px; bottom: 3px;">
 											<div class="ScrollContent" [ngStyle]="{opacity: ScreenOpacity}">
-												<table *ngIf="DirectionId == 'E'">
+												<table *ngIf="DirectionId == 'E' && !ShowAddDocument">
 													<tr style="height: 30px;">
 														<td>
 															<div class="ScrollViewer" style="padding: 10px; padding-top: 5px; top: 3px; right: 3px; bottom: 3px;">
@@ -263,7 +263,7 @@
 																		<table>
 
 																			<tr class="FormFieldRow">
-																				  
+
 																				<td [style.width.px]="LabelColumnWidth">
 																					<div class="RedPoint"></div>
 																					<label style="padding-left:10px;color: rgb(110, 113, 114);">
@@ -432,7 +432,7 @@
 																					</table>
 																				</td>
 																			</tr>
-																			 
+
 																		</table>
 
 																		<div style="height:1px; width: 100%; background: #999999; opacity:0.3; margin-top: 5px; margin-bottom: 5px;"></div>
@@ -653,12 +653,12 @@
 
 												</table>
 
-									 
 
-												<table *ngIf="DirectionId == 'C'">  
-													<tr style="height:30%">
+
+												<table *ngIf="DirectionId == 'C' || ShowAddDocument">
+													<tr *ngIf="DirectionId == 'C'" style="height:30%">
 														<td>
-															<table>
+															<table *ngIf="DirectionId == 'C'">
 																<tr style="height: 10px;">
 																	<td style="height: 10px;">
 																		<div></div>
@@ -690,7 +690,7 @@
 																				<td style="height: 22px;">
 																					<table>
 																						<tr>
-																							<td style="width:7px;"> 
+																							<td style="width:7px;">
 																							</td>
 																							<td>
 																								<label style="padding-left:10px;color: rgb(110, 113, 114);">
@@ -752,7 +752,7 @@
 																					</table>
 
 																				</td>
-																			</tr> 
+																			</tr>
 																			<tr>
 																				<td></td>
 																			</tr>
@@ -1031,14 +1031,25 @@
 													</tr>
 
 
-													<tr style="height:33px;" *ngIf="!IsDSVTenant">
+													<tr style="height:33px;" *ngIf="!IsDSVTenant || ShowAddDocument">
 
 														<td>
-															<table style="height:33px">
+																	<table *ngIf="ShowAddDocument">
+																			<tr>
+																				<td style="width:7px;">
+																				</td>
+																				<td>
+																					<label class="SectionTitle">
+																						Documents
+																					</label>
+																				</td>
+																			</tr>
+																		</table>
+															<table style="height:33px"> 
 																<tr style="height:33px">
 
 
-																	<td style="width:7px;">
+																	<td style="width:7px;"> 
 																		<div style="width: 7px; height: 7px; background: #E45A26; -webkit-border-radius: 25px; -moz-border-radius: 25px; border-radius: 25px;"></div>
 
 																	</td>
@@ -1051,7 +1062,7 @@
 
 
 																	<td style="width:100px"></td>
-																	<td *ngIf="TransportModeId === 'O'" [class.Disabled]="!TransportModeId || TransportModeId != 'O'">
+																	<td *ngIf="TransportModeId === 'O' &&DirectionId == 'C'" [class.Disabled]="!TransportModeId || TransportModeId != 'O'">
 																		<table>
 																			<tr>
 
@@ -1095,7 +1106,7 @@
 													</tr>
 
 
-													<tr style="height:100px" *ngIf="!IsDSVTenant">
+													<tr style="height:100px" *ngIf="!IsDSVTenant || ShowAddDocument">
 
 														<td class="CellStretch">
 															<div class="SimpleGridView">
@@ -1181,7 +1192,7 @@
 
 													<tr>
 														<td></td>
-													</tr> 
+													</tr>
 												</table>
 
 
@@ -1197,7 +1208,8 @@
 		</td>
 	</tr>
 
-	<tr style="height: 32px;">
+ 
+	<tr  style="height: 32px;">
 		<td style="vertical-align: bottom">
 			<table style="height: 22px;">
 				<tr>
@@ -1208,12 +1220,19 @@
 					<td style="width: 57px;">
 						<button class="Button" id="{{'ShipmentCancelbtn' | IdGeneratorPipe}}" (click)="CloseButtonClicked()">Cancel</button>
 					</td>
+					<td style="width: 5px;">
+						<div></div>
+					</td>
+
+					<td  *ngIf="DirectionId == 'E'" style="width: 57px;">
+						<button [ngClass]="ShowAddDocument ?  'Button' : 'RedButton'" (click)="NextButtonClicked()" id="{{'ShipmentCreatebtn' | IdGeneratorPipe}}">{{ChangePageButton}}</button>
+					</td>
 
 					<td style="width: 5px;">
 						<div></div>
 					</td>
 
-					<td style="width: 57px;">
+					<td *ngIf="DirectionId != 'E' || ShowAddDocument" style="width: 57px;">
 						<button class="RedButton" (click)="OkButtonClicked()" id="{{'ShipmentCreatebtn' | IdGeneratorPipe}}">Create</button>
 					</td>
 				</tr>
