@@ -8,6 +8,8 @@ namespace Logitude.FullAccounting.Test.Models
 {
     public static class FullAccountingData
     {
+        internal static string WorksChartOfAccountId;
+
         public static string CreditActoinId { get; internal set; }
         public static string DebitActoinId { get; internal set; }
         public static string AutomaticReconcile_A { get; internal set; }
@@ -49,5 +51,6 @@ namespace Logitude.FullAccounting.Test.Models
         public static string ChequeARPaymenId { get; internal set; }
         public static string ChequeBankDepositARPaymentChequeId { get; internal set; }
         public static string RevenuesChartOfAccountId { get; internal set; }
+        public static string ExpensesChartOfAccountId { get; internal set; }
     }
 }

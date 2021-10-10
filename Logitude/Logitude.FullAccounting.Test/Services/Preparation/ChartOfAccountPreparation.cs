@@ -23,9 +23,9 @@ namespace Logitude.FullAccounting.Test.Services.Preparation
             FullAccountingData.VendorChartOfAccountId = GetVendor();
             FullAccountingData.BankChartOfAccountId = GetBank();
             FullAccountingData.RevenuesChartOfAccountId = GetRevenues();
+            FullAccountingData.ExpensesChartOfAccountId = GetExpenses();
+            FullAccountingData.WorksChartOfAccountId = GetWorks();
         }
-
-        
         private string GetDebtorsAndCreditors()
         {
             return GetIdByCode(ChartOfAccountCodes.DebtorsAndCreditorsChart) ?? Create(CreateDebtorsAndCreditorsInstance());
@@ -48,6 +48,14 @@ namespace Logitude.FullAccounting.Test.Services.Preparation
         private string GetRevenues()
         {
             return GetIdByCode(ChartOfAccountCodes.RevenuesChart) ?? Create(CreateRevenuesChartInstance());
+        }
+        private string GetExpenses()
+        {
+            return GetIdByCode(ChartOfAccountCodes.ExpensesChart) ?? Create(CreateExpensesInstance());
+        }
+        private string GetWorks()
+        {
+            return GetIdByCode(ChartOfAccountCodes.WorksChart) ?? Create(CreateWorksInstance());
         }
 
         private string GetIdByCode(string code)
@@ -132,6 +140,32 @@ namespace Logitude.FullAccounting.Test.Services.Preparation
                 Tenant = UserTenant.Tenant,
                 SearchFields = $"{ChartOfAccountCodes.RevenuesChart},Revenues Chart",
                 TypeCode = (int)ChartOfAccountsTypeEnum.Revenues + ""
+
+            };
+        }
+        private ChartOfAccountPM CreateExpensesInstance()
+        {
+            return new ChartOfAccountPM()
+            {
+                Code = ChartOfAccountCodes.ExpensesChart,
+                EnglishName = "Expenses Chart",
+                LocalName = "Expenses Chart",
+                Tenant = UserTenant.Tenant,
+                SearchFields = $"{ChartOfAccountCodes.ExpensesChart},Expenses Chart",
+                TypeCode = (int)ChartOfAccountsTypeEnum.Expenses + ""
+
+            };
+        }
+        private ChartOfAccountPM CreateWorksInstance()
+        {
+            return new ChartOfAccountPM()
+            {
+                Code = ChartOfAccountCodes.WorksChart,
+                EnglishName = "Works Chart",
+                LocalName = "Works Chart",
+                Tenant = UserTenant.Tenant,
+                SearchFields = $"{ChartOfAccountCodes.WorksChart},Works Chart",
+                TypeCode = (int)ChartOfAccountsTypeEnum.Works + ""
 
             };
         }

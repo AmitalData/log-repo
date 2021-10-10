@@ -125,7 +125,10 @@ namespace Logitude.FullAccounting.Test.Services.Preparation
                     return FullAccountingData.RevenuesChartOfAccountId;
 
                 case ChartOfAccountsTypeEnum.Expenses:
+                    return FullAccountingData.ExpensesChartOfAccountId;
+
                 case ChartOfAccountsTypeEnum.Works:
+                    return FullAccountingData.WorksChartOfAccountId;
                 default:
                     throw new NotImplementedException("Chart Of Accounts Type Code: "+ chartOfAccountsTypeCode+ " Not Implemented");
             }
