@@ -1256,5 +1256,11 @@ namespace AmitalCustomsWindowsService.Tester
         //Console.WriteLine(" Press [enter] to exit.");
         //Console.ReadLine();
 
-    } 
+    
+        private void singletonFTPCommunicationWorkerRoleWinServiceToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var d = new AmitalCustomsWindowsService.BL.WorkerOnce<CommunicationWorkerRole.SingletonFTPCommunicationWorkerRoleWinService>(10, 1, checkBoxDebugMode.Checked) { ServiceStarted = true };
+            d.ExecuteTask();
+        }
+    }
 }
