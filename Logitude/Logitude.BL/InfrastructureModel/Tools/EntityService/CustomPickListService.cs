@@ -84,7 +84,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
         {
             if (IsMetConditionsToSendCToolMessage(theEntityPm))
             {
-                AddKafkaQueueMessage(theEntityPm, "CToolShipmentsUpdate");
+                AddKafkaQueueMessage(theEntityPm, messageType);
             }
         }
 
@@ -99,7 +99,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
             queueservice.InitializeQueue("CToolLookups", 0);
             var queueMessage = new Dictionary<string, string>() {
                 { "Entity", messageType },
-                { "EntityId", entityPM.Id },
+                { "EntityId", theEntityPm.Id },
                 { "Tenant", tenant.ToString()}};
             queueservice.Send(queueMessage, tenant);
         }
