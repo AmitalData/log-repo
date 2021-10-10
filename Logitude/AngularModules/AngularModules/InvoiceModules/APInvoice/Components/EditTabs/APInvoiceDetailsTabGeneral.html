@@ -74,27 +74,6 @@
                                                     <LogTextBox [ObjectFieldName]="'AmountInInvoiceCurrency'" [Text]="AmountInInvoiceCurrency" [InputType]="'sigdouble'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
                                                 </td>
                                             </tr>
-
-                                            <!-- GlobalTaxCalculation -->
-                                            <tr class="FormFieldRow" *ngIf="IsGlobalTaxCalculationVisible">
-                                                <td>
-                                                    <LogLabel [ObjectFieldName]="'GlobalTaxCalculation'" [ObjectTableName]="ObjectTableName"
-                                                              [DataContext]="DataContext"></LogLabel>
-                                                </td>
-                                                <td>
-                                                    <table>
-                                                        <tr>
-                                                            <td>
-                                                                <ComboBox [ItemsSource]="GlobalTaxCalculationItemsSource" [SelectedItem]="SelectedGlobalTaxCalculation" (SelectedItemChanged)="SelectedGlobalTaxCalculation=$event" [IsDisabled]="!IsEditingEnabled"></ComboBox>
-                                                            </td>
-                                                            <td style="width: 40px;">
-                                                                <div></div>
-                                                            </td>
-                                                        </tr>
-                                                    </table>
-                                                </td>
-                                            </tr>
-
                                         </table>
                                     </td>
 
