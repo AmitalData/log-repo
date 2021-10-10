@@ -372,6 +372,15 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "IDS,InlandDomesticShipments DWH", 
                 Description = "Allow Tenants to Show InlandDomesticShipments  Fact on the BI Report Screen", 
 			});
+
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Name = "Ocean Insights Sending Automatically Logic", 
+                Code = "AOI", 
+                SearchFields = "AOI,Ocean Insights Sending Automatically Logic", 
+                Description = "Ocean Insights Sending Automatically Logic", 
+			});
 			
             return all;
        }
