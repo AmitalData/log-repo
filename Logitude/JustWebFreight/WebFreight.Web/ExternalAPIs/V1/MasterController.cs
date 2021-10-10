@@ -213,6 +213,11 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         throw new ApplicationException("Missing chargeable weight unit code");
                     }
 
+                    if (entityPM.CustomsClearanceDate != null)
+                    {
+                        entityPM.IncludesCustoms = true;
+                    }
+
                     switch (entityPM.VolumeUnitCode)
                     {
                         case "CBF":
@@ -748,6 +753,11 @@ namespace WebFreight.Web.ExternalAPIs.V1
                             if (MasterPM.IsCancelled)
                             {
                                 throw new ApplicationException("Can't update cancelled shipments");
+                            }
+
+                            if (MasterPM.CustomsClearanceDate != null && MasterPM.IncludesCustoms == false)
+                            {
+                                MasterPM.IncludesCustoms = true;
                             }
 
                             APITransshipmentHelper aPITransshipmentHelper = new APITransshipmentHelper(MasterPM, authToken.Tenant);
