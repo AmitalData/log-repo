@@ -114,9 +114,20 @@ namespace CommunicationWorkerRole
                     return GetPackageTypeById(Tenant, EntityId);
                 case "ObjectField":
                     return GetObjectFieldById(Tenant, EntityId);
+                case "UpsertCustomPickListValue":
+                    return GetCustomPickListValueById(Tenant, EntityId);
+                case "DeleteCustomPickListValue":
+                    return GetCustomPickListValueById(Tenant, EntityId);
                 default:
                     return null;
             }
+        }
+
+        private object GetCustomPickListValueById(int tenant, string id)
+        {
+            CustomPickListQuery customPickListQuery = new CustomPickListQuery(tenant);
+            CustomPickListPM customPickListPM = customPickListQuery.GetSinglePM(id, tenant);
+            return customPickListPM;
         }
 
         private object GetObjectFieldById(int tenant, string id)
@@ -221,6 +232,10 @@ namespace CommunicationWorkerRole
                     return KakaMessageTypes.PackageType;
                 case "ObjectField":
                     return KakaMessageTypes.CustomField;
+                case "UpsertCustomPickListValue":
+                    return KakaMessageTypes.CustomPickList;
+                case "DeleteCustomPickListValue":
+                    return KakaMessageTypes.DeleteCustomPickListValue;
                 default:
                     return 0;
             }
