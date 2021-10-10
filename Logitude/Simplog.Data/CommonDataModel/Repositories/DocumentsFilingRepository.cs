@@ -284,6 +284,13 @@ namespace Simplog.Data.CommonDataModel.Repositories
 
 
 
+        public string GetDocumentIdById(string documentsFilingId, int tenant)
+        {
+            return (from a in context.DocumentsFilings
+                    where a.Id == documentsFilingId && a.Tenant == tenant
+                    select a.DocumentId).FirstOrDefault();
+
+        }
 
 
 
