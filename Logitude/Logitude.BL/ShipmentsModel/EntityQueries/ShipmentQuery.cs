@@ -1867,6 +1867,15 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
             if (shipment.ShipmentLevelCode == "H" && !string.IsNullOrEmpty(shipment.MasterShipmentDataId))
             {
+                Shipment masterShipment = (from a in repository.context.Shipments
+                                           where a.Id == shipment.MasterShipmentDataId && a.Tenant == tenant
+                                           select a).FirstOrDefault();
+                if(masterShipment != null)
+                {
+                    shipmentPM.HouseMasterConcurrencyGUID = masterShipment.ConcurrencyGUID;
+                    shipmentPM.HouseMasterNewConcurrencyGUID = Guid.NewGuid().ToString();
+                }
+
                 if (masterData != null)
                 {
                     if (!string.IsNullOrEmpty(masterData.StatusId))
