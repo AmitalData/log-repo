@@ -34,6 +34,9 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.ObjectTableName).HasMaxLength(50).IsUnicode(false);
             this.Property(t => t.AdditionalFactRelationType).HasMaxLength(100).IsUnicode(false);
 
+            this.Property(t => t.AdditionalConditions).HasMaxLength(200).IsUnicode(false);
+
+            
             this.ToTable("DWObjectTables");
             this.Property(t => t.Id).HasColumnName("Id");
             this.Property(t => t.Tenant).HasColumnName("Tenant");
@@ -59,6 +62,7 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.ObjectTableName).HasColumnName("ObjectTableName");
             this.Property(t => t.MaxNumberOfCustomFields).HasColumnName("MaxNumberOfCustomFields");
             this.Property(t => t.AdditionalFactRelationType).HasColumnName("AdditionalFactRelationType");
+            this.Property(t => t.AdditionalConditions).HasColumnName("AdditionalConditions");
 
 
 

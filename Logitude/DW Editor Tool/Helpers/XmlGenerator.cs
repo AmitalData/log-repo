@@ -52,6 +52,8 @@ namespace DW_Editor_Tool.Helpers
                 SetAttribute("HasCustomFields", tableViewModel.HasCustomFields.ToString().ToLower(), entityElement);
                 SetAttribute("MaxNumberOfCustomFields", tableViewModel.MaxNumberOfCustomFields.ToString(), entityElement);
                 SetAttribute("AdditionalFactRelationType", GetStringValue(tableViewModel.AdditionalFactRelationType), entityElement);
+               SetAttribute("AdditionalConditions", GetStringValue(tableViewModel.AdditionalConditions), entityElement);
+
 
                 XmlElement fieldsTagElement = doc.CreateElement("fields");
                 entityElement.AppendChild(fieldsTagElement);
@@ -179,6 +181,7 @@ namespace DW_Editor_Tool.Helpers
                         tableViewModel.HasCustomFields = GetAttributeBoolValue(entity.Attributes["HasCustomFields"]);
                         tableViewModel.MaxNumberOfCustomFields = GetAttributeIntegerValue(entity.Attributes["MaxNumberOfCustomFields"]);
                         tableViewModel.AdditionalFactRelationType = GetAttributeStringValue(entity.Attributes["AdditionalFactRelationType"]);
+                        tableViewModel.AdditionalConditions = GetAttributeStringValue(entity.Attributes["AdditionalConditions"]);
 
                         List<DWObjectFieldViewModel> fieldsList = new List<DWObjectFieldViewModel>();
                         foreach (XmlNode childNode in entity.ChildNodes)

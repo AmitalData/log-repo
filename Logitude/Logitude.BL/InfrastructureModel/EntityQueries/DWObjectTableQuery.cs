@@ -18,7 +18,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
         {
             {"BIF","Invoices"},
             {"BQF", "Quotes"},
-            {"BAF", "ARInvoices"}
+            {"BAF", "ARInvoices"},
+            {"IDS", "Inland Domestic Shipments"}
         };
 
         public DWObjectTableQuery()
@@ -120,6 +121,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         HasCustomFields = a.HasCustomFields,
                         MaxNumberOfCustomFields = a.MaxNumberOfCustomFields,
                         AdditionalFactRelationType = a.AdditionalFactRelationType,
+                        AdditionalConditions = a.AdditionalConditions,
                     }).FirstOrDefault();
         }
 

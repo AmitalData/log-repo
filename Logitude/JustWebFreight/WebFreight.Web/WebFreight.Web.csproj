@@ -2655,6 +2655,7 @@
     <Compile Include="Helpers\AutomationDocumentHelper.cs" />
     <Compile Include="Helpers\BaseDataProviderService.cs" />
     <Compile Include="Helpers\DocumentTypeTemplateDefultAttachmentService.cs" />
+    <Compile Include="Helpers\DWObjectTableAdditionalConditionService.cs" />
     <Compile Include="Helpers\PrivateLabelsBrandingDataService.cs" />
     <Compile Include="Helpers\QuotesRequestService.cs" />
     <Compile Include="Helpers\SharedLogisticReportService.cs" />

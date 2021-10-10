@@ -143,4 +143,11 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="AdditionalConditions"
+    Type="varchar"
+    Size="200">
+    <Constraints
+      Nullable="true" />
+  </Column>
 </Table>
