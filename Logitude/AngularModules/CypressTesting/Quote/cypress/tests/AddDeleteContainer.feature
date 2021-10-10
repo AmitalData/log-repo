@@ -1,4 +1,4 @@
-@devsmoke @release @all
+@smoke @release @all
 Feature: Add and delete container from a quote
   After the user logging in the system and navigate to quotes workspace
   after that add and delete container from this quote.

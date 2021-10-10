@@ -1,4 +1,4 @@
-@release @all @stable @devsmoke
+@release @all @stable @smoke
 Feature: Build shipment from quote
     The user creates a quote and build shipment from quote
 

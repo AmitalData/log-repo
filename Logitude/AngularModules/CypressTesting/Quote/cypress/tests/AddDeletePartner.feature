@@ -1,4 +1,4 @@
-@release @all @stable @devsmoke
+@release @all @stable @smoke
 Feature: Create Quote, add partner and delete partner
     The user creates a quote, update partner tab and delete partner
 
