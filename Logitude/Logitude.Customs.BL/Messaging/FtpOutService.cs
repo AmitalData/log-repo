@@ -108,7 +108,11 @@ namespace Logitude.Customs.BL.Messaging
             documentRepository.Add(document);
             documentRepository.SubmitChanges();
 
-            bool singleton = false; ///!!!!!
+            bool singleton = false;
+            if (target == "MAMAN")
+            {
+                singleton = true;
+            } ///!!!!!
 
             CommunicationLog commLog = new CommunicationLog()
             {
