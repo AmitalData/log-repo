@@ -1,4 +1,4 @@
-@release @all @stable @devsmoke
+@release @all @stable @smoke
 Feature: Quote Set as Sent to Customer, Return to Draft, Reactivate & Copy
 
     The user creates a quote, sets it as Sent to Customer, returns it to draft,

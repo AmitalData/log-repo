@@ -51,7 +51,7 @@ Feature: Shipment Update
     Then the direct should update successfully
 
   Scenario: Update routing tab
-    Given add transshipments with "EZE" as via port and "AA" as airline
+    Given add transshipments with "JFK" as via port and "AA" as airline
     And the user add new pickup
     And add delivery with "TestAgent" as a partner routing
     And add pre carriage and on carriage from port "JFK" to port "MIA"
