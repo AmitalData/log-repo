@@ -117,7 +117,7 @@ namespace CommunicationWorkerRole
                 case "UpsertCustomPickListValue":
                     return GetCustomPickListValueById(Tenant, EntityId);
                 case "DeleteCustomPickListValue":
-                    return GetCustomPickListValueById(Tenant, EntityId);
+                    return EntityId;
                 default:
                     return null;
             }
