@@ -12835,6 +12835,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     HandlerUserName = f.HandlerUserName,
                     AccrualsApprovalDate = f.AccrualsApprovalDate,
                     IsAccrualsApproved = f.IsAccrualsApproved,
+                    CustomerContactEmail = f.CustomerContactEmail,
+                    CustomerContactName = f.CustomerContactName,
                 };
 
                 List<ObjectField> customFields = ObjectFieldRepository.GetCustomObjectFieldsByObjectTableName("Shipment", tenant).ToList();
