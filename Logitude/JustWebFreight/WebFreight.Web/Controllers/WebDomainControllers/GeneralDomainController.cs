@@ -346,6 +346,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                 if (args.RemovedCustomPickListPMs != null && args.RemovedCustomPickListPMs.Count > 0)
                 {
+                    CustomPickListService customPickListService = new CustomPickListService(objectContext, authToken.Tenant);
                     CustomPickListRepository repo = new CustomPickListRepository(authToken.Tenant);
                     foreach (var entityPM in args.RemovedCustomPickListPMs)
                     {
@@ -354,6 +355,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         {
                             repo.Remove(Column);
                             repo.SubmitChanges();
+                            customPickListService.ProcessPickListCToolMessage(entityPM, "DeleteCustomPickListValue");
                         }
                     }
                 }
