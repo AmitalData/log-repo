@@ -469,8 +469,50 @@ using Simplog.Data.ShipmentsModel;
 				   temp.Notify1Reference = MyEntityPM.Notify1Reference;
 				   temp.Notify1Reference2 = MyEntityPM.Notify1Reference2;
 				   temp.ShipperNotExporterReference1 = MyEntityPM.ShipperNotExporterReference1;
-				   temp.ShipperNotExporterReference2 = MyEntityPM.ShipperNotExporterReference2;					
-				   temp.CustomsClearanceDate = MyEntityPM.CustomsClearanceDate;					
+				   temp.ShipperNotExporterReference2 = MyEntityPM.ShipperNotExporterReference2;
+				   temp.CustomsClearanceDate = MyEntityPM.CustomsClearanceDate; 
+
+			  
+				   if(MyEntityPM.InlandDomesticFromTypeCode != null)
+				   {
+					   PickUpDeliveryFromToTypeQueryService PickUpDeliveryFromToTypeService32 = new PickUpDeliveryFromToTypeQueryService(Tenant);
+					   					   temp.InlandDomesticFromTypeCode = PickUpDeliveryFromToTypeService32.GetPickUpDeliveryFromToTypeByCode(MyEntityPM.InlandDomesticFromTypeCode,Tenant,ComputingPartnerName); 
+			       
+					   				   }
+				    
+
+			  
+				   if(MyEntityPM.InlandDomesticToTypeCode != null)
+				   {
+					   PickUpDeliveryFromToTypeQueryService PickUpDeliveryFromToTypeService33 = new PickUpDeliveryFromToTypeQueryService(Tenant);
+					   					   temp.InlandDomesticToTypeCode = PickUpDeliveryFromToTypeService33.GetPickUpDeliveryFromToTypeByCode(MyEntityPM.InlandDomesticToTypeCode,Tenant,ComputingPartnerName); 
+			       
+					   				   }
+				    
+
+			  
+				   if(MyEntityPM.InlandDomesticFromCountryId != null)
+				   {
+					   CountryQueryService CountryService34 = new CountryQueryService(Tenant);
+					   					   temp.InlandDomesticFromCountry = CountryService34.GetCountryById(MyEntityPM.InlandDomesticFromCountryId,Tenant,ComputingPartnerName); 
+			       
+					   				   }
+				    
+
+			  
+				   if(MyEntityPM.InlandDomesticToCountryId != null)
+				   {
+					   CountryQueryService CountryService35 = new CountryQueryService(Tenant);
+					   					   temp.InlandDomesticToCountry = CountryService35.GetCountryById(MyEntityPM.InlandDomesticToCountryId,Tenant,ComputingPartnerName); 
+			       
+					   				   }
+				   
+				   temp.InlandDomesticFromZipCode = MyEntityPM.InlandDomesticFromZipCode;
+				   temp.InlandDomesticToZipCode = MyEntityPM.InlandDomesticToZipCode;
+				   temp.InlandDomesticFromCity = MyEntityPM.InlandDomesticFromCity;
+				   temp.InlandDomesticToCity = MyEntityPM.InlandDomesticToCity;
+				   temp.MainCarriageFromPortAddress = MyEntityPM.MainCarriageFromPortAddress;
+				   temp.MainCarriageToPortAddress = MyEntityPM.MainCarriageToPortAddress;					
 				   return temp;
 			}
             catch (Exception ex)
@@ -796,11 +838,11 @@ using Simplog.Data.ShipmentsModel;
 
 					if(MyEntity.AirPackages != null && MyEntity.AirPackages.Count > 0)
 					{
-						AirPackageQueryService AirPackageService32 = new AirPackageQueryService(Tenant);
+						AirPackageQueryService AirPackageService36 = new AirPackageQueryService(Tenant);
 						  
 						if(!IsUpdate)
 						{								//throw new ApplicationException("AirPackages Can't be update"); 
-								temp.ShipmentPackages = AirPackageService32.AirPackageCustomDataMappingAndValidatin(MyEntity,MyEntity.AirPackages,Tenant,ComputingPartnerName);
+								temp.ShipmentPackages = AirPackageService36.AirPackageCustomDataMappingAndValidatin(MyEntity,MyEntity.AirPackages,Tenant,ComputingPartnerName);
 
 					 
 						}  
@@ -812,11 +854,11 @@ using Simplog.Data.ShipmentsModel;
 
 					if(MyEntity.OceanOrInlandPackages != null && MyEntity.OceanOrInlandPackages.Count > 0)
 					{
-						OceanOrInlandPackageQueryService OceanOrInlandPackageService32 = new OceanOrInlandPackageQueryService(Tenant);
+						OceanOrInlandPackageQueryService OceanOrInlandPackageService36 = new OceanOrInlandPackageQueryService(Tenant);
 						  
 						if(!IsUpdate)
 						{								//throw new ApplicationException("OceanOrInlandPackages Can't be update"); 
-								temp.ShipmentPackages = OceanOrInlandPackageService32.OceanOrInlandPackageCustomDataMappingAndValidatin(MyEntity,MyEntity.OceanOrInlandPackages,Tenant,ComputingPartnerName);
+								temp.ShipmentPackages = OceanOrInlandPackageService36.OceanOrInlandPackageCustomDataMappingAndValidatin(MyEntity,MyEntity.OceanOrInlandPackages,Tenant,ComputingPartnerName);
 
 					 
 						}  
@@ -828,11 +870,11 @@ using Simplog.Data.ShipmentsModel;
 
 					if(MyEntity.Containers != null && MyEntity.Containers.Count > 0)
 					{
-						ContainerQueryService ContainerService32 = new ContainerQueryService(Tenant);
+						ContainerQueryService ContainerService36 = new ContainerQueryService(Tenant);
 						  
 						if(!IsUpdate)
 						{								//throw new ApplicationException("Containers Can't be update"); 
-								temp.ShipmentPackages = ContainerService32.ContainerCustomDataMappingAndValidatin(MyEntity,MyEntity.Containers,Tenant,ComputingPartnerName);
+								temp.ShipmentPackages = ContainerService36.ContainerCustomDataMappingAndValidatin(MyEntity,MyEntity.Containers,Tenant,ComputingPartnerName);
 
 					 
 						}  
@@ -971,9 +1013,9 @@ using Simplog.Data.ShipmentsModel;
 
 					if(MyEntity.Deliveries != null && MyEntity.Deliveries.Count > 0)
 					{
-						DeliveryQueryService DeliveryService32 = new DeliveryQueryService(Tenant);
+						DeliveryQueryService DeliveryService36 = new DeliveryQueryService(Tenant);
 						 								//throw new ApplicationException("Deliveries Can't be update"); 
-								temp.ShipmentDeliveries = DeliveryService32.DeliveryDataMappingAndValidatin(MyEntity.Deliveries,Tenant,ComputingPartnerName,IsUpdate);
+								temp.ShipmentDeliveries = DeliveryService36.DeliveryDataMappingAndValidatin(MyEntity.Deliveries,Tenant,ComputingPartnerName,IsUpdate);
 
 					 
 
@@ -984,9 +1026,9 @@ using Simplog.Data.ShipmentsModel;
 
 					if(MyEntity.PickUps != null && MyEntity.PickUps.Count > 0)
 					{
-						PickUpQueryService PickUpService32 = new PickUpQueryService(Tenant);
+						PickUpQueryService PickUpService36 = new PickUpQueryService(Tenant);
 						 								//throw new ApplicationException("PickUps Can't be update"); 
-								temp.ShipmentPickUps = PickUpService32.PickUpDataMappingAndValidatin(MyEntity.PickUps,Tenant,ComputingPartnerName,IsUpdate);
+								temp.ShipmentPickUps = PickUpService36.PickUpDataMappingAndValidatin(MyEntity.PickUps,Tenant,ComputingPartnerName,IsUpdate);
 
 					 
 
@@ -1098,11 +1140,11 @@ using Simplog.Data.ShipmentsModel;
 
 					if(MyEntity.Receivables != null && MyEntity.Receivables.Count > 0)
 					{
-						ReceivableQueryService ReceivableService32 = new ReceivableQueryService(Tenant);
+						ReceivableQueryService ReceivableService36 = new ReceivableQueryService(Tenant);
 						  
 						if(!IsUpdate)
 						{								//throw new ApplicationException("Receivables Can't be update"); 
-								temp.ShipmentReceivables = ReceivableService32.ReceivableDataMappingAndValidatin(MyEntity.Receivables,Tenant,ComputingPartnerName,IsUpdate);
+								temp.ShipmentReceivables = ReceivableService36.ReceivableDataMappingAndValidatin(MyEntity.Receivables,Tenant,ComputingPartnerName,IsUpdate);
 
 					 
 						}  
@@ -1114,11 +1156,11 @@ using Simplog.Data.ShipmentsModel;
 
 					if(MyEntity.Payables != null && MyEntity.Payables.Count > 0)
 					{
-						PayableQueryService PayableService32 = new PayableQueryService(Tenant);
+						PayableQueryService PayableService36 = new PayableQueryService(Tenant);
 						  
 						if(!IsUpdate)
 						{								//throw new ApplicationException("Payables Can't be update"); 
-								temp.ShipmentPayables = PayableService32.PayableDataMappingAndValidatin(MyEntity.Payables,Tenant,ComputingPartnerName,IsUpdate);
+								temp.ShipmentPayables = PayableService36.PayableDataMappingAndValidatin(MyEntity.Payables,Tenant,ComputingPartnerName,IsUpdate);
 
 					 
 						}  
@@ -1357,9 +1399,9 @@ using Simplog.Data.ShipmentsModel;
 
 					if(MyEntity.MainCarriageLegs != null && MyEntity.MainCarriageLegs.Count > 0)
 					{
-						MainCarriageLegQueryService MainCarriageLegService32 = new MainCarriageLegQueryService(Tenant);
+						MainCarriageLegQueryService MainCarriageLegService36 = new MainCarriageLegQueryService(Tenant);
 						 								//throw new ApplicationException("MainCarriageLegs Can't be update"); 
-								temp.MainCarriageLegs = MainCarriageLegService32.MainCarriageLegDataMappingAndValidatin(MyEntity.MainCarriageLegs,Tenant,ComputingPartnerName,IsUpdate);
+								temp.MainCarriageLegs = MainCarriageLegService36.MainCarriageLegDataMappingAndValidatin(MyEntity.MainCarriageLegs,Tenant,ComputingPartnerName,IsUpdate);
 
 					 
 
@@ -1545,9 +1587,119 @@ using Simplog.Data.ShipmentsModel;
                     							//throw new ApplicationException("ShipperNotExporterReference2 Can't be update"); 
 							temp.ShipperNotExporterReference2 = MyEntity.ShipperNotExporterReference2;
 
+					 
+
 					
                     							//throw new ApplicationException("CustomsClearanceDate Can't be update"); 
 							temp.CustomsClearanceDate = MyEntity.CustomsClearanceDate;
+
+					 
+
+					
+					PickUpDeliveryFromToTypeQueryService InlandDomesticFromTypeCodePickUpDeliveryFromToTypeService = new PickUpDeliveryFromToTypeQueryService(Tenant);
+					if(MyEntity.InlandDomesticFromTypeCode != null)
+					{
+						var myInlandDomesticFromTypeCodePM = InlandDomesticFromTypeCodePickUpDeliveryFromToTypeService.PickUpDeliveryFromToTypeDataMappingAndValidatin(MyEntity.InlandDomesticFromTypeCode,Tenant,ComputingPartnerName,IsUpdate);
+						
+						if(myInlandDomesticFromTypeCodePM != null)
+						{ 
+
+						 								//throw new ApplicationException("InlandDomesticFromTypeCode Can't be update"); 
+								temp.InlandDomesticFromTypeCode = myInlandDomesticFromTypeCodePM.Code;
+						  
+
+							
+						} 
+
+					}
+			
+					
+					PickUpDeliveryFromToTypeQueryService InlandDomesticToTypeCodePickUpDeliveryFromToTypeService = new PickUpDeliveryFromToTypeQueryService(Tenant);
+					if(MyEntity.InlandDomesticToTypeCode != null)
+					{
+						var myInlandDomesticToTypeCodePM = InlandDomesticToTypeCodePickUpDeliveryFromToTypeService.PickUpDeliveryFromToTypeDataMappingAndValidatin(MyEntity.InlandDomesticToTypeCode,Tenant,ComputingPartnerName,IsUpdate);
+						
+						if(myInlandDomesticToTypeCodePM != null)
+						{ 
+
+						 								//throw new ApplicationException("InlandDomesticToTypeCode Can't be update"); 
+								temp.InlandDomesticToTypeCode = myInlandDomesticToTypeCodePM.Code;
+						  
+
+							
+						} 
+
+					}
+			
+					
+					CountryQueryService InlandDomesticFromCountryCountryService = new CountryQueryService(Tenant);
+					if(MyEntity.InlandDomesticFromCountry != null)
+					{
+						var myInlandDomesticFromCountryPM = InlandDomesticFromCountryCountryService.CountryDataMappingAndValidatin(MyEntity.InlandDomesticFromCountry,Tenant,ComputingPartnerName,IsUpdate);
+						
+						if(myInlandDomesticFromCountryPM != null)
+						{ 
+
+						 								//throw new ApplicationException("InlandDomesticFromCountry Can't be update"); 
+								temp.InlandDomesticFromCountryId = myInlandDomesticFromCountryPM.Id;
+						  
+
+							
+						} 
+
+					}
+			
+					
+					CountryQueryService InlandDomesticToCountryCountryService = new CountryQueryService(Tenant);
+					if(MyEntity.InlandDomesticToCountry != null)
+					{
+						var myInlandDomesticToCountryPM = InlandDomesticToCountryCountryService.CountryDataMappingAndValidatin(MyEntity.InlandDomesticToCountry,Tenant,ComputingPartnerName,IsUpdate);
+						
+						if(myInlandDomesticToCountryPM != null)
+						{ 
+
+						 								//throw new ApplicationException("InlandDomesticToCountry Can't be update"); 
+								temp.InlandDomesticToCountryId = myInlandDomesticToCountryPM.Id;
+						  
+
+							
+						} 
+
+					}
+			
+					
+                    							//throw new ApplicationException("InlandDomesticFromZipCode Can't be update"); 
+							temp.InlandDomesticFromZipCode = MyEntity.InlandDomesticFromZipCode;
+
+					 
+
+					
+                    							//throw new ApplicationException("InlandDomesticToZipCode Can't be update"); 
+							temp.InlandDomesticToZipCode = MyEntity.InlandDomesticToZipCode;
+
+					 
+
+					
+                    							//throw new ApplicationException("InlandDomesticFromCity Can't be update"); 
+							temp.InlandDomesticFromCity = MyEntity.InlandDomesticFromCity;
+
+					 
+
+					
+                    							//throw new ApplicationException("InlandDomesticToCity Can't be update"); 
+							temp.InlandDomesticToCity = MyEntity.InlandDomesticToCity;
+
+					 
+
+					
+                    							//throw new ApplicationException("MainCarriageFromPortAddress Can't be update"); 
+							temp.MainCarriageFromPortAddress = MyEntity.MainCarriageFromPortAddress;
+
+					 
+
+					
+                    							//throw new ApplicationException("MainCarriageToPortAddress Can't be update"); 
+							temp.MainCarriageToPortAddress = MyEntity.MainCarriageToPortAddress;
 
 					 
 
@@ -1562,4 +1714,4 @@ using Simplog.Data.ShipmentsModel;
         }
 		 
    }
-}
+}

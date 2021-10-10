@@ -193,6 +193,26 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
     public string ShipperNotExporterReference2 { get; set; }
     
     public DateTime? CustomsClearanceDate { get; set; }
+    
+    public PickUpDeliveryFromToType InlandDomesticFromTypeCode { get; set; }
+    
+    public PickUpDeliveryFromToType InlandDomesticToTypeCode { get; set; }
+    
+    public Country InlandDomesticFromCountry { get; set; }
+    
+    public Country InlandDomesticToCountry { get; set; }
+    
+    public string InlandDomesticFromZipCode { get; set; }
+    
+    public string InlandDomesticToZipCode { get; set; }
+    
+    public string InlandDomesticFromCity { get; set; }
+    
+    public string InlandDomesticToCity { get; set; }
+    
+    public string MainCarriageFromPortAddress { get; set; }
+    
+    public string MainCarriageToPortAddress { get; set; }
 
     public  string  ComputingPartnerCode { get; set; }
 

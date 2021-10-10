@@ -678,27 +678,111 @@ namespace WebFreight.Web.ExternalAPIs.V1
 
         private ShipmentPM ValidateInlandDomesticShipment(ShipmentPM entityPM)
         {
-
-            entityPM = SetInlandDomesticShipmentPartners(entityPM);
-            ValidateInlandDomesticShipmentPartnersAddesses(entityPM);
+            ValidateInlandDomesticShipmentFromTypeCode(entityPM);
+            ValidateInlandDomesticShipmentToTypeCode(entityPM);
+            entityPM = SetInlandDomesticShipmentFromPartners(entityPM);
+            entityPM = SetInlandDomesticShipmentToPartners(entityPM);
+           // ValidateInlandDomesticShipmentPartnersAddesses(entityPM);
             ValidateInlandDomesticMainCarriageDates(entityPM);
 
             return entityPM;
         }
-        private ShipmentPM SetInlandDomesticShipmentPartners(ShipmentPM entityPM)
+        private void ValidateInlandDomesticShipmentToTypeCode(ShipmentPM entityPM)
         {
-
-            if (entityPM.MainCarriageToPartnerId == null)
+            bool isCityOrCountryNull = string.IsNullOrEmpty(entityPM.InlandDomesticToCity) || string.IsNullOrEmpty(entityPM.InlandDomesticToCountryId);
+           
+            if (string.IsNullOrEmpty(entityPM.InlandDomesticToTypeCode))
             {
-                entityPM.MainCarriageToPartnerId = entityPM.ConsigneeId;
+                throw new ApplicationException("InlandDomesticToTypeCode Field is Required");
             }
-            if (entityPM.MainCarriageFromPartnerId == null)
+            if (entityPM.InlandDomesticToTypeCode == "CASL" && isCityOrCountryNull)
             {
-                entityPM.MainCarriageFromPartnerId = entityPM.ShipperId;
+                throw new ApplicationException("InlandDomestic To City And Country Fields are Required");
+            }
+            else if (entityPM.InlandDomesticToTypeCode == "PART" && string.IsNullOrEmpty(entityPM.MainCarriageToPartnerId))
+            {
+                throw new ApplicationException("MainCarriageToPartnerId Field is Required");
+            }
+            else if (entityPM.InlandDomesticToTypeCode == "PORT" && string.IsNullOrEmpty(entityPM.MainCarriageFromPortId))           
+            {
+                throw new ApplicationException("MainCarriageFromPortId Field is Required");
+            }
+            else
+            {
+                throw new ApplicationException("Invalid InlandDomesticFromTypeCode");
+            }
+        }
+
+        private void ValidateInlandDomesticShipmentFromTypeCode(ShipmentPM entityPM)
+        {
+            bool isCityOrCountryNull = string.IsNullOrEmpty(entityPM.InlandDomesticFromCity) || string.IsNullOrEmpty(entityPM.InlandDomesticFromCountryId);
+
+            if (string.IsNullOrEmpty(entityPM.InlandDomesticFromTypeCode))
+            {
+                throw new ApplicationException("InlandDomesticFromTypeCode Field is Required");
+            }
+            if (entityPM.InlandDomesticFromTypeCode == "CASL" && isCityOrCountryNull)
+            {
+                throw new ApplicationException("InlandDomesticFrom City And Country Fields are Required");
+            }
+            else if (entityPM.InlandDomesticFromTypeCode == "PART" && string.IsNullOrEmpty(entityPM.MainCarriageFromPartnerId))
+            {
+                throw new ApplicationException("MainCarriageFromPartnerId Field is Required");
+            }
+            else if (entityPM.InlandDomesticFromTypeCode == "PORT" && string.IsNullOrEmpty(entityPM.MainCarriageFromPortId))
+            {
+                throw new ApplicationException("MainCarriageFromPortId Field is Required");
+            }
+            else
+            {
+                throw new ApplicationException("Invalid InlandDomesticFromTypeCode");
+            }
+        }
+
+        private ShipmentPM SetInlandDomesticShipmentFromPartners(ShipmentPM entityPM)
+        {
+            if (entityPM.InlandDomesticFromTypeCode == "CASL")
+            {
+                entityPM.MainCarriageFromPartnerId = null;
+                entityPM.MainCarriageFromPortId = null;
+            }
+            else if (entityPM.InlandDomesticFromTypeCode == "PART")
+            {
+                entityPM.InlandDomesticFromCity = null;
+                entityPM.InlandDomesticFromCountryId = null;
+                entityPM.MainCarriageFromPortId = null;
+            }
+            else if (entityPM.InlandDomesticFromTypeCode == "PORT")
+            {
+                entityPM.InlandDomesticFromCity = null;
+                entityPM.InlandDomesticFromCountryId = null;
+                entityPM.MainCarriageFromPartnerId = null;
             }
             return entityPM;
-
         }
+
+        private ShipmentPM SetInlandDomesticShipmentToPartners(ShipmentPM entityPM)
+        {
+            if (entityPM.InlandDomesticToTypeCode == "CASL")
+            {
+                entityPM.MainCarriageToPartnerId = null;
+                entityPM.MainCarriageToPortId = null;
+            }
+            else if (entityPM.InlandDomesticToTypeCode == "PART")
+            {
+                entityPM.InlandDomesticToCity = null;
+                entityPM.InlandDomesticToCountryId = null;
+                entityPM.MainCarriageToPortId = null;
+            }
+            else if (entityPM.InlandDomesticToTypeCode == "PORT")
+            {
+                entityPM.InlandDomesticToCity = null;
+                entityPM.InlandDomesticToCountryId = null;
+                entityPM.MainCarriageToPartnerId = null;
+            }
+            return entityPM;
+        }
+
         private void ValidateInlandDomesticMainCarriageDates(ShipmentPM entityPM)
         {
             if (!this.IsRoutingLegDatesValid(entityPM.MainCarriageETD, entityPM.MainCarriageETA))
