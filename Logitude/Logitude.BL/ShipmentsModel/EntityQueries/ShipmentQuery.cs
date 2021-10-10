@@ -12458,6 +12458,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                IsAccrualsApproved = f.IsAccrualsApproved,
                                TruckNumber = f.TruckNumber,
                                ContainersNumbersandTypesArray = f.ContainersNumbersandTypesArray,
+                               CustomerContactEmail = f.CustomerContactEmail,
+                               CustomerContactName = f.CustomerContactName,
                            };
             return myResult;
         }

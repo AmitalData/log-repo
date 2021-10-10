@@ -379,6 +379,8 @@ namespace Simplog.Data.ShipmentModel.Mapping
             this.Property(t => t.MainCarriageFromPartnerId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.MainCarriageToPartnerId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.FreightLocationId).HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.CustomerContactName).HasMaxLength(60).IsUnicode(false);
+            this.Property(t => t.CustomerContactEmail).HasMaxLength(70).IsUnicode(false);
 
             // Table & Column Mappings
             this.ToTable("ShipmentDataView");
@@ -864,6 +866,8 @@ namespace Simplog.Data.ShipmentModel.Mapping
             this.Property(t => t.PlannedCargoReadyDate).HasColumnName("PlannedCargoReadyDate");
             this.Property(t => t.HandlerUserId).HasColumnName("HandlerUserId");
             this.Property(t => t.HandlerUserName).HasColumnName("HandlerUserName");
+            this.Property(t => t.CustomerContactName).HasColumnName("CustomerContactName");
+            this.Property(t => t.CustomerContactEmail).HasColumnName("CustomerContactEmail");
         }
     }
 }
