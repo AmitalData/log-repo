@@ -167,6 +167,10 @@ namespace Logitude.Test.Base.Models.Shared
         {
             return $"PartnersDomain/GetCustomerById?id={id}" ;
         }
+        public static string PostCreatePeriodsForYear(int year)
+        {
+            return $"accountingPeriods/PostCreatePeriodsForYear?year={year}" ;
+        }
 
         public static string TenantsUpdate(int id)
         {
@@ -232,6 +236,10 @@ namespace Logitude.Test.Base.Models.Shared
         public static string CustomersGetSingle(string id)
         {
             return "customers/getsingle?id=" + id;
+        }
+        public static string GetInsertControlAccount(string ControlAccountId,string ChartOfAccountsId)
+        {
+            return $"glaccountviews/GetInsertControlAccount?ControlAccountId={ControlAccountId}&ChartOfAccountsId={ChartOfAccountsId}";
         }
         public static string VendorssGetSingle(string id)
         {

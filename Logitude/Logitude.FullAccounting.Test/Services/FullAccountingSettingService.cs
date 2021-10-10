@@ -1,5 +1,6 @@
 ﻿using Logitude.FullAccounting.Test.Models;
 using Logitude.FullAccounting.Test.Services.Preparation;
+using Logitude.FullAccountingTests.Models;
 using Logitude.Test.Base.Models.Api;
 using Logitude.Test.Base.Models.BillingsPreparation;
 using Logitude.Test.Base.Models.Shared;
@@ -39,34 +40,40 @@ namespace Logitude.FullAccountingTests.Services
             }
             if (string.IsNullOrEmpty(setting.VendorControlAccountId))
             {
-                setting.CustomerControlAccountId = GetVendorID();
+                setting.VendorControlAccountId = GetVendorID();
             }
-            
-
 
             APICaller.CallPut<FullAccountingSettingPM>(setting, Urls.FullAccountingSettingsController, UserTenant.Token);
         }
 
         private string GetVendorID()
         {
-            new VendorPreparation().Prepare();
-            return FullAccountingData.VendorId;
+            return APICaller.CallGet<InsertedControlAccountPM>(Urls.GetInsertControlAccount("VendorControlAccountId", FullAccountingData.VendorChartOfAccountId), UserTenant.Token)?.Data.AccountId.VendorControlAccountId;
         }
 
         private string GetCustomerID()
         {
-            new CustomerPreparation().Prepare();
-            return FullAccountingData.CustomerId;
+            return APICaller.CallGet<InsertedControlAccountPM>(Urls.GetInsertControlAccount("CustomerControlAccountId", FullAccountingData.CustomerChartOfAccountId), UserTenant.Token)?.Data.AccountId.CustomerControlAccountId;
         }
 
         private void UpdateAccountingPeriodsCurrentMonth()
         {
             var accountingPeriods = GetAccountingPeriodsByYear(DateTime.Now.Year);
+            if(accountingPeriods.Count == 0)
+            {
+                CreatePeriodsForYear();
+                accountingPeriods = GetAccountingPeriodsByYear(DateTime.Now.Year);
+            }
             foreach (var item in accountingPeriods)
             {
                 item.OpenMonth = DateTime.Now.Month;
                 var updateditem = APICaller.CallPut<AccountingPeriodList>(item, Urls.AccountingPeriodsController, UserTenant.Token).Data;
             }
+        }
+
+        private void CreatePeriodsForYear()
+        {
+            APICaller.CallPost<FullAccountingSettingPM>(null, Urls.PostCreatePeriodsForYear(DateTime.Now.Year), UserTenant.Token);
         }
 
         private List<AccountingPeriodList> GetAccountingPeriodsByYear(int year)

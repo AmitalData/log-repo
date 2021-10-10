@@ -13,5 +13,7 @@ namespace Logitude.FullAccounting.Test.Models.Codes
         public const string VendorChart = "VNCHR";
         public const string BankChart = "BNCHR";
         public const string RevenuesChart = "RECHR";
+        public const string ExpensesChart = "EXCHR";
+        public const string WorksChart = "WOCHR";
     }
 }

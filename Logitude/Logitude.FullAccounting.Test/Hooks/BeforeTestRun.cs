@@ -19,13 +19,11 @@ namespace Logitude.Logitude.FullAccounting.Test.Hooks
             new ChartOfAccountPreparation().Prepare();
             new AutomaticReconcilePreparation().Prepare();
             new ChargesGroupPreparation().Prepare();
+            new FullAccountingSettingService().UpdateSetting();
             new ChargeTypePreparation().Prepare();
             new CashBookPreparation().Prepare();
             new BankCodePreparation().Prepare();
             new AccountingPaymentMethodPreparation().Prepare();
-
-            new FullAccountingSettingService().UpdateSetting();
-
         }
 
     }

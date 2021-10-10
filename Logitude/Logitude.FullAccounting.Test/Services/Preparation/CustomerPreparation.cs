@@ -1,5 +1,6 @@
 ﻿using Logitude.FullAccounting.Test.Models;
 using Logitude.FullAccounting.Test.Models.Codes;
+using Logitude.FullAccountingTests.Models;
 using Logitude.Test.Base.Models.Api;
 using Logitude.Test.Base.Models.BillingsPreparation;
 using Logitude.Test.Base.Models.PartnersPreparation;
@@ -27,7 +28,6 @@ namespace Logitude.FullAccounting.Test.Services.Preparation
             FullAccountingData.CustomerCardId = customer.Card.Id;
             FullAccountingData.CustomerMainAddressId = GetAddressID(customer);
         }
-
         private string GetAddressID(CustomerPM customer)
         {
             var address = APICaller.CallGet<List<AddressPM>>(Urls.GetAllAddressesPMsbyCardId(customer.Card.Id), UserTenant.Token)?.Data;

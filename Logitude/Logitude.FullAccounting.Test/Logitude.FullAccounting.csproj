@@ -157,6 +157,7 @@
     <Compile Include="Models\FullAccountingSettingPM.cs" />
     <Compile Include="Models\GLAccountPM.cs" />
     <Compile Include="Models\GLAccountTypeEnum.cs" />
+    <Compile Include="Models\InsertedControlAccountPM.cs" />
     <Compile Include="Models\JournalActionType.cs" />
     <Compile Include="Models\JournalLinePM.cs" />
     <Compile Include="Models\JournalPM.cs" />
