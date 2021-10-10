@@ -1022,7 +1022,7 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string MainCarriageVesselId { get; set; }
-        
+
         public string Transshipment1VesselId { get; set; }
         public string Transshipment2VesselId { get; set; }
         public string Transshipment3VesselId { get; set; }
@@ -1931,7 +1931,7 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string ShipperPickAddressId { get; set; }
         public string ConsigneeMainAddressId { get; set; }
         public string ConsigneePickAddressId { get; set; }
-        
+
         public bool IncludePickUp { get; set; }
         public string FromAddressCity { get; set; }
         public string FromAddressZipCode { get; set; }
@@ -2134,7 +2134,7 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public DateTime? AssignedToTruckerDate { get; set; }
-         
+
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public DateTime? AssginedToCustomsAgentDate { get; set; }
 
@@ -2287,7 +2287,7 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string INTTRABookingStatusCode { get; set; }
         public string INTTRABookingStatusName { get; set; }
-        
+
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public DateTime? INTTRALastEBbookingSendDate { get; set; }
 
@@ -2478,7 +2478,7 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public DateTime? Transshipment2STD_Original { get; set; }
         public DateTime? Transshipment3ATD_Original { get; set; }
         public DateTime? Transshipment3ETD_Original { get; set; }
-        public DateTime? Transshipment3STD_Original { get; set; }        
+        public DateTime? Transshipment3STD_Original { get; set; }
         public DateTime? MainCarriageATA_Original { get; set; }
         public DateTime? MainCarriageETA_Original { get; set; }
         public DateTime? MainCarriageSTA_Original { get; set; }
@@ -2490,7 +2490,7 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public DateTime? Transshipment2STA_Original { get; set; }
         public DateTime? Transshipment3ATA_Original { get; set; }
         public DateTime? Transshipment3ETA_Original { get; set; }
-        public DateTime? Transshipment3STA_Original { get; set; }        
+        public DateTime? Transshipment3STA_Original { get; set; }
         public string INTTRABookingStatusCode_Original { get; set; }
         public string BookingConfirmedBy_Original { get; set; }
         public string MAN_FromPortId_Original { get; set; }
@@ -2512,11 +2512,11 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
 
         public string DocumentFilingIds { get; set; }
 
-        
+
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string SLAC { get; set; }
-        
+
         public string MasterProjectNumber { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
@@ -2692,9 +2692,9 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string PrivateLabelInvoiceNumber { get; set; }
-         
 
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")] 
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public DateTime? RequestedFlightDate { get; set; }
 
 
@@ -2738,9 +2738,11 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string ShipperNotExporterReference1 { get; set; }
         public string ShipperNotExporterReference2 { get; set; }
         public string OperationalStatusId { get; set; }
-        public string BillingStatusId { get; set; } 
+        public string BillingStatusId { get; set; }
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string AccountingClosedByUserId { get; set; } 
+        public string AccountingClosedByUserId { get; set; }
+        public string HouseMasterConcurrencyGUID { get; set; }
+        public string HouseMasterNewConcurrencyGUID { get; set; }
     }
 
     public class TransshipmentLeg
