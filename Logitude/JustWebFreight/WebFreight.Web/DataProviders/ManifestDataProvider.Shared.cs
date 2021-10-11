@@ -166,6 +166,10 @@ namespace WebFreight.Web.DataProviders
         public string FreightLocationAddress { get; set; }
         public string ShipperContactPhone { get; set; }
         public string ShipperContactName { get; set; }
+        public string Trasnshipment1ToPortName { get; set; }
+        public string Trasnshipment2ToPortName { get; set; }
+        public string Trasnshipment3ToPortName { get; set; }
+        public DateTime? ArrivalDate { get; set; }
 
         public List<ManifestDetailsClass> ManifestDetails { get; set; }
         public List<NewManifestDetailsClass> NewManifestDetails { get; set; }
