@@ -29,6 +29,8 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
         
 
         protected InterfaceDetails _InterfaceDetails;
+        protected QueueDetails _QueueDetails;
+
         protected CommunicationLog _CommunicationLog;
 
         protected StringBuilder _SBLog;
@@ -41,6 +43,65 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
             this._InterfaceDetails = MyInterfaceDetails;
             
         }
+
+        public CustomAnalyzerQueueBase(QueueDetails queueDetails)
+        {
+            _SBLog = new StringBuilder();
+            this._QueueDetails = queueDetails;
+
+        }
+
+        public void Run( AnalyzeQueueRepository analyzeQueueRepository, int tenant, string communicationLogId , string message)
+        {
+
+            try
+            {
+
+                 this.analyzeQueueRepository = analyzeQueueRepository;
+ 
+                if (String.IsNullOrWhiteSpace(communicationLogId))
+                {
+                    throw new Exception("CommunicationLogId is null");
+                }
+
+
+
+
+
+                _CommunicationLog = Communications.GetCommunicationLog(tenant, communicationLogId);
+                if (_CommunicationLog == null)
+                {
+                    throw new Exception("Cannnot GetCommunicationLog");
+                }
+                var communicationsData = message; //Communications.GetData(_CommunicationLog); ;
+                if (string.IsNullOrWhiteSpace(communicationsData))
+                {
+                    throw new Exception("communicationsData is null");
+                }
+
+
+
+                LogMessagingUtil.Instance.Clear();
+                _AnalyzeResultModel = this.AnalyzeData(communicationsData);
+                ;
+                _AnalyzeResultModel = _AnalyzeResultModel ?? new AnalyzeResultModel();
+                LogMessagingUtil.Instance.AppendLine(ProxyUtil.JsonConvertSerialize(_AnalyzeResultModel));
+             }
+
+            catch (Exception ex)
+            {
+                _AnalyzeResultModel = _AnalyzeResultModel ?? new AnalyzeResultModel()
+                {
+                    ErrorMessage = ex.ToString(),
+                    MyCommStatusEnum = CommStatusEnum.F
+                };
+                 //AnalyzeFailed(ex.ToString());
+
+                ExceptionHandler.HandleException(ex, DateTime.Now, 0, "", "WorkerRole", "CustomAnalyzerQueueBase : Run() Method", null);
+
+            }
+        }
+
         public void Run(AnalyzeQueue analyzeQueue, AnalyzeQueueRepository analyzeQueueRepository, int tenant)
         {
 

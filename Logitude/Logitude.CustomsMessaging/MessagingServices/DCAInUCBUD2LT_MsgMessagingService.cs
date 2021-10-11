@@ -12,6 +12,7 @@ using Logitude.CustomsMessaging.Common.ResponseData;
 using Logitude.CustomsMessaging.RequestServices;
 using Logitude.CustomsMessaging.ResponseServices;
 using Logitude.CustomsMessaging.Testers.Messages;
+using Logitude.Server.Tools;
 using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.Utils;
 using RabbitMQ.Client;
@@ -183,26 +184,98 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
                     //}, xmlESBResponseXmlClass);
 
-                    var factory = new ConnectionFactory() { HostName = "unimq", UserName = "v5101", Password = "Aa123" };
-                    using (var connection = factory.CreateConnection())
-                    using (var channel = connection.CreateModel())
+
+                    try
                     {
-                        channel.QueueDeclare(queue: "connectToTicket",
-                                             durable: false,
-                                             exclusive: false,
-                                             autoDelete: false,
-                                             arguments: null);
+                      var  _CommunicationsParams = new CommunicationsParams()
+                        {
 
-                        string message = xmlESBResponseXmlClass;
-                        var body2 = Encoding.UTF8.GetBytes(message);
+                            Tenant =tenant, 
 
-                        channel.BasicPublish(exchange: "",
-                                             routingKey: "connectToTicket",
-                                             basicProperties: null,
-                                             body: body2);
+                            LoggingObjectTableId = objectTableId,
+                            LoggingEntityId = entityId, 
 
-                        Console.WriteLine(" [x] Sent {0}", message);
+                            Subject ="קישור מסמך לטיקט",// "FU Status",
+                            LoggingEntityReference = documentsFilingPM.ExternalEntityReference,//_PhysicalCheckPM.CheckId,
+                            LoggingUserId = LoggingUserId,//loggingUserId,
+
+
+                            Status = "W",
+                            To = "RabbitMQ",
+                            CommunicationLogTypeCode = "T",
+                            FolderName = "",
+                            From = "Logitude",
+                            InOut = "O",
+
+                            //XMLData=some xml data string 
+                        };
+
+
+                        var message = Encoding.UTF8.GetBytes(xmlESBResponseXmlClass);
+                        _CommunicationsParams.ByteData = message;
+                        string communicationLogId = Communications.AddCommunicationLog(_CommunicationsParams);
+
+ 
+
+
+                        var queuename = "";
+                        var args = new Dictionary<string, object>();
+                        //lazy = store messages to disk => no lost messages in case on rabbitmq restart 
+
+                        var factory = new ConnectionFactory() { HostName = "unimq", UserName = "v5101", Password = "Aa123" };
+                        using (var connection = factory.CreateConnection())
+                        using (var channel = connection.CreateModel())
+                        {
+                            channel.BasicQos(0, 5, true);
+
+                            args.Add("x-queue-mode", "lazy");
+                            channel.QueueDeclare(queue: queuename,
+                                                durable: true,
+                                                exclusive: false,
+                                                autoDelete: false,
+                                                arguments: args);
+                            var header = new Dictionary<string, object>();
+                            var prop = channel.CreateBasicProperties();
+                            prop.Persistent = true;
+                            prop.MessageId = communicationLogId;
+                           // prop.AppId = ea.BasicProperties.AppId;
+                            prop.DeliveryMode = 2; //persistent
+                            prop.Headers = header;
+                           // var body = RabbitmqHelper.MyJsonSerializer(message);
+                         //   channel.QueueBind(queue: queuename, exchange: EcomFilingService.exchangeName, routingKey: queuename);
+                            channel.BasicPublish(exchange: "",
+                                                         routingKey: queuename,
+                                                         basicProperties: null,
+                                                         body: message);
+
+                        }
                     }
+                    catch (Exception)
+                    {
+
+                        throw;
+                    }
+
+                    //var factory = new ConnectionFactory() { HostName = "unimq", UserName = "v5101", Password = "Aa123" };
+                    //using (var connection = factory.CreateConnection())
+                    //using (var channel = connection.CreateModel())
+                    //{
+                    //    channel.QueueDeclare(queue: "connectToTicket",
+                    //                         durable: false,
+                    //                         exclusive: false,
+                    //                         autoDelete: false,
+                    //                         arguments: null);
+
+                    //    string message = xmlESBResponseXmlClass;
+                    //    var body2 = Encoding.UTF8.GetBytes(message);
+
+                    //    channel.BasicPublish(exchange: "",
+                    //                         routingKey: "connectToTicket",
+                    //                         basicProperties: null,
+                    //                         body: body2);
+
+                    //    Console.WriteLine(" [x] Sent {0}", message);
+                    //}
 
                  
                     trans.Complete();

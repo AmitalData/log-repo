@@ -52,6 +52,7 @@ using System.Xml.Serialization;
 using Logitude.CustomsMessaging.MessagingServices;
 using Logitude.AmitalMessaging.Utils;
 using System.Xml;
+using CustomsWorkerRole.RabbitMQ;
 
 namespace CustomsWorkerRole
 {
@@ -61,6 +62,9 @@ namespace CustomsWorkerRole
     {
         QueueDescription _QueueDescription;
         QueueClient _QueueClient;
+
+        private AnalyzeResultModel _AnalyzeResultModel;
+
         public override void Run()
         {
 
@@ -103,147 +107,207 @@ namespace CustomsWorkerRole
         private int _SeedTenant = 1;
 
 
-        public override bool OnStart()
+        //public override bool OnStart()
+        //{
+        //    try
+        //    {
+
+        //        Logger.LogMe("SSSSS", false, "TESTELISH");
+
+        //        //if (_OnStartDone) return true;
+        //        //_OnStartDone = true;
+        //        //DoneItemsInRange = new Dictionary<DateTime, int>();
+
+        //        //if (WorkerRoleServiceLocator.PleaseShutDown) return true;
+
+
+
+        //        var factory = new ConnectionFactory() { HostName = "unimq", UserName = "v5101", Password = "Aa123" };
+        //        using (var connection = factory.CreateConnection())
+        //        using (var channel = connection.CreateModel())
+        //        {
+        //            Logger.LogMe("create---", false, "TESTELISH");
+
+        //            channel.QueueDeclare(queue: "connectToTicket",
+        //                                 durable: false,
+        //                                 exclusive: false,
+        //                                 autoDelete: false,
+        //                                 arguments: null);
+
+        //            var consumer = new EventingBasicConsumer(channel);
+        //            consumer.Received += (model, ea) =>
+        //            {
+        //                Logger.LogMe("recievd", false, "TESTELISH");
+        //                 var body = ea.Body.ToArray();
+        //                var message = Encoding.UTF8.GetString(body);
+
+        //                UniCourierBatchSendUCBUD2LT_MsgResponseService uniCourierBatchSendUCBUD2LT_MsgResponseService = new UniCourierBatchSendUCBUD2LT_MsgResponseService();
+
+        //                XmlSerializer serializer = new XmlSerializer(typeof(DCAInUCBUD2LTWithResponseContentHeader));
+        //                DCAInUCBUD2LTWithResponseContentHeader result = new DCAInUCBUD2LTWithResponseContentHeader();
+        //                using (TextReader reader = new StringReader(message))
+        //                {
+        //                    Logger.LogMe("read xml", false, "TESTELISH");
+
+        //                    XmlDocument doc = new XmlDocument();
+        //                doc.Load(reader);
+
+        //                //Display all the book titles.
+        //                XmlNodeList elemList = doc.GetElementsByTagName("Body");
+
+
+        //                    result = (DCAInUCBUD2LTWithResponseContentHeader)serializer.Deserialize(new StringReader(elemList[0].InnerXml));
+
+        //                //    dynamic test = XmlGenericUtil<dynamic>.DeSerializeObject(elemList[0].InnerXml);//serializer.Deserialize(reader);
+        //                //    result = (DCAInUCBUD2LTWithResponseContentHeader)test.body.DCAInUCBUD2LTWithResponseContentHeader;
+        //                 }
+
+        //                Logger.LogMe("update", false, "TESTELISH");
+
+        //                uniCourierBatchSendUCBUD2LT_MsgResponseService.RealUpdate2(result);
+
+        //                Console.WriteLine(" [x] Received {0}", message);
+        //            };
+
+        //            Logger.LogMe("BasicConsume", false, "TESTELISH");
+
+        //            channel.BasicConsume(queue: "connectToTicket",
+        //                                 autoAck: true,
+        //                                 consumer: consumer);
+
+        //            Logger.LogMe("end BasicConsume", false, "TESTELISH");
+
+        //        }
+
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "amital send data worker role start", null, null);
+        //    }
+
+        //    // Set the maximum number of concurrent connections 
+        //    ServicePointManager.DefaultConnectionLimit = 12;
+
+        //    //DiagnosticMonitor.Start("DiagnosticsConnectionString");
+
+        //    // For information on handling configuration changes
+        //    // see the MSDN topic at http://go.microsoft.com/fwlink/?LinkId=166357.
+
+
+        //    return base.OnStart();
+        //}
+
+
+        private void WorkUntil_AnalyzeQueue_Empty_Db_NOTINUSE()
         {
-            try
+
+            var customRabbitMQQueue = new CustomRabbitMQQueue();
+            var _CustomsAnalyzeQueueServices = customRabbitMQQueue.GetAllQueueDetails()
+             .Where(r => r.AnalyzeQueueService != AnalyzeMQQueueServiceEnum.none)
+            .ToList();
+
+            while (true)
             {
 
-                Logger.LogMe("SSSSS", false, "TESTELISH");
+                EventHandler<BasicDeliverEventArgs> consumerEventArgs = null;
+                EventingBasicConsumer consumer = null;
 
-                //if (_OnStartDone) return true;
-                //_OnStartDone = true;
-                //DoneItemsInRange = new Dictionary<DateTime, int>();
-
-                //if (WorkerRoleServiceLocator.PleaseShutDown) return true;
-
-
-
-                var factory = new ConnectionFactory() { HostName = "unimq", UserName = "v5101", Password = "Aa123" };
-                using (var connection = factory.CreateConnection())
-                using (var channel = connection.CreateModel())
+                var factory = RabbitmqHelper.GetConnectionFactory();
+                factory.RequestedHeartbeat = TimeSpan.FromSeconds(600);
+         
+           foreach (QueueDetails queue in _CustomsAnalyzeQueueServices)
                 {
-                    Logger.LogMe("create---", false, "TESTELISH");
 
-                    channel.QueueDeclare(queue: "connectToTicket",
-                                         durable: false,
-                                         exclusive: false,
-                                         autoDelete: false,
-                                         arguments: null);
-
-                    var consumer = new EventingBasicConsumer(channel);
-                    consumer.Received += (model, ea) =>
                     {
-                        Logger.LogMe("recievd", false, "TESTELISH");
 
-                        var body = ea.Body.ToArray();
-                        var message = Encoding.UTF8.GetString(body);
 
-                        UniCourierBatchSendUCBUD2LT_MsgResponseService uniCourierBatchSendUCBUD2LT_MsgResponseService = new UniCourierBatchSendUCBUD2LT_MsgResponseService();
-
-                        XmlSerializer serializer = new XmlSerializer(typeof(DCAInUCBUD2LTWithResponseContentHeader));
-                        DCAInUCBUD2LTWithResponseContentHeader result = new DCAInUCBUD2LTWithResponseContentHeader();
-                        using (TextReader reader = new StringReader(message))
+                        try
                         {
-                            Logger.LogMe("read xml", false, "TESTELISH");
 
-                            XmlDocument doc = new XmlDocument();
-                        doc.Load(reader);
+                            using (var connection = factory.CreateConnection())
+                            using (var channel = connection.CreateModel())
+                            {
+                                channel.BasicQos(0, 5, true);
+                                //Create queue if not exists
+                                RabbitmqHelper.DeclareQueue(channel, queue.Code);
 
-                        //Display all the book titles.
-                        XmlNodeList elemList = doc.GetElementsByTagName("Body");
+                                AnalyzeQueueRepository analyzeQueueRepository = new AnalyzeQueueRepository();
+
+                                //while (true)
+                                //{
+                                consumerEventArgs = (model, ea) =>
+                                {
+                                    if (channel == null)
+                                        return;
+                                    if (!channel.IsOpen)
+                                        return;
+
+                                    string messageId = "";
+                                    try
+                                    {
+                                        var body = ea.Body.ToArray();
+                                        string remark;
+                                        var message =  Encoding.UTF8.GetString(body);
+                                        messageId = ea.BasicProperties.MessageId;
+
+                                        Exec(customRabbitMQQueue, queue, analyzeQueueRepository, messageId, 1 , message);
+                                        LogDoneItemInMemory();
 
 
-                            result = (DCAInUCBUD2LTWithResponseContentHeader)serializer.Deserialize(new StringReader(elemList[0].InnerXml));
 
-                        //    dynamic test = XmlGenericUtil<dynamic>.DeSerializeObject(elemList[0].InnerXml);//serializer.Deserialize(reader);
-                        //    result = (DCAInUCBUD2LTWithResponseContentHeader)test.body.DCAInUCBUD2LTWithResponseContentHeader;
-                         }
+                                        if (true)
+                                        {
+                                             channel.BasicAck(ea.DeliveryTag, false);
+                                         }
 
-                        Logger.LogMe("update", false, "TESTELISH");
+                                    }
 
-                        uniCourierBatchSendUCBUD2LT_MsgResponseService.RealUpdate2(result);
+                                    catch
+                                    {
 
-                        Console.WriteLine(" [x] Received {0}", message);
-                    };
 
-                    Logger.LogMe("BasicConsume", false, "TESTELISH");
+                                    }
 
-                    channel.BasicConsume(queue: "connectToTicket",
-                                         autoAck: true,
-                                         consumer: consumer);
+                                    };
+                                // }
 
-                    Logger.LogMe("end BasicConsume", false, "TESTELISH");
 
+                                Thread.Sleep(500);
+                            }
+
+                        }
+                        catch (Exception e)
+                        {
+                            ExceptionHandler.HandleException(e, DateTime.Now, 0, "", "WorkerRole", "CustomsAnalyzeQueueWR : Run() Method", null);
+                            Thread.Sleep(5000);
+                        }
+                    }
                 }
 
+
+                //Thread.Sleep(TimeSpan.FromSeconds(5));
+
+                Thread.Sleep(TimeSpan.FromSeconds(1));//not using soo mach 
+                break;
+
+
             }
-            catch (Exception ex)
-            {
-                ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "amital send data worker role start", null, null);
-            }
-
-            // Set the maximum number of concurrent connections 
-            ServicePointManager.DefaultConnectionLimit = 12;
-
-            //DiagnosticMonitor.Start("DiagnosticsConnectionString");
-
-            // For information on handling configuration changes
-            // see the MSDN topic at http://go.microsoft.com/fwlink/?LinkId=166357.
-
-
-            return base.OnStart();
         }
 
-        private void CreateFtpDefinitionsEvery10Min()
+        private void Exec(CustomRabbitMQQueue customRabbitMQQueue, QueueDetails queue, AnalyzeQueueRepository analyzeQueueRepository, string communicationLogId, int tenant , string message)
         {
-            //if (DateTime.Now.Subtract(_LastCreateFtpDefinition) < TimeSpan.FromMinutes(15))
-            //{
-            //    return;
-            //}
-            using (TransactionScope scope = TransactionFactory.GetTransaction())
+            using (TransactionScope scope = TransactionFactory.GetNewTransaction())
             {
-
-                //ProccessReceivedMessage();
-
-
-                _LastCreateFtpDefinition = DateTime.Now;
-                _FtpDefinitions = new List<CustomsPartnerFtpPM>();
-                var customsPartnerFtpDetails = new CustomsPartnerFtpDetails();
-                var ftpIncustomsPartnerFtpDetails = customsPartnerFtpDetails.GetAllInterfaceDetails()
-                    .Where(r => r.TypeCode == CustomsPartnerFtpDetails.TypeCode_In)
-                    .Where(r => r.ViaMethod == "FTP")
-                    .ToList();
-
-                ftpIncustomsPartnerFtpDetails.ForEach(ftpIncustomsPartnerFtpDetail =>
-                {
-
-                    var myCustomsPartnerFtpQueryService = new CustomsPartnerFtpQueryService(_SeedTenant);
-                    var pmCustomsPartnerFtps = myCustomsPartnerFtpQueryService.GetAllTenantBy(ftpIncustomsPartnerFtpDetail.Code /*CustomsPartnerFtpDetails.InterfaceName_ECSPCL*/,
-                        ftpIncustomsPartnerFtpDetail.Partner,
-                        ftpIncustomsPartnerFtpDetail.TypeCode);
-
-
-                    foreach (var pmCustomsPartnerFtp in pmCustomsPartnerFtps)
-                    {
-                        //if (pmCustomsPartnerFtp != null)
-                        {
-
-
-                            FTPDetailRepository ftpDetailsRepository = new FTPDetailRepository(_SeedTenant);
-                            FTPDetail ftpDetail = ftpDetailsRepository.GetSingleFTPDetail(pmCustomsPartnerFtp.FtpDetailsId, pmCustomsPartnerFtp.Tenant);
-                            if (ftpDetail != null)
-                            {
-
-                                pmCustomsPartnerFtp.MyFtpDetail = ftpDetail;
-                                _FtpDefinitions.Add(pmCustomsPartnerFtp);
-                            }
-                        }
-
-                    }
-                });
+                var serviceAnalyzer = customRabbitMQQueue.GetCustomAnalyzerQueueService(queue);
+                //ArtemusAnalyzer analyzer = new Artemus(analyzeQueue, analyzeQueueRepository);
+                serviceAnalyzer.Run( analyzeQueueRepository, tenant , communicationLogId , message);
+                scope.Complete();
             }
         }
 
+
+
+ 
         public override void WorkOnce()
         {
 
@@ -251,7 +315,7 @@ namespace CustomsWorkerRole
             {
                 OnStart();
 
-                //  WorkUntilQEmpty_Db();
+                WorkUntil_AnalyzeQueue_Empty_Db_NOTINUSE();
 
 
             }
@@ -265,62 +329,7 @@ namespace CustomsWorkerRole
 
         }
 
-        //private void WorkUntilQEmpty_Db()
-        //{
-        //    CreateFtpDefinitionsEvery10Min();
-
-        //    while (!WorkerRoleServiceLocator.PleaseShutDown)
-        //    {
-
-        //        foreach (CustomsPartnerFtpPM ftpDef in _FtpDefinitions)
-        //        {
-        //            LastActivity = DateTime.UtcNow;
-        //            if (ftpDef.MyFtpDetail.UseSFTP)
-        //            {
-        //                DownloadSFTPFiles(ftpDef);
-        //            }
-        //            else
-        //            {
-        //                DownloadFTPFiles(ftpDef);
-        //            }
-        //            if (WorkerRoleServiceLocator.PleaseShutDown)
-        //            {
-        //                break;
-        //            }
-        //        }
-
-
-        //        //Thread.Sleep(TimeSpan.FromSeconds(5));
-
-        //        Thread.Sleep(TimeSpan.FromSeconds(15));//not using soo mach 
-        //        break;
-
-
-        //    }
-        //}
-        static List<string> _BadFileNamesCache = new List<string>();
-        static DateTime _LastClearCacheBadFileNames = DateTime.MinValue;
-
-
-        public static void SaveAnalyzeQueue(InterfaceDetails defInterfaceDetails, string fileName, byte[] fileData, int tenant)
-        {
-            //var analyzeQueueUtil = new AnalyzeQueueUtil();
-            //analyzeQueueUtil.SaveMessageToAnalyzeQueue(fileName, fileData, tenant, "", defInterfaceDetails, null);
-        }
-
-        private void ClearBadFileNamesCache()
-        {
-            _LastClearCacheBadFileNames = DateTime.Now;
-            _BadFileNamesCache.Clear();
-        }
-
-        public static void SaveAnalyzeQueueFromCode(int tenant, string interfaceCode, string fileName, byte[] fileData)
-        {
-            //var customsPartnerFtpDetails = new CustomsPartnerFtpDetails();
-            //var defInterfaceDetails = customsPartnerFtpDetails.GetAllInterfaceDetails()
-            //        .Where(r => r.Code == interfaceCode).First();
-            //SaveAnalyzeQueue(defInterfaceDetails, fileName, fileData, tenant);
-        }
+   
     }
 
 
