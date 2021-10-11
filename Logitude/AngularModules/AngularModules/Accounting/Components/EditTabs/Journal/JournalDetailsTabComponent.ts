@@ -1250,18 +1250,17 @@ class JournalLineModel extends BaseComponent {
         if (!AppTool.IsNullOrEmpty(value)) {
             this.CreditAccountName = value.LocalName;
 
-            this.SetCurrencyForSingleAccount(value, ActionCode.Credit.toString(), ActionCode.DebitAndCredit.toString());
-            
-
+            this.SetCurrencyForSingleAccount(value, ActionCode.Credit.toString(), ActionCode.DebitAndCredit.toString());                      
             if (!AppTool.IsNullOrEmpty(this.Currency)) {
                 this.SplittedCheck();
             }
-
+           
 
         } else {
             this.CreditAccountName = null;
             this.CreditAccountId = null;
         }
+        this.SetForeignAmountEnabilityForSingleCurrencyAccount();
     }
 
     debitAccount: GLAccountPM;
@@ -1274,7 +1273,7 @@ class JournalLineModel extends BaseComponent {
         if (!AppTool.IsNullOrEmpty(value)) {
             this.DebitAccountName = value.LocalName;
             this.SetCurrencyForSingleAccount(value, ActionCode.Debit.toString(), ActionCode.DebitAndCredit.toString());
-            
+           
             if (!AppTool.IsNullOrEmpty(this.Currency)) {
                 this.SplittedCheck();
             }
@@ -1282,6 +1281,7 @@ class JournalLineModel extends BaseComponent {
             this.DebitAccountName = null;
             this.DebitAccountId = null;
         }
+        this.SetForeignAmountEnabilityForSingleCurrencyAccount();
     }
     SetCurrencyForSingleAccount(account:GLAccountPM,actionCode1:string ,actionCode2:string) {
         if (!account.IsMultiCurrency) {
@@ -1296,7 +1296,16 @@ class JournalLineModel extends BaseComponent {
 
         }
     }
-
+    SetForeignAmountEnabilityForSingleCurrencyAccount() {
+        if (this.CurrencyId != SessionLocator.TenantPM.CurrencyId) {
+            this.UIProperties.SetEnabled("ForeignAmount", this.ObjectTableName, true);
+            this.enableForeighAmountField = true;
+        }
+        else {
+            this.UIProperties.SetEnabled("ForeignAmount", this.ObjectTableName, false);
+            this.enableForeighAmountField = false;
+        }
+    }
     accDay: number;
     get AccDay() {
         return this.accDay
