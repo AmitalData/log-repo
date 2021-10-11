@@ -348,6 +348,22 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "POD,Convert POD Image to Pdf File", 
                 Description = "Convert POD Image to Pdf File", 
 			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "MLS", 
+                Name = "Shipment Number In Generic Interface", 
+                SearchFields = "MLS,Shipment Number In Generic Interface", 
+                Description = "Sending shipment number for multiple AP invoice in generic interface", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Name = "Ocean Insights Sending Automatically Logic", 
+                Code = "AOI", 
+                SearchFields = "AOI,Ocean Insights Sending Automatically Logic", 
+                Description = "Ocean Insights Sending Automatically Logic", 
+			});
 			
             return all;
        }

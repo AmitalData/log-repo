@@ -40,8 +40,14 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
             new FieldMap("PickupDate", "PickupActualDateTime"),
             new FieldMap("BookingDate", "BookingConfirmationDate"),
             new FieldMap("PickupEstimationDate", "PickupEstimatedDateTime"),
-            
+            new FieldMap("DepartureEstimationDate", "ETD"),
+            new FieldMap("DepartureDate", "ATD"),
+            new FieldMap("ArrivalEstimationDate", "ETA"),
+            new FieldMap("ArrivalDate", "ATA"),
+
         };
+
+     
         public static void SetTableLogic(DataRow tableRow)
         {
             SetFixedValueFields(tableRow);
@@ -51,6 +57,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
             SetMainEntity(tableRow);
             SetPreviousForwardingShipmentHeader(tableRow);
             SetCurrentMilestone(tableRow);
+            SetExceptionDescription(tableRow);
         }
 
         private static void SetFixedValueFields(DataRow tableRow)
@@ -62,6 +69,10 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
         {
             tableRow.SetField("PickupDone", !IsFieldNullOrEmpty(tableRow, "PickupActualDateTime"));
             tableRow.SetField("BookingDone", !IsFieldNullOrEmpty(tableRow, "BookingConfirmationDate"));
+            tableRow.SetField("CreateDone", !IsFieldNullOrEmpty(tableRow, "CreateDate"));
+            tableRow.SetField("DepartureDone", !IsFieldNullOrEmpty(tableRow, "ATD"));
+            tableRow.SetField("ArrivalDone", !IsFieldNullOrEmpty(tableRow, "ATA"));
+
         }
         private static void SetMainEntity(DataRow tableRow)
         {
@@ -69,20 +80,41 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
         }
         private static void SetCurrentMilestone(DataRow tableRow)
         {
-             if (!IsFieldNullOrEmpty(tableRow, "BookingDone") && !tableRow["BookingDone"].Equals("False"))
+            if (!IsFieldNullOrEmpty(tableRow, "ArrivalDone") && !tableRow["ArrivalDone"].Equals("False"))
+            {
+                tableRow.SetField("CurrentMilestoneCode", CargoTrackingMilestoneValues.Arrival);
+                tableRow.SetField("CurrentMilestoneDate", tableRow["ArrivalDate"]);
+
+            }
+            else if (!IsFieldNullOrEmpty(tableRow, "DepartureDone") && !tableRow["DepartureDone"].Equals("False"))
+            {
+
+                tableRow.SetField("CurrentMilestoneCode", CargoTrackingMilestoneValues.Departure);
+                tableRow.SetField("CurrentMilestoneDate", tableRow["DepartureDate"]);
+
+            }
+            else if (!IsFieldNullOrEmpty(tableRow, "PickupDone") && !tableRow["PickupDone"].Equals("False"))
+            {
+                tableRow.SetField("CurrentMilestoneCode", CargoTrackingMilestoneValues.Pickup);
+                tableRow.SetField("CurrentMilestoneDate", tableRow["PickupDate"]);
+            }
+            else if (!IsFieldNullOrEmpty(tableRow, "BookingDone") && !tableRow["BookingDone"].Equals("False"))
             {
                 tableRow.SetField("CurrentMilestoneCode", CargoTrackingMilestoneValues.Booking);
                 tableRow.SetField("CurrentMilestoneDate", tableRow["BookingDate"]);
-
             }
-
             else if (!IsFieldNullOrEmpty(tableRow, "CreateDone") && !tableRow["CreateDone"].Equals("False"))
             {
                 tableRow.SetField("CurrentMilestoneCode", CargoTrackingMilestoneValues.Created);
                 tableRow.SetField("CurrentMilestoneDate", tableRow["CreateDate"]);
-
             }
 
+        }
+        private static void SetExceptionDescription(DataRow tableRow)
+        {
+            var exceptionDate = !IsFieldNullOrEmpty(tableRow, "LastExceptionDate") ? tableRow["LastExceptionDate"]?.ToString(): null;
+            var exceptionDescription = !IsFieldNullOrEmpty(tableRow, "LastExceptionDescription") ? "," + tableRow["LastExceptionDescription"] : null;
+            tableRow.SetField("CurrentMilestoneExceptions", string.IsNullOrWhiteSpace(exceptionDate) ? exceptionDescription : exceptionDate +"," + tableRow["LastExceptionDescription"]);
         }
         private static void SetPreviousForwardingShipmentHeader(DataRow tableRow)
         {
@@ -221,7 +253,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
         }
         private static bool IsFieldNullOrEmpty(DataRow tableRow, string coulmnName)
         {
-            if (tableRow[coulmnName].Equals(null) || tableRow[coulmnName].Equals("") || tableRow[coulmnName].GetType().Name == "DBNull")
+            if (tableRow[coulmnName].Equals(null) || tableRow[coulmnName].Equals(0) || tableRow[coulmnName].Equals("") || tableRow[coulmnName].GetType().Name == "DBNull")
                 return true;
             return false;
         }

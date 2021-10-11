@@ -560,7 +560,7 @@ h1{
 }
     .filters-sidebar .header {
         padding-top: 15px;
-        padding: 20px;
+        padding: 20px 20px 0px 20px;
     }
         .filters-sidebar .header > div{
             display: inline-block;
@@ -579,7 +579,8 @@ h1{
         }
     .filters-sidebar ul {
         padding: 0;
-        height: 100%;
+        position: absolute;
+        width: 100%;
     }
         .filters-sidebar ul li {
             list-style: none;
@@ -591,12 +592,13 @@ h1{
             font-size: 12px;
 
         }
-        .filters-sidebar ul li.filters-footer {
+        .filters-footer {
             position: absolute;
             bottom: 0;
             width: 100%;
+            padding: 15px 20px;
         }
-            .filters-sidebar ul li.filters-footer a {
+            .filters-footer a {
                 display: block;
                 color: black;
                 margin: 20px 0;
@@ -604,7 +606,7 @@ h1{
                 font-size: 14px;
                 font-weight: 500;
             }
-            .filters-sidebar ul li.filters-footer button {
+            .filters-footer button {
                 background: var(--MainColor);
                 border-radius: 3px;
                 width: 89%;
@@ -617,7 +619,7 @@ h1{
                 border: none;
                 cursor: pointer;
             }
-            .filters-sidebar ul li.filters-footer button:hover {
+            .filters-footer button:hover {
                 opacity: 0.95;
             }
 

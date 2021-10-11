@@ -423,11 +423,47 @@
                 </div>
             </li>
 
-            <li class="filters-footer">
-                <a href="javascript:;" (click)="ClearAdvancedFilters()">Clear Selection</a>
-                <button (click)="ApplyFilterButtonClicked()">Apply Filters</button>
+            <li class="mobile-only" [class.expanded]="isShipmentTypeFilterExpanded">
+                <div class="filter-title" (click)="isShipmentTypeFilterExpanded = !isShipmentTypeFilterExpanded">Shipment Type</div>
+                <div class="expand-icon" (click)="isShipmentTypeFilterExpanded = !isShipmentTypeFilterExpanded">
+                    <img src="./assets/images/icons/down-arrow.png" alt=" " [class.expanded]="isShipmentTypeFilterExpanded" />
+                </div>
+                <div class="expanded-list" [class.show]="isShipmentTypeFilterExpanded">
+
+
+                    <div class="checkbox-filteritem" *ngFor="let item of ToggleFilters.slice(0, 0).concat(ToggleFilters.slice(2,ToggleFilters.length))">
+                        <CheckBox [Value]="selectedShipmentTypesFilter.includes(item)" [Text]="item.Name"
+                        (ValueChanged)="OnShipmentTypeFilterChanged($event, item)"></CheckBox>
+                    </div>
+
+                </div>
+            </li>
+
+            <li  class="mobile-only" [class.expanded]="isShipmentDirectionFilterExpanded">
+                <div class="filter-title" (click)="isShipmentDirectionFilterExpanded = !isShipmentDirectionFilterExpanded">Shipment Direction</div>
+                <div class="expand-icon" (click)="isShipmentDirectionFilterExpanded = !isShipmentDirectionFilterExpanded">
+                    <img src="./assets/images/icons/down-arrow.png" alt=" " [class.expanded]="isShipmentDirectionFilterExpanded" />
+                </div>
+                <div class="expanded-list" [class.show]="isShipmentDirectionFilterExpanded">
+
+
+                    <div class="checkbox-filteritem" *ngFor="let item of ToggleFilters.slice(0,2)">
+                        <CheckBox [Value]="selectedShipmentDirectionsFilter.includes(item)" [Text]="item.Name"
+                        (ValueChanged)="OnShipmentDirectionFilterChanged($event, item)"></CheckBox>
+                    </div>
+
+                </div>
+            </li>
+            <li class="mobile-only">
+                <div class="filter-title" >
+                    <CheckBox (ValueChanged)="OnAdvancedHasExceptionChanged($event)" [Text]="'Exceptions Only'" [Value]="hasExceptionAdvancedFilter"></CheckBox>
+                </div>
             </li>
         </ul>
+        <div class="filters-footer">
+            <a href="javascript:;" (click)="ClearAdvancedFilters()">Clear Selection</a>
+            <button (click)="ApplyFilterButtonClicked()">Apply Filters</button>
+        </div>
     </div>
 
     <!-- Progress Indicator -->

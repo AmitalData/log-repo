@@ -163,7 +163,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 CardContactRepository.Remove(cardContact);
                 CardContactRepository.SubmitChanges();
             }
-            if((entityPM.PartnerTypeId== PartnerTypes.Customer || entityPM.PartnerTypeId == PartnerTypes.Vendor) && entityPM.GLAccountId !=null)
+            if((entityPM.PartnerTypeId== PartnerTypes.Customer || entityPM.PartnerTypeId == PartnerTypes.Vendor || entityPM.PartnerTypeId == PartnerTypes.AccountingPartner) && entityPM.GLAccountId !=null)
             {
                 HandleGLAccountCardData(entityPM.Id,entityPM.GLAccountId,entityPM.Tenant);              
             }
@@ -303,7 +303,8 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
         public static string Customer = "CS";
         public static string Vendor = "VD";
-     
-}
+        public static string AccountingPartner = "AC";
+
+    }
 }
 

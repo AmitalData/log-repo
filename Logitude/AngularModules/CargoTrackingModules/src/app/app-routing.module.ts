@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { Routes, RouterModule, RouteReuseStrategy } from '@angular/router';
 import { LoginComponent } from 'src/Infrastructure/Components/LoginComponent/Login.Component';
 import { Error401Component } from 'src/CargoTracking/Components/Errors/Error401Component';
 import { HomeComponent } from 'src/CargoTracking/Components/PublicSite/HomeComponent/HomeComponent';
@@ -12,6 +12,7 @@ import { UserDashboardComponent } from 'src/CargoTracking/Components/UserDashboa
 import { ResetPasswordComponent } from 'src/Infrastructure/Components/LoginComponent/ResetPassword.Component';
 import { ChangePasswordComponent } from 'src/Infrastructure/Components/LoginComponent/ChangePassword.Component';
 import { AuthGuardService as AuthGuard } from 'src/Infrastructure/Services/auth-guard.service';
+import { CustomRouteReuseStrategy } from './custom-route-reuse-strategy.service';
 const routes: Routes = [
 
     { path: 'Cargo-Tracking', redirectTo: "cargo-tracking/login", pathMatch: "full" },
@@ -43,14 +44,13 @@ const routes: Routes = [
             { path: '**', redirectTo: 'public-tracking/search', pathMatch: 'full' },
         ]
     },
-
-    
     { path: 'Error401', component: Error401Component },
     { path: '', redirectTo: 'public-tracking/search', pathMatch: 'full' },
     { path: '**', redirectTo: 'public-tracking/search', pathMatch: 'full' },
 ];
 @NgModule({
     imports: [RouterModule.forRoot(routes)], //, { useHash: true}
-    exports: [RouterModule]
+    exports: [RouterModule],
+    providers: [{ provide: RouteReuseStrategy, useClass: CustomRouteReuseStrategy }]
 })
 export class AppRoutingModule { }

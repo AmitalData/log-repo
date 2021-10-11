@@ -547,7 +547,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         }
         private void CreateJournalAdditionalDataWhenApprovingJournal(JournalPM journal)
         {
-            if (journal.StatusCodeEnum == JournalStatusTypePM.StatusCodeEnum.Approved)
+            if (journal.StatusCodeEnum == JournalStatusTypePM.StatusCodeEnum.Approved && journal.ChangeSetOp == ChangeSetOperation.Insert)
             {
                 CreateJournalAdditionalDataForEachDebitInputLine(journal);
                 CreateJournalAdditionalDataForARInvoiceJournal(journal);
@@ -605,10 +605,12 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         }
         public virtual void CreateInterestTransactionTo_RegularJournal(JournalPM entityPM)
         {
-            var myRegularJournalInterestTransactionService = new RegularJournalInterestTransactionMapping();
-            myRegularJournalInterestTransactionService.CreatelInterestTransactions(entityPM);
+            if (entityPM.ChangeSetOp == ChangeSetOperation.Insert)
+            {
+                var myRegularJournalInterestTransactionService = new RegularJournalInterestTransactionMapping();
+                myRegularJournalInterestTransactionService.CreatelInterestTransactions(entityPM);
+            }
         }
-
         protected void ReCheckFromDBThrowIfNotValid(JournalPM entityPM)
         {
             var qs= new JournalQueryService(entityPM.Tenant);

@@ -196,7 +196,7 @@ namespace WebFreight.Web.App_Code
         {
             IQueueService queueservice = new DbQueueService();
             queueservice.InitializeQueue("PODImageConverterQueue", extDocPM.Tenant);
-            queueservice.Send(new Dictionary<string, string>() { { "DocumentId", extDocPM.DocumentId }, { "NewType", "PDF" } ,  { "Tenant", extDocPM.Tenant.ToString() } }, extDocPM.Tenant, null, null, null, null);
+            queueservice.Send(new Dictionary<string, string>() { { "DocumentsFilingId", extDocPM.Id }, { "EntityId", extDocPM.EntityId }, { "Tenant", extDocPM.Tenant.ToString() } }, extDocPM.Tenant, null, null, null, null);
         }
 
         private SuccessMobile AuthorizationVersion()

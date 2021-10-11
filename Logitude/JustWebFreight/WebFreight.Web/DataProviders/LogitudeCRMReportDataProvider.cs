@@ -13,7 +13,6 @@ namespace WebFreight.Web.DataProviders
         }
 
         public List<CustomerItem> Customers { get; set; }
-        public bool ShowNet { get; set; }
         public int ResellerCommission { get; set; }
         public int NumberOfUsers { get; set; }
         public decimal AveragePrice { get; set; }
@@ -21,8 +20,8 @@ namespace WebFreight.Web.DataProviders
         public int OpportunitiesNumberOfUsers { get; set; }
         public decimal OpportunitiesTotal { get; set; }
         public decimal OpportunitiesTotalNet { get; set; }
+        public decimal CurrentTotal { get; set; }
         public decimal TotalNetBeforeYear { get; set; }
-        public decimal TotalNet { get; set; }
     }
 
 
@@ -45,10 +44,10 @@ namespace WebFreight.Web.DataProviders
         public decimal? TotalPrice { get; set; }
         public List<OpportunityItem> Opportunities { get; set; }
         public int? HasError { get; set; }
-        public decimal? TotalNetBeforeYear { get; set; }
+        public decimal? CurrentTotal { get; set; }
         public List<OpportunityPeriod> OpportunityPeriods { get; set; }
-        public decimal? TotalNet { get; set; }
-
+        public decimal? TotalNetBeforeYear { get; set; }
+        public bool InActive { get; set; }
     }
 
     public class OpportunityItem

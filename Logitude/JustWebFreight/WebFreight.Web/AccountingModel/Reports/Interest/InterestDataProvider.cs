@@ -15,6 +15,8 @@ namespace WebFreight.Web.AccountingModel.Reports.Interest
         }
         public decimal? OpenBalance { get; set; }
         public string CustomerName { get; set; }
+        public string GLAccountDisplayNumber { get; set; }
+
         public string InvoiceNumber { get; set; }
         public DateTime? InterestCalculationDate { get; set; }
         public decimal? TotalAmount { get; set; }

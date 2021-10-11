@@ -104,7 +104,7 @@ namespace WebFreight.Web
             return userData;
         }
 
-
+         
         public UserData PostTrayLoginUsingAuthenticaionToken(LoginTokenParameter logintokenparam, bool fromTray, bool useTenant)
         {
             UserData userdata;
@@ -1564,6 +1564,7 @@ namespace WebFreight.Web
             MixPanelEvent mixPanelEvent = new MixPanelEvent();
             mixPanelEvent.Name = "login";
             mixPanelEvent.AddProperty("email", parameters.Email);
+            mixPanelEvent.AddProperty("is_public", "False");
             return mixPanelEvent;
         }
         private bool CheckLoginSecurityPolicy(int tenant, UserData user, User logitudeUser, ICommonDataContext commonDataContext)

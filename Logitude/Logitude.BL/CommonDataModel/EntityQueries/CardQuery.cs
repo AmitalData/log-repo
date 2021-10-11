@@ -2208,6 +2208,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                              CountryCode = a.CountryCode,
                                              CountryName = a.CountryName,
                                              CreditLimitAmount = a.Customer==null?null: a.Customer.CreditLimitAmount,
+                                             AccountingPartnerCreditLimit = a.AccountingPartner== null?null : a.AccountingPartner.CreditLimit, 
                                              Tenant = a.Tenant,
                                              CityName = a.CityName,
                                              GLAccountId = a.GLAccountId,

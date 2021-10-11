@@ -82,7 +82,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.CRM.LogitudeCRMRepor
 
         private void SetShowNetFilter(QueryOperations iQueryOperations)
         {
-            QueryFilterItem queryFilterItem = iQueryOperations.QueryFilterItems.Where(d => d.FieldName == "ShowAllRecurringTenants").FirstOrDefault();
+            QueryFilterItem queryFilterItem = iQueryOperations.QueryFilterItems.Where(d => d.FieldName == "ShowNet").FirstOrDefault();
 
             if (queryFilterItem != null && queryFilterItem.FieldValue != null)
             {

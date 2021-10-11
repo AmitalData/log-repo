@@ -56,6 +56,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
 
 
     public IsExportActivated: boolean = false;
+    public IsImportActivated: boolean = false;
 
     public isLogbox: boolean = SystemEnvironmentService.IsLogBox();
 
@@ -137,6 +138,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
             this.RequestedDocsLable = "Action Required";
             this.RefTemplateWidth = '150px';
             this.IsExportActivated = SessionLocator.PrivateLableSettings.IsExportActivated;
+            this.IsImportActivated = SessionLocator.PrivateLableSettings.IsImportActivated;
         }
         else {
             this.RefTemplateWidth = this.ToggleIsExportShipments ? '250px' : '220px';
@@ -548,7 +550,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
                 EnableHoverVisibility: true,
                 ServerSideSortable: false
             });
-            this.HoverTemplateIndex = this.HasExportShipmentToggle ? 6 : 5;
+            this.HoverTemplateIndex = this.HasExportShipmentToggle || !this.isPrivateLabel? 6 : 5;
         }
         else if (this.RequestedDocsLable == "Action Required" && this.SelectedFilter == this.RequestedDocsLable && this.isPrivateLabel) {
             this.columns.push({

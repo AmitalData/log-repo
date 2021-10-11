@@ -606,7 +606,7 @@ namespace Logitude.BL.InvoiceModel.Tools
                 queueservice.Complete();
                 APInvoiceRepository repository = new APInvoiceRepository(tenant);
                 APInvoice invoice = repository.GetSingleAPInvoice(APInvoice.Id, tenant);
-                APInvoiceMapping.MapEntity(APInvoice, invoice, IsNewEntity);
+                APInvoiceMapping.MapEntity(APInvoice, invoice == null ? new APInvoice() : invoice, IsNewEntity);
                 repository.Update(invoice);
             }
 

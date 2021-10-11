@@ -39,7 +39,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Toggle&quot;"
-  Code="&quot;a5cb&quot;"
+  Code="&quot;de99&quot;"
   Name="&quot; Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;Name&quot;"
@@ -597,6 +597,16 @@
       Name="&quot;Convert POD Image to Pdf File&quot;"
       SearchFields="&quot;POD,Convert POD Image to Pdf File&quot;"
       Description="&quot;Convert POD Image to Pdf File&quot;" />
+    <Record
+      Code="&quot;MLS&quot;"
+      Name="&quot;Shipment Number In Generic Interface&quot;"
+      SearchFields="&quot;MLS,Shipment Number In Generic Interface&quot;"
+      Description="&quot;Sending shipment number for multiple AP invoice in generic interface&quot;" />
+    <Record
+      Name="&quot;Ocean Insights Sending Automatically Logic&quot;"
+      Code="&quot;AOI&quot;"
+      SearchFields="&quot;AOI,Ocean Insights Sending Automatically Logic&quot;"
+      Description="&quot;Ocean Insights Sending Automatically Logic&quot;" />
   </Records>
   <DataContracts />
   <AdditionalTextCodes />

@@ -38,7 +38,6 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.CRM.LogitudeCRMRepor
             List<OpportunityCRMDetails> opportunities = new LogitudeCRMOpperunityService(tenant, logitudeCRMReportFilter).Build();
 
             LogitudeCRMReportDataProvider logitudeCRMReportDataProvider = new LogitudeCRMReportDataProvider();
-            logitudeCRMReportDataProvider.ShowNet = logitudeCRMReportFilter.ShowNet;
             logitudeCRMReportDataProvider.Customers = opportunities.GroupBy(c => c.ClientId).Select(a => MappOpportunityToCustomer(a)).ToList();
 
             SetSums(logitudeCRMReportDataProvider);
@@ -56,8 +55,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.CRM.LogitudeCRMRepor
             logitudeCRMReportDataProvider.OpportunitiesTotal = logitudeCRMReportDataProvider.Customers.Sum(a => a.Opportunities.Sum(b => b.Total ?? 0));
             logitudeCRMReportDataProvider.OpportunitiesTotalNet = logitudeCRMReportDataProvider.Customers.Sum(a => a.Opportunities.Sum(b => b.TotalNet ?? 0));
 
+            logitudeCRMReportDataProvider.CurrentTotal = logitudeCRMReportDataProvider.Customers.Sum(a => a.CurrentTotal ?? 0);
             logitudeCRMReportDataProvider.TotalNetBeforeYear = logitudeCRMReportDataProvider.Customers.Sum(a => a.TotalNetBeforeYear ?? 0);
-            logitudeCRMReportDataProvider.TotalNet = logitudeCRMReportDataProvider.Customers.Sum(a => a.TotalNet ?? 0);
         }
 
         private CustomerItem MappOpportunityToCustomer(IGrouping<string, OpportunityCRMDetails> opportunityCRMDetail)
@@ -76,26 +75,29 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.CRM.LogitudeCRMRepor
                 TotalPrice = ConvertToUsd(opportunityCRMDetail.First().CurrencyCode, opportunityCRMDetail.First().TenantManagementTotalPrice),
                 Opportunities = GetOpportunityItems(opportunityCRMDetail.ToList(), opportunityCRMDetail.First().CurrencyCode),
                 HasError = HasError(opportunityCRMDetail.ToList()),
-                TotalNetBeforeYear = ConvertToUsd(opportunityCRMDetail.First().CurrencyCode, GetTotalNetBeforeYear(opportunityCRMDetail.ToList())),
+                CurrentTotal = ConvertToUsd(opportunityCRMDetail.First().CurrencyCode, opportunityCRMDetail.ToList().Sum(b => b.Total)),
                 OpportunityPeriods = GetPeriods(opportunityCRMDetail.ToList(), opportunityCRMDetail.First().CurrencyCode),
-                TotalNet = ConvertToUsd(opportunityCRMDetail.First().CurrencyCode, opportunityCRMDetail.ToList().Sum(b => b.Total))
+                TotalNetBeforeYear = ConvertToUsd(opportunityCRMDetail.First().CurrencyCode, GetTotalNetBeforeYear(opportunityCRMDetail.ToList())),
+                InActive = opportunityCRMDetail.First().InActive,
             };
         }
 
         private decimal? GetTotalNetBeforeYear(IEnumerable<OpportunityCRMDetails> opportunityDetails)
         {
-            return opportunityDetails.Where(a => a.CreateDate.Year < DateTime.Now.Year).Sum(a => a.Total);
+            return opportunityDetails.Where(a => a.ActualClosingDate.Year < DateTime.Now.Year).Sum(a => a.Total);
         }
 
         private List<OpportunityItem> GetOpportunityItems(IEnumerable<OpportunityCRMDetails> opportunityDetails, string currencyCode)
         {
-            return opportunityDetails.Select(a => new OpportunityItem
-            {
-                NumberOfUsers = a.NumberOfUsers,
-                Total = ConvertToUsd(currencyCode, a.Total),
-                TotalNet = ConvertToUsd(currencyCode, a.TotalNet),
+            return opportunityDetails
+                .GroupBy(a => 1)
+                .Select(a => new OpportunityItem
+                {
+                    NumberOfUsers = a.Sum(b => b.NumberOfUsers),
+                    Total = ConvertToUsd(currencyCode, a.Sum(b => b.Total)),
+                    TotalNet = ConvertToUsd(currencyCode, a.Sum(b => b.TotalNet)),
 
-            }).ToList();
+                }).ToList();
         }
 
         private List<OpportunityPeriod> GetPeriods(IEnumerable<OpportunityCRMDetails> opportunityDetails, string currencyCode)
@@ -115,12 +117,15 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.CRM.LogitudeCRMRepor
 
         private List<OpportunityPeriodSummary> GetOpportunityPeriodSummaries(IEnumerable<OpportunityCRMDetails> opportunityDetails, int mounth, string currencyCode)
         {
-            return opportunityDetails.Where(b => b.CreateDate.Year == DateTime.Now.Year && b.CreateDate.Month == mounth).Select(a => new OpportunityPeriodSummary
-            {
-                NumberOfUsers = a.NumberOfUsers,
-                IsNewCustomer = a.IsNewCustomer,
-                NewIncome = ConvertToUsd(currencyCode, a.Total),
-            }).ToList();
+            return opportunityDetails
+                .Where(b => b.ActualClosingDate.Year == DateTime.Now.Year && b.ActualClosingDate.Month == mounth)
+                .GroupBy(a => 1)
+                .Select(a => new OpportunityPeriodSummary
+                {
+                    NumberOfUsers = a.Sum(b => b.NumberOfUsers),
+                    IsNewCustomer = a.Where(b => b.IsNewCustomer != null).OrderByDescending(b => b.ActualClosingDate).FirstOrDefault()?.IsNewCustomer,
+                    NewIncome = ConvertToUsd(currencyCode, a.Sum(b => b.Total)),
+                }).ToList();
         }
 
         private int? HasError(IEnumerable<OpportunityCRMDetails> opportunityDetails)

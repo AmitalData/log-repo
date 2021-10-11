@@ -229,8 +229,12 @@ export class GLAccountOverviewComponent extends BaseComponent {
                             IsAllCardHasOpenShipmentNull=false;
                         }
                         if(s.CreditLimitAmount!=null){
-                            IsAllCardHasCriedtLimitNull=false;
-                            this.CreditLimitAmount+=s.CreditLimitAmount;
+                            IsAllCardHasCriedtLimitNull = false;
+                            this.CreditLimitAmount += s.CreditLimitAmount + s.AccountingPartnerCreditLimit;
+                        }
+                        if (s.AccountingPartnerCreditLimit != null) {
+                            IsAllCardHasCriedtLimitNull = false;
+                            this.CreditLimitAmount += s.AccountingPartnerCreditLimit;
                         }
                     });
                     if(this.accountCardlist.length >= 10){
@@ -724,7 +728,7 @@ export class GLAccountOverviewComponent extends BaseComponent {
         this.gLAccountCardsDataPMService.get(this.EntityPM.CardsDataId).subscribe((myResult: ServiceResponse) => {
             var myResult: ServiceResponse ;
             if (!myResult.HasError) {
-                this.InsuredCreditLimit = myResult.Result.InsuredcreditLimit;
+                this.InsuredCreditLimit =myResult.Result? myResult.Result.InsuredcreditLimit: null;
             }
         });
     }

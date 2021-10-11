@@ -192,6 +192,32 @@ export class ShipmentDetailsComponent implements AfterViewInit
             }
         });
     }
+    SetTitleForSupplierOrClient(directionId: string) {
+        var title;
+        switch (directionId) {
+            case ShipmentDirections.Export: {
+                title = "CLIENT"
+                break;
+            }
+
+            case ShipmentDirections.Import:
+            case ShipmentDirections.Customs: {
+                title = "SUPPLIER"
+                break;
+            }
+        }
+
+        return title;
+    }
+    SetSupplierOrCleintValueByDirection(shipmentList) {
+        if(shipmentList.DirectionId == ShipmentDirections.Export) 
+        {
+            return shipmentList.ShipperName;
+        } else if(shipmentList.DirectionId == ShipmentDirections.Import) {
+            return shipmentList.ConsigneeName;   
+        }
+        return '';
+    }
     SetTypeTitle() {
         if (this.Shipment.ShipmentList.TransportModeId == "A") {
             this.TypeTitle = "PACKAGE TYPE";
@@ -894,11 +920,9 @@ export class ShipmentDetailsComponent implements AfterViewInit
     InitRoutes()
     {
         if (this.ShipmentPM) {
-            this.CreatePickupsRoutesFromShipmentPM();
-            this.CreateWarehouseLegRoutesFromShipmentPMIfExist();
-            this.CreateMainCarriageLegsRoutesFromShipmentPM();
-            this.CreateShipmentDeliveriesRoutesFromShipmentPM();
+            this.SetShipmentRoutesAccordingToShipmentDirection();
         }
+
         if (this.ShipmentOrder) {
             if (this.ShipmentOrder.GatewayId) {
                 this.AddShipmentRouteStep(this.CreateShipmentOrderOriginRoute());
@@ -909,6 +933,23 @@ export class ShipmentDetailsComponent implements AfterViewInit
             }
         }
     }
+    private SetShipmentRoutesAccordingToShipmentDirection() {
+        this.CreatePickupsRoutesFromShipmentPM();
+        this.ReorderRoutesAccordingToShipmentDirection();
+        this.CreateShipmentDeliveriesRoutesFromShipmentPM();
+    }
+
+    private ReorderRoutesAccordingToShipmentDirection() {
+        if (this.Shipment.ShipmentList.DirectionId == ShipmentDirections.Export) {
+            this.CreateWarehouseLegRoutesFromShipmentPMIfExist();
+            this.CreateMainCarriageLegsRoutesFromShipmentPM();
+        }
+        else {
+            this.CreateMainCarriageLegsRoutesFromShipmentPM();
+            this.CreateWarehouseLegRoutesFromShipmentPMIfExist();
+        }
+    }
+
     CreateShipmentOrderNoGatewayRoute() {
         var step = new RoutingStep();
         step.TransportModeCode = this.ShipmentOrder.TransportModeId;
@@ -1118,9 +1159,9 @@ export class ShipmentDetailsComponent implements AfterViewInit
         this.ShipmentRouteSteps.push(step);
     }
 
-    DownloadDocument(document: string) {
-        if(document)
-            this.documentDownloadService.DownloadPage(document);
+    DownloadDocument(documentId: string, documentTypeName: string) {
+        if (documentId)
+            this.documentDownloadService.DownloadPage(documentId, this.Shipment.ShipmentList.ShipmentNumber + '-' + documentTypeName);
     }
 
     DownloadAllClick(entityId: string, securityKey: string) {
@@ -1212,4 +1253,10 @@ export class PartnerCard
     PhoneNumber: string;
     FaxNumber: string;
     ShowDetails: boolean = false;
+}
+
+enum ShipmentDirections {
+    Import = "I",
+    Export = "E",
+    Customs = "C"
 }

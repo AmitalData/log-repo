@@ -658,6 +658,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
         private bool IsUpdatingStandaloneShipments()
         {
+            if (this.entityPM.IsHybrid)
+                return false;
             if (this.entityPM.DirectionId != this.entityPoco.DirectionId)
                 return true;
             if (this.entityPM.ShipmentLevelCode != this.entityPoco.ShipmentLevelCode)
@@ -2480,21 +2482,18 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         {
             if (IsAutomaticallyOceanOnsightsRequest())
             {
-                if (!string.IsNullOrEmpty(this.initializer.EntityPM.Master))
+                // Shipment
+                ContainerStatusesHelper myHelper = new ContainerStatusesHelper(this.initializer.EntityPM.Id, null, false, this.initializer.Tenant, objectContext);
+                if (myHelper.Validate() && myHelper.IsLogitudeOceanInsightsRequestExistForShipment())
                 {
-                    // Shipment
-                    ContainerStatusesHelper myHelper = new ContainerStatusesHelper(this.initializer.EntityPM.Id, null, false, this.initializer.Tenant, objectContext);
-                    if (myHelper.Validate() && myHelper.IsLogitudeOceanInsightsRequestExistForShipment())
-                    {
-                        myHelper.SendContainerStatusRequest();
-                    }
+                    myHelper.SendContainerStatusRequest();
                 }
             }
         }
 
         private bool IsAutomaticallyOceanOnsightsRequest()
         {
-            if (!FeatureToggleHelper.HasFeatureToggle("OIC", this.initializer.Tenant))
+            if (!FeatureToggleHelper.HasFeatureToggle("OIC", this.initializer.Tenant) || !FeatureToggleHelper.HasFeatureToggle("AOI", this.initializer.Tenant))
                 return false;
 
             if (initializer.EntityPM.TransportModeId != "O")
@@ -2503,7 +2502,26 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             if (initializer.EntityPM.ShipmentTypeId.ToLower() != "fcl" && initializer.EntityPM.ShipmentTypeId.ToLower() != "fcld")
                 return false;
 
+            if (string.IsNullOrEmpty(this.initializer.EntityPM.Master))
+                return false;
+
+            if (!this.IsFirstFourDigitsOfMasterNumberAreLetters())
+                return false;
+
             return true;
+        }
+
+        private bool IsFirstFourDigitsOfMasterNumberAreLetters()
+        {
+            string masterNumber = this.initializer.EntityPM.Master.Substring(0, 4);
+            if (masterNumber.All(char.IsLetter))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         private void MapMainCarriageLegsForAutomation()
@@ -2840,7 +2858,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                             shipmentAdditionalCloudData.DocumentsApprovedByUserName = entityPM.DocumentsApprovedByUserName;
                         }
 
-                        if ((entityPM.DeclarationXMLData != shipmentAdditionalCloudData.DeclarationXmlData && !string.IsNullOrEmpty(entityPM.DeclarationXMLData)) && entityPM.CustomsClearanceDate == null)
+                        if (entityPM.DeclarationXMLData != shipmentAdditionalCloudData.DeclarationXmlData && !string.IsNullOrEmpty(entityPM.DeclarationXMLData))
                         {
                             //var tempShipmentAdditionalCloudData = shipmentAdditionalCloudDataRepository.GetSingleShipmentAdditionalCloudData(entityPM.Id, entityPM.Tenant);
                             if (loggedTenant.LogBoxTenantSetting.IsDocumentsArchive && (!IsImporterApprovalRequiredOldValue && entityPM.IsImporterApprovalRequired))
@@ -2848,11 +2866,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                                 AddImporterApprovalReceivedQueue();
                             }
                             shipmentAdditionalCloudData.DeclarationXmlData = entityPM.DeclarationXMLData;
-                            shipmentAdditionalCloudData.IsImporterApprovalRequried = true;
-                            shipmentAdditionalCloudData.ApprovedByUserName = null;
-                            shipmentAdditionalCloudData.ApproveDateTime = null;
-                            shipmentAdditionalCloudData.DenyReason = null;
-                            shipmentAdditionalCloudData.VersionApproved = null;
+                            shipmentAdditionalCloudData.IsImporterApprovalRequried = GetIsImporterApprovalRequiredValueFromDeclarationXMLData();
+                            ClearApprovalDenialFields();
                         }
                         else if (entityPM.IsShipmentAdditionalCloudDataChange)
                         {
@@ -2930,6 +2945,24 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 behaviour.Handle();
                 this.initializer.IsUpdatingHousesFinalArrivalDate = behaviour.IsUpdatingHouses;
             }
+        }
+
+        private void ClearApprovalDenialFields()
+        {
+            if (!shipmentAdditionalCloudData.IsImporterApprovalRequried)
+            {
+                shipmentAdditionalCloudData.ApprovedByUserName = null;
+                shipmentAdditionalCloudData.ApproveDateTime = null;
+                shipmentAdditionalCloudData.DenyReason = null;
+                shipmentAdditionalCloudData.VersionApproved = null;
+            }
+        }
+
+        private bool GetIsImporterApprovalRequiredValueFromDeclarationXMLData()
+        {
+            ShipmentCloudCustomDataDeserializer shipmentCloudCustomDataDeserializer = new ShipmentCloudCustomDataDeserializer();
+            bool IsImporterApprovalRequried = shipmentCloudCustomDataDeserializer.GetIsImporterApprovalRequriedValue(entityPM.DeclarationXMLData);
+            return IsImporterApprovalRequried;
         }
 
         private void FillDefaultSubType()

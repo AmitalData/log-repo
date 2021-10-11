@@ -113,7 +113,7 @@ namespace Logitude.Accounting.BL.Validators
             {
                 throw new Exception(TextCodesTranslator.TranslateText("InterestReport.O.Customerisnotdefined", entityPM.Tenant, showLocals));
             }
-            entityPM.GLAccountInterestCreditLimit = gLAccount.InterestCreditLimit;
+         //   entityPM.GLAccountInterestCreditLimit = gLAccount.InterestCreditLimit;
 
         }
 

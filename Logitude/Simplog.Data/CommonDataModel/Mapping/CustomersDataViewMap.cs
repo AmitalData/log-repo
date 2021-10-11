@@ -119,6 +119,8 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.ActivatedByUserName).HasColumnName("ActivatedByUserName");
             this.Property(t => t.SetAsInactiveByName).HasColumnName("SetAsInactiveByName");
             this.Property(t => t.ActivationRequestedByUserName).HasColumnName("ActivationRequestedByUserName");
+            this.Property(t => t.BillToId).HasColumnName("BillToId");
+            this.Property(t => t.BillToName).HasColumnName("BillToName");
 
             //#if ORACLE_DB
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");

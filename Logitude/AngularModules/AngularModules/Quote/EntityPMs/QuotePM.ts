@@ -1382,6 +1382,10 @@ export class QuotePM {
     public get MainCarriageToPortAddress() { return this.mainCarriageToPortAddress; }
     public set MainCarriageToPortAddress(newValue: string) { if (this.mainCarriageToPortAddress != newValue) { this.mainCarriageToPortAddress = newValue; this.MarkAsDirty("MainCarriageToPortAddress"); } }
 
+    private routing: string;
+    public get Routing() { return this.routing; }
+    public set Routing(newValue: string) { if (this.routing != newValue) { this.routing = newValue; this.MarkAsDirty("Routing"); } }
+
      
 	private quoteCharges: QuoteChargePM[];
     get  QuoteCharges() {
