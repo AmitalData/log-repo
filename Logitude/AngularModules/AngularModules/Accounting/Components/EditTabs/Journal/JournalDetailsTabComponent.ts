@@ -1246,7 +1246,7 @@ class JournalLineModel extends BaseComponent {
 
             this.SetCurrencyForSingleAccount(value, ActionCode.Credit.toString(), ActionCode.DebitAndCredit.toString());
             
-
+            this.SetForeignAmountEnabilityForSingleCurrencyAccount();
             if (!AppTool.IsNullOrEmpty(this.Currency)) {
                 this.SplittedCheck();
             }
@@ -1268,7 +1268,7 @@ class JournalLineModel extends BaseComponent {
         if (!AppTool.IsNullOrEmpty(value)) {
             this.DebitAccountName = value.LocalName;
             this.SetCurrencyForSingleAccount(value, ActionCode.Debit.toString(), ActionCode.DebitAndCredit.toString());
-            
+            this.SetForeignAmountEnabilityForSingleCurrencyAccount();
             if (!AppTool.IsNullOrEmpty(this.Currency)) {
                 this.SplittedCheck();
             }
@@ -1290,7 +1290,16 @@ class JournalLineModel extends BaseComponent {
 
         }
     }
-
+    SetForeignAmountEnabilityForSingleCurrencyAccount() {
+        if (this.CurrencyId != SessionLocator.TenantPM.CurrencyId) {
+            this.UIProperties.SetEnabled("ForeignAmount", this.ObjectTableName, true);
+            this.enableForeighAmountField = true;
+        }
+        else {
+            this.UIProperties.SetEnabled("ForeignAmount", this.ObjectTableName, false);
+            this.enableForeighAmountField = false;
+        }
+    }
     accDay: number;
     get AccDay() {
         return this.accDay
