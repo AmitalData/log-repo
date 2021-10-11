@@ -24,6 +24,12 @@
        
         color:rgb(138, 138, 92);
     }
+
+    .Statistics  {
+      border: 1px solid black;
+      width: 50% ;
+      text-align: center; 
+    }
 </style>
 
 <table *ngIf="_TranslationLoaded ||  false" style="padding-top: 10px;width:100%">
@@ -503,44 +509,43 @@
                 </table>
             </td>
             <td *ngIf="StatisticsVisibility"  width="20%">
-                <table>
-                    <tr>
-                        <td>
+                <table style=" border: 1px solid black; width:50%">
+                    <tr class="FormFieldRow" style=" border: 1px solid black; ">
+                        <td class="Statistics"> 
                             סוג בקשה
                         </td>
-                        <td>
+                        <td class="Statistics">
                             כמות
                         </td>
                     </tr>
-                    <tr>
-                        <td>
+                    <tr class="FormFieldRow" style=" border: 1px solid black; ">
+                        <td class="Statistics">
                             שאילתת סטטוס הצהרה
                         </td>
-                        <td>
+                        <td class="Statistics">
                             {{this.customsRequestsSheetSummary.DeclarationStatusSearch}}
                         </td>
                     </tr>
-                    <tr>
-                        <td>
+                    <tr style=" border: 1px solid black; " class="FormFieldRow">
+                        <td class="Statistics">
                             התרה
                         </td>
-                        <td>
+                        <td class="Statistics">
                             {{this.customsRequestsSheetSummary.ReleaseGoodsMessage}}
                         </td>
                     </tr>
-                    <tr>
-                        <td>
+                    <tr style=" border: 1px solid black; " class="FormFieldRow">
+                        <td class="Statistics">
                             שליחת צרופה
                         </td>
-                        <td>
+                        <td class="Statistics">
                             {{this.customsRequestsSheetSummary.Tzrufa}}
                         </td>
                     </tr>
-                    <tr>
-                        <td>
-
+                    <tr style=" border: 1px solid black; " class="FormFieldRow">
+                        <td class="Statistics">
                         </td>
-                        <td>
+                        <td class="Statistics">
                             {{this.customsRequestsSheetSummary.Total}}
                         </td>
                     </tr>
