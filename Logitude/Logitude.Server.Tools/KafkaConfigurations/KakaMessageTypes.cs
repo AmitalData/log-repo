@@ -23,5 +23,7 @@
         public static long ContainerSetValue = 19;
         public static long ContainerUpdate = 20;
         public static long ContainerCreate = 21;
+        public static long CustomPickList = 22;
+        public static long DeleteCustomPickListValue = 23;
     }
 }

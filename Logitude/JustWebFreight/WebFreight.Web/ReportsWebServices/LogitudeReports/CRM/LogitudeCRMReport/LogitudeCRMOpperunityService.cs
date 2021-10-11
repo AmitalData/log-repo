@@ -48,9 +48,9 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.CRM.LogitudeCRMRepor
             {
                 opportunityCRMDetails.CurrencyCode = tenantManagement.PaymentCurrencyCode;
                 opportunityCRMDetails.ResellerCommission = tenantManagement.ResellerCommission;
-                opportunityCRMDetails.TenantManagementNumberOfUsers = logitudeCRMReportTenantManagementService.GetNumberOfUsers(tenantManagement);
-                opportunityCRMDetails.TenantManagementTotalPrice = (decimal?)logitudeCRMReportTenantManagementService.GetTotalPrice(tenantManagement);
-                opportunityCRMDetails.TenantManagementAveragePrice = CalculateAveragePrice(opportunityCRMDetails);
+                opportunityCRMDetails.TenantManagementNumberOfUsers = opportunityCRMDetails.InActive ? 0 : logitudeCRMReportTenantManagementService.GetNumberOfUsers(tenantManagement);
+                opportunityCRMDetails.TenantManagementTotalPrice = opportunityCRMDetails.InActive ? 0 : (decimal?)logitudeCRMReportTenantManagementService.GetTotalPrice(tenantManagement);
+                opportunityCRMDetails.TenantManagementAveragePrice = opportunityCRMDetails.InActive ? 0 : CalculateAveragePrice(opportunityCRMDetails);
                 opportunityCRMDetails.TotalNet = CalculateTotalNet(opportunityCRMDetails, tenantManagement);
             }
         }

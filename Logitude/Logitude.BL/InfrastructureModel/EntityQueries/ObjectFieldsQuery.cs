@@ -356,12 +356,13 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
             return Get_List_Of_ObjectFields_With_Modifications_And_Validations(objectFields, tenant);
         }
 
-        public List<ObjectFieldPM> GetCustomFieldsBytableIDAndDataTypeCode(string tableId, int tenant, string dataTypeCode)
+        public List<ObjectFieldPM> GetCustomFieldsByTableIdForCTool(string tableId, int tenant)
         {
-            List<ObjectFieldPM> objectFields = (from a in repository.context.ObjectFields.Include("ObjectTable").Include("TextCode")
+            List<ObjectFieldPM> objectFields = (from a in repository.context.ObjectFields.Include("ObjectTable")
+                                                                                         .Include("TextCode")
                                                 where a.Tenant == tenant
                                                 && a.ObjectTableId == tableId
-                                                && (a.DataTypeCode == dataTypeCode || a.DataTypeCode == "nText")
+                                                && (a.DataTypeCode != "LookUp")
                                                 && a.IsCustom == true && a.InActive == false
                                                 select new ObjectFieldPM()
                                                 {
