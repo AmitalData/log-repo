@@ -5041,6 +5041,17 @@ export class ShipmentPM {
     public get MainCarriageToPortAddress() { return this.mainCarriageToPortAddress; }
     public set MainCarriageToPortAddress(newValue: string) { if (this.mainCarriageToPortAddress != newValue) { this.mainCarriageToPortAddress = newValue; this.MarkAsDirty("MainCarriageToPortAddress"); } }
 
+    private houseMasterConcurrencyGUID: string;
+    public get HouseMasterConcurrencyGUID() { return this.houseMasterConcurrencyGUID; }
+    public set HouseMasterConcurrencyGUID(newValue: string) { if (this.houseMasterConcurrencyGUID != newValue) { this.houseMasterConcurrencyGUID = newValue; this.MarkAsDirty("HouseMasterConcurrencyGUID"); } }
+
+    private houseMasterNewConcurrencyGUID: string;
+    public get HouseMasterNewConcurrencyGUID() { return this.houseMasterNewConcurrencyGUID; }
+    public set HouseMasterNewConcurrencyGUID(newValue: string) { if (this.houseMasterNewConcurrencyGUID != newValue) { this.houseMasterNewConcurrencyGUID = newValue; this.MarkAsDirty("HouseMasterNewConcurrencyGUID"); } }
+
+
+
+
     public OldEntityPM: ShipmentPM;
 
     private aWBOCIPMs: AWBOCIPM[];
