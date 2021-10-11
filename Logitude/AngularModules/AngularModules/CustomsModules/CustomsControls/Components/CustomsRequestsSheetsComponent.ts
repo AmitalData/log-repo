@@ -156,6 +156,7 @@ export class CustomsRequestsSheetsComponent
                 this.RefreshButtonVisibility = true;//Visibility.Visible;
             }
         } else {
+            this.StatisticsVisibility = true;
             this.FromRequestCreateDate = DateTool.AddDays(DateTool.GetCurrentDateAsUtc(), 0);
             this.RefreshButtonVisibility = true;//Visibility.Visible;
         }
@@ -225,20 +226,19 @@ export class CustomsRequestsSheetsComponent
         })
     }
 
-     customsRequestsSheetSummary = new CustomsRequestsSheetSummary();
+    customsRequestsSheetSummary = new CustomsRequestsSheetSummary();
+    public StatisticsList: ObservableCollection;
 
     GetStatistics() {
         var service = new CustomsRequestsSheetWebService();
+        this.StatisticsList = new ObservableCollection([]);
         var statistics = service.GetStatistics().subscribe((response: any) => {
             if (response.Result != null) {
                 this.customsRequestsSheetSummary.ReleaseGoodsMessage = response.Result.ReleaseGoodsMessage;
                 this.customsRequestsSheetSummary.Tzrufa = response.Result.Tzrufa;
                 this.customsRequestsSheetSummary.DeclarationStatusSearch = response.Result.DeclarationStatusSearch;
                 this.customsRequestsSheetSummary.Total = response.Result.ReleaseGoodsMessage + response.Result.Tzrufa + response.Result.DeclarationStatusSearch;
-                debugger;
-                this.StatisticsVisibility = true;
             }
-
         });
     }
 
