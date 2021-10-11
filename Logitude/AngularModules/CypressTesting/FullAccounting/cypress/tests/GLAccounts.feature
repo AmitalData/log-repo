@@ -5,12 +5,13 @@ Feature: GL Accounts
     Scenario: Create new GL Account
         Given the user logged in and navigates to GL Account workspace
         And a GL Account with the following details
-            | ChartOfAccountsType | Banks |
-            | ChartOfAccounts     | Banks |
-            | LocalName           | GL    |
-            | EnglishName         | GL    |
-            | Currency            | NIS   |
-            | RevenueExpenseType  | Other |
+            | ChartOfAccountsType | Banks      |
+            | ChartOfAccounts     | Banks      |
+            | LocalName           | GL         |
+            | EnglishName         | GL         |
+            | Currency            | NIS        |
+            | ReconcileMethod     | מטבע מקומי |
+            | RevenueExpenseType  | Other      |
         When create GL Account
         Then the GL Account should create successfully
 

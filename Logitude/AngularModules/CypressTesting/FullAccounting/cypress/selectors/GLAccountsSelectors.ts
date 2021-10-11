@@ -14,4 +14,5 @@ export class GLAccountsSelectors {
     public static readonly SaveButton = "#GLAccount-Save";
     public static readonly AdditionalDataTab = "#GLAccountTHAdditional";
     public static readonly AddSplittedbyCurrencyHyperLink = "#AddSplittedbyCurrency";
+    public static readonly ReconcileMethod = "#GLAccount_ReconcileMethodCode";
 }
