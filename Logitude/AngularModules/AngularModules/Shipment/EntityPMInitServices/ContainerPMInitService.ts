@@ -62,7 +62,34 @@ export class ContainerPMInitService {
             entityPM.UIProperties.SetEnabled("ShipmentOriginAgentId", "Container", false);
             entityPM.UIProperties.SetEnabled("ShipmentDestinationAgentId", "Container", false);
 
+            entityPM.UIProperties.SetEnabled("ShipmentPreCarriageFromId", "Container", false);
+            entityPM.UIProperties.SetEnabled("ShipmentPreCarriageToId", "Container", false);
+            entityPM.UIProperties.SetEnabled("ShipmentMainCarriageFromId", "Container", false);
+            entityPM.UIProperties.SetEnabled("ShipmentMainCarriageToId", "Container", false);
+            entityPM.UIProperties.SetEnabled("ShipmentTransshipment1FromId", "Container", false);
+            entityPM.UIProperties.SetEnabled("ShipmentTransshipment1ToId", "Container", false);
+            entityPM.UIProperties.SetEnabled("ShipmentTransshipment2FromId", "Container", false);
+            entityPM.UIProperties.SetEnabled("ShipmentTransshipment2ToId", "Container", false);
+            entityPM.UIProperties.SetEnabled("ShipmentTransshipment3FromId", "Container", false);
+            entityPM.UIProperties.SetEnabled("ShipmentTransshipment3ToId", "Container", false);
+            entityPM.UIProperties.SetEnabled("ShipmentOnCarriageFromId", "Container", false);
+            entityPM.UIProperties.SetEnabled("ShipmentOnCarriageToId", "Container", false);
+            entityPM.UIProperties.SetEnabled("ShipmentFirstPickupFrom", "Container", false);
+            entityPM.UIProperties.SetEnabled("ShipmentFirstPickupTo", "Container", false);
+            entityPM.UIProperties.SetEnabled("ShipmentPreCarriageFrom", "Container", false);
+            entityPM.UIProperties.SetEnabled("ShipmentPreCarriageTo", "Container", false);
+            entityPM.UIProperties.SetEnabled("ShipmentMainCarriageFrom", "Container", false);
+            entityPM.UIProperties.SetEnabled("ShipmentMainCarriageTo", "Container", false);
+            entityPM.UIProperties.SetEnabled("ShipmentTransshipment1From", "Container", false);
+            entityPM.UIProperties.SetEnabled("ShipmentTransshipment1To", "Container", false);
+            entityPM.UIProperties.SetEnabled("ShipmentTransshipment2From", "Container", false);
+            entityPM.UIProperties.SetEnabled("ShipmentTransshipment2To", "Container", false);
+            entityPM.UIProperties.SetEnabled("ShipmentTransshipment3From", "Container", false);
+            entityPM.UIProperties.SetEnabled("ShipmentTransshipment3To", "Container", false);
+            entityPM.UIProperties.SetEnabled("ShipmentOnCarriageFrom", "Container", false);
+            entityPM.UIProperties.SetEnabled("ShipmentOnCarriageTo", "Container", false);
+            entityPM.UIProperties.SetEnabled("ShipmentLastDeliveryFrom", "Container", false);
+            entityPM.UIProperties.SetEnabled("ShipmentLastDeliveryTo", "Container", false);
         }
-
     }
 }
