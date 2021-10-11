@@ -661,7 +661,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             return paymentCreditTransaction;
 
         }
-
+       
         public List<LedgerTransactionPM> GetOpenInvoicesTransactionsForAccount(string billToGLAccountId, string arpaymentId, int tenant)
        {
             IQueryable<LedgerTransactionPM> transactions = GetTransactionsJoinedWithJounrals();
