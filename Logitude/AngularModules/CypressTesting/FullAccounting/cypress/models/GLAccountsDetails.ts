@@ -5,5 +5,6 @@ export interface GLAccountsDetails {
     EnglishName: string,
     Currency: string,
     MultiCurrencyCheckBox: string,
-    RevenueExpenseType: string
+    RevenueExpenseType: string,
+    ReconcileMethod: string
 }

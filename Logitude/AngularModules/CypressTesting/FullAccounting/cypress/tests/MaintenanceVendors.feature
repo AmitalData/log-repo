@@ -29,6 +29,7 @@ Feature: Vendor Create, Search, activate and Edit from Maintenance
             | LocalName          | CurrentDate         |
             | EnglishName        | CurrentDate         |
             | Currency           | NIS                 |
+            | ReconcileMethod    | מטבע מקומי          |
             | RevenueExpenseType | Other               |
         When create GL Account
         Then the GL Account should create successfully

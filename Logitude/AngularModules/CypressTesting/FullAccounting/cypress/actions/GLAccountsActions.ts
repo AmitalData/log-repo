@@ -17,6 +17,7 @@ export function FillGLAccountDetails(gLAccountsDetails: GLAccountsDetails, curre
     cy.FillLogTextBox(GLAccountsSelectors.LocalName, gLAccountsDetails.LocalName + currentDateTime)
     FillEnglishName(gLAccountsDetails.EnglishName + currentDateTime)
     FillCurrency(gLAccountsDetails.Currency)
+    cy.FillLogLov(GLAccountsSelectors.ReconcileMethod, gLAccountsDetails.ReconcileMethod, true)
     Actions.FillCheckBoxProcess(GLAccountsSelectors.MultiCurrencyCheckBox, gLAccountsDetails.MultiCurrencyCheckBox)
     cy.FillLogLov(GLAccountsSelectors.RevenueExpenseType, gLAccountsDetails.RevenueExpenseType, true)
 }

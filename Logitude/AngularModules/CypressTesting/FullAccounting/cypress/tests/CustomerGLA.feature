@@ -24,11 +24,11 @@ Feature: Customer GLA
     Scenario: Activate the customer in accounting system
         Given navigates new account wizerd inside the customer
         And a GL Account with the following details
-            | ChartOfAccounts       | Customer1 |
-            | LocalName             | GL        |
-            | EnglishName           | GL        |
-            | MultiCurrencyCheckBox | Yes       |
-            | RevenueExpenseType    | Other     |
+            | ChartOfAccounts       | Customer |
+            | LocalName             | GL       |
+            | EnglishName           | GL       |
+            | MultiCurrencyCheckBox | Yes      |
+            | RevenueExpenseType    | Other    |
         When create GL Account
         Then the GL Account should create successfully
 
