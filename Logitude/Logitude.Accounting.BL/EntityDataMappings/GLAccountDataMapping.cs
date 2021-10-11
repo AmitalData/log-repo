@@ -744,7 +744,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
         {
             UserPM loggedUser;
             UserQuery userQuery = new UserQuery(tenant);
-            if (AuthenticationUtil.AuthenticatedUserEmail != null)
+            if (!string.IsNullOrEmpty(AuthenticationUtil.AuthenticatedUserEmail))
             { // user set and passed from from WR
                 loggedUser = userQuery.GetSinglePMByEmail(AuthenticationUtil.AuthenticatedUserEmail, tenant);
             }
