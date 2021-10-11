@@ -1,4 +1,4 @@
-	using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
@@ -13,13 +13,14 @@ using System.Xml.Serialization;
 
 using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Data.EntityLists;
+using Logitude.Customs.Data.DataContracts;
 
 namespace Logitude.Customs.Data.EntityListQueryServices
-{ 
+{
 
     public partial class CustomsRequestsSheetListQueryService
     {
-	    private IQueryable<CustomsRequestsSheetList> GetIqueryableList(IQueryable<CustomsRequestsSheet> iQueryable)
+        private IQueryable<CustomsRequestsSheetList> GetIqueryableList(IQueryable<CustomsRequestsSheet> iQueryable)
         {
             IQueryable<CustomsRequestsSheetList> query = (from a in iQueryable
                                                           select new CustomsRequestsSheetList()
@@ -50,14 +51,43 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
                                                           });
             return query;
-		}
+        }
 
         private IQueryable<CustomsRequestsSheet> ApplyCustomFilters(QueryOperations queryOperations, IQueryable<CustomsRequestsSheet> iQueryable, int tenant)
         {
             return iQueryable;
-		}
-	}
+        }
+        public CustomsRequestsSheetSummary GetStatistics(int tenant)
+        {
+            CustomsRequestsSheetSummary customsRequestsSheetSummary = new CustomsRequestsSheetSummary();
+            IQueryable<CustomsRequestsSheetList> query = (from a in context.CustomsRequestsSheets
+                                                          where a.Tenant == tenant && (a.RequestStatusCode == "5" || a.RequestStatusCode == "1" ||
+                                                          a.RequestStatusCode == "2" || a.RequestStatusCode == "21" || a.RequestStatusCode == "99")
+                                                          select new CustomsRequestsSheetList()
+                                                          {
+                                                              Id = a.Id,
+                                                              InterfaceTypeCode = a.InterfaceTypeCode,
+                                                          });
+
+
+            var qGroupIt = (from a in query
+                            group a by 1 into groupBy1
+                            select new CustomsRequestsSheetSummary
+                            {
+                                ReleaseGoodsMessage = groupBy1.Count(x => x.InterfaceTypeCode == "2470"),
+                                DeclarationStatusSearch = groupBy1.Count(x => x.InterfaceTypeCode == "8250"),
+                                Tzrufa = groupBy1.Count(x => x.InterfaceTypeCode == "2715"),
+                            }
+                           );
+
+            customsRequestsSheetSummary = qGroupIt.FirstOrDefault() ?? new CustomsRequestsSheetSummary();
+            return customsRequestsSheetSummary;
+
+
+        }
+
+
+    }
 
 
 }
-	

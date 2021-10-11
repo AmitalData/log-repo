@@ -421,6 +421,7 @@ import { PoaAuthorizationTypeLookupListService } from './Services/StandardLists/
 import { ClientsPoaListService } from './Services/StandardLists/ClientsPoaListService';
 import { BuyerRoleTypeListService } from './Services/StandardLists/BuyerRoleTypeListService';
 import { AmedmentTypeListService } from './Services/StandardLists/AmedmentTypeListService';
+import { CustomsRequestsSheetWebService } from './Services/WebServices/CustomsRequestsSheetWebService';
 
 export class ModuleProviders {
     public static GetInstance(name: string) {
@@ -829,6 +830,7 @@ export class ModuleProviders {
             case "InvoiceQueueWebService": { myResult = new InvoiceQueueWebService(); break; }
             case "ContainerizationMessagesService": { myResult = new ContainerizationMessagesService(); break; }
             case "NewQuoteOPWebService": { myResult = new NewQuoteOPWebService(); break; }
+            case "CustomsRequestsSheetWebService": { myResult = new CustomsRequestsSheetWebService(); break; }
 
 
             //#endregion

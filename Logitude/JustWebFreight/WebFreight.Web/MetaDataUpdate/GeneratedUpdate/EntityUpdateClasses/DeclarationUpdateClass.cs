@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationUpdateClass
    {  		
-		public const string HashString = "d414c388ecebc81b6345049a798675d6";
+		public const string HashString = "d7dcf0068181e91453e18e3da1d72a8a";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -16312,6 +16312,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		   Feature DeclarationFeature_EscapeSign = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EscapeSign", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.EscapeSign", NameTextCodeDefaultText = @"Escape Sign" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DeclarationObjectTable);
 
 		   Feature DeclarationFeature_CUSTOMERSVIEW = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CUSTOMERSVIEW", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.CUSTOMERSVIEW", NameTextCodeDefaultText = @"CUSTOMERSVIEW" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DeclarationObjectTable);
+
+		   Feature DeclarationFeature_MultiUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "MultiUpdate", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.MultiUpdate", NameTextCodeDefaultText = @"Multi update Process Code/TaxExemptCode" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DeclarationObjectTable);
 
    
 	    

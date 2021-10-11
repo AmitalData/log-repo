@@ -67,5 +67,16 @@ namespace Logitude.Customs.BL.EntityQueryServices
             return supplierInvoiceItemProcesTypePMs;
 
         }
+        public int GetMaxLineNumber(string declarationId, int invoiceCounterKey, int lineNumber, int tenant)
+        {
+            int counter =0;
+            var maxCounter = repository.GetMaxLineNumber(declarationId, invoiceCounterKey, lineNumber, tenant);
+            if( maxCounter != null)
+            {
+                counter = (int)maxCounter;
+            }
+            return counter;
+
+        }
     }
 }

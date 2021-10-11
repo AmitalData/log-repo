@@ -1767,6 +1767,7 @@
     <TypeScriptCompile Include="Customs\Services\StandardPMs\DeficitsPMService.ts" />
     <TypeScriptCompile Include="Customs\Services\WebServices\DeclarationCourierStatusWebService.ts" />
     <TypeScriptCompile Include="Customs\Services\WebServices\ContainerizationMessagesService.ts" />
+    <TypeScriptCompile Include="Customs\Services\WebServices\CustomsRequestsSheetWebService.ts" />
     <TypeScriptCompile Include="Customs\Services\WebServices\DeclarationReferantDataWebService.ts" />
     <TypeScriptCompile Include="Customs\Services\WebServices\InvoiceQueueWebService.ts" />
     <TypeScriptCompile Include="Customs\Services\WebServices\NewQuoteOPWebService.ts" />

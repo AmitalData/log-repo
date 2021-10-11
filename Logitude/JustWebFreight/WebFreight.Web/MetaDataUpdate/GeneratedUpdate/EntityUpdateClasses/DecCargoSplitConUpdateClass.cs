@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DecCargoSplitConUpdateClass
    {  		
-		public const string HashString = "af4368d00631c18f9d1dd35eff91b7a9";
+		public const string HashString = "cf94501dbff950274d4bb7d9b573ab2f";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -126,7 +126,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "משגור פיצול מטען",
 			      				    DefaultText =  "Declaration Cargo Split Consignment",
-			      				    Code =  "edb1",
+			      				    Code =  "127d",
 			      				    Name =  "Customs.DecCargoSplitCon Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -316,10 +316,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ImporterCode",
 					  						DefaultText =  "Importer Code",
-					  						FullLocalDefaultText =  "מספר יבואן",
+					  						FullLocalDefaultText =  "מספר יבואן/יצואן",
 					  						ListFieldLable =  "ImporterCodeListLable",
 					  						ListLableDefaultText =  "Importer Code",
-					  						ListLocalDefaultText =  "מספר יבואן",
+					  						ListLocalDefaultText =  "מספר יבואן/יצואן",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
