@@ -30,7 +30,7 @@ namespace WebFreight.Web.Security
     public class CargoTrackingSecurityService
     {
         private const int limitMinutes = 1;
-        private const int limitCount = 5;
+        private const int limitCount = 20;
         public static Dictionary<string,List<CargoTrackingEntitySearch>> EntitySearchesDictionary = new Dictionary<string, List<CargoTrackingEntitySearch>>();
         //public static List<CargoTrackingEntitySearch> EntitySearches = new List<CargoTrackingEntitySearch>();
 		public static void RecordSearch(int tenant)
