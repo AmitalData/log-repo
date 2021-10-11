@@ -592,11 +592,31 @@ export class DWQueryBuilderComponent extends DWQueryBuilderBaseComponent {
 
     btnAdd_Click(item) {
         this.SelectedItem = item.IsMultipleSelection ? new DWObjectFieldsDetails(item) : item;
+      
+        var isValidateQuerey = this.ValidateQuereyFields();
         var myCurrentItem = this.SelectedFieldsDataSource.filter(a => a.DisplayName == this.SelectedItem.DisplayName);
-        if (this.MatchAddColumnConditions(myCurrentItem)) {
+        if (this.MatchAddColumnConditions(myCurrentItem) && isValidateQuerey) {
             this.AddSelectedField();
             this.ClearData();
         }
+    }
+
+    private ValidateQuereyFields() {
+        //validate Measurement Fields
+        var isValidate = true;
+        if (this.SelectedItem.IsMeasurement) {
+            var hasShipmentNumberColumn = this.SelectedFieldsDataSource.filter(a => a.DisplayName == "Shipment Number")[0] ? true : false;
+            if (!hasShipmentNumberColumn) {
+                this.ShowValidateMessage("You are not allow to add " + this.SelectedItem.DisplayName + " column unless you add the Shipment Number column");
+                isValidate = false;
+            }
+        }
+        return isValidate;
+    }
+
+    private ShowValidateMessage(error) {
+        var messageWindow: MessageWindow = new MessageWindow();
+        messageWindow.Show(error);
     }
 
     private MatchAddColumnConditions(myCurrentItem: DWObjectFieldsDetails[]) {
@@ -893,6 +913,7 @@ export class DWQueryBuilderComponent extends DWQueryBuilderBaseComponent {
             if (field.IsMultipleSelection)
                 this.DWQueryData.PageSize = 1000;
         });
+
         if (this.SelectedFiltersDataSource.length > 0 && this.ValidFiltersValues(this.SelectedFiltersDataSource[0]) != true) {
             this.messageWindow.Width = 300;
             this.messageWindow.Height = 150;
@@ -901,6 +922,12 @@ export class DWQueryBuilderComponent extends DWQueryBuilderBaseComponent {
             this.messageWindow.Show(this.messageWindow.Message);
             return;
         }
+ 
+        if (this.hasMeasurementFields() && !this.hasShipmentNumberField()) {
+            this.ShowValidateMessage("You are not allow to save changes unless you add the Shipment Number column");
+            return;
+        }
+
         if (this.SelectedFieldsDataSource.length > 0) {
             this.StartBusyIndicator("Loading ..");
             this.IsPreview = !StopPreview;
@@ -1004,6 +1031,12 @@ export class DWQueryBuilderComponent extends DWQueryBuilderBaseComponent {
             this.messageWindow.Show(this.messageWindow.Message);
             return;
         }
+          
+        if (this.hasMeasurementFields() && !this.hasShipmentNumberField()) {
+            this.ShowValidateMessage("You are not allow to save changes unless you add the Shipment Number column");
+            return;
+        }
+
         this.CurrentSession.CurrentWindow.StartBusyIndicator("Saving ..");
         this._DWObjectTablePMService.get(this.FactTableName).subscribe((myResult:any) => {
             if (!myResult.HasError) {
@@ -1050,6 +1083,14 @@ export class DWQueryBuilderComponent extends DWQueryBuilderBaseComponent {
     }
 
     NotExist: boolean = true;
+    private hasShipmentNumberField() {
+        return this.SelectedFieldsDataSource.filter(a => a.DisplayName == "Shipment Number")[0];
+    }
+
+    private hasMeasurementFields() {
+        return this.SelectedFieldsDataSource.filter(a => a.IsMeasurement == true)[0];
+    }
+
     EditButtonClicked(getSingle: boolean = false) {
         this.SelectedFieldsDataSource = [];
         this.SelectedFiltersDataSource = [];
