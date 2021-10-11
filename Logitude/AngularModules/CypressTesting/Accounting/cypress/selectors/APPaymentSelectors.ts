@@ -7,4 +7,5 @@ export class APPaymentSelectors {
     public static readonly APPaymentApproveButton = '#APPaymentBApprove';
     public static readonly PayableAccountingTab = '#PAYABLEAccounting';
     public static readonly APPaymentCurrency = '#APPayment_PaymentCurrencyId';
+    public static readonly RegisterDate = '#date_APPayment_RegisterDate';
 }

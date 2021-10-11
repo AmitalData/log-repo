@@ -9,6 +9,7 @@ Feature: AR Payment
             | PaymentCurrency | NIS         |
             | PaymentMethod   | Cash        |
             | PaymentAmount   | 100         |
+            | RegisterDate    | 01/10/2021  |
         When create AR Payment
         Then the AR Payment should get successfully
 

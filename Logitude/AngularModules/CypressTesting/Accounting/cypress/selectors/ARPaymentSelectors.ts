@@ -5,4 +5,5 @@ export class ARPaymentSelectors {
     public static readonly PaymentAmount = '#ARPayment_AmountInPaymentCurrency';
     public static readonly OkAddARPayment = '#ok-AddARPayment';
     public static readonly ARPaymentBApprove = '#ARPaymentBApprove';
+    public static readonly RegisterDate = '#RegisterDate';
 }

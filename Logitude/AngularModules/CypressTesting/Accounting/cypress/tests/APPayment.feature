@@ -9,6 +9,7 @@ Feature: AP Payment
             | PaymentMethod   | Cash       |
             | PaymentAmount   | 100        |
             | PaymentCurrency | NIS        |
+            | RegisterDate    | 01/10/2021 |
         When save the AP Payment
         Then the AP Payment should save successfully
 
