@@ -161,7 +161,7 @@
 		 
 		declare @IsCancelled as bit  
 		set @IsCancelled =0;
-		if(@StatusCode = 'AR'or @StatusCode = 'AC' or @StatusCode = 'CN' or @StatusCode = 'VD' or @StatusCode = 'AR') 
+		if(@StatusCode = 'AR'or @StatusCode = 'AC' or @StatusCode = 'LL' or @StatusCode = 'VD') 
 		begin set @IsCancelled = 1 end  
 
 		 ----------------------------------------------
