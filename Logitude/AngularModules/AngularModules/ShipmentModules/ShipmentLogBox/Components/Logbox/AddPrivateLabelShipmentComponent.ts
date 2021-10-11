@@ -195,6 +195,7 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
         this.GetDepartment();
         this.SetUIProperties();
         this.BuildFiltersLists();
+        this.SetUIProperties_Filters();
     }
 
     private SetArgs(args: any) {
@@ -429,7 +430,7 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
             this.PushErrorMessage("Destination");  
         }
 
-        if (!this.documentsFilings || this.documentsFilings.filter(d => d.IsSharedWithForwarder == true).length == 0) {
+        if (!this.IsDSVTenant &&(!this.documentsFilings || this.documentsFilings.filter(d => d.IsSharedWithForwarder == true).length == 0)) {
             this.ValidationErrorsList.push("You should have at least one document shared with agent");
         }
     }

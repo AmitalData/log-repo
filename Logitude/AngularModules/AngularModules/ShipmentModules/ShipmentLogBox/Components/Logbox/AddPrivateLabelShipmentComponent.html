@@ -1220,11 +1220,11 @@
 					<td style="width: 57px;">
 						<button class="Button" id="{{'ShipmentCancelbtn' | IdGeneratorPipe}}" (click)="CloseButtonClicked()">Cancel</button>
 					</td>
-					<td style="width: 5px;">
+					<td *ngIf="DirectionId == 'E' && !IsDSVTenant" style="width: 5px;">
 						<div></div>
 					</td>
 
-					<td  *ngIf="DirectionId == 'E'" style="width: 57px;">
+					<td *ngIf="DirectionId == 'E' && !IsDSVTenant" style="width: 57px;">
 						<button [ngClass]="ShowAddDocument ?  'Button' : 'RedButton'" (click)="NextButtonClicked()" id="{{'ShipmentCreatebtn' | IdGeneratorPipe}}">{{ChangePageButton}}</button>
 					</td>
 
@@ -1232,7 +1232,7 @@
 						<div></div>
 					</td>
 
-					<td *ngIf="DirectionId != 'E' || ShowAddDocument" style="width: 57px;">
+					<td *ngIf="DirectionId != 'E' || ShowAddDocument || IsDSVTenant" style="width: 57px;">
 						<button class="RedButton" (click)="OkButtonClicked()" id="{{'ShipmentCreatebtn' | IdGeneratorPipe}}">Create</button>
 					</td>
 				</tr>
