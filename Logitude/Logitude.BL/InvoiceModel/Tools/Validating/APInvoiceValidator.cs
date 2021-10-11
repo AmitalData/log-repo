@@ -134,8 +134,8 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                     throw new ApplicationException(msg);
                 }
 
+                ValidateInvoiceAmountDue(entityPM, entityPOCO, isNew, context);
                 ValidateNormalInvoiceLines(entityPM, commonContext, accountingSetting, msgRequired);
-
                 ValidateShipmentConcurrencyGUID(entityPM, MainShipmentConcurrencyGUID);
             }
 
@@ -737,7 +737,6 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
             Tenant tenantPOCO = tenantRepository.GetSingleTenant(tenant);
             return tenantPOCO;
         }
-
         private static void ThrowErrors(string errors)
         {
             if (!string.IsNullOrEmpty(errors))
@@ -747,7 +746,6 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
             }
 
         }
-
 
         private static void ValidateAccountingPeriod(APInvoicePM invoicePM, ref string errors, int tenant)
         {
@@ -827,7 +825,6 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
             else return null;
         }
 
-
         private static GLAccountPM GetGLAccountByCardId(string cardId, int tenant)
         {
             GLAccountPM glaAccount = null;
@@ -906,7 +903,6 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                 }
             }
         }
-
         private static bool IsEditingEntityEnabled(APInvoice entityPOCO)
         {
             bool myResult = false;
@@ -930,6 +926,21 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
             }
 
             return myResult;
+        }
+
+        private static void ValidateInvoiceAmountDue(APInvoicePM entityPM, APInvoice entityPOCO, bool isNew, IInvoiceContext context)
+        {
+            if(!isNew && !entityPM.IsUpdateFromPaymentService)
+            {
+                IQueryable<APInvoicePayment> allConnectedPaymentsFromDB = (from a in context.APInvoicePayments where a.APInvoiceId == entityPM.Id && a.Tenant == entityPM.Tenant select a);
+                List<APInvoicePaymentPM> allConnectedPaymentsFromUI = entityPM.InvoicePayments;
+
+                if(allConnectedPaymentsFromDB.Count() != allConnectedPaymentsFromUI.Count && entityPM.AmountDue != entityPOCO.AmountDue)
+                {
+                    string msg = TranslateTextsClass.Translate("General.M.CantUpdateRecord", entityPM.Tenant);
+                    throw new ApplicationException(msg);
+                }
+            }
         }
     }
 }
