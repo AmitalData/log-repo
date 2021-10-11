@@ -143,7 +143,7 @@ export class ProductTypeGeneralTabComponent extends BaseComponent {
                 this.Application = "I";
                 break;
             }
-            case "O": {
+            case "OI": {
                 this.Application = "I";
                 break;
             }
