@@ -88,17 +88,7 @@
                                                 <td>
                                                     <LogLabel [ObjectFieldName]="'MeasurementId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                                 </td>
-                                                <td *ngIf="!IsQuoteOPMaintence" style="padding-right:18px;">
-                                                    <LogLov [ObjectFieldName]="'MeasurementId'"
-                                                            [ObjectTableName]="ObjectTableName"
-                                                            [DataContext]="DataContext"
-                                                            [LookUpTableName]="'Measurement'"
-                                                            [DependencyFilter2Value]="false"
-                                                            [HideLastColumn]="true"
-                                                            [QueryFilterItems]="MeasurementsQueryFilters">
-                                                    </LogLov>
-                                                </td>
-                                                <td *ngIf="IsQuoteOPMaintence" style="padding-left:18px;">
+                                                <td style="padding-right:18px;">
                                                     <LogLov [ObjectFieldName]="'MeasurementId'"
                                                             [ObjectTableName]="ObjectTableName"
                                                             [DataContext]="DataContext"
