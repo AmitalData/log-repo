@@ -19,6 +19,9 @@ import {NewQuoteComponentArgs} from '../../Args';
 import {LogitudeWindow} from '../../../Controls/Windows/LogitudeWindow';
 import {ListComponentArgs} from '../../../Infrastructure/Args';
 import {TextCodeTranslator} from '../../../Infrastructure/Utilities/TextCodeTranslator';
+import { GenericTableDataService } from 'Customs/Components/generic-table/generic-table-data.service';
+import { GenericTableService } from 'Customs/Components/generic-table/generic-table.service';
+
 declare var makeChart, FunnelClick, ResetItemFunnel;
 
 @Component({
@@ -27,13 +30,18 @@ declare var makeChart, FunnelClick, ResetItemFunnel;
 })
 
 export class QuotesComponent extends BaseComponent {
+    // ngOnInit(){
+    //     console.log('**********************************************')
+    //     this.genericTableService.openByTableName('QuoteOP','QuoteOP',['CreatedByUser','CreatedByUserId','CustomerId','CustomerName'])
+    // }
+
     public DataContext = this;
     public SalesFunnelId: string = "SalesFunnelId_";
     public IsResourcesReady: boolean = false;
     @Output() ReloadUserQueries = new EventEmitter();
     public QuickSearchItems: QuoteOPList[] = [];
     private CurrentSession = SessionLocator.SelectedSession;
-    constructor(private _entityResourceService: EntityResourceService) {
+    constructor(private _entityResourceService: EntityResourceService, /* private genericTableService: GenericTableService */) {
         super();
         this.SalesFunnelId = "SalesFunnel_" + this.CurrentSession.GetNewId("SalesFunnel");
 
@@ -694,7 +702,7 @@ export class QuotesComponent extends BaseComponent {
                 });
             });
     }    
-    RunQuoteWizard() {
+    RunQuoteWizard(oldWizard: boolean = false) {
         var args = new NewQuoteComponentArgs();
         var logWindow = new LogitudeWindow();
         //logWindow.RTL = false;
@@ -702,7 +710,7 @@ export class QuotesComponent extends BaseComponent {
         logWindow.Height = 800;
         logWindow.WindowArgs = args;
         logWindow.Title = TextCodeTranslator.Translate("Quote.S.NewQuote.CreateNewQuote");
-        logWindow.Show('./QuoteOPM/Components/NewEntity/NewQuoteComponent');
+        oldWizard ? logWindow.Show('./QuoteOPM/Components/NewEntity/NewQuoteComponentOld') :logWindow.Show('./QuoteOPM/Components/NewEntity/NewQuoteComponent');
 
         logWindow.WindowClosed.subscribe(s => {            
             if (s) {
