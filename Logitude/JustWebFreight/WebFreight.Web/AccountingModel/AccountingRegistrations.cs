@@ -1,6 +1,7 @@
 ﻿//using Logitude.Accounting.BL.CoreBL.Reconcile;
 using Logitude.Accounting.BL.CoreBL.Reconcile;
 using Logitude.Accounting.BL.EntityQueryServiceExt;
+using Logitude.Accounting.BL.EntityQueryServices;
 using Logitude.Accounting.BL.EntityUpdateServiceExt;
 using Logitude.Accounting.Def.BLExt;
 using Logitude.Accounting.Def.EntityQueryServicesExt;
@@ -49,8 +50,9 @@ namespace WebFreight.Web.AccountingModel
             ContainerAccessor.Container.RegisterType<IGLAccountCardsDataQueryServiceExt, GLAccountCardsDataQueryServiceExt>("GLAccountCardsDataQueryServiceExt", new InjectionFactory(c => new GLAccountCardsDataQueryServiceExt()));
             ContainerAccessor.Container.RegisterType<IGLAccountCardsDataUpdateServiceExt, GLAccountCardsDataUpdateServiceExt>("GLAccountCardsDataUpdateServiceExt", new InjectionFactory(c => new GLAccountCardsDataUpdateServiceExt()));
             ContainerAccessor.Container.RegisterType<IGLAccountCurrencyQueryServiceExt, GLAccountCurrencyQueryServiceExt>("GLAccountCurrencyQueryServiceExt", new InjectionFactory(c => new GLAccountCurrencyQueryServiceExt()));
+            ContainerAccessor.Container.RegisterType<ILedgerTransactionQueryService, LedgerTransactionQueryServiceExt>("LedgerTransactionQueryServiceExt", new InjectionFactory(c => new LedgerTransactionQueryServiceExt()));
 
-            
+
         }
     }
 }
