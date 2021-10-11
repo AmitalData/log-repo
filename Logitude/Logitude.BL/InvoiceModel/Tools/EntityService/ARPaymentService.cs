@@ -139,9 +139,9 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             var setVoided = _arpaymentPM.SetVoided;
 
             ARPaymentMapping.MapEntity(_arpaymentPM, paymentPoco, isNewEntity);
-
             paymentRepository.Add(paymentPoco);
             paymentRepository.SubmitChanges();
+
             SubmitPaymentInvoices(_arpaymentPM);
 
             UpdatePaymentOpenAmount();
@@ -1651,6 +1651,17 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             InterestReportUpdate.CancelledInterestTransactionsByARPayment(entityPm.Id, entityPm.Tenant);
         }
 
+        private void voidARPaymentJounal()
+        {
+            ARPaymentsJournalRepository arPaymentsJournalRepository = new ARPaymentsJournalRepository(tenant);
+            ARPaymentsJournal arPaymentsJournal = new ARPaymentsJournal();
+            arPaymentsJournal.Tenant = tenant;
+            arPaymentsJournal.IsVoided = true;
+            arPaymentsJournal.PaymentId = paymentPM.Id;
+            arPaymentsJournalRepository.Add(arPaymentsJournal);
+            arPaymentsJournalRepository.SubmitChanges();
+        }
+
         private void CancelJournal(ARPaymentPM entityPm)
         {
 
@@ -1679,6 +1690,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     AccountingDate = entityPm.AccountingCancelationDate,
                     AccountingEntityReference = paymentPM.PaymentNo
                 });
+
+                voidARPaymentJounal();
                 JournalPM voidedByJournal = GetApprovedJournalByAccountingEntityId(entityPm);
 
                 paymentPM.VoidedByJournalNumber = voidedByJournal != null ? voidedByJournal.JournalNumber : null;

@@ -65,8 +65,19 @@ namespace Logitude.BL.InvoiceModel.CoreBL
         {
             if (PaymentCashbook != null)
                 AddChequesOrCashToCashbook();
-
+            AddARPaymentJounal();
             CreatePaymentJournalIfNotCreated();
+        }
+
+        private void AddARPaymentJounal()
+        {
+            ARPaymentsJournalRepository arPaymentsJournalRepository = new ARPaymentsJournalRepository(tenant);
+            ARPaymentsJournal arPaymentsJournal = new ARPaymentsJournal();
+            arPaymentsJournal.Tenant = tenant;
+            arPaymentsJournal.IsVoided = false;
+            arPaymentsJournal.PaymentId = paymentPM.Id;
+            arPaymentsJournalRepository.Add(arPaymentsJournal);
+            arPaymentsJournalRepository.SubmitChanges();
         }
 
         private void AddChequesOrCashToCashbook()

@@ -97,6 +97,7 @@
     <None Include="DBTables\AccountingPeriod.dxml" />
     <None Include="DBTables\ARPaymentCheque.dxml" />
     <None Include="DBTables\ARPaymentChequeStatus.dxml" />
+    <None Include="DBTables\ARPaymentsJournal.dxml" />
     <None Include="DBTables\AutomaticExternalReconcileMethod.dxml" />
     <None Include="DBTables\AutomaticReconcile.dxml" />
     <None Include="DBTables\AutomaticReconcileMethod.dxml" />
@@ -184,6 +185,7 @@
     <None Include="DBTables\WithholdingTaxDeductionType.dxml" />
     <None Include="EntityFiles\AccountingCompanyType.lxml" />
     <None Include="EntityFiles\AccountingNote.lxml" />
+    <None Include="EntityFiles\ARPaymentsJournal.lxml" />
     <None Include="EntityFiles\CalculatedChartsOfAccount.lxml" />
     <None Include="EntityFiles\CalculatedChartsOfAccountsLine.lxml" />
     <None Include="EntityFiles\CalculatedChartsLineType.lxml" />

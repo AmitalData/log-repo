@@ -386,6 +386,7 @@
     <Compile Include="EntityDataMappings\AccountingPeriodDataMapping.cs" />
     <Compile Include="EntityDataMappings\ARPaymentChequeDataMapping.cs" />
     <Compile Include="EntityDataMappings\ARPaymentChequeStatusDataMapping.cs" />
+    <Compile Include="EntityDataMappings\ARPaymentsJournalDataMapping.cs" />
     <Compile Include="EntityDataMappings\AutomaticExternalReconcileMethodDataMapping.cs" />
     <Compile Include="EntityDataMappings\AutomaticReconcileDataMapping.cs" />
     <Compile Include="EntityDataMappings\AutomaticReconcileMethodDataMapping.cs" />
@@ -419,6 +420,7 @@
     <Compile Include="EntityDataMappings\Generated\AccountingPeriodDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\ARPaymentChequeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\ARPaymentChequeStatusDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\ARPaymentsJournalDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\AutomaticExternalReconcileMethodDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\AutomaticReconcileDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\AutomaticReconcileMethodDataMapping.Generated.cs" />
@@ -604,6 +606,7 @@
     <Compile Include="EntityQueryServices\Generated\AccountingIntegrityCheckQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\AccountingNoteQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\ARPaymentChequeStatusQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\ARPaymentsJournalQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\AutomaticExternalReconcileMethodQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\BankPageEntryTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\CalculatedChartsLineTypeQueryService.Generated.cs" />
@@ -709,6 +712,7 @@
     <Compile Include="EntityUpdateServices\BankAccountTraceEventService.cs" />
     <Compile Include="EntityUpdateServices\CalculatedChartsOfAccountsLineUpdateService.cs" />
     <Compile Include="EntityUpdateServices\CalculatedChartsOfAccountUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\Generated\ARPaymentsJournalUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\CalculatedChartsLineTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\CalculatedChartsOfAccountsLineUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\CalculatedChartsOfAccountUpdateService.Generated.cs" />
