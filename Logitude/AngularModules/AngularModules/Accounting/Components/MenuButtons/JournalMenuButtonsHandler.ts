@@ -26,6 +26,7 @@ import {DownloadManager} from '../../../Infrastructure/Utilities/DownloadManager
 import {GeneralPrintHelper} from '../../../Infrastructure/Helpers/GeneralPrintHelper';
 import {JournalExtendedPMService} from '../../Services/ExtendedPMs/JournalExtendedPMService';
 import { TextCodeTranslator } from '../../../Infrastructure/Utilities/TextCodeTranslator';
+import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
 
 export class JournalMenuButtonsHandler {
     public EntityPM: JournalPM;
@@ -215,20 +216,7 @@ export class JournalMenuButtonsHandler {
                 }
             case "JournalVoid":
                 {
-                    this.entityArgs.EditComponent.StartBusyIndicatorSaving();
-                    let myJournalExtendedPMService: JournalExtendedPMService = new JournalExtendedPMService();
-                    myJournalExtendedPMService
-                        .VoidJournal(this.EntityPM.Tenant, this.EntityPM.Id, "", "", "")
-                        .subscribe((res: ServiceResponse) => {
-                            this.entityArgs.EditComponent.StopBusyIndicator();
-                            if (res.HasError) {
-                                this.entityArgs.EditComponent.ValidationErrorsList= res.ErrorsArray;
-                            } else {
-                                this.entityArgs.EditComponent.ReloadEntityPM();
-                            }
-                        });
-                    //this.EntityPM.StatusCode = "3"; // Voided
-                    //this.SaveChenges();
+                    this.ShowConfirmMessageAndVoidJournal();
                     break;
                 }
             case "JournalPrint":
@@ -257,6 +245,37 @@ export class JournalMenuButtonsHandler {
         }
 
 
+    }
+
+    private ShowConfirmMessageAndVoidJournal() {
+        var msg = TextCodeTranslator.Translate("Journal.O.ConfirmVoidJournal");
+        var confirmWindow = new ConfirmWindow();
+        confirmWindow.Width = 300;
+        confirmWindow.Height = 150;
+        confirmWindow.YesButtonText = TextCodeTranslator.Translate("Accounting.General.B.OK");
+        confirmWindow.NoButtonText = TextCodeTranslator.Translate("Accounting.General.B.Cancel");
+        confirmWindow.Show(msg);
+
+        confirmWindow.WindowClosed.subscribe((event: any) => {
+
+            if (confirmWindow.Yes) {
+                this.entityArgs.EditComponent.StartBusyIndicatorSaving();
+                let myJournalExtendedPMService: JournalExtendedPMService = new JournalExtendedPMService();
+                myJournalExtendedPMService
+                    .VoidJournal(this.EntityPM.Tenant, this.EntityPM.Id, "", "", "")
+                    .subscribe((res: ServiceResponse) => {
+                        this.entityArgs.EditComponent.StopBusyIndicator();
+                        if (res.HasError) {
+                            this.entityArgs.EditComponent.ValidationErrorsList = res.ErrorsArray;
+                        } else {
+                            this.entityArgs.EditComponent.ReloadEntityPM();
+                        }
+                    });
+            }
+            else {
+                confirmWindow.Close();
+            }
+        });
     }
 
     SaveChenges() {
