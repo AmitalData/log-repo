@@ -429,7 +429,7 @@ export class AddEditPrivateLabelShipmentComponent extends BaseComponent implemen
         this.IsNew = args.IsNew;
         this._PackageTypeListService.getAll().subscribe((myResult: any) => {
             if (!myResult.HasError) {
-                this.UnAssignedPackageTypeId = myResult.Result.filter(a => a.Tenant == SessionLocator.Tenant && a.Code == '---')[0].Id;
+                this.UnAssignedPackageTypeId = myResult.Result.filter(a => a.Tenant == SessionLocator.Tenant && a.Code == '---')[0]?.Id; 
             }
             else {
                 this.ValidationErrorsList = myResult.ErrorsArray;
