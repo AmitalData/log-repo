@@ -7,7 +7,7 @@
     }
 </style>
 
-<div class="dashboard-container" style="height:90%">
+<div class="dashboard-container">
 
     <h1 class="hide-mobile">Shipments</h1>
     <h2 class="mobile-only">Shipments</h2>
@@ -112,11 +112,11 @@
     </div>
 
     <!-- Shipments List -->
-    <div class="scrollable-table" *ngIf="!noResult" style="height: calc(100vh - 274px)">
-        <div class="table" style="height: calc(100vh - 274px)">
+    <div class="scrollable-table" *ngIf="!noResult" >
+        <div class="table" >
 
 
-            <cdk-virtual-scroll-viewport id="scrollArea" *ngIf="ShipmentsDataSource" class="shipment-cards-holder" [itemSize]="170" style="height: calc(100vh - 10px)">
+            <cdk-virtual-scroll-viewport id="scrollArea" *ngIf="ShipmentsDataSource" class="shipment-cards-holder" [itemSize]="170" >
 
 
 

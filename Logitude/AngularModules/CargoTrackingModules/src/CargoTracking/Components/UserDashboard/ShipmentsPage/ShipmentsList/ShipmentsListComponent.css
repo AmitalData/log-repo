@@ -723,8 +723,13 @@ h1{
 }
 .shipment-skelton{
     position: relative;
-
 }
+
+.dashboard-container{
+    height:100%;
+    overflow: hidden;
+}
+
 .skelton-wrapper > div{
     background: #f6f7f8;
     position: absolute;
