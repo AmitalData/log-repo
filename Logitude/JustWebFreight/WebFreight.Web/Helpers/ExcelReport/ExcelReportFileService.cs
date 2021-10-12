@@ -109,20 +109,22 @@ namespace WebFreight.Web.Helpers.ExcelReport
         {
             ReportsTemplatesVersionRepository reportsTemplatesVersionRepository = new ReportsTemplatesVersionRepository(tenant);
             ReportsTemplatesVersion reportsTemplatesVersion = reportsTemplatesVersionRepository.GetLastReportsTemplatesVersionByReportsTemplateId(reportsTemplateId, tenant);
-            if (reportsTemplatesVersion != null)
+            if (reportsTemplatesVersion == null)
             {
-                IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
-                BlobFileInfo fileInfo = new BlobFileInfo()
-                {
-                    FileName = reportsTemplatesVersion.ReportDocumentId,
-                    FolderName = "reports",
-                    Extension = "xml",
-                    Tenant = tenant,
-                    FileSize = fileData.Length,
-
-                };
-                storageservice.Write(fileData, fileInfo);
+                return;
             }
+
+            IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
+            BlobFileInfo fileInfo = new BlobFileInfo()
+            {
+                FileName = reportsTemplatesVersion.ReportDocumentId,
+                FolderName = "reports",
+                Extension = "xml",
+                Tenant = tenant,
+                FileSize = fileData.Length,
+
+            };
+            storageservice.Write(fileData, fileInfo);
         }
     }
 }
