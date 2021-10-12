@@ -104,17 +104,21 @@ export class ExcelReportTemplateComponent implements OnInit {
     Search(textsearch: string) {
         this.SearchText = textsearch;
         if (textsearch) {
-            this.DataProviderFields = JSON.parse(JSON.stringify(this.DataProviderFieldsAll)).filter(function f(o) {
-                if (o.Text.toLowerCase().indexOf(textsearch.toLowerCase()) > -1) return true
-
-                if (o.Fields) {
-                    return (o.Fields = JSON.parse(JSON.stringify(o.Fields)).filter(f)).length
-                }
-            });
+            this.DataProviderFields = this.FilterDataProviderFields(textsearch);
         }
         else {
             this.DataProviderFields = this.DataProviderFieldsAll;
         }
+    }
+    
+    FilterDataProviderFields(textsearch: string): DataProviderField[] {
+        return JSON.parse(JSON.stringify(this.DataProviderFieldsAll)).filter(function f(o) {
+            if (o.Text.toLowerCase().indexOf(textsearch.toLowerCase()) > -1) return true
+
+            if (o.Fields) {
+                return (o.Fields = JSON.parse(JSON.stringify(o.Fields)).filter(f)).length
+            }
+        });
     }
 
     CloseButtonClicked() {
