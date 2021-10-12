@@ -1229,6 +1229,13 @@ namespace MeatadataGeneratorTool
             set { objectTableName = value; FirePropertyChanged("ObjectTableName"); }
         }
 
+        string parentObjectTableName;
+        public string ParentObjectTableName
+        {
+            get { return parentObjectTableName; }
+            set { parentObjectTableName = value; FirePropertyChanged("ParentObjectTableName"); }
+        }
+
         string defaultText;
 
         public string DefaultText

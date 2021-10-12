@@ -41,6 +41,7 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.DescriptionTextCodeCode).HasMaxLength(100).IsUnicode(false);
             this.Property(t => t.NewButtonTextCodeCode).HasMaxLength(100).IsUnicode(false);
             this.Property(t => t.SplitComponentPath).HasMaxLength(500).IsUnicode(true);
+            this.Property(t => t.ParentObjectTableName).HasMaxLength(50).IsUnicode(false);
 
 
             //this.Property(t => t.FilterMenuComponentPath).HasMaxLength(250).IsUnicode(false);
@@ -114,6 +115,7 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.IsTabsHidden).HasColumnName("IsTabsHidden");
             this.Property(t => t.DescriptionTextCodeCode).HasColumnName("DescriptionTextCodeCode");
             this.Property(t => t.NewButtonTextCodeCode).HasColumnName("NewButtonTextCodeCode");
+            this.Property(t => t.ParentObjectTableName).HasColumnName("ParentObjectTableName");
 
             // Relationships
             this.HasOptional(t => t.DescriptionTextCode).WithMany().HasForeignKey(d => d.DescriptionTextCodeId);

@@ -951,6 +951,7 @@ namespace MeatadataGeneratorTool.Helpers
             {
                 objectTable.Id = GetAttributeStringValue(entity.Attributes["Id"]);
                 objectTable.ObjectTableName = GetAttributeStringValue(entity.Attributes["ObjectTableName"]);
+                objectTable.ParentObjectTableName = GetAttributeStringValue(entity.Attributes["ParentObjectTableName"]);
                 objectTable.DBTableName = GetAttributeStringValue(entity.Attributes["DBTableName"]);
 
                 objectTable.OldDBTableName = GetAttributeStringValue(entity.Attributes["OldDBTableName"]);

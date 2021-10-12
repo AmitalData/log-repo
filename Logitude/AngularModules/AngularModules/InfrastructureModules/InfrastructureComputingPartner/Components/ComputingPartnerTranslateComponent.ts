@@ -35,6 +35,11 @@ export class ComputingPartnerTranslateComponent extends BaseComponent {
                 }
 
                 var table = window.ObjectTables.filter(d => d.Name === res.Value.ObjectTableName)[0];
+                if (table && !AppTool.IsNullOrEmpty(table.ParentObjectTableName)) {
+                    table = window.ObjectTables.filter(d => d.Name === table.ParentObjectTableName)[0];
+                    res.Value.ObjectTableId = table.Id;
+                    res.Value.ObjectTableName = table.Name;
+                }
                 if (table)
                     filters.ClinetName = table.ClientModuleName;
                 filters.computingPartnerId = res.Value.ComputingPartnerId;
@@ -193,6 +198,9 @@ export class ComputingPartnerTranslateComponent extends BaseComponent {
             filters.ComputingPartnerName = this.EntityPM.ComputingPartnerName;
             filters.SearchingFields = this.searchFields;
             filters.IsClosedTable = table.IsClosed;
+            let parentObjectTableName = window.ObjectTables.filter(f => f.Name === this.EntityPM.ObjectTableName)[0].ParentObjectTableName;
+            filters.ParentObjectTableName = parentObjectTableName;
+            filters.ParentObjectTableId = window.ObjectTables.filter(f => f.Name === parentObjectTableName)[0].Id;
             var service: CommonDomainService = new CommonDomainService();
             return new Promise((resolve, reject) => {
                 resolve(service.getByFilters(filters))
