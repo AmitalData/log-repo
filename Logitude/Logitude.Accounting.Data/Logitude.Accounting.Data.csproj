@@ -85,6 +85,7 @@
     <Compile Include="EntitiesTypeEnums.CS" />
     <Compile Include="EntityKeys\AccountingIntegrityCheckKeys.cs" />
     <Compile Include="EntityKeys\AccountingNoteKeys.cs" />
+    <Compile Include="EntityKeys\ARPaymentsJournalKeys.cs" />
     <Compile Include="EntityKeys\AutomaticExternalReconcileMethodKeys.cs" />
     <Compile Include="EntityKeys\BankPageEntryTypeKeys.cs" />
     <Compile Include="EntityKeys\CalculatedChartsLineTypeKeys.cs" />
@@ -126,6 +127,7 @@
     <Compile Include="EntityKeys\VatReportStatusKeys.cs" />
     <Compile Include="EntityListQueryServices\AccountingIntegrityCheckListQueryService.cs" />
     <Compile Include="EntityListQueryServices\AccountingNoteListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\ARPaymentsJournalListQueryService.cs" />
     <Compile Include="EntityListQueryServices\AutomaticExternalReconcileMethodListQueryService.cs" />
     <Compile Include="EntityListQueryServices\BankPageEntryTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\CalculatedChartsLineTypeListQueryService.cs" />
@@ -134,6 +136,7 @@
     <Compile Include="EntityListQueryServices\ExternalPageAdditionalDataListQueryService.cs" />
     <Compile Include="EntityListQueryServices\Generated\AccountingIntegrityCheckListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\AccountingNoteListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\ARPaymentsJournalListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\AutomaticExternalReconcileMethodListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\BankPageEntryTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\CalculatedChartsLineTypeListQueryService.Generated.cs" />
@@ -206,6 +209,7 @@
     <Compile Include="EntityListQueryServices\VatReportStatusListQueryService.cs" />
     <Compile Include="EntityLists\Generated\AccountingIntegrityCheckList.Generated.cs" />
     <Compile Include="EntityLists\Generated\AccountingNoteList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\ARPaymentsJournalList.Generated.cs" />
     <Compile Include="EntityLists\Generated\AutomaticExternalReconcileMethodList.Generated.cs" />
     <Compile Include="EntityLists\Generated\BankPageEntryTypeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\CalculatedChartsLineTypeList.Generated.cs" />
@@ -246,6 +250,7 @@
     <Compile Include="EntityLists\Generated\VatReportStatusList.Generated.cs" />
     <Compile Include="EntityMapping\AccountingIntegrityCheckMap.cs" />
     <Compile Include="EntityMapping\AccountingNoteMap.cs" />
+    <Compile Include="EntityMapping\ARPaymentsJournalMap.cs" />
     <Compile Include="EntityMapping\AutomaticExternalReconcileMethodMap.cs" />
     <Compile Include="EntityMapping\BankPageEntryTypeMap.cs" />
     <Compile Include="EntityMapping\CalculatedChartsLineTypeMap.cs" />
@@ -287,6 +292,7 @@
     <Compile Include="EntityMapping\VatReportStatusMap.cs" />
     <Compile Include="EntityPOCOs\AccountingIntegrityCheck.cs" />
     <Compile Include="EntityPOCOs\AccountingNote.cs" />
+    <Compile Include="EntityPOCOs\ARPaymentsJournal.cs" />
     <Compile Include="EntityPOCOs\AutomaticExternalReconcileMethod.cs" />
     <Compile Include="EntityPOCOs\BankPageEntryType.cs" />
     <Compile Include="EntityPOCOs\CalculatedChartsLineType.cs" />
@@ -328,9 +334,11 @@
     <Compile Include="EntityPOCOs\VatReportStatus.cs" />
     <Compile Include="Enums\AccountingEntityCodes.cs" />
     <Compile Include="Enums\InterestReportStatusCodes.cs" />
+    <Compile Include="Repositories\ARPaymentsJournalRepository.cs" />
     <Compile Include="Repositories\CalculatedChartsLineTypeRepository.cs" />
     <Compile Include="Repositories\CalculatedChartsOfAccountRepository.cs" />
     <Compile Include="Repositories\CalculatedChartsOfAccountsLineRepository.cs" />
+    <Compile Include="Repositories\Generated\ARPaymentsJournalRepository.Generated.cs" />
     <Compile Include="Repositories\Generated\CalculatedChartsLineTypeRepository.Generated.cs" />
     <Compile Include="Repositories\Generated\CalculatedChartsOfAccountRepository.Generated.cs" />
     <Compile Include="Repositories\Generated\CalculatedChartsOfAccountsLineRepository.Generated.cs" />

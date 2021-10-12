@@ -82,6 +82,8 @@ namespace Logitude.Accounting.Data
 	
             modelBuilder.Configurations.Add(new ARPaymentChequeStatusMap());
 	
+            modelBuilder.Configurations.Add(new ARPaymentsJournalMap());
+	
             modelBuilder.Configurations.Add(new AutomaticExternalRconcilMthodMap());
 	
             modelBuilder.Configurations.Add(new AutomaticReconcileMap());
@@ -748,6 +750,12 @@ namespace Logitude.Accounting.Data
 	 }
 	
 	 public IDbSet<ARPaymentChequeStatus> ARPaymentChequeStatuses 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<ARPaymentsJournal> ARPaymentsJournals 
 	 {
 	      get; set;
 	 
