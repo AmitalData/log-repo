@@ -105737,5 +105737,14 @@
       IsCoreFeature="false"
       IsBusinessUnitEnabled="false"
       ToggleCode="&quot;CPH&quot;" />
+    <Feature
+      Code="&quot;MULTIUPDATE&quot;"
+      FeatureTypeCode="&quot;ACT&quot;"
+      FeatureTextCodeCode="&quot;Shipment.Features.MULTIUPDATE&quot;"
+      FeatureDefaultText="&quot;Multi Update&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
   </AdditionalFeatures>
 </entity>
