@@ -32,6 +32,7 @@ using System.Xml.Serialization;
 using Logitude.CustomsMessaging.MessagingServices;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
+using System.Xml;
 //using System.Windows.Interactivity;
 
 namespace AmitalCustomsWindowsService.Tester
@@ -1034,11 +1035,21 @@ namespace AmitalCustomsWindowsService.Tester
             using (var connection = factory.CreateConnection())
             using (var channel = connection.CreateModel())
             {
-                channel.QueueDeclare(queue: "connectToTicket",
-                                     durable: false,
-                                     exclusive: false,
-                                     autoDelete: false,
-                                     arguments: null);
+                var args = new Dictionary<string, object>();
+                //lazy = store messages to disk => no lost messages in case on rabbitmq restart 
+                args.Add("x-queue-mode", "lazy");
+                //channel.QueueDeclare(queue: "ucbud2lt__",
+                //                    durable: true,
+                //                    exclusive: false,
+                //                    autoDelete: false,
+                //                    arguments: args);
+
+
+                channel.QueueDeclare(queue: "ucbud2lt__",
+                                                           durable: false,
+                                                           exclusive: false,
+                                                           autoDelete: false,
+                                                           arguments: null);
 
                 var consumer = new EventingBasicConsumer(channel);
                 consumer.Received += (model, ea) =>
@@ -1047,21 +1058,33 @@ namespace AmitalCustomsWindowsService.Tester
                     var message = Encoding.UTF8.GetString(body);
 
                     UniCourierBatchSendUCBUD2LT_MsgResponseService uniCourierBatchSendUCBUD2LT_MsgResponseService = new UniCourierBatchSendUCBUD2LT_MsgResponseService();
-
                     XmlSerializer serializer = new XmlSerializer(typeof(DCAInUCBUD2LTWithResponseContentHeader));
-                    DCAInUCBUD2LTWithResponseContentHeader result = new DCAInUCBUD2LTWithResponseContentHeader();
+                    DCAInUCBUD2LTWithResponseContentHeader mySTBMessage;
                     using (TextReader reader = new StringReader(message))
                     {
-                        result = (DCAInUCBUD2LTWithResponseContentHeader)serializer.Deserialize(reader);
+
+
+                        XmlDocument doc = new XmlDocument();
+                        doc.Load(reader);
+
+                        //Display all the book titles.
+                        XmlNodeList elemList = doc.GetElementsByTagName("Body");
+                        //XmlNodeList elemList2 = elemList.GetElementsByTagName("ResponseContentHeader");
+
+                        //  mySTBMessage = GetSTBMessage(elemList[0].LastChild.InnerXml);
+
+                        mySTBMessage = (DCAInUCBUD2LTWithResponseContentHeader)serializer.Deserialize(new StringReader(elemList[0].InnerXml));
+
+                        //    dynamic test = XmlGenericUtil<dynamic>.DeSerializeObject(elemList[0].InnerXml);//serializer.Deserialize(reader);
+                        //    result = (DCAInUCBUD2LTWithResponseContentHeader)test.body.DCAInUCBUD2LTWithResponseContentHeader;
                     }
 
-
-                    uniCourierBatchSendUCBUD2LT_MsgResponseService.RealUpdate2(result);
-
-                    Console.WriteLine(" [x] Received {0}", message);
+                    uniCourierBatchSendUCBUD2LT_MsgResponseService.RealUpdate2(mySTBMessage);
+             //   channel.BasicAck(ea.DeliveryTag, false);
+                    //Console.WriteLine(" [x] Received {0}", message);
                 };
 
-                channel.BasicConsume(queue: "connectToTicket",
+                channel.BasicConsume(queue: "ucbud2lt__",
                                      autoAck: true,
                                      consumer: consumer);
 

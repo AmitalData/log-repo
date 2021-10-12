@@ -120,9 +120,15 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
                 }
             }
+
+
+
+            if(Communications.GetSingleCommunicationLogInProccess(tenant, documentsFilingPM.EntityId, "RabbitMQ", documentsFilingPM.Id) != null)
+            {
+                return "קיים מסר זהה בתהליך )RABBITMQ(";
+            }
+
             LogMessagingUtil.Instance.AppendLine("Build !!!Requestsheet  with Interface Type  = UCBUD2LT  !!!");
-
-
 
             string uniComm = null;
             string fileName = null;
@@ -187,18 +193,20 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
                     try
                     {
-                      var  _CommunicationsParams = new CommunicationsParams()
+
+
+                        var _CommunicationsParams = new CommunicationsParams()
                         {
 
-                            Tenant =tenant, 
+                            Tenant = tenant,
 
                             LoggingObjectTableId = objectTableId,
-                            LoggingEntityId = entityId, 
+                            LoggingEntityId = entityId,
 
-                            Subject ="קישור מסמך לטיקט",// "FU Status",
+                            Subject = "קישור מסמך לטיקט",// "FU Status",
                             LoggingEntityReference = documentsFilingPM.ExternalEntityReference,//_PhysicalCheckPM.CheckId,
                             LoggingUserId = LoggingUserId,//loggingUserId,
-
+                            CorrelationID = documentsFilingPM.Id,
 
                             Status = "W",
                             To = "RabbitMQ",
@@ -234,6 +242,13 @@ namespace Logitude.CustomsMessaging.MessagingServices
                                                 exclusive: false,
                                                 autoDelete: false,
                                                 arguments: args);
+
+                            //channel.QueueDeclare(queue: queuename +"__",
+                            //                                 durable: false,
+                            //                                 exclusive: false,
+                            //                                 autoDelete: false,
+                            //                                 arguments: null);
+
                             var header = new Dictionary<string, object>();
                             var prop = channel.CreateBasicProperties();
                             prop.Persistent = true;
@@ -244,8 +259,8 @@ namespace Logitude.CustomsMessaging.MessagingServices
                            // var body = RabbitmqHelper.MyJsonSerializer(message);
                          //   channel.QueueBind(queue: queuename, exchange: EcomFilingService.exchangeName, routingKey: queuename);
                             channel.BasicPublish(exchange: "",
-                                                         routingKey: queuename,
-                                                         basicProperties: null,
+                                                         routingKey: queuename  ,
+                                                         basicProperties: prop,
                                                          body: message);
 
                         }

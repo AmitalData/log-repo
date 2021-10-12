@@ -106,97 +106,14 @@ namespace CustomsWorkerRole
         private List<CustomsPartnerFtpPM> _FtpDefinitions;
         private int _SeedTenant = 1;
 
+        public override bool OnStart()
+        {
+            WorkUntil_AnalyzeQueue_Empty_Db_NOTINUSE();
+                return true;
 
-        //public override bool OnStart()
-        //{
-        //    try
-        //    {
+        }
 
-        //        Logger.LogMe("SSSSS", false, "TESTELISH");
-
-        //        //if (_OnStartDone) return true;
-        //        //_OnStartDone = true;
-        //        //DoneItemsInRange = new Dictionary<DateTime, int>();
-
-        //        //if (WorkerRoleServiceLocator.PleaseShutDown) return true;
-
-
-
-        //        var factory = new ConnectionFactory() { HostName = "unimq", UserName = "v5101", Password = "Aa123" };
-        //        using (var connection = factory.CreateConnection())
-        //        using (var channel = connection.CreateModel())
-        //        {
-        //            Logger.LogMe("create---", false, "TESTELISH");
-
-        //            channel.QueueDeclare(queue: "connectToTicket",
-        //                                 durable: false,
-        //                                 exclusive: false,
-        //                                 autoDelete: false,
-        //                                 arguments: null);
-
-        //            var consumer = new EventingBasicConsumer(channel);
-        //            consumer.Received += (model, ea) =>
-        //            {
-        //                Logger.LogMe("recievd", false, "TESTELISH");
-        //                 var body = ea.Body.ToArray();
-        //                var message = Encoding.UTF8.GetString(body);
-
-        //                UniCourierBatchSendUCBUD2LT_MsgResponseService uniCourierBatchSendUCBUD2LT_MsgResponseService = new UniCourierBatchSendUCBUD2LT_MsgResponseService();
-
-        //                XmlSerializer serializer = new XmlSerializer(typeof(DCAInUCBUD2LTWithResponseContentHeader));
-        //                DCAInUCBUD2LTWithResponseContentHeader result = new DCAInUCBUD2LTWithResponseContentHeader();
-        //                using (TextReader reader = new StringReader(message))
-        //                {
-        //                    Logger.LogMe("read xml", false, "TESTELISH");
-
-        //                    XmlDocument doc = new XmlDocument();
-        //                doc.Load(reader);
-
-        //                //Display all the book titles.
-        //                XmlNodeList elemList = doc.GetElementsByTagName("Body");
-
-
-        //                    result = (DCAInUCBUD2LTWithResponseContentHeader)serializer.Deserialize(new StringReader(elemList[0].InnerXml));
-
-        //                //    dynamic test = XmlGenericUtil<dynamic>.DeSerializeObject(elemList[0].InnerXml);//serializer.Deserialize(reader);
-        //                //    result = (DCAInUCBUD2LTWithResponseContentHeader)test.body.DCAInUCBUD2LTWithResponseContentHeader;
-        //                 }
-
-        //                Logger.LogMe("update", false, "TESTELISH");
-
-        //                uniCourierBatchSendUCBUD2LT_MsgResponseService.RealUpdate2(result);
-
-        //                Console.WriteLine(" [x] Received {0}", message);
-        //            };
-
-        //            Logger.LogMe("BasicConsume", false, "TESTELISH");
-
-        //            channel.BasicConsume(queue: "connectToTicket",
-        //                                 autoAck: true,
-        //                                 consumer: consumer);
-
-        //            Logger.LogMe("end BasicConsume", false, "TESTELISH");
-
-        //        }
-
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "amital send data worker role start", null, null);
-        //    }
-
-        //    // Set the maximum number of concurrent connections 
-        //    ServicePointManager.DefaultConnectionLimit = 12;
-
-        //    //DiagnosticMonitor.Start("DiagnosticsConnectionString");
-
-        //    // For information on handling configuration changes
-        //    // see the MSDN topic at http://go.microsoft.com/fwlink/?LinkId=166357.
-
-
-        //    return base.OnStart();
-        //}
-
+ 
 
         private void WorkUntil_AnalyzeQueue_Empty_Db_NOTINUSE()
         {
@@ -219,74 +136,90 @@ namespace CustomsWorkerRole
                 {
 
                     {
-                       
+
 
                         try
                         {
-                            var factory = new ConnectionFactory() { HostName = "unimq", UserName = "v5101", Password = "Aa123" };
+                            var factory = new ConnectionFactory() { HostName = "unimq", UserName = "v5101", Password = "Aa123" ,   RequestedConnectionTimeout=new TimeSpan(600000000) };
                             using (var connection = factory.CreateConnection())
                             using (var channel = connection.CreateModel())
                             {
-
-
-                            //    using (var connection = factory.CreateConnection())
-                            //using (var channel = connection.CreateModel())
-                            //{
-                                Logger.LogMe("CONNECTION", false, "TESTELISH");
-
-                                channel.BasicQos(0, 5, true);
-                                //Create queue if not exists
-                                RabbitmqHelper.DeclareQueue(channel, queue.Code);
-
-                                AnalyzeQueueRepository analyzeQueueRepository = new AnalyzeQueueRepository();
-
-                                //while (true)
-                                //{
-                                consumerEventArgs = (model, ea) =>
+                                try
                                 {
-                                    if (channel == null)
-                                        return;
-                                    if (!channel.IsOpen)
-                                        return;
+                                    Logger.LogMe("CONNECTION", false, "TESTELISH");
+                                   
+                                     channel.BasicQos(0, 5, true);
+                                    //Create queue if not exists
+                                     RabbitmqHelper.DeclareQueue(channel, queue.Code);
+                                     AnalyzeQueueRepository analyzeQueueRepository = new AnalyzeQueueRepository();
 
-                                    string messageId = "";
-                                    try
+                                
+                                     consumerEventArgs = (model, ea) =>
                                     {
-                                        var body = ea.Body.ToArray();
-                                        string remark;
-                                        var message =  Encoding.UTF8.GetString(body);
-                                        messageId = ea.BasicProperties.MessageId;
-                                        Logger.LogMe("RUN", false, "TESTELISH");
+                                        //if (channel == null)
+                                        //    return;
+                                        //if (!channel.IsOpen)
+                                        //    return;
 
-                                        Exec(customRabbitMQQueue, queue, analyzeQueueRepository, messageId, 1 , message);
-                                        LogDoneItemInMemory();
-
-
-
-                                        if (true)
+                                        string messageId = "";
+                                        try
                                         {
-                                            Logger.LogMe("BasicAck", false, "TESTELISH");
+                                            var body = ea.Body.ToArray();
+                                            string remark;
+                                            var message = Encoding.UTF8.GetString(body);
+                                            messageId = ea.BasicProperties.MessageId;
+                                            Logger.LogMe("RUN", false, "TESTELISH");
 
-                                            channel.BasicAck(ea.DeliveryTag, false);
-                                         }
-
-                                    }
-
-                                    catch(Exception ex)
-                                    {
-
-                                        Logger.LogMe(ex.Message, false, "TESTELISH");
-
-                                    }
-
-                                };
-                                // }
+                                            Exec(customRabbitMQQueue, queue, analyzeQueueRepository, messageId, 1 , message);
+                                            LogDoneItemInMemory();
 
 
-                                Thread.Sleep(500);
+
+                                            if (true)
+                                            {
+                                                Logger.LogMe("BasicAck", false, "TESTELISH");
+
+                                                channel.BasicAck(ea.DeliveryTag, false);
+                                            }
+
+                                        }
+
+                                        catch (Exception ex)
+                                        {
+
+                                            Logger.LogMe(ex.Message, false, "TESTELISH");
+
+                                        }
+
+                                    };
+
+                                    consumer = new EventingBasicConsumer(channel);
+                                    consumer.Received += consumerEventArgs;
+
+                                    channel.BasicConsume(queue: queue.Code  ,
+                                                        autoAck: false,
+                                                        consumer: consumer);
+ 
+
+                                    Thread.Sleep(500);
+
+                                }
+
+                                catch (Exception e)
+                                {
+
+                                }
+
+                                finally
+                                {
+                                   //channel.Close();
+                                   // connection.Close();
+                                }
+                            
                             }
-
                         }
+
+  
                         catch (Exception e)
                         {
                             Logger.LogMe(e.Message, false, "TESTELISH");
@@ -294,6 +227,8 @@ namespace CustomsWorkerRole
                             ExceptionHandler.HandleException(e, DateTime.Now, 0, "", "WorkerRole", "CustomsAnalyzeQueueWR : Run() Method", null);
                             Thread.Sleep(5000);
                         }
+
+                     
                     }
                 }
 
@@ -328,7 +263,7 @@ namespace CustomsWorkerRole
             {
                 OnStart();
 
-                WorkUntil_AnalyzeQueue_Empty_Db_NOTINUSE();
+              //  WorkUntil_AnalyzeQueue_Empty_Db_NOTINUSE();
 
 
             }
