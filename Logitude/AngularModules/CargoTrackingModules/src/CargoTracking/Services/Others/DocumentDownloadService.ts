@@ -35,7 +35,7 @@ export class DocumentDownloadService {
     DownloadAllPages(entityId: string, securityKey: string) {
         this.GetCurrenctUserValidity().subscribe((response: any) => {
             this.token = response.Result.DocumentDownloadToken;
-            var link = ServiceHelper.GetAppURL(this.baseUrl) + "WebPages/SharedDownloadPage.aspx?id=" + SessionInfo.LoggedUserTenant + ":" + null + ":ship:" + entityId + ":CS:" + null + ":" + securityKey + ":securitykey";
+            var link = ServiceHelper.GetAppURL(this.baseUrl) + "WebPages/SharedDownloadPage.aspx?id=" + SessionInfo.LoggedUserTenant + ":" + null + ":ship:" + entityId + ":CS:" + null + ":" + securityKey + ":securitykey:CargoTracking";
             var win = window.open(link, '_blank');
             if (win) {
                 win.focus();
