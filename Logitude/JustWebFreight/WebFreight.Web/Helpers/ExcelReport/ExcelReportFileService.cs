@@ -21,32 +21,35 @@ namespace WebFreight.Web.Helpers.ExcelReport
 
         public byte[] GetReport(bool isNew, string reportTemplateId)
         {
-            byte[] fileData = null;
-            Document document = null;
             DocumentRepository documentRepository = new DocumentRepository(tenant);
+
+            Document document;
             if (isNew)
             {
                 document = documentRepository.GetSingleDocument(tenant, reportTemplateId);
             }
             else
             {
-                ReportsTemplatesVersionQuery reportsTemplatesVersionQuery = new ReportsTemplatesVersionQuery(tenant);
-                ReportsTemplatesVersionPM reportsTemplatesVersionPM = reportsTemplatesVersionQuery.GetLastReportsTemplatesVersionPMByReportsTemplateId(reportTemplateId, tenant);
-                if (reportsTemplatesVersionPM != null)
-                {
-                    document = documentRepository.GetSingleDocument(reportsTemplatesVersionPM.Tenant, reportsTemplatesVersionPM.ReportDocumentId);
-                }
+                document = GetFirstTemplateFromVersion(reportTemplateId, documentRepository);
             }
-            if (document != null)
-            {
-                fileData = ReadFieldDataFromDocument(document);
-            }
+            return ReadFieldDataFromDocument(document);
+        }
 
-            return fileData;
+        private Document GetFirstTemplateFromVersion(string reportTemplateId, DocumentRepository documentRepository)
+        {
+            ReportsTemplatesVersionQuery reportsTemplatesVersionQuery = new ReportsTemplatesVersionQuery(tenant);
+            ReportsTemplatesVersionPM reportsTemplatesVersionPM = reportsTemplatesVersionQuery.GetLastReportsTemplatesVersionPMByReportsTemplateId(reportTemplateId, tenant);
+            if (reportsTemplatesVersionPM == null)
+            {
+                return null;
+            }
+            return documentRepository.GetSingleDocument(reportsTemplatesVersionPM.Tenant, reportsTemplatesVersionPM.ReportDocumentId);
         }
 
         private byte[] ReadFieldDataFromDocument(Document document)
         {
+            if (document == null)
+                return null;
 
             IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
             BlobFileInfo fileInfo = new BlobFileInfo()
@@ -61,6 +64,7 @@ namespace WebFreight.Web.Helpers.ExcelReport
             return fileData;
 
         }
+
         public void SaveDocumentOnDifferentFile(string reportsTemplateId, byte[] fileData, string userEmail)
         {
             UserRepository userRep = new UserRepository(tenant);
