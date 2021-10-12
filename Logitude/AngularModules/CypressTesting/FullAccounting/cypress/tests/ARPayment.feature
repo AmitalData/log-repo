@@ -8,8 +8,8 @@ Feature: AR Payment
             | Partner         | BDDCustomer |
             | PaymentCurrency | NIS         |
             | PaymentMethod   | Cash        |
-            | PaymentAmount   | 100         |
-            | PaymentBranch   | BDDBranch   |
+            | PaymentAmount   | 1000        |
+            | PaymentBranch   | Main Office |
         When create AR Payment
         Then the AR Payment should get successfully
 
