@@ -381,6 +381,14 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "AOI,Ocean Insights Sending Automatically Logic", 
                 Description = "Ocean Insights Sending Automatically Logic", 
 			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "SAL", 
+                Name = "Use Security Access Level", 
+                SearchFields = "SAL,Use Security Access Level", 
+                Description = "Use Security Access Level", 
+			});
 			
             return all;
        }
