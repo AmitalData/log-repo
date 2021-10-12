@@ -118,9 +118,25 @@ namespace LogitudeTransferData
         private void button11_Click(object sender, EventArgs e)
         {
             var tenant = int.Parse(textBox1.Text);
-            List<ObjectFieldPM> objectFieldPMs = GetAllCustomObjectFields(tenant);
+            List<ObjectFieldPM> AllObjectFieldPMs = GetAllCustomObjectFields(tenant);
+            // Here we get all CustomFields except Lookup and PickList types
+            List<ObjectFieldPM> notPickListObjectFieldPMs = AllObjectFieldPMs.FindAll(o => o.DataTypeCode != "PickList");
+            ProduceKafkaMessages<ObjectFieldPM>(notPickListObjectFieldPMs, KakaMessageTypes.CustomField);
 
-            ProduceKafkaMessages<ObjectFieldPM>(objectFieldPMs, KakaMessageTypes.CustomField);
+            // Here we want to get CustomPickList values
+            List<CustomPickListPM> customPickListPMs = GetAllCustomPickLists(tenant);
+            ProduceKafkaMessages<CustomPickListPM>(customPickListPMs, KakaMessageTypes.CustomPickList);
+
+            // Then send PickList object fields
+            List<ObjectFieldPM> pickListObjectFieldPMs = AllObjectFieldPMs.FindAll(o => o.DataTypeCode == "PickList");
+            ProduceKafkaMessages<ObjectFieldPM>(pickListObjectFieldPMs, KakaMessageTypes.CustomField);
+        }
+
+        private List<CustomPickListPM> GetAllCustomPickLists(int tenant)
+        {
+            CustomPickListQuery customPickListQuery = new CustomPickListQuery(tenant);
+            List<CustomPickListPM> customPickListPMs = customPickListQuery.GetCustomPickListPMsByTenant(tenant).ToList();
+            return customPickListPMs;
         }
 
         private List<ObjectFieldPM> GetAllCustomObjectFields(int tenant)
@@ -130,7 +146,7 @@ namespace LogitudeTransferData
 
             ObjectFieldRepository ObjectFieldsRepository = new ObjectFieldRepository(tenant);
             ObjectFieldQuery objectFieldsQuery = new ObjectFieldQuery(ObjectFieldsRepository);
-            List<ObjectFieldPM> objectFieldPMs = objectFieldsQuery.GetCustomFieldsBytableIDAndDataTypeCode(shipmentObjectId, tenant, "Text").ToList();
+            List<ObjectFieldPM> objectFieldPMs = objectFieldsQuery.GetCustomFieldsByTableIdForCTool(shipmentObjectId, tenant).ToList();
             return objectFieldPMs;
         }
 

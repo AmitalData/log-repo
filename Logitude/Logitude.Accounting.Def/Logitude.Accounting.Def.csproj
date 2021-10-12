@@ -181,6 +181,7 @@
     <Compile Include="EntityQueryServicesExt\ICashBookQueryServiceExt.cs" />
     <Compile Include="EntityQueryServicesExt\IGLAccountCardsDataQueryServiceExt.cs" />
     <Compile Include="EntityQueryServicesExt\IGLAccountCurrencyQueryServiceExt.cs" />
+    <Compile Include="EntityQueryServicesExt\ILedgerTransactionQueryService.cs" />
     <Compile Include="EntityQueryServicesExt\IInterestTransactionQueryServiceExt.cs" />
     <Compile Include="EntityQueryServicesExt\IFullAccountingSettingQueryServiceExt.cs" />
     <Compile Include="EntityQueryServicesExt\IGLAccountQueryServiceExt.cs" />

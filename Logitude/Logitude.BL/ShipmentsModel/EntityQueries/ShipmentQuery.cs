@@ -1867,6 +1867,15 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
             if (shipment.ShipmentLevelCode == "H" && !string.IsNullOrEmpty(shipment.MasterShipmentDataId))
             {
+                Shipment masterShipment = (from a in repository.context.Shipments
+                                           where a.Id == shipment.MasterShipmentDataId && a.Tenant == tenant
+                                           select a).FirstOrDefault();
+                if(masterShipment != null)
+                {
+                    shipmentPM.HouseMasterConcurrencyGUID = masterShipment.ConcurrencyGUID;
+                    shipmentPM.HouseMasterNewConcurrencyGUID = Guid.NewGuid().ToString();
+                }
+
                 if (masterData != null)
                 {
                     if (!string.IsNullOrEmpty(masterData.StatusId))
@@ -2609,7 +2618,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             {
                 shipmentPM.MainCarriageLegs.Add(new TransshipmentLeg()
                 {
-                    LegIndex = 2,
+                    LegIndex = 3,
                     ATA = shipmentPM.Transshipment2ATA,
                     ATD = shipmentPM.Transshipment2ATD,
                     ETA = shipmentPM.Transshipment2ETA,
@@ -2627,7 +2636,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             {
                 shipmentPM.MainCarriageLegs.Add(new TransshipmentLeg()
                 {
-                    LegIndex = 2,
+                    LegIndex = 4,
                     ATA = shipmentPM.Transshipment3ATA,
                     ATD = shipmentPM.Transshipment3ATD,
                     ETA = shipmentPM.Transshipment3ETA,

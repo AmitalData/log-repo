@@ -410,7 +410,18 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
         {
             var containerNumbers = "";
             bool isInlandDomesticShipment = (item.DirectionId == "D" && item.TransportModeId == "I");
-            containerNumbers = item.TransportModeId == "O" ? Regex.Replace(item.ContainersNumbersAndTypesArray, "(\\[.*?\\])", "") : isInlandDomesticShipment ? item.TruckNumber : item.MainCarriageCarrierNumber;
+            if (item.TransportModeId == "O")
+            {
+                if (!string.IsNullOrEmpty(item.ContainersNumbersAndTypesArray))
+                {
+                    containerNumbers = Regex.Replace(item.ContainersNumbersAndTypesArray, "(\\[.*?\\])", "");
+                }
+            }
+
+            else
+            {
+                containerNumbers = isInlandDomesticShipment ? item.TruckNumber : item.MainCarriageCarrierNumber;
+            }
 
             return containerNumbers;
         }

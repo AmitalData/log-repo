@@ -85586,7 +85586,7 @@
     DependencyFilter3IsList="false"
     ValidForQuerySection1="&quot;Shipment&quot;"
     IsRestrictable="false"
-    DisplayInEntityVariables="false"
+    DisplayInEntityVariables="true"
     AllowedInCustomerFieldsSettings="false"
     DisplayInSearchWindowFilters="false"
     DisplayInSearchWindowFiltersIndex="0"

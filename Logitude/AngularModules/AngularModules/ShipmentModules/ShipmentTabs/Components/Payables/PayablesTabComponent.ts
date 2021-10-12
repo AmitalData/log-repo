@@ -35,6 +35,8 @@ import { CardList } from '../../../../Common/EntityLists/CardList';
 import { CardListService } from '../../../../Common/Services/StandardLists/CardListService';
 import { TariffDomainService, TariffSearchSummary, SurchargeSummary } from '../../../../TariffModule/Services/TariffDomainService';
 import { ServiceLocator } from '../../../../Infrastructure/Locators/ServiceLocator';
+import { APInvoiceListService } from '../../../../Invoice/Services/StandardLists/APInvoiceListService';
+import { APInvoiceList } from '../../../../Invoice/EntityLists/APInvoiceList';
 
 @Component({    
     templateUrl: './PayablesTabComponent.html',
@@ -1082,7 +1084,7 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
             }
 
             case "ViewInvoice": {
-                this.RunViewInvoice();
+                this.ViewAPInvoice(this.SavingRequestParam);                
                 break;
             }
 
@@ -1094,41 +1096,56 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
 
         this.StopSavingFlags();
     }
-
-    RunViewInvoice() {
+    private ViewAPInvoice(invoiceId: string) {
         if (this.SavingRequestParam) {
-            var entityId = this.SavingRequestParam;
+            if (this.EntityPM.ShipmentLevelCode == "H" && !AppTool.IsNullOrEmpty(this.EntityPM.MasterShipmentDataId)) {
+                this.CheckIfMasterInvoice(invoiceId);
+            }
 
-            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
-                .then(cmpRef => {
-
-                    var iFields: any[] = [];
-                    iFields.push({ FieldName: "ShipmentConcurrencyGUID", FieldValue: this.EntityPM.ConcurrencyGUID });
-                    iFields.push({ FieldName: "ShipmentNewConcurrencyGUID", FieldValue: this.EntityPM.NewConcurrencyGUID });
-
-                    cmpRef.instance.ComponentRef = cmpRef;
-                    cmpRef.instance.Run({ EntityId: entityId, ObjectTableName: 'APInvoice', BackButtonLabel: this.ObjectTableName + ": " + this.EntityPM.ShipmentNumber, EntityFields: iFields });
-
-                    let isEditComponentSaved = false;
-                    cmpRef.instance.BackCompleted.subscribe(bk => {
-                        if (isEditComponentSaved) {
-                            this.entityArgs.EditComponent.ReloadEntityPM();
-                        }
-                    });
-
-                    cmpRef.instance.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
-                        if (isSaveSuccess) {
-                            isEditComponentSaved = true;
-                        }
-                    });
-
-                    cmpRef.instance.SaveAndCloseCompleted.subscribe((isSaveSuccess: boolean) => {
-                        if (isSaveSuccess) {
-                            isEditComponentSaved = true;
-                        }
-                    });
-                });
+            else {
+                this.RunViewInvoice(invoiceId);
+            }
         }
+    }
+    RunViewInvoice(entityId: string, mainEntityId: string = null) {
+        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
+            .then(cmpRef => {
+                var concurrencyGUID = this.EntityPM.ConcurrencyGUID;
+                var newConcurrencyGUID = this.EntityPM.NewConcurrencyGUID;
+
+                if (!AppTool.IsNullOrEmpty(mainEntityId) && this.EntityPM.ShipmentLevelCode == "H" && !AppTool.IsNullOrEmpty(this.EntityPM.MasterShipmentDataId)) {
+                    if (this.EntityPM.MasterShipmentDataId == mainEntityId) {
+                        concurrencyGUID = this.EntityPM.HouseMasterConcurrencyGUID;
+                        newConcurrencyGUID = this.EntityPM.HouseMasterNewConcurrencyGUID;
+                    }
+                }
+
+                var iFields: any[] = [];
+                iFields.push({ FieldName: "ShipmentConcurrencyGUID", FieldValue: concurrencyGUID });
+                iFields.push({ FieldName: "ShipmentNewConcurrencyGUID", FieldValue: newConcurrencyGUID });
+
+                cmpRef.instance.ComponentRef = cmpRef;
+                cmpRef.instance.Run({ EntityId: entityId, ObjectTableName: 'APInvoice', BackButtonLabel: this.ObjectTableName + ": " + this.EntityPM.ShipmentNumber, EntityFields: iFields });
+
+                let isEditComponentSaved = false;
+                cmpRef.instance.BackCompleted.subscribe(bk => {
+                    if (isEditComponentSaved) {
+                        this.entityArgs.EditComponent.ReloadEntityPM();
+                    }
+                });
+
+                cmpRef.instance.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+                    if (isSaveSuccess) {
+                        isEditComponentSaved = true;
+                    }
+                });
+
+                cmpRef.instance.SaveAndCloseCompleted.subscribe((isSaveSuccess: boolean) => {
+                    if (isSaveSuccess) {
+                        isEditComponentSaved = true;
+                    }
+                });
+            });
     }
     RunViewQuote() {
         if (this.SavingRequestParam) {
@@ -1221,6 +1238,17 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
             item.EntityPM.PayablesDisconnectedFromTariff = true;
             item.SetUIProperties();
         }
+    }
+    private CheckIfMasterInvoice(invoiceId: string) {
+        var myService: APInvoiceListService = new APInvoiceListService();
+        myService.getSingle(this.SavingRequestParam).subscribe((myResponse: ServiceResponse) => {
+            if (!myResponse.HasError) {
+                var invoice: APInvoiceList = myResponse.Result;
+                if (invoice != null) {
+                    this.RunViewInvoice(invoiceId, invoice.MainEntityId);
+                }
+            }
+        });
     }
 
     ComputeShipmentFields() {

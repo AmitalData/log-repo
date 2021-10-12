@@ -52,6 +52,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 {
     public class ARInvoiceService
     {
+        private const string InvoiceAutoCreditStatus = "AC";
         private int tenant;
         private bool isNewEntity;
         private bool isUpdateTotalVats;
@@ -3792,9 +3793,9 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                             journal.JournalLines.Add(journalLine);
                         }
 
-                    
 
-
+                    if(entityPM.StatusCode == InvoiceAutoCreditStatus)
+                        AutoReconcileAutoCreditInvoiceWithAutoCreditedInvoice(journal);
 
 
                     IJournalUpdateServiceExt journalUpdate = ContainerAccessor.Container.Resolve(typeof(IJournalUpdateServiceExt), "JournalUpdateServiceExt", new ParameterOverride("", 1)) as IJournalUpdateServiceExt;
@@ -3802,7 +3803,55 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 }
             }
         }
-        
+
+        private void AutoReconcileAutoCreditInvoiceWithAutoCreditedInvoice(JournalPM journal)
+        {
+            List<LedgerTransactionPM> autoCreditedInvoiceTransactions = GetAutoCreditedInvoiceTransactions(entityPM.Tenant, entityPM.AutoCreditByARInvoiceNumber);
+            CreateJounalReconcileForEachTransaction(journal, autoCreditedInvoiceTransactions);
+        }
+
+        private static void CreateJounalReconcileForEachTransaction(JournalPM journal, List<LedgerTransactionPM> originalInvoiceTransactions)
+        {
+            originalInvoiceTransactions.ForEach(ledger =>
+            {
+                journal.JournalReconciles.Add(CreateJournalReconcileForLedgerTransaction(ledger, journal));
+            });
+        }
+
+        private static JournalReconcilePM CreateJournalReconcileForLedgerTransaction(LedgerTransactionPM ledger, JournalPM journal)
+        {
+            return new JournalReconcilePM()
+            {
+                Tenant = journal.Tenant,
+                ChangeSetOp = ChangeSetOperation.Insert,
+                JournalId = journal.Id,
+                Line = 1,
+                LedgerTransactionId = ledger.Id,
+                CurrencyId = ledger.OpenAmountCurrencyId,
+                ReconciliationAmount = ledger.OpenAmount,
+                IsPartial = false
+            };
+        }
+
+        private List<LedgerTransactionPM> GetAutoCreditedInvoiceTransactions(int tenant, string autoCreditByARInvoiceNumber)
+        {
+            ARInvoicePM originalInvoice = GetOriginalInvoiceByAutoCreditNumber(tenant, autoCreditByARInvoiceNumber);
+            return GetTransactionsByJournalId(tenant, originalInvoice?.JournalId);
+        }
+
+        private static List<LedgerTransactionPM> GetTransactionsByJournalId(int tenant, string journalId)
+        {
+            ILedgerTransactionQueryService ledgerTransactionQuery = ContainerAccessor.Container.Resolve(typeof(ILedgerTransactionQueryService), "LedgerTransactionQueryServiceExt", new ParameterOverride("", 1)) as ILedgerTransactionQueryService;
+            return ledgerTransactionQuery.GetByJournalId(journalId, tenant);
+        }
+
+        private static ARInvoicePM GetOriginalInvoiceByAutoCreditNumber(int tenant, string autoCreditByARInvoiceNumber)
+        {
+            ARInvoiceQuery aRInvoiceQuery = new ARInvoiceQuery(tenant);
+            var originalInvoice = aRInvoiceQuery.GetSingleInvoiceByInvoiceNumber(autoCreditByARInvoiceNumber, tenant);
+            return originalInvoice;
+        }
+
         private JournalPM CreateJournalDebitLinesForMultiCurrencyInvoice(JournalPM journal, ARInvoicePM invoice)
         {
             journal = CreateJournalDebitLinesFromInvoiceLines(journal, invoice);

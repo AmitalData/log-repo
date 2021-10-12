@@ -571,6 +571,7 @@
     <Compile Include="EntityDataMappings\VatReportStatusDataMapping.cs" />
     <Compile Include="EntityDataMappings\WithholdingTaxDeductionTypeDataMapping.cs" />
     <Compile Include="EntityPMs\JournalLinePM.cs" />
+    <Compile Include="EntityQueryServiceExt\LedgerTransactionQueryServiceExt.cs" />
     <Compile Include="EntityQueryServiceExt\ARPaymentChequeQueryServiceExt.cs" />
     <Compile Include="EntityQueryServiceExt\BankAccountQueryServiceExt.cs" />
     <Compile Include="EntityQueryServiceExt\BankCodeQueryServiceExt.cs" />
