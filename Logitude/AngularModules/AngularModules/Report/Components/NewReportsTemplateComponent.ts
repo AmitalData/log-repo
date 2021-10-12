@@ -208,7 +208,7 @@ export class NewReportsTemplateComponent implements OnInit {
 
                         if (this.TemplateType == "E") {
                             this.DataViewModel.AddTemplateToExcelList(this.ReportsTemplatePM);
-                            this.DataViewModel.EditExcelReportsTemplate(this.ReportsTemplatePM);
+                            this.DataViewModel.EditExcelReportsTemplate(this.ReportsTemplatePM, true);
                             this.CloseButtonClicked();
                             return;
                         }

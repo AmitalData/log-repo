@@ -40,7 +40,7 @@ export class ReportTemplateComponent implements OnInit {
 
     IsEnableEditUserReportTemplate: boolean = false;
     IsEnableEditAllReportTemplate: boolean = false;
-
+    IsEnableReportTemplateExcel: boolean = false;
 
     private _entityResourceService: EntityResourceService = new EntityResourceService();
     ReportsTemplatePMLists: ReportsTemplatePM[] = [];
@@ -75,7 +75,10 @@ export class ReportTemplateComponent implements OnInit {
         }
         if (FeatureLocator.HasFeaturePermession("ReportsTemplate", "UPDATE")) {
             this.IsEnableEditUserReportTemplate = true;
+        }
 
+        if (FeatureLocator.HasFeaturePermession("ReportsTemplate", "ReportTemplateExcel")) {
+            this.IsEnableReportTemplateExcel = true;
         }
 
 
@@ -118,13 +121,13 @@ export class ReportTemplateComponent implements OnInit {
 
     }
 
-    InitReportTemplates(result:any) {
+    InitReportTemplates(result: any) {
         result.forEach((item: any) => {
             this.AddReportsTemplateToList(item);
         });
-        this.SetTemplateAsDefault(this.ReportsTemplatePMLists,this.EntityPM.DefaultTemplateId);
-        this.SetTemplateAsDefault(this.MessageReportsTemplatePMLists,this.EntityPM.DefaultMessageTemplateId);
-        this.SetTemplateAsDefault(this.ExcellReportsTemplatePMLists,this.EntityPM.DefaultExcelTemplateId);
+        this.SetTemplateAsDefault(this.ReportsTemplatePMLists, this.EntityPM.DefaultTemplateId);
+        this.SetTemplateAsDefault(this.MessageReportsTemplatePMLists, this.EntityPM.DefaultMessageTemplateId);
+        this.SetTemplateAsDefault(this.ExcellReportsTemplatePMLists, this.EntityPM.DefaultExcelTemplateId);
     }
 
     AddReportsTemplateToList(reportsTemplate: any) {
@@ -260,7 +263,7 @@ export class ReportTemplateComponent implements OnInit {
         }
     }
 
-    EditExcelReportsTemplate(item: ReportsTemplatePM) {
+    EditExcelReportsTemplate(item: ReportsTemplatePM, isNew: boolean) {
         if (!this.CanEditTemplate(item))
             return;
 
@@ -269,14 +272,15 @@ export class ReportTemplateComponent implements OnInit {
         windowArgs.TemplateId = item.Id;
         windowArgs.Tenant = item.Tenant;
         windowArgs.ReportTemplatePM = item;
+        windowArgs.isNew = isNew;
 
         var logWindow = new LogitudeWindow();
-        logWindow.Width = 668;
-        logWindow.Height = 500;
+        logWindow.Width = 500;
+        logWindow.Height = 600;
         logWindow.Title = "Edit Excel Template";
 
         logWindow.WindowArgs = windowArgs;
-        //logWindow.Show("./InfrastructureModules/InfrastructureDocuments/Components/DocumentComponent/HtmlDocumentPreviewComponent");
+        logWindow.Show("./Report/Components/ExcelReportTemplateComponent");
 
     }
 

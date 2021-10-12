@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class ReportsTemplateUpdateClass
    {  		
-		public const string HashString = "f4cef108814bbcc6d11c32e5a2021fdb";
+		public const string HashString = "993f9db09295e54f4ba969088fcabfbc";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -119,7 +119,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Reports Template",
-			      				    Code =  "a32a",
+			      				    Code =  "d3ba",
 			      				    Name =  "ReportsTemplate",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Common",
@@ -751,6 +751,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 		   Feature ReportsTemplateFeature_SYSTEMTEMPLATEEDIT = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SYSTEMTEMPLATEEDIT", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ReportsTemplateObjectTable.Id, Tenant = 0, NameTextCodeCode = "ReportsTemplate.Features.SystemTemplateEdit", NameTextCodeDefaultText = @"System Template Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ReportsTemplateObjectTable);
 
 		   Feature ReportsTemplateFeature_REPORTTEMPLATEMESSAGE = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "REPORTTEMPLATEMESSAGE", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ReportsTemplateObjectTable.Id, Tenant = 0, NameTextCodeCode = "ReportsTemplate.Features.ReportTemplateMessage", NameTextCodeDefaultText = @"Report Template Message" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ReportsTemplateObjectTable);
+
+		   Feature ReportsTemplateFeature_REPORTTEMPLATEEXCEL = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "REPORTTEMPLATEEXCEL", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ReportsTemplateObjectTable.Id, Tenant = 0, NameTextCodeCode = "ReportsTemplate.Features.REPORTTEMPLATEEXCEL", NameTextCodeDefaultText = @"Report Template Excel" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ReportsTemplateObjectTable);
 
    
 	    
