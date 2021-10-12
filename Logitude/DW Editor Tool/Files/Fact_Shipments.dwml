@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<entity Id="&quot;20076484-bb00-4a75-b25a-e11494adb409&quot;" Code="&quot;Fact_Shipments&quot;" Name="&quot;Fact_Shipments&quot;" TypeCode="&quot;Fact&quot;" IsClosed="false" DataViewName="&quot;factShipments&quot;" HasPivotColumn="false" RecordType="&quot;Shipment&quot;" DisplayName="&quot;Shipments&quot;" ObjectTableName="&quot;Shipment&quot;" HasCustomFields="true" MaxNumberOfCustomFields="40">
+<entity Id="&quot;20076484-bb00-4a75-b25a-e11494adb409&quot;" Code="&quot;Fact_Shipments&quot;" Name="&quot;Fact_Shipments&quot;" TypeCode="&quot;Fact&quot;" IsClosed="false" DataViewName="&quot;factShipments&quot;" HasPivotColumn="false" RecordType="&quot;Shipment&quot;" DisplayName="&quot;Shipments&quot;" ObjectTableName="&quot;Shipment&quot;" HasCustomFields="true" MaxNumberOfCustomFields="40" AdditionalConditions="&quot; Fact_Shipments.[Is Standalone Pickup Delivery] = 0&quot;">
   <fields>
     <field Id="&quot;6d3da012-5549-4aeb-bd1e-de1729ece179&quot;" Code="&quot;[Id_Number]&quot;" Name="&quot;Id_Number&quot;" DataTypeCode="&quot;Integer&quot;" IsRequired="true" MinLength="0" MaxLength="0" IsPrimaryKey="true" IsMeasurement="false" DisplayInQueryBuilder="false" HideTree="false" CannotFilter="false" IsCustom="false" DontDisplayInView="true" IsMultipleSelection="false" />
     <field Id="&quot;53ff94b2-cd84-4d46-94ce-c6253bb4cc8c&quot;" Code="&quot;[Id]&quot;" Name="&quot;Id&quot;" DataTypeCode="&quot;Text&quot;" IsRequired="true" MinLength="0" MaxLength="15" IsPrimaryKey="false" IsMeasurement="false" DisplayInQueryBuilder="false" HideTree="false" CannotFilter="false" IsCustom="false" DontDisplayInView="true" IsMultipleSelection="false" />
@@ -324,20 +324,18 @@
     <field Id="&quot;3dd7d687-3a89-436c-82c6-a24bf4ffb88b&quot;" Code="&quot;[Shipper Not Exporter Address]&quot;" Name="&quot;Shipper Not Exporter Address&quot;" DataTypeCode="&quot;Dimension&quot;" IsRequired="false" MinLength="0" MaxLength="0" DimensionTableCode="&quot;DIM_Addresses&quot;" IsPrimaryKey="false" IsMeasurement="false" DisplayInQueryBuilder="true" Category1="&quot;PartnerAddresses&quot;" HideTree="false" CannotFilter="false" IsCustom="false" OriginalObjectFieldCode="&quot;Shipment.ShipperNotExporterAddressId&quot;" DontDisplayInView="false" IsMultipleSelection="false" />
     <field Id="&quot;a75a1985-7511-4de5-8332-64fc46b63137&quot;" Code="&quot;[Shipper Not Exporter Contact]&quot;" Name="&quot;Shipper Not Exporter Contact&quot;" DataTypeCode="&quot;Dimension&quot;" IsRequired="false" MinLength="0" MaxLength="0" DimensionTableCode="&quot;DIM_Contacts&quot;" IsPrimaryKey="false" IsMeasurement="false" DisplayInQueryBuilder="true" Category1="&quot;PartnerContacts&quot;" HideTree="false" CannotFilter="false" IsCustom="false" OriginalObjectFieldCode="&quot;Shipment.ShipperNotExporterContactId&quot;" DontDisplayInView="false" IsMultipleSelection="false" />
     <field Id="&quot;489465fd-1b7b-4c47-b477-d5290c55d5ef&quot;" Code="&quot;[IsInland Domestic Shipment]&quot;" Name="&quot;IsInland Domestic Shipment&quot;" DataTypeCode="&quot;Boolean&quot;" IsRequired="false" MinLength="0" MaxLength="0" IsPrimaryKey="false" IsMeasurement="false" DisplayInQueryBuilder="false" HideTree="false" CannotFilter="false" IsCustom="false" DontDisplayInView="true" IsMultipleSelection="false" />
+    <field Id="&quot;a9f4b4c6-d003-4335-8343-078d07c18450&quot;" Code="&quot;[Is Standalone Pickup Delivery]&quot;" Name="&quot;Is Standalone Pickup Delivery&quot;" DataTypeCode="&quot;Boolean&quot;" IsRequired="false" MinLength="0" MaxLength="0" IsPrimaryKey="false" IsMeasurement="false" DisplayInQueryBuilder="false" HideTree="false" CannotFilter="false" IsCustom="false" DontDisplayInView="true" IsMultipleSelection="false" />
   </fields>
   <Indexes>
-      <Index Columns="[Source Tenant],[Create Date]" />
-      <Index Columns="[Source Tenant],[Create Date Time]" />
-      <Index Columns="[Source Tenant],[DirectHouse]" />
-      <Index Columns="[Source Tenant], [Operationally Closed]" />
-      <Index Columns="[Source Tenant],[IsInland Domestic Shipment],[DirectHouse]" />
-
-      <Index Columns="[Parent Tenant],[Create Date]" />
-      <Index Columns="[Parent Tenant],[Create Date Time]" />
-      <Index Columns="[Parent Tenant],[DirectHouse]" />
-      <Index Columns="[Parent Tenant],[IsInland Domestic Shipment],[DirectHouse]" />
-      <Index Columns="[Operationally Closed], [Parent Tenant], [First Operational Close Date]" />
-
-
+    <Index Columns="[Source Tenant],[Create Date]" />
+    <Index Columns="[Source Tenant],[Create Date Time]" />
+    <Index Columns="[Source Tenant],[DirectHouse]" />
+    <Index Columns="[Source Tenant], [Operationally Closed]" />
+    <Index Columns="[Source Tenant],[IsInland Domestic Shipment],[DirectHouse]" />
+    <Index Columns="[Parent Tenant],[Create Date]" />
+    <Index Columns="[Parent Tenant],[Create Date Time]" />
+    <Index Columns="[Parent Tenant],[DirectHouse]" />
+    <Index Columns="[Parent Tenant],[IsInland Domestic Shipment],[DirectHouse]" />
+    <Index Columns="[Operationally Closed], [Parent Tenant], [First Operational Close Date]" />
   </Indexes>
 </entity>
