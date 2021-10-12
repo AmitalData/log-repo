@@ -1,4 +1,4 @@
-@devsmoke
+@smoke
 Feature: AR Payment
     The user creates new AR Payment and ARprove the AR Payment
 
