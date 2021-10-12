@@ -59,7 +59,7 @@ h1{
 
   div.content {
     margin-left: 170px;
-    min-height: 100vh;
+    height: 100%;
     padding-top: 93px;
     box-sizing: border-box;
     /* background: #FAFBFC; */
