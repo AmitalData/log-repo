@@ -421,7 +421,7 @@ using Simplog.Data.ShipmentsModel;
 				   temp.Notify1Reference = MyEntityPM.Notify1Reference;
 				   temp.Notify1Reference2 = MyEntityPM.Notify1Reference2;
 				   temp.ShipperNotExporterReference1 = MyEntityPM.ShipperNotExporterReference1;
-				   temp.ShipperNotExporterReference2 = MyEntityPM.ShipperNotExporterReference2;					
+				   temp.ShipperNotExporterReference2 = MyEntityPM.ShipperNotExporterReference2;
 				   temp.CustomsClearanceDate = MyEntityPM.CustomsClearanceDate;					
 				   return temp;
 			}
@@ -1383,6 +1383,10 @@ using Simplog.Data.ShipmentsModel;
 					
                     							//throw new ApplicationException("ShipperNotExporterReference2 Can't be update"); 
 							temp.ShipperNotExporterReference2 = MyEntity.ShipperNotExporterReference2;
+
+					 
+
+					
                     							//throw new ApplicationException("CustomsClearanceDate Can't be update"); 
 							temp.CustomsClearanceDate = MyEntity.CustomsClearanceDate;
 
@@ -1399,4 +1403,4 @@ using Simplog.Data.ShipmentsModel;
         }
 		 
    }
-}
+}
