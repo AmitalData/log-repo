@@ -57,5 +57,6 @@ namespace Logitude.BL.InfrastructureModel.EntityLists
         public string LovDisplayMemberPath { get; set; }
         public string LovDisplayMemberPathLocal { get; set; }
         public bool IsTabsHidden { get; set; }
+        public string ParentObjectTableName { get; set; }
     }
 }

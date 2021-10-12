@@ -335,6 +335,11 @@ export class ObjectTablePM {
     public set IsTabsHidden(newValue: boolean) { if (this.isTabsHidden != newValue) { this.isTabsHidden = newValue; this.MarkAsDirty("IsTabsHidden"); } }
        
 	 
+    private parentObjectTableName: string;
+    public get ParentObjectTableName() { return this.parentObjectTableName; }
+    public set ParentObjectTableName(newValue: string) { if (this.parentObjectTableName != newValue) { this.parentObjectTableName = newValue; this.MarkAsDirty("ParentObjectTableName"); } }
+       
+	 
 
     public OldEntityPM: ObjectTablePM;
 		

@@ -470,6 +470,25 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             return cards;
         }
 
+        public IQueryable<CardList> GetCarrierPMsByTenant(int tenant)
+        {
+            AddressRepository addressRepository = new AddressRepository(tenant);
+            IQueryable<CardList> carriers = from a in repository.context.Cards
+                                         where a.Tenant == tenant && (a.PartnerTypeId == "AL" || a.PartnerTypeId == "SL" || a.PartnerTypeId == "TR")
+                                         select new CardList()
+                                         {
+                                             Id = a.Id,
+                                             Code = a.Code,
+                                             EnglishName = a.EnglishName,
+                                             VatNumber = a.VatNumber,
+                                             CountryCode = a.CountryCode,
+                                             CountryName = a.CountryName,
+                                             CityName = a.CityName,
+                                             GLAccountId = a.GLAccountId
+                                         };
+
+            return carriers;
+        }
 
         public List<string> GetCardIdsByTenant(int tenant)
         {

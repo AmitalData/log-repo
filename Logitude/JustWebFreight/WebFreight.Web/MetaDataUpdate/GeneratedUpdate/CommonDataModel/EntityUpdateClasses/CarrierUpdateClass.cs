@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class CarrierUpdateClass
    {  		
-		public const string HashString = "bfdd0622d201680117a4a8e5e4a9a73b";
+		public const string HashString = "c9354b04bf4ea77988f5e1de17544638";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -89,7 +89,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	             				    ObjectTableName =  "Carrier",
 			      				    IsNew =  false,
 			      				    DBTableName =  "NONE",
-			      				    OldDBTableName =  "NONE",
 			      				    ObjectTableSingular =  "Carrier",
 			      				    ObjectTablePlural =  "Carriers",
 			      				    HasCustomFilter =  false,
@@ -123,13 +122,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Carrier",
-			      				    Code =  "8933",
+			      				    Code =  "ebd4",
 			      				    Name =  "Carrier",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Common",
 			      				    NoTS =  false,
 			      				    HasMenuButtons =  false,
-			      				    AllowedForComputingPartners =  false,
+			      				    AllowedForComputingPartners =  true,
+			      				    ParentObjectTableName =  "Card",
 			      				    CustomFieldsCount =  0,
 			      				    DisableSearchBox =  false,
 			      				    HasDocuments =  false,
@@ -148,7 +148,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "Code",
-					  						OldFieldName =  "Code",
 					  						ObjectTableName =  "Carrier",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -212,7 +211,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "EnglishName",
-					  						OldFieldName =  "EnglishName",
 					  						ObjectTableName =  "Carrier",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -276,7 +274,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "LocalName",
-					  						OldFieldName =  "LocalName",
 					  						ObjectTableName =  "Carrier",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -340,7 +337,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "ComputedLocalName",
-					  						OldFieldName =  "ComputedLocalName",
 					  						ObjectTableName =  "Carrier",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -402,7 +398,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "PartnerTypeId",
-					  						OldFieldName =  "PartnerTypeId",
 					  						ObjectTableName =  "Carrier",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -463,7 +458,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "CityName",
-					  						OldFieldName =  "CityName",
 					  						ObjectTableName =  "Carrier",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -527,7 +521,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "CountryName",
-					  						OldFieldName =  "CountryName",
 					  						ObjectTableName =  "Carrier",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -591,7 +584,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "CountryCodeOrName",
-					  						OldFieldName =  "CountryCodeOrName",
 					  						ObjectTableName =  "Carrier",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -654,7 +646,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "CodeOrName",
-					  						OldFieldName =  "CodeOrName",
 					  						ObjectTableName =  "Carrier",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -719,7 +710,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "Prefix",
-					  						OldFieldName =  "Prefix",
 					  						ObjectTableName =  "Carrier",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -783,7 +773,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "ICAO",
-					  						OldFieldName =  "ICAO",
 					  						ObjectTableName =  "Carrier",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -866,6 +855,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "SearchFields",
 					  						ListPropertyPath =  "SearchFields",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
