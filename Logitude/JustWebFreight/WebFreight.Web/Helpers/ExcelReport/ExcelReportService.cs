@@ -12,12 +12,10 @@ namespace WebFreight.Web.Helpers.ExcelReport
     public class ExcelReportService
     {
         private readonly int tenant;
-        private readonly ReportHelper reportHelper;
         private readonly ExcelReportFileService excelReportFileService;
         public ExcelReportService(int tenant)
         {
             this.tenant = tenant;
-            reportHelper = new ReportHelper();
             excelReportFileService = new ExcelReportFileService(tenant);
         }
 
@@ -39,15 +37,20 @@ namespace WebFreight.Web.Helpers.ExcelReport
         {
             foreach (var dataProviderField in dataProvderFields)
             {
-                DataProviderField templateDataProviderField = templateDataProvderFields.FirstOrDefault(a => a.Name == dataProviderField.Name);
-                if (templateDataProviderField == null)
-                    continue;
+                CheckIfFieldExists(dataProviderField, templateDataProvderFields);
+            }
+        }
 
-                dataProviderField.IsChecked = true;
-                if (dataProviderField.Type == "Class" || dataProviderField.Type == "List")
-                {
-                    ResolveTemplateDifference(dataProviderField.Fields, templateDataProviderField.Fields);
-                }
+        private void CheckIfFieldExists(DataProviderField dataProviderField, List<DataProviderField> templateDataProvderFields)
+        {
+            DataProviderField templateDataProviderField = templateDataProvderFields.FirstOrDefault(a => a.Name == dataProviderField.Name);
+            if (templateDataProviderField == null)
+                return;
+
+            dataProviderField.IsChecked = true;
+            if (dataProviderField.Fields != null && dataProviderField.Fields.Count != 0)
+            {
+                ResolveTemplateDifference(dataProviderField.Fields, templateDataProviderField.Fields);
             }
         }
 
