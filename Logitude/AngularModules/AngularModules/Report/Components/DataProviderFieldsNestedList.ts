@@ -14,10 +14,6 @@ export class DataProviderFieldsNestedList {
             this.field.IsChecked = value;
     }
 
-    getMargin() {
-        return 20;
-      }
-
     checkChange(): void {
         this.field.IsChecked = !this.field.IsChecked;
         if (this.field.IsChecked === false) {

@@ -134,7 +134,7 @@ export class ExcelReportTemplateComponent implements OnInit {
 
         this.excelReportService.postDataProviderProperties(excelReportArguments).subscribe((myResponse: ServiceResponse) => {
             this.CurrentSession.StopBusyIndicator();
-           // this.CurrentSession.CurrentWindow.Close("");
+            this.CurrentSession.CurrentWindow.Close("");
         });
     }
 
