@@ -22,7 +22,7 @@
                     <td class="CellStretch">
                         <div style="height:100%;">
 
-                            <div  style="height:45%;vertical-align:top;">
+                            <div [ngStyle]="IsEnableReportTemplateExcel && {'height': '28.3%'}"  style="height:45%;vertical-align:top;">
 
                               <table>
 
@@ -222,7 +222,7 @@
                             <div style="height:5%;"></div>
 
 
-                            <div  style="height:45%;vertical-align:top;">
+                            <div  style="height:28.3%;vertical-align:top;" *ngIf="IsEnableReportTemplateExcel">
 
                                 <table>
   
@@ -346,7 +346,7 @@
                                                                                         <td style="width:5px"><div style="width:5px"></div></td>
                                                                                         <td style="width: 57px;">
                                                                                             <div>
-                                                                                                <button [disabled]="!item.IsSystem ? !IsEnableEditAllReportTemplate && !IsEnableEditUserReportTemplate :!IsEnableEditAllReportTemplate" style="display:inline;width:57px;vertical-align:middle" class="Button" (click)="EditReportsTemplate(item)">
+                                                                                                <button [disabled]="!item.IsSystem ? !IsEnableEditAllReportTemplate && !IsEnableEditUserReportTemplate :!IsEnableEditAllReportTemplate" style="display:inline;width:57px;vertical-align:middle" class="Button" (click)="EditExcelReportsTemplate(item,false)">
                                                                                                     <table>
                                                                                                         <tr>
                                                                                                             <td style="width:20px;"><img style="margin-bottom:-1px" src="./Images/Buttons/Edit.png" /></td>
@@ -406,10 +406,10 @@
   
                               </div>
   
-                              <div style="height:5%;"></div>
+                              <div *ngIf="IsEnableReportTemplateExcel" style="height:5%;"></div>
 
 
-                            <div style="height:45%;vertical-align:top;">
+                            <div [ngStyle]="IsEnableReportTemplateExcel && {'height': '28.3%'}"  style="height:45%;vertical-align:top;">
 
                                 <table>
 

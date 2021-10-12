@@ -1,0 +1,80 @@
+<style>
+    .iwanttohover:hover {
+        background: #DDE6F0;
+    }
+</style>
+
+
+<table>
+
+    <tr style="height:100%;vertical-align:top">
+        <div class="LocationDirective" LocationDirective Code="OVE">
+
+
+            <div style="height:30px;">
+                <table>
+                    <tr class="TabTitleRow">
+                        <td style="height:20px">
+                            <div style="width:10px;text-align:left;float: left"></div>
+
+                            <div style="margin-left:10px;margin-right:10px;text-align:left" class="SearchBox">
+                                <input [disabled]="!IsTextSearchEnabled" type="text" placeholder="Search"
+                                    (focus)="OnFucos();" (blur)="OnLostFucos();" [formControl]="SearchTextValue" />
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+
+            </div>
+            <div style="height:5px"></div>
+
+            <div style="margin:5px;overflow-y:auto;overflow-x:no-display;max-height:460px" class="BodyBackground">
+                <table style="vertical-align:top;top:0px;">
+                    <tr style="text-align:left;vertical-align:top" *ngFor="let item of DataProviderFields">
+                        <DataProviderFieldsNestedList [margin]="20" [field]="item"></DataProviderFieldsNestedList>
+                    </tr>
+                </table>
+            </div>
+
+        </div>
+
+    </tr>
+
+    <tr style="height: 32px;">
+        <td style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <div>
+                            <button class="Button" (click)="CloseButtonClicked()">Cancel</button>
+                        </div>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <div>
+                            <button class="Button" (click)="PreviewButtonClicked()">Preview</button>
+                        </div>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="RedButton" id="{{'OkButton' | IdGeneratorPipe}}"
+                            (click)="SaveButtonClicked()">OK</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+</table>

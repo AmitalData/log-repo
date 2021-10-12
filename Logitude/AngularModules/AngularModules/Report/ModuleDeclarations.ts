@@ -92,6 +92,8 @@ import { ShipmentDetailsFilterComponent } from './Components/FilterReportCompone
 import { VDKFilterComponent } from './Components/FilterReportComponent/VDKFilterComponent';
 import { UserDefinedReportFilterControl } from './Components/FilterReportComponent/UserDefinedReportFilterControl';
 import { LogitudeCRMReportFilterComponent } from './Components/FiltersComponent/CRM/LogitudeCRMReportFilterComponent';
+import { ExcelReportTemplateComponent } from './Components/ExcelReportTemplateComponent';
+import { DataProviderFieldsNestedList } from './Components/DataProviderFieldsNestedList';
 
 export const Components =
     [
@@ -170,7 +172,9 @@ export const Components =
         BluesnapPaymentsReportFilterComponent,
         ExternalReconciliationLinesReportFilterControl,
         UserDefinedReportFilterControl,
-        LogitudeCRMReportFilterComponent
+        LogitudeCRMReportFilterComponent,
+        ExcelReportTemplateComponent,
+        DataProviderFieldsNestedList
     ];
 
 export class ModuleDeclarations {
@@ -255,6 +259,7 @@ export class ModuleDeclarations {
             case "ExternalReconciliationLinesReportFilterControl": { myResult = ExternalReconciliationLinesReportFilterControl; break; }
             case "UserDefinedReportFilterControl": { myResult = UserDefinedReportFilterControl; break; }
             case "LogitudeCRMReportFilterComponent": { myResult = LogitudeCRMReportFilterComponent; break; }
+            case "ExcelReportTemplateComponent": { myResult = ExcelReportTemplateComponent; break; }
         }
 
         return myResult;

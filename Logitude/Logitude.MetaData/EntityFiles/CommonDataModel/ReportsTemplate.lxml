@@ -36,7 +36,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Reports Template&quot;"
-  Code="&quot;a32a&quot;"
+  Code="&quot;d3ba&quot;"
   Name="&quot;ReportsTemplate&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Common&quot;"
@@ -50,6 +50,7 @@
   ApplyOnPropertyChangedCode="false"
   HasApiHelper="false"
   AllowedForComputingPartners="false"
+  IsBusinessUnitEnabled="false"
   Code1="&quot;391c&quot;"
   Name1="&quot; Query Group&quot;"
   CustomFieldsCount="0"
@@ -1612,20 +1613,29 @@
     <Feature
       Code="&quot;SYSTEMTEMPLATEEDIT&quot;"
       FeatureTypeCode="&quot;AREA&quot;"
+      FeatureTextCodeCode="&quot;ReportsTemplate.Features.SystemTemplateEdit&quot;"
+      FeatureDefaultText="&quot;System Template Edit&quot;"
       IsPackagable="true"
-      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      FeatureTextCodeCode="&quot;ReportsTemplate.Features.SystemTemplateEdit&quot;"
-      FeatureDefaultText="&quot;System Template Edit&quot;" />
+      IsBusinessUnitEnabled="false" />
     <Feature
       Code="&quot;REPORTTEMPLATEMESSAGE&quot;"
       FeatureTypeCode="&quot;AREA&quot;"
+      FeatureTextCodeCode="&quot;ReportsTemplate.Features.ReportTemplateMessage&quot;"
+      FeatureDefaultText="&quot;Report Template Message&quot;"
       IsPackagable="true"
-      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      FeatureTextCodeCode="&quot;ReportsTemplate.Features.ReportTemplateMessage&quot;"
-      FeatureDefaultText="&quot;Report Template Message&quot;" />
+      IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;REPORTTEMPLATEEXCEL&quot;"
+      FeatureTypeCode="&quot;AREA&quot;"
+      FeatureTextCodeCode="&quot;ReportsTemplate.Features.REPORTTEMPLATEEXCEL&quot;"
+      FeatureDefaultText="&quot;Report Template Excel&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
   </AdditionalFeatures>
 </entity>
