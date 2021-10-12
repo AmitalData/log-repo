@@ -20,6 +20,7 @@ import { TreatmentWayPM } from  '../../../../Customs/EntityPMs/TreatmentWayPM';
 import { TreatmentWayListService } from  '../../../../Customs/Services/StandardLists/TreatmentWayListService';
 import { DeclarationPMService } from '../../../../Customs/Services/StandardPMs/DeclarationPMService';
 import { DeclarationExtendedListService } from '../../../../Customs/Services/ExtendedLists/DeclarationExtendedListService';
+import { DecCargoSplitConExtendedPMService } from '../../../../Customs/Services/ExtendedPMs/DecCargoSplitConExtendedPMService';
 
 @Component({
     
@@ -83,6 +84,8 @@ export class DecCargoSplitConComponent extends BaseComponent {
         }
     }
 
+    ParentCargoConsinmentItemList: any;
+    decCargoSplitConExtendedPMService: DecCargoSplitConExtendedPMService;
     DeclarationDirection: string;
     declarationExtendedListService: DeclarationExtendedListService;
     DecCargoSplitConStatusVisibility: boolean;
@@ -94,6 +97,12 @@ export class DecCargoSplitConComponent extends BaseComponent {
             this.declarationExtendedListService.GetSingleDeclarationByCustomFileNo(this.declarationCargoSplitPM.CustomFileNo).subscribe((response: any) => {
                 if (response != null) {
                     this.DeclarationDirection = response.Result.Direction;
+                    this.decCargoSplitConExtendedPMService = new DecCargoSplitConExtendedPMService();
+                    this.decCargoSplitConExtendedPMService.GetConsiPackageSequeList(response.Result.Id).subscribe((responseCon: any) => {
+                        if (responseCon != null) {
+                            this.ParentCargoConsinmentItemList = responseCon.Result;
+                        }
+                    });
                     this.SetDisplayFields();
                 }
             });
@@ -463,6 +472,11 @@ export class DecCargoSplitConComponent extends BaseComponent {
         
     }
 
+    ParentCargoConsinmentItemSelectionChanged(item,value) {
+        if (item != null) {
+            item.ParentCargoConsinmentItem = value;
+        }
+    }
 
     EditButtonClicked(item) {
 
