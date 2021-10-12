@@ -1392,9 +1392,6 @@ insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,Is
 declare @Fact_ChargesAccountingClosedByNewId varchar(15)
 execute usp_GetNextTableIdValue @Fact_ChargesAccountingClosedByNewId OUTPUT,'DWObjectField' 
 insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,DimensionTableCode,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,OriginalObjectFieldCode,DontDisplayInView,IsMultipleSelection) Values(@Fact_ChargesAccountingClosedByNewId,0,'Fact_Charges','[Accounting Closed By]','Accounting Closed By','Dimension','false',0,0,'DIM_Users','false','false','true','Operational','false','false','false','ShipmentComputedFields.AccountingClosedByUserId','false','false')  
-declare @Fact_ChargesGrossWeightKGNewId varchar(15)
-execute usp_GetNextTableIdValue @Fact_ChargesGrossWeightKGNewId OUTPUT,'DWObjectField' 
-insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,AggregationTypeCode,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,OriginalObjectFieldCode,DontDisplayInView,IsMultipleSelection) Values(@Fact_ChargesGrossWeightKGNewId,0,'Fact_Charges','[Gross Weight (KG)]','Gross Weight (KG)','Decimal','false',0,0,'false','true','SUM','true','Packages','false','false','false','Shipment.GrossWeightInKG','false','false')  
 declare @Fact_ChargesGrossWeightPerTonNewId varchar(15)
 execute usp_GetNextTableIdValue @Fact_ChargesGrossWeightPerTonNewId OUTPUT,'DWObjectField' 
 insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,AggregationTypeCode,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,OriginalObjectFieldCode,DontDisplayInView,IsMultipleSelection) Values(@Fact_ChargesGrossWeightPerTonNewId,0,'Fact_Charges','[Gross Weight Per Ton]','Gross Weight Per Ton','Decimal','false',0,0,'false','true','SUM','true','Packages','false','false','false','Shipment.GrossWeightPerTon','false','false')  
@@ -1419,6 +1416,9 @@ insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,Is
 declare @Fact_ChargesOrderNumberofPackagesNewId varchar(15)
 execute usp_GetNextTableIdValue @Fact_ChargesOrderNumberofPackagesNewId OUTPUT,'DWObjectField' 
 insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,AggregationTypeCode,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,OriginalObjectFieldCode,DontDisplayInView,IsMultipleSelection) Values(@Fact_ChargesOrderNumberofPackagesNewId,0,'Fact_Charges','[Order Number of Packages]','Order Number of Packages','Integer','false',0,0,'false','true','SUM','true','Packages','false','false','false','Shipment.BookingNumberOfPackages','false','false')  
+declare @Fact_ChargesGrossWeightKGNewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_ChargesGrossWeightKGNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,OriginalObjectFieldCode,DontDisplayInView,IsMultipleSelection) Values(@Fact_ChargesGrossWeightKGNewId,0,'Fact_Charges','[Gross Weight (KG)]','Gross Weight (KG)','Decimal','false',0,0,'false','false','true','Packages','false','false','false','Shipment.GrossWeightInKG','false','false')  
 ------------------------------------------------------------------------------------
 declare @Fact_InlandDomesticShipmentsNewId varchar(15)
 execute usp_GetNextTableIdValue @Fact_InlandDomesticShipmentsNewId OUTPUT,'DWObjectTable' 

@@ -607,7 +607,7 @@ export class DWQueryBuilderComponent extends DWQueryBuilderBaseComponent {
         if (this.SelectedItem.IsMeasurement) {
             var hasShipmentNumberColumn = this.SelectedFieldsDataSource.filter(a => a.DisplayName == "Shipment Number")[0] ? true : false;
             if (!hasShipmentNumberColumn) {
-                this.ShowValidateMessage("You are not allow to add " + this.SelectedItem.DisplayName + " column unless you add the Shipment Number column");
+                this.ShowValidateMessage("You are not allowed to add " + this.SelectedItem.DisplayName + " column unless you add the Shipment Number column");
                 isValidate = false;
             }
         }
@@ -924,7 +924,7 @@ export class DWQueryBuilderComponent extends DWQueryBuilderBaseComponent {
         }
  
         if (this.hasMeasurementFields() && !this.hasShipmentNumberField()) {
-            this.ShowValidateMessage("You are not allow to save changes unless you add the Shipment Number column");
+            this.ShowValidateMessage("Please add Shipment Number column to load the data");
             return;
         }
 
@@ -1033,7 +1033,7 @@ export class DWQueryBuilderComponent extends DWQueryBuilderBaseComponent {
         }
           
         if (this.hasMeasurementFields() && !this.hasShipmentNumberField()) {
-            this.ShowValidateMessage("You are not allow to save changes unless you add the Shipment Number column");
+            this.ShowValidateMessage("You are not allowed to save changes unless you add the Shipment Number column");
             return;
         }
 
