@@ -4,10 +4,11 @@ import {AppTool, DateTool} from '../../Infrastructure/Tools';
 import {SessionLocator} from '../../Infrastructure/Utilities/SessionLocator';
 import {TextCodeTranslator} from '../../Infrastructure/Utilities/TextCodeTranslator';
 
+const approvedStatus = '2';
 export class JournalValidator
 {
     private static CurrentSession = SessionLocator.SelectedSession;
-  
+
 
     public static ValidateJournal(entityPM: any)
     {
@@ -70,7 +71,7 @@ export class JournalValidator
                     }
                 }
 
-                
+
                 // Ref. + Due Dates
                 if (!line.DocumentDate) {
                     errors.push(TextCodeTranslator.Translate("Accounting.General.O.chooseRefDate") + " " + line.Line  ); //You should choose Ref. Date for line
@@ -151,27 +152,32 @@ export class JournalValidator
     errorList: string[];
     public Validate(entityPM: JournalPM) {
 
+        var oldEntity:any = entityPM.OldEntityPM;
+        if(oldEntity && oldEntity?.statusCode == approvedStatus)
+            return [];
+
+
         JournalValidator.CurrentSession = SessionLocator.SelectedSession;
 
         this.errorList = [];
         var result = [];
-      
+
         // Validate last row of journal lines
         //if (!AppTool.IsNullOrEmpty(entityPM.JournalLines)) {
         //    var lastRow = entityPM.JournalLines[entityPM.JournalLines.length - 1];
         //}
-       
+
         for (var line in entityPM.JournalLines) {
             var journalLine = entityPM.JournalLines[line];
             result = JournalValidator.ValidateJournalLines(journalLine);
-            this.FillErrorList(result); 
+            this.FillErrorList(result);
         }
 
 
         // Validate Totals
         result = JournalValidator.ValidateTotals(entityPM)
         if (result.length > 0) {
-            this.FillErrorList(result); 
+            this.FillErrorList(result);
             return this.errorList;
         }
 
