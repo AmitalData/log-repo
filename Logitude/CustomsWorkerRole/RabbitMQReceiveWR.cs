@@ -200,7 +200,7 @@ namespace CustomsWorkerRole
 
         private void WorkUntil_AnalyzeQueue_Empty_Db_NOTINUSE()
         {
-
+            Logger.LogMe("START", false, "TESTELISH");
             var customRabbitMQQueue = new CustomRabbitMQQueue();
             var _CustomsAnalyzeQueueServices = customRabbitMQQueue.GetAllQueueDetails()
              .Where(r => r.AnalyzeQueueService != AnalyzeMQQueueServiceEnum.none)
@@ -212,21 +212,28 @@ namespace CustomsWorkerRole
                 EventHandler<BasicDeliverEventArgs> consumerEventArgs = null;
                 EventingBasicConsumer consumer = null;
 
-                var factory = RabbitmqHelper.GetConnectionFactory();
-                factory.RequestedHeartbeat = TimeSpan.FromSeconds(600);
+              //  var factory = RabbitmqHelper.GetConnectionFactory();
+                //factory.RequestedHeartbeat = TimeSpan.FromSeconds(600);
          
            foreach (QueueDetails queue in _CustomsAnalyzeQueueServices)
                 {
 
                     {
-
+                       
 
                         try
                         {
-
+                            var factory = new ConnectionFactory() { HostName = "unimq", UserName = "v5101", Password = "Aa123" };
                             using (var connection = factory.CreateConnection())
                             using (var channel = connection.CreateModel())
                             {
+
+
+                            //    using (var connection = factory.CreateConnection())
+                            //using (var channel = connection.CreateModel())
+                            //{
+                                Logger.LogMe("CONNECTION", false, "TESTELISH");
+
                                 channel.BasicQos(0, 5, true);
                                 //Create queue if not exists
                                 RabbitmqHelper.DeclareQueue(channel, queue.Code);
@@ -249,6 +256,7 @@ namespace CustomsWorkerRole
                                         string remark;
                                         var message =  Encoding.UTF8.GetString(body);
                                         messageId = ea.BasicProperties.MessageId;
+                                        Logger.LogMe("RUN", false, "TESTELISH");
 
                                         Exec(customRabbitMQQueue, queue, analyzeQueueRepository, messageId, 1 , message);
                                         LogDoneItemInMemory();
@@ -257,18 +265,21 @@ namespace CustomsWorkerRole
 
                                         if (true)
                                         {
-                                             channel.BasicAck(ea.DeliveryTag, false);
+                                            Logger.LogMe("BasicAck", false, "TESTELISH");
+
+                                            channel.BasicAck(ea.DeliveryTag, false);
                                          }
 
                                     }
 
-                                    catch
+                                    catch(Exception ex)
                                     {
 
+                                        Logger.LogMe(ex.Message, false, "TESTELISH");
 
                                     }
 
-                                    };
+                                };
                                 // }
 
 
@@ -278,6 +289,8 @@ namespace CustomsWorkerRole
                         }
                         catch (Exception e)
                         {
+                            Logger.LogMe(e.Message, false, "TESTELISH");
+
                             ExceptionHandler.HandleException(e, DateTime.Now, 0, "", "WorkerRole", "CustomsAnalyzeQueueWR : Run() Method", null);
                             Thread.Sleep(5000);
                         }

@@ -203,7 +203,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                             Status = "W",
                             To = "RabbitMQ",
                             CommunicationLogTypeCode = "T",
-                            FolderName = "",
+                            FolderName = "RabbitMQ",
                             From = "Logitude",
                             InOut = "O",
 
@@ -218,7 +218,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
  
 
 
-                        var queuename = "";
+                        var queuename = "ucbud2lt";
                         var args = new Dictionary<string, object>();
                         //lazy = store messages to disk => no lost messages in case on rabbitmq restart 
 
