@@ -182,7 +182,7 @@ namespace WebFreight.Web.WebPages
                             documents = up.GetDocumentByEntityAndTenant(downloadAllDocumentsArgs.EntityId, downloadAllDocumentsArgs.Tenant);
                             break;
                     }
-                    if (string.IsNullOrEmpty(downloadAllDocumentsArgs.Token))
+                    if (string.IsNullOrEmpty(downloadAllDocumentsArgs.Token) && downloadAllDocumentsArgs.RequestArea != "CargoTracking")
                     {
                         if (downloadAllDocumentsArgs.PartnerType == "AG")
                         {
@@ -396,6 +396,7 @@ namespace WebFreight.Web.WebPages
                         Tenant = int.Parse(filestrings[0]),
                         PartnerType = filestrings[4],
                         Token = filestrings.Length == 6 ? filestrings[5] : null,
+                        RequestArea = filestrings.Length == 9 ? filestrings[8] : null,
                     };
 
                     if (headerRequest.Contains("securitykey"))
@@ -596,5 +597,6 @@ namespace WebFreight.Web.WebPages
         public string Token { get; set; }
         public string Securitykey { get; set; }
         public string FileName { get; set; }
+        public string RequestArea { get; set; }
     }
 }
