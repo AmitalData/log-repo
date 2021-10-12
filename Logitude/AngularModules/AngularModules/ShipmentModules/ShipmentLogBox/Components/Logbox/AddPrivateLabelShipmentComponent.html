@@ -184,7 +184,7 @@
 	</tr>
 	<tr>
 		<td>
-			<div class="FillParent CurvedArea">
+			<div class="FillParent CurvedArea" style="padding: 5px;">
 				<table>
 					<tr>
 						<td style="width: 155px; vertical-align: top" class="AppLeftMenuBackground">
@@ -1034,7 +1034,7 @@
 													<tr style="height:33px;" *ngIf="!IsDSVTenant || ShowAddDocument">
 
 														<td>
-																	<table *ngIf="ShowAddDocument">
+																	<table *ngIf="ShowAddDocument && DirectionId == 'E'">
 																			<tr>
 																				<td style="width:7px;">
 																				</td>
@@ -1049,7 +1049,7 @@
 																<tr style="height:33px">
 
 
-																	<td style="width:7px;"> 
+																	<td style="width:7px;">
 																		<div style="width: 7px; height: 7px; background: #E45A26; -webkit-border-radius: 25px; -moz-border-radius: 25px; border-radius: 25px;"></div>
 
 																	</td>
@@ -1061,7 +1061,8 @@
 																	</td>
 
 
-																	<td style="width:100px"></td>
+																	<td style="width:300px"></td>
+																	<td  *ngIf="ShowAddDocument && DirectionId == 'E'" style="width:360px"></td>
 																	<td *ngIf="TransportModeId === 'O' &&DirectionId == 'C'" [class.Disabled]="!TransportModeId || TransportModeId != 'O'">
 																		<table>
 																			<tr>
