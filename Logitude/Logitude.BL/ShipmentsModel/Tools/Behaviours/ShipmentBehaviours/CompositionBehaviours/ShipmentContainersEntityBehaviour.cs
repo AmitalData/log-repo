@@ -286,7 +286,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
         {
             if (IsSendAutomaticallyOceanOnsightsRequestByContainer())
             {
-                var allUpdatedContainers = initializer.ShipmentPackagesChangeSet.Where(a => (a.ChangeSetOp == ChangeSetOperation.Update || a.ChangeSetOp == ChangeSetOperation.Insert) && a.ContainerNumber != null);
+                var allUpdatedContainers = initializer.ShipmentPackagesChangeSet.Where(a => a.ContainerNumber != null);
                 foreach (var container in allUpdatedContainers)
                 {
                     this.SendAutomaticallyOceanOnsightsRequestByContainer(container.ContainerEntityId);
@@ -323,7 +323,13 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
                 var isContainerUpdated = initializer.ShipmentPackagesChangeSet
                       .Where(a => a.ChangeSetOp == ChangeSetOperation.Update || a.ChangeSetOp == ChangeSetOperation.Insert)
                       .Any(a => a.ContainerNumber != null);
+
                 if (string.IsNullOrEmpty(this.initializer.EntityPM.Master) && isContainerUpdated)
+                {
+                    return true;
+                }
+
+                if(!string.IsNullOrEmpty(this.initializer.EntityPM.Master) && !this.initializer.IsFirstFourDigitsOfMasterNumberAreLetters())
                 {
                     return true;
                 }
