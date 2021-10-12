@@ -682,7 +682,6 @@ namespace WebFreight.Web.ExternalAPIs.V1
             ValidateInlandDomesticShipmentToTypeCode(entityPM);
             entityPM = SetInlandDomesticShipmentFromPartners(entityPM);
             entityPM = SetInlandDomesticShipmentToPartners(entityPM);
-           // ValidateInlandDomesticShipmentPartnersAddesses(entityPM);
             ValidateInlandDomesticMainCarriageDates(entityPM);
 
             return entityPM;
@@ -690,7 +689,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
         private void ValidateInlandDomesticShipmentToTypeCode(ShipmentPM entityPM)
         {
             bool isCityOrCountryNull = string.IsNullOrEmpty(entityPM.InlandDomesticToCity) || string.IsNullOrEmpty(entityPM.InlandDomesticToCountryId);
-           
+            string[] inlandDomesticToTypeCodes = { "CASL", "PART", "PORT" };
             if (string.IsNullOrEmpty(entityPM.InlandDomesticToTypeCode))
             {
                 throw new ApplicationException("InlandDomesticToTypeCode Field is Required");
@@ -701,22 +700,22 @@ namespace WebFreight.Web.ExternalAPIs.V1
             }
             else if (entityPM.InlandDomesticToTypeCode == "PART" && string.IsNullOrEmpty(entityPM.MainCarriageToPartnerId))
             {
-                throw new ApplicationException("MainCarriageToPartnerId Field is Required");
+                throw new ApplicationException("MainCarriageToPartner Field is Required");
             }
-            else if (entityPM.InlandDomesticToTypeCode == "PORT" && string.IsNullOrEmpty(entityPM.MainCarriageFromPortId))           
+            else if (entityPM.InlandDomesticToTypeCode == "PORT" && string.IsNullOrEmpty(entityPM.MainCarriageToPortId))           
             {
-                throw new ApplicationException("MainCarriageFromPortId Field is Required");
+                throw new ApplicationException("ToPort Field is Required");
             }
-            else
+            else if (!inlandDomesticToTypeCodes.Contains(entityPM.InlandDomesticToTypeCode))
             {
-                throw new ApplicationException("Invalid InlandDomesticFromTypeCode");
+                throw new ApplicationException("Invalid InlandDomesticToTypeCode");
             }
         }
 
         private void ValidateInlandDomesticShipmentFromTypeCode(ShipmentPM entityPM)
         {
             bool isCityOrCountryNull = string.IsNullOrEmpty(entityPM.InlandDomesticFromCity) || string.IsNullOrEmpty(entityPM.InlandDomesticFromCountryId);
-
+            string[] inlandDomesticFromTypeCodes = { "CASL", "PART", "PORT"};
             if (string.IsNullOrEmpty(entityPM.InlandDomesticFromTypeCode))
             {
                 throw new ApplicationException("InlandDomesticFromTypeCode Field is Required");
@@ -725,15 +724,15 @@ namespace WebFreight.Web.ExternalAPIs.V1
             {
                 throw new ApplicationException("InlandDomesticFrom City And Country Fields are Required");
             }
-            else if (entityPM.InlandDomesticFromTypeCode == "PART" && string.IsNullOrEmpty(entityPM.MainCarriageFromPartnerId))
+            else if (entityPM.InlandDomesticFromTypeCode == "PART" && (string.IsNullOrEmpty(entityPM.MainCarriageFromPartnerId)))
             {
-                throw new ApplicationException("MainCarriageFromPartnerId Field is Required");
+                throw new ApplicationException("MainCarriageFromPartner Field is Required");
             }
             else if (entityPM.InlandDomesticFromTypeCode == "PORT" && string.IsNullOrEmpty(entityPM.MainCarriageFromPortId))
             {
-                throw new ApplicationException("MainCarriageFromPortId Field is Required");
+                throw new ApplicationException("FromPort Field is Required");
             }
-            else
+            else if (!inlandDomesticFromTypeCodes.Contains(entityPM.InlandDomesticFromTypeCode))
             {
                 throw new ApplicationException("Invalid InlandDomesticFromTypeCode");
             }
@@ -795,49 +794,6 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 throw new ApplicationException("Main-Carriage actual departure must be less than Main-Carriage actual arrival");
             }
 
-        }
-
-        private void ValidateInlandDomesticShipmentPartnersAddesses(ShipmentPM entityPM)
-        {
-            List<DomesticCountry> iDomesticCountries = new List<DomesticCountry>();
-            AddDomesticAddress(iDomesticCountries, entityPM.MainCarriageFromAddressId, entityPM.Tenant);
-            AddDomesticAddress(iDomesticCountries, entityPM.MainCarriageToAddressId, entityPM.Tenant);
-
-            if (iDomesticCountries.GroupBy(g => g.CountryId).Count() > 1)
-            {
-                bool isAllPortsEC = iDomesticCountries.Where(d => d.CountryIsEC == false).Any() ? false : true;
-                bool isAllPortsNA = iDomesticCountries.Where(d => d.CountryIsNorthAmerica == false).Any() ? false : true;
-                bool isAllPortsChina = iDomesticCountries.Where(d => d.CountryIsGreaterChinese == false).Any() ? false : true;
-
-                if (!isAllPortsEC && !isAllPortsNA && !isAllPortsChina)
-                {
-                    throw new ApplicationException("Both Addresses must be in the same country since the direction is Domestic");
-                }
-            }
-        }
-
-        private void AddDomesticAddress(List<DomesticCountry> iDomesticCountries, string iAddressId, int iTenant)
-        {
-            if (!string.IsNullOrEmpty(iAddressId))
-            {
-                if (!iDomesticCountries.Where(d => d.Id == iAddressId).Any())
-                {
-                    AddressRepository addressRepository = new AddressRepository(iTenant);
-                    Address iAddress = addressRepository.GetSingleAddress(iAddressId, iTenant);
-
-                    if (iAddress != null)
-                    {
-                        iDomesticCountries.Add(new DomesticCountry()
-                        {
-                            Id = iAddress.Id,
-                            CountryId = iAddress.CountryId,
-                            CountryIsEC = iAddress.Country.EC,
-                            CountryIsNorthAmerica = iAddress.Country.IsNorthAmerica,
-                            CountryIsGreaterChinese = iAddress.Country.IsGreaterChina,
-                        });
-                    }
-                }
-            }
         }
 
         private bool IsRoutingLegDatesValid(DateTime? fisrtDate, DateTime? secondeDate)

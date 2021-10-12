@@ -210,9 +210,9 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
     
     public string InlandDomesticToCity { get; set; }
     
-    public string MainCarriageFromPortAddress { get; set; }
+    public Port MainCarriageFromPort { get; set; }
     
-    public string MainCarriageToPortAddress { get; set; }
+    public Port MainCarriageToPort { get; set; }
 
     public  string  ComputingPartnerCode { get; set; }
 

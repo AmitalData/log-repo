@@ -33,6 +33,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
             HandleCustomAgentImport();
             HandleReleasingAgent();
             HandleFreightForwarder();
+            HandleInlandDemosticPartners();
         }
 
         private void HandleShipper()
@@ -300,6 +301,64 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
             bool isShipmentFromUNF = entityPM.IsHybrid;
             bool isShipmentFromOrToLogbox = isShipmentFromUNF || entityPM.IsImporterShipment || !string.IsNullOrEmpty(entityPM.ForwarderShipmentNumber);
             return isShipmentFromOrToLogbox;
+        }
+
+        private void HandleInlandDemosticPartners()
+        {
+            if (!IsInlandDomesticShipment())
+            {
+                return ;
+            }
+
+            if (entityPM.InlandDomesticFromTypeCode == "PART")
+            {
+                HandleMainCarrigeFromPartner();
+            }
+            if (entityPM.InlandDomesticToTypeCode == "PART")
+            {
+                HandleMainCarrigeToPartner();
+            }
+
+        }
+        private bool IsInlandDomesticShipment()
+        {
+            return entityPM.DirectionId == "D" && entityPM.TransportModeId == "I";
+        }
+        private void HandleMainCarrigeFromPartner()
+        {
+            if (!entityPM.IsExternalAPI)
+            {
+                return ;
+            }
+
+            Card card = CardRepository.GetSingleCard(entityPM.MainCarriageFromPartnerId, initializer.Tenant, true);
+            if (card == null)
+            {
+                return;
+            }
+
+            if (string.IsNullOrWhiteSpace(entityPM.MainCarriageFromAddressId))
+            {
+                entityPM.MainCarriageFromAddressId = initializer.AddressRepository.GetMainAddressId(entityPM.MainCarriageFromPartnerId, initializer.Tenant);
+            }
+        }
+        private void HandleMainCarrigeToPartner()
+        {
+            if (!entityPM.IsExternalAPI)
+            {
+                return;
+            }
+
+            Card card = CardRepository.GetSingleCard(entityPM.MainCarriageToPartnerId, initializer.Tenant, true);
+            if (card == null)
+            {
+                return;
+            }
+
+            if (string.IsNullOrWhiteSpace(entityPM.MainCarriageToAddressId))
+            {
+                entityPM.MainCarriageToAddressId = initializer.AddressRepository.GetMainAddressId(entityPM.MainCarriageToPartnerId, initializer.Tenant);
+            }
         }
     }
 }
