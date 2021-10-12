@@ -384,7 +384,7 @@ namespace WebFreight.Web.WebPages
 
 
                 string fileName = Request["filename"];
-
+                const int arrayIncludingRequesrAreaMaxLength = 9;
 
                 tenant = Convert.ToInt32(filestrings[0]);
                 if (filestrings[1] == "null")
@@ -396,7 +396,7 @@ namespace WebFreight.Web.WebPages
                         Tenant = int.Parse(filestrings[0]),
                         PartnerType = filestrings[4],
                         Token = filestrings.Length == 6 ? filestrings[5] : null,
-                        RequestArea = filestrings.Length == 9 ? filestrings[8] : null,
+                        RequestArea = filestrings.Length == arrayIncludingRequesrAreaMaxLength ? filestrings[8] : null,
                     };
 
                     if (headerRequest.Contains("securitykey"))
