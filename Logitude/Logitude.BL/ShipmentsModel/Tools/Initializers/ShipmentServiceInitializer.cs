@@ -241,5 +241,22 @@ namespace Logitude.BL.ShipmentsModel.Tools.Initializers
         {
             this.Customer = customer;
         }
+
+        public bool IsFirstFourDigitsOfMasterNumberAreLetters()
+        {
+            if (this.EntityPM.Master.Length < 4)
+            {
+                return false;
+            }
+            string masterNumber = this.EntityPM.Master.Substring(0, 4);
+            if (masterNumber.All(char.IsLetter))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
     }
 }
