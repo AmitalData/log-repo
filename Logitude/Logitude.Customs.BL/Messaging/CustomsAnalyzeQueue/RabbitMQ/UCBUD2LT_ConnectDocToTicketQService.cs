@@ -18,10 +18,13 @@ using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
 using System.Xml.Linq;
+using System.Xml.Serialization;
 
 namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
 {
@@ -43,16 +46,32 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
 
                 res.ObjectTableID = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
                 LogMessagingUtil.Instance.AppendLine("UCBUD2LT_ConnectDocToTicketQService");
+                XmlSerializer serializer = new XmlSerializer(typeof(DCAInUCBUD2LTWithResponseContentHeader));
+                DCAInUCBUD2LTWithResponseContentHeader mySTBMessage;
+                using (TextReader reader = new StringReader(communicationsData))
+                {
+                     
 
-                DCAInUCBUD2LTWithResponseContentHeader mySTBMessage = GetSTBMessage(communicationsData);
-                if (string.IsNullOrWhiteSpace(mySTBMessage.DocumentTypeCode))
+                    XmlDocument doc = new XmlDocument();
+                    doc.Load(reader);
+
+                     XmlNodeList elemList = doc.GetElementsByTagName("Body");
+                  
+                   mySTBMessage = (DCAInUCBUD2LTWithResponseContentHeader)serializer.Deserialize(new StringReader(elemList[0].InnerXml));
+
+                    
+                }
+
+
+
+                 if (string.IsNullOrWhiteSpace(mySTBMessage.DocumentTypeCode))
                 {
                     res.ErrorMessage = $"bad communicationsData  mySTBMessage.DocumentTypeCode is null";
                     res.MyCommStatusEnum = Def.ClosedTable.CommStatusEnum.F;
                     return res;
                 }
 
-                var qsDeclarationQueryService = new DeclarationQueryService(_CommunicationLog.Tenant);
+                var qsDeclarationQueryService = new DeclarationQueryService(mySTBMessage.tenant);
 
                 var xml = XmlGenericUtil<LOGIDOCS>.SerializeObject(
               new LOGIDOCS()
@@ -177,7 +196,11 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
 
             return ele;
         }
+
     }
+
+    [XmlRoot(Namespace = "http://amital.com/customs/Prod/DCAInUCBUD2LTWithResponseContentHeader", IsNullable = false)]
+    [XmlType(AnonymousType = true, Namespace = "http://amital.com/customs/Prod/DCAInUCBUD2LTWithResponseContentHeader")]
     public class DCAInUCBUD2LTWithResponseContentHeader 
     {
 

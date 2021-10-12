@@ -27,6 +27,15 @@ namespace Simplog.Data.CommonDataModel.Repositories
         {
             commonDataContext = CommonDataContext.GetContext(tenant);
         }
+        public CommunicationLog GetSingleCommunicationLogInProccess(string entityId, int tenant , string to, string correlationID)
+        {
+            var q = (from a in context.CommunicationLogs
+                     where a.To == to && a.EntityId== entityId && a.CommunicationStatusTypeCode=="W" && a.CorrelationID == correlationID
+                     select a);
+            var log = q.FirstOrDefault();
+            return log;
+ 
+        }
 
         public CommunicationLog GetSingleCommunicationLog(string id,int tenant)
         {
