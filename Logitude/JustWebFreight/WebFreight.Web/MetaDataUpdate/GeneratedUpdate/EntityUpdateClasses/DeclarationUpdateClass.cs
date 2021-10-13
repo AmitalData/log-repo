@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationUpdateClass
    {  		
-		public const string HashString = "dd8fc83d7fab95f19abad595914cee89";
+		public const string HashString = "3fac6ab1e4a36bc19d541dcd4a4c769e";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -14805,6 +14805,64 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "IsHatraDateNull",
+					  						ObjectTableName =  "Customs.Declaration",
+					  						FieldsDataType =  "Boolean",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "IsHatraDateNull",
+					  						ListPropertyPath =  "IsHatraDateNull",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "IsHatraDateNull",
+					  						DefaultText =  "Is PaymentDate Null",
+					  						ListFieldLable =  "IsHatraDateNullListLable",
+					  						ListLableDefaultText =  "IsHatraDateNull",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
@@ -14952,7 +15010,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
              AdvancedQueryFilter UnReleasedFastProcessQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.Declaration.FastIndividualProcessCode", PredefinedValue = "F",PredefinedValue2 = null, QueryId = UnReleasedFastProcessQuery.Id,QueryCode = UnReleasedFastProcessQuery.UniqueCode, Tenant = 0,Operator = "Equals"}, addedQueryFilters);
 
 
-             AdvancedQueryFilter UnReleasedFastProcessQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.Declaration.HatraDate", PredefinedValue = "",PredefinedValue2 = null, QueryId = UnReleasedFastProcessQuery.Id,QueryCode = UnReleasedFastProcessQuery.UniqueCode, Tenant = 0,Operator = "Equals"}, addedQueryFilters);
+             AdvancedQueryFilter UnReleasedFastProcessQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.Declaration.IsHatraDateNull", PredefinedValue = "true",PredefinedValue2 = null, QueryId = UnReleasedFastProcessQuery.Id,QueryCode = UnReleasedFastProcessQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
 
 
              AdvancedQueryFilter UnReleasedFastProcessQueryFilter_2 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.Declaration.IsCourierDeclaration", PredefinedValue = "true",PredefinedValue2 = null, QueryId = UnReleasedFastProcessQuery.Id,QueryCode = UnReleasedFastProcessQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
@@ -15012,7 +15070,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
              AdvancedQueryFilter UnReleasedIndividualQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.Declaration.FastIndividualProcessCode", PredefinedValue = "I",PredefinedValue2 = null, QueryId = UnReleasedIndividualQuery.Id,QueryCode = UnReleasedIndividualQuery.UniqueCode, Tenant = 0,Operator = "Equals"}, addedQueryFilters);
 
 
-             AdvancedQueryFilter UnReleasedIndividualQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.Declaration.HatraDate", PredefinedValue = "",PredefinedValue2 = null, QueryId = UnReleasedIndividualQuery.Id,QueryCode = UnReleasedIndividualQuery.UniqueCode, Tenant = 0,Operator = "Equals"}, addedQueryFilters);
+             AdvancedQueryFilter UnReleasedIndividualQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.Declaration.IsHatraDateNull", PredefinedValue = "true",PredefinedValue2 = null, QueryId = UnReleasedIndividualQuery.Id,QueryCode = UnReleasedIndividualQuery.UniqueCode, Tenant = 0,Operator = "Equals"}, addedQueryFilters);
 
 
              AdvancedQueryFilter UnReleasedIndividualQueryFilter_2 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.Declaration.IsCourierDeclaration", PredefinedValue = "true",PredefinedValue2 = null, QueryId = UnReleasedIndividualQuery.Id,QueryCode = UnReleasedIndividualQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
@@ -15584,6 +15642,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		   Feature DeclarationFeature_AddNewClientFromManifest = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AddNewClientFromManifest", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.AddNewClientFromManifest", NameTextCodeDefaultText = @"Add New Client " }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DeclarationObjectTable);
 
 		   Feature DeclarationFeature_ICL = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ICL", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.ICL", NameTextCodeDefaultText = @"ICL Interface" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DeclarationObjectTable);
+
+		   Feature DeclarationFeature_MultiUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "MultiUpdate", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.MultiUpdate", NameTextCodeDefaultText = @"Multi update Process Code/TaxExemptCode" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DeclarationObjectTable);
 
    
 	    
@@ -17022,7 +17082,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
              			   Feature DeclarationFeature_MB610 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Cancel Declaration Closure", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Declaration.Features.CancelDeclarationClosure", NameTextCodeDefaultText = "Cancel Declaration Closure", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,DeclarationObjectTable);
              			   Feature DeclarationFeature_MB611 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DeclarationCustomsRequests", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.DeclarationCustomsRequests", NameTextCodeDefaultText = "Declaration Customs Requests", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,DeclarationObjectTable);
              			   Feature DeclarationFeature_MB612 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DeclarationCancellation", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Declaration.Features.DeclarationCancellation", NameTextCodeDefaultText = "Declaration Cancellation", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,DeclarationObjectTable);
-             			   Feature DeclarationFeature_MB613 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "MultiUpdate", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Declaration.Features.MultiupdateProcessCode/TaxExemptCode", NameTextCodeDefaultText = "Multi update Process Code/TaxExemptCode", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,DeclarationObjectTable);
                    
     
 			   Feature DeclarationFeature_MB7 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DOCUMENTSPANEL", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.DocumentsPanel", NameTextCodeDefaultText = "Declaration Documents Panel", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,DeclarationObjectTable);
@@ -17516,26 +17575,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
                         HtmlComponentPath="./CustomsModules/CustomsDeclarationModules/DeclarationOthers/Components/DeclarationCancellation/DeclarationCancellationComponent",
                         Width=0,
 						FeatureUniqeCode=  DeclarationFeature_MB612.FeatureUniqeCode,
-					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
-	   
-			   MenuButton DeclarationMenuButton613 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
-					{
-						EventCode = "MultiUpdate",
-						Index = 15, 
-						IsActive = true,
-						LabelTextCodeCode = "Declaration.B.MultiupdateProcessCode/TaxExemptCode",
-						LabelTextCodeDefaultText = "Multi update Process Code/TaxExemptCode",
-						Tenant = 0,
-						MenuButtonGroupId = DeclarationMenuButtonGroup.Id,
-						ParentMenuButtonId = DeclarationMenuButton6.Id,
-						ObjectTableId = DeclarationObjectTable.Id,
-						MenuButtonType = "menuitem",
-						FeatureId=  DeclarationFeature_MB613.Id,
-						Style = null,
-						LocalDefaultText = "עדכון קוד תהליך/הנחה פטור",
-                        HtmlComponentPath=null,
-                        Width=0,
-						FeatureUniqeCode=  DeclarationFeature_MB613.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	          
    

@@ -104,6 +104,7 @@
             this.rabbitMQToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sendToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.recivedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.singletonFTPCommunicationWorkerRoleWinServiceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -184,7 +185,8 @@
             this.reqSheetStatisticToolStripMenuItem,
             this.rePushAnalyzeToolStripMenuItem,
             this.fTPCommunicationWorkerRoleToolStripMenuItem,
-            this.commDecServiceToolStripMenuItem});
+            this.commDecServiceToolStripMenuItem,
+            this.singletonFTPCommunicationWorkerRoleWinServiceToolStripMenuItem});
             this.debugToolStripMenuItem.Name = "debugToolStripMenuItem";
             this.debugToolStripMenuItem.Size = new System.Drawing.Size(54, 20);
             this.debugToolStripMenuItem.Text = "Debug";
@@ -252,7 +254,7 @@
             // toDcaToolStripMenuItem
             // 
             this.toDcaToolStripMenuItem.Name = "toDcaToolStripMenuItem";
-            this.toDcaToolStripMenuItem.Size = new System.Drawing.Size(129, 22);
+            this.toDcaToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.toDcaToolStripMenuItem.Text = "380 to Dca";
             this.toDcaToolStripMenuItem.Click += new System.EventHandler(this.toDcaToolStripMenuItem_Click);
             // 
@@ -750,12 +752,17 @@
             this.sendToolStripMenuItem.Click += new System.EventHandler(this.sendToolStripMenuItem_Click);
             // 
             // recivedToolStripMenuItem
+            // singletonFTPCommunicationWorkerRoleWinServiceToolStripMenuItem
             // 
 
             this.recivedToolStripMenuItem.Name = "recivedToolStripMenuItem";
             this.recivedToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.recivedToolStripMenuItem.Text = "Recived";
             this.recivedToolStripMenuItem.Click += new System.EventHandler(this.recivedToolStripMenuItem_Click);
+            this.singletonFTPCommunicationWorkerRoleWinServiceToolStripMenuItem.Name = "singletonFTPCommunicationWorkerRoleWinServiceToolStripMenuItem";
+            this.singletonFTPCommunicationWorkerRoleWinServiceToolStripMenuItem.Size = new System.Drawing.Size(349, 22);
+            this.singletonFTPCommunicationWorkerRoleWinServiceToolStripMenuItem.Text = "SingletonFTPCommunicationWorkerRoleWinService";
+          //  this.singletonFTPCommunicationWorkerRoleWinServiceToolStripMenuItem.Click += new System.EventHandler(this.singletonFTPCommunicationWorkerRoleWinServiceToolStripMenuItem_Click);
             // 
             // TesterForm
             // 
@@ -861,5 +868,6 @@
         private System.Windows.Forms.ToolStripMenuItem sendToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem recivedToolStripMenuItem;
 
+        private System.Windows.Forms.ToolStripMenuItem singletonFTPCommunicationWorkerRoleWinServiceToolStripMenuItem;
     }
 }

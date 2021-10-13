@@ -400,6 +400,8 @@ namespace Logitude.Customs.Data.EntityLists
        public int RowNumber  { get; set; }
        [DataMember]
        public bool? IsSubmitDeclaration  { get; set; }
+       [DataMember]
+       public bool? IsHatraDateNull  { get; set; }
    }
 
 }

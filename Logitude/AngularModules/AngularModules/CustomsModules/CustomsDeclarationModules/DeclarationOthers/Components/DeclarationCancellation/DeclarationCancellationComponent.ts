@@ -313,11 +313,11 @@ export class DeclarationCancellationComponent extends BaseComponent implements O
     ViewDocumentsComponent() {
         var windowArgs: any = {};
         windowArgs.EntityPM = this.EntityPM;
-       // windowArgs.ObjectTableName = "Customs.CustomsCollateral";Cancellation
-       windowArgs.ObjectTableName = "Customs.Declaration";// this.ObjectTableName;
-       windowArgs.EntityParentPM = "DeclarationCancellation";
+        //windowArgs.ObjectTableName = "Customs.DeclarationCancellation";
+        windowArgs.ObjectTableName = "Customs.Declaration";// this.ObjectTableName;
+        windowArgs.EntityParentPM = "DeclarationCancellation";
     //    windowArgs.SkipCtor = this.SkipCtor;
-
+        windowArgs.IsFromStandAloneScreen = true;
         var windowTitle = "Customs.Declaration.TH.Documents";
 
         var logWindow = new LogitudeWindow();

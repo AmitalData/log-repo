@@ -22,6 +22,7 @@ using System.Transactions;
 using Logitude.Customs.Data.EntityKeys;
 using Logitude.Customs.Def.EntityPMs;
 using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.Server.Tools.Utils;
 
 namespace Logitude.Customs.BL.EntityUpdateServices
 {
@@ -763,6 +764,17 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
             int count = 0;
             if (string.IsNullOrWhiteSpace(res.certificateKeys)) return count;
+            
+            var myLog = new LogChangesService_custom("20210708HD310000.LogUntilDateyyyyMMdd");
+            myLog.AddTextToLog("DeclarationId = " + declarationId);
+            myLog.AddTextToLog("data to be update (SupplierInvoiceItemsCertificateWithoutResponse) : ");
+            myLog.AddTextToLog("supplierInvoiceItems table keys (CounterKey LineNumber): ");
+            myLog.AddTextToLog(res.InvoiceItemKeys);
+            myLog.AddTextToLog("");
+            myLog.AddTextToLog("SupplierInvioceItemCertificats table keys (InvoiceCounterKey LineNumber ItemCertificateCounterKey): ");
+            myLog.AddTextToLog(res.certificateKeys);
+            myLog.AddTextToLog("");
+
             string whereInCertificateKeys = "";
             string whereInInvoiceItemKeys = "";
             int i = 0;
@@ -813,6 +825,10 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     string cmd1 = @"
                                 Update supplierInvoiceItems s set s.CertificatesStatusCode = '1'
                                 where s.DeclarationId ='" + declarationId + "' and s.CounterKey || ' ' || s.LineNumber in ( " + whereInInvoiceItemKeys + " )";
+                    myLog.AddTextToLog("script of update:");
+                    myLog.AddTextToLog(cmd);
+                    myLog.AddTextToLog(cmd1);
+                    myLog.AddTextToLog("=====END=====");
 
                     OracleCommand sqlCommand = new OracleCommand(cmd, con);
                     OracleCommand sqlCommand1 = new OracleCommand(cmd1, con);
@@ -839,6 +855,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     cn.Close();
                 }
             }
+            myLog.LogIt();
             return count;
         }
 
