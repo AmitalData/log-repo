@@ -25,6 +25,7 @@ import { FeatureToggleList } from '../../../../Infrastructure/EntityLists/Featur
 import { NewShipmentComponentArgs } from '../../../../Shipment/Args';
 import { ShipmentTool } from '../../../../Shipment/Tools';
 import { ShipmentDomainService } from '../../../../Shipment/Services/ShipmentDomainService';
+import { PackageTypePMService } from '../../../../Common/Services/StandardPMs/PackageTypePMService';
 
 @Component({    
     templateUrl: './AddEditDeliveryComponent.html',
@@ -924,8 +925,8 @@ export class AddEditDeliveryComponent implements AfterViewInit, OnDestroy {
         this.standaloneAction = buttonCode;
 
         if (buttonCode == "CreateStandalone") {
-            this.ValidateNumberOfDeliveryPackages("Create");            
-            this.CreateStandaloneShipmentClicked();
+            this.ValidateNumberOfDeliveryPackages("Create");
+            this.ValidateTypeOfDeliveryPackages();
         }
 
         else if (buttonCode == "ConnectStandalone") {
@@ -943,6 +944,48 @@ export class AddEditDeliveryComponent implements AfterViewInit, OnDestroy {
             errors.push("Can't " + actionType +" a Stand Alone Shipment Since Delivery has more than one Container");
         }
         this.ValidationErrorsList = errors;
+    }
+
+    ValidateTypeOfDeliveryPackages() {
+        var shipmentPickUpDeliveryPackage = this.EntityPM?.ShipmentPickUpDeliveryPackages?.find(d => d != null && d.ChangeSetOp != "3");
+        if (shipmentPickUpDeliveryPackage == null) {
+            this.CreateStandaloneShipmentClicked();
+        }
+
+        this.CompareCompatiblityOfPackgeAndShipmentTypes(shipmentPickUpDeliveryPackage?.PackageTypeId);
+    }
+
+    CompareCompatiblityOfPackgeAndShipmentTypes(packageTypeId: string) {
+        if (AppTool.IsNullOrEmpty(packageTypeId))
+            return;
+
+        var isContainer = false;
+        var packageTypePMService: PackageTypePMService = new PackageTypePMService();
+
+        packageTypePMService.get(packageTypeId).subscribe((myResponse: ServiceResponse) => {
+            if (myResponse.HasError) {
+                return;
+            }
+
+            var packageTypePM = myResponse.Result;
+            if (packageTypePM) {
+                isContainer = packageTypePM.IsContainer
+                this.ValidateCompatiblityOfPackgeAndShipmentTypes(isContainer);
+            }
+        });
+    }
+
+    ValidateCompatiblityOfPackgeAndShipmentTypes(isContainer: boolean) {
+        var isFCLShipment = AppTool.IsFCLEntity(this.ShipmentPM?.TransportModeId, this.ShipmentPM?.ShipmentTypeId);
+        var isLCLShipment = AppTool.IsLCLEntity(this.ShipmentPM?.TransportModeId, this.ShipmentPM?.ShipmentTypeId);
+
+        if (isLCLShipment && isContainer) {
+            this.ValidationErrorsList.push("The container type is not compatible with the standalone shipment (LTL)");
+        } else if (isFCLShipment && !isContainer) {
+            this.ValidationErrorsList.push("The package type is not compatible with the standalone shipment (FTL)");
+        } else {
+            this.CreateStandaloneShipmentClicked();
+        }
     }
 
     public ShipmentNumber: string = null;
