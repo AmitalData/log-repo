@@ -35,6 +35,7 @@ import {ConfirmWindow} from '../../../../Controls/Windows/ConfirmWindow';
 import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator';
 import { CodeNameClass } from '../../../../Infrastructure/DataContracts/CodeNameClass';
 import { ARInvoiceStockLinePM } from '../../../../Invoice/EntityPMs/ARInvoiceStockLinePM';
+import { AccountingSettingListService } from '../../../../Common/Services/StandardLists/AccountingSettingListService';
 
 @Component({
     
@@ -120,9 +121,7 @@ export class ARInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
         }
     }
     BuildGlobalTaxCalculationItemsSource() {
-        if (this.IsQBOAccountingSystem()) {
-            this.IsGlobalTaxCalculationVisible = true;
-        }
+        this.IsQBOAccountingSystem()
         this.GlobalTaxCalculationItemsSource = [];
         this.GlobalTaxCalculationItemsSource.push("None");
         this.GlobalTaxCalculationItemsSource.push("Tax Excluded");
@@ -132,10 +131,16 @@ export class ARInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
 
     IsQBOAccountingSystem() {
         var isQBOAccountingSystem = false;
-        if (ObjectsLocator.GlobalSetting) {
-            isQBOAccountingSystem = (ObjectsLocator.AccountingSettingPM.AccountingSystemCode.includes("QB"));
-        }
-        return isQBOAccountingSystem;
+        var accountingSettingListService: AccountingSettingListService = new AccountingSettingListService();
+        accountingSettingListService.getSingle(SessionLocator.Tenant).subscribe((response: any) => {
+            if (response == null) {
+                return;
+            }
+            isQBOAccountingSystem = response.Result?.AccountingSystemCode.includes("QB");
+            if (isQBOAccountingSystem) {
+                this.IsGlobalTaxCalculationVisible = true;
+            }
+        });
     }
 
     ShowFixMe() {
