@@ -367,6 +367,11 @@ namespace WebFreight.Web.ExternalAPIs.V1
                             var partner = computingPartnerQuery.GetSinglePMByCodeAndCheckTenantZero(entity.ComputingPartnerCode, authToken.Tenant);
                             entityPM.CreatedByPartner = (partner != null ? partner.Name : null);
                         }
+                     
+                        if (entityPM.CustomsClearanceDate != null)
+                        {
+                            entityPM.IncludesCustoms = true;
+                        }
 
                         if ((IsShipmentHasPickup(entityPM) || IsShipmentHasDelivery(entityPM)) && IsOceanInsightFeatureToggleExistInTenant(authToken.Tenant))
                         {
@@ -658,6 +663,11 @@ namespace WebFreight.Web.ExternalAPIs.V1
                             if (!string.IsNullOrEmpty(HousePM.MasterShipmentDataId))
                             {
                                 throw new ApplicationException("Can't update house connected to master");
+                            }
+
+                            if (HousePM.CustomsClearanceDate != null && HousePM.IncludesCustoms == false)
+                            {
+                                HousePM.IncludesCustoms = true;
                             }
 
                             APITransshipmentHelper aPITransshipmentHelper = new APITransshipmentHelper(HousePM, authToken.Tenant);

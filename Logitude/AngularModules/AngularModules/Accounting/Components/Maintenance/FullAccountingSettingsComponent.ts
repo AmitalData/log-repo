@@ -145,29 +145,33 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
         SessionLocator.TenantPM.AccountingActivated = this.AccountingActivated;
 
     }
+   public activateSecurityLevel: boolean = false;
+   public enableAllFields: boolean = false;
     SetUIProperties() {
 
-        var enableAllFields = false;
+       
         if (this.AccountingActivated && this.AccountingActivationDate != null) {
-            enableAllFields = true;
+            this.enableAllFields = true;
         }
-        this.UIProperties.SetEnabled("DeductionFileNumber", this.ObjectTableName, enableAllFields);
-        this.UIProperties.SetEnabled("ConsolidationVAT", this.ObjectTableName, enableAllFields);
-        this.UIProperties.SetEnabled("DefaultVATTypeId", this.ObjectTableName, enableAllFields);
-        this.UIProperties.SetEnabled("PaymentTermId", "Tenant", enableAllFields);
-        this.UIProperties.SetEnabled("VATInputsGLAccountId", this.ObjectTableName, enableAllFields);
-        this.UIProperties.SetEnabled("VATOutputGLAccountId", this.ObjectTableName, enableAllFields);
-        this.UIProperties.SetEnabled("AutomaticReconcileMethodId", this.ObjectTableName, enableAllFields);
-        this.UIProperties.SetEnabled("ExchangeRateDiffGLAccountId", this.ObjectTableName, enableAllFields);
-        this.UIProperties.SetEnabled("RevenueExpenseGLAccountId", this.ObjectTableName, enableAllFields);
-        this.UIProperties.SetEnabled("CustomerControlAccountId", this.ObjectTableName, enableAllFields);
-        this.UIProperties.SetEnabled("VendorControlAccountId", this.ObjectTableName, enableAllFields);
-        this.UIProperties.SetEnabled("FileControlAccountId", this.ObjectTableName, enableAllFields);
-        this.UIProperties.SetEnabled("OceanExportJobControlAccountId", this.ObjectTableName, enableAllFields);
-        this.UIProperties.SetEnabled("OceanImportJobControlAccountId", this.ObjectTableName, enableAllFields);
-        this.UIProperties.SetEnabled("AirExportJobControlAccountId", this.ObjectTableName, enableAllFields);
-        this.UIProperties.SetEnabled("AirImportJobControlAccountId", this.ObjectTableName, enableAllFields);
-        this.UIProperties.SetEnabled("IsSecurityLevelActivated", this.ObjectTableName, enableAllFields);
+        this.UIProperties.SetEnabled("DeductionFileNumber", this.ObjectTableName, this.enableAllFields);
+        this.UIProperties.SetEnabled("ConsolidationVAT", this.ObjectTableName, this.enableAllFields);
+        this.UIProperties.SetEnabled("DefaultVATTypeId", this.ObjectTableName, this.enableAllFields);
+        this.UIProperties.SetEnabled("PaymentTermId", "Tenant", this.enableAllFields);
+        this.UIProperties.SetEnabled("VATInputsGLAccountId", this.ObjectTableName, this.enableAllFields);
+        this.UIProperties.SetEnabled("VATOutputGLAccountId", this.ObjectTableName, this.enableAllFields);
+        this.UIProperties.SetEnabled("AutomaticReconcileMethodId", this.ObjectTableName, this.enableAllFields);
+        this.UIProperties.SetEnabled("ExchangeRateDiffGLAccountId", this.ObjectTableName, this.enableAllFields);
+        this.UIProperties.SetEnabled("RevenueExpenseGLAccountId", this.ObjectTableName, this.enableAllFields);
+        this.UIProperties.SetEnabled("CustomerControlAccountId", this.ObjectTableName, this.enableAllFields);
+        this.UIProperties.SetEnabled("VendorControlAccountId", this.ObjectTableName, this.enableAllFields);
+        this.UIProperties.SetEnabled("FileControlAccountId", this.ObjectTableName, this.enableAllFields);
+        this.UIProperties.SetEnabled("OceanExportJobControlAccountId", this.ObjectTableName, this.enableAllFields);
+        this.UIProperties.SetEnabled("OceanImportJobControlAccountId", this.ObjectTableName, this.enableAllFields);
+        this.UIProperties.SetEnabled("AirExportJobControlAccountId", this.ObjectTableName, this.enableAllFields);
+        this.UIProperties.SetEnabled("AirImportJobControlAccountId", this.ObjectTableName, this.enableAllFields);
+        var UsingSecurityLevelFeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "SAL")[0];
+        if (UsingSecurityLevelFeatureToggle) this.activateSecurityLevel = true;
+        this.UIProperties.SetEnabled("IsSecurityLevelActivated", this.ObjectTableName, (this.enableAllFields && this.activateSecurityLevel));
 
     }
 

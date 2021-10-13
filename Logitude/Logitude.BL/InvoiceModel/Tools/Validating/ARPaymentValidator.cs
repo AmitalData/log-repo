@@ -448,11 +448,6 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                         }
                     }
 
-                    if (arguments.PaymentMethodCode == "BT" && arguments.ValueDate != null && arguments.ValueDate > TenantServerConfigration.GetCurrentDateTime(arguments.Tenant))
-                    {
-                        string msg = TranslateTextsClass.Translate("ARPayment.M.ValueDateCantBeFutureDate", arguments.Tenant, useLocal);
-                        errors += msg + ";";
-                    }
                     bool showLocal = LoggedContactResolver.GetLoggedContactShowLocal(arguments.Tenant);
 
                     if (arguments.PaymentMethodCode == "CH" && string.IsNullOrEmpty(arguments.Branch) && arguments.ChequeReplicas.Count == 0)

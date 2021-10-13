@@ -75,22 +75,22 @@ using Logitude.CargoTracking.Data.Repositories;
 using Logitude.CargoTracking.BL;
 using Logitude.CargoTracking.Data.EntityPOCOs;
 
-namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
+namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpdateClasses
 {
-   public class ToggleUpdateClass
+   public class PickUpDeliveryFromToTypeUpdateClass
    {  		
-		public const string HashString = "aa707f8be11380733b47e4c7570967d22";
+		public const string HashString = "2cba797b69340b66af7e1a1dac8dca9e";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
             AddObjectsAndObjectFields.AddObjectTable(new ObjectTableDetails()
             {
 			
-	             				    ObjectTableName =  "Toggle",
+	             				    ObjectTableName =  "PickUpDeliveryFromToType",
 			      				    IsNew =  true,
-			      				    DBTableName =  "Toggles",
-			      				    ObjectTableSingular =  "Toggle",
-			      				    ObjectTablePlural =  "Toggles",
+			      				    DBTableName =  "PickUpDeliveryFromToTypes",
+			      				    ObjectTableSingular =  "PickUpDeliveryFromToType",
+			      				    ObjectTablePlural =  "PickUpDeliveryFromToTypes",
 			      				    HasCustomFilter =  false,
 			      				    HasCustomFields =  false,
 			      				    HasHelper =  false,
@@ -98,8 +98,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    HasFiltersMenu =  false,
 			      				    IsEditable =  false,
 			      				    IsNewWizard =  false,
-			      				    LookUp1 =  "Code",
-			      				    LookUp2 =  "Name",
+			      				    LookUp1 =  "Name",
 			      				    KeyPropertyPath =  "Code",
 			      				    AutoCompleteSearchWindow =  false,
 			      				    IsClosed =  true,
@@ -109,9 +108,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    EnableAddFromLOV =  false,
 			      				    IsRestrictable =  false,
 			      				    IsMain =  false,
-			      				    IsAutoComplete =  true,
+			      				    IsAutoComplete =  false,
 			      				    EnableEditFromLOV =  false,
-			      				    SortingByObjectField =  "Name",
 			      				    InActive =  false,
 			      				    IsSaveButtonVisible =  false,
 			      				    IsComposition =  false,
@@ -120,14 +118,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    HasDynamicHeader =  false,
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
-			      				    DefaultText =  "Toggle",
-			      				    Code =  "f8c6",
+			      				    Code =  "2fc0",
 			      				    Name =  " Query Group",
-			      				    CloseTableCode =  "Code",
 			      				    CloseTableName =  "Name",
 			      				    GenerateDomainService =  false,
-			      				    ClientModuleName =  "Infrastructure",
-			      				    ServerModuleName =  "Infrastructure",
+			      				    ClientModuleName =  "Shipment",
 			      				    NoTS =  false,
 			      				    HasMenuButtons =  false,
 			      				    AllowedForComputingPartners =  false,
@@ -136,7 +131,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    HasDocuments =  false,
 			      				    IsLookUp =  false,
 			      				    IsTabsHidden =  false,
-			      				    HashString =  ToggleUpdateClass.HashString,
+			      				    HashString =  PickUpDeliveryFromToTypeUpdateClass.HashString,
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
@@ -148,23 +143,23 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Code",
-					  						ObjectTableName =  "Toggle",
+					  						ObjectTableName =  "PickUpDeliveryFromToType",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
-					  						MaxLength =  3,
-					  						IsRequired =  true,
+					  						MaxLength =  4,
+					  						IsRequired =  false,
 					  						CopyToDW =  false,
-					  						DisplayOnLookUp =  true,
+					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
-					  						SystemMaxLength =  3,
+					  						SystemMaxLength =  4,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
-					  						DisplayInSearchWindowList =  true,
+					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "Code",
 					  						ListPropertyPath =  "Code",
 					  						DisplayInLookUpIndex =  0,
@@ -175,7 +170,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "Toggle",
+					  						ValidForQuerySection1 =  "PickUpDeliveryFromToType",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -207,34 +202,34 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Name",
-					  						ObjectTableName =  "Toggle",
+					  						ObjectTableName =  "PickUpDeliveryFromToType",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
-					  						MaxLength =  100,
-					  						IsRequired =  true,
+					  						MaxLength =  40,
+					  						IsRequired =  false,
 					  						CopyToDW =  false,
-					  						DisplayOnLookUp =  true,
+					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
-					  						SystemMaxLength =  100,
+					  						SystemMaxLength =  0,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
-					  						DisplayInSearchWindowList =  true,
+					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "Name",
 					  						ListPropertyPath =  "Name",
-					  						DisplayInLookUpIndex =  1,
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
-					  						DisplayInSearchWindowListIndex =  1,
+					  						DisplayInSearchWindowListIndex =  0,
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "Toggle",
+					  						ValidForQuerySection1 =  "PickUpDeliveryFromToType",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -266,7 +261,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "SearchFields",
-					  						ObjectTableName =  "Toggle",
+					  						ObjectTableName =  "PickUpDeliveryFromToType",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
 					  						MaxLength =  1000,
@@ -293,7 +288,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "Toggle",
+					  						ValidForQuerySection1 =  "PickUpDeliveryFromToType",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -306,66 +301,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DefaultText =  "Search ...",
 					  						ListFieldLable =  "SearchFieldsListLable",
 					  						ListLableDefaultText =  "Search ...",
-					  						IsMaxLength =  false,
-					  						IsFixedLength =  false,
-					  						EnableAutoFill =  false,
-					  						IncludeInSearchField =  false,
-					  						AllowedinAutomationConditions =  false,
-					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
-					  						HasTemplate =  false,
-					  						IsCustom =  false,
-					  						EnableFullscreenTextBox =  false,
-					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
- 
-
-			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
-			   {
-					 
-					 						FieldName =  "Description",
-					  						ObjectTableName =  "Toggle",
-					  						FieldsDataType =  "nText",
-					  						MinLength =  0,
-					  						MaxLength =  400,
-					  						IsRequired =  false,
-					  						CopyToDW =  false,
-					  						DisplayOnLookUp =  true,
-					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  false,
-					  						DisplayOnly =  false,
-					  						SystemRequired =  false,
-					  						SystemMaxLength =  400,
-					  						DisplayInList =  true,
-					  						IsCustomFilter =  false,
-					  						MultiLine =  false,
-					  						IsTimeFrameFilter =  false,
-					  						DisplayInSearchWindowList =  true,
-					  						PMPropertyPath =  "Description",
-					  						ListPropertyPath =  "Description",
-					  						DisplayInLookUpIndex =  2,
-					  						AutomaticField =  false,
-					  						UniqueField =  false,
-					  						DisplayInSearchWindowListIndex =  2,
-					  						IsMulti =  false,
-					  						DependencyFilter1IsList =  false,
-					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "Toggle",
-					  						IsRestrictable =  false,
-					  						DisplayInEntityVariables =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInSearchWindowFilters =  false,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						DisplayInDocumentReferences =  false,
-					  						InActive =  false,
-					  						DisplayLongName =  false,
-					  						FullFieldLable =  "Description",
-					  						DefaultText =  "Description",
-					  						ListFieldLable =  "DescriptionListLable",
-					  						ListLableDefaultText =  "Description",
-					  						IsMaxLength =  false,
+					  						IsMaxLength =  true,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -388,15 +324,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
 	    {   
 
-		   ObjectTable ToggleObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Toggle" && d.Tenant == 0).FirstOrDefault();
-		   //List<ObjectField> ToggleObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Toggle").ToList();
+		   ObjectTable PickUpDeliveryFromToTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "PickUpDeliveryFromToType" && d.Tenant == 0).FirstOrDefault();
+		   //List<ObjectField> PickUpDeliveryFromToTypeObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "PickUpDeliveryFromToType").ToList();
 		       
 	      
 
-	         Screen ToggleToggleHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Toggle.HeaderScreen", Name = "ToggleHeaderScreen", ObjectTableId = ToggleObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+	         Screen PickUpDeliveryFromToTypePickUpDeliveryFromToTypeHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "PickUpDeliveryFromToType.HeaderScreen", Name = "PickUpDeliveryFromToTypeHeaderScreen", ObjectTableId = PickUpDeliveryFromToTypeObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       	
-		    ToggleObjectTable.HeaderScreenId = ToggleToggleHeaderScreenScreen0.Id;
-		    ToggleObjectTable.HeaderScreenCode = ToggleToggleHeaderScreenScreen0.Code;
+		    PickUpDeliveryFromToTypeObjectTable.HeaderScreenId = PickUpDeliveryFromToTypePickUpDeliveryFromToTypeHeaderScreenScreen0.Id;
+		    PickUpDeliveryFromToTypeObjectTable.HeaderScreenCode = PickUpDeliveryFromToTypePickUpDeliveryFromToTypeHeaderScreenScreen0.Code;
 
 	   		  
 
@@ -413,7 +349,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 	    public void AddTableEventTypes(Dictionary<string, EventType> tenantEventTypes,EventTypeRepository EventTypeRepository,IWebFreightContext ObjectContext,List<EntityStatus> AllEntityStatuses)
 	    {   
-			ObjectTable ToggleObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Toggle" && d.Tenant == 0).FirstOrDefault(); 
+			ObjectTable PickUpDeliveryFromToTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "PickUpDeliveryFromToType" && d.Tenant == 0).FirstOrDefault(); 
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
                 Code =  "CREV",
@@ -427,7 +363,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
                 AllowedInAutomation =  false,
                 ManualActivatedFollowUp =  false,
                 IsFollowUp =  false,
-                ObjectTableId = ToggleObjectTable.Id,
+                ObjectTableId = PickUpDeliveryFromToTypeObjectTable.Id,
 				 
             }, EventTypeRepository, tenantEventTypes);
 
@@ -445,7 +381,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
                 AllowedInAutomation =  false,
                 ManualActivatedFollowUp =  false,
                 IsFollowUp =  false,
-                ObjectTableId = ToggleObjectTable.Id,
+                ObjectTableId = PickUpDeliveryFromToTypeObjectTable.Id,
 				 
             }, EventTypeRepository, tenantEventTypes);
 
@@ -461,18 +397,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    
 }
 
-
-	    public void FillToggle()
-        { 
-            var repo = new ToggleRepository(0);
-            var dic =repo.GetAll().ToDictionary(rec => rec.Code, rec => rec);
-            new FillCloseTables().FillCloseTable<
-                                Toggle,
-                                ToggleDetails,
-                                ToggleRepository>(repo, dic);
-        }
-
-	    
+    
 
    }
     

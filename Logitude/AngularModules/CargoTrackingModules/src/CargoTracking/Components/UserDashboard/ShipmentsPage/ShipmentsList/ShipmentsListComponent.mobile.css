@@ -92,6 +92,9 @@
 }
 
 @media screen and (max-width: 479px) {
+    .dashboard-container{
+        height:90%;
+    }
     .search-text {
         /* margin: 0 20px; */
         width: calc(100% - 130px) !important;
@@ -244,3 +247,9 @@
         height: 420px;
     }
 }
+
+/* @media screen and (max-height: 800px) {
+    .shipment-cards-holder{
+        height: 428px;
+    }
+} */

@@ -286,7 +286,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
         {
             if (IsSendAutomaticallyOceanOnsightsRequestByContainer())
             {
-                var allUpdatedContainers = initializer.ShipmentPackagesChangeSet.Where(a => (a.ChangeSetOp == ChangeSetOperation.Update || a.ChangeSetOp == ChangeSetOperation.Insert) && a.ContainerNumber != null);
+                var allUpdatedContainers = initializer.ShipmentPackagesChangeSet.Where(a => a.ContainerNumber != null);
                 foreach (var container in allUpdatedContainers)
                 {
                     this.SendAutomaticallyOceanOnsightsRequestByContainer(container.ContainerEntityId);
@@ -323,7 +323,13 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
                 var isContainerUpdated = initializer.ShipmentPackagesChangeSet
                       .Where(a => a.ChangeSetOp == ChangeSetOperation.Update || a.ChangeSetOp == ChangeSetOperation.Insert)
                       .Any(a => a.ContainerNumber != null);
+
                 if (string.IsNullOrEmpty(this.initializer.EntityPM.Master) && isContainerUpdated)
+                {
+                    return true;
+                }
+
+                if(!string.IsNullOrEmpty(this.initializer.EntityPM.Master) && !this.initializer.IsFirstFourDigitsOfMasterNumberAreLetters())
                 {
                     return true;
                 }
@@ -333,13 +339,17 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
         }
         private void SendAutomaticallyOceanOnsightsRequestByContainer(string containerId)
         {
-            // Container 
-            ContainerStatusesHelper myHelper = new ContainerStatusesHelper(this.initializer.EntityPM.Id, containerId, true, this.initializer.Tenant, this.initializer.ShipmentContext);
-            if (myHelper.Validate() && myHelper.IsLogitudeOceanInsightsRequestExistForConatiner())
-            {
-                myHelper.SendContainerStatusRequest();
+            if (FeatureToggleHelper.HasFeatureToggle("AOI", this.initializer.Tenant))
+            { 
+                // Container 
+                ContainerStatusesHelper myHelper = new ContainerStatusesHelper(this.initializer.EntityPM.Id, containerId, true, this.initializer.Tenant, this.initializer.ShipmentContext);
+                if (myHelper.Validate() && myHelper.IsLogitudeOceanInsightsRequestExistForConatiner())
+                {
+                    myHelper.SendContainerStatusRequest();
+                }
             }
         }
+
         private void DeleteContainer(ShipmentPackagePM shipmentPackage)
         {
             var container = CheckIfContainerExists(shipmentPackage);

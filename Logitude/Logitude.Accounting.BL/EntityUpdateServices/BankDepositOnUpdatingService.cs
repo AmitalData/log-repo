@@ -24,6 +24,7 @@ using Microsoft.Practices.Unity;
 using Logitude.Server.Tools;
 using Logitude.BL.Helpers;
 using Logitude.BL.Resolvers;
+using Logitude.Accounting.BL.CloseTables;
 
 namespace Logitude.Accounting.BL.EntityUpdateServices
 {
@@ -221,25 +222,17 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
         private void VoidJournal(BankDepositPM bankDeposit, int tenant)
         {
-            //    - select * from journals where Journals.AccountingEntityId == BankDeposits.Id
-
             IAccountingContext MyContext = AccountingContext.GetContext(tenant);
 
-            //  (a) get the journal
             JournalPM journalPM;
             JournalQueryService journalQuery = new JournalQueryService(MyContext);
             IQueryable<JournalPM> journalPMs = journalQuery.GetJournalsByAccountingEntityId(bankDeposit.Id, tenant);
             if (journalPMs != null)
             {
-                journalPM = journalPMs.FirstOrDefault();///BAD BAD BAD !!!
-                //why itzik need to fix that ????  
-                var list = journalPMs.Where(r => r.AccountingEntityCode == "6").ToList();//why itzik need to fix that ????  6   הפקדת המחאות    Cheque Deposit
+                var list = journalPMs.Where(r => r.AccountingEntityCode == AccountingEntityValues.CashDeposit || r.AccountingEntityCode == AccountingEntityValues.ChequeDeposit).ToList();//why itzik need to fix that ????  6   הפקדת המחאות    Cheque Deposit
                 if (list.Count > 1)
-                {
                     throw new ApplicationException("Find more then 1 Journal for this deposit");
-                }
                 journalPM = list.FirstOrDefault();
-
             }
             else
             {

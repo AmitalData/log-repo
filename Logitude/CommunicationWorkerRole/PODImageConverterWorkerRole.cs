@@ -62,7 +62,9 @@ namespace CommunicationWorkerRole
     {
         private DbQueueService queueService;
         private int? tenant;
-        private string documentId = string.Empty;
+        private string documentsFilingId = string.Empty;
+        private string entityId = string.Empty;
+
         private QueueResponse queueResponse;
         public override bool OnStart()
         {
@@ -107,8 +109,6 @@ namespace CommunicationWorkerRole
                 queueService.Delay(new TimeSpan(0, 0, 0, 5));
             }
 
-
-
         }
 
         private void ExecuteQueue()
@@ -127,13 +127,13 @@ namespace CommunicationWorkerRole
 
         private void ConvertPODImageService()
         {
-            documentId = queueResponse.MessageValues.Keys.Contains("DocumentId") ? queueResponse.MessageValues["DocumentId"].ToString() : "";
+            documentsFilingId = queueResponse.MessageValues.Keys.Contains("DocumentsFilingId") ? queueResponse.MessageValues["DocumentsFilingId"].ToString() : "";
             tenant = queueResponse.MessageValues.Keys.Contains("Tenant") && !string.IsNullOrEmpty(queueResponse.MessageValues["Tenant"].ToString()) ? (int?)int.Parse(queueResponse.MessageValues["Tenant"].ToString()) : null;
-            if (string.IsNullOrEmpty(documentId) || tenant == null)
+            if (string.IsNullOrEmpty(documentsFilingId) || tenant == null)
             {
                 return;
             }
-            new PODImageConverterService(documentId, (int)tenant).Convert(new PODImagePdfConverter());
+            new PODImageConverterService(documentsFilingId, (int)tenant).Convert(new PODImagePdfConverter());
         }
 
         private void ConnectClient()

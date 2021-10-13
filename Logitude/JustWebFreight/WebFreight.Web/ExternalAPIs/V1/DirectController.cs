@@ -268,7 +268,10 @@ namespace WebFreight.Web.ExternalAPIs.V1
                                 entityPM.OtherPrepaidCollectId = myIncoterm.OtherCharges;
                             }
                         }
-
+                        if (entityPM.CustomsClearanceDate != null)
+                        {
+                            entityPM.IncludesCustoms = true;
+                        }
                         if (!IsInlandDomesticShipment(entityPM))
                         {
                             if (entityPM.ShipmentPackages.Count > 0)
@@ -334,6 +337,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         APIReceivablePayableHelper receivablePayableHelper = new APIReceivablePayableHelper(entityPM, authToken.Tenant);
                         receivablePayableHelper.ValidateReceivablesAndPayables();
                         receivablePayableHelper.ComputeReceivablesPayablesTotals();
+                
 
                         if (entityPM.MainCarriageLegs != null && entityPM.MainCarriageLegs.Count > 0)
                         {
@@ -678,27 +682,110 @@ namespace WebFreight.Web.ExternalAPIs.V1
 
         private ShipmentPM ValidateInlandDomesticShipment(ShipmentPM entityPM)
         {
-
-            entityPM = SetInlandDomesticShipmentPartners(entityPM);
-            ValidateInlandDomesticShipmentPartnersAddesses(entityPM);
+            ValidateInlandDomesticShipmentFromTypeCode(entityPM);
+            ValidateInlandDomesticShipmentToTypeCode(entityPM);
+            entityPM = SetInlandDomesticShipmentFromPartners(entityPM);
+            entityPM = SetInlandDomesticShipmentToPartners(entityPM);
             ValidateInlandDomesticMainCarriageDates(entityPM);
 
             return entityPM;
         }
-        private ShipmentPM SetInlandDomesticShipmentPartners(ShipmentPM entityPM)
+        private void ValidateInlandDomesticShipmentToTypeCode(ShipmentPM entityPM)
         {
-
-            if (entityPM.MainCarriageToPartnerId == null)
+            bool isCityOrCountryNull = string.IsNullOrEmpty(entityPM.InlandDomesticToCity) || string.IsNullOrEmpty(entityPM.InlandDomesticToCountryId);
+            string[] inlandDomesticToTypeCodes = { "CASL", "PART", "PORT" };
+            if (string.IsNullOrEmpty(entityPM.InlandDomesticToTypeCode))
             {
-                entityPM.MainCarriageToPartnerId = entityPM.ConsigneeId;
+                throw new ApplicationException("InlandDomesticToTypeCode Field is Required");
             }
-            if (entityPM.MainCarriageFromPartnerId == null)
+            if (entityPM.InlandDomesticToTypeCode == "CASL" && isCityOrCountryNull)
             {
-                entityPM.MainCarriageFromPartnerId = entityPM.ShipperId;
+                throw new ApplicationException("InlandDomestic To City And Country Fields are Required");
+            }
+            else if (entityPM.InlandDomesticToTypeCode == "PART" && string.IsNullOrEmpty(entityPM.MainCarriageToPartnerId))
+            {
+                throw new ApplicationException("MainCarriageToPartner Field is Required");
+            }
+            else if (entityPM.InlandDomesticToTypeCode == "PORT" && string.IsNullOrEmpty(entityPM.MainCarriageToPortId))           
+            {
+                throw new ApplicationException("ToPort Field is Required");
+            }
+            else if (!inlandDomesticToTypeCodes.Contains(entityPM.InlandDomesticToTypeCode))
+            {
+                throw new ApplicationException("Invalid InlandDomesticToTypeCode");
+            }
+        }
+
+        private void ValidateInlandDomesticShipmentFromTypeCode(ShipmentPM entityPM)
+        {
+            bool isCityOrCountryNull = string.IsNullOrEmpty(entityPM.InlandDomesticFromCity) || string.IsNullOrEmpty(entityPM.InlandDomesticFromCountryId);
+            string[] inlandDomesticFromTypeCodes = { "CASL", "PART", "PORT"};
+            if (string.IsNullOrEmpty(entityPM.InlandDomesticFromTypeCode))
+            {
+                throw new ApplicationException("InlandDomesticFromTypeCode Field is Required");
+            }
+            if (entityPM.InlandDomesticFromTypeCode == "CASL" && isCityOrCountryNull)
+            {
+                throw new ApplicationException("InlandDomesticFrom City And Country Fields are Required");
+            }
+            else if (entityPM.InlandDomesticFromTypeCode == "PART" && (string.IsNullOrEmpty(entityPM.MainCarriageFromPartnerId)))
+            {
+                throw new ApplicationException("MainCarriageFromPartner Field is Required");
+            }
+            else if (entityPM.InlandDomesticFromTypeCode == "PORT" && string.IsNullOrEmpty(entityPM.MainCarriageFromPortId))
+            {
+                throw new ApplicationException("FromPort Field is Required");
+            }
+            else if (!inlandDomesticFromTypeCodes.Contains(entityPM.InlandDomesticFromTypeCode))
+            {
+                throw new ApplicationException("Invalid InlandDomesticFromTypeCode");
+            }
+        }
+
+        private ShipmentPM SetInlandDomesticShipmentFromPartners(ShipmentPM entityPM)
+        {
+            if (entityPM.InlandDomesticFromTypeCode == "CASL")
+            {
+                entityPM.MainCarriageFromPartnerId = null;
+                entityPM.MainCarriageFromPortId = null;
+            }
+            else if (entityPM.InlandDomesticFromTypeCode == "PART")
+            {
+                entityPM.InlandDomesticFromCity = null;
+                entityPM.InlandDomesticFromCountryId = null;
+                entityPM.MainCarriageFromPortId = null;
+            }
+            else if (entityPM.InlandDomesticFromTypeCode == "PORT")
+            {
+                entityPM.InlandDomesticFromCity = null;
+                entityPM.InlandDomesticFromCountryId = null;
+                entityPM.MainCarriageFromPartnerId = null;
             }
             return entityPM;
-
         }
+
+        private ShipmentPM SetInlandDomesticShipmentToPartners(ShipmentPM entityPM)
+        {
+            if (entityPM.InlandDomesticToTypeCode == "CASL")
+            {
+                entityPM.MainCarriageToPartnerId = null;
+                entityPM.MainCarriageToPortId = null;
+            }
+            else if (entityPM.InlandDomesticToTypeCode == "PART")
+            {
+                entityPM.InlandDomesticToCity = null;
+                entityPM.InlandDomesticToCountryId = null;
+                entityPM.MainCarriageToPortId = null;
+            }
+            else if (entityPM.InlandDomesticToTypeCode == "PORT")
+            {
+                entityPM.InlandDomesticToCity = null;
+                entityPM.InlandDomesticToCountryId = null;
+                entityPM.MainCarriageToPartnerId = null;
+            }
+            return entityPM;
+        }
+
         private void ValidateInlandDomesticMainCarriageDates(ShipmentPM entityPM)
         {
             if (!this.IsRoutingLegDatesValid(entityPM.MainCarriageETD, entityPM.MainCarriageETA))
@@ -711,49 +798,6 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 throw new ApplicationException("Main-Carriage actual departure must be less than Main-Carriage actual arrival");
             }
 
-        }
-
-        private void ValidateInlandDomesticShipmentPartnersAddesses(ShipmentPM entityPM)
-        {
-            List<DomesticCountry> iDomesticCountries = new List<DomesticCountry>();
-            AddDomesticAddress(iDomesticCountries, entityPM.MainCarriageFromAddressId, entityPM.Tenant);
-            AddDomesticAddress(iDomesticCountries, entityPM.MainCarriageToAddressId, entityPM.Tenant);
-
-            if (iDomesticCountries.GroupBy(g => g.CountryId).Count() > 1)
-            {
-                bool isAllPortsEC = iDomesticCountries.Where(d => d.CountryIsEC == false).Any() ? false : true;
-                bool isAllPortsNA = iDomesticCountries.Where(d => d.CountryIsNorthAmerica == false).Any() ? false : true;
-                bool isAllPortsChina = iDomesticCountries.Where(d => d.CountryIsGreaterChinese == false).Any() ? false : true;
-
-                if (!isAllPortsEC && !isAllPortsNA && !isAllPortsChina)
-                {
-                    throw new ApplicationException("Both Addresses must be in the same country since the direction is Domestic");
-                }
-            }
-        }
-
-        private void AddDomesticAddress(List<DomesticCountry> iDomesticCountries, string iAddressId, int iTenant)
-        {
-            if (!string.IsNullOrEmpty(iAddressId))
-            {
-                if (!iDomesticCountries.Where(d => d.Id == iAddressId).Any())
-                {
-                    AddressRepository addressRepository = new AddressRepository(iTenant);
-                    Address iAddress = addressRepository.GetSingleAddress(iAddressId, iTenant);
-
-                    if (iAddress != null)
-                    {
-                        iDomesticCountries.Add(new DomesticCountry()
-                        {
-                            Id = iAddress.Id,
-                            CountryId = iAddress.CountryId,
-                            CountryIsEC = iAddress.Country.EC,
-                            CountryIsNorthAmerica = iAddress.Country.IsNorthAmerica,
-                            CountryIsGreaterChinese = iAddress.Country.IsGreaterChina,
-                        });
-                    }
-                }
-            }
         }
 
         private bool IsRoutingLegDatesValid(DateTime? fisrtDate, DateTime? secondeDate)
@@ -818,6 +862,12 @@ namespace WebFreight.Web.ExternalAPIs.V1
                             {
                                 directPM = this.ValidateInlandDomesticShipment(directPM);
                             }
+
+                            if (directPM.CustomsClearanceDate != null && directPM.IncludesCustoms == false)
+                            {
+                                directPM.IncludesCustoms = true;
+                            }
+
                             ShipmentService service = new ShipmentService(MyContext, directPM, SecurityUtility.GetAuthenticatedUser());
                             service.Update(true);
                         }
@@ -942,5 +992,11 @@ namespace WebFreight.Web.ExternalAPIs.V1
         {
             return shipmentPM.ShipmentDeliveries != null && shipmentPM.ShipmentDeliveries.Count > 0;
         }
+
+        private void UpdateIncludeCustomesFeild(ShipmentPM shipmentPM)
+        {
+
+        }
+       
     }
 }

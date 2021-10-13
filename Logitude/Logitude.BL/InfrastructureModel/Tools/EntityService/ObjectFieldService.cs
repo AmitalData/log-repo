@@ -18,6 +18,7 @@ using Logitude.BL.Helpers;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Logitude.Server.Tools.QueueService;
+using Logitude.BL.InfrastructureModel.EntityQueries;
 
 namespace Logitude.BL.InfrastructureModel.Tools.EntityService
 {
@@ -240,9 +241,10 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
 
                 #endregion
             }
-            if (theEntityPm.DataTypeCode == "Text" || theEntityPm.DataTypeCode == "nText")
+
+            if (IsMetConditionsToSendCToolMessage(theEntityPm))
             {
-                AddObjectFieldKafkaQueueMessage();
+                AddKafkaQueueMessage();
             }
         }
 
@@ -398,9 +400,9 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
             ObjectFieldTracing.Trace(theEntityPm, Poco, isNewEntity);
 
             //TableLastUpdateClass.UpdateSystemMetaDataHistory(true);
-            if (theEntityPm.DataTypeCode == "Text" || theEntityPm.DataTypeCode == "nText")
+            if (IsMetConditionsToSendCToolMessage(theEntityPm))
             {
-                AddObjectFieldKafkaQueueMessage();
+                AddKafkaQueueMessage();
             }
         }
 
@@ -567,19 +569,17 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
             ObjectFieldTracing.Trace(theEntityPm, Poco, isNewEntity);
 
             //TableLastUpdateClass.UpdateSystemMetaDataHistory(true);
-            if (theEntityPm.DataTypeCode == "Text" || theEntityPm.DataTypeCode == "nText")
+            if (IsMetConditionsToSendCToolMessage(theEntityPm))
             {
-                AddObjectFieldKafkaQueueMessage();
+                AddKafkaQueueMessage();
             }
         }
 
-        private void AddObjectFieldKafkaQueueMessage()
+        private bool IsMetConditionsToSendCToolMessage(ObjectFieldPM theEntityPm)
         {
-            if (!FeatureToggleHelper.HasFeatureToggle("CTL", entityPM.Tenant))
-            {
-                return;
-            }
-            AddKafkaQueueMessage();
+            return FeatureToggleHelper.HasFeatureToggle("CTL", theEntityPm.Tenant) &&
+                theEntityPm.ObjectTableId.Equals(ObjectTableQuery.GetObjectTableByCode("Shipment", theEntityPm.Tenant)?.Id) &&
+                theEntityPm.IsCustom.Equals(true) && theEntityPm.DataTypeCode != "LookUp";
         }
 
         private void AddKafkaQueueMessage()

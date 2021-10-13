@@ -39,7 +39,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Toggle&quot;"
-  Code="&quot;6b01&quot;"
+  Code="&quot;f8c6&quot;"
   Name="&quot; Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;Name&quot;"
@@ -602,6 +602,16 @@
       Name="&quot;Shipment Number In Generic Interface&quot;"
       SearchFields="&quot;MLS,Shipment Number In Generic Interface&quot;"
       Description="&quot;Sending shipment number for multiple AP invoice in generic interface&quot;" />
+    <Record
+      Name="&quot;Ocean Insights Sending Automatically Logic&quot;"
+      Code="&quot;AOI&quot;"
+      SearchFields="&quot;AOI,Ocean Insights Sending Automatically Logic&quot;"
+      Description="&quot;Ocean Insights Sending Automatically Logic&quot;" />
+    <Record
+      Code="&quot;SAL&quot;"
+      Name="&quot;Use Security Access Level&quot;"
+      SearchFields="&quot;SAL,Use Security Access Level&quot;"
+      Description="&quot;Use Security Access Level&quot;" />
   </Records>
   <DataContracts />
   <AdditionalTextCodes />

@@ -625,12 +625,15 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                 SetVariblesFromParentCurrencyGLAccount(entityPM);
             }
 
+            if(FeatureToggleHelper.HasFeatureToggle("SAL", entityPM.Tenant))
+            {
+                entityPM.Access = CheckIfUserHasSecurityAccessToGLAccount(entityPM.Tenant, entityPM.ChartOfAccountSecurityLevel);
 
+                if (entityPM.Access == false)
+                    ResetAccountBalances(entityPM);
+            }
 
-            entityPM.Access = CheckIfUserHasSecurityAccessToGLAccount(entityPM.Tenant, entityPM.ChartOfAccountSecurityLevel);
-
-            if (entityPM.Access == false)
-                ResetAccountBalances(entityPM);
+           
         }
         private static void ResetAccountBalances(GLAccountPM account)
         {
@@ -738,13 +741,13 @@ namespace Logitude.Accounting.BL.EntityDataMappings
         public FullAccountingSettingPM GetFullAccountingSettings(int tenant)
         {
             FullAccountingSettingQueryService fullAccountingSettingQueryService = new FullAccountingSettingQueryService(tenant);
-            return fullAccountingSettingQueryService.GetSingleFullAccountingSetting(tenant);
+            return fullAccountingSettingQueryService.GetSingle(tenant.ToString(),false,true);
         }
         private UserPM GetLoggedUser(int tenant)
         {
             UserPM loggedUser;
             UserQuery userQuery = new UserQuery(tenant);
-            if (AuthenticationUtil.AuthenticatedUserEmail != null)
+            if (!string.IsNullOrEmpty(AuthenticationUtil.AuthenticatedUserEmail))
             { // user set and passed from from WR
                 loggedUser = userQuery.GetSinglePMByEmail(AuthenticationUtil.AuthenticatedUserEmail, tenant);
             }

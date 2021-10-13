@@ -356,6 +356,22 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "MLS,Shipment Number In Generic Interface", 
                 Description = "Sending shipment number for multiple AP invoice in generic interface", 
 			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Name = "Ocean Insights Sending Automatically Logic", 
+                Code = "AOI", 
+                SearchFields = "AOI,Ocean Insights Sending Automatically Logic", 
+                Description = "Ocean Insights Sending Automatically Logic", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "SAL", 
+                Name = "Use Security Access Level", 
+                SearchFields = "SAL,Use Security Access Level", 
+                Description = "Use Security Access Level", 
+			});
 			
             return all;
        }

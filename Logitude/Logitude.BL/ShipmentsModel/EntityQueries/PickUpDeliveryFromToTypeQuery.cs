@@ -20,6 +20,19 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             this.repository = repository;
         }
 
+        public PickUpDeliveryFromToTypePM GetSinglePM(string code)
+        {
+            return (from a in repository.context.PickUpDeliveryFromToTypes
+                    where a.Code == code
+                    select new PickUpDeliveryFromToTypePM() { Code = a.Code, Name = a.Name }).FirstOrDefault();
+        }
+
+        public PickUpDeliveryFromToTypePM GetSinglePM(string code,int tenant)
+        {
+            return (from a in repository.context.PickUpDeliveryFromToTypes
+                    where a.Code == code
+                    select new PickUpDeliveryFromToTypePM() { Code = a.Code, Name = a.Name }).FirstOrDefault();
+        }
         public PickUpDeliveryFromToTypePM GetSinglePickUpDeliveryFromToTypePM(string code)
         {
             return (from a in repository.context.PickUpDeliveryFromToTypes

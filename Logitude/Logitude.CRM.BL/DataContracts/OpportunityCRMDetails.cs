@@ -29,5 +29,7 @@ namespace Logitude.CRM.BL.DataContracts
         public string OpportunityTypeCode { get; set; }
         public bool IsCancelled { get; set; }
         public DateTime CreateDate { get; set; }
+        public bool InActive { get; set; }
+        public DateTime ActualClosingDate { get; set; }
     }
 }

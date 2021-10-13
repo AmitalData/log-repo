@@ -18,14 +18,20 @@ namespace WebFreight.Web.Helpers.WorkerRole.PODImage
         private DocumentRepository documentRepository;
         private Simplog.Data.CommonDataModel.EntityPOCOs.Document document;
 
-        public PODImageConverterService(string documnetId, int tenant)
+        public PODImageConverterService(string documnetFilingId, int tenant)
         {
             this.tenant = tenant;
-            documentRepository = new DocumentRepository(tenant);
-            document = documentRepository.GetSingleDocument(tenant, documnetId);
+           LoadDocument(documnetFilingId, tenant);
         }
 
 
+
+        private void LoadDocument(string documnetFilingId, int tenant)
+        {
+            string documentId = new DocumentsFilingRepository(tenant).GetDocumentIdById(documnetFilingId, tenant);
+            documentRepository = new DocumentRepository(tenant);
+            document = documentRepository.GetSingleDocument(tenant, documentId);
+        }
 
         public void Convert(IPODImageConverter podImageConverter)
         {

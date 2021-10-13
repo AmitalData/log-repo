@@ -1267,7 +1267,13 @@ namespace WebFreight.Web.ReportsWebServices
 
                 #endregion
 
-                manifestDataProvider.PortOfDischargeName = master.MainCarriageToPortName != null ? master.MainCarriageToPortName : "";
+                manifestDataProvider.Transshipment1FromPortName = master.Transshipment1FromPortName;
+                manifestDataProvider.Transshipment2FromPortName = master.Transshipment2FromPortName;
+                manifestDataProvider.Transshipment3FromPortName = master.Transshipment3FromPortName;
+                manifestDataProvider.Transshipment1ToPortName = master.Transshipment1ToPortName;
+                manifestDataProvider.Transshipment2ToPortName = master.Transshipment2ToPortName;
+                manifestDataProvider.Transshipment3ToPortName = master.Transshipment3ToPortName;
+                this.ComputePortOfDischargeNameAndDate(manifestDataProvider);
 
                 if (master.Transshipment3ToPortCountryCode != null)
                 {
@@ -1372,6 +1378,33 @@ namespace WebFreight.Web.ReportsWebServices
 
             return manifestDataProvider;
             #endregion
+        }
+
+        private void ComputePortOfDischargeNameAndDate(ManifestDataProvider manifestDataProvider)
+        {
+            if(!string.IsNullOrEmpty(master.Transshipment3ToPortId))
+            {
+                manifestDataProvider.PortOfDischargeName =  master.Transshipment3ToPortName;
+                manifestDataProvider.ArrivalDate = master.Transshipment3ATA;
+            }
+
+            else if (!string.IsNullOrEmpty(master.Transshipment2ToPortId))
+            {
+                manifestDataProvider.PortOfDischargeName = master.Transshipment2ToPortName;
+                manifestDataProvider.ArrivalDate = master.Transshipment2ATA;
+            }
+
+            else if (!string.IsNullOrEmpty(master.Transshipment1ToPortId))
+            {
+                manifestDataProvider.PortOfDischargeName = master.Transshipment1ToPortName;
+                manifestDataProvider.ArrivalDate = master.Transshipment1ATA;
+            }
+
+            else
+            {
+                manifestDataProvider.PortOfDischargeName = master.MainCarriageToPortName;
+                manifestDataProvider.ArrivalDate = master.MainCarriageATA;
+            }
         }
 
         private string GetHousesPackagesDimensions(List<ShipmentPackagePM> packagse)

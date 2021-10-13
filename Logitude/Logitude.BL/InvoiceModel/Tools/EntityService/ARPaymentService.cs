@@ -687,12 +687,15 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         private void CancelARPaymentChequesInterestTransactions(ARPaymentPM payment)
         {
             List<InterestTransactionPM> interestTransactions = GetARPaymentChequeInterestTransactions(payment);
-            int MaxLineNumber = interestTransactions.Max(d => d.OriginalEntityLineNumber);
-            foreach (InterestTransactionPM transaction in interestTransactions)
+            if (interestTransactions.Count > 0)
             {
-                MaxLineNumber++;
-                InterestTransactionPM interestTransaction = MapInterestTransactionPMFromARPaymentCheque(transaction, payment,MaxLineNumber);
-                SaveInterestTransaction(interestTransaction);
+                int MaxLineNumber = interestTransactions.Max(d => d.OriginalEntityLineNumber);
+                foreach (InterestTransactionPM transaction in interestTransactions)
+                {
+                    MaxLineNumber++;
+                    InterestTransactionPM interestTransaction = MapInterestTransactionPMFromARPaymentCheque(transaction, payment, MaxLineNumber);
+                    SaveInterestTransaction(interestTransaction);
+                }
             }
         }
         private List<InterestTransactionPM> GetARPaymentChequeInterestTransactions(ARPaymentPM payment)
@@ -1472,6 +1475,10 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
         private void UpdateDocOutNeedsRebuild()
         {
+            if (string.IsNullOrEmpty(paymentPoco.Id))
+            {
+                return;
+            }
             DocumentOutRepository documentOutRepository = new DocumentOutRepository(myCommonContext);
             DocumentOut docOut = documentOutRepository.GetDocumentOutByEntityAndChildEntity(paymentPoco.Id, null);
             if (docOut != null)
