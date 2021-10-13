@@ -608,14 +608,16 @@ export class DWQueryBuilderComponent extends DWQueryBuilderBaseComponent {
         //validate Measurement Fields
         var isValidate = true; 
         let IsChargesFactMeasurementField = this.ChargesFactMeasurementFields.filter(a => a == this.SelectedItem.DisplayName)[0] ? true : false
-   
-        if (IsChargesFactMeasurementField && (this.SelectedItem.DWObjectTableCode == "Fact_Charges")) {
-            if (!this.hasShipmentOrMasterNumberField()) {
-                this.ShowValidateMessage("You are not allowed to add " + this.SelectedItem.DisplayName + " column unless you add the Shipment Number column");
-                isValidate = false;
-            }
-        }
-        return isValidate;
+         
+        if (!this.HasValitaionError(IsChargesFactMeasurementField)) {
+            return isValidate;  
+        } 
+        this.ShowValidateMessage("You are not allowed to add " + this.SelectedItem.DisplayName + " column unless you add the Shipment Number column");
+        isValidate = false;
+    }
+
+    private HasValitaionError(IsChargesFactMeasurementField: boolean) {
+        return IsChargesFactMeasurementField && (this.SelectedItem.DWObjectTableCode == "Fact_Charges") && !this.hasShipmentOrMasterNumberField();
     }
 
     private ShowValidateMessage(error) {
@@ -1102,22 +1104,17 @@ export class DWQueryBuilderComponent extends DWQueryBuilderBaseComponent {
     }
 
     private hasMeasurementFieldsInFactCharges() {
-        if (this.FactTableName == "Fact_Charges") {
-            var measurementFields = this.SelectedFieldsDataSource.filter(element => this.IsFactChargesMeasurementFields(element) == true);
 
-            if (measurementFields.length == 0) {
-                return false;
-            } else {
-                return true;
-            }
-
-        } else
-            return false; 
+        if (this.FactTableName != "Fact_Charges") {
+            return false;
+        }  
+        var measurementFields = this.SelectedFieldsDataSource.filter(element => this.IsFactChargesMeasurementFields(element) == true);
+        return measurementFields.length != 0;
+        
     }
     IsFactChargesMeasurementFields(element: DWObjectFieldsDetails): boolean {
         var chargesFactMeasurementField = this.ChargesFactMeasurementFields.filter(a => a == element.Name)[0];
-        if (chargesFactMeasurementField != null) return true;
-        else return false;
+        return chargesFactMeasurementField != null; 
     }
 
     EditButtonClicked(getSingle: boolean = false) {
