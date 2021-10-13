@@ -83,45 +83,81 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
             return query;
         }
 
-        public List<LedgerTransactionList> GetReportLinesLedgerTransactions(string taxreportid, int tenant, string accountId)
+        public List<LedgerTransactionList> GetReportLinesLedgerTransactions(string taxreportId, int tenant, string accountId)
+        {        
+            IQueryable<LedgerTransaction> transactions = null;
+            IQueryable<LedgerTransaction> outputTransactions = null;
+            IQueryable<LedgerTransaction> inputTransactions = null;
+            TaxReportList taxReport = GetTaxReport(taxreportId, tenant);          
+            FullAccountingSettingList accountingSettingList = GetFullAccountingSetting(tenant);
+         
+            
+            if (accountId == accountingSettingList.VATInputsGLAccountId)
+            {
+                transactions= inputTransactions = GetInputTransactions(taxReport, tenant, accountingSettingList);
+               
+            }
+            if (accountId == accountingSettingList.VATOutputGLAccountId)
+            {
+                transactions= outputTransactions = GetOutputTransactions(taxReport, tenant, accountingSettingList);              
+            }
+            if (accountingSettingList.VATOutputGLAccountId == accountingSettingList.VATInputsGLAccountId)
+            {
+                transactions = inputTransactions.Concat(outputTransactions);
+            }
+            return GetIqueryableList(transactions).Distinct().ToList();          
+        }
+
+        private FullAccountingSettingList GetFullAccountingSetting(int tenant)
         {
-            IAccountingContext context = AccountingContext.GetContext(tenant);
-            LedgerTransactionListQueryService ledgerTransactionListQueryService = new LedgerTransactionListQueryService(context);
-            IQueryable<LedgerTransaction> transactions;
-          
-            TaxReportListQueryService taxReportListQueryService = new TaxReportListQueryService(context);
-            TaxReportList taxReport = taxReportListQueryService.GetSingle(taxreportid);
-
+            FullAccountingSettingListQueryService fullAccountingSettingListQueryService = new FullAccountingSettingListQueryService(context);
+            return  fullAccountingSettingListQueryService.GetSingle(tenant.ToString());
+        }
+        private IQueryable<LedgerTransaction> GetOutputTransactions(TaxReportList taxReport, int tenant, FullAccountingSettingList accountingSettingList)
+        {
+            IQueryable<LedgerTransaction> outputTransactions;
             LedgerTransactionRepository ledgerTransactionRepository = new LedgerTransactionRepository(tenant);
-
-            if (taxreportid != null)
+            if (taxReport != null)
             {
 
-                List<string> outputTaxReportsJournalsIds = (from a in context.TaxReportLines
-                                                            where a.TaxReportId == taxreportid && a.Tenant == tenant && a.OutputOrInput == "O"
-                                                            select a.JournalId).ToList();
-
-                List<string> inputTaxReportsJournalsIds = (from a in context.TaxReportLines
-                                                           where a.TaxReportId == taxreportid && a.Tenant == tenant && a.OutputOrInput == "I"
-                                                           select a.JournalId).ToList();
-                IQueryable<LedgerTransaction> outputTransactions = ledgerTransactionRepository.GetTaxReportsLedgerTransactionsByJournalIds(outputTaxReportsJournalsIds, tenant, taxReport.TaxReportMonth, accountId);
-                IQueryable<LedgerTransaction> inputTransactions = ledgerTransactionRepository.GetLedgerTransactionsByTaxReportJournalIds(taxReport.TaxReportMonth, tenant, inputTaxReportsJournalsIds, accountId);
-                transactions = outputTransactions.Concat(inputTransactions);
-
+                List<string> outputTaxReportsJournalsIds = GetTaxReportLinesJournalIds(taxReport, InputOutput.Output);
+                outputTransactions = ledgerTransactionRepository.GetTaxReportsLedgerTransactionsByJournalIds(outputTaxReportsJournalsIds, tenant, taxReport.TaxReportMonth, accountingSettingList.VATOutputGLAccountId);
             }
             else
             {
-                transactions= ledgerTransactionRepository.GetLedgerTransactionsNotIncludedInTaxReports(tenant,  accountId);
+                outputTransactions = ledgerTransactionRepository.GetLedgerTransactionsOutputNotIncludedInTaxReports(tenant, accountingSettingList.VATOutputGLAccountId);
             }
+            return outputTransactions;
+        }
+        private IQueryable<LedgerTransaction> GetInputTransactions(TaxReportList taxReport, int tenant,FullAccountingSettingList accountingSettingList)
+        {
 
-
-
-            return GetIqueryableList(transactions).Distinct().ToList();
-           
-
+            IQueryable<LedgerTransaction> inputTransactions;
+            LedgerTransactionRepository ledgerTransactionRepository = new LedgerTransactionRepository(tenant);
+            if (taxReport != null)
+            {
+                List<string> inputTaxReportsJournalsIds = GetTaxReportLinesJournalIds(taxReport, InputOutput.Input);
+                inputTransactions = ledgerTransactionRepository.GetLedgerTransactionsByTaxReportJournalIds(taxReport.TaxReportMonth, tenant, inputTaxReportsJournalsIds, accountingSettingList.VATInputsGLAccountId);
+            }
+            else
+            {
+                inputTransactions = ledgerTransactionRepository.GetLedgerTransactionsInputsNotIncludedInTaxReports(tenant, accountingSettingList);
+            }
+            return inputTransactions;
+        }
+        private List<string> GetTaxReportLinesJournalIds(TaxReportList taxReport, string inputOrOutput)
+        {
+          return  (from a in context.TaxReportLines
+             where a.TaxReportId == taxReport.Id && a.Tenant == taxReport.Tenant && a.OutputOrInput == inputOrOutput
+                   select a.JournalId).ToList();
+        }
+        private TaxReportList GetTaxReport(string Id, int tenant)
+        {
+            IAccountingContext context = AccountingContext.GetContext(tenant);
+            TaxReportListQueryService taxReportListQueryService = new TaxReportListQueryService(context);
+           return taxReportListQueryService.GetSingle(Id);
 
         }
-
         private IQueryable<LedgerTransaction> ApplyCustomFilters(QueryOperations queryOperations, IQueryable<LedgerTransaction> iQueryable, int tenant)
         {
             LedgerTransactionListCustomFilter customFilter = new LedgerTransactionListCustomFilter(tenant);
@@ -1459,6 +1495,11 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
         }
     }
 
+    public struct InputOutput
+    {
+        public const string Input = "I";
+        public const string Output = "O";
+    }
     public class LedgerTransactionDto
     {
 
