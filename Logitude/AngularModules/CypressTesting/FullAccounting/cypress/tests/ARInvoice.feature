@@ -1,4 +1,4 @@
-@devsmoke
+@smoke
 Feature: AR Invoice
     The user creates new AR Invoice, add new line and ARprove the AR Invoice
 
