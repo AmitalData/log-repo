@@ -63,7 +63,7 @@ namespace Logitude.CustomsMessaging.FakeMessagingServices
             _generalData.declarationID = _dec.DeclarationNumber;
             _generalData.type = "1";
             _generalData.governmentProcedureType = 4000001;
-            _generalData.ReleaseMessageCode = 1;
+            _generalData.ReleaseMessageCode = 9;
             _generalData.currentDate = DateTime.Now;
             _generalData.releaseDateSpecified = true;
             _generalData.releaseDate = DateTime.Now;
