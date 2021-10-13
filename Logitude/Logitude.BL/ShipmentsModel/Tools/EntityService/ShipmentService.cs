@@ -2505,23 +2505,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             if (string.IsNullOrEmpty(this.initializer.EntityPM.Master))
                 return false;
 
-            if (!this.IsFirstFourDigitsOfMasterNumberAreLetters())
+            if (!this.initializer.IsFirstFourDigitsOfMasterNumberAreLetters())
                 return false;
 
             return true;
-        }
-
-        private bool IsFirstFourDigitsOfMasterNumberAreLetters()
-        {
-            string masterNumber = this.initializer.EntityPM.Master.Substring(0, 4);
-            if (masterNumber.All(char.IsLetter))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
         }
 
         private void MapMainCarriageLegsForAutomation()
