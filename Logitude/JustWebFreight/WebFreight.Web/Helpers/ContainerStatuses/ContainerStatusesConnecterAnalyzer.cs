@@ -197,6 +197,7 @@ namespace WebFreight.Web.Helpers.Analyzers
         string POLShipmentUpdateIndicator = null;
         string PODShipmentUpdateIndicator = null;
         string computingPartnerCode;
+        private bool IsUpdatingPackages = false;
 
         public ContainerStatusesConnecterAnalyzer(AnalyzeQueue analyzeQueue, AnalyzeQueueRepository analyzeQueueRepository)
         {
@@ -653,7 +654,9 @@ namespace WebFreight.Web.Helpers.Analyzers
                             {
                                 this.CreateShipmentContainerStatus(item);
                                 this.UpdateContainer();
+                                this.UpdatePackage();
                                 this.UpdateShipment();
+                                this.SaveShipment(shipmentPM);
                             }
                         }
                     }
@@ -1171,6 +1174,7 @@ namespace WebFreight.Web.Helpers.Analyzers
         }
         private void UpdatePackage()
         {
+            this.IsUpdatingPackages = false;
             DateTime todatDate = TenantServerConfigration.GetCurrentDateTime(logitudeTenant.Value);
             DateTime? eventData = this.GetEventDate();
             ShipmentPackagePM package = shipmentPM.ShipmentPackages.Where(a => a.Id == this.shipmentPackagesId).FirstOrDefault();
@@ -1188,6 +1192,7 @@ namespace WebFreight.Web.Helpers.Analyzers
                     package.LastStatusDate = eventData;
                     package.ContainerStatusSourceCode = oceanInsightsSource;
                     package.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
+                    this.IsUpdatingPackages = true;
                 }
                 else if (eventData > package.LastStatusDate)
                 {
@@ -1195,6 +1200,7 @@ namespace WebFreight.Web.Helpers.Analyzers
                     package.LastStatusDate = eventData;
                     package.ContainerStatusSourceCode = oceanInsightsSource;
                     package.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
+                    this.IsUpdatingPackages = true;
                 }
             }
         }
@@ -2133,10 +2139,8 @@ namespace WebFreight.Web.Helpers.Analyzers
         }
         private void StartProcessingUpdateShipment()
         {
-            shipmentPM.IsUpdatedOceanInsightsAnalyzer = true;
-            this.UpdatePackage();            
+            shipmentPM.IsUpdatedOceanInsightsAnalyzer = true;  
             this.UpdateShipmentDates();
-            this.SaveShipment(shipmentPM);            
         }
         private void UpdateShipmentDates()
         {
@@ -2205,9 +2209,12 @@ namespace WebFreight.Web.Helpers.Analyzers
         }
         private void SaveShipment(ShipmentPM shipmentPM)
         {
-            string systemEmail = "system@tenant" + this.logitudeTenant.Value + ".com";
-            ShipmentService service = new ShipmentService(shipmentContext, shipmentPM, systemEmail);
-            service.Update(true);
+            if (shipmentPM.IsUpdatedOceanInsightsAnalyzer || this.IsUpdatingPackages)
+            {
+                string systemEmail = "system@tenant" + this.logitudeTenant.Value + ".com";
+                ShipmentService service = new ShipmentService(shipmentContext, shipmentPM, systemEmail);
+                service.Update(true);
+            }
         }
         private void DoneAnalyzeQueue()
         {
