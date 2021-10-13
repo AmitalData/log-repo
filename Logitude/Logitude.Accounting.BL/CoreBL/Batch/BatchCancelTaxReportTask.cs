@@ -26,37 +26,59 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
         public override void RunCode()
         {
             // Deserilaize parameters
-            string xmlParameters = BatchTaskExecution.PrametersXml;
-            System.IO.StringReader stringReader = new System.IO.StringReader(xmlParameters);
-            XmlSerializer serializer = new XmlSerializer(typeof(PNCFileArgs));
-            PNCFileArgs parameterArgs = serializer.Deserialize(stringReader) as PNCFileArgs;
-            TaxReportQueryService taxReportQueryService = new TaxReportQueryService(parameterArgs.Tenant);
-            TaxReportPM taxReportPM = taxReportQueryService.GetSingle(parameterArgs.ReportId, false, false);
-
-            IAccountingContext accountingContext = AccountingContext.GetContext(taxReportPM.Tenant);
-
-            TaxReportUpdateService taxReportUpdateService = new TaxReportUpdateService(accountingContext, new Dictionary<string, IContext>(), taxReportPM.Tenant);
-
+            PNCFileArgs parameterArgs = DeserilaizeParameters();
+            TaxReportPM taxReportPM = GetTaxReportById(parameterArgs);
+            
 
             try
             {
-                taxReportPM.IsCancelled = true;
-                taxReportPM.StatusCode = VatReportStatusValues.Cancelled;
-                taxReportPM.ChangeSetOp = ChangeSetOperation.Update;
-                taxReportUpdateService.Update(taxReportPM, true);
+                SetReportAsCancelled(taxReportPM);
+                SubmitTaxReport(taxReportPM);
             }
 
             catch (Exception ex)
             {
-                taxReportPM.IsCancelled = false;
-                taxReportPM.StatusCode = VatReportStatusValues.CancelationFailed;
-                taxReportPM.ChangeSetOp = ChangeSetOperation.Update;
-                taxReportUpdateService.Update(taxReportPM, true);
+                SetReportAsFailedToCancel(taxReportPM);
+                SubmitTaxReport(taxReportPM);
+
                 throw;
 
             }
         }
 
+        private static void SubmitTaxReport(TaxReportPM taxReportPM)
+        {
+            IAccountingContext accountingContext = AccountingContext.GetContext(taxReportPM.Tenant);
+            TaxReportUpdateService taxReportUpdateService = new TaxReportUpdateService(accountingContext, new Dictionary<string, IContext>(), taxReportPM.Tenant);
+            taxReportPM.ChangeSetOp = ChangeSetOperation.Update;
+            taxReportUpdateService.Update(taxReportPM, true);
+        }
+
+        private PNCFileArgs DeserilaizeParameters()
+        {
+            string xmlParameters = BatchTaskExecution.PrametersXml;
+            System.IO.StringReader stringReader = new System.IO.StringReader(xmlParameters);
+            XmlSerializer serializer = new XmlSerializer(typeof(PNCFileArgs));
+            PNCFileArgs parameterArgs = serializer.Deserialize(stringReader) as PNCFileArgs;
+            return parameterArgs;
+        }
+        private static TaxReportPM GetTaxReportById(PNCFileArgs parameterArgs)
+        {
+            TaxReportQueryService taxReportQueryService = new TaxReportQueryService(parameterArgs.Tenant);
+            TaxReportPM taxReportPM = taxReportQueryService.GetSingle(parameterArgs.ReportId, false, false);
+            return taxReportPM;
+        }
+
+        private static void SetReportAsCancelled(TaxReportPM taxReportPM)
+        {
+            taxReportPM.IsCancelled = true;
+            taxReportPM.StatusCode = VatReportStatusValues.Cancelled;
+        }
+        private static void SetReportAsFailedToCancel(TaxReportPM taxReportPM)
+        {
+            taxReportPM.IsCancelled = false;
+            taxReportPM.StatusCode = VatReportStatusValues.CancelationFailed;
+        }
 
     }
 }

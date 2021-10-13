@@ -89,13 +89,7 @@ namespace WebFreight.Web.Controllers.AccountingModel
         {
             try
             {
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                SecurityUtility.CheckContactFeature("TaxReport", "UPDATE", authToken.Tenant);
-                int tenant = authToken.Tenant;
-
-       
+                int tenant = GetAuthinticatedTenant();
 
                 BatchTaskExecutionPM batchTaskPM = TaxReportService.CancelTaxReportInBatch(entityPM.Id, tenant);
 
@@ -109,6 +103,17 @@ namespace WebFreight.Web.Controllers.AccountingModel
             }
 
         }
+
+        private static int GetAuthinticatedTenant()
+        {
+            string token = HttpContext.Current.Request.Headers["Token"];
+            AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+            SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+            SecurityUtility.CheckContactFeature("TaxReport", "UPDATE", authToken.Tenant);
+            int tenant = authToken.Tenant;
+            return tenant;
+        }
+
         [HttpGet]
         public HttpResponseMessage GetLinesByFilters([FromUri] ApiQueryFilters filters)
         {

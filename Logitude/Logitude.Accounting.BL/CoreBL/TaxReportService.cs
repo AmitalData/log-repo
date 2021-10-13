@@ -65,7 +65,7 @@ namespace Logitude.Accounting.BL.CoreBL
         private static List<GLAccountPM> parentGLAccounts;
         const string StatusCode_VATAmountInTheRecordIsHigherThanThePercentageOfVATAllowed = "9";
         const int maxAllowedLinesCount = 3000;
-        const string CancelationInProgressStatusCode = "CP";
+        const string CreatedStatusCode = "C";
 
         public static List<TaxReportLinePM> CreateTaxReportLines(TaxReportPM taxReport, int tenant)
         {
@@ -534,42 +534,56 @@ namespace Logitude.Accounting.BL.CoreBL
             {
                 // create BTE record
                 PNCFileArgs args = new PNCFileArgs() { ReportId = taxReportId, Tenant = tenant };
-                var stringwriter = new System.IO.StringWriter();
-                var serializer = new XmlSerializer(typeof(PNCFileArgs));
-                serializer.Serialize(stringwriter, args);
-                string xmlParameters = stringwriter.ToString();
+                string xmlParameters = SerializeParameters(args);
 
-                taskExe = new BatchTaskExecutionPM()
-                {
-                    Subject = "Cancel Tax Report",
-                    Tenant = tenant,
-                    ChangeSetOp = ChangeSetOperation.Insert,
-                    ClassName = "Logitude.Accounting.BL.CoreBL.Batch.BatchCancelTaxReportTask,Logitude.Accounting.BL",
-                    CreateDate = DateTime.Now,
-                    PrametersXml = xmlParameters,
-                    StatusCode = "C",
+                taskExe = CreateBatchTaskExecutionPM(tenant, xmlParameters);
 
-                };
+                SubmitBatchTask(tenant, taskExe);
 
-               
-                IInfrastructureContext MyContext = InfrastructureContext.GetContext(tenant);
-                BatchTaskExecutionUpdateService bteUpdateService = new BatchTaskExecutionUpdateService(MyContext, new Dictionary<string, IContext>(), tenant);
-                bteUpdateService.Update(taskExe, true);
-
-               
-                // 2- Send to queue
-                IQueueService queueservice = new DbQueueService();
-                queueservice.InitializeQueue("batchtaskexecutionqueue", 0);
-                queueservice.Send(new Dictionary<string, string>()
-                {
-                    { "BatchTaskExecutionId", taskExe.Id },
-                    { "Tenant", tenant.ToString() }
-                }, tenant);
-                scope.Complete();
+                SendBatchTaskToQueue(tenant, taskExe, scope);
             }
 
             return taskExe;
 
+        }
+        private static string SerializeParameters(PNCFileArgs args)
+        {
+            var stringwriter = new System.IO.StringWriter();
+            var serializer = new XmlSerializer(typeof(PNCFileArgs));
+            serializer.Serialize(stringwriter, args);
+            string xmlParameters = stringwriter.ToString();
+            return xmlParameters;
+        }
+        private static BatchTaskExecutionPM CreateBatchTaskExecutionPM(int tenant, string xmlParameters)
+        {
+            return new BatchTaskExecutionPM()
+            {
+                Subject = "Cancel Tax Report",
+                Tenant = tenant,
+                ChangeSetOp = ChangeSetOperation.Insert,
+                ClassName = "Logitude.Accounting.BL.CoreBL.Batch.BatchCancelTaxReportTask,Logitude.Accounting.BL",
+                CreateDate = DateTime.Now,
+                PrametersXml = xmlParameters,
+                StatusCode = CreatedStatusCode,
+
+            };
+        }
+        private static void SubmitBatchTask(int tenant, BatchTaskExecutionPM taskExe)
+        {
+            IInfrastructureContext MyContext = InfrastructureContext.GetContext(tenant);
+            BatchTaskExecutionUpdateService bteUpdateService = new BatchTaskExecutionUpdateService(MyContext, new Dictionary<string, IContext>(), tenant);
+            bteUpdateService.Update(taskExe, true);
+        }
+        private static void SendBatchTaskToQueue(int tenant, BatchTaskExecutionPM taskExe, TransactionScope scope)
+        {
+            IQueueService queueservice = new DbQueueService();
+            queueservice.InitializeQueue("batchtaskexecutionqueue", 0);
+            queueservice.Send(new Dictionary<string, string>()
+                {
+                    { "BatchTaskExecutionId", taskExe.Id },
+                    { "Tenant", tenant.ToString() }
+                }, tenant);
+            scope.Complete();
         }
 
         public static BatchTaskExecutionPM CreatePNCFileInBatch(string taxReportId, int tenant)

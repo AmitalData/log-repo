@@ -17,6 +17,7 @@ import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
 import { TaxReportExtendedPMService } from '../../Services/ExtendedPMs/TaxReportExtendedPMService';
 import { DownloadManager } from '../../../Infrastructure/Utilities/DownloadManager';
 import { FullAccountingSettingListService } from '../../Services/StandardLists/FullAccountingSettingListService';
+import { strict } from 'assert';
 
 
 export class TaxReportMenuButtonsHandler {
@@ -88,18 +89,25 @@ export class TaxReportMenuButtonsHandler {
     }
 
     private SetUploadButtonEnabilityAccordingToConsolidationVAT(button: MenuButtonPM) {
+        var consolidationVAT: string = this.GetConsolidationVATFromFullAccountingSetting(button);
+        if (consolidationVAT != null) {
+            if (consolidationVAT == this.TenantPM.VatNumber && (this.EntityPM.StatusCode == TaxReportStatus.Darft || this.EntityPM.StatusCode == TaxReportStatus.Error)) {
+                button.IsDisabled = false;
+            }
+            else {
+                button.IsDisabled = true;
+            }
+        }
+
+    }
+
+    private GetConsolidationVATFromFullAccountingSetting(button: MenuButtonPM) {
         this.fullAccountingSettingListService.getSingle(this.TenantPM.Id.toString()).subscribe((response: any) => {
-            this.CurrentSession.StopBusyIndicator();         
+            this.CurrentSession.StopBusyIndicator();
             if (response != null) {
                 var response = response.Result;
-                if (response.ConsolidationVAT == this.TenantPM.VatNumber && (this.EntityPM.StatusCode == "D" || this.EntityPM.StatusCode=="E")) {
-                        button.IsDisabled = false;
-                    }
-                    else {
-                        button.IsDisabled = true;
-                }
-
-                }
+                return response.ConsolidationVAT;
+            }
         });
     }
 
@@ -138,22 +146,7 @@ export class TaxReportMenuButtonsHandler {
                             this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                                 if (isSaveSuccess) {
                                     this.entityArgs.EditComponent.ReloadEntityPM();
-                                    this.taxReportExtendedPMService.CancelTaxReportInBatch(this.EntityPM).subscribe((myResult: ServiceResponse) => {
-                                        var mm: ServiceResponse = myResult;
-                                        if (!mm.HasError) {
-                                            this.entityArgs.EditComponent.ReloadEntityPM();
-                                        }
-                                        else {
-                                            this.EntityPM.IsCancelled = false;
-                                            this.EntityPM.StatusCode = TaxReportStatus.CancelationFailed;
-                                            this.entityArgs.EditComponent.SaveChanges();
-                                            this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
-                                                if (isSaveSuccess) {
-                                                    this.entityArgs.EditComponent.ReloadEntityPM();
-                                                }
-                                            })
-                                        }
-                                    })
+                                    this.CancelTaxReportInBatch();
                                 } else {
                                     this.EntityPM.IsCancelled = false;
                                 }
@@ -223,6 +216,25 @@ export class TaxReportMenuButtonsHandler {
 
     }
 
+    private CancelTaxReportInBatch() {
+        this.taxReportExtendedPMService.CancelTaxReportInBatch(this.EntityPM).subscribe((myResult: ServiceResponse) => {
+            var mm: ServiceResponse = myResult;
+            if (!mm.HasError) {
+                this.entityArgs.EditComponent.ReloadEntityPM();
+            }
+            else {
+                this.EntityPM.IsCancelled = false;
+                this.EntityPM.StatusCode = TaxReportStatus.CancelationFailed;
+                this.entityArgs.EditComponent.SaveChanges();
+                this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+                    if (isSaveSuccess) {
+                        this.entityArgs.EditComponent.ReloadEntityPM();
+                    }
+                });
+            }
+        });
+    }
+
     private StartBusyIndicator(message: string) {
         this.CurrentSession.StartBusyIndicator(message);
     }
@@ -242,6 +254,7 @@ enum TaxReportStatus {
 
     Darft = "D",
     Transmitted = "T",
+    Error = "E",
     CancelationInProgress = "CP",
     CancelationFailed = "CF"
 }
