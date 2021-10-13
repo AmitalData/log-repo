@@ -1024,7 +1024,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                             throw new Exception("The Amount due is not suitable to the total amount paid, for invoice: " + invoice.InvoiceNumber);
                         }
 
-
+                        invoice.IsUpdateFromPaymentService = true;
                         this.UpdateInvoicePaidDate(invoice);
                         APInvoiceService aRInvoiceService = new APInvoiceService(this.objectContext, this.tenant);
                         aRInvoiceService.Update(invoice);
