@@ -1,7 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { ServiceHelper } from "../../../Infrastructure/Utilities/ServiceHelper";
-import { defer } from 'rxjs';
+import { defer, Observable } from 'rxjs';
 import { ServiceResponse } from "../../../Infrastructure/DataContracts/ServiceResponse";
 import { SessionInfo } from "../../../Infrastructure/Utilities/SessionInfo";
 import { catchError, map } from "rxjs/operators";
@@ -18,7 +18,7 @@ export class NewQuoteOPWebService {
     /*example :-  var service = new DeclarationWebService();  PTERMID=code
     service.GetETBPAYTRtemList(this.PTERMID , this.costSearchText, 30, true).subscribe((res: ServiceResponse) => {
     });*/
-    GetETBPAYTRitemList(PTERMID: string, search: string, top: number, isSearchNULLVendor: boolean) {
+    GetETBPAYTRitemList(PTERMID: string, search: string, top: number, isSearchNULLVendor: boolean):Observable<ServiceResponse> {
 
         return defer(() => {
 

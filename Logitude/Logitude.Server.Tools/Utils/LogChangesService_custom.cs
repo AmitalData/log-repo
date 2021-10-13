@@ -24,12 +24,15 @@ namespace Logitude.Server.Tools.Utils
             {
                 IsDateValid = false;
             }
-            DateTime stopLogAt = DateTime.MinValue; 
-            stopLogAt = DateTime.ParseExact(untilDateyyyyMMdd, "yyyyMMdd", CultureInfo.InvariantCulture, DateTimeStyles.None);
-
-            if (DateTime.Now > stopLogAt)
+            else
             {
-                IsDateValid = false;
+                DateTime stopLogAt = DateTime.MinValue;
+                stopLogAt = DateTime.ParseExact(untilDateyyyyMMdd, "yyyyMMdd", CultureInfo.InvariantCulture, DateTimeStyles.None);
+
+                if (DateTime.Now > stopLogAt)
+                {
+                    IsDateValid = false;
+                }
             }
         }
         //public void AddDataToLog<POCOType>(POCOType entityPOCO)

@@ -2,9 +2,13 @@
 using Logitude.AmitalMessaging.Utils;
 using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
 using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.Customs.BL.BL;
 using Logitude.Customs.BL.EntityQueryServices;
+using Logitude.Customs.BL.EntityUpdateServices;
 using Logitude.Customs.BL.Messaging.Customs;
+using Logitude.Customs.BL.Messaging.U2L.DeclarationDocuments;
 using Logitude.Customs.Data;
+using Logitude.Customs.Data.Repsitories;
 using Logitude.Customs.Def.EntityPMs;
 using Logitude.Customs.Def.EntityQueryServicesExt;
 using Logitude.CustomsMessaging.Common.RequestParams;
@@ -331,7 +335,12 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 if (/*CourierENV() */ declarationPM.IsCourierDeclaration)
                 {
                     Debug.WriteLine("CourierENV");
-
+                    var updateDocumentStatuscodeService = new UpdateDocumentStatuscodeService();
+                    if (updateDocumentStatuscodeService.ConnectedAfterSend_Need2UpdateDocumentStatuscode(declarationPM,_DocumentsFilingPM))
+                    {
+                        LogitudeSettings.HandleLogMe("ConnectedAfterSend_Need2UpdateDocumentStatuscode", false, "CreateUD2LTService", stopLogAt);
+                        updateDocumentStatuscodeService.UpdateDocumentStatuscode(declarationPM, stopLogAt);
+                    }
                     shouldCreateDCAComm = true;
                 }
                 else
@@ -439,6 +448,53 @@ namespace Logitude.CustomsMessaging.MessagingServices
             }
 
         }
+
+        //public static void UpdateDocumentStatuscode(DeclarationPM connectedDeclarationPM, DateTime stopLogAt)
+        //{
+
+        //    ICustomContext context = CustomContext.GetContext(connectedDeclarationPM.Tenant);
+        //    DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(context);
+        //    DeclarationCourierStatusPM currentDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(connectedDeclarationPM.Id, true, false);
+        //    if (currentDeclarationCourierStatusPM != null)
+        //    {
+        //        CalculateDeclarationCourierStatus calculateDeclarationCourierStatus = new CalculateDeclarationCourierStatus(connectedDeclarationPM, connectedDeclarationPM.Id, connectedDeclarationPM.Tenant);
+        //        //LogMessagingUtil.Instance.AppendLine("currentDeclarationCourierStatusPM.DocumentStatusCode: " + currentDeclarationCourierStatusPM.DocumentStatusCode);
+        //        currentDeclarationCourierStatusPM.DocumentStatusCode = "V";
+        //        calculateDeclarationCourierStatus.CalcDocumentStatusCode(currentDeclarationCourierStatusPM);//// will change if wrong !!!
+        //        if (currentDeclarationCourierStatusPM.DocumentStatusCode == "V")
+        //        {
+        //            LogMessagingUtil.Instance.AppendLine($"currentDeclarationCourierStatusPM.DocumentStatusCode: {currentDeclarationCourierStatusPM.DocumentStatusCode}  change 2 V");
+        //            LogitudeSettings.HandleLogMe($"currentDeclarationCourierStatusPM.DocumentStatusCode: {currentDeclarationCourierStatusPM.DocumentStatusCode}  change 2 V", false, "CreateUD2LTService", stopLogAt);
+        //            using (var trans = TransactionFactory.GetNewTransaction())
+        //            {
+        //                DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(context, new Dictionary<string, IContext>(), connectedDeclarationPM.Tenant);
+        //                currentDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
+        //                ///currentDeclarationCourierStatusPM.DocumentStatusCode = "V";
+        //                declarationCourierStatusUpdateService.Update(currentDeclarationCourierStatusPM, true);
+        //                trans.Complete();
+        //            }
+        //        }
+        //        else
+        //        {
+        //            LogitudeSettings.HandleLogMe("calculateDeclarationCourierStatus.CalcDocumentStatusCode return <> V", false, "CreateUD2LTService", stopLogAt);
+        //        }
+        //    }
+        //}
+
+        //private bool ConnectedAfterSend_Need2UpdateDocumentStatuscode(DeclarationPM declarationPM)
+        //{
+
+        //    var customsDocumentRepository = new CustomsDocumentRepository(declarationPM.Tenant);
+        //    var customsDocument =customsDocumentRepository.GetSingle(_DocumentsFilingPM.Id, declarationPM.Tenant);
+        //    if (string.IsNullOrWhiteSpace(customsDocument?.CustomsDocId))
+        //    {
+        //        return false;
+        //    }
+        //    var declarationCourierStatusRepository = new DeclarationCourierStatusRepository(declarationPM.Tenant);
+        //    var declarationCourierStatus =declarationCourierStatusRepository.GetSingle(declarationPM.Id, declarationPM.Tenant);
+        //    return declarationCourierStatus.DocumentStatusCode != "V";
+
+        //}
 
         private void FixDocumentTypeCodeEmpty(string logData)
         {

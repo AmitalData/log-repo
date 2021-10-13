@@ -1,0 +1,76 @@
+<div class="grid" [formGroup]='formGroup'>
+
+  <div class="col-12">
+    <h2 class="sub-header">{{'QuoteOP.S.NewQuote.General' | TextCodeTranslationPipe}}</h2>
+    <h5>Quote Type</h5>
+    <div class='radio-row' *ngFor='let x of quoteTypes'>
+      <p-radioButton name="quoteTypeGroup" (click)='checkType(x.code)' [value]="x.code" formControlName="quoteType"
+        [label]='x.text'></p-radioButton>
+    </div>
+  </div>
+
+  <div class="col-6 p-fluid">
+    <div class="grid">
+      <div class="col-6 p-field">
+        <label for="StartDate_Date">Start Date</label>
+        <p-calendar formControlName='startDate' id="StartDate_Date"></p-calendar>
+      </div>
+
+      <div class="col-6 p-field">
+        <label></label>
+        <p-calendar formControlName='startDate' [timeOnly]="true" class="col-6"></p-calendar>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-6 p-fluid">
+    <div class="p-field">
+      <app-autocomplate-table
+      [columnsShow]="{Code:'Code',MoveTypeEnglishName:'English Name'}"
+      [data]='moveTypes' [fieldShow]='"MoveTypeEnglishName"' [label]="'Move Type'" [controlName]='"moveType"'
+      [formGroup]='formGroup' (onSelect)='onSelectedMoveType($event)'>
+    </app-autocomplate-table>
+    </div>
+  </div>
+
+  <div class="col-6 p-fluid">
+    <div class="p-field">
+      <label for="expirationDays">Expiration Days</label>
+      <p-inputNumber formControlName="expirationDays" mode="decimal" inputId="expirationDays" [useGrouping]="false"
+        (onInput)="expirationDaysChange($event)">
+      </p-inputNumber>
+    </div>
+  </div>
+
+  <div class="col-6 p-fluid">
+    <p-checkbox formControlName='isAutomaticallyClosed' [binary]="true"></p-checkbox>
+    {{'QuoteOP.S.NewQuote.CloseAutomatically' | TextCodeTranslationPipe}}
+    <p-inputNumber formControlName='automaticallyCloseDays' mode="decimal" [useGrouping]="false"
+      (onInput)="closeDaysChange($event)" [disabled]='!formGroup.controls.isAutomaticallyClosed.value'
+      class="w-4rem inline-block"></p-inputNumber>
+    {{'QuoteOP.S.NewQuote.Days' | TextCodeTranslationPipe}}
+  </div>
+
+
+  <div class="col-6 p-fluid">
+    <div class="grid">
+      <div class="col-6 p-field">
+        <label for="expirationDate_Date">Expiration Date</label>
+        <p-calendar formControlName='expirationDate' id="expirationDate_Date"></p-calendar>
+      </div>
+
+      <div class="col-6 p-field">
+        <label></label>
+        <p-calendar formControlName='expirationDate' [timeOnly]="true" class="col-6"></p-calendar>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-6 p-fluid">
+    <div class="p-field">
+      <label for="closeDate_Date">{{'QuoteOP.S.NewQuote.CloseAutomatically' | TextCodeTranslationPipe}}</label>
+      <p-calendar formControlName='automaticallyCloseDate' id="closeDate_Date"
+        [disabled]='!formGroup.controls.isAutomaticallyClosed.value'></p-calendar>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,99 @@
+:host ::ng-deep {
+    .p-field {
+        margin-bottom: 1em !important;
+    }
+
+    .root-header-text {
+        font-size: 20px;
+        font-weight: bold;
+    }
+    
+    .sub-header {
+        font-size: 18px;
+        font-weight: bold;
+        margin-bottom: 20px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid var(--surface-200);
+    }
+    
+    app-autocomplate-table label,
+    .simple-text {
+        font-size: 13px;
+    }
+
+    .col-4,
+    .col-6 {
+        padding: 1.5rem;
+    }
+
+    .ng-submitted p-autocomplete.ng-invalid input,
+    .ng-submitted .ng-invalid {
+        border-color: #f44336;
+    }
+}
+
+:host {
+    display: block;
+    height: 100%;
+    background-color: var(--surface-200);
+    font-family: -apple-system, BlinkMacSystemFont, “Segoe UI”, Roboto, Helvetica, Arial, sans-serif,
+        “Apple Color Emoji”, “Segoe UI Emoji”, “Segoe UI Symbol”;
+}
+
+.container {
+    height: 570px
+}
+
+.section {
+    background: var(--surface-0);
+    padding: 27px;
+    margin-bottom: 20px;
+    border-radius: 14px;
+}
+
+.section-btn {
+    height: 67px;
+    border-radius: 0;
+    text-align: right;    
+    padding: 20px;
+    margin-bottom: 0;
+
+    .p-button-danger {
+        margin-right: 30px;
+    }
+}
+
+.root-header {
+    margin-bottom: 8px;
+    padding: 13px 20px;
+    border-radius: 0;
+
+    h2 {
+        font-size: 24px;
+    }
+}
+
+.left-side {
+    border-radius: 0px;
+    margin-bottom: 1px;
+}
+
+.right-side {
+    padding-left: 13px;
+    padding-top: 13px;
+    overflow-x: hidden;
+    height: 100%;
+    position: relative;
+}
+
+.section-pickup {
+}
+
+.section-delivery {
+}
+
+.disabled {
+    pointer-events: none;
+    opacity: 0.5;
+    background: #ccc;
+}

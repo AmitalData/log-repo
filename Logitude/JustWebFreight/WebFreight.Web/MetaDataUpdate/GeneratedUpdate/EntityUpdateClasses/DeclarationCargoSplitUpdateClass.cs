@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationCargoSplitUpdateClass
    {  		
-		public const string HashString = "83f8d0e06f4fc64dadaa98799540c7dd";
+		public const string HashString = "ec09a1c809db00b86d772da80aa75ca1";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -127,8 +127,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    NewWizardControlName =  "Logitude.Customs.Views.NewDeclarationCargoSplitControlCommand",
 			      				    LocalDefaultText =  "פיצול מטען",
 			      				    DefaultText =  "Declaration Cargo Split",
-			      				    NewButtonLocalDefaultText =  "בקשת פיצול מטען חדשה",
-			      				    NewButtonDefaultText =  "בקשת פיצול מטען חדשה",
+			      				    NewButtonLocalDefaultText =  "בקשת פיצול מטען",
+			      				    NewButtonDefaultText =  "בקשת פיצול מטען",
 			      				    Code =  "DECS",
 			      				    Name =  "Customs.DeclarationCargoSplit",
 			      				    GenerateDomainService =  true,
@@ -1249,10 +1249,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CustomFileNo",
 					  						DefaultText =  "Custom File No",
-					  						FullLocalDefaultText =  "תיק עמילות",
+					  						FullLocalDefaultText =  "תיק עמילות/מכס",
 					  						ListFieldLable =  "CustomFileNoListLable",
 					  						ListLableDefaultText =  "Custom File No",
-					  						ListLocalDefaultText =  "תיק עמילות",
+					  						ListLocalDefaultText =  "תיק עמילות/מכס",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,

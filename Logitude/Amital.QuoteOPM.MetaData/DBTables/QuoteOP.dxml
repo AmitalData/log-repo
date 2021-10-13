@@ -1363,21 +1363,6 @@
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Relation
-    ForeignKeyColumn="FromPortId"
-    ReferencedTable="Ports"
-    ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
-  <Relation
-    ForeignKeyColumn="ToPortId"
-    ReferencedTable="Ports"
-    ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
-  <Relation
-    ForeignKeyColumn="IncotermId"
-    ReferencedTable="Incoterms"
-    ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
-  <Relation
     ForeignKeyColumn="SalesmanUserId"
     ReferencedTable="Users"
     ReferencedColumn="Id"
@@ -1537,11 +1522,6 @@
   <Relation
     ForeignKeyColumn="RegionalTaxId"
     ReferencedTable="VatTypes"
-    ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
-  <Relation
-    ForeignKeyColumn="SpecialServiceId"
-    ReferencedTable="OPSpecialServicesTypes"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
 </Table>

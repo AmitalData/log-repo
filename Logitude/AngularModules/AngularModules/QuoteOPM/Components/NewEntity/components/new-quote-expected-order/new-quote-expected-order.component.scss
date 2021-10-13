@@ -1,0 +1,15 @@
+:host ::ng-deep {
+    .mydialog {
+        width: 1000px;
+        
+        button {
+            margin: 8px;
+        }
+    }
+}
+
+@media screen and (max-width: 1200px) {
+    .mydialog {
+        width: 100vw;
+    }
+}

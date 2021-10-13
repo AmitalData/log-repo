@@ -1,0 +1,28 @@
+:host ::ng-deep .p-radiobutton {
+    display: none;
+}
+
+p-radiobutton {
+    vertical-align: middle;
+    margin-left: 10px;
+}
+
+.radio-section {
+    margin-bottom: 20px;
+}
+
+.radio-checked {
+    background-color: #e2f0fb;
+    color: #1084DC !important;
+ }
+
+.radio-row {
+    font-size: 12px;
+    color: gray;
+    // display: flex;
+    padding: 5px 0;
+
+    label img {
+        width: 20px;
+    }
+}

@@ -38,6 +38,8 @@ using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 
 using Logitude.Customs.Data.DataContracts;
+using Logitude.CustomsMessaging.Common.RequestParams;
+using Logitude.CustomsMessaging.MessagingServices;
 
 namespace WebFreight.Web.Controllers.CustomsModel.Extended
 {
@@ -827,6 +829,28 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 SupplierInvoice exists = supplierInvoiceQuery.CheckIfInvoiceNumberExists(declarationId,invoiceNumber,invoiceCounterKey, tenant);
 
                 return Request.CreateResponse(HttpStatusCode.OK, exists);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+        public HttpResponseMessage PostSendMultiUpdate(MultiUpdateRequestParams requestParamsData)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+                string loggedUserEmail = authToken.Email;
+                SecurityUtility.AuthenticationOnTenant(tenant);
+
+                ICustomContext customContext = CustomContext.GetContext(authToken.Tenant);
+                var messagingService = new DCAInUCBMultiUpdate_MsgMessagingService();
+                var sts = messagingService.CreateCRS(tenant, null, requestParamsData);
+
+                return Request.CreateResponse(HttpStatusCode.OK, sts);
             }
 
             catch (Exception ex)

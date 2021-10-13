@@ -1,0 +1,24 @@
+:host ::ng-deep {
+    ul.p-autocomplete-items {
+        li:first-child {
+            position: sticky;
+            top: 0;
+            background: white;
+            pointer-events: none;
+            cursor: pointer;
+            z-index: 1;
+
+            div {
+                font-weight: bold;
+            }
+        }
+    }
+}
+
+.autocomplete-col {
+    display: inline-block;
+    width: 110px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    font-size: 13px;
+}

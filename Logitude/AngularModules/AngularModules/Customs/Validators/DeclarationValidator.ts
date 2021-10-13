@@ -1,11 +1,11 @@
 declare var window: any;
-import {SessionLocator} from '../../Infrastructure/Utilities/SessionLocator';
-import {AppTool, DateTool} from '../../Infrastructure/Tools';
-import {TextCodeTranslator} from '../../Infrastructure/Utilities/TextCodeTranslator';
-import {Validator} from '../../Infrastructure/Validators/Validator';
+import { SessionLocator } from '../../Infrastructure/Utilities/SessionLocator';
+import { AppTool, DateTool } from '../../Infrastructure/Tools';
+import { TextCodeTranslator } from '../../Infrastructure/Utilities/TextCodeTranslator';
+import { Validator } from '../../Infrastructure/Validators/Validator';
 import { LuhnAlgorithm } from '../../Customs/Utilities/LuhnAlgorithm';
-import {DeclarationPM}          from '../EntityPMs/DeclarationPM';
-import {SupplierInvoiceItemPM}  from '../EntityPMs/SupplierInvoiceItemPM';
+import { DeclarationPM } from '../EntityPMs/DeclarationPM';
+import { SupplierInvoiceItemPM } from '../EntityPMs/SupplierInvoiceItemPM';
 import { DecDangersContactPM } from '../EntityPMs/DecDangersContactPM';
 import { ConsignmentPackDangerPM } from '../EntityPMs/ConsignmentPackDangerPM';
 
@@ -196,7 +196,7 @@ export class DeclarationValidator {
                 errorMessage = "Customs.Declaration.O.IsAmendment";
                 if (!AppTool.IsNullOrEmpty(errorMessage)) {
                     this.ValidationErrorMessageCodes.push(errorMessage);
-                    return ' - ' +  this._DeclarationPM.AmendmentStatusName;
+                    return ' - ' + this._DeclarationPM.AmendmentStatusName;
                 }
             }
         }
@@ -209,15 +209,13 @@ export class DeclarationValidator {
         var errorMessage: string = "";
 
         if (this._DeclarationPM != null) {
-            if (this._DeclarationPM.Direction != "E" && this._DeclarationPM.PaymentDate)
-            {
+            if (this._DeclarationPM.Direction != "E" && this._DeclarationPM.PaymentDate) {
                 errorMessage = "Customs.General.O.NoPaymentDate";
                 if (!AppTool.IsNullOrEmpty(errorMessage)) {
                     this.ValidationErrorMessageCodes.push(errorMessage);
                 }
             }
-            if (this._DeclarationPM.Direction == "E" && this._DeclarationPM.IsSubmitDeclaration)
-            {
+            if (this._DeclarationPM.Direction == "E" && this._DeclarationPM.IsSubmitDeclaration) {
                 errorMessage = "Customs.General.O.NoPaymentDateExport";
                 if (!AppTool.IsNullOrEmpty(errorMessage)) {
                     this.ValidationErrorMessageCodes.push(errorMessage);
@@ -364,7 +362,11 @@ export class DeclarationValidator {
                 if ((taxationDateTime.getFullYear() != todayDate.getUTCFullYear()) ||
                     (taxationDateTime.getMonth() != todayDate.getUTCMonth()) ||
                     (taxationDateTime.getDate() != todayDate.getUTCDate())) {
-                    errorMessage = "Customs.General.O.TaxationDateTimeNotToday";
+                    if (this._DeclarationPM.Direction == "E") {
+                        errorMessage = "Customs.General.O.ExportTaxationDateTimeNT";
+                    } else {
+                        errorMessage = "Customs.General.O.TaxationDateTimeNotToday";
+                    }
                 }
             }
             if (!AppTool.IsNullOrEmpty(errorMessage)) {
@@ -514,7 +516,7 @@ export class DeclarationValidator {
                 }
             }
         }
- 
+
 
     }
     //Yuval Chalup 18.11.2014 TASK-4240 --->
@@ -530,12 +532,12 @@ export class DeclarationValidator {
                 for (let line of item.ConsignmentPackages) {
                     if (line.MarksNumbers == null && line.PackageMeasureQualifierCode == null && line.PackageQuantity == null && line.PackageTypeCode == null && line.GrossMassMeasure == null) {
                         errorMessage = TextCodeTranslator.Translate("Customs.Declaration.O.EmptyConsignmentPackage");
-                         if (!AppTool.IsNullOrEmpty(errorMessage)) {
-                        this.ValidationErrorMessageCodes.push(errorMessage);
+                        if (!AppTool.IsNullOrEmpty(errorMessage)) {
+                            this.ValidationErrorMessageCodes.push(errorMessage);
 
+                        }
                     }
-                }
-              
+
                 }
             }
         }
@@ -573,12 +575,12 @@ export class DeclarationValidator {
                     this.ValidationErrorMessageCodes.push(TextCodeTranslator.Translate("Customs.Declaration.O.CorrectDigit") + checkDigit.toString());
                 }
             }
-        
+
         }
     }
-  
+
     public Validate(entityPM: DeclarationPM) {
-   
+
         var result = [];
         this._DeclarationPM = entityPM;
         this.EmptyConsignmentPackageCheck();

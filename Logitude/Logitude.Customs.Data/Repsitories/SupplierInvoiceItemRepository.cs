@@ -222,10 +222,18 @@ namespace Logitude.Customs.Data.Repsitories
             return maxLine;
         }
 
+
         public List<SupplierInvoiceItem> GetSupplierInvoiceItemsForDeclaration(string declarationId, int tenant)
         {
             return (from a in context.SupplierInvoiceItems.Include("OriginCountry").Include("TradeAgreement").Include("AdditionalMeasurmentUnit").Include("InvoiceMeasurmentUnit").Include("StatisticMeasurmentUnit")
                     where a.DeclarationId == declarationId
+                    select a).ToList();
+        }
+
+        public List<SupplierInvoiceItem> GetSupplierInvoiceItemByClassificationCode(string declarationId, int tenant,string classificationCode)
+        {
+            return (from a in context.SupplierInvoiceItems.Include("OriginCountry").Include("TradeAgreement").Include("AdditionalMeasurmentUnit").Include("InvoiceMeasurmentUnit").Include("StatisticMeasurmentUnit")
+                    where a.DeclarationId == declarationId &&  a.ClassificationCode ==classificationCode
                     select a).ToList();
         }
 

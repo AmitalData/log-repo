@@ -401,7 +401,7 @@ namespace Amital.QuoteOPM.BL.EntityDataMappings
 
             #region Routings
 
-            if (entityPOCO.FromPort != null)
+          /*  if (entityPOCO.FromPort != null)
             {
                 entityPM.FromPort = entityPOCO.FromPort.Code;
                 entityPM.FromPortName = entityPOCO.FromPort.EnglishName;
@@ -421,7 +421,7 @@ namespace Amital.QuoteOPM.BL.EntityDataMappings
                 {
                     entityPM.ToPortCountry = entityPOCO.ToPort.Country.EnglishName;
                 }
-            }
+            }*/
 
             if (isInlandDomestic)
             {

@@ -46,13 +46,16 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                 mess.AppendLine($"מפוצל כבר !!!");
 
-                List<DeclarationCourierStatus> ServerSplitDeclarationsList
-                    = repo.GetDeclarationsByIds(customResponse.ServerSplitDeclarationsList, requestParams.Tenant);
-                CreateCRS8250(requestParams, mess, myDeclarationQueryService, objectTableId, objectTableIdCourierMaster, ServerSplitDeclarationsList, customResponse.TesterSendOption);
+                /*List<DeclarationCourierStatus> ServerSplitDeclarationsList
+                    = repo.GetDeclarationsByIds(customResponse.ServerSplitDeclarationsList, requestParams.Tenant);*/
+
+                CreateCRS8250(requestParams, mess, myDeclarationQueryService, objectTableId, objectTableIdCourierMaster, customResponse);
             }
             else
             {
-                List<DeclarationCourierStatus> listPoco = repo.GetByMasterIDDeclarationCourierStatus(requestParams.Tenant, requestParams.AppicationId);
+                //List<DeclarationCourierStatus> listPoco = repo.GetByMasterIDDeclarationCourierStatus(requestParams.Tenant, requestParams.AppicationId);
+                string MAWB = "";
+                List<string> listPoco = repo.GetByMasterIDDeclarationList(requestParams.Tenant, requestParams.AppicationId, out MAWB);
 
                 mess.AppendLine($"ראשי - מפצל");
                 mess.AppendLine($"כל ההצהרות יפוצלו.....");
@@ -63,10 +66,11 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     mess.AppendLine($"There ARE  NOT any Declarations 'R'eady to (Declaration) send  for master {requestParams.AppicationId} ");
                 }
 
-                listPoco.Select(r => r.DeclarationId).ToList().ChunkBy(100)
+                listPoco.ChunkBy(100)
    .ForEach(list100 =>
    {
        customResponse.ServerSplitDeclarationsList = list100;
+       customResponse.MyMoreParams = MAWB;
        customResponse.LoggingUserId = requestParams.LoggingUserId;
         //CreateDCAInUCB1170_MsgMessagingService(customResponse, requestParams);
         var CreateDCAInUCB1170_MsgMessagingService = new CRSUtil();
@@ -82,15 +86,15 @@ namespace Logitude.CustomsMessaging.ResponseServices
             this.MyResponseData.Succeeded = true;
         }
 
-        private static void CreateCRS8250(GenericRequestParams requestParams, StringBuilder mess, DeclarationQueryService myDeclarationQueryService, string objectTableId, string objectTableIdCourierMaster, List<DeclarationCourierStatus> listPoco, string testerSendOption)
+        private static void CreateCRS8250(GenericRequestParams requestParams, StringBuilder mess, DeclarationQueryService myDeclarationQueryService, string objectTableId, string objectTableIdCourierMaster, DCAInUCB8250WithResponseContentHeader customResponse)
         {
-            foreach (DeclarationCourierStatus itemPoco in listPoco)
-            {
+            var declarations =string.Join(",", customResponse.ServerSplitDeclarationsList);
+            
                 try
                 {
-                    DeclarationPM declarationPM = myDeclarationQueryService.GetSingle(itemPoco.DeclarationId, false, false);
-                    if (declarationPM != null && !string.IsNullOrEmpty(declarationPM.DeclarationNumber))
-                    {
+                    //DeclarationPM declarationPM = myDeclarationQueryService.GetSingle(itemPoco.DeclarationId, false, false);
+                    //if (declarationPM != null && !string.IsNullOrEmpty(declarationPM.DeclarationNumber))
+                    //{
 
                         using (var scopeNewCRS = TransactionFactory.GetNewTransaction())
                         {
@@ -98,35 +102,35 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             {
                                 Tenant = requestParams.Tenant,
                                 LoggingEnabled = true,
-                                LoggingObjectTableId = objectTableId,
-                                LoggingEntityId = itemPoco.DeclarationId,
-                                LoggingObjectTableId2 = objectTableIdCourierMaster,
-                                LoggingEntityId2 = requestParams.LoggingEntityId,
+                                LoggingObjectTableId = objectTableIdCourierMaster,
+                                LoggingEntityId =  requestParams.LoggingEntityId,
+                                LoggingObjectTableId2 = objectTableId,
+                                DeclarationList = declarations,
                                 InterfaceTypeCode = "8250",
-                                LoggingEntityReference = declarationPM.DeclarationNumber,
+                                //LoggingEntityReference = declarationPM.DeclarationNumber,
                                 LoggingUserId = requestParams.LoggingUserId,
                                 RequestVIA = SendRequestVIA.WebServiceBatch,
-                                DeclarationNumber = declarationPM.DeclarationNumber,
+                                //DeclarationNumber = declarationPM.DeclarationNumber,
                                 DeclarationRadio = true,
-                                TesterSendOption= testerSendOption,
-                                
+                                TesterSendOption= customResponse.TesterSendOption,
+                                CourierMaster = customResponse.MyMoreParams
                             };
 
                             SBQMessageService.CreateSheetSBQMessage<DeclarationStatusRequestParams>(requestParams8250, false);
-                            LogMessagingUtil.Instance.AppendLine($" CreateSheetSBQMessage({itemPoco.DeclarationId})");
-                            mess.AppendLine($" CreateSheetSBQMessage({itemPoco.DeclarationId})");
+                            LogMessagingUtil.Instance.AppendLine($" CreateSheetSBQMessage({declarations})");
+                            mess.AppendLine($" CreateSheetSBQMessage({declarations})");
 
                             scopeNewCRS.Complete();
                         }
-                    }
+                    //}
 
                 }
                 catch (System.Exception ee1)
                 {
-                    LogMessagingUtil.Instance.AppendLine($"Exception!!!CreateSheetSBQMessage({itemPoco.DeclarationId}) : {ee1.Message}");
-                    mess.AppendLine($"Exception!!!CreateSheetSBQMessage({itemPoco.DeclarationId}) : {ee1.Message}");
+                    LogMessagingUtil.Instance.AppendLine($"Exception!!!CreateSheetSBQMessage({declarations}) : {ee1.Message}");
+                    mess.AppendLine($"Exception!!!CreateSheetSBQMessage({declarations}) : {ee1.Message}");
                 }
-            }
+            
         }
     }
 }

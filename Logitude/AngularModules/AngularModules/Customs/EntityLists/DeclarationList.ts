@@ -210,6 +210,7 @@ export class DeclarationList {
 	DeclarationOfficeNameForExport: string;
 	AmedmentType: string;
 	AmendmentTypeName: string;
+	IsHatraDateNull: boolean;
 	
 }
  

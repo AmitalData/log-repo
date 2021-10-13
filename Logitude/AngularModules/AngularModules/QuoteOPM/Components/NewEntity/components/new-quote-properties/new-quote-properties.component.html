@@ -1,0 +1,39 @@
+<h3 class="sub-header">Quote Properties</h3>
+
+<div class="grid" [formGroup]='formGroup'>
+  <div class="col-4 p-fluid">
+    <div class="p-field">
+      <app-autocomplate-table [columnsShow]="{Code:'Code', Name: 'Name',CountryName:'CountryName'}" [data]='toPortList' [fieldShow]='"Name"' [label]="'Geteway'"
+        [controlName]='"toPort"' [formGroup]='formGroup' (onSelect)='onSelectedtoPort($event)'>
+      </app-autocomplate-table>
+    </div>
+
+    <div class="p-field">
+      <app-autocomplate-table [columnsShow]="{Code:'Code', Name: 'Name',CountryName:'CountryName'}" [data]='fromPortList' [fieldShow]='"Name"' [label]="'Destination'"
+        [controlName]='"fromPort"' [formGroup]='formGroup' (onSelect)='onSelectedFromPort($event)'>
+      </app-autocomplate-table>
+    </div>
+  </div>
+
+  <div class="col-4 p-fluid">
+    <div class="p-field">
+      <app-autocomplate-table [columnsShow]="{AIRLINE_ID:'Code', Name: 'Name',Prefix:'Prefix'}" [data]='mainCarriageCarrierList' [fieldShow]='"Name"' [label]="'Airline'"
+        [controlName]='"mainCarriageCarrier"' [formGroup]='formGroup' (onSelect)='onMainCarriageCarrier($event)'>
+      </app-autocomplate-table>
+    </div>
+    
+    <div class="p-field">
+      <app-autocomplate-table [columnsShow]="{PTERMID:'Code', Name: 'Name'}" [data]='incotermList' [fieldShow]='"Name"' [label]="'Incoterm'"
+        [controlName]='"incoterm"' [formGroup]='formGroup' (onSelect)='onSelectedIncoterm($event)'>
+      </app-autocomplate-table>
+    </div>
+  </div>
+
+  <div class="col-4 p-fluid">
+    <div class="p-field">
+      <app-autocomplate-table [columnsShow]="{SERVLEVEL_ID:'Code', Name: 'Name'}" [data]='specialServiceList' [fieldShow]='"Name"' [label]="'Special Services Type'"
+        [controlName]='"specialService"' [formGroup]='formGroup' (onSelect)='onSelectedSpecialService($event)'>
+      </app-autocomplate-table>
+    </div>
+  </div>
+</div>
