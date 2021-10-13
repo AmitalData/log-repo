@@ -21,6 +21,7 @@ import { ServiceResponse } from '../../../../Infrastructure/DataContracts/Servic
 import {EntityResourceService} from '../../../../Infrastructure/Services/EntityResourceService';
 import { CustomEntityArgs } from '../../../../Infrastructure/Components/LogitudeComponents/DWLogSearchWindowComponent';
 import { DWQueryBuilderBaseComponent, ObjectFieldOperator, DWFieldsGroup, MultiSelectedValue, ValueDetails, DWObjectFieldsDetails } from '../../../../InfrastructureModules/InfrastructureBIReport/Components/Workspaces/DWQueryBuilderBaseComponent';
+import { forEach } from 'cypress/types/lodash';
 
 @Component({
     selector: 'DWQueryBuilder',
@@ -56,7 +57,7 @@ export class DWQueryBuilderComponent extends DWQueryBuilderBaseComponent {
     private ComponentRef;
     private CurrentSession = SessionLocator.SelectedSession;
     private _entityResourceService: EntityResourceService = new EntityResourceService();
-
+ 
     DataSource: any[];
     AllFieldsDataSource: DWObjectFieldsDetails[];
     AllGroupsDataSource: DWFieldsGroup[];
@@ -82,6 +83,8 @@ export class DWQueryBuilderComponent extends DWQueryBuilderBaseComponent {
     IsLoadShipmentShipmentPayableResource: boolean = false;
     IsLoadShipmentChargesTypeResource: boolean = false;
     KPIFeatureToggle: any;
+    private ChargesFactMeasurementFields: string[] = ['Gross Weight Per Ton', 'Order Gross Weight', 'Order Gross Weight in Ton',
+        'Order Volume', 'Total Volume(CBM)', 'Volumetric Weight', 'Number of Packages', 'Order Number of Packages','Gross Weight (KG)'];
 
     @Output() BackCompleted: EventEmitter<boolean> = new EventEmitter<boolean>();
 
@@ -592,11 +595,32 @@ export class DWQueryBuilderComponent extends DWQueryBuilderBaseComponent {
 
     btnAdd_Click(item) {
         this.SelectedItem = item.IsMultipleSelection ? new DWObjectFieldsDetails(item) : item;
+       
         var myCurrentItem = this.SelectedFieldsDataSource.filter(a => a.DisplayName == this.SelectedItem.DisplayName);
-        if (this.MatchAddColumnConditions(myCurrentItem)) {
+
+        if (this.MatchAddColumnConditions(myCurrentItem) && this.ValidateQuereyFields()) {
             this.AddSelectedField();
             this.ClearData();
         }
+    }
+
+    private ValidateQuereyFields() {
+        //validate Measurement Fields
+        var isValidate = true; 
+        let IsChargesFactMeasurementField = this.ChargesFactMeasurementFields.filter(a => a == this.SelectedItem.DisplayName)[0] ? true : false
+   
+        if (IsChargesFactMeasurementField && (this.SelectedItem.DWObjectTableCode == "Fact_Charges")) {
+            if (!this.hasShipmentOrMasterNumberField()) {
+                this.ShowValidateMessage("You are not allowed to add " + this.SelectedItem.DisplayName + " column unless you add the Shipment Number column");
+                isValidate = false;
+            }
+        }
+        return isValidate;
+    }
+
+    private ShowValidateMessage(error) {
+        var messageWindow: MessageWindow = new MessageWindow();
+        messageWindow.Show(error);
     }
 
     private MatchAddColumnConditions(myCurrentItem: DWObjectFieldsDetails[]) {
@@ -651,12 +675,22 @@ export class DWQueryBuilderComponent extends DWQueryBuilderBaseComponent {
 
     RootGroups: DWObjectFieldsDetails[] = [];
     btnAddFilter_Click(item: DWObjectFieldsDetails) {
+
         if (item.CannotFilter == true) {
             this.messageWindow.Width = 300;
             this.messageWindow.Height = 150;
             this.messageWindow.Title = "Not available for filtering";
             this.messageWindow.Message = "This field is not available for filtering, you can use the code";
             this.messageWindow.Show(this.messageWindow.Message);
+            return;
+        }
+
+        var selectedItem = item.IsMultipleSelection ? new DWObjectFieldsDetails(item) : item;
+        var isChargesFactMeasurementField = this.ChargesFactMeasurementFields.filter(a => a == selectedItem.DisplayName)[0] ? true : false
+
+        if (isChargesFactMeasurementField && !this.hasShipmentOrMasterNumberField() && this.FactTableName == "Fact_Charges") {
+            this.ShowValidateMessage("You are not allowed to add " + selectedItem.DisplayName + " filter unless you add the Shipment Number column");
+             
             return;
         }
         var view = new DWObjectFieldsDetails(item.BaseDWObjectField, this);
@@ -893,6 +927,7 @@ export class DWQueryBuilderComponent extends DWQueryBuilderBaseComponent {
             if (field.IsMultipleSelection)
                 this.DWQueryData.PageSize = 1000;
         });
+
         if (this.SelectedFiltersDataSource.length > 0 && this.ValidFiltersValues(this.SelectedFiltersDataSource[0]) != true) {
             this.messageWindow.Width = 300;
             this.messageWindow.Height = 150;
@@ -901,6 +936,12 @@ export class DWQueryBuilderComponent extends DWQueryBuilderBaseComponent {
             this.messageWindow.Show(this.messageWindow.Message);
             return;
         }
+ 
+        if (this.hasMeasurementFieldsInFactCharges() && !this.hasShipmentOrMasterNumberField()) {
+            this.ShowValidateMessage("Please add Shipment Number column to load the data");
+            return;
+        }
+
         if (this.SelectedFieldsDataSource.length > 0) {
             this.StartBusyIndicator("Loading ..");
             this.IsPreview = !StopPreview;
@@ -1004,6 +1045,12 @@ export class DWQueryBuilderComponent extends DWQueryBuilderBaseComponent {
             this.messageWindow.Show(this.messageWindow.Message);
             return;
         }
+          
+        if (this.hasMeasurementFieldsInFactCharges() && !this.hasShipmentOrMasterNumberField()) {
+            this.ShowValidateMessage("You are not allowed to save changes unless you add the Shipment Number column");
+            return;
+        }
+
         this.CurrentSession.CurrentWindow.StartBusyIndicator("Saving ..");
         this._DWObjectTablePMService.get(this.FactTableName).subscribe((myResult:any) => {
             if (!myResult.HasError) {
@@ -1050,6 +1097,29 @@ export class DWQueryBuilderComponent extends DWQueryBuilderBaseComponent {
     }
 
     NotExist: boolean = true;
+    private hasShipmentOrMasterNumberField() { 
+        return this.SelectedFieldsDataSource.filter(a => a.DisplayName == "Shipment Number" || a.DisplayName == "Master Shipment Number")[0];
+    }
+
+    private hasMeasurementFieldsInFactCharges() {
+        if (this.FactTableName == "Fact_Charges") {
+            var measurementFields = this.SelectedFieldsDataSource.filter(element => this.IsFactChargesMeasurementFields(element) == true);
+
+            if (measurementFields.length == 0) {
+                return false;
+            } else {
+                return true;
+            }
+
+        } else
+            return false; 
+    }
+    IsFactChargesMeasurementFields(element: DWObjectFieldsDetails): boolean {
+        var chargesFactMeasurementField = this.ChargesFactMeasurementFields.filter(a => a == element.Name)[0];
+        if (chargesFactMeasurementField != null) return true;
+        else return false;
+    }
+
     EditButtonClicked(getSingle: boolean = false) {
         this.SelectedFieldsDataSource = [];
         this.SelectedFiltersDataSource = [];

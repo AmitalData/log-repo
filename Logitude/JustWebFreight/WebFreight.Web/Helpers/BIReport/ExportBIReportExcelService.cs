@@ -15,19 +15,28 @@ namespace WebFreight.Web.Helpers.BIReport
 {
     public class ExportBIReportExcelService
     {
+        List<string> ChargesFactMeasurementFields = new List<string>()
+       {"Gross Weight Per Ton", "Order Gross Weight", "Order Gross Weight in Ton",
+        "Order Volume", "Total Volume(CBM)", "Volumetric Weight", "Number of Packages", 
+        "Order Number of Packages", "Gross Weight (KG)"
+        };
 
+        string FactTable; 
         public  byte[] Run(BIReportXMLData bIReportXMLData, DataTable dataTable, int tenant)
         {
             byte[] reportData;
 
             BIReportQueryService query = new BIReportQueryService(tenant);
             BIReportPM biReportEntityPM = query.GetSingle(bIReportXMLData.BIReportId, false, false);
+            var factTable = biReportEntityPM.FactTableName;
             var bITabularViewSettings = LogitudeXmlSerializer.DeserializeObject<BITabularViewSettings>(biReportEntityPM.AGGridOptionsXML);
             List<string> MeasurmentColumns = null;
             List<ExcelTotals> excelTotals = new List<ExcelTotals>();
+            this.FactTable = biReportEntityPM.FactTableName;
             if (bIReportXMLData.IncludeTotals)
             {
-                MeasurmentColumns = bITabularViewSettings.Columns.Where(c => c.DataTypeCode == "Double" || c.DataTypeCode == "Decimal" || c.DataTypeCode == "Integer").Select(c => c.Code).ToList();
+                MeasurmentColumns = bITabularViewSettings.Columns.Where(c => (c.DataTypeCode == "Double" || c.DataTypeCode == "Decimal" || c.DataTypeCode == "Integer") && NotInFactChargesMeasurementFields(c)).Select(c => c.Code).ToList();
+               
             }
 
             System.IO.MemoryStream memory = new System.IO.MemoryStream();
@@ -133,7 +142,7 @@ namespace WebFreight.Web.Helpers.BIReport
                             string value = Convert.ToString(row[agColumn.Name]);
                             sheet.Range[cellRow, cellCol].Text = value;
                         }
-                        else if (bIReportXMLData.IncludeTotals && (agColumn.DataTypeCode == "Double" || agColumn.DataTypeCode == "Decimal" || agColumn.DataTypeCode == "Integer"))
+                        else if (bIReportXMLData.IncludeTotals && ((agColumn.DataTypeCode == "Double" || agColumn.DataTypeCode == "Decimal" || agColumn.DataTypeCode == "Integer") && (NotInFactChargesMeasurementFields(agColumn))))
                         {
                             string value = row[agColumn.Name].ToString();
                             if (!string.IsNullOrEmpty(value))
@@ -164,6 +173,13 @@ namespace WebFreight.Web.Helpers.BIReport
             return reportData;
         }
 
+        private bool NotInFactChargesMeasurementFields(Column c)
+        {
+            var chargesFactMeasurementField = ChargesFactMeasurementFields.Where(a=> a == c.Name).FirstOrDefault();
+            if (chargesFactMeasurementField != null && this.FactTable == "Fact_Charges") return false;
+            else return true;
+        }
+          
         private DataTable RemoveTenantColumnFromDataTableColumns(DataTable dataTable)
         {
             DataTable dataTableWithoutTenantColumn = dataTable;
