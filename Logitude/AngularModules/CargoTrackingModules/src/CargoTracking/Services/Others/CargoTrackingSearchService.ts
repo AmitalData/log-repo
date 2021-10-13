@@ -23,24 +23,7 @@ export class CargoTrackingSearchService {
 	getShipments(searchRequest:CargoTrackingSearchRequest) {
         var authHeaders = ServiceHelper.GetHeaders();
 
-        var urlparameters = '/GetShipments?';
-		var mykeys = Object.keys(searchRequest);
-		var addtionalFiltersValues = null;
-
-		for (var i in mykeys) {
-			var propName = mykeys[i];
-			var propValue = searchRequest[propName];
-			var ignoreFilter = ((propName.indexOf("Operator") > 0 && propValue == "Equals") || propName == "AdditionalFilters");
-
-            if (urlparameters != "?") {
-				urlparameters = urlparameters.concat('&');
-            }
-
-            if (!ignoreFilter) {
-				propValue = encodeURIComponent(propValue);
-				urlparameters = urlparameters.concat(propName.concat('=').concat(propValue));
-			}
-        }
+        var urlparameters = this.BuildURLParameters(searchRequest);
 
 		return defer(() => {
             return this._http.get(this._apiUrl + urlparameters,
@@ -56,6 +39,29 @@ export class CargoTrackingSearchService {
 					})));
 		});
 	}
+    private BuildURLParameters(searchRequest: any)
+    {
+        var urlparameters = '/GetShipments?';
+        var mykeys = Object.keys(searchRequest);
+        var addtionalFiltersValues = null;
+
+        for (var i in mykeys) {
+            var propName = mykeys[i];
+            var propValue = searchRequest[propName];
+            var ignoreFilter = ((propName.indexOf("Operator") > 0 && propValue == "Equals") || propName == "AdditionalFilters");
+
+            if (urlparameters != "?") {
+                urlparameters = urlparameters.concat('&');
+            }
+
+            if (!ignoreFilter) {
+                propValue = encodeURIComponent(propValue);
+                urlparameters = urlparameters.concat(propName.concat('=').concat(propValue));
+            }
+        }
+        return urlparameters;
+    }
+
     GetUserShipments(pageIndex: number, pageSize: number, shipmentFilters: CargoTrackingShipmentFilters) {
         var authHeaders = ServiceHelper.GetHeadersWithToken();
 
