@@ -19,8 +19,7 @@ import {NewQuoteComponentArgs} from '../../Args';
 import {LogitudeWindow} from '../../../Controls/Windows/LogitudeWindow';
 import {ListComponentArgs} from '../../../Infrastructure/Args';
 import {TextCodeTranslator} from '../../../Infrastructure/Utilities/TextCodeTranslator';
-import { GenericTableDataService } from 'Customs/Components/generic-table/generic-table-data.service';
-import { GenericTableService } from 'Customs/Components/generic-table/generic-table.service';
+
 
 declare var makeChart, FunnelClick, ResetItemFunnel;
 
@@ -30,18 +29,13 @@ declare var makeChart, FunnelClick, ResetItemFunnel;
 })
 
 export class QuotesComponent extends BaseComponent {
-    // ngOnInit(){
-    //     console.log('**********************************************')
-    //     this.genericTableService.openByTableName('QuoteOP','QuoteOP',['CreatedByUser','CreatedByUserId','CustomerId','CustomerName'])
-    // }
-
     public DataContext = this;
     public SalesFunnelId: string = "SalesFunnelId_";
     public IsResourcesReady: boolean = false;
     @Output() ReloadUserQueries = new EventEmitter();
     public QuickSearchItems: QuoteOPList[] = [];
     private CurrentSession = SessionLocator.SelectedSession;
-    constructor(private _entityResourceService: EntityResourceService, /* private genericTableService: GenericTableService */) {
+    constructor(private _entityResourceService: EntityResourceService) {
         super();
         this.SalesFunnelId = "SalesFunnel_" + this.CurrentSession.GetNewId("SalesFunnel");
 

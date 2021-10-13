@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { LazyLoadEvent, SortEvent } from 'primeng/api';
+import { DynamicDialogConfig } from 'primeng/dynamicdialog';
 import { Table } from 'primeng/table';
 import { GenericTableService } from './generic-table.service';
 
@@ -11,24 +12,24 @@ import { GenericTableService } from './generic-table.service';
 export class GenericTableComponent implements OnInit {
   @ViewChild('table') table: Table = null as any;
 
-  data: any[] = [];
+  data: any[] = []//Array.from({ length: 1000 }) //[];
   columns: GenericTableColumn[] = [];
   columnsNames: string[] = [];
-  paginator: boolean = true
-  totalRecords: number = 0;
-  firstRowIndex: number = 0;
-  pageNumber: number = 0;
-  rows: number = 10;
+  rows: number = 100;
+  lazy: boolean = false;
+  first = 0;
+  sortField: string = ''
+  sortOrder: number = 1;
   filterVal: string = '';
 
   constructor(
-    // private ref: DynamicDialogRef, 
     private config: DynamicDialogConfig,
     private tableService: GenericTableService,
   ) { }
 
   ngOnInit(): void {
     this.insertData(this.config.data);
+    this.lazy = !!this.config.data.getData
   }
 
   insertData(dataTable: GenericTableDataTable) {
@@ -36,28 +37,39 @@ export class GenericTableComponent implements OnInit {
     let columns: any[] = dataTable.columns as any[];
 
     [this.columns, this.columnsNames] = this.tableService.columnsCleansing(columns, this.data);
-    this.totalRecords = this.data.length;
   }
 
-
-  filterTable(val: string = null as any) {
-    if (val !== null)
-      this.filterVal = val;
-
-    if (this.config.data.filter)
-      this.data = this.config.data.filter(this.filterVal, this.pageNumber, this.rows);
-    else
-      this.table.filterGlobal(this.filterVal, 'contains')
+  async loadLazy(e: LazyLoadEvent) {
+    // console.log('loadLazy',e )
+    this.addDataFromFunc(e.first as number);
   }
 
+  filterTable(val: string) {
+    this.filterVal = val
 
-  onPageChange(e: { page: number, first: number, rows: number, pageCount: number }) {
-    this.rows = e.rows
-    this.firstRowIndex = e.first
-    this.pageNumber = e.page;
+    if (this.config.data.getData) {
+      this.table.clearCache()
+      this.data = Array.from({ length: 100 });;
+      this.addDataFromFunc(0);
+    } else
+      this.table.filterGlobal(val, 'contains')
+  }
 
-    if (this.config.data.filter)
-      this.filterTable();
+  async onSort(e: SortEvent) {
+    if (!this.lazy) return;
+
+    this.sortField = e.field as string;
+    this.sortOrder = e.order as number
+    this.table.clearCache()
+    this.data = Array.from({ length: 100 });
+    this.addDataFromFunc(0);
+  }
+
+  async addDataFromFunc(index: number) {
+    let loadedData: any[] = await this.config.data.getData(this.filterVal, index, this.sortField, this.sortOrder);
+    Array.prototype.splice.apply(this.data, [index, 100, ...loadedData]);
+    Array.prototype.splice.apply(this.data, [index + 100, 0, ...Array.from({ length: 100 })]);
+    this.data = [...this.data]
   }
 }
 
