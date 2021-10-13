@@ -1,4 +1,5 @@
-﻿using Simplog.Data.CommonDataModel.EntityPOCOs;
+﻿using Simplog.Data.CommonDataModel;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using System;
 using System.Collections.Generic;
@@ -21,7 +22,7 @@ namespace WebFreight.Web.Helpers.ExcelReport
 
         public List<DataProviderField> GetDataProviderFields(string reportId, string reportTemplateId, bool isNew)
         {
-            Report report = new ReportRepository().GetSingleReport(reportId, tenant);
+            Report report = new ReportRepository(tenant).GetSingleReport(reportId, tenant);
 
             List<DataProviderField> dataProvderFields = new ExcelDataProviderFieldsBuilder().Build(report.Code);
             List<DataProviderField> templateDataProvderFields = GetDataProviderFieldsFromXML(reportTemplateId, isNew);
