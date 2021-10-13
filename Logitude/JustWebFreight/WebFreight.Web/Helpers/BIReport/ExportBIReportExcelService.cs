@@ -176,8 +176,9 @@ namespace WebFreight.Web.Helpers.BIReport
         private bool NotInFactChargesMeasurementFields(Column c)
         {
             var chargesFactMeasurementField = ChargesFactMeasurementFields.Where(a=> a == c.Name).FirstOrDefault();
-            if (chargesFactMeasurementField != null && this.FactTable == "Fact_Charges") return false;
-            else return true;
+
+            return (!(chargesFactMeasurementField != null && this.FactTable == "Fact_Charges"));
+            
         }
           
         private DataTable RemoveTenantColumnFromDataTableColumns(DataTable dataTable)
