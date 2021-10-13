@@ -255,8 +255,11 @@ export class JournalMenuButtonsHandler {
     private ShowConfirmMessageAndVoidJournal() {
         var msg = TextCodeTranslator.Translate("Journal.O.ConfirmVoidJournal");
         var confirmWindow = new ConfirmWindow();
-        confirmWindow.Width = 300;
-        confirmWindow.Height = 150;
+        const widthOfWindow = 300;
+        const heightOfWindow = 150;
+
+        confirmWindow.Width = widthOfWindow;
+        confirmWindow.Height = heightOfWindow;
         confirmWindow.YesButtonText = TextCodeTranslator.Translate("Accounting.General.B.OK");
         confirmWindow.NoButtonText = TextCodeTranslator.Translate("Accounting.General.B.Cancel");
         confirmWindow.Show(msg);
@@ -265,22 +268,26 @@ export class JournalMenuButtonsHandler {
 
             if (confirmWindow.Yes) {
                 this.entityArgs.EditComponent.StartBusyIndicatorSaving();
-                let myJournalExtendedPMService: JournalExtendedPMService = new JournalExtendedPMService();
-                myJournalExtendedPMService
-                    .VoidJournal(this.EntityPM.Tenant, this.EntityPM.Id, "", "", "")
-                    .subscribe((res: ServiceResponse) => {
-                        this.entityArgs.EditComponent.StopBusyIndicator();
-                        if (res.HasError) {
-                            this.entityArgs.EditComponent.ValidationErrorsList = res.ErrorsArray;
-                        } else {
-                            this.entityArgs.EditComponent.ReloadEntityPM();
-                        }
-                    });
+                this.VoidJournal();
             }
             else {
                 confirmWindow.Close();
             }
         });
+    }
+
+    private VoidJournal() {
+        let myJournalExtendedPMService: JournalExtendedPMService = new JournalExtendedPMService();
+        myJournalExtendedPMService
+            .VoidJournal(this.EntityPM.Tenant, this.EntityPM.Id, "", "", "")
+            .subscribe((res: ServiceResponse) => {
+                this.entityArgs.EditComponent.StopBusyIndicator();
+                if (res.HasError) {
+                    this.entityArgs.EditComponent.ValidationErrorsList = res.ErrorsArray;
+                } else {
+                    this.entityArgs.EditComponent.ReloadEntityPM();
+                }
+            });
     }
 
     SaveChenges() {
