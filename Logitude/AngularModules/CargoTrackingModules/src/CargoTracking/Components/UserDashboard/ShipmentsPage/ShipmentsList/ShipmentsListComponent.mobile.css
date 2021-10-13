@@ -2,7 +2,11 @@
 
 @media screen and (max-width: 479px) {
     .shipment-cards-holder {
-        height: 100vh;
+        height: 100%;
+    }
+
+    .scrollable-table{
+        height: 90%;
     }
 
     h1 {
