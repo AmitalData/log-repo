@@ -1452,14 +1452,15 @@ on record.JournalId equals j.Id
 
             IQueryable<LedgerTransaction> outputLines = (from a in context.LedgerTransactions
                                                          join j in context.Journals on a.JournalId equals j.Id
-
                                                          join m in context.JournalAdditionalDatas on j.Id equals m.JournalId
-                                                         where j.AccountingEntityCode == "2" && (m.TaxReportId == null || m.TaxReportTransmitStatusCode == "2" || m.TaxReportTransmitStatusCode == null) && a.Tenant == tenant
+                                                         join x in context.TaxReports on m.TaxReportId equals x.Id
+                                                         where j.AccountingEntityCode == "2" &&  a.Tenant == tenant
 
-                                                         where a.Tenant == tenant && a.AccountId == accountId
+                                                         && a.AccountId == accountId && x.StatusCode != "T"
 
                                                          select a
                     ).Distinct();
+            List<LedgerTransaction> list = outputLines.ToList();
 
             FullAccountingSettingRepository fullAccountingSettingRepository = new FullAccountingSettingRepository(tenant);
             FullAccountingSetting setting = fullAccountingSettingRepository.GetSingleFullAccountingSetting(tenant);
@@ -1467,16 +1468,15 @@ on record.JournalId equals j.Id
             IQueryable<LedgerTransaction> inputLines = (from a in context.LedgerTransactions
                                                         join j in context.Journals on a.JournalId equals j.Id
                                                         join m in context.JournalAdditionalDatas on new { a.JournalId, a.JournalLineNumber } equals new { m.JournalId, m.JournalLineNumber }
-
-                                                        where (m.TaxReportId == null || m.TaxReportTransmitStatusCode == "2" || m.TaxReportTransmitStatusCode == null)
-
-                                                        && a.OppositeAccountId != setting.VATOutputGLAccountId
-                                                      && a.Tenant == tenant
+                                                        join x in context.TaxReports on m.TaxReportId equals x.Id
+                                                        where  (a.OppositeAccountId != setting.VATOutputGLAccountId ||  a.OppositeAccountId == null)
+                                                       && a.Tenant == tenant
                                                       && a.LocalAmountDebit != 0
                                                       && a.AccountId == accountId
-
+                                                      && x.StatusCode != "T"
                                                         select a).Distinct();
-                   
+            List<LedgerTransaction> list2 = inputLines.ToList();
+
             return outputLines.Concat(inputLines);
         }
         public IQueryable<LedgerTransaction> GetClosedPeriodTransactions(string accountId, DateTime closedDate, DateTime openDate, int tenant)
