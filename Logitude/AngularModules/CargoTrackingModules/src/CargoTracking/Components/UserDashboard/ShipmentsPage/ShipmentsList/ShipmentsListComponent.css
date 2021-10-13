@@ -140,6 +140,7 @@ h1{
 .scrollable-table {
     /* max-width: 1600px; */
     margin: 0 auto;
+    height: 75%;
     /* height: 68vh; */
 }
 
@@ -719,7 +720,7 @@ h1{
 }
 .shipment-cards-holder{
     width: 100%;
-    height: calc(100vh - 175px);
+    height: 100%;
 }
 .shipment-skelton{
     position: relative;
