@@ -995,7 +995,7 @@ namespace Logitude.CRM.BL.EntityQueryServices
             ICRMContext context = MainContext as ICRMContext;
             IQueryable<OpportunityCRMDetails> opportunityDetails = (from a in context.Opportunities.Include("Customer").Include("Customer.Customer").Include("OpportunityClosingReason")
                                                                     join opportunityType in context.OpportunityTypes on a.OpportunityTypeId equals opportunityType.Id
-                                                                    where a.Tenant == tenant && a.IsClosed && a.OpportunityClosingReason.Code == "WN"
+                                                                    where a.Tenant == tenant
                                                                     select new OpportunityCRMDetails()
                                                                     {
                                                                         CustomerStatusCode = (a.Customer != null && a.Customer.Customer != null) ? a.Customer.Customer.CustomerStatusCode : null,
@@ -1013,7 +1013,7 @@ namespace Logitude.CRM.BL.EntityQueryServices
                                                                         NumberOfUsers = a.NumberOfShipments,
                                                                         Field4 = a.Field4,
                                                                         IsNewCustomer = (a.Subject != null && a.Subject.ToLower().Contains("churn")) ? "-1" : opportunityType.Code == "N" ? "1" : null,
-                                                                        InActive = a.Customer != null ? a.Customer.InActive : false,
+                                                                        InActive = (a.Customer != null && a.Customer.Customer != null) ? a.Customer.Customer.CustomerStatusCode != "ACT" : false,
                                                                         ActualClosingDate = a.ActualClosingDate ?? a.CreateDate.Value,
 
                                                                     });
