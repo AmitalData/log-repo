@@ -762,7 +762,7 @@
             this.singletonFTPCommunicationWorkerRoleWinServiceToolStripMenuItem.Name = "singletonFTPCommunicationWorkerRoleWinServiceToolStripMenuItem";
             this.singletonFTPCommunicationWorkerRoleWinServiceToolStripMenuItem.Size = new System.Drawing.Size(349, 22);
             this.singletonFTPCommunicationWorkerRoleWinServiceToolStripMenuItem.Text = "SingletonFTPCommunicationWorkerRoleWinService";
-            this.singletonFTPCommunicationWorkerRoleWinServiceToolStripMenuItem.Click += new System.EventHandler(this.singletonFTPCommunicationWorkerRoleWinServiceToolStripMenuItem_Click);
+          //  this.singletonFTPCommunicationWorkerRoleWinServiceToolStripMenuItem.Click += new System.EventHandler(this.singletonFTPCommunicationWorkerRoleWinServiceToolStripMenuItem_Click);
             // 
             // TesterForm
             // 
