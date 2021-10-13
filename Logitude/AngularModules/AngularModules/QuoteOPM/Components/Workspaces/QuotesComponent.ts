@@ -19,6 +19,8 @@ import {NewQuoteComponentArgs} from '../../Args';
 import {LogitudeWindow} from '../../../Controls/Windows/LogitudeWindow';
 import {ListComponentArgs} from '../../../Infrastructure/Args';
 import {TextCodeTranslator} from '../../../Infrastructure/Utilities/TextCodeTranslator';
+
+
 declare var makeChart, FunnelClick, ResetItemFunnel;
 
 @Component({
@@ -694,7 +696,7 @@ export class QuotesComponent extends BaseComponent {
                 });
             });
     }    
-    RunQuoteWizard() {
+    RunQuoteWizard(oldWizard: boolean = false) {
         var args = new NewQuoteComponentArgs();
         var logWindow = new LogitudeWindow();
         //logWindow.RTL = false;
@@ -702,7 +704,7 @@ export class QuotesComponent extends BaseComponent {
         logWindow.Height = 800;
         logWindow.WindowArgs = args;
         logWindow.Title = TextCodeTranslator.Translate("Quote.S.NewQuote.CreateNewQuote");
-        logWindow.Show('./QuoteOPM/Components/NewEntity/NewQuoteComponent');
+        oldWizard ? logWindow.Show('./QuoteOPM/Components/NewEntity/NewQuoteComponentOld') :logWindow.Show('./QuoteOPM/Components/NewEntity/NewQuoteComponent');
 
         logWindow.WindowClosed.subscribe(s => {            
             if (s) {

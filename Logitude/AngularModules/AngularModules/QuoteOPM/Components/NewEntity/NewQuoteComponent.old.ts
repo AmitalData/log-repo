@@ -35,12 +35,12 @@ import { FeatureLocator } from '../../../Infrastructure/Utilities/FeatureLocator
 import { Cloner } from '../../../Infrastructure/Utilities/Cloner';
 
 @Component({
-    templateUrl: './NewQuoteComponent.html',
+    templateUrl: './NewQuoteComponent.old.html',
 })
 
-export class NewQuoteComponent extends BaseComponent implements OnInit, AfterViewInit {
+export class NewQuoteComponentOld extends BaseComponent implements OnInit, AfterViewInit {
     public EntityPM: QuoteOPPM;
-    public DataContext: NewQuoteComponent = this;
+    public DataContext: NewQuoteComponentOld = this;
     public ObjectTableName: string = "QuoteOP";
     public LabelColumnWidth: number = 120;
     public ControlColumnWidth: number = 220;
@@ -88,6 +88,7 @@ export class NewQuoteComponent extends BaseComponent implements OnInit, AfterVie
     public SubTypeFeatureToggle: FeatureToggleList;
     ngOnInit() {
         var listservice: EntityListService = new EntityListService();
+        alert()
         var loadPr = listservice.getMock("Port");
         loadPr.then((res: any) => {
             res.subscribe((resp: any) => {
