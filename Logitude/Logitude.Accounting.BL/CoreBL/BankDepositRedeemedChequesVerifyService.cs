@@ -344,19 +344,21 @@ namespace Logitude.Accounting.BL.CoreBL
                     List<string> chequesIds = chequesPMs.Select(d => d.Id).ToList();
                     ARPaymentChequeRepository chequeRepository = new ARPaymentChequeRepository(tenant);
                     List<ARPaymentCheque> cheques = chequeRepository.GetByIds(tenant, chequesIds);
-
-                    foreach (var cheque in cheques)
+                    cheques = cheques.Where(cheque => cheque.StatusCode == ARPaymentChequeStatusValues.InBank || cheque.StatusCode == ARPaymentChequeStatusValues.InBankAccount).ToList();
+                    if (cheques.Any())
                     {
-                        cheque.StatusCode = ARPaymentChequeStatusValues.Redeemed;
-                        chequeRepository.Update(cheque);
+                        foreach (var cheque in cheques)
+                        {
+                            cheque.StatusCode = ARPaymentChequeStatusValues.Redeemed;
+                            chequeRepository.Update(cheque);
+                        }
+
+                        chequeRepository.SubmitChanges();
+
+                        DoneCheques.AddRange(cheques);
+
+                        scope.Complete();
                     }
-
-
-                    chequeRepository.SubmitChanges();
-
-                    DoneCheques.AddRange(cheques);
-
-                    scope.Complete();
                 }
 
 
