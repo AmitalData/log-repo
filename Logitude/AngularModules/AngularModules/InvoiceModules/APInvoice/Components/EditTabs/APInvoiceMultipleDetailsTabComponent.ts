@@ -31,6 +31,7 @@ import { ChargesTypeList } from '../../../../Common/EntityLists/ChargesTypeList'
 import { VatTypeListService } from '../../../../Common/Services/StandardLists/VatTypeListService';
 import { VatTypeList } from '../../../../Common/EntityLists/VatTypeList';
 import { APInvoiceMultipleShortPM } from '../../../../Invoice/EntityPMs/APInvoiceMultipleShortPM';
+import { AccountingSettingListService } from '../../../../Common/Services/StandardLists/AccountingSettingListService';
 
 @Component({    
     templateUrl: './APInvoiceMultipleDetailsTabComponent.html',
@@ -528,9 +529,7 @@ export class APInvoiceMultipleDetailsTabComponent extends BaseComponent implemen
     }
 
     BuildGlobalTaxCalculationItemsSource() {
-        if (this.IsQBOAccountingSystem()) {
-            this.IsGlobalTaxCalculationVisible = true;
-        }
+        this.IsQBOAccountingSystem()
         this.GlobalTaxCalculationItemsSource = [];
         this.GlobalTaxCalculationItemsSource.push("None");
         this.GlobalTaxCalculationItemsSource.push("Tax Excluded");
@@ -540,10 +539,16 @@ export class APInvoiceMultipleDetailsTabComponent extends BaseComponent implemen
 
     IsQBOAccountingSystem() {
         var isQBOAccountingSystem = false;
-        if (ObjectsLocator.GlobalSetting) {
-            isQBOAccountingSystem = (ObjectsLocator.AccountingSettingPM.AccountingSystemCode.includes("QB"));
-        }
-        return isQBOAccountingSystem;
+        var accountingSettingListService: AccountingSettingListService = new AccountingSettingListService();
+        accountingSettingListService.getSingle(SessionLocator.Tenant).subscribe((response: any) => {
+            if (response == null) {
+                return;
+            }
+            isQBOAccountingSystem = response.Result?.AccountingSystemCode.includes("QB");
+            if (isQBOAccountingSystem) {
+                this.IsGlobalTaxCalculationVisible = true;
+            }
+        });
     }
 
     get SelectedGlobalTaxCalculation() {
