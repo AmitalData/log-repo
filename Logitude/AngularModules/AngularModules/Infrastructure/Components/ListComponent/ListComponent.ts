@@ -89,6 +89,7 @@ export class ListComponent implements OnInit, AfterViewInit {
 
     ConstantPageSize: number = 100;
     DontApplyVirtualization: boolean = false;
+    HasMutliUpdateFeature: boolean = false;
 
     //public Title: string;
     private title: string;//= "";
@@ -506,7 +507,9 @@ export class ListComponent implements OnInit, AfterViewInit {
         });
 
         this.LayoutDirection = ObjectsLocator.GlobalSetting == undefined ? "ltr" : ObjectsLocator.GlobalSetting.LayoutDirection;
+     
     }
+
     name: string;
     processAdvanceQueryFilters(filters) {
         if (this.IsAdvancedSearchOpened == false) {
@@ -931,6 +934,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
       //args.QueryCode=this.ObjectTableName + '.' + args.QueryCode
       this.QueryCode = args.QueryCode;
       this.ObjectTableName = args.ObjectTableName;
+        this.HasMutliUpdateFeature = this.HasMultiUpdateFeature();
       this.SetAddButtonTitle();
       this.MethodName = args.MethodName;
       this.BackBtnTitle = args.BackButtonTitle;
@@ -957,6 +961,13 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
     }
   }
 
+    private HasMultiUpdateFeature(): boolean {
+        return this.ObjectTableName == "Shipment" && FeatureLocator.HasFeaturePermession("Shipment", "MULTIUPDATE");
+    }
+
+    MutliUpdate() {
+        console.log("Multi Update");
+    }
     ViewInitCompleted(event) {
         //this.afterViewGridInitCompleted.emit(event);
         this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName, 0).subscribe((response:any) => {

@@ -119,6 +119,11 @@
     .Hide {
         display: none;
     }
+    .MultiUpdateIcon {
+        cursor: pointer; 
+        margin-right: 20px;
+        width: 30px;
+    }
 </style>
 
 <div style="position: absolute; top:0px; bottom:0px; left:0px; right:0px;margin:auto; background:white;" *ngIf="IsDemoTenant">
@@ -273,7 +278,7 @@
                         <td style="vertical-align: middle;width:170px">
                             <QueryList *ngIf="ShowViews && ResourcesLoaded" [ItemsSource]="Queries" [UserItemSource]="UserQueries" [Binding]="'NameTextCodeCode'" [onSelectedQueryChangeEvent]="onSelectedQueryChangeEvent" [SelectedItem]="SelectedQuery" [ObjectTableName]="ObjectTableName" (itemSelectedEvent)="QueryValueChanged($event)" [QueryListSourceChanged]="QueryListSourceChanged" (QueriesChangedEvent)="QueriesChangedEvent($event)" [LoadResourceCompleted]="LoadResourceCompleted" [pubSubAdvanceQueryFiltersService]="AdvanceQFiltersService" (NewViewClosedEvent)="NewViewClosedEvent($event)"></QueryList>
 
-
+                             
 
                             <!--<select style="width: 150px;" [(ngModel)]="SelectedQueryId" (change)="QueryValueChanged($event.target.value)">
             <option *ngFor="let q of Queries" [value]="q.Id">{{q.NameTextCodeCode | TextCodeTranslationPipe}}</option>
@@ -297,16 +302,15 @@
             </div>
         </div>-->
                         </td>
-
+                        <td style="width: 40px;"> <img *ngIf="HasMutliUpdateFeature" src="./Images/Update-Button.png" (click)="MutliUpdate()" class="CenterCenter MultiUpdateIcon" /></td>
                         <td style="width:200px;vertical-align:central">
 
                             <div style="width:200px;height:20px">
-                                <p *ngIf="IsShowAddReportFromLibraryLink" (click)="LinkAddReportFromLibraryClick()" class="CustomLink" style="font-size:12px;float:right;width:200px;height:20px">Add Report From Library</p>
+                                <p *ngIf="IsShowAddReportFromLibraryLink" (click)="LinkAddReportFromLibraryClick()" class="CustomLink" style="font-size:12px;float:right;width:200px;height:20px;margin-right: 20px;">Add Report From Library</p>
 
                             </div>
 
-                        </td>
-
+                        </td> 
 
                         <td *ngIf="(dataSource && dataSource.rowCount == ConstantPageSize && DontApplyVirtualization)" style="color: #666666; font-size: 11px; padding-left:5px;padding-right:5px;width:1px;background-color:#FFFBDA">
                             <div>  <span>Showing the first {{ConstantPageSize}} rows, use the search field to find more results.</span></div>
