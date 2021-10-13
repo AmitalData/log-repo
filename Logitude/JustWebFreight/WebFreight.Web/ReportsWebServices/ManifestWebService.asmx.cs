@@ -1267,9 +1267,12 @@ namespace WebFreight.Web.ReportsWebServices
 
                 #endregion
 
-                manifestDataProvider.Trasnshipment1ToPortName = master.Transshipment1ToPortName;
-                manifestDataProvider.Trasnshipment2ToPortName = master.Transshipment2ToPortName;
-                manifestDataProvider.Trasnshipment3ToPortName = master.Transshipment3ToPortName;
+                manifestDataProvider.Transshipment1FromPortName = master.Transshipment1FromPortName;
+                manifestDataProvider.Transshipment2FromPortName = master.Transshipment2FromPortName;
+                manifestDataProvider.Transshipment3FromPortName = master.Transshipment3FromPortName;
+                manifestDataProvider.Transshipment1ToPortName = master.Transshipment1ToPortName;
+                manifestDataProvider.Transshipment2ToPortName = master.Transshipment2ToPortName;
+                manifestDataProvider.Transshipment3ToPortName = master.Transshipment3ToPortName;
                 this.ComputePortOfDischargeNameAndDate(manifestDataProvider);
 
                 if (master.Transshipment3ToPortCountryCode != null)
