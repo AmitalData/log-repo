@@ -59,6 +59,8 @@ import { ModificationAndDiscountTypeList } from '../../../../../Customs/EntityLi
 import { ModificationAndDiscountTypeListService } from '../../../../../Customs/Services/StandardLists/ModificationAndDiscountTypeListService';
 import { any } from 'cypress/types/bluebird';
 import { CurrencyTypeListService } from '../../../../../Customs/Services/StandardLists/CurrencyTypeListService';
+import { GITITEMCR } from '../../../../../Customs/EntityPMs/Extended/GITITEMCR';
+import { SupplierInvioceItemCertificatPM } from '../../../../../Customs/EntityPMs/SupplierInvioceItemCertificatPM';
 
 @Component({
 
@@ -2905,6 +2907,7 @@ export class SupplierInvoiceItemLine extends BaseComponent {
     TariffErrorToolTipWrapper: string = "TariffErrorToolTipWrapper";
     TariffErrorToolTip: string = "TariffErrorToolTip";
     private CurrentSession = SessionLocator.SelectedSession;
+    //public GITITEMCRPMs: GITITEMCR[];
     constructor(EntityPM: SupplierInvoiceItemPM, parent: SupplierInvoiceGeneralTabComponent, allowExport: boolean = false) {
         super();
         this.entityPM = EntityPM;
@@ -2950,6 +2953,7 @@ export class SupplierInvoiceItemLine extends BaseComponent {
             this.WarningVisiblity = false;
             this.OkVisiblity = false;
             this.IsBlueBorderVisibile = false;
+            
         }
 
         else if (this.entityPM.CertificatesStatusCode == "1") {
@@ -3047,6 +3051,37 @@ export class SupplierInvoiceItemLine extends BaseComponent {
         }
     }
 
+    gITITEMCRPMs: GITITEMCR[];
+    get GITITEMCRPMs() { return this.GITITEMCRPMs; }
+    set GITITEMCRPMs(value: GITITEMCR[]) {
+
+        if (!AppTool.IsNullOrEmpty(value)) {
+            for (var k in value) {
+                // var mySupplierInvioceItemCertificatPM = new SupplierInvioceItemCertificatPM(k);
+                // SupplierInvioceItemCertificatPM newSupplierInvioceItemCertificatPM = mySupplierInvioceItemCertificatPM{ declara };
+                // newSupplierInvoiceItemPM.SupplierInvioceItemCertificats.push(newSupplierInvioceItemCertificatPM);
+
+                for (let item of this.EntityPM.SupplierInvoiceItems.filter(d => !d.IsParent)) {
+                    var exist = item.SupplierInvioceItemCertificats.filter(d => d.certificateNumber == "k.REQCERT")[0];
+                    if (!exist) {
+                        var SupplierInvioceItemCertificat: SupplierInvioceItemCertificatPM = new SupplierInvioceItemCertificatPM(item);
+                        SupplierInvioceItemCertificat.DeclarationId = this.entityPM.DeclarationId;
+                        SupplierInvioceItemCertificat.InvoiceCounterKey = this.EntityPM.InvoiceCounterKey;
+                        SupplierInvioceItemCertificat.LineNumber = item.LineNumber;
+                        SupplierInvioceItemCertificat.Tenant = this.EntityPM.Tenant;
+                        SupplierInvioceItemCertificat.CertificateNumber = "k.REQCERT";
+
+
+                        item.AddSupplierInvioceItemCertificat(SupplierInvioceItemCertificat);
+
+
+
+                    }
+                }
+            }
+        }
+    }
+    
 
     tradeAgreement: TradeAgreementPM;
     get TradeAgreement() { return this.tradeAgreement; }
@@ -3119,6 +3154,9 @@ export class SupplierInvoiceItemLine extends BaseComponent {
 
     public get ItemDescription() { return this.entityPM.ItemDescription; }
     public set ItemDescription(newValue: string) { this.entityPM.ItemDescription = newValue; }
+
+    public get TariffID() { return this.entityPM.TradeAgreementCode; }
+    public set TariffID(newValue: string) { this.entityPM.TradeAgreementCode = newValue; }
 
     public get NotForAccumaltion() { return this.entityPM.NotForAccumaltion; }
     public set NotForAccumaltion(value: boolean) {
@@ -3563,7 +3601,22 @@ export class SupplierInvoiceItemLine extends BaseComponent {
                         if (GITITEMCacheService.Instance.IsCountryPURForItems) {
                             itemCodeDetails.OriginCountryCode = this.OriginCountryCode;
                             itemCodeDetails.OriginCountryName = this.OriginCountryName;
-                            //itemCodeDetails.TariffID = this.TradeAgreementCode;
+                            itemCodeDetails.TariffID = this.TradeAgreementCode;
+                        }
+                        for (let item of this.GITITEMCRPMs) {
+                            itemCodeDetails.GITITEMCRPMs.push(new GITITEMCR(item.COUNTER, item.REQCERT, item.REMARKS));
+                            var exist = this.entityPM.SupplierInvioceItemCertificats.filter(d => d.CertificateNumber == item.REQCERT)[0];
+                            if (!exist) {
+                                var SupplierInvioceItemCertificat: SupplierInvioceItemCertificatPM = new SupplierInvioceItemCertificatPM(item);
+                                SupplierInvioceItemCertificat.DeclarationId = this.entityPM.DeclarationId;
+                                SupplierInvioceItemCertificat.InvoiceCounterKey = this.EntityPM.InvoiceCounterKey;
+                                SupplierInvioceItemCertificat.LineNumber = this.EntityPM.LineNumber;
+                                SupplierInvioceItemCertificat.Tenant = this.EntityPM.Tenant;
+                                SupplierInvioceItemCertificat.CertificateNumber = item.REQCERT;
+
+                                this.entityPM.AddSupplierInvioceItemCertificat(SupplierInvioceItemCertificat);
+
+                            }
                         }
                         itemCodeDetails.IsNew = true;
                     }
@@ -3604,9 +3657,10 @@ export class SupplierInvoiceItemLine extends BaseComponent {
         if (GITITEMCacheService.Instance.IsUnitPURForItems) {
             invoiceQuantityType = this.InvoiceQuantityType;
         }
+        tariffID = this.TradeAgreementCode
         //this.Parent.Parent.ItemCode_LocalCache.push(new ItemCodeComponent(this.ItemCode, this.ClassificationCode, this.ItemDescription, this.Parent.vendorNumber, originCountryCode, originCountryName, true, this.InvoiceQuantityType));
         GITITEMCacheService.Instance. /*ItemCode_LocalCache.push*/AddItemCodeComponent(
-            new ItemCodeComponent(this.ItemCode, this.ClassificationCode, this.ItemDescription, this.Parent.vendorNumber, originCountryCode, originCountryName, true, invoiceQuantityType, this.Parent.declarationPM.CustomerCode));
+            new ItemCodeComponent(this.ItemCode, this.ClassificationCode, this.ItemDescription, this.Parent.vendorNumber, originCountryCode, originCountryName, true, invoiceQuantityType, this.Parent.declarationPM.CustomerCode, tariffID, this.GITITEMCRPMs));
     }
 
     OnOriginCountryCodeLostFocus(logCellTemplate: any, originCountryCodeLov: any) {
@@ -3658,7 +3712,9 @@ export class SupplierInvoiceItemLine extends BaseComponent {
                                                 this.OriginCountryCode,
                                                 this.OriginCountryName, true,
                                                 this.InvoiceQuantityType,
-                                                this.Parent.declarationPM.CustomerCode
+                                                this.Parent.declarationPM.CustomerCode,
+                                                this.TariffID,
+                                                this.GITITEMCRPMs
                                             )
                                         );
                                     }
@@ -3677,6 +3733,21 @@ export class SupplierInvoiceItemLine extends BaseComponent {
                                             this.OriginCountryCode = itemCodeDetails.OriginCountryCode;
                                             this.OriginCountryName = itemCodeDetails.OriginCountryName;
                                             this.TradeAgreementCode = itemCodeDetails.TariffID;
+                                        }
+                                        //this.entityPM.AddSupplierInvioceItemCertificat()
+                                        for (let item of itemCodeDetails.GITITEMCRPMs) {
+                                            var exist = this.entityPM.SupplierInvioceItemCertificats.filter(d => d.CertificateNumber == item.REQCERT)[0];
+                                            if (!exist) {
+                                                var SupplierInvioceItemCertificat: SupplierInvioceItemCertificatPM = new SupplierInvioceItemCertificatPM(item);
+                                                SupplierInvioceItemCertificat.DeclarationId = this.entityPM.DeclarationId;
+                                                SupplierInvioceItemCertificat.InvoiceCounterKey = this.EntityPM.InvoiceCounterKey;
+                                                SupplierInvioceItemCertificat.LineNumber = this.EntityPM.LineNumber;
+                                                SupplierInvioceItemCertificat.Tenant = this.EntityPM.Tenant;
+                                                SupplierInvioceItemCertificat.CertificateNumber = item.REQCERT;
+                                                
+                                                this.entityPM.AddSupplierInvioceItemCertificat(SupplierInvioceItemCertificat);
+
+                                            }
                                         }
                                         this.GetQuantityType();
                                     }
@@ -3782,7 +3853,9 @@ export class SupplierInvoiceItemLine extends BaseComponent {
                                                 item.OriginCountryCode,
                                                 item.OriginCountryName, true,
                                                 item.InvoiceQuantityType,
-                                                this.Parent.declarationPM.CustomerCode
+                                                this.Parent.declarationPM.CustomerCode,
+                                                item.TariffID,
+                                                item.GITITEMCRPMs
                                             )
                                         );
                                         this.GetQuantityType();
@@ -3803,9 +3876,24 @@ export class SupplierInvoiceItemLine extends BaseComponent {
                                         if (GITITEMCacheService.Instance.IsUnitPURForItems) {
                                             item.InvoiceQuantityType = partnersItem.InvoiceQuantityType;
                                         }
+                                        
+                                        for (let item of partnersItem.GITITEMCRPMs) {
+                                            item.GITITEMCRPMs.push(new GITITEMCR(item.COUNTER, item.REQCERT, item.REMARKS));
+                                            var exist = this.entityPM.SupplierInvioceItemCertificats.filter(d => d.CertificateNumber == item.REQCERT)[0];
+                                            if (!exist) {
+                                                var SupplierInvioceItemCertificat: SupplierInvioceItemCertificatPM = new SupplierInvioceItemCertificatPM(item);
+                                                SupplierInvioceItemCertificat.DeclarationId = this.entityPM.DeclarationId;
+                                                SupplierInvioceItemCertificat.InvoiceCounterKey = this.EntityPM.InvoiceCounterKey;
+                                                SupplierInvioceItemCertificat.LineNumber = this.EntityPM.LineNumber;
+                                                SupplierInvioceItemCertificat.Tenant = this.EntityPM.Tenant;
+                                                SupplierInvioceItemCertificat.CertificateNumber = item.REQCERT;
 
+                                                this.entityPM.AddSupplierInvioceItemCertificat(SupplierInvioceItemCertificat);
+
+                                            }
+                                        }
                                         //this.Parent.Parent.ItemCode_LocalCache.push(new ItemCodeComponent(partnersItem.ItemCode, partnersItem.ClassificationCode, partnersItem.Name, this.Parent.vendorNumber, item.OriginCountryCode, item.OriginCountryName, false, item.InvoiceQuantityType));
-                                        GITITEMCacheService.Instance./*ItemCode_LocalCache.push*/AddItemCodeComponent(new ItemCodeComponent(partnersItem.ItemCode, partnersItem.ClassificationCode, partnersItem.Name, this.Parent.vendorNumber, item.OriginCountryCode, item.OriginCountryName, false, item.InvoiceQuantityType, this.Parent.declarationPM.CustomerCode));
+                                        GITITEMCacheService.Instance./*ItemCode_LocalCache.push*/AddItemCodeComponent(new ItemCodeComponent(partnersItem.ItemCode, partnersItem.ClassificationCode, partnersItem.Name, this.Parent.vendorNumber, item.OriginCountryCode, item.OriginCountryName, false, item.InvoiceQuantityType, this.Parent.declarationPM.CustomerCode, item.TariffID, item.GITITEMCRPMs));
                                         this.GetQuantityType();
 
                                     }
@@ -4430,8 +4518,9 @@ export class ItemCodeComponent extends BaseComponent {
     private _TariffID: string;
     private _InvoiceQuantityType: string;
     private _IsNew: boolean;
+    public GITITEMCRPMs: GITITEMCR[];
 
-    constructor(itemCode: string, classificationCode: string, itemDescription: string, vendorNumber: string, originCountryCode: string, originCountryName: string, isNew: boolean, invoiceQuantityType: string, private _CustomerCode: string) {
+    constructor(itemCode: string, classificationCode: string, itemDescription: string, vendorNumber: string, originCountryCode: string, originCountryName: string, isNew: boolean, invoiceQuantityType: string, private _CustomerCode: string, tariffID: string, public gITITEMCRPMs: GITITEMCR[]) {
         super();
 
         this.ItemCode = itemCode;
@@ -4442,6 +4531,9 @@ export class ItemCodeComponent extends BaseComponent {
         this.OriginCountryName = originCountryName;
         this.InvoiceQuantityType = invoiceQuantityType;
         this.IsNew = isNew;
+        this.GITITEMCRPMs = gITITEMCRPMs;
+        this.TariffID = tariffID;
+         
     }
 
     public get ItemCode() { return this._ItemCode; }
@@ -4473,4 +4565,31 @@ export class ItemCodeComponent extends BaseComponent {
 
     public get IsNew() { return this._IsNew; }
     public set IsNew(newValue: boolean) { this._IsNew = newValue; }
+}
+
+export class ItemCertificateComponent extends BaseComponent {
+    private _COUNTER: number;
+    private _REQCERT: string;
+    private _REMARKS: string;
+    
+
+    constructor(COUNTER: number, REQCERT: string, REMARKS: string) {
+        super();
+
+        this.COUNTER = COUNTER;
+        this.REQCERT = REQCERT;
+        this.REMARKS = REMARKS;
+       
+    }
+
+    public get COUNTER() { return this._COUNTER; }
+    public set COUNTER(newValue: number) { this._COUNTER = newValue; }
+
+    public get REQCERT() { return this._REQCERT; }
+    public set REQCERT(newValue: string) { this._REQCERT = newValue; }
+
+    public get REMARKS() { return this._REMARKS; }
+    public set REMARKS(newValue: string) { this._REMARKS = newValue; }
+
+    
 }
