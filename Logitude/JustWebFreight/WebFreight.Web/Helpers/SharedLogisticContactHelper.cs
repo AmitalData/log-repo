@@ -361,7 +361,7 @@ namespace WebFreight.Web.Helpers
                 return LogitudeSettings.WorkEnvironment == "cloud" ? "הזמנה ל-Unifreight Mobile" : tenantCompany.Company + " invites you to “Shared Logistics and Logitude Mobile” with Logitude.";
             }
 
-            return null;
+            return "";
         }
 
         private string GetEmailFrom(int tenant)
