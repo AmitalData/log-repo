@@ -945,7 +945,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
 
     private GetWindowComponentPath(newWindowComponentPath: string, newWindow: LogitudeWindow) {
  
-        if (!this.isLogbox && this.IsExportActivated) {
+        if (!this.isLogbox && this.HasExportShipmentToggle) {
  
             newWindowComponentPath = this.LoadNewAddShipmentComponent(newWindow, newWindowComponentPath);
         } else {
