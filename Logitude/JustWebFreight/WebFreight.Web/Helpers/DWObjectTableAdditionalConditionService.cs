@@ -17,10 +17,11 @@ namespace WebFreight.Web.Helpers
         }
 
 
-        public string Get()
+        public string Get(bool isDWQueryUsedAdditionalFact)
         {
             if (string.IsNullOrEmpty(dWObjectTablePM.AdditionalConditions) && string.IsNullOrEmpty(dWObjectTablePM.AdditionalFactCode)) return null;
             if (!string.IsNullOrEmpty(dWObjectTablePM.AdditionalConditions)) return dWObjectTablePM.AdditionalConditions;
+            if (!isDWQueryUsedAdditionalFact) return null;
             return GetDWObjectTableByCode(dWObjectTablePM.AdditionalFactCode, dWObjectTablePM.Tenant)?.AdditionalConditions;
         }
 
