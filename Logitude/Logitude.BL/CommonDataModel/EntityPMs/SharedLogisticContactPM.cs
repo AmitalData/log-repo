@@ -23,7 +23,6 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public string Mobile { get; set; }
         public string Fax { get; set; }
         public DateTime? LastLoginDate { get; set; }
-
-        
+        public bool IsCargoTrackingInvitation { get; set; }
     }
 }
