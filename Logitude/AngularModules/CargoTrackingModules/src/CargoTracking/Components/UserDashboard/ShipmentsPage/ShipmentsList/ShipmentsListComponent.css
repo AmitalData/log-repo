@@ -840,7 +840,7 @@ h1{
     margin-left: 10px;
 }
 
-::ng-deep .mat-option.ATD{
+::ng-deep .mat-option.ATD\/ETD{
  border-bottom: 1px solid var(--MainColor);
 }
 
@@ -866,10 +866,6 @@ h1{
     display: block;
     margin-top: 10px;
     margin-left: 10px;
-}
-
-::ng-deep .mat-option.ATD{
- border-bottom: 1px solid var(--MainColor);
 }
 
 .shipment-references{
