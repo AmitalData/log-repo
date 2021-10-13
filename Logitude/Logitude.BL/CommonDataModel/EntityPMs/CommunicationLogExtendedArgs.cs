@@ -22,6 +22,7 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public string FolderName { get; set; }
         public string MessageBody { get; set; }
         public string FileExtension { get; set; }
-        public string MessageException { get; set; }
+        public string ExceptionMessage { get; set; }
+        public  string Logs { get; set; }
     }
 }

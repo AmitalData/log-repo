@@ -64,7 +64,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
                         FolderName = communicationLogExtendedArgs.FolderName,
                         ByteData = Encoding.UTF8.GetBytes(communicationLogExtendedArgs.MessageBody),
                         FileExtension = communicationLogExtendedArgs.FileExtension,
-                        Logs = communicationLogExtendedArgs.MessageException,
+                        Logs = communicationLogExtendedArgs.Logs,
+                        ExceptionMessage = communicationLogExtendedArgs.ExceptionMessage
                     };
 
                     Communications.AddCommunicationLog(logParams);
