@@ -380,6 +380,7 @@ export class SharedLogisticsMainComponent implements OnInit {
             listArgs.ObjectTableName = objectTableName;
             listArgs.DisplayTitle = displayTitle;
             listArgs.BackButtonTitle = backButtonTitle;
+            listArgs.IsCargoTrackingMenuClicked = this.SharedTitleType == "CargoTracking";
             //listArgs.ShowViews = false;
             this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe((response:any) => {
                 SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
