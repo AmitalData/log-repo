@@ -450,17 +450,14 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 ICustomContext customContext = CustomContext.GetContext(authToken.Tenant);
                 //var messagingService = new DCAInUCB8250_MsgMessagingService();
                 //var sts = messagingService.CreateCRS(tenant, null, CourierMasterId, testerSendOption);
-                var declarationCourierStatusRepository = new DeclarationCourierStatusRepository(customContext);
-                string HAWB = "";
-                List<string> declarations = declarationCourierStatusRepository.
-                    GetByMasterIDDeclarationList(tenant, CourierMasterId,out HAWB);
+                
 
-                if (declarations.Count == 0)
-                {
-                    return Request.CreateResponse(HttpStatusCode.OK, "אין הצהרות לשליחה");
-                }
 
-                var declarationsText = string.Join(",", declarations);
+                var messagingService = new DCAInUCB8250_MsgMessagingService();
+                var sts = messagingService.CreateCRS(tenant, null, CourierMasterId, testerSendOption);
+
+
+               /* var declarationsText = string.Join(",", declarations);
                 var objectTableIdCourierMaster = ObjectTableRepository.GetObjectTableByName("Customs.CourierMaster");
                 string loggingUserId = AuthenticationUtil.ResolveUserId(tenant);
                 var service = new DF_NG_8250_Web01_DeclarationStatus_RequestMessagingService();
@@ -480,9 +477,9 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 };
                 var res = service.Send(requestParams8250);
                 if (res.HasException)
-                    return Request.CreateResponse(HttpStatusCode.OK, res.UserMessage);
+                    return Request.CreateResponse(HttpStatusCode.OK, res.UserMessage);*/
 
-                return Request.CreateResponse(HttpStatusCode.OK, "המסר נבנה בהצלחה וישלח בתהליך רקע");
+                return Request.CreateResponse(HttpStatusCode.OK, sts);
             }
 
             catch (Exception ex)

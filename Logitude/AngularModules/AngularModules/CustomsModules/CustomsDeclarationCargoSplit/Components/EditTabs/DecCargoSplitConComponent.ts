@@ -18,6 +18,9 @@ import { DeclarationDisplayOnlyChecks, DisplayOnlyCheckResult } from '../../../.
 import { ClientList } from '../../../../Customs/EntityLists/ClientList';
 import { TreatmentWayPM } from  '../../../../Customs/EntityPMs/TreatmentWayPM';
 import { TreatmentWayListService } from  '../../../../Customs/Services/StandardLists/TreatmentWayListService';
+import { DeclarationPMService } from '../../../../Customs/Services/StandardPMs/DeclarationPMService';
+import { DeclarationExtendedListService } from '../../../../Customs/Services/ExtendedLists/DeclarationExtendedListService';
+import { DecCargoSplitConExtendedPMService } from '../../../../Customs/Services/ExtendedPMs/DecCargoSplitConExtendedPMService';
 
 @Component({
     
@@ -81,10 +84,30 @@ export class DecCargoSplitConComponent extends BaseComponent {
         }
     }
 
+    ParentCargoConsinmentItemList: any;
+    decCargoSplitConExtendedPMService: DecCargoSplitConExtendedPMService;
+    DeclarationDirection: string;
+    declarationExtendedListService: DeclarationExtendedListService;
     DecCargoSplitConStatusVisibility: boolean;
     SetTabArgs(args: any) {
         this.EntityPM = args.EntityPM;
         this.declarationCargoSplitPM = args.Parent;
+        if (this.declarationCargoSplitPM != null) {
+            this.declarationExtendedListService = new DeclarationExtendedListService();
+            this.declarationExtendedListService.GetSingleDeclarationByCustomFileNo(this.declarationCargoSplitPM.CustomFileNo).subscribe((response: any) => {
+                if (response != null) {
+                    this.DeclarationDirection = response.Result.Direction;
+                    this.decCargoSplitConExtendedPMService = new DecCargoSplitConExtendedPMService();
+                    this.decCargoSplitConExtendedPMService.GetConsiPackageSequeList(response.Result.Id).subscribe((responseCon: any) => {
+                        if (responseCon != null) {
+                            this.ParentCargoConsinmentItemList = responseCon.Result;
+                        }
+                    });
+                    this.SetDisplayFields();
+                }
+            });
+        }
+    
         this.IsClosed = this.declarationCargoSplitPM.IsClosed;
         this.IsDisplayOnly = args.Disabled;
         if (!AppTool.IsNullOrEmpty(this.EntityPM.DecCargoSplitConsItems)) {
@@ -171,6 +194,9 @@ export class DecCargoSplitConComponent extends BaseComponent {
             this.UIProperties.SetEnabled("ConditionCode", this.ObjectTableName, true);
             this.UIProperties.SetEnabled("ProcedureCurrentCode", this.ObjectTableName, true);
             this.DisplayOnlyMessageVisibility = false;
+        }
+        if (this.DeclarationDirection == "E") {
+            this.UIProperties.SetEnabled("ConditionCode", this.ObjectTableName, false);
         }
         this.IsImporerCodeEnabled = !this.IsDisplayOnly;
     }
@@ -446,6 +472,11 @@ export class DecCargoSplitConComponent extends BaseComponent {
         
     }
 
+    ParentCargoConsinmentItemSelectionChanged(item,value) {
+        if (item != null) {
+            item.ParentCargoConsinmentItem = value;
+        }
+    }
 
     EditButtonClicked(item) {
 
@@ -454,6 +485,7 @@ export class DecCargoSplitConComponent extends BaseComponent {
             windowArgs.DecCargoSplitConsItemPM = item.EntityPM;
             windowArgs.IsDisplayOnly = this.IsDisplayOnly;
             windowArgs.DeclarationCargoSplitPM = this.declarationCargoSplitPM;
+            windowArgs.DeclarationDirection = this.DeclarationDirection
             var windowTitle = TextCodeTranslator.Translate("Customs.Declaration.O.ConsignmentPackages");
 
             var logWindow = new LogitudeWindow();

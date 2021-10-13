@@ -54,9 +54,13 @@ export class DecCargoSplitConsPackDetComponent extends BaseComponent {
 
     }
 
+    IsExportDeclaration: boolean=false;
     LineNumber: string;
     SetWindowArgs(args: any) {
         var _entityResourceService: EntityResourceService = new EntityResourceService();
+        if (args.DeclarationDirection != null && args.DeclarationDirection=="E") {
+            this.IsExportDeclaration = true;
+        }
         _entityResourceService.getEntityResourceByTableName("Customs.PackingType", 0).subscribe((res: any) => {
             var entityListService: PackingTypeListService = new PackingTypeListService();
             entityListService.getAllFromCache().subscribe((res: any) => {
@@ -135,7 +139,6 @@ export class DecCargoSplitConsPackDetComponent extends BaseComponent {
         for (let item of this.decCargoSplitConsItemPM.DecCargoSplitConsPackDets) {
             this.ItemsSource.Insert(new DecCargoSplitConsPackDetLine(item, this));
         }
-
 
     }
 
