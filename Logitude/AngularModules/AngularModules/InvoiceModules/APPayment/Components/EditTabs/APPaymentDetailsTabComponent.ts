@@ -737,6 +737,7 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
                 }
                 this.GetCardProperties();
                 this.LoadData();
+                this.LoadTaxPercentage();
                 this.IsTaxUpdated = true;
 
             }
