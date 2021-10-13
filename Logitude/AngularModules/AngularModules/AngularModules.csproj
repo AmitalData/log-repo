@@ -305,6 +305,7 @@
     <Content Include="Images\PrivateLabel\MainImage.png" />
     <Content Include="Images\PrivateLabel\LogBoxLogo.png" />
     <Content Include="Images\PrivateLabel\Background.png" />
+    <Content Include="Images\Update-Button.png" />
     <Content Include="InfrastructureModules\InfrastructureBIReport\Components\Workspaces\DWQueryBuilderBaseComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureCommunications\Components\ReportExecutionLog\ReportExecutionLogErrorComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureCommunications\Components\ReportExecutionLog\ReportExecutionLogMessageBodyComponent.html" />
