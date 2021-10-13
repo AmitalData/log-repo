@@ -1,4 +1,4 @@
-@devsmoke
+@smoke
 Feature: Journal
     The user creates new Journal, add new line and approve the Journal
 

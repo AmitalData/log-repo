@@ -1,4 +1,4 @@
-@devsmoke
+@smoke
 Feature: Vendor Create, Search, activate and Edit from Maintenance
     The user creates a vendor, searches for, activate it and edits it from the Maintenance Module.
 
