@@ -343,7 +343,7 @@ namespace WebFreight.Web.Helpers
         {
             if (sharedLogisticsContact.IsCargoTrackingInvitation)
             {
-                return tenantCompany.Company + " invites you to " + tenantCompany.Company + "Cargo Tracking";
+                return tenantCompany.Company + " Cargo Tracking Invitation";
             }
 
             if (tenantCompany.IsWebAccessActivated && !tenantCompany.IsMobileActivated)
