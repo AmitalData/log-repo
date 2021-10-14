@@ -47,7 +47,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
     isShipmentTypeFilterExpanded: boolean = false;
     isShipmentDirectionFilterExpanded: boolean = false;
     isAbdullahCompanyChecked: boolean = true;
-    showSortDetailsMenu: boolean = false;
+    showMobileSortMenu: boolean = false;
     showShipmentDetailsMenu: boolean = false;
     InvitedCustomersIds: string[];
     InvitedCustomers: any[] = [];
@@ -70,6 +70,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
     SupplierOrClientValue: string;
 
     ShipmenTypeForRouting: string;
+    public SortOptions= SortOptions;
 
     get tenant(){
         return CargoTrackingBrandingData.Tenant;
@@ -1064,7 +1065,7 @@ enum Milestones {
     Invoiced = "17"
 }
 
-enum SortOptions {
+export enum SortOptions {
     CMD = "CMD",
     ATA = "ATA",
     ATD = "ATD",
