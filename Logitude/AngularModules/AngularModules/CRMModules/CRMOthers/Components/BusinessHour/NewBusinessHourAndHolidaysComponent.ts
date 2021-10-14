@@ -516,7 +516,7 @@ export class NewBusinessHourAndHolidaysComponent extends BaseComponent {
         }
 
         this.ValidationErrorsList = errors;
-        this.ValidateTime();
+        this.ValidateBusinessHoursTime();
         if (this.ValidationErrorsList.length == 0) {
             if (this.IsNew) {
                 this.InsertBusinesHour();
@@ -553,7 +553,7 @@ export class NewBusinessHourAndHolidaysComponent extends BaseComponent {
         });
     }
 
-    ValidateTime() {
+    ValidateBusinessHoursTime() {
         var isValid = true;
 
         if (this.SundayFromHourDate != null && this.SundayToHourDate != null && DateTool.GetDateFromDate(this.SundayToHourDate) <= DateTool.GetDateFromDate(this.SundayFromHourDate)) {
