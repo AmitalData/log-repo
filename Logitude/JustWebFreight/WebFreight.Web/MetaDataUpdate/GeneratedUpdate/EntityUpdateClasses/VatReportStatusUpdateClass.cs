@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class VatReportStatusUpdateClass
    {  		
-		public const string HashString = "494f803cb2f7ba37ed2cc764d015fce8";
+		public const string HashString = "07e2ac1016c06ac5ae537bca0cb1b5d3";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -89,7 +89,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	             				    ObjectTableName =  "VatReportStatus",
 			      				    IsNew =  true,
 			      				    DBTableName =  "VatReportStatuses",
-			      				    OldDBTableName =  "TaxReportStatueses",
 			      				    ObjectTableSingular =  "Vat Report Status",
 			      				    ObjectTablePlural =  "Vat Report Statuses",
 			      				    HasCustomFilter =  false,
@@ -120,7 +119,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "BR",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Vat Report Status",
-			      				    Code =  "aa70",
+			      				    Code =  "b9b4",
 			      				    Name =  " Query Group",
 			      				    CloseTableCode =  "Code",
 			      				    CloseTableName =  "EnglishName",
@@ -147,7 +146,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Code",
-					  						OldFieldName =  "Code",
 					  						ObjectTableName =  "VatReportStatus",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -196,6 +194,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -207,7 +206,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "EnglishName",
-					  						OldFieldName =  "EnglishName",
 					  						ObjectTableName =  "VatReportStatus",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -255,6 +253,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -266,7 +265,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "SearchFields",
-					  						OldFieldName =  "SearchFields",
 					  						ObjectTableName =  "VatReportStatus",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -314,6 +312,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -325,7 +324,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "LocalName",
-					  						OldFieldName =  "LocalName",
 					  						ObjectTableName =  "VatReportStatus",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -371,6 +369,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -382,7 +381,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Inactive",
-					  						OldFieldName =  "Inactive",
 					  						ObjectTableName =  "VatReportStatus",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -428,6 +426,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -441,7 +440,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
-	    {    
+	    {   
+
+		   ObjectTable VatReportStatusObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "VatReportStatus" && d.Tenant == 0).FirstOrDefault();
+		   //List<ObjectField> VatReportStatusObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "VatReportStatus").ToList();
+		       
+	      
+
+	         Screen VatReportStatusVatReportStatusHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "VatReportStatus.HeaderScreen", Name = "VatReportStatusHeaderScreen", ObjectTableId = VatReportStatusObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+      	
+		    VatReportStatusObjectTable.HeaderScreenId = VatReportStatusVatReportStatusHeaderScreenScreen0.Id;
+		    VatReportStatusObjectTable.HeaderScreenCode = VatReportStatusVatReportStatusHeaderScreenScreen0.Code;
+
+	   		  
 
 	    }
 

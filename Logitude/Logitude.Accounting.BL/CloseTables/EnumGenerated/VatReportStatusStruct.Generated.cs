@@ -15,7 +15,10 @@ namespace Logitude.Accounting.BL.CloseTables
        public const string Cancelled = "C";  
        public const string Transmitted = "T";  
        public const string Error = "E";  
-       public const string InProgress = "P";  
+       public const string InProgress = "P";
+       public const string CancelationInProgress = "CP";
+       public const string CancelationFailed = "CF";
+
     }
 }
 
