@@ -25,8 +25,8 @@ namespace Logitude.CargoTracking.BL
             {    
                 Code = "1", 
                 EnglishName = "Created", 
-                SearchFields = "1,Created", 
-                LocalName = "Created", 
+                SearchFields = "1,Created,משלוח נוצר", 
+                LocalName = "משלוח נוצר", 
                 Inactive = false, 
 			});
 			 
@@ -34,56 +34,57 @@ namespace Logitude.CargoTracking.BL
             {    
                 Code = "2", 
                 EnglishName = "Booking", 
-                SearchFields = "2,Booking", 
-                LocalName = "Booking", 
+                SearchFields = "2,Booking,בוצעה הזמנה", 
+                LocalName = "בוצעה הזמנה", 
 			});
 			 
             all.Add(new CargoTrackingMilestoneDetails()
             {    
                 Code = "3", 
                 EnglishName = "Pickup", 
-                SearchFields = "3,Pickup", 
-                LocalName = "Pickup", 
+                SearchFields = "3,Pickup,נאסף מהספק", 
+                LocalName = "נאסף מהספק", 
 			});
 			 
             all.Add(new CargoTrackingMilestoneDetails()
             {    
                 Code = "4", 
-                EnglishName = "From Warehouse", 
-                SearchFields = "4,From Warehouse", 
-                LocalName = "From Warehouse", 
+                EnglishName = "Origin Warehouse", 
+                SearchFields = "4,Origin Warehouse, אחסנה בנמל מוצא", 
+                LocalName = " אחסנה בנמל מוצא", 
+                Inactive = false, 
 			});
 			 
             all.Add(new CargoTrackingMilestoneDetails()
             {    
                 Code = "5", 
                 EnglishName = "Departure", 
-                SearchFields = "5,Departure", 
-                LocalName = "Departure", 
+                SearchFields = "5,Departure,המראה", 
+                LocalName = "המראה", 
 			});
 			 
             all.Add(new CargoTrackingMilestoneDetails()
             {    
                 Code = "6", 
                 EnglishName = "Arrival", 
-                SearchFields = "6,Arrival", 
-                LocalName = "Arrival", 
+                SearchFields = "6,Arrival,הגעה", 
+                LocalName = "הגעה", 
 			});
 			 
             all.Add(new CargoTrackingMilestoneDetails()
             {    
                 Code = "7", 
-                EnglishName = "To Warehouse", 
-                SearchFields = "7,To Warehouse", 
-                LocalName = "To Warehouse", 
+                EnglishName = "Destination Warehouse", 
+                SearchFields = "7,Destination Warehouse,אחסנה בנמל יעד", 
+                LocalName = "אחסנה בנמל יעד", 
 			});
 			 
             all.Add(new CargoTrackingMilestoneDetails()
             {    
                 Code = "8", 
                 EnglishName = "Assigned To Customs Broker", 
-                SearchFields = "8,Assigned To Customs Broker", 
-                LocalName = "Assigned To Customs Broker", 
+                SearchFields = "8,Assigned To Customs Broker,הועבר לסוכן מכס", 
+                LocalName = "הועבר לסוכן מכס", 
                 Inactive = false, 
 			});
 			 
@@ -91,32 +92,32 @@ namespace Logitude.CargoTracking.BL
             {    
                 Code = "9", 
                 EnglishName = "Customs Process", 
-                SearchFields = "9,Customs Process", 
-                LocalName = "Customs Process", 
+                SearchFields = "9,Customs Process,בתהליך מכס", 
+                LocalName = "בתהליך מכס", 
 			});
 			 
             all.Add(new CargoTrackingMilestoneDetails()
             {    
                 Code = "10", 
                 EnglishName = "Goods Classification", 
-                SearchFields = "10,Goods Classification", 
-                LocalName = "Goods Classification", 
+                SearchFields = "10,Goods Classification,סיווג", 
+                LocalName = "סיווג", 
 			});
 			 
             all.Add(new CargoTrackingMilestoneDetails()
             {    
                 Code = "11", 
                 EnglishName = "Document Inspection", 
-                SearchFields = "11,Document Inspection", 
-                LocalName = "Document Inspection", 
+                SearchFields = "11,Document Inspection,ביקורת מסמכים", 
+                LocalName = "ביקורת מסמכים", 
 			});
 			 
             all.Add(new CargoTrackingMilestoneDetails()
             {    
                 Code = "12", 
                 EnglishName = "Payment Requested", 
-                SearchFields = "12,Payment Requested", 
-                LocalName = "Payment Requested", 
+                SearchFields = "12,Payment Requested,נשלחה בקשת תשלום", 
+                LocalName = "נשלחה בקשת תשלום", 
                 Inactive = false, 
 			});
 			 
@@ -124,8 +125,8 @@ namespace Logitude.CargoTracking.BL
             {    
                 Code = "13", 
                 EnglishName = "Payment Received", 
-                SearchFields = "13,Payment Received", 
-                LocalName = "Payment Received", 
+                SearchFields = "13,Payment Received,התקבל תשלום", 
+                LocalName = "התקבל תשלום", 
                 Inactive = false, 
 			});
 			 
@@ -133,8 +134,8 @@ namespace Logitude.CargoTracking.BL
             {    
                 Code = "14", 
                 EnglishName = "Customs Payment", 
-                SearchFields = "14,Customs Payment", 
-                LocalName = "Customs Payment", 
+                SearchFields = "14,Customs Payment,שולם למכס", 
+                LocalName = "שולם למכס", 
                 Inactive = false, 
 			});
 			 
@@ -142,8 +143,8 @@ namespace Logitude.CargoTracking.BL
             {    
                 Code = "15", 
                 EnglishName = "Clearance", 
-                SearchFields = "15,Clearance", 
-                LocalName = "Clearance", 
+                SearchFields = "15,Clearance,התרת מכס", 
+                LocalName = "התרת מכס", 
                 Inactive = false, 
 			});
 			 
@@ -151,8 +152,8 @@ namespace Logitude.CargoTracking.BL
             {    
                 Code = "16", 
                 EnglishName = "Gatepass Arrived", 
-                SearchFields = "16,Gatepass Arrived", 
-                LocalName = "Gatepass Arrived", 
+                SearchFields = "16,Gatepass Arrived,גייטפס מוכן", 
+                LocalName = "גייטפס מוכן", 
                 Inactive = false, 
 			});
 			 
@@ -160,8 +161,8 @@ namespace Logitude.CargoTracking.BL
             {    
                 Code = "17", 
                 EnglishName = "Assigned to Trucker", 
-                SearchFields = "17,Assigned to Trucker", 
-                LocalName = "Assigned to Trucker", 
+                SearchFields = "17,Assigned to Trucker,נמסר למוביל", 
+                LocalName = "נמסר למוביל", 
                 Inactive = false, 
 			});
 			 
@@ -169,8 +170,8 @@ namespace Logitude.CargoTracking.BL
             {    
                 Code = "18", 
                 EnglishName = "Delivery Out", 
-                SearchFields = "18,Delivery Out", 
-                LocalName = "Delivery Out", 
+                SearchFields = "18,Delivery Out,יצא להפצה", 
+                LocalName = "יצא להפצה", 
                 Inactive = false, 
 			});
 			 
@@ -178,8 +179,8 @@ namespace Logitude.CargoTracking.BL
             {    
                 Code = "19", 
                 EnglishName = "Delivered", 
-                SearchFields = "19,Delivered", 
-                LocalName = "Delivered", 
+                SearchFields = "19,Delivered,נמסר ללקוח", 
+                LocalName = "נמסר ללקוח", 
                 Inactive = false, 
 			});
 			 
@@ -187,8 +188,8 @@ namespace Logitude.CargoTracking.BL
             {    
                 Code = "20", 
                 EnglishName = "Invoiced", 
-                SearchFields = "20,Invoiced", 
-                LocalName = "Invoiced", 
+                SearchFields = "20,Invoiced,הופקה חשבונית", 
+                LocalName = "הופקה חשבונית", 
                 Inactive = false, 
 			});
 			

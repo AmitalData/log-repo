@@ -37,7 +37,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;CargoTrackingMilestones&quot;"
-  Code="&quot;1da5&quot;"
+  Code="&quot;e3a2&quot;"
   Name="&quot; Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;EnglishName&quot;"
@@ -458,113 +458,114 @@
     <Record
       Code="&quot;1&quot;"
       EnglishName="&quot;Created&quot;"
-      SearchFields="&quot;1,Created&quot;"
-      LocalName="&quot;Created&quot;"
+      SearchFields="&quot;1,Created,משלוח נוצר&quot;"
+      LocalName="&quot;משלוח נוצר&quot;"
       Inactive="false" />
     <Record
       Code="&quot;2&quot;"
       EnglishName="&quot;Booking&quot;"
-      SearchFields="&quot;2,Booking&quot;"
-      LocalName="&quot;Booking&quot;" />
+      SearchFields="&quot;2,Booking,בוצעה הזמנה&quot;"
+      LocalName="&quot;בוצעה הזמנה&quot;" />
     <Record
       Code="&quot;3&quot;"
       EnglishName="&quot;Pickup&quot;"
-      SearchFields="&quot;3,Pickup&quot;"
-      LocalName="&quot;Pickup&quot;" />
+      SearchFields="&quot;3,Pickup,נאסף מהספק&quot;"
+      LocalName="&quot;נאסף מהספק&quot;" />
     <Record
       Code="&quot;4&quot;"
-      EnglishName="&quot;From Warehouse&quot;"
-      SearchFields="&quot;4,From Warehouse&quot;"
-      LocalName="&quot;From Warehouse&quot;" />
+      EnglishName="&quot;Origin Warehouse&quot;"
+      SearchFields="&quot;4,Origin Warehouse, אחסנה בנמל מוצא&quot;"
+      LocalName="&quot; אחסנה בנמל מוצא&quot;"
+      Inactive="false" />
     <Record
       Code="&quot;5&quot;"
       EnglishName="&quot;Departure&quot;"
-      SearchFields="&quot;5,Departure&quot;"
-      LocalName="&quot;Departure&quot;" />
+      SearchFields="&quot;5,Departure,המראה&quot;"
+      LocalName="&quot;המראה&quot;" />
     <Record
       Code="&quot;6&quot;"
       EnglishName="&quot;Arrival&quot;"
-      SearchFields="&quot;6,Arrival&quot;"
-      LocalName="&quot;Arrival&quot;" />
+      SearchFields="&quot;6,Arrival,הגעה&quot;"
+      LocalName="&quot;הגעה&quot;" />
     <Record
       Code="&quot;7&quot;"
-      EnglishName="&quot;To Warehouse&quot;"
-      SearchFields="&quot;7,To Warehouse&quot;"
-      LocalName="&quot;To Warehouse&quot;" />
+      EnglishName="&quot;Destination Warehouse&quot;"
+      SearchFields="&quot;7,Destination Warehouse,אחסנה בנמל יעד&quot;"
+      LocalName="&quot;אחסנה בנמל יעד&quot;" />
     <Record
       Code="&quot;8&quot;"
       EnglishName="&quot;Assigned To Customs Broker&quot;"
-      SearchFields="&quot;8,Assigned To Customs Broker&quot;"
-      LocalName="&quot;Assigned To Customs Broker&quot;"
+      SearchFields="&quot;8,Assigned To Customs Broker,הועבר לסוכן מכס&quot;"
+      LocalName="&quot;הועבר לסוכן מכס&quot;"
       Inactive="false" />
     <Record
       Code="&quot;9&quot;"
       EnglishName="&quot;Customs Process&quot;"
-      SearchFields="&quot;9,Customs Process&quot;"
-      LocalName="&quot;Customs Process&quot;" />
+      SearchFields="&quot;9,Customs Process,בתהליך מכס&quot;"
+      LocalName="&quot;בתהליך מכס&quot;" />
     <Record
       Code="&quot;10&quot;"
       EnglishName="&quot;Goods Classification&quot;"
-      SearchFields="&quot;10,Goods Classification&quot;"
-      LocalName="&quot;Goods Classification&quot;" />
+      SearchFields="&quot;10,Goods Classification,סיווג&quot;"
+      LocalName="&quot;סיווג&quot;" />
     <Record
       Code="&quot;11&quot;"
       EnglishName="&quot;Document Inspection&quot;"
-      SearchFields="&quot;11,Document Inspection&quot;"
-      LocalName="&quot;Document Inspection&quot;" />
+      SearchFields="&quot;11,Document Inspection,ביקורת מסמכים&quot;"
+      LocalName="&quot;ביקורת מסמכים&quot;" />
     <Record
       Code="&quot;12&quot;"
       EnglishName="&quot;Payment Requested&quot;"
-      SearchFields="&quot;12,Payment Requested&quot;"
-      LocalName="&quot;Payment Requested&quot;"
+      SearchFields="&quot;12,Payment Requested,נשלחה בקשת תשלום&quot;"
+      LocalName="&quot;נשלחה בקשת תשלום&quot;"
       Inactive="false" />
     <Record
       Code="&quot;13&quot;"
       EnglishName="&quot;Payment Received&quot;"
-      SearchFields="&quot;13,Payment Received&quot;"
-      LocalName="&quot;Payment Received&quot;"
+      SearchFields="&quot;13,Payment Received,התקבל תשלום&quot;"
+      LocalName="&quot;התקבל תשלום&quot;"
       Inactive="false" />
     <Record
       Code="&quot;14&quot;"
       EnglishName="&quot;Customs Payment&quot;"
-      SearchFields="&quot;14,Customs Payment&quot;"
-      LocalName="&quot;Customs Payment&quot;"
+      SearchFields="&quot;14,Customs Payment,שולם למכס&quot;"
+      LocalName="&quot;שולם למכס&quot;"
       Inactive="false" />
     <Record
       Code="&quot;15&quot;"
       EnglishName="&quot;Clearance&quot;"
-      SearchFields="&quot;15,Clearance&quot;"
-      LocalName="&quot;Clearance&quot;"
+      SearchFields="&quot;15,Clearance,התרת מכס&quot;"
+      LocalName="&quot;התרת מכס&quot;"
       Inactive="false" />
     <Record
       Code="&quot;16&quot;"
       EnglishName="&quot;Gatepass Arrived&quot;"
-      SearchFields="&quot;16,Gatepass Arrived&quot;"
-      LocalName="&quot;Gatepass Arrived&quot;"
+      SearchFields="&quot;16,Gatepass Arrived,גייטפס מוכן&quot;"
+      LocalName="&quot;גייטפס מוכן&quot;"
       Inactive="false" />
     <Record
       Code="&quot;17&quot;"
       EnglishName="&quot;Assigned to Trucker&quot;"
-      SearchFields="&quot;17,Assigned to Trucker&quot;"
-      LocalName="&quot;Assigned to Trucker&quot;"
+      SearchFields="&quot;17,Assigned to Trucker,נמסר למוביל&quot;"
+      LocalName="&quot;נמסר למוביל&quot;"
       Inactive="false" />
     <Record
       Code="&quot;18&quot;"
       EnglishName="&quot;Delivery Out&quot;"
-      SearchFields="&quot;18,Delivery Out&quot;"
-      LocalName="&quot;Delivery Out&quot;"
+      SearchFields="&quot;18,Delivery Out,יצא להפצה&quot;"
+      LocalName="&quot;יצא להפצה&quot;"
       Inactive="false" />
     <Record
       Code="&quot;19&quot;"
       EnglishName="&quot;Delivered&quot;"
-      SearchFields="&quot;19,Delivered&quot;"
-      LocalName="&quot;Delivered&quot;"
+      SearchFields="&quot;19,Delivered,נמסר ללקוח&quot;"
+      LocalName="&quot;נמסר ללקוח&quot;"
       Inactive="false" />
     <Record
       Code="&quot;20&quot;"
       EnglishName="&quot;Invoiced&quot;"
-      SearchFields="&quot;20,Invoiced&quot;"
-      LocalName="&quot;Invoiced&quot;"
+      SearchFields="&quot;20,Invoiced,הופקה חשבונית&quot;"
+      LocalName="&quot;הופקה חשבונית&quot;"
       Inactive="false" />
   </Records>
   <DataContracts />
