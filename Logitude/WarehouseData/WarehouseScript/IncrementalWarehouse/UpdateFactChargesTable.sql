@@ -429,7 +429,7 @@ END CATCH
  
 	,@OperationalCloseDate, @AccountingCloseDate, @RegistryDate, @ProjectNumber, @Shipper, @Consignee, @Routing, @Incoterm, @InvoiceDate, @InvoiceLineAmountForeign, @ForiegnCurrencyId,@InvoiceChargeLineDescription, @ChargeTypeNote, @HousesOpenPayablesInLocal, @HousesOpenPayablesInProfit, @HousesACCTPayablesInLocal, @HousesACCTPayablesInProfit, @HousesOpenReceivablesInLocal, @HousesOpenReceivablesInProfit, @HousesACCTReceivablesInLocal, @HousesACCTReceivablesInProfit
  
-,@ComputedStatus, @ShipmentPayablesReceivablesInvoiceStatusCode, @ShipmentPayablesReceivablesInvoiceDraftNumber,@InvoiceLineDescription, @InvoiceLineLocalDescription,@ExpectedAmount, @ExpectedAmountLocal,@ExpectedAmountInProfitCurrency,@PlannedCargoReadyDate,@ApprovedCargoReadyDate,@Notify1Reference2,@HandlerUser,@AccountingClosedByUser@TotalGrossWeightInKG, @GrossWeightPerTon, @OrderGrossWeight, @BookingVolume,
+,@ComputedStatus, @ShipmentPayablesReceivablesInvoiceStatusCode, @ShipmentPayablesReceivablesInvoiceDraftNumber,@InvoiceLineDescription, @InvoiceLineLocalDescription,@ExpectedAmount, @ExpectedAmountLocal,@ExpectedAmountInProfitCurrency,@PlannedCargoReadyDate,@ApprovedCargoReadyDate,@Notify1Reference2,@HandlerUser,@AccountingClosedByUser,@TotalGrossWeightInKG, @GrossWeightPerTon, @OrderGrossWeight, @BookingVolume,
  @TotalVolumeInCBM, @VolumetricWeight,@NumberOfPackages, @BookingNumberOfPackages
 		End
 	CLOSE ShipmentsChargesCursor
