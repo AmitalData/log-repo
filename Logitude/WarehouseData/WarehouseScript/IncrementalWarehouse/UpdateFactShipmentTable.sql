@@ -681,6 +681,10 @@
             set @InWarehouseDate = null
         End
 
+	if(@IsStandalonePickupDelivery is null)
+	    BEGIN
+            set @IsStandalonePickupDelivery = 0
+        End
 	--------------CarrierDate CustomAgent----------
 	 if(@DirectionId = 'I' OR @DirectionId = 'C')
 	 BEGIN
