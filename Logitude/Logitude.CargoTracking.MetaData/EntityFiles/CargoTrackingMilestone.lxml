@@ -37,7 +37,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;CargoTrackingMilestones&quot;"
-  Code="&quot;1da5&quot;"
+  Code="&quot;4541&quot;"
   Name="&quot; Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;EnglishName&quot;"
@@ -550,9 +550,9 @@
       Inactive="false" />
     <Record
       Code="&quot;18&quot;"
-      EnglishName="&quot;Delivery Out&quot;"
-      SearchFields="&quot;18,Delivery Out&quot;"
-      LocalName="&quot;Delivery Out&quot;"
+      EnglishName="&quot;Delivery on the way&quot;"
+      SearchFields="&quot;18,Delivery on the way&quot;"
+      LocalName="&quot;Delivery on the way&quot;"
       Inactive="false" />
     <Record
       Code="&quot;19&quot;"

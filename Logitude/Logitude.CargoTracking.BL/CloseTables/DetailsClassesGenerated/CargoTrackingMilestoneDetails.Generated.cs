@@ -168,9 +168,9 @@ namespace Logitude.CargoTracking.BL
             all.Add(new CargoTrackingMilestoneDetails()
             {    
                 Code = "18", 
-                EnglishName = "Delivery Out", 
-                SearchFields = "18,Delivery Out", 
-                LocalName = "Delivery Out", 
+                EnglishName = "Delivery on the way", 
+                SearchFields = "18,Delivery on the way", 
+                LocalName = "Delivery on the way", 
                 Inactive = false, 
 			});
 			 
