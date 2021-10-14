@@ -2850,7 +2850,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                                 AddImporterApprovalReceivedQueue();
                             }
                             shipmentAdditionalCloudData.DeclarationXmlData = entityPM.DeclarationXMLData;
-                            shipmentAdditionalCloudData.IsImporterApprovalRequried = GetIsImporterApprovalRequiredValueFromDeclarationXMLData();
+                            shipmentAdditionalCloudData.IsImporterApprovalRequried = entityPM.IsImporterApprovalRequired ?  GetIsImporterApprovalRequiredValueFromDeclarationXMLData() : false;
                             shipmentAdditionalCloudData.ApprovedByUserName = null;
                             shipmentAdditionalCloudData.ApproveDateTime = null;
                             shipmentAdditionalCloudData.DenyReason = null;
