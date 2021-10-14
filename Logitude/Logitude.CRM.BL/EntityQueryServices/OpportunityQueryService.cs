@@ -1013,7 +1013,7 @@ namespace Logitude.CRM.BL.EntityQueryServices
                                                                         NumberOfUsers = a.NumberOfShipments,
                                                                         Field4 = a.Field4,
                                                                         IsNewCustomer = (a.Subject != null && a.Subject.ToLower().Contains("churn")) ? "-1" : opportunityType.Code == "N" ? "1" : null,
-                                                                        InActive = a.Customer != null ? a.Customer.InActive : false,
+                                                                        InActive = (a.Customer != null && a.Customer.Customer != null) ? a.Customer.Customer.CustomerStatusCode != "ACT" : false,
                                                                         ActualClosingDate = a.ActualClosingDate ?? a.CreateDate.Value,
 
                                                                     });

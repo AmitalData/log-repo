@@ -38,25 +38,25 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
                     if (item.CarrierId != null)
                     {
                         CardQueryService Service = new CardQueryService(Tenant);
-                        temp.Carrier = Service.GetCardById(item.CarrierId, Tenant);
+                        temp.Carrier = Service.GetCardById(item.CarrierId, Tenant, ComputingPartnerName);
                     }
 
                     if (item.FromPortId != null)
                     {
                         PortQueryService Service = new PortQueryService(Tenant);
-                        temp.FromPort = Service.GetPortById(item.FromPortId, Tenant);
+                        temp.FromPort = Service.GetPortById(item.FromPortId, Tenant, ComputingPartnerName);
                     }
 
                     if (item.ToPortId != null)
                     {
                         PortQueryService Service = new PortQueryService(Tenant);
-                        temp.ToPort = Service.GetPortById(item.ToPortId, Tenant);
+                        temp.ToPort = Service.GetPortById(item.ToPortId, Tenant, ComputingPartnerName);
                     }
 
                     if (item.VesselId != null)
                     {
                         VesselQueryService Service = new VesselQueryService(Tenant);
-                        temp.Vessel = Service.GetVesselById(item.VesselId, Tenant);
+                        temp.Vessel = Service.GetVesselById(item.VesselId, Tenant, ComputingPartnerName);
                     }
 
                     MyList.Add(temp);

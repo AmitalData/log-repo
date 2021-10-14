@@ -85,7 +85,7 @@ export class ShipmentDetailsComponent implements AfterViewInit
     ngAfterViewInit(): void
     {
         this.LoadShipment();
-        this.CreatePartnerCardsFromShipmentPM();
+      //  this.CreatePartnerCardsFromShipmentPM();
     }
     private SetOverviewPanelTitle() {
         if (this.Shipment.ShipmentList.EntityType == this.OrderEntityType) {
@@ -173,6 +173,7 @@ export class ShipmentDetailsComponent implements AfterViewInit
                 this.SetTypeTitle();
 
             }
+            this.CreatePartnerCardsFromShipmentPM();
 
             setTimeout(() =>
             {

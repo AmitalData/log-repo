@@ -1952,6 +1952,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                                     var windowArgs: any = {};
 
                                     windowArgs.CurrentEntity = entityList;
+                                    windowArgs.IsCargoTrackingMenuClicked = this.listArgs.IsCargoTrackingMenuClicked;
                                     var logWindow = new LogitudeWindow();
                                     logWindow.Width = 960;
                                     logWindow.Height = 570;

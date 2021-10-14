@@ -794,8 +794,8 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
             milestones.Add(new Milestone()
             {
                 Id = 4,
-                Code = "FromWarehouse",
-                Name = "From Warehouse",
+                Code = "OriginWarehouse",
+                Name = "Origin Warehouse",
                 Date = shipment.FromWarehouseDate,
                 EstimationDate = shipment.FromWarehouseEstimationDate,
                 Done = shipment.FromWarehouseDone,
@@ -830,8 +830,8 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
             milestones.Add(new Milestone()
             {
                 Id = 7,
-                Code = "ToWarehouse",
-                Name = "To Warehouse",
+                Code = "DestinationWarehouse",
+                Name = "Destination Warehouse",
                 Date = shipment.ToWarehouseDate,
                 EstimationDate = shipment.ToWarehouseEstimationDate,
                 Done = shipment.ToWarehouseDone,
