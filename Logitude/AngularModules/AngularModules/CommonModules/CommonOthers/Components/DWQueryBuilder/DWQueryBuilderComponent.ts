@@ -939,7 +939,7 @@ export class DWQueryBuilderComponent extends DWQueryBuilderBaseComponent {
             return;
         }
  
-        if (this.hasMeasurementFieldsInFactCharges() && !this.hasShipmentOrMasterNumberField()) {
+        if ((this.hasMeasurementFieldsInFactCharges() || this.hasMeasurementFilterInFactCharges()) && !this.hasShipmentOrMasterNumberField()) {
             this.ShowValidateMessage("Please add Shipment Number column to load the data");
             return;
         }
@@ -1048,11 +1048,11 @@ export class DWQueryBuilderComponent extends DWQueryBuilderBaseComponent {
             return;
         }
           
-        if (this.hasMeasurementFieldsInFactCharges() && !this.hasShipmentOrMasterNumberField()) {
+        if ((this.hasMeasurementFieldsInFactCharges() || this.hasMeasurementFilterInFactCharges()) && !this.hasShipmentOrMasterNumberField()) {
             this.ShowValidateMessage("You are not allowed to save changes unless you add the Shipment Number column");
             return;
         }
-
+         
         this.CurrentSession.CurrentWindow.StartBusyIndicator("Saving ..");
         this._DWObjectTablePMService.get(this.FactTableName).subscribe((myResult:any) => {
             if (!myResult.HasError) {
@@ -1112,6 +1112,17 @@ export class DWQueryBuilderComponent extends DWQueryBuilderBaseComponent {
         return measurementFields.length != 0;
         
     }
+
+    private hasMeasurementFilterInFactCharges() {
+
+        if (this.FactTableName != "Fact_Charges") {
+            return false;
+        }
+        var measurementFilters = this.SelectedFiltersDataSource.filter(element => this.IsFactChargesMeasurementFields(element) == true);
+        return measurementFilters.length != 0;
+
+    }
+
     IsFactChargesMeasurementFields(element: DWObjectFieldsDetails): boolean {
         var chargesFactMeasurementField = this.ChargesFactMeasurementFields.filter(a => a == element.Name)[0];
         return chargesFactMeasurementField != null; 
