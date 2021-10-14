@@ -109,6 +109,7 @@ export class TaxReportMenuButtonsHandler {
                 return response.ConsolidationVAT;
             }
         });
+        return '';
     }
 
     private SetReturnToDraftButtonStatus(button: MenuButtonPM) {
