@@ -20,16 +20,16 @@ export class NewQuoteLeftSideComponent implements OnInit {
   shipmentTypeList: ShipmentTypeList[] = []
   directionList: DirectionList[] = []
 
-  icons: {} = { 
-    Air: 'assets/icons/airplane.png', 
-    Ocean: 'assets/icons/ocean.png', 
+  icons: {} = {
+    Air: 'assets/icons/airplane.png',
+    Ocean: 'assets/icons/ocean.png',
     Inland: 'assets/icons/inland.png',
-    Export: 'assets/icons/box-up.png' ,
-    Import: 'assets/icons/house.png' ,
-    Domestic: 'assets/icons/box-down.png' ,
-    Drop: 'assets/icons/recycle.png' ,
+    Export: 'assets/icons/box-up.png',
+    Domestic: 'assets/icons/house.png',
+    Import: 'assets/icons/box-down.png',
+    Drop: 'assets/icons/recycle.png',
     FTL: 'assets/icons/inland.png',
-    LTL: 'assets/icons/inland.png',
+    LCL: 'assets/icons/inland.png',
   }
 
   constructor(
@@ -41,23 +41,30 @@ export class NewQuoteLeftSideComponent implements OnInit {
     this.getDirectionList();
     this.getShipmentTypeList()
   }
-  
+
   async getDirectionList() {
     this.directionList = await this.newQuoteDataService.getDirectionList()
-    this.directionList = this.directionList.filter(x=>!x.Name.toLowerCase().includes('customs'))
+    this.directionList = this.directionList.filter(x => !x.Name.toLowerCase().includes('customs'))
+    this.sortDirectionList();
   }
+
+  sortDirectionList() {
+    ['Export', 'Import', 'Domestic', 'Drop'].forEach((val: string, i: number) =>
+      this.changePositionInArr(this.directionList, this.directionList.findIndex(x => x.Name === val), i));
+  }
+
 
   async getTransportModeList() {
     this.transportModeList = await this.newQuoteDataService.getTransportModeList()
-  }  
-  
+  }
+
   async getShipmentTypeList() {
     this.shipmentTypeList = await this.newQuoteDataService.getShipmentTypeList()
-    this.shipmentTypeList = this.shipmentTypeList.filter(x=>x.Name === 'FTL' || x.Name === 'LTL')
+    this.shipmentTypeList = this.shipmentTypeList.filter(x => x.Name === 'FTL' || x.Name === 'LCL')
   }
-  
-  ngOnChanges(changes: SimpleChanges) {        
-    if (!this.formGroup.contains('shipmentType')){
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (!this.formGroup.contains('shipmentType')) {
       this.addFormControls()
       this.subscribeCtrls()
     }
@@ -70,8 +77,16 @@ export class NewQuoteLeftSideComponent implements OnInit {
   }
 
   subscribeCtrls() {
-    this.formGroup.controls.direction.valueChanges.subscribe((val:DirectionList)=> this.EntityPM.DirectionId = val.Id);
-    this.formGroup.controls.transportMode.valueChanges.subscribe((val:TransportModeList)=> this.EntityPM.TransportModeId = val.Id);
-    this.formGroup.controls.shipmentType.valueChanges.subscribe((val:ShipmentTypeList)=> this.EntityPM.ShipmentTypeId = val.Id);
-  }   
+    this.formGroup.controls.direction.valueChanges.subscribe((val: DirectionList) => this.EntityPM.DirectionId = val.Id);
+    this.formGroup.controls.transportMode.valueChanges.subscribe((val: TransportModeList) => this.EntityPM.TransportModeId = val.Id);
+    this.formGroup.controls.shipmentType.valueChanges.subscribe((val: ShipmentTypeList) => this.EntityPM.ShipmentTypeId = val.Id);
+  }
+
+
+  private changePositionInArr(arr, fromIndex, toIndex) {
+    var element = arr[fromIndex];
+    arr.splice(fromIndex, 1);
+    arr.splice(toIndex, 0, element);
+  }
+
 }

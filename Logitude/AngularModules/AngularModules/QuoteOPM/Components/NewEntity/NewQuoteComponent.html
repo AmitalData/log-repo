@@ -16,6 +16,7 @@
     (formGroup.controls.transportMode?.value?.Name === 'Ocean' || formGroup.controls.transportMode?.value?.Name === 'Inland') &&  !formGroup.controls.shipmentType?.value}">
             <div class="section">
                 <app-new-quote-shipper [formGroup]='formGroup' [EntityPM]='EntityPM'></app-new-quote-shipper>
+                <hr>
                 <app-new-quote-consignee [formGroup]='formGroup' [EntityPM]='EntityPM'></app-new-quote-consignee>
                 <!-- <app-new-quote-my-customers [formGroup]='formGroup'></app-new-quote-my-customers> -->
             </div>

@@ -700,11 +700,11 @@ export class QuotesComponent extends BaseComponent {
         var args = new NewQuoteComponentArgs();
         var logWindow = new LogitudeWindow();
         //logWindow.RTL = false;
-        logWindow.Width = 1200;
+        logWindow.Width = oldWizard ? 1200 : 1440;
         logWindow.Height = 800;
         logWindow.WindowArgs = args;
         logWindow.Title = TextCodeTranslator.Translate("Quote.S.NewQuote.CreateNewQuote");
-        oldWizard ? logWindow.Show('./QuoteOPM/Components/NewEntity/NewQuoteComponentOld') :logWindow.Show('./QuoteOPM/Components/NewEntity/NewQuoteComponent');
+        oldWizard ? logWindow.Show('./QuoteOPM/Components/NewEntity/NewQuoteComponentOld') : logWindow.Show('./QuoteOPM/Components/NewEntity/NewQuoteComponent');
 
         logWindow.WindowClosed.subscribe(s => {            
             if (s) {

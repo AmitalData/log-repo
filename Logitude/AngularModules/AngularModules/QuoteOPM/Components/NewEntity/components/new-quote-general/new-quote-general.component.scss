@@ -1,4 +1,69 @@
-.col-6.p-fluid {
-    padding-top: 0px;
-    padding-bottom: 0px;
+:host ::ng-deep {
+    .p-radiobutton {
+        vertical-align: middle;
+        margin-right: 14px;
+    }
+
+    .p-radiobutton-label {
+        font-weight: bold;
+    }
+
+    .p-radiobutton .p-radiobutton-box.p-highlight {
+        background-color: white;
+        border-color: black;
+    }
+
+    .p-radiobutton .p-radiobutton-box .p-radiobutton-icon {
+        background-color: black;
+    }
+
+    .p-radiobutton .p-radiobutton-box.p-highlight:not(.p-disabled):hover {
+        border-color: black;
+        background: white;
+    }
+
+    .close-days {
+        width: 222px !important;
+    }
+
+    .close-days-text {
+        margin-left: 13px;
+    }
+
+    .p-datepicker-trigger {
+        background-color: white;
+        border-color: #ced4da;
+        border-left: none;
+
+        .p-button-icon {
+            color: #2196F3;
+            border: none;
+        }
+    }
+}
+
+h5 {
+    margin-bottom: 10px;
+}
+
+.col-6 {
+    padding: 0.5rem;
+}
+
+.radio-row {
+    display: inline-block;
+}
+
+.radio-row:last-child {
+    margin-left: 60px;
+}
+
+.col-align {
+    display: flex;
+    align-items: center;
+    top: 8px;
+    position: relative;
+}
+
+.checkbox-text {
 }

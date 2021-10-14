@@ -1,5 +1,11 @@
 :host ::ng-deep {
     ul.p-autocomplete-items {
+        li {
+            padding: 0 !important;
+            border-top: 1px solid black !important;
+            height: 26px;
+        }
+            
         li:first-child {
             position: sticky;
             top: 0;
@@ -7,6 +13,7 @@
             pointer-events: none;
             cursor: pointer;
             z-index: 1;
+            border: none !important;
 
             div {
                 font-weight: bold;
@@ -21,4 +28,16 @@
     text-overflow: ellipsis;
     overflow: hidden;
     font-size: 13px;
+    padding: 4px;
+    border-right: 1px solid black;
+    height: 26px;
+}
+
+.autocomplete-col:last-child {
+    border: none;
+}
+
+.pi {
+    margin: auto;
+    color: #1084dc !important;
 }

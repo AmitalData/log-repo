@@ -4,7 +4,7 @@
         <div class='radio-row' *ngFor='let x of directionList'
             [ngClass]="{'radio-checked':formGroup.controls.direction.value?.Name === x.Name}"
             (click)='formGroup.controls.direction.setValue(x)'>
-            <label [for]="x.Name"><img [src]="icons[x.Name]"></label>
+            <label class="text-style" [for]="x.Name"><img [src]="icons[x.Name]"></label>
             <p-radioButton [inputId]="x.Name" [value]="x" formControlName="direction" [label]='x.Name' [labelStyleClass]='"simple-text"' >
             </p-radioButton>
         </div>
@@ -15,7 +15,7 @@
         <div class='radio-row' *ngFor='let x of transportModeList'
         [ngClass]="{'radio-checked':formGroup.controls.transportMode.value?.Name === x.Name}"
         (click)='formGroup.controls.transportMode.setValue(x)'>
-        <label [for]="x.Name"><img [src]="icons[x.Name]"></label>
+        <label class="text-style" [for]="x.Name"><img [src]="icons[x.Name]"></label>
         <p-radioButton [inputId]="x.Name" [value]="x" formControlName="transportMode" [label]='x.Name' [labelStyleClass]='"simple-text"'>
         </p-radioButton>
     </div>
@@ -26,7 +26,7 @@
     <div class='radio-row' *ngFor='let x of shipmentTypeList'
         [ngClass]="{'radio-checked':formGroup.controls.shipmentType.value?.Name === x.Name}"        
         (click)='formGroup.controls.shipmentType.setValue(x)'>
-        <label [for]="x.Name"><img [src]="icons[x.Name]"></label>
+        <label class="text-style" [for]="x.Name"><img [src]="icons[x.Name]"></label>
         <p-radioButton [inputId]="x.Name" [value]="x" formControlName="shipmentType" [label]='x.Name' [labelStyleClass]='"simple-text"'>
         </p-radioButton>
     </div>
