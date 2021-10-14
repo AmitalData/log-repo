@@ -21,12 +21,14 @@ import { NewQuotePropertiesComponent } from './Components/NewEntity/components/n
 import { NewQuoteShipperComponent } from './Components/NewEntity/components/new-quote-shipper/new-quote-shipper.component';
 import { AddressTextareaComponent } from './Components/NewEntity/components/address-textarea/address-textarea.component';
 import { AutocomplateTableComponent } from './Components/NewEntity/components/autocomplate-table/autocomplate-table.component';
+import { NewQuoteComponentOld } from './Components/NewEntity/NewQuoteComponent.old';
 
 export const Components =
     [
         FieldTemplateComponent,
         QuotesComponent,
         NewQuoteComponent,
+        NewQuoteComponentOld,
         QuoteDimensionsComponent,
         NewQuoteAddEditDimensionsComponent,        
         QuoteOPShortTitleComponent,
@@ -63,6 +65,7 @@ export class ModuleDeclarations {
             case "FieldTemplateComponent": { myResult = FieldTemplateComponent; break; }
             case "QuotesComponent": { myResult = QuotesComponent; break; }
             case "NewQuoteComponent": { myResult = NewQuoteComponent; break; }
+            case "NewQuoteComponentOld": { myResult = NewQuoteComponentOld; break; }
             case "QuoteDimensionsComponent": { myResult = QuoteDimensionsComponent; break; }
             case "NewQuoteAddEditDimensionsComponent": { myResult = NewQuoteAddEditDimensionsComponent; break; }            
             case "QuoteOPShortTitleComponent": { myResult = QuoteOPShortTitleComponent; break; } 

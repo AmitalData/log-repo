@@ -179,7 +179,7 @@ export class NewQuoteDataService {
   }
 
   private getDataFromService(ob: Observable<any>): Promise<any[]> {
-    return new Promise<TransportModeList[]>((resolve, reject) =>
+    return new Promise<any[]>((resolve, reject) =>
       ob.pipe(filterIsNotNull(), take(1))
         .subscribe((res: ServiceResponse) =>
           resolve(res.Result)
