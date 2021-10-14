@@ -1,4 +1,5 @@
-﻿using Logitude.BL.CommonDataModel.EntityPMs;
+﻿using Logitude.BL.CommonDataModel.CustomFilters;
+using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.Tools.EntityService;
 using Logitude.BL.Helpers;
@@ -45,30 +46,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
                     SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                     SecurityUtility.CheckContactFeature("CommunicationLog", "NEW", authToken.Tenant);
 
-                    int tenant = authToken.Tenant;
-                    ObjectTableQuery tablesQuery = new ObjectTableQuery(tenant);
-                    ObjectTablePM table = tablesQuery.GetObjectTableByName(communicationLogExtendedArgs.ObjectTableName, 0);
-
-                    CommunicationsParams logParams = new CommunicationsParams()
-                    {
-                        Tenant = tenant,
-                        From = communicationLogExtendedArgs.From,
-                        To = communicationLogExtendedArgs.To,
-                        CommunicationLogTypeCode = communicationLogExtendedArgs.CommunicationLogTypeCode,
-                        Priority = communicationLogExtendedArgs.Priority,
-                        InOut = communicationLogExtendedArgs.InOut,
-                        Status = communicationLogExtendedArgs.CommunicationStatusTypeCode,
-                        LoggingObjectTableId = table.Id,
-                        LoggingEntityId = communicationLogExtendedArgs.EntityId,
-                        Subject = communicationLogExtendedArgs.Subject,
-                        FolderName = communicationLogExtendedArgs.FolderName,
-                        ByteData = Encoding.UTF8.GetBytes(communicationLogExtendedArgs.MessageBody),
-                        FileExtension = communicationLogExtendedArgs.FileExtension,
-                        Logs = communicationLogExtendedArgs.Logs,
-                        ExceptionMessage = communicationLogExtendedArgs.ExceptionMessage
-                    };
-
-                    Communications.AddCommunicationLog(logParams);
+                    CommunicationLogExtendedService.AddCommunicationLog(communicationLogExtendedArgs, authToken.Tenant);
 
                     scope.Complete();
                     return Request.CreateResponse(HttpStatusCode.OK, communicationLogExtendedArgs);
