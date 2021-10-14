@@ -3,6 +3,7 @@ using Logitude.CRM.BL.DataContracts;
 using Logitude.CRM.BL.EntityQueryServices;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -38,7 +39,31 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.CRM.LogitudeCRMRepor
         private void FillCustomFields(List<Card> resellers, OpportunityCRMDetails opportunityCRMDetails)
         {
             opportunityCRMDetails.Reseller = resellers.Where(a => a.Id == opportunityCRMDetails.ResellerId).FirstOrDefault()?.EnglishName;
-            opportunityCRMDetails.Total = (decimal.TryParse(opportunityCRMDetails.Field4, out decimal x) ? x : 0);
+            opportunityCRMDetails.Total = GetOpportunityTotal(opportunityCRMDetails.Field4);
+            opportunityCRMDetails.TotalNet = opportunityCRMDetails.NumberOfUsers * opportunityCRMDetails.Total;
+        }
+
+        private decimal GetOpportunityTotal(string newIncome)
+        {
+            if (string.IsNullOrEmpty(newIncome))
+                return 0;
+
+            if (TotalIsEUR(newIncome))
+            {
+                newIncome = newIncome.Remove(newIncome.Length - 1);
+                return ConvertToUsd("EUR", StringToDecimal(newIncome)) ?? 0;
+            }
+            return StringToDecimal(newIncome);
+        }
+
+        private decimal StringToDecimal(string amount)
+        {
+            return (decimal.TryParse(amount, out decimal t) ? t : 0);
+        }
+
+        private bool TotalIsEUR(string total)
+        {
+            return total.EndsWith("E");
         }
 
         private void FillTenantManagementsFileds(OpportunityCRMDetails opportunityCRMDetails)
@@ -70,13 +95,27 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.CRM.LogitudeCRMRepor
             {
                 return opportunityCRMDetails.Total * (100 - tenantManagement.ResellerCommission ?? 0) / 100;
             }
-            return opportunityCRMDetails.NumberOfUsers * opportunityCRMDetails.Total;
+            return opportunityCRMDetails.TotalNet;
         }
 
         private List<Card> GetResellersForIds(List<string> cardIds)
         {
             CardRepository cardRepository = new CardRepository(tenant);
             return cardRepository.GetCardsByIds(cardIds, tenant).ToList();
+        }
+
+        public decimal? ConvertToUsd(string currencyCode, decimal? price)
+        {
+            if (currencyCode == "USD" || string.IsNullOrEmpty(currencyCode))
+                return price;
+
+            if (price == null)
+                return null;
+
+            if (price == 0)
+                return 0;
+
+            return price * logitudeCRMReportFilter.ExchangeRate;
         }
     }
 }
