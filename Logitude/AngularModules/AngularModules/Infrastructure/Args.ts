@@ -19,6 +19,7 @@ export class ListComponentArgs {
     public IsTasksMenuClicked: boolean;
     public BIReportFolderId: string;
     public QuerySection: string;
+    public IsCargoTrackingMenuClicked: boolean = false;
 }
 
 export class NewEntityArgs {

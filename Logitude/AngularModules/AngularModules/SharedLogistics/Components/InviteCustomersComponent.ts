@@ -25,6 +25,7 @@ import {EntityResourceService} from '../../Infrastructure/Services/EntityResourc
 export class InviteCustomersComponent implements OnInit {
 
     CurrentEntity: CustomerList;
+    IsCargoTrackingMenuClicked: boolean;
     NoContactsVisibility: boolean;
     public SharedLogisticCustomerLineList: CustomerLineViewModel[];
 
@@ -70,6 +71,7 @@ export class InviteCustomersComponent implements OnInit {
     sharedLogisticContact: SharedLogisticContactPM;
     SaveChanges(item: SharedLogisticContactPM) {
         this.sharedLogisticContact = item;
+        this.sharedLogisticContact.IsCargoTrackingInvitation = this.IsCargoTrackingMenuClicked;
         this.CurrentSession.CurrentWindow.StartBusyIndicator("Saving...");
         this._sharedLogisticContactService.ContactInternetAccessInvitation(this.sharedLogisticContact).subscribe((res: any) => {
             var pmResponse: ServiceResponse = res;
@@ -174,6 +176,7 @@ export class InviteCustomersComponent implements OnInit {
     SetWindowArgs(args: any) {
 
         this.CurrentEntity = args.CurrentEntity;
+        this.IsCargoTrackingMenuClicked = args.IsCargoTrackingMenuClicked;
         this.CustomerName = this.CurrentEntity.EnglishName;
         this.CustomerCode = this.CurrentEntity.Code;
         this.InvitationStatus = this.CurrentEntity.SharedLogisticsInvitationStatusName;
