@@ -542,7 +542,7 @@
   -- inner JOIN @DIM_ContactsTable ConsolidatorContactTable ON dw_Shipments.ConsolidatorContactId = ConsolidatorContactTable.Id
   
    
-	 where dw_Shipments.IsCancelled = 0 and dw_Shipments.ShipmentLevelCode in ('H','D' , 'C') and dw_Shipments.IsStandalonePickupDelivery = 0
+	 where dw_Shipments.IsCancelled = 0 and dw_Shipments.ShipmentLevelCode in ('H','D' , 'C')
 
 	OPEN ShipmentsCursor FETCH NEXT FROM ShipmentsCursor INTO    @Id ,@SourceTenant, @ParentTenant ,@Direction , @TransportMode, @DirectHouse , @Type, @OBLType , @Department , @Branch , @ShipmentNumber , @House , @Master , @Shipper , @Consignee , @Agent, @Customer 
 	,@Incoterm , @TotalGrossWeightInKG, @TotalChargeableWeightInKG , @TotalVolumeInCBM , @NumberOfPackages ,@DangerousGoods , @NumberOfContainers , @Salesman ,@AccountManager,@TotalProfitInLocalCurrency ,
@@ -668,6 +668,11 @@
 	if(@DirectionId != 'I')
 	    BEGIN
             set @InWarehouseDate = null
+        End
+
+	if(@IsStandalonePickupDelivery is null)
+	    BEGIN
+            set @IsStandalonePickupDelivery = 0
         End
 
 	--------------CarrierDate CustomAgent----------
