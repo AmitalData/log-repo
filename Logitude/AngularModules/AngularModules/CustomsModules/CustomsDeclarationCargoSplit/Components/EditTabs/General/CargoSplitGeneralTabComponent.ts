@@ -1,5 +1,5 @@
 declare var window: any;
-import { Component, Input, AfterContentInit, AfterViewInit, ChangeDetectorRef, ViewChildren, QueryList, Output, EventEmitter } from '@angular/core';
+import { Component, Input, AfterContentInit, AfterViewInit, ChangeDetectorRef, ViewChildren, QueryList, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
 import { EntityArgs } from '../../../../../Infrastructure/DataContracts/EntityArgs';
 import { DateTool, AppTool, ArrayTool } from '../../../../../Infrastructure/Tools';
 import { FeatureLocator } from '../../../../../Infrastructure/Utilities/FeatureLocator';
@@ -37,6 +37,8 @@ import { DecCargoSplitConPM } from '../../../../../Customs/EntityPMs/DecCargoSpl
 import { ConfirmWindow } from '../../../../../Controls/Windows/ConfirmWindow';
 import { ApiQueryFilters } from '../../../../../Infrastructure/DataContracts/ApiQueryFilters';
 import { EntityListService } from '../../../../../Infrastructure/Services/EntityListService';
+import { CargoIdentifireTypePM } from '../../../../../Customs/EntityPMs/CargoIdentifireTypePM';
+import { CargoIdentifireTypeListService } from '../../../../../Customs/Services/StandardLists/CargoIdentifireTypeListService';
 //import {DecCargoSplitConComponent} from '../DecCargoSplitConComponent';
 
 @Component({
@@ -68,6 +70,7 @@ export class CargoSplitGeneralTabComponent
     public ImporterCode: string = "";
     public IsCustomsFileRetrieved: boolean = false;
     public CargoIdentifiersList: ObservableCollection;
+    public ExportCargoTypeFilterItems: ApiQueryFilters;
 
     FIELD_IS_REQUIERD: string;
     RequestVIA: SendRequestVIA;
@@ -123,7 +126,8 @@ export class CargoSplitGeneralTabComponent
                                 //this.EntityPM = this.entityArgs.EntityPM;
                                     //this.ObjectTableName = this.entityArgs.ObjectTableName;
                                     this._EntityResourceFinished = true;
-
+                                    this.ExportCargoTypeFilterItems = new ApiQueryFilters();
+                                    this.ExportCargoTypeFilterItems.addAdditionalFilter("IsForDeclarationExport", true, null, null, "Equal", false, false, false, "boolean", false, true);
                                     this.Listen();
                                     //this.BuildTabs();
 
@@ -145,6 +149,8 @@ export class CargoSplitGeneralTabComponent
         }
     }
 
+
+    IsExportDeclaration: boolean = false;
     GetFileData() {
         if (AppTool.IsNullOrEmpty(this.CustomFileNo)) return;
         this.CurrentSession.StartBusyIndicator("")
@@ -159,6 +165,8 @@ export class CargoSplitGeneralTabComponent
                 if (AppTool.IsNullOrEmpty(this._LastFetchDeclarationList)) {
                     this.NoConnectedConsignmentEnableField();
                 } else {
+                    if (this._LastFetchDeclarationList.Direction == "E")
+                        this.IsExportDeclaration = true;
                     this.CurrentSession.StartBusyIndicator("")
                     this._DeclarationExtendedListService.GetConsignmentListPMByCustomFileNo(this.CustomFileNo)
                         .subscribe((myResponse: ServiceResponse) => {
@@ -969,6 +977,17 @@ export class CargoSplitGeneralTabComponent
             if (item.includes("DeclarationCargoSplitId")) errors.splice(index, 1);
         });
 
+        if (this.IsExportDeclaration) {
+            if (AppTool.IsNullOrEmpty(this.EntityPM.DecCargoSplitCargoIdentifiers[0].CargoTypeCode)) {
+                errors.push("מזהה מטען מפוצל- חובה להזין סוג מזהה מטען");
+            }
+            if (AppTool.IsNullOrEmpty(this.EntityPM.DecCargoSplitCargoIdentifiers[0].CargoIdentifierKey1)) {
+                errors.push("מזהה מטען מפוצל- חובה להזין מזהה מטען ראשון");
+            }
+            errors.push.apply(errors,this.ItemsList.Collection[0].CheckRequired());
+
+        }
+
         if (errors.length > 0) {
             this.ValidationErrorsList = errors;
             this.FillValidationErrorList.emit(errors);
@@ -1266,15 +1285,72 @@ export class XRayAvailableItem {
 
 }
 
-export class DecCargoSplitCargoIdentifierModel extends BaseComponent {
+export class DecCargoSplitCargoIdentifierModel extends BaseComponent
+     {
     public EntityPM: DecCargoSplitCargoIdentifierPM;
 
     constructor(line: DecCargoSplitCargoIdentifierPM) {
         super();
         this.EntityPM = line;
+        if (this.CargoTypeCode != null) {
+            this.ChangeCargoIdentifireType();
+        }
+    }
+
+    setRequired() {
+        this.UIProperties.SetRequired("CargoIdentifierKey1", "Customs.DecCargoSplitCargoIdentifier", true);
+        if (this.CargoIdentifierKey1 != null) {
+            this.UIProperties.SetRequired("CargoIdentifierKey1", "Customs.DecCargoSplitCargoIdentifier", false);
+            }
+
+        if (this.cargoIdentifireType.IsKey2Mandatory) {
+            this.UIProperties.SetRequired("CargoIdentifierKey2", "Customs.DecCargoSplitCargoIdentifier", true);
+                if (this.CargoIdentifierKey2 != null) {
+                    this.UIProperties.SetRequired("CargoIdentifierKey2", "Customs.DecCargoSplitCargoIdentifier", false);
+                }
+            } else {
+            this.UIProperties.SetRequired("CargoIdentifierKey2", "Customs.DecCargoSplitCargoIdentifier", false);
+        }
+        if (this.cargoIdentifireType.IsKey3Mandatory) {
+            this.UIProperties.SetRequired("CargoIdentifierKey3", "Customs.DecCargoSplitCargoIdentifier", true);
+                if (this.CargoIdentifierKey3 != null) {
+                    this.UIProperties.SetRequired("CargoIdentifierKey3", "Customs.DecCargoSplitCargoIdentifier", false);
+                }
+            } else {
+            this.UIProperties.SetRequired("CargoIdentifierKey3", "Customs.DecCargoSplitCargoIdentifier", false);
+            }
+       
+    }
+
+    CheckRequired() {
+        var errors = [];
+        if (this.cargoIdentifireType.IsKey2Mandatory) {
+            if (this.CargoIdentifierKey2 == null) {
+                errors.push("מזהה מטען מפוצל- חובה להזין מזהה מטען שני");
+            }
+        }
+        if (this.cargoIdentifireType.IsKey3Mandatory) {
+            if (this.CargoIdentifierKey3 == null) {
+                errors.push("מזהה מטען מפוצל- חובה להזין מזהה מטען שלישי");
+            }
+        }
+        return errors;
+    }
+
+    ChangeCargoIdentifireType() {
+        var service = new CargoIdentifireTypeListService();
+        service.getSingleFromCache(this.CargoTypeCode).subscribe((response: any) => {
+            if (response != null) {
+                this.CargoIdentifireType = response.Result;
+                this.setRequired();
+            }
+        });
     }
 
     //#region Properties
+    public get CargoTypeCode() { return this.EntityPM.CargoTypeCode; }
+    public set CargoTypeCode(newValue: string) { this.EntityPM.CargoTypeCode = newValue; }
+     
     public get CargoIdentifierKey1() { return this.EntityPM.CargoIdentifierKey1; }
     public set CargoIdentifierKey1(newValue: string) { this.EntityPM.CargoIdentifierKey1 = newValue; }
 
@@ -1283,6 +1359,20 @@ export class DecCargoSplitCargoIdentifierModel extends BaseComponent {
 
     public get CargoIdentifierKey3() { return this.EntityPM.CargoIdentifierKey3; }
     public set CargoIdentifierKey3(newValue: string) { this.EntityPM.CargoIdentifierKey3 = newValue; }
+
+    cargoIdentifireType: CargoIdentifireTypePM;
+    public get CargoIdentifireType() { return this.cargoIdentifireType; }
+    public set CargoIdentifireType(newValue: CargoIdentifireTypePM) {
+        this.cargoIdentifireType = newValue;
+        if (newValue != null) {
+            this.CargoIdentifireTypeName = newValue.LocalName;
+        }
+    }
+
+    cargoIdentifireTypeName: string;
+    public get CargoIdentifireTypeName() { return this.cargoIdentifireTypeName; }
+    public set CargoIdentifireTypeName(newValue: string) { this.cargoIdentifireTypeName = newValue; }
+
 }
 
 class TabItem { constructor(public code: string, public textCode: string) { } }
