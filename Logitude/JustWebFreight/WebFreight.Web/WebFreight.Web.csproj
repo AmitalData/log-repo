@@ -5798,6 +5798,7 @@
     <Compile Include="RequestParams\StartTransferReadyInvoicesRequestParams.Shared.cs" />
     <Compile Include="RequestParams\TestConnectionRequestParams.Shared.cs" />
     <Compile Include="Security\AutenticationException.cs" />
+    <Compile Include="Security\CargoTrackingSecurityService.cs" />
     <Compile Include="Security\SecurityUtility.cs" />
     <Compile Include="Security\SessionContextInterceptor.cs" />
     <Compile Include="SendGridWebPage.aspx.cs">

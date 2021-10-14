@@ -8,6 +8,7 @@ import { CargoTrackingShipmentFilters } from 'src/CargoTracking/DataContracts/Ca
 import { CaptchaParameters } from 'src/CargoTracking/DataContracts/CaptchaParameters';
 import { ServiceResponse } from '../../DataContracts/ServiceResponse';
 import { SessionInfo } from 'src/Infrastructure/Utilities/SessionInfo';
+import { CargoTrackingSearchRequest } from 'src/CargoTracking/DataContracts/CargoTrackingSearchRequest';
 
 @Injectable()
 export class CargoTrackingSearchService {
@@ -19,12 +20,13 @@ export class CargoTrackingSearchService {
     }
 
 
-	getShipments(searchKey: string, tenant: number) {
+	getShipments(searchRequest:CargoTrackingSearchRequest) {
         var authHeaders = ServiceHelper.GetHeaders();
 
+        var urlparameters = this.BuildURLParameters(searchRequest);
 
 		return defer(() => {
-            return this._http.get(this._apiUrl + '/GetShipments/?' + 'searchKey=' + searchKey + '&tenant=' + tenant,
+            return this._http.get(this._apiUrl + urlparameters,
              {headers: authHeaders})
 				.pipe(
 					map((response: HttpResponse<any>) => {
@@ -37,6 +39,29 @@ export class CargoTrackingSearchService {
 					})));
 		});
 	}
+    private BuildURLParameters(searchRequest: any)
+    {
+        var urlparameters = '/GetShipments?';
+        var mykeys = Object.keys(searchRequest);
+        var addtionalFiltersValues = null;
+
+        for (var i in mykeys) {
+            var propName = mykeys[i];
+            var propValue = searchRequest[propName];
+            var ignoreFilter = ((propName.indexOf("Operator") > 0 && propValue == "Equals") || propName == "AdditionalFilters");
+
+            if (urlparameters != "?") {
+                urlparameters = urlparameters.concat('&');
+            }
+
+            if (!ignoreFilter) {
+                propValue = encodeURIComponent(propValue);
+                urlparameters = urlparameters.concat(propName.concat('=').concat(propValue));
+            }
+        }
+        return urlparameters;
+    }
+
     GetUserShipments(pageIndex: number, pageSize: number, shipmentFilters: CargoTrackingShipmentFilters) {
         var authHeaders = ServiceHelper.GetHeadersWithToken();
 

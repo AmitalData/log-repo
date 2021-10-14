@@ -4,31 +4,22 @@
 
         <router-outlet></router-outlet>
 
-        <div *ngIf="IsShowAreaCaptcha" style="height:100px;">
-            <table>
-                <tr>
-                    <td>
-                        <img src={{CaptchaImageUrl}} style="height:auto;width:auto;float:left;" />
 
+        <div *ngIf="ShowCaptcha" style="height:140px;text-align: center;">
 
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <input [(ngModel)]="CaptchaTextValue" style="height:19px;margin-bottom:5px;margin-top:5px;float:left;" type="text" placeholder="type the text you see" id="CaptchaTextBox" />
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <div>
-                            <span style="white-space: normal;">
-                                <p style="color:red;text-align:left;margin-top:3px;white-space: normal;" id="errorsList">{{errorMessage}}</p>
+            <p>To continue, type the charachters in the picture:</p>
+            <div><img src={{CaptchaImageUrl}} style="height:auto;width:auto;" /></div>
+            <div style="height:auto;width:auto;">
+                <input class="gray " [(ngModel)]="CaptchaTextValue"
+                 style="width: 130px; padding: 5px; font-size: 14px; margin: 0 auto; border: none; box-shadow: 0px 0px 5px 0px #00000021; color: black; outline: transparent;" type="text"
+                  placeholder="type the text" id="CaptchaTextBox" />
+            </div>
+            <div>
+                <span style="white-space: normal;">
+                    <p style="color:red;margin-top:3px;white-space: normal;" id="errorsList">{{errorMessage}}</p>
 
-                            </span>
-                        </div>
-                    </td>
-                </tr>
-            </table>
+                </span>
+            </div>
         </div>
         <div class=" ">
             <div>

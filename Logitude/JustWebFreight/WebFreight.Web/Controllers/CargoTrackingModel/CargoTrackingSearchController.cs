@@ -54,22 +54,24 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
     {
         private const string ProjectToken = "99de9de5af6505a670b915020e51380e";
         private const string MasterUserId = "13793";
-
         [HttpGet]// for public search
-        public HttpResponseMessage GetShipments(string searchKey, int tenant)
+        public HttpResponseMessage GetShipments([FromUri] CargoTrackingSearchRequest searchRequest)
         {
             try
             {
+                CargoTrackingSearchResponse searchResponse = new CargoTrackingSearchResponse();
+
+                var hasCaptcha = !string.IsNullOrEmpty(searchRequest.CaptchaKey);
+                if (hasCaptcha)
+                    ValidateCaptcha(searchRequest, searchResponse);
+                else
+                    CheckRequestsLimit(searchRequest, searchResponse);
+
+                if (!searchResponse.CaptchaRequired)
+                    searchResponse.Shipments = GetShipmentsBySearchKey(searchRequest);
 
 
-                ICargoTrackingContext MyContext = CargoTrackingContext.GetContext(tenant);
-                CargoTrackingShipmentSearchListQueryService cargoTrackingShipmentSearchQuery = new CargoTrackingShipmentSearchListQueryService(MyContext);
-
-                List<CargoTrackingShipmentList> shipments = cargoTrackingShipmentSearchQuery.GetShipments(searchKey, tenant).OrderByDescending(s => s.CreateDate).ToList();
-
-                CreateSearchEventForMixPanel(searchKey, tenant, shipments,true);
-
-                HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, shipments);
+                HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, searchResponse);
 
                 return reponseMessage;
             }
@@ -78,6 +80,55 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
 
+        }
+
+        private static void CheckRequestsLimit(CargoTrackingSearchRequest searchRequest, CargoTrackingSearchResponse searchResponse)
+        {
+            var exceedLimit = CargoTrackingSecurityService.CheckRequestsLimit(searchRequest.Tenant);
+            if (exceedLimit == true)
+                AddNewCaptcha(searchResponse);
+        }
+
+        private static void ValidateCaptcha(CargoTrackingSearchRequest searchRequest, CargoTrackingSearchResponse searchResponse)
+        {
+            bool validCaptcha = CheckIfCaptchaIsValid(searchRequest);
+            if (!validCaptcha)
+            {
+                searchResponse.InvalidCaptcha = true;
+                AddNewCaptcha(searchResponse);
+            }
+        }
+
+        private static void AddNewCaptcha(CargoTrackingSearchResponse searchResponse)
+        {
+            searchResponse.CaptchaRequired = true;
+
+            UserData data = new UserData();
+            CaptchaHelper captchaHelper = new CaptchaHelper();
+            captchaHelper.AddCaptchaKey(null, data, "Search");
+
+            searchResponse.CaptchaKey = data.CaptchaKey;
+            searchResponse.CaptchaImage = data.CaptchaImage;
+        }
+
+        private static bool CheckIfCaptchaIsValid(CargoTrackingSearchRequest searchRequest)
+        {
+            CaptchaHelper captchaHelper = new CaptchaHelper();
+            var validCaptcha = captchaHelper.CheckCaptchaCodeValidated(searchRequest.CaptchaCode, searchRequest.CaptchaKey, null, false);
+            return validCaptcha;
+        }
+
+        private static List<CargoTrackingShipmentList> GetShipmentsBySearchKey(CargoTrackingSearchRequest searchRequest)
+        {
+            CargoTrackingSecurityService.RecordSearch(searchRequest.Tenant);
+
+            ICargoTrackingContext MyContext = CargoTrackingContext.GetContext(searchRequest.Tenant);
+            CargoTrackingShipmentSearchListQueryService cargoTrackingShipmentSearchQuery = new CargoTrackingShipmentSearchListQueryService(MyContext);
+            List<CargoTrackingShipmentList> shipments = cargoTrackingShipmentSearchQuery.GetShipments(searchRequest.SearchKey, searchRequest.Tenant).OrderByDescending(s => s.CreateDate).ToList();
+
+            CreateSearchEventForMixPanel(searchRequest.SearchKey, searchRequest.Tenant, shipments, true);
+
+            return shipments;
         }
 
         private static void CreateSearchEventForMixPanel(string searchKey, int tenant, List<CargoTrackingShipmentList> shipments, bool isPublic)
@@ -361,6 +412,25 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
     {
         public string SearchKey { get; set; }
         public int Tenant { get; set; }
+        public CaptchaParameters captchaParameters { get; set; }
+    }
+
+    public class CargoTrackingSearchRequest
+    {
+        public int Tenant { get; set; }
+        public string SearchKey { get; set; }
+        public string CaptchaKey { get; set; }
+        public string CaptchaCode { get; set; }
+
+    }
+    public class CargoTrackingSearchResponse
+    {
+        public List<CargoTrackingShipmentList> Shipments { get; set; }
+        public bool CaptchaRequired { get; set; }
+        public string CaptchaImage { get; set; }
+        public string CaptchaKey { get; set; }
+        public bool InvalidCaptcha { get; set; }
+
     }
 
 }

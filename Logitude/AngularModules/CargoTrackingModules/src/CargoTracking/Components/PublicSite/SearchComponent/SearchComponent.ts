@@ -8,8 +8,11 @@ import { CargoTrackingShipmentList } from '../../../EntityLists/CargoTrackingShi
 import { CargoTrackingBrandingData } from 'src/CargoTracking/DataContracts/CargoTrackingBrandingData';
 import { CaptchaParameters } from 'src/CargoTracking/DataContracts/CaptchaParameters';
 import { ServiceResponse } from 'src/CargoTracking/DataContracts/ServiceResponse';
+import { CargoTrackingSearchRequest } from 'src/CargoTracking/DataContracts/CargoTrackingSearchRequest';
+import { CargoTrackingSearchResponse } from 'src/CargoTracking/DataContracts/CargoTrackingSearchResponse';
 
 
+const invalidCaptchaMessage = "Please re-enter the characters you see in the image above";
 @Component({
     selector: 'SearchComponent',
     templateUrl: './SearchComponent.html',
@@ -30,9 +33,9 @@ export class SearchComponent implements AfterViewInit,OnInit, OnDestroy
     Shipments: CargoTrackingShipmentList[] = [];
     searchCounter: number =+ sessionStorage.getItem("searchCounter");
     public CaptchaImageUrl: any;
-    public IsShowAreaCaptcha: boolean = false
-    public CaptchaKey: string;
-    public CaptchaTextValue: string;
+    public ShowCaptcha: boolean = false
+    public CaptchaKey: string = "";
+    public CaptchaTextValue: string = "";
     private captchaParameters: CaptchaParameters;
     public errorMessage: string;
     constructor(private router: Router,
@@ -199,84 +202,12 @@ export class SearchComponent implements AfterViewInit,OnInit, OnDestroy
         this.location.go( 'public-tracking/search/' );
     }
 
-    ValidateUser() {
-        this.captchaParameters = new CaptchaParameters();
-        this.captchaParameters.CaptchaCode = this.CaptchaTextValue;
-        this.captchaParameters.CaptchaKey = this.CaptchaKey;
-        this.PostUserValidation(this.captchaParameters);
-    }
-    PostUserValidation(CaptchaParameters: CaptchaParameters) {
-        this.searchService.PostUserValidation(CaptchaParameters).subscribe(
-            (result: any) => {
-                if (result && result.HasError == true  ) {
-                    this.CaptchaKey = result ? result.CaptchaKey : "";
-                    this.errorMessage = "";
-                    if (result.InValidCaptcha) {
-                        if (this.IsShowAreaCaptcha) {
-                            this.CaptchaTextValue = "";
-                        }
-                        this.IsShowAreaCaptcha = true;
-                        this.CaptchaImageUrl = result.CaptchaImage;
-                    }
-                    if (result.InValidCaptcha && result.CaptchaImage) this.errorMessage = "Please re-enter the characters you see in the image above";
-
-                }
-
-                else {
-                    this.IsShowAreaCaptcha = false;
-                    this.ResetStorageData();
-                    this.LoadShipments();
-
-                }
-            });
-    }
     Search(searchSource:any)
     {
-        if (this.IsShowAreaCaptcha) {
-            this.ValidateUser();
+        if (this.tenant != null && this.SearchText) {
+            this.router.navigate(['public-tracking/search'], { queryParams: { searchKey: this.SearchText } });
+            this.LoadShipments();
         }
-        else {
-            this.CheckSearchTimes(searchSource);
-            if (this.tenant != null && this.SearchText) {
-                // this.router.navigate(['public-tracking/search',  this.SearchText]);
-                // this.router.navigate(['public-tracking/search',  this.SearchText]);
-                //this.location.go( 'public-tracking/search?searchKey=' + this.SearchText);
-                this.router.navigate(['public-tracking/search'], { queryParams: { searchKey: this.SearchText } });
-                this.LoadShipments();
-            }
-        }
-
-    }
-    CheckSearchTimes(searchSource: any) {
-        this.currentDate = new Date();
-        if (this.searchCounter == 0) sessionStorage.setItem("FirstSearchDate", this.currentDate.getTime());
-        var FirstSearchDate: any = sessionStorage.getItem("FirstSearchDate");
-        if (searchSource == null) ++this.searchCounter;
-        sessionStorage.setItem("searchCounter", this.searchCounter.toString());
-        var difference: any = this.currentDate.getTime() - FirstSearchDate;
-        if (difference <= 100000) {
-            if (this.searchCounter == 20) {
-                this.ShowCaptchaImage();
-                this.ResetStorageData();
-            }
-        }
-        else {
-            this.ResetStorageData();
-        }
-    }
-    ResetStorageData() {
-        sessionStorage.setItem("FirstSearchDate", this.currentDate);
-        sessionStorage.setItem("searchCounter", "0");
-        this.searchCounter = 0;
-    }
-    ShowCaptchaImage() {
-        this.searchService.GetCaptchaData().subscribe(
-            (result: any) => {
-                this.CaptchaTextValue = "";
-                this.CaptchaImageUrl = result.CaptchaImage;
-                this.CaptchaKey = result.CaptchaKey;
-                this.IsShowAreaCaptcha = true;
-            });
     }
     ItemClicked(item)
     {
@@ -296,32 +227,70 @@ export class SearchComponent implements AfterViewInit,OnInit, OnDestroy
             this.hasError = false;
             this.isLoading = true;
             RootContext.StartBusyIndicatorLoading();
-            this.searchService.getShipments(searchText, this.tenant).subscribe(
-            (result: any) =>
-            {   RootContext.StopBusyIndicator();
-                this.isLoading = false;
-                console.log("[getShipments]", result);
 
-                this.Shipments = this.SortShipmentsBasedOnCurrentMilestoneDate(result);
-                this.noResult = this.Shipments.length == 0 && !!this.SearchText;
-            },
-            errorObject=>
-            {
-                RootContext.StopBusyIndicator();
-                this.isLoading = false;
-                this.hasError = true;
-                this.ServiceError = errorObject.error;
-                console.log("[ERROR FOUND]", errorObject);
+            let searchRequest = this.BuildSearchRequest(searchText);
+            this.searchService.getShipments(searchRequest).subscribe(
+                (result: any) =>
+                {
+                    RootContext.StopBusyIndicator();
+                    this.isLoading = false;
+                    console.log("[getShipments]", result);
 
-            });
+                    var searchResponse: CargoTrackingSearchResponse = result;
+                    if (searchResponse.CaptchaRequired)
+                        this.ShowCaptchaCode(searchResponse);
+                    else
+                    {
+                        this.ResetCaptcha();
+                        this.Shipments = this.SortShipmentsBasedOnCurrentMilestoneDate(searchResponse.Shipments);
+                        this.noResult = this.Shipments.length == 0 && !!this.SearchText;
+                    }
+
+                },
+                errorObject =>
+                {
+                    RootContext.StopBusyIndicator();
+                    this.isLoading = false;
+                    this.hasError = true;
+                    this.ServiceError = errorObject.error;
+                    console.log("[ERROR FOUND]", errorObject);
+
+                });
             this.searchService.TrackSearch(searchText)
-                // .subscribe(arg => {
+            // .subscribe(arg => {
 
-                // });
+            // });
 
         } else {
             this.Shipments = [];
         }
+    }
+
+    private ResetCaptcha()
+    {
+        this.ShowCaptcha = false;
+        this.CaptchaKey = "";
+    }
+
+    private ShowCaptchaCode(searchResponse: CargoTrackingSearchResponse)
+    {
+        this.CaptchaTextValue = "";
+        this.CaptchaImageUrl = searchResponse.CaptchaImage;
+        this.CaptchaKey = searchResponse.CaptchaKey;
+        this.ShowCaptcha = true;
+
+        if (searchResponse.InvalidCaptcha)
+            this.errorMessage = invalidCaptchaMessage;
+    }
+
+    private BuildSearchRequest(searchText: string)
+    {
+        let searchRequest = new CargoTrackingSearchRequest();
+        searchRequest.Tenant = this.tenant;
+        searchRequest.SearchKey = searchText;
+        searchRequest.CaptchaCode = this.CaptchaTextValue;
+        searchRequest.CaptchaKey = this.CaptchaKey;
+        return searchRequest;
     }
 
     private SortShipmentsBasedOnCurrentMilestoneDate(result: any) : CargoTrackingShipmentList[] {
