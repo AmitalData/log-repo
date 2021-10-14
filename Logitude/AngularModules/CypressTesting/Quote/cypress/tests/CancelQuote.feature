@@ -15,8 +15,8 @@ Feature: Cancel Quote
 
     Scenario: Cancel quote
         Given the user open the quote
-        When "Cancel Quote" action with "Cancelling the quote to test the reactivate quote" note
+        When "Cancel Quote" action with "Quote Cancelled" note
         Then following event should appear in events tab
-            | Event        | Notes                                             |
-            | Cancel Quote | Cancelling the quote to test the reactivate quote |
+            | Event        | Notes           |
+            | Cancel Quote | Quote Cancelled |
         And the quote should appear in Cancelled quotes list
