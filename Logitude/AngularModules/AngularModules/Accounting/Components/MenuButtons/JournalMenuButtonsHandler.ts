@@ -26,6 +26,7 @@ import {DownloadManager} from '../../../Infrastructure/Utilities/DownloadManager
 import {GeneralPrintHelper} from '../../../Infrastructure/Helpers/GeneralPrintHelper';
 import {JournalExtendedPMService} from '../../Services/ExtendedPMs/JournalExtendedPMService';
 import { TextCodeTranslator } from '../../../Infrastructure/Utilities/TextCodeTranslator';
+import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
 
 export class JournalMenuButtonsHandler {
     public EntityPM: JournalPM;
@@ -160,6 +161,7 @@ export class JournalMenuButtonsHandler {
         const RevaluationAccountingEntity = "8";
         const AdjustmentAccountingEntity = "10";
         const ApprovedStatusCode = "2";
+        const VoidedStatusCode = "3";
 
         let IsVoidButtonEnabled: Boolean = this.EntityPM.AccountingEntityCode == JournalAccountingEntity ||
             this.EntityPM.AccountingEntityCode == RevaluationAccountingEntity ||
@@ -179,6 +181,10 @@ export class JournalMenuButtonsHandler {
 
         if (this.EntityPM.ExternalSystem)
             button.IsDisabled = true;
+
+        if (this.EntityPM.StatusCode == VoidedStatusCode)
+            button.IsDisabled = true;
+
     }
 
     public MenuButtonClick(menuButton: MenuButtonPM) {
@@ -215,20 +221,7 @@ export class JournalMenuButtonsHandler {
                 }
             case "JournalVoid":
                 {
-                    this.entityArgs.EditComponent.StartBusyIndicatorSaving();
-                    let myJournalExtendedPMService: JournalExtendedPMService = new JournalExtendedPMService();
-                    myJournalExtendedPMService
-                        .VoidJournal(this.EntityPM.Tenant, this.EntityPM.Id, "", "", "")
-                        .subscribe((res: ServiceResponse) => {
-                            this.entityArgs.EditComponent.StopBusyIndicator();
-                            if (res.HasError) {
-                                this.entityArgs.EditComponent.ValidationErrorsList= res.ErrorsArray;
-                            } else {
-                                this.entityArgs.EditComponent.ReloadEntityPM();
-                            }
-                        });
-                    //this.EntityPM.StatusCode = "3"; // Voided
-                    //this.SaveChenges();
+                    this.ShowConfirmMessageAndVoidJournal();
                     break;
                 }
             case "JournalPrint":
@@ -257,6 +250,44 @@ export class JournalMenuButtonsHandler {
         }
 
 
+    }
+
+    private ShowConfirmMessageAndVoidJournal() {
+        var msg = TextCodeTranslator.Translate("Journal.O.ConfirmVoidJournal");
+        var confirmWindow = new ConfirmWindow();
+        const widthOfWindow = 300;
+        const heightOfWindow = 150;
+
+        confirmWindow.Width = widthOfWindow;
+        confirmWindow.Height = heightOfWindow;
+        confirmWindow.YesButtonText = TextCodeTranslator.Translate("Accounting.General.B.OK");
+        confirmWindow.NoButtonText = TextCodeTranslator.Translate("Accounting.General.B.Cancel");
+        confirmWindow.Show(msg);
+
+        confirmWindow.WindowClosed.subscribe((event: any) => {
+
+            if (confirmWindow.Yes) {
+                this.entityArgs.EditComponent.StartBusyIndicatorSaving();
+                this.VoidJournal();
+            }
+            else {
+                confirmWindow.Close();
+            }
+        });
+    }
+
+    private VoidJournal() {
+        let myJournalExtendedPMService: JournalExtendedPMService = new JournalExtendedPMService();
+        myJournalExtendedPMService
+            .VoidJournal(this.EntityPM.Tenant, this.EntityPM.Id, "", "", "")
+            .subscribe((res: ServiceResponse) => {
+                this.entityArgs.EditComponent.StopBusyIndicator();
+                if (res.HasError) {
+                    this.entityArgs.EditComponent.ValidationErrorsList = res.ErrorsArray;
+                } else {
+                    this.entityArgs.EditComponent.ReloadEntityPM();
+                }
+            });
     }
 
     SaveChenges() {
