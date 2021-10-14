@@ -1,4 +1,4 @@
-@devsmoke
+@smoke
 Feature: Interest Bases
     The user creates new Interest Base and add Interest Period
 
