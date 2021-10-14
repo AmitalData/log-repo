@@ -624,10 +624,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
 
     }
  
-
-    private HasAdditonalColumns() {
-        return (this.HasExportShipmentToggle && this.showComputedStatusDateField() && this.isPrivateLabel);
-    }
+ 
 
     private showComputedStatusDateField() {
         return this.isPrivateLabel == false || (this.isPrivateLabel == true && (this.SelectedFilter != "My Shipments" && this.SelectedFilter != "Action Required"));
