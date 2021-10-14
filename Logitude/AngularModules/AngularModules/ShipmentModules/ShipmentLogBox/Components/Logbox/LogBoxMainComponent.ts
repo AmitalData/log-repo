@@ -550,7 +550,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
                 EnableHoverVisibility: true,
                 ServerSideSortable: false
             });
-            this.HoverTemplateIndex = this.HasExportShipmentToggle || !this.isPrivateLabel? 6 : 5;
+            this.HoverTemplateIndex = this.GetMyShipmentHovarIndex();
         }
         else if (this.RequestedDocsLable == "Action Required" && this.SelectedFilter == this.RequestedDocsLable && this.isPrivateLabel) {
             this.columns.push({
@@ -621,6 +621,14 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
         });
         this.QueryColumns.push(this.GetQueryColumn("Agent", 'Text', 'Agent'));
 
+    }
+
+    private GetMyShipmentHovarIndex(): number {
+        return this.HasAdditonalColumns() ? 7 : this.HasExportShipmentToggle || !this.isPrivateLabel ? 6 : 5;
+    }
+
+    private HasAdditonalColumns() {
+        return (this.HasExportShipmentToggle && this.showComputedStatusDateField() && this.isPrivateLabel);
     }
 
     private showComputedStatusDateField() {
