@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 {
    public class RatesTableUpdateClass
    {  		
-		public const string HashString = "9c0ce9ff1fe9f25d6aa38a81091841aa";
+		public const string HashString = "1d13c19b0ca18faf3f0f68f8d5beeed3";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -89,7 +89,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 	             				    ObjectTableName =  "RatesTable",
 			      				    IsNew =  false,
 			      				    DBTableName =  "RatesTables",
-			      				    OldDBTableName =  "RatesTables",
 			      				    ObjectTableSingular =  "Rates Table",
 			      				    ObjectTablePlural =  "RatesTables",
 			      				    DescriptionDefaultText =  "Insert the daily exchange rates of currencies to your base currency.",
@@ -144,8 +143,69 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
+					 						FieldName =  "LogDateTime",
+					  						ObjectTableName =  "RatesTable",
+					  						FieldsDataType =  "DateTime",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "LogDateTime",
+					  						ListPropertyPath =  "LogDateTime",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "RatesTable",
+					  						ValidForQuerySection2 =  "RatesTableFollowUp",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "LogDateTime",
+					  						DefaultText =  "LogDateTime",
+					  						FullLocalDefaultText =  "LogDateTime",
+					  						ListFieldLable =  "LogDateTimeListLable",
+					  						ListLableDefaultText =  "LogDateTime",
+					  						ListLocalDefaultText =  "LogDateTime",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
 					 						FieldName =  "ForeignCurrencyId",
-					  						OldFieldName =  "ForeignCurrencyId",
 					  						ObjectTableName =  "RatesTable",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -213,7 +273,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   {
 					 
 					 						FieldName =  "ForeignCurrencyCode",
-					  						OldFieldName =  "ForeignCurrencyCode",
 					  						ObjectTableName =  "RatesTable",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -281,7 +340,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   {
 					 
 					 						FieldName =  "BaseCurrencyId",
-					  						OldFieldName =  "BaseCurrencyId",
 					  						ObjectTableName =  "RatesTable",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -346,7 +404,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   {
 					 
 					 						FieldName =  "Rate",
-					  						OldFieldName =  "Rate",
 					  						ObjectTableName =  "RatesTable",
 					  						FieldsDataType =  "Double",
 					  						MinLength =  0,
@@ -414,7 +471,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   {
 					 
 					 						FieldName =  "ValueDate",
-					  						OldFieldName =  "ValueDate",
 					  						ObjectTableName =  "RatesTable",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -482,7 +538,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   {
 					 
 					 						FieldName =  "SearchFields",
-					  						OldFieldName =  "SearchFields",
 					  						ObjectTableName =  "RatesTable",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
