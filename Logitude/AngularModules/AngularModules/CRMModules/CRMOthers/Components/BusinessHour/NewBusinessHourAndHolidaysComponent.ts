@@ -516,6 +516,7 @@ export class NewBusinessHourAndHolidaysComponent extends BaseComponent {
         }
 
         this.ValidationErrorsList = errors;
+        this.ValidateTime();
         if (this.ValidationErrorsList.length == 0) {
             if (this.IsNew) {
                 this.InsertBusinesHour();
@@ -550,6 +551,33 @@ export class NewBusinessHourAndHolidaysComponent extends BaseComponent {
                 this.ValidationErrorsList = myResponse.ErrorsArray;
             }
         });
+    }
+
+    ValidateTime() {
+        var isValid = true;
+
+        if (this.SundayFromHourDate != null && this.SundayToHourDate != null && DateTool.GetDateFromDate(this.SundayToHourDate) <= DateTool.GetDateFromDate(this.SundayFromHourDate)) {
+            isValid = false;
+        }
+        if (this.MondayFromHourDate != null && this.MondayToHourDate != null && DateTool.GetDateFromDate(this.MondayToHourDate) <= DateTool.GetDateFromDate(this.MondayFromHourDate)) {
+            isValid = false;
+        }
+        if (this.TuesdayFromHourDate != null && this.TuesdayToHourDate != null && DateTool.GetDateFromDate(this.TuesdayToHourDate) <= DateTool.GetDateFromDate(this.TuesdayFromHourDate)) {
+            isValid = false;
+        }
+        if (this.WednesdayFromHourDate != null && this.WednesdayToHourDate != null && DateTool.GetDateFromDate(this.WednesdayToHourDate) <= DateTool.GetDateFromDate(this.WednesdayFromHourDate)) {
+            isValid = false;
+        }
+        if (this.ThursdayFromHourDate != null && this.ThursdayToHourDate != null && DateTool.GetDateFromDate(this.ThursdayToHourDate) <= DateTool.GetDateFromDate(this.ThursdayFromHourDate)) {
+            isValid = false;
+        }
+        if (this.FridayFromHourDate != null && this.FridayToHourDate != null && DateTool.GetDateFromDate(this.FridayToHourDate) <= DateTool.GetDateFromDate(this.FridayFromHourDate)){
+            isValid = false;
+        }
+        if (this.SaturdayFromHourDate != null && this.SaturdayToHourDate != null && DateTool.GetDateFromDate(this.SaturdayToHourDate) <= DateTool.GetDateFromDate(this.SaturdayFromHourDate)) {
+            isValid = false;
+        }
+        if (!isValid) this.ValidationErrorsList.push("Exist time Field must be greater than Entry time Field");
     }
 
     UpadteDates() {
