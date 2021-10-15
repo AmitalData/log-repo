@@ -198,9 +198,7 @@ export class ComputingPartnerTranslateComponent extends BaseComponent {
             filters.ComputingPartnerName = this.EntityPM.ComputingPartnerName;
             filters.SearchingFields = this.searchFields;
             filters.IsClosedTable = table.IsClosed;
-            let parentObjectTableName = window.ObjectTables.filter(f => f.Name === this.EntityPM.ObjectTableName)[0].ParentObjectTableName;
-            filters.ParentObjectTableName = parentObjectTableName;
-            filters.ParentObjectTableId = window.ObjectTables.filter(f => f.Name === parentObjectTableName)[0].Id;
+            this.FillParentObjectTableDetails(filters);
             var service: CommonDomainService = new CommonDomainService();
             return new Promise((resolve, reject) => {
                 resolve(service.getByFilters(filters))
@@ -209,6 +207,13 @@ export class ComputingPartnerTranslateComponent extends BaseComponent {
             });
 
 
+    }
+
+    private FillParentObjectTableDetails(filters: CustomApiQueryFilters) {
+        let parentObjectTableName = window.ObjectTables.filter(f => f.Name === this.EntityPM.ObjectTableName)[0]?.ParentObjectTableName;
+        if (!parentObjectTableName) return;
+        filters.ParentObjectTableName = parentObjectTableName;
+        filters.ParentObjectTableId = window.ObjectTables.filter(f => f.Name === parentObjectTableName)[0]?.Id;
     }
 
     CancelButtonClicked() {
