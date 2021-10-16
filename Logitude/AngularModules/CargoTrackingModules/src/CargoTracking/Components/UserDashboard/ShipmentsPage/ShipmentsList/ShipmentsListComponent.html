@@ -476,9 +476,33 @@
     </div>
 
     <!-- Details Menu - sort -->
-    <details-menu [Show]="showSortDetailsMenu" [Toggle]="'showSortDetailsMenu'" [DataContext]="this" [MenuTitle]="'Sort'"
+    <!-- <details-menu [Show]="showSortDetailsMenu" [Toggle]="'showSortDetailsMenu'" [DataContext]="this" [MenuTitle]="'Sort'"
                   [Buttons]="[{Code: 'asc', Name:'Ascending'}, {Code: 'desc', Name:'Descending'}]"
-                  (ButtonClicked)="SortMenuClicked($event)"></details-menu>
+                  (ButtonClicked)="SortMenuClicked($event)"></details-menu> -->
+
+                  <div class="mobile-sort-menu-dismiss-section" (click)="showMobileSortMenu=false" [style.display]="showMobileSortMenu?'Block':'none'"></div>
+                  <div class="mobile-sort-menu" 
+                      [class.show-menu]="showMobileSortMenu" 
+                      [style.height.px]="350"
+                      [style.bottom.px]="-350"
+                      >
+                      <div class="title uppercase">Sort By</div>
+                      <ul class="sort-by-menu">
+                          <li (click)="sortBySelectionChangedHandler(SortOptions.CMD)" 
+                            [ngClass]="{'sort-item-selected': sortField == SortOptions.CMD}">Current Status Date</li>
+                          <li (click)="sortBySelectionChangedHandler(SortOptions.ATA)" 
+                            [ngClass]="{'sort-item-selected': sortField == SortOptions.ATA}">ATA/ETA</li>
+                          <li (click)="sortBySelectionChangedHandler(SortOptions.ATD)" 
+                            [ngClass]="{'sort-item-selected': sortField == SortOptions.ATD}">ATD/ETD</li>
+                      </ul>
+                      <div class="title uppercase">Sort Direction</div>
+                      <ul class="sort-direction-menu">
+                          <li (click)="sortBySelectionChangedHandler(SortOptions.ASC)" 
+                            [ngClass]="{'sort-item-selected': isSortDescending == SortOptions.ASC}"><span>Ascending</span> <i class="las la-arrow-up"></i></li>
+                          <li (click)="sortBySelectionChangedHandler(SortOptions.DESC)" 
+                            [ngClass]="{'sort-item-selected': isSortDescending == SortOptions.DESC}"><span>Descending</span> <i class="las la-arrow-down"></i></li>
+                      </ul>
+                  </div>
 
     <!-- Details Menu - shipment more -->
     <details-menu [Show]="showShipmentDetailsMenu" [Toggle]="'showShipmentDetailsMenu'" [DataContext]="this"
@@ -494,7 +518,8 @@
         <li ><img src="./assets/images/icons/star@1x.png" alt=""></li>
         <li (click)="FocusOnSearchInput()"><img src="./assets/images/icons/search@1x.png" alt=""></li>
         <li (click)="isFiltersSideBarOpened = !isFiltersSideBarOpened"><img src="./assets/images/icons/filter@1x-white.png" alt=""></li>
-        <li (click)="showSortDetailsMenu = !showSortDetailsMenu"><img src="./assets/images/icons/sort@1x-white.png" [class.FlipImgVert]="!isSortDescending" alt=""></li>
+        <li (click)="showMobileSortMenu = !showMobileSortMenu"><img src="./assets/images/icons/sort@1x-white.png"
+            [class.FlipImgVert]="isSortDescending == SortOptions.ASC" alt=""></li>
     </ul>
 </div>
 

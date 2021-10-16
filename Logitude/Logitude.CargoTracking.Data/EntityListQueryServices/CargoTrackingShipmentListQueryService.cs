@@ -554,34 +554,40 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
 
         private static IQueryable<CargoTrackingShipmentList> SortShipmentsDescending(CargoTrackingShipmentFilters shipmentFilters, IQueryable<CargoTrackingShipmentList> shipments)
         {
-            if (shipmentFilters.SortFieldName == "ATA")
+            if (shipmentFilters.SortFieldName == "CMD")
             {
-                shipments = shipments.OrderByDescending(d => d.ArrivalDate);
+                shipments = shipments.OrderByDescending(d => d.CurrentMilestoneDate);
+            } else if (shipmentFilters.SortFieldName == "ATA")
+            {
+                shipments = shipments.OrderByDescending(d => d.ArrivalDate).ThenByDescending(d => d.ArrivalEstimationDate);
             }
             else if (shipmentFilters.SortFieldName == "ATD")
             {
-                shipments = shipments.OrderByDescending(d => d.DepartureDate);
+                shipments = shipments.OrderByDescending(d => d.DepartureDate).ThenByDescending(d => d.DepartureEstimationDate);
             }
             else
             {
-                shipments = shipments.OrderByDescending(d => d.CreateDate);
+                shipments = shipments.OrderByDescending(d => d.CurrentMilestoneDate);
             }
             return shipments;
         }
 
         private static IQueryable<CargoTrackingShipmentList> SortShipmentsAscending(CargoTrackingShipmentFilters shipmentFilters, IQueryable<CargoTrackingShipmentList> shipments)
         {
-            if (shipmentFilters.SortFieldName == "ATA")
+            if (shipmentFilters.SortFieldName == "CMD")
             {
-                shipments = shipments.OrderBy(d => d.ArrivalDate);
+                shipments = shipments.OrderBy(d => d.CurrentMilestoneDate);
+            } else if (shipmentFilters.SortFieldName == "ATA")
+            {
+                shipments = shipments.OrderBy(d => d.ArrivalDate).ThenBy(d => d.ArrivalEstimationDate);
             }
             else if (shipmentFilters.SortFieldName == "ATD")
             {
-                shipments = shipments.OrderBy(d => d.DepartureDate);
+                shipments = shipments.OrderBy(d => d.DepartureDate).ThenBy(d => d.DepartureEstimationDate);
             }
             else
             {
-                shipments = shipments.OrderBy(d => d.CreateDate);
+                shipments = shipments.OrderBy(d => d.CurrentMilestoneDate);
             }
             return shipments;
         }
