@@ -278,9 +278,7 @@ export class SearchComponent implements AfterViewInit,OnInit, OnDestroy
         this.CaptchaImageUrl = searchResponse.CaptchaImage;
         this.CaptchaKey = searchResponse.CaptchaKey;
         this.ShowCaptcha = true;
-
-        if (searchResponse.InvalidCaptcha)
-            this.errorMessage = invalidCaptchaMessage;
+        this.errorMessage = searchResponse.InvalidCaptcha ? invalidCaptchaMessage : '';
     }
 
     private BuildSearchRequest(searchText: string)

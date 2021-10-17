@@ -71,6 +71,10 @@ namespace WebFreight.Web.Security
             var count = GetRecentRecords(tenant);
             return count >= limitCount;
         }
+        public static void ResetIPSearchCounter()
+        {
+            EntitySearchesDictionary= new Dictionary<string, List<CargoTrackingEntitySearch>>();
+        }
     }
 
     public class CargoTrackingEntitySearch
