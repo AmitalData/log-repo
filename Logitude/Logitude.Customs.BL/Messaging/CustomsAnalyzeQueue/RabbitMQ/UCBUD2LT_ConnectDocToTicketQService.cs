@@ -107,12 +107,24 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
                 moreParams = moreParams.Replace("@TENANT@", mySTBMessage.tenant.ToString());
                 moreParams = moreParams.Replace("@UNIFREIGHT_USER_ID@", "AMITAL");
                 string messageOut = "";
-                unifreightGenericService.ProccessGenericRequest(xml, ref moreParams, out messageOut);
+                try
+                {
+                    unifreightGenericService.ProccessGenericRequest(xml, ref moreParams, out messageOut);
+                  
+                }
+                catch (Exception ex)
+                {
+                   // res.ErrorMessage = ex.Message;
+                    //res.MyCommStatusEnum = Def.ClosedTable.CommStatusEnum.W;
+                    //res.EntityID = mySTBMessage.DeclarationId;
+                    //res.EntityReference = _DeclarationPM.CustomFileNo;
+                    throw new Exception(ex.Message + "--" + ex.StackTrace);
+                }
                 _DeclarationPM = qsDeclarationQueryService.GetSingle(mySTBMessage.DeclarationId, true, false);
                 res.EntityID = mySTBMessage.DeclarationId;
                 res.EntityReference = _DeclarationPM.CustomFileNo;
                 res.MyCommStatusEnum = Def.ClosedTable.CommStatusEnum.D;
-
+               // res.ErrorMessage = messageOut;
 
 
             }
@@ -124,7 +136,7 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
             }
             catch (Exception ee)
             {
-                throw;
+                throw new Exception(ee.Message + "--" + ee.StackTrace);
             }
             return res;
         }

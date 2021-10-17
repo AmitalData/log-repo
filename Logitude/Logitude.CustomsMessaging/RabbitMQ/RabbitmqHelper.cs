@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace CustomsWorkerRole.RabbitMQ
+namespace Logitude.CustomsMessaging.RabbitMQ
 {
     public class RabbitmqHelper
     {
@@ -129,13 +129,13 @@ namespace CustomsWorkerRole.RabbitMQ
             return (-1);
         }
 
-        internal static ConnectionFactory GetConnectionFactory()
+        public static ConnectionFactory GetConnectionFactory()
         {
             //var factory = new ConnectionFactory() { HostName = "unimq", UserName = "v5101", Password = "Aa123" };
             return (new ConnectionFactory() { HostName = ConfigurationManager.AppSettings["RabbitmqHost"], UserName = ConfigurationManager.AppSettings["RabbitmqUsername"], Password = ConfigurationManager.AppSettings["RabbitmqPassword"] }); ;
         }
 
-        internal static bool DeclareQueue(RabbitmqConnection connection, string queuename, out string errMessage)
+        public static bool DeclareQueue(RabbitmqConnection connection, string queuename, out string errMessage)
         {
             errMessage = "";
             try
@@ -158,7 +158,7 @@ namespace CustomsWorkerRole.RabbitMQ
             }
         }
 
-        internal static void DeclareQueue(IModel channel, string queuename)
+        public static void DeclareQueue(IModel channel, string queuename)
         {
             try
             {

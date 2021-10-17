@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CustomsWorkerRole.RabbitMQ
+namespace Logitude.CustomsMessaging.RabbitMQ
 {
   public  class RabbitmqConnection
     {

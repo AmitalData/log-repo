@@ -314,6 +314,8 @@
     <Compile Include="MessagingServices\Unifreight_L2US01_US2L01_SivugMessagingService.cs" />
     <Compile Include="MessagingServices\VE_8326_ImporterDeclarationMessagingService.cs" />
     <Compile Include="MessagingServices\VP_NG_2690_VehicleInMessagingService.cs" />
+    <Compile Include="RabbitMQ\RabbitmqConnection.cs" />
+    <Compile Include="RabbitMQ\RabbitmqHelper.cs" />
     <Compile Include="RequestServices\CBC_NG_8361_MSG01_CustomsBookInRequestService.cs" />
     <Compile Include="RequestServices\CB_NG_8316_CustomItemLegalDemandsRequestService.cs" />
     <Compile Include="RequestServices\CLAIM_2340_ClaimRequestRequestService.cs" />
