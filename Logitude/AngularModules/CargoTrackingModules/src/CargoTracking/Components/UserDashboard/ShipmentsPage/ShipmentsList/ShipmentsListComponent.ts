@@ -37,6 +37,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
     currentDate = new Date();
     FilteredItems: any[] = [];
     searchForm;
+    mobileSearchForm;
     Shipments: CargoTrackingShipmentList[] = [];
 
     isLoading: boolean = false;
@@ -54,6 +55,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
     ShipmentsDataSource;
     @ViewChild(CdkVirtualScrollViewport) virtualScroll: CdkVirtualScrollViewport;
     @ViewChild('input') searchInput: ElementRef;
+    @ViewChild('mobileSearch') mobileSearchInput: ElementRef;
     @ViewChild('shipmentTypeMultipleSelection') shipmentTypeMultipleSelection: MultipleSelectionComponent;
     @ViewChild('shipmentDirectionMultipleSelection') shipmentDirectionMultipleSelection: MultipleSelectionComponent;
     @ViewChild('sortByMultipleSelection') sortByMultipleSelection: MultipleSelectionComponent;
@@ -68,9 +70,9 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
     ShipmentTypeAndDirectionTooltip: string;
     SupplierOrClientTitle: string;
     SupplierOrClientValue: string;
-
+    ShowMobileSearch: boolean = false;
     ShipmenTypeForRouting: string;
-
+    PanelSearchText;
     get tenant(){
         return CargoTrackingBrandingData.Tenant;
     }
@@ -94,7 +96,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
         this.GetCompanyLoginsFromCache();
         this.GetMilstones();
         this.getPreviousScroll();
-        
+
     }
     private getPreviousScroll(){
         this.router.events.pipe(
@@ -106,7 +108,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
                     shipmentCardsContainer.scrollTop = RootContext.ShipmentsScrollPosition || 0;
                 }
              }
-             
+
          });
     }
     ngAfterViewInit(): void
@@ -250,7 +252,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
             this.GetInvitedCustomers();
             this.updateShipmentTypeAndDirectionSelection();
             this.setSortFilterValues();
-            
+
             this.LoadScreenData();
         }
     }
@@ -299,7 +301,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
             var AtaSelectOption = this.sortByMultipleSelection.select.options.find(d => d.value.Code == 'ATA');
             var AscSelectOption = this.sortByMultipleSelection.select.options.find(d => d.value.Code == 'ASC');
             var DescSelectOption = this.sortByMultipleSelection.select.options.find(d => d.value.Code == 'DESC');
-            
+
             if(this.sortField == 'ATA') {
                 AtdSelectOption.deselect();
                 AtaSelectOption.select();
@@ -354,7 +356,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
         this.LoadScreenData();
     }
 
-    
+
 
     private GetMilstones(){
         this.milestonesService.getAll(this.tenant)
@@ -389,7 +391,9 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
         this.searchForm = this.formBuilder.group({
             SearchText: ''
         });
-
+        this.mobileSearchForm = this.formBuilder.group({
+            PanelSearchText: ''
+        });
     }
 
 
@@ -564,7 +568,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
         RootContext.ShipmentsScrollPosition = 0;
         this.SelectToggleFilters(toggleFilterCodes);
     }
-    
+
     OnHasExceptionChanged(event){
         RootContext.ShipmentsScrollPosition = 0;
         this.hasException = event;
@@ -689,23 +693,23 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
         });
     }
 
-    OpenReferencesMessageWindow(references, isMobile: boolean) {	
+    OpenReferencesMessageWindow(references, isMobile: boolean) {
         references = references.map(x => x.trim());
-        this.dialog.open(MessageWindowComponent, {	
-            data: {	
-                title: 'References',	
-                description: isMobile ? references.join("\n") : references.slice(3, references.length + 1).join("\n"),	
-            }	
-        });	
+        this.dialog.open(MessageWindowComponent, {
+            data: {
+                title: 'References',
+                description: isMobile ? references.join("\n") : references.slice(3, references.length + 1).join("\n"),
+            }
+        });
     }
 
-    OpenExceptionMessageWindow(messageDescription) {	
-        this.dialog.open(MessageWindowComponent, {	
-            data: {	
-                title: 'Exception',	
-                description: messageDescription,	
-            }	
-        });	
+    OpenExceptionMessageWindow(messageDescription) {
+        this.dialog.open(MessageWindowComponent, {
+            data: {
+                title: 'Exception',
+                description: messageDescription,
+            }
+        });
     }
 
     GetModeIcon(mode: string)
@@ -873,7 +877,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
         this.SelectedInvitedCustomers = [];
         this.selectedFilterMilestonesStatus = [];
         this.MilestonesStatus.map((item, index) => {
-            this.MilestonesStatus[index].IsSelected = false; 
+            this.MilestonesStatus[index].IsSelected = false;
         });
         this.selectedShipmentTypesFilter = [];
         this.selectedShipmentDirectionsFilter = [];
@@ -1000,6 +1004,32 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
         }
     }
 
+    ShowSearchPanel()
+    {
+        this.ShowMobileSearch = true;
+        this.FocusOnMobileSearchBox();
+    }
+    HideSearchPanel()
+    {
+        this.ShowMobileSearch = false;
+        this.SearchText = this.PanelSearchText;
+        this.Search();
+    }
+    ToggleSearchPanel()
+    {
+        this.ShowMobileSearch = !this.ShowMobileSearch;
+
+        if (this.ShowMobileSearch)
+            this.FocusOnMobileSearchBox();
+    }
+
+    private FocusOnMobileSearchBox()
+    {
+        setTimeout(() =>
+        {
+            this.mobileSearchInput?.nativeElement?.focus();
+        }, 50);
+    }
 }
 
 export class ToggleFilter
