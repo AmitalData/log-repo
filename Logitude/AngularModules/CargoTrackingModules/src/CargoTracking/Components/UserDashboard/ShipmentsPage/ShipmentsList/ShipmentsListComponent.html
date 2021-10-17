@@ -2,6 +2,7 @@
     .FlipImgVert {
         transform: rotate(180deg);
     }
+
     .FlipImgDiagonal {
         transform: rotate(225deg) !important;
     }
@@ -12,17 +13,18 @@
     <h1 class="hide-mobile">Shipments</h1>
     <h2 class="mobile-only">Shipments</h2>
 
-    <div class="toolbar">
+    <div class="toolbar hide-mobile">
 
         <div class="search-bar">
-            <form  class="search-form" [formGroup]="searchForm" (ngSubmit)="LoadScreenData()">
+            <form class="search-form" [formGroup]="searchForm" (ngSubmit)="LoadScreenData()">
 
-                <div class="search-text">
+                <div class="search-text" [class.hide-mobile]="!SearchText">
                     <input #input type="text " class="gray " [(ngModel)]="SearchText" placeholder="Free search ..."
                         formControlName="SearchText" name="SearchText " />
                 </div>
-                
-                <button mat-button matSuffix mat-stroked-button aria-label="search" class="search-button" type="submit" (onsubmit)="LoadScreenData()">
+
+                <button mat-button matSuffix mat-stroked-button aria-label="search" class="search-button" type="submit"
+                    (onsubmit)="LoadScreenData()">
                     <mat-icon>search</mat-icon>
                 </button>
             </form>
@@ -36,38 +38,81 @@
                 </li>
             </ul>
         </div>-->
-    <div class="hide-mobile shipments-filters" style="margin-left: 20px;">
-        <multiple-selection #shipmentTypeMultipleSelection class="multipe-select" [MultipleSelectionList]="ToggleFilters.slice(0, 0).concat(ToggleFilters.slice(2,ToggleFilters.length))" [Title]="'Shipment Type'" (SelectionChanged)="SelectionChangedHandler($event)"> </multiple-selection>
-        <multiple-selection #shipmentDirectionMultipleSelection class="multipe-select" [MultipleSelectionList]="ToggleFilters.slice(0,2)" [Title]="'Shipment Direction'"  (SelectionChanged)="SelectionChangedHandler($event)"> </multiple-selection>
-        
-        <div class="has-exception-checkbox-filter">
-            <CheckBox (ValueChanged)="OnHasExceptionChanged($event)" [Text]="'Exceptions Only'" [Value]="hasException"></CheckBox>
-        </div>
-        <multiple-selection #sortByMultipleSelection class="multipe-select sort-by-multiple-selection" [MultipleSelectionList]="sortByOptions" [Title]="'Sort By'"  (SelectionChanged)="sortBySelectionChangedHandler($event)"> </multiple-selection>
-        <div class="actions-buttons hide-mobile">
-            <div (click)="OpenAdvancedFiltersSidebar()">
+        <div class="hide-mobile shipments-filters" style="margin-left: 20px;">
+            <multiple-selection #shipmentTypeMultipleSelection class="multipe-select"
+                [MultipleSelectionList]="ToggleFilters.slice(0, 0).concat(ToggleFilters.slice(2,ToggleFilters.length))"
+                [Title]="'Shipment Type'" (SelectionChanged)="SelectionChangedHandler($event)"> </multiple-selection>
+            <multiple-selection #shipmentDirectionMultipleSelection class="multipe-select"
+                [MultipleSelectionList]="ToggleFilters.slice(0,2)" [Title]="'Shipment Direction'"
+                (SelectionChanged)="SelectionChangedHandler($event)"> </multiple-selection>
+
+            <div class="has-exception-checkbox-filter">
+                <CheckBox (ValueChanged)="OnHasExceptionChanged($event)" [Text]="'Exceptions Only'"
+                    [Value]="hasException"></CheckBox>
+            </div>
+            <multiple-selection #sortByMultipleSelection class="multipe-select sort-by-multiple-selection"
+                [MultipleSelectionList]="sortByOptions" [Title]="'Sort By'"
+                (SelectionChanged)="sortBySelectionChangedHandler($event)"> </multiple-selection>
+            <div class="actions-buttons hide-mobile">
+                <div (click)="OpenAdvancedFiltersSidebar()">
                 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="30px" height="30px" viewBox="0 0 20 24" version="1.1">
-                    <g id="Desktop" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                        <g id="White-label-2" transform="translate(-1764.000000, -130.000000)" style="fill: var(--secondaryColor);" fill-rule="nonzero">
-                            <g id="menu/filter" transform="translate(1764.000000, 130.000000)">
-                                <path d="M16.5972846,1.93784382e-15 C17.5198235,1.93784382e-15 18.3700527,0.503766826 18.8092506,1.32824314 C19.2302001,2.11853519 19.1982759,3.06285791 18.7389337,3.81676882 L18.6339704,3.97528117 L13.1410652,11.6367273 L13.1412942,19.0806175 C13.1412942,19.4198351 13.0407956,19.7481679 12.8564587,20.0250862 L12.7573809,20.1590731 L10.4096992,23.0249825 C9.92739776,23.6139801 9.22255424,23.9454545 8.48001414,23.9454545 C8.20253595,23.9454545 7.92549337,23.8992847 7.65960968,23.8079176 C6.70440511,23.480914 6.0452506,22.6311403 5.97100822,21.6225525 L5.96401273,21.43167 L5.96317043,11.6367273 L0.471431179,3.97550507 C-0.0489774033,3.25020961 -0.143566238,2.31025622 0.212753584,1.49986145 L0.296018638,1.32831391 C0.705886889,0.558761283 1.47391266,0.068597887 2.32457345,0.00666300146 L2.50802232,1.93784382e-15 L16.5972846,1.93784382e-15 Z M16.9195818,2.31628753 C16.8646458,2.25493445 16.7858984,2.20997198 16.6936506,2.19132532 L16.5972846,2.18181818 L2.50802232,2.18181818 C2.34117872,2.18181818 2.20228993,2.26410874 2.13912767,2.38269974 C2.09808179,2.4597594 2.09427622,2.54072376 2.12840425,2.61742489 L2.16112364,2.67402376 L7.8616453,10.627047 C7.96950773,10.7775301 8.03767385,10.9536087 8.0606258,11.1379948 L8.06927589,11.2775718 L8.06927589,21.43167 C8.06927589,21.5642781 8.15246903,21.6788701 8.3210656,21.7365879 C8.37391974,21.7547504 8.42724035,21.7636364 8.48001414,21.7636364 C8.58405865,21.7636364 8.67909973,21.7287264 8.75320031,21.6656132 L8.80466288,21.6130949 L11.035802,18.888 L11.036031,11.2776148 C11.036031,11.0901579 11.0826234,10.9066864 11.1702907,10.7444875 L11.2436565,10.6270971 L16.9443363,2.67371852 C16.9973431,2.59985834 17.0123526,2.51956522 16.9899688,2.44108815 L16.9661792,2.38269974 L16.9195818,2.31628753 Z" />
+                        <g id="Desktop" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                            <g id="White-label-2" transform="translate(-1764.000000, -130.000000)"
+                                style="fill: var(--secondaryColor);" fill-rule="nonzero">
+                                <g id="menu/filter" transform="translate(1764.000000, 130.000000)">
+                                    <path
+                                        d="M16.5972846,1.93784382e-15 C17.5198235,1.93784382e-15 18.3700527,0.503766826 18.8092506,1.32824314 C19.2302001,2.11853519 19.1982759,3.06285791 18.7389337,3.81676882 L18.6339704,3.97528117 L13.1410652,11.6367273 L13.1412942,19.0806175 C13.1412942,19.4198351 13.0407956,19.7481679 12.8564587,20.0250862 L12.7573809,20.1590731 L10.4096992,23.0249825 C9.92739776,23.6139801 9.22255424,23.9454545 8.48001414,23.9454545 C8.20253595,23.9454545 7.92549337,23.8992847 7.65960968,23.8079176 C6.70440511,23.480914 6.0452506,22.6311403 5.97100822,21.6225525 L5.96401273,21.43167 L5.96317043,11.6367273 L0.471431179,3.97550507 C-0.0489774033,3.25020961 -0.143566238,2.31025622 0.212753584,1.49986145 L0.296018638,1.32831391 C0.705886889,0.558761283 1.47391266,0.068597887 2.32457345,0.00666300146 L2.50802232,1.93784382e-15 L16.5972846,1.93784382e-15 Z M16.9195818,2.31628753 C16.8646458,2.25493445 16.7858984,2.20997198 16.6936506,2.19132532 L16.5972846,2.18181818 L2.50802232,2.18181818 C2.34117872,2.18181818 2.20228993,2.26410874 2.13912767,2.38269974 C2.09808179,2.4597594 2.09427622,2.54072376 2.12840425,2.61742489 L2.16112364,2.67402376 L7.8616453,10.627047 C7.96950773,10.7775301 8.03767385,10.9536087 8.0606258,11.1379948 L8.06927589,11.2775718 L8.06927589,21.43167 C8.06927589,21.5642781 8.15246903,21.6788701 8.3210656,21.7365879 C8.37391974,21.7547504 8.42724035,21.7636364 8.48001414,21.7636364 C8.58405865,21.7636364 8.67909973,21.7287264 8.75320031,21.6656132 L8.80466288,21.6130949 L11.035802,18.888 L11.036031,11.2776148 C11.036031,11.0901579 11.0826234,10.9066864 11.1702907,10.7444875 L11.2436565,10.6270971 L16.9443363,2.67371852 C16.9973431,2.59985834 17.0123526,2.51956522 16.9899688,2.44108815 L16.9661792,2.38269974 L16.9195818,2.31628753 Z" />
+                                </g>
                             </g>
                         </g>
-                    </g>
-                </svg>
-                <!-- <img src="./assets/images/icons/filter.svg" alt=" " /> -->
+                    </svg>
+                    <!-- <img src="./assets/images/icons/filter.svg" alt=" " /> -->
                 </div>
+            </div>
         </div>
+
+
+
+
     </div>
 
-        
+    <div class="mobile-toolbar mobile-only" *ngIf="SearchText">
+        <div class="search-text">
+            <input #input type="text " class="gray " [(ngModel)]="SearchText" (click)="ShowSearchPanel()"
+                placeholder="Free search ..." name="SearchText0" />
+        </div>
+        <!-- <IconButton [IconName]="'delete'" (IconClicked)="''"></IconButton> -->
+        <i class="las la-times la-2x" (click)="SearchText = '';PanelSearchText = '';LoadScreenData()"></i>
+    </div>
 
+    <div class="mobile-search-panel mobile-only" *ngIf="ShowMobileSearch">
+
+        <h1>Search</h1>
+        <form class="search-form" [formGroup]="mobileSearchForm" (ngSubmit)="HideSearchPanel()">
+
+            <div class="input-box">
+
+                <i *ngIf="PanelSearchText" class="las la-times la-2x" style="font-size: 22px;padding-top: 4px;" (click)="PanelSearchText = ''"></i>
+
+                <input #mobileSearch type="text " autocomplete="off" class="gray " [(ngModel)]="PanelSearchText" style="display: inline-block;"
+                    placeholder="By shipment References" name="PanelSearchText"
+                    formControlName="PanelSearchText" />
+
+                <i *ngIf="PanelSearchText" class="las la-long-arrow-alt-right la-2x" style="padding-top: 4px;" (click)="HideSearchPanel()"></i>
+                <i *ngIf="!PanelSearchText" class="las la-search" style="padding-top: 4px;"></i>
+
+            </div>
+        </form>
+
+        <br>
 
     </div>
+
     <div class="clearFix hide-mobile"></div>
 
     <!-- PC: Search Filters -->
-    <div class="selected-filters" *ngIf="SelectedFilters.length > 0 || SelectedInvitedCustomers.length > 0 || hasException || appliedSelectedFilterMilestonesStatus.length > 0">
+    <div class="selected-filters"
+        *ngIf="SelectedFilters.length > 0 || SelectedInvitedCustomers.length > 0 || hasException || appliedSelectedFilterMilestonesStatus.length > 0">
         <ul>
             <li *ngFor="let filter of SelectedFilters" (click)="DeselectFilter(filter)">
                 {{filter.Name}}
@@ -91,8 +136,8 @@
         </ul>
     </div>
 
-    <!-- No Result -->
-    <div class="no-result-div" *ngIf="noResult">
+    <!-- No Result - web -->
+    <div class="no-result-div hide-mobile" *ngIf="noResult">
         <img src="./assets/images/misc/No results@1x.png" alt=" " />
         <div class="title">There are no search results</div>
         <p>
@@ -100,6 +145,12 @@
             Just start typing to start your new search.
         </p>
 
+    </div>
+
+    <!-- No Result - mobile -->
+    <div class="no-result-div mobile-only" *ngIf="noResult">
+        <img src="./assets/images/misc/no orders.svg" alt=" " />
+        <p style=" font-weight: 600; color: #5a5a5a;">No results found</p>
     </div>
 
     <div class="error" *ngIf="ShipmentsLoadingError">
@@ -115,12 +166,13 @@
         <div class="table" style="height: 100%;">
 
 
-            <cdk-virtual-scroll-viewport id="scrollArea" *ngIf="ShipmentsDataSource" class="shipment-cards-holder" [itemSize]="170" >
+            <cdk-virtual-scroll-viewport id="scrollArea" *ngIf="ShipmentsDataSource" class="shipment-cards-holder"
+                [itemSize]="170">
 
 
 
-                <div *cdkVirtualFor="let shipment of ShipmentsDataSource" class="row record-row" (click)="ItemClicked(shipment)"
-                     style="cursor: pointer;">
+                <div *cdkVirtualFor="let shipment of ShipmentsDataSource" class="row record-row"
+                    (click)="ItemClicked(shipment)" style="cursor: pointer;">
 
                     <!-- Shipment Skelton -->
                     <div *ngIf="!shipment" class="shipment-skelton">
@@ -136,10 +188,12 @@
                     </div>
 
                     <!-- Shipment Data -->
-                    <div *ngIf="shipment" style="width: 100%; height: 100%;" [attr.src]="SetShipmentTypeAndDirectionTooltip(shipment)">
+                    <div *ngIf="shipment" style="width: 100%; height: 100%;"
+                        [attr.src]="SetShipmentTypeAndDirectionTooltip(shipment)">
                         <div class="column mode-icon" [attr.title]="ShipmentTypeAndDirectionTooltip" style="width: 8%;">
                             <div class="circle-image">
                                 <!-- <img class="path " [attr.src]="GetModeIcon(shipment.TransportModeId)" alt=" " /> -->
+
 
                                 <div [ngSwitch]="shipment.TransportModeId" style="display: inline-block;    position: relative;" [attr.title]="ShipmentTypeAndDirectionTooltip">
                                     <svg *ngSwitchCase="'O'" viewBox="0 0 47 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -148,7 +202,9 @@
                                                 <g id="Group-14-Copy" transform="translate(308.000000, 328.000000)">
                                                     <g id="Type/boat" transform="translate(45.000000, 46.000000)">
                                                         <g id="Group">
-                                                            <path fill="var(--secondaryColor)" d="M64.0004222,40.059772 L55.4342944,51 L20.0331393,51 L17.0004222,40.059772 L64.0004222,40.059772 Z M30.3716056,37.1653425 L30.3716056,39.1572031 L20.6380712,39.1572031 L20.6380712,37.1653425 L30.3716056,37.1653425 Z M57.1715124,35.1574036 L57.1715124,39.1411248 L51.6342935,39.1411248 L51.6342935,35.1574036 L57.1715124,35.1574036 Z M51.0698938,35.1574036 L51.0698938,39.1411248 L45.532675,39.1411248 L45.532675,35.1574036 L51.0698938,35.1574036 Z M41.4126297,36.4234621 L41.4126297,39.0792762 L31.6790953,39.0792762 L31.6790953,36.4234621 L41.4126297,36.4234621 Z M25.1815979,34.4120812 L25.1815979,36.7067047 L20.8232989,36.7067047 L20.8232989,34.4120812 L25.1815979,34.4120812 Z M30.1863779,34.4120812 L30.1863779,36.7067047 L25.8280789,36.7067047 L25.8280789,34.4120812 L30.1863779,34.4120812 Z M54.0862725,31 L54.0862725,34.6441488 L48.5490537,34.6441488 L48.5490537,31 L54.0862725,31 Z" id="ship"></path>
+                                                            <path fill="var(--secondaryColor)"
+                                                                d="M64.0004222,40.059772 L55.4342944,51 L20.0331393,51 L17.0004222,40.059772 L64.0004222,40.059772 Z M30.3716056,37.1653425 L30.3716056,39.1572031 L20.6380712,39.1572031 L20.6380712,37.1653425 L30.3716056,37.1653425 Z M57.1715124,35.1574036 L57.1715124,39.1411248 L51.6342935,39.1411248 L51.6342935,35.1574036 L57.1715124,35.1574036 Z M51.0698938,35.1574036 L51.0698938,39.1411248 L45.532675,39.1411248 L45.532675,35.1574036 L51.0698938,35.1574036 Z M41.4126297,36.4234621 L41.4126297,39.0792762 L31.6790953,39.0792762 L31.6790953,36.4234621 L41.4126297,36.4234621 Z M25.1815979,34.4120812 L25.1815979,36.7067047 L20.8232989,36.7067047 L20.8232989,34.4120812 L25.1815979,34.4120812 Z M30.1863779,34.4120812 L30.1863779,36.7067047 L25.8280789,36.7067047 L25.8280789,34.4120812 L30.1863779,34.4120812 Z M54.0862725,31 L54.0862725,34.6441488 L48.5490537,34.6441488 L48.5490537,31 L54.0862725,31 Z"
+                                                                id="ship"></path>
                                                         </g>
                                                     </g>
                                                 </g>
@@ -156,19 +212,24 @@
                                         </g>
                                     </svg>
 
+
                                     <svg *ngSwitchCase="'A'" viewBox="0 0 47 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                                         <g id="Desktop-DSV" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
                                             <g id="Search-Results" transform="translate(-375.000000, -804.000000)" fill="#002664">
                                                 <g id="Group-14-Copy-2" transform="translate(308.000000, 732.000000)">
                                                     <g id="Type/boat" transform="translate(45.000000, 46.000000)">
                                                         <g id="Group">
-                                                            <path fill="var(--secondaryColor)" d="M28.2010781,26 L44.9721135,32.4312677 C46.8367468,31.1081412 48.7257202,29.7863693 50.5260794,28.5557714 C51.8003996,27.6847188 57.0176923,27.3267788 57.7639616,28.3543079 L57.7639616,28.3543079 L57.8454343,28.4667753 C58.5922106,29.4947934 56.4585397,34.1000925 55.1737396,34.9563124 C53.4750773,36.0893977 51.6720921,37.2654064 49.8681811,38.4256513 L50.4013143,55.8435582 L47.2072029,58 L45.7311918,55.9677976 L46.4843162,55.4596112 L41.7760232,43.5398952 C37.7106852,46.0706551 34.750133,47.8626901 34.750133,47.8626901 L34.750133,47.8626901 L33.3792963,52.8533126 L29.7502134,55.3041258 L28.875312,48.0677395 L28.7522579,47.8982233 L22,44.6307983 L25.629421,42.179985 L30.9638518,42.6479476 C30.9638518,42.6479476 33.557413,40.7024661 37.2302404,38.0156431 L27.2355389,29.6802767 L26.4826023,30.1888253 L25.0069668,28.1571663 L28.2010781,26 Z" id="plane"></path>
+                                                            <path fill="var(--secondaryColor)"
+                                                                d="M28.2010781,26 L44.9721135,32.4312677 C46.8367468,31.1081412 48.7257202,29.7863693 50.5260794,28.5557714 C51.8003996,27.6847188 57.0176923,27.3267788 57.7639616,28.3543079 L57.7639616,28.3543079 L57.8454343,28.4667753 C58.5922106,29.4947934 56.4585397,34.1000925 55.1737396,34.9563124 C53.4750773,36.0893977 51.6720921,37.2654064 49.8681811,38.4256513 L50.4013143,55.8435582 L47.2072029,58 L45.7311918,55.9677976 L46.4843162,55.4596112 L41.7760232,43.5398952 C37.7106852,46.0706551 34.750133,47.8626901 34.750133,47.8626901 L34.750133,47.8626901 L33.3792963,52.8533126 L29.7502134,55.3041258 L28.875312,48.0677395 L28.7522579,47.8982233 L22,44.6307983 L25.629421,42.179985 L30.9638518,42.6479476 C30.9638518,42.6479476 33.557413,40.7024661 37.2302404,38.0156431 L27.2355389,29.6802767 L26.4826023,30.1888253 L25.0069668,28.1571663 L28.2010781,26 Z"
+                                                                id="plane"></path>
                                                         </g>
                                                     </g>
                                                 </g>
                                             </g>
                                         </g>
                                     </svg>
+
+
 
 
                                     <svg *ngSwitchCase="'I'" width="39px" height="24px" viewBox="0 0 39 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -177,7 +238,11 @@
                                                 <g id="Group-14-Copy-3" transform="translate(308.000000, 934.000000)">
                                                     <g id="Type/car" transform="translate(45.000000, 46.000000)">
                                                         <g id="Group-3">
-                                                            <path fill="var(--secondaryColor)" d="M29.6731686,46.9283885 C31.3325599,46.9283885 32.677691,48.2875099 32.677691,49.9642285 C32.677691,51.6408786 31.3325599,53 29.6731686,53 C28.0137095,53 26.6685784,51.6408786 26.6685784,49.9642285 C26.6685784,48.2875099 28.0137095,46.9283885 29.6731686,46.9283885 Z M52.7712947,46.9283885 C54.4306859,46.9283885 55.775885,48.2875099 55.775885,49.9642285 C55.775885,51.6408786 54.4306859,53 52.7712947,53 C51.1118356,53 49.7667045,51.6408786 49.7667045,49.9642285 C49.7667045,48.2875099 51.1118356,46.9283885 52.7712947,46.9283885 Z M59.5103151,29.000045 C60.3331132,28.9936856 61,29.6623235 61,30.4935267 L61,30.4935267 L61,48.094433 C61,48.9256362 60.3362073,49.664958 59.5173334,49.7455545 L59.5173334,49.7455545 L56.7117602,50.0216564 C56.7120621,50.0025176 56.7125149,49.9833788 56.7125149,49.96424 C56.7125149,47.7649559 54.9479854,45.9819979 52.7712645,45.9819979 C50.5946191,45.9819979 48.8300897,47.7649559 48.8300897,49.96424 C48.8300897,50.093179 48.8364287,50.2208219 48.8482013,50.3467109 L48.8482013,50.3467109 L33.596213,50.3467109 C33.608061,50.2208219 33.6144001,50.093179 33.6144001,49.96424 C33.6144001,47.7649559 31.8498707,45.9819979 29.6731498,45.9819979 C27.4965043,45.9819979 25.7319749,47.7649559 25.7319749,49.96424 C25.7319749,50.0006876 25.7325031,50.0371352 25.7334842,50.0734302 L25.7334842,50.0734302 L23.395494,49.6050254 C22.5884681,49.443375 21.9644456,48.639088 22.0015746,47.8087235 L22.001651,47.7970977 C22.0037397,47.5436283 22.0604663,43.2216537 23.5033339,42.3380778 C24.3290751,41.8324629 25.2657503,41.5066458 25.9354293,41.3168591 C26.3464133,41.2004251 26.7834328,40.7948503 26.9041773,40.3811168 L26.9041773,40.3811168 L28.6373886,34.4390163 C28.9325334,33.4271763 29.5955715,32.453919 30.5043245,31.6986609 C31.4130775,30.9434028 32.486194,30.4737017 33.5258793,30.3764064 L33.5258793,30.3764064 L35.9259775,30.1515447 C36.1341862,29.5682307 36.6859884,29.1476347 37.3324996,29.1426022 L37.3324996,29.1426022 Z M35.4019465,31.7518073 L33.6669994,31.9144489 C32.140563,32.057418 30.5370764,33.3899662 30.1036038,34.8758536 L30.1036038,34.8758536 L28.4251048,40.6306075 C28.3768824,40.7960704 28.4752137,40.9146394 28.6448597,40.8954243 L28.6448597,40.8954243 L34.2584964,40.2599553 C34.4990043,40.232734 34.7174763,40.013896 34.7465304,39.7711154 L34.7465304,39.7711154 L35.672565,32.0330942 C35.6931671,31.8618363 35.5718943,31.7359472 35.4019465,31.7518073 L35.4019465,31.7518073 Z" id="Truck" transform="translate(41.500000, 41.000000) scale(-1, 1) translate(-41.500000, -41.000000) "></path>
+                                                            <path fill="var(--secondaryColor)"
+                                                                d="M29.6731686,46.9283885 C31.3325599,46.9283885 32.677691,48.2875099 32.677691,49.9642285 C32.677691,51.6408786 31.3325599,53 29.6731686,53 C28.0137095,53 26.6685784,51.6408786 26.6685784,49.9642285 C26.6685784,48.2875099 28.0137095,46.9283885 29.6731686,46.9283885 Z M52.7712947,46.9283885 C54.4306859,46.9283885 55.775885,48.2875099 55.775885,49.9642285 C55.775885,51.6408786 54.4306859,53 52.7712947,53 C51.1118356,53 49.7667045,51.6408786 49.7667045,49.9642285 C49.7667045,48.2875099 51.1118356,46.9283885 52.7712947,46.9283885 Z M59.5103151,29.000045 C60.3331132,28.9936856 61,29.6623235 61,30.4935267 L61,30.4935267 L61,48.094433 C61,48.9256362 60.3362073,49.664958 59.5173334,49.7455545 L59.5173334,49.7455545 L56.7117602,50.0216564 C56.7120621,50.0025176 56.7125149,49.9833788 56.7125149,49.96424 C56.7125149,47.7649559 54.9479854,45.9819979 52.7712645,45.9819979 C50.5946191,45.9819979 48.8300897,47.7649559 48.8300897,49.96424 C48.8300897,50.093179 48.8364287,50.2208219 48.8482013,50.3467109 L48.8482013,50.3467109 L33.596213,50.3467109 C33.608061,50.2208219 33.6144001,50.093179 33.6144001,49.96424 C33.6144001,47.7649559 31.8498707,45.9819979 29.6731498,45.9819979 C27.4965043,45.9819979 25.7319749,47.7649559 25.7319749,49.96424 C25.7319749,50.0006876 25.7325031,50.0371352 25.7334842,50.0734302 L25.7334842,50.0734302 L23.395494,49.6050254 C22.5884681,49.443375 21.9644456,48.639088 22.0015746,47.8087235 L22.001651,47.7970977 C22.0037397,47.5436283 22.0604663,43.2216537 23.5033339,42.3380778 C24.3290751,41.8324629 25.2657503,41.5066458 25.9354293,41.3168591 C26.3464133,41.2004251 26.7834328,40.7948503 26.9041773,40.3811168 L26.9041773,40.3811168 L28.6373886,34.4390163 C28.9325334,33.4271763 29.5955715,32.453919 30.5043245,31.6986609 C31.4130775,30.9434028 32.486194,30.4737017 33.5258793,30.3764064 L33.5258793,30.3764064 L35.9259775,30.1515447 C36.1341862,29.5682307 36.6859884,29.1476347 37.3324996,29.1426022 L37.3324996,29.1426022 Z M35.4019465,31.7518073 L33.6669994,31.9144489 C32.140563,32.057418 30.5370764,33.3899662 30.1036038,34.8758536 L30.1036038,34.8758536 L28.4251048,40.6306075 C28.3768824,40.7960704 28.4752137,40.9146394 28.6448597,40.8954243 L28.6448597,40.8954243 L34.2584964,40.2599553 C34.4990043,40.232734 34.7174763,40.013896 34.7465304,39.7711154 L34.7465304,39.7711154 L35.672565,32.0330942 C35.6931671,31.8618363 35.5718943,31.7359472 35.4019465,31.7518073 L35.4019465,31.7518073 Z"
+                                                                id="Truck"
+                                                                transform="translate(41.500000, 41.000000) scale(-1, 1) translate(-41.500000, -41.000000) ">
+                                                            </path>
                                                         </g>
                                                     </g>
                                                 </g>
@@ -187,15 +252,16 @@
                                     <span *ngIf="shipment.EntityType==='O'" class="order-icon">Order</span>
                                 </div>
 
-                                <svg [class.FlipImgDiagonal]="shipment.DirectionId=='E'" width="14" height="14" version="1.1" viewBox="0 0 512.17 512.17"
-                                     xml:space="preserve" xmlns="http://www.w3.org/2000/svg"
-                                     class="direction-icon">
-                                <g xmlns="http://www.w3.org/2000/svg">
-                                <path class="" d="m479.05 283.92c-1.664-3.989-5.547-6.592-9.856-6.592h-116.88v-266.67c0-5.888-4.779-10.667-10.667-10.667h-170.67c-5.888 0-10.667 4.779-10.667 10.667v266.67h-117.33c-4.309 0-8.192 2.603-9.856 6.571-1.643 3.989-0.747 8.576 2.304 11.627l212.8 213.5c2.005 2.005 4.715 3.136 7.552 3.136s5.547-1.131 7.552-3.115l213.42-213.5c3.051-3.052 3.968-7.638 2.304-11.628z"
-                                      fill="var(--secondaryColor)" data-original="#000000" />
+                                <svg [class.FlipImgDiagonal]="shipment.DirectionId=='E'" width="14" height="14"
+                                    version="1.1" viewBox="0 0 512.17 512.17" xml:space="preserve"
+                                    xmlns="http://www.w3.org/2000/svg" class="direction-icon">
+                                    <g xmlns="http://www.w3.org/2000/svg">
+                                        <path class=""
+                                            d="m479.05 283.92c-1.664-3.989-5.547-6.592-9.856-6.592h-116.88v-266.67c0-5.888-4.779-10.667-10.667-10.667h-170.67c-5.888 0-10.667 4.779-10.667 10.667v266.67h-117.33c-4.309 0-8.192 2.603-9.856 6.571-1.643 3.989-0.747 8.576 2.304 11.627l212.8 213.5c2.005 2.005 4.715 3.136 7.552 3.136s5.547-1.131 7.552-3.115l213.42-213.5c3.051-3.052 3.968-7.638 2.304-11.628z"
+                                            fill="var(--secondaryColor)" data-original="#000000" />
 
                                     </g>
-                                    </svg>
+                                </svg>
                             </div>
                         </div>
                         <!-- References -->
@@ -204,25 +270,30 @@
                                 <div [attr.src]="SplitReference(shipment.CustomerReference)" class="subtitle">
                                     Reference NO.
                                     <span *ngIf="shipment.IsFavorite">
-                                        &nbsp;<img src="/assets/images/icons/favoritesicon@1x.png"
-                                                   alt="">
+                                        &nbsp;<img src="/assets/images/icons/favoritesicon@1x.png" alt="">
                                     </span>
                                 </div>
 
                                 <span class="mobile-only-inline-block">
                                     {{ shipment.ShipmentNumber }}
                                 </span>
-                                <div class="truncateText mobile-inline-block" *ngFor="let item of references; let i = index">
+                                <div class="truncateText mobile-inline-block"
+                                    *ngFor="let item of references; let i = index">
                                     <span [ngClass]="{'hide-mobile': i >= 0}" *ngIf="i < 3">
                                         {{item}}
                                     </span>
                                     <span class="more-mobile" *ngIf="i == 0">
-                                        <a (click)="OpenReferencesMessageWindow(shipment.CustomerReference?.split(','), true); $event.stopPropagation()"><u>+ {{references?.length}} More</u></a>
+                                        <a
+                                            (click)="OpenReferencesMessageWindow(shipment.CustomerReference?.split(','), true); $event.stopPropagation()"><u>+
+                                                {{references?.length}} More</u></a>
                                     </span>
                                 </div>
-                                <span class="hide-mobile" (click)="OpenReferencesMessageWindow(shipment.CustomerReference?.split(','), false); $event.stopPropagation()" *ngIf="references?.length > 4"
-                                     [attr.src]="SetMoreReferenceText(shipment.CustomerReference)">
-                                    <img src="./assets/images/icons/info.png" alt=" " style="margin-right: 6px; margin-top: 6px" />
+                                <span class="hide-mobile"
+                                    (click)="OpenReferencesMessageWindow(shipment.CustomerReference?.split(','), false); $event.stopPropagation()"
+                                    *ngIf="references?.length > 4"
+                                    [attr.src]="SetMoreReferenceText(shipment.CustomerReference)">
+                                    <img src="./assets/images/icons/info.png" alt=" "
+                                        style="margin-right: 6px; margin-top: 6px" />
                                     <u [attr.title]="MoreReferenceText">+ {{references?.length - 3}} More</u>
                                 </span>
 
@@ -232,22 +303,28 @@
                         <!-- Shipment Number -->
                         <div class="column col-md-2 hide-mobile" style="width: 12%;">
                             <div>
-                                <div class="subtitle">{{shipment.EntityType==='O' ? 'Order Number' : 'Shipment Number'}}</div>
+                                <div class="subtitle">{{shipment.EntityType==='O' ? 'Order Number' : 'Shipment Number'}}
+                                </div>
                                 <div class="value uppercase truncateText">{{ shipment.ShipmentNumber }}</div>
 
                                 <div class="subtitle" [attr.src]="SetConsignmentNumber(shipment)">
 
                                     <span *ngIf="shipment.ForwardingShipmentLevelCode == 'D'">Master</span>
                                     <span *ngIf="shipment.ForwardingShipmentLevelCode == 'H'">House</span>
-                                    <span *ngIf="shipment.EntityType == 'C' && !shipment.ForwardingShipmentHeaderId && shipment.House" >House</span>
-                                    <span *ngIf="shipment.EntityType == 'C' && !shipment.ForwardingShipmentHeaderId && shipment.Master && !shipment.House" >Master</span>
+                                    <span
+                                        *ngIf="shipment.EntityType == 'C' && !shipment.ForwardingShipmentHeaderId && shipment.House">House</span>
+                                    <span
+                                        *ngIf="shipment.EntityType == 'C' && !shipment.ForwardingShipmentHeaderId && shipment.Master && !shipment.House">Master</span>
                                     <!-- Consignment No. -->
                                 </div>
                                 <div class="value uppercase truncateText">
-                                    <span *ngIf="shipment.EntityType == 'C' && !shipment.ForwardingShipmentHeaderId && shipment.House" >{{shipment.House}}</span>
-                                    <span *ngIf="shipment.EntityType == 'C' && !shipment.ForwardingShipmentHeaderId && shipment.Master && !shipment.House" >{{shipment.Master}}</span>
-                                    <span *ngIf="shipment.EntityType == 'C' && shipment.ForwardingShipmentHeaderId" > {{GetConsignmentNumberForCustomsForwardingShipment(shipment)}} </span>
-                                    <span *ngIf="shipment.EntityType != 'C'" >{{ConsignmentNumber}}</span>
+                                    <span
+                                        *ngIf="shipment.EntityType == 'C' && !shipment.ForwardingShipmentHeaderId && shipment.House">{{shipment.House}}</span>
+                                    <span
+                                        *ngIf="shipment.EntityType == 'C' && !shipment.ForwardingShipmentHeaderId && shipment.Master && !shipment.House">{{shipment.Master}}</span>
+                                    <span *ngIf="shipment.EntityType == 'C' && shipment.ForwardingShipmentHeaderId">
+                                        {{GetConsignmentNumberForCustomsForwardingShipment(shipment)}} </span>
+                                    <span *ngIf="shipment.EntityType != 'C'">{{ConsignmentNumber}}</span>
                                 </div>
                             </div>
                         </div>
@@ -263,12 +340,13 @@
 
 
 
-                                <div class="subtitle hide-mobile" [attr.src]="SetShipmenTypeForRouting(shipment)">ROUTING</div>
+                                <div class="subtitle hide-mobile" [attr.src]="SetShipmenTypeForRouting(shipment)">
+                                    ROUTING</div>
                                 <div class="value truncateText hide-mobile">
                                     {{shipment.FromPortCode}} to {{shipment.ToPortCode}} <br>
-                                    <span style="font-weight:bold">  {{ShipmenTypeForRouting}}</span>
-                                </div>
                                     <span style="font-weight:bold"> {{ShipmenTypeForRouting}}</span>
+                                </div>
+                                <span style="font-weight:bold"> {{ShipmenTypeForRouting}}</span>
 
                             </div>
                         </div>
@@ -283,7 +361,8 @@
                                     {{shipment.GrossWeight || 0}} {{shipment.GrossWeightUnitCode}}
                                 </div>
 
-                                <div class="subtitle hide-mobile" [attr.src]="SetEstimationORActualDate(shipment)">{{TitleOfEstimationORActualDate}}</div>
+                                <div class="subtitle hide-mobile" [attr.src]="SetEstimationORActualDate(shipment)">
+                                    {{TitleOfEstimationORActualDate}}</div>
                                 <div class="value truncateText">
                                     {{ValueOfEstimationORActualDate | date: "d-MMM-y, h:mm"}}
                                 </div>
@@ -333,37 +412,43 @@
                                 <div class="value truncateText">
 
 
-                                    <app-tooltip *ngIf="shipment.CurrentMilestoneExceptions" [ShowHeader]="true" [Title]="'Exception'">
+                                    <app-tooltip *ngIf="shipment.CurrentMilestoneExceptions" [ShowHeader]="true"
+                                        [Title]="'Exception'">
                                         <div tooltip-trigger>
                                             <div (click)="$event.stopPropagation()" class="icon-danger">!</div>
                                         </div>
                                         <div tooltip-body>
                                             <div style="text-align: right;">
-                                                {{ shipment.CurrentMilestoneExceptions?.split(',')[0] | date:'dd/MM/yyyy, HH:mm'}}
+                                                {{ shipment.CurrentMilestoneExceptions?.split(',')[0] |
+                                                date:'dd/MM/yyyy, HH:mm'}}
                                                 <br>
                                                 {{shipment.CurrentMilestoneExceptions.substring(shipment.CurrentMilestoneExceptions.indexOf(',')+1)}}
                                             </div>
                                         </div>
                                     </app-tooltip>
-                                        {{ shipment.CurrentMilestoneName }}
-                                    <div class="value mobile-only">{{ shipment.CurrentMilestoneDate | date: "d-MMM-y, h:mm" }}</div>
+                                    {{ shipment.CurrentMilestoneName }}
+                                    <div class="value mobile-only">{{ shipment.CurrentMilestoneDate | date: "d-MMM-y,
+                                        h:mm" }}</div>
                                 </div>
 
 
                                 <div class="subtitle hide-mobile">Last Updated</div>
-                                <div class="value hide-mobile">{{ shipment.CurrentMilestoneDate | date: "d-MMM-y, h:mm" }}</div>
+                                <div class="value hide-mobile">{{ shipment.CurrentMilestoneDate | date: "d-MMM-y, h:mm"
+                                    }}</div>
                             </div>
                         </div>
 
                         <!-- NEXT STATUS -->
-                        <div *ngIf="shipment.FutureMilstoneName != null" class="column col-md-1 status hide-mobile" style="width: 13%;">
+                        <div *ngIf="shipment.FutureMilstoneName != null" class="column col-md-1 status hide-mobile"
+                            style="width: 13%;">
                             <div>
                                 <div class="subtitle">NEXT STATUS</div>
                                 <div class="value truncateText">{{ shipment.FutureMilstoneName }}</div>
 
 
                                 <div class="subtitle hide-mobile">Estimated Date</div>
-                                <div class="value hide-mobile">{{ shipment.FutureMilstoneDate | date: "d-MMM-y, h:mm" }}</div>
+                                <div class="value hide-mobile">{{ shipment.FutureMilstoneDate | date: "d-MMM-y, h:mm" }}
+                                </div>
                             </div>
                         </div>
 
@@ -395,8 +480,9 @@
 
 
                     <div class="checkbox-filteritem" *ngFor="let customer of FiltersInvitedCustomers">
-                        <CheckBox [Bind]="'IsSelected'" [Value]="customer.IsSelected" (ValueChanged)="OnCustomerValueChanged($event, customer)"
-                                  [Text]="customer.Name" [DataContext]="customer"></CheckBox>
+                        <CheckBox [Bind]="'IsSelected'" [Value]="customer.IsSelected"
+                            (ValueChanged)="OnCustomerValueChanged($event, customer)" [Text]="customer.Name"
+                            [DataContext]="customer"></CheckBox>
                         <!-- <div style="float: right;" class="counter">0</div> -->
                     </div>
 
@@ -404,55 +490,65 @@
             </li>
 
             <li [class.expanded]="isMilestonesStatusFilterExpanded">
-                <div class="filter-title" (click)="isMilestonesStatusFilterExpanded = !isMilestonesStatusFilterExpanded">Status</div>
+                <div class="filter-title"
+                    (click)="isMilestonesStatusFilterExpanded = !isMilestonesStatusFilterExpanded">Status</div>
                 <div class="expand-icon" (click)="isMilestonesStatusFilterExpanded = !isMilestonesStatusFilterExpanded">
-                    <img src="./assets/images/icons/down-arrow.png" alt=" " [class.expanded]="isMilestonesStatusFilterExpanded" />
+                    <img src="./assets/images/icons/down-arrow.png" alt=" "
+                        [class.expanded]="isMilestonesStatusFilterExpanded" />
                 </div>
                 <div class="expanded-list" [class.show]="isMilestonesStatusFilterExpanded">
 
 
                     <div class="checkbox-filteritem" *ngFor="let state of MilestonesStatus">
                         <CheckBox [Value]="state.IsSelected" [Text]="state.EnglishName"
-                        (ValueChanged)="OnMilestonesStatusFilterChanged($event, state)"></CheckBox>
+                            (ValueChanged)="OnMilestonesStatusFilterChanged($event, state)"></CheckBox>
                     </div>
 
                 </div>
             </li>
 
             <li class="mobile-only" [class.expanded]="isShipmentTypeFilterExpanded">
-                <div class="filter-title" (click)="isShipmentTypeFilterExpanded = !isShipmentTypeFilterExpanded">Shipment Type</div>
+                <div class="filter-title" (click)="isShipmentTypeFilterExpanded = !isShipmentTypeFilterExpanded">
+                    Shipment Type</div>
                 <div class="expand-icon" (click)="isShipmentTypeFilterExpanded = !isShipmentTypeFilterExpanded">
-                    <img src="./assets/images/icons/down-arrow.png" alt=" " [class.expanded]="isShipmentTypeFilterExpanded" />
+                    <img src="./assets/images/icons/down-arrow.png" alt=" "
+                        [class.expanded]="isShipmentTypeFilterExpanded" />
                 </div>
                 <div class="expanded-list" [class.show]="isShipmentTypeFilterExpanded">
 
 
-                    <div class="checkbox-filteritem" *ngFor="let item of ToggleFilters.slice(0, 0).concat(ToggleFilters.slice(2,ToggleFilters.length))">
+                    <div class="checkbox-filteritem"
+                        *ngFor="let item of ToggleFilters.slice(0, 0).concat(ToggleFilters.slice(2,ToggleFilters.length))">
                         <CheckBox [Value]="selectedShipmentTypesFilter.includes(item)" [Text]="item.Name"
-                        (ValueChanged)="OnShipmentTypeFilterChanged($event, item)"></CheckBox>
+                            (ValueChanged)="OnShipmentTypeFilterChanged($event, item)"></CheckBox>
                     </div>
 
                 </div>
             </li>
 
-            <li  class="mobile-only" [class.expanded]="isShipmentDirectionFilterExpanded">
-                <div class="filter-title" (click)="isShipmentDirectionFilterExpanded = !isShipmentDirectionFilterExpanded">Shipment Direction</div>
-                <div class="expand-icon" (click)="isShipmentDirectionFilterExpanded = !isShipmentDirectionFilterExpanded">
-                    <img src="./assets/images/icons/down-arrow.png" alt=" " [class.expanded]="isShipmentDirectionFilterExpanded" />
+            <li class="mobile-only" [class.expanded]="isShipmentDirectionFilterExpanded">
+                <div class="filter-title"
+                    (click)="isShipmentDirectionFilterExpanded = !isShipmentDirectionFilterExpanded">Shipment Direction
+                </div>
+                <div class="expand-icon"
+                    (click)="isShipmentDirectionFilterExpanded = !isShipmentDirectionFilterExpanded">
+                    <img src="./assets/images/icons/down-arrow.png" alt=" "
+                        [class.expanded]="isShipmentDirectionFilterExpanded" />
                 </div>
                 <div class="expanded-list" [class.show]="isShipmentDirectionFilterExpanded">
 
 
                     <div class="checkbox-filteritem" *ngFor="let item of ToggleFilters.slice(0,2)">
                         <CheckBox [Value]="selectedShipmentDirectionsFilter.includes(item)" [Text]="item.Name"
-                        (ValueChanged)="OnShipmentDirectionFilterChanged($event, item)"></CheckBox>
+                            (ValueChanged)="OnShipmentDirectionFilterChanged($event, item)"></CheckBox>
                     </div>
 
                 </div>
             </li>
             <li class="mobile-only">
-                <div class="filter-title" >
-                    <CheckBox (ValueChanged)="OnAdvancedHasExceptionChanged($event)" [Text]="'Exceptions Only'" [Value]="hasExceptionAdvancedFilter"></CheckBox>
+                <div class="filter-title">
+                    <CheckBox (ValueChanged)="OnAdvancedHasExceptionChanged($event)" [Text]="'Exceptions Only'"
+                        [Value]="hasExceptionAdvancedFilter"></CheckBox>
                 </div>
             </li>
         </ul>
@@ -502,20 +598,19 @@
 
     <!-- Details Menu - shipment more -->
     <details-menu [Show]="showShipmentDetailsMenu" [Toggle]="'showShipmentDetailsMenu'" [DataContext]="this"
-                  [MenuTitle]="'Sort By'"
-                  [Buttons]="[{Code: 'set', Name:'Set as favorite'}, {Code: 'share', Name:'Share'}, {Code: 'copyRef', Name:'Copy Reference #'}]"
-                  (ButtonClicked)="ShipmentDetailsMenuClicked($event)"></details-menu>
+        [MenuTitle]="'Sort By'"
+        [Buttons]="[{Code: 'set', Name:'Set as favorite'}, {Code: 'share', Name:'Share'}, {Code: 'copyRef', Name:'Copy Reference #'}]"
+        (ButtonClicked)="ShipmentDetailsMenuClicked($event)"></details-menu>
 
 </div>
 
- <!-- Mobile: floating bar -->
- <div class="floating-bar mobile-only">
+<!-- Mobile: floating bar -->
+<div class="floating-bar mobile-only">
     <ul>
         <li ><img src="./assets/images/icons/star@1x.png" alt=""></li>
-        <li (click)="FocusOnSearchInput()"><img src="./assets/images/icons/search@1x.png" alt=""></li>
+        <li (click)="ToggleSearchPanel()"><img src="./assets/images/icons/search@1x.png" alt=""></li>
         <li (click)="isFiltersSideBarOpened = !isFiltersSideBarOpened"><img src="./assets/images/icons/filter@1x-white.png" alt=""></li>
         <li (click)="showMobileSortMenu = !showMobileSortMenu"><img src="./assets/images/icons/sort@1x-white.png"
             [class.FlipImgVert]="isSortDescending == SortOptions.ASC" alt=""></li>
     </ul>
 </div>
-
