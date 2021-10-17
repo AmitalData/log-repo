@@ -84,7 +84,7 @@ export class DWQueryBuilderComponent extends DWQueryBuilderBaseComponent {
     IsLoadShipmentChargesTypeResource: boolean = false;
     KPIFeatureToggle: any;
     private ChargesFactMeasurementFields: string[] = ['Gross Weight Per Ton', 'Order Gross Weight', 'Order Gross Weight in Ton',
-        'Order Volume', 'Total Volume(CBM)', 'Volumetric Weight', 'Number of Packages', 'Order Number of Packages','Gross Weight (KG)'];
+        'Order Volume', 'Total Volume (CBM)', 'Volumetric Weight', 'Number of Packages', 'Order Number of Packages','Gross Weight (KG)'];
 
     @Output() BackCompleted: EventEmitter<boolean> = new EventEmitter<boolean>();
 
@@ -612,7 +612,7 @@ export class DWQueryBuilderComponent extends DWQueryBuilderBaseComponent {
         if (!this.HasValitaionError(IsChargesFactMeasurementField)) {
             return isValidate;  
         } 
-        this.ShowValidateMessage("You are not allowed to add " + this.SelectedItem.DisplayName + " column unless you add the Shipment Number column");
+        this.ShowValidateMessage("You are not allowed to add " + this.SelectedItem.DisplayName + " column unless you add the Shipment Number or Master Shipment Number column");
         isValidate = false;
     }
 
@@ -691,7 +691,7 @@ export class DWQueryBuilderComponent extends DWQueryBuilderBaseComponent {
         var isChargesFactMeasurementField = this.ChargesFactMeasurementFields.filter(a => a == selectedItem.DisplayName)[0] ? true : false
 
         if (isChargesFactMeasurementField && !this.hasShipmentOrMasterNumberField() && this.FactTableName == "Fact_Charges") {
-            this.ShowValidateMessage("You are not allowed to add " + selectedItem.DisplayName + " filter unless you add the Shipment Number column");
+            this.ShowValidateMessage("You are not allowed to add " + selectedItem.DisplayName + " filter unless you add the Shipment Number or Master Shipment Number column");
              
             return;
         }
@@ -940,7 +940,7 @@ export class DWQueryBuilderComponent extends DWQueryBuilderBaseComponent {
         }
  
         if ((this.hasMeasurementFieldsInFactCharges() || this.hasMeasurementFilterInFactCharges()) && !this.hasShipmentOrMasterNumberField()) {
-            this.ShowValidateMessage("Please add Shipment Number column to load the data");
+            this.ShowValidateMessage("Please add Shipment Number or Master Shipment Number column to load the data");
             return;
         }
 
@@ -1049,7 +1049,7 @@ export class DWQueryBuilderComponent extends DWQueryBuilderBaseComponent {
         }
           
         if ((this.hasMeasurementFieldsInFactCharges() || this.hasMeasurementFilterInFactCharges()) && !this.hasShipmentOrMasterNumberField()) {
-            this.ShowValidateMessage("You are not allowed to save changes unless you add the Shipment Number column");
+            this.ShowValidateMessage("You are not allowed to save changes unless you add the Shipment Number or Master Shipment Number column");
             return;
         }
          
@@ -1105,7 +1105,7 @@ export class DWQueryBuilderComponent extends DWQueryBuilderBaseComponent {
 
     private hasMeasurementFieldsInFactCharges() {
 
-        if (this.FactTableName != "Fact_Charges") {
+        if (this.FactTableName != "Fact_Charges" &&  this.FactTableName != "Fact_MasterCharges") {
             return false;
         }  
         var measurementFields = this.SelectedFieldsDataSource.filter(element => this.IsFactChargesMeasurementFields(element) == true);
@@ -1115,7 +1115,7 @@ export class DWQueryBuilderComponent extends DWQueryBuilderBaseComponent {
 
     private hasMeasurementFilterInFactCharges() {
 
-        if (this.FactTableName != "Fact_Charges") {
+        if (this.FactTableName != "Fact_Charges" && this.FactTableName != "Fact_MasterCharges") {
             return false;
         }
         var measurementFilters = this.GetMeasurementFilters();
