@@ -31,7 +31,7 @@ import { GLAccountFollowUpDataPM } from '../../../EntityPMs/GLaccountFollowUpDat
 import { GLaccountFollowUpDataExtendedPMService } from 'Accounting/Services/ExtendedPMs/GLaccountFollowUpDataExtendedPMService';
 import { GLAccountCardsDataPMService } from '../../../Services/StandardPMs/GLAccountCardsDataPMService';
 import { GLAccountExtendedPMService } from '../../../Services/ExtendedPMs/GLAccountExtendedPMService';
-
+declare var makeAmBarChart;
 @Component({
 
     templateUrl: './GLAccountOverviewComponent.html',
@@ -942,10 +942,10 @@ export class GLAccountOverviewComponent extends BaseComponent {
 
             i++;
         });
-
+        
         var poisition = this.isRTL == true ? "right" : "left";
 
-    //    makeAmBarChart(this.chartId, Graphs, DataProvider, max, null, null, null, null, poisition);
+        makeAmBarChart(this.chartId, Graphs, DataProvider, max, null, null, null, null, poisition);
 
     }
     //
