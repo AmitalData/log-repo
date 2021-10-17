@@ -651,6 +651,7 @@ namespace Logitude.BL.InvoiceModel.Tools
                         QBOInvoice.SalesTermRef = new ReferenceType { Value = PaymentTermExternalCode };
                     if (!string.IsNullOrEmpty(invoice.GlobalTaxCalculation))
                     {
+                        QBOInvoice.GlobalTaxCalculationSpecified = true;
                         QBOInvoice.GlobalTaxCalculation = GetGlobalTaxCalculation(invoice.GlobalTaxCalculation);
                     }
                     System.Collections.Generic.List<Line> lineList = new List<Line>();
@@ -747,7 +748,11 @@ namespace Logitude.BL.InvoiceModel.Tools
                     QBOInvoice.TransactionLocationType = IndiaExternalQBOStates;
                     if (PaymentTermExternalCode != null)
                         QBOInvoice.SalesTermRef = new ReferenceType { Value = PaymentTermExternalCode };
-
+                    if (!string.IsNullOrEmpty(invoice.GlobalTaxCalculation))
+                    {
+                        QBOInvoice.GlobalTaxCalculationSpecified = true;
+                        QBOInvoice.GlobalTaxCalculation = GetGlobalTaxCalculation(invoice.GlobalTaxCalculation);
+                    }
                     System.Collections.Generic.List<Line> lineList = new List<Line>();
                     string ExternalVatTypeCodeWhereIsNotZeroPercentage = "";
                     for (int i = 0; i < lines.Count; i++)
