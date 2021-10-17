@@ -355,7 +355,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
         this.paymentPM.FuturePaymentDateTime = newValue;
     }
 
-    public get AutomaticPayment() { return this.paymentPM.AutomaticPayment; }
+    public get AutomaticPayment() { return (this.paymentPM.AutomaticPayment ? this.paymentPM.AutomaticPayment : null) }
     public set AutomaticPayment(newValue: number) {
         this.paymentPM.AutomaticPayment = newValue;
     }
@@ -2774,7 +2774,6 @@ export class PaymentMethodModel extends BaseComponent {
         errorLogPM.Tenant = SessionLocator.Tenant;
         errorLogPM.UserName = SessionLocator.LoggedUserId + "/" + SessionLocator.LoggedUserPM.Email;
         errorLogPM.LogDate = DateTool.GetCurrentDateTimeAsUtc();
-
         let myBankList = this._BanksList.map(r => JSON.stringify({
             'InternalBankId': r.Id, 'LocalName': r.LocalName, 'EnglishName': r.EnglishName
         }));
@@ -2982,7 +2981,6 @@ export class PaymentMethodModel extends BaseComponent {
                                                                 agentBanks = response.Result.filter(d => d.PayerTypeCode == "3" && !d.InActive);
                                                                 //fill the LOV
                                                                 this.BanksList = connectedBanks.concat(agentBanks);
-
                                                                 //select bank
                                                                 if (this.InternalBankId != null) {
                                                                     var bank: CustomBankList = this.BanksList.filter(d => d.Id == this.InternalBankId)[0];
@@ -3310,6 +3308,26 @@ export class PaymentMethodModel extends BaseComponent {
 
                                 this.parent.PaymentMethodsList.Insert(this.parent.paymentMethodModelMax);
                             }
+                            // for dsv when more than one bank
+                            if (customBank == null && this.BanksList.length > 0 ) {
+                                for (let bank of this.BanksList) {
+                                    if (this.parent.BetweenMinAndMax && bank.PayerTypeCode == "3" && this.parent.PaymentMethodsList.Length == 0) {
+                                        this.BankIsNull = true;
+                                        this.methodPM.MethodTypeCode = "2";
+                                        this.methodPM.PayerActivityTypeCode = "3";
+                                        this.methodPM.Amount = this.parent.DeclarationPM.TotalTax;
+                                        this.InternalBankName = null;
+                                        this.InternalBankId = null;
+                                        this.parent.paymentMethodTypeListService.getSingleFromCache("2").subscribe((response: ServiceResponse) => {
+                                            this.methodPM.MethodTypeName = response.Result.LocalName;
+                                        });
+                                        this.parent.customerActivityTypeListService.getSingleFromCache("3").subscribe((response: ServiceResponse) => {
+                                            this.methodPM.PayerActivityTypeName = response.Result.LocalName;
+                                        });
+                                        this.parent.PaymentMethodsList.Insert(this.parent.paymentMethodModelMax);
+                                    }
+                                }
+                            }
 
                             else if (this.parent.PaymentMethodsList.Length == 0) {
                                 if (!AppTool.IsNullOrEmpty(this.parent.paymentPM)) {
@@ -3330,6 +3348,8 @@ export class PaymentMethodModel extends BaseComponent {
 
 
     }
+
+   
 
     get InternalBankName() { return this.methodPM.InternalBankName; }
     set InternalBankName(value: string) {
