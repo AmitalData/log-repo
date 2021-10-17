@@ -57,9 +57,14 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
              "NULL OrderShipmentNumber , " +
              "min(AdditionalData.GatepassDocumentsReady) as GatepassDocumentsReady ";
 
+
+            var carrierCardFields =
+            "min(CarrierCard.EnglishName) as CarrierEnglishName, " +
+            "min(CarrierCard.LocalName) as CarrierLocalName ";
+
             var groupSelect = "Min(P.Id) as ForwardingIdForCustom";
 
-            var selectScript = $"SELECT {updatedShipmentFields}, {shipmentComputedFields}, {shipmentMasterFields}, {groupSelect} , {forwardingShipmentFields} , {shipmentAdditionalDataFields}";
+            var selectScript = $"SELECT {updatedShipmentFields}, {shipmentComputedFields}, {shipmentMasterFields}, {groupSelect} , {forwardingShipmentFields} , {shipmentAdditionalDataFields}, {carrierCardFields}";
 
 
 
@@ -71,6 +76,8 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
                              $"LEFT OUTER JOIN dbo.ShipmentMasterDatas ForwardingMaster    ON ForwardingMaster.Id = P.MasterShipmentDataId "+
                              $"LEFT OUTER JOIN dbo.ShipmentComputedFields ForwardingComputed    ON ForwardingComputed.Id = P.Id " +
                              $"LEFT OUTER JOIN dbo.ShipmentAdditionalCloudDatas AdditionalData    ON AdditionalData.Id = P.Id " +
+                             $"LEFT OUTER JOIN dbo.ShipmentPickUpDeliveries ShipmentDeliveries    ON ShipmentDeliveries.ShipmentId = P.Id "+
+                             $"LEFT OUTER JOIN dbo.Cards CarrierCard    ON CarrierCard.Id = ShipmentDeliveries.CarrierId " +
                              $"LEFT OUTER JOIN dbo.Cards ConsigneeCard    ON ConsigneeCard.Id = C.ConsigneeId " +
                              $"LEFT OUTER JOIN dbo.Cards ShipperCard    ON ShipperCard.Id = C.ShipperId";
 
@@ -185,8 +192,11 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
              "min(SHO.OrderNumber) as OrderShipmentNumber, " +
              "min(SHO.CustomerReferences) as OrderCustomerReference ";
 
+            var carrierCardFields =
+            "min(CarrierCard.EnglishName) as CarrierEnglishName, " +
+            "min(CarrierCard.LocalName) as CarrierLocalName ";
 
-            var selectScript = $"Select {updatedShipmentFields} , {shipmentComputedFields} , {shipmentMasterFields} , {forwardingShipmentFields} , {shipmentAdditionalDataFields} , {shipmentOrderFields} ";
+            var selectScript = $"Select {updatedShipmentFields} , {shipmentComputedFields} , {shipmentMasterFields} , {forwardingShipmentFields} , {shipmentAdditionalDataFields} , {shipmentOrderFields}, {carrierCardFields} ";
 
 
 
@@ -200,6 +210,8 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
                             LEFT OUTER JOIN dbo.ShipmentOrders SHO    ON SHO.ShipmentId = P.Id
                             LEFT OUTER JOIN dbo.ShipmentMasterDatas Mas    ON Mas.Id = P.MasterShipmentDataId
                             LEFT OUTER JOIN dbo.ShipmentAdditionalCloudDatas AdditionalData    ON AdditionalData.Id = P.Id
+                            LEFT OUTER JOIN dbo.ShipmentPickUpDeliveries ShipmentDeliveries    ON ShipmentDeliveries.ShipmentId = P.Id
+							LEFT OUTER JOIN dbo.Cards CarrierCard    ON CarrierCard.Id = ShipmentDeliveries.CarrierId
 							LEFT OUTER JOIN dbo.Cards ConsigneeCard    ON ConsigneeCard.Id = P.ConsigneeId
 							LEFT OUTER JOIN dbo.Cards ShipperCard    ON ShipperCard.Id = P.ShipperId";
 

@@ -967,8 +967,8 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
             milestones.Add(new Milestone()
             {
                 Id = 18,
-                Code = "DeliveryOut",
-                Name = "Delivery Out",
+                Code = "DeliveryOnTheWay",
+                Name = "Delivery on the way",
                 Date = shipment.DeliveryDate,
                 EstimationDate = shipment.DeliveryEstimationDate,
                 Done = shipment.DeliveryDone,
