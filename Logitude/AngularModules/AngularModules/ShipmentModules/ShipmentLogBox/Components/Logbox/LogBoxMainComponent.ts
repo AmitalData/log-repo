@@ -478,7 +478,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
             this.QueryColumns.push(this.GetQueryColumn("StatusName", 'Text', 'Status'));
 
             if (this.showComputedStatusDateField()) {
-                this.HoverTemplateIndex = this.HoverTemplateIndex + 1 ;
+                this.HoverTemplateIndex = this.isPrivateLabel ? this.HoverTemplateIndex + 1 : this.HoverTemplateIndex;
                 this.columns.push({
                     FieldName: 'ComputedStatusDate',
                     DataTypeCode: 'String',
