@@ -102,6 +102,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                     TrialEndDate = DateTime.Now.AddDays(31),
                     PackageCode = packageCode,
                     NumberOfUsers = 1,
+                    TotalNumberOfUsers = 1,
                     SearchFields = globalTenant.Id + "," + globalTenant.CompanyName + ",1",
                     AWBMessagesCCSTypeCode = "CHAMP",                        
                 };
