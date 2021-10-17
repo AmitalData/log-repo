@@ -1,9 +1,11 @@
 import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
+import { AddressList } from 'Common/EntityLists/AddressList';
+import { CardList } from 'Common/EntityLists/CardList';
 import { CountryCityList } from 'Common/EntityLists/CountryCityList';
 import { CountryList } from 'Common/EntityLists/CountryList';
 import { QuoteOPPM } from 'QuoteOPM/EntityPMs/QuoteOPPM';
-import { NewQuoteDataService } from '../../Services/new-quote-data/new-quote-data.service';
+import { filterIsNotNull, NewQuoteDataService } from '../../Services/new-quote-data/new-quote-data.service';
 
 @Component({
   selector: 'app-new-quote-pickup',
@@ -17,6 +19,8 @@ export class NewQuotePickupComponent implements OnInit {
   countryList: CountryList[] = []
   cityListAll: CountryCityList[] = []
   cityList: CountryCityList[] = []
+  shipperNames: CardList[] = []
+  Address: AddressList = null as any;
 
   constructor(
     private newQuoteDataService: NewQuoteDataService,
@@ -25,6 +29,11 @@ export class NewQuotePickupComponent implements OnInit {
   ngOnInit(): void {
     this.InitCountries();
     this.InitCity();
+    this.initShipperNames()
+  }
+
+  private async initShipperNames() {
+    this.shipperNames = await this.newQuoteDataService.getCardsTable();
   }
 
   private async InitCountries() {
@@ -52,24 +61,26 @@ export class NewQuotePickupComponent implements OnInit {
   }
 
   subscribeCtrls() {
-    this.formGroup.controls.pickupCity.valueChanges.subscribe(val=>this.EntityPM.FromAddressCity = val)
-      this.formGroup.controls.pickupZipCode.valueChanges.subscribe(val=> this.EntityPM.FromAddressZipCode = val);
-      this.formGroup.controls.pickupCity.valueChanges.subscribe(val=> this.EntityPM.FromAddressCity = val); // need change when update field to autocomplate
+    this.formGroup.controls.pickupCity.valueChanges.subscribe(val => this.EntityPM.FromAddressCity = val)
+    this.formGroup.controls.pickupZipCode.valueChanges.subscribe(val => this.EntityPM.FromAddressZipCode = val);
+    this.formGroup.controls.pickupCity.valueChanges.subscribe(val => this.EntityPM.FromAddressCity = val); // need change when update field to autocomplate
+    this.formGroup.controls.shipperName.valueChanges.pipe(filterIsNotNull()).subscribe(async (shipperName: CardList) =>
+      this.Address = await this.newQuoteDataService.getAddress(shipperName.Id, shipperName.Tenant));
   }
-    
+
   initDefaultValue() {
     this.formGroup.controls.pickupInclude.setValue(false)
   }
 
-  includeCheckboxChange(e: {checked: boolean, originalEvent: PointerEvent}) {
-    if(e)
+  includeCheckboxChange(e: { checked: boolean, originalEvent: PointerEvent }) {
+    if (e)
       this.EntityPM.IncludePickUp = e.checked;
   }
-  
+
   // onSelectedCity(e) {
   //   console.log(e)    
   // }
-  
+
   onSelectedCountry(country: CountryList) {
     this.EntityPM.FromAddressCountryId = country.Id;
   }

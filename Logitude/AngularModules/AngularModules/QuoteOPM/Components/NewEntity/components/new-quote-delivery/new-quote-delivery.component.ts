@@ -1,9 +1,11 @@
 import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
+import { AddressList } from 'Common/EntityLists/AddressList';
+import { CardList } from 'Common/EntityLists/CardList';
 import { CountryCityList } from 'Common/EntityLists/CountryCityList';
 import { CountryList } from 'Common/EntityLists/CountryList';
 import { QuoteOPPM } from 'QuoteOPM/EntityPMs/QuoteOPPM';
-import { NewQuoteDataService } from '../../Services/new-quote-data/new-quote-data.service';
+import { filterIsNotNull, NewQuoteDataService } from '../../Services/new-quote-data/new-quote-data.service';
 
 @Component({
   selector: 'app-new-quote-delivery',
@@ -13,10 +15,12 @@ import { NewQuoteDataService } from '../../Services/new-quote-data/new-quote-dat
 export class NewQuoteDeliveryComponent implements OnInit {
   @Input() formGroup: FormGroup = null as any;
   @Input() EntityPM: QuoteOPPM = null as any;
+  Address: AddressList = null as any;
 
   countryList: CountryList[] = []
   cityListAll: CountryCityList[] = []
   cityList: CountryCityList[] = []
+  consigneeNames: any[] = []
 
   constructor(
     private newQuoteDataService: NewQuoteDataService,
@@ -25,6 +29,7 @@ export class NewQuoteDeliveryComponent implements OnInit {
   ngOnInit(): void {
     this.InitCountries();
     this.InitCity();
+    this.initConsigneeNames();
   }
 
   private async InitCountries() {
@@ -34,6 +39,10 @@ export class NewQuoteDeliveryComponent implements OnInit {
   private async InitCity() {
     this.cityListAll = await this.newQuoteDataService.getCityTable();
     this.cityList = this.cityListAll;
+  }
+
+  private async initConsigneeNames() {
+    this.consigneeNames = await this.newQuoteDataService.getCardsTable();
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -55,6 +64,8 @@ export class NewQuoteDeliveryComponent implements OnInit {
     this.formGroup.controls.deliveryCity.valueChanges.subscribe(val => this.EntityPM.ToAddressCity = val)
     this.formGroup.controls.deliveryZipCode.valueChanges.subscribe(val => this.EntityPM.FromAddressZipCode = val);
     this.formGroup.controls.deliveryCity.valueChanges.subscribe(val => this.EntityPM.FromAddressCity = val); // need change when update field to autocomplate
+    this.formGroup.controls.consigneeName.valueChanges.pipe(filterIsNotNull()).subscribe(async (consigneeName: CardList) =>
+      this.Address = await this.newQuoteDataService.getAddress(consigneeName.Id, consigneeName.Tenant));
   }
 
   initDefaultValue() {

@@ -40,6 +40,10 @@
         label {
             top: 12px;
         }
+
+        .p-checkbox-label {
+            top: 0;
+        }
     }
 
     .text-style,
@@ -105,7 +109,7 @@
 }
 
 hr {
-    border-top: 2px dashed #1084dc;
+    border-top: 2px dashed #e2f0fb;
     margin: 10px 30px 35px;
 }
 
@@ -122,12 +126,6 @@ hr {
     overflow-x: hidden;
     height: 100%;
     position: relative;
-}
-
-.section-pickup {
-}
-
-.section-delivery {
 }
 
 .disabled {

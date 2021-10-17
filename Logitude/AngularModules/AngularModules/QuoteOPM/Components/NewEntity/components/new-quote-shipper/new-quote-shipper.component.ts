@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnInit, SimpleChanges } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
 import { AddressList } from 'Common/EntityLists/AddressList';
 import { CardList } from 'Common/EntityLists/CardList';
@@ -21,6 +21,7 @@ export class NewQuoteShipperComponent implements OnInit {
 
   constructor(
     private newQuoteDataService: NewQuoteDataService,
+    private cdref: ChangeDetectorRef,
   ) { }
 
   ngOnInit(): void {
@@ -72,6 +73,8 @@ export class NewQuoteShipperComponent implements OnInit {
       this.formGroup.controls.shipperNotes.setValue(shipperName.Notes);
       this.initShipperContacts(shipperName.Id);
       this.setShipperAddress(shipperName);
+      this.onSelectedName(shipperName);
+      this.cdref.detectChanges();
     })
   }
 
