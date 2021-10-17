@@ -478,6 +478,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
             this.QueryColumns.push(this.GetQueryColumn("StatusName", 'Text', 'Status'));
 
             if (this.showComputedStatusDateField()) {
+                this.SetPrivateLabelHoverIndex(); 
                 this.columns.push({
                     FieldName: 'ComputedStatusDate',
                     DataTypeCode: 'String',
@@ -550,7 +551,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
                 EnableHoverVisibility: true,
                 ServerSideSortable: false
             });
-            this.HoverTemplateIndex = this.HasExportShipmentToggle || !this.isPrivateLabel? 6 : 5;
+           this.HoverTemplateIndex = this.HasExportShipmentToggle || !this.isPrivateLabel? 6 : 5;
         }
         else if (this.RequestedDocsLable == "Action Required" && this.SelectedFilter == this.RequestedDocsLable && this.isPrivateLabel) {
             this.columns.push({
@@ -608,6 +609,11 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
         }
         this.CustomColumnsReady.emit(this.columns);
     }
+    SetPrivateLabelHoverIndex() {
+        if (this.isPrivateLabel) { 
+            this.HoverTemplateIndex = this.HoverTemplateIndex + 1
+        } 
+    }
 
     private DisplayAgentColumn() {
         this.columns.push({
@@ -622,6 +628,8 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
         this.QueryColumns.push(this.GetQueryColumn("Agent", 'Text', 'Agent'));
 
     }
+ 
+ 
 
     private showComputedStatusDateField() {
         return this.isPrivateLabel == false || (this.isPrivateLabel == true && (this.SelectedFilter != "My Shipments" && this.SelectedFilter != "Action Required"));
