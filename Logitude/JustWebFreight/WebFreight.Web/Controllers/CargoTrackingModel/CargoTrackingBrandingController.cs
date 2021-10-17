@@ -1,6 +1,7 @@
 ﻿using Logitude.BL.GlobalModel.EntityPMs;
 using Logitude.BL.GlobalModel.EntityQueries;
 using Logitude.BL.Resolvers;
+using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
@@ -25,6 +26,7 @@ namespace WebFreight.Web.Controllers.CargoTrackingModel
             {
                 CargoTrackingHelper cargoTrackingHelper = new CargoTrackingHelper();
                 CargoTrackingBrandingData brandingData = cargoTrackingHelper.GetCargoTrackingBrandingDataByDomain(BrandingDataRequest);
+                brandingData.ForceHttps = LogitudeSettings.ForceHttps;
                 ServiceResponse response = new ServiceResponse();
                 response.Result = brandingData;
                 return Request.CreateResponse(HttpStatusCode.OK, response);
@@ -42,6 +44,7 @@ namespace WebFreight.Web.Controllers.CargoTrackingModel
             {
                 CargoTrackingHelper cargoTrackingHelper = new CargoTrackingHelper();
                 CargoTrackingBrandingData brandingData = cargoTrackingHelper.GetCargoTrackingBrandingDataByDomain(BrandingDataRequest, true);
+                brandingData.ForceHttps = LogitudeSettings.ForceHttps;
                 ServiceResponse response = new ServiceResponse();
                 response.Result = brandingData;
                 return Request.CreateResponse(HttpStatusCode.OK, response);

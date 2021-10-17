@@ -8,6 +8,7 @@ import { ServiceResponse } from 'src/CargoTracking/DataContracts/ServiceResponse
 import { ServiceHelper } from 'src/CargoTracking/Utilities/ServiceHelper';
 import { LoginExtendedService } from 'src/Infrastructure/Services/Extended/LoginExtendedService';
 import { filter } from 'rxjs/operators';
+import { Location } from '@angular/common';
 
 
 
@@ -44,6 +45,7 @@ export class UserDashboardComponent implements AfterViewInit, OnInit
     constructor(
         private brandingService: CargoTrackingBrandingDataExtendedService,
         private loginService: LoginExtendedService,
+        private location: Location,
         private router: Router,
         @Inject('BASE_URL') baseUrl: string) {
         this.baseURL = baseUrl;
@@ -191,6 +193,9 @@ export class UserDashboardComponent implements AfterViewInit, OnInit
         .subscribe((response: ServiceResponse) =>
         {
             if (response.Result) {
+                if(response?.Result?.ForceHttps)
+                    return this.RedirectAppToHttps();
+
                 ServiceHelper.SetCargoTrackingDate(response.Result, this.baseURL);
 
                 this.IsBrandingDataLoaded = true;
@@ -200,6 +205,11 @@ export class UserDashboardComponent implements AfterViewInit, OnInit
             }
 
         });
+    }
+    RedirectAppToHttps(){
+        if (location.protocol === 'http:') {
+            window.location.href = location.href.replace('http', 'https');
+        }
     }
     ngOnInit(): void {
         this.SubscribeRoutingEvents();

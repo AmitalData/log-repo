@@ -38,20 +38,29 @@ export class HomeComponent
 
     private getcargoTrackingData()
     {
-        this.cargoTrackingDataExtendedService.get(ServiceHelper.GetcargoTrackingDataRequest(this.baseUrl)).subscribe((response: ServiceResponse) =>
-        { if(response.Result){
+        this.cargoTrackingDataExtendedService.get(ServiceHelper.GetcargoTrackingDataRequest(this.baseUrl)).subscribe((response: any) =>
+        {
+            if (response.Result) {
 
-            ServiceHelper.SetCargoTrackingDate(response.Result,this.baseUrl);
-            this.IsBrandingDataLoaded = true;
-            this.listenToRouterEvents();
-        }
-        else{
-            this.GoToError401();
-        }
+                if (response?.Result?.ForceHttps)
+                    return this.RedirectAppToHttps();
+
+                ServiceHelper.SetCargoTrackingDate(response.Result, this.baseUrl);
+                this.IsBrandingDataLoaded = true;
+                this.listenToRouterEvents();
+            }
+            else {
+                this.GoToError401();
+            }
 
         });
     }
 
+    RedirectAppToHttps(){
+        if (location.protocol === 'http:') {
+            window.location.href = location.href.replace('http', 'https');
+        }
+    }
 
 
     get ComapnyLogo(){

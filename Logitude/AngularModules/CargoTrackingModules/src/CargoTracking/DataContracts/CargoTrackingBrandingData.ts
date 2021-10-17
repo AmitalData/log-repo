@@ -23,4 +23,5 @@ export class CargoTrackingBrandingData {
     public static InvertedLogoBytes:any;
     public static BackgroundBytes:any;
     public static ShipmentHeaderBytes:any;
+    public static ForceHttps:boolean;
 }
