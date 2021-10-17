@@ -100,5 +100,6 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
         public bool AllowedInTicket { get; set; }
         public bool IsTabsHidden { get; set; }
         public string HashString { get; set; }
+        public string ParentObjectTableName { get; set; }
     }
 }

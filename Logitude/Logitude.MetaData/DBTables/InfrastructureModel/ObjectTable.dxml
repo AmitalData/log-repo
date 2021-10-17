@@ -416,7 +416,7 @@
   <!--try fix-->
   <Column
     Name="AllowedInTicket"
-    
+
     Type="bit">
     <Constraints
       Nullable="false" />
@@ -445,6 +445,13 @@
     Name="HashString"
     Type="nvarchar"
     Size="-1">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ParentObjectTableName"
+    Type="varchar"
+    Size="50">
     <Constraints
       Nullable="true" />
   </Column>
