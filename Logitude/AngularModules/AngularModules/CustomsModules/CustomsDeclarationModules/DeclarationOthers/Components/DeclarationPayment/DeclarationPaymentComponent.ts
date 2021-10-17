@@ -207,7 +207,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
 
 
                                                 this.DeclarationPM = args.EntityPM;
-
+                                                
                                                 if (this.DeclarationPM.IsCourierDeclaration) {
                                                     let myDeclarationCourierStatusListService: DeclarationCourierStatusListService = new DeclarationCourierStatusListService();
 
@@ -2371,9 +2371,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
                         //do not close Win !!
                     }
                     else {
-                        //if OK then  close Win !!
-                        if (SessionLocator.SelectedSession.CurrentWindow != null)
-                            SessionLocator.SelectedSession.CloseCurrentWindow();
+                         //SessionLocator.SelectedSession.CloseCurrentWindow();
                     }
                 }
             };
@@ -2389,6 +2387,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
             let myPaymentResponseData: CustomFileCreditResponseData = res;
             this.RefreshDeclaration();
             SessionLocator.SelectedSession.CurrentEditComponent.ReloadEntityPM();
+            SessionLocator.SelectedSession.CloseCurrentWindow();
         })
             .catch(err => {
                 err = err || "PostSendPaymentOnly return Error (Without message????!!?!)";
@@ -2408,9 +2407,6 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
                     .subscribe(res1 => {
                     });
         }
-
-        SessionLocator.SelectedSession.CloseCurrentWindow();
-
     }
 
     InstructionActualSendToTransfer() {
