@@ -6,11 +6,11 @@
       <app-autocomplate-table
         [columnsShow]="['Code', 'EnglishName', 'Address1', 'CityName', 'CountryName', 'PartnerTypeName']"
         [data]='shipperNames' [fieldShow]='"EnglishName"' [label]="'Name'" [controlName]='"shipperName"'
-        [formGroup]='formGroup' (onSelect)='onSelectedName($event)'>
+        [formGroup]='formGroup'>
       </app-autocomplate-table>
     </div>
 
-    <div *ngIf='formGroup.value.shipperName'>
+    <div *ngIf='Address'>
       <div class="p-field">
         <app-address-textarea [Address]='Address'></app-address-textarea>
       </div>
@@ -23,7 +23,7 @@
   </div>
 
   <div class="col-6 p-fluid">
-    <div *ngIf='formGroup.value.shipperName'>
+    <div *ngIf='Address'>
       <div class="p-field">
         <app-autocomplate-table [columnsShow]="['Email', 'EnglishName']" [data]='shipperContacts'
           [fieldShow]='"EnglishName"' [label]="'Contact'" [controlName]='"shipperContact"' [formGroup]='formGroup'

@@ -53,14 +53,19 @@ export class NewQuoteLeftSideComponent implements OnInit {
       this.changePositionInArr(this.directionList, this.directionList.findIndex(x => x.Name === val), i));
   }
 
-
   async getTransportModeList() {
     this.transportModeList = await this.newQuoteDataService.getTransportModeList()
+    this.sortTransportModeList();
+  }
+
+  sortTransportModeList() {
+    ['Air', 'Inland', 'Ocean'].forEach((val: string, i: number) =>
+      this.changePositionInArr(this.transportModeList, this.transportModeList.findIndex(x => x.Name === val), i));
   }
 
   async getShipmentTypeList() {
     this.shipmentTypeList = await this.newQuoteDataService.getShipmentTypeList()
-    this.shipmentTypeList = this.shipmentTypeList.filter(x => x.Name === 'FTL' || x.Name === 'LCL')
+    this.shipmentTypeList = this.shipmentTypeList.filter(x => x.Name === 'FCL' || x.Name === 'LCL')
   }
 
   ngOnChanges(changes: SimpleChanges) {
