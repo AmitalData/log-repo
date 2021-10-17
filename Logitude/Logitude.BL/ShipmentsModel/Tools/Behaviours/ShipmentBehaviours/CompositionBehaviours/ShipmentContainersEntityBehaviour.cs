@@ -433,6 +433,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
             {
                 entityPM.ShipmentFirstPickupTo = null;
                 entityPM.ShipmentFirstPickupFrom = null;
+                entityPM.ShipmentPickupETA = null;
+                entityPM.ShipmentPickupETD = null;
+                entityPM.ShipmentPickupATA = null;
+                entityPM.ShipmentPickupATD = null;
                 return;
             }
 
@@ -457,6 +461,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
             {
                 entityPM.ShipmentLastDeliveryFrom = null;
                 entityPM.ShipmentLastDeliveryTo = null;
+                entityPM.ShipmentDeliveryETA = null;
+                entityPM.ShipmentDeliveryETD = null;
+                entityPM.ShipmentDeliveryATA = null;
+                entityPM.ShipmentDeliveryATD = null;
                 return;
             }
             
@@ -767,6 +775,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
             {
                 containerPM.ShipmentFirstPickupFrom = null;
                 containerPM.ShipmentFirstPickupTo = null;
+                containerPM.ShipmentPickupETA = null;
+                containerPM.ShipmentPickupETD = null;
+                containerPM.ShipmentPickupATA = null;
+                containerPM.ShipmentPickupATD = null;
                 containerService.Update(containerPM);
             }
         }
@@ -802,6 +814,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
             {
                 containerPM.ShipmentLastDeliveryFrom = null;
                 containerPM.ShipmentLastDeliveryTo = null;
+                containerPM.ShipmentDeliveryETA = null;
+                containerPM.ShipmentDeliveryETD = null;
+                containerPM.ShipmentDeliveryATA = null;
+                containerPM.ShipmentDeliveryATD = null;
                 containerService.Update(containerPM);
             }
         }
