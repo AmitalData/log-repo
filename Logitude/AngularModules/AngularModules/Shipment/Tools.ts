@@ -5233,11 +5233,12 @@ export class RoutingHelper {
         followups = followups.filter(f => f.LegType.indexOf("PreCarriage") > -1);
 
         if (followups.length > 0) {
+            var CurrentSession = SessionLocator.SelectedSession;
             followups.forEach(item => {
                 entityPM.RemoveShipmentFollowUp(item);
             });
 
-            this.CurrentSession.FireEvent("FollowupsChanged");
+            CurrentSession.FireEvent("FollowupsChanged");
         }
     }
     public static RemoveOnCarriageLeg(entityPM: ShipmentPM) {
@@ -5407,11 +5408,13 @@ export class RoutingHelper {
         followups = followups.filter(f => f.LegType.indexOf("Transshipment1") > -1);
 
         if (followups.length > 0) {
+            var CurrentSession = SessionLocator.SelectedSession;
+
             followups.forEach(item => {
                 entityPM.RemoveShipmentFollowUp(item);
             });
 
-            this.CurrentSession.FireEvent("FollowupsChanged");
+            CurrentSession.FireEvent("FollowupsChanged");
         }
     }
     public static RemoveTransshipment2Leg(entityPM: ShipmentPM) {
@@ -5498,11 +5501,12 @@ export class RoutingHelper {
         followups = followups.filter(f => f.LegType.indexOf("Transshipment2") > -1);
 
         if (followups.length > 0) {
+            var CurrentSession = SessionLocator.SelectedSession;
             followups.forEach(item => {
                 entityPM.RemoveShipmentFollowUp(item);
             });
 
-            this.CurrentSession.FireEvent("FollowupsChanged");
+            CurrentSession.FireEvent("FollowupsChanged");
         }
     }
     public static RemoveTransshipment3Leg(entityPM: ShipmentPM) {
@@ -5589,11 +5593,12 @@ export class RoutingHelper {
         followups = followups.filter(f => f.LegType.indexOf("Transshipment3") > -1);
 
         if (followups.length > 0) {
+            var CurrentSession = SessionLocator.SelectedSession;
             followups.forEach(item => {
                 entityPM.RemoveShipmentFollowUp(item);
             });
 
-            this.CurrentSession.FireEvent("FollowupsChanged");
+            CurrentSession.FireEvent("FollowupsChanged");
         }
     }
     public static RemovePreForwardingLeg(entityPM: ShipmentPM) {
@@ -5671,11 +5676,12 @@ export class RoutingHelper {
         followups = followups.filter(f => f.LegType.indexOf("PreForwarding") > -1);
 
         if (followups.length > 0) {
+            var CurrentSession = SessionLocator.SelectedSession;
             followups.forEach(item => {
                 entityPM.RemoveShipmentFollowUp(item);
             });
 
-            this.CurrentSession.FireEvent("FollowupsChanged");
+            CurrentSession.FireEvent("FollowupsChanged");
         }
     }
     public static RemoveOnForwardingLeg(entityPM: ShipmentPM) {
@@ -5754,11 +5760,12 @@ export class RoutingHelper {
         followups = followups.filter(f => f.LegType.indexOf("OnForwarding") > -1);
 
         if (followups.length > 0) {
+            var CurrentSession = SessionLocator.SelectedSession;
             followups.forEach(item => {
                 entityPM.RemoveShipmentFollowUp(item);
             });
 
-            this.CurrentSession.FireEvent("FollowupsChanged");
+            CurrentSession.FireEvent("FollowupsChanged");
         }
     }
 
