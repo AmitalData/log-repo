@@ -105,6 +105,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                 LoggingObjectTableId = objectTableIdCourierMaster,
                                 LoggingEntityId =  requestParams.LoggingEntityId,
                                 LoggingObjectTableId2 = objectTableId,
+                                LoggingEntityId2 = "_" + customResponse.ServerSplitDeclarationsList.FirstOrDefault(),
                                 DeclarationList = declarations,
                                 InterfaceTypeCode = "8250",
                                 //LoggingEntityReference = declarationPM.DeclarationNumber,
