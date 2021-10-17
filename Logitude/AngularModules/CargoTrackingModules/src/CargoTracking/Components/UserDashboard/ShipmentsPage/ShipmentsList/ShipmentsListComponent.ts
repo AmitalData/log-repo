@@ -188,12 +188,12 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
     SetTitleForSupplierOrClient(shipment: CargoTrackingShipmentList) {
         var title;
         switch (shipment.DirectionId) {
-            case 'E': {
+            case 'I': {
                 title = "CLIENT"
                 break;
             }
 
-            case 'I':
+            case 'E':
             case 'C': {
                 title = "SUPPLIER"
                 break;
@@ -213,12 +213,12 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
 
     private SetSupplierOrCleintValueByDirection(shipment: CargoTrackingShipmentList, value: any) {
         switch (shipment.DirectionId) {
-            case 'E': {
+            case 'I': {
                 value = shipment.ShipperName;
                 break;
             }
 
-            case 'I': {
+            case 'E': {
                 value = shipment.ConsigneeName;
                 break;
             }
