@@ -1013,7 +1013,13 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
     {
         this.ShowMobileSearch = false;
         this.SearchText = this.PanelSearchText;
-        this.Search();
+        if(!this.SearchText){
+            this.Shipments = [];
+            RootContext.LastSearchText = this.SearchText;
+            this.LoadScreenData();
+        }else{
+            this.Search();
+        }
     }
     ToggleSearchPanel()
     {
