@@ -80,6 +80,16 @@ export class EntityStatusPM {
     public set DisplayName(newValue: string) { if (this.displayName != newValue) { this.displayName = newValue; this.MarkAsDirty("DisplayName"); } }
        
 	 
+    private statusLocalWeight: number;
+    public get StatusLocalWeight() { return this.statusLocalWeight; }
+    public set StatusLocalWeight(newValue: number) { if (this.statusLocalWeight != newValue) { this.statusLocalWeight = newValue; this.MarkAsDirty("StatusLocalWeight"); } }
+       
+	 
+    private entityStatusTypeCode: string;
+    public get EntityStatusTypeCode() { return this.entityStatusTypeCode; }
+    public set EntityStatusTypeCode(newValue: string) { if (this.entityStatusTypeCode != newValue) { this.entityStatusTypeCode = newValue; this.MarkAsDirty("EntityStatusTypeCode"); } }
+       
+	 
 
     public OldEntityPM: EntityStatusPM;
 		

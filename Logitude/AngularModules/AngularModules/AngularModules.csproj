@@ -1888,6 +1888,7 @@
     <TypeScriptCompile Include="Infrastructure\EntityLists\DWQueryFilterList.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityLists\DWSubQueryList.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityLists\DWQueryList.ts" />
+    <TypeScriptCompile Include="Infrastructure\EntityLists\EntityStatusTypeList.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityLists\FeatureToggleList.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityLists\HelpResourceList.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityLists\LastRunDetailList.ts" />

@@ -370,7 +370,10 @@ namespace Simplog.Data.InfrastructureModel
             get { throw new NotImplementedException(); }
         }
 
-
+        public IDbSet<EntityStatusType> EntityStatusTypes
+        {
+            get { throw new NotImplementedException(); }
+        }
 
         public IDbSet<SpecialService> SpecialServices
         {

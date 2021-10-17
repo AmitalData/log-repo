@@ -27,7 +27,9 @@ namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
             entityStatus.Tenant = entityStatusPM.Tenant;
             entityStatus.Code = entityStatusPM.Code;
             entityStatus.InActive = entityStatusPM.InActive;
-            entityStatus.SearchFields = entityStatusPM.Code + "," + entityStatusPM.Name + "," + (table != null ? table.Name : "");    
+            entityStatus.SearchFields = entityStatusPM.Code + "," + entityStatusPM.Name + "," + (table != null ? table.Name : "");
+            entityStatus.EntityStatusTypeCode = entityStatusPM.EntityStatusTypeCode;
+            entityStatus.StatusLocalWeight = entityStatusPM.StatusLocalWeight;
         }
     }
 }

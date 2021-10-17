@@ -860,6 +860,7 @@
     <None Include="DBTables\InfrastructureModel\EntityLastActivityType.dxml" />
     <None Include="DBTables\InfrastructureModel\EntityLastUpdate.dxml" />
     <None Include="DBTables\InfrastructureModel\EntityStatus.dxml" />
+    <None Include="DBTables\InfrastructureModel\EntityStatusType.dxml" />
     <None Include="DBTables\InfrastructureModel\EventType.dxml" />
     <None Include="DBTables\InfrastructureModel\EventTypeCategory.dxml" />
     <None Include="DBTables\InfrastructureModel\FieldDataType.dxml" />
@@ -1091,6 +1092,7 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="EntityFiles\InfrastructureModel\DescriptionOfGoods.lxml" />
+    <None Include="EntityFiles\InfrastructureModel\EntityStatusType.lxml" />
     <None Include="EntityFiles\InfrastructureModel\QueryExportExecutionLog.lxml" />
     <None Include="EntityFiles\InfrastructureModel\WorkerRoleName.lxml" />
     <None Include="EntityFiles\QuoteModel\QuoteComputedField.lxml" />

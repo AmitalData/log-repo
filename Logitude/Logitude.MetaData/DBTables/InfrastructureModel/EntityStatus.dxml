@@ -72,10 +72,28 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="EntityStatusTypeCode"
+    Type="varchar"
+    Size="3">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="StatusLocalWeight"
+    Type="int">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="ObjectTableId"
     ReferencedTable="ObjectTables"
     ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="EntityStatusTypeCode"
+    ReferencedTable="EntityStatusTypes"
+    ReferencedColumn="Code"
     ReferencedTableSchema="dbo" />
   <Index
     Columns="AutomaticLastUpdateDate" />

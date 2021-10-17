@@ -329,6 +329,7 @@ namespace Simplog.Data.InfrastructureModel
             modelBuilder.Configurations.Add(new CustomerStatusMap());
             modelBuilder.Configurations.Add(new CustomerSizeMap());
             modelBuilder.Configurations.Add(new ObjectTableLastUpdateMap());
+            modelBuilder.Configurations.Add(new EntityStatusTypeMap());
 
             // InboundEmails
             modelBuilder.Configurations.Add(new InboundEmailsMap());
@@ -1012,6 +1013,12 @@ namespace Simplog.Data.InfrastructureModel
         }
 
         public IDbSet<QueryExportExecutionLog> QueryExportExecutionLogs
+        {
+            get;
+            set;
+        }
+
+        public IDbSet<EntityStatusType> EntityStatusTypes
         {
             get;
             set;

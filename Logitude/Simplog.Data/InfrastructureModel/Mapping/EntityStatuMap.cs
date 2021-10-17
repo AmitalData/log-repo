@@ -42,6 +42,9 @@ namespace Simplog.Data.InfrastructureModel.Mapping
                 .HasMaxLength(40)
                 .IsUnicode(false);
 
+            this.Property(t => t.EntityStatusTypeCode)
+                .HasMaxLength(3)
+                .IsUnicode(false);
 
             // Table & Column Mappings
             this.ToTable("EntityStatus");
@@ -54,11 +57,15 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.InActive).HasColumnName("InActive");
             this.Property(t => t.SearchFields).HasColumnName("SearchFields");
             this.Property(t => t.DisplayName).HasColumnName("DisplayName");
-            this.Property(t => t.AutomaticLastUpdateDate).HasColumnName("AutomaticLastUpdateDate"); 
+            this.Property(t => t.AutomaticLastUpdateDate).HasColumnName("AutomaticLastUpdateDate");
+            this.Property(t => t.StatusLocalWeight).HasColumnName("StatusLocalWeight");
+            this.Property(t => t.EntityStatusTypeCode).HasColumnName("EntityStatusTypeCode");
+            
             // Relationships
             //this.HasRequired(t => t.ObjectTable)
             //    .WithMany(t => t.EntityStatus)
             //    .HasForeignKey(d => d.ObjectTableId);
+            this.HasOptional(t => t.EntityStatusType).WithMany().HasForeignKey(d => d.EntityStatusTypeCode);
 
         }
     }
