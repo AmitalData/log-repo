@@ -97,6 +97,10 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                 searchResponse.InvalidCaptcha = true;
                 AddNewCaptcha(searchResponse);
             }
+            else
+            {
+                CargoTrackingSecurityService.ResetIPSearchCounter();
+            }
         }
 
         private static void AddNewCaptcha(CargoTrackingSearchResponse searchResponse)
