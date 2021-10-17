@@ -96,8 +96,8 @@
 
                 <i *ngIf="PanelSearchText" class="las la-times la-2x" style="font-size: 22px;" (click)="PanelSearchText = ''"></i>
 
-                <input #mobileSearch type="text " class="gray " [(ngModel)]="PanelSearchText" style="display: inline-block;"
-                    placeholder="Search by the shipment References ..." name="PanelSearchText"
+                <input #mobileSearch type="text " autocomplete="off" class="gray " [(ngModel)]="PanelSearchText" style="display: inline-block;"
+                    placeholder="By shipment References" name="PanelSearchText"
                     formControlName="PanelSearchText" />
 
                 <i *ngIf="PanelSearchText" class="las la-long-arrow-alt-right la-2x" (click)="HideSearchPanel()"></i>
