@@ -45,6 +45,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CargoTrackingShipmentOrderService } from '../CargoTracking/Services/Others/CargoTrackingShipmentOrderService';
+import { IconButtonComponent } from '../Infrastructure/Components/IconButton/IconButtonComponent';
+
 export function getBaseUrl() {
     return document.getElementsByTagName('base')[0].href;
 }
@@ -73,6 +75,7 @@ export function getBaseUrl() {
         MessageWindowComponent,
         ToolTipComponent,
         MultipleSelectionComponent,
+        IconButtonComponent,
 
 
         //Erros
