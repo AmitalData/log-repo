@@ -1118,9 +1118,17 @@ export class DWQueryBuilderComponent extends DWQueryBuilderBaseComponent {
         if (this.FactTableName != "Fact_Charges") {
             return false;
         }
-        var measurementFilters = this.SelectedFiltersDataSource.filter(element => this.IsFactChargesMeasurementFields(element) == true);
+        var measurementFilters = this.GetMeasurementFilters();
         return measurementFilters.length != 0;
 
+    }
+      
+    private GetMeasurementFilters() {
+        return this.SelectedFiltersDataSource.filter(item => this.HasMeasuremenFtilter(item));
+    }
+
+    private HasMeasuremenFtilter(item: DWObjectFieldsDetails): unknown {
+        return (item.FilterItems.some(dw => this.IsFactChargesMeasurementFields(dw) == true));
     }
 
     IsFactChargesMeasurementFields(element: DWObjectFieldsDetails): boolean {
