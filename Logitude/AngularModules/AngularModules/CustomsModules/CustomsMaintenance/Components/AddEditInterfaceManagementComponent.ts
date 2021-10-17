@@ -175,6 +175,8 @@ export class AddEditInterfaceManagementComponent
     get AllowRestore() { return this.entityPM != null ? this.entityPM.AllowRestore : false; }
     set AllowRestore(value) { this.entityPM.AllowRestore = value; }
 
+    get UseRabbitMQ() { return this.entityPM != null ? this.entityPM.UseRabbitMQ : false; }
+    set UseRabbitMQ(value) { this.entityPM.UseRabbitMQ = value; }
 
 
     get Description() { return this.entityPM != null ? this.entityPM.Description : null; }
@@ -230,6 +232,7 @@ export class AddEditInterfaceManagementComponent
         if (IsNew) {
             return;
         }
+        debugger;
         
         this._InterfaceManagementPMExtendService.PutInterfaceManagementPM(this.entityPM)
             .subscribe((resp:any) => {
