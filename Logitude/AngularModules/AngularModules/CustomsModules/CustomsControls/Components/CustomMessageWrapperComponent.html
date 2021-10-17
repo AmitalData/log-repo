@@ -55,7 +55,7 @@
                         </tr>
 
                         <!-- Response  -->
-                        <tr *ngIf="ShowCustomResponseContent">
+                        <tr *ngIf="ShowCustomResponseContent && (ResponseContentDisabled == null||!ResponseContentDisabled)">
                             <td>
                                 <fieldset [disabled]="CustomResponseContentIsDisable">
                                     <div class="CustomResponseBorderClass">
@@ -64,7 +64,15 @@
                                 </fieldset>
                             </td>
                         </tr>
-
+                         <tr *ngIf="ShowCustomResponseContent && ResponseContentDisabled">
+                            <td>
+                                <fieldset [disabled]="false">
+                                    <div class="CustomResponseBorderClass">
+                                        <ng-content select=".class-NotDisabled-response-content"></ng-content>
+                                    </div>
+                                </fieldset>
+                            </td>
+                        </tr>
 
                         <tr >
                             <td>

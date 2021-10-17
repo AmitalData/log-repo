@@ -10,11 +10,53 @@
         color: gray;
         font-family: sans-serif;
     }
+
+    .LogLovContainer {
+        height: 100%;
+        width: 100%;
+        background: white;
+        font-size: 11px;
+        color: #45494A;
+        border-radius: 3px;
+        -moz-border-radius: 3px;
+        -webkit-border-radius: 3px;
+        position: relative;
+    }
+
+    .LogLOVControl {
+        display: block;
+        height: 22px;
+        min-height: 22px;
+        max-height: 22px;
+        line-height: 22px;
+        width: 100%;
+        position: relative;
+    }
+
+    .LogLovInputDiv {
+        height: 100%;
+        width: 100%;
+        line-height: 22px;
+        width: 100%;
+        border: 1px solid #AAAAAA;
+        outline: none;
+        font-size: 11px;
+        color: #45494A;
+        background: white;
+        border-radius: 3px;
+        -webkit-border-radius: 3px;
+        -moz-border-radius: 3px;
+        -moz-box-shadow: inset 0 0 3px #AAAAAA;
+        -webkit-box-shadow: inset 0 0 3px #AAAAAA;
+        box-shadow: inset 0 0 3px #AAAAAA;
+        text-decoration: none;
+        vertical-align: middle;
+    }
 </style>
 
 <div>
 
-    <custom-message-wrapper [CustomSendOptionsButtonCanForcePersonalSign]="false">
+    <custom-message-wrapper [CustomSendOptionsButtonCanForcePersonalSign]="false" [IsResponseContentDisabled]="IsMultiDeclaration">
 
         <!-- Request -->
         <div class="class-request-content">
@@ -96,7 +138,7 @@
                                 <td style="width: 110px;">
                                     <LogLabel [ObjectFieldName]="'CargoTypeCode'" [DataContext]="DataContext" [TextCode]="'Customs.SpecialActivityRequest.O.CargoIdentifierType'"></LogLabel>
                                 </td>
-                                <td style="width: 160px;" >
+                                <td style="width: 160px;">
                                     <LogLov [ObjectFieldName]="'CargoTypeCode'"
                                             [ObjectTableName]="'Customs.CargoIdentifireType'"
                                             [DataContext]="DataContext"
@@ -140,7 +182,7 @@
                                     <LogLabel [ObjectFieldName]="'ThirdCargoID'" [DataContext]="DataContext" [ObjectTableName]="ObjectTableName" [TextCode]="'Customs.SpecialActivityRequest.O.CargoIdentifierKey3'"></LogLabel>
                                 </td>
                                 <td style="width: 160px;">
-                                    <LogTextBox [ObjectFieldName]="'ThirdCargoID'"  (change)="setRequired()" [Text]="ManifestNumber" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                                    <LogTextBox [ObjectFieldName]="'ThirdCargoID'" (change)="setRequired()" [Text]="ManifestNumber" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
                                 </td>
                                 <td>
                                     <div></div>
@@ -217,7 +259,15 @@
                                     <LogLabel [ObjectFieldName]="'DeclarationID'" [DataContext]="DataContext" [TextCode]="'Customs.DeclarationStatusQuery.O.DeclarationID'"> </LogLabel>
                                 </td>
                                 <td style="width: 150px;">
-                                    <LogTextBox [ObjectFieldName]="'DeclarationID'" [Text]="DeclarationID" [DataContext]="DataContext"> </LogTextBox>
+                                    <div *ngIf="IsMultiDeclaration">
+                                        <select class="LogLovContainer LogLOVControl LogLovInputDiv" style="width: 111px; cursor:pointer" #selectControl (change)="ParentDeclarationSelectionChanged(selectControl.value)">
+                                            <option *ngFor="let c of DeclarationsList" [selected]="c==DeclarationID">{{c}}</option>
+
+                                        </select>
+                                    </div>
+                                    <div *ngIf="!IsMultiDeclaration">
+                                        <LogTextBox [ObjectFieldName]="'DeclarationID'" [Text]="DeclarationID" [DataContext]="DataContext"> </LogTextBox>
+                                    </div>
                                 </td>
 
                                 <td><div></div></td>
@@ -328,6 +378,223 @@
 
                             <tr><td><div></div></td></tr>
                         </table>
+                    </td>
+                </tr>
+
+                <tr class="FormFieldRow" style="width: 100% ; height : 35%" *ngIf="IsShowAvailabiltyQuantitiesList">
+                    <td>
+                        <div class="FillParent AppLeftMenuBackgroundRTL" style="width:100%; height:100%; overflow:auto">
+                            <table class="DefaultMenuItem" style="text-align: right;">
+                                <tr class="AppHeaderBackground" style="text-align: right;">
+                                    <th></th>
+                                    <th>סוג אריזה</th>
+                                    <th>כמות</th>
+                                    <th>משקל</th>
+                                </tr>
+                                <tr class="DefaultMenuItem" *ngFor="let item of AvailabiltyQuantitiesList" style="text-align: right;">
+                                    <th>כמות מוצהרת</th>
+                                    <td style="text-align: right;">{{item.CargoPackageTypeText}}</td>
+                                    <td style="text-align: right;">{{item.CargoPackageQuantity}}</td>
+                                    <td style="text-align: right;">{{item.CargoPackageWeight}}</td>
+                                </tr>
+                                <tr class="DefaultMenuItem" *ngFor="let item of AvailabiltyQuantitiesList" style="text-align: right;">
+                                    <th>כמות קליטה</th>
+                                    <td style="text-align: right;">{{item.DeclarationPackageTypeText}}</td>
+                                    <td style="text-align: right;">{{item.DeclarationPackgeQuantity}}</td>
+                                    <td style="text-align: right;">{{item.DeclarationPackageWeight}}</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr class="FormFieldRow" style="width: 100% ; height : 35%" *ngIf="IsShowAvailabiltyQuantitiesList">
+                    <td>
+                        <div class="FillParent AppLeftMenuBackgroundRTL" style="width:100%; height:100%; overflow:auto">
+                            <table class="DefaultMenuItem" style="text-align: right;">
+                                <tr class="AppHeaderBackground" style="text-align: right;">
+                                    <th></th>
+                                    <th>סוג אריזה</th>
+                                    <th>כמות</th>
+                                    <th>משקל</th>
+                                </tr>
+                                <tr class="DefaultMenuItem" *ngFor="let item of AvailabiltyQuantitiesList" style="text-align: right;">
+                                    <th>כמות מוצהרת</th>
+                                    <td style="text-align: right;">{{item.CargoPackageTypeText}}</td>
+                                    <td style="text-align: right;">{{item.CargoPackageQuantity}}</td>
+                                    <td style="text-align: right;">{{item.CargoPackageWeight}}</td>
+                                </tr>
+                                <tr class="DefaultMenuItem" *ngFor="let item of AvailabiltyQuantitiesList" style="text-align: right;">
+                                    <th>כמות קליטה</th>
+                                    <td style="text-align: right;">{{item.DeclarationPackageTypeText}}</td>
+                                    <td style="text-align: right;">{{item.DeclarationPackgeQuantity}}</td>
+                                    <td style="text-align: right;">{{item.DeclarationPackageWeight}}</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="class-NotDisabled-response-content">
+            <table style="width: 500px;height: 360px;padding-top: 10px;">
+
+                <!--<tr class="FormFieldRow" style="width: 50% ; height : 5%">
+                    <td style="width: 100px;">
+                        <LogLabel [ObjectFieldName]="'ResultTitle'" [DataContext]="DataContext" [TextCode]="'Customs.Declaration.O.DeclarationStatus'"></LogLabel>
+                    </td>
+
+                    <td><div></div></td>
+                </tr>-->
+                <!-- WarningMessage -->
+                <tr class="FormFieldRow" style="width: 100% ; height : 10%" *ngIf="WarningMessage != null">
+                    <td>
+                        <table>
+                            <tr class="FormFieldRow">
+                                <td style="width: 10px; "><div></div></td>
+
+                                <td style="width: 500px;">
+                                    <div style="width: 100%; height:22px; text-align:center">
+                                        <div class="DisbleBox">
+                                            {{WarningMessage}}
+                                        </div>
+                                    </div>
+                                </td>
+
+                                <td><div></div></td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+
+                <tr class="FormFieldRow" style="width: 100% ; height : 55%">
+                    <td style="width: 500px;">
+                        <table style="height:32px;">
+                            <tr class="FormFieldRow">
+                                <!-- DeclarationID -->
+                                <td style="width: 120px;">
+                                    <LogLabel [ObjectFieldName]="'DeclarationID'" [DataContext]="DataContext" [TextCode]="'Customs.DeclarationStatusQuery.O.DeclarationID'"> </LogLabel>
+                                </td>
+                                <td style="width: 150px;">
+                                    <div *ngIf="IsMultiDeclaration">
+                                        <select class="LogLovContainer LogLOVControl LogLovInputDiv" style="width: 115px; cursor:pointer" #selectControl (change)="ParentDeclarationSelectionChanged(selectControl.value)">
+                                            <option *ngFor="let c of DeclarationsList" [selected]="c==DeclarationID">{{c}}</option>
+                                        </select>
+                                    </div>
+                                </td>
+                                <td><div></div></td>
+
+                                <!--DeclarationVersion-->
+                                <td style="width: 90px;">
+                                    <LogLabel [ObjectFieldName]="'DeclarationVersion'" [DataContext]="DataContext" [TextCode]="'Customs.DeclarationStatusQuery.O.DeclarationVersion'"> </LogLabel>
+                                </td>
+                                <td style="width: 150px;">
+                                    <fieldset disabled>
+                                        <LogTextBox [ObjectFieldName]="'DeclarationVersion'" [ObjectTableName]="'Customs.Declaration'" [Text]="DeclarationVersion" [DataContext]="DataContext"> </LogTextBox>
+                                    </fieldset>
+                                </td>
+
+                                <td><div></div></td>
+                            </tr>
+                        </table>
+                        <fieldset disabled style="height:90%">
+                            <table>
+                                <tr class="FormFieldRow">
+                                    <!--DeclarationStatusText-->
+                                    <td style="width:120px">
+                                        <LogLabel [ObjectFieldName]="'DeclarationStatusText'" [DataContext]="DataContext" [TextCode]="'Customs.DeclarationStatusQuery.O.DeclarationStatusText'"> </LogLabel>
+                                    </td>
+                                    <td colspan="4">
+                                        <div class="RightCenter" style="display: inline; padding-right:10px; height: 18px; line-height: 18px;text-align:center;"
+                                             [ngStyle]="{color: DeclarationStatusCode | StringToColorPipe:'DeclarationStatusTypeCode'}">
+                                            <span style="font-weight: bold;">{{DeclarationStatusText}}</span>
+                                        </div>
+                                    </td>
+
+                                    <td><div></div></td>
+                                </tr>
+
+                                <tr class="FormFieldRow">
+                                    <!-- LogisticStatusText -->
+                                    <td style="width: 120px;">
+                                        <LogLabel [ObjectFieldName]="'LogisticStatusText'" [DataContext]="DataContext" [TextCode]="'Customs.DeclarationStatusQuery.O.LogisticStatusText'"> </LogLabel>
+                                    </td>
+                                    <td style="width: 150px;">
+                                        <LogTextBox [ObjectFieldName]="'LogisticStatusText'" [Text]="LogisticStatusText" [DataContext]="DataContext"> </LogTextBox>
+                                    </td>
+
+                                    <td><div></div></td>
+
+                                    <!-- DeclarationOfficeText -->
+                                    <td style="width: 90px;">
+                                        <LogLabel [ObjectFieldName]="'DeclarationOfficeText'" [DataContext]="DataContext" [TextCode]="'Customs.DeclarationStatusQuery.O.DeclarationOfficeText'"> </LogLabel>
+                                    </td>
+                                    <td style="width: 150px;">
+                                        <LogTextBox [ObjectFieldName]="'DeclarationOfficeText'" [Text]="DeclarationOfficeText" [DataContext]="DataContext"> </LogTextBox>
+                                    </td>
+
+                                    <td><div></div></td>
+                                </tr>
+
+                                <tr class="FormFieldRow">
+                                    <!-- TaxationDateTime -->
+                                    <td style="width: 120px;">
+                                        <LogLabel [ObjectFieldName]="'TaxationDateTime'" [DataContext]="DataContext" [TextCode]="'Customs.DeclarationStatusQuery.O.TaxationDateTime'"> </LogLabel>
+                                    </td>
+                                    <td style="width: 150px;">
+                                        <LogTextBox [ObjectFieldName]="'TaxationDateTime'" [Text]="TaxationDateTime" [DataContext]="DataContext"> </LogTextBox>
+                                    </td>
+
+                                    <td><div></div></td>
+
+                                    <!-- FinancialStatusText -->
+                                    <td style="width: 90px;">
+                                        <LogLabel [ObjectFieldName]="'FinancialStatusText'" [DataContext]="DataContext" [TextCode]="'Customs.DeclarationStatusQuery.O.FinancialStatusText'"> </LogLabel>
+                                    </td>
+                                    <td style="width: 150px;">
+                                        <LogTextBox [ObjectFieldName]="'FinancialStatusText'" [Text]="FinancialStatusText" [DataContext]="DataContext"> </LogTextBox>
+                                    </td>
+
+                                    <td><div></div></td>
+                                </tr>
+
+                                <tr class="FormFieldRow">
+                                    <!-- ReleaseDateTime -->
+                                    <td style="width: 120px;">
+                                        <LogLabel [ObjectFieldName]="'ReleaseDateTime'" [DataContext]="DataContext" [TextCode]="'Customs.DeclarationStatusQuery.O.ReleaseDateTime'"> </LogLabel>
+                                    </td>
+                                    <td style="width: 150px;">
+                                        <LogTextBox [ObjectFieldName]="'ReleaseDateTime'" [Text]="ReleaseDateTime" [DataContext]="DataContext"> </LogTextBox>
+                                    </td>
+
+                                    <td><div></div></td>
+
+                                    <!-- SubmitDateTime -->
+                                    <td style="width: 90px;">
+                                        <LogLabel [ObjectFieldName]="'SubmitDateTime'" [DataContext]="DataContext" [TextCode]="'Customs.DeclarationStatusQuery.O.SubmitDateTime'"> </LogLabel>
+                                    </td>
+                                    <td style="width: 150px;">
+                                        <LogTextBox [ObjectFieldName]="'SubmitDateTime'" [Text]="SubmitDateTime" [DataContext]="DataContext"> </LogTextBox>
+                                    </td>
+
+                                    <td><div></div></td>
+                                </tr>
+
+                                <tr class="FormFieldRow">
+                                    <!-- HandeledWroker -->
+                                    <td style="width: 120px;">
+                                        <LogLabel [ObjectFieldName]="'HandeledWroker'" [DataContext]="DataContext" [TextCode]="'Customs.DeclarationStatusQuery.O.HandeledWroker'"> </LogLabel>
+                                    </td>
+                                    <td style="width: 150px;">
+                                        <LogTextBox [ObjectFieldName]="'HandeledWroker'" [Text]="HandeledWroker" [DataContext]="DataContext"> </LogTextBox>
+                                    </td>
+
+                                    <td><div></div></td>
+                                </tr>
+
+                                <tr><td><div></div></td></tr>
+                            </table>
+                        </fieldset>
                     </td>
                 </tr>
 

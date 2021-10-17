@@ -1,5 +1,5 @@
 
-import { Component, EventEmitter, Output, Input, OnInit, ViewChild, AfterViewInit, AfterContentInit } from '@angular/core';
+import { Component, EventEmitter, Output, Input, OnInit, ViewChild, AfterViewInit, AfterContentInit, ChangeDetectorRef } from '@angular/core';
 import { BaseComponent } from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
 import { AppTool, DateTool } from '../../../Infrastructure/Tools';
@@ -49,6 +49,8 @@ export class CustomMessageWrapperComponent
     set CustomSendOptionsButtonAvoidDoubleClick(newValue: boolean) {
         this.MyCustomSendOptionsComponent.AvoidDoubleClick = newValue;
     }
+    @Input()
+    public IsResponseContentDisabled: boolean;
 
     @Input()
     public IsShowCustomResponseContent: boolean = true;
@@ -103,7 +105,7 @@ export class CustomMessageWrapperComponent
         }
     }
 
-
+     
     private _IsDisableToggle: boolean = false;
     MessageDisplayIsDisableToggle() {
         this._IsDisableToggle = !this._IsDisableToggle;
@@ -152,6 +154,13 @@ export class CustomMessageWrapperComponent
     public set ShowCustomResponseContent(newValue: boolean) {
         if (this.IsShowCustomResponseContent != newValue) {
             this.IsShowCustomResponseContent = newValue;
+        }
+    }
+
+    public get ResponseContentDisabled() {return this.IsResponseContentDisabled; }
+    public set ResponseContentDisabled(newValue: boolean) {
+        if (this.IsResponseContentDisabled != newValue) {
+            this.IsResponseContentDisabled = newValue;
         }
     }
 
