@@ -101,7 +101,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 //foreach (var item in listPoco)
                 //{
                 //var RequestInProgressList2 = customsRequestsSheetQS.GetRequestInProgressByIds(tenant, "8250", objectTableId2, Ids, false);
-            var RequestInProgressList2 = customsRequestsSheetQS.GetRequestInProgress(tenant, "8250", null, null, objectTableId, CourierMasterId, null, false);
+            var RequestInProgressList2 = customsRequestsSheetQS.GetRequestInProgress(tenant, "8250", objectTableId, CourierMasterId, null, null, null, false);
 
             if (RequestInProgressList2 != null && RequestInProgressList2.Count > 0)
                 {

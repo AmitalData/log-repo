@@ -46,13 +46,16 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                 mess.AppendLine($"מפוצל כבר !!!");
 
-                List<DeclarationCourierStatus> ServerSplitDeclarationsList
-                    = repo.GetDeclarationsByIds(customResponse.ServerSplitDeclarationsList, requestParams.Tenant);
-                CreateCRS8250(requestParams, mess, myDeclarationQueryService, objectTableId, objectTableIdCourierMaster, ServerSplitDeclarationsList, customResponse.TesterSendOption);
+                /*List<DeclarationCourierStatus> ServerSplitDeclarationsList
+                    = repo.GetDeclarationsByIds(customResponse.ServerSplitDeclarationsList, requestParams.Tenant);*/
+
+                CreateCRS8250(requestParams, mess, myDeclarationQueryService, objectTableId, objectTableIdCourierMaster, customResponse);
             }
             else
             {
-                List<DeclarationCourierStatus> listPoco = repo.GetByMasterIDDeclarationCourierStatus(requestParams.Tenant, requestParams.AppicationId);
+                //List<DeclarationCourierStatus> listPoco = repo.GetByMasterIDDeclarationCourierStatus(requestParams.Tenant, requestParams.AppicationId);
+                string MAWB = "";
+                List<string> listPoco = repo.GetByMasterIDDeclarationList(requestParams.Tenant, requestParams.AppicationId, out MAWB);
 
                 mess.AppendLine($"ראשי - מפצל");
                 mess.AppendLine($"כל ההצהרות יפוצלו.....");
@@ -63,10 +66,11 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     mess.AppendLine($"There ARE  NOT any Declarations 'R'eady to (Declaration) send  for master {requestParams.AppicationId} ");
                 }
 
-                listPoco.Select(r => r.DeclarationId).ToList().ChunkBy(100)
+                listPoco.ChunkBy(100)
    .ForEach(list100 =>
    {
        customResponse.ServerSplitDeclarationsList = list100;
+       customResponse.MyMoreParams = MAWB;
        customResponse.LoggingUserId = requestParams.LoggingUserId;
         //CreateDCAInUCB1170_MsgMessagingService(customResponse, requestParams);
         var CreateDCAInUCB1170_MsgMessagingService = new CRSUtil();
@@ -82,9 +86,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
             this.MyResponseData.Succeeded = true;
         }
 
-        private static void CreateCRS8250(GenericRequestParams requestParams, StringBuilder mess, DeclarationQueryService myDeclarationQueryService, string objectTableId, string objectTableIdCourierMaster, List<DeclarationCourierStatus> listPoco, string testerSendOption)
+        private static void CreateCRS8250(GenericRequestParams requestParams, StringBuilder mess, DeclarationQueryService myDeclarationQueryService, string objectTableId, string objectTableIdCourierMaster, DCAInUCB8250WithResponseContentHeader customResponse)
         {
-            var s =string.Join(",", listPoco.Select(x => x.DeclarationId));
+            var declarations =string.Join(",", customResponse.ServerSplitDeclarationsList);
             
                 try
                 {
@@ -101,20 +105,21 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                 LoggingObjectTableId = objectTableIdCourierMaster,
                                 LoggingEntityId =  requestParams.LoggingEntityId,
                                 LoggingObjectTableId2 = objectTableId,
-                                LoggingEntityId2 = s,
+                                LoggingEntityId2 = "_" + customResponse.ServerSplitDeclarationsList.FirstOrDefault(),
+                                DeclarationList = declarations,
                                 InterfaceTypeCode = "8250",
                                 //LoggingEntityReference = declarationPM.DeclarationNumber,
                                 LoggingUserId = requestParams.LoggingUserId,
                                 RequestVIA = SendRequestVIA.WebServiceBatch,
                                 //DeclarationNumber = declarationPM.DeclarationNumber,
                                 DeclarationRadio = true,
-                                TesterSendOption= testerSendOption,
-                                
+                                TesterSendOption= customResponse.TesterSendOption,
+                                CourierMaster = customResponse.MyMoreParams
                             };
 
                             SBQMessageService.CreateSheetSBQMessage<DeclarationStatusRequestParams>(requestParams8250, false);
-                            LogMessagingUtil.Instance.AppendLine($" CreateSheetSBQMessage({s})");
-                            mess.AppendLine($" CreateSheetSBQMessage({s})");
+                            LogMessagingUtil.Instance.AppendLine($" CreateSheetSBQMessage({declarations})");
+                            mess.AppendLine($" CreateSheetSBQMessage({declarations})");
 
                             scopeNewCRS.Complete();
                         }
@@ -123,8 +128,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 }
                 catch (System.Exception ee1)
                 {
-                    LogMessagingUtil.Instance.AppendLine($"Exception!!!CreateSheetSBQMessage({s}) : {ee1.Message}");
-                    mess.AppendLine($"Exception!!!CreateSheetSBQMessage({s}) : {ee1.Message}");
+                    LogMessagingUtil.Instance.AppendLine($"Exception!!!CreateSheetSBQMessage({declarations}) : {ee1.Message}");
+                    mess.AppendLine($"Exception!!!CreateSheetSBQMessage({declarations}) : {ee1.Message}");
                 }
             
         }
