@@ -13,6 +13,7 @@ using Logitude.Customs.Def.EntityPMs;
 using Logitude.Customs.Def.EntityQueryServicesExt;
 using Logitude.CustomsMessaging.Common.RequestParams;
 using Logitude.CustomsMessaging.Common.ResponseData;
+using Logitude.CustomsMessaging.RabbitMQ;
 using Logitude.CustomsMessaging.RequestServices;
 using Logitude.CustomsMessaging.ResponseServices;
 using Logitude.CustomsMessaging.Testers.Messages;
@@ -106,13 +107,25 @@ namespace Logitude.CustomsMessaging.MessagingServices
             var objectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
             var objectTableDocumentsFilingId = ObjectTableRepository.GetObjectTableByName("DocumentsFiling");
             var customsRequestsSheetQS = new CustomsRequestsSheetQueryService(tenant);
+
+
+            InterfaceManagementPM interfaceManagementPM = new InterfaceManagementPM();
+
+            InterfaceManagementQueryService interfaceManagementQueryService = new InterfaceManagementQueryService(tenant);
+
+            interfaceManagementPM = interfaceManagementQueryService.GetSingle(this.MainInterfaceCode, false, true);
+
             //bool simultaneousCheckGeneralLock = true;
             //if (simultaneousCheckGeneralLock)
             //{
 
             //}
             //else
+           // {
+           if(!interfaceManagementPM.UseRabbitMQ)
             {
+
+          
                 var RequestInProgressList = customsRequestsSheetQS.GetRequestInProgress(tenant, this.MainInterfaceCode,
                     objectTableId, documentsFilingPM.EntityId,
                     objectTableDocumentsFilingId, documentsFilingPM.Id, null, true);
@@ -124,13 +137,17 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
                 }
             }
+            // }
 
-
-
-            if(Communications.GetSingleCommunicationLogInProccess(tenant, documentsFilingPM.EntityId, "RabbitMQ", documentsFilingPM.Id) != null)
+            else
             {
-                return "קיים מסר זהה בתהליך )RABBITMQ(";
+                if (Communications.GetSingleCommunicationLogInProccess(tenant, documentsFilingPM.EntityId, "RabbitMQ", documentsFilingPM.Id) != null)
+                {
+                    return "קיים מסר זהה בתהליך )RABBITMQ(";
+                }
             }
+
+          
 
             LogMessagingUtil.Instance.AppendLine("Build !!!Requestsheet  with Interface Type  = UCBUD2LT  !!!");
 
@@ -187,115 +204,99 @@ namespace Logitude.CustomsMessaging.MessagingServices
                     var InterfaceManagementPM = InterfaceManagementQS.GetSingleInterfaceManagementwithDefinition(
                         this.MainInterfaceCode, tenant);
                     fileName = fileName.Replace("DcaPrefixName.", InterfaceManagementPM.DcaPrefixName);
-                    //ourRef = this.DcaReceivedCustomResponseCorrelation(InterfaceManagementPM, tenant, new Customs.BL.Utils.DCAFileModel()
-                    //{
-                    //    SelectedFileDownload = fileName,
-                    //    TimStamp = transmitionDateTime
 
-                    //}, xmlESBResponseXmlClass);
-
-
-                    try
+                    if (!interfaceManagementPM.UseRabbitMQ)
                     {
 
 
-                        var _CommunicationsParams = new CommunicationsParams()
+                        ourRef = this.DcaReceivedCustomResponseCorrelation(InterfaceManagementPM, tenant, new Customs.BL.Utils.DCAFileModel()
+                        {
+                            SelectedFileDownload = fileName,
+                            TimStamp = transmitionDateTime
+
+                        }, xmlESBResponseXmlClass);
+                    }
+                    else
+                    {
+                        try
                         {
 
-                            Tenant = tenant,
 
-                            LoggingObjectTableId = objectTableId,
-                            LoggingEntityId = entityId,
+                            var _CommunicationsParams = new CommunicationsParams()
+                            {
 
-                            Subject = "קישור מסמך לטיקט",// "FU Status",
-                            LoggingEntityReference = documentsFilingPM.ExternalEntityReference,//_PhysicalCheckPM.CheckId,
-                            LoggingUserId = LoggingUserId,//loggingUserId,
-                            CorrelationID = documentsFilingPM.Id,
+                                Tenant = tenant,
 
-                            Status = "W",
-                            To = "RabbitMQ",
-                            CommunicationLogTypeCode = "T",
-                            FolderName = "RabbitMQ",
-                            From = "Logitude",
-                            InOut = "O",
+                                LoggingObjectTableId = objectTableId,
+                                LoggingEntityId = entityId,
 
-                            //XMLData=some xml data string 
-                        };
+                                Subject = "קישור מסמך לטיקט",
+                                LoggingEntityReference = documentsFilingPM.ExternalEntityReference,
+                                LoggingUserId = LoggingUserId,
+                                CorrelationID = documentsFilingPM.Id,
 
+                                Status = "W",
+                                To = "RabbitMQ",
+                                CommunicationLogTypeCode = "T",
+                                FolderName = "RabbitMQ",
+                                From = "Logitude",
+                                InOut = "O",
 
-                        var message = Encoding.UTF8.GetBytes(xmlESBResponseXmlClass);
-                        _CommunicationsParams.ByteData = message;
-                        string communicationLogId = Communications.AddCommunicationLog(_CommunicationsParams);
-
- 
+                             };
 
 
-                        var queuename = "ucbud2lt";
-                        var args = new Dictionary<string, object>();
-                        //lazy = store messages to disk => no lost messages in case on rabbitmq restart 
+                            var message = Encoding.UTF8.GetBytes(xmlESBResponseXmlClass);
+                            _CommunicationsParams.ByteData = message;
+                            string communicationLogId = Communications.AddCommunicationLog(_CommunicationsParams);
 
-                        var factory = new ConnectionFactory() { HostName = "unimq", UserName = "v5101", Password = "Aa123" };
-                        using (var connection = factory.CreateConnection())
-                        using (var channel = connection.CreateModel())
-                        {
 
-                            channel.BasicQos(0, 5, true);
 
-                            args.Add("x-queue-mode", "lazy");
-                            channel.QueueDeclare(queue: queuename,
-                                                durable: true,
-                                                exclusive: false,
-                                                autoDelete: false,
-                                                arguments: args);
 
-                            //channel.QueueDeclare(queue: queuename +"__",
-                            //                                 durable: false,
-                            //                                 exclusive: false,
-                            //                                 autoDelete: false,
-                            //                                 arguments: null);
+                            var queuename = "ucbud2lt";
+                            var args = new Dictionary<string, object>();
 
-                            var header = new Dictionary<string, object>();
-                            var prop = channel.CreateBasicProperties();
-                            prop.Persistent = true;
-                            prop.MessageId = communicationLogId;
-                           // prop.AppId = ea.BasicProperties.AppId;
-                            prop.DeliveryMode = 2; //persistent
-                            prop.Headers = header;
-                           // var body = RabbitmqHelper.MyJsonSerializer(message);
-                         //   channel.QueueBind(queue: queuename, exchange: EcomFilingService.exchangeName, routingKey: queuename);
-                            channel.BasicPublish(exchange: "",
-                                                         routingKey: queuename  ,
-                                                         basicProperties: prop,
-                                                         body: message);
+                            //   var factory = new ConnectionFactory() { HostName = "unimq", UserName = "v5101", Password = "Aa123" };
+                            var factory = RabbitmqHelper.GetConnectionFactory();
 
+                            using (var connection = factory.CreateConnection())
+                            using (var channel = connection.CreateModel())
+                            {
+
+                                channel.BasicQos(0, 5, true);
+
+                                //args.Add("x-queue-mode", "lazy");
+                                //channel.QueueDeclare(queue: queuename,
+                                //                    durable: true,
+                                //                    exclusive: false,
+                                //                    autoDelete: false,
+                                //                    arguments: args);
+
+                                RabbitmqHelper.DeclareQueue(channel, queuename);
+
+
+                                var header = new Dictionary<string, object>();
+                                var prop = channel.CreateBasicProperties();
+                                prop.Persistent = true;
+                                prop.MessageId = communicationLogId;
+                                prop.DeliveryMode = 2; //persistent
+                                prop.Headers = header;
+
+                                channel.BasicPublish(exchange: "",
+                                                             routingKey: queuename,
+                                                             basicProperties: prop,
+                                                             body: message);
+
+                            }
                         }
+                        catch (Exception)
+                        {
+
+                            throw;
+                        }
+
                     }
-                    catch (Exception)
-                    {
 
-                        throw;
-                    }
 
-                    //var factory = new ConnectionFactory() { HostName = "unimq", UserName = "v5101", Password = "Aa123" };
-                    //using (var connection = factory.CreateConnection())
-                    //using (var channel = connection.CreateModel())
-                    //{
-                    //    channel.QueueDeclare(queue: "connectToTicket",
-                    //                         durable: false,
-                    //                         exclusive: false,
-                    //                         autoDelete: false,
-                    //                         arguments: null);
-
-                    //    string message = xmlESBResponseXmlClass;
-                    //    var body2 = Encoding.UTF8.GetBytes(message);
-
-                    //    channel.BasicPublish(exchange: "",
-                    //                         routingKey: "connectToTicket",
-                    //                         basicProperties: null,
-                    //                         body: body2);
-
-                    //    Console.WriteLine(" [x] Sent {0}", message);
-                    //}
 
                     trans.Complete();
                     return "המסר נבנה בהצלחה וישלח בתהליך רקע";
@@ -431,7 +432,12 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
                 }
 
-
+                if (declarationPM ==null )
+                {
+                    LogitudeSettings.HandleLogMe("declarationPM ==null" + logData, false, "CreateUD2LTService", stopLogAt);
+                    Debug.WriteLine("declarationPM ==null");
+                    return;
+                }
 
                 logData += $"declarationPM.id={declarationPM.Id},CustomFileNo={declarationPM.CustomFileNo}"; //Logitude.Server.Tools.Utils.ProxyUtil.JsonConvertSerialize(declarationPM);
                 if (declarationPM.PaymentDate.HasValue)

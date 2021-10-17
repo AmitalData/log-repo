@@ -271,6 +271,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.DeclarationDocuments
             //MyGenericResponseObj.ResponseXml ;
             MyGenericResponseObj.StatusType = GenericResponseObj.StatusEnum.Success;
             MyCommunicationsParams.LoggingEntityId = MyGenericResponseObj.ApplicationId;
+            MessageOut = GetLog();
         }
 
         private void DeserilazeObject(string xmlLOGIDOCS)
