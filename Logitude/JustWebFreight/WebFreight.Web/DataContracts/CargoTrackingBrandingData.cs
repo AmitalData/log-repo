@@ -33,7 +33,8 @@ namespace WebFreight.Web.DataContracts
         public byte[] InvertedLogoBytes { get; set; }
         public byte[] BackgroundBytes { get; set; }
         public byte[] ShipmentHeaderBytes { get; set; }
+        public bool ForceHttps { get; set; }
 
-        
+
     }
 }
