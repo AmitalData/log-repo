@@ -478,7 +478,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
             this.QueryColumns.push(this.GetQueryColumn("StatusName", 'Text', 'Status'));
 
             if (this.showComputedStatusDateField()) {
-                this.HoverTemplateIndex = this.isPrivateLabel ? this.HoverTemplateIndex + 1 : this.HoverTemplateIndex;
+                this.SetPrivateLabelHoverIndex(); 
                 this.columns.push({
                     FieldName: 'ComputedStatusDate',
                     DataTypeCode: 'String',
@@ -608,6 +608,11 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
             });
         }
         this.CustomColumnsReady.emit(this.columns);
+    }
+    SetPrivateLabelHoverIndex() {
+        if (this.isPrivateLabel) { 
+            this.HoverTemplateIndex = this.HoverTemplateIndex + 1
+        } 
     }
 
     private DisplayAgentColumn() {
