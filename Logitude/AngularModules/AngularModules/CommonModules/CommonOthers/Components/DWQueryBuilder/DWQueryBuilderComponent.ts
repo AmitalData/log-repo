@@ -617,7 +617,7 @@ export class DWQueryBuilderComponent extends DWQueryBuilderBaseComponent {
     }
 
     private HasValitaionError(IsChargesFactMeasurementField: boolean) {
-        return IsChargesFactMeasurementField && (this.SelectedItem.DWObjectTableCode == "Fact_Charges") && !this.hasShipmentOrMasterNumberField();
+        return IsChargesFactMeasurementField && (this.SelectedItem.DWObjectTableCode == "Fact_Charges" || this.SelectedItem.DWObjectTableCode == "Fact_MasterCharges") && !this.hasShipmentOrMasterNumberField();
     }
 
     private ShowValidateMessage(error) {
@@ -690,7 +690,7 @@ export class DWQueryBuilderComponent extends DWQueryBuilderBaseComponent {
         var selectedItem = item.IsMultipleSelection ? new DWObjectFieldsDetails(item) : item;
         var isChargesFactMeasurementField = this.ChargesFactMeasurementFields.filter(a => a == selectedItem.DisplayName)[0] ? true : false
 
-        if (isChargesFactMeasurementField && !this.hasShipmentOrMasterNumberField() && this.FactTableName == "Fact_Charges") {
+        if (isChargesFactMeasurementField && !this.hasShipmentOrMasterNumberField() && (this.FactTableName == "Fact_Charges" || this.FactTableName == "Fact_MasterCharges")) {
             this.ShowValidateMessage("You are not allowed to add " + selectedItem.DisplayName + " filter unless you add the Shipment Number or Master Shipment Number column");
              
             return;
