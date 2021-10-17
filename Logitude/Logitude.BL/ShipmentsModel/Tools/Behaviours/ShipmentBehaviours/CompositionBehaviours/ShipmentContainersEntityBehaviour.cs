@@ -234,6 +234,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
                 containerService.Create(containerPM);
                 UpdateShipmentPackage(containerPM.Id, shipmentPackage.Id);
             }
+            else
+            {
+                UpdateContainer(shipmentPackage);
+            }
         }
 
         private void UpdateContainer(ShipmentPackagePM shipmentPackage)
@@ -724,6 +728,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
             {
                 containerPM.ShipmentFirstPickupFrom = isPackageDeleted ? null : this.GetFirstPickupFromAddress(updatedShipmentPickUp);
                 containerPM.ShipmentFirstPickupTo = isPackageDeleted ? null : this.GetFirstPickupToAddress(updatedShipmentPickUp);
+                containerPM.ShipmentPickupETA = isPackageDeleted ? null : updatedShipmentPickUp?.ETA;
+                containerPM.ShipmentPickupETD = isPackageDeleted ? null : updatedShipmentPickUp?.ETD;
+                containerPM.ShipmentPickupATA = isPackageDeleted ? null : updatedShipmentPickUp?.ATA;
+                containerPM.ShipmentPickupATD = isPackageDeleted ? null : updatedShipmentPickUp?.ATD;
+
                 containerService.Update(containerPM);
             }
         }
@@ -734,6 +743,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
             {
                 containerPM.ShipmentLastDeliveryFrom = isPackageDeleted ? null : GetLastDeliveryFromAddress(updatedShipmentDeliveryPM);
                 containerPM.ShipmentLastDeliveryTo = isPackageDeleted ? null : GetLastDeliveryToAddress(updatedShipmentDeliveryPM);
+                containerPM.ShipmentDeliveryETA  = isPackageDeleted ? null : updatedShipmentDeliveryPM?.ETA;
+                containerPM.ShipmentDeliveryETD  = isPackageDeleted ? null : updatedShipmentDeliveryPM?.ETD;
+                containerPM.ShipmentDeliveryATA  = isPackageDeleted ? null : updatedShipmentDeliveryPM?.ATA;
+                containerPM.ShipmentDeliveryATD = isPackageDeleted ? null : updatedShipmentDeliveryPM?.ATD;
                 containerService.Update(containerPM);
             }
         }
