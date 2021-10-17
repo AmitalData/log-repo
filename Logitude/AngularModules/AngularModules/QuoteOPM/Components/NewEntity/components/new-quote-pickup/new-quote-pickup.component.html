@@ -1,5 +1,5 @@
 <h2 class="sub-header">{{"QuoteOP.S.NewQuote.Pickup" | TextCodeTranslationPipe}}</h2>
-<div [formGroup]='formGroup'>
+<div [formGroup]='formGroup' class="content-in-section">
     <p-checkbox formControlName='pickupInclude' [binary]="true" label='Include PickUp'
         (onChange)="includeCheckboxChange($event)"></p-checkbox>
 

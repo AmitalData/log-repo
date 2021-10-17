@@ -1,5 +1,6 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { AbstractControl, FormGroup } from '@angular/forms';
+import { AutoComplete } from 'primeng/autocomplete';
 
 @Component({
   selector: 'app-autocomplate-table',
@@ -13,7 +14,10 @@ export class AutocomplateTableComponent {
   @Input() fieldShow: string = '';
   @Input() controlName: string = '';
   @Input() data: any[] = []
-  @Input() set columnsShow(columns: any[]) {
+  @Input() searchIcon: boolean = true;
+  @Input() dropIcon: boolean= false;
+  @ViewChild('autoComplete') autoComplete: AutoComplete = null as any;
+   @Input() set columnsShow(columns: any[]) {
     this.initColumns(columns);
   }
   @Output() onSelect = new EventEmitter()
@@ -62,5 +66,11 @@ export class AutocomplateTableComponent {
     const obj: any = {};
     arr.forEach(x => { obj[x] = x })
     return obj;
+  }
+
+  openDropdown() {
+    setTimeout(() => {
+      this.autoComplete.handleDropdownClick({ query: null })
+    }, 100);
   }
 }

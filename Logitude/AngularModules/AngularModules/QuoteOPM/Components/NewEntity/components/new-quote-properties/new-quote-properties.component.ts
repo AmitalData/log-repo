@@ -12,13 +12,14 @@ export class NewQuotePropertiesComponent implements OnInit {
   @Input() EntityPM: QuoteOPPM = null as any;
   @Input() formGroup: FormGroup = null as any;
 
-  fromPortList:Port[] = []
-  toPortList:Port[] = []
-  specialServiceList:SpecialService[] = []
-  mainCarriageCarrierList:Carrier[] = []
-  incotermList:Incoterm[] = []
+  fromPortList: Port[] = []
+  toPortList: Port[] = []
+  specialServiceList: SpecialService[] = []
+  mainCarriageCarrierList: Carrier[] = []
+  incotermList: Incoterm[] = []
   transportModeId: string = '';
   directionId: string = '';
+  carrierColumns: any = {}
 
   constructor(
     private newQuoteDataService: NewQuoteDataService,
@@ -29,7 +30,7 @@ export class NewQuotePropertiesComponent implements OnInit {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (!this.formGroup.contains('fromPort')){
+    if (!this.formGroup.contains('fromPort')) {
       this.addFormControls()
       this.subscribeTransport()
     }
@@ -44,55 +45,58 @@ export class NewQuotePropertiesComponent implements OnInit {
   }
 
   subscribeTransport() {
-    this.formGroup.controls.transportMode.valueChanges.subscribe(()=>this.updateList())
-    this.formGroup.controls.direction.valueChanges.subscribe(()=>this.updateList())
+    this.formGroup.controls.transportMode.valueChanges.subscribe(() => this.updateList())
+    this.formGroup.controls.direction.valueChanges.subscribe(() => this.updateList())
   }
 
   updateList() {
     this.transportModeId = this.formGroup.controls.transportMode.value?.Id;
     this.directionId = this.formGroup.controls.direction.value?.Id;
 
-    if(!this.transportModeId || !this.directionId) return;
-    
+    if (!this.transportModeId || !this.directionId) return;
+
     this.getPorts()
     this.getSpecialService()
     this.getMainCarriageCarrier()
   }
-  
+
   async getPorts() {
     this.fromPortList = await this.newQuoteDataService.getPorts(this.directionId, this.transportModeId);
     this.toPortList = this.fromPortList;
   }
 
   async getSpecialService() {
-    this.specialServiceList= await this.newQuoteDataService.getSpecialServices(this.directionId, this.transportModeId);
+    this.specialServiceList = await this.newQuoteDataService.getSpecialServices(this.directionId, this.transportModeId);
   }
 
   async getMainCarriageCarrier() {
     this.mainCarriageCarrierList = await this.newQuoteDataService.getCarrierses(this.directionId, this.transportModeId);
+
+    this.carrierColumns = this.directionId === "E" ? { AIRLINE_ID: 'Code' } : { VENDOR_ID: 'Code' }
+    this.carrierColumns = { ...this.carrierColumns, ...{ Name: 'Name', Prefix: 'Prefix' } }
   }
 
   async getIncoterms() {
     this.incotermList = await this.newQuoteDataService.getIncoterms();
   }
-  
-  onSelectedtoPort(value:Port){
+
+  onSelectedtoPort(value: Port) {
     this.EntityPM.ToPortId = value.Code;
   }
 
-  onSelectedFromPort(value:Port){
+  onSelectedFromPort(value: Port) {
     this.EntityPM.FromPortId = value.Code;
   }
 
-  onMainCarriageCarrier(value:Carrier){
+  onMainCarriageCarrier(value: Carrier) {
     this.EntityPM.MainCarriageCarrierId = value.AIRLINE_ID;
   }
 
-  onSelectedIncoterm(value:Incoterm){
+  onSelectedIncoterm(value: Incoterm) {
     this.EntityPM.IncotermId = value.PTERMID;
   }
 
-  onSelectedSpecialService(value:SpecialService){
+  onSelectedSpecialService(value: SpecialService) {
     this.EntityPM.SpecialServiceId = value.SERVLEVEL_ID;
   }
 }

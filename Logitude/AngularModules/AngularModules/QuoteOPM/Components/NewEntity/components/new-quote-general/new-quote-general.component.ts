@@ -39,6 +39,7 @@ export class NewQuoteGeneralComponent implements OnInit {
     if (!this.formGroup.contains('quoteType')){
       this.addFormControls()
       this.subscribeCtrls();
+      this.addDefaultValue()
     }
   }
 
@@ -54,11 +55,6 @@ export class NewQuoteGeneralComponent implements OnInit {
     this.formGroup.addControl('automaticallyCloseDate', new FormControl(''));
   }
   
-  checkType(code:string) {
-    this.formGroup.controls.quoteType.setValue(code, {emitEvent: false});
-    this.EntityPM.QuoteTypeCode = code;
-  }
-
   subscribeCtrls() {
     this.formGroup.controls.startDate.valueChanges.subscribe(newVal => this.EntityPM.StartDate = newVal)
     this.formGroup.controls.expirationDays.valueChanges.subscribe(newVal => this.EntityPM.ExpirationDays = newVal)
@@ -68,8 +64,24 @@ export class NewQuoteGeneralComponent implements OnInit {
     this.formGroup.controls.automaticallyCloseDate.valueChanges.subscribe(newVal => this.EntityPM.AutomaticallyCloseDate = newVal)
   }
 
+  addDefaultValue() {
+    const dateNow = new Date();
+    dateNow.setHours(0,0,0,0);
+    const nextMonth = new Date(new Date().setMonth(new Date().getMonth()+1));
+    nextMonth.setHours(0,0,0,0);
+
+    this.formGroup.controls.startDate.setValue(dateNow);
+    this.formGroup.controls.expirationDays.setValue(30);
+    this.formGroup.controls.expirationDate.setValue(nextMonth);
+  }
+  
+  checkType(code:string) {
+    this.formGroup.controls.quoteType.setValue(code, {emitEvent: false});
+    this.EntityPM.QuoteTypeCode = code;
+  }
+
   expirationDaysChange(e: any) {
-    let date: Date = this.formGroup.controls.startDate.value;
+    let date: Date =new Date(this.formGroup.controls.startDate.value.getTime());
     if (-1 < e.value) {
       date.setDate(date.getDate() + e.value)
       this.formGroup.controls.expirationDate.setValue(date);
@@ -77,7 +89,7 @@ export class NewQuoteGeneralComponent implements OnInit {
   }
 
   closeDaysChange(e: any) {
-    let date: Date = this.formGroup.controls.startDate.value;
+    let date: Date =new Date(this.formGroup.controls.startDate.value.getTime());
     if (-1 < e.value) {
       date.setDate(date.getDate() + e.value)
       this.formGroup.controls.automaticallyCloseDate.setValue(date);

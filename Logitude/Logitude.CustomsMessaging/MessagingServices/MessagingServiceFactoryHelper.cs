@@ -447,7 +447,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                             ((new DCAInUCB8250_MsgMessagingService()).MainInterfaceCode);
 
             ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
-                            DCAInUCB2715_MsgMessagingService>
+                            DCAInUCB2715_MsgMessagingService>   
                             ((new DCAInUCB2715_MsgMessagingService()).MainInterfaceCode);
 
             ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
