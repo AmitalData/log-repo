@@ -172,6 +172,10 @@ namespace WebFreight.Web.DataProviders
         public string ValueOfGoodsCurrency { get; set; }
         public string TruckerName { get; set; }
         public string CustomsClearancePointName { get; set; }
+        public string CustomsClearancePointFullAddress { get; set; }
+        public string CustomsClearancePointContactName { get; set; }
+        public string CustomsClearancePointContactEmail { get; set; }
+        public string CustomsClearancePointTelephoneNumber { get; set; }
         public string DeclarationNumber { get; set; }
         public string WarehouseReferenceNumber { get; set; }
         public int? StorageFreeDays { get; set; }
@@ -184,6 +188,6 @@ namespace WebFreight.Web.DataProviders
         public DateTime? PickupDeliveryDeparture { get; set; }//(ATD, if null then take ETD)
         public DateTime? PickupDeliveryArrival { get; set; }//(ATA, if null then take ETA)
         public string PickupDeliveryNumber { get; set; }
-        public string CarrierCode { get; set; }//(Airline code from Main carriage for example)
+        public string CarrierCode { get; set; }//(Airline code from Main carriage for example)        
     }
 }
