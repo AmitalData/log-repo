@@ -555,34 +555,40 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
 
         private static IQueryable<CargoTrackingShipmentList> SortShipmentsDescending(CargoTrackingShipmentFilters shipmentFilters, IQueryable<CargoTrackingShipmentList> shipments)
         {
-            if (shipmentFilters.SortFieldName == "ATA")
+            if (shipmentFilters.SortFieldName == "CMD")
             {
-                shipments = shipments.OrderByDescending(d => d.ArrivalDate);
+                shipments = shipments.OrderByDescending(d => d.CurrentMilestoneDate);
+            } else if (shipmentFilters.SortFieldName == "ATA")
+            {
+                shipments = shipments.OrderByDescending(d => d.ArrivalDate).ThenByDescending(d => d.ArrivalEstimationDate);
             }
             else if (shipmentFilters.SortFieldName == "ATD")
             {
-                shipments = shipments.OrderByDescending(d => d.DepartureDate);
+                shipments = shipments.OrderByDescending(d => d.DepartureDate).ThenByDescending(d => d.DepartureEstimationDate);
             }
             else
             {
-                shipments = shipments.OrderByDescending(d => d.CreateDate);
+                shipments = shipments.OrderByDescending(d => d.CurrentMilestoneDate);
             }
             return shipments;
         }
 
         private static IQueryable<CargoTrackingShipmentList> SortShipmentsAscending(CargoTrackingShipmentFilters shipmentFilters, IQueryable<CargoTrackingShipmentList> shipments)
         {
-            if (shipmentFilters.SortFieldName == "ATA")
+            if (shipmentFilters.SortFieldName == "CMD")
             {
-                shipments = shipments.OrderBy(d => d.ArrivalDate);
+                shipments = shipments.OrderBy(d => d.CurrentMilestoneDate);
+            } else if (shipmentFilters.SortFieldName == "ATA")
+            {
+                shipments = shipments.OrderBy(d => d.ArrivalDate).ThenBy(d => d.ArrivalEstimationDate);
             }
             else if (shipmentFilters.SortFieldName == "ATD")
             {
-                shipments = shipments.OrderBy(d => d.DepartureDate);
+                shipments = shipments.OrderBy(d => d.DepartureDate).ThenBy(d => d.DepartureEstimationDate);
             }
             else
             {
-                shipments = shipments.OrderBy(d => d.CreateDate);
+                shipments = shipments.OrderBy(d => d.CurrentMilestoneDate);
             }
             return shipments;
         }
@@ -794,8 +800,8 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
             milestones.Add(new Milestone()
             {
                 Id = 4,
-                Code = "FromWarehouse",
-                Name = "From Warehouse",
+                Code = "OriginWarehouse",
+                Name = "Origin Warehouse",
                 Date = shipment.FromWarehouseDate,
                 EstimationDate = shipment.FromWarehouseEstimationDate,
                 Done = shipment.FromWarehouseDone,
@@ -830,8 +836,8 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
             milestones.Add(new Milestone()
             {
                 Id = 7,
-                Code = "ToWarehouse",
-                Name = "To Warehouse",
+                Code = "DestinationWarehouse",
+                Name = "Destination Warehouse",
                 Date = shipment.ToWarehouseDate,
                 EstimationDate = shipment.ToWarehouseEstimationDate,
                 Done = shipment.ToWarehouseDone,
@@ -962,8 +968,8 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
             milestones.Add(new Milestone()
             {
                 Id = 18,
-                Code = "DeliveryOut",
-                Name = "Delivery Out",
+                Code = "DeliveryOnTheWay",
+                Name = "Delivery on the way",
                 Date = shipment.DeliveryDate,
                 EstimationDate = shipment.DeliveryEstimationDate,
                 Done = shipment.DeliveryDone,

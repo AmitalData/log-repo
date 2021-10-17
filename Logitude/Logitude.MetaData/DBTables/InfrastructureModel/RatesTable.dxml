@@ -19,14 +19,20 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="BaseCurrencyId"
+    Name="LogDateTime"
+    Type="datetime">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ForeignCurrencyId"
     Type="varchar"
     Size="15">
     <Constraints
       Nullable="false" />
   </Column>
   <Column
-    Name="ForeignCurrencyId"
+    Name="BaseCurrencyId"
     Type="varchar"
     Size="15">
     <Constraints
@@ -44,19 +50,13 @@
     <Constraints
       Nullable="true" />
   </Column>
-  <Column
-    Name="LogDateTime"
-    Type="datetime">
-    <Constraints
-      Nullable="false" />
-  </Column>
   <Relation
-    ForeignKeyColumn="BaseCurrencyId"
+    ForeignKeyColumn="ForeignCurrencyId"
     ReferencedTable="Currencies"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Relation
-    ForeignKeyColumn="ForeignCurrencyId"
+    ForeignKeyColumn="BaseCurrencyId"
     ReferencedTable="Currencies"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />

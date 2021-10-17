@@ -1333,6 +1333,8 @@ export class CustomApiQueryFilters {
     public AdditionalFilters: FilterItem[] = [];
     public ForceCacheRefresh: boolean = false;
     public IsClosedTable: boolean = false;
+    public ParentObjectTableName: string;
+    public ParentObjectTableId: string;
     addAdditionalFilter(
         FieldName: string,
         FieldValue: any,

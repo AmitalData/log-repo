@@ -1,3 +1,4 @@
+import { Location } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'src/app/auth.service';
@@ -43,6 +44,7 @@ export class LoginComponent implements OnInit {
         private authService: AuthService,
         private cargoTrackingBrandingDataExtendedService: CargoTrackingBrandingDataExtendedService,
         private loginServiceHelper: LoginServiceHelper,
+        private location: Location,
         @Inject('BASE_URL') baseUrl: string) {
         this.RouteToMainPage();
         this.GetcargoTrackingData(baseUrl);
@@ -52,17 +54,26 @@ export class LoginComponent implements OnInit {
         this.LogoImgSrc = "./assets/images/logo/White.jpg";
         this.cargoTrackingBrandingDataExtendedService.GetUserDashboardBrandingData(ServiceHelper.GetcargoTrackingDataRequest(baseUrl)).subscribe((response: ServiceResponse) => {
             if(response.Result){
-                this.Tenant = response.Result.Tenant;
-                ServiceHelper.SetCargoTrackingDate(response.Result,baseUrl);
-                this.LogoImgSrc = this.loginServiceHelper.GetLoginLogoImg();
-                this.BackGroundImg = CargoTrackingBrandingData.BackgroundURL;
-                this.MainColor = response.Result.MainColor;
-                this.SecondaryColor = response.Result.SecondaryColor;
+                if (response.Result?.ForceHttps) {
+                    this.RedirectAppToHttps();
+                } else {
+                    this.Tenant = response.Result.Tenant;
+                    ServiceHelper.SetCargoTrackingDate(response.Result, baseUrl);
+                    this.LogoImgSrc = this.loginServiceHelper.GetLoginLogoImg();
+                    this.BackGroundImg = CargoTrackingBrandingData.BackgroundURL;
+                    this.MainColor = response.Result.MainColor;
+                    this.SecondaryColor = response.Result.SecondaryColor;
+                }
             }
             else{
                 this.GoToError401();
             }
         });
+    }
+    RedirectAppToHttps(){
+        if (location.protocol === 'http:') {
+            window.location.href = location.href.replace('http', 'https');
+        }
     }
 
     ngOnInit() {

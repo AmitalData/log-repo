@@ -74,6 +74,10 @@ export class SharedLogisticContactPM {
     public get LastLoginDate() { return this.lastLoginDate; }
     public set LastLoginDate(newValue: string) { this.lastLoginDate = newValue; this.MarkAsDirty(); }
 
+    private isCargoTrackingInvitation: boolean;
+    public get IsCargoTrackingInvitation() { return this.isCargoTrackingInvitation; }
+    public set IsCargoTrackingInvitation(newValue: boolean) { this.isCargoTrackingInvitation = newValue; this.MarkAsDirty(); }
+
     public OldEntityPM: SharedLogisticContactPM;
 
     public IsDirty: boolean;

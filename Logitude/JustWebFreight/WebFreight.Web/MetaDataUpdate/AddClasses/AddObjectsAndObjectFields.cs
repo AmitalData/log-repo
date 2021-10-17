@@ -67,6 +67,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 objectTable.HasCustomValidator = objectTablesDetails.HasCustomValidator;
                 objectTable.DisableSearchBox = objectTablesDetails.DisableSearchBox;
                 objectTable.CustomFieldsCount = objectTablesDetails.CustomFieldsCount;
+                objectTable.ParentObjectTableName = objectTablesDetails.ParentObjectTableName;
                 objectTable.AllowedForComputingPartners = objectTablesDetails.AllowedForComputingPartners;
                 objectTable.CodeField = objectTablesDetails.CodeField;
                 objectTable.NameField = objectTablesDetails.NameField;
@@ -220,6 +221,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 updatedObjectTable.HasCustomValidator = objectTablesDetails.HasCustomValidator;
                 updatedObjectTable.DisableSearchBox = objectTablesDetails.DisableSearchBox;
                 updatedObjectTable.CustomFieldsCount = objectTablesDetails.CustomFieldsCount;
+                updatedObjectTable.ParentObjectTableName = objectTablesDetails.ParentObjectTableName;
                 updatedObjectTable.AllowedForComputingPartners = objectTablesDetails.AllowedForComputingPartners;
                 updatedObjectTable.CodeField = objectTablesDetails.CodeField;
                 updatedObjectTable.NameField = objectTablesDetails.NameField;

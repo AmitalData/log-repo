@@ -38,7 +38,7 @@ export class RatesHistoryComponent extends BaseComponent {
         }
 
         this.filters = new ApiQueryFilters();
-        this.filters.SortBy = "ValueDate";
+        this.filters.SortBy = "LogDateTime";
         this.filters.SortDirection = "Descending";
         this.filters.GetCount = true;
         var value = this.LastRate.ForeignCurrencyId;

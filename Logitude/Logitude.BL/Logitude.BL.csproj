@@ -377,6 +377,7 @@
     <Compile Include="CommonDataModel\EntityLists\ProductItemList.cs" />
     <Compile Include="CommonDataModel\EntityLists\ReportExecutionLogList.cs" />
     <Compile Include="CommonDataModel\EntityPMs\AddressTypePM.cs" />
+    <Compile Include="CommonDataModel\EntityPMs\CommunicationLogExtendedArgs.cs" />
     <Compile Include="CommonDataModel\EntityPMs\ReportExecutionLogPM.cs" />
     <Compile Include="CommonDataModel\EntityPMs\HTSCodePM.cs" />
     <Compile Include="CommonDataModel\EntityPMs\ProductItemPM.cs" />
@@ -385,6 +386,7 @@
     <Compile Include="CommonDataModel\EntityQueries\HTSCodeQuery.cs" />
     <Compile Include="CommonDataModel\EntityQueries\ProductItemQuery.cs" />
     <Compile Include="CommonDataModel\EntityQueries\ReportExecutionLogQuery.cs" />
+    <Compile Include="CommonDataModel\ExternalService\CommunicationLogExtendedService.cs" />
     <Compile Include="CommonDataModel\ExternalService\CustomerDataSearchService.cs" />
     <Compile Include="CommonDataModel\CustomFilters\CustomsShipperCustomFilter.cs" />
     <Compile Include="CommonDataModel\CustomFilters\AccountingPartnerCustomFilter.cs" />

@@ -140,6 +140,7 @@ h1{
 .scrollable-table {
     /* max-width: 1600px; */
     margin: 0 auto;
+    height: 75%;
     /* height: 68vh; */
 }
 
@@ -719,7 +720,7 @@ h1{
 }
 .shipment-cards-holder{
     width: 100%;
-    height: calc(100vh - 175px);
+    height: 100%;
 }
 .shipment-skelton{
     position: relative;
@@ -845,7 +846,7 @@ h1{
     margin-left: 10px;
 }
 
-::ng-deep .mat-option.ATD{
+::ng-deep .mat-option.ATD\/ETD{
  border-bottom: 1px solid var(--MainColor);
 }
 
@@ -871,10 +872,6 @@ h1{
     display: block;
     margin-top: 10px;
     margin-left: 10px;
-}
-
-::ng-deep .mat-option.ATD{
- border-bottom: 1px solid var(--MainColor);
 }
 
 .shipment-references{

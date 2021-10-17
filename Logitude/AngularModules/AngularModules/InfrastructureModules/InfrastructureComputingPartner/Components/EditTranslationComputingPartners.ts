@@ -14,6 +14,7 @@ import {ComputingPartnerTranslationPM} from '../../../Common/EntityPMs/Computing
 import {TranslationItem} from '../../../Common/Services/CommonDomainService';
 import {ComputingPartnerTranslationPMService} from '../../../Common/Services/StandardPMs/ComputingPartnerTranslationPMService';
 import {EntityResourceService} from '../../../Infrastructure/Services/EntityResourceService';
+declare var window: any
 
 @Component({
     selector: 'EditTranslationComputingPartners',
@@ -65,10 +66,20 @@ export class EditTranslationComputingPartners extends BaseComponent {
             this.EntityPM.ComputingPartnerName = this.TranslatedEntity.ComputingPartnerName;
             this.EntityPM.ObjectTableName = this.TranslatedEntity.ObjectTableName;
             this.EntityPM.ObjectTableId = this.TranslatedEntity.ObjectTableId;
+            this.FillParentObjectTableDetailsFromChildObjectTable();
             this.SetUiProperties();
             this.DataLoaded = true;
         }
 
+    }
+
+    private FillParentObjectTableDetailsFromChildObjectTable() {
+        let childObjectTable = window.ObjectTables.filter(t => t.Name === this.EntityPM.ObjectTableName)[0];
+        if (!childObjectTable) return;
+        if (AppTool.IsNullOrEmpty(childObjectTable.ParentObjectTableName)) return;
+        let parentObjectTable = window.ObjectTables.filter(t => t.Name === childObjectTable.ParentObjectTableName)[0];
+        this.EntityPM.ObjectTableName = parentObjectTable?.Name;
+        this.EntityPM.ObjectTableId = parentObjectTable?.Id;
     }
 
     SetUiProperties() {

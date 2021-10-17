@@ -1089,6 +1089,7 @@ namespace MeatadataGeneratorTool
             SetAttribute("HasApiHelper", table.HasApiHelper.ToString().ToLower(), entityElement);
             SetAttribute("AllowedForComputingPartners", table.AllowedForComputingPartners.ToString().ToLower(), entityElement);
             SetAttribute("IsBusinessUnitEnabled", table.IsBusinessUnitEnabled.ToString().ToLower(), entityElement);
+            SetAttribute("ParentObjectTableName", GetStringValue(table.ParentObjectTableName), entityElement);
 
             if (table.IsMetadataOnlyTable != false)
             {

@@ -37,6 +37,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
     currentDate = new Date();
     FilteredItems: any[] = [];
     searchForm;
+    mobileSearchForm;
     Shipments: CargoTrackingShipmentList[] = [];
 
     isLoading: boolean = false;
@@ -47,13 +48,14 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
     isShipmentTypeFilterExpanded: boolean = false;
     isShipmentDirectionFilterExpanded: boolean = false;
     isAbdullahCompanyChecked: boolean = true;
-    showSortDetailsMenu: boolean = false;
+    showMobileSortMenu: boolean = false;
     showShipmentDetailsMenu: boolean = false;
     InvitedCustomersIds: string[];
     InvitedCustomers: any[] = [];
     ShipmentsDataSource;
     @ViewChild(CdkVirtualScrollViewport) virtualScroll: CdkVirtualScrollViewport;
     @ViewChild('input') searchInput: ElementRef;
+    @ViewChild('mobileSearch') mobileSearchInput: ElementRef;
     @ViewChild('shipmentTypeMultipleSelection') shipmentTypeMultipleSelection: MultipleSelectionComponent;
     @ViewChild('shipmentDirectionMultipleSelection') shipmentDirectionMultipleSelection: MultipleSelectionComponent;
     @ViewChild('sortByMultipleSelection') sortByMultipleSelection: MultipleSelectionComponent;
@@ -68,9 +70,10 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
     ShipmentTypeAndDirectionTooltip: string;
     SupplierOrClientTitle: string;
     SupplierOrClientValue: string;
-
+    ShowMobileSearch: boolean = false;
     ShipmenTypeForRouting: string;
-
+    public SortOptions= SortOptions;
+    PanelSearchText;
     get tenant(){
         return CargoTrackingBrandingData.Tenant;
     }
@@ -90,12 +93,25 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
     }
 
     ngOnInit(): void {
+        this.setDefaultSort();
         this.GetPreservedToggleFiltersFromSessionInfo();
         this.GetCompanyLoginsFromCache();
         this.GetMilstones();
         this.getPreviousScroll();
-        
+        this.selectDefaultSortFields();
     }
+
+    private setDefaultSort(){
+        this.sortField = SortOptions.CMD;
+        this.isSortDescending = SortOptions.DESC;
+    }
+
+    private selectDefaultSortFields(){
+        this.sortByMultipleSelection.select.options.filter(d => 
+            [SortOptions.CMD, SortOptions.DESC].includes(d.value.Code))
+            .map(x => x.select());
+    }
+
     private getPreviousScroll(){
         this.router.events.pipe(
             filter((e: any): e is NavigationEnd => e instanceof NavigationEnd)
@@ -106,7 +122,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
                     shipmentCardsContainer.scrollTop = RootContext.ShipmentsScrollPosition || 0;
                 }
              }
-             
+
          });
     }
     ngAfterViewInit(): void
@@ -116,7 +132,6 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
     }
 
     private SetShipmentsScrollPosition() {
-        console.log('ayed', RootContext.ShipmentsScrollPosition)
         const shipmentCardsContainer = document.getElementById("scrollArea");
         shipmentCardsContainer.scrollTop = RootContext.ShipmentsScrollPosition || 0;
     }
@@ -173,12 +188,12 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
     SetTitleForSupplierOrClient(shipment: CargoTrackingShipmentList) {
         var title;
         switch (shipment.DirectionId) {
-            case 'E': {
+            case 'I': {
                 title = "CLIENT"
                 break;
             }
 
-            case 'I':
+            case 'E':
             case 'C': {
                 title = "SUPPLIER"
                 break;
@@ -198,12 +213,12 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
 
     private SetSupplierOrCleintValueByDirection(shipment: CargoTrackingShipmentList, value: any) {
         switch (shipment.DirectionId) {
-            case 'E': {
+            case 'I': {
                 value = shipment.ShipperName;
                 break;
             }
 
-            case 'I': {
+            case 'E': {
                 value = shipment.ConsigneeName;
                 break;
             }
@@ -249,8 +264,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
             this.hasException = SessionInfo.ShipmentsFilters.HasException? SessionInfo.ShipmentsFilters.HasException : this.hasException;
             this.GetInvitedCustomers();
             this.updateShipmentTypeAndDirectionSelection();
-            this.setSortFilterValues();
-            
+
             this.LoadScreenData();
         }
     }
@@ -286,34 +300,6 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
                 this.shipmentDirectionMultipleSelection.select.options.find(d => d.value.Code == x.Code).select();
             }
         });
-    }
-
-    private setSortFilterValues()
-    {
-        this.sortField = '';
-        if(SessionInfo.ShipmentsFilters) {
-            this.sortField = SessionInfo.ShipmentsFilters.SortFieldName;
-            this.isSortDescending = SessionInfo.ShipmentsFilters.SortDescending;
-        }
-            var AtdSelectOption = this.sortByMultipleSelection.select.options.find(d => d.value.Code == 'ATD');
-            var AtaSelectOption = this.sortByMultipleSelection.select.options.find(d => d.value.Code == 'ATA');
-            var AscSelectOption = this.sortByMultipleSelection.select.options.find(d => d.value.Code == 'ASC');
-            var DescSelectOption = this.sortByMultipleSelection.select.options.find(d => d.value.Code == 'DESC');
-            
-            if(this.sortField == 'ATA') {
-                AtdSelectOption.deselect();
-                AtaSelectOption.select();
-            } else if(this.sortField == 'ATD'){
-                AtdSelectOption.select();
-                AtaSelectOption.deselect();
-            }
-            if(this.isSortDescending == 'DESC') {
-                AscSelectOption.deselect();
-                DescSelectOption.select();
-            } else if(this.isSortDescending == 'ASC'){
-                DescSelectOption.deselect();
-                AscSelectOption.select();
-            }
     }
 
     SetMoreReferenceText(reference: string) {
@@ -354,7 +340,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
         this.LoadScreenData();
     }
 
-    
+
 
     private GetMilstones(){
         this.milestonesService.getAll(this.tenant)
@@ -389,7 +375,9 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
         this.searchForm = this.formBuilder.group({
             SearchText: ''
         });
-
+        this.mobileSearchForm = this.formBuilder.group({
+            PanelSearchText: ''
+        });
     }
 
 
@@ -564,7 +552,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
         RootContext.ShipmentsScrollPosition = 0;
         this.SelectToggleFilters(toggleFilterCodes);
     }
-    
+
     OnHasExceptionChanged(event){
         RootContext.ShipmentsScrollPosition = 0;
         this.hasException = event;
@@ -578,34 +566,36 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
 
     sortBySelectionChangedHandler(event) {
         const index = this.sortByOptions.findIndex(d => d.Code == event);
-        var selectedCode = '';
         switch(index) {
             case 0: {
-                selectedCode = this.sortByOptions[1].Code;
                 this.sortField = this.sortField === event ? '' : event;
-                this.sortByMultipleSelection.select.options.find(d => d.value.Code == selectedCode).deselect();
+                this.sortByMultipleSelection.select.options.filter(d => 
+                    [SortOptions.ATA, SortOptions.ATD].includes(d.value.Code)).map(x => x.deselect());
                 break;
             }
-            case 1:{
-                selectedCode = this.sortByOptions[0].Code;
+            case 1: {
                 this.sortField = this.sortField === event ? '' : event;
-                this.sortByMultipleSelection.select.options.find(d => d.value.Code == selectedCode).deselect();
+                this.sortByMultipleSelection.select.options.filter(d => 
+                    [SortOptions.CMD, SortOptions.ATD].includes(d.value.Code)).map(x => x.deselect());
                 break;
             }
             case 2:{
-                selectedCode = this.sortByOptions[3].Code;
-                this.isSortDescending = this.isSortDescending === event ? '' : event;
-                this.sortByMultipleSelection.select.options.find(d => d.value.Code == selectedCode).deselect();
+                this.sortField = this.sortField === event ? '' : event;
+                this.sortByMultipleSelection.select.options.filter(d => 
+                    [SortOptions.CMD, SortOptions.ATA].includes(d.value.Code)).map(x => x.deselect());
                 break;
             }
             case 3:{
-                selectedCode = this.sortByOptions[2].Code;
                 this.isSortDescending = this.isSortDescending === event ? '' : event;
-                this.sortByMultipleSelection.select.options.find(d => d.value.Code == selectedCode).deselect();
+                this.sortByMultipleSelection.select.options.find(d => d.value.Code == SortOptions.DESC).deselect();
+                break;
+            }
+            case 4:{
+                this.isSortDescending = this.isSortDescending === event ? '' : event;
+                this.sortByMultipleSelection.select.options.find(d => d.value.Code == SortOptions.ASC).deselect();
                 break;
             }
         }
-
         if((this.sortField && this.isSortDescending) || (!this.sortField && !this.isSortDescending))
         {
             RootContext.ShipmentsScrollPosition = 0;
@@ -689,23 +679,23 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
         });
     }
 
-    OpenReferencesMessageWindow(references, isMobile: boolean) {	
+    OpenReferencesMessageWindow(references, isMobile: boolean) {
         references = references.map(x => x.trim());
-        this.dialog.open(MessageWindowComponent, {	
-            data: {	
-                title: 'References',	
-                description: isMobile ? references.join("\n") : references.slice(3, references.length + 1).join("\n"),	
-            }	
-        });	
+        this.dialog.open(MessageWindowComponent, {
+            data: {
+                title: 'References',
+                description: isMobile ? references.join("\n") : references.slice(3, references.length + 1).join("\n"),
+            }
+        });
     }
 
-    OpenExceptionMessageWindow(messageDescription) {	
-        this.dialog.open(MessageWindowComponent, {	
-            data: {	
-                title: 'Exception',	
-                description: messageDescription,	
-            }	
-        });	
+    OpenExceptionMessageWindow(messageDescription) {
+        this.dialog.open(MessageWindowComponent, {
+            data: {
+                title: 'Exception',
+                description: messageDescription,
+            }
+        });
     }
 
     GetModeIcon(mode: string)
@@ -740,22 +730,14 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
     ];
 
     sortByOptions: ToggleFilter[] = [
-        // new ToggleFilter('AL', 'ALL', ''),
-        new ToggleFilter('ATA', 'ATA', '', null),
-        new ToggleFilter('ATD', 'ATD', '', null),
-        new ToggleFilter('ASC', 'ASC', '', null),
-        new ToggleFilter('DESC', 'DESC', '', null),
+        new ToggleFilter(SortOptions.CMD, 'Current Status Date', '', null),
+        new ToggleFilter(SortOptions.ATA, 'ATA/ETA', '', null),
+        new ToggleFilter(SortOptions.ATD, 'ATD/ETD', '', null),
+        new ToggleFilter(SortOptions.ASC, 'Ascending', '', null),
+        new ToggleFilter(SortOptions.DESC, 'Descending', '', null),
     ];
 
     BuildToggleFilters(){
-        // this.ToggleFilters = [
-        //     new ToggleFilter('AL', 'ALL', '', this.ShipmentsCount),
-        //     new ToggleFilter('IM', 'Import', 'shipmentDirection',this.ShipmentsCounter.Import),
-        //     new ToggleFilter('EX', 'Export', 'shipmentDirection',this.ShipmentsCounter.Export),
-        //     new ToggleFilter('A', 'Air', 'shipmentType',this.ShipmentsCounter.Air),
-        //     new ToggleFilter('I', 'Land', 'shipmentType',this.ShipmentsCounter.Land),
-        //     new ToggleFilter('O', 'Sea', 'shipmentType',this.ShipmentsCounter.Sea),
-        // ];
         this.shipmentTypeMultipleSelection.MultipleSelectionList.map(x => {
             x.Count = this.setCounterForMultipleSelect(x);
             return x;
@@ -873,7 +855,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
         this.SelectedInvitedCustomers = [];
         this.selectedFilterMilestonesStatus = [];
         this.MilestonesStatus.map((item, index) => {
-            this.MilestonesStatus[index].IsSelected = false; 
+            this.MilestonesStatus[index].IsSelected = false;
         });
         this.selectedShipmentTypesFilter = [];
         this.selectedShipmentDirectionsFilter = [];
@@ -1000,6 +982,38 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
         }
     }
 
+    ShowSearchPanel()
+    {
+        this.ShowMobileSearch = true;
+        this.FocusOnMobileSearchBox();
+    }
+    HideSearchPanel()
+    {
+        this.ShowMobileSearch = false;
+        this.SearchText = this.PanelSearchText;
+        if(!this.SearchText){
+            this.Shipments = [];
+            RootContext.LastSearchText = this.SearchText;
+            this.LoadScreenData();
+        }else{
+            this.Search();
+        }
+    }
+    ToggleSearchPanel()
+    {
+        this.ShowMobileSearch = !this.ShowMobileSearch;
+
+        if (this.ShowMobileSearch)
+            this.FocusOnMobileSearchBox();
+    }
+
+    private FocusOnMobileSearchBox()
+    {
+        setTimeout(() =>
+        {
+            this.mobileSearchInput?.nativeElement?.focus();
+        }, 50);
+    }
 }
 
 export class ToggleFilter
@@ -1085,4 +1099,12 @@ enum Milestones {
     DeliveryOut = "15",
     Delivered = "16",
     Invoiced = "17"
+}
+
+export enum SortOptions {
+    CMD = "CMD",
+    ATA = "ATA",
+    ATD = "ATD",
+    ASC = "ASC",
+    DESC = "DESC"
 }

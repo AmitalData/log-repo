@@ -100,6 +100,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
             tableRow.SetField("DeliveryEstimationDate", tableRow["FinalDeliveryETD"]);
             tableRow.SetField("DeliveryDate", tableRow["FinalDeliveryATD"]);
             SetDeliveryDone(tableRow);
+            SetDeliveryNotes(tableRow);
 
         }
         private static void SetClearanceMilestones(DataRow tableRow)
@@ -516,6 +517,18 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
             }
 
 
+        }
+
+        private static void SetDeliveryNotes(DataRow tableRow)
+        {
+            var isLocalNameExist = !IsFieldNullOrEmpty(tableRow, "CarrierLocalName");
+            var isEnglishNameExist = !IsFieldNullOrEmpty(tableRow, "CarrierEnglishName");
+
+            if (isLocalNameExist || isEnglishNameExist)
+            {
+                var carrierName = isLocalNameExist ? tableRow["CarrierLocalName"] : tableRow["CarrierEnglishName"];
+                tableRow.SetField("DeliveryNotes", "Via " + carrierName);
+            }
         }
 
         private static bool IsFieldNullOrEmpty(DataRow tableRow, string coulmnName)

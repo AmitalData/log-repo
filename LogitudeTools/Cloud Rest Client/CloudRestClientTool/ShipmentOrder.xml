@@ -4,7 +4,7 @@
 	<TransportMode Code="A">
 		<Name>Air</Name>
 	</TransportMode>
-	<AccountManager Code="specflowtest@logitudeworld.com">
+	<AccountManager ExternalCode="test">
 		<EnglishName>SpecflowTest</EnglishName>
 		<LocalName>SpecflowTest</LocalName>
 	</AccountManager>
