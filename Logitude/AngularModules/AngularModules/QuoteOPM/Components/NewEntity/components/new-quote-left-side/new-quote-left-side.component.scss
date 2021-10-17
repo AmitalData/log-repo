@@ -2,6 +2,11 @@
     display: none;
 }
 
+.label {
+    padding: 8px 25px;
+    font-weight: bolder;
+}
+
 p-radiobutton {
     vertical-align: middle;
     margin-left: 10px;
@@ -20,7 +25,7 @@ p-radiobutton {
     font-size: 12px;
     color: gray;
     // display: flex;
-    padding: 5px 0;
+    padding: 5px 27px;
 
     label img {
         width: 20px;

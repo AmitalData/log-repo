@@ -1,8 +1,8 @@
-<div [formGroup]='formGroup'>
+<div [formGroup]='formGroup' class="p-input-icon-right">
 
     <label [for]="label">{{label}}</label>
 
-    <p-autoComplete [formControlName]="controlName" [id]="label" [suggestions]="selected" [dropdown]="true"
+    <p-autoComplete #autoComplete [formControlName]="controlName" [id]="label" [suggestions]="selected" [dropdown]="dropIcon"
         (completeMethod)="search($event)" (onBlur)='onBlur()' [field]='fieldShow' (onSelect)='onSelected($event)'>
 
         <ng-template pTemplate="item" let-x>
@@ -10,5 +10,7 @@
         </ng-template>
 
     </p-autoComplete>
+
+    <i *ngIf='searchIcon' class='pi pi-search' (click)='openDropdown()'></i>
 
 </div>
