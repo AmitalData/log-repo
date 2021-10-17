@@ -40,7 +40,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
 
                     if (CacheManager.CacheWrapper.Get(entityName) == null)
                     {
-                        var entitystatuses = (from a in repository.context.EntityStatus.Include("ObjectTable")
+                        var entitystatuses = (from a in repository.context.EntityStatus.Include("ObjectTable").Include("EntityStatusType")
                                               where a.Tenant == tenant
                                               select new EntityStatusPM()
                                               {
@@ -54,8 +54,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                   SearchFields = a.SearchFields,
                                                   InActive = a.InActive,
                                                   DisplayName = !string.IsNullOrEmpty(a.DisplayName) ? a.DisplayName : a.Name,
-
-
+                                                  EntityStatusTypeCode = a.EntityStatusTypeCode,
+                                                  StatusLocalWeight = a.StatusLocalWeight,
                                               });
                         foreach (var s in entitystatuses)
                         {
@@ -109,6 +109,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                  SearchFields = a.SearchFields,
                                                  InActive = a.InActive,
                                                  DisplayName = !string.IsNullOrEmpty(a.DisplayName) ? a.DisplayName : a.Name,
+                                                 EntityStatusTypeCode = a.EntityStatusTypeCode,
+                                                 StatusLocalWeight = a.StatusLocalWeight,
                                              }).FirstOrDefault();
 
                     entity = status;
@@ -145,6 +147,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                   SearchFields = a.SearchFields,
                                                   InActive = a.InActive,
                                                   DisplayName = !string.IsNullOrEmpty(a.DisplayName) ? a.DisplayName : a.Name,
+                                                  EntityStatusTypeCode = a.EntityStatusTypeCode,
+                                                  StatusLocalWeight = a.StatusLocalWeight,
                                               });
                         foreach (var s in entitystatuses)
                         {
@@ -198,6 +202,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                  SearchFields = a.SearchFields,
                                                  InActive = a.InActive,
                                                  DisplayName = !string.IsNullOrEmpty(a.DisplayName) ? a.DisplayName : a.Name,
+                                                 EntityStatusTypeCode = a.EntityStatusTypeCode,
+                                                 StatusLocalWeight = a.StatusLocalWeight,
                                              }).FirstOrDefault();
 
                     entity = status;
@@ -227,6 +233,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         SearchFields = a.SearchFields,
                         InActive = a.InActive,
                         DisplayName = !string.IsNullOrEmpty(a.DisplayName) ? a.DisplayName : a.Name,
+                        EntityStatusTypeCode = a.EntityStatusTypeCode,
+                        StatusLocalWeight = a.StatusLocalWeight,
                     });
         }
 
@@ -245,6 +253,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                       ObjectTableName = entity.ObjectTable.Name,
                                                       StatusWeight = entity.StatusWeight,
                                                       DisplayName = !string.IsNullOrEmpty(entity.DisplayName) ? entity.DisplayName : entity.Name,
+                                                      EntityStatusTypeCode = entity.EntityStatusTypeCode,
+                                                      StatusLocalWeight = entity.StatusLocalWeight,
                                                   };
             return result;
         }

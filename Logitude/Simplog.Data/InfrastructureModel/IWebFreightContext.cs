@@ -110,6 +110,7 @@ namespace Simplog.Data.InfrastructureModel
         IDbSet<WorkerRoleName> WorkerRoleNames { get; }
 
         IDbSet<QueryExportExecutionLog> QueryExportExecutionLogs { get; }
+        IDbSet<EntityStatusType> EntityStatusTypes { get; }
 
         void SetAsModified(object entity);
         void DetectChanges();

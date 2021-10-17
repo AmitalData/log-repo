@@ -6,18 +6,9 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-export class EntityStatusList {
-   		Id: string;
-		Tenant: number;
+export class EntityStatusTypeList {
+   		Code: string;
 		Name: string;
-		ObjectTableId: string;
-		StatusWeight: number;
-		ObjectTableName: string;
-		InActive: boolean;
-		Code: string;
 		SearchFields: string;
-		DisplayName: string;
-		StatusLocalWeight: number;
-		EntityStatusTypeCode: string;
 	
 }

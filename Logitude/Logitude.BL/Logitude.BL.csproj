@@ -493,6 +493,11 @@
     <Compile Include="InfrastructureModel\APIDataContract\QueryService\EntityStatusQueryService.Generated.cs" />
     <Compile Include="InfrastructureModel\APIDataContract\Messages\RatesUpdateService.cs" />
     <Compile Include="InfrastructureModel\APIDataContract\RatesUpdate.cs" />
+    <Compile Include="InfrastructureModel\CloseTables\DetailsClassesGenerated\EntityStatusTypeDetails.Generated.cs" />
+    <Compile Include="InfrastructureModel\CloseTables\EnumGenerated\EntityStatusTypeStruct.Generated.cs" />
+    <Compile Include="InfrastructureModel\EntityLists\EntityStatusTypeList.cs" />
+    <Compile Include="InfrastructureModel\EntityPMs\EntityStatusTypePM.cs" />
+    <Compile Include="InfrastructureModel\EntityQueries\EntityStatusTypeQuery.cs" />
     <Compile Include="InfrastructureModel\FieldShortNameGetters\ObjectFieldsShortNamesGetter.cs" />
     <Compile Include="GlobalModel\EntityLists\BluesnapTransactionList.cs" />
     <Compile Include="GlobalModel\EntityLists\HelpResourceList.cs" />
