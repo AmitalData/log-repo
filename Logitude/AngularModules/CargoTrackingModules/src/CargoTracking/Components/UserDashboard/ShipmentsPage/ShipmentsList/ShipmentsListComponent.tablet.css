@@ -157,6 +157,9 @@
     .more-mobile {
         display: none;
     }
+    .mobile-sort-menu-dismiss-section, .mobile-sort-menu{
+        display: none;
+    }
 }
 
 

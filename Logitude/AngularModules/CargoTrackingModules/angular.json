@@ -26,6 +26,7 @@
             ],
             "styles": [
               "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
+              "./node_modules/line-awesome/dist/line-awesome/css/line-awesome.min.css",
               "src/styles.css"
             ],
             "scripts": []
