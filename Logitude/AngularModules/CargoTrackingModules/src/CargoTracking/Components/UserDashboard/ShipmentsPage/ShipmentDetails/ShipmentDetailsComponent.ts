@@ -195,12 +195,12 @@ export class ShipmentDetailsComponent implements AfterViewInit
     SetTitleForSupplierOrClient(directionId: string) {
         var title;
         switch (directionId) {
-            case ShipmentDirections.Export: {
+            case ShipmentDirections.Import: {
                 title = "CLIENT"
                 break;
             }
 
-            case ShipmentDirections.Import:
+            case ShipmentDirections.Export:
             case ShipmentDirections.Customs: {
                 title = "SUPPLIER"
                 break;
@@ -210,10 +210,10 @@ export class ShipmentDetailsComponent implements AfterViewInit
         return title;
     }
     SetSupplierOrCleintValueByDirection(shipmentList) {
-        if(shipmentList.DirectionId == ShipmentDirections.Export) 
+        if(shipmentList.DirectionId == ShipmentDirections.Import) 
         {
             return shipmentList.ShipperName;
-        } else if(shipmentList.DirectionId == ShipmentDirections.Import) {
+        } else if(shipmentList.DirectionId == ShipmentDirections.Export) {
             return shipmentList.ConsigneeName;   
         }
         return '';
