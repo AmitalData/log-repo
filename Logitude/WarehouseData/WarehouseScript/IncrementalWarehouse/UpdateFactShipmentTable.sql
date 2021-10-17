@@ -393,7 +393,7 @@
  
 	 dw_Shipments.PreForwardingCarrierNumber, PreForwardingCarrier.Id_Number, PreForwardingFromPort.Id_Number,PreForwardingToPort.Id_Number, PreForwardingTransportModes.Name,
 	  fromPort.Id_Number, toPort.Id_Number, dw_ShipmentMasterDatas.OnCarriageATA, dw_ShipmentMasterDatas.OnCarriageATD, dw_ShipmentMasterDatas.OnCarriageETD, dw_ShipmentMasterDatas.OnCarriageETA,
-	   dw_Shipments.PlannedCargoReadyDate,  dw_Shipments.ApprovedCargoReadyDate, dw_Shipments.Notify1Reference2,  HandlerUser.Id_Number, AccountingClosedByUser.Id_Number, @IsStandalonePickupDelivery,
+	   dw_Shipments.PlannedCargoReadyDate,  dw_Shipments.ApprovedCargoReadyDate, dw_Shipments.Notify1Reference2,  HandlerUser.Id_Number, AccountingClosedByUser.Id_Number, dw_Shipments.IsStandalonePickupDelivery,
  
 
  	1,1,1,1,
