@@ -650,7 +650,6 @@ export function CopyShipment(shipmentLevel: string) {
     cy.Click(ShipmentSelectors.ShipmentMoreList, null, true)
     cy.Click(ShipmentSelectors.CopyShipmentButton, null)
     CheckBoxesInCopyShipmentWizerd()
-    cy.wait(5000)
     CreateShipment(shipmentLevel);
 }
 
