@@ -42,6 +42,7 @@ export class ShipmentDetailsComponent implements AfterViewInit
     DocumentsFilings: any[];
     PartnerCards: PartnerCard[] = [];
     HasReferences: boolean = false;
+    HasMoreThanTwoReferences: boolean = false;
     HasContainersDetails: boolean = false;
     InlandTransportMode = 'I';
     WarehouseTransportMode ='W'
@@ -155,6 +156,7 @@ export class ShipmentDetailsComponent implements AfterViewInit
                 this.Shipment = result;
                 this.ShipmentReferences = result.ShipmentList.CustomerReference ? result.ShipmentList.CustomerReference.split(',') : null;
                 this.HasReferences = this.SetHasReferences();
+                this.HasMoreThanTwoReferences = this.SetHasMoreThanTwoReferences();
 
                 this.SetRoutingVariables();
 
@@ -233,6 +235,9 @@ export class ShipmentDetailsComponent implements AfterViewInit
     }
     SetHasReferences() {
         return this.ShipmentReferences == null ? false : true;
+    }
+    SetHasMoreThanTwoReferences() {
+        return this.HasMoreThanTwoReferences = this.ShipmentReferences?.length > 2;
     }
     SetHasContainersDetails() {
         return this.ShipmentPackages.length==0  ? false : true;
@@ -500,9 +505,10 @@ export class ShipmentDetailsComponent implements AfterViewInit
             for (let routing of this.ShipmentPM.ShipmentPickUps) {
                 this.AddTruckerPartnerCardIfCarrierIdExist(routing);
             }
+
+            this.RemoveDashesFromPartnerCardsNames();
         }
     }
-   
 
     private GetIdFromURI()
     {
@@ -893,31 +899,36 @@ export class ShipmentDetailsComponent implements AfterViewInit
     {
         var address = this.PartnersAddresses.find(a => a.CardId == cardId);
         if (address)
-            var phoneNumber = address.PhoneNumber;
+            var phoneNumber = address.PhoneNumber?.replace(/---/g, "");
         return phoneNumber;
     }
     private GetPartnerFaxNumberFromAddress(cardId: any)
     {
         var address = this.PartnersAddresses.find(a => a.CardId == cardId);
         if (address)
-            var faxNumber = address.FaxNumber;
+            var faxNumber = address.FaxNumber?.replace(/---/g, "");;
         return faxNumber;
     }
     private GetPartnerAddress(cardId: any)
     {
         var address = this.PartnersAddresses.find(a => a.CardId == cardId);
+        var isCityAndCountryExist = address.City?.replace(/---/g, "")?.length > 0 && address.CountryName?.replace(/---/g, "")?.length > 0 ? ',': '' ;
         if (address) {
             var addressLines = [
-                address.Address1,
-                address.Address2,
-                address.ZipCode,
-                address.City + ',' + address.CountryName
+                address.Address1?.replace(/---/g, ""),
+                address.Address2?.replace(/---/g, ""),
+                address.ZipCode?.replace(/---/g, ""),
+                address.City?.replace(/---/g, "") + isCityAndCountryExist  + address.CountryName?.replace(/---/g, "")
             ];
             return addressLines.filter(a=>a).join('<br>');
         }
         return null;
     }
-
+    private RemoveDashesFromPartnerCardsNames() {
+        for (let i = 0; i < this.PartnerCards.length; i++) {
+            this.PartnerCards[i].Name = this.PartnerCards[i].Name?.replace(/---/g, "");
+        }
+    }
     InitRoutes()
     {
         if (this.ShipmentPM) {
