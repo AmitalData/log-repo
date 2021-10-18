@@ -189,13 +189,13 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
         var title;
         switch (shipment.DirectionId) {
             case 'I': {
-                title = "CLIENT"
+                title = "SUPPLIER"
                 break;
             }
 
             case 'E':
             case 'C': {
-                title = "SUPPLIER"
+                title = "CLIENT"
                 break;
             }
         }

@@ -197,13 +197,13 @@ export class ShipmentDetailsComponent implements AfterViewInit
         var title;
         switch (directionId) {
             case ShipmentDirections.Import: {
-                title = "CLIENT"
+                title = "SUPPLIER"
                 break;
             }
 
             case ShipmentDirections.Export:
             case ShipmentDirections.Customs: {
-                title = "SUPPLIER"
+                title = "CLIENT"
                 break;
             }
         }
