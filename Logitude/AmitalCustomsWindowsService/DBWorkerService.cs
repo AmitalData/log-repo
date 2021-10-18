@@ -234,6 +234,9 @@ namespace AmitalCustomsWindowsService
             var listOfWorkerEntryPoint = CustomsWorkerRole.ThreadedRoleEntryPoint.GetAllWorkerEntryPointType();
             ///itzik +  ihab  listOfWorkerEntryPoint.Add(new CommunicationWorkerRole.CommunicationLogWorkerRoleWinService());
             listOfWorkerEntryPoint.Add(new CommunicationWorkerRole.FTPCommunicationWorkerRoleWinService());
+
+            
+
             listOfWorkerEntryPoint.Add(new SendWEBAPIMessage2MamanWR());
             listOfWorkerEntryPoint.Add(new FTPToAnalyzeQueueWR());
             listOfWorkerEntryPoint.Add(new CustomsAnalyzeQueueWR());
@@ -258,7 +261,7 @@ namespace AmitalCustomsWindowsService
                 listOfWorkerEntryPoint.Add(new DownloadDcaMessageSheetWR());
             }
 
-
+            
             foreach (var batchServicesDefinitionPM in BatchServicesDefinitions)
             {
                 var worker = listOfWorkerEntryPoint.FirstOrDefault(r => r.NameOf() == batchServicesDefinitionPM.Code);
@@ -271,10 +274,30 @@ namespace AmitalCustomsWindowsService
                     }
                 }
             }
+            ////FROM CONFIG !!! 
+            SingletonFTPCommunicationLogQueue(listOfWorkerEntryPoint);
         }
 
-        
+        private void SingletonFTPCommunicationLogQueue(List<Logitude.Server.Tools.WorkerEntryPoint> listOfWorkerEntryPoint)
+        {
+            var suppresDoOnlyCheck = false;
+            var addWorkerFromAppSettingMethodInfoDB = typeof(DBWorkerService).GetMethod("AddWorkerFromAppSettingDB");
+            //INSERT INTO "AMINET_GLOBAL"."BATCHSERVICESDEFINITIONS"(CODE, CLASSNAME) VALUES('SingletonFTPCommunicationWorkerRoleWinService', 'SingletonFTPCommunicationWorkerRoleWinService');
+            //INSERT INTO "AMINET_GLOBAL"."BATCHSERVICESDEFINITIONMODS" VALUES('SingletonFTPCommunicationWorkerRoleWinService', '0', '1');
 
+            ///< add key = "SingletonFTPCommunicationWorkerRoleWinService" value = "1" />
+            if (!string.IsNullOrWhiteSpace(ConfigurationManager.AppSettings.Get("SingletonFTPCommunicationWorkerRoleWinService")))/*"SingletonFTPCommunicationLogQueue"*/
+            {
+                listOfWorkerEntryPoint.Add(new CommunicationWorkerRole.SingletonFTPCommunicationWorkerRoleWinService());
+                var AddWorkerFromAppSettingGenericMethod = addWorkerFromAppSettingMethodInfoDB.MakeGenericMethod(new Type[] { (new SingletonFTPCommunicationWorkerRoleWinService()).GetType() });
+                AddWorkerFromAppSettingGenericMethod.Invoke(this, new object[] { (object)suppresDoOnlyCheck });
+
+            }
+
+        }
+
+
+        
         private List<BatchServicesDefinitionPM> GetBatchServicesDefinitions()
         {
             BatchServicesDefinitionRepository BatchServicesRepository = new BatchServicesDefinitionRepository();
