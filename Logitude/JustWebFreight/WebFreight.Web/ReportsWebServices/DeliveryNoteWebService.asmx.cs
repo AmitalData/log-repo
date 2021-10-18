@@ -233,6 +233,7 @@ namespace WebFreight.Web.ReportsWebServices
             this.MapShipmentMoveType();
             this.MapShipmentInsidePackages();
             this.MapShipmentCustomFields();
+            this.MapShipmentCustomClearancePoint();
         }
         private void MapBranchData()
         {
@@ -400,7 +401,7 @@ namespace WebFreight.Web.ReportsWebServices
                 dataProvider.ShipperVATNumber = card.VatNumber;
             }
         }
-
+        
         private void MapShipmentConsignee()
         {
             if (!string.IsNullOrEmpty(shipment.ConsigneeId))
@@ -605,8 +606,8 @@ namespace WebFreight.Web.ReportsWebServices
         {
             CustomFieldResolver customFieldResolver = new CustomFieldResolver();
             customFieldResolver.SetDataProviderCustomFieldsValues("Shipment", tenant, shipment, dataProvider);
-        }
-              
+        }       
+
         private void MapChildEntityFields()
         {
             if (this.childEntity != null)
@@ -1096,7 +1097,6 @@ namespace WebFreight.Web.ReportsWebServices
                 itemLine.HSCode = item.Harmonize;
             }
         }
-
         private Vessel GetVessel(string id)
         {
             Vessel output = null;
@@ -1197,6 +1197,53 @@ namespace WebFreight.Web.ReportsWebServices
             }
 
             return output;
+        }
+        private void MapShipmentCustomClearancePoint()
+        {
+            if (!string.IsNullOrEmpty(shipment.CustomClearancePointId))
+            {
+                this.MapCustomClearancePointAddress();
+                this.MapCustomClearancePointContact();
+            }
+        }
+        private void MapCustomClearancePointAddress()
+        {
+            if (!string.IsNullOrEmpty(shipment.CustomClearancePointAddressId))
+            {
+                Address address = addressRepository.GetSingleAddress(shipment.CustomClearancePointAddressId, tenant);
+                if (address != null)
+                {
+                    dataProvider.CustomsClearancePointFullAddress = DataProviders.General.GetAddress(address);
+
+                    if (!string.IsNullOrEmpty(address.PhoneNumber) || !string.IsNullOrEmpty(address.FaxNumber))
+                    {
+                        dataProvider.CustomsClearancePointFullAddress += Environment.NewLine;
+                    }
+
+                    if (!string.IsNullOrEmpty(address.PhoneNumber))
+                    {
+                        dataProvider.CustomsClearancePointFullAddress += "Tel: " + address.PhoneNumber + " ";
+                    }
+
+                    if (!string.IsNullOrEmpty(address.FaxNumber))
+                    {
+                        dataProvider.CustomsClearancePointFullAddress += "Fax: " + address.FaxNumber;
+                    }
+                }
+            }
+        }
+        private void MapCustomClearancePointContact()
+        {
+            if (!string.IsNullOrEmpty(shipment.CustomClearancePointContactId))
+            {
+                Contact contact = ContactRepository.GetSingleContact(shipment.CustomClearancePointContactId, tenant, true);
+                if (contact != null)
+                {
+                    dataProvider.CustomsClearancePointContactName = contact.EnglishName;
+                    dataProvider.CustomsClearancePointTelephoneNumber = contact.BusinessPhone;
+                    dataProvider.CustomsClearancePointContactEmail = contact.Email;
+                }
+            }
         }
     }
 }
