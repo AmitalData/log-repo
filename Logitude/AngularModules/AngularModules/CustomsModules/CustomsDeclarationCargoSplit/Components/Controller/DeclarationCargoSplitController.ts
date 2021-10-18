@@ -8,16 +8,18 @@ import {EventEmitter} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
 import { defer, of } from 'rxjs';
+import { SessionLocator } from "../../../../Infrastructure/Utilities/SessionLocator";
 
 export class DeclarationCargoSplitController {
   private IsDisplayOnly: boolean;
   private http: HttpClient;
-  private apiUrl: string;
+    private apiUrl: string;
+    private tenant: number;
 
   constructor(private DeclarationCargoSplitPM: DeclarationCargoSplitPM) {
     this.apiUrl = ServiceHelper.GetLogitudeURL() + 'api/CustomsRequestSheetExtended';
-    this.http = ServiceHelper.HttpClient;
-
+      this.http = ServiceHelper.HttpClient;
+      this.tenant = SessionLocator.Tenant;
   }
 
 
@@ -39,7 +41,7 @@ export class DeclarationCargoSplitController {
     var table2 = window.ObjectTables.filter(d => d.Name === "Customs.Declaration")[0];
 
     return defer(() => {
-      return this.http.get(this.apiUrl + '/GetRequestInProgress/?' + 'tenant=' + this.DeclarationCargoSplitPM.Tenant + '&interfaceTypeCode=8370' + '&objectTableId1=' + table.Id + '&entityId1=' + this.DeclarationCargoSplitPM.Id + '&objectTableId2=' + table2.Id + '&entityId2=' + encodeURIComponent(declarationId) + '&customFileNo=' + "" + '&displayOnlyMode= false', ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+        return this.http.get(this.apiUrl + '/GetRequestInProgress/?' + 'tenant=' + this.tenant + '&interfaceTypeCode=8370' + '&objectTableId1=' + table.Id + '&entityId1=' + this.DeclarationCargoSplitPM.Id + '&objectTableId2=' + table2.Id + '&entityId2=' + encodeURIComponent(declarationId) + '&customFileNo=' + "" + '&displayOnlyMode= false', ServiceHelper.GetHttpHeaders()).pipe(map(response => {
         var serviceResponse: ServiceResponse = new ServiceResponse();
         var requestSheets:any = response;
         if (requestSheets == null || requestSheets.length == 0) {
