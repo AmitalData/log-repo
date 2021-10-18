@@ -374,10 +374,11 @@ Shipment.ShipmentList.ArrivalDate |
                     <div *ngIf="Shipment.ShipmentList.EntityType != 'O'" class="description">
                         <div *ngFor="let package of ShipmentPackages?.slice(0,1), let i = index">
                             {{package.PackageTypeName}}
-                            <a *ngIf="ShipmentPackages.length > 1 && i == 0" (click)="ShowMoreLinkClicked()"
-                               style="cursor: pointer; font-size: 11px;color:var(--MainColor)">
-                                {{ShowDetailsSection?'Show less':'Show more'}}
-                            </a>
+                            <i class="las la-chevron-circle-up" style="color: var(--MainColor)"
+                               *ngIf="ShipmentPackages.length > 1 && i == 0 && ShowDetailsSection" (click)="ShowMoreLinkClicked()"></i>
+
+                            <i class="las la-chevron-circle-down" style="color: var(--MainColor)"
+                               *ngIf="ShipmentPackages.length > 1 && i == 0 && !ShowDetailsSection" (click)="ShowMoreLinkClicked()"></i>
                         </div>
                     </div>
                 </div>
@@ -416,8 +417,11 @@ Shipment.ShipmentList.ArrivalDate |
                     <div class="description">
                         <div *ngFor="let container of ContainersNumbers?.slice(0,2), let i = index">
                             {{container}}
-                            <a *ngIf="ContainersNumbers.length > 2 && i == 1" (click)="ShowMoreLinkClicked()"
-                               style="cursor: pointer; font-size: 11px;color:var(--MainColor)"> {{ShowDetailsSection?'Show less':'Show more'}} </a>
+                            <i class="las la-chevron-circle-up" style="color: var(--MainColor)"
+                               *ngIf="ContainersNumbers.length > 2 && i == 1 && ShowDetailsSection" (click)="ShowMoreLinkClicked()"></i>
+
+                            <i class="las la-chevron-circle-down" style="color: var(--MainColor)"
+                               *ngIf="ContainersNumbers.length > 2 && i == 1 && !ShowDetailsSection" (click)="ShowMoreLinkClicked()"></i>
                         </div>
                     </div>
                 </div>
