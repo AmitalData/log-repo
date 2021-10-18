@@ -177,7 +177,7 @@ export class ProductItemsTabComponent extends BaseComponent implements OnInit, O
         }
     }
     private UpdateSimilarProductItems(shipmentItem: ShipmentProductItemPM, customerItem: ProductItemPM) {
-        var sameProductItems: ShipmentProductItemPM[] = this.EntityPM.ShipmentProductItems.filter(d => d.Id == shipmentItem.ProductItemId);
+        var sameProductItems: ShipmentProductItemPM[] = this.EntityPM.ShipmentProductItems.filter(d => d.ProductItemId == shipmentItem.ProductItemId);
         if (sameProductItems != null && sameProductItems.length > 0) {
             sameProductItems.forEach(item => {
                 this.MapProductItem(item, customerItem);
