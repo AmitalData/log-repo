@@ -98,5 +98,9 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public bool IsActiveInImport { get; set; }
         public bool IsActiveInDomestic { get; set; }
         public bool IsActiveInDrop { get; set; }
+        [ForeignKey("QuoteGroupSectionID")]
+        public virtual QuoteGroupSection QuoteGroupSection { get; set; }
+        public string QuoteGroupSectionID { get; set; }
+
     }
 }
