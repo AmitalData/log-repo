@@ -43,7 +43,7 @@ export class PublicGateComponent
         this.cargoTrackingDataExtendedService.get(this._Tenant).subscribe((response: any) =>
         {
             if(response?.Result?.ForceHttps)
-                return this.RedirectAppToHttps();
+                this.RedirectAppToHttps();
 
             CargoTrackingBrandingData.MainColor = response.Result.MainColor;
             if(CargoTrackingBrandingData.MainColor) {
