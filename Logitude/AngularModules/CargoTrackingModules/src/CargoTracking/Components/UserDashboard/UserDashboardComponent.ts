@@ -194,7 +194,7 @@ export class UserDashboardComponent implements AfterViewInit, OnInit
         {
             if (response.Result) {
                 if(response?.Result?.ForceHttps)
-                    return this.RedirectAppToHttps();
+                    this.RedirectAppToHttps();
 
                 ServiceHelper.SetCargoTrackingDate(response.Result, this.baseURL);
 
