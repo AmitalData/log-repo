@@ -108,7 +108,9 @@ export class ReportsTemplateRestoreComponent implements OnInit {
             windowArgs.DataViewModel = this;
             windowArgs.ProcessType = "ReportPreview";
             windowArgs.ReportTemplateId = item.ReportDocumentId;
+            windowArgs.ReportsTemplateId = this.ReportsTemplatePM.Id;
             windowArgs.Tenant = item.Tenant;
+            windowArgs.TemplateType = this.ReportsTemplatePM.TemplateType;
 
             var widthwindow = window.innerWidth;
             var heighthwindow = window.innerHeight;

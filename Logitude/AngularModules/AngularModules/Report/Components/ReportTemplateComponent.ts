@@ -263,7 +263,7 @@ export class ReportTemplateComponent implements OnInit {
         }
     }
 
-    EditExcelReportsTemplate(item: ReportsTemplatePM, isNew: boolean) {
+    EditExcelReportsTemplate(item: ReportsTemplatePM) {
         if (!this.CanEditTemplate(item))
             return;
 
@@ -272,7 +272,6 @@ export class ReportTemplateComponent implements OnInit {
         windowArgs.TemplateId = item.Id;
         windowArgs.Tenant = item.Tenant;
         windowArgs.ReportTemplatePM = item;
-        windowArgs.isNew = isNew;
 
         var logWindow = new LogitudeWindow();
         logWindow.Width = 500;

@@ -1,3 +1,4 @@
+declare var window: any;
 
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { SessionLocator } from 'Infrastructure/Utilities/SessionLocator';
@@ -9,6 +10,7 @@ import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator'
 import { FormControl } from '@angular/forms';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { ExcelReportArguments } from 'Common/DataContracts/ExcelReportArguments';
+import { LogitudeWindow } from 'Controls/Windows/LogitudeWindow';
 
 @Component({
 
@@ -59,13 +61,13 @@ export class ExcelReportTemplateComponent implements OnInit {
         this.TemplateType = args.TemplateType;
         this.Area = args.Area;
         this.ReportTemplatePM = args.ReportTemplatePM;
-        this.isNew = args.isNew;
         this.LoadReportTemplate();
     }
 
     LoadReportTemplate() {
         this.CurrentSession.StartBusyIndicatorLoading();
-        this.excelReportService.getDataProviderFields(this.ReportTemplatePM.ReportId, this.ReportTemplatePM.Id, this.isNew).subscribe((myResponse: ServiceResponse) => {
+        this.excelReportService.getDataProviderFields(this.ReportTemplatePM.ReportId, this.ReportTemplatePM.Id)
+        .subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
                 this.FillDataProviderFields(myResponse.Result)
             }
@@ -78,7 +80,7 @@ export class ExcelReportTemplateComponent implements OnInit {
         this.DataProviderFieldsAll = new Array<DataProviderField>();
         result.forEach((item) => {
             this.DataProviderFieldsAll.push(item);
-            this.DataProviderFields = this.DataProviderFieldsAll;
+            this.DataProviderFields.push(this.Clone(item));
         });
         this.TextSearchEnabled();
     }
@@ -110,13 +112,30 @@ export class ExcelReportTemplateComponent implements OnInit {
             this.DataProviderFields = this.DataProviderFieldsAll;
         }
     }
-    
+
     FilterDataProviderFields(textsearch: string): DataProviderField[] {
-        return JSON.parse(JSON.stringify(this.DataProviderFieldsAll)).filter(function f(o) {
+        return this.Clone(this.DataProviderFieldsAll).filter(function f(o) {
             if (o.Text.toLowerCase().indexOf(textsearch.toLowerCase()) > -1) return true
 
             if (o.Fields) {
                 return (o.Fields = JSON.parse(JSON.stringify(o.Fields)).filter(f)).length
+            }
+        });
+    }
+
+    CheckChanges(expression: string) {
+        this.FindItem(expression, this.DataProviderFieldsAll);
+    }
+
+    FindItem(expression: string, list: DataProviderField[]) {
+        list.forEach(item => {
+            if (item.Expression == expression) {
+                item.IsChecked = !item.IsChecked;
+                return;
+            }
+
+            if (item.Fields != null) {
+                this.FindItem(expression, item.Fields);
             }
         });
     }
@@ -126,16 +145,11 @@ export class ExcelReportTemplateComponent implements OnInit {
     }
 
     SaveButtonClicked() {
-        var selectedDataProviderFields: DataProviderField[] = this.GetSelectedDataProviderFields(this.CloneList(this.DataProviderFields));
-
-        if (selectedDataProviderFields == null || selectedDataProviderFields.length == 0) {
-            return;
-        }
-
-        this.CurrentSession.StartBusyIndicatorLoading();
-
+        var selectedDataProviderFields: DataProviderField[] = this.GetSelectedDataProviderFields(this.Clone(this.DataProviderFieldsAll));
+        
         var excelReportArguments: ExcelReportArguments = this.GetExcelReportArguments(selectedDataProviderFields);
 
+        this.CurrentSession.StartBusyIndicatorLoading();
         this.excelReportService.postDataProviderProperties(excelReportArguments).subscribe((myResponse: ServiceResponse) => {
             this.CurrentSession.StopBusyIndicator();
             this.CurrentSession.CurrentWindow.Close("");
@@ -151,7 +165,7 @@ export class ExcelReportTemplateComponent implements OnInit {
         return excelReportArguments;
     }
 
-    CloneList(list: any): any {
+    Clone(list: any): any {
         return JSON.parse(JSON.stringify(list));
     }
 
@@ -162,7 +176,7 @@ export class ExcelReportTemplateComponent implements OnInit {
                 selectedDataProviderFields.push(item);
             }
             if (item.Fields != null) {
-                item.Fields = this.GetSelectedDataProviderFields(this.CloneList(item.Fields));
+                item.Fields = this.GetSelectedDataProviderFields(this.Clone(item.Fields));
             }
         });
         return selectedDataProviderFields;
@@ -171,9 +185,31 @@ export class ExcelReportTemplateComponent implements OnInit {
 
 
     PreviewButtonClicked() {
+        this.OpenStimulsoftDesigner();
         this.CurrentSession.CurrentWindow.Close("");
     }
 
+    OpenStimulsoftDesigner() {
+        var windowArgs: any = {};
+        windowArgs.DataViewModel = this;
+        windowArgs.ProcessType = "";
+        windowArgs.ReportTemplateId = this.ReportTemplatePM.Id;
+        windowArgs.ReportsTemplateId = this.ReportTemplatePM.Id;
+        windowArgs.Tenant = SessionLocator.Tenant;
+        windowArgs.TemplateType = this.ReportTemplatePM.TemplateType;
 
+        var widthwindow = window.innerWidth;
+        var heighthwindow = window.innerHeight;
+        var logWindow = new LogitudeWindow();
+
+        logWindow.Width = widthwindow - 100;
+        logWindow.Height = heighthwindow - 100;
+        logWindow.Title = this.ReportTemplatePM.Description;
+
+        logWindow.IsShowCloseButton = true;
+        logWindow.WindowArgs = windowArgs;
+        window.designerClosed = false;
+        logWindow.Show("./Infrastructure/Components/StimulsoftDesigner/StimulsoftDesigner");
+    }
 
 }

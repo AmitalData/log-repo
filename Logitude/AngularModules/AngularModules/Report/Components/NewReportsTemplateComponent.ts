@@ -208,7 +208,7 @@ export class NewReportsTemplateComponent implements OnInit {
 
                         if (this.TemplateType == "E") {
                             this.DataViewModel.AddTemplateToExcelList(this.ReportsTemplatePM);
-                            this.DataViewModel.EditExcelReportsTemplate(this.ReportsTemplatePM, true);
+                            this.DataViewModel.EditExcelReportsTemplate(this.ReportsTemplatePM);
                             this.CloseButtonClicked();
                             return;
                         }
@@ -261,6 +261,7 @@ export class NewReportsTemplateComponent implements OnInit {
         windowArgs.ProcessType = "SaveOnSameDocument";
         windowArgs.ReportTemplateId = this.ReportsTemplatePM.Id;
         windowArgs.Tenant = SessionLocator.Tenant;
+        windowArgs.ReportType = this.TemplateType;
         var widthwindow = window.innerWidth;
         var heighthwindow = window.innerHeight;
         var logWindow = new LogitudeWindow();

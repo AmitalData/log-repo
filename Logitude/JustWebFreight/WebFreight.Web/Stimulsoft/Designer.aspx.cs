@@ -46,9 +46,11 @@ namespace WebFreight.Web.Stimulsoft
 
                 var templateId = Request.QueryString["templateId"];
                 var reportTemplateId = Request.QueryString["reportTemplateId"];
+                var reportsTemplateId = Request.QueryString["reportsTemplateId"];
                 var tenantPar = Request.QueryString["tenant"];
                 var token = Request.QueryString["token"];
                 var processType = Request.QueryString["processtype"];
+                var templateType = Request.QueryString["templateType"];
 
                 StiReport report = new StiReport();
                 #region Document Type Template
@@ -77,7 +79,7 @@ namespace WebFreight.Web.Stimulsoft
                     else if(!string.IsNullOrEmpty(reportTemplateId))
                     {
                         ReportHelper reportHelper = new ReportHelper();
-                        byte[] fileData = reportHelper.LoadDataToStimulReport(processType, reportTemplateId, tenant);
+                        byte[] fileData = reportHelper.LoadDataToStimulReport(processType, reportTemplateId, tenant, reportsTemplateId, templateType);
                         if (fileData != null)
                         {
                             report.Load(fileData);
@@ -86,7 +88,7 @@ namespace WebFreight.Web.Stimulsoft
                         {
                             LogitudeStiWebDesigner.ShowSaveButton = false;
                             LogitudeStiWebDesigner.ShowSaveDialog = false;
-                            LogitudeStiWebDesigner.ShowDictionary = false;
+                            LogitudeStiWebDesigner.ShowDictionary = templateType == "E";
                             LogitudeStiWebDesigner.ShowReportTree = false;
                             LogitudeStiWebDesigner.ShowPanel = false;
                             LogitudeStiWebDesigner.ShowTooltips = false;

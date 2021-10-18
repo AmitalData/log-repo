@@ -2625,6 +2625,7 @@
     <Compile Include="Helpers\EntityPropertyValueService.cs" />
     <Compile Include="Helpers\ExcelReport\ExcelDataProviderFieldsBuilder.cs" />
     <Compile Include="Helpers\ExcelReport\ExcelReportFileService.cs" />
+    <Compile Include="Helpers\ExcelReport\ExcelReportMrtBuilder.cs" />
     <Compile Include="Helpers\ExcelReport\ExcelReportService.cs" />
     <Compile Include="Helpers\ExcelReport\ExcelReportUpdateService.cs" />
     <Compile Include="Helpers\ExternalAPITemplatesBuilder.cs" />

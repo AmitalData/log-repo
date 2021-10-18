@@ -7,6 +7,11 @@ using Microsoft.Practices.Unity;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
+using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Xml.Linq;
+using WebFreight.Web.DataContracts;
 
 namespace WebFreight.Web.Helpers.ExcelReport
 {
@@ -19,14 +24,50 @@ namespace WebFreight.Web.Helpers.ExcelReport
             this.tenant = tenant;
         }
 
-        public byte[] GetReport(bool isNew, string reportTemplateId)
+        public List<DataProviderField> GetDataProviderFieldsFromXML(string reportTemplateId, string documentId, bool isDocument)
+        {
+            if (string.IsNullOrEmpty(reportTemplateId))
+                return null;
+
+            byte[] fileData = GetReport(isDocument, reportTemplateId, documentId);
+            if (fileData == null)
+                return null;
+
+            string xmlString = Encoding.UTF8.GetString(fileData);
+            if (xmlString == null)
+                return null;
+            try
+            {
+                XDocument doc = XDocument.Parse(xmlString);
+                return DeserializeXDocument<DataProviderField>(doc);
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+
+        }
+
+        private List<T> DeserializeXDocument<T>(XDocument doc)
+        {
+            System.Xml.Serialization.XmlSerializer serializer = new System.Xml.Serialization.XmlSerializer(typeof(List<T>));
+
+            System.Xml.XmlReader reader = doc.CreateReader();
+
+            List<T> result = (List<T>)serializer.Deserialize(reader);
+            reader.Close();
+
+            return result;
+        }
+
+        private byte[] GetReport(bool isDocument, string reportTemplateId, string documentId)
         {
             DocumentRepository documentRepository = new DocumentRepository(tenant);
 
             Document document;
-            if (isNew)
+            if (isDocument)
             {
-                document = documentRepository.GetSingleDocument(tenant, reportTemplateId);
+                document = documentRepository.GetSingleDocument(tenant, documentId);
             }
             else
             {
@@ -126,5 +167,6 @@ namespace WebFreight.Web.Helpers.ExcelReport
             };
             storageservice.Write(fileData, fileInfo);
         }
+
     }
 }

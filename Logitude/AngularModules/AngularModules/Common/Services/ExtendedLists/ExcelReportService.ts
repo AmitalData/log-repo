@@ -19,10 +19,10 @@ export class ExcelReportService {
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/ExcelReport';
     }
 
-    getDataProviderFields(reportId: string, reportsTemplateId: string, isNew: boolean) {
+    getDataProviderFields(reportId: string, reportsTemplateId: string) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken())
-        return this._http.get(this._apiUrl + "/getDataProviderFields" + '?reportId=' + reportId + "&reportsTemplateId=" + reportsTemplateId + "&isNew=" + isNew, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+        return this._http.get(this._apiUrl + "/getDataProviderFields" + '?reportId=' + reportId + "&reportsTemplateId=" + reportsTemplateId , ServiceHelper.GetHttpHeaders()).pipe(map(response => {
             var pmresponse: ServiceResponse;
             pmresponse = new ServiceResponse();
             pmresponse.Result = response;
