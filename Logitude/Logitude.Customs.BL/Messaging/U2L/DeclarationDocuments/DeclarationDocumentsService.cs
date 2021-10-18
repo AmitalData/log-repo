@@ -258,7 +258,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.DeclarationDocuments
             DeclarationUpdateService DeclarationUpdateService = new DeclarationUpdateService(dbContext, new Dictionary<string, IContext>(), ResolvedTenant());
             this._MyDeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
             this._MyDeclarationPM.MarkAsChanged = true;
-            DeclarationUpdateService.Update(this._MyDeclarationPM, true);
+           DeclarationUpdateService.Update(this._MyDeclarationPM, true);
 
             MyGenericResponseObj.Stage = "Add Ticket Done ";
             AppendLogLine("Add Ticket:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
@@ -267,6 +267,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.DeclarationDocuments
             //MyGenericResponseObj.ResponseXml ;
             MyGenericResponseObj.StatusType = GenericResponseObj.StatusEnum.Success;
             MyCommunicationsParams.LoggingEntityId = MyGenericResponseObj.ApplicationId;
+            MessageOut = GetLog();
         }
 
         private void DeserilazeObject(string xmlLOGIDOCS)
