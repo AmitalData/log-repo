@@ -67,6 +67,7 @@ export class EditComponent implements OnDestroy {
     public NeedRefresh: boolean = false;
 
     public EditComponentArgument: any = null;
+    public InterestInvoiceARInvoiceType: string = "IT";
 
     EntityParentPM: any;
     ShowWindowsOverEditComponent: boolean = false;
@@ -1301,6 +1302,10 @@ export class EditComponent implements OnDestroy {
             myResult = false;
         }
         else if (this.ObjectTableName == "TaxReport" || this.ObjectTableName == "BankDeposit") {
+            myResult = false;
+        }
+
+        if (this.ObjectTableName == "ARInvoice" && this.EntityPM.ARInvoiceTypeCode == this.InterestInvoiceARInvoiceType) {
             myResult = false;
         }
         return myResult;
