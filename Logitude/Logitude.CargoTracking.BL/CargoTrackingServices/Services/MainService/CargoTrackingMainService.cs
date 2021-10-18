@@ -255,12 +255,12 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
                 List<DataColumn> dataColumnListCols = new List<DataColumn>();
                 bulkDataPreperation.MainDataTable = new DataTable();
 
-                CreatePreOldShipmentsTable(bulkDataPreperation);
+                //CreatePreOldShipmentsTable(bulkDataPreperation);
 
                 UpdateCargoTracking(bulkDataPreperation,dataColumnListCols);
                 AfterFinishUpdateCargoTracking(bulkDataPreperation, isUpadteWaterMark);
 
-                SwapPreOldShipmentsWithOldShipmentsTable(bulkDataPreperation);
+                //SwapPreOldShipmentsWithOldShipmentsTable(bulkDataPreperation);
 
                 sourceConnection.Close();
             }
