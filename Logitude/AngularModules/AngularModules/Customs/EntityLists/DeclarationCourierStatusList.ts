@@ -84,6 +84,7 @@ export class DeclarationCourierStatusList {
 	AmendmentDontDisplayInList: boolean;
 	TruckerName: string;
 	CourierPendingReasonNameList: string;
+	DeclarationStorageSiteCode: string;
 	
 }
  
