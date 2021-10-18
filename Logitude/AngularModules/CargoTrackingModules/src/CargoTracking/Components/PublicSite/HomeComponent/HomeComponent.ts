@@ -43,7 +43,7 @@ export class HomeComponent
             if (response.Result) {
 
                 if (response?.Result?.ForceHttps)
-                    return this.RedirectAppToHttps();
+                     this.RedirectAppToHttps();
 
                 ServiceHelper.SetCargoTrackingDate(response.Result, this.baseUrl);
                 this.IsBrandingDataLoaded = true;
