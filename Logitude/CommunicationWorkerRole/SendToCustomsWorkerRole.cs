@@ -57,7 +57,15 @@ namespace CommunicationWorkerRole
 
                                         using (APIWebClient client = new APIWebClient())
                                         {
-                                            client.Url = "http://cargowise.customsforce.com/customsforcewebservice.asmx";
+                                            if (tenant == 2264)
+                                            {
+                                                client.Url = "http://cargowise.customsforce.com/customsforcewebservice.asmx";
+                                            }
+
+                                            else
+                                            {
+                                                client.Url = "https://customsforce.com/customsforcewebservice.asmx";
+                                            }
 
                                             XmlDocument doc = new XmlDocument();
                                             doc.LoadXml(fileBody);
