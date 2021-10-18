@@ -171,11 +171,20 @@ export class ProductItemsTabComponent extends BaseComponent implements OnInit, O
     private UpdateShipmentProductItem(shipmentItem: ProductItem, customerItem: ProductItemPM) {
         var shipmentProductItem: ShipmentProductItemPM = this.EntityPM.ShipmentProductItems.filter(d => d.Id == shipmentItem.EntityPM.Id)[0];
         if (shipmentProductItem) {
-            this.MapProductItems(shipmentProductItem, customerItem);
+            this.MapProductItem(shipmentProductItem, customerItem);
+            this.UpdateSimilarProductItems(shipmentProductItem, customerItem);
             this.BuildProductItems();
         }
     }
-    MapProductItems(shipmentProductItem: ShipmentProductItemPM, customerItem: ProductItemPM) {
+    private UpdateSimilarProductItems(shipmentItem: ShipmentProductItemPM, customerItem: ProductItemPM) {
+        var sameProductItems: ShipmentProductItemPM[] = this.EntityPM.ShipmentProductItems.filter(d => d.Id == shipmentItem.ProductItemId);
+        if (sameProductItems != null && sameProductItems.length > 0) {
+            sameProductItems.forEach(item => {
+                this.MapProductItem(item, customerItem);
+            });
+        }
+    }
+    MapProductItem(shipmentProductItem: ShipmentProductItemPM, customerItem: ProductItemPM) {
         shipmentProductItem.Description = customerItem.Description;
         shipmentProductItem.SKU = customerItem.SKU;
         shipmentProductItem.Name = customerItem.Name;
