@@ -9,9 +9,9 @@ namespace WebFreight.Web.Helpers.ExcelReport
 {
     public class ExcelDataProviderFieldsBuilder
     {
-        public List<DataProviderField> Build(string code)
+        public List<DataProviderField> Build(string reportCode)
         {
-            return BuildDataProviderFields(GetDataProvider(code).GetProperties(), GetDataProvider(code).Name);
+            return BuildDataProviderFields(GetDataProviderType(reportCode).GetProperties(), GetDataProviderType(reportCode).Name);
         }
 
 
@@ -75,7 +75,7 @@ namespace WebFreight.Web.Helpers.ExcelReport
             return false;
         }
 
-        private Type GetDataProvider(string reportCode)
+        public Type GetDataProviderType(string reportCode)
         {
             switch (reportCode)
             {
@@ -93,11 +93,6 @@ namespace WebFreight.Web.Helpers.ExcelReport
                 case "RALS":
                     {
                         return typeof(AirlineStatisticsDataProvider);
-                    }
-
-                case "RSLS":
-                    {
-                        return typeof(ShippingLineStatisticsDataProvider);
                     }
 
                 default:

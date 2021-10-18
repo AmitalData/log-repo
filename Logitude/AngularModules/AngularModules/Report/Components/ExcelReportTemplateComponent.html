@@ -31,7 +31,7 @@
             <div style="margin:5px;overflow-y:auto;overflow-x:no-display;max-height:460px" class="BodyBackground">
                 <table style="vertical-align:top;top:0px;">
                     <tr style="text-align:left;vertical-align:top" *ngFor="let item of DataProviderFields">
-                        <DataProviderFieldsNestedList [margin]="20" [field]="item"></DataProviderFieldsNestedList>
+                        <DataProviderFieldsNestedList (checkChangeEvent)="CheckChanges($event)" [margin]="20" [field]="item"></DataProviderFieldsNestedList>
                     </tr>
                 </table>
             </div>

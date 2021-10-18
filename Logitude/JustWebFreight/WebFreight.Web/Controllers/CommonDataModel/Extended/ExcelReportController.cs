@@ -17,7 +17,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
 {
     public class ExcelReportController : ApiController
     {
-        public HttpResponseMessage GetDataProviderFields(string reportId, string reportsTemplateId, bool isNew)
+        public HttpResponseMessage GetDataProviderFields(string reportId, string reportsTemplateId)
         {
             try
             {
@@ -27,7 +27,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
                 SecurityUtility.CheckContactFeature("ReportsTemplate", "ReportTemplateExcel", authToken.Tenant);
 
                 ExcelReportService reportsTemplateQuery = new ExcelReportService(authToken.Tenant);
-                List<DataProviderField> myResult = reportsTemplateQuery.GetDataProviderFields(reportId, reportsTemplateId, isNew);
+                List<DataProviderField> myResult = reportsTemplateQuery.GetDataProviderFields(reportId, reportsTemplateId);
                 return Request.CreateResponse(HttpStatusCode.OK, myResult);
             }
 
@@ -48,7 +48,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
 
 
                 ExcelReportUpdateService reportsTemplateQuery = new ExcelReportUpdateService(authToken.Tenant);
-                reportsTemplateQuery.UpdateReport(excelReportArguments,authToken.Email);
+                reportsTemplateQuery.UpdateReport(excelReportArguments, authToken.Email);
                 return Request.CreateResponse(HttpStatusCode.OK);
 
 

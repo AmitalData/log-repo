@@ -34,6 +34,7 @@ using System.Xml.Serialization;
 using WebFreight.Web.CommonDataModel.DomainServices;
 using WebFreight.Web.DataProviders;
 using WebFreight.Web.Helpers.DataProviderHelpers;
+using WebFreight.Web.Helpers.ExcelReport;
 using WebFreight.Web.ReportsWebServices;
 using WebFreight.Web.ReportsWebServices.LogitudeReports;
 using WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting;
@@ -105,7 +106,7 @@ namespace WebFreight.Web.Helpers
                                     FeatureUniqeCode = report.FeatureUniqeCode,
                                     AvailableForScheduling = report.AvailableForScheduling,
                                     DisablePreview = report.DisablePreview,
-                                    
+
                                 };
                                 reportRepository.Add(newReport);
                                 myReports.Add(newReport);
@@ -238,11 +239,11 @@ namespace WebFreight.Web.Helpers
 
         }
 
-   
-       //private bool IsUsingFileStreamAndTiffImage(int tenant)
-       // {
-       //     return (tenant == 1526 || tenant == 1) ? true : false;
-       // }
+
+        //private bool IsUsingFileStreamAndTiffImage(int tenant)
+        // {
+        //     return (tenant == 1526 || tenant == 1) ? true : false;
+        // }
 
         public string GetSpecificPageFromStimulReportAsBase64(ReportFliter reportFliter)
         {
@@ -509,9 +510,9 @@ namespace WebFreight.Web.Helpers
             }
             return reportsTemplatesVersion;
         }
- 
+
         public Document CreateDocumentAndWriteOnStorage(DocumentFile documentFile)
-        { 
+        {
             #region Create Document and Write on Storage
             DocumentRepository documentRepository = new DocumentRepository(documentFile.Tenant);
 
@@ -585,7 +586,7 @@ namespace WebFreight.Web.Helpers
                     ReportHelper reportHelper = new ReportHelper();
                     DocumentFile documentFile = new DocumentFile() { FileName = reportsTemplate.Description, FileData = fileData, Extension = "mrt", Folder = "reports", Tenant = tenant };
                     Document newDocument = reportHelper.CreateDocumentAndWriteOnStorage(documentFile);
-                     
+
                     #region Create Reports Templates Version 
                     ReportsTemplatesVersionRepository reportsTemplatesVersionRepository = new ReportsTemplatesVersionRepository(tenant);
                     ReportsTemplatesVersion reportsTemplatesVersion = new ReportsTemplatesVersion()
@@ -618,9 +619,17 @@ namespace WebFreight.Web.Helpers
 
 
         }
-        public byte[] LoadDataToStimulReport(string processType, string reportTemplateId, int tenant)
+        public byte[] LoadDataToStimulReport(string processType, string reportTemplateId, int tenant, string reportsTemplateId, string templateType)
         {
-            byte[] fileData = null;
+
+            if (templateType == "E")
+            {
+                ReportsTemplateRepository reportsTemplateRepository = new ReportsTemplateRepository(tenant);
+                ReportsTemplate reportsTemplate = reportsTemplateRepository.GetSingleReportsTemplate(reportsTemplateId, tenant);
+                var documentId = processType == "ReportPreview" ? reportTemplateId : null;
+                return new ExcelReportMrtBuilder(tenant).Build(reportsTemplate, documentId, processType == "ReportPreview");
+            }
+
             Document document = null;
             DocumentRepository documentRepository = new DocumentRepository(tenant);
             if (processType == "ReportPreview")
@@ -636,12 +645,13 @@ namespace WebFreight.Web.Helpers
                     document = documentRepository.GetSingleDocument(reportsTemplatesVersionPM.Tenant, reportsTemplatesVersionPM.ReportDocumentId);
                 }
             }
-            if (document != null)
+
+            if (document == null)
             {
-                fileData = ReadFieldDataFromDocument(document);
+                return null;
             }
 
-            return fileData;
+            return ReadFieldDataFromDocument(document);
         }
 
         private byte[] ReadFieldDataFromDocument(Document document)
@@ -733,7 +743,7 @@ namespace WebFreight.Web.Helpers
 
         }
 
-        public  void ReportAuthentication(ReportFliter reportFliter , int tenant)
+        public void ReportAuthentication(ReportFliter reportFliter, int tenant)
         {
             if (tenant != reportFliter.tenant)
             {
@@ -843,7 +853,7 @@ namespace WebFreight.Web.Helpers
 
                 case "SHEL":
                     {
-                        dataProvider=  LoadShipmentsEventsListDataProvider(filters, reportFliter.tenant);
+                        dataProvider = LoadShipmentsEventsListDataProvider(filters, reportFliter.tenant);
                         break;
                     }
 
@@ -1255,11 +1265,11 @@ namespace WebFreight.Web.Helpers
             return dataProvider;
         }
 
-        public ReportStimulDataProviderDetails GetReportStimulDataProviderDetails(byte[] dataProvider , ReportFliter reportFliter)
+        public ReportStimulDataProviderDetails GetReportStimulDataProviderDetails(byte[] dataProvider, ReportFliter reportFliter)
         {
-            ReportStimulDataProviderDetails stimulReportDataProviderDetails  = new ReportStimulDataProviderDetails();
+            ReportStimulDataProviderDetails stimulReportDataProviderDetails = new ReportStimulDataProviderDetails();
             MemoryStream memorystream = new MemoryStream(dataProvider);
-            stimulReportDataProviderDetails.Tenant = reportFliter.tenant;            switch (reportFliter.ReportCode)
+            stimulReportDataProviderDetails.Tenant = reportFliter.tenant; switch (reportFliter.ReportCode)
             {
                 case "RALS":
                     {
@@ -1278,7 +1288,7 @@ namespace WebFreight.Web.Helpers
                         reportDataProvider.Today_DateTime = TenantServerConfigration.GetCurrentDateTime(stimulReportDataProviderDetails.Tenant);
                         stimulReportDataProviderDetails.CurrentBusinessObject = new StiBusinessObject() { Category = "Shippingline Statistics", Name = "ShippingLineStatisticsDataProvider", BusinessObjectValue = reportDataProvider };
                         stimulReportDataProviderDetails.Logo = reportDataProvider.Logo;
-                        
+
                         break;
                     }
 
@@ -1289,7 +1299,7 @@ namespace WebFreight.Web.Helpers
                         reportDataProvider.Today_DateTime = TenantServerConfigration.GetCurrentDateTime(stimulReportDataProviderDetails.Tenant);
                         stimulReportDataProviderDetails.CurrentBusinessObject = new StiBusinessObject() { Category = "Profit By Shipment", Name = "ProfitByShipmentDataProvider", BusinessObjectValue = reportDataProvider };
                         stimulReportDataProviderDetails.Logo = reportDataProvider.Logo;
-                        
+
                         break;
                     }
 
@@ -1300,7 +1310,7 @@ namespace WebFreight.Web.Helpers
                         reportDataProvider.Today_DateTime = TenantServerConfigration.GetCurrentDateTime(stimulReportDataProviderDetails.Tenant);
                         stimulReportDataProviderDetails.CurrentBusinessObject = new StiBusinessObject() { Category = "Statistics By Customer", Name = "StatisticsByClientDataProvider", BusinessObjectValue = reportDataProvider };
                         stimulReportDataProviderDetails.Logo = reportDataProvider.Logo;
-                        
+
                         break;
                     }
 
@@ -1311,7 +1321,7 @@ namespace WebFreight.Web.Helpers
                         reportDataProvider.Today_DateTime = TenantServerConfigration.GetCurrentDateTime(stimulReportDataProviderDetails.Tenant);
                         stimulReportDataProviderDetails.CurrentBusinessObject = new StiBusinessObject() { Category = "Statement", Name = "StatementDataProvider", BusinessObjectValue = reportDataProvider };
                         stimulReportDataProviderDetails.Logo = reportDataProvider.Logo;
-                        
+
                         break;
                     }
 
@@ -1322,7 +1332,7 @@ namespace WebFreight.Web.Helpers
                         reportDataProvider.Today_DateTime = TenantServerConfigration.GetCurrentDateTime(stimulReportDataProviderDetails.Tenant);
                         stimulReportDataProviderDetails.CurrentBusinessObject = new StiBusinessObject() { Category = "InvoicesByPartner", Name = "InvoicesByPartnerDataProvider", BusinessObjectValue = reportDataProvider };
                         stimulReportDataProviderDetails.Logo = reportDataProvider.Logo;
-                        
+
                         break;
                     }
 
@@ -1333,7 +1343,7 @@ namespace WebFreight.Web.Helpers
                         reportDataProvider.Today_DateTime = TenantServerConfigration.GetCurrentDateTime(stimulReportDataProviderDetails.Tenant);
                         stimulReportDataProviderDetails.CurrentBusinessObject = new StiBusinessObject() { Category = "Quotes", Name = "QuotesDataProvider", BusinessObjectValue = reportDataProvider };
                         stimulReportDataProviderDetails.Logo = reportDataProvider.Logo;
-                        
+
                         break;
                     }
 
@@ -1344,7 +1354,7 @@ namespace WebFreight.Web.Helpers
                         reportDataProvider.Today_DateTime = TenantServerConfigration.GetCurrentDateTime(stimulReportDataProviderDetails.Tenant);
                         stimulReportDataProviderDetails.CurrentBusinessObject = new StiBusinessObject() { Category = "Invoices", Name = "InvoiceDataProvider", BusinessObjectValue = reportDataProvider };
                         stimulReportDataProviderDetails.Logo = reportDataProvider.Logo;
-                        
+
                         break;
                     }
 
@@ -1355,7 +1365,7 @@ namespace WebFreight.Web.Helpers
                         reportDataProvider.Today_DateTime = TenantServerConfigration.GetCurrentDateTime(stimulReportDataProviderDetails.Tenant);
                         stimulReportDataProviderDetails.CurrentBusinessObject = new StiBusinessObject() { Category = "Invoices", Name = "InvoiceDataProvider", BusinessObjectValue = reportDataProvider };
                         stimulReportDataProviderDetails.Logo = reportDataProvider.Logo;
-                        
+
                         break;
                     }
 
@@ -1366,7 +1376,7 @@ namespace WebFreight.Web.Helpers
                         reportDataProvider.Today_DateTime = TenantServerConfigration.GetCurrentDateTime(stimulReportDataProviderDetails.Tenant);
                         stimulReportDataProviderDetails.CurrentBusinessObject = new StiBusinessObject() { Category = "AgedAccountsReceivable", Name = "AgedAccountsReceivableDataProvider", BusinessObjectValue = reportDataProvider };
                         stimulReportDataProviderDetails.Logo = reportDataProvider.Logo;
-                        
+
                         break;
                     }
 
@@ -1377,7 +1387,7 @@ namespace WebFreight.Web.Helpers
                         reportDataProvider.Today_DateTime = TenantServerConfigration.GetCurrentDateTime(stimulReportDataProviderDetails.Tenant);
                         stimulReportDataProviderDetails.CurrentBusinessObject = new StiBusinessObject() { Category = "TaxesApproval", Name = "TaxesApproval", BusinessObjectValue = reportDataProvider };
                         stimulReportDataProviderDetails.Logo = reportDataProvider.Logo;
-                        
+
                         break;
                     }
 
@@ -1388,7 +1398,7 @@ namespace WebFreight.Web.Helpers
                         reportDataProvider.Today_DateTime = TenantServerConfigration.GetCurrentDateTime(stimulReportDataProviderDetails.Tenant);
                         stimulReportDataProviderDetails.CurrentBusinessObject = new StiBusinessObject() { Category = "IATA Statistics", Name = "IATAStatisticsDataProvider", BusinessObjectValue = reportDataProvider };
                         stimulReportDataProviderDetails.Logo = reportDataProvider.Logo;
-                        
+
                         break;
                     }
 
@@ -1399,7 +1409,7 @@ namespace WebFreight.Web.Helpers
                         reportDataProvider.Today_DateTime = TenantServerConfigration.GetCurrentDateTime(stimulReportDataProviderDetails.Tenant);
                         stimulReportDataProviderDetails.CurrentBusinessObject = new StiBusinessObject() { Category = "Accounting Ledger", Name = "AccountingLedgerDataProvider", BusinessObjectValue = reportDataProvider };
                         stimulReportDataProviderDetails.Logo = reportDataProvider.Logo;
-                        
+
                         break;
                     }
 
@@ -1410,7 +1420,7 @@ namespace WebFreight.Web.Helpers
                         reportDataProvider.Today_DateTime = TenantServerConfigration.GetCurrentDateTime(stimulReportDataProviderDetails.Tenant);
                         stimulReportDataProviderDetails.CurrentBusinessObject = new StiBusinessObject() { Category = "Shipment Packages", Name = "RegisterShipmentPackageDataProvider", BusinessObjectValue = reportDataProvider };
                         stimulReportDataProviderDetails.Logo = reportDataProvider.Logo;
-                        
+
                         break;
                     }
 
@@ -1421,7 +1431,7 @@ namespace WebFreight.Web.Helpers
                         reportDataProvider.Today_DateTime = TenantServerConfigration.GetCurrentDateTime(stimulReportDataProviderDetails.Tenant);
                         stimulReportDataProviderDetails.CurrentBusinessObject = new StiBusinessObject() { Category = "StatementByInvoiceDate", Name = "StatementByInvoiceDateDataProvider", BusinessObjectValue = reportDataProvider };
                         stimulReportDataProviderDetails.Logo = reportDataProvider.Logo;
-                        
+
 
                         break;
                     }
@@ -1433,7 +1443,7 @@ namespace WebFreight.Web.Helpers
                         reportDataProvider.Today_DateTime = TenantServerConfigration.GetCurrentDateTime(stimulReportDataProviderDetails.Tenant);
                         stimulReportDataProviderDetails.CurrentBusinessObject = new StiBusinessObject() { Category = "OpportunityStageChanging", Name = "OpportunityStageChangingDataProvider", BusinessObjectValue = reportDataProvider };
                         stimulReportDataProviderDetails.Logo = reportDataProvider.Logo;
-                        
+
                         break;
                     }
 
@@ -1444,7 +1454,7 @@ namespace WebFreight.Web.Helpers
                         reportDataProvider.Today_DateTime = TenantServerConfigration.GetCurrentDateTime(stimulReportDataProviderDetails.Tenant);
                         stimulReportDataProviderDetails.CurrentBusinessObject = new StiBusinessObject() { Category = "OpportunityMonthlyConversion", Name = "OpportunityMonthlyConversionDataProvider", BusinessObjectValue = reportDataProvider };
                         stimulReportDataProviderDetails.Logo = reportDataProvider.Logo;
-                        
+
                         break;
                     }
 
@@ -1455,7 +1465,7 @@ namespace WebFreight.Web.Helpers
                         reportDataProvider.Today_DateTime = TenantServerConfigration.GetCurrentDateTime(stimulReportDataProviderDetails.Tenant);
                         stimulReportDataProviderDetails.CurrentBusinessObject = new StiBusinessObject() { Category = "ExpectedIncome", Name = "ExpectedIncomeDataProvider", BusinessObjectValue = reportDataProvider };
                         stimulReportDataProviderDetails.Logo = reportDataProvider.Logo;
-                        
+
                         break;
                     }
 
@@ -1466,7 +1476,7 @@ namespace WebFreight.Web.Helpers
                         reportDataProvider.Today_DateTime = TenantServerConfigration.GetCurrentDateTime(stimulReportDataProviderDetails.Tenant);
                         stimulReportDataProviderDetails.CurrentBusinessObject = new StiBusinessObject() { Category = "ContainerTrucking", Name = "ContainerTruckingDataProvider", BusinessObjectValue = reportDataProvider };
                         stimulReportDataProviderDetails.Logo = reportDataProvider.Logo;
-                        
+
                         break;
                     }
 
@@ -1477,7 +1487,7 @@ namespace WebFreight.Web.Helpers
                         reportDataProvider.Today_DateTime = TenantServerConfigration.GetCurrentDateTime(stimulReportDataProviderDetails.Tenant);
                         stimulReportDataProviderDetails.CurrentBusinessObject = new StiBusinessObject() { Category = "ContainerDetailsVoyage", Name = "ContainerDetailsVoyageDataProvider", BusinessObjectValue = reportDataProvider };
                         stimulReportDataProviderDetails.Logo = reportDataProvider.Logo;
-                        
+
                         break;
                     }
 
@@ -1488,7 +1498,7 @@ namespace WebFreight.Web.Helpers
                         reportDataProvider.Today_DateTime = TenantServerConfigration.GetCurrentDateTime(stimulReportDataProviderDetails.Tenant);
                         stimulReportDataProviderDetails.CurrentBusinessObject = new StiBusinessObject() { Category = "ApprovedOpportunities", Name = "ApprovedOpportunitiesDataProvider", BusinessObjectValue = reportDataProvider };
                         stimulReportDataProviderDetails.Logo = reportDataProvider.Logo;
-                        
+
                         break;
                     }
 
@@ -1499,7 +1509,7 @@ namespace WebFreight.Web.Helpers
                         reportDataProvider.Today_DateTime = TenantServerConfigration.GetCurrentDateTime(stimulReportDataProviderDetails.Tenant);
                         stimulReportDataProviderDetails.CurrentBusinessObject = new StiBusinessObject() { Category = "CustomerAdditionalServices", Name = "CustomerAdditionalServicesDataProvider", BusinessObjectValue = reportDataProvider };
                         stimulReportDataProviderDetails.Logo = reportDataProvider.Logo;
-                        
+
                         break;
                     }
 
@@ -1510,7 +1520,7 @@ namespace WebFreight.Web.Helpers
                         reportDataProvider.Today_DateTime = TenantServerConfigration.GetCurrentDateTime(stimulReportDataProviderDetails.Tenant);
                         stimulReportDataProviderDetails.CurrentBusinessObject = new StiBusinessObject() { Category = "CustomerPotentialActual", Name = "CustomerPotentialActualDataProvider", BusinessObjectValue = reportDataProvider };
                         stimulReportDataProviderDetails.Logo = reportDataProvider.Logo;
-                        
+
                         break;
                     }
 
@@ -1521,7 +1531,7 @@ namespace WebFreight.Web.Helpers
                         reportDataProvider.Today_DateTime = TenantServerConfigration.GetCurrentDateTime(stimulReportDataProviderDetails.Tenant);
                         stimulReportDataProviderDetails.CurrentBusinessObject = new StiBusinessObject() { Category = "OpportunitiesAdditionalServices", Name = "OpportunitiesAdditionalServicesDataProvider", BusinessObjectValue = reportDataProvider };
                         stimulReportDataProviderDetails.Logo = reportDataProvider.Logo;
-                        
+
                         break;
                     }
 
@@ -1532,7 +1542,7 @@ namespace WebFreight.Web.Helpers
                         reportDataProvider.Today_DateTime = TenantServerConfigration.GetCurrentDateTime(stimulReportDataProviderDetails.Tenant);
                         stimulReportDataProviderDetails.CurrentBusinessObject = new StiBusinessObject() { Category = "Statistics By Agent", Name = "StatisticsByAgentDataProvider", BusinessObjectValue = reportDataProvider };
                         stimulReportDataProviderDetails.Logo = reportDataProvider.Logo;
-                        
+
                         break;
                     }
 
@@ -1542,7 +1552,7 @@ namespace WebFreight.Web.Helpers
                         DashBoardDataClass reportDataProvider = (DashBoardDataClass)serializer.Deserialize(memorystream);
                         reportDataProvider.Today_DateTime = TenantServerConfigration.GetCurrentDateTime(stimulReportDataProviderDetails.Tenant);
                         stimulReportDataProviderDetails.CurrentBusinessObject = new StiBusinessObject() { Category = "DashBoardDataClass", Name = "DashBoardDataClass", BusinessObjectValue = reportDataProvider };
-                        
+
                         break;
                     }
 
@@ -1552,7 +1562,7 @@ namespace WebFreight.Web.Helpers
                         BookingsDataProvider reportDataProvider = (BookingsDataProvider)serializer.Deserialize(memorystream);
                         reportDataProvider.Today_DateTime = TenantServerConfigration.GetCurrentDateTime(stimulReportDataProviderDetails.Tenant);
                         stimulReportDataProviderDetails.CurrentBusinessObject = new StiBusinessObject() { Category = "e-Booking", Name = "BookingsDataProvider", BusinessObjectValue = reportDataProvider };
-                        
+
                         break;
                     }
 
@@ -1562,7 +1572,7 @@ namespace WebFreight.Web.Helpers
                         EAWBsDataProvider reportDataProvider = (EAWBsDataProvider)serializer.Deserialize(memorystream);
                         reportDataProvider.Today_DateTime = TenantServerConfigration.GetCurrentDateTime(stimulReportDataProviderDetails.Tenant);
                         stimulReportDataProviderDetails.CurrentBusinessObject = new StiBusinessObject() { Category = "e-AWBs", Name = "EAWBsDataProvider", BusinessObjectValue = reportDataProvider };
-                        
+
                         break;
                     }
 
@@ -1572,7 +1582,7 @@ namespace WebFreight.Web.Helpers
                         FlightBookingDataProvider reportDataProvider = (FlightBookingDataProvider)serializer.Deserialize(memorystream);
                         reportDataProvider.Today_DateTime = TenantServerConfigration.GetCurrentDateTime(stimulReportDataProviderDetails.Tenant);
                         stimulReportDataProviderDetails.CurrentBusinessObject = new StiBusinessObject() { Category = "FlightBooking", Name = "FlightBookingDataProvider", BusinessObjectValue = reportDataProvider };
-                        
+
                         break;
                     }
 
@@ -1583,7 +1593,7 @@ namespace WebFreight.Web.Helpers
                         ShipmentChargesAnalysisDataProvider reportDataProvider = (ShipmentChargesAnalysisDataProvider)serializer.Deserialize(memorystream);
                         reportDataProvider.Today_DateTime = TenantServerConfigration.GetCurrentDateTime(stimulReportDataProviderDetails.Tenant);
                         stimulReportDataProviderDetails.CurrentBusinessObject = new StiBusinessObject() { Category = "ShipmentAnalysis", Name = "ShipmentChargesAnalysisDataProvider", BusinessObjectValue = reportDataProvider };
-                        
+
                         break;
                     }
 
@@ -1593,7 +1603,7 @@ namespace WebFreight.Web.Helpers
                         ParticipantsUsersActivitiesDataProvider reportDataProvider = (ParticipantsUsersActivitiesDataProvider)serializer.Deserialize(memorystream);
                         reportDataProvider.Today_DateTime = TenantServerConfigration.GetCurrentDateTime(stimulReportDataProviderDetails.Tenant);
                         stimulReportDataProviderDetails.CurrentBusinessObject = new StiBusinessObject() { Category = "ParticipantsUsersActivities", Name = "ParticipantsUsersActivitiesDataProvider", BusinessObjectValue = reportDataProvider };
-                        
+
                         break;
                     }
 
@@ -1603,9 +1613,9 @@ namespace WebFreight.Web.Helpers
                         ARInvoiceDepositDataProvider reportDataProvider = (ARInvoiceDepositDataProvider)serializer.Deserialize(memorystream);
                         reportDataProvider.Today_DateTime = TenantServerConfigration.GetCurrentDateTime(stimulReportDataProviderDetails.Tenant);
                         reportDataProvider.CompanyName = DataProviders.General.GetCompanyName(stimulReportDataProviderDetails.Tenant);
-                        reportDataProvider.Logo = stimulReportDataProviderDetails.Logo =  DataProviders.General.GetLogo(stimulReportDataProviderDetails.Tenant);
+                        reportDataProvider.Logo = stimulReportDataProviderDetails.Logo = DataProviders.General.GetLogo(stimulReportDataProviderDetails.Tenant);
                         stimulReportDataProviderDetails.CurrentBusinessObject = new StiBusinessObject() { Category = "Bank Deposit", Name = "ARInvoiceDepositDataProvider", BusinessObjectValue = reportDataProvider };
-                        
+
                         break;
                     }
 
@@ -1615,7 +1625,7 @@ namespace WebFreight.Web.Helpers
                         CASSDataProvider reportDataProvider = (CASSDataProvider)serializer.Deserialize(memorystream);
                         reportDataProvider.Today_DateTime = TenantServerConfigration.GetCurrentDateTime(stimulReportDataProviderDetails.Tenant);
                         stimulReportDataProviderDetails.CurrentBusinessObject = new StiBusinessObject() { Category = "CASS", Name = "CASSDataProvider", BusinessObjectValue = reportDataProvider };
-                        
+
                         break;
                     }
 
@@ -1625,7 +1635,7 @@ namespace WebFreight.Web.Helpers
                         ShipmentProfitVSQuoteEstimateDataProvider reportDataProvider = (ShipmentProfitVSQuoteEstimateDataProvider)serializer.Deserialize(memorystream);
                         reportDataProvider.Today_DateTime = TenantServerConfigration.GetCurrentDateTime(stimulReportDataProviderDetails.Tenant);
                         stimulReportDataProviderDetails.CurrentBusinessObject = new StiBusinessObject() { Category = "Shipment Profit vs. Quote Estimate", Name = "ShipmentProfitVSQuoteEstimateDataProvider", BusinessObjectValue = reportDataProvider };
-                        
+
                         break;
                     }
 
@@ -1636,7 +1646,7 @@ namespace WebFreight.Web.Helpers
                         ArchivoExportadoDataProvider reportDataProvider = (ArchivoExportadoDataProvider)serializer.Deserialize(memorystream);
                         reportDataProvider.Today_DateTime = TenantServerConfigration.GetCurrentDateTime(stimulReportDataProviderDetails.Tenant);
                         stimulReportDataProviderDetails.CurrentBusinessObject = new StiBusinessObject() { Category = "Archivo Exportado", Name = "ArchivoExportadoDataProvider", BusinessObjectValue = reportDataProvider };
-                        
+
                         break;
 
                     }
@@ -1647,7 +1657,7 @@ namespace WebFreight.Web.Helpers
                         InventoryDataProvider reportDataProvider = (InventoryDataProvider)serializer.Deserialize(memorystream);
                         reportDataProvider.Today_DateTime = TenantServerConfigration.GetCurrentDateTime(stimulReportDataProviderDetails.Tenant);
                         stimulReportDataProviderDetails.CurrentBusinessObject = new StiBusinessObject() { Category = "Inventory", Name = "InventoryDataProvider", BusinessObjectValue = reportDataProvider };
-                        
+
                         break;
                     }
 
@@ -1657,7 +1667,7 @@ namespace WebFreight.Web.Helpers
                         ARInvoiceIncludeVATRoutingsDataProvider reportDataProvider = (ARInvoiceIncludeVATRoutingsDataProvider)serializer.Deserialize(memorystream);
                         reportDataProvider.Today_DateTime = TenantServerConfigration.GetCurrentDateTime(stimulReportDataProviderDetails.Tenant);
                         stimulReportDataProviderDetails.CurrentBusinessObject = new StiBusinessObject() { Category = "ARInvoiceIncludeVATRoutings", Name = "ARInvoiceIncludeVATRoutingsDataProvider", BusinessObjectValue = reportDataProvider };
-                        
+
                         break;
                     }
                 case "EMTS":
@@ -1666,7 +1676,7 @@ namespace WebFreight.Web.Helpers
                         EmployeeTimeSheetDataProvider reportDataProvider = (EmployeeTimeSheetDataProvider)serializer.Deserialize(memorystream);
                         reportDataProvider.Today_DateTime = TenantServerConfigration.GetCurrentDateTime(stimulReportDataProviderDetails.Tenant);
                         stimulReportDataProviderDetails.CurrentBusinessObject = new StiBusinessObject() { Category = "EmployeeTimeSheet", Name = "EmployeeTimeSheetDataProvider", BusinessObjectValue = reportDataProvider };
-                        
+
                         break;
                     }
                 case "WDTS":
@@ -1675,7 +1685,7 @@ namespace WebFreight.Web.Helpers
                         WorkDaysPerProjectDataProvider reportDataProvider = (WorkDaysPerProjectDataProvider)serializer.Deserialize(memorystream);
                         reportDataProvider.Today_DateTime = TenantServerConfigration.GetCurrentDateTime(stimulReportDataProviderDetails.Tenant);
                         stimulReportDataProviderDetails.CurrentBusinessObject = new StiBusinessObject() { Category = "WorkHoursPerProject", Name = "WorkHoursPerProjectDataProvider", BusinessObjectValue = reportDataProvider };
-                        
+
                         break;
                     }
 
@@ -1685,7 +1695,7 @@ namespace WebFreight.Web.Helpers
                         WorkDaysPerCategoryDataProvider reportDataProvider = (WorkDaysPerCategoryDataProvider)serializer.Deserialize(memorystream);
                         reportDataProvider.Today_DateTime = TenantServerConfigration.GetCurrentDateTime(stimulReportDataProviderDetails.Tenant);
                         stimulReportDataProviderDetails.CurrentBusinessObject = new StiBusinessObject() { Category = "WorkPerDaysCategoryManager", Name = "WorkDaysPerCategoryDataProvider", BusinessObjectValue = reportDataProvider };
-                        
+
                         break;
                     }
 
@@ -1695,7 +1705,7 @@ namespace WebFreight.Web.Helpers
                         TasksWithoutProjectsDataProvider reportDataProvider = (TasksWithoutProjectsDataProvider)serializer.Deserialize(memorystream);
                         reportDataProvider.Today_DateTime = TenantServerConfigration.GetCurrentDateTime(stimulReportDataProviderDetails.Tenant);
                         stimulReportDataProviderDetails.CurrentBusinessObject = new StiBusinessObject() { Category = "TasksWithoutProjects", Name = "TasksWithoutProjectsDataProvider", BusinessObjectValue = reportDataProvider };
-                        
+
                         break;
                     }
                 case "AGER":
@@ -1706,7 +1716,7 @@ namespace WebFreight.Web.Helpers
                         reportDataProvider.CompanyName = DataProviders.General.GetCompanyName(stimulReportDataProviderDetails.Tenant);
                         reportDataProvider.Logo = stimulReportDataProviderDetails.Logo = DataProviders.General.GetLogo(stimulReportDataProviderDetails.Tenant);
                         stimulReportDataProviderDetails.CurrentBusinessObject = new StiBusinessObject() { Category = "AGER", Name = "AccountingAgingDataProvider", BusinessObjectValue = reportDataProvider };
-                        
+
                         break;
                     }
 
@@ -1718,7 +1728,7 @@ namespace WebFreight.Web.Helpers
                         reportDataProvider.CompanyName = DataProviders.General.GetCompanyName(stimulReportDataProviderDetails.Tenant);
                         reportDataProvider.Logo = stimulReportDataProviderDetails.Logo = DataProviders.General.GetLogo(stimulReportDataProviderDetails.Tenant);
                         stimulReportDataProviderDetails.CurrentBusinessObject = new StiBusinessObject() { Category = "LTRP", Name = "LedgerTransactionsDataProvider", BusinessObjectValue = reportDataProvider };
-                        
+
                         break;
                     }
                 case "CSSR":
@@ -1736,7 +1746,7 @@ namespace WebFreight.Web.Helpers
                         OpenShipmentsByCustomerDataProvider reportDataProvider = (OpenShipmentsByCustomerDataProvider)serializer.Deserialize(memorystream);
                         reportDataProvider.Today_DateTime = TenantServerConfigration.GetCurrentDateTime(stimulReportDataProviderDetails.Tenant);
                         stimulReportDataProviderDetails.CurrentBusinessObject = new StiBusinessObject() { Category = "OpenShipmentsByCustomer", Name = "OpenShipmentsByCustomerDataProvider", BusinessObjectValue = reportDataProvider };
-                        
+
                         break;
                     }
 
@@ -1746,7 +1756,7 @@ namespace WebFreight.Web.Helpers
                         ParentVsChildTenantsDataProvider reportDataProvider = (ParentVsChildTenantsDataProvider)serializer.Deserialize(memorystream);
                         reportDataProvider.Today_DateTime = TenantServerConfigration.GetCurrentDateTime(stimulReportDataProviderDetails.Tenant);
                         stimulReportDataProviderDetails.CurrentBusinessObject = new StiBusinessObject() { Category = "ParentVsChildTenants", Name = "ParentVsChildTenantsDataProvider", BusinessObjectValue = reportDataProvider };
-                        
+
                         break;
                     }
                 case "REXR":
@@ -1755,9 +1765,9 @@ namespace WebFreight.Web.Helpers
                         RevenueExpenseDataProvider reportDataProvider = (RevenueExpenseDataProvider)serializer.Deserialize(memorystream);
                         reportDataProvider.Today_DateTime = TenantServerConfigration.GetCurrentDateTime(stimulReportDataProviderDetails.Tenant);
                         reportDataProvider.CompanyName = DataProviders.General.GetCompanyName(stimulReportDataProviderDetails.Tenant);
-                        reportDataProvider.Logo = DataProviders.General.GetLogo(stimulReportDataProviderDetails.Tenant); 
+                        reportDataProvider.Logo = DataProviders.General.GetLogo(stimulReportDataProviderDetails.Tenant);
                         stimulReportDataProviderDetails.CurrentBusinessObject = new StiBusinessObject() { Category = "Accounting", Name = "RevenueExpenseDataProvider", BusinessObjectValue = reportDataProvider };
-                        
+
                         break;
                     }
 
@@ -1769,7 +1779,7 @@ namespace WebFreight.Web.Helpers
                         reportDataProvider.CompanyName = DataProviders.General.GetCompanyName(stimulReportDataProviderDetails.Tenant);
                         reportDataProvider.Logo = stimulReportDataProviderDetails.Logo = DataProviders.General.GetLogo(stimulReportDataProviderDetails.Tenant);
                         stimulReportDataProviderDetails.CurrentBusinessObject = new StiBusinessObject() { Category = "Accounting", Name = "RevenueExpenseDataProvider", BusinessObjectValue = reportDataProvider };
-                        
+
                         break;
                     }
 
@@ -1779,7 +1789,7 @@ namespace WebFreight.Web.Helpers
                         UsersByTenantDataProvider reportDataProvider = (UsersByTenantDataProvider)serializer.Deserialize(memorystream);
                         reportDataProvider.Today_DateTime = TenantServerConfigration.GetCurrentDateTime(stimulReportDataProviderDetails.Tenant);
                         stimulReportDataProviderDetails.CurrentBusinessObject = new StiBusinessObject() { Category = "UsersByTenant", Name = "UsersByTenantDataProvider", BusinessObjectValue = reportDataProvider };
-                        
+
                         break;
                     }
 
@@ -1789,7 +1799,7 @@ namespace WebFreight.Web.Helpers
                         LicenseManagementDataProvider reportDataProvider = (LicenseManagementDataProvider)serializer.Deserialize(memorystream);
                         reportDataProvider.Today_DateTime = TenantServerConfigration.GetCurrentDateTime(stimulReportDataProviderDetails.Tenant);
                         stimulReportDataProviderDetails.CurrentBusinessObject = new StiBusinessObject() { Category = "LicenseManagement", Name = "LicenseManagementDataProvider", BusinessObjectValue = reportDataProvider };
-                        
+
                         break;
                     }
 
@@ -1800,7 +1810,7 @@ namespace WebFreight.Web.Helpers
                         ShipmentsStocksDataProvider reportDataProvider = (ShipmentsStocksDataProvider)serializer.Deserialize(memorystream);
                         //  reportDataProvider.Today_DateTime = TenantServerConfigration.GetCurrentDateTime(tenant);
                         stimulReportDataProviderDetails.CurrentBusinessObject = new StiBusinessObject() { Category = "Shipments Stocks", Name = "ShipmentsStocksDataProvider", BusinessObjectValue = reportDataProvider };
-                        
+
                         break;
                     }
 
@@ -1810,7 +1820,7 @@ namespace WebFreight.Web.Helpers
                         ShipmentDetailsDataProvider reportDataProvider = (ShipmentDetailsDataProvider)serializer.Deserialize(memorystream);
                         reportDataProvider.Today_DateTime = TenantServerConfigration.GetCurrentDateTime(stimulReportDataProviderDetails.Tenant);
                         stimulReportDataProviderDetails.CurrentBusinessObject = new StiBusinessObject() { Category = "ShipmentDetails", Name = "ShipmentDetailsDataProvider", BusinessObjectValue = reportDataProvider };
-                        
+
                         break;
                     }
 
@@ -1821,7 +1831,7 @@ namespace WebFreight.Web.Helpers
                         VDKDataProvider reportDataProvider = (VDKDataProvider)serializer.Deserialize(memorystream);
                         reportDataProvider.Today_DateTime = TenantServerConfigration.GetCurrentDateTime(stimulReportDataProviderDetails.Tenant);
                         stimulReportDataProviderDetails.CurrentBusinessObject = new StiBusinessObject() { Category = "VDK", Name = "VDKDataProvider", BusinessObjectValue = reportDataProvider };
-                        
+
                         break;
                     }
 
@@ -1832,7 +1842,7 @@ namespace WebFreight.Web.Helpers
                         VehiclesDataProvider reportDataProvider = (VehiclesDataProvider)serializer.Deserialize(memorystream);
                         reportDataProvider.Today_DateTime = TenantServerConfigration.GetCurrentDateTime(stimulReportDataProviderDetails.Tenant);
                         stimulReportDataProviderDetails.CurrentBusinessObject = new StiBusinessObject() { Category = "Vehicles", Name = "VehiclesDataProvider", BusinessObjectValue = reportDataProvider };
-                        
+
                         break;
                     }
 
@@ -1842,7 +1852,7 @@ namespace WebFreight.Web.Helpers
                         VendorChargesAnalysisDataProvider reportDataProvider = (VendorChargesAnalysisDataProvider)serializer.Deserialize(memorystream);
                         reportDataProvider.Today_DateTime = TenantServerConfigration.GetCurrentDateTime(stimulReportDataProviderDetails.Tenant);
                         stimulReportDataProviderDetails.CurrentBusinessObject = new StiBusinessObject() { Category = "VendorChargesAnalysis", Name = "VendorChargesAnalysisDataProvider", BusinessObjectValue = reportDataProvider };
-                        
+
                         break;
                     }
 
@@ -1852,7 +1862,7 @@ namespace WebFreight.Web.Helpers
                         UnicargoExportDataProvider reportDataProvider = (UnicargoExportDataProvider)serializer.Deserialize(memorystream);
                         reportDataProvider.Today_DateTime = TenantServerConfigration.GetCurrentDateTime(stimulReportDataProviderDetails.Tenant);
                         stimulReportDataProviderDetails.CurrentBusinessObject = new StiBusinessObject() { Category = "UnicargoExport", Name = "UnicargoExportDataProvider", BusinessObjectValue = reportDataProvider };
-                        
+
                         break;
                     }
 
@@ -1863,7 +1873,7 @@ namespace WebFreight.Web.Helpers
                         ShipmentsEventsListDataProvider reportDataProvider = (ShipmentsEventsListDataProvider)serializer.Deserialize(memorystream);
                         reportDataProvider.Today_DateTime = TenantServerConfigration.GetCurrentDateTime(stimulReportDataProviderDetails.Tenant);
                         stimulReportDataProviderDetails.CurrentBusinessObject = new StiBusinessObject() { Category = "ShipmentsEventsList", Name = "ShipmentsEventsListDataProvider", BusinessObjectValue = reportDataProvider };
-                        
+
                         break;
                     }
                 case "SHRR":
@@ -1872,7 +1882,7 @@ namespace WebFreight.Web.Helpers
                         ShipperReturnsDataProvider reportDataProvider = (ShipperReturnsDataProvider)serializer.Deserialize(memorystream);
                         reportDataProvider.Today_DateTime = TenantServerConfigration.GetCurrentDateTime(stimulReportDataProviderDetails.Tenant);
                         stimulReportDataProviderDetails.CurrentBusinessObject = new StiBusinessObject() { Category = "ShipperReturns", Name = "ShipperReturnsDataProvider", BusinessObjectValue = reportDataProvider };
-                        
+
                         break;
                     }
 
@@ -1903,7 +1913,7 @@ namespace WebFreight.Web.Helpers
                         AutomationTestReportDataProvider reportDataProvider = (AutomationTestReportDataProvider)serializer.Deserialize(memorystream);
                         reportDataProvider.Today_DateTime = TenantServerConfigration.GetCurrentDateTime(stimulReportDataProviderDetails.Tenant);
                         stimulReportDataProviderDetails.CurrentBusinessObject = new StiBusinessObject() { Category = "AutomationTestReport", Name = "AutomationTestReportDataProvider", BusinessObjectValue = reportDataProvider };
-                        
+
                         break;
                     }
 
@@ -1913,7 +1923,7 @@ namespace WebFreight.Web.Helpers
                         FlightBookingsManifestDataProvider reportDataProvider = (FlightBookingsManifestDataProvider)serializer.Deserialize(memorystream);
                         reportDataProvider.Today_DateTime = TenantServerConfigration.GetCurrentDateTime(stimulReportDataProviderDetails.Tenant);
                         stimulReportDataProviderDetails.CurrentBusinessObject = new StiBusinessObject() { Category = "FlightBookingsManifest", Name = "FlightBookingsManifestDataProvider", BusinessObjectValue = reportDataProvider };
-                        
+
                         break;
                     }
 
@@ -1923,18 +1933,18 @@ namespace WebFreight.Web.Helpers
                         BluesnapPaymentsDataProvider reportDataProvider = (BluesnapPaymentsDataProvider)serializer.Deserialize(memorystream);
                         reportDataProvider.Today_DateTime = TenantServerConfigration.GetCurrentDateTime(stimulReportDataProviderDetails.Tenant);
                         stimulReportDataProviderDetails.CurrentBusinessObject = new StiBusinessObject() { Category = "BluesnapPayments", Name = "BluesnapPaymentsDataProvider", BusinessObjectValue = reportDataProvider };
-                        
+
                         break;
                     }
 
 
                 case "RCRF":
-                    { 
+                    {
                         XmlSerializer serializer = new XmlSerializer(typeof(RacingQuoteDataProvider));
                         RacingQuoteDataProvider reportDataProvider = (RacingQuoteDataProvider)serializer.Deserialize(memorystream);
                         reportDataProvider.Today_DateTime = TenantServerConfigration.GetCurrentDateTime(stimulReportDataProviderDetails.Tenant);
                         stimulReportDataProviderDetails.CurrentBusinessObject = new StiBusinessObject() { Category = "RacingQuote", Name = "RacingQuoteDataProvider", BusinessObjectValue = reportDataProvider };
-                        
+
                         break;
                     }
 
@@ -2015,26 +2025,26 @@ namespace WebFreight.Web.Helpers
 
             if (!reportFliter.DisablePreview)
             {
-                SaveStimulReportUsingFileStreamByFileType(reportFliter, report,"tiff");
+                SaveStimulReportUsingFileStreamByFileType(reportFliter, report, "tiff");
             }
         }
 
 
-        private void SaveStimulReportUsingFileStreamByFileType(ReportFliter reportFliter, StiReport report , string fileType)
+        private void SaveStimulReportUsingFileStreamByFileType(ReportFliter reportFliter, StiReport report, string fileType)
         {
             try
             {
                 string tempFilePath = Path.Combine(Path.GetTempPath(), reportFliter.ReportKey + "." + fileType);
                 var fileStream = new FileStream(tempFilePath, FileMode.Create, FileAccess.Write);
                 if (fileType == "mdc") report.SaveDocument(fileStream);
-                else if (fileType == "tiff") report.ExportDocument(StiExportFormat.ImageTiff, fileStream, new StiTiffExportSettings() { PageRange = StiPagesRange.All , ImageResolution = 200 });
+                else if (fileType == "tiff") report.ExportDocument(StiExportFormat.ImageTiff, fileStream, new StiTiffExportSettings() { PageRange = StiPagesRange.All, ImageResolution = 200 });
                 else if (fileType == "xlsx") new StiExcel2007ExportService().ExportExcel(report, fileStream, new StiExcel2007ExportSettings() { UseOnePageHeaderAndFooter = true });
                 fileStream.Close();
                 ReadFileFromStreamFileAndSaveOnStorgeByChunks(tempFilePath, reportFliter, fileType);
             }
             catch (Exception ex)
             {
-                ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "SaveStimulReportUsingFileStream to "+ fileType + "file", null, null);
+                ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "SaveStimulReportUsingFileStream to " + fileType + "file", null, null);
                 SaveStimulReportUsingMemoryStreamByFileType(reportFliter, report, fileType);
             }
         }
@@ -2043,7 +2053,7 @@ namespace WebFreight.Web.Helpers
         {
             var stream = new MemoryStream();
             if (fileType == "mdc") report.SaveDocument(stream);
-            else if (fileType == "tiff") report.ExportDocument(StiExportFormat.ImageTiff, stream, new StiTiffExportSettings() { PageRange = StiPagesRange.All , ImageResolution = 200 });
+            else if (fileType == "tiff") report.ExportDocument(StiExportFormat.ImageTiff, stream, new StiTiffExportSettings() { PageRange = StiPagesRange.All, ImageResolution = 200 });
             else if (fileType == "xlsx") new StiExcel2007ExportService().ExportExcel(report, stream, new StiExcel2007ExportSettings() { UseOnePageHeaderAndFooter = true });
             if (stream != null)
             {
@@ -2051,7 +2061,7 @@ namespace WebFreight.Web.Helpers
                 if (reportData != null)
                 {
                     if (string.IsNullOrEmpty(reportFliter.ReportKey) || !reportFliter.ReportsRunUsingWR) reportFliter.ReportKey = Guid.NewGuid().ToString();
-                    BlobFileInfo fileInfo = GetNewBlobFileInfo((reportFliter.ReportKey + "@" + reportFliter.ReportName+ fileType), fileType, reportFliter.tenant);
+                    BlobFileInfo fileInfo = GetNewBlobFileInfo((reportFliter.ReportKey + "@" + reportFliter.ReportName + fileType), fileType, reportFliter.tenant);
                     fileInfo.FileSize = reportData.Length;
 
                     IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
@@ -2072,7 +2082,8 @@ namespace WebFreight.Web.Helpers
                 fileInfo.FileSize = fileStream.Length;
                 var buffer = new byte[GetChunkSize(fileStream.Length, sendSize)];
                 while ((bytesRead = fileStream.Read(buffer, 0, buffer.Length)) > 0)
-                {  sendSize += buffer.Length;
+                {
+                    sendSize += buffer.Length;
                     var blockId = Convert.ToBase64String(Guid.NewGuid().ToByteArray());
                     blockIdsList.Add(blockId);
                     storageservice.WriteBlock(buffer, sendSize, blockIdsList.ToArray(), bufferNumber, fileInfo);
@@ -2084,7 +2095,7 @@ namespace WebFreight.Web.Helpers
             File.Delete(tempFilePath);
         }
 
-        private long GetChunkSize(long fileSize ,long sendSize)
+        private long GetChunkSize(long fileSize, long sendSize)
         {
             long chunkSize = 1000000;
             if ((fileSize - sendSize) < chunkSize) chunkSize = fileSize - sendSize;
@@ -2092,7 +2103,7 @@ namespace WebFreight.Web.Helpers
             return chunkSize;
         }
 
-        private BlobFileInfo GetNewBlobFileInfo(string fileName,  string extension ,int tenant)
+        private BlobFileInfo GetNewBlobFileInfo(string fileName, string extension, int tenant)
         {
             BlobFileInfo fileInfo = new BlobFileInfo()
             {
@@ -2126,10 +2137,10 @@ namespace WebFreight.Web.Helpers
 
         private byte[] LoadShipmentsEventsListDataProvider(byte[] filters, int tenant)
         {
-           
+
             LogitudeReportsWebService logitudeReportsWebService = new LogitudeReportsWebService();
             return logitudeReportsWebService.LoadShipmentsEventsListDataProvider(filters, tenant);
-        }        
+        }
 
         private bool IsHaveReport(string reportCode)
         {
@@ -2200,7 +2211,7 @@ namespace WebFreight.Web.Helpers
             if (data != null)
             {
                 System.Drawing.Bitmap bitmapReport = (Bitmap)Image.FromStream(new MemoryStream(data));
-                reportFliter.PageCount= bitmapReport.GetFrameCount(FrameDimension.Page);
+                reportFliter.PageCount = bitmapReport.GetFrameCount(FrameDimension.Page);
                 bitmapReport.SelectActiveFrame(FrameDimension.Page, reportFliter.NumberOfPage - 1);
                 MemoryStream byteStream = new MemoryStream();
                 bitmapReport.Save(byteStream, ImageFormat.Jpeg);
@@ -2230,7 +2241,7 @@ namespace WebFreight.Web.Helpers
 
             List<ReportsTemplatesVersion> tenantZeroReportsTemplatesVersionLists = reportsTemplatesVersionRepository.GetReportsTemplatesVersionsByReportsTemplateIds(tenantZeroReportsTemplate.Select(d => d.Id).ToList(), 0);
             List<ReportsTemplatesVersion> myTenantReportsTemplatesVersion = reportsTemplatesVersionRepository.GetReportsTemplatesVersionsByReportsTemplateIds(myTenantReportsTemplate.Select(d => d.Id).ToList(), tenant);
-            List<Document> documentLists = documentRepository.GetDocumentsByIds(tenantZeroReportsTemplatesVersionLists.Select(d=>d.ReportDocumentId).ToList());
+            List<Document> documentLists = documentRepository.GetDocumentsByIds(tenantZeroReportsTemplatesVersionLists.Select(d => d.ReportDocumentId).ToList());
             List<Report> myReports = new List<Report>();
 
             if (tenant != 0)
@@ -2258,7 +2269,7 @@ namespace WebFreight.Web.Helpers
                             FeatureUniqeCode = report.FeatureUniqeCode,
                             AvailableForScheduling = report.AvailableForScheduling,
                             DisablePreview = report.DisablePreview,
-                            
+
                         };
                         reportRepository.Add(newReport);
                         myReports.Add(newReport);
@@ -2272,14 +2283,14 @@ namespace WebFreight.Web.Helpers
                 isChangeReport = false;
                 foreach (Report report in reportList)
                 {
-                    ReportsTemplate systemReportTemplate = tenantZeroReportsTemplate.Where(d => d.ReportId == report.Id &&  d.Id == report.DefaultTemplateId).FirstOrDefault();
+                    ReportsTemplate systemReportTemplate = tenantZeroReportsTemplate.Where(d => d.ReportId == report.Id && d.Id == report.DefaultTemplateId).FirstOrDefault();
                     if (systemReportTemplate != null)
                     {
                         Report myReport = myReports.Where(d => d.Code == report.Code && d.Tenant == tenant).FirstOrDefault();
                         if (myReport != null)
                         {
-                            ReportsTemplate myReportsTemplate = myTenantReportsTemplate.Where(d => d.ReportId == myReport.Id && d.IsSystem ).FirstOrDefault();
-                            if(myReportsTemplate== null)
+                            ReportsTemplate myReportsTemplate = myTenantReportsTemplate.Where(d => d.ReportId == myReport.Id && d.IsSystem).FirstOrDefault();
+                            if (myReportsTemplate == null)
                             {
                                 myReportsTemplate = myTenantReportsTemplate.Where(d => d.ReportId == myReport.Id && d.Id == myReport.DefaultTemplateId).FirstOrDefault();
                             }
@@ -2287,7 +2298,7 @@ namespace WebFreight.Web.Helpers
                             if (myReportsTemplate == null)
                             {
                                 ReportsTemplatesVersion tenantZeroReportsTemplatesVersion = tenantZeroReportsTemplatesVersionLists.Where(d => d.ReportId == report.Id && d.TemplateId == systemReportTemplate.Id).FirstOrDefault();
-                                if(tenantZeroReportsTemplatesVersion != null && !string.IsNullOrEmpty(tenantZeroReportsTemplatesVersion.ReportDocumentId))
+                                if (tenantZeroReportsTemplatesVersion != null && !string.IsNullOrEmpty(tenantZeroReportsTemplatesVersion.ReportDocumentId))
                                 {
                                     string documentId = AddDocument(documentRepository, tenantZeroReportsTemplatesVersion.ReportDocumentId, report.Tenant, tenant, documentLists);
                                     if (!string.IsNullOrEmpty(documentId))
@@ -2302,9 +2313,9 @@ namespace WebFreight.Web.Helpers
                                 ReportsTemplatesVersion tenantZeroReportsTemplatesVersion = tenantZeroReportsTemplatesVersionLists.Where(d => d.ReportId == report.Id && d.TemplateId == systemReportTemplate.Id).FirstOrDefault();
                                 ReportsTemplatesVersion myReportsTemplatesVersion = myTenantReportsTemplatesVersion.Where(d => d.ReportId == myReport.Id && d.TemplateId == myReportsTemplate.Id && d.Version == myReportsTemplate.CurrentVersion).FirstOrDefault();
 
-                                if(tenantZeroReportsTemplatesVersion != null && myReportsTemplatesVersion != null)
+                                if (tenantZeroReportsTemplatesVersion != null && myReportsTemplatesVersion != null)
                                 {
-                                    if(tenantZeroReportsTemplatesVersion.UpdateDate > myReportsTemplatesVersion.UpdateDate)
+                                    if (tenantZeroReportsTemplatesVersion.UpdateDate > myReportsTemplatesVersion.UpdateDate)
                                     {
                                         string documentId = AddDocument(documentRepository, tenantZeroReportsTemplatesVersion.ReportDocumentId, tenantZeroReportsTemplatesVersion.Tenant, tenant, documentLists);
                                         ReportsTemplatesVersion reportsTemplatesVersion = new ReportsTemplatesVersion()
@@ -2317,14 +2328,14 @@ namespace WebFreight.Web.Helpers
                                             CreatedByUserId = userId,
                                             UpdatedByUserId = userId,
                                             TemplateId = myReportsTemplate.Id,
-                                            Version = myReportsTemplate.CurrentVersion+1,
+                                            Version = myReportsTemplate.CurrentVersion + 1,
                                             ReportDocumentId = !string.IsNullOrEmpty(documentId) ? documentId : null,
                                         };
 
-                                       reportsTemplatesVersionRepository.Add(reportsTemplatesVersion);
-                                       myReportsTemplate.CurrentVersion = reportsTemplatesVersion.Version;
-                                       myReportsTemplate.UpdateDate = TenantServerConfigration.GetCurrentDateTime(tenant);
-                                       myReportsTemplate.UpdatedByUserId = userId;
+                                        reportsTemplatesVersionRepository.Add(reportsTemplatesVersion);
+                                        myReportsTemplate.CurrentVersion = reportsTemplatesVersion.Version;
+                                        myReportsTemplate.UpdateDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+                                        myReportsTemplate.UpdatedByUserId = userId;
                                         isChangeReport = true;
                                     }
                                 }
@@ -2383,15 +2394,15 @@ namespace WebFreight.Web.Helpers
         }
 
 
-       
+
 
     }
 
 
     public class BuildReportDataResult
     {
-       public CustomerPotentialActualDataProvider CustomerPotentialActualDataProvider { get; set; }
-       public string UrlImage { get; set; }
+        public CustomerPotentialActualDataProvider CustomerPotentialActualDataProvider { get; set; }
+        public string UrlImage { get; set; }
     }
 
     public class ReportStimulDataProviderDetails

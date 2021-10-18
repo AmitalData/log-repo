@@ -1,5 +1,5 @@
 <td style="width:20px;">
-    <CheckBox [IsEnabled]="!isDisabled" (change)="checkChange()" [IsChecked]="field.IsChecked"></CheckBox>
+    <CheckBox [IsEnabled]="!isDisabled" (change)="CheckChange()" [IsChecked]="field.IsChecked"></CheckBox>
 </td>
 <td>
     <label style="float:left; margin-left: 5px;">{{field.Text}}</label>
@@ -7,7 +7,7 @@
 
 <ul>
     <ng-container *ngFor="let item of field.Fields">
-        <DataProviderFieldsNestedList [margin]="margin+20" [checkAll]="field.IsChecked" [isDisabled]="!field.IsChecked"
+        <DataProviderFieldsNestedList (checkChangeEvent)="NestedCheckChange($event)" [margin]="margin+20" [checkAll]="field.IsChecked" [isDisabled]="!field.IsChecked"
             [style.marginLeft.px]="margin" [field]="item">
         </DataProviderFieldsNestedList>
     </ng-container>

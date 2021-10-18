@@ -1,11 +1,7 @@
-﻿using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+﻿using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Xml.Linq;
 using WebFreight.Web.DataContracts;
 
 namespace WebFreight.Web.Helpers.ExcelReport
@@ -20,12 +16,12 @@ namespace WebFreight.Web.Helpers.ExcelReport
             excelReportFileService = new ExcelReportFileService(tenant);
         }
 
-        public List<DataProviderField> GetDataProviderFields(string reportId, string reportTemplateId, bool isNew)
+        public List<DataProviderField> GetDataProviderFields(string reportId, string reportTemplateId)
         {
             Report report = new ReportRepository(tenant).GetSingleReport(reportId, tenant);
 
             List<DataProviderField> dataProvderFields = new ExcelDataProviderFieldsBuilder().Build(report.Code);
-            List<DataProviderField> templateDataProvderFields = GetDataProviderFieldsFromXML(reportTemplateId, isNew);
+            List<DataProviderField> templateDataProvderFields = excelReportFileService.GetDataProviderFieldsFromXML(reportTemplateId, null, false);
             if (templateDataProvderFields == null)
                 return dataProvderFields;
 
@@ -55,40 +51,5 @@ namespace WebFreight.Web.Helpers.ExcelReport
             }
         }
 
-        private List<DataProviderField> GetDataProviderFieldsFromXML(string reportTemplateId, bool isNew)
-        {
-            if (string.IsNullOrEmpty(reportTemplateId))
-                return null;
-
-            byte[] fileData = excelReportFileService.GetReport(isNew, reportTemplateId);
-            if (fileData == null)
-                return null;
-
-            string xmlString = Encoding.UTF8.GetString(fileData);
-            if (xmlString == null)
-                return null;
-            try
-            {
-                XDocument doc = XDocument.Parse(xmlString);
-                return DeserializeXDocument<DataProviderField>(doc);
-            }
-            catch (Exception)
-            {
-                return null;
-            }
-
-        }
-
-        private List<T> DeserializeXDocument<T>(XDocument doc)
-        {
-            System.Xml.Serialization.XmlSerializer serializer = new System.Xml.Serialization.XmlSerializer(typeof(List<T>));
-
-            System.Xml.XmlReader reader = doc.CreateReader();
-
-            List<T> result = (List<T>)serializer.Deserialize(reader);
-            reader.Close();
-
-            return result;
-        }
     }
 }
