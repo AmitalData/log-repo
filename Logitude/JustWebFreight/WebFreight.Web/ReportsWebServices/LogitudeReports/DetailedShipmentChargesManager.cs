@@ -891,7 +891,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                                 ShipmentPickUpDelivery myLastDelivery = shipmentPickUpDeliveriesLists.Where(d => d.ShipmentId == myShipment.Id && d.PickUpDeliveryTypeCode == "DELV").OrderByDescending(s => s.PickUpDeliveryNumber).FirstOrDefault();
                                 myRecord.CountryOfDestination = this.ComputeCountryOfDistination(myShipment, myLastDelivery);
 
-                                if (this.tenant == 1255)
+                                if (this.tenant == 1255 || this.tenant == 2512)
                                 {
                                     if (this.IsLocalCurrency)
                                     {
