@@ -1,4 +1,4 @@
-<h3 class="sub-header sub-header-short-line">{{'QuoteOP.F.Consignee' | TextCodeTranslationPipe}}</h3>
+<h3 class="sub-header">{{'QuoteOP.F.Consignee' | TextCodeTranslationPipe}}</h3>
 
 <div class="grid content-in-section" [formGroup]='formGroup'>
   <div class="col-6 p-fluid">
@@ -7,11 +7,11 @@
         [columnsShow]="['Code', 'EnglishName', 'Address1', 'CityName', 'CountryName', 'PartnerTypeName']"
         [data]='consigneeNames' [fieldShow]='"EnglishName"'
         [label]="'QuoteOP.S.NewQuote.Name' | TextCodeTranslationPipe" [controlName]='"consigneeName"'
-        [formGroup]='formGroup' (onSelect)='onSelectedName($event)'>
+        [formGroup]='formGroup'>
       </app-autocomplate-table>
     </div>
 
-    <div *ngIf='formGroup.value.consigneeName'>
+    <div *ngIf='Address'>
       <div class="p-field">
         <app-address-textarea [Address]='Address'></app-address-textarea>
       </div>
@@ -24,7 +24,7 @@
   </div>
 
   <div class="col-6 p-fluid">
-    <div *ngIf='formGroup.value.consigneeName'>
+    <div *ngIf='Address'>
 
       <div class="p-field">
         <app-autocomplate-table [columnsShow]="['Email', 'EnglishName']" [data]='consigneeContacts'

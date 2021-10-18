@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnInit, SimpleChanges } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
 import { AddressList } from 'Common/EntityLists/AddressList';
 import { CardList } from 'Common/EntityLists/CardList';
@@ -15,12 +15,14 @@ export class NewQuoteConsigneeComponent implements OnInit {
   @Input() formGroup: FormGroup = null as any;
   @Input() EntityPM: QuoteOPPM = null as any;
 
-  consigneeNames: any[] = []
-  consigneeContacts: any[] = []
+  consigneeNames: CardList[] = []
+  consigneeContacts: ContactList[] = []
   Address: AddressList = null as any;
 
   constructor(
     private newQuoteDataService: NewQuoteDataService,
+    private cdref: ChangeDetectorRef,
+
   ) {}
 
   ngOnInit(): void {
@@ -67,11 +69,12 @@ export class NewQuoteConsigneeComponent implements OnInit {
   }
 
   private subscribeConsigneeName() {
-    this.formGroup.controls.consigneeName.valueChanges.pipe(filterIsNotNull()).subscribe((consigneeName: any) => {
+    this.formGroup.controls.consigneeName.valueChanges.pipe(filterIsNotNull()).subscribe((consigneeName: CardList) => {
       this.formGroup.controls.consigneeContact.reset();
       this.formGroup.controls.consigneeNotes.setValue(consigneeName.Notes);
       this.initConsigneeContacts(consigneeName.Id);
       this.setConsigneeAddress(consigneeName);
+      this.onSelectedName(consigneeName);
     })
   }
 

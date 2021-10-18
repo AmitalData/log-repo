@@ -3,36 +3,60 @@
 <div class="grid content-in-section" [formGroup]='formGroup'>
   <div class="col-4 p-fluid">
     <div class="p-field">
-      <app-autocomplate-table [columnsShow]="{Code:'Code', Name: 'Name',CountryName:'CountryName'}" [data]='toPortList' [fieldShow]='"Name"' [label]="'Geteway'"
-        [controlName]='"toPort"' [formGroup]='formGroup' (onSelect)='onSelectedtoPort($event)'>
+      <app-autocomplate-table [columnsShow]="{Code:'Code', Name: 'Name',CountryName:'CountryName'}" [data]='toPortList'
+        [fieldShow]='"Name"' [label]="'Geteway'" [controlName]='"toPort"' [formGroup]='formGroup'
+        (onSelect)='onSelectedtoPort($event)'>
       </app-autocomplate-table>
     </div>
 
     <div class="p-field">
-      <app-autocomplate-table [columnsShow]="{Code:'Code', Name: 'Name',CountryName:'CountryName'}" [data]='fromPortList' [fieldShow]='"Name"' [label]="'Destination'"
-        [controlName]='"fromPort"' [formGroup]='formGroup' (onSelect)='onSelectedFromPort($event)'>
+      <app-autocomplate-table [columnsShow]="{Code:'Code', Name: 'Name',CountryName:'CountryName'}"
+        [data]='fromPortList' [fieldShow]='"Name"' [label]="'Destination'" [controlName]='"fromPort"'
+        [formGroup]='formGroup' (onSelect)='onSelectedFromPort($event)'>
       </app-autocomplate-table>
+    </div>
+
+    <div class="p-field">
+      <div class="p-field accordion-container">
+        <h4>{{"QuoteOP.S.NewQuote.Pickup" | TextCodeTranslationPipe}}</h4>
+        <i [class]="'pi pi-angle-' + (pickup.hidden ? 'down': 'right')" (click)='pickup.hidden = !pickup.hidden'></i>
+        <div #pickup hidden class="accordion-contect">
+          <app-new-quote-pickup [formGroup]='formGroup' [EntityPM]='EntityPM'></app-new-quote-pickup>
+        </div>
+      </div>
     </div>
   </div>
 
   <div class="col-4 p-fluid">
     <div class="p-field">
-      <app-autocomplate-table [columnsShow]="carrierColumns" [data]='mainCarriageCarrierList' [fieldShow]='"Name"' [label]="'Airline'"
-        [controlName]='"mainCarriageCarrier"' [formGroup]='formGroup' (onSelect)='onMainCarriageCarrier($event)'>
+      <app-autocomplate-table [columnsShow]="carrierColumns" [data]='mainCarriageCarrierList' [fieldShow]='"Name"'
+        [label]="'Airline'" [controlName]='"mainCarriageCarrier"' [formGroup]='formGroup'
+        (onSelect)='onMainCarriageCarrier($event)'>
       </app-autocomplate-table>
     </div>
-    
+
     <div class="p-field">
-      <app-autocomplate-table [columnsShow]="{PTERMID:'Code', Name: 'Name'}" [data]='incotermList' [fieldShow]='"Name"' [label]="'Incoterm'"
-        [controlName]='"incoterm"' [formGroup]='formGroup' (onSelect)='onSelectedIncoterm($event)'>
+      <app-autocomplate-table [columnsShow]="{PTERMID:'Code', Name: 'Name'}" [data]='incotermList' [fieldShow]='"Name"'
+        [label]="'Incoterm'" [controlName]='"incoterm"' [formGroup]='formGroup' (onSelect)='onSelectedIncoterm($event)'>
       </app-autocomplate-table>
+    </div>
+
+    <div class="p-field">
+      <div class="p-field accordion-container">
+        <h4>{{"QuoteOP.S.NewQuote.Delivery" | TextCodeTranslationPipe}}</h4>
+        <i [class]="'pi pi-angle-' + (delivery.hidden ? 'down': 'right')" (click)='delivery.hidden = !delivery.hidden'></i>
+        <div #delivery hidden class="accordion-contect">
+          <app-new-quote-delivery [formGroup]='formGroup' [EntityPM]='EntityPM'></app-new-quote-delivery>
+        </div>
+      </div>
     </div>
   </div>
 
   <div class="col-4 p-fluid">
     <div class="p-field">
-      <app-autocomplate-table [columnsShow]="{SERVLEVEL_ID:'Code', Name: 'Name'}" [data]='specialServiceList' [fieldShow]='"Name"' [label]="'Special Services Type'"
-        [controlName]='"specialService"' [formGroup]='formGroup' (onSelect)='onSelectedSpecialService($event)'>
+      <app-autocomplate-table [columnsShow]="{SERVLEVEL_ID:'Code', Name: 'Name'}" [data]='specialServiceList'
+        [fieldShow]='"Name"' [label]="'Special Services Type'" [controlName]='"specialService"' [formGroup]='formGroup'
+        (onSelect)='onSelectedSpecialService($event)'>
       </app-autocomplate-table>
     </div>
   </div>
