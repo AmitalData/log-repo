@@ -289,7 +289,7 @@
 
                                 <div class="subtitle hide-mobile" [attr.src]="SetEstimationORActualDate(shipment)">{{TitleOfEstimationORActualDate}}</div>
                                 <div class="value truncateText">
-                                    {{ValueOfEstimationORActualDate | date: 'dd/MM/yyyy, HH:mm'}}
+                                    {{ValueOfEstimationORActualDate | date: 'd-MMM-y, HH:mm'}}
                                 </div>
 
                             </div>
@@ -343,19 +343,19 @@
                                         </div>
                                         <div tooltip-body>
                                             <div style="text-align: right;">
-                                                {{ shipment.CurrentMilestoneExceptions?.split(',')[0] | date:'dd/MM/yyyy, HH:mm'}}
+                                                {{ shipment.CurrentMilestoneExceptions?.split(',')[0] | date:'d-MMM-y, HH:mm'}}
                                                 <br>
                                                 {{shipment.CurrentMilestoneExceptions.substring(shipment.CurrentMilestoneExceptions.indexOf(',')+1)}}
                                             </div>
                                         </div>
                                     </app-tooltip>
                                         {{ shipment.CurrentMilestoneName }}
-                                <div class="value mobile-only">{{ shipment.CurrentMilestoneDate | date: 'dd/MM/yyyy, HH:mm'  }}</div>
+                                <div class="value mobile-only">{{ shipment.CurrentMilestoneDate | date: 'd-MMM-y, HH:mm'  }}</div>
                                 </div>
 
 
                                 <div class="subtitle hide-mobile">Last Updated</div>
-                                <div class="value hide-mobile">{{ shipment.CurrentMilestoneDate | date: 'dd/MM/yyyy, HH:mm' }}</div>
+                                <div class="value hide-mobile">{{ shipment.CurrentMilestoneDate | date: 'd-MMM-y, HH:mm' }}</div>
                             </div>
                         </div>
 
@@ -367,7 +367,7 @@
 
 
                                 <div class="subtitle hide-mobile">Estimated Date</div>
-                                <div class="value hide-mobile">{{ shipment.FutureMilstoneDate | date: 'dd/MM/yyyy, HH:mm' }}</div>
+                                <div class="value hide-mobile">{{ shipment.FutureMilstoneDate | date: 'd-MMM-y, HH:mm' }}</div>
                             </div>
                         </div>
 
