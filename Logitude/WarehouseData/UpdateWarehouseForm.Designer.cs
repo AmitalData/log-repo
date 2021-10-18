@@ -130,6 +130,8 @@
             this.label49 = new System.Windows.Forms.Label();
             this.FactARInvoicesLabel = new System.Windows.Forms.Label();
             this.label51 = new System.Windows.Forms.Label();
+            this.label40 = new System.Windows.Forms.Label();
+            this.DimShipmentSubTypesLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // DestinationConnectionlTextBox
@@ -1373,11 +1375,37 @@
             this.label51.TabIndex = 262;
             this.label51.Text = "Fact ARInvoice";
             // 
+            // label40
+            // 
+            this.label40.AutoSize = true;
+            this.label40.BackColor = System.Drawing.SystemColors.Control;
+            this.label40.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label40.ForeColor = System.Drawing.Color.CornflowerBlue;
+            this.label40.Location = new System.Drawing.Point(745, 775);
+            this.label40.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label40.Name = "label40";
+            this.label40.Size = new System.Drawing.Size(283, 25);
+            this.label40.TabIndex = 264;
+            this.label40.Text = "Dimension ShipmentSubTypes";
+            // 
+            // DimShipmentSubTypesLabel
+            // 
+            this.DimShipmentSubTypesLabel.AutoSize = true;
+            this.DimShipmentSubTypesLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.DimShipmentSubTypesLabel.ForeColor = System.Drawing.Color.CornflowerBlue;
+            this.DimShipmentSubTypesLabel.Location = new System.Drawing.Point(1043, 775);
+            this.DimShipmentSubTypesLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.DimShipmentSubTypesLabel.Name = "DimShipmentSubTypesLabel";
+            this.DimShipmentSubTypesLabel.Size = new System.Drawing.Size(0, 25);
+            this.DimShipmentSubTypesLabel.TabIndex = 265;
+            // 
             // UpdateWarehouseForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1799, 830);
+            this.Controls.Add(this.DimShipmentSubTypesLabel);
+            this.Controls.Add(this.label40);
             this.Controls.Add(this.FactARInvoicesLabel);
             this.Controls.Add(this.label51);
             this.Controls.Add(this.DimVatTypesLabel);
@@ -1592,5 +1620,7 @@
         private System.Windows.Forms.Label label49;
         private System.Windows.Forms.Label FactARInvoicesLabel;
         private System.Windows.Forms.Label label51;
+        private System.Windows.Forms.Label label40;
+        private System.Windows.Forms.Label DimShipmentSubTypesLabel;
     }
 }
