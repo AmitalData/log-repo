@@ -363,7 +363,8 @@ Shipment.ShipmentList.ArrivalDate |
     <panel style="order: 4;" [Title]="'Cargo Info'" [Name]="'Cargo'" [HaveDetailsSection]=" Shipment.ShipmentList.EntityType != 'O'"
            [ShowWhitePanelOnMobile]="true"
            [DetailsTitle]="Shipment.ShipmentList.TransportModeId != 'A' ? 'Container List' : 'Packages List'"
-           [DetailsSectionToggleEvent]="DetailsSectionToggleEvent">
+           [InputDetailsSectionToggleEvent]="DetailsSectionToggleEvent"
+           (OutputDetailsSectionToggleEvent)="ChangeShowDetailsSectionValue($event)">
 
         <div body>
             <div class="data-cards" *ngIf="Shipment&& Shipment.ShipmentList">
@@ -372,13 +373,13 @@ Shipment.ShipmentList.ArrivalDate |
                     <div class="title" *ngIf="Shipment.ShipmentList.TransportModeId == 'A'">PACKAGE TYPE</div>
                     <div class="title" *ngIf="Shipment.ShipmentList.TransportModeId != 'A'">CONTAINER TYPE</div>
                     <div *ngIf="Shipment.ShipmentList.EntityType != 'O'" class="description">
-                        <div *ngFor="let package of ShipmentPackages?.slice(0,1), let i = index">
+                        <div *ngFor="let package of ShipmentPackages?.slice(0,2), let i = index">
                             {{package.PackageTypeName}}
                             <i class="las la-chevron-circle-up" style="color: var(--MainColor)"
-                               *ngIf="ShipmentPackages.length > 1 && i == 0 && ShowDetailsSection" (click)="ShowMoreLinkClicked()"></i>
+                               *ngIf="ShipmentPackages.length > 1 && i == 1 && ShowDetailsSection" (click)="ShowMoreLinkClicked()"></i>
 
                             <i class="las la-chevron-circle-down" style="color: var(--MainColor)"
-                               *ngIf="ShipmentPackages.length > 1 && i == 0 && !ShowDetailsSection" (click)="ShowMoreLinkClicked()"></i>
+                               *ngIf="ShipmentPackages.length > 1 && i == 1 && !ShowDetailsSection" (click)="ShowMoreLinkClicked()"></i>
                         </div>
                     </div>
                 </div>

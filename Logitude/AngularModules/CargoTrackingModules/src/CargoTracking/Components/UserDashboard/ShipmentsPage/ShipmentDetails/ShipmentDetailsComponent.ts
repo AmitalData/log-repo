@@ -1,4 +1,4 @@
-import {Component,ViewChild, ElementRef, AfterViewInit, HostListener, Input, EventEmitter} from '@angular/core';
+import {Component,ViewChild, ElementRef, AfterViewInit, HostListener, Input, EventEmitter, Output} from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder } from '@angular/forms';
 import { CargoTrackingSearchService } from 'src/CargoTracking/Services/Others/CargoTrackingSearchService';
@@ -1202,6 +1202,10 @@ export class ShipmentDetailsComponent implements AfterViewInit
                 description: text,
             }
         });
+    }
+
+    ChangeShowDetailsSectionValue(newValue) {
+        this.ShowDetailsSection = newValue;
     }
 }
 
