@@ -178,7 +178,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             container.ShipmentPickupETD = containerPM.ShipmentPickupETD;
             container.ShipmentPickupATA = containerPM.ShipmentPickupATA;
             container.ShipmentPickupATD = containerPM.ShipmentPickupATD;
-            container.ShipmentPreCarriageETA = containerPM.ShipmentPickupATD;
+            container.ShipmentPreCarriageETA = containerPM.ShipmentPreCarriageETA;
             container.ShipmentPreCarriageETD = containerPM.ShipmentPreCarriageETD;
             container.ShipmentPreCarriageATA = containerPM.ShipmentPreCarriageATA;
             container.ShipmentPreCarriageATD = containerPM.ShipmentPreCarriageATD;
