@@ -439,7 +439,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
             catch (Exception E)
             {
 
-                LogitudeSettings.HandleLogMe(E.ToString() + logData, true, "CreateUD2LTService", stopLogAt);
+                LogitudeSettings.HandleLogMe(E.ToString() + E.StackTrace+ logData, true, "CreateUD2LTService", stopLogAt);
                 throw;
             }
             finally
