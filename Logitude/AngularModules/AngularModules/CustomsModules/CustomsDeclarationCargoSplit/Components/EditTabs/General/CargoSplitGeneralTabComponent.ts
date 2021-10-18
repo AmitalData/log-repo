@@ -165,7 +165,7 @@ export class CargoSplitGeneralTabComponent
                 if (AppTool.IsNullOrEmpty(this._LastFetchDeclarationList)) {
                     this.NoConnectedConsignmentEnableField();
                 } else {
-                    if (this._LastFetchDeclarationList.Direction == "E")
+                    if (this._LastFetchDeclarationList.Direction == "E") 
                         this.IsExportDeclaration = true;
                     this.CurrentSession.StartBusyIndicator("")
                     this._DeclarationExtendedListService.GetConsignmentListPMByCustomFileNo(this.CustomFileNo)
@@ -587,6 +587,19 @@ export class CargoSplitGeneralTabComponent
         }
     }
 
+    SwitchTabsForExportORImport() {
+        for (var tab of this.Tabs) {
+            var index = this.Tabs.indexOf(tab);
+            if (index > -1) {
+                this.EntityPM.RemoveDecCargoSplitCon(tab.EntityPM);
+                this.Tabs.splice(index, 1)
+            }
+        }
+        this.BuildTabs();
+        this.RefreshEntity();
+
+    }
+
     OnSelectedChanged(tab: LogTab) {
         if (!AppTool.IsNullOrEmpty(tab)) {
             this.SelectedTab = tab;
@@ -629,6 +642,13 @@ export class CargoSplitGeneralTabComponent
                         this._DeclarationExtendedListService.GetConsignmentListPMByCustomFileNo(this.CustomFileNo)
                             .subscribe((myResponse: ServiceResponse) => {
                                 this.CurrentSession.StopBusyIndicator();
+                                if (this._LastFetchDeclarationList.Direction == "E") {
+                                    this.IsExportDeclaration = true;
+                                } else {
+                                    this.IsExportDeclaration = false;
+                                }
+                                this.SwitchTabsForExportORImport();
+
                                 if (searchtext == "ImporterOnly") {
                                     this._LastFetchConsignmentPMList = myResponse.Result
                                     if (this._LastFetchConsignmentPMList != null && this._LastFetchDeclarationList != null) {
@@ -920,11 +940,15 @@ export class CargoSplitGeneralTabComponent
             this.CurrentSession.CurrentEditComponent.EditComponentController.ResetMustRefresh();
             this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
         }
-        this.declarationCargoSplitController.CheckRequestsInProgress(this.EntityPM.DeclarationId).subscribe((response: ServiceResponse) => {
-            if (response.Result.IsDisplayOnly) {
-                this.SendButtonEnabled = false;
-            }
-        });
+        if (this.EntityPM.DeclarationId != null) {
+            this.declarationCargoSplitController.CheckRequestsInProgress(this.EntityPM.DeclarationId).subscribe((response: ServiceResponse) => {
+                if (response.Result != null) {
+                    if (response.Result.IsDisplayOnly) {
+                        this.SendButtonEnabled = false;
+                    }
+                }
+            });
+        }
         if (!AppTool.IsNullOrEmpty(this.EntityPM) && this.EntityPM.DecCargoSplitCargoIdentifiers != null && this.EntityPM.DecCargoSplitCargoIdentifiers.length > 0) {
             this.CargoIdentifiersList.InsertCollection(this.EntityPM.DecCargoSplitCargoIdentifiers);
         }
@@ -1302,24 +1326,24 @@ export class DecCargoSplitCargoIdentifierModel extends BaseComponent
         if (this.CargoIdentifierKey1 != null) {
             this.UIProperties.SetRequired("CargoIdentifierKey1", "Customs.DecCargoSplitCargoIdentifier", false);
             }
-
-        if (this.cargoIdentifireType.IsKey2Mandatory) {
-            this.UIProperties.SetRequired("CargoIdentifierKey2", "Customs.DecCargoSplitCargoIdentifier", true);
+        if (this.cargoIdentifireType != null) {
+            if (this.cargoIdentifireType.IsKey2Mandatory) {
+                this.UIProperties.SetRequired("CargoIdentifierKey2", "Customs.DecCargoSplitCargoIdentifier", true);
                 if (this.CargoIdentifierKey2 != null) {
                     this.UIProperties.SetRequired("CargoIdentifierKey2", "Customs.DecCargoSplitCargoIdentifier", false);
                 }
             } else {
-            this.UIProperties.SetRequired("CargoIdentifierKey2", "Customs.DecCargoSplitCargoIdentifier", false);
-        }
-        if (this.cargoIdentifireType.IsKey3Mandatory) {
-            this.UIProperties.SetRequired("CargoIdentifierKey3", "Customs.DecCargoSplitCargoIdentifier", true);
+                this.UIProperties.SetRequired("CargoIdentifierKey2", "Customs.DecCargoSplitCargoIdentifier", false);
+            }
+            if (this.cargoIdentifireType.IsKey3Mandatory) {
+                this.UIProperties.SetRequired("CargoIdentifierKey3", "Customs.DecCargoSplitCargoIdentifier", true);
                 if (this.CargoIdentifierKey3 != null) {
                     this.UIProperties.SetRequired("CargoIdentifierKey3", "Customs.DecCargoSplitCargoIdentifier", false);
                 }
             } else {
-            this.UIProperties.SetRequired("CargoIdentifierKey3", "Customs.DecCargoSplitCargoIdentifier", false);
+                this.UIProperties.SetRequired("CargoIdentifierKey3", "Customs.DecCargoSplitCargoIdentifier", false);
             }
-       
+        }
     }
 
     CheckRequired() {
