@@ -89,8 +89,6 @@ export class DeclarationStatusComponent
                     this.DeclarationsList.push(dec.DeclarationID);
                 }
                 this.IsMultiDeclaration = true;
-                this.UIProperties.SetEnabled("DeclarationVersion", "Customs.Declaration", false);
-
             }
         }
     }
