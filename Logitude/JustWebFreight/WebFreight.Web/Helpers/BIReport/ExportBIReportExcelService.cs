@@ -177,7 +177,7 @@ namespace WebFreight.Web.Helpers.BIReport
         {
             var chargesFactMeasurementField = ChargesFactMeasurementFields.Where(a=> a == c.Name).FirstOrDefault();
 
-            return (!(chargesFactMeasurementField != null && this.FactTable == "Fact_Charges"));
+            return (!(chargesFactMeasurementField != null && ( this.FactTable == "Fact_Charges" || this.FactTable == "Fact_MasterCharges")));
             
         }
           
