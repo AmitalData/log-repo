@@ -1,4 +1,3 @@
-
 :host ::ng-deep {
     .p-tabview {
         ul {
@@ -13,10 +12,19 @@
 
                 a.p-tabview-nav-link {
                     overflow: visible;
-                    padding: 20px 11px 8px;
+                    padding: 15px 23px;
                     border: none;
                     color: black;
-                    font-weight: 600;
+
+                    span {
+                        font-size: 14px;
+                        font-weight: 600;
+                    }
+
+                    img {
+                        width: 14px;
+                        margin: 0 5px;
+                    }
                 }
 
                 a:before {
@@ -37,7 +45,7 @@
                     position: absolute;
                     top: 0;
                     height: 100%;
-                    width: 29px;
+                    width: 33px;
                     background-color: #fff;
                 }
 
@@ -83,38 +91,37 @@
     }
 }
 
-.properties {
+p-tabview {
+    width: calc(100% - 50px);
     display: inline-block;
-    width: 1000px;
+}
+
+.pi-plus {
+    background: #1084dc;
+    color: white;
+    width: 13px;
+    padding: 11px;
+    display: inline;
+    top: 23px;
     position: relative;
+    vertical-align: top;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+}
 
-    p-tabview {
-        width: calc(100% - 100px);
-        display: inline-block;
-    }
+hr {
+    position: absolute;
+    top: 49px;
+    width: 100%;
+    color: black;
+    height: 2px;
+    background: black;
+}
 
-    .pi {
-        background: #1084dc;
-        color: white;
-        width: 13px;
-        padding: 11px;
-        display: inline;
-        top: 11px;
-        position: relative;
-        vertical-align: top;
-        border-radius: 6px;
-        font-weight: bold;
-        cursor: pointer;
-    }
-
-    hr {
-        position: absolute;
-        top: 35px;
-        width: calc(100% - 50px);
-        color: black;
-        height: 4px;
-        background: black;
-    }
+.container {
+    position: relative;
+    margin-bottom: 20px;
 }
 
 .accordion-container {
@@ -132,7 +139,7 @@
 
     .pi {
         float: right;
-        color: #1084DC;
+        color: #1084dc;
     }
 }
 

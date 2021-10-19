@@ -65,21 +65,17 @@ export class NewQuoteDeliveryComponent implements OnInit {
     this.formGroup.controls.deliveryZipCode.valueChanges.subscribe(val => this.EntityPM.FromAddressZipCode = val);
     this.formGroup.controls.deliveryCity.valueChanges.subscribe(val => this.EntityPM.FromAddressCity = val); // need change when update field to autocomplate
     this.formGroup.controls.consigneeName.valueChanges.pipe(filterIsNotNull()).subscribe(async (consigneeName: CardList) =>
-      this.Address = await this.newQuoteDataService.getAddress(consigneeName.Id, consigneeName.Tenant));
+    this.Address = await this.newQuoteDataService.getAddress(consigneeName.Id, consigneeName.Tenant));
   }
 
   initDefaultValue() {
-    this.formGroup.controls.deliveryInclude.setValue(false)
+    this.formGroup.controls.deliveryInclude.setValue(true)    
   }
 
   includeCheckboxChange(e: { checked: boolean, originalEvent: PointerEvent }) {
     if (e)
       this.EntityPM.IncludeDelivery = e.checked;
   }
-
-  // onSelectedCity(e) {
-  //   console.log(e)    
-  // }
 
   onSelectedCountry(country: CountryList) {
     this.EntityPM.ToAddressCountryId = country.Id;

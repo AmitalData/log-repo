@@ -69,17 +69,13 @@ export class NewQuotePickupComponent implements OnInit {
   }
 
   initDefaultValue() {
-    this.formGroup.controls.pickupInclude.setValue(false)
+    this.formGroup.controls.pickupInclude.setValue(true)
   }
 
   includeCheckboxChange(e: { checked: boolean, originalEvent: PointerEvent }) {
     if (e)
       this.EntityPM.IncludePickUp = e.checked;
   }
-
-  // onSelectedCity(e) {
-  //   console.log(e)    
-  // }
 
   onSelectedCountry(country: CountryList) {
     this.EntityPM.FromAddressCountryId = country.Id;
