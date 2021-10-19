@@ -25,8 +25,11 @@ namespace Amital.QuoteOPM.Data.EntityPOCOs
 	    public int Tenant { get; set; }
         [Column("SearchFields")]
 	    public string SearchFields { get; set; }
+        [ForeignKey("QuoteOP")]
         [Column("QuoteID")]
 	    public string QuoteID { get; set; }
+	      
+        public virtual QuoteOP QuoteOP { get; set; }
         [Column("Order")]
 	    public int Order { get; set; }
         [Column("FromPortId")]
@@ -39,6 +42,34 @@ namespace Amital.QuoteOPM.Data.EntityPOCOs
 	    public string SpecialServiceID { get; set; }
         [Column("MainCarriageCarrierId")]
 	    public string MainCarriageCarrierId { get; set; }
+        [ForeignKey("PickUpAddressEntity")]
+        [Column("FromAddressId")]
+	    public string FromAddressId { get; set; }
+	      
+        public virtual Address PickUpAddressEntity { get; set; }
+        [Column("FromAddressZipCode")]
+	    public string FromAddressZipCode { get; set; }
+        [ForeignKey("FromAddressCountry")]
+        [Column("FromAddressCountryId")]
+	    public string FromAddressCountryId { get; set; }
+	      
+        public virtual Country FromAddressCountry { get; set; }
+        [Column("FromAddressCity")]
+	    public string FromAddressCity { get; set; }
+        [ForeignKey("DeliveryAddressEntity")]
+        [Column("ToAddressId")]
+	    public string ToAddressId { get; set; }
+	      
+        public virtual Address DeliveryAddressEntity { get; set; }
+        [Column("ToAddressCity")]
+	    public string ToAddressCity { get; set; }
+        [ForeignKey("ToAddressCountry")]
+        [Column("ToAddressCountryId")]
+	    public string ToAddressCountryId { get; set; }
+	      
+        public virtual Country ToAddressCountry { get; set; }
+        [Column("ToAddressZipCode")]
+	    public string ToAddressZipCode { get; set; }
     }
 }
 	 

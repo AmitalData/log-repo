@@ -551,6 +551,15 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                     CalcIsAutonomy();
                     CalcProcedureCurrentCode();
                     CalcInternalTransitionSite();
+                    if (myDeclarationUpsertService._AmitalCustomsFile == null)
+                    {
+                        myDeclarationUpsertService._AmitalCustomsFile = this._AmitalCustomsFile;
+                    }
+                    if (myDeclarationUpsertService._MyDeclarationPM == null)
+                    {
+                        myDeclarationUpsertService._MyDeclarationPM = this._MyDeclarationPM;
+                    }
+                    myDeclarationUpsertService.UpdateTrucker();
                     if (this.IsAutonomy)
                     {
                         UpdateDeclarationPending("901");

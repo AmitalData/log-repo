@@ -77,6 +77,7 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             poco.IsActiveInImport = entityPM.IsActiveInImport;
             poco.IsActiveInDomestic = entityPM.IsActiveInDomestic;
             poco.IsActiveInDrop = entityPM.IsActiveInDrop;
+            poco.QuoteGroupSectionID = entityPM.QuoteGroupSectionID;
             BuildSearchField(entityPM, poco);
         }
 

@@ -6762,7 +6762,40 @@ namespace Amital.QuoteOPM.Def.EntityPMs
 			
 		 }
 	   }
-   }
+
+	   private List<QuoteOPPropertiesPM> quoteProperties;
+	 
+		     
+	   [Include]
+	   [Association("QuoteOPProperties", "Id","QuoteID")]
+	   [DataMember]
+	   public virtual List<QuoteOPPropertiesPM> QuoteProperties  
+	   {
+	        get
+             {
+                 if (quoteProperties == null)
+                 {
+                     quoteProperties = new List<QuoteOPPropertiesPM>();
+                 }
+                 return quoteProperties;
+              }
+             set { quoteProperties = value; }
+	    }
+		   
+	   private List<QuoteOPPropertiesPM>  deletedQuoteProperties;
+	   public virtual List<QuoteOPPropertiesPM> DeletedQuoteProperties  
+	   {
+	        get
+             {
+                 if ( deletedQuoteProperties == null)
+                 {
+                      deletedQuoteProperties = new List<QuoteOPPropertiesPM>();
+                 }
+                 return  deletedQuoteProperties;
+              }
+             set {  deletedQuoteProperties = value; }
+	    }
+	     }
    
 }
 	 

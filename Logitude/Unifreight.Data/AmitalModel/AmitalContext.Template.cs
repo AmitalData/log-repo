@@ -8643,6 +8643,7 @@ namespace Unifreight.Data.AmitalModel
                     .HasColumnType("varchar2");
 
             #endregion
+       
             #region Disabled conventions
 
 
@@ -8764,6 +8765,5 @@ namespace Unifreight.Data.AmitalModel
         public virtual DbSet<ETBVEND> ETBVENDs { get; set; }
         public virtual DbSet<MTBCARR> MTBCARRs { get; set; }
         public virtual DbSet<MTBPORT> MTBPORTs { get; set; }
-
     }
 }

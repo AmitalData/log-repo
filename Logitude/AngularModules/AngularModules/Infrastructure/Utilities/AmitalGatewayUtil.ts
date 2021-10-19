@@ -1433,11 +1433,11 @@ export class ShowInvoiceFromUrouterReturnCreateInvoiceCommand {
                 let ExcludeLines = "";
                 if (toCreateQInvoice.includes("1")) {
                     CreateInvoice = 1;
-                    let ExcludeLines = toCreateQInvoice.replace("1;", "");
+                    ExcludeLines = toCreateQInvoice.replace("1;", "");
                 } else {
                     CreateInvoice = 0;
                 }
-                AmitalGatewayUtil.Instance.CreateQInvoiceUnifreightCallBack(CreateInvoice, comp.Remarks, ExcludeLines );
+                AmitalGatewayUtil.Instance.CreateQInvoiceUnifreightCallBack(CreateInvoice, comp.Remarks, ExcludeLines);
             });
         });
         logWindow.Show('./CustomsModules/InvoiceQueue/Components/InvoiceQueueComponent');

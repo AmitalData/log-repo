@@ -95,8 +95,12 @@ export class DecCargoSplitConComponent extends BaseComponent {
         if (this.declarationCargoSplitPM != null) {
             this.declarationExtendedListService = new DeclarationExtendedListService();
             this.declarationExtendedListService.GetSingleDeclarationByCustomFileNo(this.declarationCargoSplitPM.CustomFileNo).subscribe((response: any) => {
-                if (response != null) {
+                if (response.Result != null) {
                     this.DeclarationDirection = response.Result.Direction;
+                    if (this.DeclarationDirection == "E") {
+                        this.PreceduralFilterItems = new ApiQueryFilters();
+                        this.PreceduralFilterItems.addAdditionalFilter("Code", "1000000,8000000,4000000", null, null, "InListExact", false, false, false, "string", false, true);
+                    }
                     this.decCargoSplitConExtendedPMService = new DecCargoSplitConExtendedPMService();
                     this.decCargoSplitConExtendedPMService.GetConsiPackageSequeList(response.Result.Id).subscribe((responseCon: any) => {
                         if (responseCon != null) {
@@ -121,10 +125,11 @@ export class DecCargoSplitConComponent extends BaseComponent {
             this.SetClosedDeclarationCargoSplitScreesn(res.IsClosed);
             })
         );
-        if (!AppTool.IsNullOrEmpty(this.EntityPM)) {
-            this.PreceduralFilterItems = new ApiQueryFilters();
-            this.PreceduralFilterItems.addAdditionalFilter("IsImport", true, null, null, "Equals", false, false, false, "boolean");
-        }
+            if (!AppTool.IsNullOrEmpty(this.EntityPM)) {
+                this.PreceduralFilterItems = new ApiQueryFilters();
+                this.PreceduralFilterItems.addAdditionalFilter("IsImport", true, null, null, "Equals", false, false, false, "boolean",false,false);
+            }
+
         this.firstTime = true;
       
         this.SetClosedDeclarationCargoSplitScreesn(this.declarationCargoSplitPM.IsClosed);

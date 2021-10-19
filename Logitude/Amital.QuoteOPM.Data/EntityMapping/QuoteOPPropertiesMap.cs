@@ -42,6 +42,22 @@ namespace Amital.QuoteOPM.Data.EntityMapping
             this.Property(t => t.SpecialServiceID).HasColumnName("SpecialServiceID").HasMaxLength(15).IsUnicode(false);
 
             this.Property(t => t.MainCarriageCarrierId).HasColumnName("MainCarriageCarrierId").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.FromAddressId).HasColumnName("FromAddressId").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.FromAddressZipCode).HasColumnName("FromAddressZipCode").HasMaxLength(15).IsFixedLength();
+
+            this.Property(t => t.FromAddressCountryId).HasColumnName("FromAddressCountryId").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.FromAddressCity).HasColumnName("FromAddressCity").HasMaxLength(25).IsUnicode(true);
+
+            this.Property(t => t.ToAddressId).HasColumnName("ToAddressId").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.ToAddressCity).HasColumnName("ToAddressCity").HasMaxLength(25).IsUnicode(true);
+
+            this.Property(t => t.ToAddressCountryId).HasColumnName("ToAddressCountryId").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.ToAddressZipCode).HasColumnName("ToAddressZipCode").HasMaxLength(15).IsUnicode(false);
         }
     }
 }

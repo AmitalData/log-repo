@@ -250,6 +250,144 @@ namespace Amital.QuoteOPM.Def.EntityPMs
 			
 		 }
 	   }
+	  private string fromAddressZipCode ;
+	  	  
+       
+	   [CustomValidation(typeof(QuoteOPMValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string FromAddressZipCode  
+	   {
+	    
+	     get
+		{
+		   return fromAddressZipCode;
+		 }
+		 set
+		 {
+		   if(fromAddressZipCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="FromAddressZipCode",OldValue=fromAddressZipCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   fromAddressZipCode=value;
+		   }
+			
+		 }
+	   }
+	  private string fromAddressCountryId ;
+	  	  
+       
+	   [CustomValidation(typeof(QuoteOPMValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string FromAddressCountryId  
+	   {
+	    
+	     get
+		{
+		   return fromAddressCountryId;
+		 }
+		 set
+		 {
+		   if(fromAddressCountryId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="FromAddressCountryId",OldValue=fromAddressCountryId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   fromAddressCountryId=value;
+		   }
+			
+		 }
+	   }
+	  private string fromAddressCity ;
+	  	  
+       
+	   [CustomValidation(typeof(QuoteOPMValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string FromAddressCity  
+	   {
+	    
+	     get
+		{
+		   return fromAddressCity;
+		 }
+		 set
+		 {
+		   if(fromAddressCity != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="FromAddressCity",OldValue=fromAddressCity,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   fromAddressCity=value;
+		   }
+			
+		 }
+	   }
+	  private string toAddressCity ;
+	  	  
+       
+	   [CustomValidation(typeof(QuoteOPMValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ToAddressCity  
+	   {
+	    
+	     get
+		{
+		   return toAddressCity;
+		 }
+		 set
+		 {
+		   if(toAddressCity != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ToAddressCity",OldValue=toAddressCity,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   toAddressCity=value;
+		   }
+			
+		 }
+	   }
+	  private string toAddressCountryId ;
+	  	  
+       
+	   [CustomValidation(typeof(QuoteOPMValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ToAddressCountryId  
+	   {
+	    
+	     get
+		{
+		   return toAddressCountryId;
+		 }
+		 set
+		 {
+		   if(toAddressCountryId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ToAddressCountryId",OldValue=toAddressCountryId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   toAddressCountryId=value;
+		   }
+			
+		 }
+	   }
+	  private string toAddressZipCode ;
+	  	  
+       
+	   [CustomValidation(typeof(QuoteOPMValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ToAddressZipCode  
+	   {
+	    
+	     get
+		{
+		   return toAddressZipCode;
+		 }
+		 set
+		 {
+		   if(toAddressZipCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ToAddressZipCode",OldValue=toAddressZipCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   toAddressZipCode=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

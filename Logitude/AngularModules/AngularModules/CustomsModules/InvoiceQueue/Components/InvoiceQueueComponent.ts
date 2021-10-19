@@ -51,7 +51,7 @@ export class InvoiceQueueComponent
         super();
         this.EntityResourceService.getEntityResourceByTableName("Customs.Consignment").subscribe(response => {
             this.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe(response => {
-               //this.GetData();
+                //this.GetData();
             });
         });
     }
@@ -63,15 +63,15 @@ export class InvoiceQueueComponent
         logitudeWindow.Width = 700;
         logitudeWindow.ShowCloseButton = true;
         windowArgs.remarks = entity.Comments;
-       // logitudeWindow.Title = this.title;
+        // logitudeWindow.Title = this.title;
         logitudeWindow.WindowArgs = windowArgs;
         logitudeWindow.Show('./CustomsModules/CustomsControls/Components/RemarksPopUp');
     }
 
     private GetData() {
         this.ResetVariables();
-      this._declarationPMService.get(this.UnifreightMessage.LogitudeEntityNumber).subscribe(data => {
-        //this._declarationPMService.get("1-211404").subscribe(data => {
+        this._declarationPMService.get(this.UnifreightMessage.LogitudeEntityNumber).subscribe(data => {
+            //this._declarationPMService.get("1-211404").subscribe(data => {
             this.declaration = data.Result;
             SessionLocator.SelectedSession.StopBusyIndicator();
             if (this.declaration == null) {
@@ -94,13 +94,13 @@ export class InvoiceQueueComponent
                 this.LabelSumAmountNIS = this.SetFixedValue(String(this.SumAmountNIS));
                 (data.Result.Invoice as AllInvoices).Statuses.forEach(x => {
                     this.StatusList.Insert(x);
-                }); 
+                });
                 (data.Result.Invoice as AllInvoices).IntegratedInvoices.forEach(x => {
                     x.InvoiceAmount = this.SetFixedValue(x.InvoiceAmount);
                     this.IntegratedInvoiceList.Insert(x);
                 });
                 this.GeneralDetails = (data.Result.Invoice as AllInvoices).GeneralDetails;
-                 
+
                 if ((data.Result.Invoice as AllInvoices).Invoices != null) {
                     (data.Result.Invoice as AllInvoices).Invoices.forEach(x => {
                         if (x.InvoiceDate != null && x.InvoiceDate != "") {
@@ -128,7 +128,7 @@ export class InvoiceQueueComponent
                         if (x.E != null) {
                             this.EMessagesList.Insert(x);
                             this.ErrorMessages = true;
-                           this.CreateQInvoiceButtonDim = true; // מקש חשבוניות ב DIM םם יש שגםיה מסוג ERROR
+                            this.CreateQInvoiceButtonDim = true; // מקש חשבוניות ב DIM םם יש שגםיה מסוג ERROR
                         }
                         if (x.W != null) {
                             this.WMessagesList.Insert(x);
@@ -198,12 +198,12 @@ export class InvoiceQueueComponent
         if (!$event) {
             if (!this.ExcludeLines.includes(lineNumber)) {
                 this.ExcludeLines = this.ExcludeLines + lineNumber + ",";
-             }
-         }
-         else {
+            }
+        }
+        else {
             if (this.ExcludeLines.includes(lineNumber)) {
                 this.ExcludeLines = this.ExcludeLines.replace(lineNumber + ",", "");
-             }
+            }
         }
     }
 
@@ -510,7 +510,7 @@ export class InvoiceQueueComponent
 
     CreateQInvoice() {
         let message = "1" + ";" + this.ExcludeLines;        // send 1 + ExcludeLines seperated by ;
-        SessionLocator.SelectedSession.CurrentWindow.Close("1" + ";" + this.ExcludeLines);
+        SessionLocator.SelectedSession.CurrentWindow.Close(message);
     }
 
 }

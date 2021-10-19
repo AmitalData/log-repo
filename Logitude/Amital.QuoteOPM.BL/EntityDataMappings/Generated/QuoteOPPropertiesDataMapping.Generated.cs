@@ -31,7 +31,15 @@ namespace Amital.QuoteOPM.BL.EntityDataMappings
 	         ToPortId, 
 	         IncotermId, 
 	         SpecialServiceID, 
-	         MainCarriageCarrierId,
+	         MainCarriageCarrierId, 
+	         FromAddressId, 
+	         FromAddressZipCode, 
+	         FromAddressCountryId, 
+	         FromAddressCity, 
+	         ToAddressId, 
+	         ToAddressCity, 
+	         ToAddressCountryId, 
+	         ToAddressZipCode,
 	      }
 
 
@@ -47,7 +55,13 @@ namespace Amital.QuoteOPM.BL.EntityDataMappings
 	         ToPortId, 
 	         IncotermId, 
 	         SpecialServiceID, 
-	         MainCarriageCarrierId,
+	         MainCarriageCarrierId, 
+	         FromAddressZipCode, 
+	         FromAddressCountryId, 
+	         FromAddressCity, 
+	         ToAddressCity, 
+	         ToAddressCountryId, 
+	         ToAddressZipCode,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -99,6 +113,36 @@ namespace Amital.QuoteOPM.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.MainCarriageCarrierId))
             {
 				entityPOCO.MainCarriageCarrierId = entityPM.MainCarriageCarrierId;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FromAddressZipCode))
+            {
+				entityPOCO.FromAddressZipCode = entityPM.FromAddressZipCode;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FromAddressCountryId))
+            {
+				entityPOCO.FromAddressCountryId = entityPM.FromAddressCountryId;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FromAddressCity))
+            {
+				entityPOCO.FromAddressCity = entityPM.FromAddressCity;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ToAddressCity))
+            {
+				entityPOCO.ToAddressCity = entityPM.ToAddressCity;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ToAddressCountryId))
+            {
+				entityPOCO.ToAddressCountryId = entityPM.ToAddressCountryId;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ToAddressZipCode))
+            {
+				entityPOCO.ToAddressZipCode = entityPM.ToAddressZipCode;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -157,6 +201,36 @@ namespace Amital.QuoteOPM.BL.EntityDataMappings
 					entityPM.MainCarriageCarrierId = entityPOCO.MainCarriageCarrierId;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.FromAddressZipCode))
+            {
+					entityPM.FromAddressZipCode = entityPOCO.FromAddressZipCode;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.FromAddressCountryId))
+            {
+					entityPM.FromAddressCountryId = entityPOCO.FromAddressCountryId;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.FromAddressCity))
+            {
+					entityPM.FromAddressCity = entityPOCO.FromAddressCity;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ToAddressCity))
+            {
+					entityPM.ToAddressCity = entityPOCO.ToAddressCity;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ToAddressCountryId))
+            {
+					entityPM.ToAddressCountryId = entityPOCO.ToAddressCountryId;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ToAddressZipCode))
+            {
+					entityPM.ToAddressZipCode = entityPOCO.ToAddressZipCode;
+            }
+
 		}
 
 		public void PMToOldPM(QuoteOPPropertiesPM entityPM, QuoteOPPropertiesPM oldEntityPM)
@@ -208,6 +282,36 @@ namespace Amital.QuoteOPM.BL.EntityDataMappings
                 oldEntityPM.MainCarriageCarrierId = entityPM.MainCarriageCarrierId;
             }
 			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FromAddressZipCode))
+            {
+                oldEntityPM.FromAddressZipCode = entityPM.FromAddressZipCode;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FromAddressCountryId))
+            {
+                oldEntityPM.FromAddressCountryId = entityPM.FromAddressCountryId;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FromAddressCity))
+            {
+                oldEntityPM.FromAddressCity = entityPM.FromAddressCity;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ToAddressCity))
+            {
+                oldEntityPM.ToAddressCity = entityPM.ToAddressCity;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ToAddressCountryId))
+            {
+                oldEntityPM.ToAddressCountryId = entityPM.ToAddressCountryId;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ToAddressZipCode))
+            {
+                oldEntityPM.ToAddressZipCode = entityPM.ToAddressZipCode;
+            }
+			
 		}
 
 	    public void EncodeBase64NVARCHARFields(QuoteOPPropertiesPM entityPM)
@@ -220,6 +324,14 @@ namespace Amital.QuoteOPM.BL.EntityDataMappings
             if (!String.IsNullOrWhiteSpace(entityPM.SearchFields)) //T4 find type == nText 
             {
                 entityPM.SearchFields = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.SearchFields));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.FromAddressCity)) //T4 find type == nText 
+            {
+                entityPM.FromAddressCity = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.FromAddressCity));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.ToAddressCity)) //T4 find type == nText 
+            {
+                entityPM.ToAddressCity = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.ToAddressCity));
             }
             entityPM.EncodeBase64NVARCHARFieldsBy=null;
 		}

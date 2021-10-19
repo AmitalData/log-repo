@@ -121,7 +121,7 @@ export class CustomsDocumentTicketViewModel {
     private EntityResourceService: EntityResourceService;
     //*****************************************//
     constructor(public customsDocumentsTicketPM: CustomsDocumentsTicketPM, customsDocumentMetaDataValuePMs: CustomsDocumentMetaDataValuePM[], 
-        private isNew: boolean, public isDisplayOnly: boolean, public EntityPM: any, private objectTableName: string, private iCustomsDocumentsController: ICustomsDocumentsController ) {
+        private isNew: boolean, public isDisplayOnly: boolean, public EntityPM: any, private objectTableName: string, private iCustomsDocumentsController: ICustomsDocumentsController) {
         this.EntityResourceService = new EntityResourceService();
         if (customsDocumentMetaDataValuePMs != null) {
             this.customsDocumentMetaDataValuePMs = customsDocumentMetaDataValuePMs.filter(d => d.CustomsDocumentId == customsDocumentsTicketPM.DocumentsFilingId);
@@ -248,7 +248,6 @@ export class CustomsDocumentTicketViewModel {
 
     private SetCustomDocumentMetaDataFromAll() {
 
-
         this.customDocumentTypeMetaDataLists = this.customDocumentTypeMetaDataLists.filter(d => d.DocumentTypeCode === this.customsDocumentsTicketPM.DocumentTypeCode);
         if (this.customDocumentTypeMetaDataLists) {
             var requiredMetaDatas: CustomDocumentTypeMetaDataList[] = this.customDocumentTypeMetaDataLists.filter(d => d.Mandatory && d.DocumentTypeCode === this.customsDocumentsTicketPM.DocumentTypeCode);
@@ -292,9 +291,9 @@ export class CustomsDocumentTicketViewModel {
                     var leadingValue: CustomsDocumentMetaDataValuePM = this.customsDocumentMetaDataValuePMs.filter(d => d.MetaDataTypeCode == leading.MetaDataTypeCode)[0];
                     this.LeadingMetaDataValue = leadingValue != null ? (leadingValue.MetaDataValue == "True" ? "כן" : (leadingValue.MetaDataValue == "False" ? "לא" : leadingValue.MetaDataValue)) : null;
                     this.LeadingMetaDataName = leading.MetaDataTypeName;
+                    }
                 }
             }
-        }
 
 
 
@@ -671,6 +670,42 @@ export class CustomsDocumentTicketViewModel {
         });
     }
 
+    GeneratecustomsDocumentMetaDataValues() {
+        if (this.customsDocumentsTicketPM.DocumentTypeCode == "IL_140") {
+            var GenerateMetaData18 = true;
+            for (var document of this.customsDocumentMetaDataValuePMs) {
+                if (document.MetaDataTypeCode == "18") {
+                    GenerateMetaData18 = false;
+                }
+            }
+            if (GenerateMetaData18 && !AppTool.IsNullOrEmpty(this.EntityPM.ImporterCode)) {
+                var item = new CustomsDocumentMetaDataValuePM(this.customsDocumentsTicketPM);
+                item.MetaDataTypeCode = "18";
+                item.Tenant = this.EntityPM.Tenant;
+                item.MetaDataValue = this.EntityPM.ImporterCode;
+                this.customsDocumentMetaDataValuePMs.push(item);
+            }
+        }
+        var SupplierInvoicesTypeCodes = ["380", "325", "326"];
+        if (SupplierInvoicesTypeCodes.includes(this.customsDocumentsTicketPM.DocumentTypeCode)) {
+            var GenerateMetaData39 = true;
+            for (var document of this.customsDocumentMetaDataValuePMs) {
+                if (document.MetaDataTypeCode == "39") {
+                    GenerateMetaData39 = false;
+                }
+            }
+            if (this.EntityPM.SupplierInvoices[0] != null) {
+                if (GenerateMetaData39 && !AppTool.IsNullOrEmpty(this.EntityPM.SupplierInvoices[0].InvoiceNumber)) {
+                    var item = new CustomsDocumentMetaDataValuePM(this.customsDocumentsTicketPM);
+                    item.MetaDataTypeCode = "39";
+                    item.Tenant = this.EntityPM.Tenant;
+                    item.MetaDataValue = this.EntityPM.SupplierInvoices[0].InvoiceNumber;
+                    this.customsDocumentMetaDataValuePMs.push(item);
+                } 
+            }
+        }
+    }
+
     ProcessConnectDocument(relatedDocumentViewModel: RelatedDocumentViewModel) {
         SessionLocator.SelectedSession.StartBusyIndicator(TextCodeTranslator.Translate("Customs.General.O.Saving"));
         if (relatedDocumentViewModel != null) {
@@ -711,7 +746,9 @@ export class CustomsDocumentTicketViewModel {
                 this.customsDocumentsTicketPM.DocumentStatusCode = relatedDocumentViewModel.CustomDocument.DocumentStatusCode;
                 this.customsDocumentsTicketPM.CustomsDocId = relatedDocumentViewModel.CustomDocument.CustomsDocId;
                 this.customsDocumentsTicketPM.ExternalAttachmentId = relatedDocumentViewModel.CustomDocument.ExternalAttachmentId;
-
+                if (this.EntityPM.Direction == "E") {
+                    this.GeneratecustomsDocumentMetaDataValues();
+                }
 
                 if (this.isNew) {
                    

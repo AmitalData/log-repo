@@ -57,6 +57,8 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string DcaPrefixName4 { get; set; }
         [Column("InterfaceType")]
 	    public string InterfaceType { get; set; }
+        [Column("UseRabbitMQ")]
+	    public bool UseRabbitMQ { get; set; }
     }
 }
 	 
