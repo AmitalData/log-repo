@@ -150,12 +150,14 @@ namespace AmitalCustomsWindowsService
                 AddWorkerFromAppSetting<CommunicationWorkerRole.FTPCommunicationWorkerRoleWinService>();
                 AddWorkerFromAppSetting<SendWEBAPIMessage2MamanWR>();
                 AddWorkerFromAppSetting<FTPToAnalyzeQueueWR>();
-                
+                AddWorkerFromAppSetting<RabbitMQReceiveWR>();
+
                 bool courierFeaturePackageExist = true;
                 if (courierFeaturePackageExist)
                 {
                     AddWorkerFromAppSetting<SendWEBAPIMessage2MamanWR>();
                     AddWorkerFromAppSetting<FTPToAnalyzeQueueWR>();
+                    AddWorkerFromAppSetting<RabbitMQReceiveWR>();
                     AddWorkerFromAppSetting<CustomsAnalyzeQueueWR>();
                     
 
@@ -241,6 +243,7 @@ namespace AmitalCustomsWindowsService
             listOfWorkerEntryPoint.Add(new CommunicationWorkerRole.FTPCommunicationWorkerRoleWinService());
             listOfWorkerEntryPoint.Add(new SendWEBAPIMessage2MamanWR());
             listOfWorkerEntryPoint.Add(new FTPToAnalyzeQueueWR());
+            listOfWorkerEntryPoint.Add(new RabbitMQReceiveWR());
             listOfWorkerEntryPoint.Add(new CustomsAnalyzeQueueWR());
             bool testCustomsSchedularWR = false;
             if (testCustomsSchedularWR)
