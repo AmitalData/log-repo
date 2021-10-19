@@ -570,7 +570,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 {
                     string cmd = "Update DECLARATIONS set " +
                         "ISCLOSE= 1  , ISCANCELLED =1 ";
-                    cmd = cmd + " where ID IN " + "(" + declarations + ")";
+                    cmd = cmd + " where ID IN " + "(" + whereIn + ")";
 
                     OracleCommand sqlCommand = new OracleCommand(cmd, con);
 
