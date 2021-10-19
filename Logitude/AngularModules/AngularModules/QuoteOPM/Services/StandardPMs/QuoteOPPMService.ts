@@ -33,6 +33,7 @@ import {QuoteOPVATsTotalPM} from '../../EntityPMs/QuoteOPVATsTotalPM';
 import {QuoteOPFollowUpPM} from '../../EntityPMs/QuoteOPFollowUpPM';
 import {QuoteOPDocumentVersionPM} from '../../EntityPMs/QuoteOPDocumentVersionPM';
 import {QuoteOPTotalVATPM} from '../../EntityPMs/QuoteOPTotalVATPM';
+import {QuoteOPPropertiesPM} from '../../EntityPMs/QuoteOPPropertiesPM';
 import {QuoteOPValidator} from '../../Validators/QuoteOPValidator';
 
 @Injectable()
@@ -216,6 +217,7 @@ export class QuoteOPPMService {
                this.MapFollowUps(entityPM, jsonPM, mapParent); // Call composition tables map methods
                this.MapQuoteDocumentVersions(entityPM, jsonPM, mapParent); // Call composition tables map methods
                this.MapTotalVATs(entityPM, jsonPM, mapParent); // Call composition tables map methods
+               this.MapQuoteProperties(entityPM, jsonPM, mapParent); // Call composition tables map methods
 			 
             
 
@@ -308,6 +310,15 @@ export class QuoteOPPMService {
 						
 							 
             entityPM.OldEntityPM.TotalVATs.push(newQuoteOPTotalVATPM);
+            }
+			   			   			   
+            entityPM.OldEntityPM.QuoteProperties = [];
+            for (var item in entityPM.QuoteProperties) {
+            var myQuoteOPPropertiesPM = entityPM.QuoteProperties[item];
+            var newQuoteOPPropertiesPM: QuoteOPPropertiesPM = this.clone(myQuoteOPPropertiesPM);
+						
+							 
+            entityPM.OldEntityPM.QuoteProperties.push(newQuoteOPPropertiesPM);
             }
 			   
 		}
@@ -999,6 +1010,32 @@ export class QuoteOPPMService {
                     }
                 }
             }
+        }
+    }
+    MapQuoteProperties(entityPM: QuoteOPPM, jsonPM: any, mapParent: boolean = true) {
+
+        entityPM.QuoteProperties = new Array<QuoteOPPropertiesPM>();
+        for (var item in jsonPM.QuoteProperties) {
+
+            var jItem = jsonPM.QuoteProperties[item];
+            if (mapParent && (jItem.ChangeSetOp == "Delete" || jItem.ChangeSetOp == 3)) {
+                continue;
+            }
+            var newQuoteOPPropertiesPM: QuoteOPPropertiesPM;
+            newQuoteOPPropertiesPM = new QuoteOPPropertiesPM();
+		    newQuoteOPPropertiesPM.DisableMarkAsDirty = true;                
+            var pmKeysArray = Object.keys(jItem);
+            for (var pmKey in pmKeysArray) {
+			
+                if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
+                    continue;
+                }
+                var pmProperty = pmKeysArray[pmKey];
+                newQuoteOPPropertiesPM[pmProperty] = jItem[pmProperty];
+            }
+			newQuoteOPPropertiesPM.DisableMarkAsDirty = false;
+            newQuoteOPPropertiesPM.IsDirty = false;
+            entityPM.QuoteProperties.push(newQuoteOPPropertiesPM);
         }
     }
 

@@ -130,6 +130,11 @@
       Nullable="true" />
   </Column>
   <Relation
+    ForeignKeyColumn="QuoteID"
+    ReferencedTable="QuoteOPs"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
     ForeignKeyColumn="FromAddressId"
     ReferencedTable="Addresses"
     ReferencedColumn="Id"

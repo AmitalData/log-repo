@@ -16,6 +16,7 @@ import {QuoteOPVATsTotalPM} from './QuoteOPVATsTotalPM';
 import {QuoteOPFollowUpPM} from './QuoteOPFollowUpPM';
 import {QuoteOPDocumentVersionPM} from './QuoteOPDocumentVersionPM';
 import {QuoteOPTotalVATPM} from './QuoteOPTotalVATPM';
+import {QuoteOPPropertiesPM} from './QuoteOPPropertiesPM';
 import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
@@ -1639,6 +1640,20 @@ export class QuoteOPPM {
     public set SpecialServiceName(newValue: string) { if (this.specialServiceName != newValue) { this.specialServiceName = newValue; this.MarkAsDirty("SpecialServiceName"); } }
        
 	 
+     
+	private quoteProperties: QuoteOPPropertiesPM[];
+    get  QuoteProperties() {
+        if (this.quoteProperties == null) {
+            this.quoteProperties = [];
+        }
+
+        return this.quoteProperties;
+    }
+    set  QuoteProperties(newValue: QuoteOPPropertiesPM[]) {
+        if (this.quoteProperties != newValue) {
+            this.quoteProperties = newValue;
+        }
+    }
 
     public OldEntityPM: QuoteOPPM;
 		

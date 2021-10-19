@@ -25,8 +25,11 @@ namespace Amital.QuoteOPM.Data.EntityPOCOs
 	    public int Tenant { get; set; }
         [Column("SearchFields")]
 	    public string SearchFields { get; set; }
+        [ForeignKey("QuoteOP")]
         [Column("QuoteID")]
 	    public string QuoteID { get; set; }
+	      
+        public virtual QuoteOP QuoteOP { get; set; }
         [Column("Order")]
 	    public int Order { get; set; }
         [Column("FromPortId")]
