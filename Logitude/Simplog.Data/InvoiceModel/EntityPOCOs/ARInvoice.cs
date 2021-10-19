@@ -226,5 +226,8 @@ namespace Simplog.Data.InvoiceModel.EntityPOCOs
         public string HouseNumbers { get; set; }
         public string GlobalTaxCalculation { get; set; }
 
+        [ForeignKey("GlobalTaxCalculation")]
+        public virtual QBOGlobalTaxCalculation QBOGlobalTaxCalculation { get; set; }
+
     }
 }

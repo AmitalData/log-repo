@@ -239,28 +239,9 @@
                                                 </td>
                                             </tr>
 
-                                            <!-- GlobalTaxCalculation -->
-                                            <tr class="FormFieldRow"  *ngIf="IsGlobalTaxCalculationVisible">
-                                                <td>
-                                                    <LogLabel [ObjectFieldName]="'GlobalTaxCalculation'" [ObjectTableName]="ObjectTableName"
-                                                              [DataContext]="DataContext"></LogLabel>
-                                                </td>
-                                                <td>
-                                                    <table>
-                                                        <tr>
-                                                            <td>
-                                                                <ComboBox [ItemsSource]="GlobalTaxCalculationItemsSource" [SelectedItem]="SelectedGlobalTaxCalculation" (SelectedItemChanged)="SelectedGlobalTaxCalculation=$event" [IsDisabled]="!IsEditingEnabled"></ComboBox>
-                                                            </td>
-                                                            <td style="width: 40px;">
-                                                                <div></div>
-                                                            </td>
-                                                        </tr>
-                                                    </table>
-                                                </td>
-                                            </tr>
 
                                             <tr>
-                                                <td colspan="2">
+                                                <td colspan="3">
                                                     <div></div>
                                                 </td>
                                             </tr>

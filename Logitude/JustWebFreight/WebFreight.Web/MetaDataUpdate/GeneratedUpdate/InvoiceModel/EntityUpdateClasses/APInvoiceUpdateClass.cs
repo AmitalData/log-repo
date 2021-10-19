@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 {
    public class APInvoiceUpdateClass
    {  		
-		public const string HashString = "3e22eb358bb2f3abc1a89278cadfa4f9";
+		public const string HashString = "77aea4159b5e43696b049d4ad86bc80b";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -5597,9 +5597,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					 
 					 						FieldName =  "GlobalTaxCalculation",
 					  						ObjectTableName =  "APInvoice",
-					  						FieldsDataType =  "Text",
+					  						FieldsDataType =  "LookUp",
+					  						LookUpTableName =  "QBOGlobalTaxCalculation",
 					  						MinLength =  0,
-					  						MaxLength =  40,
+					  						MaxLength =  3,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -5615,6 +5616,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "GlobalTaxCalculation",
 					  						ListPropertyPath =  "GlobalTaxCalculation",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -5994,7 +5996,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 		       
 	      
 
-	         Screen APInvoiceGeneralTabScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "APInvoice.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = APInvoiceObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 6, IsReadOnly = false }, screensRepository, tenantScreens);
+	         Screen APInvoiceGeneralTabScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "APInvoice.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = APInvoiceObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 7, IsReadOnly = false }, screensRepository, tenantScreens);
       
              ScreenField APInvoiceAPInvoiceGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = APInvoiceGeneralTabScreenScreen0.Id,ScreenCode = APInvoiceGeneralTabScreenScreen0.Code, ObjectFieldCode = "APInvoice.UpdatedByUserId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          
@@ -6007,6 +6009,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
              ScreenField APInvoiceAPInvoiceGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ScreenId = APInvoiceGeneralTabScreenScreen0.Id,ScreenCode = APInvoiceGeneralTabScreenScreen0.Code, ObjectFieldCode = "APInvoice.HouseNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          
              ScreenField APInvoiceAPInvoiceGeneralTabScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 5, ScreenId = APInvoiceGeneralTabScreenScreen0.Id,ScreenCode = APInvoiceGeneralTabScreenScreen0.Code, ObjectFieldCode = "APInvoice.AccountingDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField APInvoiceAPInvoiceGeneralTabScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 6, ScreenId = APInvoiceGeneralTabScreenScreen0.Id,ScreenCode = APInvoiceGeneralTabScreenScreen0.Code, ObjectFieldCode = "APInvoice.GlobalTaxCalculation", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	            
 	      
 

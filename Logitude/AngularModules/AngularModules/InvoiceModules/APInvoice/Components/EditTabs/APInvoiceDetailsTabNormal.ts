@@ -50,8 +50,6 @@ export class APInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
     public IsEditExchangeRateVisible: boolean = false;
     public isRTL: boolean = false;
     public IsTotalVatVisible: boolean = false;
-    public GlobalTaxCalculationItemsSource: string[] = [];
-    public IsGlobalTaxCalculationVisible: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(private entityArgs: EntityArgs) {
         super();
@@ -67,7 +65,6 @@ export class APInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
         this.InitializeServices();
         this.SetUIProperties();
         this.BuildScreenData();
-        this.BuildGlobalTaxCalculationItemsSource();
         this.Listen();
 
         if (FeatureLocator.HasFeaturePermession("General", "General.Features.SystemCurrencies")) {
@@ -448,38 +445,6 @@ export class APInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
         }
         else {
             this.BuildInvoiceLines();
-        }
-    }
-
-    BuildGlobalTaxCalculationItemsSource() {
-        this.IsQBOAccountingSystem();
-        this.GlobalTaxCalculationItemsSource = [];
-        this.GlobalTaxCalculationItemsSource.push("None");
-        this.GlobalTaxCalculationItemsSource.push("Tax Excluded");
-        this.GlobalTaxCalculationItemsSource.push("Tax Inclusive");
-        this.GlobalTaxCalculationItemsSource.push("Out Of Scope");
-    }
-
-    IsQBOAccountingSystem() {
-        var isQBOAccountingSystem = false;
-        var accountingSettingListService: AccountingSettingListService = new AccountingSettingListService();
-        accountingSettingListService.getSingle(SessionLocator.Tenant).subscribe((response: any) => {
-            if (response == null) {
-                return;
-            }
-            isQBOAccountingSystem = response.Result?.AccountingSystemCode.includes("QB");
-            if (isQBOAccountingSystem) {
-                this.IsGlobalTaxCalculationVisible = true;
-            }
-        });
-    }
-
-    get SelectedGlobalTaxCalculation() {
-        return AppTool.IsNullOrEmpty(this.EntityPM.GlobalTaxCalculation) ? "None" : this.EntityPM.GlobalTaxCalculation;
-    }
-    set SelectedGlobalTaxCalculation(value: string) {
-        if (this.EntityPM.GlobalTaxCalculation != value) {
-            this.EntityPM.GlobalTaxCalculation = value;
         }
     }
 

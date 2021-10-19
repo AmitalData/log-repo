@@ -787,7 +787,7 @@
   <Column
     Name="GlobalTaxCalculation"
     Type="varchar"
-    Size="40">
+    Size="3">
     <Constraints
       Nullable="true" />
   </Column>
@@ -921,7 +921,13 @@
 	  ReferencedTable="Cards"
 	  ReferencedColumn="Id"
 	  ReferencedTableSchema="dbo" />
-	<Index
+
+  <Relation
+    ForeignKeyColumn="GlobalTaxCalculation"
+    ReferencedTable="QBOGlobalTaxCalculations"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="dbo" />
+  <Index
 	  Columns="Tenant,InvoiceDate" />
 	<Index
 	  Columns="MainEntityId" />

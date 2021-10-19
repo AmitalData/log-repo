@@ -9694,9 +9694,10 @@
     IsChecked="true"
     IsDeleted="false"
     ObjectTableName="&quot;APInvoice&quot;"
-    FieldsDataType="&quot;Text&quot;"
+    FieldsDataType="&quot;LookUp&quot;"
+    LookUpTableName="&quot;QBOGlobalTaxCalculation&quot;"
     MinLength="0"
-    MaxLength="40"
+    MaxLength="3"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -9713,6 +9714,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;GlobalTaxCalculation&quot;"
     ListPropertyPath="&quot;GlobalTaxCalculation&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -9731,8 +9733,10 @@
     FullFieldLable="&quot;GlobalTaxCalculation&quot;"
     DefaultText="&quot;Global Tax Calculation&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
+    ForeignEntity="QBOGlobalTaxCalculation"
     DontBuildRelationOnDB="false"
+    NavigationPropertyName="QBOGlobalTaxCalculation"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -10544,7 +10548,7 @@
     IsHeaderScreen="false"
     Code="&quot;APInvoice.GeneralTabScreen&quot;"
     NumberOfColumns="1"
-    NumberOfRows="6">
+    NumberOfRows="7">
     <ScreenFields>
       <ScreenField
         Column="0"
@@ -10575,6 +10579,11 @@
         Column="0"
         Row="5"
         ObjectFieldName="&quot;AccountingDate&quot;"
+        ScreenName="General Tab Screen" />
+      <ScreenField
+        Column="0"
+        Row="6"
+        ObjectFieldName="&quot;GlobalTaxCalculation&quot;"
         ScreenName="General Tab Screen" />
     </ScreenFields>
   </Screen>

@@ -1,4 +1,4 @@
-﻿import {DateTool} from '../../Infrastructure/Tools';
+import {DateTool} from '../../Infrastructure/Tools';
 import {FeatureLocator} from '../../Infrastructure/Utilities/FeatureLocator';
 import {SessionLocator} from '../../Infrastructure/Utilities/SessionLocator';
 import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
@@ -39,6 +39,7 @@ export class APInvoicePMInitService {
         entityPM.UIProperties.SetEnabled("HouseNumber", "APInvoice",  isAllowedEdit);
         entityPM.UIProperties.SetEnabled("MasterNumber", "APInvoice",  isAllowedEdit);
         entityPM.UIProperties.SetEnabled("BranchId", "APInvoice", isAllowedEdit);
+        entityPM.UIProperties.SetEnabled("GlobalTaxCalculation", "APInvoice", isAllowedEdit);
 
 
 
@@ -50,6 +51,10 @@ export class APInvoicePMInitService {
             entityPM.UIProperties.SetVisibility("HouseNumber", "APInvoice", false);
             entityPM.UIProperties.SetVisibility("MasterNumber", "APInvoice", false);
         }
+
+        if (!(SessionLocator.AccountingSettingPM.AccountingSystemCode == "QBO" || SessionLocator.AccountingSettingPM.AccountingSystemCode == "QBOG")) {
+            entityPM.UIProperties.SetVisibility("GlobalTaxCalculation", "APInvoice", false);
+        } 
     }
 
 }

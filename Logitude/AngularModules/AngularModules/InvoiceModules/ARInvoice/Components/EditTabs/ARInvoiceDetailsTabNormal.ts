@@ -59,8 +59,6 @@ export class ARInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
     private CurrentSession = SessionLocator.SelectedSession;
     public InvoiceNumberFilterList: CodeNameClass[] = [];
     public NumbersPipe: NumbersPipe;
-    public GlobalTaxCalculationItemsSource: string[] = [];
-    public IsGlobalTaxCalculationVisible: boolean = false;
     constructor(private entityArgs: EntityArgs) {
         super();
         this.NumbersPipe = new NumbersPipe();
@@ -79,7 +77,6 @@ export class ARInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
         this.Listen();
 
         this.BuildEntityWarnings();
-        this.BuildGlobalTaxCalculationItemsSource();
         if (FeatureLocator.HasFeaturePermession("General", "General.Features.SystemCurrencies")) {
             this.IsEditExchangeRateVisible = true;
         }
@@ -119,28 +116,6 @@ export class ARInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
             this.EntityWarningsList.push(this.EntityPM.TransmissionError);
             this.EntityWarning = this.EntityPM.TransmissionError;
         }
-    }
-    BuildGlobalTaxCalculationItemsSource() {
-        this.IsQBOAccountingSystem()
-        this.GlobalTaxCalculationItemsSource = [];
-        this.GlobalTaxCalculationItemsSource.push("None");
-        this.GlobalTaxCalculationItemsSource.push("Tax Excluded");
-        this.GlobalTaxCalculationItemsSource.push("Tax Inclusive");
-        this.GlobalTaxCalculationItemsSource.push("Out Of Scope");
-    }
-
-    IsQBOAccountingSystem() {
-        var isQBOAccountingSystem = false;
-        var accountingSettingListService: AccountingSettingListService = new AccountingSettingListService();
-        accountingSettingListService.getSingle(SessionLocator.Tenant).subscribe((response: any) => {
-            if (response == null) {
-                return;
-            }
-            isQBOAccountingSystem = response.Result?.AccountingSystemCode.includes("QB");
-            if (isQBOAccountingSystem) {
-                this.IsGlobalTaxCalculationVisible = true;
-            }
-        });
     }
 
     ShowFixMe() {
@@ -323,7 +298,6 @@ export class ARInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
             this.EntityPM.UIProperties.SetEnabled("MasterNumber", this.ObjectTableName, isEditingEnabled);
             this.EntityPM.UIProperties.SetEnabled("CustomerRef", this.ObjectTableName, isEditingEnabled);
             this.EntityPM.UIProperties.SetEnabled("BranchId", this.ObjectTableName, isEditingEnabled);
-            this.EntityPM.UIProperties.SetEnabled("GlobalTaxCalculation", this.ObjectTableName, isEditingEnabled);
             this.EntityPM.UIProperties.SetEnabled("SATPaymentMethodCode", this.ObjectTableName, isEditingEnabled);
         }
        
@@ -1805,14 +1779,6 @@ export class ARInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
         }
     }
 
-    get SelectedGlobalTaxCalculation() {
-        return AppTool.IsNullOrEmpty(this.EntityPM.GlobalTaxCalculation) ? "None" : this.EntityPM.GlobalTaxCalculation;
-    }
-    set SelectedGlobalTaxCalculation(value: string) {
-        if (this.EntityPM.GlobalTaxCalculation != value) {
-            this.EntityPM.GlobalTaxCalculation = value;
-        }
-    }
 }
 export class ARInvoiceLineItem extends BaseComponent {
     public EntityPM: ARInvoiceLinePM = null;

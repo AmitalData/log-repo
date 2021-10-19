@@ -31,7 +31,6 @@ import { ChargesTypeList } from '../../../../Common/EntityLists/ChargesTypeList'
 import { VatTypeListService } from '../../../../Common/Services/StandardLists/VatTypeListService';
 import { VatTypeList } from '../../../../Common/EntityLists/VatTypeList';
 import { APInvoiceMultipleShortPM } from '../../../../Invoice/EntityPMs/APInvoiceMultipleShortPM';
-import { AccountingSettingListService } from '../../../../Common/Services/StandardLists/AccountingSettingListService';
 
 @Component({    
     templateUrl: './APInvoiceMultipleDetailsTabComponent.html',
@@ -50,8 +49,6 @@ export class APInvoiceMultipleDetailsTabComponent extends BaseComponent implemen
     public apiQueryFilters: ApiQueryFilters = null;
     private CurrentSession = SessionLocator.SelectedSession;
     private invoiceDomainService: InvoiceDomainService;
-    public GlobalTaxCalculationItemsSource: string[] = [];
-    public IsGlobalTaxCalculationVisible: boolean = false;
     constructor(private entityArgs: EntityArgs) {
         super();
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");       
@@ -190,7 +187,6 @@ export class APInvoiceMultipleDetailsTabComponent extends BaseComponent implemen
         });
 
         this.BuildTotalsCollection();
-        this.BuildGlobalTaxCalculationItemsSource();
     }
 
     // Vendor
@@ -526,38 +522,6 @@ export class APInvoiceMultipleDetailsTabComponent extends BaseComponent implemen
         mySummaryItem_All.Label = TextCodeTranslator.Translate("APInvoice.F.AmountInInvoiceCurrency") + " " + selectedCurrencyCode;
         mySummaryItem_All.Value = this.IsTotalInLocalCurrency ? pipe.transform(this.EntityPM.AmountInLocalCurrency_Summary, "N2") : pipe.transform(this.EntityPM.AmountInInvoiceCurrency_Summary, "N2");
         this.SummaryItems.push(mySummaryItem_All);
-    }
-
-    BuildGlobalTaxCalculationItemsSource() {
-        this.IsQBOAccountingSystem()
-        this.GlobalTaxCalculationItemsSource = [];
-        this.GlobalTaxCalculationItemsSource.push("None");
-        this.GlobalTaxCalculationItemsSource.push("Tax Excluded");
-        this.GlobalTaxCalculationItemsSource.push("Tax Inclusive");
-        this.GlobalTaxCalculationItemsSource.push("Out Of Scope");
-    }
-
-    IsQBOAccountingSystem() {
-        var isQBOAccountingSystem = false;
-        var accountingSettingListService: AccountingSettingListService = new AccountingSettingListService();
-        accountingSettingListService.getSingle(SessionLocator.Tenant).subscribe((response: any) => {
-            if (response == null) {
-                return;
-            }
-            isQBOAccountingSystem = response.Result?.AccountingSystemCode.includes("QB");
-            if (isQBOAccountingSystem) {
-                this.IsGlobalTaxCalculationVisible = true;
-            }
-        });
-    }
-
-    get SelectedGlobalTaxCalculation() {
-        return AppTool.IsNullOrEmpty(this.EntityPM.GlobalTaxCalculation) ? "None" : this.EntityPM.GlobalTaxCalculation;
-    }
-    set SelectedGlobalTaxCalculation(value: string) {
-        if (this.EntityPM.GlobalTaxCalculation != value) {
-            this.EntityPM.GlobalTaxCalculation = value;
-        }
     }
 
     ConvertToDouble(myString: string) {

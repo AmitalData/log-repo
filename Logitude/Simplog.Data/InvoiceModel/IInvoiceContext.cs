@@ -45,6 +45,7 @@ namespace Simplog.Data.InvoiceModel
         IDbSet<SATPaymentMethod> SATPaymentMethods { get; }
         IDbSet<APPaymentTransferStatus> APPaymentTransferStatuses { get; }
         IDbSet<SATTransferStatus> SATTransferStatus { get; }
+        IDbSet<QBOGlobalTaxCalculation> QBOGlobalTaxCalculations { get; }
         IDbSet<SATInvoiceStatus> SATInvoiceStatus { get; }
         IDbSet<SATInterface> SATInterfaces { get; }
         IDbSet<SATInterfaceSetting> SATInterfaceSettings { get; }
