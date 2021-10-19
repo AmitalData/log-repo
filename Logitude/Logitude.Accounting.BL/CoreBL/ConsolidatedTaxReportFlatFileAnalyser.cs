@@ -44,7 +44,7 @@ namespace Logitude.Accounting.BL.CoreBL
         {
             try
             {
-                useLocal = !(GetLoggedContact(ptenant.Value).DontShowLocal);
+                if (ptenant.HasValue) useLocal = !(GetLoggedContact(ptenant.Value).DontShowLocal);
                 FileContent = ConvertFromDosHebrewToWinHebrew(FileContent);
                 int? tenantFromPage4Tester = null;
                 string taxReportIdFromPage4Tester = "";
@@ -58,6 +58,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 {
                     throw new ApplicationException("unable to find tenantFromPage4Tester ");
                 }
+                useLocal = !(GetLoggedContact(ptenant.Value).DontShowLocal);
                 int tenant = ptenant.Value;
 
                 if (!String.IsNullOrWhiteSpace(taxReportIdFromPage4Tester))
@@ -262,6 +263,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     {
                         string tenantS = rawLine.Split(new string[] { "//Tenant=" }, StringSplitOptions.RemoveEmptyEntries)[0];
                         tenant = int.Parse(tenantS);
+                        if (tenant.HasValue) useLocal = !(GetLoggedContact(tenant.Value).DontShowLocal);
                     }
                     else if (rawLine.StartsWith("//ReportId="))//for tester 
                     {
@@ -410,7 +412,7 @@ namespace Logitude.Accounting.BL.CoreBL
             long count = 1;
             foreach (TaxReportLineDTO taxLine in _TaxReportLinesDTO)
             {
-                if (taxLine.VatNumber.TrimStart('0') == "")
+                if (taxLine.LineTypeCode != "K" && taxLine.VatNumber.TrimStart('0') == "")
                 {
                     text = TranslateTextsClassTranslate("ConsolidatedTaxReport.O.TaxLineNo", 0, useLocal);
                     text_44 = TranslateTextsClassTranslate("ConsolidatedTaxReport.O.IsMissing", 0, useLocal);
