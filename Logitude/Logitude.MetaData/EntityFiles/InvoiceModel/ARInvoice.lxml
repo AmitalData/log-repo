@@ -15483,9 +15483,10 @@
     IsChecked="true"
     IsDeleted="false"
     ObjectTableName="&quot;ARInvoice&quot;"
-    FieldsDataType="&quot;Text&quot;"
+    FieldsDataType="&quot;LookUp&quot;"
+    LookUpTableName="&quot;QBOGlobalTaxCalculation&quot;"
     MinLength="0"
-    MaxLength="40"
+    MaxLength="3"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -15502,6 +15503,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;GlobalTaxCalculation&quot;"
     ListPropertyPath="&quot;GlobalTaxCalculation&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -15509,6 +15511,7 @@
     DependencyFilter1IsList="false"
     DependencyFilter2IsList="false"
     DependencyFilter3IsList="false"
+    ValidForQuerySection1="&quot;ARInvoice&quot;"
     IsRestrictable="false"
     DisplayInEntityVariables="false"
     AllowedInCustomerFieldsSettings="false"
@@ -15519,9 +15522,13 @@
     DisplayLongName="false"
     FullFieldLable="&quot;GlobalTaxCalculation&quot;"
     DefaultText="&quot;Global Tax Calculation&quot;"
+    ListFieldLable="&quot;GlobalTaxCalculationListLable&quot;"
+    ListLableDefaultText="&quot;Global Tax Calculation&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
+    ForeignEntity="QBOGlobalTaxCalculation"
     DontBuildRelationOnDB="false"
+    NavigationPropertyName="QBOGlobalTaxCalculation"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -16700,7 +16707,7 @@
     IsHeaderScreen="false"
     Code="&quot;ARInvoice.GeneralTabScreen&quot;"
     NumberOfColumns="1"
-    NumberOfRows="10">
+    NumberOfRows="11">
     <ScreenFields>
       <ScreenField
         Column="0"
@@ -16751,6 +16758,11 @@
         Column="0"
         Row="9"
         ObjectFieldName="&quot;Intercompany&quot;"
+        ScreenName="General Tab Screen" />
+      <ScreenField
+        Column="0"
+        Row="10"
+        ObjectFieldName="&quot;GlobalTaxCalculation&quot;"
         ScreenName="General Tab Screen" />
     </ScreenFields>
   </Screen>

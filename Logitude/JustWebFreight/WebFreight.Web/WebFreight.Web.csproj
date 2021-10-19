@@ -1042,6 +1042,7 @@
     <Compile Include="Controllers\Integration\Quote\QuoteIntegrationVariables.cs" />
     <Compile Include="Controllers\Integration\Shipment\ShipmentIntegrationBuilder.cs" />
     <Compile Include="Controllers\Integration\Shipment\ShipmentIntegrationVariables.cs" />
+    <Compile Include="Controllers\InvoiceModel\Generated\ListControllers\QBOGlobalTaxCalculationViewsController.Generated.cs" />
     <Compile Include="Controllers\QuoteModel\Generated\PMControllers\QuoteClosingReasonController.Generated.cs" />
     <Compile Include="Controllers\CargoTrackingModel\CargoTrackingBrandingController.cs" />
     <Compile Include="Controllers\ShardLogistics\SharedLogisticReportController.cs" />
@@ -2741,6 +2742,7 @@
     <Compile Include="InvoiceModel\DomainServices\InvoiceDomainService.ARInvoiceStocksStatus.cs" />
     <Compile Include="InvoiceModel\DomainServices\InvoiceDomainService.ARPaymentTransferStatus.cs" />
     <Compile Include="InvoiceModel\DomainServices\InvoiceDomainService.BankAccountLite.cs" />
+    <Compile Include="InvoiceModel\DomainServices\InvoiceDomainService.QBOGlobalTaxCalculation.cs" />
     <Compile Include="LinksGateway.aspx.cs">
       <DependentUpon>LinksGateway.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -3296,6 +3298,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InvoiceModel\EntityUpdateClasses\BankAccountLiteUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InvoiceModel\EntityUpdateClasses\CreditCardTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InvoiceModel\EntityUpdateClasses\ExternalSystemsTablesCodeUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\InvoiceModel\EntityUpdateClasses\QBOGlobalTaxCalculationUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InvoiceModel\EntityUpdateClasses\SATInterfaceSettingUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InvoiceModel\EntityUpdateClasses\SATInterfaceUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InvoiceModel\EntityUpdateClasses\SATInvoiceStatusUpdateClass.cs" />

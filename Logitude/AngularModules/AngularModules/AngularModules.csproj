@@ -2978,6 +2978,7 @@
     <TypeScriptCompile Include="Invoice\Components\AccountingTab\AccountingTab_AccountingPaymentMethod.ts" />
     <TypeScriptCompile Include="Invoice\Components\MenuButtons\ARInvoiceStockMenuButtonsHandler.ts" />
     <TypeScriptCompile Include="Invoice\Components\Workspaces\Windows\ExternalTransmissionSettingsComponent.ts" />
+    <TypeScriptCompile Include="Invoice\EntityLists\QBOGlobalTaxCalculationList.ts" />
     <TypeScriptCompile Include="Invoice\Services\ConsilidationInvoiceDomainService.ts" />
     <TypeScriptCompile Include="Invoice\EntityLists\AccountingPaymentMethodList.ts" />
     <TypeScriptCompile Include="Invoice\EntityLists\APPaymentTransferStatusList.ts" />
@@ -2997,6 +2998,7 @@
     <TypeScriptCompile Include="Invoice\Services\StandardLists\APPaymentTransferStatusListService.ts" />
     <TypeScriptCompile Include="Invoice\Services\StandardLists\ARInvoiceStockListService.ts" />
     <TypeScriptCompile Include="Invoice\Services\StandardLists\ARInvoiceStocksStatusListService.ts" />
+    <TypeScriptCompile Include="Invoice\Services\StandardLists\QBOGlobalTaxCalculationListService.ts" />
     <TypeScriptCompile Include="Invoice\Services\StandardLists\SATInvoiceStatusListService.ts" />
     <TypeScriptCompile Include="Invoice\Services\StandardLists\SATTransferStatusListService.ts" />
     <TypeScriptCompile Include="Invoice\Services\StandardPMs\AccountingPaymentMethodPMService.ts" />

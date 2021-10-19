@@ -576,16 +576,6 @@ export class ARInvoiceDetailsTabConsolidation extends BaseComponent implements O
             }
         });
     }
-
-    get SelectedGlobalTaxCalculation() {
-        return AppTool.IsNullOrEmpty(this.EntityPM.GlobalTaxCalculation) ? "None" : this.EntityPM.GlobalTaxCalculation;
-    }
-    set SelectedGlobalTaxCalculation(value: string) {
-        if (this.EntityPM.GlobalTaxCalculation != value) {
-            this.EntityPM.GlobalTaxCalculation = value;
-        }
-    }
-
     // Load Date 
     private LastRatesList: LastRate[] = [];
     private myCurrencyRatesService: CurrencyRatesService;

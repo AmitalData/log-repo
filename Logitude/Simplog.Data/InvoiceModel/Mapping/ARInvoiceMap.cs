@@ -88,7 +88,7 @@ namespace Simplog.Data.InvoiceModel.Mapping
             this.Property(t => t.MasterNumbers).HasMaxLength(1000).IsUnicode(false);
             this.Property(t => t.MasterShipmentNumbers).HasMaxLength(1000).IsUnicode(false);
             this.Property(t => t.HouseNumbers).HasMaxLength(1000).IsUnicode(false);
-            this.Property(t => t.GlobalTaxCalculation).HasMaxLength(40).IsUnicode(false);
+            this.Property(t => t.GlobalTaxCalculation).HasMaxLength(3).IsUnicode(false);
 
             // Table & Column Mappings
             this.ToTable("ARInvoices");
@@ -231,6 +231,7 @@ namespace Simplog.Data.InvoiceModel.Mapping
             this.HasRequired(t => t.SATInvoiceStatus).WithMany().HasForeignKey(d => d.SATInvoiceStatusCode);
             this.HasOptional(t => t.BankAccountLite).WithMany().HasForeignKey(d => d.BankAccountLiteId);
             this.HasOptional(t => t.RegionalTax).WithMany().HasForeignKey(d => d.RegionalTaxId);
+            this.HasOptional(t => t.QBOGlobalTaxCalculation).WithMany().HasForeignKey(d => d.GlobalTaxCalculation);
         }
     }
 }

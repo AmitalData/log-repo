@@ -323,7 +323,6 @@ export class ARInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
             this.EntityPM.UIProperties.SetEnabled("MasterNumber", this.ObjectTableName, isEditingEnabled);
             this.EntityPM.UIProperties.SetEnabled("CustomerRef", this.ObjectTableName, isEditingEnabled);
             this.EntityPM.UIProperties.SetEnabled("BranchId", this.ObjectTableName, isEditingEnabled);
-            this.EntityPM.UIProperties.SetEnabled("GlobalTaxCalculation", this.ObjectTableName, isEditingEnabled);
             this.EntityPM.UIProperties.SetEnabled("SATPaymentMethodCode", this.ObjectTableName, isEditingEnabled);
         }
        
@@ -1805,14 +1804,6 @@ export class ARInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
         }
     }
 
-    get SelectedGlobalTaxCalculation() {
-        return AppTool.IsNullOrEmpty(this.EntityPM.GlobalTaxCalculation) ? "None" : this.EntityPM.GlobalTaxCalculation;
-    }
-    set SelectedGlobalTaxCalculation(value: string) {
-        if (this.EntityPM.GlobalTaxCalculation != value) {
-            this.EntityPM.GlobalTaxCalculation = value;
-        }
-    }
 }
 export class ARInvoiceLineItem extends BaseComponent {
     public EntityPM: ARInvoiceLinePM = null;

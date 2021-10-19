@@ -637,6 +637,7 @@
     <Compile Include="InvoiceModel\EntityPOCOs\BankAccountLite.cs" />
     <Compile Include="InvoiceModel\EntityPOCOs\SATPaymentMethod.cs" />
     <Compile Include="InvoiceModel\EntityPOCOs\SATInvoiceStatus.cs" />
+    <Compile Include="InvoiceModel\EntityPOCOs\QBOGlobalTaxCalculation.cs" />
     <Compile Include="InvoiceModel\EntityPOCOs\SATTransferStatus.cs" />
     <Compile Include="InvoiceModel\Mapping\APPaymentTransferStatusMap.cs" />
     <Compile Include="InvoiceModel\Mapping\ARInvoiceStockLineMap.cs" />
@@ -647,6 +648,7 @@
     <Compile Include="InvoiceModel\Mapping\BankAccountLiteMap.cs" />
     <Compile Include="InvoiceModel\Mapping\SATPaymentMethodMap.cs" />
     <Compile Include="InvoiceModel\Mapping\SATInvoiceStatusMap.cs" />
+    <Compile Include="InvoiceModel\Mapping\QBOGlobalTaxCalculationMap.cs" />
     <Compile Include="InvoiceModel\Mapping\SATTransferStatusMap.cs" />
     <Compile Include="InvoiceModel\Repositories\APPaymentTransferStatusRepository.cs" />
     <Compile Include="InvoiceModel\Repositories\ARInvoiceChargesConstraintRepository.cs" />
@@ -658,6 +660,7 @@
     <Compile Include="InvoiceModel\Repositories\BankAccountLiteRepository.cs" />
     <Compile Include="InvoiceModel\Repositories\SATPaymentMethodRepository.cs" />
     <Compile Include="InvoiceModel\Repositories\SATInvoiceStatusRepository.cs" />
+    <Compile Include="InvoiceModel\Repositories\QBOGlobalTaxCalculationRepository.cs" />
     <Compile Include="InvoiceModel\Repositories\SATTransferStatusRepository.cs" />
     <Compile Include="QuoteModel\EntityPOCOs\QuoteComputedField.cs" />
     <Compile Include="QuoteModel\EntityPOCOs\QuoteSetting.cs" />

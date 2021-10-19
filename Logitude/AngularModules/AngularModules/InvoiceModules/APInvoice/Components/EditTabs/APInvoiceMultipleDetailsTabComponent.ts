@@ -551,15 +551,6 @@ export class APInvoiceMultipleDetailsTabComponent extends BaseComponent implemen
         });
     }
 
-    get SelectedGlobalTaxCalculation() {
-        return AppTool.IsNullOrEmpty(this.EntityPM.GlobalTaxCalculation) ? "None" : this.EntityPM.GlobalTaxCalculation;
-    }
-    set SelectedGlobalTaxCalculation(value: string) {
-        if (this.EntityPM.GlobalTaxCalculation != value) {
-            this.EntityPM.GlobalTaxCalculation = value;
-        }
-    }
-
     ConvertToDouble(myString: string) {
         var myResult: number = 0;
 

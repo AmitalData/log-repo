@@ -4,6 +4,7 @@ import {SessionLocator} from '../../Infrastructure/Utilities/SessionLocator';
 import {ARInvoicePM} from '../EntityPMs/ARInvoicePM';
 import {InvoiceTool} from '../Tools';
 import {AppTool} from '../../Infrastructure/Tools'; 
+import { AccountingSettingListService } from '../../Common/Services/StandardLists/AccountingSettingListService';
 
 export class ARInvoicePMInitService {
 
@@ -44,23 +45,29 @@ export class ARInvoicePMInitService {
         entityPM.UIProperties.SetEnabled("SATPaymentMethodCode", "ARInvoice", isAllowedEdit);
         //entityPM.UIProperties.SetEnabled("SalesmanUserId", "ARInvoice", isAllowedEdit);
         entityPM.UIProperties.SetEnabled("BankAccountLiteId", "ARInvoice", isAllowedEdit);
+        entityPM.UIProperties.SetEnabled("GlobalTaxCalculation", "ARInvoice", isAllowedEdit);
 
         if (FeatureLocator.HasFeaturePermession("ARInvoice", "Intercompany")) {
             entityPM.UIProperties.SetVisibility("Intercompany", "ARInvoice", true);
         }
         else {
             entityPM.UIProperties.SetVisibility("Intercompany", "ARInvoice", false);
-      }
-
-
-      if (SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF" || SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF33") {
-        if (AppTool.IsNullOrEmpty(entityPM.SATPaymentMethodCode)) {
-          entityPM.UIProperties.SetRequired("SATPaymentMethodCode", "ARInvoice", true);
         }
 
-        if (AppTool.IsNullOrEmpty(entityPM.MetodoPagoCode)) {
-          entityPM.UIProperties.SetRequired("MetodoPagoCode", "ARInvoice", true);
+        if (SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF" || SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF33") {
+            if (AppTool.IsNullOrEmpty(entityPM.SATPaymentMethodCode)) {
+                entityPM.UIProperties.SetRequired("SATPaymentMethodCode", "ARInvoice", true);
+            }
+
+            if (AppTool.IsNullOrEmpty(entityPM.MetodoPagoCode)) {
+                entityPM.UIProperties.SetRequired("MetodoPagoCode", "ARInvoice", true);
+            }
         }
-      }
+
+        if (!(SessionLocator.AccountingSettingPM.AccountingSystemCode == "QBO" || SessionLocator.AccountingSettingPM.AccountingSystemCode == "QBOG")) {
+            entityPM.UIProperties.SetVisibility("GlobalTaxCalculation", "ARInvoice", false);
+        }
+
     }
+
 }

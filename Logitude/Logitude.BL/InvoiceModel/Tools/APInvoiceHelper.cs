@@ -695,11 +695,11 @@ namespace Logitude.BL.InvoiceModel.Tools
 
         private GlobalTaxCalculationEnum GetGlobalTaxCalculation(string globalTaxCalculation)
         {
-            if (globalTaxCalculation == "Tax Excluded")
+            if (globalTaxCalculation == "TE")
             {
                 return GlobalTaxCalculationEnum.TaxExcluded;
             }
-            else if (globalTaxCalculation == "Tax Inclusive")
+            else if (globalTaxCalculation == "TI")
             {
                 return GlobalTaxCalculationEnum.TaxInclusive;
             }

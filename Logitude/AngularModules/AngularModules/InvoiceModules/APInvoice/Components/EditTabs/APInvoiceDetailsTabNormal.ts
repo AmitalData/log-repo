@@ -474,15 +474,6 @@ export class APInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
         });
     }
 
-    get SelectedGlobalTaxCalculation() {
-        return AppTool.IsNullOrEmpty(this.EntityPM.GlobalTaxCalculation) ? "None" : this.EntityPM.GlobalTaxCalculation;
-    }
-    set SelectedGlobalTaxCalculation(value: string) {
-        if (this.EntityPM.GlobalTaxCalculation != value) {
-            this.EntityPM.GlobalTaxCalculation = value;
-        }
-    }
-
     BuildInvoiceLines() {
 
         this.ItemsSource.Clear();
