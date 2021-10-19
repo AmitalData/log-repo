@@ -4262,7 +4262,7 @@
     ShortFieldLable="&quot;MainCarriageCarrierId&quot;"
     ShortFieldLableDefaultText="&quot;Carrier&quot;"
     IsNullable="false"
-    IsForeignKey="true"
+    IsForeignKey="false"
     ForeignEntity="Card"
     DontBuildRelationOnDB="false"
     NavigationPropertyName="MainCarriageCarrierCard"

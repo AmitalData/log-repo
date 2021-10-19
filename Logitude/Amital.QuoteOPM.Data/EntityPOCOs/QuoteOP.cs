@@ -129,11 +129,8 @@ namespace Amital.QuoteOPM.Data.EntityPOCOs
 	    public bool IsCancelled { get; set; }
         [Column("QuoteNumber")]
 	    public string QuoteNumber { get; set; }
-        [ForeignKey("MainCarriageCarrierCard")]
         [Column("MainCarriageCarrierId")]
 	    public string MainCarriageCarrierId { get; set; }
-	      
-        public virtual Card MainCarriageCarrierCard { get; set; }
         [ForeignKey("Direction")]
         [Column("DirectionId")]
 	    public string DirectionId { get; set; }

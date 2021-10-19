@@ -323,9 +323,7 @@ export class QuoteOPPM {
 	 
     private quoteCustomerTypeCode: string;
     public get QuoteCustomerTypeCode() { return this.quoteCustomerTypeCode; }
-    public set QuoteCustomerTypeCode(newValue: string) { 
-        if (this.quoteCustomerTypeCode != newValue) { this.quoteCustomerTypeCode = newValue; this.MarkAsDirty("QuoteCustomerTypeCode"); } 
-    }
+    public set QuoteCustomerTypeCode(newValue: string) { if (this.quoteCustomerTypeCode != newValue) { this.quoteCustomerTypeCode = newValue; this.MarkAsDirty("QuoteCustomerTypeCode"); } }
        
 	 
     private customerId: string;
@@ -410,9 +408,7 @@ export class QuoteOPPM {
 	 
     private openDate: Date;
     public get OpenDate() { return this.openDate; }
-    public set OpenDate(newValue: Date) { 
-        if (this.openDate != newValue) { this.openDate = newValue; this.MarkAsDirty("OpenDate"); } 
-    }
+    public set OpenDate(newValue: Date) { if (this.openDate != newValue) { this.openDate = newValue; this.MarkAsDirty("OpenDate"); } }
        
 	 
     private notes: string;
@@ -885,9 +881,7 @@ export class QuoteOPPM {
 	 
     private updatedByUserId: string;
     public get UpdatedByUserId() { return this.updatedByUserId; }
-    public set UpdatedByUserId(newValue: string) { 
-        if (this.updatedByUserId != newValue) { this.updatedByUserId = newValue; this.MarkAsDirty("UpdatedByUserId"); } 
-    }
+    public set UpdatedByUserId(newValue: string) { if (this.updatedByUserId != newValue) { this.updatedByUserId = newValue; this.MarkAsDirty("UpdatedByUserId"); } }
        
 	 
     private updateDate: Date;
@@ -1427,9 +1421,7 @@ export class QuoteOPPM {
 	 
     private isCopyExchangeRates: boolean;
     public get IsCopyExchangeRates() { return this.isCopyExchangeRates; }
-    public set IsCopyExchangeRates(newValue: boolean) { 
-        if (this.isCopyExchangeRates != newValue) { this.isCopyExchangeRates = newValue; this.MarkAsDirty("IsCopyExchangeRates"); } 
-    }
+    public set IsCopyExchangeRates(newValue: boolean) { if (this.isCopyExchangeRates != newValue) { this.isCopyExchangeRates = newValue; this.MarkAsDirty("IsCopyExchangeRates"); } }
        
 	 
     private quoteVersion: string;
@@ -1675,4 +1667,4 @@ export class QuoteOPPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

@@ -74,6 +74,36 @@ export class QuoteOPPropertiesPM {
     public set MainCarriageCarrierId(newValue: string) { if (this.mainCarriageCarrierId != newValue) { this.mainCarriageCarrierId = newValue; this.MarkAsDirty("MainCarriageCarrierId"); } }
        
 	 
+    private fromAddressZipCode: string;
+    public get FromAddressZipCode() { return this.fromAddressZipCode; }
+    public set FromAddressZipCode(newValue: string) { if (this.fromAddressZipCode != newValue) { this.fromAddressZipCode = newValue; this.MarkAsDirty("FromAddressZipCode"); } }
+       
+	 
+    private fromAddressCountryId: string;
+    public get FromAddressCountryId() { return this.fromAddressCountryId; }
+    public set FromAddressCountryId(newValue: string) { if (this.fromAddressCountryId != newValue) { this.fromAddressCountryId = newValue; this.MarkAsDirty("FromAddressCountryId"); } }
+       
+	 
+    private fromAddressCity: string;
+    public get FromAddressCity() { return this.fromAddressCity; }
+    public set FromAddressCity(newValue: string) { if (this.fromAddressCity != newValue) { this.fromAddressCity = newValue; this.MarkAsDirty("FromAddressCity"); } }
+       
+	 
+    private toAddressCity: string;
+    public get ToAddressCity() { return this.toAddressCity; }
+    public set ToAddressCity(newValue: string) { if (this.toAddressCity != newValue) { this.toAddressCity = newValue; this.MarkAsDirty("ToAddressCity"); } }
+       
+	 
+    private toAddressCountryId: string;
+    public get ToAddressCountryId() { return this.toAddressCountryId; }
+    public set ToAddressCountryId(newValue: string) { if (this.toAddressCountryId != newValue) { this.toAddressCountryId = newValue; this.MarkAsDirty("ToAddressCountryId"); } }
+       
+	 
+    private toAddressZipCode: string;
+    public get ToAddressZipCode() { return this.toAddressZipCode; }
+    public set ToAddressZipCode(newValue: string) { if (this.toAddressZipCode != newValue) { this.toAddressZipCode = newValue; this.MarkAsDirty("ToAddressZipCode"); } }
+       
+	 
 
     public OldEntityPM: QuoteOPPropertiesPM;
 		
