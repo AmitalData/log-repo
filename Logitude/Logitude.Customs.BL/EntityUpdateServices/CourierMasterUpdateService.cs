@@ -536,6 +536,34 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         {
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
             string strConnString = GetConnection(Tenant);
+            string whereIn = "";
+            int i = 0;
+            if (!string.IsNullOrEmpty(declarations) && declarations.Split(',').Count() > 990)
+            {
+                foreach (var item in declarations.Split(','))
+                {
+                    if (i < 990)
+                    {
+                        whereIn += item + ',';
+                        i++;
+                    }
+                    else
+                    {
+                        whereIn = whereIn.TrimEnd(',');
+                        whereIn += ") OR  ID IN (" + item + ',';
+                        i = 0;
+                    }
+                }
+                whereIn = whereIn.TrimEnd(',');
+                //     whereIn += ")";
+
+
+            }
+
+            else
+            {
+                whereIn = declarations;
+            }
             if (dbms == "oracle")
             {
                 using (OracleConnection con = new OracleConnection(strConnString))
