@@ -48,8 +48,6 @@ export class ARInvoiceDetailsTabConsolidation extends BaseComponent implements O
     public isRTL: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
     public InvoiceNumberFilterList: CodeNameClass[] = [];
-    public GlobalTaxCalculationItemsSource: string[] = [];
-    public IsGlobalTaxCalculationVisible: boolean = false;
     constructor(private entityArgs: EntityArgs) {
         super();
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");    
@@ -60,7 +58,6 @@ export class ARInvoiceDetailsTabConsolidation extends BaseComponent implements O
         this.InitializeComponent();
         this.SetUIProperties();
         this.BuildScreenData();
-        this.BuildGlobalTaxCalculationItemsSource();
         this.Listen()
 
         this.BuildEntityWarnings();
@@ -554,28 +551,6 @@ export class ARInvoiceDetailsTabConsolidation extends BaseComponent implements O
         }
     }
 
-    BuildGlobalTaxCalculationItemsSource() {
-        this.IsQBOAccountingSystem()
-        this.GlobalTaxCalculationItemsSource = [];
-        this.GlobalTaxCalculationItemsSource.push("None");
-        this.GlobalTaxCalculationItemsSource.push("Tax Excluded");
-        this.GlobalTaxCalculationItemsSource.push("Tax Inclusive");
-        this.GlobalTaxCalculationItemsSource.push("Out Of Scope");
-    }
-
-    IsQBOAccountingSystem() {
-        var isQBOAccountingSystem = false;
-        var accountingSettingListService: AccountingSettingListService = new AccountingSettingListService();
-        accountingSettingListService.getSingle(SessionLocator.Tenant).subscribe((response: any) => {
-            if (response == null) {
-                return;
-            }
-            isQBOAccountingSystem = response.Result?.AccountingSystemCode.includes("QB");
-            if (isQBOAccountingSystem) {
-                this.IsGlobalTaxCalculationVisible = true;
-            }
-        });
-    }
     // Load Date 
     private LastRatesList: LastRate[] = [];
     private myCurrencyRatesService: CurrencyRatesService;
