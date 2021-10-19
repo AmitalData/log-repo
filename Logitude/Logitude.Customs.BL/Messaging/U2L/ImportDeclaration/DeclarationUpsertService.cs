@@ -40,8 +40,8 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
     public class DeclarationUpsertService : UnifreightGenericService
     {
         private LOGICUSTFILE _LOGICUSTFILE;
-        private LogitudeCustomsFile _AmitalCustomsFile;
-        private Def.EntityPMs.DeclarationPM _MyDeclarationPM;
+        public LogitudeCustomsFile _AmitalCustomsFile;
+        public Def.EntityPMs.DeclarationPM _MyDeclarationPM;
         private ICustomContext _context;
         private CourierMasterPM _CourierMasterPM;
         private CourierDeclarationPM _CourierDeclarationPM;
