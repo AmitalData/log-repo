@@ -30,6 +30,17 @@ namespace Logitude.Customs.Data.Repsitories
                 ;
         }
 
+        public List<string> GetByKeywordtypeCodeStringList(string keywordtypeCode, int tenant)
+        {
+                var Keywordtype = (from a in context.CustomsAutonomyKeywords
+                                    where a.Tenant == tenant
+                                    where a.KeywordtypeCode == keywordtypeCode
+                                   select a.KeywordsList
+                                                        );
+
+                return Keywordtype.ToList();
+        }
+
         public CustomsAutonomyKeyword  GetByKeywordtypeCode(string keywordtypeCode, int tenant)
         {
             return
