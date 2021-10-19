@@ -86,7 +86,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                        a.EstimatedArrivalDate != null ? (System.Data.Entity.DbFunctions.TruncateTime(a.EstimatedArrivalDate.Value) == today ? "Blue" :
                                                        (System.Data.Entity.DbFunctions.TruncateTime(a.EstimatedArrivalDate.Value) < today ? "Red" : "Black")) : "Black",
                                                        OpenDeclarations = a.OpenDeclarations,
-                                                       CourierMasterRemarks =a.CourierMasterRemarks
+                                                       CourierMasterRemarks =a.CourierMasterRemarks,
+                                                       EstimatedArrivalTimeOnly= a.EstimatedArrivalDate,
+                                                       EstimatedArrivalDateOnly = a.EstimatedArrivalDate,
                                                    });
 
             return query;
