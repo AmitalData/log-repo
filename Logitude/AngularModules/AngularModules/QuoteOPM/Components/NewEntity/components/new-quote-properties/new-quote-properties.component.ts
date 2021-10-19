@@ -21,6 +21,8 @@ export class NewQuotePropertiesComponent implements OnInit {
   directionId: string = '';
   carrierColumns: any = {}
 
+  tabs: any[] = ['a','b','c'];
+
   constructor(
     private newQuoteDataService: NewQuoteDataService,
   ) { }
@@ -98,5 +100,14 @@ export class NewQuotePropertiesComponent implements OnInit {
 
   onSelectedSpecialService(value: SpecialService) {
     this.EntityPM.SpecialServiceId = value.SERVLEVEL_ID;
+  }
+
+  addProperty() {
+    console.log('add property')
+    this.tabs.push('d')
+  }
+
+  removeProperty(e: {originalEvent: PointerEvent, index: number}) {
+    console.log(this.tabs[e.index],e.index)
   }
 }

@@ -16,7 +16,6 @@ import { EntityListService } from 'Infrastructure/Services/EntityListService';
 import { EntityResourceService } from 'Infrastructure/Services/EntityResourceService';
 import { DirectionListService } from 'Infrastructure/Services/StandardLists/DirectionListService';
 import { TransportModeListService } from 'Infrastructure/Services/StandardLists/TransportModeListService';
-import { SessionLocator } from 'Infrastructure/Utilities/SessionLocator';
 import { QuoteOPPM } from 'QuoteOPM/EntityPMs/QuoteOPPM';
 import { QuoteOPPMService } from 'QuoteOPM/Services/StandardPMs/QuoteOPPMService';
 import { Observable } from 'rxjs';

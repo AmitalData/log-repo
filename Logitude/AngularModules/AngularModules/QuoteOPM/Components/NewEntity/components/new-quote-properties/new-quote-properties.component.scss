@@ -1,3 +1,122 @@
+
+:host ::ng-deep {
+    .p-tabview {
+        ul {
+            background: none;
+            border: none;
+            padding-left: 40px;
+
+            li {
+                margin-right: 39px;
+                cursor: pointer;
+                position: relative;
+
+                a.p-tabview-nav-link {
+                    overflow: visible;
+                    padding: 20px 11px 8px;
+                    border: none;
+                    color: black;
+                    font-weight: 600;
+                }
+
+                a:before {
+                    right: -17px;
+                    transform: skew(30deg, 0deg);
+                    box-shadow: rgb(0 0 0 / 10%) 3px 2px 5px, inset rgb(255 255 255 / 9%) -1px 0;
+                }
+
+                a:after {
+                    left: -17px;
+                    transform: skew(-30deg, 0deg);
+                    box-shadow: rgb(0 0 0 / 10%) -3px 2px 5px, inset rgb(255 255 255 / 9%) 1px 0;
+                }
+
+                a:before,
+                a:after {
+                    content: " ";
+                    position: absolute;
+                    top: 0;
+                    height: 100%;
+                    width: 29px;
+                    background-color: #fff;
+                }
+
+                .p-tabview-nav-link:not(.p-disabled):focus {
+                    box-shadow: none;
+                }
+            }
+
+            .pi-times:before {
+                content: "";
+            }
+
+            .p-highlight {
+                a:before,
+                a:after,
+                a {
+                    background: #1084dc !important;
+                    color: white !important;
+                }
+
+                .pi-times:before {
+                    content: "\e90b";
+                    position: absolute;
+                    top: 5px;
+                    right: 0px;
+                    background: white;
+                    width: 12px;
+                    height: 12px;
+                    line-height: 12px;
+                    border-radius: 7px;
+                    text-align: center;
+                    color: #1084dc;
+                    font-size: 8px;
+                }
+            }
+        }
+
+        .p-tabview-panels {
+            width: calc(100% + 50px);
+            margin-top: 22px;
+            border-radius: 8px;
+        }
+    }
+}
+
+.properties {
+    display: inline-block;
+    width: 1000px;
+    position: relative;
+
+    p-tabview {
+        width: calc(100% - 100px);
+        display: inline-block;
+    }
+
+    .pi {
+        background: #1084dc;
+        color: white;
+        width: 13px;
+        padding: 11px;
+        display: inline;
+        top: 11px;
+        position: relative;
+        vertical-align: top;
+        border-radius: 6px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    hr {
+        position: absolute;
+        top: 35px;
+        width: calc(100% - 50px);
+        color: black;
+        height: 4px;
+        background: black;
+    }
+}
+
 .accordion-container {
     padding: 7px 10px;
     border: 1px solid #ced4da;

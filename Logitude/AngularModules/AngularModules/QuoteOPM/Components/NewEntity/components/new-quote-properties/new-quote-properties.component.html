@@ -1,6 +1,17 @@
+<div class="properties">
+  <p-tabView (onClose)="removeProperty($event)">
+      <p-tabPanel *ngFor='let x of tabs' [header]="'Header ' + x" [closable]='tabs.length > 1'>
+          Content {{x}}
+      </p-tabPanel>
+  </p-tabView>
+  <i class="pi pi-plus" (click)='addProperty()'></i>
+  <hr>
+</div>
+
 <h3 class="sub-header">Quote Properties</h3>
 
 <div class="grid content-in-section" [formGroup]='formGroup'>
+
   <div class="col-4 p-fluid">
     <div class="p-field">
       <app-autocomplate-table [columnsShow]="{Code:'Code', Name: 'Name',CountryName:'CountryName'}" [data]='toPortList'
