@@ -220,8 +220,8 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
             // Where
             List<string> whereConditions = new List<string>();
 
-            var notCustomShipment = $" P.Id NOT IN (SELECT C.Id FROM  dbo.{table.DBTableName } SH " +
-                                                    $"JOIN  dbo.{table.DBTableName}  C  ON SH.CustomFileId = C.Id) ";
+            var notCustomShipment = $" P.ShipmentLevelCode <> 'A'";//P.Id NOT IN (SELECT C.Id FROM  dbo.{table.DBTableName } SH " +
+                                                   // $"JOIN  dbo.{table.DBTableName}  C  ON SH.CustomFileId = C.Id) ";
             whereConditions.Add(notCustomShipment);
 
 
