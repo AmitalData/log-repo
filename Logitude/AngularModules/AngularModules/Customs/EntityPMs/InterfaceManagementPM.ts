@@ -144,6 +144,11 @@ export class InterfaceManagementPM {
     public set InterfaceType(newValue: string) { if (this.interfaceType != newValue) { this.interfaceType = newValue; this.MarkAsDirty("InterfaceType"); } }
        
 	 
+    private useRabbitMQ: boolean;
+    public get UseRabbitMQ() { return this.useRabbitMQ; }
+    public set UseRabbitMQ(newValue: boolean) { if (this.useRabbitMQ != newValue) { this.useRabbitMQ = newValue; this.MarkAsDirty("UseRabbitMQ"); } }
+       
+	 
 
     public OldEntityPM: InterfaceManagementPM;
 		

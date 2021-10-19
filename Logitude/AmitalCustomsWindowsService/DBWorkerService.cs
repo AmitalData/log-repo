@@ -240,6 +240,8 @@ namespace AmitalCustomsWindowsService
             listOfWorkerEntryPoint.Add(new SendWEBAPIMessage2MamanWR());
             listOfWorkerEntryPoint.Add(new FTPToAnalyzeQueueWR());
             listOfWorkerEntryPoint.Add(new CustomsAnalyzeQueueWR());
+            listOfWorkerEntryPoint.Add(new RabbitMQReceiveWR());
+
             bool testCustomsSchedularWR = false;
             if (testCustomsSchedularWR)
             {

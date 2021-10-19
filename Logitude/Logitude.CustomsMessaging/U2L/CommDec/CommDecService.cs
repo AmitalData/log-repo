@@ -551,6 +551,7 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                     CalcIsAutonomy();
                     CalcProcedureCurrentCode();
                     CalcInternalTransitionSite();
+                    myDeclarationUpsertService.UpdateTrucker();
                     if (this.IsAutonomy)
                     {
                         UpdateDeclarationPending("901");

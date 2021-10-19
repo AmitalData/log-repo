@@ -102,6 +102,9 @@
             this._TBTenant = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.singletonFTPCommunicationWorkerRoleWinServiceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.rabbitMQToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.sendToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.recivedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -114,7 +117,8 @@
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripMenuItem1,
             this.debugToolStripMenuItem,
-            this.adHockToolStripMenuItem});
+            this.adHockToolStripMenuItem,
+            this.rabbitMQToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(638, 24);
@@ -731,11 +735,32 @@
             this.label1.Text = "Tenant";
             // 
             // singletonFTPCommunicationWorkerRoleWinServiceToolStripMenuItem
+            // rabbitMQToolStripMenuItem
+            // 
+            this.rabbitMQToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.sendToolStripMenuItem,
+            this.recivedToolStripMenuItem});
+            this.rabbitMQToolStripMenuItem.Name = "rabbitMQToolStripMenuItem";
+            this.rabbitMQToolStripMenuItem.Size = new System.Drawing.Size(73, 20);
+            this.rabbitMQToolStripMenuItem.Text = "RabbitMQ";
+            // 
+            // sendToolStripMenuItem
+            // 
+            this.sendToolStripMenuItem.Name = "sendToolStripMenuItem";
+            this.sendToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.sendToolStripMenuItem.Text = "Send";
+            this.sendToolStripMenuItem.Click += new System.EventHandler(this.sendToolStripMenuItem_Click);
+            // 
+            // recivedToolStripMenuItem
             // 
             this.singletonFTPCommunicationWorkerRoleWinServiceToolStripMenuItem.Name = "singletonFTPCommunicationWorkerRoleWinServiceToolStripMenuItem";
             this.singletonFTPCommunicationWorkerRoleWinServiceToolStripMenuItem.Size = new System.Drawing.Size(349, 22);
             this.singletonFTPCommunicationWorkerRoleWinServiceToolStripMenuItem.Text = "SingletonFTPCommunicationWorkerRoleWinService";
             this.singletonFTPCommunicationWorkerRoleWinServiceToolStripMenuItem.Click += new System.EventHandler(this.singletonFTPCommunicationWorkerRoleWinServiceToolStripMenuItem_Click);
+            this.recivedToolStripMenuItem.Name = "recivedToolStripMenuItem";
+            this.recivedToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.recivedToolStripMenuItem.Text = "Recived";
+            this.recivedToolStripMenuItem.Click += new System.EventHandler(this.recivedToolStripMenuItem_Click);
             // 
             // TesterForm
             // 
@@ -838,5 +863,8 @@
         private System.Windows.Forms.ToolStripMenuItem downloadFTPToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem commDecServiceToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem singletonFTPCommunicationWorkerRoleWinServiceToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem rabbitMQToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem sendToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem recivedToolStripMenuItem;
     }
 }
