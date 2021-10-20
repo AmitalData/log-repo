@@ -75,8 +75,8 @@ namespace CargoTrackingWinService.Helper
 
         private void SetIncrementalRecordData(bool isFromBuild)
         {
-            if (ApplicationInfo.UpdateCounter == 10)
-            {
+            //if (ApplicationInfo.UpdateCounter == 10)
+            //{
                 ApplicationInfo.UpdateCounter = 0;
                 ApplicationInfo.EndDate = TenantServerConfigration.GetCurrentDateTime(0);
                 if (!isFromBuild)
@@ -84,7 +84,7 @@ namespace CargoTrackingWinService.Helper
                     CargoTrackingServiceHelper.AddRecordToCargoTrackingIncrementalStats(destinationConnectionString);
 
                 }
-            }
+           // }
         }
 
         private RecordUpdated UpdateCargoDataBase(CargoTrackingTable table)
