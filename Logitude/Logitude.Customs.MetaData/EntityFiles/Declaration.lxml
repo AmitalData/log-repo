@@ -18175,7 +18175,7 @@
     InActive="false"
     DisplayLongName="false"
     FullFieldLable="&quot;IsHatraDateNull&quot;"
-    DefaultText="&quot;Is PaymentDate Null&quot;"
+    DefaultText="&quot;Is Hatra Date Null&quot;"
     ListFieldLable="&quot;IsHatraDateNullListLable&quot;"
     ListLableDefaultText="&quot;IsHatraDateNull&quot;"
     IsNullable="true"

@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationUpdateClass
    {  		
-		public const string HashString = "5c6fb1b375f6be063392134ce4934f30";
+		public const string HashString = "87220627478d0466fe3c4bc716d8756a";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -14846,7 +14846,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "IsHatraDateNull",
-					  						DefaultText =  "Is PaymentDate Null",
+					  						DefaultText =  "Is Hatra Date Null",
 					  						ListFieldLable =  "IsHatraDateNullListLable",
 					  						ListLableDefaultText =  "IsHatraDateNull",
 					  						IsMaxLength =  false,
