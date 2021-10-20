@@ -56,6 +56,7 @@ export class NewQuoteGeneralComponent implements OnInit {
   }
   
   subscribeCtrls() {
+    this.formGroup.controls.moveType.valueChanges.subscribe((newVal:MoveTypeList) => this.EntityPM.MoveTypeId = newVal?.Id)
     this.formGroup.controls.startDate.valueChanges.subscribe(newVal => this.EntityPM.StartDate = newVal)
     this.formGroup.controls.expirationDays.valueChanges.subscribe(newVal => this.EntityPM.ExpirationDays = newVal)
     this.formGroup.controls.expirationDate.valueChanges.subscribe(newVal => this.EntityPM.ExpirationDate = newVal)
@@ -70,6 +71,7 @@ export class NewQuoteGeneralComponent implements OnInit {
     const nextMonth = new Date(new Date().setMonth(new Date().getMonth()+1));
     nextMonth.setHours(0,0,0,0);
 
+    this.checkType(this.quoteTypes[0].code);
     this.formGroup.controls.startDate.setValue(dateNow);
     this.formGroup.controls.expirationDays.setValue(30);
     this.formGroup.controls.expirationDate.setValue(nextMonth);

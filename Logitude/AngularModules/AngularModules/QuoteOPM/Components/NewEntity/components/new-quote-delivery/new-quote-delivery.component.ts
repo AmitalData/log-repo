@@ -64,7 +64,7 @@ export class NewQuoteDeliveryComponent implements OnInit {
 
   subscribeCtrls() {
     this.qouteForm.controls.consigneeName.valueChanges.subscribe(async (consigneeName: CardList) =>
-      this.Address = await this.newQuoteDataService.getAddress(consigneeName.Id, consigneeName.Tenant));
+      this.Address = consigneeName ?  await this.newQuoteDataService.getAddress(consigneeName.Id, consigneeName.Tenant) : null);
   }
 
   initDefaultValue() {

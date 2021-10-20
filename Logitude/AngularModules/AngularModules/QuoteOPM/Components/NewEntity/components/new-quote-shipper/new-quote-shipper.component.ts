@@ -68,10 +68,10 @@ export class NewQuoteShipperComponent implements OnInit {
   }
 
   private subscribeShipperName() {
-    this.formGroup.controls.shipperName.valueChanges.pipe(filterIsNotNull()).subscribe((shipperName: CardList) => {
+    this.formGroup.controls.shipperName.valueChanges.subscribe((shipperName: CardList) => {
       this.formGroup.controls.shipperContact.reset();
-      this.formGroup.controls.shipperNotes.setValue(shipperName.Notes);
-      this.initShipperContacts(shipperName.Id);
+      this.formGroup.controls.shipperNotes.setValue(shipperName?.Notes);
+      this.initShipperContacts(shipperName?.Id);
       this.setShipperAddress(shipperName);
       this.onSelectedName(shipperName);
       this.cdref.detectChanges();
@@ -85,21 +85,21 @@ export class NewQuoteShipperComponent implements OnInit {
   }
 
   private async setShipperAddress(shipperName: CardList): Promise<void> {
-    this.Address = await this.newQuoteDataService.getAddress(shipperName.Id, shipperName.Tenant)
+    this.Address = shipperName ? await this.newQuoteDataService.getAddress(shipperName.Id, shipperName.Tenant) : null
   }
 
   private async initShipperContacts(cardId: string) {
-    this.shipperContacts = await this.newQuoteDataService.getContactsTable(cardId);
+    this.shipperContacts = cardId ? await this.newQuoteDataService.getContactsTable(cardId) : null;
   }
 
   onSelectedName(val: CardList) {
-    this.EntityPM.ShipperName = val.EnglishName;
-    this.EntityPM.ShipperId = val.Id;
-    this.EntityPM.ShipperMainAddressId = val.MainAddressId;
-    this.EntityPM.ShipperPickAddressId = val.PickAddressId;
+    this.EntityPM.ShipperName = val?.EnglishName;
+    this.EntityPM.ShipperId = val?.Id;
+    this.EntityPM.ShipperMainAddressId = val?.MainAddressId;
+    this.EntityPM.ShipperPickAddressId = val?.PickAddressId;
   }
 
   onSelectedContact(val: ContactList) {
-    this.EntityPM.ShipperContactId = val.Id;
+    this.EntityPM.ShipperContactId = val?.Id;
   }
 }

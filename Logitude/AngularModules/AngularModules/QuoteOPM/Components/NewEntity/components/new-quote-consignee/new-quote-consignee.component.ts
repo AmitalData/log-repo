@@ -69,10 +69,10 @@ export class NewQuoteConsigneeComponent implements OnInit {
   }
 
   private subscribeConsigneeName() {
-    this.formGroup.controls.consigneeName.valueChanges.pipe(filterIsNotNull()).subscribe((consigneeName: CardList) => {
+    this.formGroup.controls.consigneeName.valueChanges.subscribe((consigneeName: CardList) => {
       this.formGroup.controls.consigneeContact.reset();
-      this.formGroup.controls.consigneeNotes.setValue(consigneeName.Notes);
-      this.initConsigneeContacts(consigneeName.Id);
+      this.formGroup.controls.consigneeNotes.setValue(consigneeName?.Notes);
+      this.initConsigneeContacts(consigneeName?.Id);
       this.setConsigneeAddress(consigneeName);
       this.onSelectedName(consigneeName);
     })
@@ -85,21 +85,21 @@ export class NewQuoteConsigneeComponent implements OnInit {
   }
 
   private async setConsigneeAddress(consigneeName: any): Promise<void> {
-    this.Address = await this.newQuoteDataService.getAddress(consigneeName.Id, consigneeName.Tenant)
+    this.Address = consigneeName ? await this.newQuoteDataService.getAddress(consigneeName.Id, consigneeName.Tenant) : null
   }
 
   private async initConsigneeContacts(cardId: string) {
-    this.consigneeContacts = await this.newQuoteDataService.getContactsTable(cardId);
+    this.consigneeContacts = cardId ? await this.newQuoteDataService.getContactsTable(cardId) : null
   }
 
   onSelectedName(val: CardList) {
-      this.EntityPM.ConsigneeName = val.EnglishName;
-      this.EntityPM.ConsigneeId = val.Id;
-      this.EntityPM.ConsigneeMainAddressId = val.MainAddressId;
-      this.EntityPM.ConsigneePickAddressId = val.PickAddressId;
+      this.EntityPM.ConsigneeName = val?.EnglishName;
+      this.EntityPM.ConsigneeId = val?.Id;
+      this.EntityPM.ConsigneeMainAddressId = val?.MainAddressId;
+      this.EntityPM.ConsigneePickAddressId = val?.PickAddressId;
   }
   
   onSelectedContact(val: ContactList){
-    this.EntityPM.ConsigneeContactId = val.Id;
+    this.EntityPM.ConsigneeContactId = val?.Id;
   }
 }

@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Component, EventEmitter, Input, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { AbstractControl, FormGroup } from '@angular/forms';
 import { AutoComplete } from 'primeng/autocomplete';
-import { Subscription } from 'rxjs';
+// import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-autocomplate-table',
@@ -27,25 +27,25 @@ export class AutocomplateTableComponent {
   columnsNames: string[] = [];
   columnsHeader: {} = [];
   selectedChoice: any;
-  subscribeRef: Subscription = null as any;
+  // subscribeRef: Subscription = null as any;
 
-  constructor(private cdref: ChangeDetectorRef){}
+  // constructor(private cdref: ChangeDetectorRef){}
 
-  ngOnDestroy() {
-    this.subscribeRef?.unsubscribe()
-  }
+  // ngOnDestroy() {
+  //   this.subscribeRef?.unsubscribe()
+  // }
 
-  ngOnChanges(changes: SimpleChanges) {
-    if (this.formGroup && !this.subscribeRef) 
-      this.subscribeCtrl();
-  }
+  // ngOnChanges(changes: SimpleChanges) {
+  //   if (this.formGroup && !this.subscribeRef) 
+  //     this.subscribeCtrl();
+  // }
 
-  private subscribeCtrl() {
-    this.subscribeRef = this.formGroup.controls[this.controlName].valueChanges.subscribe(val=> {
-      this.selectedChoice = val
-      this.cdref.detectChanges();
-    })
-  }
+  // private subscribeCtrl() {
+  //   this.subscribeRef = this.formGroup.controls[this.controlName].valueChanges.subscribe(val=> {
+  //     this.selectedChoice = val
+  //     this.cdref.detectChanges();
+  //   })
+  // }
 
   private initColumns(columns: any[]) {
     if (typeof columns[0] === 'string') {

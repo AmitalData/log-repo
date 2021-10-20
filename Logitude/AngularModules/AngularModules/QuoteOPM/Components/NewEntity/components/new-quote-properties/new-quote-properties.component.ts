@@ -96,23 +96,23 @@ export class NewQuotePropertiesComponent implements OnInit {
   }
 
   onSelectedtoPort(value: Port) {
-    this.EntityPM.ToPortId = value.Code;
+    // this.EntityPM.ToPortId = value.Code;
   }
 
   onSelectedFromPort(value: Port) {
-    this.EntityPM.FromPortId = value.Code;
+    // this.EntityPM.FromPortId = value.Code;
   }
 
   onMainCarriageCarrier(value: Carrier) {
-    this.EntityPM.MainCarriageCarrierId = value.AIRLINE_ID;
+    // this.EntityPM.MainCarriageCarrierId = value.AIRLINE_ID;
   }
 
   onSelectedIncoterm(value: Incoterm) {
-    this.EntityPM.IncotermId = value.PTERMID;
+    // this.EntityPM.IncotermId = value.PTERMID;
   }
 
   onSelectedSpecialService(value: SpecialService) {
-    this.EntityPM.SpecialServiceId = value.SERVLEVEL_ID;
+    // this.EntityPM.SpecialServiceId = value.SERVLEVEL_ID;
   }
 
   addProperty() {
