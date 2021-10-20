@@ -1576,8 +1576,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
             //dus._MyDeclarationPM.Id;
         }
 
-
-        private void UpdateTrucker()
+        public void UpdateTrucker()
         {
             if (currentDeclarationCourierStatusPM == null)
             {
