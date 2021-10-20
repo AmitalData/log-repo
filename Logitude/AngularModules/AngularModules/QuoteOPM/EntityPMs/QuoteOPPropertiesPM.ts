@@ -74,6 +74,11 @@ export class QuoteOPPropertiesPM {
     public set MainCarriageCarrierId(newValue: string) { if (this.mainCarriageCarrierId != newValue) { this.mainCarriageCarrierId = newValue; this.MarkAsDirty("MainCarriageCarrierId"); } }
        
 	 
+    private fromAddressId: string;
+    public get FromAddressId() { return this.fromAddressId; }
+    public set FromAddressId(newValue: string) { if (this.fromAddressId != newValue) { this.fromAddressId = newValue; this.MarkAsDirty("FromAddressId"); } }
+       
+	 
     private fromAddressZipCode: string;
     public get FromAddressZipCode() { return this.fromAddressZipCode; }
     public set FromAddressZipCode(newValue: string) { if (this.fromAddressZipCode != newValue) { this.fromAddressZipCode = newValue; this.MarkAsDirty("FromAddressZipCode"); } }
@@ -87,6 +92,11 @@ export class QuoteOPPropertiesPM {
     private fromAddressCity: string;
     public get FromAddressCity() { return this.fromAddressCity; }
     public set FromAddressCity(newValue: string) { if (this.fromAddressCity != newValue) { this.fromAddressCity = newValue; this.MarkAsDirty("FromAddressCity"); } }
+       
+	 
+    private toAddressId: string;
+    public get ToAddressId() { return this.toAddressId; }
+    public set ToAddressId(newValue: string) { if (this.toAddressId != newValue) { this.toAddressId = newValue; this.MarkAsDirty("ToAddressId"); } }
        
 	 
     private toAddressCity: string;
