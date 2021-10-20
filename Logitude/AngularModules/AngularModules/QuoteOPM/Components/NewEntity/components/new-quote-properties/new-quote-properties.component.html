@@ -42,7 +42,7 @@
                 <i [class]="'pi pi-angle-' + (pickup.hidden ? 'down': 'right')"
                   (click)='pickup.hidden = !pickup.hidden'></i>
                 <div #pickup hidden class="accordion-contect">
-                  <app-new-quote-pickup [formGroup]='formGroup' [EntityPM]='EntityPM'></app-new-quote-pickup>
+                  <app-new-quote-pickup [propertyForm]='x' [qouteForm]='formGroup' [EntityPM]='EntityPM'></app-new-quote-pickup>
                 </div>
               </div>
             </div>
@@ -67,10 +67,11 @@
             <div class="p-field">
               <div class="p-field accordion-container">
                 <h4>{{"QuoteOP.S.NewQuote.Delivery" | TextCodeTranslationPipe}}</h4>
-                <i [class]="'pi pi-angle-' + (delivery.hidden ? 'down': 'right')"
-                  (click)='delivery.hidden = !delivery.hidden'></i>
+                <i class='pi pi-angle-down'></i>
+                <!-- <i [class]="'pi pi-angle-' + (delivery.hidden ? 'down': 'right')"
+                  (click)='delivery.hidden = !delivery.hidden'></i> -->
                 <div #delivery hidden class="accordion-contect">
-                  <app-new-quote-delivery [formGroup]='formGroup' [EntityPM]='EntityPM'></app-new-quote-delivery>
+                  <app-new-quote-delivery [propertyForm]='x' [qouteForm]='formGroup' [EntityPM]='EntityPM'></app-new-quote-delivery>
                 </div>
               </div>
             </div>

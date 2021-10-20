@@ -1,10 +1,10 @@
 <!-- <h2 class="sub-header">{{"QuoteOP.S.NewQuote.Delivery" | TextCodeTranslationPipe}}</h2> -->
-<div [formGroup]='formGroup' class="">
+<div [formGroup]='propertyForm' class="">
     <div [hidden]='Address'>
-        <p-checkbox formControlName='deliveryInclude' [binary]="true" label='Include Delivery'
+        <p-checkbox formControlName='deliveryInclude' [binary]="true" label='{{"QuoteOP.O.NewQuote.IncludeDelivery" | TextCodeTranslationPipe}}'
             (onChange)="includeCheckboxChange($event)"></p-checkbox>
 
-        <div [hidden]='!formGroup.controls.deliveryInclude.value' class='container'>
+        <div [hidden]='!propertyForm.controls.deliveryInclude.value' class='container'>
             <h5>{{"QuoteOP.S.NewQuote.DeliveryAddress" | TextCodeTranslationPipe}}</h5>
             <div class="p-fluid">
                 <div class="p-field">
@@ -17,7 +17,7 @@
                 <div class="p-field">
                     <!-- <app-autocomplate-table [columnsShow]="['Name', 'LocalName', 'Country', 'State']" [data]='cityList'
                     [fieldShow]='"Name"' [label]='"QuoteOP.S.NewQuote.City" | TextCodeTranslationPipe'
-                    [controlName]='"deliveryCity"' [formGroup]='formGroup' (onSelect)='onSelectedCity($event)'>
+                    [controlName]='"deliveryCity"' [formGroup]='propertyForm' (onSelect)='onSelectedCity($event)'>
                 </app-autocomplate-table> -->
                     <label for="deliveryZipCode">{{"QuoteOP.S.NewQuote.City" | TextCodeTranslationPipe}}</label>
                     <input formControlName='deliveryCity' id="deliveryZipCode" pInputText />
@@ -26,7 +26,7 @@
                 <div class="p-field">
                     <app-autocomplate-table [columnsShow]="{Code:'Code',EnglishName:'Name'}" [data]='countryList'
                         [fieldShow]='"EnglishName"' [label]='"QuoteOP.S.NewQuote.Country" | TextCodeTranslationPipe'
-                        [controlName]='"deliveryCountry"' [formGroup]='formGroup'
+                        [controlName]='"deliveryCountry"' [formGroup]='propertyForm'
                         (onSelect)='onSelectedCountry($event)'>
                     </app-autocomplate-table>
                 </div>
@@ -39,8 +39,8 @@
             <app-autocomplate-table
                 [columnsShow]="['Code', 'EnglishName', 'Address1', 'CityName', 'CountryName', 'PartnerTypeName']"
                 [data]='consigneeNames' [fieldShow]='"EnglishName"'
-                [label]="'QuoteOP.S.NewQuote.Name' | TextCodeTranslationPipe" [controlName]='"consigneeName"'
-                [formGroup]='formGroup'>
+                [label]="'QuoteOP.S.NewQuote.Name' | TextCodeTranslationPipe" [controlName]='"deliveryAddressId"'
+                [formGroup]='propertyForm'>
             </app-autocomplate-table>
         </div>
 

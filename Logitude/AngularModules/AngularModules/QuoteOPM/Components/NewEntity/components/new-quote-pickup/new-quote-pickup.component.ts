@@ -13,7 +13,8 @@ import { filterIsNotNull, NewQuoteDataService } from '../../Services/new-quote-d
   styleUrls: ['./new-quote-pickup.component.scss']
 })
 export class NewQuotePickupComponent implements OnInit {
-  @Input() formGroup: FormGroup = null as any;
+  @Input() qouteForm: FormGroup
+  @Input() propertyForm: FormGroup
   @Input() EntityPM: QuoteOPPM = null as any;
 
   countryList: CountryList[] = []
@@ -31,22 +32,22 @@ export class NewQuotePickupComponent implements OnInit {
     this.InitCity();
     this.initShipperNames()
   }
-
-  private async initShipperNames() {
-    this.shipperNames = await this.newQuoteDataService.getCardsTable();
-  }
-
+  
   private async InitCountries() {
     this.countryList = await this.newQuoteDataService.getCounriesTable();
   }
-
+  
   private async InitCity() {
     this.cityListAll = await this.newQuoteDataService.getCityTable();
     this.cityList = this.cityListAll;
   }
 
+  private async initShipperNames() {
+    this.shipperNames = await this.newQuoteDataService.getCardsTable();
+  }
+
   ngOnChanges(changes: SimpleChanges) {
-    if (!this.formGroup.contains('pickupInclude')) {
+    if (!this.propertyForm.contains('pickupInclude')) {
       this.addFormControls()
       this.subscribeCtrls();
       this.initDefaultValue()
@@ -54,30 +55,28 @@ export class NewQuotePickupComponent implements OnInit {
   }
 
   addFormControls() {
-    this.formGroup.addControl('pickupInclude', new FormControl(''));
-    this.formGroup.addControl('pickupZipCode', new FormControl(''));
-    this.formGroup.addControl('pickupCity', new FormControl(''));
-    this.formGroup.addControl('pickupCountry', new FormControl(''));
+    this.propertyForm.addControl('pickupInclude', new FormControl(''));
+    this.propertyForm.addControl('pickupZipCode', new FormControl(''));
+    this.propertyForm.addControl('pickupCity', new FormControl(''));
+    this.propertyForm.addControl('pickupCountry', new FormControl(''));
+    this.propertyForm.addControl('pickupAddressId', new FormControl(''));
   }
 
   subscribeCtrls() {
-    this.formGroup.controls.pickupCity.valueChanges.subscribe(val => this.EntityPM.FromAddressCity = val)
-    this.formGroup.controls.pickupZipCode.valueChanges.subscribe(val => this.EntityPM.FromAddressZipCode = val);
-    this.formGroup.controls.pickupCity.valueChanges.subscribe(val => this.EntityPM.FromAddressCity = val); // need change when update field to autocomplate
-    this.formGroup.controls.shipperName.valueChanges.pipe(filterIsNotNull()).subscribe(async (shipperName: CardList) =>
+    this.qouteForm.controls.shipperName.valueChanges.subscribe(async (shipperName: CardList) =>
       this.Address = await this.newQuoteDataService.getAddress(shipperName.Id, shipperName.Tenant));
   }
 
   initDefaultValue() {
-    this.formGroup.controls.pickupInclude.setValue(true)
+    this.propertyForm.controls.pickupInclude.setValue(true)
   }
 
   includeCheckboxChange(e: { checked: boolean, originalEvent: PointerEvent }) {
-    if (e)
-      this.EntityPM.IncludePickUp = e.checked;
+    // if (e) 
+    //   this.EntityPM.IncludePickUp = e.checked;
   }
 
   onSelectedCountry(country: CountryList) {
-    this.EntityPM.FromAddressCountryId = country.Id;
+    // this.EntityPM.FromAddressCountryId = country.Id;
   }
 }

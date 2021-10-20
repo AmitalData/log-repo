@@ -29,11 +29,13 @@ export class NewQuotePropertiesComponent implements OnInit {
       specialService: new FormControl(),
       mainCarriageCarrier: new FormControl(),
       incoterm: new FormControl(),
+      delivery: new FormGroup({}),
+      pickup: new FormGroup({}),
     })
   }
 
-  get properties(): FormArray {
-    return this.formGroup.get('properties') as FormArray;
+  get properties(): any {
+    return this.formGroup.get('properties') as any;
   }
 
   constructor(
@@ -47,7 +49,7 @@ export class NewQuotePropertiesComponent implements OnInit {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (!this.formGroup.contains('fromPort')) {
+    if (!this.formGroup.contains('properties')) {
       this.addFormControls()
       this.subscribeTransport()
     }
