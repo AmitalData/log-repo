@@ -39,6 +39,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
         const int ShipmentTable_GetAllNonCustomShipmentsThatContainForwardingShipments = 2;
         const int ShipmentTable_GetShipmentOrders = 3;
         const int GeneralTable_WithoutCustomCondition = 0;
+        ShipmentMilestonesSyncService syncService = new ShipmentMilestonesSyncService();
 
 
         public RecordUpdated UpdateCargoTrackingDataBase(CargoTrackingUpdateDataBaseArgs cargoTrackingDataBaseArgs)
@@ -867,9 +868,11 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
                 }
                 if (cargoTrackingDataBaseArgs.BuildCargoArgs.Table.ConditionsNumber == CargoTrackingTable_MultiConditions)
                 {
-                    UpdateCargoTrackingCondition(updateCargoTrackingRecords, ShipmentTable_GetAllCustomsShipmentsThatContainForwardingShipments);
-                    UpdateCargoTrackingCondition(updateCargoTrackingRecords, ShipmentTable_GetAllNonCustomShipmentsThatContainForwardingShipments,true);
-                    UpdateCargoTrackingCondition(updateCargoTrackingRecords, ShipmentTable_GetShipmentOrders, true);
+                    BuildShipments(updateCargoTrackingRecords);
+
+                    var updatedShipmentsCount = updateCargoTrackingRecords.NumberRecordUpdated;
+                    if(updatedShipmentsCount > 0)
+                        syncService.SyncShipmentMilstones(cargoTrackingDataBaseArgs.BuildCargoArgs);
                 }
                 _recordUpdated.NumberOfRecordUpdated = updateCargoTrackingRecords.NumberRecordUpdated;
                 _recordUpdated.NumberOfRecordUpdated2 = updateCargoTrackingRecords.NumberRecordUpdated2;
@@ -878,8 +881,14 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
             return _recordUpdated;
         }
 
+        private void BuildShipments(UpdateCargoTrackingRecords updateCargoTrackingRecords)
+        {
+            UpdateCargoTrackingCondition(updateCargoTrackingRecords, ShipmentTable_GetAllCustomsShipmentsThatContainForwardingShipments);
+            UpdateCargoTrackingCondition(updateCargoTrackingRecords, ShipmentTable_GetAllNonCustomShipmentsThatContainForwardingShipments, true);
+            UpdateCargoTrackingCondition(updateCargoTrackingRecords, ShipmentTable_GetShipmentOrders, true);
+        }
 
-     
+
         private void UpdateCargoTrackingCondition(UpdateCargoTrackingRecords updateCargoTrackingRecords,int CurrentCondition, bool IsUpadteWaterMark = false)
         {
             updateCargoTrackingRecords.CargoTrackingUpdateDataBaseArgs.BuildCargoArgs.Table.CurrentCondition = CurrentCondition;
