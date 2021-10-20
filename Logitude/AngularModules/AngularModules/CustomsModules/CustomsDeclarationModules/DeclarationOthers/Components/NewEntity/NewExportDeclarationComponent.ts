@@ -93,6 +93,7 @@ export class NewExportDeclarationComponent extends BaseComponent implements OnIn
 
     isOkButtonClicked: boolean = false;
     OkButtonClicked() {
+        this.CurrentSession.StartBusyIndicator("");
         this.isOkButtonClicked = true;
           var idIndex = this.CurrentSession.GetNewId("RadioButton");
         var errors: string[] = [];
@@ -112,6 +113,7 @@ export class NewExportDeclarationComponent extends BaseComponent implements OnIn
        
         if (errors.length > 0) {
             this.ValidationErrorsList = errors;
+            this.CurrentSession.StopBusyIndicator();
             return;
         }
 
@@ -125,6 +127,7 @@ export class NewExportDeclarationComponent extends BaseComponent implements OnIn
 
     SubmitChanges() {
         this.CurrentSession.CloseCurrentWindowEmit("ok");
+        this.CurrentSession.StopBusyIndicator();
         var Consignment  = new ConsignmentPM(this.EntityPM);
 
         Consignment.ConsignmentType = 'E';
