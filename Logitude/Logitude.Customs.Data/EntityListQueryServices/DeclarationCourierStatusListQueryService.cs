@@ -181,6 +181,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                                   MasterGatewayPortCode = cm.GatewayPortCode,
                                                                   MasterEstimatedArrivalDate = cm.EstimatedArrivalDate,
                                                                   MasterStorageSiteCode = cm.StorageSiteCode,
+                                                                  DeclarationStorageSiteCode = d.StorageSiteCode,
                                                                   MasterHAWB = cm.HAWB,
                                                                   CustomFileNo = d.CustomFileNo,
                                                                   TruckerId = a.Trucker.Card.Code,

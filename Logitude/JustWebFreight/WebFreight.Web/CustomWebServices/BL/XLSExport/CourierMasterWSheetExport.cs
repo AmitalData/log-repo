@@ -32,7 +32,7 @@ namespace WebFreight.Web.CustomWebServices.BL.XLSExport
                     r.MasterCreateDateTime,
                     r.MasterGatewayPortCode,
                     r.MasterEstimatedArrivalDate,
-                    r.MasterStorageSiteCode,
+                    r.DeclarationStorageSiteCode,
                     r.CourierHawb,
                     r.ProcedureCurrentName,
                     r.FastIndividualProcessCode,
@@ -229,7 +229,7 @@ namespace WebFreight.Web.CustomWebServices.BL.XLSExport
                     newrow[4] = r.MasterCreateDateTime;
                     newrow[5] = r.MasterGatewayPortCode;
                     newrow[6] = r.MasterEstimatedArrivalDate;
-                    newrow[7] = r.MasterStorageSiteCode;
+                    newrow[7] = r.DeclarationStorageSiteCode;
                     newrow[8] = r.CourierHawb;
                     newrow[9] = r.ProcedureCurrentName;
                     newrow[10] = r.FastIndividualProcessCode;
