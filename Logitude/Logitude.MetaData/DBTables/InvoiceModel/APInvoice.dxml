@@ -487,6 +487,13 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="GlobalTaxCalculation"
+    Type="varchar"
+    Size="3">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="VendorId"
     ReferencedTable="Cards"
@@ -541,6 +548,11 @@
     ForeignKeyColumn="ApprovedByUserId"
     ReferencedTable="Users"
     ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="GlobalTaxCalculation"
+    ReferencedTable="QBOGlobalTaxCalculations"
+    ReferencedColumn="Code"
     ReferencedTableSchema="dbo" />
   <Index
     Columns="Tenant,StatusCode" />

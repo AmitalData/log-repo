@@ -61,7 +61,7 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
     DisplayFieldsFromList:string;
     DisplayLocalFieldsFromList:string;
     BillToLovSizeForFullAccounting:number;
-    IsAccountingActivated:boolean = false;
+    IsAccountingActivated: boolean = false;
     constructor(private entityArgs: EntityArgs) {
         super();
        // this.CurrentSession.StartBusyIndicatorLoading();

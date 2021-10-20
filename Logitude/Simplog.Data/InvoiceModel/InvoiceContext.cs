@@ -336,6 +336,7 @@ namespace Simplog.Data.InvoiceModel
             modelBuilder.Configurations.Add(new SATPaymentMethodMap());
             modelBuilder.Configurations.Add(new BankAccountLiteMap());
             modelBuilder.Configurations.Add(new SATTransferStatusMap());
+            modelBuilder.Configurations.Add(new QBOGlobalTaxCalculationMap());
             modelBuilder.Configurations.Add(new SATInvoiceStatusMap());
             modelBuilder.Configurations.Add(new CustomsShipperMap());
             modelBuilder.Configurations.Add(new ARPaymentChequeReplicaMap());
@@ -480,6 +481,7 @@ namespace Simplog.Data.InvoiceModel
         public IDbSet<ARPaymentChequeReplica> ARPaymentChequeReplicas { get; set; }
         public IDbSet<ARPaymentChequeStatusReplica> ARPaymentChequeStatusReplicas { get; set; }
         public IDbSet<ARInvoiceChargesConstraint> ARInvoiceChargesConstraints { get; set; }
+        public IDbSet<QBOGlobalTaxCalculation> QBOGlobalTaxCalculations { get; set; }
 
         public void DetectChanges()
         {

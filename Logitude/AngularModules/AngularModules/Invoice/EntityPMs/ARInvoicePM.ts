@@ -383,6 +383,11 @@ export class ARInvoicePM {
     public set MasterNumber(newValue: string) { if (this.masterNumber != newValue) { this.masterNumber = newValue; this.MarkAsDirty("MasterNumber"); } }
        
 	 
+    private mainEntityMasterShipmentNumbers: string;
+    public get MainEntityMasterShipmentNumbers() { return this.mainEntityMasterShipmentNumbers; }
+    public set MainEntityMasterShipmentNumbers(newValue: string) { if (this.mainEntityMasterShipmentNumbers != newValue) { this.mainEntityMasterShipmentNumbers = newValue; this.MarkAsDirty("MainEntityMasterShipmentNumbers"); } }
+       
+	 
     private description: string;
     public get Description() { return this.description; }
     public set Description(newValue: string) { if (this.description != newValue) { this.description = newValue; this.MarkAsDirty("Description"); } }
@@ -1090,6 +1095,11 @@ export class ARInvoicePM {
     private partnerId: string;
     public get PartnerId() { return this.partnerId; }
     public set PartnerId(newValue: string) { if (this.partnerId != newValue) { this.partnerId = newValue; this.MarkAsDirty("PartnerId"); } }
+       
+	 
+    private globalTaxCalculation: string;
+    public get GlobalTaxCalculation() { return this.globalTaxCalculation; }
+    public set GlobalTaxCalculation(newValue: string) { if (this.globalTaxCalculation != newValue) { this.globalTaxCalculation = newValue; this.MarkAsDirty("GlobalTaxCalculation"); } }
        
 	 
 

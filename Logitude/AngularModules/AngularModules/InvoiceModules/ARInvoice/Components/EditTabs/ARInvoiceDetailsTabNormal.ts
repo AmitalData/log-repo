@@ -35,6 +35,7 @@ import {ConfirmWindow} from '../../../../Controls/Windows/ConfirmWindow';
 import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator';
 import { CodeNameClass } from '../../../../Infrastructure/DataContracts/CodeNameClass';
 import { ARInvoiceStockLinePM } from '../../../../Invoice/EntityPMs/ARInvoiceStockLinePM';
+import { AccountingSettingListService } from '../../../../Common/Services/StandardLists/AccountingSettingListService';
 
 @Component({
     
@@ -58,7 +59,6 @@ export class ARInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
     private CurrentSession = SessionLocator.SelectedSession;
     public InvoiceNumberFilterList: CodeNameClass[] = [];
     public NumbersPipe: NumbersPipe;
-
     constructor(private entityArgs: EntityArgs) {
         super();
         this.NumbersPipe = new NumbersPipe();
@@ -77,7 +77,6 @@ export class ARInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
         this.Listen();
 
         this.BuildEntityWarnings();
-
         if (FeatureLocator.HasFeaturePermession("General", "General.Features.SystemCurrencies")) {
             this.IsEditExchangeRateVisible = true;
         }
@@ -1779,6 +1778,7 @@ export class ARInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
             this.ComputeTotals();
         }
     }
+
 }
 export class ARInvoiceLineItem extends BaseComponent {
     public EntityPM: ARInvoiceLinePM = null;

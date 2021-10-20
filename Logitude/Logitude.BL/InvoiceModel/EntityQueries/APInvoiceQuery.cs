@@ -178,6 +178,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                              MasterNumbers = a.MasterNumbers,
                              MasterShipmentNumbers = a.MasterShipmentNumbers,
                              HouseNumbers = a.HouseNumbers,
+                             GlobalTaxCalculation = a.GlobalTaxCalculation,
                          });          
 
             return query;
@@ -582,7 +583,8 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                         ShipmentsNumbers = a.ShipmentsNumbers, 
                                         MasterNumbers = a.MasterNumbers,
                                         MasterShipmentNumbers = a.MasterShipmentNumbers, 
-                                        HouseNumbers = a.HouseNumbers, 
+                                        HouseNumbers = a.HouseNumbers,
+                                        GlobalTaxCalculation = a.GlobalTaxCalculation,
 
                                     }).FirstOrDefault();
 
@@ -677,6 +679,8 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                         MasterNumbers = a.MasterNumbers,
                                         MasterShipmentNumbers = a.MasterShipmentNumbers,
                                         HouseNumbers = a.HouseNumbers,
+                                        GlobalTaxCalculation = a.GlobalTaxCalculation,
+
                                     }).FirstOrDefault();
 
             if(entityPM != null)
@@ -1090,6 +1094,8 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                              MasterNumbers = a.MasterNumbers,
                              MasterShipmentNumbers = a.MasterShipmentNumbers,
                              HouseNumbers = a.HouseNumbers,
+                             GlobalTaxCalculation = a.GlobalTaxCalculation,
+
                          };
 
             return result;

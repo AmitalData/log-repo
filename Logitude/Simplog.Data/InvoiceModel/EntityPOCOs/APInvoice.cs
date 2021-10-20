@@ -121,6 +121,11 @@ namespace Simplog.Data.InvoiceModel.EntityPOCOs
         public string MasterNumbers { get; set; }
         public string MasterShipmentNumbers { get; set; }
         public string HouseNumbers { get; set; }
+        public string GlobalTaxCalculation { get; set; }
+
+        [ForeignKey("GlobalTaxCalculation")]
+        public virtual QBOGlobalTaxCalculation QBOGlobalTaxCalculation { get; set; }
+
     }
 
 }

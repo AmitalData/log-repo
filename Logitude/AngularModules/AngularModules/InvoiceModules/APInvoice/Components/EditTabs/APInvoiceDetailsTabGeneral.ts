@@ -55,7 +55,7 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
     accountingActivated: boolean= false;
     DisplayFieldsFromList:string;
     DisplayLocalFieldsFromList:string;
-    VendorLovSizeForFullAccounting:number;
+    VendorLovSizeForFullAccounting: number;
     constructor(private entityArgs: EntityArgs) {
         super();
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
@@ -491,8 +491,6 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
 
         return myResult;
     }
-
-
     private isTotalInLocalCurrency: boolean = false;
     get IsTotalInLocalCurrency() { return this.isTotalInLocalCurrency; }
     set IsTotalInLocalCurrency(value: boolean) {
@@ -1993,4 +1991,6 @@ export class APInvoiceLineItem extends BaseComponent {
             logWindow.Show('./CommonModules/CommonOthers/Components/UpdateVATPercentage/UpdateVATPercentageComponent');
         }
     }
+
 }
+

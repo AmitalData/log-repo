@@ -1088,6 +1088,7 @@
     <None Include="EntityFiles\InfrastructureModel\DescriptionOfGoods.lxml" />
     <None Include="EntityFiles\InfrastructureModel\QueryExportExecutionLog.lxml" />
     <None Include="EntityFiles\InfrastructureModel\WorkerRoleName.lxml" />
+    <None Include="EntityFiles\InvoiceModel\QBOGlobalTaxCalculation.lxml" />
     <None Include="EntityFiles\QuoteModel\QuoteComputedField.lxml" />
     <None Include="EntityFiles\QuoteModel\QuoteSalesTotal.lxml" />
     <None Include="EntityFiles\QuoteModel\QuoteTemplateSectionType.lxml" />

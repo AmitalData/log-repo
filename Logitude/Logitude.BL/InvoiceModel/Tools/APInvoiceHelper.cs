@@ -312,6 +312,11 @@ namespace Logitude.BL.InvoiceModel.Tools
                     QBOBill.DocNumber = invoice.InvoiceNumber;
                     QBOBill.Id = invoice.Id;
                     QBOBill.domain = invoice.ExternalAccountingEntityId;
+                    if (!string.IsNullOrEmpty(invoice.GlobalTaxCalculation))
+                    {
+                        QBOBill.GlobalTaxCalculationSpecified = true;
+                        QBOBill.GlobalTaxCalculation = GetGlobalTaxCalculation(invoice.GlobalTaxCalculation);
+                    }
                     string notes = "";
                     if (!String.IsNullOrEmpty(invoice.MainEntityReference))
                     {
@@ -409,6 +414,11 @@ namespace Logitude.BL.InvoiceModel.Tools
                     lines = invoice.InvoiceLines.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete).ToList();
                     QBOBill.Id = invoice.Id;
                     QBOBill.domain = invoice.ExternalAccountingEntityId;
+                    if (!string.IsNullOrEmpty(invoice.GlobalTaxCalculation))
+                    {
+                        QBOBill.GlobalTaxCalculationSpecified = true;
+                        QBOBill.GlobalTaxCalculation = GetGlobalTaxCalculation(invoice.GlobalTaxCalculation);
+                    }
                     for (int i = 0; i < lines.Count; i++)
                     {
                         Line line = new Line();
@@ -683,9 +693,20 @@ namespace Logitude.BL.InvoiceModel.Tools
             communicationLogRepository.SubmitChanges();
         }
 
-
-
-
-
+        private GlobalTaxCalculationEnum GetGlobalTaxCalculation(string globalTaxCalculation)
+        {
+            if (globalTaxCalculation == "TE")
+            {
+                return GlobalTaxCalculationEnum.TaxExcluded;
+            }
+            else if (globalTaxCalculation == "TI")
+            {
+                return GlobalTaxCalculationEnum.TaxInclusive;
+            }
+            else
+            {
+                return GlobalTaxCalculationEnum.NotApplicable;
+            }
+        }
     }
 }

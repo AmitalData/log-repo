@@ -784,6 +784,13 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="GlobalTaxCalculation"
+    Type="varchar"
+    Size="3">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="CreditedByARInvoiceId"
     ReferencedTable="ARInvoices"
@@ -913,6 +920,11 @@
     ForeignKeyColumn="PartnerId"
     ReferencedTable="Cards"
     ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="GlobalTaxCalculation"
+    ReferencedTable="QBOGlobalTaxCalculations"
+    ReferencedColumn="Code"
     ReferencedTableSchema="dbo" />
   <Index
     Columns="Tenant,InvoiceDate" />

@@ -33,6 +33,7 @@ import {ShipmentPayablePM} from '../../../../Shipment/EntityPMs/ShipmentPayableP
 import {ObservableCollection} from '../../../../Infrastructure/Utilities/ObservableCollection';
 import {FeatureLocator} from '../../../../Infrastructure/Utilities/FeatureLocator';
 import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator';
+import { AccountingSettingListService } from '../../../../Common/Services/StandardLists/AccountingSettingListService';
 
 @Component({    
     templateUrl: './APInvoiceDetailsTabNormal.html',
@@ -446,6 +447,7 @@ export class APInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
             this.BuildInvoiceLines();
         }
     }
+
     BuildInvoiceLines() {
 
         this.ItemsSource.Clear();

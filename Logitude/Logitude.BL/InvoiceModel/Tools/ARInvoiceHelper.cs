@@ -649,7 +649,11 @@ namespace Logitude.BL.InvoiceModel.Tools
 
                     if (PaymentTermExternalCode != null)
                         QBOInvoice.SalesTermRef = new ReferenceType { Value = PaymentTermExternalCode };
-
+                    if (!string.IsNullOrEmpty(invoice.GlobalTaxCalculation))
+                    {
+                        QBOInvoice.GlobalTaxCalculationSpecified = true;
+                        QBOInvoice.GlobalTaxCalculation = GetGlobalTaxCalculation(invoice.GlobalTaxCalculation);
+                    }
                     System.Collections.Generic.List<Line> lineList = new List<Line>();
                     string ExternalVatTypeCodeWhereIsNotZeroPercentage = "";
                     if (this.isIndiaCountry)
@@ -744,7 +748,11 @@ namespace Logitude.BL.InvoiceModel.Tools
                     QBOInvoice.TransactionLocationType = IndiaExternalQBOStates;
                     if (PaymentTermExternalCode != null)
                         QBOInvoice.SalesTermRef = new ReferenceType { Value = PaymentTermExternalCode };
-
+                    if (!string.IsNullOrEmpty(invoice.GlobalTaxCalculation))
+                    {
+                        QBOInvoice.GlobalTaxCalculationSpecified = true;
+                        QBOInvoice.GlobalTaxCalculation = GetGlobalTaxCalculation(invoice.GlobalTaxCalculation);
+                    }
                     System.Collections.Generic.List<Line> lineList = new List<Line>();
                     string ExternalVatTypeCodeWhereIsNotZeroPercentage = "";
                     for (int i = 0; i < lines.Count; i++)
@@ -1133,10 +1141,20 @@ namespace Logitude.BL.InvoiceModel.Tools
 
             return myResult;
         }
-
-
-
-
-
+        private GlobalTaxCalculationEnum GetGlobalTaxCalculation(string globalTaxCalculation)
+        {
+            if (globalTaxCalculation == "TE")
+            {
+                return GlobalTaxCalculationEnum.TaxExcluded;
+            }
+            else if (globalTaxCalculation == "TI")
+            {
+                return GlobalTaxCalculationEnum.TaxInclusive;
+            }
+            else
+            {
+                return GlobalTaxCalculationEnum.NotApplicable;
+            }
+        }
     }
 }

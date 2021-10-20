@@ -371,6 +371,7 @@ export class APInvoiceMultipleDetailsTabComponent extends BaseComponent implemen
     ComputeTotals() {
         this.BuildTotalsCollection(true);
     }
+
     BuildTotalsCollection(isComputingTotals: boolean = false) {
         var totalsList: InvoiceTotalsClass[] = [];
         var myDataList = this.EntityPM.InvoiceMultipleShipments;
@@ -532,6 +533,7 @@ export class APInvoiceMultipleDetailsTabComponent extends BaseComponent implemen
 
         return myResult;
     }
+
 
     get SubTotalInLocalCurrency() { return this.EntityPM.SubTotalInLocalCurrency; }
     set SubTotalInLocalCurrency(value: number) {
