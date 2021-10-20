@@ -56,6 +56,7 @@ export class FullAccountingSettingList {
 	SecondPeriodsMonths: string;
 	ThirdsPeriodsMonths: string;
 	IsSecurityLevelActivated: boolean;
+	CreateRevaluationJournal: boolean;
 	
 }
  

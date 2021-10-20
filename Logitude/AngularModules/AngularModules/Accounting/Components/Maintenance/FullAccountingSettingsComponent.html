@@ -356,6 +356,19 @@
                                                         <td><div></div></td>
                                                     </tr>
 
+
+                                                    <!-- CreateRevaluationJournal  -->
+                                                    <tr class="FormFieldRow">
+                                                        <td>
+                                                            <LogLabel [ObjectFieldName]="'CreateRevaluationJournal'" [ObjectTableName]="ObjectTableName"
+                                                                      [DataContext]="DataContext"></LogLabel>
+                                                        </td>
+
+                                                        <td colspan="2">
+                                                            <CheckBox  [IsChecked]="CreateRevaluationJournal" (Checked)="CreateRevaluationJournal = $event"></CheckBox>
+                                                        </td>
+                                                    </tr>
+
                                                 </table>
                                             </td>
 
