@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 {
    public class ARInvoiceUpdateClass
    {  		
-		public const string HashString = "d313feb3ebdd88e42e6b661d0a7609f3";
+		public const string HashString = "1b539a6b42ba24b3e3a858d9e778a655";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -8782,7 +8782,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "GlobalTaxCalculation",
-					  						DefaultText =  "Global Tax Calculation",
+					  						DefaultText =  "Global Tax Calculation ",
 					  						ListFieldLable =  "GlobalTaxCalculationListLable",
 					  						ListLableDefaultText =  "Global Tax Calculation",
 					  						IsMaxLength =  false,
