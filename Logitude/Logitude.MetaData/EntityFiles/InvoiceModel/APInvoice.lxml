@@ -9731,7 +9731,7 @@
     InActive="false"
     DisplayLongName="false"
     FullFieldLable="&quot;GlobalTaxCalculation&quot;"
-    DefaultText="&quot;Global Tax Calculation&quot;"
+    DefaultText="&quot;Global Tax Calculation &quot;"
     IsNullable="false"
     IsForeignKey="true"
     ForeignEntity="QBOGlobalTaxCalculation"

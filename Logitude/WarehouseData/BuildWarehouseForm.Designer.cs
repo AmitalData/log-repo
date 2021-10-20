@@ -136,6 +136,8 @@
             this.label49 = new System.Windows.Forms.Label();
             this.FactARInvoicesLabel = new System.Windows.Forms.Label();
             this.label51 = new System.Windows.Forms.Label();
+            this.label46 = new System.Windows.Forms.Label();
+            this.DimShipmentSubTypesLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // BuildWarehouseData
@@ -153,7 +155,7 @@
             // BuildDataFirstTime
             // 
             this.BuildDataFirstTime.Location = new System.Drawing.Point(299, 79);
-            this.BuildDataFirstTime.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.BuildDataFirstTime.Margin = new System.Windows.Forms.Padding(4);
             this.BuildDataFirstTime.Name = "BuildDataFirstTime";
             this.BuildDataFirstTime.Size = new System.Drawing.Size(645, 28);
             this.BuildDataFirstTime.TabIndex = 17;
@@ -190,7 +192,7 @@
             // DestinationConnectionlTextBox
             // 
             this.DestinationConnectionlTextBox.Location = new System.Drawing.Point(299, 47);
-            this.DestinationConnectionlTextBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.DestinationConnectionlTextBox.Margin = new System.Windows.Forms.Padding(4);
             this.DestinationConnectionlTextBox.Name = "DestinationConnectionlTextBox";
             this.DestinationConnectionlTextBox.Size = new System.Drawing.Size(644, 22);
             this.DestinationConnectionlTextBox.TabIndex = 40;
@@ -199,7 +201,7 @@
             // SourceConnectionlTextBox
             // 
             this.SourceConnectionlTextBox.Location = new System.Drawing.Point(299, 11);
-            this.SourceConnectionlTextBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.SourceConnectionlTextBox.Margin = new System.Windows.Forms.Padding(4);
             this.SourceConnectionlTextBox.Name = "SourceConnectionlTextBox";
             this.SourceConnectionlTextBox.Size = new System.Drawing.Size(644, 22);
             this.SourceConnectionlTextBox.TabIndex = 39;
@@ -1446,11 +1448,37 @@
             this.label51.TabIndex = 211;
             this.label51.Text = "Fact ARInvoice";
             // 
+            // label46
+            // 
+            this.label46.AutoSize = true;
+            this.label46.BackColor = System.Drawing.SystemColors.Control;
+            this.label46.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label46.ForeColor = System.Drawing.Color.CornflowerBlue;
+            this.label46.Location = new System.Drawing.Point(760, 778);
+            this.label46.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label46.Name = "label46";
+            this.label46.Size = new System.Drawing.Size(283, 25);
+            this.label46.TabIndex = 213;
+            this.label46.Text = "Dimension ShipmentSubTypes";
+            // 
+            // DimShipmentSubTypesLabel
+            // 
+            this.DimShipmentSubTypesLabel.AutoSize = true;
+            this.DimShipmentSubTypesLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.DimShipmentSubTypesLabel.ForeColor = System.Drawing.Color.CornflowerBlue;
+            this.DimShipmentSubTypesLabel.Location = new System.Drawing.Point(1051, 778);
+            this.DimShipmentSubTypesLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.DimShipmentSubTypesLabel.Name = "DimShipmentSubTypesLabel";
+            this.DimShipmentSubTypesLabel.Size = new System.Drawing.Size(0, 25);
+            this.DimShipmentSubTypesLabel.TabIndex = 214;
+            // 
             // BuildWarehouseForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1789, 859);
+            this.Controls.Add(this.DimShipmentSubTypesLabel);
+            this.Controls.Add(this.label46);
             this.Controls.Add(this.FactARInvoicesLabel);
             this.Controls.Add(this.label51);
             this.Controls.Add(this.DimContactsLabel);
@@ -1559,7 +1587,7 @@
             this.Controls.Add(this.SourceConnectionlabel);
             this.Controls.Add(this.BuildWarehouseData);
             this.Controls.Add(this.BuildDataFirstTime);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "BuildWarehouseForm";
             this.Text = "Warehouse Data";
             this.ResumeLayout(false);
@@ -1677,6 +1705,8 @@
         private System.Windows.Forms.Label label49;
         private System.Windows.Forms.Label FactARInvoicesLabel;
         private System.Windows.Forms.Label label51;
+        private System.Windows.Forms.Label label46;
+        private System.Windows.Forms.Label DimShipmentSubTypesLabel;
     }
 }
 

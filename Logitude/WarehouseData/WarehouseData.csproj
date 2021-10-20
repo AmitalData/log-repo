@@ -242,6 +242,9 @@
     <Content Include="WarehouseScript\BuildWarehouse\BuildShipmentTypeDimensionTable.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="WarehouseScript\BuildWarehouse\BuildShipmentSubTypeDimensionTable.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="WarehouseScript\BuildWarehouse\BuildSpecialServicesTypeDimensionTable.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -338,6 +341,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="WarehouseScript\IncrementalWarehouse\UpdateShipmentTypeDimensionTable.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="WarehouseScript\IncrementalWarehouse\UpdateShipmentSubTypeDimensionTable.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="WarehouseScript\IncrementalWarehouse\UpdateSpecialServicesTypeDimensionTable.sql">
