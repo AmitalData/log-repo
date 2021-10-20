@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 {
    public class QBOGlobalTaxCalculationUpdateClass
    {  		
-		public const string HashString = "670477bca19c7c6504e588e415c7331a";
+		public const string HashString = "c602e84b3fff46b0aa3aa80699399abb";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -98,9 +98,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			      				    HasFiltersMenu =  false,
 			      				    IsEditable =  false,
 			      				    IsNewWizard =  false,
-			      				    LookUp1 =  "Code",
+			      				    LookUp1 =  "Name",
 			      				    LookUp2 =  "Name",
-			      				    LovDisplayMemberPath =  "Code",
+			      				    LovDisplayMemberPath =  "Name",
 			      				    LovDisplayMemberPathLocal =  "Name",
 			      				    KeyPropertyPath =  "Code",
 			      				    AutoCompleteSearchWindow =  false,
@@ -123,7 +123,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "QBO Global Tax Calculations",
-			      				    Code =  "18d8",
+			      				    Code =  "767a",
 			      				    Name =  " Query Group",
 			      				    CloseTableCode =  "Code",
 			      				    CloseTableName =  "Name",
