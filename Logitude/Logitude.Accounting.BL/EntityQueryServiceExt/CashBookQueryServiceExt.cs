@@ -41,5 +41,12 @@ namespace Logitude.Accounting.BL.EntityQueryServiceExt
             return query.GetListByPaymentAndCurrencyAndBranch(code,currencyId,branch,tenant);
         }
 
+        public bool CheckIfCashbookLineCreatedForPaymentCheque(string cashBookId, string paymentChequeId, int tenant)
+        {
+            CashBookQueryService query = new CashBookQueryService(tenant);
+            return query.CheckIfCashbookLineCreatedForPaymentCheque(cashBookId, paymentChequeId, tenant);
+
+        }
+
     }
 }

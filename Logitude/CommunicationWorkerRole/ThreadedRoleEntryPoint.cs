@@ -495,13 +495,14 @@ namespace CommunicationWorkerRole
             {
                 BatchServicesDefinitions = BatchServicesDefinitions.Where(r => r.ClassName == "LogMessagesWorkerRole" || r.ClassName == "CustomsSchedularWR").ToList();
             }
-            var reportsTest = false;
+            var reportsTest = true;
 
             if (reportsTest)
             {
                 
-                   BatchServicesDefinitions = BatchServicesDefinitions.Where(r => r.ClassName == "BatchTaskExecutionWR").ToList();
+                   BatchServicesDefinitions = BatchServicesDefinitions.Where(r => r.ClassName == "AccountingJournalApproveWR").ToList();
             }
+            
             if(ActiveWorkers != null && ActiveWorkers.Length > 0)
             {
                 BatchServicesDefinitions = BatchServicesDefinitions.Where(r => ActiveWorkers.Contains(r.Code)).ToList();

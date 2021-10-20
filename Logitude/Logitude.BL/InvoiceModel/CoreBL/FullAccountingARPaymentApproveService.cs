@@ -204,7 +204,7 @@ namespace Logitude.BL.InvoiceModel.CoreBL
                 SubmitARPaymentCheque(arPaymentcheque);
                 return arPaymentcheque;
             }
-            return null;
+            return InitializeARPaymentChequeFromReplica(arpaymentPM, chequeReplica);
 
         }
 
@@ -299,7 +299,8 @@ namespace Logitude.BL.InvoiceModel.CoreBL
                 ChangeSetOp = ChangeSetOperation.Insert,
                 StatusCode = "1", // In Cashbook  
                 ExchangeRate = (decimal)arpaymentPM.PaymentCurrencyExchangeRate,
-                PaymentNumber = arpaymentPM.PaymentNo
+                PaymentNumber = arpaymentPM.PaymentNo,
+                Id = chequeReplica.Id,
             };
             return arPaymentcheque;
         }
@@ -342,7 +343,11 @@ namespace Logitude.BL.InvoiceModel.CoreBL
         private void CreateCashbookLine(ARPaymentChequePM aRPaymentCheque)
         {
             CashBookLinePM cashBookLine = CreateCashbookLineForCheque(aRPaymentCheque);
-            SubmitCashbookLine(cashBookLine);
+            ICashBookQueryServiceExt cashBookQueryService = ContainerAccessor.Container.Resolve(typeof(ICashBookQueryServiceExt), "CashBookQueryServiceExt", new ParameterOverride("", 1)) as ICashBookQueryServiceExt;
+            if (!cashBookQueryService.CheckIfCashbookLineCreatedForPaymentCheque(cashBookLine.CashBookId, cashBookLine.ARPChequeId, cashBookLine.Tenant))
+            {
+                SubmitCashbookLine(cashBookLine);
+            }
         }
 
         private CashBookLinePM CreateCashbookLineForCheque(ARPaymentChequePM aRPaymentCheque)
