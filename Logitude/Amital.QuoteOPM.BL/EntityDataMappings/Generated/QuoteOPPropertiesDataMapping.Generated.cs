@@ -56,9 +56,11 @@ namespace Amital.QuoteOPM.BL.EntityDataMappings
 	         IncotermId, 
 	         SpecialServiceID, 
 	         MainCarriageCarrierId, 
+	         FromAddressId, 
 	         FromAddressZipCode, 
 	         FromAddressCountryId, 
 	         FromAddressCity, 
+	         ToAddressId, 
 	         ToAddressCity, 
 	         ToAddressCountryId, 
 	         ToAddressZipCode,
@@ -115,6 +117,11 @@ namespace Amital.QuoteOPM.BL.EntityDataMappings
 				entityPOCO.MainCarriageCarrierId = entityPM.MainCarriageCarrierId;
 			}
 			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FromAddressId))
+            {
+				entityPOCO.FromAddressId = entityPM.FromAddressId;
+			}
+			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FromAddressZipCode))
             {
 				entityPOCO.FromAddressZipCode = entityPM.FromAddressZipCode;
@@ -128,6 +135,11 @@ namespace Amital.QuoteOPM.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FromAddressCity))
             {
 				entityPOCO.FromAddressCity = entityPM.FromAddressCity;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ToAddressId))
+            {
+				entityPOCO.ToAddressId = entityPM.ToAddressId;
 			}
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ToAddressCity))
@@ -201,6 +213,11 @@ namespace Amital.QuoteOPM.BL.EntityDataMappings
 					entityPM.MainCarriageCarrierId = entityPOCO.MainCarriageCarrierId;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.FromAddressId))
+            {
+					entityPM.FromAddressId = entityPOCO.FromAddressId;
+            }
+
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.FromAddressZipCode))
             {
 					entityPM.FromAddressZipCode = entityPOCO.FromAddressZipCode;
@@ -214,6 +231,11 @@ namespace Amital.QuoteOPM.BL.EntityDataMappings
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.FromAddressCity))
             {
 					entityPM.FromAddressCity = entityPOCO.FromAddressCity;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ToAddressId))
+            {
+					entityPM.ToAddressId = entityPOCO.ToAddressId;
             }
 
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ToAddressCity))
@@ -282,6 +304,11 @@ namespace Amital.QuoteOPM.BL.EntityDataMappings
                 oldEntityPM.MainCarriageCarrierId = entityPM.MainCarriageCarrierId;
             }
 			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FromAddressId))
+            {
+                oldEntityPM.FromAddressId = entityPM.FromAddressId;
+            }
+			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FromAddressZipCode))
             {
                 oldEntityPM.FromAddressZipCode = entityPM.FromAddressZipCode;
@@ -295,6 +322,11 @@ namespace Amital.QuoteOPM.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FromAddressCity))
             {
                 oldEntityPM.FromAddressCity = entityPM.FromAddressCity;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ToAddressId))
+            {
+                oldEntityPM.ToAddressId = entityPM.ToAddressId;
             }
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ToAddressCity))
