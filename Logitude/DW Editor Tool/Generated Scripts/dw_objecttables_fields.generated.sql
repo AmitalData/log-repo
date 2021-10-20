@@ -763,6 +763,35 @@ declare @DIM_ShipmentStatusesAutomaticLastUpdateDateNewId varchar(15)
 execute usp_GetNextTableIdValue @DIM_ShipmentStatusesAutomaticLastUpdateDateNewId OUTPUT,'DWObjectField' 
 insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree,CannotFilter,IsCustom,DontDisplayInView,IsMultipleSelection) Values(@DIM_ShipmentStatusesAutomaticLastUpdateDateNewId,0,'DIM_ShipmentStatuses','[Automatic Last Update Date]','Last Update Date','DateTime','false',0,0,'false','false','true','false','false','false','false','false')  
 ------------------------------------------------------------------------------------
+declare @DIM_ShipmentSubTypesNewId varchar(15)
+execute usp_GetNextTableIdValue @DIM_ShipmentSubTypesNewId OUTPUT,'DWObjectTable' 
+insert into DWObjectTables(Id,Tenant,IndexesXml,Code,Name,TypeCode,IsClosed,DefaultFilterBy,HasPivotColumn,HasCustomFields,MaxNumberOfCustomFields) Values(@DIM_ShipmentSubTypesNewId,0,'','DIM_ShipmentSubTypes','DIM_ShipmentSubTypes','Dimension','false','[Name]','false','false',0)  
+--Fields --
+declare @DIM_ShipmentSubTypesId_NumberNewId varchar(15)
+execute usp_GetNextTableIdValue @DIM_ShipmentSubTypesId_NumberNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree,CannotFilter,IsCustom,DontDisplayInView,IsMultipleSelection) Values(@DIM_ShipmentSubTypesId_NumberNewId,0,'DIM_ShipmentSubTypes','[Id_Number]','Id_Number','Integer','true',0,0,'true','false','false','false','false','false','false','false')  
+declare @DIM_ShipmentSubTypesIdNewId varchar(15)
+execute usp_GetNextTableIdValue @DIM_ShipmentSubTypesIdNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree,CannotFilter,IsCustom,DontDisplayInView,IsMultipleSelection) Values(@DIM_ShipmentSubTypesIdNewId,0,'DIM_ShipmentSubTypes','[Id]','Id','Text','true',0,15,'false','false','false','false','false','false','true','false')  
+declare @DIM_ShipmentSubTypesNameNewId varchar(15)
+execute usp_GetNextTableIdValue @DIM_ShipmentSubTypesNameNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree,CannotFilter,IsCustom,DontDisplayInView,IsMultipleSelection) Values(@DIM_ShipmentSubTypesNameNewId,0,'DIM_ShipmentSubTypes','[Name]','Name','Text','true',0,60,'false','false','true','false','false','false','false','false')  
+declare @DIM_ShipmentSubTypesSourceTenantNewId varchar(15)
+execute usp_GetNextTableIdValue @DIM_ShipmentSubTypesSourceTenantNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree,CannotFilter,IsCustom,ViewFieldDisplayName,DontDisplayInView,IsMultipleSelection) Values(@DIM_ShipmentSubTypesSourceTenantNewId,0,'DIM_ShipmentSubTypes','[Source Tenant]','Source Tenant','Integer','true',0,0,'false','false','false','false','false','false','Tenant','false','false')  
+declare @DIM_ShipmentSubTypesParentTenantNewId varchar(15)
+execute usp_GetNextTableIdValue @DIM_ShipmentSubTypesParentTenantNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree,CannotFilter,IsCustom,DontDisplayInView,IsMultipleSelection) Values(@DIM_ShipmentSubTypesParentTenantNewId,0,'DIM_ShipmentSubTypes','[Parent Tenant]','Parent Tenant','Integer','true',0,0,'false','false','false','false','false','false','true','false')  
+declare @DIM_ShipmentSubTypesAutomaticLastUpdateDateNewId varchar(15)
+execute usp_GetNextTableIdValue @DIM_ShipmentSubTypesAutomaticLastUpdateDateNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree,CannotFilter,IsCustom,DontDisplayInView,IsMultipleSelection) Values(@DIM_ShipmentSubTypesAutomaticLastUpdateDateNewId,0,'DIM_ShipmentSubTypes','[Automatic Last Update Date]','Last Update Date','DateTime','false',0,0,'false','false','true','false','false','false','false','false')  
+declare @DIM_ShipmentSubTypesInActiveNewId varchar(15)
+execute usp_GetNextTableIdValue @DIM_ShipmentSubTypesInActiveNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree,CannotFilter,IsCustom,DontDisplayInView,IsMultipleSelection) Values(@DIM_ShipmentSubTypesInActiveNewId,0,'DIM_ShipmentSubTypes','[InActive]','InActive','Boolean','false',0,0,'false','false','true','false','false','false','false','false')  
+declare @DIM_ShipmentSubTypesCodeNewId varchar(15)
+execute usp_GetNextTableIdValue @DIM_ShipmentSubTypesCodeNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree,CannotFilter,IsCustom,DontDisplayInView,IsMultipleSelection) Values(@DIM_ShipmentSubTypesCodeNewId,0,'DIM_ShipmentSubTypes','[Code]','Code','Text','true',0,5,'false','false','true','false','false','false','false','false')  
+------------------------------------------------------------------------------------
 declare @DIM_SpecialServicesTypesNewId varchar(15)
 execute usp_GetNextTableIdValue @DIM_SpecialServicesTypesNewId OUTPUT,'DWObjectTable' 
 insert into DWObjectTables(Id,Tenant,IndexesXml,Code,Name,TypeCode,IsClosed,DefaultFilterBy,HasPivotColumn) Values(@DIM_SpecialServicesTypesNewId,0,'','DIM_SpecialServicesTypes','DIM_SpecialServicesTypes','Dimension','false','[English Name]','false')  
@@ -1050,7 +1079,7 @@ execute usp_GetNextTableIdValue @Fact_ARInvoicesShipmentTypeNewId OUTPUT,'DWObje
 insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,DimensionTableCode,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,OriginalObjectFieldCode,DontDisplayInView,IsMultipleSelection) Values(@Fact_ARInvoicesShipmentTypeNewId,0,'Fact_ARInvoices','[Shipment Type]','Shipment Type','Dimension','true',0,40,'DIM_Types','false','false','true','General','true','false','false','Shipment.ShipmentTypeId','false','false')  
 declare @Fact_ARInvoicesShipmentSubTypeNewId varchar(15)
 execute usp_GetNextTableIdValue @Fact_ARInvoicesShipmentSubTypeNewId OUTPUT,'DWObjectField' 
-insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,OriginalObjectFieldCode,DontDisplayInView,IsMultipleSelection) Values(@Fact_ARInvoicesShipmentSubTypeNewId,0,'Fact_ARInvoices','[Shipment Sub Type]','Shipment Sub Type','Text','false',0,15,'false','false','true','General','false','false','false','Shipment.ShipmentSubTypeId','false','false')  
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,DimensionTableCode,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,OriginalObjectFieldCode,DontDisplayInView,IsMultipleSelection) Values(@Fact_ARInvoicesShipmentSubTypeNewId,0,'Fact_ARInvoices','[Shipment Sub Type]','Shipment Sub Type','Dimension','false',0,15,'DIM_ShipmentSubTypes','false','false','true','General','false','false','false','Shipment.ShipmentSubTypeId','false','false')  
 declare @Fact_ARInvoicesDepartmentNewId varchar(15)
 execute usp_GetNextTableIdValue @Fact_ARInvoicesDepartmentNewId OUTPUT,'DWObjectField' 
 insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,DimensionTableCode,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,OriginalObjectFieldCode,DontDisplayInView,IsMultipleSelection) Values(@Fact_ARInvoicesDepartmentNewId,0,'Fact_ARInvoices','[Department]','Department','Dimension','false',0,15,'DIM_Departments','false','false','true','General','false','false','false','Shipment.DepartmentId','false','false')  
