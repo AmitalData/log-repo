@@ -37,6 +37,8 @@ export class SearchComponent implements AfterViewInit,OnInit, OnDestroy
     public CaptchaTextValue: string;
     private captchaParameters: CaptchaParameters;
     public errorMessage: string;
+    public ShortSearchValueBlockingMessage: string = "";
+
     constructor(private router: Router,
         private route: ActivatedRoute,
         private formBuilder: FormBuilder,
@@ -240,8 +242,9 @@ export class SearchComponent implements AfterViewInit,OnInit, OnDestroy
         }
         else {
             this.CheckSearchTimes(searchSource);
-            if (this.SearchText?.length < 3) {
-                this.OpenMessageWindow("Search value must have at least three characters");
+            var minimumCharactersLimitForSearch = 3;
+            if (this.SearchText?.length < minimumCharactersLimitForSearch) {
+                this.OpenMessageWindow(this.ShortSearchValueBlockingMessage);
             }
             else if (this.tenant != null && this.SearchText) {
                 // this.router.navigate(['public-tracking/search',  this.SearchText]);
