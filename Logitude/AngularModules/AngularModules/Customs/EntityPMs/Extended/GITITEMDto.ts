@@ -29,33 +29,33 @@ export class GITITEMDto {
     public TARIFFID: string;
     
 
-    private gITITEMCRPMs: GITITEMCR[];
-    get GITITEMCRPMs() {
-        if (this.gITITEMCRPMs == null) {
-            this.gITITEMCRPMs = [];
+    private gITITEMCRs: GITITEMCR[];
+    get GITITEMCRs() {
+        if (this.gITITEMCRs == null) {
+            this.gITITEMCRs = [];
         }
 
-        return this.gITITEMCRPMs;
+        return this.gITITEMCRs;
     }
-    set GITITEMCRPMs(newValue: GITITEMCR[]) {
-        if (this.gITITEMCRPMs != newValue) {
-            this.gITITEMCRPMs = newValue;
+    set GITITEMCRs(newValue: GITITEMCR[]) {
+        if (this.gITITEMCRs != newValue) {
+            this.gITITEMCRs = newValue;
         }
     }
     public AddGITITEMCR(item: GITITEMCR) {
         if (item != null) {
-            var index = this.GITITEMCRPMs.indexOf(item);
+            var index = this.GITITEMCRs.indexOf(item);
             if (index == -1) {
-                this.GITITEMCRPMs.push(item);
+                this.GITITEMCRs.push(item);
                 //this.MarkAsDirty();
             }
         }
     }
     public RemoveGITITEMCR(item: GITITEMCR) {
         if (item != null) {
-            var index = this.GITITEMCRPMs.indexOf(item);
+            var index = this.GITITEMCRs.indexOf(item);
             if (index > -1) {
-                this.GITITEMCRPMs.splice(index, 1);
+                this.GITITEMCRs.splice(index, 1);
                 //this.MarkAsDirty();
             }
         }

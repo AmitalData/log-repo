@@ -61,6 +61,8 @@ import { any } from 'cypress/types/bluebird';
 import { CurrencyTypeListService } from '../../../../../Customs/Services/StandardLists/CurrencyTypeListService';
 import { GITITEMCR } from '../../../../../Customs/EntityPMs/Extended/GITITEMCR';
 import { SupplierInvioceItemCertificatPM } from '../../../../../Customs/EntityPMs/SupplierInvioceItemCertificatPM';
+import { MultiCertificateUpdateComponent } from '../../../../../CustomsModules/CustomsDeclarationModules/DeclarationSupplierInvoice/Components/SupplierInvoices/MultiCertificateUpdate/MultiCertificateUpdateComponent';
+
 
 @Component({
 
@@ -2907,7 +2909,7 @@ export class SupplierInvoiceItemLine extends BaseComponent {
     TariffErrorToolTipWrapper: string = "TariffErrorToolTipWrapper";
     TariffErrorToolTip: string = "TariffErrorToolTip";
     private CurrentSession = SessionLocator.SelectedSession;
-    //public GITITEMCRPMs: GITITEMCR[];
+    //public GITITEMCRs: GITITEMCR[];
     constructor(EntityPM: SupplierInvoiceItemPM, parent: SupplierInvoiceGeneralTabComponent, allowExport: boolean = false) {
         super();
         this.entityPM = EntityPM;
@@ -3051,24 +3053,25 @@ export class SupplierInvoiceItemLine extends BaseComponent {
         }
     }
 
-    gITITEMCRPMs: GITITEMCR[];
-    get GITITEMCRPMs() { return this.GITITEMCRPMs; }
-    set GITITEMCRPMs(value: GITITEMCR[]) {
+    gITITEMCRs: GITITEMCR[];
+    get GITITEMCRs() { return this.GITITEMCRs; }
+    set GITITEMCRs(value: GITITEMCR[]) {
 
         if (!AppTool.IsNullOrEmpty(value)) {
-            for (var k in value) {
+            /*
+            for (GITITEMCR k in value) {
                 // var mySupplierInvioceItemCertificatPM = new SupplierInvioceItemCertificatPM(k);
                 // SupplierInvioceItemCertificatPM newSupplierInvioceItemCertificatPM = mySupplierInvioceItemCertificatPM{ declara };
                 // newSupplierInvoiceItemPM.SupplierInvioceItemCertificats.push(newSupplierInvioceItemCertificatPM);
-
+                
                 for (let item of this.EntityPM.SupplierInvoiceItems.filter(d => !d.IsParent)) {
-                    var exist = item.SupplierInvioceItemCertificats.filter(d => d.certificateNumber == "k.REQCERT")[0];
+                    var exist = item.SupplierInvioceItemCertificats.filter(d => d.certificateNumber == k.REQCERT.replace(/^0+/, ''))[0];
                     if (!exist) {
-                        var SupplierInvioceItemCertificat: SupplierInvioceItemCertificatPM = new SupplierInvioceItemCertificatPM(item);
+                        var SupplierInvioceItemCertificat: SupplierInvioceItemCertificatPM = new SupplierInvioceItemCertificatPM(this.entityPM);
                         SupplierInvioceItemCertificat.DeclarationId = this.entityPM.DeclarationId;
-                        SupplierInvioceItemCertificat.InvoiceCounterKey = this.EntityPM.InvoiceCounterKey;
-                        SupplierInvioceItemCertificat.LineNumber = item.LineNumber;
-                        SupplierInvioceItemCertificat.Tenant = this.EntityPM.Tenant;
+                        SupplierInvioceItemCertificat.InvoiceCounterKey = this.entityPM.CounterKey;
+                        SupplierInvioceItemCertificat.LineNumber = this.entityPM.LineNumber;
+                        SupplierInvioceItemCertificat.Tenant = this.entityPM.Tenant;
                         SupplierInvioceItemCertificat.CertificateNumber = "k.REQCERT";
 
 
@@ -3079,6 +3082,7 @@ export class SupplierInvoiceItemLine extends BaseComponent {
                     }
                 }
             }
+            */
         }
     }
     
@@ -3603,22 +3607,25 @@ export class SupplierInvoiceItemLine extends BaseComponent {
                             itemCodeDetails.OriginCountryName = this.OriginCountryName;
                             itemCodeDetails.TariffID = this.TradeAgreementCode;
                         }
-                        for (let item of this.GITITEMCRPMs) {
-                            itemCodeDetails.GITITEMCRPMs.push(new GITITEMCR(item.COUNTER, item.REQCERT, item.REMARKS));
-                            var exist = this.entityPM.SupplierInvioceItemCertificats.filter(d => d.CertificateNumber == item.REQCERT)[0];
+                        for (let item of this.GITITEMCRs) {
+                            //itemCodeDetails.GITITEMCRs.push(new GITITEMCR(item.COUNTER, item.REQCERT, item.REMARKS));
+                            var exist = this.entityPM.SupplierInvioceItemCertificats.filter(d => d.CertificateNumber == item.REQCERT.replace(/^0+/, ''))[0];
                             if (!exist) {
-                                var SupplierInvioceItemCertificat: SupplierInvioceItemCertificatPM = new SupplierInvioceItemCertificatPM(item);
+                                var SupplierInvioceItemCertificat: SupplierInvioceItemCertificatPM = new SupplierInvioceItemCertificatPM(this.entityPM);
                                 SupplierInvioceItemCertificat.DeclarationId = this.entityPM.DeclarationId;
-                                SupplierInvioceItemCertificat.InvoiceCounterKey = this.EntityPM.InvoiceCounterKey;
-                                SupplierInvioceItemCertificat.LineNumber = this.EntityPM.LineNumber;
-                                SupplierInvioceItemCertificat.Tenant = this.EntityPM.Tenant;
-                                SupplierInvioceItemCertificat.CertificateNumber = item.REQCERT;
-
+                                SupplierInvioceItemCertificat.InvoiceCounterKey = this.entityPM.CounterKey;
+                                SupplierInvioceItemCertificat.LineNumber = this.entityPM.LineNumber;
+                                SupplierInvioceItemCertificat.Tenant = this.entityPM.Tenant;
+                                //SupplierInvioceItemCertificat.CertificateNumber = item.REQCERT;
+                                SupplierInvioceItemCertificat.ReqConfirmationTypeCode = item.REQCERT.replace(/^0+/,'');
                                 this.entityPM.AddSupplierInvioceItemCertificat(SupplierInvioceItemCertificat);
-
+                                var multiCertificateUpdateComponent: MultiCertificateUpdateComponent = new MultiCertificateUpdateComponent();
+                                multiCertificateUpdateComponent.UpdateCertStatusAlaaMethod(SupplierInvioceItemCertificat, this.entityPM);
                             }
                         }
+                        this.SetCertificateStatusVisibility();
                         itemCodeDetails.IsNew = true;
+                        itemCodeDetails.GITITEMCRs = (this.GITITEMCRs);
                     }
                 }
             }
@@ -3660,7 +3667,7 @@ export class SupplierInvoiceItemLine extends BaseComponent {
         tariffID = this.TradeAgreementCode
         //this.Parent.Parent.ItemCode_LocalCache.push(new ItemCodeComponent(this.ItemCode, this.ClassificationCode, this.ItemDescription, this.Parent.vendorNumber, originCountryCode, originCountryName, true, this.InvoiceQuantityType));
         GITITEMCacheService.Instance. /*ItemCode_LocalCache.push*/AddItemCodeComponent(
-            new ItemCodeComponent(this.ItemCode, this.ClassificationCode, this.ItemDescription, this.Parent.vendorNumber, originCountryCode, originCountryName, true, invoiceQuantityType, this.Parent.declarationPM.CustomerCode, tariffID, this.GITITEMCRPMs));
+            new ItemCodeComponent(this.ItemCode, this.ClassificationCode, this.ItemDescription, this.Parent.vendorNumber, originCountryCode, originCountryName, true, invoiceQuantityType, this.Parent.declarationPM.CustomerCode, tariffID, this.GITITEMCRs));
     }
 
     OnOriginCountryCodeLostFocus(logCellTemplate: any, originCountryCodeLov: any) {
@@ -3714,7 +3721,7 @@ export class SupplierInvoiceItemLine extends BaseComponent {
                                                 this.InvoiceQuantityType,
                                                 this.Parent.declarationPM.CustomerCode,
                                                 this.TariffID,
-                                                this.GITITEMCRPMs
+                                                this.GITITEMCRs
                                             )
                                         );
                                     }
@@ -3735,20 +3742,23 @@ export class SupplierInvoiceItemLine extends BaseComponent {
                                             this.TradeAgreementCode = itemCodeDetails.TariffID;
                                         }
                                         //this.entityPM.AddSupplierInvioceItemCertificat()
-                                        for (let item of itemCodeDetails.GITITEMCRPMs) {
-                                            var exist = this.entityPM.SupplierInvioceItemCertificats.filter(d => d.CertificateNumber == item.REQCERT)[0];
+                                        for (let item of itemCodeDetails.GITITEMCRs) {
+                                            var exist = this.entityPM.SupplierInvioceItemCertificats.filter(d => d.CertificateNumber == item.REQCERT.replace(/^0+/, ''))[0];
                                             if (!exist) {
-                                                var SupplierInvioceItemCertificat: SupplierInvioceItemCertificatPM = new SupplierInvioceItemCertificatPM(item);
+                                                var SupplierInvioceItemCertificat: SupplierInvioceItemCertificatPM = new SupplierInvioceItemCertificatPM(this.entityPM);
                                                 SupplierInvioceItemCertificat.DeclarationId = this.entityPM.DeclarationId;
-                                                SupplierInvioceItemCertificat.InvoiceCounterKey = this.EntityPM.InvoiceCounterKey;
-                                                SupplierInvioceItemCertificat.LineNumber = this.EntityPM.LineNumber;
-                                                SupplierInvioceItemCertificat.Tenant = this.EntityPM.Tenant;
-                                                SupplierInvioceItemCertificat.CertificateNumber = item.REQCERT;
-                                                
+                                                SupplierInvioceItemCertificat.InvoiceCounterKey = this.entityPM.CounterKey;
+                                                SupplierInvioceItemCertificat.LineNumber = this.entityPM.LineNumber;
+                                                SupplierInvioceItemCertificat.Tenant = this.entityPM.Tenant;
+                                                //SupplierInvioceItemCertificat.CertificateNumber = item.REQCERT;
+                                                SupplierInvioceItemCertificat.ReqConfirmationTypeCode = item.REQCERT.replace(/^0+/, '');
                                                 this.entityPM.AddSupplierInvioceItemCertificat(SupplierInvioceItemCertificat);
-
+                                                var multiCertificateUpdateComponent: MultiCertificateUpdateComponent = new MultiCertificateUpdateComponent();
+                                                multiCertificateUpdateComponent.UpdateCertStatusAlaaMethod(SupplierInvioceItemCertificat, this.entityPM);
                                             }
                                         }
+                                        this.GITITEMCRs = itemCodeDetails.GITITEMCRs;
+                                        this.SetCertificateStatusVisibility();
                                         this.GetQuantityType();
                                     }
                                     break;
@@ -3855,7 +3865,7 @@ export class SupplierInvoiceItemLine extends BaseComponent {
                                                 item.InvoiceQuantityType,
                                                 this.Parent.declarationPM.CustomerCode,
                                                 item.TariffID,
-                                                item.GITITEMCRPMs
+                                                item.GITITEMCRs
                                             )
                                         );
                                         this.GetQuantityType();
@@ -3877,25 +3887,28 @@ export class SupplierInvoiceItemLine extends BaseComponent {
                                             item.InvoiceQuantityType = partnersItem.InvoiceQuantityType;
                                         }
                                         
-                                        for (let item of partnersItem.GITITEMCRPMs) {
-                                            item.GITITEMCRPMs.push(new GITITEMCR(item.COUNTER, item.REQCERT, item.REMARKS));
-                                            var exist = this.entityPM.SupplierInvioceItemCertificats.filter(d => d.CertificateNumber == item.REQCERT)[0];
+                                        for (let itm of partnersItem.GITITEMCRs) {
+                                            //item.GITITEMCRs.push(new GITITEMCR(itm.COUNTER, itm.REQCERT, itm.REMARKS));
+                                            var exist = this.entityPM.SupplierInvioceItemCertificats.filter(d => d.CertificateNumber == itm.REQCERT.replace(/^0+/, ''))[0];
                                             if (!exist) {
-                                                var SupplierInvioceItemCertificat: SupplierInvioceItemCertificatPM = new SupplierInvioceItemCertificatPM(item);
+                                                var SupplierInvioceItemCertificat: SupplierInvioceItemCertificatPM = new SupplierInvioceItemCertificatPM(this.entityPM);
                                                 SupplierInvioceItemCertificat.DeclarationId = this.entityPM.DeclarationId;
-                                                SupplierInvioceItemCertificat.InvoiceCounterKey = this.EntityPM.InvoiceCounterKey;
-                                                SupplierInvioceItemCertificat.LineNumber = this.EntityPM.LineNumber;
-                                                SupplierInvioceItemCertificat.Tenant = this.EntityPM.Tenant;
-                                                SupplierInvioceItemCertificat.CertificateNumber = item.REQCERT;
-
+                                                SupplierInvioceItemCertificat.InvoiceCounterKey = this.entityPM.CounterKey;
+                                                SupplierInvioceItemCertificat.LineNumber = this.entityPM.LineNumber;
+                                                SupplierInvioceItemCertificat.Tenant = this.entityPM.Tenant;
+                                                //SupplierInvioceItemCertificat.CertificateNumber = item.REQCERT;
+                                                SupplierInvioceItemCertificat.ReqConfirmationTypeCode = itm.REQCERT.replace(/^0+/, '');
                                                 this.entityPM.AddSupplierInvioceItemCertificat(SupplierInvioceItemCertificat);
-
+                                                var multiCertificateUpdateComponent: MultiCertificateUpdateComponent = new MultiCertificateUpdateComponent();
+                                                multiCertificateUpdateComponent.UpdateCertStatusAlaaMethod(SupplierInvioceItemCertificat, this.entityPM);
                                             }
                                         }
+                                        item.TariffID = partnersItem.TariffID;
+                                        this.SetCertificateStatusVisibility();
                                         //this.Parent.Parent.ItemCode_LocalCache.push(new ItemCodeComponent(partnersItem.ItemCode, partnersItem.ClassificationCode, partnersItem.Name, this.Parent.vendorNumber, item.OriginCountryCode, item.OriginCountryName, false, item.InvoiceQuantityType));
-                                        GITITEMCacheService.Instance./*ItemCode_LocalCache.push*/AddItemCodeComponent(new ItemCodeComponent(partnersItem.ItemCode, partnersItem.ClassificationCode, partnersItem.Name, this.Parent.vendorNumber, item.OriginCountryCode, item.OriginCountryName, false, item.InvoiceQuantityType, this.Parent.declarationPM.CustomerCode, item.TariffID, item.GITITEMCRPMs));
+                                        GITITEMCacheService.Instance./*ItemCode_LocalCache.push*/AddItemCodeComponent(new ItemCodeComponent(partnersItem.ItemCode, partnersItem.ClassificationCode, partnersItem.Name, this.Parent.vendorNumber, item.OriginCountryCode, item.OriginCountryName, false, item.InvoiceQuantityType, this.Parent.declarationPM.CustomerCode, item.TariffID, item.GITITEMCRs));
                                         this.GetQuantityType();
-
+                                        item.GITITEMCRs = partnersItem.GITITEMCRs;
                                     }
                                     break;
                             }
@@ -4518,9 +4531,9 @@ export class ItemCodeComponent extends BaseComponent {
     private _TariffID: string;
     private _InvoiceQuantityType: string;
     private _IsNew: boolean;
-    public GITITEMCRPMs: GITITEMCR[];
+    public GITITEMCRs: GITITEMCR[];
 
-    constructor(itemCode: string, classificationCode: string, itemDescription: string, vendorNumber: string, originCountryCode: string, originCountryName: string, isNew: boolean, invoiceQuantityType: string, private _CustomerCode: string, tariffID: string, public gITITEMCRPMs: GITITEMCR[]) {
+    constructor(itemCode: string, classificationCode: string, itemDescription: string, vendorNumber: string, originCountryCode: string, originCountryName: string, isNew: boolean, invoiceQuantityType: string, private _CustomerCode: string, tariffID: string, public gITITEMCRs: GITITEMCR[]) {
         super();
 
         this.ItemCode = itemCode;
@@ -4531,7 +4544,7 @@ export class ItemCodeComponent extends BaseComponent {
         this.OriginCountryName = originCountryName;
         this.InvoiceQuantityType = invoiceQuantityType;
         this.IsNew = isNew;
-        this.GITITEMCRPMs = gITITEMCRPMs;
+        this.GITITEMCRs = gITITEMCRs;
         this.TariffID = tariffID;
          
     }

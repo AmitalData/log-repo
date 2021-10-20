@@ -44,6 +44,7 @@ using System.IO;
 using Logitude.CustomsMessaging.ResponseServices;
 using Logitude.Customs.BL.TraceEvents;
 using Unifreight.BL.EntityPMs;
+using SupplierInvoicePM = Logitude.Customs.Def.EntityPMs.SupplierInvoicePM;
 
 namespace WebFreight.Web.Controllers.CustomsModel.WebServices
 {
@@ -988,7 +989,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                             SearchFields = rec.SEARCHENG,
                             OriginCountryCode = rec.ORIGINCOUNTRY,
                             InvoiceQuantityType = rec.UNITID,
-                            //TariffID = rec.GITITEMCTARIFFID,
+                            TariffID = rec.TARIFFID,
                         })
 
                     select new { itm };
@@ -1023,6 +1024,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                     foreach (var item in aynList)
                     {
                         var crkeys = new Unifreight.Data.AmitalModel.EntityKeys.GITITEMKeys() { COUNTER = item.itm.Id };
+                        /*
                         var aq =
                     from itmcr in itemCrRepo
                         .GetMulti(crkeys)
@@ -1034,8 +1036,9 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                             
                         })
                     select new { itmcr };
-                        var list = aq;
-                       // item.itm.GITITEMCRs = aq.ToList();
+                        */
+                        var list = itemCrRepo.GetMulti(crkeys);
+                       item.itm.GITITEMCRs = list;
 
                     }
 
