@@ -207,7 +207,9 @@ export class UserDashboardComponent implements AfterViewInit, OnInit
         });
     }
     RedirectAppToHttps(){
-        if (location.protocol === 'http:') {
+        const isLocally = window.location.origin.indexOf('localhost') > -1;
+
+        if (!isLocally && location.protocol === 'http:') {
             window.location.href = location.href.replace('http', 'https');
         }
     }

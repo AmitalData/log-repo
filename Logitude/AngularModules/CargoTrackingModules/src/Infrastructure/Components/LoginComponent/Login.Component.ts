@@ -54,16 +54,16 @@ export class LoginComponent implements OnInit {
         this.LogoImgSrc = "./assets/images/logo/White.jpg";
         this.cargoTrackingBrandingDataExtendedService.GetUserDashboardBrandingData(ServiceHelper.GetcargoTrackingDataRequest(baseUrl)).subscribe((response: ServiceResponse) => {
             if(response.Result){
-                if (response.Result?.ForceHttps) {
+                if (response.Result?.ForceHttps) 
                     this.RedirectAppToHttps();
-                } else {
-                    this.Tenant = response.Result.Tenant;
-                    ServiceHelper.SetCargoTrackingDate(response.Result, baseUrl);
-                    this.LogoImgSrc = this.loginServiceHelper.GetLoginLogoImg();
-                    this.BackGroundImg = CargoTrackingBrandingData.BackgroundURL;
-                    this.MainColor = response.Result.MainColor;
-                    this.SecondaryColor = response.Result.SecondaryColor;
-                }
+
+                this.Tenant = response.Result.Tenant;
+                ServiceHelper.SetCargoTrackingDate(response.Result, baseUrl);
+                this.LogoImgSrc = this.loginServiceHelper.GetLoginLogoImg();
+                this.BackGroundImg = CargoTrackingBrandingData.BackgroundURL;
+                this.MainColor = response.Result.MainColor;
+                this.SecondaryColor = response.Result.SecondaryColor;
+                
             }
             else{
                 this.GoToError401();
@@ -71,7 +71,9 @@ export class LoginComponent implements OnInit {
         });
     }
     RedirectAppToHttps(){
-        if (location.protocol === 'http:') {
+        const isLocally = window.location.origin.indexOf('localhost') > -1;
+
+        if (!isLocally && location.protocol === 'http:') {
             window.location.href = location.href.replace('http', 'https');
         }
     }
