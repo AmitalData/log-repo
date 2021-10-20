@@ -273,7 +273,7 @@ export class SendManifestService {
             var result = myResponse.Result;
 
             if (AppTool.IsNullOrEmpty(result)) {
-                this.ValidationErrors.push("ההצרה אינה מקושרת לבלדר ראשי");
+                this.ValidationErrors.push("ההצהרה אינה מקושרת לבלדר ראשי");
                 this.FillValidationErrors(this.presendValidationsTitle);
             }
             else {
