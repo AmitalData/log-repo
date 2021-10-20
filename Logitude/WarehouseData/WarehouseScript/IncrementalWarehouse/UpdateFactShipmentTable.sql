@@ -348,6 +348,8 @@
    declare @ColoaderContact as int
    declare @ConsolidatorAddress as int
    declare @ConsolidatorContact as int
+   declare @ShipmentSubType as int
+
    declare @DIM_AddressesTable TABLE(Id  varchar(15) NOT NULL UNIQUE CLUSTERED,Id_Number int NOT NULL PRIMARY KEY NONCLUSTERED);
    declare @DIM_ContactsTable TABLE(Id  varchar(15) NOT NULL UNIQUE CLUSTERED,Id_Number int NOT NULL PRIMARY KEY NONCLUSTERED);
 
@@ -403,7 +405,8 @@
 	1,1,1,1,
 	1,1,1,1,
 	1,1,1,1,
-    1,1,1,1
+    1,1,1,1,
+	  NewDIM_ShipmentSubTypes.Id_Number
 	 --ShipperAddress.Id_Number,ShipperContact.Id_Number,ShipperNotExporterAddress.Id_Number,ShipperNotExporterContact.Id_Number,
 	 --FreelancerAddress.Id_Number,FreelancerContact.Id_Number,ReleasingAgentAddress.Id_Number,ReleasingAgentContact.Id_Number,
 	 --CustomerAddress.Id_Number,CustomerContact.Id_Number,ConsigneeAddress.Id_Number,ConsigneeContact.Id_Number,
@@ -505,7 +508,7 @@
    inner JOIN DIM_Users HandlerUser ON dw_Shipments.HandlerUserId = HandlerUser.Id
    inner JOIN DIM_TransportModes  PreForwardingTransportModes ON dw_Shipments.PreForwardingTransportModeId = PreForwardingTransportModes.Code
    inner JOIN DIM_Users AccountingClosedByUser ON dw_ShipmentComputedFields.AccountingClosedByUserId  = AccountingClosedByUser.Id
-
+   inner JOIN DIM_ShipmentSubTypes   ON dw_Shipments.ShipmentSubTypeId = NewDIM_ShipmentSubTypes.Id
 
    --inner JOIN @DIM_AddressesTable ShipperAddress ON dw_Shipments.ShipperAddressId = ShipperAddress.Id
    --inner JOIN @DIM_ContactsTable ShipperContact ON dw_Shipments.ShipperContactId = ShipperContact.Id   
@@ -600,7 +603,8 @@
 	  @ConsigneeNotImporterAddress,@ConsigneeNotImporterContact,
 	  @CustomClearancePointAddress,@CustomClearancePointContact,
 	  @ColoaderAddress,@ColoaderContact,
-	  @ConsolidatorAddress,@ConsolidatorContact
+	  @ConsolidatorAddress,@ConsolidatorContact,
+	  @ShipmentSubType
  
 
 
@@ -787,7 +791,7 @@
 	   [Custom Agent Import Address],[Custom Agent Import Contact],[Notify1 Address],[Notify1 Contact],
 	   [Notify2 Address],[Notify2 Contact],[Freight Forwarder Address],[Freight Forwarder Contact],
 	   [Consignee Not Importer Address],[Consignee Not Importer Contact],[Custom Clearance Point Address],[Custom Clearance Point Contact],
-	   [Coloader Address],[Coloader Contact],[Consolidator Address],[Consolidator Contact],[IsInland Domestic Shipment],[Is Standalone Pickup Delivery]
+	   [Coloader Address],[Coloader Contact],[Consolidator Address],[Consolidator Contact],[IsInland Domestic Shipment],[Is Standalone Pickup Delivery], [Shipment Sub Type]
 	  )  
       values(@Id, @SourceTenant,@ParentTenant,@Direction,@TransportMode, @DirectHouse, @Type, @OBLType, @Department ,@Branch , @ShipmentNumber , @House ,@Master , @Shipper,  @Consignee , @Agent,@Customer,@Incoterm ,@TotalGrossWeightInKG,@TotalChargeableWeightInKG, @TotalVolumeInCBM,  @NumberOfPackages, @DangerousGoods, @NumberOfContainers, @Salesman , @AccountManager ,    @TotalProfitInLocalCurrency , @TotalProfitInProfitCurrency , @LocalCurrency,@ProfitCurrency ,@OperationallyClosed,@AccountingClosed, @ComputedStatus, @Location,  @MainCarriageFromPort , @FinalDestination , @IsDeparted , @MainCarriageATD  ,@IsArrived , @ArrivedDate   , @IsCustomsCleared  , 1 ,dbo.GetDateFormateAsNumber(@CreateDate)    ,dbo.GetDateFormateAsNumber(@LastUpdateDate)   , dbo.GetDateFormateAsNumber(@OperationalDate),dbo.GetDateFormateAsNumber(@OperationalCloseDate),dbo.GetDateFormateAsNumber(@AccountingCloseDate) ,@OpenReceivablesInLocalCurrency , @OpenReceivablesInProfitCurrency ,@AccountedReceivablesInLocalCurrency,@AccountedReceivablesInProfitCurrency, @OpenPayablesInLocalCurrency ,@OpenPayablesInProfitCurrency , @AccountedPayablesInLocalCurrency ,@AccountedPayablesInProfitCurrency , @AgentReference1, @AgentReference2,@AMSBL ,@ConsigneeReference1,@ConsigneeReference2,@CreatedBy,@CustomAgent,@CustomerReference1,@CustomerReference2,dbo.GetDateFormateAsNumber(@FirstPickupDate)   ,@FreightPC, dbo.GetDateFormateAsNumber(@CarrierDate)   ,@Carrier,@CarrierNumber,@MainHarmonize,@OtherChargePC,@ProjectNumber,@ShipperReference1,@ShipperReference2,@TEU,@ValueOfGoods,@ValueOfGoodsCurrency,@Warehouse,@FreightForwarder ,  @BookingConfirmationNumber,@MainCarriageATA ,dbo.GetDateFormateAsNumber(@MAWBOBLDate) , @MAWBOBLDate , dbo.GetDateFormateAsNumber(@ComputedStatusDate) , @CustomsDeclarationNumber ,dbo.GetDateFormateAsNumber(@FirstOperationalCloseDate) ,  @EstimatedFinalArrivalDate , @ActualFinalArrivalDate , REPLACE(@Routing,',','>'), @DescriptionOfGoods, @PreCarriageETD ,  @MainCarriageETA , @MainCarriageETD,@MoveType ,@Vessel,@SpecialServicesType ,@FirstPickupETA, @FirstPickupETD, @MasterShipmentNumber , @ARInvoices,[CustomFieldValuesVariable],@CreateDate,@LastUpdateDate,@OperationalDate,@CutoffDate ,@Consolidator,@ConsolidatorRef1, @ShipmentNotes, @Notify1, @Notify1Ref1, @Notify2, @Notify2Ref1, @Coloader, @ColoaderRef1, @ShipperNotExporter, @ShipperNotExporterRef1, @ReleasingAgent , @ReleasingAgentRef1
 	   ,@Transshipment1Vessel,@Transshipment1Carrier,@IncludesCustoms,@DeclarationNumber,@DeclarationDate,@CustomsClearanceDate,@TerminalAvailable,@WarehouseLegLastFreeDate,@FirstPickupATD,@FirstPickupATA,@FinalDeliveryETD,@FinalDeliveryETA,@FinalDeliveryATD,@FinalDeliveryATA,@Transshipment1ETA,@Transshipment1ETD,@Transshipment1ATA,@Transshipment1ATD, @Transshipment1AdditionalMAWBOBLBL,@FirstPickupLocation,@ContainersNumbers,@FinalRatio,@FinalVolumetricWeight,@WarehouseLegEntryDate,@WarehouseLegReleaseDate,@OrderGrossWeightWithUnitCode ,@OrderVolumeWithUnitCode , @BookingNumberOfPackages ,@OrderChargeableWeight,@EstimateProfitInProfitCurrency , @EstimateProfitInLocalCurrency, @ConsigneeNotImporter,@IssuingCarrierAgent,@OnCarriageTransportMode,@FirstARInvoiceApprovalDate,@BookingConfirmationNotes,@BookingConfirmedBy,@NumberOfDeliveries,@OperationallyClosedByUser,@LastPickupATA,@LastPickupETA,@DeliveryToPort,@LastPickupETD,@LastPickupATD,@DeliveryFrom,@DeliveryTo,@PickupFrom,@PickupTo,@FreightRelease,
@@ -808,7 +812,7 @@
 	  @CustomAgentImportAddress ,@CustomAgentImportContact ,@Notify1Address ,@Notify1Contact ,
 	  @Notify2Address ,@Notify2Contact ,@FreightForwarderAddress ,@FreightForwarderContact ,
 	  @ConsigneeNotImporterAddress ,@ConsigneeNotImporterContact ,@CustomClearancePointAddress ,@CustomClearancePointContact ,
-	  @ColoaderAddress ,@ColoaderContact ,@ConsolidatorAddress ,@ConsolidatorContact, @IsInlandDomesticShipment, @IsStandalonePickupDelivery )
+	  @ColoaderAddress ,@ColoaderContact ,@ConsolidatorAddress ,@ConsolidatorContact, @IsInlandDomesticShipment, @IsStandalonePickupDelivery,@ShipmentSubType )
 
 	   	END TRY 
 BEGIN CATCH  
@@ -867,7 +871,7 @@ END CATCH
 	  @CustomAgentImportAddress ,@CustomAgentImportContact ,@Notify1Address ,@Notify1Contact ,
 	  @Notify2Address ,@Notify2Contact ,@FreightForwarderAddress ,@FreightForwarderContact ,
 	  @ConsigneeNotImporterAddress ,@ConsigneeNotImporterContact ,@CustomClearancePointAddress ,@CustomClearancePointContact ,
-	  @ColoaderAddress ,@ColoaderContact ,@ConsolidatorAddress ,@ConsolidatorContact 
+	  @ColoaderAddress ,@ColoaderContact ,@ConsolidatorAddress ,@ConsolidatorContact, @ShipmentSubType
  
 
 
