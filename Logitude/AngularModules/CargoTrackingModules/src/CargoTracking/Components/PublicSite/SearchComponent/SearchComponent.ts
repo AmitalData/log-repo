@@ -8,6 +8,8 @@ import { CargoTrackingShipmentList } from '../../../EntityLists/CargoTrackingShi
 import { CargoTrackingBrandingData } from 'src/CargoTracking/DataContracts/CargoTrackingBrandingData';
 import { CaptchaParameters } from 'src/CargoTracking/DataContracts/CaptchaParameters';
 import { ServiceResponse } from 'src/CargoTracking/DataContracts/ServiceResponse';
+import { MessageWindowComponent } from '../../../../Infrastructure/Components/MessageWindow/MessageWindowComponent';
+import { MatDialog } from '@angular/material/dialog';
 
 
 @Component({
@@ -40,6 +42,7 @@ export class SearchComponent implements AfterViewInit,OnInit, OnDestroy
         private formBuilder: FormBuilder,
         private location: Location,
         private searchService: CargoTrackingSearchService,
+        public dialog: MatDialog,
         public DatePipe: DatePipe)
     {
         this.GetSearchTextFromURI();
@@ -237,7 +240,10 @@ export class SearchComponent implements AfterViewInit,OnInit, OnDestroy
         }
         else {
             this.CheckSearchTimes(searchSource);
-            if (this.tenant != null && this.SearchText) {
+            if (this.SearchText?.length < 3) {
+                this.OpenMessageWindow("Search value must have at least three characters");
+            }
+            else if (this.tenant != null && this.SearchText) {
                 // this.router.navigate(['public-tracking/search',  this.SearchText]);
                 // this.router.navigate(['public-tracking/search',  this.SearchText]);
                 //this.location.go( 'public-tracking/search?searchKey=' + this.SearchText);
@@ -278,6 +284,16 @@ export class SearchComponent implements AfterViewInit,OnInit, OnDestroy
                 this.IsShowAreaCaptcha = true;
             });
     }
+
+    OpenMessageWindow(messageDescription) {
+        this.dialog.open(MessageWindowComponent, {
+            data: {
+                title: "Alert",
+                description: messageDescription,
+            }
+        });
+    }
+
     ItemClicked(item)
     {
         var selection = window.getSelection();
