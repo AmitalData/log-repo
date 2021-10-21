@@ -1182,8 +1182,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                               UserRoles = user.UserRoles,
                                               SecurityLevel = user.SecurityLevel,
                                               AdditionalPackagesOnly = user.AdditionalPackagesOnly,
-                                              SignatureImageId = user.SignatureImageId
-
+                                              SignatureImageId = user.SignatureImageId,
+                                              Mobile = user.Contact.Mobile ?? "",
                                           };
 
             //int tenant = 0;
