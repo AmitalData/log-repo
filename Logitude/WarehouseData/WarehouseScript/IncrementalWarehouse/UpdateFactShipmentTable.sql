@@ -406,7 +406,7 @@
 	1,1,1,1,
 	1,1,1,1,
     1,1,1,1,
-	  NewDIM_ShipmentSubTypes.Id_Number
+	DIM_ShipmentSubTypes.Id_Number
 	 --ShipperAddress.Id_Number,ShipperContact.Id_Number,ShipperNotExporterAddress.Id_Number,ShipperNotExporterContact.Id_Number,
 	 --FreelancerAddress.Id_Number,FreelancerContact.Id_Number,ReleasingAgentAddress.Id_Number,ReleasingAgentContact.Id_Number,
 	 --CustomerAddress.Id_Number,CustomerContact.Id_Number,ConsigneeAddress.Id_Number,ConsigneeContact.Id_Number,
@@ -508,7 +508,7 @@
    inner JOIN DIM_Users HandlerUser ON dw_Shipments.HandlerUserId = HandlerUser.Id
    inner JOIN DIM_TransportModes  PreForwardingTransportModes ON dw_Shipments.PreForwardingTransportModeId = PreForwardingTransportModes.Code
    inner JOIN DIM_Users AccountingClosedByUser ON dw_ShipmentComputedFields.AccountingClosedByUserId  = AccountingClosedByUser.Id
-   inner JOIN DIM_ShipmentSubTypes   ON dw_Shipments.ShipmentSubTypeId = NewDIM_ShipmentSubTypes.Id
+   inner JOIN DIM_ShipmentSubTypes   ON dw_Shipments.ShipmentSubTypeId = DIM_ShipmentSubTypes.Id
 
    --inner JOIN @DIM_AddressesTable ShipperAddress ON dw_Shipments.ShipperAddressId = ShipperAddress.Id
    --inner JOIN @DIM_ContactsTable ShipperContact ON dw_Shipments.ShipperContactId = ShipperContact.Id   
