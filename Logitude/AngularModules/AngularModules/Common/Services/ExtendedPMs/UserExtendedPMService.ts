@@ -80,7 +80,18 @@ export class UserExtendedPMService {
         }),catchError(ServiceHelper.HandleServiceError));
     }
 
+    GetLastUserLoginIpSameAsLoggedUserIpAndBrowser(userId: string, tenant: number, getuser: boolean) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
+        return this._http.get(this._apiUrl + '?userId=' + userId + '&tenant=' + tenant + '&getUser=' + getuser, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+            var pmresponse: ServiceResponse;
+            pmresponse = new ServiceResponse();
+
+            pmresponse.Result = response;
+            return pmresponse;
+        }), catchError(ServiceHelper.HandleServiceError));
+    }
 
     Anonymization(userId: string) {
         var authHeader = new Headers();
