@@ -344,7 +344,8 @@ namespace Logitude.BL.InvoiceModel.CoreBL
         {
             CashBookLinePM cashBookLine = CreateCashbookLineForCheque(aRPaymentCheque);
             ICashBookQueryServiceExt cashBookQueryService = ContainerAccessor.Container.Resolve(typeof(ICashBookQueryServiceExt), "CashBookQueryServiceExt", new ParameterOverride("", 1)) as ICashBookQueryServiceExt;
-            if (!cashBookQueryService.CheckIfCashbookLineCreatedForPaymentCheque(cashBookLine.CashBookId, cashBookLine.ARPChequeId, cashBookLine.Tenant))
+            bool paymentChequeCashbookLineExist = cashBookQueryService.CheckIfCashbookLineCreatedForPaymentCheque(cashBookLine.CashBookId, cashBookLine.ARPChequeId, cashBookLine.Tenant);
+            if (!paymentChequeCashbookLineExist)
             {
                 SubmitCashbookLine(cashBookLine);
             }
