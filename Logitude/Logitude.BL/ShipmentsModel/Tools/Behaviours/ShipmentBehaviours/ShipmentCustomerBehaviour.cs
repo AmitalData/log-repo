@@ -236,7 +236,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
 
         private void MapShipper()
         {
-            if (!entityPM.IsImporterShipment && !entityPM.IsHybrid)
+            if (!entityPM.IsImporterShipment)
             {
                 if (string.IsNullOrEmpty(entityPM.CustomerId))
                 {
