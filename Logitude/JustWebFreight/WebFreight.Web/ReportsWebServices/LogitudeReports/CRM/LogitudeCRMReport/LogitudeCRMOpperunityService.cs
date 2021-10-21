@@ -93,7 +93,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.CRM.LogitudeCRMRepor
         {
             if (logitudeCRMReportFilter.ShowNet)
             {
-                return opportunityCRMDetails.Total * (100 - tenantManagement.ResellerCommission ?? 0) / 100;
+                return opportunityCRMDetails.Total * (100 - (tenantManagement.ResellerCommission ?? 0)) / 100;
             }
             return opportunityCRMDetails.TotalNet;
         }
