@@ -3,6 +3,8 @@ import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
 import { AddressList } from 'Common/EntityLists/AddressList';
 import { CardList } from 'Common/EntityLists/CardList';
 import { ContactList } from 'Common/EntityLists/ContactList';
+import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator';
+import { MenuItem } from 'primeng/api';
 import { QuoteOPPM } from 'QuoteOPM/EntityPMs/QuoteOPPM';
 import { filterIsNotNull, NewQuoteDataService } from '../../Services/new-quote-data/new-quote-data.service';
 
@@ -18,7 +20,14 @@ export class NewQuoteConsigneeComponent implements OnInit {
   consigneeNames: CardList[] = []
   consigneeContacts: ContactList[] = []
   Address: AddressList = null as any;
+  ddl: MenuItem[] = [
+    { label: TextCodeTranslator.Translate('QuoteOP.B.NewQuote.AddShipper'), command: ()=> this.newQuoteDataService.AddCustomerClicked('Shipper') },
+    { label: TextCodeTranslator.Translate('QuoteOP.B.NewQuote.AddPotentialShipper'), command: ()=> this.newQuoteDataService.AddPotentialCustomerClicked('Shipper') },
+  ];
 
+  addContact(){
+    this.newQuoteDataService.AddContact(this.formGroup.controls.shipperName.value.Id, 'SH')
+  }
   constructor(
     private newQuoteDataService: NewQuoteDataService,
     private cdref: ChangeDetectorRef,
@@ -69,10 +78,10 @@ export class NewQuoteConsigneeComponent implements OnInit {
   }
 
   private subscribeConsigneeName() {
-    this.formGroup.controls.consigneeName.valueChanges.pipe(filterIsNotNull()).subscribe((consigneeName: CardList) => {
+    this.formGroup.controls.consigneeName.valueChanges.subscribe((consigneeName: CardList) => {
       this.formGroup.controls.consigneeContact.reset();
-      this.formGroup.controls.consigneeNotes.setValue(consigneeName.Notes);
-      this.initConsigneeContacts(consigneeName.Id);
+      this.formGroup.controls.consigneeNotes.setValue(consigneeName?.Notes);
+      this.initConsigneeContacts(consigneeName?.Id);
       this.setConsigneeAddress(consigneeName);
       this.onSelectedName(consigneeName);
     })
@@ -85,21 +94,21 @@ export class NewQuoteConsigneeComponent implements OnInit {
   }
 
   private async setConsigneeAddress(consigneeName: any): Promise<void> {
-    this.Address = await this.newQuoteDataService.getAddress(consigneeName.Id, consigneeName.Tenant)
+    this.Address = consigneeName ? await this.newQuoteDataService.getAddress(consigneeName.Id, consigneeName.Tenant) : null
   }
 
   private async initConsigneeContacts(cardId: string) {
-    this.consigneeContacts = await this.newQuoteDataService.getContactsTable(cardId);
+    this.consigneeContacts = cardId ? await this.newQuoteDataService.getContactsTable(cardId) : null
   }
 
   onSelectedName(val: CardList) {
-      this.EntityPM.ConsigneeName = val.EnglishName;
-      this.EntityPM.ConsigneeId = val.Id;
-      this.EntityPM.ConsigneeMainAddressId = val.MainAddressId;
-      this.EntityPM.ConsigneePickAddressId = val.PickAddressId;
+      this.EntityPM.ConsigneeName = val?.EnglishName;
+      this.EntityPM.ConsigneeId = val?.Id;
+      this.EntityPM.ConsigneeMainAddressId = val?.MainAddressId;
+      this.EntityPM.ConsigneePickAddressId = val?.PickAddressId;
   }
   
   onSelectedContact(val: ContactList){
-    this.EntityPM.ConsigneeContactId = val.Id;
+    this.EntityPM.ConsigneeContactId = val?.Id;
   }
 }

@@ -13,14 +13,16 @@ import { filterIsNotNull, NewQuoteDataService } from '../../Services/new-quote-d
   styleUrls: ['./new-quote-delivery.component.scss']
 })
 export class NewQuoteDeliveryComponent implements OnInit {
-  @Input() formGroup: FormGroup = null as any;
+  @Input() qouteForm: FormGroup
+  @Input() propertyForm: FormGroup
   @Input() EntityPM: QuoteOPPM = null as any;
-  Address: AddressList = null as any;
 
   countryList: CountryList[] = []
   cityListAll: CountryCityList[] = []
   cityList: CountryCityList[] = []
   consigneeNames: any[] = []
+  Address: AddressList = null;
+  AddressList: AddressList[] = [];
 
   constructor(
     private newQuoteDataService: NewQuoteDataService,
@@ -46,7 +48,7 @@ export class NewQuoteDeliveryComponent implements OnInit {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (!this.formGroup.contains('deliveryInclude')) {
+    if (!this.propertyForm.contains('deliveryInclude')) {
       this.addFormControls()
       this.subscribeCtrls();
       this.initDefaultValue()
@@ -54,34 +56,37 @@ export class NewQuoteDeliveryComponent implements OnInit {
   }
 
   addFormControls() {
-    this.formGroup.addControl('deliveryInclude', new FormControl(''));
-    this.formGroup.addControl('deliveryZipCode', new FormControl(''));
-    this.formGroup.addControl('deliveryCity', new FormControl(''));
-    this.formGroup.addControl('deliveryCountry', new FormControl(''));
+    this.propertyForm.addControl('deliveryInclude', new FormControl(''));
+    this.propertyForm.addControl('deliveryZipCode', new FormControl(''));
+    this.propertyForm.addControl('deliveryCity', new FormControl(''));
+    this.propertyForm.addControl('deliveryCountry', new FormControl(''));
+    this.propertyForm.addControl('deliveryAddressId', new FormControl(''));
   }
 
   subscribeCtrls() {
-    this.formGroup.controls.deliveryCity.valueChanges.subscribe(val => this.EntityPM.ToAddressCity = val)
-    this.formGroup.controls.deliveryZipCode.valueChanges.subscribe(val => this.EntityPM.FromAddressZipCode = val);
-    this.formGroup.controls.deliveryCity.valueChanges.subscribe(val => this.EntityPM.FromAddressCity = val); // need change when update field to autocomplate
-    this.formGroup.controls.consigneeName.valueChanges.pipe(filterIsNotNull()).subscribe(async (consigneeName: CardList) =>
-      this.Address = await this.newQuoteDataService.getAddress(consigneeName.Id, consigneeName.Tenant));
+    this.qouteForm.controls.consigneeName.valueChanges.subscribe(async (consigneeName: CardList) => {
+      if (consigneeName) {
+        this.AddressList = consigneeName ? await this.newQuoteDataService.getAddresses(consigneeName.Id, consigneeName.Tenant) : null;
+        this.Address = this.AddressList.length ? this.AddressList[0] : null
+        this.propertyForm.controls.deliveryAddressId.setValue(this.Address)
+      } else {
+        this.Address = null
+        this.AddressList = []
+        this.propertyForm.controls.deliveryAddressId.setValue(null)
+      }
+    });
   }
 
   initDefaultValue() {
-    this.formGroup.controls.deliveryInclude.setValue(false)
+    this.propertyForm.controls.deliveryInclude.setValue(true)
   }
 
   includeCheckboxChange(e: { checked: boolean, originalEvent: PointerEvent }) {
-    if (e)
-      this.EntityPM.IncludeDelivery = e.checked;
+    // if (e)
+    //   this.EntityPM.IncludeDelivery = e.checked;
   }
 
-  // onSelectedCity(e) {
-  //   console.log(e)    
-  // }
-
   onSelectedCountry(country: CountryList) {
-    this.EntityPM.ToAddressCountryId = country.Id;
+    // this.EntityPM.ToAddressCountryId = country.Id;
   }
 }

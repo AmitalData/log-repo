@@ -19,20 +19,23 @@ export class AddressTextareaComponent {
 
   initAddress() {
     const address: AddressList = this.Address;
-    if(!address) return;
+    if(!address) {
+      this.addressTextarea = '';
+      return;
+    }
     
     const cityLine: string = this.GetCityLineText(address);
     const br = '\r\n';
 
     let addressFinal: string = '';
     if (address.Address1)
-      addressFinal += address.Address1;
+      addressFinal += address.Address1 + br;
     if (address.Address2)
-      addressFinal += br + address.Address2;
+      addressFinal += address.Address2 + br;
     if (cityLine)
-      addressFinal += br + cityLine;
+      addressFinal += cityLine + br;
     if (address.CountryName)
-      addressFinal += br + address.CountryName;
+      addressFinal += address.CountryName;
 
     this.addressTextarea = addressFinal;
   }

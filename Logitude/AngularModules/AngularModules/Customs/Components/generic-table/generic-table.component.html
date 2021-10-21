@@ -16,7 +16,7 @@
         </tr>
     </ng-template>
     <ng-template pTemplate="body" let-row let-columns="columns" let-rowIndex='rowIndex'>
-        <tr style='height:34px'>
+        <tr style='height:34px' (click)='onSelectedRow(row)'>
             <td>{{rowIndex}}</td>
             <td *ngFor='let col of columns'>{{row[col.name]}}</td>
         </tr>

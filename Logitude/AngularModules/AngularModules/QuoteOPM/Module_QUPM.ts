@@ -17,6 +17,9 @@ import { NewQuoteOPWebService } from 'Customs/Services/WebServices/NewQuoteOPWeb
 import { MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
 import { GenericTableModule } from 'Customs/Components/generic-table/generic-table.module';
+import {TabViewModule} from 'primeng/tabview';
+import {SplitButtonModule} from 'primeng/splitbutton';
+import { MenuModule } from 'primeng/menu';
 
 @NgModule({
     imports: [InfrastructureModule,
@@ -33,12 +36,15 @@ import { GenericTableModule } from 'Customs/Components/generic-table/generic-tab
         DialogModule,
         ToastModule,
         GenericTableModule,
+        TabViewModule,
+        SplitButtonModule,
+        MenuModule,
     ],
     declarations: [...Components, ...SharedComponents],
     providers: [
         NewQuoteDataService,
         NewQuoteOPWebService,
-        MessageService
+        MessageService,
     ],
     entryComponents: [...Components, ...SharedComponents],
     exports: [...SharedComponents],

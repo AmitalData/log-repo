@@ -1,10 +1,10 @@
-<!-- <h2 class="sub-header">{{"QuoteOP.S.NewQuote.Pickup" | TextCodeTranslationPipe}}</h2> -->
-<div [formGroup]='formGroup' class="">
-    <div [hidden]='Address'>
-        <p-checkbox formControlName='pickupInclude' [binary]="true" label='Include PickUp'
+<div [formGroup]='propertyForm' class="">
+    <div [hidden]='AddressList.length'>
+        <p-checkbox formControlName='pickupInclude' [binary]="true"
+            label='{{"QuoteOP.O.NewQuote.IncludePickUp" | TextCodeTranslationPipe}}'
             (onChange)="includeCheckboxChange($event)"></p-checkbox>
 
-        <div [hidden]='!formGroup.controls.pickupInclude.value' class='container'>
+        <div [hidden]='!propertyForm.controls.pickupInclude.value' class='container'>
             <h5>{{"QuoteOP.S.NewQuote.PickupAddress" | TextCodeTranslationPipe}}</h5>
             <div class="p-fluid">
                 <div class="p-field">
@@ -17,7 +17,7 @@
                 <div class="p-field">
                     <!-- <app-autocomplate-table [columnsShow]="['Name', 'LocalName', 'Country', 'State']" [data]='cityList'
                     [fieldShow]='"Name"' [label]='"QuoteOP.S.NewQuote.City" | TextCodeTranslationPipe'
-                    [controlName]='"pickupCity"' [formGroup]='formGroup' (onSelect)='onSelectedCity($event)'>
+                    [controlName]='"pickupCity"' [formGroup]='propertyForm' (onSelect)='onSelectedCity($event)'>
                 </app-autocomplate-table> -->
                     <label for="pickupZipCode">{{"QuoteOP.S.NewQuote.City" | TextCodeTranslationPipe}}</label>
                     <input formControlName='pickupCity' id="pickupZipCode" pInputText />
@@ -26,7 +26,8 @@
                 <div class="p-field">
                     <app-autocomplate-table [columnsShow]="{Code:'Code',EnglishName:'Name'}" [data]='countryList'
                         [fieldShow]='"EnglishName"' [label]='"QuoteOP.S.NewQuote.Country" | TextCodeTranslationPipe'
-                        [controlName]='"pickupCountry"' [formGroup]='formGroup' (onSelect)='onSelectedCountry($event)'>
+                        [controlName]='"pickupCountry"' [formGroup]='propertyForm'
+                        (onSelect)='onSelectedCountry($event)'>
                     </app-autocomplate-table>
                 </div>
             </div>
@@ -34,12 +35,11 @@
     </div>
 
 
-    <div [hidden]='!Address'>
+    <div [hidden]='!AddressList.length'>
         <div class="p-field">
-            <app-autocomplate-table
-                [columnsShow]="['Code', 'EnglishName', 'Address1', 'CityName', 'CountryName', 'PartnerTypeName']"
-                [data]='shipperNames' [fieldShow]='"EnglishName"' [label]="'Name'" [controlName]='"shipperName"'
-                [formGroup]='formGroup'>
+            <app-autocomplate-table [columnsShow]="['Description', 'Name', 'Address1']" [data]='AddressList'
+                [fieldShow]='"Description"' [label]="'QuoteOP.S.NewQuote.Name' | TextCodeTranslationPipe"
+                [controlName]='"pickupAddressId"' [formGroup]='propertyForm'>
             </app-autocomplate-table>
         </div>
 

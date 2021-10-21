@@ -22,7 +22,7 @@ export class GenericTableService {
     private dataService: GenericTableDataService,
   ) { }
 
-  open(data: any[], header: string, columns: string[] | GenericTableColumn[] = null as any, getDataFunction: () => any = null as any): DynamicDialogRef {
+  open(data: any[], header: string ='', columns: string[] | GenericTableColumn[] = null as any, getDataFunction: () => any = null as any): DynamicDialogRef {
     if (!data) throw ("Generic Table cannot be get null or undefined data");
 
     const config: DynamicDialogConfig = {}
@@ -33,7 +33,7 @@ export class GenericTableService {
     return this.dialogService.open(GenericTableComponent, config);
   }
 
-  async openByPromise(f: FunctionGetDataPromise, header: string = '', columns: string[] | GenericTableColumn[] = null as any, virtualScroll: boolean = false, columnFilter: string = null) {
+  async openByPromise(f: FunctionGetDataPromise, header: string = '', columns: string[] | GenericTableColumn[] = null as any, virtualScroll: boolean = false, columnFilter: string = null): Promise<DynamicDialogRef> {
     const data: any[] = await f('', 0, 100, null, null, null);
 
     const [columnsClean, columnsNames]: [GenericTableColumn[], string[]] = this.columnsCleansing(columns, data);
@@ -44,10 +44,10 @@ export class GenericTableService {
         f(val, pageIndex, rowsTake, columnFilter, sortField, sortOrder) :
       null;
 
-    this.open(data, header, columns, getDataFunction)
+    return this.open(data, header, columns, getDataFunction)
   }
 
-  async openByService(service: any, header: string = '', columns: string[] | GenericTableColumn[] = null as any, virtualScroll: boolean = false, columnFilter: string = null) {
+  async openByService(service: any, header: string = '', columns: string[] | GenericTableColumn[] = null as any, virtualScroll: boolean = false, columnFilter: string = null): Promise<DynamicDialogRef> {
     const data: any[] = virtualScroll ? await this.dataService.getDataFromFuncWithFilter(service, '', 0, 100, null) : await this.dataService.getDataFromFunc(service);
 
     const [columnsClean, columnsNames]: [GenericTableColumn[], string[]] = this.columnsCleansing(columns, data);
@@ -58,10 +58,10 @@ export class GenericTableService {
         this.dataService.getDataFromFuncWithFilter(service, val, pageIndex, rowsTake, columnFilter, sortField, sortOrder) :
       null;
 
-    this.open(data, header, columns, getDataFunction)
+    return this.open(data, header, columns, getDataFunction)
   }
 
-  async openByTableName(tableName: string, header: string = tableName, columns: string[] | GenericTableColumn[] = null as any, virtualScroll: boolean = false, columnFilter: string = 'SearchFields') {
+  async openByTableName(tableName: string, header: string = tableName, columns: string[] | GenericTableColumn[] = null as any, virtualScroll: boolean = false, columnFilter: string = 'SearchFields'): Promise<DynamicDialogRef> {
     const data: any[] = virtualScroll ? await this.dataService.getTableWithFilter(tableName, '', 0, 100, null) : await this.dataService.getTable(tableName);
     // console.log(data)
     const [columnsClean, columnsNames]: [GenericTableColumn[], string[]] = this.columnsCleansing(columns, data);
@@ -72,7 +72,7 @@ export class GenericTableService {
         this.dataService.getTableWithFilter(tableName, val, pageIndex, rowsTake, columnFilter, sortField, sortOrder) :
       null;
 
-    this.open(data, header, columns, getDataFunction)
+   return this.open(data, header, columns, getDataFunction)
   }
 
   columnsCleansing(columns: string[] | GenericTableColumn[] | null, data: any[]): [GenericTableColumn[], string[]] {

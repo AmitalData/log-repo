@@ -3,6 +3,8 @@ import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
 import { AddressList } from 'Common/EntityLists/AddressList';
 import { CardList } from 'Common/EntityLists/CardList';
 import { ContactList } from 'Common/EntityLists/ContactList';
+import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator';
+import { MenuItem } from 'primeng/api';
 import { QuoteOPPM } from 'QuoteOPM/EntityPMs/QuoteOPPM';
 import { filterIsNotNull, NewQuoteDataService } from '../../Services/new-quote-data/new-quote-data.service';
 
@@ -18,6 +20,14 @@ export class NewQuoteShipperComponent implements OnInit {
   shipperNames: CardList[] = []
   shipperContacts: ContactList[] = []
   Address: AddressList = null as any;
+  ddl: MenuItem[] = [
+    { label: TextCodeTranslator.Translate('QuoteOP.B.NewQuote.AddShipper'), command: ()=> this.newQuoteDataService.AddCustomerClicked('Shipper') },
+    { label: TextCodeTranslator.Translate('QuoteOP.B.NewQuote.AddPotentialShipper'), command: ()=> this.newQuoteDataService.AddPotentialCustomerClicked('Shipper') },
+  ];
+
+  addContact(){
+    this.newQuoteDataService.AddContact(this.formGroup.controls.shipperName.value.Id, 'SH')
+  }
 
   constructor(
     private newQuoteDataService: NewQuoteDataService,
@@ -68,10 +78,10 @@ export class NewQuoteShipperComponent implements OnInit {
   }
 
   private subscribeShipperName() {
-    this.formGroup.controls.shipperName.valueChanges.pipe(filterIsNotNull()).subscribe((shipperName: CardList) => {
+    this.formGroup.controls.shipperName.valueChanges.subscribe((shipperName: CardList) => {
       this.formGroup.controls.shipperContact.reset();
-      this.formGroup.controls.shipperNotes.setValue(shipperName.Notes);
-      this.initShipperContacts(shipperName.Id);
+      this.formGroup.controls.shipperNotes.setValue(shipperName?.Notes);
+      this.initShipperContacts(shipperName?.Id);
       this.setShipperAddress(shipperName);
       this.onSelectedName(shipperName);
       this.cdref.detectChanges();
@@ -85,21 +95,21 @@ export class NewQuoteShipperComponent implements OnInit {
   }
 
   private async setShipperAddress(shipperName: CardList): Promise<void> {
-    this.Address = await this.newQuoteDataService.getAddress(shipperName.Id, shipperName.Tenant)
+    this.Address = shipperName ? await this.newQuoteDataService.getAddress(shipperName.Id, shipperName.Tenant) : null
   }
 
   private async initShipperContacts(cardId: string) {
-    this.shipperContacts = await this.newQuoteDataService.getContactsTable(cardId);
+    this.shipperContacts = cardId ? await this.newQuoteDataService.getContactsTable(cardId) : null;
   }
 
   onSelectedName(val: CardList) {
-    this.EntityPM.ShipperName = val.EnglishName;
-    this.EntityPM.ShipperId = val.Id;
-    this.EntityPM.ShipperMainAddressId = val.MainAddressId;
-    this.EntityPM.ShipperPickAddressId = val.PickAddressId;
+    this.EntityPM.ShipperName = val?.EnglishName;
+    this.EntityPM.ShipperId = val?.Id;
+    this.EntityPM.ShipperMainAddressId = val?.MainAddressId;
+    this.EntityPM.ShipperPickAddressId = val?.PickAddressId;
   }
 
   onSelectedContact(val: ContactList) {
-    this.EntityPM.ShipperContactId = val.Id;
+    this.EntityPM.ShipperContactId = val?.Id;
   }
 }

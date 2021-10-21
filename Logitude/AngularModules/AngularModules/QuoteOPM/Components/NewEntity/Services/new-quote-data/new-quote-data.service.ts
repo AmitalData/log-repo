@@ -5,7 +5,11 @@ import { ContactList } from 'Common/EntityLists/ContactList';
 import { CountryCityList } from 'Common/EntityLists/CountryCityList';
 import { CountryList } from 'Common/EntityLists/CountryList';
 import { AddressService } from 'Common/Services/ExtendedLists/AddressService';
+import { AddressListService } from 'Common/Services/StandardLists/AddressListService';
+import { ContactInputTemplateArgs } from 'CommonModules/CommonPartners/Components/Templates/ContactInputTemplate';
+import { LogitudeWindow } from 'Controls/Windows/LogitudeWindow';
 import { NewQuoteOPWebService } from 'Customs/Services/WebServices/NewQuoteOPWebService';
+import { NewEntityArgs } from 'Infrastructure/Args';
 import { ApiQueryFilters } from 'Infrastructure/DataContracts/ApiQueryFilters';
 import { ServiceResponse } from 'Infrastructure/DataContracts/ServiceResponse';
 import { DirectionList } from 'Infrastructure/EntityLists/DirectionList';
@@ -16,7 +20,6 @@ import { EntityListService } from 'Infrastructure/Services/EntityListService';
 import { EntityResourceService } from 'Infrastructure/Services/EntityResourceService';
 import { DirectionListService } from 'Infrastructure/Services/StandardLists/DirectionListService';
 import { TransportModeListService } from 'Infrastructure/Services/StandardLists/TransportModeListService';
-import { SessionLocator } from 'Infrastructure/Utilities/SessionLocator';
 import { QuoteOPPM } from 'QuoteOPM/EntityPMs/QuoteOPPM';
 import { QuoteOPPMService } from 'QuoteOPM/Services/StandardPMs/QuoteOPPMService';
 import { Observable } from 'rxjs';
@@ -142,6 +145,21 @@ export class NewQuoteDataService {
     });
   }
 
+  async getAddresses(cardId: string, tenant: number): Promise<AddressList[]> {
+    const filters = new ApiQueryFilters();
+    filters.GetAll = true
+    filters.SortDirection = "Ascending";
+    filters.addAdditionalFilter('CardId', cardId, null, null, "Equals", true, false, false, "Text", false, false);
+    filters.addAdditionalFilter('Tanent', cardId, null, null, "Equals", true, false, false, "Text", false, false);
+
+    return new Promise<AddressList[]>(async (resolve, reject) => {
+      const resService: any = await this.entityListService.getByFilters('Address', filters).then();
+
+      resService.pipe(filterIsNotNull(), take(1))
+        .subscribe((resp: any) => resolve(resp.Result));
+    });
+  }
+
   async getAddress(cardId: string, tenant: number): Promise<AddressList> {
     return new Promise<AddressList>((resolve, reject) =>
       this.addressService.GetMainAddressByCardId(cardId, tenant)
@@ -149,9 +167,11 @@ export class NewQuoteDataService {
         .subscribe((myResult: ServiceResponse) => resolve(myResult.Result)));
   }
 
+
+
   creatingNewQuote(entityPM: QuoteOPPM): Promise<any> {
     return new Promise<any>((resolve, reject) => {
-      new QuoteOPPMService().insert(entityPM)
+      new QuoteOPPMService().insert(entityPM, false)
         .pipe(filterIsNotNull(), take(1))
         .subscribe((myResponse: ServiceResponse) => {
           if (myResponse.HasError)
@@ -184,6 +204,122 @@ export class NewQuoteDataService {
         .subscribe((res: ServiceResponse) =>
           resolve(res.Result)
         ));
+  }
+
+
+  AddCustomerClicked(customerType: string) {
+    var myComponentPath: string = null;
+    var title = "";
+
+    // if (this.QuoteCustomerTypeCode == "AGT") {
+    //     myComponentPath = "./CommonModules/CommonAgent/Components/NewEntity/NewAgentComponent";
+    // }
+
+    // else {
+    myComponentPath = "./CommonModules/CommonCustomer/Components/NewEntity/NewCustomerComponent";
+    // }
+
+    // if (customerType == "Customer") {
+    //     title = "New " + this.ComputeAddCustomerTitle();
+    // }
+
+    // else {
+    title = "New " + customerType;
+    // }
+
+    var args = new NewEntityArgs();
+
+    // if (customerType == "Shipper") {
+    //     if (!this.IsShipperMyCustomer) {
+    //         args.Perspective = "ShippersAndConsignees";
+    //     }
+    // }
+
+    // else if (customerType == "Consignee") {
+    //     if (!this.IsConsigneeMyCustomer) {
+    //         args.Perspective = "ShippersAndConsignees";
+    //     }
+    // }
+
+    // else if (customerType == "Customer") {
+    //     if (this.QuoteCustomerTypeCode == "SHI") {
+    //         if (!this.IsShipperMyCustomer) {
+    //             args.Perspective = "ShippersAndConsignees";
+    //         }
+    //     }
+
+    //     else if (this.QuoteCustomerTypeCode == "CON") {
+    //         if (!this.IsConsigneeMyCustomer) {
+    //             args.Perspective = "ShippersAndConsignees";
+    //         }
+    //     }
+    // }
+
+    var logWindow = new LogitudeWindow();
+    logWindow.Title = title;
+    logWindow.Width = 960;
+    logWindow.Height = 600;
+    logWindow.WindowArgs = args;
+    logWindow.Show(myComponentPath);
+
+    logWindow.ComponentLoaded.subscribe(comp => {
+      logWindow.WindowClosed.subscribe(s => {
+        if (s) {
+          console.log(s)
+        }
+      });
+    });
+  }
+
+  AddPotentialCustomerClicked(customerType: string) {
+    var _entityResourceService: EntityResourceService = new EntityResourceService();
+    _entityResourceService.getEntityResourceByTableName("Customer").subscribe(response2 => {
+      _entityResourceService.getEntityResourceByTableName("Contact").subscribe(response2 => {
+        var args = new NewEntityArgs();
+
+        // if (customerType == "Shipper") {
+        //     if (!this.IsShipperMyCustomer) {
+        //         args.Perspective = "ShippersAndConsignees";
+        //     }
+        // }
+
+        // else {
+        //     if (!this.IsConsigneeMyCustomer) {
+        //         args.Perspective = "ShippersAndConsignees";
+        //     }
+        // }
+
+        var logWindow = new LogitudeWindow();
+        logWindow.Title = "New Potential " + customerType;
+        logWindow.Width = 990;
+        logWindow.Height = 600;
+        logWindow.WindowArgs = args;
+        logWindow.Show("./CommonModules/CommonPartners/Components/NewEntity/NewPotentialCustomerComponent");
+
+        logWindow.ComponentLoaded.subscribe(comp => {
+          logWindow.WindowClosed.subscribe(s => {
+            if (s) {
+              console.log(s)
+            }
+          });
+        });
+      });
+    });
+  }
+
+  AddContact(partnerId: string, type: string) {
+    var logWindow = new LogitudeWindow();
+    logWindow.Width = 960;
+    logWindow.Height = 570;
+    logWindow.Title = "New Contact";
+    var args = new ContactInputTemplateArgs();
+    args.CustomerId = partnerId;
+    // args.CardDependencyProperty1 = this.CardDependencyProperty1;
+    args.CustomerLable = type == "SH" ? "Shipper" : "Consignee";
+    args.ComponentName = "Partners";
+    logWindow.WindowArgs = args;
+    logWindow.Show('./CommonModules/CommonPartners/Components/NewEntity/NewContactComponent');
+    // logWindow.WindowClosed.subscribe(($event: any) => this.OnNewContactWindowClosed($event, type));
   }
 }
 

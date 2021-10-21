@@ -22,6 +22,7 @@ import { NewQuoteShipperComponent } from './Components/NewEntity/components/new-
 import { AddressTextareaComponent } from './Components/NewEntity/components/address-textarea/address-textarea.component';
 import { AutocomplateTableComponent } from './Components/NewEntity/components/autocomplate-table/autocomplate-table.component';
 import { NewQuoteComponentOld } from './Components/NewEntity/NewQuoteComponent.old';
+import { BtnMenuPlusComponent } from './Components/NewEntity/components/btn-menu-plus/btn-menu-plus.component';
 
 export const Components =
     [
@@ -49,6 +50,7 @@ export const Components =
         NewQuoteExpectedOrderComponent,
         AddressTextareaComponent,
         AutocomplateTableComponent,
+        BtnMenuPlusComponent,
     ];
 
 export const SharedComponents =

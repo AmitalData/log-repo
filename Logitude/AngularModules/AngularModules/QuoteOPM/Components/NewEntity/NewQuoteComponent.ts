@@ -1,10 +1,11 @@
 import { Component, isDevMode } from "@angular/core";
-import { FormGroup } from "@angular/forms";
+import { AbstractControl, FormArray, FormGroup } from "@angular/forms";
 import { add } from "cypress/types/lodash";
 import { SessionLocator } from "Infrastructure/Utilities/SessionLocator";
 import { MessageService } from "primeng/api";
 import { QuoteOPPMInitService } from "QuoteOPM/EntityPMInitServices/QuoteOPPMInitService";
 import { QuoteOPPM } from "QuoteOPM/EntityPMs/QuoteOPPM";
+import { QuoteOPPropertiesPM } from "QuoteOPM/EntityPMs/QuoteOPPropertiesPM";
 import { QuoteOPPMService } from "QuoteOPM/Services/StandardPMs/QuoteOPPMService";
 import { NewQuoteDataService } from "./Services/new-quote-data/new-quote-data.service";
 
@@ -34,7 +35,10 @@ export class NewQuoteComponent {
 
         SessionLocator.SelectedSession.CurrentWindow.StartBusyIndicator('Create new quote... ');
 
+        this.addAutoProperties()
         this.addProperty()
+        this.updatePropertiesTable()
+
         this.newQuoteDataService.creatingNewQuote(this.EntityPM)
             .then(() => SessionLocator.SelectedSession.CloseCurrentWindowEmit('OK'))
             .catch((err: string[]) => this.messageService.add({ severity: 'error', summary: 'Create new quote failed', detail: err.join(', ')}))
@@ -52,7 +56,8 @@ export class NewQuoteComponent {
         QuoteOPPMInitService.InitValues(this.EntityPM, true);
     }
 
-    private addProperty() {
+    
+    private addAutoProperties() {
         const entityPM: QuoteOPPM = this.EntityPM;
 
         entityPM.QuoteCustomerTypeCode = entityPM.DirectionId === 'I' ? 'CON' : 'SHI';
@@ -66,6 +71,50 @@ export class NewQuoteComponent {
             entityPM.QuoteCustomerTypeCode = 'SHI';
             entityPM.CustomerId = entityPM.ShipperId;
         }
+    }
+
+    private addProperty(): void {
+        const propertyForm: FormGroup["controls"] = ((this.formGroup.controls.properties as FormArray).at(0) as FormGroup).controls;
+        this.EntityPM.FromAddressCity = propertyForm.deliveryCity.value
+        this.EntityPM.FromAddressCountryId = propertyForm.deliveryCountry.value?.Id
+        this.EntityPM.FromAddressZipCode = propertyForm.deliveryZipCode.value
+        this.EntityPM.DeliveryAddressId = propertyForm.deliveryAddressId.value?.Id
+
+        this.EntityPM.ToAddressCity = propertyForm.pickupCity.value
+        this.EntityPM.ToAddressCountryId = propertyForm.pickupCountry.value?.Id
+        this.EntityPM.ToAddressZipCode = propertyForm.pickupZipCode.value
+        this.EntityPM.PickUpAddressId= propertyForm.pickupAddressId.value?.Id
+
+        this.EntityPM.ToPortId = propertyForm.toPort.value?.Code
+        this.EntityPM.FromPortId = propertyForm.fromPort.value?.Code
+        this.EntityPM.MainCarriageCarrierId = propertyForm.mainCarriageCarrier.value?.AIRLINE_ID
+        this.EntityPM.IncotermId = propertyForm.incoterm.value?.PTERMID
+        this.EntityPM.SpecialServiceId = propertyForm.specialService.value?.SERVLEVEL_ID
+    }
+
+    private updatePropertiesTable(): void {
+        const propertiesForms: AbstractControl[] = (this.formGroup.controls.properties as FormArray).controls.filter((propertyForm: FormGroup) => propertyForm.valid);
+        
+        propertiesForms.forEach((propertyForm: FormGroup) => {
+            const propertiesPM: QuoteOPPropertiesPM = new QuoteOPPropertiesPM();
+            propertiesPM.FromAddressCity = propertyForm.value.deliveryCity
+            propertiesPM.FromAddressCountryId = propertyForm.value.deliveryCountry?.Id
+            propertiesPM.FromAddressZipCode = propertyForm.value.deliveryZipCode
+            propertiesPM.FromAddressId = propertyForm.value.deliveryAddressId?.Id
+
+            propertiesPM.ToAddressCity = propertyForm.value.pickupCity
+            propertiesPM.ToAddressCountryId = propertyForm.value.pickupCountry?.Id
+            propertiesPM.ToAddressZipCode = propertyForm.value.pickupZipCode
+            propertiesPM.ToAddressId = propertyForm.value.pickupAddressId?.Id
+
+            propertiesPM.ToPortId = propertyForm.value.toPort?.Code
+            propertiesPM.FromPortId = propertyForm.value.fromPort?.Code
+            propertiesPM.MainCarriageCarrierId = propertyForm.value.mainCarriageCarrier?.AIRLINE_ID
+            propertiesPM.IncotermId = propertyForm.value.incoterm?.PTERMID
+            propertiesPM.SpecialServiceID = propertyForm.value.specialService?.SERVLEVEL_ID;
+
+            this.EntityPM.AddQuoteProperties(propertiesPM)
+        });
     }
 
     // private test() {

@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, FormArray, Validators } from '@angular/forms';
 import { QuoteOPPM } from 'QuoteOPM/EntityPMs/QuoteOPPM';
 import { Carrier, Incoterm, NewQuoteDataService, Port, SpecialService } from '../../Services/new-quote-data/new-quote-data.service';
 
@@ -20,6 +20,23 @@ export class NewQuotePropertiesComponent implements OnInit {
   transportModeId: string = '';
   directionId: string = '';
   carrierColumns: any = {}
+  formArray: FormArray = new FormArray([this.propForm]);
+ 
+  get propForm(): FormGroup {
+    return new FormGroup({
+      fromPort: new FormControl('', Validators.required),
+      toPort: new FormControl(),
+      specialService: new FormControl(),
+      mainCarriageCarrier: new FormControl(),
+      incoterm: new FormControl(),
+      delivery: new FormGroup({}),
+      pickup: new FormGroup({}),
+    })
+  }
+
+  get properties(): any {
+    return this.formGroup.get('properties') as any;
+  }
 
   constructor(
     private newQuoteDataService: NewQuoteDataService,
@@ -27,21 +44,19 @@ export class NewQuotePropertiesComponent implements OnInit {
 
   ngOnInit(): void {
     this.getIncoterms()
+    let a = this.formArray[1]
+    console.log(a)
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (!this.formGroup.contains('fromPort')) {
+    if (!this.formGroup.contains('properties')) {
       this.addFormControls()
       this.subscribeTransport()
     }
   }
 
   addFormControls() {
-    this.formGroup.addControl('fromPort', new FormControl());
-    this.formGroup.addControl('toPort', new FormControl());
-    this.formGroup.addControl('specialService', new FormControl());
-    this.formGroup.addControl('mainCarriageCarrier', new FormControl());
-    this.formGroup.addControl('incoterm', new FormControl());
+    this.formGroup.addControl('properties', this.formArray)
   }
 
   subscribeTransport() {
@@ -81,22 +96,30 @@ export class NewQuotePropertiesComponent implements OnInit {
   }
 
   onSelectedtoPort(value: Port) {
-    this.EntityPM.ToPortId = value.Code;
+    // this.EntityPM.ToPortId = value.Code;
   }
 
   onSelectedFromPort(value: Port) {
-    this.EntityPM.FromPortId = value.Code;
+    // this.EntityPM.FromPortId = value.Code;
   }
 
   onMainCarriageCarrier(value: Carrier) {
-    this.EntityPM.MainCarriageCarrierId = value.AIRLINE_ID;
+    // this.EntityPM.MainCarriageCarrierId = value.AIRLINE_ID;
   }
 
   onSelectedIncoterm(value: Incoterm) {
-    this.EntityPM.IncotermId = value.PTERMID;
+    // this.EntityPM.IncotermId = value.PTERMID;
   }
 
   onSelectedSpecialService(value: SpecialService) {
-    this.EntityPM.SpecialServiceId = value.SERVLEVEL_ID;
+    // this.EntityPM.SpecialServiceId = value.SERVLEVEL_ID;
+  }
+
+  addProperty() {
+    this.formArray.push(this.propForm)
+  }
+
+  removeProperty(e: { originalEvent: PointerEvent, index: number }) {
+    this.formArray.removeAt(e.index)
   }
 }
