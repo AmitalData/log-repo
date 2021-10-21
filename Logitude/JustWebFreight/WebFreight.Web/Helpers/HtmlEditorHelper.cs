@@ -1083,6 +1083,7 @@ namespace WebFreight.Web.Helpers
                     IEnumerable<HtmlNode> spansList = document.DocumentNode.SelectNodes("//span").Where(n => n.InnerText.Contains("[") && n.InnerText.Contains("["));
                     if (spansList != null)
                     {
+                        nodeValues = new Dictionary<string, string>();
                         foreach (HtmlNode node in spansList)
                         {
 
@@ -5166,7 +5167,7 @@ namespace WebFreight.Web.Helpers
                 return " ";
             }
         }
-
+        Dictionary<string, string> nodeValues = new Dictionary<string, string>();
         private string GetHtmlNodeValue(HtmlNode node, string nodeText, object theEntity, List<ObjectField> theEntityObjectFields, Dictionary<HtmlNode, HtmlNode> tablesDic, SystemDataPM systemEntity, List<ObjectField> systemEntityObjectFields, List<HtmlNode> signatureNodeList, int tenant, GeneralDomainService theGeneralService, List<HtmlNode> ticketHeaderNode = null, List<HtmlNode> ticketFooterNode = null)
         {
 
@@ -5191,8 +5192,13 @@ namespace WebFreight.Web.Helpers
                                 objectField = childEntityObjectFields.Where(f => f.FieldName == fields[0]).FirstOrDefault();
                                 if (objectField != null)
                                 {
-
+                                    if (nodeValues.ContainsKey(propertyName))
+                                    {
+                                        node.InnerHtml.Replace("[" + propertyName + "]", nodeValues[propertyName]);
+                                        continue;
+                                    }
                                     nodeTextValue = ResolveObjectFieldValueHtml(objectField, fields, tenant, propertyName, systemEntity, systemEntityObjectFields, tablesDic, node, nodeTextValue, childEntity, childEntityObjectFields, nodeText);
+                                    nodeValues.Add(propertyName, nodeTextValue);
                                 }
                                 else
                                 {
@@ -5202,8 +5208,14 @@ namespace WebFreight.Web.Helpers
 
                                         if (objectField != null)
                                         {
-
+                                            if (nodeValues.ContainsKey(propertyName))
+                                            {
+                                                node.InnerHtml.Replace("[" + propertyName + "]", nodeValues[propertyName]);
+                                                continue;
+                                            }
                                             nodeTextValue = ResolveObjectFieldValueHtml(objectField, fields, tenant, propertyName, systemEntity, systemEntityObjectFields, tablesDic, node, nodeTextValue, theEntity, theEntityObjectFields, nodeText);
+                                            nodeValues.Add(propertyName, nodeTextValue);
+
                                         }
                                     }
                                 }
@@ -5216,8 +5228,14 @@ namespace WebFreight.Web.Helpers
 
                                     if (objectField != null)
                                     {
-
+                                        if (nodeValues.ContainsKey(propertyName))
+                                        {
+                                            node.InnerHtml.Replace("[" + propertyName + "]", nodeValues[propertyName]);
+                                            continue;
+                                        }
                                         nodeTextValue = ResolveObjectFieldValueHtml(objectField, fields, tenant, propertyName, systemEntity, systemEntityObjectFields, tablesDic, node, nodeTextValue, theEntity, theEntityObjectFields, nodeText);
+                                        nodeValues.Add(propertyName, nodeTextValue);
+
                                     }
                                 }
                             }
@@ -5572,6 +5590,8 @@ namespace WebFreight.Web.Helpers
                         {
 
                             node.InnerHtml = node.InnerHtml.Replace("[" + propertyName + "]", " ");
+
+                            value = " ";
                         }
                     }
                 }
