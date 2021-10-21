@@ -101,6 +101,7 @@
     </Compile>
     <Compile Include="DataContracts\CustomsRequestsSheetSummary.cs" />
     <Compile Include="DataContracts\DeclarationCourierStatusSummary.cs" />
+    <Compile Include="DataContracts\CustomsRequestsSheetSummary.cs" />
     <Compile Include="DataContracts\DeclarationReferantDataSummary.cs" />
     <Compile Include="EntityKeys\AcceptanceStatusKeys.cs" />
     <Compile Include="EntityKeys\ActionCodeKeys.cs" />
