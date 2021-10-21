@@ -1030,16 +1030,25 @@
                                                 </div>
                                             </td>
 
-                                            <!-- ManifestDate -->
-                                            <td>
-                                                <LogLabel [ObjectFieldName]="'ManifestDate'" [ObjectTableName]="'Customs.Consignment'"
+
+                                            <td style="vertical-align: top;padding-top: 2px; width: 160px;">
+                                                <LogLabel [ObjectFieldName]="'ShipCode'" [ObjectTableName]="'Customs.Consignment'"
                                                           [DataContext]="DataContext"></LogLabel>
                                             </td>
-                                            <td>
-                                                <LogDatePicker [ObjectFieldName]="'ManifestDate'" [ObjectTableName]="'Customs.Consignment'"
-                                                               [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
-                                            </td>
 
+                                            <td style="vertical-align: top;padding-top: 2px;width: 160px;">
+                                                <LogLov [ObjectFieldName]="'ShipCode'"
+                                                        [ObjectTableName]="'Customs.Consignment'"
+                                                        [DataContext]="DataContext"
+                                                        [LookUpTableName]="'Customs.CustomsShip'"
+                                                        [DisplayMemberPath]="'LocalName'"
+                                                        [SelectedValue]="ShipCode"
+                                                        [HideColumns]="true">
+                                                </LogLov>
+
+
+                                            </td>
+                                            
                                             <td style="width: 10px;"><div></div></td>
 
                                             <td style="width: 150px;">
@@ -1228,24 +1237,12 @@
                                             </td>
 
 
-
-                                            <td style="vertical-align: top;padding-top: 2px; width: 160px;">
-                                                <LogLabel [ObjectFieldName]="'ShipCode'" [ObjectTableName]="'Customs.Consignment'"
-                                                          [DataContext]="DataContext"></LogLabel>
-                                            </td>
-
-                                            <td style="vertical-align: top;padding-top: 2px;width: 160px;">
-                                                <LogLov [ObjectFieldName]="'ShipCode'"
-                                                        [ObjectTableName]="'Customs.Consignment'"
-                                                        [DataContext]="DataContext"
-                                                        [LookUpTableName]="'Customs.CustomsShip'"
-                                                        [DisplayMemberPath]="'LocalName'"
-                                                        [SelectedValue]="ShipCode"
-                                                        [HideColumns]="true">
-                                                </LogLov>
+                                            <!-- ManifestDate -->
 
 
-                                            </td>
+                                            <td> <div></div> </td>
+                                            <td> <div></div> </td>
+
                                             <td><div></div></td>
 
                                         </tr>
