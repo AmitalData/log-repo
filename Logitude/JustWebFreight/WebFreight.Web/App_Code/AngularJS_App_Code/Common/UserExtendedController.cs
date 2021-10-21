@@ -158,7 +158,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Common
         {
             UserLoginLogQuery userLoginLogQuery = new UserLoginLogQuery(tenant);
             UserLoginLogList lastUserLoginLogList = userLoginLogQuery.GetUserLoginLogListsByTenant(userId, tenant).OrderByDescending(d => d.GMTDateTime).FirstOrDefault();
-            bool isSameUser = lastUserLoginLogList.IP == AuthenticationUtil.GetIP4Address() && lastUserLoginLogList.Browser == HttpContext.Current.Request.Browser.Type;
+            bool isSameUser = lastUserLoginLogList.IP == AuthenticationUtil.GetIP4Address() && lastUserLoginLogList.Browser != null && lastUserLoginLogList.Browser.ToLower() == HttpContext.Current.Request.Browser.Type.ToLower();
             if (isSameUser && getUser)
             {
                 return Request.CreateResponse(HttpStatusCode.OK, lastUserLoginLogList);
