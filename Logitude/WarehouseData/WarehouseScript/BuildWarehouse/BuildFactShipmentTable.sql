@@ -715,6 +715,7 @@
      if(@ArrivedDate is null) begin set @IsArrived= 0; end
 	 if(@MainCarriageATD is null) begin set @IsDeparted=0; end
      if(@CustomsClearanceDate is null) begin set @IsCustomsCleared= 0 end
+     if(@NumberOfPackages is null) begin set @NumberOfPackages= 0 end
 	 -------------------------------------------------
 
 	 ----------------Entry And Release-------------------

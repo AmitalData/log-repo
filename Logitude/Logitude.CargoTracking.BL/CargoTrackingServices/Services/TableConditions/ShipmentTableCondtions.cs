@@ -131,7 +131,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
                     Mas.MainCarriageETA";
 
 
-            string sqlQuery = string.Join(Environment.NewLine, selectScript , fromScript , joinScript , whereScript , groupByScript);
+            string sqlQuery = string.Join(Environment.NewLine, selectScript, fromScript, joinScript, whereScript, groupByScript, " WITH (NOLOCK)");
 
 
             return sqlQuery;
@@ -271,7 +271,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
                     Mas.MainCarriageETA";
 
 
-            string sqlQuery = selectScript + fromScript + joinScript + whereScript + groupByScript;
+            string sqlQuery = selectScript + fromScript + joinScript + whereScript + groupByScript + " WITH (NOLOCK)";
 
             return sqlQuery;
         }
@@ -370,7 +370,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
 
             var whereScript = " WHERE " + string.Join(" AND ", whereConditions);
 
-            string sqlQuery = string.Join(Environment.NewLine, selectScript, fromScript, whereScript);
+            string sqlQuery = string.Join(Environment.NewLine, selectScript, fromScript, whereScript, " WITH (NOLOCK)");
 
             return sqlQuery;
         }
