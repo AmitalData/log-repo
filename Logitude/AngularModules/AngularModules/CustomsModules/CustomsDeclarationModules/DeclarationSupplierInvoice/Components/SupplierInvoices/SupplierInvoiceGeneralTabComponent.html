@@ -511,18 +511,12 @@
 
 
                                     <td style="width: 130px;">
-                                        <LogLabel [ObjectFieldName]="'IssueCountryCode'" [ObjectTableName]="ObjectTableName"
+                                        <LogLabel [ObjectFieldName]="'IsPreference'" [ObjectTableName]="ObjectTableName"
                                                   [DataContext]="DataContext"></LogLabel>
                                     </td>
 
                                     <td style="width: 160px;">
-                                        <LogLov [ObjectFieldName]="'IssueCountryCode'"
-                                                [ObjectTableName]="ObjectTableName"
-                                                [DataContext]="DataContext"
-                                                [LookUpTableName]="'Customs.CustomsCountry'"
-                                                [SelectedValue]="IssueCountryCode"
-                                                [HideColumns]="true">
-                                        </LogLov>
+                                        <LogCheckBox [Checked]="IsPreference" [ObjectTableName]="ObjectTableName" [ObjectFieldName]="'IsPreference'" [DataContext]="DataContext"></LogCheckBox>
 
                                     </td>
 
@@ -568,14 +562,14 @@
                                 </tr>
 
                                 <tr style="height: 32px;">
-                                    <td style="width: 150px;">
-                                        <LogLabel [ObjectFieldName]="'IsPreference'" [ObjectTableName]="ObjectTableName"
+
+                                    <td style="width: 130px;">
+                                        <LogLabel [ObjectFieldName]="'BuyerName'" [ObjectTableName]="ObjectTableName"
                                                   [DataContext]="DataContext"></LogLabel>
                                     </td>
-
                                     <td style="width: 160px;">
-                                        <LogCheckBox [Checked]="IsPreference" [ObjectTableName]="ObjectTableName" [ObjectFieldName]="'IsPreference'" [DataContext]="DataContext"></LogCheckBox>
-
+                                        <LogTextBox [ObjectFieldName]="'BuyerName'" [ObjectTableName]="ObjectTableName" [Text]="BuyerName"
+                                                    [HideColumns]="true" [DataContext]="DataContext" [InputType]="'ntext'"></LogTextBox>
                                     </td>
                                     <td>
                                         <div style="width:20px"></div>
@@ -599,12 +593,14 @@
 
                                 <tr style="height: 32px;">
                                     <td style="width: 130px;">
-                                        <LogLabel [ObjectFieldName]="'BuyerName'" [ObjectTableName]="ObjectTableName"
+                                        <LogLabel [ObjectFieldName]="'BuyerAddress'" [ObjectTableName]="ObjectTableName"
                                                   [DataContext]="DataContext"></LogLabel>
                                     </td>
+
                                     <td style="width: 160px;">
-                                        <LogTextBox [ObjectFieldName]="'BuyerName'" [ObjectTableName]="ObjectTableName" [Text]="BuyerName"
-                                                    [HideColumns]="true" [DataContext]="DataContext" [InputType]="'ntext'"></LogTextBox>
+                                        <LogTextBox [ObjectFieldName]="'BuyerAddress'" [ObjectTableName]="ObjectTableName" [Text]="BuyerAddress"
+                                                    [HideColumns]="true" [DataContext]="DataContext" [IsMultiline]="true" [InputType]="'ntext'"></LogTextBox>
+
                                     </td>
                                     <td>
                                         <div style="width:20px"></div>
@@ -627,16 +623,9 @@
                                 </tr>
 
                                 <tr style="height: 32px;">
-                                    <td style="width: 130px;">
-                                        <LogLabel [ObjectFieldName]="'BuyerAddress'" [ObjectTableName]="ObjectTableName"
-                                                  [DataContext]="DataContext"></LogLabel>
-                                    </td>
+                                    <td style="width: 130px;"><div></div></td>
+                                    <td style="width: 160px;"><div></div></td>
 
-                                    <td style="width: 160px;">
-                                        <LogTextBox [ObjectFieldName]="'BuyerAddress'" [ObjectTableName]="ObjectTableName" [Text]="BuyerAddress"
-                                                    [HideColumns]="true" [DataContext]="DataContext" [IsMultiline]="true" [InputType]="'ntext'"></LogTextBox>
-
-                                    </td>
                                     <td>
                                         <div style="width:20px"></div>
                                     </td>
