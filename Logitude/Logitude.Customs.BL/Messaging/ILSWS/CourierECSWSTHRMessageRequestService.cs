@@ -163,7 +163,8 @@ namespace Logitude.Customs.BL.Messaging.ILSWS
                 importerVat = myDeclarationPM.ImporterCode;
             }
 
-
+            string Description = myDeclarationPM.Consignments.DefaultIfEmpty(new ConsignmentPM()).First().CargoDescription ?? "";
+            Description= Description.Substring(0, Math.Min(Description.Length, 60));
             var courierHawbMamanModel = new CourierSWSHAWBRequest()
             {
 
@@ -184,7 +185,7 @@ namespace Logitude.Customs.BL.Messaging.ILSWS
                 GoodValueInUSD = DolarValue,
 
                 
-                Description = myDeclarationPM.Consignments.DefaultIfEmpty(new ConsignmentPM()).First().CargoDescription ?? "",
+                Description = Description,
                 ImporterName = myDeclarationPM.ImporterName ?? "",
                 ImporterAddress = myDeclarationPM.ImporterAddress ?? "",
                 DistributionLine = string.IsNullOrEmpty( currentDeclarationCourierStatusPM.DistributionArea)?"כללי" : currentDeclarationCourierStatusPM.DistributionArea,
