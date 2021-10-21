@@ -29,7 +29,8 @@ using System.Linq;
 using System.Reflection;
 using System.Transactions;
 using System.Xml;
-using Simplog.Server.Infrastructure; 
+using Simplog.Server.Infrastructure;
+using Logitude.BL.ShipmentsModel.DigitalModels;
 
 namespace Logitude.BL.ShipmentsModel.EntityQueries
 {
@@ -13992,6 +13993,51 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             List<ShipmentPackagePM> shipmentPackages = this.GetForwarderPackagesExceptConnectedContainers(shipmentPM, connectedPickUpDliveryPackagesContainersIds);
             return shipmentPackages;
         }
+
+
+        
+        public List<ShipmentAdditionalFields> GetShipmentsAdditionalFields(string shipmentIds, int tenant)
+        {
+            if (!string.IsNullOrEmpty(shipmentIds))
+            {
+                var shipmentIdsList = shipmentIds.Split(',').ToList();
+                var shipmentsAdditionalFields = from shipment in repository.context.Shipments
+                                 join shipmentPickUpDelivery in repository.context.ShipmentPickUpDeliveries
+                                 on shipment.Id equals shipmentPickUpDelivery.ShipmentId
+                                 into shipmentPickUpDeliveries
+                                 where shipmentIdsList.Contains(shipment.Id) && shipment.Tenant == tenant
+                                 select new ShipmentAdditionalFields
+                                 {
+                                     Id = shipment.Id,
+                                     ShipperCity = shipment.ShipperAddress.City,
+                                     ShipperCountryCode = shipment.ShipperAddress.Country.Code,
+                                     ConsigneeCity = shipment.ConsigneeAddress.City,
+                                     ConsigneeCountryCode = shipment.ConsigneeAddress.Country.Code,
+
+                                     FirstPickupATD = shipmentPickUpDeliveries.Where(s => s.PickUpDeliveryTypeCode == "PICK").Any() ?
+                                     shipmentPickUpDeliveries.Where(s => s.PickUpDeliveryTypeCode == "PICK")
+                                     .OrderBy(s => s.PickUpDeliveryNumber).FirstOrDefault().ATD : null,
+                                     
+                                     FirstPickupATA = shipmentPickUpDeliveries.Where(s => s.PickUpDeliveryTypeCode == "PICK").Any() ?
+                                     shipmentPickUpDeliveries.Where(s => s.PickUpDeliveryTypeCode == "PICK")
+                                     .OrderBy(s => s.PickUpDeliveryNumber).FirstOrDefault().ATA : null,
+
+                                     LastDeliveryATD = shipmentPickUpDeliveries.Where(s => s.PickUpDeliveryTypeCode == "DELV").Any() ?
+                                     shipmentPickUpDeliveries.Where(s => s.PickUpDeliveryTypeCode == "DELV")
+                                     .OrderByDescending(s => s.PickUpDeliveryNumber).FirstOrDefault().ATD : null,
+
+                                     LastDeliveryATA = shipmentPickUpDeliveries.Where(s => s.PickUpDeliveryTypeCode == "DELV").Any() ?
+                                     shipmentPickUpDeliveries.Where(s => s.PickUpDeliveryTypeCode == "DELV")
+                                     .OrderByDescending(s => s.PickUpDeliveryNumber).FirstOrDefault().ATA : null,
+                                 };
+
+                return shipmentsAdditionalFields.ToList();
+            }
+
+            return new List<ShipmentAdditionalFields>();
+        }
+
+
 
         private List<string> GetConnectedContainerEntityIdsToLegs(ShipmentPM shipmentPM, ShipmentPM stanAloneShipment)
         {
