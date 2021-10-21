@@ -1,6 +1,9 @@
 import { ChangeDetectorRef, Component, EventEmitter, Input, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { AbstractControl, FormGroup } from '@angular/forms';
+import { GenericTableColumn } from 'Customs/Components/generic-table/generic-table.component';
+import { GenericTableService } from 'Customs/Components/generic-table/generic-table.service';
 import { AutoComplete } from 'primeng/autocomplete';
+import { take } from 'rxjs/operators';
 // import { Subscription } from 'rxjs';
 
 @Component({
@@ -25,8 +28,13 @@ export class AutocomplateTableComponent {
 
   selected: any[] = []
   columnsNames: string[] = [];
-  columnsHeader: {} = [];
+  columnsHeader: any = [];
   selectedChoice: any;
+
+  constructor(
+    private genericTableService: GenericTableService,
+  ) {}
+
   // subscribeRef: Subscription = null as any;
 
   // constructor(private cdref: ChangeDetectorRef){}
@@ -62,6 +70,15 @@ export class AutocomplateTableComponent {
     this.selected.unshift(this.columnsHeader);
   }
 
+  async openSearchDialog() {
+    const columns: GenericTableColumn[] = Object.keys(this.columnsHeader).map(columnsName => { return { name: columnsName , alias: this.columnsHeader[columnsName] } }) 
+    // const recordSelected: any = await this.genericTableService.open(this.data, this.label, columns).onClose.toPromise()
+    const recordSelected: any = await new Promise<any>((resolve) => 
+      this.genericTableService.open(this.data, this.label, columns).onClose.pipe(take(1)).subscribe(x=>resolve(x)));      
+    
+      this.formGroup.controls[this.controlName].setValue(recordSelected)
+  }
+
   onSelected(val: any) {
     if (this.selected[0] == val)
       this.formGroup.controls[this.controlName].reset()
@@ -87,11 +104,5 @@ export class AutocomplateTableComponent {
     const obj: any = {};
     arr.forEach(x => { obj[x] = x })
     return obj;
-  }
-
-  openDropdown() {
-    setTimeout(() => {
-      this.autoComplete.handleDropdownClick({ query: null })
-    }, 100);
   }
 }

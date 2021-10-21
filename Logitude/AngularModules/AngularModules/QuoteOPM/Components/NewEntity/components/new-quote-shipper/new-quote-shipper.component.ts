@@ -3,6 +3,8 @@ import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
 import { AddressList } from 'Common/EntityLists/AddressList';
 import { CardList } from 'Common/EntityLists/CardList';
 import { ContactList } from 'Common/EntityLists/ContactList';
+import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator';
+import { MenuItem } from 'primeng/api';
 import { QuoteOPPM } from 'QuoteOPM/EntityPMs/QuoteOPPM';
 import { filterIsNotNull, NewQuoteDataService } from '../../Services/new-quote-data/new-quote-data.service';
 
@@ -18,6 +20,14 @@ export class NewQuoteShipperComponent implements OnInit {
   shipperNames: CardList[] = []
   shipperContacts: ContactList[] = []
   Address: AddressList = null as any;
+  ddl: MenuItem[] = [
+    { label: TextCodeTranslator.Translate('QuoteOP.B.NewQuote.AddShipper'), command: ()=> this.newQuoteDataService.AddCustomerClicked('Shipper') },
+    { label: TextCodeTranslator.Translate('QuoteOP.B.NewQuote.AddPotentialShipper'), command: ()=> this.newQuoteDataService.AddPotentialCustomerClicked('Shipper') },
+  ];
+
+  addContact(){
+    this.newQuoteDataService.AddContact(this.formGroup.controls.shipperName.value.Id, 'SH')
+  }
 
   constructor(
     private newQuoteDataService: NewQuoteDataService,

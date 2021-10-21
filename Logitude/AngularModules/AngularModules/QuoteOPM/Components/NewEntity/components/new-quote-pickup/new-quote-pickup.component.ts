@@ -21,7 +21,8 @@ export class NewQuotePickupComponent implements OnInit {
   cityListAll: CountryCityList[] = []
   cityList: CountryCityList[] = []
   shipperNames: CardList[] = []
-  Address: AddressList = null as any;
+  Address: AddressList = null;
+  AddressList: AddressList[] = [];
 
   constructor(
     private newQuoteDataService: NewQuoteDataService,
@@ -32,11 +33,11 @@ export class NewQuotePickupComponent implements OnInit {
     this.InitCity();
     this.initShipperNames()
   }
-  
+
   private async InitCountries() {
     this.countryList = await this.newQuoteDataService.getCounriesTable();
   }
-  
+
   private async InitCity() {
     this.cityListAll = await this.newQuoteDataService.getCityTable();
     this.cityList = this.cityListAll;
@@ -63,8 +64,17 @@ export class NewQuotePickupComponent implements OnInit {
   }
 
   subscribeCtrls() {
-    this.qouteForm.controls.shipperName.valueChanges.subscribe(async (shipperName: CardList) =>
-      this.Address = shipperName ? await this.newQuoteDataService.getAddress(shipperName.Id, shipperName.Tenant) : null);
+    this.qouteForm.controls.shipperName.valueChanges.subscribe(async (shipperName: CardList) => {
+      if (shipperName) {
+        this.AddressList = shipperName ? await this.newQuoteDataService.getAddresses(shipperName.Id, shipperName.Tenant) : null;
+        this.Address = this.AddressList.length ? this.AddressList[0] : null
+        this.propertyForm.controls.pickupAddressId.setValue(this.Address)
+      } else {
+        this.Address = null
+        this.AddressList = []
+        this.propertyForm.controls.pickupAddressId.setValue(null)
+      }
+    });
   }
 
   initDefaultValue() {

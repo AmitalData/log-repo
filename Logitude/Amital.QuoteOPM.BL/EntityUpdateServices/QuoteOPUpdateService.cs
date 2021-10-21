@@ -96,6 +96,12 @@ namespace Amital.QuoteOPM.BL.EntityUpdateServices
                 //no FU 4U this.CreateQuoteFollowUp(itemPM);
             }
 
+            entityPM.QuoteProperties.ForEach(propertiesPM =>
+            {
+                propertiesPM.QuoteID = entityPM.Id;
+                propertiesPM.ChangeSetOp = ChangeSetOperation.Insert;
+            });
+
             base.OnCreating(entityPM, entityParentPM);
         }
 

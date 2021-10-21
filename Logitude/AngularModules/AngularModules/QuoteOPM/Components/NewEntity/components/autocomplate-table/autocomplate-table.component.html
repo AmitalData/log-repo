@@ -1,4 +1,4 @@
-<div [formGroup]='formGroup' class="p-input-icon-right">
+<div [formGroup]='formGroup' [ngClass]="{'p-input-icon-right': !dropIcon && searchIcon, 'have-drop-icon': dropIcon}">
 
     <label [for]="label">{{label}}</label>
 
@@ -11,6 +11,6 @@
 
     </p-autoComplete>
 
-    <i *ngIf='searchIcon' class='pi pi-search' (click)='openDropdown()'></i>
+    <i *ngIf='searchIcon && !dropIcon' class='pi pi-search' (click)='openSearchDialog()'></i>
 
 </div>

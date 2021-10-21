@@ -16,12 +16,13 @@ export class NewQuoteDeliveryComponent implements OnInit {
   @Input() qouteForm: FormGroup
   @Input() propertyForm: FormGroup
   @Input() EntityPM: QuoteOPPM = null as any;
-  
+
   countryList: CountryList[] = []
   cityListAll: CountryCityList[] = []
   cityList: CountryCityList[] = []
   consigneeNames: any[] = []
-  Address: AddressList = null as any;
+  Address: AddressList = null;
+  AddressList: AddressList[] = [];
 
   constructor(
     private newQuoteDataService: NewQuoteDataService,
@@ -63,8 +64,17 @@ export class NewQuoteDeliveryComponent implements OnInit {
   }
 
   subscribeCtrls() {
-    this.qouteForm.controls.consigneeName.valueChanges.subscribe(async (consigneeName: CardList) =>
-      this.Address = consigneeName ?  await this.newQuoteDataService.getAddress(consigneeName.Id, consigneeName.Tenant) : null);
+    this.qouteForm.controls.consigneeName.valueChanges.subscribe(async (consigneeName: CardList) => {
+      if (consigneeName) {
+        this.AddressList = consigneeName ? await this.newQuoteDataService.getAddresses(consigneeName.Id, consigneeName.Tenant) : null;
+        this.Address = this.AddressList.length ? this.AddressList[0] : null
+        this.propertyForm.controls.deliveryAddressId.setValue(this.Address)
+      } else {
+        this.Address = null
+        this.AddressList = []
+        this.propertyForm.controls.deliveryAddressId.setValue(null)
+      }
+    });
   }
 
   initDefaultValue() {

@@ -7,8 +7,10 @@
         [columnsShow]="['Code', 'EnglishName', 'Address1', 'CityName', 'CountryName', 'PartnerTypeName']"
         [data]='consigneeNames' [fieldShow]='"EnglishName"'
         [label]="'QuoteOP.S.NewQuote.Name' | TextCodeTranslationPipe" [controlName]='"consigneeName"'
-        [formGroup]='formGroup'>
+        [formGroup]='formGroup'  [searchIcon]='true'>
       </app-autocomplate-table>
+      
+      <app-btn-menu-plus [ddl]='ddl'></app-btn-menu-plus>
     </div>
 
     <div *ngIf='Address'>
@@ -31,6 +33,8 @@
           [fieldShow]='"EnglishName"' [label]="'Contact'" [controlName]='"consigneeContact"' [formGroup]='formGroup'
           (onSelect)='onSelectedContact($event)'>
         </app-autocomplate-table>
+                
+        <i class="pi pi-plus plus-btn" (click)='addContact()'></i>
       </div>
 
       <div class="p-field">

@@ -2,4 +2,8 @@
     .p-paginator-bottom {
         display: none;
     }
+
+    tbody tr.ng-star-inserted:hover {
+        background: #c9c9c9;
+    }
 }

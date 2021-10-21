@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { LazyLoadEvent, SortEvent } from 'primeng/api';
-import { DynamicDialogConfig } from 'primeng/dynamicdialog';
+import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Table } from 'primeng/table';
 import { GenericTableService } from './generic-table.service';
 
@@ -25,6 +25,7 @@ export class GenericTableComponent implements OnInit {
   constructor(
     private config: DynamicDialogConfig,
     private tableService: GenericTableService,
+    private dialogRef: DynamicDialogRef,
   ) { }
 
   ngOnInit(): void {
@@ -70,6 +71,10 @@ export class GenericTableComponent implements OnInit {
     Array.prototype.splice.apply(this.data, [index, 100, ...loadedData]);
     Array.prototype.splice.apply(this.data, [index + 100, 0, ...Array.from({ length: 100 })]);
     this.data = [...this.data]
+  }
+  
+  onSelectedRow(e: any) {
+    this.dialogRef.close(e)
   }
 }
 
