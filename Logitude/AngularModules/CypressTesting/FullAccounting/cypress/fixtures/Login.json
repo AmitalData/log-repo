@@ -1,7 +1,7 @@
 {
-  "url": "http://test19.westeurope.cloudapp.azure.com/test/",
-  "email": "CloudSmokeNewEnv@mail.com",
-  "password": "!Cypress1",
+  "url": "https://test.logitudeworld.com/test/",
+  "email": "BDD@mail.com",
+  "password": "123!@#wF",
   "customerCareEmail": "ahmada@logitudeworld.com",
   "customerCarePassword": "!A123456",
   "tenant": "UNF 58 Accounting (1071)"

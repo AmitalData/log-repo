@@ -17,4 +17,8 @@ export class ARPaymentSelectors {
     public static readonly ChequeBank = '#ARPayment_Bank';
     public static readonly ChequeBankBranch = '#ARPayment_BankBranch';
     public static readonly ChequeAccount = '#ARPayment_Account';
+    public static readonly PrintNotes = '#ARPayment_PrintNotes';
+    public static readonly VoidButton = '#ARPaymentBVoid';
+    public static readonly CancelationNotes = '#ARPayment_CancelationNotes';
+
 }

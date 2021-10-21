@@ -13,6 +13,11 @@ Feature: AR Payment
         When create AR Payment
         Then the AR Payment should get successfully
 
-    Scenario: Approve the AR Payment
+    Scenario: Edit print notes and Approve the AR Payment
+        Given add "new notes" as print notes
         When Approve the AR Payment
         Then the AR Payment should approve successfully
+
+    Scenario: Void AR Payment
+        When void AR Payment
+        Then the AR Payment should void successfully

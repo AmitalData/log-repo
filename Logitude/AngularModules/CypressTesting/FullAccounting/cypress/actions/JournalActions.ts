@@ -44,3 +44,14 @@ export function ApproveJournal() {
 export function AssertApproveJournal() {
     BaseAssertion.AssertStatusCode(RequestAliases.PutJournal, 200)
 }
+
+export function PrintReport() {
+    cy.DefineWindowOpen(RequestAliases.PrintReportWindowOpen);
+    cy.Click(JournalSelectors.MenuButtons, null);
+    cy.Click(JournalSelectors.JournalPrint, null);
+    cy.Click(JournalSelectors.Printbutton, null);
+}
+
+export function AssertPrintReport() {
+    BaseAssertion.AssertWindowOpen(RequestAliases.PrintReportWindowOpen);
+}
