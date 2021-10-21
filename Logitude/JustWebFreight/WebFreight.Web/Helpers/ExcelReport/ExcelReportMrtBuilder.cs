@@ -43,7 +43,11 @@ namespace WebFreight.Web.Helpers.ExcelReport
 
             BuildDataProvider();
 
-            BuildReport(selectedFields);
+            if(selectedFields!=null && selectedFields.Count > 0)
+            {
+                BuildReport(selectedFields);
+            }
+    
             return stiReport.SaveToByteArray();
         }
 

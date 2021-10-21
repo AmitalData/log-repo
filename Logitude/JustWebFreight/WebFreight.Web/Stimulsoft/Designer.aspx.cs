@@ -84,7 +84,7 @@ namespace WebFreight.Web.Stimulsoft
                         {
                             report.Load(fileData);
                         }
-                        if (processType == "ReportPreview")
+                        if (processType == "ReportPreview" || templateType == "E")
                         {
                             LogitudeStiWebDesigner.ShowSaveButton = false;
                             LogitudeStiWebDesigner.ShowSaveDialog = false;

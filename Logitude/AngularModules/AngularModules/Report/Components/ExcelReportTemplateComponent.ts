@@ -67,12 +67,12 @@ export class ExcelReportTemplateComponent implements OnInit {
     LoadReportTemplate() {
         this.CurrentSession.StartBusyIndicatorLoading();
         this.excelReportService.getDataProviderFields(this.ReportTemplatePM.ReportId, this.ReportTemplatePM.Id)
-        .subscribe((myResponse: ServiceResponse) => {
-            if (!myResponse.HasError) {
-                this.FillDataProviderFields(myResponse.Result)
-            }
-            this.CurrentSession.StopBusyIndicator();
-        });
+            .subscribe((myResponse: ServiceResponse) => {
+                if (!myResponse.HasError) {
+                    this.FillDataProviderFields(myResponse.Result)
+                }
+                this.CurrentSession.StopBusyIndicator();
+            });
     }
 
     FillDataProviderFields(result: any) {
@@ -144,15 +144,15 @@ export class ExcelReportTemplateComponent implements OnInit {
         this.CurrentSession.CurrentWindow.Close("");
     }
 
-    SaveButtonClicked() {
+    SaveButtonClicked(preview: boolean) {
         var selectedDataProviderFields: DataProviderField[] = this.GetSelectedDataProviderFields(this.Clone(this.DataProviderFieldsAll));
-        
+
         var excelReportArguments: ExcelReportArguments = this.GetExcelReportArguments(selectedDataProviderFields);
 
         this.CurrentSession.StartBusyIndicatorLoading();
         this.excelReportService.postDataProviderProperties(excelReportArguments).subscribe((myResponse: ServiceResponse) => {
             this.CurrentSession.StopBusyIndicator();
-            this.CurrentSession.CurrentWindow.Close("");
+            preview ? this.OpenStimulsoftDesigner() : this.CurrentSession.CurrentWindow.Close("");
         });
     }
 
@@ -185,8 +185,7 @@ export class ExcelReportTemplateComponent implements OnInit {
 
 
     PreviewButtonClicked() {
-        this.OpenStimulsoftDesigner();
-        this.CurrentSession.CurrentWindow.Close("");
+        this.SaveButtonClicked(true);
     }
 
     OpenStimulsoftDesigner() {
