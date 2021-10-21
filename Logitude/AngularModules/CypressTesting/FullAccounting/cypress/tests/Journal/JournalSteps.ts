@@ -37,3 +37,13 @@ Then("the journal should approve successfully", () => {
     JournalActions.AssertApproveJournal()
 });
 //#endregion
+
+//#region Print report
+When("print the report", () => {
+    JournalActions.PrintReport();
+});
+
+Then("the report should print successfully", () => {
+    JournalActions.AssertPrintReport()
+});
+//#endregion

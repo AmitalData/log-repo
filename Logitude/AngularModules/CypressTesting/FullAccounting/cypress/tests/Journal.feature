@@ -18,3 +18,7 @@ Feature: Journal
     Scenario: Approve the Journal
         When approve the journal
         Then the journal should approve successfully
+
+    Scenario: Print report
+        When print the report
+        Then the report should print successfully
