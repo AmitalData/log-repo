@@ -22,10 +22,8 @@ export class NewQuotePartnerComponent implements OnInit {
   cardsList: CardList[] = []
   contactsList: ContactList[] = []
   Address: AddressList = null as any;
-  ddl: MenuItem[] = [
-    { label: TextCodeTranslator.Translate('QuoteOP.B.NewQuote.Add' + this.capitalizeType), command: ()=> this.dialogsService.addCustomer(this.capitalizeType) },
-    { label: TextCodeTranslator.Translate('QuoteOP.B.NewQuote.AddPotential'+ this.capitalizeType), command: ()=> this.dialogsService.addPotentialCustomer(this.capitalizeType) },
-  ];
+  ddl: MenuItem[] = [];
+
 
   partnerform: FormGroup = new FormGroup({
     partner: new FormControl(),
@@ -52,6 +50,7 @@ export class NewQuotePartnerComponent implements OnInit {
   ngOnInit(): void {
     this.initCards();
     this.partnerform.controls.notes.disable();
+    this.initDdl();
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -99,6 +98,13 @@ export class NewQuotePartnerComponent implements OnInit {
     return str?.charAt(0).toUpperCase() + str?.slice(1);
   }
 
+  private initDdl() {
+    this.ddl = [
+      { label: TextCodeTranslator.Translate('QuoteOP.B.NewQuote.Add' + this.capitalizeType), command: ()=> this.dialogsService.addCustomer(this.capitalizeType) },
+      { label: TextCodeTranslator.Translate('QuoteOP.B.NewQuote.AddPotential'+ this.capitalizeType), command: ()=> this.dialogsService.addPotentialCustomer(this.capitalizeType) },
+    ];
+  }
+
   onSelectedName(val: CardList) {
     this.EntityPM[this.capitalizeType + 'Name'] = val?.EnglishName;
     this.EntityPM[this.capitalizeType + 'Id'] = val?.Id;
@@ -111,6 +117,6 @@ export class NewQuotePartnerComponent implements OnInit {
   }
 
   addContact(){
-    this.dialogsService.addContact(this.formGroup.controls.partner.value.Id, this.partnerType )
+    this.dialogsService.addContact(this.partnerform.controls.partner.value.Id, this.partnerType )
   }
 }
