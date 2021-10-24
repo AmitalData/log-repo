@@ -1,6 +1,7 @@
 ﻿using Logitude.BL.CommonDataModel.EntityAMs;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.CommonDataModel.Tools.EntityService;
 using Logitude.BL.GlobalModel.EntityPMs;
 using Logitude.BL.GlobalModel.EntityQueries;
 using Logitude.BL.GlobalModel.Tools.EntityService;
@@ -179,6 +180,8 @@ namespace CommunicationWorkerRole
 
                                     UpdatePrivateLabel(tenant, IsImportActivated, IsExportActivated);
 
+                                   // UpdateCustomerTenantAccessRequests(CustomerTenant,tenant, IsImportActivated, IsExportActivated);
+
                                     CustomerTenantAccessRequestAM customerTenantAccessRequest = new CustomerTenantAccessRequestAM()
                                     {
                                         CustomerTenant = CustomerTenant,
@@ -350,7 +353,27 @@ namespace CommunicationWorkerRole
             }
            
         }
- 
+
+        private void UpdateCustomerTenantAccessRequests(int customerTenant, int tenant, bool isImportActivated, bool isExportActivated)
+        {
+            CustomerTenantAccessRequestQuery customerTenantAccessRequestQuery = new CustomerTenantAccessRequestQuery(tenant);
+            List<string> customerTenantAccessRequestIds = customerTenantAccessRequestQuery.GetCustomerTenantAccessRequestIdsByTenant(customerTenant);
+
+            HybridPartnerQuery hybridPartnerQuery = new HybridPartnerQuery(tenant);
+
+            List<string> forwarderIds = hybridPartnerQuery.GetPartnersForRequest(tenant, customerTenantAccessRequestIds);
+
+            IQueryable<CustomerTenantAccessRequestPM> customerTenantAccessRequestList= customerTenantAccessRequestQuery.GetCustomerTenantAccessRequestByTenantAndForwarderIds(customerTenant, forwarderIds);
+            ICommonDataContext context = CommonDataContext.GetContext(tenant);
+            CustomerTenantAccessRequestService customerTenantAccessRequestService = new CustomerTenantAccessRequestService(context, customerTenant);
+            foreach (var customerTenantAccessRequest in customerTenantAccessRequestList)
+            {
+                customerTenantAccessRequest.IsCustoms = isImportActivated;
+                customerTenantAccessRequest.IsExport = isExportActivated;
+                customerTenantAccessRequestService.Update(customerTenantAccessRequest);
+            }
+
+        }
 
         private static void UpdatePrivateLabel(int tenant, bool IsImportActivated, bool IsExportActivated)
         {

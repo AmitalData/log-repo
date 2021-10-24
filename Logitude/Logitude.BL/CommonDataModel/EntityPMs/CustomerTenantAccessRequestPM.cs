@@ -17,6 +17,7 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public string RequestStatus { get; set; }
         public string StatusName { get; set; }
         public string ForwarderName { get; set; }
-
+        public bool IsCustoms { get; set; }
+        public bool IsExport { get; set; }
     }
 }

@@ -19,16 +19,19 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
                entityPOCO.Id = entityPM.Id;
                entityPOCO.ForwarderId = entityPM.ForwarderId;
                entityPOCO.RequestDateTime = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
-        
+                entityPOCO.IsCustoms = entityPM.IsCustoms;
+                entityPOCO.IsExport = entityPM.IsExport;
 
-           }
+            }
 
            entityPOCO.RequestDateTime = entityPM.RequestDateTime;
            entityPOCO.RequestStatus = entityPM.RequestStatus;
            entityPOCO.ForwarderId = entityPM.ForwarderId;
+           entityPOCO.IsCustoms = entityPM.IsCustoms;
+           entityPOCO.IsExport = entityPM.IsExport;
 
-          
-       }
+
+        }
   
     }
 }

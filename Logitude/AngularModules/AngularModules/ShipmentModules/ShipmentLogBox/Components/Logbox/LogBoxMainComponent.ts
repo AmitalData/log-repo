@@ -24,6 +24,7 @@ import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCod
 import { LogboxShipmentExportExcelArgs } from '../../../../Shipment/DataContract/LogboxShipmentExportExcelArgs';
 import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService'; 
 import { SystemEnvironmentService } from '../../../../Infrastructure/Utilities/SystemEnvironmentService';
+import { CustomerTenantAccessRequestExtendedPMService } from '../../../../Common/Services/ExtendedPMs/CustomerTenantAccessRequestExtendedPMService';
 
 @Component({
     templateUrl: './LogBoxMainComponent.html',
@@ -54,9 +55,12 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
     private entityResourceService: EntityResourceService;
     public HasExportShipmentToggle: boolean = false;
 
+    public IsPrivateLabelExportActivated: boolean = false;
+    public IsPrivateLabelImportActivated: boolean = false;
 
     public IsExportActivated: boolean = false;
     public IsImportActivated: boolean = false;
+    public customerTenantAccessRequestExtendedPMService: CustomerTenantAccessRequestExtendedPMService;
 
     public isLogbox: boolean = SystemEnvironmentService.IsLogBox();
 
@@ -78,6 +82,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
         this._UserLastSettingsPMService = new UserLastSettingsPMService();
         this._UserLastSettingsExtendedPMService = new UserLastSettingsExtendedPMService();
         this.entityResourceService = new EntityResourceService();
+        this.customerTenantAccessRequestExtendedPMService = new CustomerTenantAccessRequestExtendedPMService();
     }
  
     private checkAirShipmentToggle() {
@@ -137,12 +142,30 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
             this.SelectedFilter = this.AgentShipmentsLabel;
             this.RequestedDocsLable = "Action Required";
             this.RefTemplateWidth = '150px';
-            this.IsExportActivated = SessionLocator.PrivateLableSettings.IsExportActivated;
-            this.IsImportActivated = SessionLocator.PrivateLableSettings.IsImportActivated;
+            this.IsPrivateLabelExportActivated = SessionLocator.PrivateLableSettings.IsExportActivated;
+            this.IsPrivateLabelImportActivated = SessionLocator.PrivateLableSettings.IsImportActivated;
+            this.GetCustomerTenantAccessRequests(SessionLocator.PrivateLableSettings.HybridPartnerId);
+
         }
         else {
             this.RefTemplateWidth = this.ToggleIsExportShipments ? '250px' : '220px';
         }
+    }
+    GetCustomerTenantAccessRequests(hybridPartnerId: any) {
+
+        var tenant = SessionLocator.Tenant;
+        this.customerTenantAccessRequestExtendedPMService.getByForwarderId(tenant,hybridPartnerId).subscribe((res: any) => {
+            if (!res.HasError) {
+
+                this.IsImportActivated = res.Result.IsCustoms;
+                this.IsExportActivated = res.Result.IsExport; 
+               
+            }
+            else {
+                //this.ValidationErrorsList = res.ErrorsArray;
+                
+            }
+        });
     }
 
     private getAgentShipmentsLabel(agentName: string) {
@@ -262,7 +285,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
 
     private mySelectedDirectionFilter: string = "All";
     get SelectedDirectionFilter() { return this.mySelectedDirectionFilter; }
-    set SelectedDirectionFilter(newValue: string) {
+    set SelectedDirectionFilter(newValue: string) { 
         if (this.mySelectedDirectionFilter != newValue) {
             this.mySelectedDirectionFilter = newValue;
             this.LoadImporterShipments();
@@ -358,7 +381,13 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
             ForwarderPartnerId: this.isPrivateLabel && !this.IsDSV ? SessionLocator.PrivateLableSettings.HybridPartnerId : '',
             DirectionOperator : 'Equal',
         };
+        // logbox filter
         if (this.isLogbox && !shipmentsQueriesCountsArgs.DirectionId) this.SetDirectionFilter(shipmentsQueriesCountsArgs);
+        // is import filter
+        if (this.isPrivateLabel && !shipmentsQueriesCountsArgs.DirectionId && (!this.IsImportActivated)) this.SetImportFilter(shipmentsQueriesCountsArgs);
+        // is export filter
+        if (this.isLogbox && !shipmentsQueriesCountsArgs.DirectionId) this.SetExportFilter(shipmentsQueriesCountsArgs);
+
         this.myShipmentDomainService.GetShipmentsQueriesCounts(shipmentsQueriesCountsArgs).subscribe((myResult: ImporterQueriesDataCounts) => {
             if (myResult != null) {
                 this.setAllShipmentsQueriesCounts(myResult);
@@ -382,6 +411,19 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
        shipmentsQueriesCountsArgs.DirectionOperator = 'NotEqual'; 
     }
 
+    private SetExportFilter(shipmentsQueriesCountsArgs: ShipmentsQueriesCountsArgs) {
+        shipmentsQueriesCountsArgs.DirectionId = 'E';
+       //shipmentsQueriesCountsArgs.DirectionOperator = 'NotEqual';
+    }
+
+    private SetImportFilter(shipmentsQueriesCountsArgs: ShipmentsQueriesCountsArgs) {
+        shipmentsQueriesCountsArgs.DirectionId = 'I';
+        //shipmentsQueriesCountsArgs.DirectionOperator = 'NotEqual';
+    }
+
+
+
+     
     private setAllShipmentsQueriesCounts(myResult: ImporterQueriesDataCounts) {
         this.AgentShipmentsCount = myResult.AgentShipmentsCount > 1000 ? "1000+" : myResult.AgentShipmentsCount.toString();
         this.MyShipmentsCount = myResult.ImporterShipmentsCount > 1000 ? "1000+" : myResult.ImporterShipmentsCount.toString();
@@ -886,9 +928,22 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
         }
          
         this.FilterLogboxShipments();
+        this.FilterPrivateLabelShipments();
 
         return this.filterAgrs;
     }
+
+    private FilterPrivateLabelShipments() {
+        if (this.isPrivateLabel) {
+            if (!this.IsPrivateLabelExportActivated || !this.IsExportActivated) {
+                this.filterAgrs.addAdditionalFilter("DirectionId", "E", null, null, "NotEqual", true, true, false, "String");
+            }
+            if (!this.IsPrivateLabelImportActivated || !this.IsImportActivated) {
+                this.filterAgrs.addAdditionalFilter("DirectionId", "I", null, null, "NotEqual", true, true, false, "String");
+            }
+        }
+    }
+
 
     private FilterLogboxShipments() {
         if (this.isLogbox) {
@@ -946,7 +1001,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
 
     private GetWindowComponentPath(newWindowComponentPath: string, newWindow: LogitudeWindow) {
  
-        if (!this.isLogbox && this.HasExportShipmentToggle) {
+        if (!this.isLogbox && this.IsExportActivated) {
  
             newWindowComponentPath = this.LoadNewAddShipmentComponent(newWindow, newWindowComponentPath);
         } else {
