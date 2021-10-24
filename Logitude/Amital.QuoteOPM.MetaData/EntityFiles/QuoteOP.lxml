@@ -30905,6 +30905,11 @@
       DefaultText="&quot;Quantity&quot;"
       TextCodeTypeCode="&quot;F&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;QuoteOP.S.NewQuote.CloseDate&quot;"
+      DefaultText="&quot;Close Date&quot;"
+      TextCodeTypeCode="&quot;S&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature

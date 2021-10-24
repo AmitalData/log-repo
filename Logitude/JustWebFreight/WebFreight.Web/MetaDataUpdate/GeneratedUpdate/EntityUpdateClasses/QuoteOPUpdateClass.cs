@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class QuoteOPUpdateClass
    {  		
-		public const string HashString = "4ce9751828bfbcb8e7248564fe9ce717";
+		public const string HashString = "b256db850b509ffb958c324c7843883a";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -16966,6 +16966,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode QuoteOPTextCode_QuoteOPSCostTotalAmount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteOP.S.CostTotalAmount", DefaultText = "Cost",LocalDefaultText = null, ObjectTableId = QuoteOPObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode QuoteOPTextCode_QuoteOPFPackageTypeQuantityShort = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteOP.F.PackageTypeQuantity.Short", DefaultText = "Quantity",LocalDefaultText = null, ObjectTableId = QuoteOPObjectTable.Id, Tenant = 0, TextCodeTypeCode = "F", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteOPTextCode_QuoteOPSNewQuoteCloseDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteOP.S.NewQuote.CloseDate", DefaultText = "Close Date",LocalDefaultText = null, ObjectTableId = QuoteOPObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
