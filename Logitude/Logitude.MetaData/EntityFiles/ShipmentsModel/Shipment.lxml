@@ -97765,8 +97765,8 @@
     <EventType
       Code="&quot;CRFP&quot;"
       ObjectTableName="&quot;Shipment&quot;"
-      EnglishName="&quot;Cargo Ready for Pickup&quot;"
-      LocalName="&quot;Cargo Ready for Pickup&quot;"
+      EnglishName="&quot;Cargo Ready Date Approved&quot;"
+      LocalName="&quot;Cargo Ready Date Approved&quot;"
       IsManualEntry="false"
       ShortView="true"
       IsAgentView="false"

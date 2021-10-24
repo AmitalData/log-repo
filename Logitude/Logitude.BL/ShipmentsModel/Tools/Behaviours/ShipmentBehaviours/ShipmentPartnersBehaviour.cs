@@ -330,13 +330,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
             {
                 return ;
             }
-
-            Card card = CardRepository.GetSingleCard(entityPM.MainCarriageFromPartnerId, initializer.Tenant, true);
-            if (card == null)
-            {
-                return;
-            }
-
             if (string.IsNullOrWhiteSpace(entityPM.MainCarriageFromAddressId))
             {
                 entityPM.MainCarriageFromAddressId = initializer.AddressRepository.GetMainAddressId(entityPM.MainCarriageFromPartnerId, initializer.Tenant);
@@ -348,13 +341,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
             {
                 return;
             }
-
-            Card card = CardRepository.GetSingleCard(entityPM.MainCarriageToPartnerId, initializer.Tenant, true);
-            if (card == null)
-            {
-                return;
-            }
-
             if (string.IsNullOrWhiteSpace(entityPM.MainCarriageToAddressId))
             {
                 entityPM.MainCarriageToAddressId = initializer.AddressRepository.GetMainAddressId(entityPM.MainCarriageToPartnerId, initializer.Tenant);
