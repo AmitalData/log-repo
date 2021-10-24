@@ -167,6 +167,8 @@ namespace Logitude.Customs.Data.EntityLists
        [DataMember]
        public string CourierPendingReasonNameList  { get; set; }
        [DataMember]
+       public bool IsAmendment  { get; set; }
+       [DataMember]
        public string DeclarationStorageSiteCode  { get; set; }
    }
 

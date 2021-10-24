@@ -13,12 +13,8 @@ namespace Logitude.Customs.Data.DataContracts
     {
         [Key]
         public Guid Id { get; set; }
-        public int DeclarationStatusSearch { get; set; }
-        public int ReleaseGoodsMessage { get; set; }
-        public int Tzrufa { get; set; }
-        public int SuccessInFiveMinutes { get; set; }
-        public int SuccessInOneMinute { get; set; }
-      
+        public int count { get; set; }
+        public string InterfaceTypeName { get; set; }
 
     }
 }
