@@ -32,12 +32,27 @@
     }
 
     .Statistics {
-        border: 1px solid black;
         text-align: center;
     }
+
     .StatisticsTable {
-        border-collapse:collapse
+        border-collapse: collapse;
+        table-layout: fixed;
     }
+
+        .StatisticsTable tbody {
+            overflow: auto;
+            width: 100%;
+            height: 80px;
+            display: block
+        }
+        .StatisticsTable thead th {
+            border: 1px solid #DADADA;
+            text-indent: 5px;
+            cursor: pointer;
+            background: linear-gradient( 180deg, rgba(247, 247, 247, 1) 0%, rgba(245, 245, 245, 1) 52.38%, rgba(238, 238, 238, 1) 72.96%, rgba(226, 226, 226, 1) 87.88%, rgba(209, 209, 209, 1) 100%);
+            color: #1B90CB;
+        }
 </style>
 
 <table *ngIf="_TranslationLoaded ||  false" style="padding-top: 10px;width:100%">
@@ -521,14 +536,14 @@
         <td *ngIf="StatisticsVisibility">
             <div style="width:80%">
                 <table class="StatisticsTable">
-                    <thead style="width: 100%; width: calc(100% - 18px); display:table;">
-                        <tr style=" border: 1px solid black; ">
+                    <thead style="width: 100%; display:table;">
+                        <tr>
                             <th style="width:50%" class="Statistics"><h2>סוג בקשה</h2></th>
-                            <th style="width:50%" class="Statistics"><h2>כמות</h2></th>
+                            <th style="width:50%" class="Statistics"><h2 style="width: calc(100% - 30px)">כמות</h2></th>
                         </tr>
                     </thead>
-                    <tbody *ngIf="IsTherecustomsRequestsSheetSummary" style="overflow: auto; width: 100%; max-height: 50px; display: block">
-                        <tr style="display:table;width:100%;table-layout:fixed;" *ngFor="let item of customsRequestsSheetSummary">
+                    <tbody *ngIf="IsTherecustomsRequestsSheetSummary">
+                        <tr style="display: table; width: 100%; table-layout: fixed; height: 20px; border-bottom:1px solid #A7A9AC;" *ngFor="let item of customsRequestsSheetSummary">
                             <td class="Statistics">{{item.InterfaceTypeName}}</td>
                             <td class="Statistics">{{item.count}}</td>
                         </tr>
@@ -536,10 +551,10 @@
                     <tbody *ngIf="!IsTherecustomsRequestsSheetSummary">
                         <tr> <td> <div></div> </td> <td> <div></div></td></tr>
                     </tbody>
-                    <tfoot style="width: 100%; width: calc(100% - 18px); display:table;">
-                        <tr style=" border: 1px solid black; ">
+                    <tfoot style="width: 100%; width: calc(100% - 18px); display: table;">
+                        <tr>
                             <td style="width:50%" class="Statistics"></td>
-                            <td style="width:50%" class="Statistics">{{SumRequests}}</td>
+                            <td style="width:50% " class="Statistics">{{SumRequests}}</td>
                         </tr>
                     </tfoot>
                 </table>
