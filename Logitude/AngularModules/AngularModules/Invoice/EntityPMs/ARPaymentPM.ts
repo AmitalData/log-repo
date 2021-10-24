@@ -20,6 +20,7 @@ import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
 import {Output, EventEmitter}  from '@angular/core';
 import {PropertyChangedArgs} from '../../Infrastructure/EventEmitterArgs/PropertyChangedArgs';
 import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass';
+import { ARPaymentBankTranferPM } from 'Accounting/EntityPMs/ARPaymentBankTranferPM';
 
 
 export class ARPaymentPM {
@@ -603,6 +604,20 @@ export class ARPaymentPM {
             }
         }
     }
+
+    private aRPaymentBankTranfers: ARPaymentBankTranferPM[];
+    get  ARPaymentBankTranfers() {
+        if (this.aRPaymentBankTranfers == null) {
+            this.aRPaymentBankTranfers = [];
+        }
+
+        return this.aRPaymentBankTranfers;
+    }
+    set  ARPaymentBankTranfers(newValue: ARPaymentBankTranferPM[]) {
+        if (this.aRPaymentBankTranfers != newValue) {
+            this.aRPaymentBankTranfers = newValue;
+        }
+    }
 	    //public ARPaymentChequeReplicas: Array<ARPaymentChequeReplicaPMPM>= [];
      private isPaymentNumberManuallySet: boolean;
     public get IsPaymentNumberManuallySet() { return this.isPaymentNumberManuallySet; }
@@ -702,4 +717,4 @@ export class ARPaymentPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

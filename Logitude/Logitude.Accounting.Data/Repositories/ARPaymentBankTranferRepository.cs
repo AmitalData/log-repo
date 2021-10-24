@@ -29,6 +29,13 @@ namespace Logitude.Accounting.Data.Repositories
                     select a).FirstOrDefault();
         }
 
+        public IQueryable<ARPaymentBankTranfer> GetARPaymentBankTranfersByPaymentId(string paymentId, int tenant)
+        {
+            return (from a in context.ARPaymentBankTranfers
+                    where a.PaymentId == paymentId && a.Tenant == tenant
+                    select a);
+        }
+
     }
 
 }

@@ -203,6 +203,8 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
             }
         }
 
+        public List<ARPaymentBankTranferPM> ARPaymentBankTranfers { get; set; }
+
         public bool IsPaymentNumberManuallySet { get; set; }
 
 

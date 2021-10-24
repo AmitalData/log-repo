@@ -162,6 +162,8 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
             payment.PaymentInvoices = entityQuery.GetARPaymentInvoicePMsForPayment(payment.Id, tenant);
 
             payment.ARPaymentChequeReplicas = GetARPaymentChequeReplicasByPaymentId(payment.Id, tenant);
+            payment.ARPaymentBankTranfers = GetARPaymentBankTranfersByPaymentId(payment.Id, tenant);
+            
             SetGLAccountFields(payment);
             payment =  SetJournalFields(payment);
 
@@ -216,6 +218,27 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
         {
             ARPaymentChequeReplicaQuery aRPaymentChequeReplicaQuery = new ARPaymentChequeReplicaQuery(tenant);
             return aRPaymentChequeReplicaQuery.GetARPaymentChequeReplicaPMsByPaymentId(paymentid, tenant);
+        }
+
+        private List<ARPaymentBankTranferPM> GetARPaymentBankTranfersByPaymentId(string paymentid, int tenant)
+        {
+            ARPaymentBankTranferRepository aRPaymentBankTranferRepository = new ARPaymentBankTranferRepository(tenant);
+            List<ARPaymentBankTranfer> arPaymentBankTranfers = aRPaymentBankTranferRepository.GetARPaymentBankTranfersByPaymentId(paymentid, tenant).ToList();
+            return (from a in arPaymentBankTranfers
+                    select new ARPaymentBankTranferPM()
+                    {
+                        Id = a.Id,
+                        Tenant = a.Tenant,
+                        PaymentId = a.PaymentId,
+                        PaymentRef = a.PaymentRef,
+                        ValueDate = a.ValueDate,
+                        BankAccountId = a.BankAccountId,
+                        CurrencyId = a.CurrencyId,
+                        LineNumber = a.LineNumber,
+                        LocalAmount = a.LocalAmount,
+                        ForeignAmount = a.ForeignAmount,
+                        ExchageRate = a.ExchageRate
+                    }).OrderBy(d => d.LineNumber).ToList();
         }
 
         void SetGLAccountFields(ARPaymentPM paymentPM)
