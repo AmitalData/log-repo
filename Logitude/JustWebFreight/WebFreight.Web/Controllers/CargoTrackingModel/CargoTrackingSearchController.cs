@@ -53,7 +53,6 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
     public class CargoTrackingSearchController : ApiController
     {
         private const string ProjectToken = "99de9de5af6505a670b915020e51380e";
-        private const string MasterUserId = "13793";
         [HttpGet]// for public search
         public HttpResponseMessage GetShipments([FromUri] CargoTrackingSearchRequest searchRequest)
         {
@@ -139,7 +138,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
         {
             if (searchKey != null)
             {
-                MixPanelEventTracker eventTracker = new MixPanelEventTracker(ProjectToken, MasterUserId, tenant);
+                MixPanelEventTracker eventTracker = new MixPanelEventTracker(ProjectToken, GetUserEmail(), tenant);
                 MixPanelEvent searchEvent = BuildMixPanelSearchEvent(searchKey, shipments, isPublic);
                 eventTracker.TrackEvent(searchEvent);
             }
@@ -234,11 +233,17 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
             SecurityUtility.AuthenticationOnTenant(tenant);
         }
 
+        private static string GetUserEmail() {
+            string token = HttpContext.Current.Request.Headers["Token"];
+            AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+            return authToken.Email;
+        }
+
         private static void CreateZoomEventForMixPanel(int tenant, CargoTrackingShipmentList shipment, bool isPublic)
         {
             MixPanelEvent zoomEvent = BuildMixPanelZoomEvent(shipment.ShipmentNumber,isPublic);
 
-            MixPanelEventTracker eventTracker = new MixPanelEventTracker(ProjectToken, MasterUserId, tenant);
+            MixPanelEventTracker eventTracker = new MixPanelEventTracker(ProjectToken, GetUserEmail(), tenant);
             eventTracker.TrackEvent(zoomEvent);
         }
 
