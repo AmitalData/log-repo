@@ -8,6 +8,8 @@ import { SessionLocator } from 'Infrastructure/Utilities/SessionLocator';
 
 export type AddressCode = 'P' | 'D';
 
+export type PartnerType = 'SH' | 'CO';
+
 @Injectable()
 export class DialogsService {
 
@@ -49,7 +51,7 @@ export class DialogsService {
     return new Promise<any>(resolve => logWindow.WindowClosed.subscribe(s => resolve(s)))
   }
 
-  addContact(partnerId: string, type: string) {
+  addContact(partnerId: string, type: PartnerType) {
     var logWindow = new LogitudeWindow();
     logWindow.Width = 960;
     logWindow.Height = 570;

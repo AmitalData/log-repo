@@ -75,15 +75,16 @@ export class NewQuoteComponent {
 
     private addProperty(): void {
         const propertyForm: FormGroup["controls"] = ((this.formGroup.controls.properties as FormArray).at(0) as FormGroup).controls;
-        this.EntityPM.FromAddressCity = propertyForm.deliveryCity.value
-        this.EntityPM.FromAddressCountryId = propertyForm.deliveryCountry.value?.Id
-        this.EntityPM.FromAddressZipCode = propertyForm.deliveryZipCode.value
-        this.EntityPM.DeliveryAddressId = propertyForm.deliveryAddress.value?.Id
+        
+        this.EntityPM.FromAddressCity = (propertyForm.delivery as FormGroup).value.city
+        this.EntityPM.FromAddressCountryId = (propertyForm.delivery as FormGroup).value.country?.Id
+        this.EntityPM.FromAddressZipCode = (propertyForm.delivery as FormGroup).value.zipCode
+        this.EntityPM.DeliveryAddressId = (propertyForm.delivery as FormGroup).value.address?.Id
 
-        this.EntityPM.ToAddressCity = propertyForm.pickupCity.value
-        this.EntityPM.ToAddressCountryId = propertyForm.pickupCountry.value?.Id
-        this.EntityPM.ToAddressZipCode = propertyForm.pickupZipCode.value
-        this.EntityPM.PickUpAddressId= propertyForm.pickupAddress.value?.Id
+        this.EntityPM.ToAddressCity = (propertyForm.pickup as FormGroup).value.city
+        this.EntityPM.ToAddressCountryId = (propertyForm.pickup as FormGroup).value.country?.Id
+        this.EntityPM.ToAddressZipCode = (propertyForm.pickup as FormGroup).value.zipCode
+        this.EntityPM.PickUpAddressId= (propertyForm.pickup as FormGroup).value.address?.Id
 
         this.EntityPM.ToPortId = propertyForm.toPort.value?.Code
         this.EntityPM.FromPortId = propertyForm.fromPort.value?.Code
@@ -95,23 +96,25 @@ export class NewQuoteComponent {
     private updatePropertiesTable(): void {
         const propertiesForms: AbstractControl[] = (this.formGroup.controls.properties as FormArray).controls.filter((propertyForm: FormGroup) => propertyForm.valid);
         
-        propertiesForms.forEach((propertyForm: FormGroup) => {
+        propertiesForms.forEach((propertyFormGroup: FormGroup) => {
+            const propertyForm: FormGroup["controls"] = propertyFormGroup.controls;
             const propertiesPM: QuoteOPPropertiesPM = new QuoteOPPropertiesPM();
-            propertiesPM.FromAddressCity = propertyForm.value.deliveryCity
-            propertiesPM.FromAddressCountryId = propertyForm.value.deliveryCountry?.Id
-            propertiesPM.FromAddressZipCode = propertyForm.value.deliveryZipCode
-            propertiesPM.FromAddressId = propertyForm.value.deliveryAddress?.Id
 
-            propertiesPM.ToAddressCity = propertyForm.value.pickupCity
-            propertiesPM.ToAddressCountryId = propertyForm.value.pickupCountry?.Id
-            propertiesPM.ToAddressZipCode = propertyForm.value.pickupZipCode
-            propertiesPM.ToAddressId = propertyForm.value.pickupAddress?.Id
+            propertiesPM.FromAddressCity = (propertyForm.delivery as FormGroup).value.city
+            propertiesPM.FromAddressCountryId = (propertyForm.delivery as FormGroup).value.country?.Id
+            propertiesPM.FromAddressZipCode = (propertyForm.delivery as FormGroup).value.zipCode
+            propertiesPM.FromAddressId= (propertyForm.delivery as FormGroup).value.address?.Id
 
-            propertiesPM.ToPortId = propertyForm.value.toPort?.Code
-            propertiesPM.FromPortId = propertyForm.value.fromPort?.Code
-            propertiesPM.MainCarriageCarrierId = propertyForm.value.mainCarriageCarrier?.AIRLINE_ID
-            propertiesPM.IncotermId = propertyForm.value.incoterm?.PTERMID
-            propertiesPM.SpecialServiceID = propertyForm.value.specialService?.SERVLEVEL_ID;
+            propertiesPM.ToAddressCity = (propertyForm.pickup as FormGroup).value.city
+            propertiesPM.ToAddressCountryId = (propertyForm.pickup as FormGroup).value.country?.Id
+            propertiesPM.ToAddressZipCode = (propertyForm.pickup as FormGroup).value.zipCode
+            propertiesPM.ToAddressId= (propertyForm.pickup as FormGroup).value.address?.Id
+
+            propertiesPM.ToPortId = propertyForm.toPort.value?.Code
+            propertiesPM.FromPortId = propertyForm.fromPort.value?.Code
+            propertiesPM.MainCarriageCarrierId = propertyForm.mainCarriageCarrier.value?.AIRLINE_ID
+            propertiesPM.IncotermId = propertyForm.incoterm.value?.PTERMID
+            propertiesPM.SpecialServiceID = propertyForm.specialService.value?.SERVLEVEL_ID;
 
             this.EntityPM.AddQuoteProperties(propertiesPM)
         });

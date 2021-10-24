@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, Input, OnInit, SimpleChanges } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, AbstractControl } from '@angular/forms';
 import { AddressList } from 'Common/EntityLists/AddressList';
 import { CardList } from 'Common/EntityLists/CardList';
 import { CountryCityList } from 'Common/EntityLists/CountryCityList';
@@ -9,18 +9,18 @@ import { AddressCode, DialogsService } from '../../Services/dialogs/dialogs.serv
 import { NewQuoteDataService } from '../../Services/new-quote-data/new-quote-data.service';
 
 @Component({
-  selector: 'app-new-quote-pickup',
-  templateUrl: './new-quote-pickup.component.html',
-  styleUrls: ['./new-quote-pickup.component.scss']
+  selector: 'app-new-quote-address',
+  templateUrl: './new-quote-address.component.html',
+  styleUrls: ['./new-quote-address.component.scss']
 })
-export class NewQuotePickupComponent implements OnInit {
+export class NewQuoteAddressComponent implements OnInit {
   @Input() qouteForm: FormGroup
   @Input() propertyForm: FormGroup
   @Input() EntityPM: QuoteOPPM = null as any;
   @Input() type: 'pickup' | 'delivery';
 
   addressForm: FormGroup = new FormGroup({
-    include: new FormControl(),
+    include: new FormControl(true),
     zipCode: new FormControl(),
     city: new FormControl(),
     country: new FormControl(),
@@ -34,16 +34,20 @@ export class NewQuotePickupComponent implements OnInit {
   Address: AddressList = null;
   AddressList: AddressList[] = [];
 
-  get partnerCtrl(): string {
-    return this.type ==='delivery' ? 'consigneeName' : 'shipperName';
+  get partnerFrom(): string {
+    return this.type === 'delivery' ? 'consignee' : 'shipper';
   }
-  
+
   get addressCode(): AddressCode {
-    return this.type ==='delivery' ? 'D' : 'P';    
+    return this.type === 'delivery' ? 'D' : 'P';
   }
 
   get capitalizeType(): string {
-    return this.type ==='delivery' ? 'Delivery' : 'Pickup';    
+    return this.type === 'delivery' ? 'Delivery' : 'Pickup';
+  }
+
+  get partnerCtrl(): FormControl {
+    return (this.qouteForm.controls[this.partnerFrom] as FormGroup).controls.partner as FormControl;
   }
 
   constructor(
@@ -56,6 +60,9 @@ export class NewQuotePickupComponent implements OnInit {
     this.InitCountries();
     this.InitCity();
     this.initCardList()
+    this.addForm()
+    this.subscribeCtrls();
+    this.initDefaultValue()
   }
 
   private async InitCountries() {
@@ -71,13 +78,11 @@ export class NewQuotePickupComponent implements OnInit {
     this.cardList = await this.newQuoteDataService.getCardsTable();
   }
 
-  ngOnChanges(changes: SimpleChanges) {
-    if (!this.propertyForm.contains(this.type)) {
-      this.addForm()
-      this.subscribeCtrls();
-      this.initDefaultValue()
-    }
-  }
+  // ngOnChanges(changes: SimpleChanges) {
+  //   if (!this.propertyForm.contains(this.type)) {
+
+  //   }
+  // }
 
   addForm() {
     this.propertyForm.addControl(this.type, this.addressForm)
@@ -89,25 +94,31 @@ export class NewQuotePickupComponent implements OnInit {
       this.cdr.detectChanges()
     });
 
-    this.qouteForm.controls[this.partnerCtrl].valueChanges.subscribe(async (partner: CardList) => {
-      if (partner) {
-        this.AddressList = await this.newQuoteDataService.getAddresses(partner.Id, partner.Tenant);
-        this.Address = this.AddressList.length ? this.AddressList[0] : null
-        this.addressForm.controls.address.setValue(this.Address)
-      } else {
-        this.Address = null
+    this.partnerCtrl.valueChanges.subscribe(async (partner: CardList) => {
+      if (partner) 
+        await this.initPartnerData(partner);
+      else {
         this.AddressList = []
+        this.Address = null
         this.addressForm.controls.address.setValue(null)
       }
     });
   }
 
-  initDefaultValue() {
-    this.addressForm.controls.include.setValue(true)
+  private async initPartnerData(partner: CardList) {
+    this.AddressList = await this.newQuoteDataService.getAddresses(partner.Id, partner.Tenant);
+    this.Address = this.AddressList.length ? this.AddressList[0] : null;
+    this.addressForm.controls.address.setValue(this.Address);
+  }
+
+  async initDefaultValue() {
+    const partner: CardList = this.partnerCtrl.value;
+    if (partner) 
+      await this.initPartnerData(partner);
   }
 
   addAddress() {
-    this.dialogsService.addAddress(this.addressCode, this.qouteForm.controls[this.partnerCtrl].value.Id)
+    this.dialogsService.addAddress(this.addressCode, this.partnerCtrl.value?.Id)
   }
 
   editAddress() {

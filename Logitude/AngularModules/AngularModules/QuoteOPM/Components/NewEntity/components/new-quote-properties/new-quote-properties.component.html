@@ -42,7 +42,7 @@
                 <!-- <i [class]="'pi pi-angle-' + (pickup.hidden ? 'down': 'right')" -->
                 <i class='pi pi-angle-down' (click)='pickup.hidden = !pickup.hidden'></i>
                 <div #pickup hidden class="accordion-contect">
-                  <app-new-quote-pickup [propertyForm]='x' [qouteForm]='formGroup' [EntityPM]='EntityPM'></app-new-quote-pickup>
+                  <app-new-quote-address  [type]="'pickup'" [propertyForm]='x' [qouteForm]='formGroup' [EntityPM]='EntityPM'></app-new-quote-address>                  
                 </div>
               </div>
             </div>
@@ -71,7 +71,7 @@
                 <!-- <i [class]="'pi pi-angle-' + (delivery.hidden ? 'down': 'right')"
                   (click)='delivery.hidden = !delivery.hidden'></i> -->
                 <div #delivery hidden class="accordion-contect">
-                  <app-new-quote-delivery [propertyForm]='x' [qouteForm]='formGroup' [EntityPM]='EntityPM'></app-new-quote-delivery>
+                  <app-new-quote-address  [type]="'delivery'" [propertyForm]='x' [qouteForm]='formGroup' [EntityPM]='EntityPM'></app-new-quote-address>
                 </div>
               </div>
             </div>

@@ -1,7 +1,6 @@
 <div [formGroup]='addressForm'>
     <p-checkbox formControlName='include' [binary]="true"
         [label]='"QuoteOP.O.NewQuote.Include" + capitalizeType | TextCodeTranslationPipe'></p-checkbox>        
-<!--         label='{{"QuoteOP.O.NewQuote.IncludeDelivery" | TextCodeTranslationPipe}}' -->
     <div [hidden]='!addressForm.controls.include.value' class='contianer'>
         <div [hidden]='AddressList.length'>
             <h5>{{"QuoteOP.S.NewQuote.Address" + capitalizeType | TextCodeTranslationPipe}}</h5>
@@ -25,7 +24,7 @@
                 <div class="p-field">
                     <app-autocomplate-table [columnsShow]="{Code:'Code',EnglishName:'Name'}" [data]='countryList'
                         [fieldShow]='"EnglishName"' [label]='"QuoteOP.S.NewQuote.Country" | TextCodeTranslationPipe'
-                        [controlName]='"country"' [formGroup]='addressForm'>
+                        [controlName]='"country"' [formGroup]='addressForm' [searchIcon]='true'>
                     </app-autocomplate-table>
                 </div>
             </div>
@@ -35,7 +34,7 @@
             <div class="p-field">
                 <app-autocomplate-table [columnsShow]="['Description', 'Name', 'Address1']" [data]='AddressList'
                     [fieldShow]='"Description"' [label]="'QuoteOP.S.NewQuote.Name' | TextCodeTranslationPipe"
-                    [controlName]='"address"' [formGroup]='addressForm' [dropIcon]='true'>
+                    [controlName]='"address"' [formGroup]='addressForm' [dropIcon]='true' class="address-input">
                 </app-autocomplate-table>
                 <i class="pi pi-pencil" (click)='editAddress()' [ngClass]='{"disabled":!Address}'></i>
                 <i class="pi pi-plus" (click)='addAddress()'></i>

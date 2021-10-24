@@ -30,7 +30,7 @@ export class NewQuotePropertiesComponent implements OnInit {
       mainCarriageCarrier: new FormControl(),
       incoterm: new FormControl(),
       delivery: new FormGroup({}),
-      pickup: new FormGroup({}),
+      // pickup: new FormGroup({}),
     })
   }
 
