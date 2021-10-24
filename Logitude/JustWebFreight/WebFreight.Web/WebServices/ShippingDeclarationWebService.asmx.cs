@@ -160,7 +160,9 @@ namespace WebFreight.Web.WebServices
                 myDataProvider.Transhipment2Vessel = shipment.Transshipment2VesselName;
                 myDataProvider.Transhipment3Vessel = shipment.Transshipment3VesselName;
                 myDataProvider.ShipmentSubTypeName = shipment.ShipmentSubTypeName;
-               
+
+                this.FillINTTRADocumentProperties(myDataProvider);                
+                
                 if (shipment.DocumentsClosingDate != null)
                 {
                     myDataProvider.DocumentsClosingDate = shipment.DocumentsClosingDate;
@@ -3827,6 +3829,20 @@ namespace WebFreight.Web.WebServices
             }
 
             return myDataProvider;
+        }
+
+        private void FillINTTRADocumentProperties(ShippingDeclarationDataProvider myDataProvider)
+        {
+            myDataProvider.INTTRADocumentQTY = shipment.INTTRADocumentQTY;
+
+            if (!string.IsNullOrEmpty(shipment.INTTRADocumentTypeCode))
+            {
+                DocumentType documentType = commonContext.DocumentTypes.Where(d => d.Code == shipment.INTTRADocumentTypeCode && d.Tenant == tenant).FirstOrDefault();
+                if (documentType != null)
+                {
+                    myDataProvider.INTTRADocumentTypeName = documentType.Name;
+                }
+            }
         }
 
         private void SetHorseDetails(InsidePackageLine insidePackage, InsideShipmentPackage insideItem)
