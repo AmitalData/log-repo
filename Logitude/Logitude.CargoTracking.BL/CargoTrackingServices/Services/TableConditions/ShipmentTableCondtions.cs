@@ -131,7 +131,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
                     Mas.MainCarriageETA";
 
 
-            string sqlQuery = string.Join(Environment.NewLine, selectScript, fromScript, joinScript, whereScript, groupByScript, " WITH (NOLOCK)");
+            string sqlQuery = string.Join(Environment.NewLine, " SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED ", selectScript, fromScript, joinScript, whereScript, groupByScript);
 
 
             return sqlQuery;
@@ -271,7 +271,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
                     Mas.MainCarriageETA";
 
 
-            string sqlQuery = selectScript + fromScript + joinScript + whereScript + groupByScript + " WITH (NOLOCK)";
+            string sqlQuery = " SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED " + selectScript + fromScript + joinScript + whereScript + groupByScript;
 
             return sqlQuery;
         }
@@ -370,7 +370,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
 
             var whereScript = " WHERE " + string.Join(" AND ", whereConditions);
 
-            string sqlQuery = string.Join(Environment.NewLine, selectScript, fromScript, whereScript, " WITH (NOLOCK)");
+            string sqlQuery = string.Join(Environment.NewLine, " SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED ", selectScript, fromScript, whereScript);
 
             return sqlQuery;
         }
