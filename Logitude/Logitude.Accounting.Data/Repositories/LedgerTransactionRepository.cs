@@ -1452,13 +1452,14 @@ on record.JournalId equals j.Id
         {
 
             IQueryable<LedgerTransaction> outputLines = (from ledger in context.LedgerTransactions
-                                                         join journal in context.Journals on ledger.JournalId equals journal.Id
-                                                         join additional in context.JournalAdditionalDatas on journal.Id equals additional.JournalId
+                                                         join journal in context.Journals on ledger.JournalId equals journal.Id 
+                                                         join additional in context.JournalAdditionalDatas on journal.Id equals additional.JournalId 
                                                          join taxReport in context.TaxReports on additional.TaxReportId equals taxReport.Id
-                                                         where journal.AccountingEntityCode == AccountingEntities.ARInvoice && ledger.Tenant == tenant
-                                                         && ledger.AccountId == accountId && taxReport.StatusCode != VatReportStatuses.Transmitted
+                                                         into transactiosjoin                                                        
+                                                         from taxreport in transactiosjoin.DefaultIfEmpty()
+                                                         where ledger.AccountId == accountId && journal.AccountingEntityCode== AccountingEntities.ARInvoice
+                                                         && ledger.Tenant== tenant && (taxreport.StatusCode != VatReportStatuses.Transmitted || additional.TaxReportId == null)
                                                          select ledger).Distinct();
-            List<LedgerTransaction> list = outputLines.ToList();          
             return outputLines;
         }
 
@@ -1469,11 +1470,13 @@ on record.JournalId equals j.Id
                                                         join journal in context.Journals on ledger.JournalId equals journal.Id
                                                         join additional in context.JournalAdditionalDatas on new { ledger.JournalId, ledger.JournalLineNumber } equals new { additional.JournalId, additional.JournalLineNumber }
                                                         join taxReport in context.TaxReports on additional.TaxReportId equals taxReport.Id
+                                                        into transactiosjoin
+                                                        from taxreport in transactiosjoin.DefaultIfEmpty()
                                                         where (ledger.OppositeAccountId != setting.VATOutputGLAccountId || ledger.OppositeAccountId == null)
                                                        && ledger.Tenant == tenant
                                                       && ledger.LocalAmountDebit != 0
                                                       && ledger.AccountId == setting.VATInputsGLAccountId
-                                                      && taxReport.StatusCode != VatReportStatuses.Transmitted
+                                                      && (taxreport.StatusCode != VatReportStatuses.Transmitted || additional.TaxReportId == null)
                                                         select ledger).Distinct();
             List<LedgerTransaction> list2 = inputLines.ToList();
 
