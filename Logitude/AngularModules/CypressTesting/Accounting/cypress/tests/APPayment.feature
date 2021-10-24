@@ -3,7 +3,7 @@ Feature: AP Payment
     The user creates new AP Payment and approve the AP Payment
 
     Scenario: Create new AP Payment
-        Given the user logged in and navigates to Full Accounting workspace
+        Given the user logged in and navigates to Accounting workspace
         And an AP Payment with the following details
             | Vendor          | TestVendor |
             | PaymentMethod   | Cash       |
