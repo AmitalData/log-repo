@@ -43,7 +43,9 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
     public class ARPaymentService
     {
         const string PartnerTypeId_Customer = "CS";
-       const string ChequeARPaymentAccountingMethod= "CH";
+        const string ChequeARPaymentAccountingMethod= "CH";
+        const string BankTransferARPaymentAccountingMethod = "BT";
+
         private int tenant;
         public ARPayment paymentPoco { get; set; }
         private ARPaymentPM paymentPM;
@@ -158,6 +160,10 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 CreateChequeInCashBook(_arpaymentPM);
             }
 
+            if (ARPaymentMethod != null && ARPaymentMethod.Code == BankTransferARPaymentAccountingMethod )
+            {
+                CreateARPaymentBankTranfer(_arpaymentPM);
+            }
 
             TraceConnected();
 
@@ -433,6 +439,11 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
                 if (theEntityPm.StatusCode != "VD" && theEntityPm.ARPaymentChequeReplicas.Count ==0)
                     CreateReconciliationForARPayment(theEntityPm);
+            }
+
+            if (theEntityPm.AccountingPaymentMethodCode != null && theEntityPm.AccountingPaymentMethodCode == BankTransferARPaymentAccountingMethod)
+            {
+                UpdateARPaymentBankTranfer(theEntityPm);
             }
 
             this.TraceConnected();
@@ -1123,7 +1134,63 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 }
             }
         }
+        private void CreateARPaymentBankTranfer(ARPaymentPM theEntityPm)
+        {
+            ARPaymentBankTranferPM aRPaymentBankTranfer = CreateARPaymentBankTranferFromARPayment(theEntityPm);
+            SaveARPaymentBankTranfer(aRPaymentBankTranfer);
+        }
+   
+        private static ARPaymentBankTranferPM CreateARPaymentBankTranferFromARPayment(ARPaymentPM theEntityPm)
+        {
+            return new ARPaymentBankTranferPM()
+            {
+                PaymentId = theEntityPm.Id,
+                LineNumber = 1,
+                CurrencyId = theEntityPm.PaymentCurrencyId,
+                ExchageRate = (decimal)theEntityPm.PaymentCurrencyExchangeRate,
+                ValueDate = (DateTime)theEntityPm.ValueDate,
+                LocalAmount = (decimal)theEntityPm.AmountInLocalCurrency,
+                ForeignAmount = (decimal)theEntityPm.AmountInPaymentCurrency,
+                PaymentRef = theEntityPm.ChequeOrPaymentRef,
+                Tenant = theEntityPm.Tenant,
+                BankAccountId = theEntityPm.BankAccountId,
+                ChangeSetOp = ChangeSetOperation.Insert,
+            };
+        }
+        private void UpdateARPaymentBankTranfer(ARPaymentPM theEntityPm)
+        {
+            ARPaymentBankTranferPM aRPaymentBankTranfer = GetARPaymentBankTranfer(theEntityPm);
+            if(aRPaymentBankTranfer != null)
+            {
+                UpdateARPaymentBankTranferFromARPayment(theEntityPm, aRPaymentBankTranfer);
+                SaveARPaymentBankTranfer(aRPaymentBankTranfer);
+            }
+        }
 
+        private static void UpdateARPaymentBankTranferFromARPayment(ARPaymentPM theEntityPm, ARPaymentBankTranferPM aRPaymentBankTranfer)
+        {
+            aRPaymentBankTranfer.CurrencyId = theEntityPm.PaymentCurrencyId;
+            aRPaymentBankTranfer.ExchageRate = (decimal)theEntityPm.PaymentCurrencyExchangeRate;
+            aRPaymentBankTranfer.ValueDate = (DateTime)theEntityPm.ValueDate;
+            aRPaymentBankTranfer.LocalAmount = (decimal)theEntityPm.AmountInLocalCurrency;
+            aRPaymentBankTranfer.ForeignAmount = (decimal)theEntityPm.AmountInPaymentCurrency;
+            aRPaymentBankTranfer.PaymentRef = theEntityPm.ChequeOrPaymentRef;
+            aRPaymentBankTranfer.BankAccountId = theEntityPm.BankAccountId;
+            aRPaymentBankTranfer.ChangeSetOp = ChangeSetOperation.Update;
+        }
+
+        private static ARPaymentBankTranferPM GetARPaymentBankTranfer(ARPaymentPM theEntityPm)
+        {
+            IARPaymentBankTranferQueryServiceExt arPaymentBankTranferQuery = ContainerAccessor.Container.Resolve(typeof(IARPaymentBankTranferQueryServiceExt), "ARPaymentBankTranferQueryServiceExt", new ParameterOverride("", 1)) as IARPaymentBankTranferQueryServiceExt;
+            ARPaymentBankTranferPM aRPaymentBankTranfer = arPaymentBankTranferQuery.GetSingleARPaymentBankTranferByPaymentId(theEntityPm.Id, theEntityPm.Tenant);
+            return aRPaymentBankTranfer;
+        }
+
+        private static void SaveARPaymentBankTranfer(ARPaymentBankTranferPM aRPaymentBankTranfer)
+        {
+            IARPaymentBankTranferUpdateServiceExt arPaymentBankTranferQuery = ContainerAccessor.Container.Resolve(typeof(IARPaymentBankTranferUpdateServiceExt), "ARPaymentBankTranferUpdateServiceExt", new ParameterOverride("", 1)) as IARPaymentBankTranferUpdateServiceExt;
+            arPaymentBankTranferQuery.Update(aRPaymentBankTranfer);
+        }
         //private void MapChequeFromPayment(ARPaymentPM aRPaymentPM, ARPaymentCheck cheque, bool isNewState, AccountingContext accountingContext)
         //{
         //    if (isNewState)
