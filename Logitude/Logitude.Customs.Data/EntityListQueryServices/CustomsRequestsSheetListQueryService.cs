@@ -57,33 +57,27 @@ namespace Logitude.Customs.Data.EntityListQueryServices
         {
             return iQueryable;
         }
-        public CustomsRequestsSheetSummary GetStatistics(int tenant)
+        public List<CustomsRequestsSheetSummary> GetStatistics(int tenant)
         {
-            CustomsRequestsSheetSummary customsRequestsSheetSummary = new CustomsRequestsSheetSummary();
+            var lastweek = DateTime.Now.Date.AddDays(-7);
             IQueryable<CustomsRequestsSheetList> query = (from a in context.CustomsRequestsSheets
                                                           where a.Tenant == tenant && (a.RequestStatusCode == "5" || a.RequestStatusCode == "1" ||
                                                           a.RequestStatusCode == "2" || a.RequestStatusCode == "21" || a.RequestStatusCode == "99")
+                                                          && a.RequestCreateDate >= lastweek
                                                           select new CustomsRequestsSheetList()
                                                           {
-                                                              Id = a.Id,
                                                               InterfaceTypeCode = a.InterfaceTypeCode,
+                                                              InterfaceTypeName = a.InterfaceManagement != null ? a.InterfaceManagement.Description : null,
                                                           });
 
 
-            var qGroupIt = (from a in query
-                            group a by 1 into groupBy1
-                            select new CustomsRequestsSheetSummary
-                            {
-                                ReleaseGoodsMessage = groupBy1.Count(x => x.InterfaceTypeCode == "2470"),
-                                DeclarationStatusSearch = groupBy1.Count(x => x.InterfaceTypeCode == "8250"),
-                                Tzrufa = groupBy1.Count(x => x.InterfaceTypeCode == "2715"),
-                            }
-                           );
-
-            customsRequestsSheetSummary = qGroupIt.FirstOrDefault() ?? new CustomsRequestsSheetSummary();
-            return customsRequestsSheetSummary;
-
-
+            var qGroupIt = query.GroupBy(q => q.InterfaceTypeName).Select(g => new CustomsRequestsSheetSummary
+            {
+                Id = new Guid(),
+                count = g.Select(x => x.InterfaceTypeCode).Count(),
+                InterfaceTypeName = g.Key
+            }).ToList();
+            return qGroupIt;
         }
 
 

@@ -75,7 +75,7 @@ export class QuoteOPPMService {
 		});                    
 	}
 
-	insert(entityPM: QuoteOPPM, checkCustomValidator: boolean = true) {
+	insert(entityPM: QuoteOPPM) {
  
 		var callTime = new Date();  
 		
@@ -85,14 +85,12 @@ export class QuoteOPPMService {
 			var validator: ClassLevelValidator = new ClassLevelValidator();                
 			var errorsArray = validator.Validate("QuoteOP", entityPM);
 
-            if(checkCustomValidator) {
-                var customValidator :QuoteOPValidator = new QuoteOPValidator();
-                var validationErrorsArr = customValidator.Validate(entityPM);
-                if(validationErrorsArr)
-                {
-                    errorsArray = errorsArray.concat(validationErrorsArr);
-                }
-            }
+			var customValidator :QuoteOPValidator = new QuoteOPValidator();
+			var validationErrorsArr = customValidator.Validate(entityPM);
+			if(validationErrorsArr)
+			{
+				errorsArray = errorsArray.concat(validationErrorsArr);
+			}
 
 			if (errorsArray.length == 0) {
 
