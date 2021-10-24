@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class QuoteOPUpdateClass
    {  		
-		public const string HashString = "52156712246af01235306c0a40561351";
+		public const string HashString = "4ce9751828bfbcb8e7248564fe9ce717";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -16507,7 +16507,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   TextCode QuoteOPTextCode_QuoteOPONewQuoteMainCarriage = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteOP.O.NewQuote.MainCarriage", DefaultText = "Main Carriage",LocalDefaultText = null, ObjectTableId = QuoteOPObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode QuoteOPTextCode_QuoteOPONewQuoteIncludePickUp = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteOP.O.NewQuote.IncludePickUp", DefaultText = "Include PickUp",LocalDefaultText = null, ObjectTableId = QuoteOPObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode QuoteOPTextCode_QuoteOPONewQuoteIncludePickup = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteOP.O.NewQuote.IncludePickup", DefaultText = "Include PickUp",LocalDefaultText = null, ObjectTableId = QuoteOPObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode QuoteOPTextCode_QuoteOPONewQuoteIncludeDelivery = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteOP.O.NewQuote.IncludeDelivery", DefaultText = "Include Delivery",LocalDefaultText = null, ObjectTableId = QuoteOPObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
