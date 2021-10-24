@@ -203,7 +203,6 @@ namespace WebFreight.Web.ReportsWebServices
             dataProvider.ValueOfGoods = shipment.ValueOfGoods;
             dataProvider.MainCarriageCarrierNumber = shipment.MainCarriageCarrierNumber;
             dataProvider.CarrierCode = shipment.MainCarriageCarrierCode;
-
             MapBranchData();
 
             if (shipment.ValueOfGoodsCurrencyId != null)
@@ -234,6 +233,7 @@ namespace WebFreight.Web.ReportsWebServices
             this.MapShipmentInsidePackages();
             this.MapShipmentCustomFields();
             this.MapShipmentCustomClearancePoint();
+            this.MapShipmentCustomsAgent();
         }
         private void MapBranchData()
         {
@@ -1244,6 +1244,62 @@ namespace WebFreight.Web.ReportsWebServices
                     dataProvider.CustomsClearancePointContactEmail = contact.Email;
                 }
             }
+        }
+        private void MapShipmentCustomsAgent()
+        {
+            dataProvider.ImportCustomsAgentFullDetails = GetCardFullDetails(shipment.CustomAgentImportId);
+            dataProvider.ExportCustomsAgentFullDetails = GetCardFullDetails(shipment.CustomAgentExportId);
+        }
+
+        private string GetCardFullDetails(string id)
+        {
+            string fullDetails = "";
+            if (string.IsNullOrEmpty(id))
+            {
+                return fullDetails;
+            }
+
+            fullDetails += GetCardAddressDetails(id);
+            fullDetails += GetCardContactDetails(id);
+
+            return fullDetails;
+        }
+
+        private string GetCardAddressDetails(string id)
+        {
+            string fullAddress = "";
+            Address address = addressRepository.GetSingleAddress(id, tenant);
+            if (address == null)
+            {
+                return fullAddress;
+            }
+
+            fullAddress = DataProviders.General.GetAddress(address);
+            if (!string.IsNullOrEmpty(address.PhoneNumber) || !string.IsNullOrEmpty(address.FaxNumber))
+            {
+                fullAddress += Environment.NewLine;
+            }
+
+            fullAddress = !string.IsNullOrEmpty(address.PhoneNumber) ? fullAddress + "Tel: " + address.PhoneNumber + " ": fullAddress;
+            fullAddress = !string.IsNullOrEmpty(address.FaxNumber) ? fullAddress + "Fax: " + address.FaxNumber + " " : fullAddress;
+        
+            return fullAddress;
+        }
+
+        private string GetCardContactDetails(string id)
+        {
+            string contactDetails = "";   
+            Contact contact = ContactRepository.GetSingleContact(shipment.CustomClearancePointContactId, tenant, true);
+
+            if (contact == null)
+            {
+                return contactDetails;
+            }
+
+            contactDetails = contact.EnglishName;
+            contactDetails += contact.BusinessPhone;
+            contactDetails += contact.Email;
+            return contactDetails;
         }
     }
 }
