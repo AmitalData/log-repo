@@ -25,7 +25,7 @@ export class ShipmentDetailsComponent implements AfterViewInit
     @ViewChild('SliderWrapper') SliderWrapperElement: ElementRef;
 
     @Input() DetailsSectionToggleEvent: EventEmitter<any> = new EventEmitter();
- 
+
     public isLoading: boolean = true;
     showMoreReferences: boolean = false;
     SecurityKey: string = "";
@@ -42,7 +42,6 @@ export class ShipmentDetailsComponent implements AfterViewInit
     DocumentsFilings: any[];
     PartnerCards: PartnerCard[] = [];
     HasReferences: boolean = false;
-    HasMoreThanTwoReferences: boolean = false;
     HasContainersDetails: boolean = false;
     InlandTransportMode = 'I';
     WarehouseTransportMode ='W'
@@ -86,7 +85,7 @@ export class ShipmentDetailsComponent implements AfterViewInit
     ngAfterViewInit(): void
     {
         this.LoadShipment();
-      //  this.CreatePartnerCardsFromShipmentPM();
+        this.CreatePartnerCardsFromShipmentPM();
     }
     private SetOverviewPanelTitle() {
         if (this.Shipment.ShipmentList.EntityType == this.OrderEntityType) {
@@ -156,7 +155,6 @@ export class ShipmentDetailsComponent implements AfterViewInit
                 this.Shipment = result;
                 this.ShipmentReferences = result.ShipmentList.CustomerReference ? result.ShipmentList.CustomerReference.split(',') : null;
                 this.HasReferences = this.SetHasReferences();
-                this.HasMoreThanTwoReferences = this.SetHasMoreThanTwoReferences();
 
                 this.SetRoutingVariables();
 
@@ -169,13 +167,12 @@ export class ShipmentDetailsComponent implements AfterViewInit
                     this.GetShipmentPackages();
                     this.GetDocumentsFilingsConnectedToShipment();
                 }
-               
+
                 this.SetCustomsOrForwarderFields();
                 this.SetOverviewPanelTitle();
                 this.SetTypeTitle();
 
             }
-            this.CreatePartnerCardsFromShipmentPM();
 
             setTimeout(() =>
             {
@@ -198,14 +195,14 @@ export class ShipmentDetailsComponent implements AfterViewInit
     SetTitleForSupplierOrClient(directionId: string) {
         var title;
         switch (directionId) {
-            case ShipmentDirections.Import: {
-                title = "SUPPLIER"
+            case ShipmentDirections.Export: {
+                title = "CLIENT"
                 break;
             }
 
-            case ShipmentDirections.Export:
+            case ShipmentDirections.Import:
             case ShipmentDirections.Customs: {
-                title = "CLIENT"
+                title = "SUPPLIER"
                 break;
             }
         }
@@ -213,11 +210,11 @@ export class ShipmentDetailsComponent implements AfterViewInit
         return title;
     }
     SetSupplierOrCleintValueByDirection(shipmentList) {
-        if(shipmentList.DirectionId == ShipmentDirections.Import) 
+        if(shipmentList.DirectionId == ShipmentDirections.Export)
         {
             return shipmentList.ShipperName;
-        } else if(shipmentList.DirectionId == ShipmentDirections.Export) {
-            return shipmentList.ConsigneeName;   
+        } else if(shipmentList.DirectionId == ShipmentDirections.Import) {
+            return shipmentList.ConsigneeName;
         }
         return '';
     }
@@ -235,9 +232,6 @@ export class ShipmentDetailsComponent implements AfterViewInit
     }
     SetHasReferences() {
         return this.ShipmentReferences == null ? false : true;
-    }
-    SetHasMoreThanTwoReferences() {
-        return this.HasMoreThanTwoReferences = this.ShipmentReferences?.length > 2;
     }
     SetHasContainersDetails() {
         return this.ShipmentPackages.length==0  ? false : true;
@@ -505,10 +499,9 @@ export class ShipmentDetailsComponent implements AfterViewInit
             for (let routing of this.ShipmentPM.ShipmentPickUps) {
                 this.AddTruckerPartnerCardIfCarrierIdExist(routing);
             }
-
-            this.RemoveDashesFromPartnerCardsNames();
         }
     }
+
 
     private GetIdFromURI()
     {
@@ -899,36 +892,31 @@ export class ShipmentDetailsComponent implements AfterViewInit
     {
         var address = this.PartnersAddresses.find(a => a.CardId == cardId);
         if (address)
-            var phoneNumber = address.PhoneNumber?.replace(/---/g, "");
+            var phoneNumber = address.PhoneNumber;
         return phoneNumber;
     }
     private GetPartnerFaxNumberFromAddress(cardId: any)
     {
         var address = this.PartnersAddresses.find(a => a.CardId == cardId);
         if (address)
-            var faxNumber = address.FaxNumber?.replace(/---/g, "");;
+            var faxNumber = address.FaxNumber;
         return faxNumber;
     }
     private GetPartnerAddress(cardId: any)
     {
         var address = this.PartnersAddresses.find(a => a.CardId == cardId);
-        var isCityAndCountryExist = address.City?.replace(/---/g, "")?.length > 0 && address.CountryName?.replace(/---/g, "")?.length > 0 ? ',': '' ;
         if (address) {
             var addressLines = [
-                address.Address1?.replace(/---/g, ""),
-                address.Address2?.replace(/---/g, ""),
-                address.ZipCode?.replace(/---/g, ""),
-                address.City?.replace(/---/g, "") + isCityAndCountryExist  + address.CountryName?.replace(/---/g, "")
+                address.Address1,
+                address.Address2,
+                address.ZipCode,
+                address.City + ',' + address.CountryName
             ];
             return addressLines.filter(a=>a).join('<br>');
         }
         return null;
     }
-    private RemoveDashesFromPartnerCardsNames() {
-        for (let i = 0; i < this.PartnerCards.length; i++) {
-            this.PartnerCards[i].Name = this.PartnerCards[i].Name?.replace(/---/g, "");
-        }
-    }
+
     InitRoutes()
     {
         if (this.ShipmentPM) {
@@ -1008,7 +996,7 @@ export class ShipmentDetailsComponent implements AfterViewInit
         var step = new RoutingStep();
         step.TransportModeCode = this.ShipmentOrder.TransportModeId;
         step.Description ="MainCarriageLeg 1";
-        this.SetFromAndToLabelsForShipmentOrderRoutes( step);      
+        this.SetFromAndToLabelsForShipmentOrderRoutes( step);
         return step;
     }
     private CreateShipmentOrderDestinationRoute() {
@@ -1049,12 +1037,12 @@ export class ShipmentDetailsComponent implements AfterViewInit
         return step;
     }
     private SetFromAndToLabelsForShipmentOrderRoutes(step: RoutingStep) {
-        step.FromPortLabel = this.ShipmentOrder.OriginPortCode;      
+        step.FromPortLabel = this.ShipmentOrder.OriginPortCode;
         step.ToPortLabel = this.ShipmentOrder.GatewayCode;
-    
+
     }
     private SetFromAndToLabelsForShipmentOrderOriginRoutes(step: RoutingStep) {
-        step.FromPortLabel = this.ShipmentOrder.GatewayCode;     
+        step.FromPortLabel = this.ShipmentOrder.GatewayCode;
         step.ToPortLabel = this.ShipmentOrder.DestinationPortCode;
     }
     private SetFromAndToLabelsForShipmentRoutes(shipmentRoute: any, step: RoutingStep) {

@@ -139,7 +139,10 @@
     <Compile Include="EntityDataMappings\Generated\CargoTrackingTransportModeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CargoTrackingWatermarkDataMapping.Generated.cs" />
     <Compile Include="EntityQueryServices\CargoTrackingIncrementalStatQueryService.cs" />
+    <Compile Include="CoreBL\CargoTrackingShipmenPartnersCardsBuilder.cs" />
+    <Compile Include="CoreBL\CargoTrackingShipmentMappingService.cs" />
     <Compile Include="EntityQueryServices\CargoTrackingShipmentQueryService.cs" />
+    <Compile Include="CoreBL\CargoTrackingShipmentRouteBuilder.cs" />
     <Compile Include="EntityQueryServices\CargoTrackingTransportModeQueryService.cs" />
     <Compile Include="EntityQueryServices\CargoTrackingWatermarkQueryService.cs" />
     <Compile Include="EntityQueryServices\CargoTrackingShipmentSearchQueryService.cs" />
@@ -193,6 +196,18 @@
     <ProjectReference Include="..\Logitude.Server.Tools\Logitude.Server.Tools.csproj">
       <Project>{9b477a08-8ee2-4457-88fe-17e8a6ec4d00}</Project>
       <Name>Logitude.Server.Tools</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logitude.ShipmentOrderModule.BL\Logitude.ShipmentOrderModule.BL.csproj">
+      <Project>{f37bf2f7-0206-4123-a873-290a087538f6}</Project>
+      <Name>Logitude.ShipmentOrderModule.BL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logitude.ShipmentOrderModule.Data\Logitude.ShipmentOrderModule.Data.csproj">
+      <Project>{378db1a8-43c3-45a1-a4a0-0b8961cfdb52}</Project>
+      <Name>Logitude.ShipmentOrderModule.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logitude.ShipmentOrderModule.Def\Logitude.ShipmentOrderModule.Def.csproj">
+      <Project>{4148fda0-ef43-49bf-8d5c-23ff1fa4bd0e}</Project>
+      <Name>Logitude.ShipmentOrderModule.Def</Name>
     </ProjectReference>
     <ProjectReference Include="..\Simplog.Data\Simplog.Data.csproj">
       <Project>{78ec8434-e6ad-4e93-9b17-c746f5403f7b}</Project>
