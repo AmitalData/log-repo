@@ -16,7 +16,6 @@ import { EntityArgs } from '../../../Infrastructure/DataContracts/EntityArgs';
 import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
 import { TaxReportExtendedPMService } from '../../Services/ExtendedPMs/TaxReportExtendedPMService';
 import { DownloadManager } from '../../../Infrastructure/Utilities/DownloadManager';
-import { FullAccountingSettingListService } from '../../Services/StandardLists/FullAccountingSettingListService';
 
 
 export class TaxReportMenuButtonsHandler {
@@ -24,7 +23,6 @@ export class TaxReportMenuButtonsHandler {
     public entityArgs: EntityArgs
     public TenantPM: TenantPM;
     public ObjectTableName: string = "TaxReport"
-    private fullAccountingSettingListService: FullAccountingSettingListService;
     taxReportExtendedPMService: TaxReportExtendedPMService = new TaxReportExtendedPMService();
     private CurrentSession = SessionLocator.SelectedSession;
 
@@ -32,7 +30,6 @@ export class TaxReportMenuButtonsHandler {
         this.TenantPM = SessionLocator.TenantPM;
         this.entityArgs = entityArgs;
         this.EntityPM = entityArgs.EntityPM;
-        this.fullAccountingSettingListService = new FullAccountingSettingListService();
     }
 
     public CheckButtonState(menuButtons: MenuButtonPM[]) {
@@ -97,19 +94,14 @@ export class TaxReportMenuButtonsHandler {
         });
     }
     private SetUploadButtonEnabilityAccordingToConsolidationVAT(button: MenuButtonPM) {
-        this.fullAccountingSettingListService.getSingle(this.TenantPM.Id.toString()).subscribe((response: any) => {
-            this.CurrentSession.StopBusyIndicator();         
-            if (response != null) {
-                var response = response.Result;
-                if (response.ConsolidationVAT == this.TenantPM.VatNumber && (this.EntityPM.StatusCode == "D" || this.EntityPM.StatusCode=="E")) {
-                        button.IsDisabled = false;
-                    }
-                    else {
-                        button.IsDisabled = true;
-                    }
-                }
-        });
-    }
+        if (this.EntityPM.StatusCode == "D" || this.EntityPM.StatusCode=="E") {
+                button.IsDisabled = false;
+            }
+            else {
+                button.IsDisabled = true;
+              }
+     }
+
     public MenuButtonClick(menuButton: MenuButtonPM) {
 
         switch (menuButton.EventCode) {
