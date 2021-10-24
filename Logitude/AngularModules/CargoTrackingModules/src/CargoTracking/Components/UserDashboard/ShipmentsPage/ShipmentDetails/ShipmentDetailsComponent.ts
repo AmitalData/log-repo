@@ -200,12 +200,12 @@ export class ShipmentDetailsComponent implements AfterViewInit
     SetTitleForSupplierOrClient(shipment: CargoTrackingShipmentList) {
         var title;
         switch (shipment.DirectionId) {
-            case 'I':{
+            case ShipmentDirections.Import:{
                 title = "SHIPPER"
                 break;
             }
 
-            case 'E': {
+            case ShipmentDirections.Export: {
                 title = "CLIENT"
                 break;
             }
@@ -1273,7 +1273,7 @@ export class PartnerCard
     ShowDetails: boolean = false;
 }
 
-enum ShipmentDirections {
+export enum ShipmentDirections {
     Import = "I",
     Export = "E",
     Customs = "C"

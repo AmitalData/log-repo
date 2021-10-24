@@ -17,6 +17,7 @@ import { RootContext } from 'src/CargoTracking/Utilities/RootContext';
 import { CargoTrackingMilestoneService } from 'src/CargoTracking/Services/Others/CargoTrackingMilestoneService';
 import { MultipleSelectionComponent } from 'src/Infrastructure/Components/MultipleSelection/MultipleSelectionComponent';
 import { filter } from 'rxjs/operators';
+import { ShipmentDirections } from '../ShipmentDetails/ShipmentDetailsComponent';
 
 @Component({
     selector: 'ShipmentsListComponent',
@@ -189,12 +190,12 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
     SetTitleForSupplierOrClient(shipment: CargoTrackingShipmentList) {
         var title;
         switch (shipment.DirectionId) {
-            case 'I':{
+            case ShipmentDirections.Import:{
                 title = "SHIPPER"
                 break;
             }
 
-            case 'E': {
+            case ShipmentDirections.Export: {
                 title = "CLIENT"
                 break;
             }
