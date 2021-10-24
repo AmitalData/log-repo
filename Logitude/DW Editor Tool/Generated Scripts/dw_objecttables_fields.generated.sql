@@ -1128,6 +1128,9 @@ insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,Is
 declare @Fact_ARInvoicesShipmentNumberNewId varchar(15)
 execute usp_GetNextTableIdValue @Fact_ARInvoicesShipmentNumberNewId OUTPUT,'DWObjectField' 
 insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,OriginalObjectFieldCode,DontDisplayInView,IsMultipleSelection) Values(@Fact_ARInvoicesShipmentNumberNewId,0,'Fact_ARInvoices','[Shipment Number]','Shipment Number','Text','false',0,1000,'false','false','true','General','false','false','false','ARInvoices.ShipmentsNumbers','false','false')  
+declare @Fact_ARInvoicesOriginalInvoiceNumberNewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_ARInvoicesOriginalInvoiceNumberNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,OriginalObjectFieldCode,DontDisplayInView,IsMultipleSelection) Values(@Fact_ARInvoicesOriginalInvoiceNumberNewId,0,'Fact_ARInvoices','[Original Invoice Number]','Original Invoice Number','Text','false',0,25,'false','false','true','General','false','false','false','ARInvoice.DraftNumber','false','false')  
 ------------------------------------------------------------------------------------
 declare @Fact_ChargesNewId varchar(15)
 execute usp_GetNextTableIdValue @Fact_ChargesNewId OUTPUT,'DWObjectTable' 
