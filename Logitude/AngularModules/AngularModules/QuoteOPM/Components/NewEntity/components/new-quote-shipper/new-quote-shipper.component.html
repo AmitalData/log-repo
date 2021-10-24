@@ -29,7 +29,7 @@
       <div class="p-field">
         <app-autocomplate-table [columnsShow]="['Email', 'EnglishName']" [data]='shipperContacts'
           [fieldShow]='"EnglishName"' [label]="'Contact'" [controlName]='"shipperContact"' [formGroup]='formGroup'
-          (onSelect)='onSelectedContact($event)'>
+          (onSelect)='onSelectedContact($event)' [dropIcon]='true'>
         </app-autocomplate-table>
         
         <i class="pi pi-plus plus-btn" (click)='addContact()'></i>

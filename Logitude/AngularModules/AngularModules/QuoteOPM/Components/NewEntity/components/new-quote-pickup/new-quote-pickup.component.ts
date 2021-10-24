@@ -1,10 +1,11 @@
-import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnInit, SimpleChanges } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { AddressList } from 'Common/EntityLists/AddressList';
 import { CardList } from 'Common/EntityLists/CardList';
 import { CountryCityList } from 'Common/EntityLists/CountryCityList';
 import { CountryList } from 'Common/EntityLists/CountryList';
 import { QuoteOPPM } from 'QuoteOPM/EntityPMs/QuoteOPPM';
+import { DialogsService } from '../../Services/dialogs/dialogs.service';
 import { filterIsNotNull, NewQuoteDataService } from '../../Services/new-quote-data/new-quote-data.service';
 
 @Component({
@@ -26,6 +27,8 @@ export class NewQuotePickupComponent implements OnInit {
 
   constructor(
     private newQuoteDataService: NewQuoteDataService,
+    private dialogsService: DialogsService,
+    private cdr: ChangeDetectorRef,
   ) { }
 
   ngOnInit(): void {
@@ -60,19 +63,24 @@ export class NewQuotePickupComponent implements OnInit {
     this.propertyForm.addControl('pickupZipCode', new FormControl(''));
     this.propertyForm.addControl('pickupCity', new FormControl(''));
     this.propertyForm.addControl('pickupCountry', new FormControl(''));
-    this.propertyForm.addControl('pickupAddressId', new FormControl(''));
+    this.propertyForm.addControl('pickupAddress', new FormControl(''));
   }
 
   subscribeCtrls() {
+    this.propertyForm.controls.pickupAddress.valueChanges.subscribe((addressId: AddressList) => {
+      this.Address = this.AddressList.find(x => x == addressId)
+      this.cdr.detectChanges()
+    });
+
     this.qouteForm.controls.shipperName.valueChanges.subscribe(async (shipperName: CardList) => {
       if (shipperName) {
-        this.AddressList = shipperName ? await this.newQuoteDataService.getAddresses(shipperName.Id, shipperName.Tenant) : null;
+        this.AddressList = await this.newQuoteDataService.getAddresses(shipperName.Id, shipperName.Tenant);
         this.Address = this.AddressList.length ? this.AddressList[0] : null
-        this.propertyForm.controls.pickupAddressId.setValue(this.Address)
+        this.propertyForm.controls.pickupAddress.setValue(this.Address)
       } else {
         this.Address = null
         this.AddressList = []
-        this.propertyForm.controls.pickupAddressId.setValue(null)
+        this.propertyForm.controls.pickupAddress.setValue(null)
       }
     });
   }
@@ -88,5 +96,13 @@ export class NewQuotePickupComponent implements OnInit {
 
   onSelectedCountry(country: CountryList) {
     // this.EntityPM.FromAddressCountryId = country.Id;
+  }
+
+  addAddress() {
+    this.dialogsService.addAddress('P', this.qouteForm.controls.shipperName.value.Id)
+  }
+
+  editAddress() {
+    this.dialogsService.editAddress(this.Address.Id)
   }
 }

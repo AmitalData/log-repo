@@ -6,6 +6,7 @@ import { ContactList } from 'Common/EntityLists/ContactList';
 import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator';
 import { MenuItem } from 'primeng/api';
 import { QuoteOPPM } from 'QuoteOPM/EntityPMs/QuoteOPPM';
+import { DialogsService } from '../../Services/dialogs/dialogs.service';
 import { filterIsNotNull, NewQuoteDataService } from '../../Services/new-quote-data/new-quote-data.service';
 
 @Component({
@@ -21,16 +22,17 @@ export class NewQuoteConsigneeComponent implements OnInit {
   consigneeContacts: ContactList[] = []
   Address: AddressList = null as any;
   ddl: MenuItem[] = [
-    { label: TextCodeTranslator.Translate('QuoteOP.B.NewQuote.AddShipper'), command: ()=> this.newQuoteDataService.AddCustomerClicked('Shipper') },
-    { label: TextCodeTranslator.Translate('QuoteOP.B.NewQuote.AddPotentialShipper'), command: ()=> this.newQuoteDataService.AddPotentialCustomerClicked('Shipper') },
+    { label: TextCodeTranslator.Translate('QuoteOP.B.NewQuote.Consignee'), command: ()=> this.dialogsService.addCustomer('Consignee') },
+    { label: TextCodeTranslator.Translate('QuoteOP.B.NewQuote.AddPotentialConsignee'), command: ()=> this.dialogsService.addPotentialCustomer('Consignee') },
   ];
 
   addContact(){
-    this.newQuoteDataService.AddContact(this.formGroup.controls.shipperName.value.Id, 'SH')
+    this.dialogsService.addContact(this.formGroup.controls.consigneeName.value.Id, 'CO')
   }
   constructor(
+    private dialogsService: DialogsService,
     private newQuoteDataService: NewQuoteDataService,
-    private cdref: ChangeDetectorRef,
+    // private cdref: ChangeDetectorRef,
 
   ) {}
 

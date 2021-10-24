@@ -1,10 +1,10 @@
 <div [formGroup]='propertyForm' class="">
-    <div [hidden]='AddressList.length'>
-        <p-checkbox formControlName='pickupInclude' [binary]="true"
-            label='{{"QuoteOP.O.NewQuote.IncludePickUp" | TextCodeTranslationPipe}}'
-            (onChange)="includeCheckboxChange($event)"></p-checkbox>
+    <p-checkbox formControlName='pickupInclude' [binary]="true"
+        label='{{"QuoteOP.O.NewQuote.IncludePickUp" | TextCodeTranslationPipe}}'
+        (onChange)="includeCheckboxChange($event)"></p-checkbox>
 
-        <div [hidden]='!propertyForm.controls.pickupInclude.value' class='container'>
+    <div [hidden]='!propertyForm.controls.pickupInclude.value' class='contianer'>
+        <div [hidden]='AddressList.length'>
             <h5>{{"QuoteOP.S.NewQuote.PickupAddress" | TextCodeTranslationPipe}}</h5>
             <div class="p-fluid">
                 <div class="p-field">
@@ -32,17 +32,18 @@
                 </div>
             </div>
         </div>
-    </div>
 
+        <div [hidden]='!AddressList.length'>
+            <div class="p-field">
+                <app-autocomplate-table [columnsShow]="['Description', 'Name', 'Address1']" [data]='AddressList'
+                    [fieldShow]='"Description"' [label]="'QuoteOP.S.NewQuote.Name' | TextCodeTranslationPipe"
+                    [controlName]='"pickupAddress"' [formGroup]='propertyForm' [dropIcon]='true'>
+                </app-autocomplate-table>
+                <i class="pi pi-pencil" (click)='editAddress()' [ngClass]='{"disabled":!Address}'></i>
+                <i class="pi pi-plus" (click)='addAddress()'></i>
+            </div>
 
-    <div [hidden]='!AddressList.length'>
-        <div class="p-field">
-            <app-autocomplate-table [columnsShow]="['Description', 'Name', 'Address1']" [data]='AddressList'
-                [fieldShow]='"Description"' [label]="'QuoteOP.S.NewQuote.Name' | TextCodeTranslationPipe"
-                [controlName]='"pickupAddressId"' [formGroup]='propertyForm'>
-            </app-autocomplate-table>
+            <app-address-textarea [Address]='Address'></app-address-textarea>
         </div>
-
-        <app-address-textarea [Address]='Address'></app-address-textarea>
     </div>
 </div>

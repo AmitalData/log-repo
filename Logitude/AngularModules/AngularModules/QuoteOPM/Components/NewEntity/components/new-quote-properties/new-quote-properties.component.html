@@ -22,7 +22,7 @@
           <div class="col-4 p-fluid">
             <div class="p-field">
               <app-autocomplate-table [columnsShow]="{Code:'Code', Name: 'Name',CountryName:'CountryName'}"
-                [data]='toPortList' [fieldShow]='"Name"'
+                [data]='toPortList' [fieldShow]='"Name"' [searchIcon]='true'
                 [label]="'QuoteOP.S.NewQuote.' + (formGroup.value.transportMode?.Id === 'A' ? 'Gateway': 'LoadingPort') | TextCodeTranslationPipe"
                 [controlName]='"fromPort"' [formGroup]='x' (onSelect)='onSelectedFromPort($event)'>
               </app-autocomplate-table>
@@ -30,7 +30,7 @@
 
             <div class="p-field">
               <app-autocomplate-table [columnsShow]="{Code:'Code', Name: 'Name',CountryName:'CountryName'}"
-                [data]='fromPortList' [fieldShow]='"Name"'
+                [data]='fromPortList' [fieldShow]='"Name"' [searchIcon]='true'
                 [label]="'QuoteOP.S.NewQuote.' + (formGroup.value.transportMode?.Id === 'A' ? 'Destination': 'DischargePort') | TextCodeTranslationPipe"
                 [controlName]='"toPort"' [formGroup]='x' (onSelect)='onSelectedtoPort($event)'>
               </app-autocomplate-table>
@@ -51,7 +51,7 @@
           <div class="col-4 p-fluid">
             <div class="p-field">
               <app-autocomplate-table [columnsShow]="carrierColumns" [data]='mainCarriageCarrierList'
-                [fieldShow]='"Name"'
+                [fieldShow]='"Name"' [searchIcon]='true'
                 [label]="'QuoteOP.S.NewQuote.' + (formGroup.value.transportMode?.Id === 'A' ? 'Airline': 'Shippingline') | TextCodeTranslationPipe"
                 [controlName]='"mainCarriageCarrier"' [formGroup]='x' (onSelect)='onMainCarriageCarrier($event)'>
               </app-autocomplate-table>
@@ -59,7 +59,7 @@
 
             <div class="p-field">
               <app-autocomplate-table [columnsShow]="{PTERMID:'Code', Name: 'Name'}" [data]='incotermList'
-                [fieldShow]='"Name"' [label]="'Incoterm'" [controlName]='"incoterm"' [formGroup]='x'
+                [fieldShow]='"Name"' [label]="'Incoterm'" [controlName]='"incoterm"' [formGroup]='x' [dropIcon]='true'
                 (onSelect)='onSelectedIncoterm($event)'>
               </app-autocomplate-table>
             </div>

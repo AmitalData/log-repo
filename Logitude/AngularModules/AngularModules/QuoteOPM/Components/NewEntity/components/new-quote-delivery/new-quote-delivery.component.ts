@@ -1,10 +1,11 @@
-import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnInit, SimpleChanges } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { AddressList } from 'Common/EntityLists/AddressList';
 import { CardList } from 'Common/EntityLists/CardList';
 import { CountryCityList } from 'Common/EntityLists/CountryCityList';
 import { CountryList } from 'Common/EntityLists/CountryList';
 import { QuoteOPPM } from 'QuoteOPM/EntityPMs/QuoteOPPM';
+import { DialogsService } from '../../Services/dialogs/dialogs.service';
 import { filterIsNotNull, NewQuoteDataService } from '../../Services/new-quote-data/new-quote-data.service';
 
 @Component({
@@ -20,12 +21,14 @@ export class NewQuoteDeliveryComponent implements OnInit {
   countryList: CountryList[] = []
   cityListAll: CountryCityList[] = []
   cityList: CountryCityList[] = []
-  consigneeNames: any[] = []
+  consigneeNames: CardList[] = []
   Address: AddressList = null;
   AddressList: AddressList[] = [];
 
   constructor(
     private newQuoteDataService: NewQuoteDataService,
+    private dialogsService: DialogsService,
+    private cdr: ChangeDetectorRef,
   ) { }
 
   ngOnInit(): void {
@@ -56,23 +59,29 @@ export class NewQuoteDeliveryComponent implements OnInit {
   }
 
   addFormControls() {
+    
     this.propertyForm.addControl('deliveryInclude', new FormControl(''));
     this.propertyForm.addControl('deliveryZipCode', new FormControl(''));
     this.propertyForm.addControl('deliveryCity', new FormControl(''));
     this.propertyForm.addControl('deliveryCountry', new FormControl(''));
-    this.propertyForm.addControl('deliveryAddressId', new FormControl(''));
+    this.propertyForm.addControl('deliveryAddress', new FormControl(''));
   }
 
   subscribeCtrls() {
+    this.propertyForm.controls.deliveryAddress.valueChanges.subscribe((addressId: AddressList) => {
+      this.Address = this.AddressList.find(x => x == addressId)
+      this.cdr.detectChanges()
+
+    });
     this.qouteForm.controls.consigneeName.valueChanges.subscribe(async (consigneeName: CardList) => {
       if (consigneeName) {
-        this.AddressList = consigneeName ? await this.newQuoteDataService.getAddresses(consigneeName.Id, consigneeName.Tenant) : null;
+        this.AddressList = await this.newQuoteDataService.getAddresses(consigneeName.Id, consigneeName.Tenant);
         this.Address = this.AddressList.length ? this.AddressList[0] : null
-        this.propertyForm.controls.deliveryAddressId.setValue(this.Address)
+        this.propertyForm.controls.deliveryAddress.setValue(this.Address)
       } else {
         this.Address = null
         this.AddressList = []
-        this.propertyForm.controls.deliveryAddressId.setValue(null)
+        this.propertyForm.controls.deliveryAddress.setValue(null)
       }
     });
   }
@@ -87,6 +96,14 @@ export class NewQuoteDeliveryComponent implements OnInit {
   }
 
   onSelectedCountry(country: CountryList) {
-    // this.EntityPM.ToAddressCountryId = country.Id;
+    // this.EntityPM.ToAddressCountryId = country.Id; 
+  }
+
+  addAddress() {
+    this.dialogsService.addAddress('D', this.qouteForm.controls.shipperName.value.Id)
+  }
+
+  editAddress() {
+    this.dialogsService.editAddress(this.Address.Id)
   }
 }

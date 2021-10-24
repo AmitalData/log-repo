@@ -78,12 +78,12 @@ export class NewQuoteComponent {
         this.EntityPM.FromAddressCity = propertyForm.deliveryCity.value
         this.EntityPM.FromAddressCountryId = propertyForm.deliveryCountry.value?.Id
         this.EntityPM.FromAddressZipCode = propertyForm.deliveryZipCode.value
-        this.EntityPM.DeliveryAddressId = propertyForm.deliveryAddressId.value?.Id
+        this.EntityPM.DeliveryAddressId = propertyForm.deliveryAddress.value?.Id
 
         this.EntityPM.ToAddressCity = propertyForm.pickupCity.value
         this.EntityPM.ToAddressCountryId = propertyForm.pickupCountry.value?.Id
         this.EntityPM.ToAddressZipCode = propertyForm.pickupZipCode.value
-        this.EntityPM.PickUpAddressId= propertyForm.pickupAddressId.value?.Id
+        this.EntityPM.PickUpAddressId= propertyForm.pickupAddress.value?.Id
 
         this.EntityPM.ToPortId = propertyForm.toPort.value?.Code
         this.EntityPM.FromPortId = propertyForm.fromPort.value?.Code
@@ -100,12 +100,12 @@ export class NewQuoteComponent {
             propertiesPM.FromAddressCity = propertyForm.value.deliveryCity
             propertiesPM.FromAddressCountryId = propertyForm.value.deliveryCountry?.Id
             propertiesPM.FromAddressZipCode = propertyForm.value.deliveryZipCode
-            propertiesPM.FromAddressId = propertyForm.value.deliveryAddressId?.Id
+            propertiesPM.FromAddressId = propertyForm.value.deliveryAddress?.Id
 
             propertiesPM.ToAddressCity = propertyForm.value.pickupCity
             propertiesPM.ToAddressCountryId = propertyForm.value.pickupCountry?.Id
             propertiesPM.ToAddressZipCode = propertyForm.value.pickupZipCode
-            propertiesPM.ToAddressId = propertyForm.value.pickupAddressId?.Id
+            propertiesPM.ToAddressId = propertyForm.value.pickupAddress?.Id
 
             propertiesPM.ToPortId = propertyForm.value.toPort?.Code
             propertiesPM.FromPortId = propertyForm.value.fromPort?.Code
