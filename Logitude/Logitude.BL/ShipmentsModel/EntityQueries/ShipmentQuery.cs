@@ -13994,8 +13994,6 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             return shipmentPackages;
         }
 
-
-        
         public List<ShipmentAdditionalFields> GetShipmentsAdditionalFields(string shipmentIds, int tenant)
         {
             if (!string.IsNullOrEmpty(shipmentIds))
@@ -14008,11 +14006,17 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                  where shipmentIdsList.Contains(shipment.Id) && shipment.Tenant == tenant
                                  select new ShipmentAdditionalFields
                                  {
-                                     Id = shipment.Id,
-                                     ShipperCity = shipment.ShipperAddress.City,
-                                     ShipperCountryCode = shipment.ShipperAddress.Country.Code,
-                                     ConsigneeCity = shipment.ConsigneeAddress.City,
-                                     ConsigneeCountryCode = shipment.ConsigneeAddress.Country.Code,
+                                     ShipmentId = shipment.Id,
+
+                                     ShipperCity = shipment.ShipperAddress != null ? shipment.ShipperAddress.City : null,
+
+                                     ShipperCountryCode = shipment.ShipperAddress != null ?
+                                     (shipment.ShipperAddress.Country != null ? shipment.ShipperAddress.Country.Code : null) : null,
+
+                                     ConsigneeCity = shipment.ConsigneeAddress != null ? shipment.ConsigneeAddress.City : null,
+
+                                     ConsigneeCountryCode = shipment.ConsigneeAddress != null ?
+                                     (shipment.ConsigneeAddress.Country != null ? shipment.ConsigneeAddress.Country.Code : null) : null,
 
                                      FirstPickupATD = shipmentPickUpDeliveries.Where(s => s.PickUpDeliveryTypeCode == "PICK").Any() ?
                                      shipmentPickUpDeliveries.Where(s => s.PickUpDeliveryTypeCode == "PICK")
@@ -14036,8 +14040,6 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
             return new List<ShipmentAdditionalFields>();
         }
-
-
 
         private List<string> GetConnectedContainerEntityIdsToLegs(ShipmentPM shipmentPM, ShipmentPM stanAloneShipment)
         {

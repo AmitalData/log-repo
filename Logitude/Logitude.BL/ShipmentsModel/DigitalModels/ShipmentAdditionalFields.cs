@@ -4,7 +4,7 @@ namespace Logitude.BL.ShipmentsModel.DigitalModels
 {
     public class ShipmentAdditionalFields
     {
-        public string Id { get; set; }
+        public string ShipmentId { get; set; }
         public string ShipperCity { get; set; }
         public string ShipperCountryCode { get; set; }
         public string ConsigneeCity { get; set; }
