@@ -1,15 +1,14 @@
-<div [formGroup]='propertyForm' class="">
-    <p-checkbox formControlName='pickupInclude' [binary]="true"
-        label='{{"QuoteOP.O.NewQuote.IncludePickUp" | TextCodeTranslationPipe}}'
-        (onChange)="includeCheckboxChange($event)"></p-checkbox>
-
-    <div [hidden]='!propertyForm.controls.pickupInclude.value' class='contianer'>
+<div [formGroup]='addressForm'>
+    <p-checkbox formControlName='include' [binary]="true"
+        [label]='"QuoteOP.O.NewQuote.Include" + capitalizeType | TextCodeTranslationPipe'></p-checkbox>        
+<!--         label='{{"QuoteOP.O.NewQuote.IncludeDelivery" | TextCodeTranslationPipe}}' -->
+    <div [hidden]='!addressForm.controls.include.value' class='contianer'>
         <div [hidden]='AddressList.length'>
-            <h5>{{"QuoteOP.S.NewQuote.PickupAddress" | TextCodeTranslationPipe}}</h5>
+            <h5>{{"QuoteOP.S.NewQuote.Address" + capitalizeType | TextCodeTranslationPipe}}</h5>
             <div class="p-fluid">
                 <div class="p-field">
-                    <label for="pickupZipCode">{{"QuoteOP.S.NewQuote.ZipCode" | TextCodeTranslationPipe}}</label>
-                    <p-inputNumber formControlName='pickupZipCode' id="pickupZipCode" mode="decimal"
+                    <label [for]="type + 'ZipCode'">{{"QuoteOP.S.NewQuote.ZipCode" | TextCodeTranslationPipe}}</label>
+                    <p-inputNumber formControlName='zipCode' [id]="type + 'ZipCode'" mode="decimal"
                         [useGrouping]="false">
                     </p-inputNumber>
                 </div>
@@ -19,15 +18,14 @@
                     [fieldShow]='"Name"' [label]='"QuoteOP.S.NewQuote.City" | TextCodeTranslationPipe'
                     [controlName]='"pickupCity"' [formGroup]='propertyForm' (onSelect)='onSelectedCity($event)'>
                 </app-autocomplate-table> -->
-                    <label for="pickupZipCode">{{"QuoteOP.S.NewQuote.City" | TextCodeTranslationPipe}}</label>
-                    <input formControlName='pickupCity' id="pickupZipCode" pInputText />
+                    <label [for]="type + 'City'">{{"QuoteOP.S.NewQuote.City" | TextCodeTranslationPipe}}</label>
+                    <input formControlName='city' [id]="type + 'City'" pInputText />
                 </div>
 
                 <div class="p-field">
                     <app-autocomplate-table [columnsShow]="{Code:'Code',EnglishName:'Name'}" [data]='countryList'
                         [fieldShow]='"EnglishName"' [label]='"QuoteOP.S.NewQuote.Country" | TextCodeTranslationPipe'
-                        [controlName]='"pickupCountry"' [formGroup]='propertyForm'
-                        (onSelect)='onSelectedCountry($event)'>
+                        [controlName]='"country"' [formGroup]='addressForm'>
                     </app-autocomplate-table>
                 </div>
             </div>
@@ -37,7 +35,7 @@
             <div class="p-field">
                 <app-autocomplate-table [columnsShow]="['Description', 'Name', 'Address1']" [data]='AddressList'
                     [fieldShow]='"Description"' [label]="'QuoteOP.S.NewQuote.Name' | TextCodeTranslationPipe"
-                    [controlName]='"pickupAddress"' [formGroup]='propertyForm' [dropIcon]='true'>
+                    [controlName]='"address"' [formGroup]='addressForm' [dropIcon]='true'>
                 </app-autocomplate-table>
                 <i class="pi pi-pencil" (click)='editAddress()' [ngClass]='{"disabled":!Address}'></i>
                 <i class="pi pi-plus" (click)='addAddress()'></i>
