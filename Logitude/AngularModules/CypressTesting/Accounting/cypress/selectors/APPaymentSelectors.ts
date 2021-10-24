@@ -8,4 +8,6 @@ export class APPaymentSelectors {
     public static readonly PayableAccountingTab = '#PAYABLEAccounting';
     public static readonly APPaymentCurrency = '#APPayment_PaymentCurrencyId';
     public static readonly RegisterDate = '#date_APPayment_RegisterDate';
+    public static readonly ShipmentPaymentDisconnectButton = "#Disconnect";
+
 }

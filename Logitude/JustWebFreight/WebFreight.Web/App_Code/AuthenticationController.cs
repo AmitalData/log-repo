@@ -69,7 +69,6 @@ namespace WebFreight.Web
         }
         private static readonly string SimplogGuid = Guid.NewGuid().ToString("N");
         private const string ProjectToken = "99de9de5af6505a670b915020e51380e";
-        private const string MasterUserId = "13793";
 
         public UserData PostLoginUsingAuthenticaionToken(LoginTokenParameter logintokenparam, string dummy)
         {
@@ -1555,7 +1554,7 @@ namespace WebFreight.Web
             if (!parameters.IsCargoTracking){ return; }
             MixPanelEvent LoginEvent = BuildMixPanelLoginEvent(parameters);
 
-            MixPanelEventTracker eventTracker = new MixPanelEventTracker(ProjectToken, MasterUserId, tenant);
+            MixPanelEventTracker eventTracker = new MixPanelEventTracker(ProjectToken, parameters.Email, tenant);
             eventTracker.TrackEvent(LoginEvent);
             
         }

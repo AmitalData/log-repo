@@ -54,6 +54,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                     where a.PaymentId == paymentId && a.Tenant == tenant
                     select new ARPaymentChequeReplicaPM()
                     {
+                        Id = a.Id,
                         Tenant = a.Tenant,
                         BankAccount = a.BankAccount,
                         BankBranch = a.BankBranch ,

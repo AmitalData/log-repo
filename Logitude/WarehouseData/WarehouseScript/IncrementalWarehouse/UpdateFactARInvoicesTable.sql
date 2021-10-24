@@ -25,7 +25,6 @@
     declare @CreatedBy as int
     declare @PrintedBy as int
 	declare @ARInvoicesSalesman as int
-	declare @ShipmentSalesman as int
 
 	declare @Status as varchar(20)
 	declare @PrintNotes as varchar(250)
@@ -40,7 +39,7 @@
 	declare @AmountInProfitCurrency as float
 	declare @AmountDueInLocalCurrency as float
 	declare @AmountDueInProfitCurrency as float
-	declare @ShipmentsNumbers as varchar(1000) 
+	
 
 	declare @Description as nvarchar(250) 
 	declare @LocalDescription as nvarchar(250) 
@@ -59,35 +58,29 @@
 	declare @InvoiceCurrencyExchangeRate  as float 
  	declare @IsExpens as bit
 	declare @IsRegionalTax as bit
-	declare @House as varchar(20)
-	declare @MasterShipmentNumber as varchar(20)
-
-    declare @Direction as varchar(40)
-    declare @TransportMode as varchar(13)
-	declare @Type as varchar(40)
-	declare @ShipmentSubType as int
-	declare @Department as int
-	declare @Shipper as int
-    declare @Consignee as int
-	declare @Routing as varchar(100)
+	 
 	declare @Branch as int 
 	declare @StatusCode as varchar(2)
-	declare @DraftNumber as varchar(20)
-    declare @IsConsolidationInvoice  as bit
-	declare @InvoiceShipmentsNumbers as varchar(1000) 
+	declare @DraftNumber as varchar(20)  
+    declare @IsConsolidationInvoice  as bit 
+	declare @MainEntityId as varchar(15)
+	declare @ShipmentsNumbers as varchar(1000) 
+
+	declare @OriginalInvoiceNumber as varchar(25)
+
 
 	DECLARE ARInvoicesCursor CURSOR READ_ONLY
 	FOR
 	SELECT dw_ARInvoices.Id,dw_ARInvoices.Tenant, SourceTenant.[Tenant Number], ParentTenant.[Tenant Number], dw_ARInvoiceTypes.Name,dw_ARInvoices.InvoiceNumber,
 	dw_ARInvoices.InvoiceDate, dw_ARInvoices.CreateDate, dw_ARInvoices.ApprovedDate, dw_ARInvoices.DueDate, dw_ARInvoices.PrintDate, dw_ARInvoices.PaidDate,
-	ApprovedByUser.Id_Number, CreatedByUser.Id_Number, PrintedByUser.Id_Number, SalesmanUser.Id_Number, ShipmentSalesmanUser.Id_Number , dw_ARInvoiceStatus.Name, dw_ARInvoices.PrintNotes,DIM_PaymentTerms.Id_Number,
+	ApprovedByUser.Id_Number, CreatedByUser.Id_Number, PrintedByUser.Id_Number, SalesmanUser.Id_Number, dw_ARInvoiceStatus.Name, dw_ARInvoices.PrintNotes,DIM_PaymentTerms.Id_Number,
 	LocalCurrency.Id_Number, InvoiceCurrency.Id_Number, dw_ARInvoices.VatNumber, BillTo.Id_Number,dw_ARInvoices.SubTotalInLocalCurrency, dw_ARInvoices.SubTotalInInvoiceCurrency,
-	dw_ARInvoices.AmountInLocalCurrency, dw_ARInvoices.AmountInProfitCurrency, dw_ARInvoices.AmountDueInLocalCurrency, dw_ARInvoices.AmountDueInProfitCurrency,dw_Shipments.ShipmentNumber,
+	dw_ARInvoices.AmountInLocalCurrency, dw_ARInvoices.AmountInProfitCurrency, dw_ARInvoices.AmountDueInLocalCurrency, dw_ARInvoices.AmountDueInProfitCurrency,
 	dw_ARInvoiceLines.Description, dw_ARInvoiceLines.LocalDescription, dw_ARInvoiceLines.UnitPrice, dw_ARInvoiceLines.Quantity, DIM_VatTypes.Id_Number, 
 	dw_ARInvoiceLines.VatPercentage, dw_ARInvoiceLines.LocalCurrencyAmount,dw_ARInvoiceLines.ForiegnCurrencyAmount,dw_ARInvoiceLines.InvoiceCurrencyAmount, ForiegnCurrency.Id_Number, dw_ARInvoiceLines.ForiegnExchangeRate,
-	dw_ARInvoiceLines.ProfitCurrencyAmount,dw_ARInvoiceLines.Notes,dw_ARInvoices.InvoiceCurrencyExchangeRate,dw_ARInvoiceLines.IsExpense,dw_ARInvoiceLines.IsRegionalTax, dw_Shipments.House, dw_ShipmentMasterDatas.MasterShipmentNumber,
-	DIM_Directions.Name,TransportModes.Name, DIM_Types.Name, DIM_ShipmentSubTypes.Id_Number, DIM_Departments.Id_Number, shipperPartners.Id_Number, consigneePartners.Id_Number, dw_Shipments.Routing, DIM_Branches.Id_Number,dw_ARInvoices.StatusCode, dw_ARInvoices.DraftNumber,
-	dw_ARInvoices.IsConsolidationInvoice, dw_ARInvoices.ShipmentsNumbers
+	dw_ARInvoiceLines.ProfitCurrencyAmount,dw_ARInvoiceLines.Notes,dw_ARInvoices.InvoiceCurrencyExchangeRate,dw_ARInvoiceLines.IsExpense,dw_ARInvoiceLines.IsRegionalTax,
+	DIM_Branches.Id_Number,dw_ARInvoices.StatusCode, dw_ARInvoices.DraftNumber,
+	dw_ARInvoices.IsConsolidationInvoice, dw_ARInvoices.MainEntityId, dw_ARInvoices.ShipmentsNumbers
 
 	 
     From dw_ARInvoices
@@ -105,48 +98,26 @@
 	inner JOIN DIM_Currencies InvoiceCurrency ON dw_ARInvoices.InvoiceCurrencyId = InvoiceCurrency.Id
 	inner JOIN DIM_Partners BillTo ON dw_ARInvoices.BillToId = BillTo.Id 
 	inner JOIN DIM_Branches ON dw_ARInvoices.BranchId =DIM_Branches.Id
-	inner JOIN dw_ARInvoiceLines  ON dw_ARInvoices.Id = dw_ARInvoiceLines.ARInvoiceId
-	 
-    inner JOIN DIM_Currencies ForiegnCurrency ON dw_ARInvoiceLines.ForiegnCurrencyId = ForiegnCurrency.Id
-	-- join shipment
-	
-	inner JOIN dw_Shipments  ON dw_ARInvoices.MainEntityId = dw_Shipments.Id
-	inner JOIN dw_ShipmentMasterDatas ON dw_Shipments.MasterShipmentDataId = dw_ShipmentMasterDatas.Id
-
-	inner JOIN DIM_Directions ON dw_Shipments.DirectionId = DIM_Directions.Code
-    inner JOIN DIM_TransportModes TransportModes ON dw_Shipments.TransportModeId = TransportModes.Code
-	inner JOIN DIM_Types ON dw_Shipments.ShipmentTypeId = DIM_Types.Code
-	inner JOIN DIM_Departments ON dw_Shipments.DepartmentId = DIM_Departments.Id
-	inner JOIN DIM_Partners shipperPartners ON dw_Shipments.ShipperId = shipperPartners.Id
-	inner JOIN DIM_Partners consigneePartners ON dw_Shipments.ConsigneeId = consigneePartners.Id 
-	inner JOIN DIM_Users ShipmentSalesmanUser ON dw_Shipments.SalesmanUserId = ShipmentSalesmanUser.Id
-
-    inner JOIN DIM_VatTypes ON dw_ARInvoiceLines.VatTypeId = DIM_VatTypes.Id
-	inner JOIN DIM_ShipmentSubTypes  ON dw_Shipments.ShipmentSubTypeId = DIM_ShipmentSubTypes.Id
+	inner JOIN dw_ARInvoiceLines  ON dw_ARInvoices.Id = dw_ARInvoiceLines.ARInvoiceId 
+    inner JOIN DIM_Currencies ForiegnCurrency ON dw_ARInvoiceLines.ForiegnCurrencyId = ForiegnCurrency.Id 
+    inner JOIN DIM_VatTypes ON dw_ARInvoiceLines.VatTypeId = DIM_VatTypes.Id 
 
     where dw_ARInvoices.AutomaticLastUpdateDate > @LastUpdateDate 
 
 	OPEN ARInvoicesCursor FETCH NEXT FROM ARInvoicesCursor   into  @Id ,@Tenant , @SourceTenant, @ParentTenant, @InvoiceType, @InvoiceNumber,
 	 @InvoiceDate, @CreateDate, @ApprovedDate, @DueDate, @PrintDate, @PaidDate, @ApprovedBy, @CreatedBy, @PrintedBy,
-	 @ARInvoicesSalesman, @ShipmentSalesman, @Status, @PrintNotes, @PaymentTerm, @LocalCurrency, @InvoiceCurrency, @VATNumber, @BillTo, @SubTotalInLocalCurrency, @SubTotalInInvoiceCurrency,
-	 @AmountInLocalCurrency, @AmountInProfitCurrency, @AmountDueInLocalCurrency, @AmountDueInProfitCurrency,  @ShipmentsNumbers, @Description, @LocalDescription, @UnitPrice, @Quantity, @VatType,
-	 @VatPercentage, @LocalCurrencyAmount,@ForiegnCurrencyAmount,@InvoiceCurrencyAmount,@ForiegnCurrencyId, @ForiegnExchangeRate, @ProfitCurrencyAmount,@Notes,@InvoiceCurrencyExchangeRate,@IsExpens,@IsRegionalTax, @House, @MasterShipmentNumber,
-	 @Direction,@TransportMode, @Type, @ShipmentSubType, @Department, @Shipper , @Consignee, @Routing, @Branch, @StatusCode, @DraftNumber, @IsConsolidationInvoice, @InvoiceShipmentsNumbers
+	 @ARInvoicesSalesman, @Status, @PrintNotes, @PaymentTerm, @LocalCurrency, @InvoiceCurrency, @VATNumber, @BillTo, @SubTotalInLocalCurrency, @SubTotalInInvoiceCurrency,
+	 @AmountInLocalCurrency, @AmountInProfitCurrency, @AmountDueInLocalCurrency, @AmountDueInProfitCurrency, @Description, @LocalDescription, @UnitPrice, @Quantity, @VatType,
+	 @VatPercentage, @LocalCurrencyAmount,@ForiegnCurrencyAmount,@InvoiceCurrencyAmount,@ForiegnCurrencyId, @ForiegnExchangeRate, @ProfitCurrencyAmount,@Notes,@InvoiceCurrencyExchangeRate,@IsExpens,@IsRegionalTax,
+	 @Branch,@StatusCode, @DraftNumber, @IsConsolidationInvoice, @MainEntityId, @ShipmentsNumbers
 	 
 	WHILE @@FETCH_STATUS = 0
 	BEGIN
 	 
 	 BEGIN TRY  
 	  
-	 ----------------------------------------------------
-	  
-
-		declare @Salesman as int
-		set @Salesman = @ARInvoicesSalesman;
-		if(@Salesman =1 )BEGIN set @Salesman = @ShipmentSalesman;END
-
-   	--------------AR Invoice Number------------------
-		 
+	 	 ----------------------------------------------------
+ 
 				IF(@StatusCode = 'DR' or @StatusCode = 'LL')
 					BEGIN
 						IF(@DraftNumber is not null)
@@ -159,17 +130,25 @@
 							END
 					END
 		 
-	 ----------------------------------------------
+		----------------------------------------------
+
+		--------------Original Invoice Number------------------
+		 
+				IF( @DraftNumber IS NOT NULL )
+				  BEGIN
+					  SET @OriginalInvoiceNumber = @DraftNumber;
+				  END
+				ELSE
+				  BEGIN
+					  SET @OriginalInvoiceNumber = @InvoiceNumber;
+				  END 
+		 
+		----------------------------------------------
 		 
 		declare @IsCancelled as bit  
 		set @IsCancelled =0;
 		if(@StatusCode = 'AR'or @StatusCode = 'AC' or @StatusCode = 'LL' or @StatusCode = 'VD') 
 		begin set @IsCancelled = 1 end  
-
-		 ----------------------------------------------
-		if(@IsConsolidationInvoice = 1) 
-		begin set @ShipmentsNumbers = @InvoiceShipmentsNumbers end  
-		----------------------------------------------
 
 
 
@@ -177,17 +156,17 @@
 	   [Approved By], [Created By], [Printed By], [Invoice Salesman],  [Invoice Status], [Print Note], [Payment Term], [Invoice Local Currency], [Invoice Currency], [VAT Number], [Bill To], 
 	   
 	   [Subtotal (Local)],[Subtotal (Profit)],[Invoice Amount (Local)],[Invoice Amount (Profit)],[Amount Due (Local)],[Amount Due (Profit)],
-	   [Shipment Number], [Line Description],[Line Local Description], [Line Unit Price], [Line Quantity], [Line VAT Type], 
+	  [Line Description],[Line Local Description], [Line Unit Price], [Line Quantity], [Line VAT Type], 
 	   [Line VAT Percentage],[Line Amount (Local)], [Line Amount (Foreign)],[Line Amount (Invoice Currency)], [Foreign Currency], [Foreign Exchange Rate],[Line Amount (Profit)],
-       [Line Notes], [Invoice Currency Exchange Rate], [Is Expense], [Is Regional Tax], [Shipment House Number], [Shipment Master Number], [Shipment Direction],[Shipment Transport Mode], [Shipment Type],[Shipment Sub Type],[Department],[Shipper], [Consignee],[Routing],[Invoice Branch],[Is Cancelled] )
+       [Line Notes], [Invoice Currency Exchange Rate], [Is Expense], [Is Regional Tax],[Invoice Branch],[Is Cancelled],[Main Entity Id],[Shipment Number],  [Original Invoice Number])
 	   
 	   
-      values(@Id  , @SourceTenant, @ParentTenant, @InvoiceType, @InvoiceNumber,dbo.GetDateFormateAsNumber(@InvoiceDate), dbo.GetDateFormateAsNumber(@CreateDate),dbo.GetDateFormateAsNumber(@ApprovedDate),  dbo.GetDateFormateAsNumber(@DueDate) ,dbo.GetDateFormateAsNumber(@PrintDate),dbo.GetDateFormateAsNumber(@PaidDate),
-	  @ApprovedBy, @CreatedBy, @PrintedBy, @Salesman, @Status, @PrintNotes,  @PaymentTerm, @LocalCurrency, @InvoiceCurrency,@VATNumber, @BillTo,
+      values(@Id  , @SourceTenant, @ParentTenant, @InvoiceType, @InvoiceNumber, dbo.GetDateFormateAsNumber(@InvoiceDate), dbo.GetDateFormateAsNumber(@CreateDate),dbo.GetDateFormateAsNumber(@ApprovedDate),  dbo.GetDateFormateAsNumber(@DueDate) ,dbo.GetDateFormateAsNumber(@PrintDate),dbo.GetDateFormateAsNumber(@PaidDate),
+	  @ApprovedBy, @CreatedBy, @PrintedBy, @ARInvoicesSalesman, @Status, @PrintNotes,  @PaymentTerm, @LocalCurrency, @InvoiceCurrency,@VATNumber, @BillTo,
 	 
-	 @SubTotalInLocalCurrency, @SubTotalInInvoiceCurrency, @AmountInLocalCurrency, @AmountInProfitCurrency, @AmountDueInLocalCurrency, @AmountDueInProfitCurrency,  @ShipmentsNumbers, @Description, @LocalDescription, @UnitPrice, @Quantity,  @VatType,
-	  @VatPercentage, @LocalCurrencyAmount,@ForiegnCurrencyAmount,@InvoiceCurrencyAmount,@ForiegnCurrencyId, @ForiegnExchangeRate, @ProfitCurrencyAmount,@Notes,@InvoiceCurrencyExchangeRate,@IsExpens,@IsRegionalTax, @House, @MasterShipmentNumber, @Direction,@TransportMode,
-	  @Type, @ShipmentSubType, @Department, @Shipper , @Consignee, @Routing, @Branch,@IsCancelled)
+	 @SubTotalInLocalCurrency, @SubTotalInInvoiceCurrency, @AmountInLocalCurrency, @AmountInProfitCurrency, @AmountDueInLocalCurrency, @AmountDueInProfitCurrency, @Description, @LocalDescription, @UnitPrice, @Quantity,  @VatType,
+	 @VatPercentage, @LocalCurrencyAmount,@ForiegnCurrencyAmount,@InvoiceCurrencyAmount,@ForiegnCurrencyId, @ForiegnExchangeRate, @ProfitCurrencyAmount,@Notes,@InvoiceCurrencyExchangeRate,@IsExpens,@IsRegionalTax,
+	 @Branch,@IsCancelled,@MainEntityId, @ShipmentsNumbers, @OriginalInvoiceNumber)
 
 
 
@@ -207,10 +186,10 @@ END CATCH
 	
 	FETCH NEXT FROM ARInvoicesCursor    INTO  @Id ,@Tenant , @SourceTenant, @ParentTenant, @InvoiceType, @InvoiceNumber,
 	@InvoiceDate, @CreateDate, @ApprovedDate, @DueDate, @PrintDate,@PaidDate, @ApprovedBy, @CreatedBy, @PrintedBy,
-	@ARInvoicesSalesman, @ShipmentSalesman,  @Status, @PrintNotes, @PaymentTerm, @LocalCurrency, @InvoiceCurrency, @VATNumber, @BillTo,@SubTotalInLocalCurrency, @SubTotalInInvoiceCurrency,
-	@AmountInLocalCurrency, @AmountInProfitCurrency, @AmountDueInLocalCurrency, @AmountDueInProfitCurrency,  @ShipmentsNumbers, @Description, @LocalDescription, @UnitPrice , @Quantity,  @VatType,
-	@VatPercentage, @LocalCurrencyAmount,@ForiegnCurrencyAmount,@InvoiceCurrencyAmount,@ForiegnCurrencyId, @ForiegnExchangeRate, @ProfitCurrencyAmount,@Notes,@InvoiceCurrencyExchangeRate,@IsExpens,@IsRegionalTax, @House, @MasterShipmentNumber, @Direction,@TransportMode,
-	@Type, @ShipmentSubType, @Department, @Shipper , @Consignee, @Routing, @Branch, @StatusCode, @DraftNumber, @IsConsolidationInvoice, @InvoiceShipmentsNumbers
+	@ARInvoicesSalesman,  @Status, @PrintNotes, @PaymentTerm, @LocalCurrency, @InvoiceCurrency, @VATNumber, @BillTo,@SubTotalInLocalCurrency, @SubTotalInInvoiceCurrency,
+	@AmountInLocalCurrency, @AmountInProfitCurrency, @AmountDueInLocalCurrency, @AmountDueInProfitCurrency, @Description, @LocalDescription, @UnitPrice , @Quantity,  @VatType,
+	@VatPercentage, @LocalCurrencyAmount,@ForiegnCurrencyAmount,@InvoiceCurrencyAmount,@ForiegnCurrencyId, @ForiegnExchangeRate, @ProfitCurrencyAmount,@Notes,@InvoiceCurrencyExchangeRate,@IsExpens,@IsRegionalTax,
+	@Branch, @StatusCode, @DraftNumber, @IsConsolidationInvoice, @MainEntityId, @ShipmentsNumbers
 
 		End
 	CLOSE ARInvoicesCursor

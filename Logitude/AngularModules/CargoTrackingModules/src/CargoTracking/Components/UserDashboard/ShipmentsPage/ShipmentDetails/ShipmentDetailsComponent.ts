@@ -62,6 +62,7 @@ export class ShipmentDetailsComponent implements AfterViewInit
         'I': "TRUCKER",
         'O': "SHIPPING LINES"
     }
+    EntityType_Customs = "C";
 
 
     ShipmentCustomsData: CargoTrackingShipmentCustomsData = null;
@@ -195,25 +196,30 @@ export class ShipmentDetailsComponent implements AfterViewInit
             }
         });
     }
-    SetTitleForSupplierOrClient(directionId: string) {
+
+    SetTitleForSupplierOrClient(shipment: CargoTrackingShipmentList) {
         var title;
-        switch (directionId) {
-            case ShipmentDirections.Import: {
-                title = "SUPPLIER"
+        switch (shipment.DirectionId) {
+            case ShipmentDirections.Import:{
+                title = "SHIPPER"
                 break;
             }
 
-            case ShipmentDirections.Export:
-            case ShipmentDirections.Customs: {
+            case ShipmentDirections.Export: {
                 title = "CLIENT"
                 break;
             }
         }
 
+        if (shipment.EntityType == this.EntityType_Customs) {
+            title = "SHIPPER"
+        }
+
         return title;
     }
+
     SetSupplierOrCleintValueByDirection(shipmentList) {
-        if(shipmentList.DirectionId == ShipmentDirections.Import) 
+        if(shipmentList.DirectionId == ShipmentDirections.Import || shipmentList.EntityType == ShipmentDirections.Customs)
         {
             return shipmentList.ShipperName;
         } else if(shipmentList.DirectionId == ShipmentDirections.Export) {
@@ -1267,7 +1273,7 @@ export class PartnerCard
     ShowDetails: boolean = false;
 }
 
-enum ShipmentDirections {
+export enum ShipmentDirections {
     Import = "I",
     Export = "E",
     Customs = "C"

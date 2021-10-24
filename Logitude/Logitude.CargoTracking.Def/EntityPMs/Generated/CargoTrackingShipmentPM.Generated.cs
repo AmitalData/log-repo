@@ -2757,6 +2757,29 @@ namespace Logitude.CargoTracking.Def.EntityPMs
 			
 		 }
 	   }
+	  private string poNumber ;
+	  	  
+       
+	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string PoNumber  
+	   {
+	    
+	     get
+		{
+		   return poNumber;
+		 }
+		 set
+		 {
+		   if(poNumber != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PoNumber",OldValue=poNumber,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   poNumber=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

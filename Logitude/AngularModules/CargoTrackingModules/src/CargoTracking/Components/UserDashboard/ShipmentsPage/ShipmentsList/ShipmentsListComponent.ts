@@ -17,6 +17,7 @@ import { RootContext } from 'src/CargoTracking/Utilities/RootContext';
 import { CargoTrackingMilestoneService } from 'src/CargoTracking/Services/Others/CargoTrackingMilestoneService';
 import { MultipleSelectionComponent } from 'src/Infrastructure/Components/MultipleSelection/MultipleSelectionComponent';
 import { filter } from 'rxjs/operators';
+import { ShipmentDirections } from '../ShipmentDetails/ShipmentDetailsComponent';
 
 @Component({
     selector: 'ShipmentsListComponent',
@@ -74,6 +75,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
     ShipmenTypeForRouting: string;
     public SortOptions= SortOptions;
     PanelSearchText;
+    EntityType_Customs = "C";
     get tenant(){
         return CargoTrackingBrandingData.Tenant;
     }
@@ -188,16 +190,19 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
     SetTitleForSupplierOrClient(shipment: CargoTrackingShipmentList) {
         var title;
         switch (shipment.DirectionId) {
-            case 'I': {
-                title = "SUPPLIER"
+            case ShipmentDirections.Import:{
+                title = "SHIPPER"
                 break;
             }
 
-            case 'E':
-            case 'C': {
+            case ShipmentDirections.Export: {
                 title = "CLIENT"
                 break;
             }
+        }
+
+        if (shipment.EntityType == this.EntityType_Customs) {
+            title = "SHIPPER"
         }
 
         this.SupplierOrClientTitle = title;
@@ -227,9 +232,8 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
     }
 
     private SetSupplierOrCleintValueByEntityType(shipment: CargoTrackingShipmentList, value: any) {
-        const EntityType_Customs = "C";
-        if (shipment.EntityType == EntityType_Customs) {
-            value = shipment.ConsigneeName;
+        if (shipment.EntityType == this.EntityType_Customs) {
+            value = shipment.ShipperName;
         }
         return value;
     }

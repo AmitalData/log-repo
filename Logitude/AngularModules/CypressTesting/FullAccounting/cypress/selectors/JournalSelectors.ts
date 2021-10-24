@@ -9,4 +9,9 @@ export class JournalSelectors {
     public static readonly ActionAmount = '#edit-log-grid_0_00_7_0';
     public static readonly SaveAsDraftButton = '#JournalBSaveAsDraft';
     public static readonly ApproveButton = '#JournalBApprove';
+
+    public static readonly MenuButtons = '#MenuButtons';
+    public static readonly JournalPrint = '#JournalBPrint';
+    public static readonly Printbutton = '#Printbutton';
+
 }

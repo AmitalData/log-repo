@@ -21,6 +21,7 @@ import { SignalRChannelService } from '../Services/SignalRServices/SignalRChanne
 import {ObjectsLocator} from '../Locators/ObjectsLocator';
 import { interval } from 'rxjs';
 import { timeInterval } from 'rxjs/operators';
+import { UserExtendedPMService } from '../../Common/Services/ExtendedPMs/UserExtendedPMService';
 
 @Injectable()
 
@@ -34,6 +35,7 @@ export class ApplicationTimersManager {
     userLastLoginPMService: UserLastLoginPMService;
     //signalRGeneralService: SignalRGeneralService;
     signalRChannelService: SignalRChannelService;
+    userExtendedPMService: UserExtendedPMService;
 
     @Output() SignoutCompleted = new EventEmitter();
     private CurrentSession = SessionLocator.SelectedSession;
@@ -44,6 +46,7 @@ export class ApplicationTimersManager {
         this.logitudeApplicationService = new LogitudeApplicationService();
         this.userLastLoginPMService = new UserLastLoginPMService();
         this.performanceLogService = new PerformanceLogService();
+        this.userExtendedPMService = new UserExtendedPMService();
         //this.signalRGeneralService = new SignalRGeneralService();
        
     }
@@ -164,49 +167,56 @@ export class ApplicationTimersManager {
     IsUserUnlock: boolean = false;
 
     private CheckUserLastLogin() {
-        this.userLastLoginPMService.GetUserLastLogin(SessionInfo.LoggedUserPM.Id, SessionInfo.LoggedUserTenant).subscribe((response:any) => {
+        this.userLastLoginPMService.GetUserLastLogin(SessionInfo.LoggedUserPM.Id, SessionInfo.LoggedUserTenant).subscribe((response: any) => {
             if (!response.HasError && response.Result) {
-
-                var lastloginPM: UserLastLoginPM = response.Result;
-
-                var computerId: string = SessionLocator.GetComputerIdFromStorage();
-                if (!AppTool.IsNullOrEmpty(computerId) && lastloginPM.ComputerId != computerId && !ObjectsLocator.GlobalSetting.SameUserLoginEnabled) {
-
-                    if (!this.IsUserUnlock) {//
-                        this.IsUserUnlock = true;
-
-                        if (this.CurrentSession) {
-                            this.CurrentSession.StopBusyIndicator();
-                            if (this.CurrentSession.CurrentWindow) {
-                                this.CurrentSession.CurrentWindow.StopBusyIndicator();
-                            }
-                        }
-                        var args = "";
-
-                        var logWindow = new LogitudeWindow();
-                        logWindow.IsOverAll = true;
-                        logWindow.Title = "";
-                        logWindow.WindowArgs = args;
-                        logWindow.Width = 1000;
-                        logWindow.Height = 250;
-                        logWindow.IsHideWindowMargin = true;
-                        logWindow.IsHideHeader = true;
-                        SessionLocator.HomeComponent.ShowLockIndicator = true;
-                        logWindow.Show('./InfrastructureModules/InfrastructureUser/Components/UserUnlockComponent/UserUnlockComponent');
-                        logWindow.WindowClosed.subscribe(($event: any) => {
-                            SessionLocator.HomeComponent.ShowLockIndicator = false;
-                            this.IsUserUnlock = false;
-
-                    });
-
-                }
-
-
+                let lastloginPM: UserLastLoginPM = response.Result;
+                this.HandleComputerIdChangedForLoggedUser(lastloginPM);
             }
+        });
+    }
 
 
+    private HandleComputerIdChangedForLoggedUser(lastloginPM: UserLastLoginPM) {
+        let computerId: string = SessionLocator.GetComputerIdFromStorage();
+        if (AppTool.IsNullOrEmpty(computerId)) return;
+        if (lastloginPM.ComputerId == computerId) return;
+        if (ObjectsLocator.GlobalSetting.SameUserLoginEnabled) return;
+        this.userExtendedPMService.GetLastUserLoginIpSameAsLoggedUserIpAndBrowser(SessionInfo.LoggedUserPM.Id, SessionInfo.LoggedUserTenant, false).subscribe((response: any) => {
+
+            let userLoginHistory: ServiceResponse = response;
+            let isSameUserWithSameBrowser: boolean = userLoginHistory.Result;
+            if (!userLoginHistory.HasError && !isSameUserWithSameBrowser) {
+                this.HandleUserUnlocked();
+            }
+        });
+    }
+
+    private HandleUserUnlocked() {
+        if (this.IsUserUnlock) return;
+
+        this.IsUserUnlock = true;
+
+        if (this.CurrentSession) {
+            this.CurrentSession.StopBusyIndicator();
+            if (this.CurrentSession.CurrentWindow) {
+                this.CurrentSession.CurrentWindow.StopBusyIndicator();
+            }
         }
 
+        var args = "";
+        var logWindow = new LogitudeWindow();
+        logWindow.IsOverAll = true;
+        logWindow.Title = "";
+        logWindow.WindowArgs = args;
+        logWindow.Width = 1000;
+        logWindow.Height = 250;
+        logWindow.IsHideWindowMargin = true;
+        logWindow.IsHideHeader = true;
+        SessionLocator.HomeComponent.ShowLockIndicator = true;
+        logWindow.Show('./InfrastructureModules/InfrastructureUser/Components/UserUnlockComponent/UserUnlockComponent');
+        logWindow.WindowClosed.subscribe(($event: any) => {
+            SessionLocator.HomeComponent.ShowLockIndicator = false;
+            this.IsUserUnlock = false;
         });
     }
 

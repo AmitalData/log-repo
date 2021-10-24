@@ -43,12 +43,15 @@ namespace Logitude.BL.Helpers
             {
                 var additionalFactDWObjectFieldPMs = groupedByCategory ? dWObjectFieldQuery.GetDWObjectFieldPMsByDWObjectTabelAndTenantGroupedByCategory(0, DwObjectTable.AdditionalFactCode , DwObjectTable.RecordType) : dWObjectFieldQuery.GetDWObjectFieldByDWObjectTableCode(0, DwObjectTable.AdditionalFactCode).Where(d=> string.IsNullOrEmpty(d.RecordType) || (!string.IsNullOrEmpty(d.RecordType) &&  d.RecordType.IndexOf(DwObjectTable.RecordType) > -1)).ToList();
                 foreach (DWObjectFieldPM additionalFactField in additionalFactDWObjectFieldPMs.Where(d => d.IsMeasurement == false && (d.DisplayInQueryBuilder || d.IsCustom)))
-                {
+                { 
                     var dwObjectField = !string.IsNullOrEmpty(additionalFactField.OriginalObjectFieldCode) ? factDWObjectFieldPMs.Where(d => d.OriginalObjectFieldCode == additionalFactField.OriginalObjectFieldCode).FirstOrDefault() : null;
                     if (dwObjectField == null)
                     {
                         dwObjectField = !string.IsNullOrEmpty(additionalFactField.Code) ? factDWObjectFieldPMs.Where(d => d.Code == additionalFactField.Code).FirstOrDefault() : null;
-                        if (dwObjectField == null) DWObjectFieldPMs.Add(additionalFactField);
+                        if (dwObjectField == null && CanAddAdditionalFactField(additionalFactField))
+                        { 
+                                DWObjectFieldPMs.Add(additionalFactField);
+                        }
                     }
                 }
             }
@@ -56,7 +59,10 @@ namespace Logitude.BL.Helpers
             DWObjectFieldPMs = DWObjectFieldPMs.Concat(factDWObjectFieldPMs).ToList();
         }
 
-
+        private bool CanAddAdditionalFactField(DWObjectFieldPM additionalFactField)
+        {
+            return string.IsNullOrEmpty(additionalFactField.RecordType) || additionalFactField.RecordType.IndexOf(DwObjectTable.RecordType) > -1;
+        }
     }
 
     public class DWObjectFieldAdditionalFactArgs
