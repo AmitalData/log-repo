@@ -979,7 +979,7 @@ insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,Is
 ------------------------------------------------------------------------------------
 declare @Fact_ARInvoicesNewId varchar(15)
 execute usp_GetNextTableIdValue @Fact_ARInvoicesNewId OUTPUT,'DWObjectTable' 
-insert into DWObjectTables(Id,Tenant,IndexesXml,Code,Name,TypeCode,IsClosed,DataViewName,HasPivotColumn,AdditionalFactCode,AdditionalFactForeignKey,RecordType,DisplayName,ObjectTableName,HasCustomFields,MaxNumberOfCustomFields,AdditionalFactRelationType) Values(@Fact_ARInvoicesNewId,0,'','Fact_ARInvoices','Fact_ARInvoices','Fact','false','factARInvoices','false','Fact_Shipments','[Main Entity Id]','ARInvoicesFact','ARInvoices','ARInvoice','false',0,'inner')  
+insert into DWObjectTables(Id,Tenant,IndexesXml,Code,Name,TypeCode,IsClosed,DataViewName,HasPivotColumn,AdditionalFactCode,AdditionalFactForeignKey,RecordType,DisplayName,ObjectTableName,HasCustomFields,MaxNumberOfCustomFields,AdditionalFactRelationType) Values(@Fact_ARInvoicesNewId,0,'','Fact_ARInvoices','Fact_ARInvoices','Fact','false','factARInvoices','false','Fact_Shipments','[Main Entity Id]','ARInvoicesFact','ARInvoices','ARInvoice','false',0,'left')  
 --Fields --
 declare @Fact_ARInvoicesId_NumberNewId varchar(15)
 execute usp_GetNextTableIdValue @Fact_ARInvoicesId_NumberNewId OUTPUT,'DWObjectField' 
