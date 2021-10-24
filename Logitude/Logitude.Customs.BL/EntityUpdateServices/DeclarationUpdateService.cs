@@ -361,7 +361,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
                 if(entityPM.IsDiamondDeclaration)
                 {
-                    DeclarationQueryService declarationQueryService = new DeclarationQueryService(entityPM.Tenant);
+                  //  DeclarationQueryService declarationQueryService = new DeclarationQueryService(entityPM.Tenant);
 
                     entityPM.IsValidTicketsDiamond= declarationQueryService.IsValidTickets(entityPM);
 
