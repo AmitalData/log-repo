@@ -81,7 +81,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                               into errorPlaceOuterJoin
                                                               from errorPlaceOuterJoinNullable in errorPlaceOuterJoin.DefaultIfEmpty()
 
-                                                                  //join cm in context.CourierMasters on c.CourierMasterId equals cm.Id
+                                                                  join cm in context.CourierMasters on c.CourierMasterId equals cm.Id
 
                                                                   //join pendingListNames in qDeclarationPendingListNames
                                                                   //on a.DeclarationId equals pendingListNames.DeclarationId
@@ -173,7 +173,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                                   CourierPendingReasonList = a.CourierPendingReasonList,
 
 
-                                                                  /* AirlineId = cm.CustomsAirline.AirlinePrefix,
+                                                                   AirlineId = cm.CustomsAirline.AirlinePrefix,
                                                                    MAWB = cm.MAWB,
                                                                    MasterGrossMassMeasure = cm.GrossMassMeasure,
                                                                    MasterPackageQuantity = cm.PackageQuantity,
@@ -190,7 +190,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                                   AmendmentDontDisplayInList= d.AmendmentDontDisplayInList,
                                                                   TruckerName = a.Trucker.Card.LocalName,
                                                                   IsAmendment  = d.IsAmendment==true? true :false
-                                                                   CrateNumber = a.CrateNumber*/
+                                                                   
                                                               });
 
 
