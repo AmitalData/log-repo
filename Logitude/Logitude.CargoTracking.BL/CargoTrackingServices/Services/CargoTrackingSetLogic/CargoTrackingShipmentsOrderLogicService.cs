@@ -44,6 +44,8 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
             new FieldMap("DepartureDate", "ATD"),
             new FieldMap("ArrivalEstimationDate", "ETA"),
             new FieldMap("ArrivalDate", "ATA"),
+            new FieldMap("PoNumber", "PoNumber"),
+
 
         };
 

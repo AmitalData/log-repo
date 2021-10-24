@@ -190,6 +190,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
              "min(SHO.House) as OrderHouse, " +
              "min(SHO.CasualImporterName) as OrderShipperName, " +
              "min(SHO.OrderNumber) as OrderShipmentNumber, " +
+             "min(SHO.PoNumber) as OrderPoNumber, " +
              "min(SHO.CustomerReferences) as OrderCustomerReference ";
 
             var carrierCardFields =
