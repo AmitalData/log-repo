@@ -5,7 +5,7 @@ import { ARPaymentDetails } from '../../models/ARPaymentDetails';
 import * as Actions from '../../actions/Actions';
 
 //#region Create new AR Payment
-Given("the user logged in and navigates to Full Accounting workspace", () => {
+Given("the user logged in and navigates to Accounting workspace", () => {
     cy.Login();
     Actions.NavigatesToAccountingMenu()
 });
