@@ -20,6 +20,7 @@ import { Guid } from '../../../Infrastructure/Utilities/Guid';
 import { CustomsRequestsSheetExtendedListService } from '../../../Customs/Services/ExtendedLists/CustomsRequestsSheetExtendedListService';
 import { MessageWindow } from '../../../Controls/Windows/MessageWindow';
 import { CustomsRequestsSheetWebService } from '../../../Customs/Services/WebServices/CustomsRequestsSheetWebService';
+import { List } from '../../../Infrastructure/DataContracts/Dashboard/List';
 
 //////////////////////////////////////////////////////////////////
 
@@ -88,6 +89,8 @@ export class CustomsRequestsSheetsComponent
     public DataContext: CustomsRequestsSheetsComponent = this;
     public ObjectTableName: string = "Customs.CustomsRequestsSheet";
     public columns: any[] = null;
+    public columnsStatistics: any[] = null;
+
 
     _MySearchText = "Search";
     _CustomsRequestsSheetStatusListService: CustomsRequestsSheetStatusListService;
@@ -137,7 +140,6 @@ export class CustomsRequestsSheetsComponent
         this.entityArgs = entityArgs;
     }
     ngOnInit() {
-        this.GetStatistics();
         this.MyRequestOnly = true;
         if (this.entityArgs.ObjectTableName) {
             if (this.entityArgs.ObjectTableName == "Customs.Declaration") {
@@ -182,6 +184,7 @@ export class CustomsRequestsSheetsComponent
 
                     this._entityListService = new EntityListService();
                     this.BuildColumns();
+                    this.GetStatistics();
                     //alert(TextCodeTranslator.Translate("Customs.CustomsRequestsSheet.F.RequestDescription"));
                     this._MySearchText = TextCodeTranslator.Translate("Customs.Notification.O.Search");
 
@@ -226,18 +229,18 @@ export class CustomsRequestsSheetsComponent
         })
     }
 
-    customsRequestsSheetSummary = new CustomsRequestsSheetSummary();
-    public StatisticsList: ObservableCollection;
-
+    customsRequestsSheetSummary = new Array<CustomsRequestsSheetSummary>();
+    IsTherecustomsRequestsSheetSummary = false;
+    SumRequests = 0;
     GetStatistics() {
         var service = new CustomsRequestsSheetWebService();
-        this.StatisticsList = new ObservableCollection([]);
         var statistics = service.GetStatistics().subscribe((response: any) => {
             if (response.Result != null) {
-                this.customsRequestsSheetSummary.ReleaseGoodsMessage = response.Result.ReleaseGoodsMessage;
-                this.customsRequestsSheetSummary.Tzrufa = response.Result.Tzrufa;
-                this.customsRequestsSheetSummary.DeclarationStatusSearch = response.Result.DeclarationStatusSearch;
-                this.customsRequestsSheetSummary.Total = response.Result.ReleaseGoodsMessage + response.Result.Tzrufa + response.Result.DeclarationStatusSearch;
+                this.customsRequestsSheetSummary = response.Result;
+                for (var request of (this.customsRequestsSheetSummary as any[])) {
+                    this.SumRequests += request.count;
+                    this.IsTherecustomsRequestsSheetSummary = true;
+                }
             }
         });
     }
@@ -449,6 +452,8 @@ export class CustomsRequestsSheetsComponent
 
         //this.onQueryChangeEvent.emit({ Filters: new ApiQueryFilters() }); 
     }
+
+
 
     BuildColumns() {
         this.columns = [];
@@ -827,12 +832,8 @@ export class CustomsRequestsSheetStatusListVM {
     IsChecked: boolean;
 }
 export class CustomsRequestsSheetSummary {
-    ReleaseGoodsMessage: number;
-    Tzrufa: number;
-    SuccessInFiveMinutes: number;
-    SuccessInOneMinute: number;
-    DeclarationStatusSearch: number;
-    Total: number;
-
+    id: string;
+    count: number;
+    InterfaceTypeName: string;
 }
 //////////////////////////////////////////////////
