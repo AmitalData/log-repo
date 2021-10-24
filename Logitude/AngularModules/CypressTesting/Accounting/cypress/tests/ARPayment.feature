@@ -3,7 +3,7 @@ Feature: AR Payment
     The user creates new AR Payment and ARprove the AR Payment
 
     Scenario: Create new AR Payment
-        Given the user logged in and navigates to Full Accounting workspace
+        Given the user logged in and navigates to Accounting workspace
         And an AR Payment with the following details
             | Partner         | TestCompany |
             | PaymentCurrency | NIS         |
