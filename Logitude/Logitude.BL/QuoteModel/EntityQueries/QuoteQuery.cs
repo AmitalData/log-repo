@@ -1537,7 +1537,6 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                     entityPM.FromCountryId = fromPort.CountryId;
                     entityPM.FromLocation = fromPort.Code + " " + fromPort.EnglishName;
                     entityPM.FromLocationIncludeCountry = fromPort.EnglishName + ", " + fromPort.CountryName;
-
                     entityPM.FromCountryIsEC = fromPort.CountryEC;
                 }
 
@@ -1547,7 +1546,6 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                     entityPM.ToCountryId = toPort.CountryId;
                     entityPM.ToLocation = toPort.Code + " " + toPort.EnglishName;
                     entityPM.ToLocationIncludeCountry = toPort.EnglishName + ", " + toPort.CountryName;
-
                     entityPM.ToCountryIsEC = toPort.CountryEC;
                 }
             }
@@ -1634,7 +1632,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                         }
                 }
 
-                entityPM.Routing = entityPM.FromCity + " > " + entityPM.ToCity;
+                entityPM.Routing = entityPM.RoutingFrom + " > " + entityPM.RoutingTo;
             }
 
             else
@@ -2733,13 +2731,16 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                 Address address = addressRepository.GetSingleAddress(entityPM.FromPartnerAddressId, entityPM.Tenant);
                 if (address != null)
                 {
+                    entityPM.RoutingFrom = address.City;
                     entityPM.FromCity = address.City;
+                    entityPM.FromZipCode = address.ZipCode;
 
                     if (!string.IsNullOrEmpty(address.CountryId))
                     {
                         Country country = countryRepository.GetSingleCountry(address.CountryId, entityPM.Tenant);
                         if (country != null)
                         {
+                            entityPM.FromCountryId = country.Id;
                             entityPM.FromCountryCode = country.Code;
                             entityPM.FromCountryName = country.EnglishName;
                         }
@@ -2754,13 +2755,14 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                 Port port = portRepository.GetSinglePort(entityPM.Tenant, entityPM.FromPortId);
                 if (port != null)
                 {
-                    entityPM.FromCity = port.Code;
+                    entityPM.RoutingFrom = port.Code;
 
                     if (!string.IsNullOrEmpty(port.CountryId))
                     {
                         Country country = countryRepository.GetSingleCountry(port.CountryId, entityPM.Tenant);
                         if (country != null)
                         {
+                            entityPM.FromCountryId = country.Id;
                             entityPM.FromCountryCode = country.Code;
                             entityPM.FromCountryName = country.EnglishName;
                         }
@@ -2770,13 +2772,16 @@ namespace Logitude.BL.QuoteModel.EntityQueries
         }
         private void GetFromCasualAddressData(QuotePM entityPM, CountryRepository countryRepository)
         {
+            entityPM.RoutingFrom = entityPM.InlandDomesticFromCity;
             entityPM.FromCity = entityPM.InlandDomesticFromCity;
+            entityPM.FromZipCode = entityPM.InlandDomesticFromZipCode;
 
             if (!string.IsNullOrEmpty(entityPM.InlandDomesticFromCountryId))
             {
                 Country country = countryRepository.GetSingleCountry(entityPM.InlandDomesticFromCountryId, entityPM.Tenant);
                 if (country != null)
                 {
+                    entityPM.FromCountryId = entityPM.InlandDomesticFromCountryId;
                     entityPM.FromCountryCode = country.Code;
                     entityPM.FromCountryName = country.EnglishName;
                 }
@@ -2790,13 +2795,16 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                 Address address = addressRepository.GetSingleAddress(entityPM.ToPartnerAddressId, entityPM.Tenant);
                 if (address != null)
                 {
+                    entityPM.RoutingTo = address.City;
                     entityPM.ToCity = address.City;
+                    entityPM.ToZipCode = address.ZipCode;
 
                     if (!string.IsNullOrEmpty(address.CountryId))
                     {
                         Country country = countryRepository.GetSingleCountry(address.CountryId, entityPM.Tenant);
                         if (country != null)
                         {
+                            entityPM.ToCountryId = country.Id;
                             entityPM.ToCountryCode = country.Code;
                             entityPM.ToCountryName = country.EnglishName;
                         }
@@ -2811,13 +2819,14 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                 Port port = portRepository.GetSinglePort(entityPM.Tenant, entityPM.ToPortId);
                 if (port != null)
                 {
-                    entityPM.ToCity = port.Code;
+                    entityPM.RoutingTo = port.Code;
 
                     if (!string.IsNullOrEmpty(port.CountryId))
                     {
                         Country country = countryRepository.GetSingleCountry(port.CountryId, entityPM.Tenant);
                         if (country != null)
                         {
+                            entityPM.ToCountryId = country.Id;
                             entityPM.ToCountryCode = country.Code;
                             entityPM.ToCountryName = country.EnglishName;
                         }
@@ -2827,13 +2836,16 @@ namespace Logitude.BL.QuoteModel.EntityQueries
         }
         private void GetToCasualAddressData(QuotePM entityPM, CountryRepository countryRepository)
         {
+            entityPM.RoutingTo = entityPM.InlandDomesticToCity;
             entityPM.ToCity = entityPM.InlandDomesticToCity;
+            entityPM.ToZipCode = entityPM.InlandDomesticToZipCode;
 
             if (!string.IsNullOrEmpty(entityPM.InlandDomesticToCountryId))
             {
                 Country country = countryRepository.GetSingleCountry(entityPM.InlandDomesticToCountryId, entityPM.Tenant);
                 if (country != null)
                 {
+                    entityPM.ToCountryId = entityPM.InlandDomesticToCountryId;
                     entityPM.ToCountryCode = country.Code;
                     entityPM.ToCountryName = country.EnglishName;
                 }
