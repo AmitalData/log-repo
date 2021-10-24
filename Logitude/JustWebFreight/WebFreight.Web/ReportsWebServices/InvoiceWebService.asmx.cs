@@ -1987,6 +1987,7 @@ namespace WebFreight.Web.ReportsWebServices
                             }
 
                             reportinvoiceline.ForeignToInvoiceExchangeRate = "1 " + foreigncurrency.Code + " = " + Math.Round(foreignExchangeRate.Value, 2) + " " + invoicecurrency.Code;
+                            reportinvoiceline.ForeignToInvoiceExchangeRate_Double = Math.Round(foreignExchangeRate.Value, 3);
                         }
 
                         reportinvoiceline.TotalAmount = reportinvoiceline.InvoiceAmount_Double + reportinvoiceline.VatAmountInInvoiceCurrency_Double;
@@ -2177,6 +2178,7 @@ namespace WebFreight.Web.ReportsWebServices
                             }
 
                             reportinvoiceline.ForeignToInvoiceExchangeRate = "1 " + foreigncurrency.Code + " = " + Math.Round(foreignExchangeRate.Value, 2) + " " + invoicecurrency.Code;
+                            reportinvoiceline.ForeignToInvoiceExchangeRate_Double = Math.Round(foreignExchangeRate.Value, 3);
                         }
 
                         reportinvoiceline.TotalAmount = reportinvoiceline.InvoiceAmount_Double + reportinvoiceline.VatAmountInInvoiceCurrency_Double;
@@ -3239,6 +3241,7 @@ namespace WebFreight.Web.ReportsWebServices
                             }
 
                             reportinvoiceline.ForeignToInvoiceExchangeRate = "1 " + foreigncurrency.Code + " = " + Math.Round(foreignExchangeRate.Value, 2) + " " + invoicecurrency.Code;
+                            reportinvoiceline.ForeignToInvoiceExchangeRate_Double = Math.Round(foreignExchangeRate.Value, 3);
                         }
 
                         reportinvoiceline.TotalAmount = reportinvoiceline.InvoiceAmount_Double + reportinvoiceline.VatAmountInInvoiceCurrency_Double;
@@ -3409,6 +3412,7 @@ namespace WebFreight.Web.ReportsWebServices
                             }
 
                             reportinvoiceline.ForeignToInvoiceExchangeRate = "1 " + foreigncurrency.Code + " = " + Math.Round(foreignExchangeRate.Value, 2) + " " + invoicecurrency.Code;
+                            reportinvoiceline.ForeignToInvoiceExchangeRate_Double = Math.Round(foreignExchangeRate.Value, 3);
                         }
 
                         reportinvoiceline.TotalAmount = reportinvoiceline.InvoiceAmount_Double + reportinvoiceline.VatAmountInInvoiceCurrency_Double;
