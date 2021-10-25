@@ -202,6 +202,14 @@ namespace Amital.QuoteOPM.Data.EntityPOCOs
 	    public bool IsRegionalTax { get; set; }
         [Column("TariffLineId")]
 	    public string TariffLineId { get; set; }
+        [Column("TariffCostNo")]
+	    public string TariffCostNo { get; set; }
+        [Column("TariffSaleNo")]
+	    public string TariffSaleNo { get; set; }
+        [Column("TariffCostXML")]
+	    public string TariffCostXML { get; set; }
+        [Column("TariffSaleXML")]
+	    public string TariffSaleXML { get; set; }
     }
 }
 	 
