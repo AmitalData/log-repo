@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { NewQuoteShipperComponent } from './new-quote-shipper.component';
+import { NewQuotePartnerComponent } from './new-quote-partner.component';
 
-describe('NewQuoteShipperComponent', () => {
-  let component: NewQuoteShipperComponent;
-  let fixture: ComponentFixture<NewQuoteShipperComponent>;
+describe('NewQuotePartnerComponent', () => {
+  let component: NewQuotePartnerComponent;
+  let fixture: ComponentFixture<NewQuotePartnerComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ NewQuoteShipperComponent ]
+      declarations: [ NewQuotePartnerComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(NewQuoteShipperComponent);
+    fixture = TestBed.createComponent(NewQuotePartnerComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

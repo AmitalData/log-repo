@@ -1,0 +1,39 @@
+.container {
+    border: 1px solid #ced4da;
+    border-radius: 3px;
+    padding: 0 18px;
+    margin-top: 21px;
+}
+
+h5 {
+    top: -8px;
+    position: relative;
+    left: 16px;
+    background: white;
+    display: inline-block;
+    padding: 0 4px;
+}
+
+.pi {
+    border-color: #e2f0fb;
+    background: #e2f0fb;
+    color: #1084dc;
+    border-radius: 5px;
+    padding: 5px;
+    margin-left: 10px;
+    cursor: pointer;
+    float: right;
+    margin-top: 21px;
+}
+
+app-autocomplate-table.address-input {
+    display: inline-block;
+    width: calc(100% - 70px);    
+}
+
+.disabled {
+    background-color: #cccccca3;
+    color: #1084dc70;
+    cursor: not-allowed;
+    pointer-events:none;
+}
