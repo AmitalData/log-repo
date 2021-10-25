@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class QuoteOPPropertiesUpdateClass
    {  		
-		public const string HashString = "662817e68b36668541d457affc4a5c9d";
+		public const string HashString = "0758f5063a14c8a832cdc3f03bd7846c";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -102,7 +102,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    HasHelper =  false,
 			      				    HasShortTitle =  false,
 			      				    HasFiltersMenu =  false,
-			      				    IsEditable =  false,
+			      				    IsEditable =  true,
 			      				    IsNewWizard =  false,
 			      				    LookUp1 =  "Id",
 			      				    LookUp2 =  "Id",
@@ -114,20 +114,20 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    HasCounter =  false,
 			      				    EnableAddFromLOV =  false,
 			      				    IsRestrictable =  false,
-			      				    IsMain =  true,
+			      				    IsMain =  false,
 			      				    IsAutoComplete =  false,
 			      				    EnableEditFromLOV =  false,
 			      				    SortingByObjectField =  "Id",
 			      				    InActive =  false,
 			      				    IsSaveButtonVisible =  false,
-			      				    IsComposition =  false,
+			      				    IsComposition =  true,
 			      				    EnableSecurity =  true,
 			      				    AllowCustomFields =  false,
 			      				    HasDynamicHeader =  false,
 			      				    ObjectTableTypeCode =  "BR",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Quote Properties",
-			      				    Code =  "bbab",
+			      				    Code =  "999c",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "QuoteOPM",
@@ -994,13 +994,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-		   ObjectTable QuoteOPPropertiesObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "QuoteOPProperties" && d.Tenant == 0).FirstOrDefault(); 
-
-		   Feature QuoteOPPropertiesFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = QuoteOPPropertiesObjectTable.Id, Tenant = 0, NameTextCodeCode = "QuoteOPProperties.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,QuoteOPPropertiesObjectTable);
-		   Feature QuoteOPPropertiesFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = QuoteOPPropertiesObjectTable.Id, Tenant = 0, NameTextCodeCode = "QuoteOPProperties.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,QuoteOPPropertiesObjectTable);
-		   Feature QuoteOPPropertiesFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = QuoteOPPropertiesObjectTable.Id, Tenant = 0, NameTextCodeCode = "QuoteOPProperties.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,QuoteOPPropertiesObjectTable);
-		   Feature QuoteOPPropertiesFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = false, ObjectTableId = QuoteOPPropertiesObjectTable.Id, Tenant = 0, NameTextCodeCode = "QuoteOPProperties.Features.PackageFeature", NameTextCodeDefaultText = "QuoteOPProperties Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,QuoteOPPropertiesObjectTable);    
+	    {     
 	    
 		}
 

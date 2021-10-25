@@ -11,190 +11,192 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
 import { defer, of } from 'rxjs';
-import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
-import { ClassLevelValidator } from '../../../Infrastructure/Validators/ClassLevelValidator';
-import { Guid } from '../../../Infrastructure/Utilities/Guid';
-import { InfraSettings } from '../../../Infrastructure/Utilities/InfraSettings';
-import { ServiceHelper } from '../../../Infrastructure/Utilities/ServiceHelper';
-import { SessionInfo } from '../../../Infrastructure/Utilities/SessionInfo';
-import { CustomFieldClass } from '../../../Infrastructure/DataContracts/CustomFieldClass'
-import { PerformanceLogger } from '../../../Infrastructure/Utilities/PerformanceLogger';
+import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
+import {ClassLevelValidator} from '../../../Infrastructure/Validators/ClassLevelValidator';
+import {Guid} from '../../../Infrastructure/Utilities/Guid';
+import {InfraSettings} from '../../../Infrastructure/Utilities/InfraSettings';
+import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
+import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
+import {CustomFieldClass} from '../../../Infrastructure/DataContracts/CustomFieldClass'
+import {PerformanceLogger} from '../../../Infrastructure/Utilities/PerformanceLogger';
 
-import { QuoteOPPM } from '../../EntityPMs/QuoteOPPM';
+import {QuoteOPPM} from '../../EntityPMs/QuoteOPPM';
 
-import { QuoteOPCostChargePM } from '../../EntityPMs/QuoteOPCostChargePM';
-import { QuoteOPSaleChargePM } from '../../EntityPMs/QuoteOPSaleChargePM';
-import { QuoteOPChargePM } from '../../EntityPMs/QuoteOPChargePM';
+import {QuoteOPCostChargePM} from '../../EntityPMs/QuoteOPCostChargePM';
+import {QuoteOPSaleChargePM} from '../../EntityPMs/QuoteOPSaleChargePM';
+import {QuoteOPChargePM} from '../../EntityPMs/QuoteOPChargePM';
 
-import { QuoteOPPriceStepsPM } from '../../EntityPMs/QuoteOPPriceStepsPM';
-import { QuoteOPPackagePM } from '../../EntityPMs/QuoteOPPackagePM';
-import { QuoteOPSalesTotalPM } from '../../EntityPMs/QuoteOPSalesTotalPM';
-import { QuoteOPVATsTotalPM } from '../../EntityPMs/QuoteOPVATsTotalPM';
-import { QuoteOPFollowUpPM } from '../../EntityPMs/QuoteOPFollowUpPM';
-import { QuoteOPDocumentVersionPM } from '../../EntityPMs/QuoteOPDocumentVersionPM';
-import { QuoteOPTotalVATPM } from '../../EntityPMs/QuoteOPTotalVATPM';
-import { QuoteOPPropertiesPM } from '../../EntityPMs/QuoteOPPropertiesPM';
-import { QuoteOPValidator } from '../../Validators/QuoteOPValidator';
+import {QuoteOPPriceStepsPM} from '../../EntityPMs/QuoteOPPriceStepsPM';
+import {QuoteOPPackagePM} from '../../EntityPMs/QuoteOPPackagePM';
+import {QuoteOPSalesTotalPM} from '../../EntityPMs/QuoteOPSalesTotalPM';
+import {QuoteOPVATsTotalPM} from '../../EntityPMs/QuoteOPVATsTotalPM';
+import {QuoteOPFollowUpPM} from '../../EntityPMs/QuoteOPFollowUpPM';
+import {QuoteOPDocumentVersionPM} from '../../EntityPMs/QuoteOPDocumentVersionPM';
+import {QuoteOPTotalVATPM} from '../../EntityPMs/QuoteOPTotalVATPM';
+import {QuoteOPPropertiesPM} from '../../EntityPMs/QuoteOPPropertiesPM';
+import {QuoteOPValidator} from '../../Validators/QuoteOPValidator';
 
 @Injectable()
 
 export class QuoteOPPMService {
-    private _http: HttpClient;
-    private _apiUrl: string;
-    constructor() {
+ private _http: HttpClient;
+ private _apiUrl: string;
+ constructor() {
         this._http = ServiceHelper.HttpClient;
-        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/quoteops';
+        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/quoteops';      
     }
 
-    get(id: string) {
+	get(id: string) {       
 
-        var callTime = new Date();
+		var callTime = new Date();		
 
-        return defer(() => {
-            return this._http.get(this._apiUrl + '/getsingle?' + 'id=' + id, ServiceHelper.GetHttpFullHeaders())
-                .pipe(
-                    map((response: HttpResponse<any>) => {
-                        var pm = response.body;
+		return defer(() => {
+			return this._http.get(this._apiUrl + '/getsingle?' + 'id=' + id, ServiceHelper.GetHttpFullHeaders())
+				.pipe(
+					map((response: HttpResponse<any>) => {
+						var pm = response.body;
+				
+						var entity: QuoteOPPM;
+						if (pm) {
+							entity = this.MapJsonToEntityPM(pm);
+						}
 
-                        var entity: QuoteOPPM;
-                        if (pm) {
-                            entity = this.MapJsonToEntityPM(pm);
-                        }
+						var serviceResponse: ServiceResponse = new ServiceResponse();
+						serviceResponse.Result = entity;
+              
+						var servertime = response.headers.get('ServerExecutionTime');
+						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "QuoteOP", "GetSinglePM", 'id=' + id);
+				 
+						return serviceResponse;
 
-                        var serviceResponse: ServiceResponse = new ServiceResponse();
-                        serviceResponse.Result = entity;
+					}),
+					
+					catchError(ServiceHelper.HandleServiceError));
+		});                    
+	}
 
-                        var servertime = response.headers.get('ServerExecutionTime');
-                        PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "QuoteOP", "GetSinglePM", 'id=' + id);
+	insert(entityPM: QuoteOPPM) {
+ 
+		var callTime = new Date();  
+		
+		return defer(() => {
 
-                        return serviceResponse;
+			var serviceResponse: ServiceResponse = new ServiceResponse();
+			var validator: ClassLevelValidator = new ClassLevelValidator();                
+			var errorsArray = validator.Validate("QuoteOP", entityPM);
 
-                    }),
+			var customValidator :QuoteOPValidator = new QuoteOPValidator();
+			var validationErrorsArr = customValidator.Validate(entityPM);
+			if(validationErrorsArr)
+			{
+				errorsArray = errorsArray.concat(validationErrorsArr);
+			}
 
-                    catchError(ServiceHelper.HandleServiceError));
-        });
-    }
+			if (errorsArray.length == 0) {
 
-    insert(entityPM: QuoteOPPM, checkCustomValidator: boolean = true) {
+				var mappedEntity: QuoteOPPM = this.MapJsonToEntityPM(entityPM, false);
+				
+				return this._http.post(this._apiUrl, JSON.stringify(mappedEntity), ServiceHelper.GetHttpFullHeaders())
+					.pipe(
+						map((response: HttpResponse<any>) => {
 
-        var callTime = new Date();
+							var pm = response.body;
+							if (pm) {
+								var mappedResult: QuoteOPPM = this.MapJsonToEntityPM(pm, true, entityPM);
+								serviceResponse.Result = mappedResult;
+							}						
 
-        return defer(() => {
+							var servertime = response.headers.get('ServerExecutionTime');
+							PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "QuoteOP", "SaveChanges", "");                    
+												                             
+							return serviceResponse;
+						}),
 
-            var serviceResponse: ServiceResponse = new ServiceResponse();
-            var validator: ClassLevelValidator = new ClassLevelValidator();
-            var errorsArray = validator.Validate("QuoteOP", entityPM);
+						catchError(ServiceHelper.HandleServiceError));
+			}
 
-            if (checkCustomValidator) {
-                var customValidator: QuoteOPValidator = new QuoteOPValidator();
-                var validationErrorsArr = customValidator.Validate(entityPM);
-                if (validationErrorsArr) 
-                    errorsArray = errorsArray.concat(validationErrorsArr);                
-            }
+			else {
+				serviceResponse.HasError = true;
+				serviceResponse.ErrorsArray = errorsArray;
+				return of(serviceResponse);
+			}
+		});
+	}
 
-            if (errorsArray.length == 0) {
+	update(entityPM: QuoteOPPM) {
 
-                var mappedEntity: QuoteOPPM = this.MapJsonToEntityPM(entityPM, false);
+		var callTime = new Date();     
+		
+		return defer(() => {
 
-                return this._http.post(this._apiUrl, JSON.stringify(mappedEntity), ServiceHelper.GetHttpFullHeaders())
-                    .pipe(
-                        map((response: HttpResponse<any>) => {
+			var serviceResponse: ServiceResponse = new ServiceResponse();
+			var validator: ClassLevelValidator = new ClassLevelValidator();               
+			var errorsArray = validator.Validate("QuoteOP", entityPM);
 
-                            var pm = response.body;
-                            if (pm) {
-                                var mappedResult: QuoteOPPM = this.MapJsonToEntityPM(pm, true, entityPM);
-                                serviceResponse.Result = mappedResult;
-                            }
+			var customValidator :QuoteOPValidator = new QuoteOPValidator();
+			var validationErrorsArr = customValidator.Validate(entityPM);
+			if(validationErrorsArr)
+			{
+				errorsArray = errorsArray.concat(validationErrorsArr);
+			}
 
-                            var servertime = response.headers.get('ServerExecutionTime');
-                            PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "QuoteOP", "SaveChanges", "");
+			if (errorsArray.length == 0) {
 
-                            return serviceResponse;
-                        }),
+				var mappedEntity: QuoteOPPM = this.MapJsonToEntityPM(entityPM, false);
+				
+				return this._http.put(this._apiUrl, JSON.stringify(mappedEntity), ServiceHelper.GetHttpFullHeaders())
+					.pipe(
+						map((response: HttpResponse<any>) => {
+                 
+							var pm = response.body;
+							if (pm) {
+								var mappedResult: QuoteOPPM = this.MapJsonToEntityPM(pm, true, entityPM);
+								serviceResponse.Result = mappedResult;
+							}
+							 
+							var servertime = response.headers.get('ServerExecutionTime');
+							PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "QuoteOP", "SaveChanges", "");                    
+					                           
+							return serviceResponse;
+						}),
 
-                        catchError(ServiceHelper.HandleServiceError));
-            }
+						catchError(ServiceHelper.HandleServiceError));
+			}
 
-            else {
-                serviceResponse.HasError = true;
-                serviceResponse.ErrorsArray = errorsArray;
-                return of(serviceResponse);
-            }
-        });
-    }
+			else {
+				serviceResponse.HasError = true;
+				serviceResponse.ErrorsArray = errorsArray;
+				return of(serviceResponse);
+			}
+		});
+	}
 
-    update(entityPM: QuoteOPPM) {
+   
 
-        var callTime = new Date();
+	  MapJsonToEntityPM(jsonPM: any, mapParent: boolean = true, entityPM: QuoteOPPM = null) {
 
-        return defer(() => {
-
-            var serviceResponse: ServiceResponse = new ServiceResponse();
-            var validator: ClassLevelValidator = new ClassLevelValidator();
-            var errorsArray = validator.Validate("QuoteOP", entityPM);
-
-            var customValidator: QuoteOPValidator = new QuoteOPValidator();
-            var validationErrorsArr = customValidator.Validate(entityPM);
-            if (validationErrorsArr) {
-                errorsArray = errorsArray.concat(validationErrorsArr);
-            }
-
-            if (errorsArray.length == 0) {
-
-                var mappedEntity: QuoteOPPM = this.MapJsonToEntityPM(entityPM, false);
-
-                return this._http.put(this._apiUrl, JSON.stringify(mappedEntity), ServiceHelper.GetHttpFullHeaders())
-                    .pipe(
-                        map((response: HttpResponse<any>) => {
-
-                            var pm = response.body;
-                            if (pm) {
-                                var mappedResult: QuoteOPPM = this.MapJsonToEntityPM(pm, true, entityPM);
-                                serviceResponse.Result = mappedResult;
-                            }
-
-                            var servertime = response.headers.get('ServerExecutionTime');
-                            PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "QuoteOP", "SaveChanges", "");
-
-                            return serviceResponse;
-                        }),
-
-                        catchError(ServiceHelper.HandleServiceError));
-            }
-
-            else {
-                serviceResponse.HasError = true;
-                serviceResponse.ErrorsArray = errorsArray;
-                return of(serviceResponse);
-            }
-        });
-    }
-
-
-
-    MapJsonToEntityPM(jsonPM: any, mapParent: boolean = true, entityPM: QuoteOPPM = null) {
-
-
+         
         if (!entityPM) {
-
+            
             entityPM = new QuoteOPPM();
-            entityPM.DisableMarkAsDirty = true;
+			entityPM.DisableMarkAsDirty = true;
         }
 
-        var customFields: Array<string> = [];
+		var customFields: Array<string> = [];
         for (var i = 1; i < 11; i++) {
             customFields.push("Field" + i);
         }
-        var jsonPMKeys = Object.keys(jsonPM);
+            var jsonPMKeys = Object.keys(jsonPM);
 
-        for (var key in jsonPMKeys) {
-            if (jsonPMKeys[key] === "UIProperties" || jsonPMKeys[key] === "PropertyChanged") {
+            for (var key in jsonPMKeys) {
+			 if (jsonPMKeys[key] === "UIProperties" || jsonPMKeys[key] === "PropertyChanged") {
 
                 continue;
             }
-            var property = jsonPMKeys[key];
-
-            if (customFields.indexOf(property) > -1) {
+                var property = jsonPMKeys[key];
+				
+			  if(customFields.indexOf(property) > -1)
+                {
                 if (jsonPM[property]) {
                     var customFieldClass: CustomFieldClass = new CustomFieldClass(jsonPM[property].Value, jsonPM[property].FieldName, jsonPM[property].TableName);
                     entityPM[property] = customFieldClass;
@@ -203,129 +205,129 @@ export class QuoteOPPMService {
             else {
                 entityPM[property] = jsonPM[property];
             }
+                 
+            }
+			
+               this.MapQuoteCostCharges(entityPM, jsonPM, mapParent); // Call composition tables map methods
+               this.MapQuoteSaleCharges(entityPM, jsonPM, mapParent); // Call composition tables map methods
+               this.MapQuoteCharges(entityPM, jsonPM, mapParent); // Call composition tables map methods
+               this.MapQuotePackages(entityPM, jsonPM, mapParent); // Call composition tables map methods
+               this.MapQuoteSalesTotals(entityPM, jsonPM, mapParent); // Call composition tables map methods
+               this.MapTotalVATPerQuote(entityPM, jsonPM, mapParent); // Call composition tables map methods
+               this.MapFollowUps(entityPM, jsonPM, mapParent); // Call composition tables map methods
+               this.MapQuoteDocumentVersions(entityPM, jsonPM, mapParent); // Call composition tables map methods
+               this.MapTotalVATs(entityPM, jsonPM, mapParent); // Call composition tables map methods
+               this.MapQuoteProperties(entityPM, jsonPM, mapParent); // Call composition tables map methods
+			 
+            
 
-        }
-
-        this.MapQuoteCostCharges(entityPM, jsonPM, mapParent); // Call composition tables map methods
-        this.MapQuoteSaleCharges(entityPM, jsonPM, mapParent); // Call composition tables map methods
-        this.MapQuoteCharges(entityPM, jsonPM, mapParent); // Call composition tables map methods
-        this.MapQuotePackages(entityPM, jsonPM, mapParent); // Call composition tables map methods
-        this.MapQuoteSalesTotals(entityPM, jsonPM, mapParent); // Call composition tables map methods
-        this.MapTotalVATPerQuote(entityPM, jsonPM, mapParent); // Call composition tables map methods
-        this.MapFollowUps(entityPM, jsonPM, mapParent); // Call composition tables map methods
-        this.MapQuoteDocumentVersions(entityPM, jsonPM, mapParent); // Call composition tables map methods
-        this.MapTotalVATs(entityPM, jsonPM, mapParent); // Call composition tables map methods
-        this.MapQuoteProperties(entityPM, jsonPM, mapParent); // Call composition tables map methods
-
-
-
-        if (mapParent) {
-            entityPM.OldEntityPM = this.clone(entityPM);
-
+		if (mapParent) {
+                entityPM.OldEntityPM = this.clone(entityPM);
+			   			   
             entityPM.OldEntityPM.QuoteCostCharges = [];
             for (var item in entityPM.QuoteCostCharges) {
-                var myQuoteOPCostChargePM = entityPM.QuoteCostCharges[item];
-                var newQuoteOPCostChargePM: QuoteOPCostChargePM = this.clone(myQuoteOPCostChargePM);
-
-
-                entityPM.OldEntityPM.QuoteCostCharges.push(newQuoteOPCostChargePM);
+            var myQuoteOPCostChargePM = entityPM.QuoteCostCharges[item];
+            var newQuoteOPCostChargePM: QuoteOPCostChargePM = this.clone(myQuoteOPCostChargePM);
+						
+							 
+            entityPM.OldEntityPM.QuoteCostCharges.push(newQuoteOPCostChargePM);
             }
-
+			   			   			   
             entityPM.OldEntityPM.QuoteSaleCharges = [];
             for (var item in entityPM.QuoteSaleCharges) {
-                var myQuoteOPSaleChargePM = entityPM.QuoteSaleCharges[item];
-                var newQuoteOPSaleChargePM: QuoteOPSaleChargePM = this.clone(myQuoteOPSaleChargePM);
-
-
-                entityPM.OldEntityPM.QuoteSaleCharges.push(newQuoteOPSaleChargePM);
+            var myQuoteOPSaleChargePM = entityPM.QuoteSaleCharges[item];
+            var newQuoteOPSaleChargePM: QuoteOPSaleChargePM = this.clone(myQuoteOPSaleChargePM);
+						
+							 
+            entityPM.OldEntityPM.QuoteSaleCharges.push(newQuoteOPSaleChargePM);
             }
-
+			   			   			   
             entityPM.OldEntityPM.QuoteCharges = [];
             for (var item in entityPM.QuoteCharges) {
-                var myQuoteOPChargePM = entityPM.QuoteCharges[item];
-                var newQuoteOPChargePM: QuoteOPChargePM = this.clone(myQuoteOPChargePM);
-
+            var myQuoteOPChargePM = entityPM.QuoteCharges[item];
+            var newQuoteOPChargePM: QuoteOPChargePM = this.clone(myQuoteOPChargePM);
+						
                 newQuoteOPChargePM.QuoteOPChargePriceSteps = [];
                 for (var k in myQuoteOPChargePM.QuoteOPChargePriceSteps) {
-                    var myQuoteOPPriceStepsPM = myQuoteOPChargePM.QuoteOPChargePriceSteps[k];
-                    var newQuoteOPPriceStepsPM = this.clone(myQuoteOPChargePM.QuoteOPChargePriceSteps[k]);
+				    var myQuoteOPPriceStepsPM =myQuoteOPChargePM.QuoteOPChargePriceSteps[k];
+				    var newQuoteOPPriceStepsPM=this.clone(myQuoteOPChargePM.QuoteOPChargePriceSteps[k]);
                     newQuoteOPChargePM.QuoteOPChargePriceSteps.push(newQuoteOPPriceStepsPM);
 
-                }
-
-                entityPM.OldEntityPM.QuoteCharges.push(newQuoteOPChargePM);
+					                 }
+							 
+            entityPM.OldEntityPM.QuoteCharges.push(newQuoteOPChargePM);
             }
-
+			   			   			   
             entityPM.OldEntityPM.QuotePackages = [];
             for (var item in entityPM.QuotePackages) {
-                var myQuoteOPPackagePM = entityPM.QuotePackages[item];
-                var newQuoteOPPackagePM: QuoteOPPackagePM = this.clone(myQuoteOPPackagePM);
-
-
-                entityPM.OldEntityPM.QuotePackages.push(newQuoteOPPackagePM);
+            var myQuoteOPPackagePM = entityPM.QuotePackages[item];
+            var newQuoteOPPackagePM: QuoteOPPackagePM = this.clone(myQuoteOPPackagePM);
+						
+							 
+            entityPM.OldEntityPM.QuotePackages.push(newQuoteOPPackagePM);
             }
-
+			   			   			   
             entityPM.OldEntityPM.QuoteSalesTotals = [];
             for (var item in entityPM.QuoteSalesTotals) {
-                var myQuoteOPSalesTotalPM = entityPM.QuoteSalesTotals[item];
-                var newQuoteOPSalesTotalPM: QuoteOPSalesTotalPM = this.clone(myQuoteOPSalesTotalPM);
-
-
-                entityPM.OldEntityPM.QuoteSalesTotals.push(newQuoteOPSalesTotalPM);
+            var myQuoteOPSalesTotalPM = entityPM.QuoteSalesTotals[item];
+            var newQuoteOPSalesTotalPM: QuoteOPSalesTotalPM = this.clone(myQuoteOPSalesTotalPM);
+						
+							 
+            entityPM.OldEntityPM.QuoteSalesTotals.push(newQuoteOPSalesTotalPM);
             }
-
+			   			   			   
             entityPM.OldEntityPM.TotalVATPerQuote = [];
             for (var item in entityPM.TotalVATPerQuote) {
-                var myQuoteOPVATsTotalPM = entityPM.TotalVATPerQuote[item];
-                var newQuoteOPVATsTotalPM: QuoteOPVATsTotalPM = this.clone(myQuoteOPVATsTotalPM);
-
-
-                entityPM.OldEntityPM.TotalVATPerQuote.push(newQuoteOPVATsTotalPM);
+            var myQuoteOPVATsTotalPM = entityPM.TotalVATPerQuote[item];
+            var newQuoteOPVATsTotalPM: QuoteOPVATsTotalPM = this.clone(myQuoteOPVATsTotalPM);
+						
+							 
+            entityPM.OldEntityPM.TotalVATPerQuote.push(newQuoteOPVATsTotalPM);
             }
-
+			   			   			   
             entityPM.OldEntityPM.FollowUps = [];
             for (var item in entityPM.FollowUps) {
-                var myQuoteOPFollowUpPM = entityPM.FollowUps[item];
-                var newQuoteOPFollowUpPM: QuoteOPFollowUpPM = this.clone(myQuoteOPFollowUpPM);
-
-
-                entityPM.OldEntityPM.FollowUps.push(newQuoteOPFollowUpPM);
+            var myQuoteOPFollowUpPM = entityPM.FollowUps[item];
+            var newQuoteOPFollowUpPM: QuoteOPFollowUpPM = this.clone(myQuoteOPFollowUpPM);
+						
+							 
+            entityPM.OldEntityPM.FollowUps.push(newQuoteOPFollowUpPM);
             }
-
+			   			   			   
             entityPM.OldEntityPM.QuoteDocumentVersions = [];
             for (var item in entityPM.QuoteDocumentVersions) {
-                var myQuoteOPDocumentVersionPM = entityPM.QuoteDocumentVersions[item];
-                var newQuoteOPDocumentVersionPM: QuoteOPDocumentVersionPM = this.clone(myQuoteOPDocumentVersionPM);
-
-
-                entityPM.OldEntityPM.QuoteDocumentVersions.push(newQuoteOPDocumentVersionPM);
+            var myQuoteOPDocumentVersionPM = entityPM.QuoteDocumentVersions[item];
+            var newQuoteOPDocumentVersionPM: QuoteOPDocumentVersionPM = this.clone(myQuoteOPDocumentVersionPM);
+						
+							 
+            entityPM.OldEntityPM.QuoteDocumentVersions.push(newQuoteOPDocumentVersionPM);
             }
-
+			   			   			   
             entityPM.OldEntityPM.TotalVATs = [];
             for (var item in entityPM.TotalVATs) {
-                var myQuoteOPTotalVATPM = entityPM.TotalVATs[item];
-                var newQuoteOPTotalVATPM: QuoteOPTotalVATPM = this.clone(myQuoteOPTotalVATPM);
-
-
-                entityPM.OldEntityPM.TotalVATs.push(newQuoteOPTotalVATPM);
+            var myQuoteOPTotalVATPM = entityPM.TotalVATs[item];
+            var newQuoteOPTotalVATPM: QuoteOPTotalVATPM = this.clone(myQuoteOPTotalVATPM);
+						
+							 
+            entityPM.OldEntityPM.TotalVATs.push(newQuoteOPTotalVATPM);
             }
-
+			   			   			   
             entityPM.OldEntityPM.QuoteProperties = [];
             for (var item in entityPM.QuoteProperties) {
-                var myQuoteOPPropertiesPM = entityPM.QuoteProperties[item];
-                var newQuoteOPPropertiesPM: QuoteOPPropertiesPM = this.clone(myQuoteOPPropertiesPM);
-
-
-                entityPM.OldEntityPM.QuoteProperties.push(newQuoteOPPropertiesPM);
+            var myQuoteOPPropertiesPM = entityPM.QuoteProperties[item];
+            var newQuoteOPPropertiesPM: QuoteOPPropertiesPM = this.clone(myQuoteOPPropertiesPM);
+						
+							 
+            entityPM.OldEntityPM.QuoteProperties.push(newQuoteOPPropertiesPM);
             }
-
-        }
+			   
+		}
         else {
 
             entityPM.OldEntityPM = null;
         }
-        entityPM.IsDirty = false;
-        entityPM.DisableMarkAsDirty = false;
+		entityPM.IsDirty = false;
+	    entityPM.DisableMarkAsDirty = false;
 
         return entityPM;
     }
@@ -341,17 +343,17 @@ export class QuoteOPPMService {
             }
             var newQuoteOPCostChargePM: QuoteOPCostChargePM;
             newQuoteOPCostChargePM = new QuoteOPCostChargePM();
-            newQuoteOPCostChargePM.DisableMarkAsDirty = true;
+		    newQuoteOPCostChargePM.DisableMarkAsDirty = true;                
             var pmKeysArray = Object.keys(jItem);
             for (var pmKey in pmKeysArray) {
-
-                if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM") || pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
+			
+                if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
                     continue;
                 }
                 var pmProperty = pmKeysArray[pmKey];
                 newQuoteOPCostChargePM[pmProperty] = jItem[pmProperty];
             }
-            newQuoteOPCostChargePM.DisableMarkAsDirty = false;
+			newQuoteOPCostChargePM.DisableMarkAsDirty = false;
             newQuoteOPCostChargePM.IsDirty = false;
             entityPM.QuoteCostCharges.push(newQuoteOPCostChargePM);
         }
@@ -367,17 +369,17 @@ export class QuoteOPPMService {
             }
             var newQuoteOPSaleChargePM: QuoteOPSaleChargePM;
             newQuoteOPSaleChargePM = new QuoteOPSaleChargePM();
-            newQuoteOPSaleChargePM.DisableMarkAsDirty = true;
+		    newQuoteOPSaleChargePM.DisableMarkAsDirty = true;                
             var pmKeysArray = Object.keys(jItem);
             for (var pmKey in pmKeysArray) {
-
-                if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM") || pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
+			
+                if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
                     continue;
                 }
                 var pmProperty = pmKeysArray[pmKey];
                 newQuoteOPSaleChargePM[pmProperty] = jItem[pmProperty];
             }
-            newQuoteOPSaleChargePM.DisableMarkAsDirty = false;
+			newQuoteOPSaleChargePM.DisableMarkAsDirty = false;
             newQuoteOPSaleChargePM.IsDirty = false;
             entityPM.QuoteSaleCharges.push(newQuoteOPSaleChargePM);
         }
@@ -396,31 +398,32 @@ export class QuoteOPPMService {
                 continue;
             }
             var newQuoteOPChargePM: QuoteOPChargePM;
-
+	  
             if (mapParent) {
                 newQuoteOPChargePM = new QuoteOPChargePM(entityPM);
             }
-            else {
+            else
+            {
                 newQuoteOPChargePM = new QuoteOPChargePM(null);
             }
-            newQuoteOPChargePM.DisableMarkAsDirty = true;
-
+ 			newQuoteOPChargePM.DisableMarkAsDirty = true;
+               
             var pmKeysArray = Object.keys(jItem);
             for (var pmKey in pmKeysArray) {
-                if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM") || pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
+                if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
                     continue;
                 }
                 var pmProperty = pmKeysArray[pmKey];
                 newQuoteOPChargePM[pmProperty] = jItem[pmProperty];
             }
-
-
+           
+			 
             if (mapParent) {
                 newQuoteOPChargePM.UniqueKey = Guid.newGuid();
                 newQuoteOPChargePM.ChangeSetOp = "None";
                 jItem.ChangeSetOp = "None";
                 newQuoteOPChargePM.OldEntityPM = this.clone(newQuoteOPChargePM);
-
+ 
 
                 this.MapQuoteOPChargePriceSteps(newQuoteOPChargePM, jItem, mapParent);
                 newQuoteOPChargePM.OldEntityPM.QuoteOPChargePriceSteps = [];
@@ -429,7 +432,7 @@ export class QuoteOPPMService {
                     newQuoteOPChargePM.OldEntityPM.QuoteOPChargePriceSteps.push(newQuoteOPChargePM.QuoteOPChargePriceSteps[k].OldEntityPM); // clone old QuoteOPChargePriceSteps//
                 }
 
-
+				
             }
             else {
                 if (newQuoteOPChargePM.UniqueKey) {
@@ -438,30 +441,30 @@ export class QuoteOPPMService {
                         newQuoteOPChargePM.ChangeSetOp = "Update";
                 }
                 else {
-                    newQuoteOPChargePM.ChangeSetOp = "Insert";
+                        newQuoteOPChargePM.ChangeSetOp = "Insert";
                 }
-
+ 
 
                 this.MapQuoteOPChargePriceSteps(newQuoteOPChargePM, jItem, mapParent);
-
+ 
                 newQuoteOPChargePM.OldEntityPM = null;
                 newQuoteOPChargePM.EntityParentPM = null;
             }
-            newQuoteOPChargePM.DisableMarkAsDirty = false;
-            newQuoteOPChargePM.IsDirty = false;
+			 newQuoteOPChargePM.DisableMarkAsDirty = false;
+			 newQuoteOPChargePM.IsDirty = false;
             entityPM.QuoteCharges.push(newQuoteOPChargePM);
         }
         if (oldQuoteCharges) {
-
+            
             for (var itemKey in oldQuoteCharges) {
-                if (entityPM.QuoteCharges.filter(p => p.UniqueKey === oldQuoteCharges[itemKey].UniqueKey).length === 0) {
-
+                if (entityPM.QuoteCharges.filter(p=> p.UniqueKey === oldQuoteCharges[itemKey].UniqueKey).length === 0) {
+				
                     if (oldQuoteCharges[itemKey]) {
                         //oldQuoteCharges[itemKey].ChangeSetOp = "Delete";
                         //entityPM.QuoteCharges.push(oldQuoteCharges[itemKey]);
-                        var oldItemJson = oldQuoteCharges[itemKey];
+						var oldItemJson = oldQuoteCharges[itemKey];
                         var deletedPM: QuoteOPChargePM = new QuoteOPChargePM(null);
-                        deletedPM.DisableMarkAsDirty = true;
+						deletedPM.DisableMarkAsDirty = true;
                         var pmKeys = Object.keys(oldItemJson);
                         for (var key in pmKeys) {
 
@@ -473,11 +476,11 @@ export class QuoteOPPMService {
                             deletedPM[property] = oldItemJson[property];
                         }
 
-                        deletedPM.DisableMarkAsDirty = false;
+					    deletedPM.DisableMarkAsDirty = false;
                         deletedPM.IsDirty = false;
                         deletedPM.ChangeSetOp = "Delete";
-
-
+                        
+ 
 
                         this.MapQuoteOPChargePriceSteps(deletedPM, oldItemJson, mapParent);
                         deletedPM.OldEntityPM = null;
@@ -501,32 +504,33 @@ export class QuoteOPPMService {
                 continue;
             }
             var newQuoteOPPriceStepsPM: QuoteOPPriceStepsPM;
-
+	  
             if (mapParent) {
                 newQuoteOPPriceStepsPM = new QuoteOPPriceStepsPM(entityPM);
             }
-            else {
+            else
+            {
                 newQuoteOPPriceStepsPM = new QuoteOPPriceStepsPM(null);
             }
-            newQuoteOPPriceStepsPM.DisableMarkAsDirty = true;
-
+ 			newQuoteOPPriceStepsPM.DisableMarkAsDirty = true;
+               
             var pmKeysArray = Object.keys(jItem);
             for (var pmKey in pmKeysArray) {
-                if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM") || pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
+                if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
                     continue;
                 }
                 var pmProperty = pmKeysArray[pmKey];
                 newQuoteOPPriceStepsPM[pmProperty] = jItem[pmProperty];
             }
-
-
+           
+			 
             if (mapParent) {
                 newQuoteOPPriceStepsPM.UniqueKey = Guid.newGuid();
                 newQuoteOPPriceStepsPM.ChangeSetOp = "None";
                 jItem.ChangeSetOp = "None";
                 newQuoteOPPriceStepsPM.OldEntityPM = this.clone(newQuoteOPPriceStepsPM);
 
-
+				
             }
             else {
                 if (entityPM.ChangeSetOp === "Delete") {
@@ -535,32 +539,32 @@ export class QuoteOPPMService {
                 else {
                     if (newQuoteOPPriceStepsPM.UniqueKey) {
 
-                        if (jItem.IsDirty)
-                            newQuoteOPPriceStepsPM.ChangeSetOp = "Update";
+                    if (jItem.IsDirty)
+                        newQuoteOPPriceStepsPM.ChangeSetOp = "Update";
                     }
-                    else {
+                else {
                         newQuoteOPPriceStepsPM.ChangeSetOp = "Insert";
                     }
                 }
-
+ 
                 newQuoteOPPriceStepsPM.OldEntityPM = null;
                 newQuoteOPPriceStepsPM.EntityParentPM = null;
             }
-            newQuoteOPPriceStepsPM.DisableMarkAsDirty = false;
-            newQuoteOPPriceStepsPM.IsDirty = false;
+			 newQuoteOPPriceStepsPM.DisableMarkAsDirty = false;
+			 newQuoteOPPriceStepsPM.IsDirty = false;
             entityPM.QuoteOPChargePriceSteps.push(newQuoteOPPriceStepsPM);
         }
         if (oldQuoteOPChargePriceSteps) {
-
+            
             for (var itemKey in oldQuoteOPChargePriceSteps) {
-                if (entityPM.QuoteOPChargePriceSteps.filter(p => p.UniqueKey === oldQuoteOPChargePriceSteps[itemKey].UniqueKey).length === 0) {
-
+                if (entityPM.QuoteOPChargePriceSteps.filter(p=> p.UniqueKey === oldQuoteOPChargePriceSteps[itemKey].UniqueKey).length === 0) {
+				
                     if (oldQuoteOPChargePriceSteps[itemKey]) {
                         //oldQuoteOPChargePriceSteps[itemKey].ChangeSetOp = "Delete";
                         //entityPM.QuoteOPChargePriceSteps.push(oldQuoteOPChargePriceSteps[itemKey]);
-                        var oldItemJson = oldQuoteOPChargePriceSteps[itemKey];
+						var oldItemJson = oldQuoteOPChargePriceSteps[itemKey];
                         var deletedPM: QuoteOPPriceStepsPM = new QuoteOPPriceStepsPM(null);
-                        deletedPM.DisableMarkAsDirty = true;
+						deletedPM.DisableMarkAsDirty = true;
                         var pmKeys = Object.keys(oldItemJson);
                         for (var key in pmKeys) {
 
@@ -572,10 +576,10 @@ export class QuoteOPPMService {
                             deletedPM[property] = oldItemJson[property];
                         }
 
-                        deletedPM.DisableMarkAsDirty = false;
+					    deletedPM.DisableMarkAsDirty = false;
                         deletedPM.IsDirty = false;
                         deletedPM.ChangeSetOp = "Delete";
-
+                        
                         deletedPM.OldEntityPM = null;
                         entityPM.QuoteOPChargePriceSteps.push(deletedPM);
                     }
@@ -583,7 +587,7 @@ export class QuoteOPPMService {
             }
         }
     }
-
+ 
     MapQuotePackages(entityPM: QuoteOPPM, jsonPM: any, mapParent: boolean = true) {
 
         var oldQuotePackages: QuoteOPPackagePM[] = [];
@@ -598,32 +602,33 @@ export class QuoteOPPMService {
                 continue;
             }
             var newQuoteOPPackagePM: QuoteOPPackagePM;
-
+	  
             if (mapParent) {
                 newQuoteOPPackagePM = new QuoteOPPackagePM(entityPM);
             }
-            else {
+            else
+            {
                 newQuoteOPPackagePM = new QuoteOPPackagePM(null);
             }
-            newQuoteOPPackagePM.DisableMarkAsDirty = true;
-
+ 			newQuoteOPPackagePM.DisableMarkAsDirty = true;
+               
             var pmKeysArray = Object.keys(jItem);
             for (var pmKey in pmKeysArray) {
-                if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM") || pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
+                if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
                     continue;
                 }
                 var pmProperty = pmKeysArray[pmKey];
                 newQuoteOPPackagePM[pmProperty] = jItem[pmProperty];
             }
-
-
+           
+			 
             if (mapParent) {
                 newQuoteOPPackagePM.UniqueKey = Guid.newGuid();
                 newQuoteOPPackagePM.ChangeSetOp = "None";
                 jItem.ChangeSetOp = "None";
                 newQuoteOPPackagePM.OldEntityPM = this.clone(newQuoteOPPackagePM);
 
-
+				
             }
             else {
                 if (newQuoteOPPackagePM.UniqueKey) {
@@ -632,27 +637,27 @@ export class QuoteOPPMService {
                         newQuoteOPPackagePM.ChangeSetOp = "Update";
                 }
                 else {
-                    newQuoteOPPackagePM.ChangeSetOp = "Insert";
+                        newQuoteOPPackagePM.ChangeSetOp = "Insert";
                 }
-
+ 
                 newQuoteOPPackagePM.OldEntityPM = null;
                 newQuoteOPPackagePM.EntityParentPM = null;
             }
-            newQuoteOPPackagePM.DisableMarkAsDirty = false;
-            newQuoteOPPackagePM.IsDirty = false;
+			 newQuoteOPPackagePM.DisableMarkAsDirty = false;
+			 newQuoteOPPackagePM.IsDirty = false;
             entityPM.QuotePackages.push(newQuoteOPPackagePM);
         }
         if (oldQuotePackages) {
-
+            
             for (var itemKey in oldQuotePackages) {
-                if (entityPM.QuotePackages.filter(p => p.UniqueKey === oldQuotePackages[itemKey].UniqueKey).length === 0) {
-
+                if (entityPM.QuotePackages.filter(p=> p.UniqueKey === oldQuotePackages[itemKey].UniqueKey).length === 0) {
+				
                     if (oldQuotePackages[itemKey]) {
                         //oldQuotePackages[itemKey].ChangeSetOp = "Delete";
                         //entityPM.QuotePackages.push(oldQuotePackages[itemKey]);
-                        var oldItemJson = oldQuotePackages[itemKey];
+						var oldItemJson = oldQuotePackages[itemKey];
                         var deletedPM: QuoteOPPackagePM = new QuoteOPPackagePM(null);
-                        deletedPM.DisableMarkAsDirty = true;
+						deletedPM.DisableMarkAsDirty = true;
                         var pmKeys = Object.keys(oldItemJson);
                         for (var key in pmKeys) {
 
@@ -664,10 +669,10 @@ export class QuoteOPPMService {
                             deletedPM[property] = oldItemJson[property];
                         }
 
-                        deletedPM.DisableMarkAsDirty = false;
+					    deletedPM.DisableMarkAsDirty = false;
                         deletedPM.IsDirty = false;
                         deletedPM.ChangeSetOp = "Delete";
-
+                        
                         deletedPM.OldEntityPM = null;
                         entityPM.QuotePackages.push(deletedPM);
                     }
@@ -686,17 +691,17 @@ export class QuoteOPPMService {
             }
             var newQuoteOPSalesTotalPM: QuoteOPSalesTotalPM;
             newQuoteOPSalesTotalPM = new QuoteOPSalesTotalPM();
-            newQuoteOPSalesTotalPM.DisableMarkAsDirty = true;
+		    newQuoteOPSalesTotalPM.DisableMarkAsDirty = true;                
             var pmKeysArray = Object.keys(jItem);
             for (var pmKey in pmKeysArray) {
-
-                if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM") || pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
+			
+                if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
                     continue;
                 }
                 var pmProperty = pmKeysArray[pmKey];
                 newQuoteOPSalesTotalPM[pmProperty] = jItem[pmProperty];
             }
-            newQuoteOPSalesTotalPM.DisableMarkAsDirty = false;
+			newQuoteOPSalesTotalPM.DisableMarkAsDirty = false;
             newQuoteOPSalesTotalPM.IsDirty = false;
             entityPM.QuoteSalesTotals.push(newQuoteOPSalesTotalPM);
         }
@@ -712,17 +717,17 @@ export class QuoteOPPMService {
             }
             var newQuoteOPVATsTotalPM: QuoteOPVATsTotalPM;
             newQuoteOPVATsTotalPM = new QuoteOPVATsTotalPM();
-            newQuoteOPVATsTotalPM.DisableMarkAsDirty = true;
+		    newQuoteOPVATsTotalPM.DisableMarkAsDirty = true;                
             var pmKeysArray = Object.keys(jItem);
             for (var pmKey in pmKeysArray) {
-
-                if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM") || pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
+			
+                if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
                     continue;
                 }
                 var pmProperty = pmKeysArray[pmKey];
                 newQuoteOPVATsTotalPM[pmProperty] = jItem[pmProperty];
             }
-            newQuoteOPVATsTotalPM.DisableMarkAsDirty = false;
+			newQuoteOPVATsTotalPM.DisableMarkAsDirty = false;
             newQuoteOPVATsTotalPM.IsDirty = false;
             entityPM.TotalVATPerQuote.push(newQuoteOPVATsTotalPM);
         }
@@ -741,33 +746,34 @@ export class QuoteOPPMService {
                 continue;
             }
             var newQuoteOPFollowUpPM: QuoteOPFollowUpPM;
-
+	  
             if (mapParent) {
                 newQuoteOPFollowUpPM = new QuoteOPFollowUpPM(entityPM);
             }
-            else {
+            else
+            {
                 newQuoteOPFollowUpPM = new QuoteOPFollowUpPM(null);
             }
-            newQuoteOPFollowUpPM.DisableMarkAsDirty = true;
-
+ 			newQuoteOPFollowUpPM.DisableMarkAsDirty = true;
+               
             var pmKeysArray = Object.keys(jItem);
             for (var pmKey in pmKeysArray) {
-                if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM") || pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
+                if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
                     continue;
                 }
                 var pmProperty = pmKeysArray[pmKey];
                 newQuoteOPFollowUpPM[pmProperty] = jItem[pmProperty];
             }
-
-
+           
+			 
             if (mapParent) {
                 newQuoteOPFollowUpPM.UniqueKey = Guid.newGuid();
                 newQuoteOPFollowUpPM.ChangeSetOp = "None";
                 jItem.ChangeSetOp = "None";
                 newQuoteOPFollowUpPM.OldEntityPM = this.clone(newQuoteOPFollowUpPM);
-                //file not found! child composition QuoteOPFollowUp
+//file not found! child composition QuoteOPFollowUp
 
-
+				
             }
             else {
                 if (newQuoteOPFollowUpPM.UniqueKey) {
@@ -776,28 +782,28 @@ export class QuoteOPPMService {
                         newQuoteOPFollowUpPM.ChangeSetOp = "Update";
                 }
                 else {
-                    newQuoteOPFollowUpPM.ChangeSetOp = "Insert";
+                        newQuoteOPFollowUpPM.ChangeSetOp = "Insert";
                 }
-                //file not found! child composition QuoteOPFollowUp
-
+//file not found! child composition QuoteOPFollowUp
+ 
                 newQuoteOPFollowUpPM.OldEntityPM = null;
                 newQuoteOPFollowUpPM.EntityParentPM = null;
             }
-            newQuoteOPFollowUpPM.DisableMarkAsDirty = false;
-            newQuoteOPFollowUpPM.IsDirty = false;
+			 newQuoteOPFollowUpPM.DisableMarkAsDirty = false;
+			 newQuoteOPFollowUpPM.IsDirty = false;
             entityPM.FollowUps.push(newQuoteOPFollowUpPM);
         }
         if (oldFollowUps) {
-
+            
             for (var itemKey in oldFollowUps) {
-                if (entityPM.FollowUps.filter(p => p.UniqueKey === oldFollowUps[itemKey].UniqueKey).length === 0) {
-
+                if (entityPM.FollowUps.filter(p=> p.UniqueKey === oldFollowUps[itemKey].UniqueKey).length === 0) {
+				
                     if (oldFollowUps[itemKey]) {
                         //oldFollowUps[itemKey].ChangeSetOp = "Delete";
                         //entityPM.FollowUps.push(oldFollowUps[itemKey]);
-                        var oldItemJson = oldFollowUps[itemKey];
+						var oldItemJson = oldFollowUps[itemKey];
                         var deletedPM: QuoteOPFollowUpPM = new QuoteOPFollowUpPM(null);
-                        deletedPM.DisableMarkAsDirty = true;
+						deletedPM.DisableMarkAsDirty = true;
                         var pmKeys = Object.keys(oldItemJson);
                         for (var key in pmKeys) {
 
@@ -809,11 +815,11 @@ export class QuoteOPPMService {
                             deletedPM[property] = oldItemJson[property];
                         }
 
-                        deletedPM.DisableMarkAsDirty = false;
+					    deletedPM.DisableMarkAsDirty = false;
                         deletedPM.IsDirty = false;
                         deletedPM.ChangeSetOp = "Delete";
-
-                        //file not found! child composition QuoteOPFollowUp
+                        
+//file not found! child composition QuoteOPFollowUp
                         deletedPM.OldEntityPM = null;
                         entityPM.FollowUps.push(deletedPM);
                     }
@@ -821,7 +827,7 @@ export class QuoteOPPMService {
             }
         }
     }
-    //file not found! for child composition QuoteOPFollowUp
+//file not found! for child composition QuoteOPFollowUp
     MapQuoteDocumentVersions(entityPM: QuoteOPPM, jsonPM: any, mapParent: boolean = true) {
 
         var oldQuoteDocumentVersions: QuoteOPDocumentVersionPM[] = [];
@@ -836,32 +842,33 @@ export class QuoteOPPMService {
                 continue;
             }
             var newQuoteOPDocumentVersionPM: QuoteOPDocumentVersionPM;
-
+	  
             if (mapParent) {
                 newQuoteOPDocumentVersionPM = new QuoteOPDocumentVersionPM(entityPM);
             }
-            else {
+            else
+            {
                 newQuoteOPDocumentVersionPM = new QuoteOPDocumentVersionPM(null);
             }
-            newQuoteOPDocumentVersionPM.DisableMarkAsDirty = true;
-
+ 			newQuoteOPDocumentVersionPM.DisableMarkAsDirty = true;
+               
             var pmKeysArray = Object.keys(jItem);
             for (var pmKey in pmKeysArray) {
-                if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM") || pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
+                if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
                     continue;
                 }
                 var pmProperty = pmKeysArray[pmKey];
                 newQuoteOPDocumentVersionPM[pmProperty] = jItem[pmProperty];
             }
-
-
+           
+			 
             if (mapParent) {
                 newQuoteOPDocumentVersionPM.UniqueKey = Guid.newGuid();
                 newQuoteOPDocumentVersionPM.ChangeSetOp = "None";
                 jItem.ChangeSetOp = "None";
                 newQuoteOPDocumentVersionPM.OldEntityPM = this.clone(newQuoteOPDocumentVersionPM);
 
-
+				
             }
             else {
                 if (newQuoteOPDocumentVersionPM.UniqueKey) {
@@ -870,27 +877,27 @@ export class QuoteOPPMService {
                         newQuoteOPDocumentVersionPM.ChangeSetOp = "Update";
                 }
                 else {
-                    newQuoteOPDocumentVersionPM.ChangeSetOp = "Insert";
+                        newQuoteOPDocumentVersionPM.ChangeSetOp = "Insert";
                 }
-
+ 
                 newQuoteOPDocumentVersionPM.OldEntityPM = null;
                 newQuoteOPDocumentVersionPM.EntityParentPM = null;
             }
-            newQuoteOPDocumentVersionPM.DisableMarkAsDirty = false;
-            newQuoteOPDocumentVersionPM.IsDirty = false;
+			 newQuoteOPDocumentVersionPM.DisableMarkAsDirty = false;
+			 newQuoteOPDocumentVersionPM.IsDirty = false;
             entityPM.QuoteDocumentVersions.push(newQuoteOPDocumentVersionPM);
         }
         if (oldQuoteDocumentVersions) {
-
+            
             for (var itemKey in oldQuoteDocumentVersions) {
-                if (entityPM.QuoteDocumentVersions.filter(p => p.UniqueKey === oldQuoteDocumentVersions[itemKey].UniqueKey).length === 0) {
-
+                if (entityPM.QuoteDocumentVersions.filter(p=> p.UniqueKey === oldQuoteDocumentVersions[itemKey].UniqueKey).length === 0) {
+				
                     if (oldQuoteDocumentVersions[itemKey]) {
                         //oldQuoteDocumentVersions[itemKey].ChangeSetOp = "Delete";
                         //entityPM.QuoteDocumentVersions.push(oldQuoteDocumentVersions[itemKey]);
-                        var oldItemJson = oldQuoteDocumentVersions[itemKey];
+						var oldItemJson = oldQuoteDocumentVersions[itemKey];
                         var deletedPM: QuoteOPDocumentVersionPM = new QuoteOPDocumentVersionPM(null);
-                        deletedPM.DisableMarkAsDirty = true;
+						deletedPM.DisableMarkAsDirty = true;
                         var pmKeys = Object.keys(oldItemJson);
                         for (var key in pmKeys) {
 
@@ -902,10 +909,10 @@ export class QuoteOPPMService {
                             deletedPM[property] = oldItemJson[property];
                         }
 
-                        deletedPM.DisableMarkAsDirty = false;
+					    deletedPM.DisableMarkAsDirty = false;
                         deletedPM.IsDirty = false;
                         deletedPM.ChangeSetOp = "Delete";
-
+                        
                         deletedPM.OldEntityPM = null;
                         entityPM.QuoteDocumentVersions.push(deletedPM);
                     }
@@ -927,32 +934,33 @@ export class QuoteOPPMService {
                 continue;
             }
             var newQuoteOPTotalVATPM: QuoteOPTotalVATPM;
-
+	  
             if (mapParent) {
                 newQuoteOPTotalVATPM = new QuoteOPTotalVATPM(entityPM);
             }
-            else {
+            else
+            {
                 newQuoteOPTotalVATPM = new QuoteOPTotalVATPM(null);
             }
-            newQuoteOPTotalVATPM.DisableMarkAsDirty = true;
-
+ 			newQuoteOPTotalVATPM.DisableMarkAsDirty = true;
+               
             var pmKeysArray = Object.keys(jItem);
             for (var pmKey in pmKeysArray) {
-                if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM") || pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
+                if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
                     continue;
                 }
                 var pmProperty = pmKeysArray[pmKey];
                 newQuoteOPTotalVATPM[pmProperty] = jItem[pmProperty];
             }
-
-
+           
+			 
             if (mapParent) {
                 newQuoteOPTotalVATPM.UniqueKey = Guid.newGuid();
                 newQuoteOPTotalVATPM.ChangeSetOp = "None";
                 jItem.ChangeSetOp = "None";
                 newQuoteOPTotalVATPM.OldEntityPM = this.clone(newQuoteOPTotalVATPM);
 
-
+				
             }
             else {
                 if (newQuoteOPTotalVATPM.UniqueKey) {
@@ -961,27 +969,27 @@ export class QuoteOPPMService {
                         newQuoteOPTotalVATPM.ChangeSetOp = "Update";
                 }
                 else {
-                    newQuoteOPTotalVATPM.ChangeSetOp = "Insert";
+                        newQuoteOPTotalVATPM.ChangeSetOp = "Insert";
                 }
-
+ 
                 newQuoteOPTotalVATPM.OldEntityPM = null;
                 newQuoteOPTotalVATPM.EntityParentPM = null;
             }
-            newQuoteOPTotalVATPM.DisableMarkAsDirty = false;
-            newQuoteOPTotalVATPM.IsDirty = false;
+			 newQuoteOPTotalVATPM.DisableMarkAsDirty = false;
+			 newQuoteOPTotalVATPM.IsDirty = false;
             entityPM.TotalVATs.push(newQuoteOPTotalVATPM);
         }
         if (oldTotalVATs) {
-
+            
             for (var itemKey in oldTotalVATs) {
-                if (entityPM.TotalVATs.filter(p => p.UniqueKey === oldTotalVATs[itemKey].UniqueKey).length === 0) {
-
+                if (entityPM.TotalVATs.filter(p=> p.UniqueKey === oldTotalVATs[itemKey].UniqueKey).length === 0) {
+				
                     if (oldTotalVATs[itemKey]) {
                         //oldTotalVATs[itemKey].ChangeSetOp = "Delete";
                         //entityPM.TotalVATs.push(oldTotalVATs[itemKey]);
-                        var oldItemJson = oldTotalVATs[itemKey];
+						var oldItemJson = oldTotalVATs[itemKey];
                         var deletedPM: QuoteOPTotalVATPM = new QuoteOPTotalVATPM(null);
-                        deletedPM.DisableMarkAsDirty = true;
+						deletedPM.DisableMarkAsDirty = true;
                         var pmKeys = Object.keys(oldItemJson);
                         for (var key in pmKeys) {
 
@@ -993,10 +1001,10 @@ export class QuoteOPPMService {
                             deletedPM[property] = oldItemJson[property];
                         }
 
-                        deletedPM.DisableMarkAsDirty = false;
+					    deletedPM.DisableMarkAsDirty = false;
                         deletedPM.IsDirty = false;
                         deletedPM.ChangeSetOp = "Delete";
-
+                        
                         deletedPM.OldEntityPM = null;
                         entityPM.TotalVATs.push(deletedPM);
                     }
@@ -1006,38 +1014,104 @@ export class QuoteOPPMService {
     }
     MapQuoteProperties(entityPM: QuoteOPPM, jsonPM: any, mapParent: boolean = true) {
 
+        var oldQuoteProperties: QuoteOPPropertiesPM[] = [];
+        if (entityPM.OldEntityPM && !mapParent) {
+            oldQuoteProperties = entityPM.OldEntityPM.QuoteProperties;
+        }
+
         entityPM.QuoteProperties = new Array<QuoteOPPropertiesPM>();
         for (var item in jsonPM.QuoteProperties) {
-
             var jItem = jsonPM.QuoteProperties[item];
             if (mapParent && (jItem.ChangeSetOp == "Delete" || jItem.ChangeSetOp == 3)) {
                 continue;
             }
             var newQuoteOPPropertiesPM: QuoteOPPropertiesPM;
-            newQuoteOPPropertiesPM = new QuoteOPPropertiesPM();
-            newQuoteOPPropertiesPM.DisableMarkAsDirty = true;
+	  
+            if (mapParent) {
+                newQuoteOPPropertiesPM = new QuoteOPPropertiesPM(entityPM);
+            }
+            else
+            {
+                newQuoteOPPropertiesPM = new QuoteOPPropertiesPM(null);
+            }
+ 			newQuoteOPPropertiesPM.DisableMarkAsDirty = true;
+               
             var pmKeysArray = Object.keys(jItem);
             for (var pmKey in pmKeysArray) {
-
-                if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM") || pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
+                if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
                     continue;
                 }
                 var pmProperty = pmKeysArray[pmKey];
                 newQuoteOPPropertiesPM[pmProperty] = jItem[pmProperty];
             }
-            newQuoteOPPropertiesPM.DisableMarkAsDirty = false;
-            newQuoteOPPropertiesPM.IsDirty = false;
+           
+			 
+            if (mapParent) {
+                newQuoteOPPropertiesPM.UniqueKey = Guid.newGuid();
+                newQuoteOPPropertiesPM.ChangeSetOp = "None";
+                jItem.ChangeSetOp = "None";
+                newQuoteOPPropertiesPM.OldEntityPM = this.clone(newQuoteOPPropertiesPM);
+
+				
+            }
+            else {
+                if (newQuoteOPPropertiesPM.UniqueKey) {
+
+                    if (jItem.IsDirty)
+                        newQuoteOPPropertiesPM.ChangeSetOp = "Update";
+                }
+                else {
+                        newQuoteOPPropertiesPM.ChangeSetOp = "Insert";
+                }
+ 
+                newQuoteOPPropertiesPM.OldEntityPM = null;
+                newQuoteOPPropertiesPM.EntityParentPM = null;
+            }
+			 newQuoteOPPropertiesPM.DisableMarkAsDirty = false;
+			 newQuoteOPPropertiesPM.IsDirty = false;
             entityPM.QuoteProperties.push(newQuoteOPPropertiesPM);
+        }
+        if (oldQuoteProperties) {
+            
+            for (var itemKey in oldQuoteProperties) {
+                if (entityPM.QuoteProperties.filter(p=> p.UniqueKey === oldQuoteProperties[itemKey].UniqueKey).length === 0) {
+				
+                    if (oldQuoteProperties[itemKey]) {
+                        //oldQuoteProperties[itemKey].ChangeSetOp = "Delete";
+                        //entityPM.QuoteProperties.push(oldQuoteProperties[itemKey]);
+						var oldItemJson = oldQuoteProperties[itemKey];
+                        var deletedPM: QuoteOPPropertiesPM = new QuoteOPPropertiesPM(null);
+						deletedPM.DisableMarkAsDirty = true;
+                        var pmKeys = Object.keys(oldItemJson);
+                        for (var key in pmKeys) {
+
+                            if ((!mapParent && pmKeys[key] === "entityParentPM") || pmKeys[key] === "UIProperties" || pmKeys[key] === "OldEntityPM" || pmKeys[key] === "PropertyChanged") {
+                                continue;
+                            }
+
+                            var property = pmKeys[key];
+                            deletedPM[property] = oldItemJson[property];
+                        }
+
+					    deletedPM.DisableMarkAsDirty = false;
+                        deletedPM.IsDirty = false;
+                        deletedPM.ChangeSetOp = "Delete";
+                        
+                        deletedPM.OldEntityPM = null;
+                        entityPM.QuoteProperties.push(deletedPM);
+                    }
+                }
+            }
         }
     }
 
-    public clone(jsonPM: any) {
+	  public clone(jsonPM: any) {
         var entityPM: any;
         entityPM = {};
 
         var jsonPMKeys = Object.keys(jsonPM);
         for (var key in jsonPMKeys) {
-
+            
             if ((jsonPMKeys[key] === "entityParentPM") || jsonPMKeys[key] === "UIProperties" || jsonPMKeys[key] === "OldEntityPM" || jsonPMKeys[key] === "PropertyChanged") {
                 continue;
             }
@@ -1049,12 +1123,12 @@ export class QuoteOPPMService {
         return entityPM;
     }
 
-    public GetNewEntityPM() {
-        var entityPM: QuoteOPPM;
-        entityPM = new QuoteOPPM();
-        entityPM.Tenant = InfraSettings.TenantPM.Id;
-        return entityPM;
+	  public GetNewEntityPM() {		 
+		    var entityPM: QuoteOPPM;
+			entityPM = new QuoteOPPM();
+			entityPM.Tenant = InfraSettings.TenantPM.Id;
+			return entityPM;
     }
-
+		 
 
 }
