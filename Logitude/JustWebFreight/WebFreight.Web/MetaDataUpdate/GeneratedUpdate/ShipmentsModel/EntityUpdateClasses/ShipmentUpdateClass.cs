@@ -81,7 +81,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
    {  		
 
 
-		public const string HashString = "fd9dc44f5ee57026af00b654ab3e3770";
+		public const string HashString = "f7251472471f7f0444d7dd81b1c39ba6";
 
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
@@ -50271,8 +50271,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
                 Code =  "CRFP",
-                EnglishName =  "Cargo Ready for Pickup",
-                LocalName =  "Cargo Ready for Pickup",
+                EnglishName =  "Cargo Ready Date Approved",
+                LocalName =  "Cargo Ready Date Approved",
                 IsManualEntry =  false,
                 ShortView =  true,
                 IsAgentView =  false,

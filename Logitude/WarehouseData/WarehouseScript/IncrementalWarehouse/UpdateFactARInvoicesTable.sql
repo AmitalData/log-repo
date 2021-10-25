@@ -66,6 +66,10 @@
 	
 	declare @ARInvoiceEntityId as varchar(15)
 	declare @ARInvoiceLineEntityId as varchar(15)
+
+	declare @OriginalInvoiceNumber as varchar(25)
+
+
 	DECLARE ARInvoicesCursor CURSOR READ_ONLY
 	FOR
 	SELECT dw_ARInvoices.Id,dw_ARInvoices.Tenant, SourceTenant.[Tenant Number], ParentTenant.[Tenant Number], dw_ARInvoiceTypes.Name,dw_ARInvoices.InvoiceNumber,
@@ -132,6 +136,19 @@
 					END
 		 
 		----------------------------------------------
+
+		--------------Original Invoice Number------------------
+		 
+				IF( @DraftNumber IS NOT NULL )
+				  BEGIN
+					  SET @OriginalInvoiceNumber = @DraftNumber;
+				  END
+				ELSE
+				  BEGIN
+					  SET @OriginalInvoiceNumber = @InvoiceNumber;
+				  END 
+		 
+		----------------------------------------------
 		 
 		declare @IsCancelled as bit  
 		set @IsCancelled =0;
@@ -146,7 +163,7 @@
 	   [Subtotal (Local)],[Subtotal (Profit)],[Invoice Amount (Local)],[Invoice Amount (Profit)],[Amount Due (Local)],[Amount Due (Profit)],
 	  [Line Description],[Line Local Description], [Line Unit Price], [Line Quantity], [Line VAT Type], 
 	   [Line VAT Percentage],[Line Amount (Local)], [Line Amount (Foreign)],[Line Amount (Invoice Currency)], [Foreign Currency], [Foreign Exchange Rate],[Line Amount (Profit)],
-       [Line Notes], [Invoice Currency Exchange Rate], [Is Expense], [Is Regional Tax],[Invoice Branch],[Is Cancelled],[Main Entity Id])
+       [Line Notes], [Invoice Currency Exchange Rate], [Is Expense], [Is Regional Tax],[Invoice Branch],[Is Cancelled],[Main Entity Id],  [Original Invoice Number])
 	   
 	   
       values(@Id  , @SourceTenant, @ParentTenant, @InvoiceType, @InvoiceNumber, dbo.GetDateFormateAsNumber(@InvoiceDate), dbo.GetDateFormateAsNumber(@CreateDate),dbo.GetDateFormateAsNumber(@ApprovedDate),  dbo.GetDateFormateAsNumber(@DueDate) ,dbo.GetDateFormateAsNumber(@PrintDate),dbo.GetDateFormateAsNumber(@PaidDate),
@@ -154,7 +171,7 @@
 	 
 	 @SubTotalInLocalCurrency, @SubTotalInInvoiceCurrency, @AmountInLocalCurrency, @AmountInProfitCurrency, @AmountDueInLocalCurrency, @AmountDueInProfitCurrency, @Description, @LocalDescription, @UnitPrice, @Quantity,  @VatType,
 	 @VatPercentage, @LocalCurrencyAmount,@ForiegnCurrencyAmount,@InvoiceCurrencyAmount,@ForiegnCurrencyId, @ForiegnExchangeRate, @ProfitCurrencyAmount,@Notes,@InvoiceCurrencyExchangeRate,@IsExpens,@IsRegionalTax,
-	 @Branch,@IsCancelled,@MainEntityId)
+	 @Branch,@IsCancelled,@MainEntityId, @OriginalInvoiceNumber)
 
 
 

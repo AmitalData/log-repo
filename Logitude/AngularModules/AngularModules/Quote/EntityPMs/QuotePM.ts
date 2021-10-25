@@ -1386,6 +1386,22 @@ export class QuotePM {
     public get Routing() { return this.routing; }
     public set Routing(newValue: string) { if (this.routing != newValue) { this.routing = newValue; this.MarkAsDirty("Routing"); } }
 
+    private fromCity: string;
+    public get FromCity() { return this.fromCity; }
+    public set FromCity(newValue: string) { if (this.fromCity != newValue) { this.fromCity = newValue; this.MarkAsDirty("FromCity"); } }
+
+    private toCity: string;
+    public get ToCity() { return this.toCity; }
+    public set ToCity(newValue: string) { if (this.toCity != newValue) { this.toCity = newValue; this.MarkAsDirty("ToCity"); } }
+
+    private fromZipCode: string;
+    public get FromZipCode() { return this.fromZipCode; }
+    public set FromZipCode(newValue: string) { if (this.fromZipCode != newValue) { this.fromZipCode = newValue; this.MarkAsDirty("FromZipCode"); } }
+
+    private toZipCode: string;
+    public get ToZipCode() { return this.toZipCode; }
+    public set ToZipCode(newValue: string) { if (this.toZipCode != newValue) { this.toZipCode = newValue; this.MarkAsDirty("ToZipCode"); } }
+
      
 	private quoteCharges: QuoteChargePM[];
     get  QuoteCharges() {

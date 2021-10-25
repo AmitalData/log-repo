@@ -969,11 +969,13 @@
     <Compile Include="CommonDataModel\LogitudeGridExportToExcel\LogitudeGridExportToExcelHelper.cs" />
     <Compile Include="Controllers\AccountingModel\BankCodeController.cs" />
     <Compile Include="Controllers\AccountingModel\ChargesTypeOpController.cs" />
+    <Compile Include="Controllers\AccountingModel\Generated\ListControllers\ARPaymentBankTranferViewsController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\ListControllers\CalculatedChartsLineTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\ListControllers\CalculatedChartsOfAccountsLineViewsController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\ListControllers\CalculatedChartsOfAccountViewsController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\ListControllers\GLAccountFollowUpDataViewsController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\ListControllers\UserDefinedReportViewsController.Generated.cs" />
+    <Compile Include="Controllers\AccountingModel\Generated\PMControllers\ARPaymentBankTranferController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\PMControllers\CalculatedChartsOfAccountController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\PMControllers\CalculatedChartsOfAccountsLineController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\PMControllers\GLAccountCardsDataController.Generated.cs" />
@@ -2987,6 +2989,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\AmendmentTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\AmountTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ApprovedProfessionUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ARPaymentBankTranferUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ARPaymentChequeStatusUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ARPaymentChequeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ARPaymentsJournalUpdateClass.cs" />

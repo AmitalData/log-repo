@@ -137,5 +137,7 @@ export class CargoTrackingShipmentList {
 	PaymentReceivedNotes: string;
 	ShipmentOrderGateway: string;
 	ShipmentOrderPONumber: string;
+	PoNumber: string;
 	
 }
+ 

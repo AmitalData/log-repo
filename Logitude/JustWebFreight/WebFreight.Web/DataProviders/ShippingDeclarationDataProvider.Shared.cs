@@ -527,6 +527,7 @@ namespace WebFreight.Web.DataProviders
         public DateTime? PlannedCargoReadyDate { get; set; }
         public DateTime? ApprovedCargoReadyDate { get; set; }
         public string Handler { get; set; }
-
+        public string INTTRADocumentTypeName { get; set; }
+        public int? INTTRADocumentQTY { get; set; }
     }
 }
