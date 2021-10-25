@@ -89,6 +89,16 @@ export class DecCargoSplitConComponent extends BaseComponent {
     DeclarationDirection: string;
     declarationExtendedListService: DeclarationExtendedListService;
     DecCargoSplitConStatusVisibility: boolean;
+
+    RefreshTabs(direction) {
+        this.DeclarationDirection = direction;
+        if (this.DeclarationDirection == "E") {
+            this.PreceduralFilterItems = new ApiQueryFilters();
+            this.PreceduralFilterItems.addAdditionalFilter("Code", "1000000,8000000,4000000", null, null, "InListExact", false, false, false, "string", false, true);
+        }
+        this.SetDisplayFields();
+
+    }
     SetTabArgs(args: any) {
         this.EntityPM = args.EntityPM;
         this.declarationCargoSplitPM = args.Parent;
@@ -116,6 +126,9 @@ export class DecCargoSplitConComponent extends BaseComponent {
         this.IsDisplayOnly = args.Disabled;
         if (!AppTool.IsNullOrEmpty(this.EntityPM.DecCargoSplitConsItems)) {
             for (let conItem of this.EntityPM.DecCargoSplitConsItems) {
+                if (this.ParentCargoConsinmentItemList != null && this.ParentCargoConsinmentItemList[0] != null) {
+                    item.ParentCargoConsinmentItem = this.ParentCargoConsinmentItemList[0];
+                }
                 var item = new DecCargoSplitConsItemModel(conItem);
                 this.ItemsList.Insert(item);
             }
@@ -360,7 +373,9 @@ export class DecCargoSplitConComponent extends BaseComponent {
             item.Tenant = this.EntityPM.Tenant;
             item.DecCargoSplitConsLineNo = this.EntityPM.LineNumber;
             item.ItemLine = counter;
-
+            if (this.ParentCargoConsinmentItemList != null && this.ParentCargoConsinmentItemList[0] != null) {
+                item.ParentCargoConsinmentItem = this.ParentCargoConsinmentItemList[0];
+            }
             if (!this.EntityPM.DecCargoSplitConsItems.includes(item)) {
                 this.EntityPM.AddDecCargoSplitConsItem(item);
                 var line = new DecCargoSplitConsItemModel(item);
@@ -477,7 +492,7 @@ export class DecCargoSplitConComponent extends BaseComponent {
         
     }
 
-    ParentCargoConsinmentItemSelectionChanged(item,value) {
+    ParentCargoConsinmentItemSelectionChanged(item, value) {
         if (item != null) {
             item.ParentCargoConsinmentItem = value;
         }
