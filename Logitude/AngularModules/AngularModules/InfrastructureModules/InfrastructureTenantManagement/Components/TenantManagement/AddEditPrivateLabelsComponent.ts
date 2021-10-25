@@ -898,6 +898,8 @@ export class AddEditPrivateLabelsComponent extends BaseComponent implements OnIn
         if (this.HybridPartnerId == null || this.HybridPartnerId == "") {
             errors.push("Hybrid Partner Field is Required");
         }
+        this.ValidateDirectionsOptions(errors);
+
         this.ValidateColors(errors);
 
         this.ValidationErrorsList = errors;
@@ -936,6 +938,13 @@ export class AddEditPrivateLabelsComponent extends BaseComponent implements OnIn
     }
 
     private myCloner: Cloner;
+
+    private ValidateDirectionsOptions(errors: string[]) {
+        if (!this.IsImportActivated && !this.IsExportActivated) {
+            errors.push("You need to fill either Is import or Is Export Activated Fields");
+        }
+    }
+
     private ValidateColors(errors: string[]) {
         if (this.wrongMainColor) {
             errors.push("Please Enter Valid Main Color");

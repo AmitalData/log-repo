@@ -177,10 +177,9 @@ namespace CommunicationWorkerRole
                                     client.DefaultRequestHeaders.Add("Token", Token);
                                     client.DefaultRequestHeaders.Add("CorrelationId", CorrelationId);
                                     ICommonDataContext commoncontext = CommonDataContext.GetContext(tenant);
+                                     
 
-                                    UpdatePrivateLabel(tenant, IsImportActivated, IsExportActivated);
-
-                                   // UpdateCustomerTenantAccessRequests(CustomerTenant,tenant, IsImportActivated, IsExportActivated);
+                                    UpdateCustomerTenantAccessRequests(CustomerTenant,tenant, IsImportActivated, IsExportActivated);
 
                                     CustomerTenantAccessRequestAM customerTenantAccessRequest = new CustomerTenantAccessRequestAM()
                                     {
@@ -357,57 +356,26 @@ namespace CommunicationWorkerRole
         private void UpdateCustomerTenantAccessRequests(int customerTenant, int tenant, bool isImportActivated, bool isExportActivated)
         {
             CustomerTenantAccessRequestQuery customerTenantAccessRequestQuery = new CustomerTenantAccessRequestQuery(tenant);
-            List<string> customerTenantAccessRequestIds = customerTenantAccessRequestQuery.GetCustomerTenantAccessRequestIdsByTenant(customerTenant);
-
             HybridPartnerQuery hybridPartnerQuery = new HybridPartnerQuery(tenant);
-
-            List<string> forwarderIds = hybridPartnerQuery.GetPartnersForRequest(tenant, customerTenantAccessRequestIds);
-
-            IQueryable<CustomerTenantAccessRequestPM> customerTenantAccessRequestList= customerTenantAccessRequestQuery.GetCustomerTenantAccessRequestByTenantAndForwarderIds(customerTenant, forwarderIds);
             ICommonDataContext context = CommonDataContext.GetContext(tenant);
             CustomerTenantAccessRequestService customerTenantAccessRequestService = new CustomerTenantAccessRequestService(context, customerTenant);
+
+            List<string> customerTenantAccessRequestIds = customerTenantAccessRequestQuery.GetCustomerTenantAccessRequestIdsByTenant(customerTenant);
+            List<string> forwarderIds = hybridPartnerQuery.GetPartnersForRequest(tenant, customerTenantAccessRequestIds);
+            IQueryable<CustomerTenantAccessRequestPM> customerTenantAccessRequestList = customerTenantAccessRequestQuery.GetCustomerTenantAccessRequestByTenantAndForwarderIds(customerTenant, forwarderIds);
+
+            UpdateCustomerTenantAccessRequestsList(isImportActivated, isExportActivated, customerTenantAccessRequestService, customerTenantAccessRequestList);
+
+        }
+
+        private static void UpdateCustomerTenantAccessRequestsList(bool isImportActivated, bool isExportActivated, CustomerTenantAccessRequestService customerTenantAccessRequestService, IQueryable<CustomerTenantAccessRequestPM> customerTenantAccessRequestList)
+        {
             foreach (var customerTenantAccessRequest in customerTenantAccessRequestList)
             {
                 customerTenantAccessRequest.IsCustoms = isImportActivated;
                 customerTenantAccessRequest.IsExport = isExportActivated;
                 customerTenantAccessRequestService.Update(customerTenantAccessRequest);
             }
-
-        }
-
-        private static void UpdatePrivateLabel(int tenant, bool IsImportActivated, bool IsExportActivated)
-        {
-
-            IQueryable<TenantManagmentPrivateLabelsPM> privateLabels = GetPrivateLabel(tenant);
-
-            if(privateLabels != null)
-            {
-                IGlobalContext context = GlobalContext.GetContext();
-                TenantManagmentPrivateLablesService service = new TenantManagmentPrivateLablesService(context);
-
-                foreach (var privateLabel in privateLabels)
-                {
-                    privateLabel.IsExportActivated = IsExportActivated;
-                    privateLabel.IsImportActivated = IsImportActivated; 
-                    service.Update(privateLabel);
-                }
-            }
-           
-        }
-
-        private static IQueryable<TenantManagmentPrivateLabelsPM> GetPrivateLabel(int tenant)
-        {
-            TenantManagmentPrivateLabelsQuery tenantManagmentPrivateLabelsQuery = new TenantManagmentPrivateLabelsQuery(tenant);
-            HybridPartnerQuery HybridPartnerQuery = new HybridPartnerQuery(tenant);
-
-            HybridPartnerPM hybridPartnerPM = HybridPartnerQuery.GetSinglePMByPartnerTenant(tenant);
-
-            if (hybridPartnerPM != null)
-            {
-               return tenantManagmentPrivateLabelsQuery.GetByHybridPartnerId(hybridPartnerPM.Id);
-              
-            }
-            return null;
         }
 
         private void ConnectClient()
