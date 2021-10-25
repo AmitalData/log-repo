@@ -141,6 +141,7 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly EditPackage = '#Edit';
   public static readonly PackageGrossWeight = '#Shipment_GrossWeight';
   public static readonly PackagePartialSplit = '#PartialSplit';
+  public static readonly HyperLinkGenerateFromOrderPackage = '#GenerateBTN';
 
   public static readonly DeliveryATDTime = '#time_ShipmentPackage_DeliveryATD';
   public static readonly DeliveryATDDate = '#date_ShipmentPackage_DeliveryATD';

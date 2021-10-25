@@ -281,7 +281,7 @@ export function FillOrdersTab(packagesDetails: PackagesDetails[], shipmentType?:
 }
 
 export function DeleteOrderPackage() {
-    cy.Click(BaseSelectors.DeleteButton, null)
+    cy.Click(BaseSelectors.DeleteButton + BaseSelectors.FirstElement, null)
     cy.Click(BaseSelectors.RedButton + BaseSelectors.LastElement, null)
 }
 //#endregion
@@ -366,6 +366,11 @@ export function FillPackageTab(transportMode: string, packagesDetails: PackagesD
             cy.FillLogTextBox(ShipmentSelectors.PackageChargeableWeight, packagesDetails[i].ChargeableWeight.toString(), true)
         }
     }
+}
+
+export function GenerateFromOrderPackage() {
+    cy.Click(ShipmentSelectors.PackagesTab_Number + BaseSelectors.LastElement, null)
+    cy.Click(ShipmentSelectors.HyperLinkGenerateFromOrderPackage, null)
 }
 
 export function DeleteShipmentPackages() {
