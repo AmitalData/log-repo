@@ -20,6 +20,8 @@ import { GenericTableModule } from 'Customs/Components/generic-table/generic-tab
 import {TabViewModule} from 'primeng/tabview';
 import {SplitButtonModule} from 'primeng/splitbutton';
 import { MenuModule } from 'primeng/menu';
+import { DialogsService } from './Components/NewEntity/Services/dialogs/dialogs.service';
+import { NewQuoteValidateEntityService } from './Components/NewEntity/Services/new-quote-validate-entity/new-quote-validate-entity.service';
 
 @NgModule({
     imports: [InfrastructureModule,
@@ -45,6 +47,8 @@ import { MenuModule } from 'primeng/menu';
         NewQuoteDataService,
         NewQuoteOPWebService,
         MessageService,
+        DialogsService,
+        NewQuoteValidateEntityService,
     ],
     entryComponents: [...Components, ...SharedComponents],
     exports: [...SharedComponents],

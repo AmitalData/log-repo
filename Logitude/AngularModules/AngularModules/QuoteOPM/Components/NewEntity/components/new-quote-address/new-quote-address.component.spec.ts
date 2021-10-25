@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { NewQuotePickupComponent } from './new-quote-pickup.component';
+import { NewQuoteAddressComponent } from './new-quote-address.component';
 
-describe('NewQuotePickupComponent', () => {
-  let component: NewQuotePickupComponent;
-  let fixture: ComponentFixture<NewQuotePickupComponent>;
+describe('NewQuoteAddressComponent', () => {
+  let component: NewQuoteAddressComponent;
+  let fixture: ComponentFixture<NewQuoteAddressComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ NewQuotePickupComponent ]
+      declarations: [ NewQuoteAddressComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(NewQuotePickupComponent);
+    fixture = TestBed.createComponent(NewQuoteAddressComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

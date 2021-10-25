@@ -5,8 +5,8 @@
     <p-autoComplete #autoComplete [formControlName]="controlName" [id]="label" [suggestions]="selected" [dropdown]="dropIcon"
         (completeMethod)="search($event)" (onBlur)='onBlur()' [field]='fieldShow' (onSelect)='onSelected($event)' [(ngModel)]="selectedChoice">
 
-        <ng-template pTemplate="item" let-x>
-            <div class="autocomplete-col" *ngFor='let col of columnsNames'>{{x[col]}}</div>
+        <ng-template pTemplate="item" let-x let-i='index'>
+            <div [ngClass]='{"highlight-row":(i + 1)%2}' class="autocomplete-col" *ngFor='let col of columnsNames'>{{x[col]}}</div>
         </ng-template>
 
     </p-autoComplete>
