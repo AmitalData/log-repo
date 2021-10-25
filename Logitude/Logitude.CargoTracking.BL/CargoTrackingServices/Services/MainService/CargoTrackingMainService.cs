@@ -436,7 +436,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
                 tableConditionCommand = AddDefaultWhereCondition(cargoTrackingDataBaseArgs, table);
 
             SqlCommand commandSourceData = new SqlCommand(tableConditionCommand, sourceConnection);
-            commandSourceData.Transaction = sourceConnection.BeginTransaction(IsolationLevel.Snapshot);
+            //commandSourceData.Transaction = sourceConnection.BeginTransaction(IsolationLevel.Snapshot);
             commandSourceData.CommandTimeout = (int)ServiceHelper.TimeOut;
             SqlDataReader reader = commandSourceData.ExecuteReader(CommandBehavior.CloseConnection);
 

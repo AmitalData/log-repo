@@ -619,6 +619,11 @@ export class CargoTrackingShipmentPM {
     public set PaymentReceivedNotes(newValue: string) { if (this.paymentReceivedNotes != newValue) { this.paymentReceivedNotes = newValue; this.MarkAsDirty("PaymentReceivedNotes"); } }
        
 	 
+    private poNumber: string;
+    public get PoNumber() { return this.poNumber; }
+    public set PoNumber(newValue: string) { if (this.poNumber != newValue) { this.poNumber = newValue; this.MarkAsDirty("PoNumber"); } }
+       
+	 
 
     public OldEntityPM: CargoTrackingShipmentPM;
 		
@@ -647,4 +652,4 @@ export class CargoTrackingShipmentPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

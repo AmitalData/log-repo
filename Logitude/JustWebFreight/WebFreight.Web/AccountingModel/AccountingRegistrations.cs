@@ -34,7 +34,7 @@ namespace WebFreight.Web.AccountingModel
             ContainerAccessor.Container.RegisterType<IInterestTransactionUpdateServiceExt, InterestTransactionUpdateServiceExt>("InterestTransactionUpdateServiceExt", new InjectionFactory(c => new InterestTransactionUpdateServiceExt()));
             ContainerAccessor.Container.RegisterType<IInterestReportUpdateServiceExt, InterestReportUpdateServiceExt>("InterestReportUpdateServiceExt", new InjectionFactory(c => new InterestReportUpdateServiceExt()));
             ContainerAccessor.Container.RegisterType<IInterestReportsConnectedInvoiceUpdateServiceExt, InterestReportsConnectedInvoiceUpdateServiceExt>("InterestReportsConnectedInvoiceUpdateServiceExt", new InjectionFactory(c => new InterestReportsConnectedInvoiceUpdateServiceExt()));
-
+            ContainerAccessor.Container.RegisterType<IARPaymentBankTranferUpdateServiceExt, ARPaymentBankTranferUpdateServiceExt>("ARPaymentBankTranferUpdateServiceExt", new InjectionFactory(c => new ARPaymentBankTranferUpdateServiceExt()));
 
             // Query Service
             ContainerAccessor.Container.RegisterType<ICashBookQueryServiceExt, CashBookQueryServiceExt>("CashBookQueryServiceExt", new InjectionFactory(c => new CashBookQueryServiceExt()));
@@ -51,7 +51,7 @@ namespace WebFreight.Web.AccountingModel
             ContainerAccessor.Container.RegisterType<IGLAccountCardsDataUpdateServiceExt, GLAccountCardsDataUpdateServiceExt>("GLAccountCardsDataUpdateServiceExt", new InjectionFactory(c => new GLAccountCardsDataUpdateServiceExt()));
             ContainerAccessor.Container.RegisterType<IGLAccountCurrencyQueryServiceExt, GLAccountCurrencyQueryServiceExt>("GLAccountCurrencyQueryServiceExt", new InjectionFactory(c => new GLAccountCurrencyQueryServiceExt()));
             ContainerAccessor.Container.RegisterType<ILedgerTransactionQueryService, LedgerTransactionQueryServiceExt>("LedgerTransactionQueryServiceExt", new InjectionFactory(c => new LedgerTransactionQueryServiceExt()));
-
+            ContainerAccessor.Container.RegisterType<IARPaymentBankTranferQueryServiceExt, ARPaymentBankTranferQueryServiceExt>("ARPaymentBankTranferQueryServiceExt", new InjectionFactory(c => new ARPaymentBankTranferQueryServiceExt()));
 
         }
     }

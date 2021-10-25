@@ -44,3 +44,16 @@ export function ApproveARPayment() {
 export function AssertApproveARPayment() {
     BaseAssertion.AssertStatusCode(RequestAliases.ARPayments, 200)
 }
+
+export function VoidARPayment() {
+    cy.DefineRequestWait(RestAPI.PUT, URLs.ARPayments, RequestAliases.ARPayments)
+    cy.Click(BaseSelectors.MenuButtons, null)
+    cy.Click(ARPaymentSelectors.VoidButton, null)
+    cy.FillLogTextBox(ARPaymentSelectors.CancelationNotes, "Cancel")
+    cy.Click(BaseSelectors.RedButton + BaseSelectors.LastElement, null)
+    cy.Click(BaseSelectors.RedButton + BaseSelectors.LastElement, null)
+}
+
+export function AssertVoidARPayment() {
+    BaseAssertion.AssertStatusCode(RequestAliases.ARPayments, 200)
+}

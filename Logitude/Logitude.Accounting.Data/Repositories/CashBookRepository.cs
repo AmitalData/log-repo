@@ -62,6 +62,15 @@ namespace Logitude.Accounting.Data.Repositories
                     select a).FirstOrDefault();
         }
 
+        public bool CheckIfCashbookLinereateForPaymentCheque(string cashbookId, string paymentChequeId, int tenant)
+        {
+          
+            return (from a in context.CashBookLines
+                    where a.CashBookId == cashbookId && a.ARPChequeId == paymentChequeId 
+                    && a.Tenant == tenant
+                    select a).Any();
+        }
+
         public List<CashBook> GetListByPaymentAndCurrencyAndBranch(string code, string currencyId, string branch, int tenant)
         {
             List<CashBook> cashbook = (from a in context.CashBooks

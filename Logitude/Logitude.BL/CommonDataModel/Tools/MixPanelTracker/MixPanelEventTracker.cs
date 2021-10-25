@@ -18,7 +18,7 @@ namespace Logitude.BL.CommonDataModel.Tools.MixPanelTracker
     {
         private static readonly HttpClient client = new HttpClient();
         private const string trackEventAPIURI = "https://api.mixpanel.com/track#live-event";
-        string masterUserId;
+        string userEmail;
         string projectToken;
         private int tenant;
         private TenantManagementPM tenantManagement;
@@ -27,10 +27,10 @@ namespace Logitude.BL.CommonDataModel.Tools.MixPanelTracker
         {
             this.projectToken = projectToken;
         }
-        public MixPanelEventTracker(string projectToken,string masterUserId, int tenant)
+        public MixPanelEventTracker(string projectToken,string email, int tenant)
         {
             this.projectToken = projectToken;
-            this.masterUserId = masterUserId;
+            this.userEmail = email;
             this.tenant = tenant;
         }
 
@@ -46,8 +46,8 @@ namespace Logitude.BL.CommonDataModel.Tools.MixPanelTracker
 
         private void AddPrimaryEventFields(MixPanelEvent mixPanelEvent)
         {
-            if (masterUserId != null)
-                mixPanelEvent.Properties.Add(new TrackingEventProperty("distinct_id", masterUserId));
+            if (userEmail != null)
+                mixPanelEvent.Properties.Add(new TrackingEventProperty("distinct_id", userEmail));
             mixPanelEvent.Properties.Add(new TrackingEventProperty("token", projectToken));
             mixPanelEvent.Properties.Add(new TrackingEventProperty("time", DateTimeOffset.Now.ToUnixTimeSeconds().ToString()));
             mixPanelEvent.Properties.Add(new TrackingEventProperty("browser", GetBrowserName()));

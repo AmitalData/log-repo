@@ -5,7 +5,7 @@ import { APPaymentDetails } from '../../models/APPaymentDetails';
 import * as Actions from '../../actions/Actions';
 
 //#region Create new AP Payment
-Given("the user logged in and navigates to Full Accounting workspace", () => {
+Given("the user logged in and navigates to Accounting workspace", () => {
     cy.Login();
     Actions.NavigatesToAccountingMenu()
 });
@@ -31,6 +31,6 @@ When("approve the AP Payment", () => {
 });
 
 Then("the AP Payment should approve successfully", () => {
-    APPaymentActions.AssertApproveAPPayment()
+    APPaymentActions.AssertUpdateAPPayment()
 });
 //#endregion

@@ -197,5 +197,7 @@ export class QuoteList {
 		RegionalTaxId: string;
 		RegionalTaxPercentage: number;
 		PackagesQuantity: number;
+		InlandDomesticFromCountryId: string;
+		InlandDomesticToCountryId: string;
 	
 }

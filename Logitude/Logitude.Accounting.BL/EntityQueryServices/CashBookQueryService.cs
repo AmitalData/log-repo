@@ -48,6 +48,13 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
             return EntityPM;
         }
+
+        public bool CheckIfCashbookLineCreatedForPaymentCheque(string cashBookId, string paymentChequeId, int tenant)
+        {
+            CashBookRepository cashBookRepo = new CashBookRepository(tenant);
+          return cashBookRepo.CheckIfCashbookLinereateForPaymentCheque(cashBookId, paymentChequeId, tenant);
+
+        }
         public CashBookPM GetByPaymentAndCurrencyAndBranch(string currency, string paymentMethod,string branch, int tenant)
         {
             CashBookRepository cashBookQuery = new CashBookRepository(tenant);
