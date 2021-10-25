@@ -20,8 +20,8 @@ using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Customs.BL.Messaging.Customs;
 using System.Diagnostics;
 using Logitude.CustomsMessaging.Dca;
-
-
+using System.Configuration;
+using Logitude.Server.Tools.Utils;
 
 namespace CustomsWorkerRole
 {
@@ -31,6 +31,7 @@ namespace CustomsWorkerRole
 
 
         private readonly int _SeedDefaultTenant;
+        private readonly DedicatedCourierDCAModel _DedicatedCourierDCAModel = null;
         private bool _OnStartDone;
         private List<Logitude.Customs.Def.EntityPMs.CustomsSettingPM> _AllCustomsSetting;
 
@@ -39,7 +40,11 @@ namespace CustomsWorkerRole
 
             _SeedDefaultTenant = 1;
             _SeedDefaultTenant = 0;
+            var dedicatedCourierDCAService = new DedicatedCourierDCAService();
+
+            this._DedicatedCourierDCAModel = dedicatedCourierDCAService.CreateDedicatedCourierDCA();
         }
+
         public override void Run()
         {
 
@@ -49,11 +54,11 @@ namespace CustomsWorkerRole
                 if (!General.IsUpdating())
                 {
 
-                    
+
                     try
                     {
                         WorkOnce();
-                        Thread.Sleep(TimeSpan.FromSeconds(2)); 
+                        Thread.Sleep(TimeSpan.FromSeconds(2));
                     }
                     catch (Exception e)
                     {
@@ -64,15 +69,15 @@ namespace CustomsWorkerRole
 
 
                 //Thread.Sleep(TimeSpan.FromMinutes(1));
-                
 
-                
+
+
             }
 
         }
 
-      
-   
+
+
         public override bool OnStart()
         {
             if (_OnStartDone) return true;
@@ -86,7 +91,7 @@ namespace CustomsWorkerRole
                 ///return;
             }
 
-            
+
 
 
             // Set the maximum number of concurrent connections 
@@ -113,7 +118,7 @@ namespace CustomsWorkerRole
         //}
         static DateTime _LastActiveAt;
         static DateTime _LastReadAllCustomsSetting;
-        
+
         public override void WorkOnce()
         {
             OnStart();
@@ -137,14 +142,14 @@ namespace CustomsWorkerRole
                 _AllCustomsSetting = customsSettingQueryService.GetAll();
             }
 
-            
-            
+
+
             var debugIIGMessageId = "";
             var debugTenant = this.Tenant;
             if (this.DebugObject != null)
             {
                 debugIIGMessageId = this.DebugObject.ToString();
-                
+
             }
 
             var costomSettingDCAList = _AllCustomsSetting.Where(env => !String.IsNullOrEmpty(env.DCAServiceAddress));
@@ -152,6 +157,19 @@ namespace CustomsWorkerRole
             {
                 costomSettingDCAList = costomSettingDCAList.Where(rec => rec.Tenant == debugTenant.GetValueOrDefault());
             }
+            if (_DedicatedCourierDCAModel != null)
+            {
+                costomSettingDCAList = _AllCustomsSetting
+                    //.Where(env => env.CompanyType == "B")
+                    .Where(env => env.Tenant == _DedicatedCourierDCAModel.Tenant);//Courier
+                if (!costomSettingDCAList.Any())
+                {
+                    Logger.LogMe("_DedicatedCourierDCAModel.Tenant is not valid!!!! must env.CompanyType == B and in customssetting !!", true);
+                    Thread.Sleep(TimeSpan.FromMinutes(3));
+                    return;
+                }
+            }
+            var sw = Stopwatch.StartNew();
             //var suppressTest = false;
             foreach (var costomSetting in costomSettingDCAList)
             {
@@ -165,7 +183,7 @@ namespace CustomsWorkerRole
                         this.LastActivity = DateTime.UtcNow;
                     };
                     myDcaService.LogDoneItemInMemoryAction = this.LogDoneItemInMemory;
-                    myDcaService.DownloadAll(debugIIGMessageId);
+                    myDcaService.DownloadAll(debugIIGMessageId, _DedicatedCourierDCAModel);
                 }
                 catch (Exception e)
                 {
@@ -175,8 +193,20 @@ namespace CustomsWorkerRole
                 }
 
             }
-            
+            SleepTil1Min(sw);
 
         }
+
+        private static void SleepTil1Min(Stopwatch sw)
+        {
+            var ts = sw.Elapsed;
+            sw.Stop();
+            if (ts < TimeSpan.FromMinutes(1))
+            {
+                //Thread.Sleep(TimeSpan.FromMinutes(1).Subtract(ts));
+                Thread.Sleep(TimeSpan.FromSeconds(5));
+            }
+        }
     }
+
 }
