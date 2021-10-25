@@ -94,11 +94,11 @@ export class QuoteOPPMService {
 
 			if (errorsArray.length == 0) {
 
-				var mappedEntity: QuoteOPPM = this.MapJsonToEntityPM(entityPM, false);
-				
-				return this._http.post(this._apiUrl, JSON.stringify(mappedEntity), ServiceHelper.GetHttpFullHeaders())
-					.pipe(
-						map((response: HttpResponse<any>) => {
+                var mappedEntity: QuoteOPPM = this.MapJsonToEntityPM(entityPM, false);
+
+                return this._http.post(this._apiUrl, JSON.stringify(mappedEntity), ServiceHelper.GetHttpFullHeaders())
+                    .pipe(
+                        map((response: HttpResponse<any>) => {
 
 							var pm = response.body;
 							if (pm) {
@@ -1014,9 +1014,13 @@ export class QuoteOPPMService {
     }
     MapQuoteProperties(entityPM: QuoteOPPM, jsonPM: any, mapParent: boolean = true) {
 
+        var oldQuoteProperties: QuoteOPPropertiesPM[] = [];
+        if (entityPM.OldEntityPM && !mapParent) {
+            oldQuoteProperties = entityPM.OldEntityPM.QuoteProperties;
+        }
+
         entityPM.QuoteProperties = new Array<QuoteOPPropertiesPM>();
         for (var item in jsonPM.QuoteProperties) {
-
             var jItem = jsonPM.QuoteProperties[item];
             if (mapParent && (jItem.ChangeSetOp == "Delete" || jItem.ChangeSetOp == 3)) {
                 continue;
@@ -1036,6 +1040,38 @@ export class QuoteOPPMService {
 			newQuoteOPPropertiesPM.DisableMarkAsDirty = false;
             newQuoteOPPropertiesPM.IsDirty = false;
             entityPM.QuoteProperties.push(newQuoteOPPropertiesPM);
+        }
+        if (oldQuoteProperties) {
+            
+            for (var itemKey in oldQuoteProperties) {
+                if (entityPM.QuoteProperties.filter(p=> p.UniqueKey === oldQuoteProperties[itemKey].UniqueKey).length === 0) {
+				
+                    if (oldQuoteProperties[itemKey]) {
+                        //oldQuoteProperties[itemKey].ChangeSetOp = "Delete";
+                        //entityPM.QuoteProperties.push(oldQuoteProperties[itemKey]);
+						var oldItemJson = oldQuoteProperties[itemKey];
+                        var deletedPM: QuoteOPPropertiesPM = new QuoteOPPropertiesPM(null);
+						deletedPM.DisableMarkAsDirty = true;
+                        var pmKeys = Object.keys(oldItemJson);
+                        for (var key in pmKeys) {
+
+                            if ((!mapParent && pmKeys[key] === "entityParentPM") || pmKeys[key] === "UIProperties" || pmKeys[key] === "OldEntityPM" || pmKeys[key] === "PropertyChanged") {
+                                continue;
+                            }
+
+                            var property = pmKeys[key];
+                            deletedPM[property] = oldItemJson[property];
+                        }
+
+					    deletedPM.DisableMarkAsDirty = false;
+                        deletedPM.IsDirty = false;
+                        deletedPM.ChangeSetOp = "Delete";
+                        
+                        deletedPM.OldEntityPM = null;
+                        entityPM.QuoteProperties.push(deletedPM);
+                    }
+                }
+            }
         }
     }
 

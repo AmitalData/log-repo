@@ -101,7 +101,7 @@ export class NewQuoteComponent {
         
         propertiesForms.forEach((propertyFormGroup: FormGroup) => {
             const propertyForm: FormGroup["controls"] = propertyFormGroup.controls;
-            const propertiesPM: QuoteOPPropertiesPM = new QuoteOPPropertiesPM();
+            const propertiesPM: QuoteOPPropertiesPM = new QuoteOPPropertiesPM(this.EntityPM);
 
             propertiesPM.FromAddressCity = (propertyForm.delivery as FormGroup).value.city
             propertiesPM.FromAddressCountryId = (propertyForm.delivery as FormGroup).value.country?.Id

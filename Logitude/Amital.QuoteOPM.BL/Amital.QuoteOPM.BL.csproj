@@ -166,6 +166,7 @@
     <Compile Include="EntityUpdateServices\OPSpecialServicesTypeRepository.cs" />
     <Compile Include="EntityUpdateServices\QuoteOPChargeUpdateService.cs" />
     <Compile Include="EntityUpdateServices\QuoteOPDocumentVersionUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\QuoteOPPropertiesUpdateService.cs" />
     <Compile Include="EntityUpdateServices\QuoteOPPackageUpdateService.cs" />
     <Compile Include="EntityUpdateServices\QuoteOPPriceStepsUpdateService.cs" />
     <Compile Include="EntityUpdateServices\QuoteOPTotalVATUpdateService.cs" />
