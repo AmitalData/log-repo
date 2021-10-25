@@ -22,7 +22,7 @@ using Amital.QuoteOPM.Data;
 
 namespace Amital.QuoteOPM.BL.EntityUpdateServices
 { 
-   public partial class QuoteOPPropertiesUpdateService:EntityUpdateService<QuoteOPProperties,QuoteOPPropertiesPM,EntityPM>
+   public partial class QuoteOPPropertiesUpdateService:EntityUpdateService<QuoteOPProperties,QuoteOPPropertiesPM,QuoteOPPM>
    {
    
         QuoteOPPropertiesRepository entityRepository;

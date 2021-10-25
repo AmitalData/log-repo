@@ -7,6 +7,10 @@ export class NewQuoteValidateEntityService {
   errorList: string[] = [];
   form: FormGroup = null as any;
 
+  get formValue(): any {
+    return this.form.value;
+  }
+
   constructor(
     private messageService: MessageService,
   ) { }
@@ -17,18 +21,21 @@ export class NewQuoteValidateEntityService {
 
     this.checkPartner();
     // this.checkProperties();
+    this.checkCloseDate();
+    this.checkAddress();
     this.checkValidator(this.form)
 
     this.showErrorMessage();
 
-    return this.errorList.length > 0;
+    return this.errorList.length === 0;
   }
 
   private showErrorMessage(): void {
-    this.messageService.add({ severity: 'error', summary: 'Create new quote failed.', detail: this.errorList.join('\n'), life: 30 * 1000 });
+    if (this.errorList.length > 0)
+      this.messageService.add({ severity: 'error', summary: 'Create new quote failed.', detail: this.errorList.join('\n'), life: 30 * 1000 });
   }
 
-  checkPartner(): void {
+  private checkPartner(): void {
     // must set shipper or consignee
 
     const shipperForm: any = this.form.controls.shipper.value;
@@ -38,13 +45,28 @@ export class NewQuoteValidateEntityService {
       this.errorList.push('Shipperr or consignee and is contact is requierd.')
   }
 
-  checkCloseDate() {
-    const value: any = this.form.controls.value;
-    
-    if (value.isAutomaticallyClosed) {
-      if (!value.automaticallyCloseDays)
+  private checkAddress(): void {
+    this.formValue.properties.forEach((property: any) => {
+      [
+        { partner: this.formValue.shipper, address: property.pickup, addressName: 'pickup' },
+        { partner: this.formValue.consignee, address: property.delivery, addressName: 'delivery' },
+      ].forEach(x => {
+        if (!x.partner.partner && x.address.include) {
+          if (!x.address.city)
+            this.errorList.push(`city in ${x.addressName} is required`)
+
+          if (!x.address.country)
+            this.errorList.push(`cuontry in ${x.addressName} is required`)
+        }
+      });
+    });
+  }
+
+  private checkCloseDate() {
+    if (this.formValue.isAutomaticallyClosed) {
+      if (!this.formValue.automaticallyCloseDays)
         this.errorList.push('Close days is requierd.')
-      if (!value.automaticallyCloseDate)
+      if (!this.formValue.automaticallyCloseDate)
         this.errorList.push('Close date is requierd.')
     }
   }
