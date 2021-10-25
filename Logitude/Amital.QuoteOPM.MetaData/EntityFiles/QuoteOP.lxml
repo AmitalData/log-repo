@@ -29756,7 +29756,7 @@
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;QuoteOP.O.NewQuote.IncludePickUp&quot;"
+      Code="&quot;QuoteOP.O.NewQuote.IncludePickup&quot;"
       DefaultText="&quot;Include PickUp&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
@@ -30904,6 +30904,11 @@
       Code="&quot;QuoteOP.F.PackageTypeQuantity.Short&quot;"
       DefaultText="&quot;Quantity&quot;"
       TextCodeTypeCode="&quot;F&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;QuoteOP.S.NewQuote.CloseDate&quot;"
+      DefaultText="&quot;Close Date&quot;"
+      TextCodeTypeCode="&quot;S&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>

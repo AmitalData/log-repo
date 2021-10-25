@@ -1655,24 +1655,6 @@ export class QuoteOPPM {
         }
     }
 
-    public AddQuoteProperties(item: QuoteOPPropertiesPM) {
-        if (item != null) {
-            var index = this. QuoteProperties.indexOf(item);
-            if (index == -1) {                
-                this. QuoteProperties.push(item);
-                this.MarkAsDirty();
-            }
-        }
-    }
-    public RemoveQuoteProperties(item: QuoteOPPropertiesPM) {
-        if (item != null) {
-            var index = this. QuoteProperties.indexOf(item);
-            if (index > -1) {
-                this. QuoteProperties.splice(index, 1);                
-            }
-        }
-    }
-
     public OldEntityPM: QuoteOPPM;
 		
     public IsDirty: boolean;
@@ -1700,4 +1682,4 @@ export class QuoteOPPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}
