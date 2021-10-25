@@ -728,6 +728,7 @@ namespace WebFreight.Web.DataProviders
 
         public string VatAmountInForeignCurrency { get; set; }
         public string ForeignToInvoiceExchangeRate { get; set; }
+        public double? ForeignToInvoiceExchangeRate_Double { get; set; }
 
         public double? LocalAmountWithVAT { get; set; }
         public string VATDescription { get; set; }
