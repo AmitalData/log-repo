@@ -1268,12 +1268,12 @@ export class DateTool {
         myResult.setUTCMilliseconds(0);
         return myResult;
     }
-    public static GetCurrentDateAsUtcForAccountingValidation() {
+    public static GetCurrentDateAsUtcForAccountingValidation(timeZoneOffset:number) {
         var myResult: Date = new Date();
         myResult.setUTCFullYear(myResult.getUTCFullYear());
         myResult.setUTCMonth(myResult.getUTCMonth());
         myResult.setUTCDate(myResult.getUTCDate());
-        myResult.setUTCHours(0);
+        myResult.setUTCHours(myResult.getUTCHours() + timeZoneOffset);
         myResult.setUTCMinutes(0);
         myResult.setUTCSeconds(0);
         myResult.setUTCMilliseconds(0);
