@@ -1245,61 +1245,71 @@ namespace WebFreight.Web.ReportsWebServices
                 }
             }
         }
+
         private void MapShipmentCustomsAgent()
         {
-            dataProvider.ImportCustomsAgentFullDetails = GetCardFullDetails(shipment.CustomAgentImportId);
-            dataProvider.ExportCustomsAgentFullDetails = GetCardFullDetails(shipment.CustomAgentExportId);
+            dataProvider.ImportCustomsAgentFullDetails = GetCustomsAgentFullDetails(shipment.CustomAgentImportId,
+                                                                                    shipment.CustomAgentImportAddressId);
+            dataProvider.ExportCustomsAgentFullDetails = GetCustomsAgentFullDetails(shipment.CustomAgentExportId,
+                                                                                    shipment.CustomAgentExportAddressId);
         }
 
-        private string GetCardFullDetails(string id)
+        private string GetCustomsAgentFullDetails(string agentId,string agentAdressId)
         {
             string fullDetails = "";
-            if (string.IsNullOrEmpty(id))
+            if (string.IsNullOrEmpty(agentId))
             {
                 return fullDetails;
             }
-
-            fullDetails += GetCardAddressDetails(id);
-            fullDetails += GetCardContactDetails(id);
-
+            Card agentCard = CardRepository.GetSingleCard(agentId, tenant, true);
+            if (agentCard == null)
+            {
+                return fullDetails;
+            }
+            fullDetails += Environment.NewLine + agentCard.EnglishName;
+            fullDetails += GetCardAddressDetails(agentAdressId) + Environment.NewLine;
+            fullDetails += GetCardContactDetails(agentCard.PrimaryContactId);
             return fullDetails;
         }
 
         private string GetCardAddressDetails(string id)
         {
             string fullAddress = "";
+            if (string.IsNullOrEmpty(id))
+            {
+                return fullAddress;
+            }
             Address address = addressRepository.GetSingleAddress(id, tenant);
             if (address == null)
             {
                 return fullAddress;
             }
-
             fullAddress = DataProviders.General.GetAddress(address);
             if (!string.IsNullOrEmpty(address.PhoneNumber) || !string.IsNullOrEmpty(address.FaxNumber))
             {
                 fullAddress += Environment.NewLine;
             }
-
-            fullAddress = !string.IsNullOrEmpty(address.PhoneNumber) ? fullAddress + "Tel: " + address.PhoneNumber + " ": fullAddress;
+            fullAddress = !string.IsNullOrEmpty(address.PhoneNumber) ? fullAddress + "Tel: " + address.PhoneNumber + " " : fullAddress;
             fullAddress = !string.IsNullOrEmpty(address.FaxNumber) ? fullAddress + "Fax: " + address.FaxNumber + " " : fullAddress;
-        
+
             return fullAddress;
         }
 
-        private string GetCardContactDetails(string id)
+        private string GetCardContactDetails(string contactId)
         {
-            string contactDetails = "";   
-            Contact contact = ContactRepository.GetSingleContact(shipment.CustomClearancePointContactId, tenant, true);
-
+            string contactDetails = "";
+            if (string.IsNullOrEmpty(contactId))
+            {
+                return contactDetails;
+            }
+  
+            Contact contact = ContactRepository.GetSingleContact(contactId, tenant, true);
             if (contact == null)
             {
                 return contactDetails;
             }
-
-            contactDetails = contact.EnglishName;
-            contactDetails += contact.BusinessPhone;
-            contactDetails += contact.Email;
-            return contactDetails;
+            return string.Join(",", new string[] { contact.EnglishName, contact.BusinessPhone, contact.Email }
+                         .Where(s => !string.IsNullOrEmpty(s)));
         }
     }
 }
