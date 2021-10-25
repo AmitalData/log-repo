@@ -979,7 +979,7 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
             errors.push(msg.replace("%FieldName", TextCodeTranslator.Translate("ARPayment.F.RegisterDate")));
         }
 
-        else if (DateTool.GetDateParts(this.RegisterDate).DateTicks > DateTool.GetCurrentDateAsUtcForAccountingValidation().valueOf()) {
+        else if (DateTool.GetDateParts(this.RegisterDate).DateTicks > DateTool.GetCurrentDateAsUtcForAccountingValidation(SessionLocator.TenantPM.TimeZoneOffset).valueOf()) {
             errors.push(TextCodeTranslator.Translate("ARPayment.M.CantSetFutureDatePayment"));
         }
 

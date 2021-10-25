@@ -721,12 +721,12 @@ export class CopyInvoiceComponent extends BaseComponent implements OnInit  {
         if (this.InvoiceDate > this.AccountingDate) {
             this.errors.push(TextCodeTranslator.Translate("APInvoice.O.CheckInvoiceDate"));
         }
- 
-        else if (DateTool.GetDateParts(this.InvoiceDate).DateTicks > DateTool.GetCurrentDateAsUtcForAccountingValidation().valueOf()) {
+
+        else if (DateTool.GetDateParts(this.InvoiceDate).DateTicks > DateTool.GetCurrentDateAsUtcForAccountingValidation(SessionLocator.TenantPM.TimeZoneOffset).valueOf()) {
             this.errors.push(TextCodeTranslator.Translate("APInvoice.M.CantReceiveFutureDateInvoice"));
         }
 
-        if (DateTool.GetDateParts(this.AccountingDate).DateTicks > DateTool.GetCurrentDateAsUtcForAccountingValidation().valueOf()) {
+        if (DateTool.GetDateParts(this.AccountingDate).DateTicks > DateTool.GetCurrentDateAsUtcForAccountingValidation(SessionLocator.TenantPM.TimeZoneOffset).valueOf()) {
             this.errors.push("Cant issue Invoice with Future Accounting Date");
         }
   
