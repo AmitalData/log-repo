@@ -592,6 +592,26 @@ export class QuoteOPChargePM {
     public set TariffLineId(newValue: string) { if (this.tariffLineId != newValue) { this.tariffLineId = newValue; this.MarkAsDirty("TariffLineId"); } }
        
 	 
+    private tariffCostNo: string;
+    public get TariffCostNo() { return this.tariffCostNo; }
+    public set TariffCostNo(newValue: string) { if (this.tariffCostNo != newValue) { this.tariffCostNo = newValue; this.MarkAsDirty("TariffCostNo"); } }
+       
+	 
+    private tariffSaleNo: string;
+    public get TariffSaleNo() { return this.tariffSaleNo; }
+    public set TariffSaleNo(newValue: string) { if (this.tariffSaleNo != newValue) { this.tariffSaleNo = newValue; this.MarkAsDirty("TariffSaleNo"); } }
+       
+	 
+    private tariffCostXML: string;
+    public get TariffCostXML() { return this.tariffCostXML; }
+    public set TariffCostXML(newValue: string) { if (this.tariffCostXML != newValue) { this.tariffCostXML = newValue; this.MarkAsDirty("TariffCostXML"); } }
+       
+	 
+    private tariffSaleXML: string;
+    public get TariffSaleXML() { return this.tariffSaleXML; }
+    public set TariffSaleXML(newValue: string) { if (this.tariffSaleXML != newValue) { this.tariffSaleXML = newValue; this.MarkAsDirty("TariffSaleXML"); } }
+       
+	 
 
     public OldEntityPM: QuoteOPChargePM;
 	
