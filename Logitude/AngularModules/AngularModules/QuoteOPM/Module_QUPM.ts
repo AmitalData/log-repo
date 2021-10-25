@@ -22,9 +22,11 @@ import {SplitButtonModule} from 'primeng/splitbutton';
 import { MenuModule } from 'primeng/menu';
 import { DialogsService } from './Components/NewEntity/Services/dialogs/dialogs.service';
 import { NewQuoteValidateEntityService } from './Components/NewEntity/Services/new-quote-validate-entity/new-quote-validate-entity.service';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
     imports: [InfrastructureModule,
+        CommonModule,
         FormsModule,
         ReactiveFormsModule,
         AutoCompleteModule,

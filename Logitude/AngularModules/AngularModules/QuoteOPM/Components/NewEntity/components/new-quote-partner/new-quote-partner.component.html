@@ -35,7 +35,7 @@
         <i class="pi pi-plus plus-btn" (click)='addContact()'></i>
       </div>
       <div class="p-field">
-        <label [for]="type + 'notes'">{{'QuoteOP.S.NewQuote.notes' | TextCodeTranslationPipe}}</label>
+        <label [for]="type + 'notes'">{{'QuoteOP.S.NewQuote.' + capitalizeType + 'Notes' | TextCodeTranslationPipe}}</label>
         <textarea formControlName="notes" [id]="type + 'notes'" pInputTextarea [rows]="4"></textarea>
       </div>
 

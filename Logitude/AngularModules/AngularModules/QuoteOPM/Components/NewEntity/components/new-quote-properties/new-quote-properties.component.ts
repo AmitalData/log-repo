@@ -25,11 +25,11 @@ export class NewQuotePropertiesComponent implements OnInit {
   get propForm(): FormGroup {
     return new FormGroup({
       fromPort: new FormControl('', Validators.required),
-      toPort: new FormControl(),
+      toPort: new FormControl('', Validators.required),
       specialService: new FormControl(),
-      mainCarriageCarrier: new FormControl(),
-      incoterm: new FormControl(),
-      delivery: new FormGroup({}),
+      mainCarriageCarrier: new FormControl('', Validators.required),
+      incoterm: new FormControl('', Validators.required),
+      // delivery: new FormGroup({}),
       // pickup: new FormGroup({}),
     })
   }

@@ -18,6 +18,7 @@ import { NewQuoteValidateEntityService } from "./Services/new-quote-validate-ent
 export class NewQuoteComponent {
     EntityPM: QuoteOPPM = new QuoteOPPM();
     formGroup = new FormGroup({});
+    isSubmit: boolean = false;
 
     constructor(
         private newQuoteDataService: NewQuoteDataService,
@@ -32,7 +33,8 @@ export class NewQuoteComponent {
         //     this.test()
     }
 
-    async create() {
+    async create() {        
+        this.isSubmit = true;
         if(!this.ValidateService.validate(this.formGroup)) return;
         if (this.formGroup.invalid) return;
 

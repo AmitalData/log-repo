@@ -94,8 +94,4 @@ export class NewQuoteGeneralComponent implements OnInit {
       this.formGroup.controls.automaticallyCloseDate.setValue(date);
     }
   }
-
-  onSelectedMoveType(val:MoveTypeList){
-    this.EntityPM.MoveTypeId = val.Id;
-  }
 }
