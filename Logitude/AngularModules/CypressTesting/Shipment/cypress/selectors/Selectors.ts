@@ -53,6 +53,7 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly EventsTab = '#ShipmentTHEvents';
   public static readonly ConnectionsTab = '#ShipmentTHConnections';
   public static readonly CustomsTab = '#ShipmentTHCustoms';
+  public static readonly StartWithPayablesTab = '[id^=ShipmentTHPayables]'
   //#endregion
 
   //#region General tab
@@ -237,7 +238,10 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly LogLovShipmentReceivableCurrencyId = "#LogLov_ShipmentReceivable_CurrencyId"
   //#endregion
 
-  //#region Payable tab fields
+  //#region Payable tab
+  public static readonly MasterExpectedAmount = "[data-cy='MasterExpectedAmount']";
+  public static readonly HouseExpectedAmount = "[data-cy='HouseExpectedAmount']";
+  public static readonly SumOfAmount = "[data-cy='SumOfAmount']";
   public static readonly AddNewPayableLine = '#AddPayable button';
   public static readonly AddPayableOkButton = '#Ok-AddPayableBtn';
   public static readonly ShipmentPayableChargesType = '#ShipmentPayable_ChargesTypeId';
@@ -360,8 +364,7 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly PickUpDeliveryETDDate = "#date_ShipmentPickUpDelivery_ETD"
   public static readonly PickUpDeliveryETDTime = "#time_ShipmentPickUpDelivery_ETD"
   //#endregion
-  public static readonly ComponentBusyIndicator = "#EditComponentBusyIndicator_0"
-
+  public static readonly ComponentBusyIndicator = "div[id^='EditComponentBusyIndicator']:last";
 
   //#region Shipment view
   public static readonly ShipmentList = "#Shipments-O-Q";
