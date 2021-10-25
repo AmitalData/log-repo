@@ -87,7 +87,7 @@ export class DSVApprovePaymentComponent extends BaseComponent implements OnInit,
             this.AdditionalData = args.AdditionalData;
             
                 if (!AppTool.IsNullOrEmpty(this.AdditionalData.DenyReason)) {
-                    this.DimDenyButton = true;
+                    //this.DimDenyButton = true;
                 }
                 if (!AppTool.IsNullOrEmpty(this.AdditionalData.ApprovedByUserName) && !AppTool.IsNullOrEmpty(this.AdditionalData.VersionApproved) && (this.AdditionalData.VersionApproved == this.AdditionalData.VersionId)) {
                     var today = new Date(this.AdditionalData.ApproveDateTime);
