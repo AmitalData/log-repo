@@ -120,10 +120,9 @@
                                     </ng-template>
                                 </log-column>
 
-                                <log-column [header]="'Customs.DecCargoSplitConsPackDet.F.ManifestNumber' | TextCodeTranslationPipe" [binding]="'ManifestNumber'" [width]="'130'" [Editable]="true" [Alignment]="'right'" >
+                                <log-column *ngIf="!IsExportDeclaration" [header]="'Customs.DecCargoSplitConsPackDet.F.ManifestNumber' | TextCodeTranslationPipe" [binding]="'ManifestNumber'" [width]="'130'" [Editable]="true" [Alignment]="'right'">
                                     <ng-template let-item>
                                         <log-cell-template #logcelltemplate>
-                                            <div *ngIf="!IsExportDeclaration">
                                                 <div class="TextTrimming" style="text-align:right" *ngIf="logcelltemplate.IsDisplayMode">
                                                     <span>{{item.ManifestNumber}}</span>
                                                 </div>
@@ -132,7 +131,6 @@
                                                                 [Text]="item.ManifestNumber" [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
 
                                                 </div>
-                                            </div>
                                         </log-cell-template>
                                     </ng-template>
                                 </log-column>
