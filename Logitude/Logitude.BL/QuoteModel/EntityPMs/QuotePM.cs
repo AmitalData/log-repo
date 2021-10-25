@@ -735,5 +735,10 @@ namespace Logitude.BL.QuoteModel.EntityPMs
         public string MainCarriageToPortAddress { get; set; }
         public string FromCity { get; set; }
         public string ToCity { get; set; }
+        public string RoutingFrom { get; set; }
+        public string RoutingTo { get; set; }
+        public string FromZipCode { get; set; }
+        public string ToZipCode { get; set; }
+        
     }
 }
