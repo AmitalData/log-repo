@@ -8,6 +8,7 @@ import { QuoteOPPM } from "QuoteOPM/EntityPMs/QuoteOPPM";
 import { QuoteOPPropertiesPM } from "QuoteOPM/EntityPMs/QuoteOPPropertiesPM";
 import { QuoteOPPMService } from "QuoteOPM/Services/StandardPMs/QuoteOPPMService";
 import { NewQuoteDataService } from "./Services/new-quote-data/new-quote-data.service";
+import { NewQuoteValidateEntityService } from "./Services/new-quote-validate-entity/new-quote-validate-entity.service";
 
 
 @Component({
@@ -21,6 +22,7 @@ export class NewQuoteComponent {
     constructor(
         private newQuoteDataService: NewQuoteDataService,
         private messageService: MessageService,
+        private ValidateService: NewQuoteValidateEntityService,
     ) { }
 
     async ngOnInit() {
@@ -31,6 +33,7 @@ export class NewQuoteComponent {
     }
 
     async create() {
+        if(!this.ValidateService.validate(this.formGroup)) return;
         if (this.formGroup.invalid) return;
 
         SessionLocator.SelectedSession.CurrentWindow.StartBusyIndicator('Create new quote... ');
@@ -116,7 +119,7 @@ export class NewQuoteComponent {
             propertiesPM.IncotermId = propertyForm.incoterm.value?.PTERMID
             propertiesPM.SpecialServiceID = propertyForm.specialService.value?.SERVLEVEL_ID;
 
-            this.EntityPM.AddQuoteProperties(propertiesPM)
+            this.EntityPM.QuoteProperties.push(propertiesPM)
         });
     }
 

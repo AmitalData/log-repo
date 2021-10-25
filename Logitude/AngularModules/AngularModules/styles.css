@@ -37,6 +37,6 @@
 }
 
 html body .p-toast-message-text .p-toast-detail {
-    white-space: initial;
+    white-space: pre-line;
     width: auto !important;
 }

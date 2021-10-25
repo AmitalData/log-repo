@@ -45,7 +45,6 @@ export class NewQuotePropertiesComponent implements OnInit {
   ngOnInit(): void {
     this.getIncoterms()
     let a = this.formArray[1]
-    console.log(a)
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -93,26 +92,6 @@ export class NewQuotePropertiesComponent implements OnInit {
 
   async getIncoterms() {
     this.incotermList = await this.newQuoteDataService.getIncoterms();
-  }
-
-  onSelectedtoPort(value: Port) {
-    // this.EntityPM.ToPortId = value.Code;
-  }
-
-  onSelectedFromPort(value: Port) {
-    // this.EntityPM.FromPortId = value.Code;
-  }
-
-  onMainCarriageCarrier(value: Carrier) {
-    // this.EntityPM.MainCarriageCarrierId = value.AIRLINE_ID;
-  }
-
-  onSelectedIncoterm(value: Incoterm) {
-    // this.EntityPM.IncotermId = value.PTERMID;
-  }
-
-  onSelectedSpecialService(value: SpecialService) {
-    // this.EntityPM.SpecialServiceId = value.SERVLEVEL_ID;
   }
 
   addProperty() {

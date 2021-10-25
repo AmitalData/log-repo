@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MoveTypeList } from 'Infrastructure/EntityLists/MoveTypeList';
 import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator';
 import { QuoteOPPM } from 'QuoteOPM/EntityPMs/QuoteOPPM';
@@ -30,7 +30,6 @@ export class NewQuoteGeneralComponent implements OnInit {
     this.getMoveTypeData()    
   }
 
-
   async getMoveTypeData(){
     this.moveTypes = await this.newQuoteDataService.getMoveTypeTable("A");
   }
@@ -44,15 +43,21 @@ export class NewQuoteGeneralComponent implements OnInit {
   }
 
   addFormControls() {
-    this.formGroup.addControl('quoteType', new FormControl(''));
-    this.formGroup.addControl('incotermId', new FormControl(''));
-    this.formGroup.addControl('moveType', new FormControl(''));
-    this.formGroup.addControl('startDate', new FormControl(''));
-    this.formGroup.addControl('expirationDays', new FormControl(''));
-    this.formGroup.addControl('expirationDate', new FormControl(''));
-    this.formGroup.addControl('isAutomaticallyClosed', new FormControl(''));
-    this.formGroup.addControl('automaticallyCloseDays', new FormControl(''));
-    this.formGroup.addControl('automaticallyCloseDate', new FormControl(''));
+    const dateNow = new Date();
+    const nextMonth = new Date(new Date().setMonth(new Date().getMonth()+1));
+    const closeDate = new Date(new Date().setDate(new Date().getDate()+45));
+    dateNow.setHours(0,0,0,0);
+    nextMonth.setHours(0,0,0,0);
+    closeDate.setHours(0,0,0,0);
+
+    this.formGroup.addControl('quoteType', new FormControl('', Validators.required));
+    this.formGroup.addControl('moveType', new FormControl('', Validators.required));
+    this.formGroup.addControl('startDate', new FormControl(dateNow, Validators.required));
+    this.formGroup.addControl('expirationDays', new FormControl(30, Validators.required));
+    this.formGroup.addControl('expirationDate', new FormControl(nextMonth, Validators.required));
+    this.formGroup.addControl('isAutomaticallyClosed', new FormControl(true));
+    this.formGroup.addControl('automaticallyCloseDays', new FormControl(45));
+    this.formGroup.addControl('automaticallyCloseDate', new FormControl(closeDate));
   }
   
   subscribeCtrls() {
@@ -66,15 +71,7 @@ export class NewQuoteGeneralComponent implements OnInit {
   }
 
   addDefaultValue() {
-    const dateNow = new Date();
-    dateNow.setHours(0,0,0,0);
-    const nextMonth = new Date(new Date().setMonth(new Date().getMonth()+1));
-    nextMonth.setHours(0,0,0,0);
-
     this.checkType(this.quoteTypes[0].code);
-    this.formGroup.controls.startDate.setValue(dateNow);
-    this.formGroup.controls.expirationDays.setValue(30);
-    this.formGroup.controls.expirationDate.setValue(nextMonth);
   }
   
   checkType(code:string) {
@@ -89,17 +86,13 @@ export class NewQuoteGeneralComponent implements OnInit {
       this.formGroup.controls.expirationDate.setValue(date);
     }
   }
-
+    
   closeDaysChange(e: any) {
     let date: Date =new Date(this.formGroup.controls.startDate.value.getTime());
     if (-1 < e.value) {
       date.setDate(date.getDate() + e.value)
       this.formGroup.controls.automaticallyCloseDate.setValue(date);
     }
-  }
-
-  onSelectedIncoterm(val:any){
-    this.EntityPM.IncotermId = val.Id;    
   }
 
   onSelectedMoveType(val:MoveTypeList){

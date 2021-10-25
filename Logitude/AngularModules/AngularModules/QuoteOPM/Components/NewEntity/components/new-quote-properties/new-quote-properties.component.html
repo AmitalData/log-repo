@@ -24,7 +24,7 @@
               <app-autocomplate-table [columnsShow]="{Code:'Code', Name: 'Name',CountryName:'CountryName'}"
                 [data]='toPortList' [fieldShow]='"Name"' [searchIcon]='true'
                 [label]="'QuoteOP.S.NewQuote.' + (formGroup.value.transportMode?.Id === 'A' ? 'Gateway': 'LoadingPort') | TextCodeTranslationPipe"
-                [controlName]='"fromPort"' [formGroup]='x' (onSelect)='onSelectedFromPort($event)'>
+                [controlName]='"fromPort"' [formGroup]='x'>
               </app-autocomplate-table>
             </div>
 
@@ -32,7 +32,7 @@
               <app-autocomplate-table [columnsShow]="{Code:'Code', Name: 'Name',CountryName:'CountryName'}"
                 [data]='fromPortList' [fieldShow]='"Name"' [searchIcon]='true'
                 [label]="'QuoteOP.S.NewQuote.' + (formGroup.value.transportMode?.Id === 'A' ? 'Destination': 'DischargePort') | TextCodeTranslationPipe"
-                [controlName]='"toPort"' [formGroup]='x' (onSelect)='onSelectedtoPort($event)'>
+                [controlName]='"toPort"' [formGroup]='x'>
               </app-autocomplate-table>
             </div>
 
@@ -53,14 +53,13 @@
               <app-autocomplate-table [columnsShow]="carrierColumns" [data]='mainCarriageCarrierList'
                 [fieldShow]='"Name"' [searchIcon]='true'
                 [label]="'QuoteOP.S.NewQuote.' + (formGroup.value.transportMode?.Id === 'A' ? 'Airline': 'Shippingline') | TextCodeTranslationPipe"
-                [controlName]='"mainCarriageCarrier"' [formGroup]='x' (onSelect)='onMainCarriageCarrier($event)'>
+                [controlName]='"mainCarriageCarrier"' [formGroup]='x'>
               </app-autocomplate-table>
             </div>
 
             <div class="p-field">
               <app-autocomplate-table [columnsShow]="{PTERMID:'Code', Name: 'Name'}" [data]='incotermList'
-                [fieldShow]='"Name"' [label]="'Incoterm'" [controlName]='"incoterm"' [formGroup]='x' [dropIcon]='true'
-                (onSelect)='onSelectedIncoterm($event)'>
+                [fieldShow]='"Name"' [label]="'Incoterm'" [controlName]='"incoterm"' [formGroup]='x' [dropIcon]='true'>
               </app-autocomplate-table>
             </div>
 
@@ -80,8 +79,7 @@
           <div class="col-4 p-fluid">
             <div class="p-field">
               <app-autocomplate-table [columnsShow]="{SERVLEVEL_ID:'Code', Name: 'Name'}" [data]='specialServiceList'
-                [fieldShow]='"Name"' [label]="'Special Services Type'" [controlName]='"specialService"' [formGroup]='x'
-                (onSelect)='onSelectedSpecialService($event)'>
+                [fieldShow]='"Name"' [label]="'Special Services Type'" [controlName]='"specialService"' [formGroup]='x'>
               </app-autocomplate-table>
             </div>
           </div>
