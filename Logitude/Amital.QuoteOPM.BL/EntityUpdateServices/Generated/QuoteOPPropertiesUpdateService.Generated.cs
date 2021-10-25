@@ -22,7 +22,7 @@ using Amital.QuoteOPM.Data;
 
 namespace Amital.QuoteOPM.BL.EntityUpdateServices
 { 
-   public partial class QuoteOPPropertiesUpdateService:EntityUpdateService<QuoteOPProperties,QuoteOPPropertiesPM,EntityPM>
+   public partial class QuoteOPPropertiesUpdateService:EntityUpdateService<QuoteOPProperties,QuoteOPPropertiesPM, QuoteOPPM>
    {
    
         QuoteOPPropertiesRepository entityRepository;
@@ -56,11 +56,8 @@ namespace Amital.QuoteOPM.BL.EntityUpdateServices
 
 		
 		protected override void FillDefaultValuesOnCreate(QuoteOPPropertiesPM entityPM)
-        {     
-  
-		
-		    entityPM.Id = IdCounter.GetNumber("QuoteOPProperties", entityPM.Tenant); 
-					
+        {     		
+		    entityPM.Id = IdCounter.GetNumber("QuoteOPProperties", entityPM.Tenant); 					
 	    }
         
 		protected override void FillDefaultValuesOnUpdate(QuoteOPPropertiesPM entityPM)
