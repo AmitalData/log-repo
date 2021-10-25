@@ -3837,7 +3837,7 @@ namespace WebFreight.Web.WebServices
 
             if (!string.IsNullOrEmpty(shipment.INTTRADocumentTypeCode))
             {
-                DocumentType documentType = commonContext.DocumentTypes.Where(d => d.Code == shipment.INTTRADocumentTypeCode && d.Tenant == tenant).FirstOrDefault();
+                INTTRADocumentType documentType = shipmentsContext.INTTRADocumentTypes.Where(d => d.Code == shipment.INTTRADocumentTypeCode).FirstOrDefault();
                 if (documentType != null)
                 {
                     myDataProvider.INTTRADocumentTypeName = documentType.Name;
