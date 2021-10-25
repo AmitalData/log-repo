@@ -40,7 +40,8 @@
   </fields>
   <Indexes>
       <Index Columns="[Source Tenant],[Create Date]" />
-      <Index Columns="[Source Tenant],[Main Entity Id]" />
+      <Index Columns="[Parent Tenant],[Create Date]" />
+      <Index Columns="[Main Entity Id]" />
       <Index Columns="[Id]" />
   </Indexes>
 </entity>
