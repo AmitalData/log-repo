@@ -94,11 +94,11 @@ export class QuoteOPPMService {
 
 			if (errorsArray.length == 0) {
 
-                var mappedEntity: QuoteOPPM = this.MapJsonToEntityPM(entityPM, false);
-
-                return this._http.post(this._apiUrl, JSON.stringify(mappedEntity), ServiceHelper.GetHttpFullHeaders())
-                    .pipe(
-                        map((response: HttpResponse<any>) => {
+				var mappedEntity: QuoteOPPM = this.MapJsonToEntityPM(entityPM, false);
+				
+				return this._http.post(this._apiUrl, JSON.stringify(mappedEntity), ServiceHelper.GetHttpFullHeaders())
+					.pipe(
+						map((response: HttpResponse<any>) => {
 
 							var pm = response.body;
 							if (pm) {
@@ -1026,19 +1026,49 @@ export class QuoteOPPMService {
                 continue;
             }
             var newQuoteOPPropertiesPM: QuoteOPPropertiesPM;
-            newQuoteOPPropertiesPM = new QuoteOPPropertiesPM();
-		    newQuoteOPPropertiesPM.DisableMarkAsDirty = true;                
+	  
+            if (mapParent) {
+                newQuoteOPPropertiesPM = new QuoteOPPropertiesPM(entityPM);
+            }
+            else
+            {
+                newQuoteOPPropertiesPM = new QuoteOPPropertiesPM(null);
+            }
+ 			newQuoteOPPropertiesPM.DisableMarkAsDirty = true;
+               
             var pmKeysArray = Object.keys(jItem);
             for (var pmKey in pmKeysArray) {
-			
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
                     continue;
                 }
                 var pmProperty = pmKeysArray[pmKey];
                 newQuoteOPPropertiesPM[pmProperty] = jItem[pmProperty];
             }
-			newQuoteOPPropertiesPM.DisableMarkAsDirty = false;
-            newQuoteOPPropertiesPM.IsDirty = false;
+           
+			 
+            if (mapParent) {
+                newQuoteOPPropertiesPM.UniqueKey = Guid.newGuid();
+                newQuoteOPPropertiesPM.ChangeSetOp = "None";
+                jItem.ChangeSetOp = "None";
+                newQuoteOPPropertiesPM.OldEntityPM = this.clone(newQuoteOPPropertiesPM);
+
+				
+            }
+            else {
+                if (newQuoteOPPropertiesPM.UniqueKey) {
+
+                    if (jItem.IsDirty)
+                        newQuoteOPPropertiesPM.ChangeSetOp = "Update";
+                }
+                else {
+                        newQuoteOPPropertiesPM.ChangeSetOp = "Insert";
+                }
+ 
+                newQuoteOPPropertiesPM.OldEntityPM = null;
+                newQuoteOPPropertiesPM.EntityParentPM = null;
+            }
+			 newQuoteOPPropertiesPM.DisableMarkAsDirty = false;
+			 newQuoteOPPropertiesPM.IsDirty = false;
             entityPM.QuoteProperties.push(newQuoteOPPropertiesPM);
         }
         if (oldQuoteProperties) {
