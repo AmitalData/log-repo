@@ -60,8 +60,7 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
     public IsDSVTenant: boolean = false;
     public FromPort: string;
     public ShowAddDocument: boolean = false;
-    public ChangePageButton: string = "Next";
-    public IsImportActivated: boolean = false;
+    public ChangePageButton: string = "Next"; 
     constructor() {
         super(); 
         this.InitializeServices();
@@ -199,17 +198,13 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
         this.SetUIProperties_Filters();
     }
 
-    private SetArgs(args: any) {
-        this.SetDirections(args);
+    private SetArgs(args: any) { 
         this.args = args;
         if (args.EntityPM) {
             this.EntityPM = args.EntityPM;
         }
     }
-
-    private SetDirections(args: any) {
-        this.IsImportActivated = args.IsImportActivated;
-    }
+ 
 
     private GetDepartment() {
         this._DepartmentListService.getAll().subscribe((result: any) => {
@@ -260,17 +255,11 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
     private BuildDirectionsList() {
         this.DirectionsList = [];
         this.DirectionsList.push(new FilterClass("E", "Export"));
-        this.DirectionsList.push(new FilterClass("C", "Customs"));
-
-        //this.SetCustomOption(); 
+        this.DirectionsList.push(new FilterClass("C", "Customs")); 
     }
      
 
-    private SetCustomOption() {
-        if (SessionLocator.PrivateLableSettings.IsImportActivated && this.IsImportActivated) {
-            this.DirectionsList.push(new FilterClass("C", "Customs"));
-        }
-    }
+    
 
 
     public get BranchId() { return this.EntityPM.BranchId }
