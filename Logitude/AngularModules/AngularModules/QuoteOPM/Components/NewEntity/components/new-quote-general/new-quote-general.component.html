@@ -27,9 +27,8 @@
   </div>
 
   <div class="col-3 p-field">
-    <app-autocomplate-table [columnsShow]="{Code:'Code',MoveTypeEnglishName:'English Name'}" [data]='moveTypes'
-      [fieldShow]='"MoveTypeEnglishName"' [label]="'Move Type'" [controlName]='"moveType"' [formGroup]='formGroup'
-      (onSelect)='onSelectedMoveType($event)'>
+    <app-autocomplate-table [columnsShow]="{Code:'Code',MoveTypeEnglishName:'English Name'}" [data]='moveTypes' [dropIcon]='true'
+      [fieldShow]='"MoveTypeEnglishName"' [label]="'Move Type'" [controlName]='"moveType"' [formGroup]='formGroup'>
     </app-autocomplate-table>
   </div>
 

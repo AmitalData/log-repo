@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AddressList } from 'Common/EntityLists/AddressList';
 import { CardList } from 'Common/EntityLists/CardList';
 import { ContactList } from 'Common/EntityLists/ContactList';
@@ -29,7 +29,7 @@ export class NewQuotePartnerComponent implements OnInit {
     partner: new FormControl(),
     contact: new FormControl(),
     notes: new FormControl(),
-    reference1: new FormControl(),
+    reference1: new FormControl('', Validators.required),
     reference2: new FormControl(),
   })
 

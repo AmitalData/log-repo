@@ -80,6 +80,12 @@
         -webkit-background-size: 100% 100%;
         background-size:cover;
     }
+
+    .ng-submitted p-autocomplete.ng-invalid input,
+    .ng-submitted p-autocomplete.ng-invalid .p-autocomplete-dropdown,
+    .ng-submitted .ng-invalid {
+        border-color: #f44336;
+    }
 }
 
 :host {

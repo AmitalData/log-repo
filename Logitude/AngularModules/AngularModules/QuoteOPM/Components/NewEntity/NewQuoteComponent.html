@@ -1,6 +1,6 @@
 <p-toast position="top-left"></p-toast>
 
-<form (submit)='create()'>
+<form (submit)='create()' [ngClass]='{"ng-submitted":isSubmit}'>
     <div class="section root-header">
         <h2 class="root-header-text">Create New Quote</h2>
     </div>

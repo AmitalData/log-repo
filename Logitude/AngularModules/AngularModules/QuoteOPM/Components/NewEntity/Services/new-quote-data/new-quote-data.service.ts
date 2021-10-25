@@ -167,7 +167,7 @@ export class NewQuoteDataService {
 
   creatingNewQuote(entityPM: QuoteOPPM): Promise<any> {
     return new Promise<any>((resolve, reject) => {
-      new QuoteOPPMService().insert(entityPM, false)
+      new QuoteOPPMService().insert(entityPM)
         .pipe(filterIsNotNull(), take(1))
         .subscribe((myResponse: ServiceResponse) => {
           if (myResponse.HasError)
