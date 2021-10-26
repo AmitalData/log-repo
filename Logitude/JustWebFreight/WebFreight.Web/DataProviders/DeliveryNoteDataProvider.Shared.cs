@@ -191,6 +191,6 @@ namespace WebFreight.Web.DataProviders
         public string CarrierCode { get; set; }//(Airline code from Main carriage for example)        
         public string ImportCustomsAgentFullDetails { get; set; }
         public string ExportCustomsAgentFullDetails { get; set; }
-
+        public string MasterShipmentNumber { get; set; }
     }
 }
