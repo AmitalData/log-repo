@@ -208,11 +208,11 @@ namespace Logitude.BL.Helpers
             {
                 return false;
             }
-            if (this.isContainer && !this.tenantZeroShippingLine.IsSendingByContainer)
+            if (this.isContainer && !this.tenantZeroShippingLine.IsSendingByContainer && !this.shippingLine.IsSendingByContainer)
             {
                 return false;
             }
-            if (!this.isContainer && !this.tenantZeroShippingLine.IsSendingByBillOfLading)
+            if (!this.isContainer && !this.tenantZeroShippingLine.IsSendingByBillOfLading && !this.shippingLine.IsSendingByBillOfLading)
             {
                 return false;
             }
