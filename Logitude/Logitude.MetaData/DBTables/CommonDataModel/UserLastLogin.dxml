@@ -31,6 +31,13 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="WorkEnvironment"
+    Type="varchar"
+    Size="40">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="Id"
     ReferencedTable="Users"
