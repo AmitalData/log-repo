@@ -83,7 +83,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
         {
             if (searchKey != null)
             {
-                MixPanelEventTracker eventTracker = new MixPanelEventTracker(ProjectToken, GetUserEmail(), tenant);
+                MixPanelEventTracker eventTracker = new MixPanelEventTracker(ProjectToken, GetUserEmail(isPublic), tenant);
                 MixPanelEvent searchEvent = BuildMixPanelSearchEvent(searchKey, shipments, isPublic);
                 eventTracker.TrackEvent(searchEvent);
             }
@@ -178,7 +178,10 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
             SecurityUtility.AuthenticationOnTenant(tenant);
         }
 
-        private static string GetUserEmail() {
+        private static string GetUserEmail(bool isPublic) {
+            if (isPublic) {
+                return null;
+            }
             string token = HttpContext.Current.Request.Headers["Token"];
             AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
             return authToken.Email;
@@ -188,7 +191,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
         {
             MixPanelEvent zoomEvent = BuildMixPanelZoomEvent(shipment.ShipmentNumber,isPublic);
 
-            MixPanelEventTracker eventTracker = new MixPanelEventTracker(ProjectToken, GetUserEmail(), tenant);
+            MixPanelEventTracker eventTracker = new MixPanelEventTracker(ProjectToken, GetUserEmail(isPublic), tenant);
             eventTracker.TrackEvent(zoomEvent);
         }
 
