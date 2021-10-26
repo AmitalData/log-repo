@@ -213,6 +213,8 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
     public Port MainCarriageFromPort { get; set; }
     
     public Port MainCarriageToPort { get; set; }
+    
+    public Card Notify1 { get; set; }
 
     public  string  ComputingPartnerCode { get; set; }
 

@@ -401,7 +401,16 @@ using Simplog.Data.ShipmentsModel;
 				   temp.Notify1Reference2 = MyEntityPM.Notify1Reference2;
 				   temp.ShipperNotExporterReference1 = MyEntityPM.ShipperNotExporterReference1;
 				   temp.ShipperNotExporterReference2 = MyEntityPM.ShipperNotExporterReference2;
-				   temp.CustomsClearanceDate = MyEntityPM.CustomsClearanceDate;					
+				   temp.CustomsClearanceDate = MyEntityPM.CustomsClearanceDate; 
+
+			  
+				   if(MyEntityPM.Notify1Id != null)
+				   {
+					   CardQueryService CardService27 = new CardQueryService(Tenant);
+					   					   temp.Notify1 = CardService27.GetCardById(MyEntityPM.Notify1Id,Tenant,ComputingPartnerName); 
+			       
+					   				   }
+				   					
 				   return temp;
 			}
             catch (Exception ex)
@@ -816,9 +825,9 @@ using Simplog.Data.ShipmentsModel;
 
 					if(MyEntity.Deliveries != null && MyEntity.Deliveries.Count > 0)
 					{
-						DeliveryQueryService DeliveryService27 = new DeliveryQueryService(Tenant);
+						DeliveryQueryService DeliveryService28 = new DeliveryQueryService(Tenant);
 						 								//throw new ApplicationException("Deliveries Can't be update"); 
-								temp.ShipmentDeliveries = DeliveryService27.DeliveryDataMappingAndValidatin(MyEntity.Deliveries,Tenant,ComputingPartnerName,IsUpdate);
+								temp.ShipmentDeliveries = DeliveryService28.DeliveryDataMappingAndValidatin(MyEntity.Deliveries,Tenant,ComputingPartnerName,IsUpdate);
 
 					 
 
@@ -829,9 +838,9 @@ using Simplog.Data.ShipmentsModel;
 
 					if(MyEntity.PickUps != null && MyEntity.PickUps.Count > 0)
 					{
-						PickUpQueryService PickUpService27 = new PickUpQueryService(Tenant);
+						PickUpQueryService PickUpService28 = new PickUpQueryService(Tenant);
 						 								//throw new ApplicationException("PickUps Can't be update"); 
-								temp.ShipmentPickUps = PickUpService27.PickUpDataMappingAndValidatin(MyEntity.PickUps,Tenant,ComputingPartnerName,IsUpdate);
+								temp.ShipmentPickUps = PickUpService28.PickUpDataMappingAndValidatin(MyEntity.PickUps,Tenant,ComputingPartnerName,IsUpdate);
 
 					 
 
@@ -849,11 +858,11 @@ using Simplog.Data.ShipmentsModel;
 
 					if(MyEntity.Houses != null && MyEntity.Houses.Count > 0)
 					{
-						HouseQueryService HouseService27 = new HouseQueryService(Tenant);
+						HouseQueryService HouseService28 = new HouseQueryService(Tenant);
 						  
 						if(!IsUpdate)
 						{								//throw new ApplicationException("Houses Can't be update"); 
-								temp.ShipmentConsoleShipments = HouseService27.HouseCustomDataMappingAndValidatin(MyEntity,MyEntity.Houses,Tenant,ComputingPartnerName);
+								temp.ShipmentConsoleShipments = HouseService28.HouseCustomDataMappingAndValidatin(MyEntity,MyEntity.Houses,Tenant,ComputingPartnerName);
 
 					 
 						}  
@@ -911,11 +920,11 @@ using Simplog.Data.ShipmentsModel;
 
 					if(MyEntity.Receivables != null && MyEntity.Receivables.Count > 0)
 					{
-						ReceivableQueryService ReceivableService27 = new ReceivableQueryService(Tenant);
+						ReceivableQueryService ReceivableService28 = new ReceivableQueryService(Tenant);
 						  
 						if(!IsUpdate)
 						{								//throw new ApplicationException("Receivables Can't be update"); 
-								temp.ShipmentReceivables = ReceivableService27.ReceivableDataMappingAndValidatin(MyEntity.Receivables,Tenant,ComputingPartnerName,IsUpdate);
+								temp.ShipmentReceivables = ReceivableService28.ReceivableDataMappingAndValidatin(MyEntity.Receivables,Tenant,ComputingPartnerName,IsUpdate);
 
 					 
 						}  
@@ -927,11 +936,11 @@ using Simplog.Data.ShipmentsModel;
 
 					if(MyEntity.Payables != null && MyEntity.Payables.Count > 0)
 					{
-						PayableQueryService PayableService27 = new PayableQueryService(Tenant);
+						PayableQueryService PayableService28 = new PayableQueryService(Tenant);
 						  
 						if(!IsUpdate)
 						{								//throw new ApplicationException("Payables Can't be update"); 
-								temp.ShipmentPayables = PayableService27.PayableDataMappingAndValidatin(MyEntity.Payables,Tenant,ComputingPartnerName,IsUpdate);
+								temp.ShipmentPayables = PayableService28.PayableDataMappingAndValidatin(MyEntity.Payables,Tenant,ComputingPartnerName,IsUpdate);
 
 					 
 						}  
@@ -1152,9 +1161,9 @@ using Simplog.Data.ShipmentsModel;
 
 					if(MyEntity.MainCarriageLegs != null && MyEntity.MainCarriageLegs.Count > 0)
 					{
-						MainCarriageLegQueryService MainCarriageLegService27 = new MainCarriageLegQueryService(Tenant);
+						MainCarriageLegQueryService MainCarriageLegService28 = new MainCarriageLegQueryService(Tenant);
 						 								//throw new ApplicationException("MainCarriageLegs Can't be update"); 
-								temp.MainCarriageLegs = MainCarriageLegService27.MainCarriageLegDataMappingAndValidatin(MyEntity.MainCarriageLegs,Tenant,ComputingPartnerName,IsUpdate);
+								temp.MainCarriageLegs = MainCarriageLegService28.MainCarriageLegDataMappingAndValidatin(MyEntity.MainCarriageLegs,Tenant,ComputingPartnerName,IsUpdate);
 
 					 
 
@@ -1288,6 +1297,24 @@ using Simplog.Data.ShipmentsModel;
 
 					 
 
+					
+					CardQueryService Notify1CardService = new CardQueryService(Tenant);
+					if(MyEntity.Notify1 != null)
+					{
+						var myNotify1PM = Notify1CardService.CardDataMappingAndValidatin(MyEntity.Notify1,Tenant,ComputingPartnerName,IsUpdate);
+						
+						if(myNotify1PM != null)
+						{ 
+
+						 								//throw new ApplicationException("Notify1 Can't be update"); 
+								temp.Notify1Id = myNotify1PM.Id;
+						  
+
+							
+						} 
+
+					}
+			
 										   
 					return temp;
 		    }
