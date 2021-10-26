@@ -618,6 +618,25 @@ export class ARPaymentPM {
             this.aRPaymentBankTranfers = newValue;
         }
     }
+
+    public AddARPaymentBankTranferPM(item: ARPaymentBankTranferPM) {
+        if (item != null) {
+            var index = this.ARPaymentBankTranfers.indexOf(item);
+            if (index == -1) {
+                this.ARPaymentBankTranfers.push(item);
+                this.MarkAsDirty();
+            }
+        }
+    }
+    public RemoveARPaymentBankTranferPM(item: ARPaymentBankTranferPM) {
+        if (item != null) {
+            var index = this.ARPaymentBankTranfers.indexOf(item);
+            if (index > -1) {
+                this. ARPaymentBankTranfers.splice(index, 1);
+                this.MarkAsDirty();
+            }
+        }
+    }
 	    //public ARPaymentChequeReplicas: Array<ARPaymentChequeReplicaPMPM>= [];
      private isPaymentNumberManuallySet: boolean;
     public get IsPaymentNumberManuallySet() { return this.isPaymentNumberManuallySet; }

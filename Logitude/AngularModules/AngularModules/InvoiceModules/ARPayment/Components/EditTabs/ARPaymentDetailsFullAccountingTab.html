@@ -646,6 +646,15 @@
                                                                     <IconButton [Name]="'Edit'" [IsSmall]="true" (click)="DisplayChequesButtonClicked()"></IconButton>
                                                                 </div>
                                                             </td>
+
+                                                            <td *ngIf="isFullAccounting && AccountingPaymentMethodCode == 'BT'" style="width:10px">
+                                                                <div *ngIf="EntityPM.StatusCode !='AD'">
+                                                                    <IconButton [Name]="'Add'" [IsSmall]="true" (click)="AddBankTransfersButtonClicked()"></IconButton>
+                                                                </div>
+                                                                <!-- <div *ngIf="isMultipleCheques && EntityPM.StatusCode=='AD'">
+                                                                    <IconButton [Name]="'Edit'" [IsSmall]="true" (click)="DisplayChequesButtonClicked()"></IconButton>
+                                                                </div> -->
+                                                            </td>
                                                             <td>
                                                             </td>
                                                         </tr>
