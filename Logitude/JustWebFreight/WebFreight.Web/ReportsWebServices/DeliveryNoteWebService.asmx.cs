@@ -1293,31 +1293,12 @@ namespace WebFreight.Web.ReportsWebServices
             {
                 fullAddress += Environment.NewLine;
             }
-        }
-        private void MapMasterShipmentNumber()
-        {
-            if (shipment.ShipmentLevelCode == "C")
-            {
-                dataProvider.MasterShipmentNumber = shipment.ShipmentNumber;
-            }
-
-            else if (shipment.ShipmentLevelCode == "H" && !string.IsNullOrEmpty(shipment.MasterShipmentDataId))
-            {
-                SetMasterShipmentNumberForConnectedHouse();
-            }
-        }
-        private void SetMasterShipmentNumberForConnectedHouse()
-        {
-            Shipment masterData  = shipmentRepository.GetSingleShipment(shipment.MasterShipmentDataId, tenant);
-            if (masterData != null)
-            {
-                dataProvider.MasterShipmentNumber = masterData.ShipmentNumber;
-            }
             fullAddress = !string.IsNullOrEmpty(address.PhoneNumber) ? fullAddress + "Tel: " + address.PhoneNumber + " " : fullAddress;
             fullAddress = !string.IsNullOrEmpty(address.FaxNumber) ? fullAddress + "Fax: " + address.FaxNumber + " " : fullAddress;
 
             return fullAddress;
         }
+
 
         private string GetCardContactDetails(string contactId)
         {
@@ -1334,6 +1315,28 @@ namespace WebFreight.Web.ReportsWebServices
             }
             return string.Join(",", new string[] { contact.EnglishName, contact.BusinessPhone, contact.Email }
                          .Where(s => !string.IsNullOrEmpty(s)));
+        }
+
+        private void MapMasterShipmentNumber()
+        {
+            if (shipment.ShipmentLevelCode == "C")
+            {
+                dataProvider.MasterShipmentNumber = shipment.ShipmentNumber;
+            }
+
+            else if (shipment.ShipmentLevelCode == "H" && !string.IsNullOrEmpty(shipment.MasterShipmentDataId))
+            {
+                SetMasterShipmentNumberForConnectedHouse();
+            }
+        }
+
+        private void SetMasterShipmentNumberForConnectedHouse()
+        {
+            Shipment masterData  = shipmentRepository.GetSingleShipment(shipment.MasterShipmentDataId, tenant);
+            if (masterData != null)
+            {
+                dataProvider.MasterShipmentNumber = masterData.ShipmentNumber;
+            }
         }
     }
 }
