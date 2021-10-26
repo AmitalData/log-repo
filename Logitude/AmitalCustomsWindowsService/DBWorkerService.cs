@@ -261,6 +261,9 @@ namespace AmitalCustomsWindowsService
             {
                 listOfWorkerEntryPoint = new List<Logitude.Server.Tools.WorkerEntryPoint>();
                 listOfWorkerEntryPoint.Add(new DownloadDcaMessageSheetWR());
+                var AddWorkerFromAppSettingGenericMethod = addWorkerFromAppSettingMethodInfoDB.MakeGenericMethod(new Type[] { (new DownloadDcaMessageSheetWR()).GetType() });
+                AddWorkerFromAppSettingGenericMethod.Invoke(this, new object[] { (object)suppresDoOnlyCheck }); 
+                return;
             }
 
 
