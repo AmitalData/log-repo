@@ -23,7 +23,7 @@ namespace Amital.QuoteOPM.Data.EntityLists
        [DataMember]
        public string QuoteID  { get; set; }
        [DataMember]
-       public int Order  { get; set; }
+       public int IndexOrder  { get; set; }
    }
 
 }

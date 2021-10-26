@@ -47,9 +47,9 @@ export class QuoteOPPropertiesPM {
     public set QuoteID(newValue: string) { if (this.quoteID != newValue) { this.quoteID = newValue; this.MarkAsDirty("QuoteID"); } }
        
 	 
-    private order: number;
-    public get Order() { return this.order; }
-    public set Order(newValue: number) { if (this.order != newValue) { this.order = newValue; this.MarkAsDirty("Order"); } }
+    private indexOrder: number;
+    public get IndexOrder() { return this.indexOrder; }
+    public set IndexOrder(newValue: number) { if (this.indexOrder != newValue) { this.indexOrder = newValue; this.MarkAsDirty("IndexOrder"); } }
        
 	 
     private fromPortId: string;

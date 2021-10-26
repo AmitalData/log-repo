@@ -33,7 +33,7 @@ namespace Amital.QuoteOPM.Data.EntityListQueryServices
 					
 					                          QuoteID = a.QuoteID,
 					
-					                          Order = a.Order,
+					                          IndexOrder = a.IndexOrder,
 					
 		                    	            });
             return query;

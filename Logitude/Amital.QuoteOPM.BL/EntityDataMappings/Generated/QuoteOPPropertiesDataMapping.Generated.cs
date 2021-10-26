@@ -26,7 +26,7 @@ namespace Amital.QuoteOPM.BL.EntityDataMappings
 	         Tenant, 
 	         SearchFields, 
 	         QuoteID, 
-	         Order, 
+	         IndexOrder, 
 	         FromPortId, 
 	         ToPortId, 
 	         IncotermId, 
@@ -50,7 +50,7 @@ namespace Amital.QuoteOPM.BL.EntityDataMappings
 	         Tenant, 
 	         SearchFields, 
 	         QuoteID, 
-	         Order, 
+	         IndexOrder, 
 	         FromPortId, 
 	         ToPortId, 
 	         IncotermId, 
@@ -87,9 +87,9 @@ namespace Amital.QuoteOPM.BL.EntityDataMappings
 				entityPOCO.QuoteID = entityPM.QuoteID;
 			}
 			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Order))
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IndexOrder))
             {
-				entityPOCO.Order = entityPM.Order;
+				entityPOCO.IndexOrder = entityPM.IndexOrder;
 			}
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FromPortId))
@@ -183,9 +183,9 @@ namespace Amital.QuoteOPM.BL.EntityDataMappings
 					entityPM.QuoteID = entityPOCO.QuoteID;
             }
 
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Order))
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IndexOrder))
             {
-					entityPM.Order = entityPOCO.Order;
+					entityPM.IndexOrder = entityPOCO.IndexOrder;
             }
 
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.FromPortId))
@@ -274,9 +274,9 @@ namespace Amital.QuoteOPM.BL.EntityDataMappings
                 oldEntityPM.QuoteID = entityPM.QuoteID;
             }
 			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Order))
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IndexOrder))
             {
-                oldEntityPM.Order = entityPM.Order;
+                oldEntityPM.IndexOrder = entityPM.IndexOrder;
             }
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FromPortId))

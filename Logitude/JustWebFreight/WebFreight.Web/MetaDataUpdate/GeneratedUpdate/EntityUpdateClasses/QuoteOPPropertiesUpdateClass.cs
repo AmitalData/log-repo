@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class QuoteOPPropertiesUpdateClass
    {  		
-		public const string HashString = "0758f5063a14c8a832cdc3f03bd7846c";
+		public const string HashString = "7abdb4878722ff73b6d96571c421da8d";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -127,7 +127,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "BR",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Quote Properties",
-			      				    Code =  "999c",
+			      				    Code =  "5f11",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "QuoteOPM",
@@ -269,7 +269,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "Order",
+					 						FieldName =  "IndexOrder",
 					  						ObjectTableName =  "QuoteOPProperties",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -287,8 +287,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "Order",
-					  						ListPropertyPath =  "Order",
+					  						PMPropertyPath =  "IndexOrder",
+					  						ListPropertyPath =  "IndexOrder",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
@@ -306,12 +306,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInDocumentReferences =  false,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "Order",
-					  						DefaultText =  "Order",
-					  						FullLocalDefaultText =  "Order",
-					  						ListFieldLable =  "OrderListLable",
-					  						ListLableDefaultText =  "Order",
-					  						ListLocalDefaultText =  "Order",
+					  						FullFieldLable =  "IndexOrder",
+					  						DefaultText =  "IndexOrder",
+					  						FullLocalDefaultText =  "IndexOrder",
+					  						ListFieldLable =  "IndexOrderListLable",
+					  						ListLableDefaultText =  "IndexOrder",
+					  						ListLocalDefaultText =  "IndexOrder",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
