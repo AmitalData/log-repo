@@ -17,4 +17,5 @@ export class ARPaymentSelectors {
     public static readonly ChequeBank = '#ARPayment_Bank';
     public static readonly ChequeBankBranch = '#ARPayment_BankBranch';
     public static readonly ChequeAccount = '#ARPayment_Account';
+    public static readonly ShortTitleControl = '.ShortTitleControl';
 }

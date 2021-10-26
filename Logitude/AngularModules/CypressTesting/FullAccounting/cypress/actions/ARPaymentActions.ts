@@ -19,11 +19,16 @@ export function FillARPayment(aRPaymentDetails: ARPaymentDetails) {
 }
 
 export function FillChequeDetails(aRPaymentDetails: ARPaymentDetails) {
-    cy.FillLogTextBox(ARPaymentSelectors.ChequeValueDate, aRPaymentDetails.ChequeValueDate)
-    cy.FillLogTextBox(ARPaymentSelectors.ChequeAccount, aRPaymentDetails.ChequeAccount)
-    cy.FillLogTextBox(ARPaymentSelectors.ChequeRef, aRPaymentDetails.ChequeRef)
-    cy.FillLogTextBox(ARPaymentSelectors.ChequeBankBranch, aRPaymentDetails.ChequeBankBranch)
-    cy.FillLogTextBox(ARPaymentSelectors.ChequeBank, aRPaymentDetails.ChequeBank)
+    PressOnTitleAfterFillLogTextBox(ARPaymentSelectors.ChequeValueDate, aRPaymentDetails.ChequeValueDate)
+    PressOnTitleAfterFillLogTextBox(ARPaymentSelectors.ChequeRef, aRPaymentDetails.ChequeRef)
+    PressOnTitleAfterFillLogTextBox(ARPaymentSelectors.ChequeBank, aRPaymentDetails.ChequeBank)
+    PressOnTitleAfterFillLogTextBox(ARPaymentSelectors.ChequeBankBranch, aRPaymentDetails.ChequeBankBranch)
+    PressOnTitleAfterFillLogTextBox(ARPaymentSelectors.ChequeAccount, aRPaymentDetails.ChequeAccount)
+}
+
+function PressOnTitleAfterFillLogTextBox(selector, value) {
+    cy.FillLogTextBox(selector, value)
+    cy.Click(ARPaymentSelectors.ShortTitleControl, null)
 }
 
 export function CreateARPayment() {
