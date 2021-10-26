@@ -358,30 +358,29 @@ namespace CommunicationWorkerRole
         private void UpdateCustomerTenantAccessRequests(CustomerTenantAccessRequestAM customerTenantAccessRequest)
         {
             CustomerTenantAccessRequestQuery customerTenantAccessRequestQuery = new CustomerTenantAccessRequestQuery(customerTenantAccessRequest.PartnerTenant);
-            HybridPartnerQuery hybridPartnerQuery = new HybridPartnerQuery(customerTenantAccessRequest.PartnerTenant);
-            ICommonDataContext context = CommonDataContext.GetContext(customerTenantAccessRequest.PartnerTenant);
-            CustomerTenantAccessRequestService customerTenantAccessRequestService = new CustomerTenantAccessRequestService(context, customerTenantAccessRequest.CustomerTenant);
+            HybridPartnerQuery hybridPartnerQuery = new HybridPartnerQuery(customerTenantAccessRequest.PartnerTenant); 
 
             List<string> customerTenantAccessRequestIds = customerTenantAccessRequestQuery.GetCustomerTenantAccessRequestIdsByTenant(customerTenantAccessRequest.CustomerTenant);
             List<string> forwarderIds = hybridPartnerQuery.GetPartnersForRequest(customerTenantAccessRequest.PartnerTenant, customerTenantAccessRequestIds);
             IQueryable<CustomerTenantAccessRequestPM> customerTenantAccessRequestList = customerTenantAccessRequestQuery.GetCustomerTenantAccessRequestByTenantAndForwarderIds(customerTenantAccessRequest.CustomerTenant, forwarderIds);
-
-            UpdateCustomerTenantAccessRequestsList(customerTenantAccessRequest.IsImportActivated, customerTenantAccessRequest.IsExportActivated, customerTenantAccessRequestService, customerTenantAccessRequestList);
-
+  
+            UpdateCustomerTenantAccessRequestsList(customerTenantAccessRequest, customerTenantAccessRequestList);
+             
         }
 
-      
-
-        private static void UpdateCustomerTenantAccessRequestsList(bool isImportActivated, bool isExportActivated, CustomerTenantAccessRequestService customerTenantAccessRequestService, IQueryable<CustomerTenantAccessRequestPM> customerTenantAccessRequestList)
+        private void UpdateCustomerTenantAccessRequestsList(CustomerTenantAccessRequestAM customerTenantAccessRequest, IQueryable<CustomerTenantAccessRequestPM> customerTenantAccessRequestList)
         {
-            foreach (var customerTenantAccessRequest in customerTenantAccessRequestList)
+            ICommonDataContext context = CommonDataContext.GetContext(customerTenantAccessRequest.PartnerTenant);
+            CustomerTenantAccessRequestService customerTenantAccessRequestService = new CustomerTenantAccessRequestService(context, customerTenantAccessRequest.CustomerTenant);
+
+            foreach (var request in customerTenantAccessRequestList)
             {
-                customerTenantAccessRequest.IsCustoms = isImportActivated;
-                customerTenantAccessRequest.IsExport = isExportActivated;
-                customerTenantAccessRequestService.Update(customerTenantAccessRequest);
+                request.IsCustoms = customerTenantAccessRequest.IsImportActivated;
+                request.IsExport = customerTenantAccessRequest.IsExportActivated;
+                customerTenantAccessRequestService.Update(request);
             }
         }
-
+ 
         private void ConnectClient()
         {
             try
