@@ -20,5 +20,5 @@ export class ARPaymentSelectors {
     public static readonly PrintNotes = '#ARPayment_PrintNotes';
     public static readonly VoidButton = '#ARPaymentBVoid';
     public static readonly CancelationNotes = '#ARPayment_CancelationNotes';
-
+    public static readonly ShortTitleControl = '.ShortTitleControl';
 }
