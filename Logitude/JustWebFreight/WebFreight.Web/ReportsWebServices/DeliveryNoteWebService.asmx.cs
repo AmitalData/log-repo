@@ -1249,26 +1249,28 @@ namespace WebFreight.Web.ReportsWebServices
         private void MapShipmentCustomsAgent()
         {
             dataProvider.ImportCustomsAgentFullDetails = GetCustomsAgentFullDetails(shipment.CustomAgentImportId,
-                                                                                    shipment.CustomAgentImportAddressId);
+                                                                                    shipment.CustomAgentImportAddressId,
+                                                                                    shipment.CustomAgentImportContactId);
             dataProvider.ExportCustomsAgentFullDetails = GetCustomsAgentFullDetails(shipment.CustomAgentExportId,
-                                                                                    shipment.CustomAgentExportAddressId);
+                                                                                    shipment.CustomAgentExportAddressId,
+                                                                                    shipment.CustomAgentExportContactId);
         }
 
-        private string GetCustomsAgentFullDetails(string agentId,string agentAdressId)
+        private string GetCustomsAgentFullDetails(string agentId,string agentAdressId,string agentContactId)
         {
             string fullDetails = "";
             if (string.IsNullOrEmpty(agentId))
             {
                 return fullDetails;
             }
-            Card agentCard = CardRepository.GetSingleCard(agentId, tenant, true);
+            Card agentCard = CardRepository.GetSingleCard(agentId, tenant, false);
             if (agentCard == null)
             {
                 return fullDetails;
             }
             fullDetails += Environment.NewLine + agentCard.EnglishName;
             fullDetails += GetCardAddressDetails(agentAdressId) + Environment.NewLine;
-            fullDetails += GetCardContactDetails(agentCard.PrimaryContactId);
+            fullDetails += GetCardContactDetails(agentContactId);
             return fullDetails;
         }
 
@@ -1303,7 +1305,7 @@ namespace WebFreight.Web.ReportsWebServices
                 return contactDetails;
             }
   
-            Contact contact = ContactRepository.GetSingleContact(contactId, tenant, true);
+            Contact contact = ContactRepository.GetSingleContact(contactId, tenant, false);
             if (contact == null)
             {
                 return contactDetails;
