@@ -640,15 +640,7 @@ namespace Logitude.Accounting.BL.CoreBL
             DocumentType docType = docTypeReposioty.GetSingleDocumentTypeByCode("TDR856", tenant);
 
             string _code = CodeCounter.GetNumber("DocumentsFiling", tenant).ToString();
-            string deductionfilenumber;
-            if (DeductionFileNumber == null)
-            {
-                deductionfilenumber = "000000000";
-            }
-            else {
-                deductionfilenumber = DeductionFileNumber;
-            }
-
+            string deductionfilenumber = GetDeductionFileNumber(DeductionFileNumber);
             string name = "A856." + deductionfilenumber + "." + taxDeductionReport.TaxYear.ToString().Substring(1, 3);
             DocumentsFilingPM document = new DocumentsFilingPM()
             {
@@ -670,7 +662,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 FileName = name,
             };
 
-            byte[] bytearray = Encoding.Unicode.GetBytes(file);
+            byte[] bytearray = Encoding.Default.GetBytes(file);
             document.FileData = bytearray;
             docService.Create(document, document.FileData, loggedUser.Id);
 
@@ -682,6 +674,21 @@ namespace Logitude.Accounting.BL.CoreBL
 
 
             return docFiling;
+        }
+
+        private static string GetDeductionFileNumber(string DeductionFileNumber)
+        {
+            string deductionfilenumber;
+            if (DeductionFileNumber == null)
+            {
+                deductionfilenumber = "000000000";
+            }
+            else
+            {
+                deductionfilenumber = DeductionFileNumber;
+            }
+            deductionfilenumber = deductionfilenumber.Length > 8 ? deductionfilenumber.Substring(deductionfilenumber.Length - 8) : deductionfilenumber;
+            return deductionfilenumber;
         }
 
         private static Contact GetLoggedContact(int tenant)
