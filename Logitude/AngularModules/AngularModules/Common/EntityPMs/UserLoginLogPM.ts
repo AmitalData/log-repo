@@ -1,4 +1,4 @@
-﻿
+
 
 import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 export class UserLoginLogPM {
@@ -49,6 +49,9 @@ export class UserLoginLogPM {
     public set ComputerId(newValue: string) { this.computerId = newValue; this.MarkAsDirty(); }
 
 
+    private workEnvironment: string;
+    public get WorkEnvironment() { return this.workEnvironment; }
+    public set WorkEnvironment(newValue: string) { this.workEnvironment = newValue; this.MarkAsDirty(); }
 
     private userAgent: string;
     public get UserAgent() { return this.userAgent; }

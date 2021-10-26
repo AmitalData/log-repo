@@ -531,6 +531,7 @@ namespace WebFreight.Web.WebServices
                         }
 
                         lastLogin.ComputerId = computerId;
+                        lastLogin.WorkEnvironment = LogitudeSettingConfigration.GetWorkEnvironment();
                         commonDataContext.UserLoginLogs.Add(userLog);
                         commonDataContext.SaveChanges();
                         isValid = true;

@@ -2227,7 +2227,8 @@ namespace WebFreight.Web
                                 Id = user.Id,
                                 Tenant = tenant,
                                 ComputerId = computerId,
-                            };
+                                WorkEnvironment = LogitudeSettingConfigration.GetWorkEnvironment(),
+                        };
 
                             commonDataContext.UserLastLogins.Add(lastLogin);
                         }

@@ -181,14 +181,14 @@ export class ApplicationTimersManager {
         if (AppTool.IsNullOrEmpty(computerId)) return;
         if (lastloginPM.ComputerId == computerId) return;
         if (ObjectsLocator.GlobalSetting.SameUserLoginEnabled) return;
-        this.userExtendedPMService.GetLastUserLoginIpSameAsLoggedUserIpAndBrowser(SessionInfo.LoggedUserPM.Id, SessionInfo.LoggedUserTenant, false).subscribe((response: any) => {
+        let workEnvironment: string = this.GetWorkEnvironment();
+        if (lastloginPM.ComputerId != computerId && lastloginPM.WorkEnvironment?.toLowerCase() != workEnvironment?.toLowerCase()) return;
+        this.HandleUserUnlocked();
+    }
 
-            let userLoginHistory: ServiceResponse = response;
-            let isSameUserWithSameBrowser: boolean = userLoginHistory.Result;
-            if (!userLoginHistory.HasError && !isSameUserWithSameBrowser) {
-                this.HandleUserUnlocked();
-            }
-        });
+    private GetWorkEnvironment(): string {
+        if (AppTool.IsNullOrEmpty(ObjectsLocator?.GlobalSetting?.WorkEnvironment)) return "logitude";
+        return ObjectsLocator?.GlobalSetting?.WorkEnvironment?.toLowerCase() == "logbox" ? location.href.toLowerCase().indexOf('.logbox.') > -1 ? "logbox" : "privatelabel" : ObjectsLocator?.GlobalSetting?.WorkEnvironment;
     }
 
     private HandleUserUnlocked() {
