@@ -42,6 +42,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                               RequestStatus=a.RequestStatus,                                                       
                                                               StatusName = a.RequestStatusCode != null ?a.RequestStatusCode.EnglishName: null,
                                                               ForwarderName=a.HybridPartnerId !=null?a.HybridPartnerId.Name:null,
+                                                              IsExport = a.IsExport,
+                                                              IsCustoms = a.IsCustoms,
                                                           };
 
 
@@ -61,9 +63,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                  Tenant=a.Tenant,
                                                  ForwarderId=a.ForwarderId,
                                                  RequestDateTime=a.RequestDateTime,
-                                                 RequestStatus=a.RequestStatus
+                                                 RequestStatus=a.RequestStatus,
+                                                 IsExport = a.IsExport,
+                                                 IsCustoms = a.IsCustoms,
                                                   
-                                                                      
                                              }).FirstOrDefault();
 
 
@@ -71,6 +74,29 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                    
             
         }
+
+        public CustomerTenantAccessRequestPM GetByTenantAndForwarderId(int tenant, string forwarderId)
+        {
+            CustomerTenantAccessRequestPM entity = (from a in repository.context.CustomerTenantAccessRequests.Include("CustomerTenantAccessStatusType").Include("HybridPartner")
+                                                    where a.ForwarderId == forwarderId && a.Tenant == tenant
+                                                    select new CustomerTenantAccessRequestPM()
+                                                    {
+                                                        Id = a.Id,
+                                                        Tenant = a.Tenant,
+                                                        ForwarderId = a.ForwarderId,
+                                                        RequestDateTime = a.RequestDateTime,
+                                                        RequestStatus = a.RequestStatus,
+                                                        IsExport = a.IsExport,
+                                                        IsCustoms = a.IsCustoms,
+
+                                                    }).FirstOrDefault();
+
+
+            return entity;
+
+
+        }
+
 
 
         public CustomerTenantAccessRequestPM GetSinglePMByCustomerTenantAndPartnerTenant(string PartnerId, int CustomerTenant)
@@ -83,7 +109,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                         Tenant = a.Tenant,
                                                         ForwarderId = a.ForwarderId,
                                                         RequestDateTime = a.RequestDateTime,
-                                                        RequestStatus = a.RequestStatus
+                                                        RequestStatus = a.RequestStatus,
+                                                        IsExport = a.IsExport,
+                                                        IsCustoms = a.IsCustoms,
 
 
                                                     }).FirstOrDefault();
@@ -107,8 +135,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                               RequestDateTime=a.RequestDateTime,
                                                               RequestStatus=a.RequestStatus,
                                                               ForwarderId=a.ForwarderId,
-                                                    
-                                                          };
+                                                             IsExport = a.IsExport,
+                                                             IsCustoms = a.IsCustoms,
+
+                                                       };
 
                                            
                                    
@@ -117,5 +147,42 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             return entity;
         }
 
+        public List<string> GetCustomerTenantAccessRequestIdsByTenant(int tenant)
+        {
+            var IdsList = from a in repository.context.CustomerTenantAccessRequests.Include("CustomerTenantAccessStatusType").Include("HybridPartner")
+                    where a.Tenant == tenant
+                    select a.Id;
+
+            return IdsList.ToList() ;
+         
+        }
+
+
+        public IQueryable<CustomerTenantAccessRequestPM> GetCustomerTenantAccessRequestByTenantAndForwarderIds(int tenant, List<string> forwarderIds)
+        {
+
+            IQueryable<CustomerTenantAccessRequestPM> entity = from a in repository.context.CustomerTenantAccessRequests.Include("CustomerTenantAccessStatusType").Include("HybridPartner")
+                                                               where a.Tenant == tenant && forwarderIds.Contains(a.ForwarderId)
+                                                               select new CustomerTenantAccessRequestPM()
+
+                                                               {
+                                                                   Id = a.Id,
+                                                                   Tenant = a.Tenant,
+                                                                   RequestDateTime = a.RequestDateTime,
+                                                                   RequestStatus = a.RequestStatus,
+                                                                   ForwarderId = a.ForwarderId,
+                                                                   IsExport = a.IsExport,
+                                                                   IsCustoms = a.IsCustoms,
+
+                                                               };
+
+
+
+
+
+            return entity;
+        }
+
+         
     }
 }

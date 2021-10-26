@@ -60,6 +60,16 @@ export class CustomerTenantAccessRequestPM {
     public set ForwarderName(newValue: string) { if (this.forwarderName != newValue) { this.forwarderName = newValue; this.MarkAsDirty("ForwarderName"); } }
        
 	 
+    private isCustoms: boolean;
+    public get IsCustoms() { return this.isCustoms; }
+    public set IsCustoms(newValue: boolean) { if (this.isCustoms != newValue) { this.isCustoms = newValue; this.MarkAsDirty("IsCustoms"); } }
+       
+	 
+    private isExport: boolean;
+    public get IsExport() { return this.isExport; }
+    public set IsExport(newValue: boolean) { if (this.isExport != newValue) { this.isExport = newValue; this.MarkAsDirty("IsExport"); } }
+       
+	 
 
     public OldEntityPM: CustomerTenantAccessRequestPM;
 		
