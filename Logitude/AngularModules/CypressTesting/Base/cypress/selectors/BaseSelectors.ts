@@ -168,6 +168,7 @@ export class BaseSelectors extends RegexSelectors {
     public static readonly LocalCustomsInterfaceCode = "#CustomsInterfaceSetting_LocalCustomsInterfaceCode";
     public static readonly LogLoveLocalCustomsInterfaceCode = "#LogLov_CustomsInterfaceSetting_LocalCustomsInterfaceCode"
     //#endregion
+    public static readonly OrangeInfo = ".OrangeInfo"
     public static readonly SingleError = ".SingleError"
     public static readonly HeaderScreen = ".HeaderScreen"
     public static readonly HeaderScreenLable = ".HeaderScreenLable"
@@ -178,6 +179,7 @@ export class BaseSelectors extends RegexSelectors {
     public static readonly TextTrimming = '.TextTrimming'
     public static readonly SimpleGridViewRow = ".SimpleGridViewRow"
     public static readonly EditPng = '[src="./Images/Buttons/Edit.png"]'
+    public static readonly CustomTreeIcon = "img[src='./Images/CustomTreeIcon.png']"
     public static readonly GridViewCell = '.GridViewCell'
     public static readonly HyperlinkButtonControl = '.HyperlinkButtonControl'
     public static readonly HyperlinkQueryButtonControl = ".HyperlinkQueryButtonControl"
