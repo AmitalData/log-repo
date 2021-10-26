@@ -840,9 +840,9 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         private string ComputeNewUserRoles()
         {
             string userRoles = "";
-            userRoles = this.GetUserRoles_New();
             if (!entityPm.SignupRole)
             {
+                userRoles = this.GetUserRoles_New();
                 bool hasRoles = this.IsUserHasRoles(userRoles);
                 if (!hasRoles)
                 {
