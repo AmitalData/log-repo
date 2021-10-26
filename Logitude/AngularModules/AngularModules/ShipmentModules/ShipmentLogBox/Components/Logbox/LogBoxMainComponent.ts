@@ -147,17 +147,36 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
 
         var tenant = SessionLocator.Tenant;
         this.customerTenantAccessRequestExtendedPMService.getByForwarderId(tenant,hybridPartnerId).subscribe((res: any) => {
-            if (!res.HasError) {
-
-                this.IsImportActivated = res.Result.IsCustoms;
-                this.IsExportActivated = res.Result.IsExport; 
-               
-            }
-            else {
-                //this.ValidationErrorsList = res.ErrorsArray;
-                
-            }
+            if (!res.HasError) { 
+                this.SetDitections(res); 
+            } 
         });
+    }
+
+    private SetDitections(res: any) {
+        this.IsImportActivated = res.Result.IsCustoms;
+        this.IsExportActivated = res.Result.IsExport;
+
+        this.SetDefaultValue();
+    }
+
+    SetDefaultValue() {
+
+        this.SetDefaultExportDirection();
+        this.SetDefaultImportDirection();
+
+    }
+ 
+    private SetDefaultImportDirection() {
+        if (this.IsPrivateLabelImportActivated && !this.IsPrivateLabelExportActivated && !this.IsImportActivated) {
+            this.IsImportActivated = this.IsPrivateLabelImportActivated;
+        }
+    }
+
+    private SetDefaultExportDirection() {
+        if (this.IsPrivateLabelExportActivated && !this.IsPrivateLabelImportActivated && !this.IsExportActivated) {
+            this.IsExportActivated = this.IsPrivateLabelExportActivated;
+        }
     }
 
     private getAgentShipmentsLabel(agentName: string) {
