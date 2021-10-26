@@ -178,8 +178,7 @@ namespace CommunicationWorkerRole
                                     client.DefaultRequestHeaders.Add("CorrelationId", CorrelationId);
                                     ICommonDataContext commoncontext = CommonDataContext.GetContext(tenant);
                                      
-
-                                    UpdateCustomerTenantAccessRequests(CustomerTenant,tenant, IsImportActivated, IsExportActivated);
+                                     
 
                                     CustomerTenantAccessRequestAM customerTenantAccessRequest = new CustomerTenantAccessRequestAM()
                                     {
@@ -188,6 +187,9 @@ namespace CommunicationWorkerRole
                                         IsExportActivated = IsExportActivated,
                                         IsImportActivated = IsImportActivated
                                     };
+
+                                    UpdateCustomerTenantAccessRequests(customerTenantAccessRequest);
+
                                     var serializedObject = JsonConvert.SerializeObject(customerTenantAccessRequest);
                                     LogPM.Subject = "Start To Send Response To Importer By CustomerTenantAccessRequestApproval Controller";
                                     if (IsNewLog)
@@ -353,20 +355,22 @@ namespace CommunicationWorkerRole
            
         }
 
-        private void UpdateCustomerTenantAccessRequests(int customerTenant, int tenant, bool isImportActivated, bool isExportActivated)
+        private void UpdateCustomerTenantAccessRequests(CustomerTenantAccessRequestAM customerTenantAccessRequest)
         {
-            CustomerTenantAccessRequestQuery customerTenantAccessRequestQuery = new CustomerTenantAccessRequestQuery(tenant);
-            HybridPartnerQuery hybridPartnerQuery = new HybridPartnerQuery(tenant);
-            ICommonDataContext context = CommonDataContext.GetContext(tenant);
-            CustomerTenantAccessRequestService customerTenantAccessRequestService = new CustomerTenantAccessRequestService(context, customerTenant);
+            CustomerTenantAccessRequestQuery customerTenantAccessRequestQuery = new CustomerTenantAccessRequestQuery(customerTenantAccessRequest.PartnerTenant);
+            HybridPartnerQuery hybridPartnerQuery = new HybridPartnerQuery(customerTenantAccessRequest.PartnerTenant);
+            ICommonDataContext context = CommonDataContext.GetContext(customerTenantAccessRequest.PartnerTenant);
+            CustomerTenantAccessRequestService customerTenantAccessRequestService = new CustomerTenantAccessRequestService(context, customerTenantAccessRequest.CustomerTenant);
 
-            List<string> customerTenantAccessRequestIds = customerTenantAccessRequestQuery.GetCustomerTenantAccessRequestIdsByTenant(customerTenant);
-            List<string> forwarderIds = hybridPartnerQuery.GetPartnersForRequest(tenant, customerTenantAccessRequestIds);
-            IQueryable<CustomerTenantAccessRequestPM> customerTenantAccessRequestList = customerTenantAccessRequestQuery.GetCustomerTenantAccessRequestByTenantAndForwarderIds(customerTenant, forwarderIds);
+            List<string> customerTenantAccessRequestIds = customerTenantAccessRequestQuery.GetCustomerTenantAccessRequestIdsByTenant(customerTenantAccessRequest.CustomerTenant);
+            List<string> forwarderIds = hybridPartnerQuery.GetPartnersForRequest(customerTenantAccessRequest.PartnerTenant, customerTenantAccessRequestIds);
+            IQueryable<CustomerTenantAccessRequestPM> customerTenantAccessRequestList = customerTenantAccessRequestQuery.GetCustomerTenantAccessRequestByTenantAndForwarderIds(customerTenantAccessRequest.CustomerTenant, forwarderIds);
 
-            UpdateCustomerTenantAccessRequestsList(isImportActivated, isExportActivated, customerTenantAccessRequestService, customerTenantAccessRequestList);
+            UpdateCustomerTenantAccessRequestsList(customerTenantAccessRequest.IsImportActivated, customerTenantAccessRequest.IsExportActivated, customerTenantAccessRequestService, customerTenantAccessRequestList);
 
         }
+
+      
 
         private static void UpdateCustomerTenantAccessRequestsList(bool isImportActivated, bool isExportActivated, CustomerTenantAccessRequestService customerTenantAccessRequestService, IQueryable<CustomerTenantAccessRequestPM> customerTenantAccessRequestList)
         {
