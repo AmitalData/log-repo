@@ -21,6 +21,7 @@ namespace WebFreight.Web.MetaDataUpdate
 
             ObjectTablePM shipmentObject = ObjectTableQuery.GetObjectTableByCode("Shipment", 0);
             ObjectTablePM customerObject = ObjectTableQuery.GetObjectTableByCode("Customer", 0);
+            ObjectTablePM containerObject = ObjectTableQuery.GetObjectTableByCode("Container", 0);
 
             Dictionary<string, EntityStatus> tenantEntityStatus = EntityStatusRepository.GetEntityStatusByTenant(0).ToDictionary(d => d.Code, a => a);
 
@@ -68,6 +69,33 @@ namespace WebFreight.Web.MetaDataUpdate
 
             #region Customer Status
             AddEntityStatus.AddEntityStatu(new EntityStatusDetails() { Code = "CSCR", Name = "Created", ObjectTableId = customerObject.Id, StatusWeight = 0, Tenant = 0, DisplayName = "Created" }, EntityStatusRepository, tenantEntityStatus);
+            #endregion
+
+            #region Container
+            AddEntityStatus.AddEntityStatu(new EntityStatusDetails() { Code = "EMPS", StatusWeight = 10, Name = "Empty to Shipper", ObjectTableId = containerObject.Id, Tenant = 0, DisplayName = "Empty to Shipper" }, EntityStatusRepository, tenantEntityStatus);
+            AddEntityStatus.AddEntityStatu(new EntityStatusDetails() { Code = "PICS", StatusWeight = 20, Name = "Picked up at Shipper", ObjectTableId = containerObject.Id, Tenant = 0, DisplayName = "Picked up at Shipper" }, EntityStatusRepository, tenantEntityStatus);
+            AddEntityStatus.AddEntityStatu(new EntityStatusDetails() { Code = "GTIN", StatusWeight = 30, Name = "Gate In", ObjectTableId = containerObject.Id, Tenant = 0, DisplayName = "Gate In" }, EntityStatusRepository, tenantEntityStatus);
+            AddEntityStatus.AddEntityStatu(new EntityStatusDetails() { Code = "PCDP", StatusWeight = 40, Name = "Pre Carriage Departed", ObjectTableId = containerObject.Id, Tenant = 0, DisplayName = "Pre Carriage Departed" }, EntityStatusRepository, tenantEntityStatus);
+            AddEntityStatus.AddEntityStatu(new EntityStatusDetails() { Code = "PCAV", StatusWeight = 50, Name = "Pre Carriage Arrived", ObjectTableId = containerObject.Id, Tenant = 0, DisplayName = "Pre Carriage Arrived" }, EntityStatusRepository, tenantEntityStatus);
+            AddEntityStatus.AddEntityStatu(new EntityStatusDetails() { Code = "POLD", StatusWeight = 60, Name = "POL Departed", ObjectTableId = containerObject.Id, Tenant = 0, DisplayName = "POL Departed" }, EntityStatusRepository, tenantEntityStatus);
+            AddEntityStatus.AddEntityStatu(new EntityStatusDetails() { Code = "T1AV", StatusWeight = 70, Name = "Transshipment  1 Arrived", ObjectTableId = containerObject.Id, Tenant = 0, DisplayName = "Transshipment  1 Arrived" }, EntityStatusRepository, tenantEntityStatus);
+            AddEntityStatus.AddEntityStatu(new EntityStatusDetails() { Code = "T1DT", StatusWeight = 80, Name = "Transshipment1 Departed", ObjectTableId = containerObject.Id, Tenant = 0, DisplayName = "Transshipment1 Departed" }, EntityStatusRepository, tenantEntityStatus);
+            AddEntityStatus.AddEntityStatu(new EntityStatusDetails() { Code = "T2AV", StatusWeight = 90, Name = "Transshipment 2 Arrived", ObjectTableId = containerObject.Id, Tenant = 0, DisplayName = "Transshipment 2 Arrived" }, EntityStatusRepository, tenantEntityStatus);
+            AddEntityStatus.AddEntityStatu(new EntityStatusDetails() { Code = "T2DT", StatusWeight = 100, Name = "Transshipment 2 Departed", ObjectTableId = containerObject.Id, Tenant = 0, DisplayName = "Transshipment 2 Departed" }, EntityStatusRepository, tenantEntityStatus);
+            AddEntityStatus.AddEntityStatu(new EntityStatusDetails() { Code = "T3AV", StatusWeight = 110, Name = "Transshipment 3 Arrived", ObjectTableId = containerObject.Id, Tenant = 0, DisplayName = "Transshipment 3 Arrived" }, EntityStatusRepository, tenantEntityStatus);
+            AddEntityStatus.AddEntityStatu(new EntityStatusDetails() { Code = "T3DT", StatusWeight = 120, Name = "Transshipment 3 Departed", ObjectTableId = containerObject.Id, Tenant = 0, DisplayName = "Transshipment 3 Departed" }, EntityStatusRepository, tenantEntityStatus);
+            AddEntityStatus.AddEntityStatu(new EntityStatusDetails() { Code = "ARPD", StatusWeight = 130, Name = "Arrived at POD", ObjectTableId = containerObject.Id, Tenant = 0, DisplayName = "Arrived at POD" }, EntityStatusRepository, tenantEntityStatus);
+            AddEntityStatus.AddEntityStatu(new EntityStatusDetails() { Code = "DSCH", StatusWeight = 140, Name = "Discharged", ObjectTableId = containerObject.Id, Tenant = 0, DisplayName = "Discharged" }, EntityStatusRepository, tenantEntityStatus);
+            AddEntityStatus.AddEntityStatu(new EntityStatusDetails() { Code = "APAR", StatusWeight = 150, Name = "Appointment Arranged", ObjectTableId = containerObject.Id, Tenant = 0, DisplayName = "Appointment Arranged" }, EntityStatusRepository, tenantEntityStatus);
+            AddEntityStatus.AddEntityStatu(new EntityStatusDetails() { Code = "GTOT", StatusWeight = 160, Name = "Gate Out", ObjectTableId = containerObject.Id, Tenant = 0, DisplayName = "Gate Out" }, EntityStatusRepository, tenantEntityStatus);
+            AddEntityStatus.AddEntityStatu(new EntityStatusDetails() { Code = "ARWH", StatusWeight = 170, Name = "Arrived to Warehouse", ObjectTableId = containerObject.Id, Tenant = 0, DisplayName = "Arrived to Warehouse" }, EntityStatusRepository, tenantEntityStatus);
+            AddEntityStatus.AddEntityStatu(new EntityStatusDetails() { Code = "AVDL", StatusWeight = 180, Name = "Available for Delivery", ObjectTableId = containerObject.Id, Tenant = 0, DisplayName = "Available for Delivery" }, EntityStatusRepository, tenantEntityStatus);
+            AddEntityStatus.AddEntityStatu(new EntityStatusDetails() { Code = "DPWH", StatusWeight = 190, Name = "Departed from Warehouse", ObjectTableId = containerObject.Id, Tenant = 0, DisplayName = "Departed from Warehouse" }, EntityStatusRepository, tenantEntityStatus);
+            AddEntityStatus.AddEntityStatu(new EntityStatusDetails() { Code = "DLCO", StatusWeight = 200, Name = "Delivered to Consignee", ObjectTableId = containerObject.Id, Tenant = 0, DisplayName = "Delivered to Consignee" }, EntityStatusRepository, tenantEntityStatus);
+            AddEntityStatus.AddEntityStatu(new EntityStatusDetails() { Code = "UNDS", StatusWeight = 210, Name = "Unloaded at Destination", ObjectTableId = containerObject.Id, Tenant = 0, DisplayName = "Unloaded at Destination" }, EntityStatusRepository, tenantEntityStatus);
+            AddEntityStatus.AddEntityStatu(new EntityStatusDetails() { Code = "PODC", StatusWeight = 220, Name = "POD", ObjectTableId = containerObject.Id, Tenant = 0, DisplayName = "POD" }, EntityStatusRepository, tenantEntityStatus);
+            AddEntityStatus.AddEntityStatu(new EntityStatusDetails() { Code = "EMRT", StatusWeight = 230, Name = "Empty Return", ObjectTableId = containerObject.Id, Tenant = 0, DisplayName = "Empty Return" }, EntityStatusRepository, tenantEntityStatus);
+
             #endregion
 
             #region Just for Testing
