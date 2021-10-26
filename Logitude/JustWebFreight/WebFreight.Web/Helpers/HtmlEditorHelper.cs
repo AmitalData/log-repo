@@ -877,7 +877,7 @@ namespace WebFreight.Web.Helpers
 
 
 
-        private bool CheckIfTemplateHaveDataVariable(HtmlEditorResolveArgs htmlEditorResolveArgs )
+        private bool CheckIfTemplateHaveDataVariable(HtmlEditorResolveArgs htmlEditorResolveArgs)
         {
             bool result = false;
             if (!string.IsNullOrEmpty(htmlEditorResolveArgs.Subject))
@@ -918,7 +918,7 @@ namespace WebFreight.Web.Helpers
             return result;
 
         }
-        public HtmlEditorResolveResult ResolveHtmlData(HtmlEditorResolveArgs htmlEditorResolveArgs ,object customEntity )
+        public HtmlEditorResolveResult ResolveHtmlData(HtmlEditorResolveArgs htmlEditorResolveArgs, object customEntity)
         {
             string htmlString = htmlEditorResolveArgs.HtmlString;
             string to = htmlEditorResolveArgs.To;
@@ -1083,7 +1083,6 @@ namespace WebFreight.Web.Helpers
                     IEnumerable<HtmlNode> spansList = document.DocumentNode.SelectNodes("//span").Where(n => n.InnerText.Contains("[") && n.InnerText.Contains("["));
                     if (spansList != null)
                     {
-                        nodeValues = new Dictionary<string, string>();
                         foreach (HtmlNode node in spansList)
                         {
 
@@ -1407,7 +1406,7 @@ namespace WebFreight.Web.Helpers
                 HtmlString = result,
                 Subject = subject,
                 From = from,
-                To= to,
+                To = to,
                 Cc = cc,
                 Bcc = bcc,
                 ReplyTo = replyTo
@@ -1416,7 +1415,8 @@ namespace WebFreight.Web.Helpers
 
         private HtmlEditorResolveResult MapHtmlEditorArgsToResult(HtmlEditorResolveArgs htmlEditorResolveArgs)
         {
-            HtmlEditorResolveResult htmlEditorResolveResult = new HtmlEditorResolveResult{
+            HtmlEditorResolveResult htmlEditorResolveResult = new HtmlEditorResolveResult
+            {
                 HtmlString = htmlEditorResolveArgs.HtmlString,
                 To = htmlEditorResolveArgs.To,
                 Cc = htmlEditorResolveArgs.Cc,
@@ -1429,7 +1429,7 @@ namespace WebFreight.Web.Helpers
             return htmlEditorResolveResult;
         }
 
-        private string ResolveVariableField( string fieldVaue, ResolveVariableFieldArgs resolveVariableFieldArgs)
+        private string ResolveVariableField(string fieldVaue, ResolveVariableFieldArgs resolveVariableFieldArgs)
         {
             string result = fieldVaue;
             if (!string.IsNullOrEmpty(fieldVaue))
@@ -4288,7 +4288,7 @@ namespace WebFreight.Web.Helpers
                             resultValue = (newValue != null ? newValue.ToString() : " ");
                         }
 
-                        resultValue = ResolveFieldValue(resultValue, field,tenant);
+                        resultValue = ResolveFieldValue(resultValue, field, tenant);
                     }
 
                 }
@@ -4766,7 +4766,7 @@ namespace WebFreight.Web.Helpers
             return resultValue;
         }
 
-        private string ResolveFieldValue(string fieldValue, ObjectField field,int tenant)
+        private string ResolveFieldValue(string fieldValue, ObjectField field, int tenant)
         {
             string result = string.Empty;
 
@@ -5167,7 +5167,7 @@ namespace WebFreight.Web.Helpers
                 return " ";
             }
         }
-        Dictionary<string, string> nodeValues = new Dictionary<string, string>();
+
         private string GetHtmlNodeValue(HtmlNode node, string nodeText, object theEntity, List<ObjectField> theEntityObjectFields, Dictionary<HtmlNode, HtmlNode> tablesDic, SystemDataPM systemEntity, List<ObjectField> systemEntityObjectFields, List<HtmlNode> signatureNodeList, int tenant, GeneralDomainService theGeneralService, List<HtmlNode> ticketHeaderNode = null, List<HtmlNode> ticketFooterNode = null)
         {
 
@@ -5192,13 +5192,8 @@ namespace WebFreight.Web.Helpers
                                 objectField = childEntityObjectFields.Where(f => f.FieldName == fields[0]).FirstOrDefault();
                                 if (objectField != null)
                                 {
-                                    if (nodeValues.ContainsKey(propertyName))
-                                    {
-                                        node.InnerHtml.Replace("[" + propertyName + "]", nodeValues[propertyName]);
-                                        continue;
-                                    }
+
                                     nodeTextValue = ResolveObjectFieldValueHtml(objectField, fields, tenant, propertyName, systemEntity, systemEntityObjectFields, tablesDic, node, nodeTextValue, childEntity, childEntityObjectFields, nodeText);
-                                    nodeValues.Add(propertyName, nodeTextValue);
                                 }
                                 else
                                 {
@@ -5208,14 +5203,8 @@ namespace WebFreight.Web.Helpers
 
                                         if (objectField != null)
                                         {
-                                            if (nodeValues.ContainsKey(propertyName))
-                                            {
-                                                node.InnerHtml.Replace("[" + propertyName + "]", nodeValues[propertyName]);
-                                                continue;
-                                            }
-                                            nodeTextValue = ResolveObjectFieldValueHtml(objectField, fields, tenant, propertyName, systemEntity, systemEntityObjectFields, tablesDic, node, nodeTextValue, theEntity, theEntityObjectFields, nodeText);
-                                            nodeValues.Add(propertyName, nodeTextValue);
 
+                                            nodeTextValue = ResolveObjectFieldValueHtml(objectField, fields, tenant, propertyName, systemEntity, systemEntityObjectFields, tablesDic, node, nodeTextValue, theEntity, theEntityObjectFields, nodeText);
                                         }
                                     }
                                 }
@@ -5228,14 +5217,8 @@ namespace WebFreight.Web.Helpers
 
                                     if (objectField != null)
                                     {
-                                        if (nodeValues.ContainsKey(propertyName))
-                                        {
-                                            node.InnerHtml.Replace("[" + propertyName + "]", nodeValues[propertyName]);
-                                            continue;
-                                        }
-                                        nodeTextValue = ResolveObjectFieldValueHtml(objectField, fields, tenant, propertyName, systemEntity, systemEntityObjectFields, tablesDic, node, nodeTextValue, theEntity, theEntityObjectFields, nodeText);
-                                        nodeValues.Add(propertyName, nodeTextValue);
 
+                                        nodeTextValue = ResolveObjectFieldValueHtml(objectField, fields, tenant, propertyName, systemEntity, systemEntityObjectFields, tablesDic, node, nodeTextValue, theEntity, theEntityObjectFields, nodeText);
                                     }
                                 }
                             }
@@ -5467,9 +5450,9 @@ namespace WebFreight.Web.Helpers
                 if (propertyPathPi != null)
                 {
                     object objectFieldValue = objectField.IsCustom ? GetCustomFieldValue(objectField, theEntity, tenant) : propertyPathPi.GetValue(theEntity, null);
-                    DateTime? dateTimeValue = (objectFieldValue!=null && !string.IsNullOrEmpty(objectFieldValue.ToString())) ? dateTimeValue = DateTime.Parse(objectFieldValue.ToString()) : null ;
+                    DateTime? dateTimeValue = (objectFieldValue != null && !string.IsNullOrEmpty(objectFieldValue.ToString())) ? dateTimeValue = DateTime.Parse(objectFieldValue.ToString()) : null;
                     string resultValue = " ";
-                  
+
                     if (dateTimeValue != null)
                     {
                         if (fields[1].Trim().ToLower() == "date")
@@ -5590,8 +5573,6 @@ namespace WebFreight.Web.Helpers
                         {
 
                             node.InnerHtml = node.InnerHtml.Replace("[" + propertyName + "]", " ");
-
-                            value = " ";
                         }
                     }
                 }
@@ -7046,14 +7027,14 @@ namespace WebFreight.Web.Helpers
                         Subject = template.Subject,
                         From = template.From,
                         ReplyTo = template.ReplyTo,
-                        Cc= template.CC,
+                        Cc = template.CC,
                         Bcc = template.BCC,
                         To = template.BCC,
                         UserId = GetLoggedUserId(tenant),
-                        ObjectTableId = objectTableId, 
-                        Tenant = tenant , 
-                        DocumentTemplateId = template.Id ,
-                        IsSendMail =true
+                        ObjectTableId = objectTableId,
+                        Tenant = tenant,
+                        DocumentTemplateId = template.Id,
+                        IsSendMail = true
 
                     };
 
@@ -7066,14 +7047,15 @@ namespace WebFreight.Web.Helpers
 
             }
 
-            return new MessageArgs() {
+            return new MessageArgs()
+            {
                 From = htmlEditorResolveResult.From,
-                ReplyTo = htmlEditorResolveResult.ReplyTo, 
+                ReplyTo = htmlEditorResolveResult.ReplyTo,
                 Subject = htmlEditorResolveResult.Subject,
-                HtmlTemplate = htmlEditorResolveResult.HtmlString ,
+                HtmlTemplate = htmlEditorResolveResult.HtmlString,
                 BCC = htmlEditorResolveResult.Bcc,
                 CC = htmlEditorResolveResult.Cc
-   
+
             };
         }
 
@@ -7258,7 +7240,7 @@ namespace WebFreight.Web.Helpers
         public string From { get; set; }
         public string ReplyTo { get; set; }
         public string Cc { get; set; }
-        public string Bcc{ get; set; }
+        public string Bcc { get; set; }
         public string To { get; set; }
         public string Mode { get; set; }
         public DocumentTypeTemplate DocumentTypeTemplate { get; set; }

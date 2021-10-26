@@ -191,8 +191,8 @@
                                                                         </td>
 
                                                                         <td class="GridViewCell" style="width: 110px; min-width: 110px; max-width: 110px; text-align: right;">
-                                                                            <span>{{insideItem.ExpectedAmount | NumbersPipe:'N2'}}</span>
-                                                                            <span style="margin-left: 2px;" *ngIf="insideItem.ExpectedAmount">{{insideItem.CurrencyCode}}</span>
+                                                                            <span [attr.data-cy]="'HouseExpectedAmount'">{{insideItem.ExpectedAmount | NumbersPipe:'N2'}}</span>
+                                                                            <span [attr.data-cy]="'HouseCurrencyCode'" style="margin-left: 2px;" *ngIf="insideItem.ExpectedAmount">{{insideItem.CurrencyCode}}</span>
                                                                         </td>
 
                                                                         <td class="GridViewCell" style="width: 150px; min-width: 150px; max-width: 150px; text-align: right;">
@@ -234,7 +234,7 @@
                                                                         </td>
 
                                                                         <td style="width: 110px; min-width: 110px; max-width: 110px; text-align: right;">
-                                                                            <span>{{item.SumOfAmount | NumbersPipe:'N2'}}</span>
+                                                                            <span [attr.data-cy]="'SumOfAmount'">{{item.SumOfAmount | NumbersPipe:'N2'}}</span>
                                                                             <span style="margin-left: 2px;" *ngIf="item.SumOfAmount">{{item.CurrencyCode}}</span>
                                                                         </td>
 
@@ -261,7 +261,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </ng-template>                                            
+                                            </ng-template>
                                         </row-template>
                                     </log-row-details>
 
@@ -318,7 +318,7 @@
                                             <log-cell-template #logcelltemplate [IsEnabled]="false">
                                                 {{item.VendorName}}
                                             </log-cell-template>
-                                        </ng-template>  
+                                        </ng-template>
                                     </log-column>
 
                                     <!-- Quantity -->
@@ -410,8 +410,8 @@
                                                             </td>
 
                                                             <td style="text-align: right;">
-                                                                <span [ngStyle]="{color: item.ExpectedAmountColor}">{{item.ExpectedAmount | NumbersPipe:'N2'}}</span>
-                                                                <span [ngStyle]="{color: item.ExpectedAmountColor}" style="margin-left: 2px;" *ngIf="item.ExpectedAmount != null">{{item.CurrencyCode}}</span>
+                                                                <span [attr.data-cy]="'MasterExpectedAmount'" [ngStyle]="{color: item.ExpectedAmountColor}">{{item.ExpectedAmount | NumbersPipe:'N2'}}</span>
+                                                                <span [attr.data-cy]="'MasterCurrencyCode'" [ngStyle]="{color: item.ExpectedAmountColor}" style="margin-left: 2px;" *ngIf="item.ExpectedAmount != null">{{item.CurrencyCode}}</span>
                                                             </td>
                                                         </tr>
                                                     </table>
@@ -421,7 +421,7 @@
                                                     <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'ExpectedAmount'" [Text]="item.ExpectedAmount" [DataContext]="item" [ObjectTableName]="item.ObjectTableName" [HideColumns]="true"></LogTextBox>
                                                 </div>
                                             </log-cell-template>
-                                        </ng-template>                                        
+                                        </ng-template>
                                     </log-column>
 
                                     <!-- AccountedAmount -->
@@ -503,7 +503,7 @@
                                                     </table>
                                                 </div>
                                             </log-cell-template>
-                                        </ng-template>                                        
+                                        </ng-template>
                                     </log-column>
 
                                     <!-- OpenAmount -->
@@ -586,7 +586,7 @@
                                                                 </div>
                                                             </td>
                                                             <td>
-                                                                <div class="deleteIcon" style="height: 20px;"  [class.Disable]="!item.IsEditingEnabled">
+                                                                <div class="deleteIcon" style="height: 20px;" [class.Disable]="!item.IsEditingEnabled">
                                                                     <img class="LeftCenter" style="width: 14px; height: 14px; cursor: pointer;" src="./Images/RedX2.png" (click)="DeleteTariff(item)" />
                                                                 </div>
                                                             </td>
@@ -594,7 +594,7 @@
                                                     </table>
                                                 </div>
                                             </log-cell-template>
-                                        </ng-template>                                        
+                                        </ng-template>
                                     </log-column>
 
                                     <!-- Buttons -->
@@ -661,7 +661,7 @@
                                                     </div>
                                                 </div>
                                             </log-cell-template>
-                                        </ng-template>                                        
+                                        </ng-template>
                                     </log-column>
 
                                 </logitude-edit-grid>
