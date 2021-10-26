@@ -169,7 +169,7 @@ namespace Logitude.BL.Security
             {
                 email = AuthenticationUtil.AuthenticatedUserEmail;
             }
-            
+
             if (string.IsNullOrWhiteSpace(email))
             {
                 email = AuthenticationUtil.ResolveLoggingUserId(tenant);
