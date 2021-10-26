@@ -255,13 +255,18 @@ namespace AmitalCustomsWindowsService
             {
                 BatchServicesDefinitions = BatchServicesDefinitions.Where(r => r.ClassName != "DownloadDcaMessageSheetWR").ToList();
             }
+
             var dedicatedCourierDCAService = new DedicatedCourierDCAService();
             var modelDedicatedCourierDCA = dedicatedCourierDCAService.CreateDedicatedCourierDCA();
             if (modelDedicatedCourierDCA != null)//Task 147744: AMITALCUSTOMSSERVER העברת הטיפול בכספת בבלדרות לתהליך
             {
                 listOfWorkerEntryPoint = new List<Logitude.Server.Tools.WorkerEntryPoint>();
                 listOfWorkerEntryPoint.Add(new DownloadDcaMessageSheetWR());
+                var AddWorkerFromAppSettingGenericMethod = addWorkerFromAppSettingMethodInfoDB.MakeGenericMethod(new Type[] { (new DownloadDcaMessageSheetWR()).GetType() });
+                AddWorkerFromAppSettingGenericMethod.Invoke(this, new object[] { (object)suppresDoOnlyCheck }); 
+                return;
             }
+
 
 
             foreach (var batchServicesDefinitionPM in BatchServicesDefinitions)
