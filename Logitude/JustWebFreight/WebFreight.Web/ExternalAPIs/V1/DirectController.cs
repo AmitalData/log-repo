@@ -268,7 +268,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                                 entityPM.OtherPrepaidCollectId = myIncoterm.OtherCharges;
                             }
                         }
-                        if (entityPM.CustomsClearanceDate != null)
+                        if (IsAddingCustomsFields(entityPM))
                         {
                             entityPM.IncludesCustoms = true;
                         }
@@ -863,7 +863,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                                 directPM = this.ValidateInlandDomesticShipment(directPM);
                             }
 
-                            if (directPM.CustomsClearanceDate != null && directPM.IncludesCustoms == false)
+                            if (IsAddingCustomsFields(directPM))
                             {
                                 directPM.IncludesCustoms = true;
                             }
@@ -996,6 +996,12 @@ namespace WebFreight.Web.ExternalAPIs.V1
         private void UpdateIncludeCustomesFeild(ShipmentPM shipmentPM)
         {
 
+        }
+
+        private bool IsAddingCustomsFields(ShipmentPM shipmentPM)
+        {
+            return ((shipmentPM.CustomsClearanceDate != null || shipmentPM.DeclarationDate != null || !string.IsNullOrEmpty(shipmentPM.DeclarationNumber))
+                                && shipmentPM.IncludesCustoms == false);
         }
        
     }

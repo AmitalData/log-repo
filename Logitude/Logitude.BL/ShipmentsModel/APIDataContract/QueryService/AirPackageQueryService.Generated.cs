@@ -168,12 +168,10 @@ using Simplog.Data.ShipmentsModel;
 										}  
 
 					
-                    
-					if(!IsUpdate)// && item.Volume != null)
-					{							//throw new ApplicationException("Volume Can't be update"); 
+                    							//throw new ApplicationException("Volume Can't be update"); 
 							temp.Volume = item.Volume;
 
-										}  
+					 
 
 					
                     

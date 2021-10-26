@@ -36,7 +36,7 @@
   MaxNumberOfCustomFields="0"
   ParentTableName="Shipment"
   DefaultText="&quot;Shipment Package&quot;"
-  Code="&quot;9a86&quot;"
+  Code="&quot;06a9&quot;"
   Name="&quot;ShipmentPackage&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Shipment&quot;"
@@ -9271,7 +9271,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;GrossWeight&quot;"
         DCVersion="&quot;&quot;"
@@ -9573,7 +9573,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;GrossWeight&quot;"
         DCVersion="&quot;&quot;"
@@ -9790,7 +9790,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;GrossWeight&quot;"
         FieldName="&quot;Weight&quot;"
