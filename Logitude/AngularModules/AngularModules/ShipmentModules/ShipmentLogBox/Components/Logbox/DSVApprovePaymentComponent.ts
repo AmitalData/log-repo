@@ -176,7 +176,7 @@ export class DSVApprovePaymentComponent extends BaseComponent implements OnInit,
         this._ShipmentAdditionalCloudDataService.getsingledata(this.EntityPm.Id).subscribe((AdditionalResult:any) => {
             var entity = AdditionalResult.Result;
             this.CurrentSession.CurrentWindow.StopBusyIndicator(); 
-            if (!AppTool.IsNullOrEmpty(entity.ApprovedByUserName) || !AppTool.IsNullOrEmpty(entity.DenyReason)) {
+            if (!AppTool.IsNullOrEmpty(entity.ApprovedByUserName)) {//!AppTool.IsNullOrEmpty(entity.DenyReason) || 
                 this.messageWindow.RTL = this.RTL;
                 this.messageWindow.Width = 300;
                 this.messageWindow.Height = 150;
@@ -301,7 +301,7 @@ export class DSVApprovePaymentComponent extends BaseComponent implements OnInit,
         
         this._ShipmentAdditionalCloudDataService.getsingledata(this.EntityPm.Id).subscribe((AdditionalResult:any) => {
             var entity = AdditionalResult.Result
-            if (!AppTool.IsNullOrEmpty(entity.DenyReason) || !AppTool.IsNullOrEmpty(entity.ApprovedByUserName)) {
+            if (!AppTool.IsNullOrEmpty(entity.ApprovedByUserName)) {//!AppTool.IsNullOrEmpty(entity.DenyReason) || 
                 this.messageWindow.RTL = this.RTL;
                 this.messageWindow.Width = 300;
                 this.messageWindow.Height = 150;
