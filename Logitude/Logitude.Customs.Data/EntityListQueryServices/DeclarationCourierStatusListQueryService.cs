@@ -154,7 +154,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                                   //PendingRemarks = declarationPendingsListNames.CourierPendingReason.LocalName,
 
 
-                                                                  //CourierSuspentionReasonName = d.CourierSuspentionReasonCode != null ? d.AgentTalkBackType.LocalName : null,
+                                                                  CourierSuspentionReasonName = d.CourierSuspentionReasonCode != null ? d.AgentTalkBackType.LocalName : null,
                                                                   AcceptanceStatusCode = d.AcceptanceStatusCode,
                                                                   //  CourierSuspentionCode = d.CourierSuspentionCode,
                                                                   CourierSuspentionName = d.CourierSuspention != null ? d.CourierSuspention.LocalName : null,
