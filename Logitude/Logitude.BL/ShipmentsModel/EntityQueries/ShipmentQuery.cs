@@ -2590,9 +2590,12 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 ETD = shipmentPM.MainCarriageETD,
                 FromPortId = shipmentPM.MainCarriageFromPortId,
                 ToPortId = shipmentPM.MainCarriageToPortId,
+                FromPortCode = shipmentPM.MainCarriageFromPortCode,
+                ToPortCode = shipmentPM.MainCarriageToPortCode,
                 VesselId = shipmentPM.MainCarriageVesselId,
                 CarrierId = shipmentPM.MainCarriageCarrierId,
                 CarrierNumber = shipmentPM.MainCarriageCarrierNumber,
+                CarrierName = shipmentPM.MainCarriageCarrierName,
                 MasterNumber = shipmentPM.Master,
             });
 
@@ -2607,9 +2610,12 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     ETD = shipmentPM.Transshipment1ETD,
                     FromPortId = shipmentPM.Transshipment1FromPortId,
                     ToPortId = shipmentPM.Transshipment1ToPortId,
+                    FromPortCode = shipmentPM.Transshipment1FromPortCode,
+                    ToPortCode = shipmentPM.Transshipment1ToPortCode,
                     VesselId = shipmentPM.Transshipment1VesselId,
                     CarrierId = shipmentPM.Transshipment1CarrierId,
                     CarrierNumber = shipmentPM.Transshipment1CarrierNumber,
+                    CarrierName = shipmentPM.Transshipment1CarrierName,
                     MasterNumber = shipmentPM.Transshipment1AdditionalMAWBOBLBL,
                 });
             }
@@ -2625,9 +2631,12 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     ETD = shipmentPM.Transshipment2ETD,
                     FromPortId = shipmentPM.Transshipment2FromPortId,
                     ToPortId = shipmentPM.Transshipment2ToPortId,
+                    FromPortCode = shipmentPM.Transshipment2FromPortCode,
+                    ToPortCode = shipmentPM.Transshipment2ToPortCode,
                     VesselId = shipmentPM.Transshipment2VesselId,
                     CarrierId = shipmentPM.Transshipment2CarrierId,
                     CarrierNumber = shipmentPM.Transshipment2CarrierNumber,
+                    CarrierName = shipmentPM.Transshipment2CarrierName,
                     MasterNumber = shipmentPM.Transshipment2AdditionalMAWBOBLBL,
                 });
             }
@@ -2643,9 +2652,12 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     ETD = shipmentPM.Transshipment3ETD,
                     FromPortId = shipmentPM.Transshipment3FromPortId,
                     ToPortId = shipmentPM.Transshipment3ToPortId,
+                    FromPortCode = shipmentPM.Transshipment3FromPortCode,
+                    ToPortCode = shipmentPM.Transshipment3ToPortCode,
                     VesselId = shipmentPM.Transshipment3VesselId,
                     CarrierId = shipmentPM.Transshipment3CarrierId,
                     CarrierNumber = shipmentPM.Transshipment3CarrierNumber,
+                    CarrierName = shipmentPM.Transshipment3CarrierName,
                     MasterNumber = shipmentPM.Transshipment3AdditionalMAWBOBLBL,
                 });
             }

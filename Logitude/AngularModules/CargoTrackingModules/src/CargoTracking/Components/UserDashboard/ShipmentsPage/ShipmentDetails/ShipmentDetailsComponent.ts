@@ -23,6 +23,8 @@ export class ShipmentDetailsComponent implements AfterViewInit
 {
 
     @ViewChild('SliderWrapper') SliderWrapperElement: ElementRef;
+    @ViewChild('RoutingSliderWrapper') RoutingSliderWrapperElement: ElementRef;
+
 
     @Input() DetailsSectionToggleEvent: EventEmitter<any> = new EventEmitter();
  
@@ -102,16 +104,18 @@ export class ShipmentDetailsComponent implements AfterViewInit
     {
         //event.target.innerWidth;
         this.InitSlider();
+        this.InitRoutingSlider();
+
     }
 
-    onMousewheel(event: WheelEvent)
+    onMousewheel(event: WheelEvent, isRoutingSlider: Boolean)
     {
         event.preventDefault();
         if (event.deltaY > 0) {
-            this.MoveSlider('left');
+            isRoutingSlider ? this.MoveRoutingSlider('left') : this.MoveSlider('left');
         }
         if (event.deltaY < 0) {
-            this.MoveSlider('right');
+            isRoutingSlider ? this.MoveRoutingSlider('right') : this.MoveSlider('right');
         }
     }
 
@@ -132,7 +136,7 @@ export class ShipmentDetailsComponent implements AfterViewInit
             var count = Math.floor((sliderWrapperWidth - PAGERS_WIDTH) / this.sliderCardWidth);
 
         if (screenwidth <= maxWidthForMobileScreen)
-        var mobileCount = this.CalculateVisibleSliderCardsCount(sliderWrapperWidth, mobilePagersWidth);
+            var mobileCount = this.CalculateVisibleSliderCardsCount(sliderWrapperWidth, mobilePagersWidth, this.sliderMobileCardWidth);
         this.sliderVisibleCardsCount = count == undefined ? mobileCount: count;
 
         this.sliderVisibleCardsWidth = count * this.sliderCardWidth;
@@ -141,8 +145,28 @@ export class ShipmentDetailsComponent implements AfterViewInit
 
     }
 
-    private CalculateVisibleSliderCardsCount(sliderWrapperWidth: number, mobilePagersWidth: number ) {
-        return Math.floor((sliderWrapperWidth - mobilePagersWidth) / this.sliderMobileCardWidth);
+    InitRoutingSlider() {
+        var PAGERS_WIDTH = 100; // 100 * 2 pager
+        var mobilePagersWidth = 150; // 100 * 2 pager
+        var screenwidth = window.innerWidth;
+
+        var sliderWrapperWidth = this.RoutingSliderWrapperElement.nativeElement.offsetWidth;
+        const maxWidthForMobileScreen = 470;
+        if (screenwidth > maxWidthForMobileScreen)
+            var count = Math.floor((sliderWrapperWidth - PAGERS_WIDTH) / this.routingSliderCardWidth);
+
+        if (screenwidth <= maxWidthForMobileScreen)
+            var mobileCount = this.CalculateVisibleSliderCardsCount(sliderWrapperWidth, mobilePagersWidth, this.routingSliderMobileCardWidth);
+        this.routingSliderVisibleCardsCount = count == undefined ? mobileCount : count;
+
+        this.routingSliderVisibleCardsWidth = count * this.routingSliderCardWidth;
+        this.routingSliderMarginCardCount = 0;
+        this.routingSliderMarginLeft =  0; // mobile: add
+
+    }
+
+    private CalculateVisibleSliderCardsCount(sliderWrapperWidth: number, mobilePagersWidth: number, sliderMobileCardWidth: number ) {
+        return Math.floor((sliderWrapperWidth - mobilePagersWidth) / sliderMobileCardWidth);
     }
     LoadShipment()
     {
@@ -180,6 +204,7 @@ export class ShipmentDetailsComponent implements AfterViewInit
             setTimeout(() =>
             {
                 this.InitSlider();
+                this.InitRoutingSlider();
                 this.BuildSliderCards();
 
             }, 200);
@@ -616,6 +641,48 @@ export class ShipmentDetailsComponent implements AfterViewInit
     }
     //#endregion
 
+    //#region Routing Slider
+    routingSliderMarginLeft: number = 0;
+    routingSliderMarginCardCount: number = 0;
+    routingSliderCardWidth: number = 200;
+    routingSliderMobileCardWidth: number = 320;
+    routingSliderVisibleCardsCount: number = 1;
+    routingSliderVisibleCardsWidth: number = 0;
+  
+ 
+    MoveRoutingSlider(dir) {
+
+        if (dir == 'right' && this.routingSliderMarginLeft == 0)
+            return;
+
+        if (dir == 'left' && ((this.routingSliderMarginCardCount + this.routingSliderVisibleCardsCount) >= this.ShipmentRouteSteps.length) || (this.routingSliderVisibleCardsCount >= this.ShipmentRouteSteps.length))
+            return;
+
+        var margin = this.routingSliderMarginLeft;
+        // inc\dec
+        if (dir == 'left') {
+            margin -= this.routingSliderCardWidth;
+            this.routingSliderMarginCardCount++;
+        }
+        else {
+            margin += this.routingSliderCardWidth;
+            this.routingSliderMarginCardCount--;
+        }
+
+        // limit boundary
+        if (margin > 0)
+            this.routingSliderMarginLeft = 0;
+        else
+            this.routingSliderMarginLeft = margin;
+
+        var screenwidth = window.innerWidth;
+        if (screenwidth < 470)
+            this.routingSliderMarginLeft - 55;
+
+
+    }
+    //#endregion
+
     GetModeIcon()
     {
         var iconPath = "";
@@ -1031,9 +1098,9 @@ export class ShipmentDetailsComponent implements AfterViewInit
     private CreateSingleMainCarriageLegsRoute(i: number) {
         var step = new RoutingStep();
         step.TransportModeCode = this.ShipmentPM.TransportModeId;
-        step.Description = this.ShipmentPM.MainCarriageCarrierName != null ? "Via " + this.ShipmentPM.MainCarriageCarrierName : null;
-        step.FromPortLabel = this.ShipmentPM.MainCarriageFromPortCode;
-        step.ToPortLabel = this.ShipmentPM.MainCarriageToPortCode;
+        step.Description = this.ShipmentPM.MainCarriageLegs[i].CarrierName != null ? "Via " + this.ShipmentPM.MainCarriageLegs[i].CarrierName : null;
+        step.FromPortLabel = this.ShipmentPM.MainCarriageLegs[i].FromPortCode;
+        step.ToPortLabel = this.ShipmentPM.MainCarriageLegs[i].ToPortCode;
 
         step.Directions = this.BuildRouteDirections(this.ShipmentPM.MainCarriageLegs[i]);
         return step;
