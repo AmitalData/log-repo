@@ -360,7 +360,7 @@ namespace CommunicationWorkerRole
             CustomerTenantAccessRequestQuery customerTenantAccessRequestQuery = new CustomerTenantAccessRequestQuery(customerTenantAccessRequest.PartnerTenant);
             HybridPartnerQuery hybridPartnerQuery = new HybridPartnerQuery(customerTenantAccessRequest.PartnerTenant); 
 
-            List<string> customerTenantAccessRequestIds = customerTenantAccessRequestQuery.GetCustomerTenantAccessRequestIdsByTenant(customerTenantAccessRequest.CustomerTenant);
+            List<string> customerTenantAccessRequestIds = customerTenantAccessRequestQuery.GetCustomerTenantAccessRequestForwarderIdsByTenant(customerTenantAccessRequest.CustomerTenant);
             List<string> forwarderIds = hybridPartnerQuery.GetPartnersForRequest(customerTenantAccessRequest.PartnerTenant, customerTenantAccessRequestIds);
             IQueryable<CustomerTenantAccessRequestPM> customerTenantAccessRequestList = customerTenantAccessRequestQuery.GetCustomerTenantAccessRequestByTenantAndForwarderIds(customerTenantAccessRequest.CustomerTenant, forwarderIds);
   

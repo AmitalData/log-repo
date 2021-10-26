@@ -147,11 +147,11 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             return entity;
         }
 
-        public List<string> GetCustomerTenantAccessRequestIdsByTenant(int tenant)
+        public List<string> GetCustomerTenantAccessRequestForwarderIdsByTenant(int tenant)
         {
             var IdsList = from a in repository.context.CustomerTenantAccessRequests.Include("CustomerTenantAccessStatusType").Include("HybridPartner")
                     where a.Tenant == tenant
-                    select a.Id;
+                    select a.ForwarderId;
 
             return IdsList.ToList() ;
          
