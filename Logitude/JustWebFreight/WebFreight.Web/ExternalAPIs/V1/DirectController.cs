@@ -560,44 +560,35 @@ namespace WebFreight.Web.ExternalAPIs.V1
         {
             if (!string.IsNullOrEmpty(entityPM.CustomerId))
             {
-                if (entityPM.CustomerId == entityPM.ShipperId 
-                    || entityPM.CustomerId == entityPM.ConsigneeId
-                    || entityPM.CustomerId == entityPM.ShipperNotExporterId
-                    || entityPM.CustomerId == entityPM.AgentId
-                    || entityPM.CustomerId == entityPM.CustomAgentImportId
-                    || entityPM.CustomerId == entityPM.ReleasingAgentId
-                    || entityPM.CustomerId == entityPM.FreightForwarderId)
-                {
-                    this.SetCustomerTypeCode(entityPM);
-
-                    Address address = addressRepository.GetMainAddressByCardId(entityPM.CustomerId, tenant);
-                    if (address != null)
-                    {
-                        entityPM.CustomerAddressId = address.Id;
-                    }
-
-                    CardRepository cardRepository = new CardRepository(tenant);
-                    Card customer = cardRepository.GetSingleCard(entityPM.CustomerId, tenant);
-                    if (customer != null)
-                    {
-                        if (string.IsNullOrEmpty(entityPM.SalesmanUserId))
-                        {
-                            entityPM.SalesmanUserId = string.IsNullOrEmpty(customer.SalesmanUserId) ? entityPM.CreatedByUserId : customer.SalesmanUserId;
-                        }
-
-                        if (customer.Customer != null)
-                        {
-                            if (string.IsNullOrEmpty(entityPM.AccountManagerUserId))
-                            {
-                                entityPM.AccountManagerUserId = !string.IsNullOrEmpty(customer.Customer.AccountManagerUserId) ? customer.Customer.AccountManagerUserId : entityPM.CreatedByUserId;
-                            }
-                        }
-                    }
-                }
-
-                else
+                if (!IsSentCustomerAShipmentPatrner(entityPM))
                 {
                     throw new ApplicationException("The sent customer is not one of the sent partners");
+                }
+
+                this.SetCustomerTypeCode(entityPM);
+
+                Address address = addressRepository.GetMainAddressByCardId(entityPM.CustomerId, tenant);
+                if (address != null)
+                {
+                    entityPM.CustomerAddressId = address.Id;
+                }
+
+                CardRepository cardRepository = new CardRepository(tenant);
+                Card customer = cardRepository.GetSingleCard(entityPM.CustomerId, tenant);
+                if (customer != null)
+                {
+                    if (string.IsNullOrEmpty(entityPM.SalesmanUserId))
+                    {
+                        entityPM.SalesmanUserId = string.IsNullOrEmpty(customer.SalesmanUserId) ? entityPM.CreatedByUserId : customer.SalesmanUserId;
+                    }
+
+                    if (customer.Customer != null)
+                    {
+                        if (string.IsNullOrEmpty(entityPM.AccountManagerUserId))
+                        {
+                            entityPM.AccountManagerUserId = !string.IsNullOrEmpty(customer.Customer.AccountManagerUserId) ? customer.Customer.AccountManagerUserId : entityPM.CreatedByUserId;
+                        }
+                    }
                 }
             }
 
@@ -1002,6 +993,47 @@ namespace WebFreight.Web.ExternalAPIs.V1
         {
             return ((shipmentPM.CustomsClearanceDate != null || shipmentPM.DeclarationDate != null || !string.IsNullOrEmpty(shipmentPM.DeclarationNumber))
                                 && shipmentPM.IncludesCustoms == false);
+        }
+
+        private bool IsSentCustomerAShipmentPatrner(ShipmentPM entityPM)
+        {
+            if (entityPM.CustomerId == entityPM.ShipperId)
+            {
+                return true;
+            }
+            if (entityPM.CustomerId == entityPM.ConsigneeId)
+            {
+                return true;
+            }
+            if (entityPM.CustomerId == entityPM.ShipperNotExporterId)
+            {
+                return true;
+            }
+            if (entityPM.CustomerId == entityPM.AgentId)
+            {
+                return true;
+            }
+            if (entityPM.CustomerId == entityPM.CustomAgentImportId)
+            {
+                return true;
+            }
+            if (entityPM.CustomerId == entityPM.ReleasingAgentId)
+            {
+                return true;
+            }
+            if (entityPM.CustomerId == entityPM.FreightForwarderId)
+            {
+                return true;
+            }
+            if (entityPM.CustomerId == entityPM.CustomAgentExportId)
+            {
+                return true;
+            }
+            if (entityPM.CustomerId == entityPM.ConsigneeNotImporterId)
+            {
+                return true;
+            }
+            return false;
         }
        
     }
