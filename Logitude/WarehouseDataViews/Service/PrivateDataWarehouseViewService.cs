@@ -33,10 +33,6 @@ namespace WarehouseDataViews.Service
             foreach (WarehouseView view in dataWarehouseViews)
             {
                 string viewscript = view.SqlString;
-                if (view.IsFactView)
-                {
-
-                }
                 if (view.IsFactView && view.HasCustomFields)
                 {
                     viewscript = view.SqlString.Replace(",@CustomFields", view.CustomFieldScriptSQL);
