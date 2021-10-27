@@ -2,6 +2,7 @@ import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
 import { FormGroup, FormControl, FormArray } from '@angular/forms';
 import { QuoteOPPackagePM } from 'QuoteOPM/EntityPMs/QuoteOPPackagePM';
 import { QuoteOPPM } from 'QuoteOPM/EntityPMs/QuoteOPPM';
+import { pairwise, startWith } from 'rxjs/operators';
 import { PackageTypeList } from '../../../../../Common/EntityLists/PackageTypeList';
 import { NewQuoteDataService } from '../../Services/new-quote-data/new-quote-data.service';
 
@@ -16,7 +17,9 @@ export class NewQuoteExpectedOrderComponent implements OnInit {
 
   formsPackage: FormGroup[] = [];
     formArray: FormArray = null;
-
+    totalQuantity: number = 0;
+    totalGrossWeight: number = 0.00;
+    totalVolume: number = 0.00;
     get propForm(): FormGroup {
         return new FormGroup({
             volume: new FormControl(),
@@ -71,7 +74,11 @@ export class NewQuoteExpectedOrderComponent implements OnInit {
         form.controls.Ldimension.disable();
         form.controls.Wdimension.disable();
         form.controls.Hdimension.disable();
-        form.controls.quantity.valueChanges.subscribe(val => this.disableForm(form))
+        form.controls.quantity.valueChanges.pipe(startWith(null), pairwise()).subscribe(([prev, next]: [any, any]) => { this.disableForm(form); this.calcTotalQuantity(prev, next) });
+        form.controls.grossWeight.valueChanges.pipe(startWith(null), pairwise()).subscribe(([prev, next]: [any, any]) => { this.calcTotalGrossWeight(prev, next) });
+        form.controls.volume.valueChanges.pipe(startWith(null), pairwise()).subscribe(([prev, next]: [any, any]) => { this.calcTotalVolume(prev, next) });
+        
+        //form.controls.quantity.valueChanges.subscribe(val => { this.disableForm(form); this.calcTotalQuantity(val) })
 
         this.formArray = new FormArray([form]);
             this.formGroup.addControl('packages', this.formArray)
@@ -121,13 +128,25 @@ export class NewQuoteExpectedOrderComponent implements OnInit {
         form.controls.Ldimension.disable();
         form.controls.Wdimension.disable();
         form.controls.Hdimension.disable();
-        form.controls.quantity.valueChanges.subscribe(val => this.disableForm(form))
-        
+        //form.controls.quantity.valueChanges.subscribe(val => this.disableForm(form))
+        form.controls.quantity.valueChanges.pipe(startWith(null), pairwise()).subscribe(([prev, next]: [any, any]) => { this.disableForm(form); this.calcTotalQuantity(prev, next) });
+        form.controls.grossWeight.valueChanges.pipe(startWith(null), pairwise()).subscribe(([prev, next]: [any, any]) => { this.calcTotalGrossWeight(prev, next) });
+        form.controls.volume.valueChanges.pipe(startWith(null), pairwise()).subscribe(([prev, next]: [any, any]) => { this.calcTotalVolume(prev, next) });
+
         this.formArray.push(form)
     }
-    removePackage(e: { originalEvent: PointerEvent, index: number }) {
-        if (this.formArray.controls.length > 1)
-            this.formArray.removeAt(e.index);
+    removePackage( index: number ) {
+        if (this.formArray.controls.length > 1) {
+            debugger;
+            var remove_quantity = (this.formArray.at(index) as FormGroup).controls.quantity.value;
+            this.calcTotalQuantity(remove_quantity, 0);
+            var remove_grossWeight = (this.formArray.at(index) as FormGroup).controls.grossWeight.value;
+            this.calcTotalGrossWeight(remove_grossWeight, 0);
+            var remove_Volume = (this.formArray.at(index) as FormGroup).controls.volume.value;
+            this.calcTotalVolume(remove_Volume, 0);
+
+            this.formArray.removeAt(index);
+        }
     }
 
     attachPackages() {
@@ -202,5 +221,15 @@ export class NewQuoteExpectedOrderComponent implements OnInit {
             form.controls.Hdimension.disable();
         }
     }
-  
+    calcTotalQuantity(prev_quantity: number, current_quantity: number) {
+        this.totalQuantity = this.totalQuantity - prev_quantity + current_quantity;
+    }
+    
+    calcTotalGrossWeight(prev_quantity: number, current_quantity: number) {
+        this.totalGrossWeight = this.totalGrossWeight - prev_quantity + current_quantity;
+    }
+    
+    calcTotalVolume(prev_quantity: number, current_quantity: number) {
+        this.totalVolume = this.totalVolume - prev_quantity + current_quantity;
+    }
 }

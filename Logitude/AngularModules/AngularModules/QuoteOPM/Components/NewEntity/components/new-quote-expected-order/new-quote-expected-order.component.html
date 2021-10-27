@@ -27,20 +27,34 @@
         <div class="col-3 p-fluid">
             <div class="p-field">
                 <label for="quantityType1">Package Type</label>
-                <p-dropdown [disabled]="!formGroup.controls.quantity1?.value"
-                            inputId="packageType1" formControlName='quantityType1' [options]="packageTypes" placeholder="Select" optionLabel="name"></p-dropdown>
+                <!--<p-dropdown [disabled]="!formGroup.controls.quantity1?.value"
+                            inputId="packageType1" formControlName='quantityType1' [options]="packageTypes" placeholder="Select" optionLabel="name"></p-dropdown>-->
+                <app-autocomplate-table [columnsShow]="{Code:'Code',EnglishName:'English Name'}" [data]='packageTypes' [dropIcon]='true'
+                                        [placeholder]='"Select"'
+                                        [disabled]='!formGroup.controls.quantity1?.value'
+                                        [fieldShow]='"EnglishName"' [controlName]='"quantityType1"' [formGroup]='formGroup'>
+                </app-autocomplate-table>
             </div>
             <div class="p-field">
-                <p-dropdown [disabled]="!formGroup.controls.quantity2?.value"
-                            inputId="packageType2" formControlName='quantityType2' [options]="packageTypes" placeholder="Select" optionLabel="name"></p-dropdown>
+                <app-autocomplate-table [columnsShow]="{Code:'Code',EnglishName:'English Name'}" [data]='packageTypes' [dropIcon]='true'
+                                        [placeholder]='"Select"'
+                                        [disabled]='!formGroup.controls.quantity2?.value'
+                                        [fieldShow]='"EnglishName"' [controlName]='"quantityType2"' [formGroup]='formGroup'>
+                </app-autocomplate-table>
             </div>
             <div class="p-field">
-                <p-dropdown [disabled]="!formGroup.controls.quantity3?.value"
-                            inputId="packageType3" formControlName='quantityType3' [options]="packageTypes" placeholder="Select" optionLabel="name"></p-dropdown>
+                <app-autocomplate-table [columnsShow]="{Code:'Code',EnglishName:'English Name'}" [data]='packageTypes' [dropIcon]='true'
+                                        [placeholder]='"Select"'
+                                        [disabled]='!formGroup.controls.quantity3?.value'
+                                        [fieldShow]='"EnglishName"' [controlName]='"quantityType3"' [formGroup]='formGroup'>
+                </app-autocomplate-table>
             </div>
             <div class="p-field">
-                <p-dropdown [disabled]="!formGroup.controls.quantity4?.value"
-                            inputId="packageType4" formControlName='quantityType4' [options]="packageTypes" placeholder="Select" optionLabel="name"></p-dropdown>
+                <app-autocomplate-table [columnsShow]="{Code:'Code',EnglishName:'English Name'}" [data]='packageTypes' [dropIcon]='true'
+                                        [placeholder]='"Select"'
+                                        [disabled]='!formGroup.controls.quantity4?.value'
+                                        [fieldShow]='"EnglishName"' [controlName]='"quantityType4"' [formGroup]='formGroup'>
+                </app-autocomplate-table>
             </div>
         </div>
          <div class="col-0.5 p-fluid"></div>
@@ -69,11 +83,11 @@
 
     <h3 class="sub-header">
         {{'QuoteOP.S.NewQuote.ExpectedOrderDetails' | TextCodeTranslationPipe}}
-        <p-button (onClick)="addPackage()" [style]="{'float':'right'}" label="add package"></p-button>
+        <p-button (onClick)="addPackage()" [style]="{'float':'right', 'color': '#2196F3','background-color': 'white'}" label="add package"></p-button>
     </h3>
     <div class="grid content-in-section" [formGroup]='formGroup'>
         <div class="col-12 p-fluid">
-            <div class="grid content-in-section">
+            <div class="grid">
                 <div class="p-field col-2">
                     <label for="quantity">Quantity</label>
                 </div>
@@ -91,7 +105,7 @@
         <div class="col-12 p-fluid" formArrayName="packages">
 
             <div *ngFor='let x of packages.controls; let i = index' [formGroupName]="i">
-                <div class="grid content-in-section" [formGroup]='x'>
+                <div class="grid" [formGroup]='x'>
                     <div class="p-field col-2 p-md-2">
                         <p-inputNumber formControlName="quantity" [formGroup]='x' mode="decimal" [useGrouping]="false">
                         </p-inputNumber>
@@ -108,39 +122,59 @@
                     </div>
 
                     <div class="p-field col-3 p-md-6">
-                        <p-inputNumber formControlName='volume' id="volume" mode="decimal" [useGrouping]="false">
+                        <p-inputNumber formControlName='volume' id="volume" mode="decimal" [useGrouping]="false" [minFractionDigits]="2" [maxFractionDigits]="2">
                         </p-inputNumber>
                     </div>
 
                     <div class="p-field col-3 p-md-6">
-                        <p-inputNumber formControlName='grossWeight' id="grossWeight" mode="decimal" [useGrouping]="false">
+                        <p-inputNumber formControlName='grossWeight' id="grossWeight" mode="decimal" [useGrouping]="false" [minFractionDigits]="2" [maxFractionDigits]="2">
                         </p-inputNumber>
                     </div>
 
-                    <p-button label="x" (click)="removePackage($event)" [disabled]="packages.controls.length < 2"></p-button>
+                    <p-button label="x" (click)="removePackage(i)" [disabled]="packages.controls.length < 2"></p-button>
 
                 </div>
             </div>
         </div>
-        <div class="col-6 p-fluid" >
-            <!--<div class="grid content-in-section" style="background: #e2f0fb">
-                <div style="background: white; margin: 1em !important" class="p-field col-5 p-fluid">number of packages</div>
-                <div style="background: white; margin: 1em !important" class="p-field col-5 p-fluid">number of packages</div>
-                <div style="background: white; margin: 1em !important" class="p-field col-5 p-fluid">number of packages</div>
-                <div style="background: white; margin: 1em !important" class="p-field col-5 p-fluid">volume</div>
-            </div>-->
+        <div class="col-6 p-fluid">
+            
+            <div class="grid" style="background: #e7f4ff;border-radius:10px; text-align: center">
+                <div class="col-10 p-fluid">
+                    <h4 style="text-align: start;font-weight:bold;font-size:14px">Summary</h4>
+                </div>
+                <div style="background: white; margin: 1em !important;border-radius:16px" class="p-field col-5 p-fluid">
+                    <br />
+                    <h4 style="font-weight: bold; font-size: 14px; color: #1084DC">{{totalQuantity}}</h4>
+                    <label style="left:0px;top:8px">Number of Packages</label>
+                </div>
+                <div style="background: white; margin: 1em !important; border-radius: 16px" class="p-field col-5 p-fluid">
+                    <br />
+                    <h4 style="font-weight: bold; font-size: 14px; color: #1084DC">{{(totalGrossWeight).toFixed(2)}}</h4>
+                    <label style="left:0px;top:8px">Gross Weight (KG)</label>
+                </div>
+                <div style="background: white; margin: 1em !important; border-radius: 16px" class="p-field col-5 p-fluid">
+                    <br />
+                    <h4 style="font-weight: bold; font-size: 14px; color: #1084DC">{{totalVolume.toFixed(3)}}</h4>
+                    <label style="left:0px;top:8px">Volume (CBM)</label>
+                </div>
+                <div style="background: white; margin: 1em !important; border-radius: 16px" class="p-field col-5 p-fluid">
+                    <br />
+                    <h4 style="font-weight: bold; font-size: 14px; color: #1084DC">{{(totalGrossWeight).toFixed(2)}}</h4>
+                    <label style="left:0px;top:8px">Chargeable Weight (MT)</label>
+                </div>
+            </div>
         </div>
         <div class="col-6 p-fluid">
                 <p-checkbox formControlName='isDangerous' [binary]="true" label='Dangerous Goods'></p-checkbox>
 
                 <div class="p-field">
                     <label for="descriptionOfGoods">Description of Goods</label>
-                    <textarea formControlName='descriptionOfGoods' id="descriptionOfGoods" pInputTextarea [rows]="3"></textarea>
+                    <textarea formControlName='descriptionOfGoods' id="descriptionOfGoods" pInputTextarea [rows]="4"></textarea>
                 </div>
 
                 <div class="p-field">
                     <label for="notes">Notes</label>
-                    <textarea formControlName='notes' id="notes" pInputTextarea [rows]="3"></textarea>
+                    <textarea formControlName='notes' id="notes" pInputTextarea [rows]="4"></textarea>
                 </div>
             </div>
         </div>
