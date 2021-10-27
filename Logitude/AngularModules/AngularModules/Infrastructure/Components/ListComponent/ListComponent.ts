@@ -966,8 +966,43 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
     }
 
     MutliUpdate() {
-        console.log("Multi Update");
+        if(!this.IsMultiUpdateValidate()){
+            return;
+        }
+        let newWindow = new LogitudeWindow();
+        newWindow.Width = 1050;
+        newWindow.Height = 700;
+        newWindow.Title = "Multi Update " + this.Title;
+
+        let windowArgs: any = {};
+        windowArgs.QueryCode = this.SelectedQueryCode;
+        windowArgs.Filters = this.CurrentQueryFilters;
+        windowArgs.Columns = this.columns;
+        windowArgs.ObjectTable = this.ObjectTable;
+        windowArgs.Title = this.Title;
+
+        newWindow.WindowArgs = windowArgs;
+        newWindow.Show('./Infrastructure/Components/MultiUpdateComponent/MultiUpdateComponent');
+        newWindow.WindowClosed.subscribe(($event: any) => {
+            this.RefreshBtnClick();
+        });
     }
+
+    IsMultiUpdateValidate(): boolean {
+        var messageWindow: MessageWindow = new MessageWindow();
+        messageWindow.Title = "Multi Update " + this.Title;
+        if (this.dataSource.rowCount == 0) {
+            messageWindow.Show("Sorry! You can’t perform the multiple update process. The number of " + this.Title + " in the view can't be 0");
+            return false;
+        }
+
+        if (this.dataSource.rowCount > 100) {
+            messageWindow.Show("Sorry! You can’t perform the multiple update process. The number of " + this.Title + " in the view mustn't exceed 100");
+            return false;
+        }
+        return true;
+    }
+
     ViewInitCompleted(event) {
         //this.afterViewGridInitCompleted.emit(event);
         this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName, 0).subscribe((response:any) => {
