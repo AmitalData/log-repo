@@ -60,7 +60,8 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
     public IsDSVTenant: boolean = false;
     public FromPort: string;
     public ShowAddDocument: boolean = false;
-    public ChangePageButton: string = "Next"; 
+    public ChangePageButton: string = "Next";
+    public IsImportActivated: boolean = false;
     constructor() {
         super(); 
         this.InitializeServices();
@@ -254,10 +255,16 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
 
     private BuildDirectionsList() {
         this.DirectionsList = [];
-        this.DirectionsList.push(new FilterClass("E", "Export"));
-        this.DirectionsList.push(new FilterClass("C", "Customs")); 
-    }
+        this.DirectionsList.push(new FilterClass("E", "Export"));  
+
+         this.SetCustomOption(); 
+    } 
      
+    private SetCustomOption() {
+        if (SessionLocator.PrivateLableSettings.IsImportActivated && this.IsImportActivated) {
+            this.DirectionsList.push(new FilterClass("C", "Customs"));
+        }
+    }
 
     
 
