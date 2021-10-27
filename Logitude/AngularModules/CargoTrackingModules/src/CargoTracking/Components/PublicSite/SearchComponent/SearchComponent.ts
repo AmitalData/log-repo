@@ -37,7 +37,7 @@ export class SearchComponent implements AfterViewInit,OnInit, OnDestroy
     public CaptchaTextValue: string;
     private captchaParameters: CaptchaParameters;
     public errorMessage: string;
-    public ShortSearchValueBlockingMessage: string = "";
+    public ShortSearchValueBlockingMessage: string = "Search value must have at least three characters";
 
     constructor(private router: Router,
         private route: ActivatedRoute,
@@ -243,7 +243,7 @@ export class SearchComponent implements AfterViewInit,OnInit, OnDestroy
         else {
             this.CheckSearchTimes(searchSource);
             var minimumCharactersLimitForSearch = 3;
-            if (this.SearchText?.length < minimumCharactersLimitForSearch) {
+            if (this.SearchText?.length < minimumCharactersLimitForSearch && searchSource != "searchText") {
                 this.OpenMessageWindow(this.ShortSearchValueBlockingMessage);
             }
             else if (this.tenant != null && this.SearchText) {
