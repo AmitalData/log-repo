@@ -32,7 +32,7 @@ namespace WarehouseDataViews.Service
         public void BuildDataWarehouseViewLists()
         {
             List<string> environmentFactTableCodes = GetEnvironmentFactTables(connectionString);
-            var factTables = GetDataTableFromSql(connectionString, "select Code,DataViewName,RecordType ,HasCustomFields ,MaxNumberOfCustomFields ,ObjectTableName from DWObjectTables where TypeCode = 'Fact' and ParentFactCode is null");
+            var factTables = GetDataTableFromSql(connectionString, "select Code,DataViewName,RecordType ,HasCustomFields ,MaxNumberOfCustomFields ,ObjectTableName,AdditionalConditions,ParentFactCode from DWObjectTables where TypeCode = 'Fact' and ParentFactCode is null");
             foreach (DataRow row in factTables.AsEnumerable())
             {
                 string factCode = CheckIfDataRowHaveColumnValue(row, "Code") ? row["Code"].ToString() : "";
@@ -43,6 +43,9 @@ namespace WarehouseDataViews.Service
                     string objectTableName = CheckIfDataRowHaveColumnValue(row, "ObjectTableName") ? row["ObjectTableName"].ToString() : "";
                     bool hasCustomFields = CheckIfDataRowHaveColumnValue(row, "HasCustomFields") ? bool.Parse(row["HasCustomFields"].ToString()) : false;
                     int maxNumberOfCustomFields = CheckIfDataRowHaveColumnValue(row, "MaxNumberOfCustomFields") ? int.Parse(row["MaxNumberOfCustomFields"].ToString()) : 0;
+                    string additionalConditions = CheckIfDataRowHaveColumnValue(row, "AdditionalConditions") ? row["AdditionalConditions"].ToString() : "";
+                    string parentFactCode = CheckIfDataRowHaveColumnValue(row, "ParentFactCode") ? row["ParentFactCode"].ToString() : "";
+
 
                     if (!string.IsNullOrEmpty(viewName))
                     {
@@ -59,7 +62,8 @@ namespace WarehouseDataViews.Service
                             ObjectTableName = objectTableName,
                             MaxNumberOfCustomFields = maxNumberOfCustomFields,
                             HasCustomFields = hasCustomFields,
-
+                            AdditionalConditions = additionalConditions,
+                            ParentFactCode = parentFactCode,
                         };
 
                         CreateFactDataView(createDataWarehouseFactViewArgs);
@@ -99,18 +103,25 @@ namespace WarehouseDataViews.Service
 
 
             List<string> shipmentLevelLists = GetShipmentLevelListsByRecordType(createDataWarehouseFactViewArgs.RecordType);
-            if(shipmentLevelLists.Count() > 0)
+            string additionalCondition = new FactAdditionalConditionService(createDataWarehouseFactViewArgs , connectionString).Get();
+            string recordTypeCondation = string.Empty;
+            if (shipmentLevelLists.Count() > 0)
             {
-                string recordTypeCondation = " where [DirectHouse] in ( ";
+                recordTypeCondation = "  [DirectHouse] in ( ";
                 foreach (string shipmentType in shipmentLevelLists)
                 {
                     recordTypeCondation += "'" + shipmentType + "' ,";
                 }
                 recordTypeCondation = recordTypeCondation.Remove(recordTypeCondation.Length - 1);
                 recordTypeCondation += ") ";
-
-                warehouseView.SqlString += recordTypeCondation;
             }
+
+            warehouseView.SqlString += (!string.IsNullOrEmpty(additionalCondition) || !string.IsNullOrEmpty(recordTypeCondation)) ? " where " : "";
+            warehouseView.SqlString += additionalCondition;
+            warehouseView.SqlString += (!string.IsNullOrEmpty(additionalCondition) && !string.IsNullOrEmpty(recordTypeCondation)) ? " and ":"";
+            warehouseView.SqlString += recordTypeCondation;
+
+
 
             DataWarehouseViewLists.Add(warehouseView);
         }
@@ -243,6 +254,8 @@ namespace WarehouseDataViews.Service
         public bool HasCustomFields { get; set; }
         public int MaxNumberOfCustomFields { get; set; }
         public string ObjectTableName { get; set; }
+        public string AdditionalConditions { get; set; }
+        public string ParentFactCode { get; set; }
 
     }
 
