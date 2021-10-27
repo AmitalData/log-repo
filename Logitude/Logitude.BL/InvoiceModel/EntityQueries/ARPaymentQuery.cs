@@ -224,6 +224,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
         {
             ARPaymentBankTranferRepository aRPaymentBankTranferRepository = new ARPaymentBankTranferRepository(tenant);
             List<ARPaymentBankTranfer> arPaymentBankTranfers = aRPaymentBankTranferRepository.GetARPaymentBankTranfersByPaymentId(paymentid, tenant).ToList();
+
             return (from a in arPaymentBankTranfers
                     select new ARPaymentBankTranferPM()
                     {
@@ -237,7 +238,8 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                         LineNumber = a.LineNumber,
                         LocalAmount = a.LocalAmount,
                         ForeignAmount = a.ForeignAmount,
-                        ExchageRate = a.ExchageRate
+                        ExchageRate = a.ExchageRate,
+                        BankAccount = a.BankAccount
                     }).OrderBy(d => d.LineNumber).ToList();
         }
 

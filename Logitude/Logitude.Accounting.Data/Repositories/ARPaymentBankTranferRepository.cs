@@ -9,6 +9,7 @@ using System.ComponentModel.DataAnnotations;
 using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Data.EntityKeys;
 using Simplog.Server.Infrastructure;
+using Simplog.Server.Infrastructure.Helpers;
 
 namespace Logitude.Accounting.Data.Repositories
 {
@@ -31,7 +32,7 @@ namespace Logitude.Accounting.Data.Repositories
 
         public IQueryable<ARPaymentBankTranfer> GetARPaymentBankTranfersByPaymentId(string paymentId, int tenant)
         {
-            return (from a in context.ARPaymentBankTranfers
+            return (from a in context.ARPaymentBankTranfers.Include("BankAccount")
                     where a.PaymentId == paymentId && a.Tenant == tenant
                     select a);
         }

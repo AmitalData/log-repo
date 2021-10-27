@@ -1925,6 +1925,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
 		if (!AppTool.IsNullOrEmpty(this.BankAccountId)) {
 			service.get(this.BankAccountId).subscribe((myResponse: ServiceResponse) =>
 			{
+				console.log('myResponse', myResponse);
 				if (myResponse != null && !myResponse.HasError) {
 					this.bankAccount = myResponse.Result;
 					if (this.bankAccount != null && this.bankAccount.GLAccountCurrencyId != null && this.bankAccount.GLAccountCurrencyId != "multi") {
@@ -2306,7 +2307,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
         var windowArgs: any = {};
         windowArgs.EntityPM = this.EntityPM;
         var logWindow = new LogitudeWindow();
-        logWindow.Width = 1000;
+        logWindow.Width = 600;
         logWindow.Height = 600;
         logWindow.ShowCloseButton = false;
         logWindow.WindowArgs = windowArgs;
@@ -2322,7 +2323,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
                 this.GetData();
             }
             if (this.EntityPM.ARPaymentBankTranfers.length >= 0) {
-                this.SetDefaultChequeFields();
+                this.SetDefaultBankTransfersFields();
             }
         }
     }
@@ -2351,7 +2352,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
     }
 
 	MapBankTransferFields(bankTransfer: ARPaymentBankTranferPM) {
-        this.Account = bankTransfer?.BankAccountId;
+        this.BankAccountId = bankTransfer?.BankAccountId;
         this.ValueDate = bankTransfer?.ValueDate;
 		this.ChequeOrPaymentRef = bankTransfer?.PaymentRef;
         this.BankTransferAmount = bankTransfer?.ForeignAmount;

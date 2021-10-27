@@ -64,6 +64,7 @@
     <Compile Include="EntityPMs\AccountingEnum.Shared.cs" />
     <Compile Include="EntityPMs\AccountingIntegrityCheckPM.cs" />
     <Compile Include="EntityPMs\AccountingPeriodPM.cs" />
+    <Compile Include="EntityPMs\ARPaymentBankTranferPM.cs" />
     <Compile Include="EntityPMs\AutomaticReconcileMethodPM.cs" />
     <Compile Include="EntityPMs\AutomaticReconcilePM.cs" />
     <Compile Include="EntityPMs\ChartOfAccountPM.cs" />

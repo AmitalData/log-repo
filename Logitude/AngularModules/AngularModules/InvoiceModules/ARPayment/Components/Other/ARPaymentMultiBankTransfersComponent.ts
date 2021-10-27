@@ -67,6 +67,7 @@ export class ARPaymentMultiBankTransfersComponent extends BaseComponent {
     FillItemSource() {
         this.ItemsSource.Clear();
         for (let item of this.paymentPM.ARPaymentBankTranfers) {
+            console.log('xxxx', item)
             this.ItemsSource.Insert(new PaymentBankTransferLine(item, this));
         }
     }
