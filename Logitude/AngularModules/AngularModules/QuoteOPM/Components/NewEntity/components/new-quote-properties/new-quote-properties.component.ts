@@ -1,5 +1,6 @@
 import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
 import { FormGroup, FormControl, FormArray, Validators } from '@angular/forms';
+import { MessageService } from 'primeng/api';
 import { QuoteOPPM } from 'QuoteOPM/EntityPMs/QuoteOPPM';
 import { Carrier, Incoterm, NewQuoteDataService, Port, SpecialService } from '../../Services/new-quote-data/new-quote-data.service';
 
@@ -21,6 +22,7 @@ export class NewQuotePropertiesComponent implements OnInit {
   directionId: string = '';
   carrierColumns: any = {}
   formArray: FormArray = new FormArray([this.propForm]);
+  index: number = 0;
  
   get propForm(): FormGroup {
     return new FormGroup({
@@ -40,6 +42,7 @@ export class NewQuotePropertiesComponent implements OnInit {
 
   constructor(
     private newQuoteDataService: NewQuoteDataService,
+    private messageService: MessageService,
   ) { }
 
   ngOnInit(): void {
@@ -85,6 +88,7 @@ export class NewQuotePropertiesComponent implements OnInit {
 
   async getMainCarriageCarrier() {
     this.mainCarriageCarrierList = await this.newQuoteDataService.getCarrierses(this.directionId, this.transportModeId);
+    this.mainCarriageCarrierList = this.sortArray(this.mainCarriageCarrierList, 'Name')
 
     this.carrierColumns = this.directionId === "E" ? { AIRLINE_ID: 'Code' } : { VENDOR_ID: 'Code' }
     this.carrierColumns = { ...this.carrierColumns, ...{ Name: 'Name', Prefix: 'Prefix' } }
@@ -95,10 +99,20 @@ export class NewQuotePropertiesComponent implements OnInit {
   }
 
   addProperty() {
-    this.formArray.push(this.propForm)
+    console.log(this.formArray)
+    if(this.formArray.valid){
+      this.index = this.formArray.length;
+      this.formArray.push(this.propForm)
+    } else
+      this.messageService.add({ severity: 'error', summary: 'Property not add', detail: 'have feild in exist propreties that not vlid'})
   }
 
   removeProperty(e: { originalEvent: PointerEvent, index: number }) {
+    this.index = 0
     this.formArray.removeAt(e.index)
+  }
+
+  sortArray(arr: any[], prop: string): any[] {
+    return arr.sort((a,b) => (a[prop] > b[prop]) ? 1 : ((b[prop] > a[prop]) ? -1 : 0))  
   }
 }
