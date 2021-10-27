@@ -492,6 +492,7 @@
     <Compile Include="Helpers\PayablesLinesVatAmounts.cs" />
     <Compile Include="InfrastructureModel\APIDataContract\EntityStatus.Generated.cs" />
     <Compile Include="InfrastructureModel\APIDataContract\EventType.Generated.cs" />
+    <Compile Include="InfrastructureModel\APIDataContract\EventTypeQueryService.cs" />
     <Compile Include="InfrastructureModel\APIDataContract\QueryService\EntityStatusQueryService.Generated.cs" />
     <Compile Include="InfrastructureModel\APIDataContract\Messages\RatesUpdateService.cs" />
     <Compile Include="InfrastructureModel\APIDataContract\QueryService\EventTypeQueryService.Generated.cs" />

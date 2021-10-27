@@ -19,17 +19,20 @@ using WebFreight.Web.DataContracts;
 using WebFreight.Web.Helpers.ExternalAPIHelpers;
 using WebFreight.Web.Security;
 using WebFreight.Web.Helpers.ShipmentOrderModule;
+using Logitude.BL.InfrastructureModel.APIDataContract.ApiV1;
 
 namespace WebFreight.Web.ExternalAPIs.V1.ShipmentOrderModule
 {
     public class EventTypeController : ApiController
     {
-        public HttpResponseMessage Get(string objecttable)
+        public HttpResponseMessage Get(string objectTableId)
         {
             try
             {
                 int tenant = GetTenantFromAuthenticationToken();
-                Authentication(tenant); 
+                Authentication(tenant);
+                List<EventType> EventTypeList = new EventTypeQueryService(tenant).GetEventTypeByObjectTable(objectTableId, tenant);
+                return Request.CreateResponse(HttpStatusCode.OK, EventTypeList);
             }
             catch (Exception ex)
             {
