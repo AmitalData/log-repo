@@ -211,10 +211,10 @@ export class SearchComponent implements AfterViewInit,OnInit, OnDestroy
     Search(searchSource:any)
     {
 
-        if (this.IsShowAreaCaptcha) {
-            this.ValidateUser();
-        }
-        else {
+        //if (this.IsShowAreaCaptcha) {
+        //    this.ValidateUser();
+        //}
+        //else {
             this.CheckSearchTimes(searchSource);
             var minimumCharactersLimitForSearch = 3;
             if (this.SearchText?.length < minimumCharactersLimitForSearch && searchSource != "searchText") {
@@ -223,7 +223,7 @@ export class SearchComponent implements AfterViewInit,OnInit, OnDestroy
             else if (this.tenant != null && this.SearchText) {
             this.router.navigate(['public-tracking/search'], { queryParams: { searchKey: this.SearchText } });
             this.LoadShipments();
-        }
+       // }
     }
 
     }
