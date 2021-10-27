@@ -62,6 +62,7 @@ namespace Simplog.Data.InvoiceModel.Mapping
             this.Property(t => t.MasterShipmentNumbers).HasMaxLength(1000).IsUnicode(false);
             this.Property(t => t.HouseNumbers).HasMaxLength(1000).IsUnicode(false);
             this.Property(t => t.GlobalTaxCalculation).HasMaxLength(3).IsUnicode(false);
+            this.Property(t => t.ConcurrencyGUID).HasMaxLength(40).IsUnicode(false);
 
             // Table & Column Mappings
             this.ToTable("APInvoices");
@@ -138,6 +139,7 @@ namespace Simplog.Data.InvoiceModel.Mapping
             this.Property(t => t.MasterShipmentNumbers).HasColumnName("MasterShipmentNumbers");
             this.Property(t => t.HouseNumbers).HasColumnName("HouseNumbers");
             this.Property(t => t.GlobalTaxCalculation).HasColumnName("GlobalTaxCalculation");
+            this.Property(t => t.ConcurrencyGUID).HasColumnName("ConcurrencyGUID");
 
             // Relationships
             this.HasRequired(t => t.Status).WithMany().HasForeignKey(d => d.StatusCode);
