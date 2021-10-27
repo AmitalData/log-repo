@@ -662,7 +662,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 FileName = name,
             };
 
-            byte[] bytearray = Encoding.Default.GetBytes(file);
+            byte[] bytearray = Encoding.Unicode.GetBytes(file);
             document.FileData = bytearray;
             docService.Create(document, document.FileData, loggedUser.Id);
 
