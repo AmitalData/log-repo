@@ -13,6 +13,9 @@ import { CargoTrackingSearchResponse } from 'src/CargoTracking/DataContracts/Car
 
 
 const invalidCaptchaMessage = "Please re-enter the characters you see in the image above";
+import { MessageWindowComponent } from '../../../../Infrastructure/Components/MessageWindow/MessageWindowComponent';
+import { MatDialog } from '@angular/material/dialog';
+
 @Component({
     selector: 'SearchComponent',
     templateUrl: './SearchComponent.html',
@@ -38,11 +41,14 @@ export class SearchComponent implements AfterViewInit,OnInit, OnDestroy
     public CaptchaTextValue: string = "";
     private captchaParameters: CaptchaParameters;
     public errorMessage: string;
+    public ShortSearchValueBlockingMessage: string = "Search value must have at least three characters";
+
     constructor(private router: Router,
         private route: ActivatedRoute,
         private formBuilder: FormBuilder,
         private location: Location,
         private searchService: CargoTrackingSearchService,
+        public dialog: MatDialog,
         public DatePipe: DatePipe)
     {
         this.GetSearchTextFromURI();
@@ -204,11 +210,64 @@ export class SearchComponent implements AfterViewInit,OnInit, OnDestroy
 
     Search(searchSource:any)
     {
-        if (this.tenant != null && this.SearchText) {
+
+        if (this.IsShowAreaCaptcha) {
+            this.ValidateUser();
+        }
+        else {
+            this.CheckSearchTimes(searchSource);
+            var minimumCharactersLimitForSearch = 3;
+            if (this.SearchText?.length < minimumCharactersLimitForSearch && searchSource != "searchText") {
+                this.OpenMessageWindow(this.ShortSearchValueBlockingMessage);
+            }
+            else if (this.tenant != null && this.SearchText) {
             this.router.navigate(['public-tracking/search'], { queryParams: { searchKey: this.SearchText } });
             this.LoadShipments();
         }
     }
+
+    }
+    CheckSearchTimes(searchSource: any) {
+        this.currentDate = new Date();
+        if (this.searchCounter == 0) sessionStorage.setItem("FirstSearchDate", this.currentDate.getTime());
+        var FirstSearchDate: any = sessionStorage.getItem("FirstSearchDate");
+        if (searchSource == null) ++this.searchCounter;
+        sessionStorage.setItem("searchCounter", this.searchCounter.toString());
+        var difference: any = this.currentDate.getTime() - FirstSearchDate;
+        if (difference <= 100000) {
+            if (this.searchCounter == 20) {
+                this.ShowCaptchaImage();
+                this.ResetStorageData();
+            }
+        }
+        else {
+            this.ResetStorageData();
+        }
+    }
+    ResetStorageData() {
+        sessionStorage.setItem("FirstSearchDate", this.currentDate);
+        sessionStorage.setItem("searchCounter", "0");
+        this.searchCounter = 0;
+    }
+    ShowCaptchaImage() {
+        this.searchService.GetCaptchaData().subscribe(
+            (result: any) => {
+                this.CaptchaTextValue = "";
+                this.CaptchaImageUrl = result.CaptchaImage;
+                this.CaptchaKey = result.CaptchaKey;
+                this.IsShowAreaCaptcha = true;
+            });
+    }
+
+    OpenMessageWindow(messageDescription) {
+        this.dialog.open(MessageWindowComponent, {
+            data: {
+                title: "Alert",
+                description: messageDescription,
+            }
+        });
+    }
+
     ItemClicked(item)
     {
         var selection = window.getSelection();

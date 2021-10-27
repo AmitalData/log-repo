@@ -15,7 +15,8 @@ export class MessageWindowComponent {
     constructor(@Inject(MAT_DIALOG_DATA) public data: any) {
         this.date = data?.date || '';
         this.description = data?.description;
-        this.title = data?.title; 
+        this.title = data?.title != null ? data?.title : this.title;
+
     }
 
 }
