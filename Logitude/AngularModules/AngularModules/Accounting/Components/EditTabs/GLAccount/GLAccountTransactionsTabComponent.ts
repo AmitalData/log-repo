@@ -784,6 +784,9 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
         return result;
     }
 
+    GetDifferenceAmount() {
+        return this.LTBSummery.EndBalanceLocal - this.GetOpenBalanceAmount();
+    }
     //#endregion
 
     //#region Date Filters Validation
