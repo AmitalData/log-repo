@@ -3812,6 +3812,9 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
             }
 
+            shipmentPM.CustomerReference1 = shipment.CustomerReference1;
+            shipmentPM.CustomerReference2 = shipment.CustomerReference2;
+
             ShipmentPM returnShipment = BranchPermitionsFilter.AddUserBranchRestrictionFilters(new QueryOperations(), shipmentPM, tenant);
             returnShipment = ProductPermitionsFilter.AddUserProductRestrictionFilters(new QueryOperations(), shipmentPM, tenant);
 
@@ -3949,6 +3952,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.Field38 = new CustomFieldClass("Field38", "Shipment", shipment.Field38);
             shipmentPM.Field39 = new CustomFieldClass("Field39", "Shipment", shipment.Field39);
             shipmentPM.Field40 = new CustomFieldClass("Field40", "Shipment", shipment.Field40);
+   
+
 
             #region ShipmentComputedFields
             MapShipmentComputedFields(shipmentPM , masterData);
@@ -13153,7 +13158,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                              AgentReference2 = entity.AgentReference2,
                                              ConsigneeReference1 = entity.ConsigneeReference1,
                                              ConsigneeReference2 = entity.ConsigneeReference2,
-
+                                             CustomerReference1 = entity.CustomerReference1,
+                                             CustomerReference2 = entity.CustomerReference2,
                                          }).FirstOrDefault();
 
             return shipmentList;
