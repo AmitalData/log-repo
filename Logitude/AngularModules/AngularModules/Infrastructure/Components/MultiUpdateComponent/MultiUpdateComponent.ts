@@ -51,23 +51,29 @@ export class MultiUpdateComponent extends BaseComponent implements OnInit {
     public get IsAllRecordSelected() { return this.isAllRecordSelected };
     public set IsAllRecordSelected(value: boolean) {
         this.isAllRecordSelected = value;
-        if (value == true) {
-            this.SelectedItemsCountText = this.AllRecordsCount + " of " + this.AllRecordsCount + " " + this.Title + " selected";
-            this.SelectedRecordsCount = this.AllRecords.length;
-            this.SelectedRecords = this.AllRecords;
-        }
-        else {
-            this.SelectedItemsCountText = "0 of " + this.AllRecordsCount + " " + this.Title + " selected";
-            this.SelectedRecords = [];
-            this.SelectedRecordsCount = 0;
-        }
-
+        value == true ? this.CheckAllRecords() : this.UnCheckAllRecords();
     }
-
 
     constructor(private _entityListService: EntityListService) {
         super();
     }
+
+    private CheckAllRecords() {
+        this.ChangeSelectedItemsCountText(this.AllRecordsCount);
+        this.SelectedRecordsCount = this.AllRecords.length;
+        this.SelectedRecords = this.AllRecords;
+    }
+
+    private UnCheckAllRecords() {
+        this.ChangeSelectedItemsCountText(0);
+        this.SelectedRecords = [];
+        this.SelectedRecordsCount = 0;
+    }
+
+    private ChangeSelectedItemsCountText(selectedCount) {
+        this.SelectedItemsCountText = selectedCount + " of " + this.AllRecordsCount + " " + this.Title + " selected";
+    }
+
     ngOnInit() {
     }
 
@@ -119,12 +125,12 @@ export class MultiUpdateComponent extends BaseComponent implements OnInit {
         this.ObjectTableId = args.ObjectTable.Id;
         this.Title = args.Title;
 
-        this.initGrid();
+        this.InitGrid();
         this.FillObjectField();
     }
 
 
-    private initGrid() {
+    private InitGrid() {
         this.Filters.GetCount = true;
         var checkBoxColumn = {
             FieldName: "Checked",
@@ -155,16 +161,24 @@ export class MultiUpdateComponent extends BaseComponent implements OnInit {
     onCheckBoxChecked(event) {
         var temp = this.SelectedRecords.filter(a => a.Id == event.rowData.Id);
         if (event.IsChecked && temp.length == 0) {
-            this.SelectedRecords.push(event.rowData);
-            this.SelectedRecordsCount++;
-            this.SelectedItemsCountText = this.SelectedRecordsCount + " of " + this.AllRecordsCount + " " + this.Title + " selected";
+            this.AddToSelectedRecords(event);
             return;
         }
         if (temp.length > 0) {
-            this.SelectedRecords = this.SelectedRecords.filter(a => a.Id != event.rowData.Id);
-            this.SelectedRecordsCount--;
-            this.SelectedItemsCountText = this.SelectedRecordsCount + " of " + this.AllRecordsCount + " " + this.Title + " selected";
+            this.RemoveFromSelectedRecords(event);
         }
+    }
+
+    private RemoveFromSelectedRecords(event: any) {
+        this.SelectedRecords = this.SelectedRecords.filter(a => a.Id != event.rowData.Id);
+        this.SelectedRecordsCount--;
+        this.ChangeSelectedItemsCountText(this.SelectedRecordsCount);
+    }
+
+    private AddToSelectedRecords(event: any) {
+        this.SelectedRecords.push(event.rowData);
+        this.SelectedRecordsCount++;
+        this.ChangeSelectedItemsCountText(this.SelectedRecordsCount);
     }
 
     FillObjectField() {

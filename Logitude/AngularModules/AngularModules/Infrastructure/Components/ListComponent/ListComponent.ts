@@ -45,6 +45,7 @@ import { LogGridComponent } from '../LogitudeComponents/LogGridComponent/LogGrid
 import { LogGridComponentV2 } from '../LogitudeComponents/LogGridComponent/LogGridComponentV2';
 import { UserDefinedReportPM } from 'Accounting/EntityPMs/UserDefinedReportPM';
 import { GLAccountSecurityLevelService } from 'Accounting/Utilities/GLAccountSecurityLevelService';
+import { IsMultiUpdateValid } from 'Infrastructure/Helpers/MultiUpdateHelper';
 
 @Component({
 
@@ -966,7 +967,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
     }
 
     MutliUpdate() {
-        if(!this.IsMultiUpdateValidate()){
+        if (!IsMultiUpdateValid(this.Title, this.dataSource.rowCount)) {
             return;
         }
         let newWindow = new LogitudeWindow();
@@ -986,21 +987,6 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
         newWindow.WindowClosed.subscribe(($event: any) => {
             this.RefreshBtnClick();
         });
-    }
-
-    IsMultiUpdateValidate(): boolean {
-        var messageWindow: MessageWindow = new MessageWindow();
-        messageWindow.Title = "Multi Update " + this.Title;
-        if (this.dataSource.rowCount == 0) {
-            messageWindow.Show("Sorry! You can’t perform the multiple update process. The number of " + this.Title + " in the view can't be 0");
-            return false;
-        }
-
-        if (this.dataSource.rowCount > 100) {
-            messageWindow.Show("Sorry! You can’t perform the multiple update process. The number of " + this.Title + " in the view mustn't exceed 100");
-            return false;
-        }
-        return true;
     }
 
     ViewInitCompleted(event) {
