@@ -25,16 +25,14 @@ namespace WarehouseDataViews.Service
             if (!privateViewArgs.IsParentTenant)
             {
                 List<WarehouseView> customFieldViewLists = GetCustomFieldViewsLists(privateViewArgs.Tenant, dataWarehouseViews);
+                customFieldViewLists = customFieldViewLists.GroupBy(d => d.ViewName).Select(d => d.First()).ToList();
+
                 dataWarehouseViews = dataWarehouseViews.Concat(customFieldViewLists).ToList();
             }
 
             foreach (WarehouseView view in dataWarehouseViews)
             {
                 string viewscript = view.SqlString;
-                if (view.IsFactView)
-                {
-
-                }
                 if (view.IsFactView && view.HasCustomFields)
                 {
                     viewscript = view.SqlString.Replace(",@CustomFields", view.CustomFieldScriptSQL);

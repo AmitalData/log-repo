@@ -32,52 +32,53 @@ namespace WarehouseDataViews.Service
         public void BuildDataWarehouseViewLists()
         {
             List<string> environmentFactTableCodes = GetEnvironmentFactTables(connectionString);
-            var factTables = GetDataTableFromSql(connectionString, "select Code,DataViewName,RecordType ,HasCustomFields ,MaxNumberOfCustomFields ,ObjectTableName,AdditionalConditions,ParentFactCode from DWObjectTables where TypeCode = 'Fact' and ParentFactCode is null");
+            var factTables = GetDataTableFromSql(connectionString, "select Code,DataViewName,RecordType ,HasCustomFields ,MaxNumberOfCustomFields ,ObjectTableName,AdditionalConditions,ParentFactCode from DWObjectTables where TypeCode = 'Fact' ");
             foreach (DataRow row in factTables.AsEnumerable())
             {
                 string factCode = CheckIfDataRowHaveColumnValue(row, "Code") ? row["Code"].ToString() : "";
-                if (environmentFactTableCodes.Contains(factCode))
-                {
+                string parentFactCode = CheckIfDataRowHaveColumnValue(row, "ParentFactCode") ? row["ParentFactCode"].ToString() : "";
+
+                if (environmentFactTableCodes.Contains(factCode) || environmentFactTableCodes.Contains(parentFactCode) )
+               {
                     string viewName = CheckIfDataRowHaveColumnValue(row, "DataViewName") ? row["DataViewName"].ToString() : "";
                     string recordType = CheckIfDataRowHaveColumnValue(row, "RecordType") ? row["RecordType"].ToString() : "";
                     string objectTableName = CheckIfDataRowHaveColumnValue(row, "ObjectTableName") ? row["ObjectTableName"].ToString() : "";
                     bool hasCustomFields = CheckIfDataRowHaveColumnValue(row, "HasCustomFields") ? bool.Parse(row["HasCustomFields"].ToString()) : false;
                     int maxNumberOfCustomFields = CheckIfDataRowHaveColumnValue(row, "MaxNumberOfCustomFields") ? int.Parse(row["MaxNumberOfCustomFields"].ToString()) : 0;
                     string additionalConditions = CheckIfDataRowHaveColumnValue(row, "AdditionalConditions") ? row["AdditionalConditions"].ToString() : "";
-                    string parentFactCode = CheckIfDataRowHaveColumnValue(row, "ParentFactCode") ? row["ParentFactCode"].ToString() : "";
-
 
                     if (!string.IsNullOrEmpty(viewName))
                     {
-                        foreach (DWObjectFieldItem field in DwObjectFieldLists.Where(d => d.DWObjectTableCode == factCode && d.DataTypeCode == "Dimension" && d.DimensionTableCode != "DIM_Dates").ToList())
+
+                        foreach (DWObjectFieldItem field in DwObjectFieldLists.Where(d => (d.DWObjectTableCode == factCode || d.DWObjectTableCode == parentFactCode) && (string.IsNullOrEmpty(d.RecordType) || (!string.IsNullOrEmpty(d.RecordType) && d.RecordType.Split(',').Contains(recordType))) && d.DataTypeCode == "Dimension" && d.DimensionTableCode != "DIM_Dates").ToList())
                         {
                             CreateDimensionDataView(field, factCode);
                         }
-
                         CreateDataWarehouseFactViewArgs createDataWarehouseFactViewArgs = new CreateDataWarehouseFactViewArgs()
                         {
                             FactCode = factCode,
                             RecordType = recordType,
                             ViewName = viewName,
                             ObjectTableName = objectTableName,
-                            MaxNumberOfCustomFields = maxNumberOfCustomFields,
-                            HasCustomFields = hasCustomFields,
+                            MaxNumberOfCustomFields =!string.IsNullOrEmpty(parentFactCode) ? factTables.AsEnumerable().Where(d => d.Field<string>("Code") == parentFactCode).Select(d => d.Field<int>("MaxNumberOfCustomFields")).FirstOrDefault() : maxNumberOfCustomFields,
+                            HasCustomFields = !string.IsNullOrEmpty(parentFactCode) ? factTables.AsEnumerable().Where(d => d.Field<string>("Code") == parentFactCode).Select(d=>d.Field<bool>("HasCustomFields")).FirstOrDefault() : hasCustomFields,
                             AdditionalConditions = additionalConditions,
                             ParentFactCode = parentFactCode,
                         };
 
                         CreateFactDataView(createDataWarehouseFactViewArgs);
                     }
-                }
+               }
             }
         }
        
         private void CreateFactDataView(CreateDataWarehouseFactViewArgs createDataWarehouseFactViewArgs)
         {
             var warehouseView = new WarehouseView() { Fields = new List<DWObjectFieldItem>(), ViewCode = createDataWarehouseFactViewArgs.FactCode, ViewName = createDataWarehouseFactViewArgs.ViewName, IsFactView = true,SqlString = " CREATE VIEW " + createDataWarehouseFactViewArgs.ViewName + " AS SELECT " };
-            foreach (DWObjectFieldItem dwObjectFieldDB in DwObjectFieldLists.Where(d => d.DWObjectTableCode == createDataWarehouseFactViewArgs.FactCode).ToList())
+
+
+            foreach (DWObjectFieldItem dwObjectFieldDB in DwObjectFieldLists.Where(d => (d.DWObjectTableCode == createDataWarehouseFactViewArgs.FactCode || d.DWObjectTableCode == createDataWarehouseFactViewArgs.ParentFactCode) && (string.IsNullOrEmpty(d.RecordType) || (!string.IsNullOrEmpty(d.RecordType) && d.RecordType.Split(',').Contains(createDataWarehouseFactViewArgs.RecordType)))).ToList())
             {
-   
                 if (dwObjectFieldDB.DimensionTableCode == "DIM_Dates")
                 {
                     warehouseView.SqlString += " " + "CASE WHEN " + dwObjectFieldDB.FieldCode + " ='1-1-1' or  " + dwObjectFieldDB.FieldCode + " ='2-2-2' or  " + dwObjectFieldDB.FieldCode + " ='3-3-3'  THEN null ELSE " + dwObjectFieldDB.FieldCode + " END " + " as ";
@@ -85,13 +86,13 @@ namespace WarehouseDataViews.Service
                 else warehouseView.SqlString += " " + dwObjectFieldDB.FieldCode + " as ";
 
                 string displayName = !string.IsNullOrEmpty(dwObjectFieldDB.ViewFieldDisplayName) ? dwObjectFieldDB.ViewFieldDisplayName : ConvertStringToCamelCase(GetFieldNameFromCode(dwObjectFieldDB.FieldCode)).Replace("(", "In").Replace(")", "");
-               string fieldName = (!string.IsNullOrEmpty(dwObjectFieldDB.DimensionTableCode) && dwObjectFieldDB.DimensionTableCode != "DIM_Dates" ? displayName + "Key" : displayName);
+                string fieldName = (!string.IsNullOrEmpty(dwObjectFieldDB.DimensionTableCode) && dwObjectFieldDB.DimensionTableCode != "DIM_Dates" ? displayName + "Key" : displayName);
 
 
                 warehouseView.SqlString += fieldName;
                 warehouseView.SqlString += ",";
 
-                warehouseView.Fields.Add(new DWObjectFieldItem() { DataTypeCode = dwObjectFieldDB.DataTypeCode, FieldName = fieldName, FieldCode = dwObjectFieldDB.FieldCode ,DWObjectTableCode = dwObjectFieldDB.DWObjectTableCode });
+                warehouseView.Fields.Add(new DWObjectFieldItem() { DataTypeCode = dwObjectFieldDB.DataTypeCode, FieldName = fieldName, FieldCode = dwObjectFieldDB.FieldCode, DWObjectTableCode = dwObjectFieldDB.DWObjectTableCode });
 
             }
             warehouseView.HasCustomFields = createDataWarehouseFactViewArgs.HasCustomFields;
@@ -99,7 +100,7 @@ namespace WarehouseDataViews.Service
             warehouseView.ObjectTableName = createDataWarehouseFactViewArgs.ObjectTableName;
 
             warehouseView.SqlString = warehouseView.SqlString.Remove(warehouseView.SqlString.Length - 1);
-            warehouseView.SqlString +=((warehouseView.HasCustomFields ? ",@CustomFields":"") +  " FROM " + createDataWarehouseFactViewArgs.FactCode);
+            warehouseView.SqlString +=((warehouseView.HasCustomFields ? ",@CustomFields":"") +  " FROM " + (!string.IsNullOrEmpty( createDataWarehouseFactViewArgs.ParentFactCode) ? createDataWarehouseFactViewArgs.ParentFactCode : createDataWarehouseFactViewArgs.FactCode));
 
 
             List<string> shipmentLevelLists = GetShipmentLevelListsByRecordType(createDataWarehouseFactViewArgs.RecordType);
