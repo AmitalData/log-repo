@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class GLAccountUpdateClass
    {  		
-		public const string HashString = "cf66661d5f706fc5b6fd1f8820a0e80c";
+		public const string HashString = "a788fe9fdbb06842be2088bdd19e6277";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -12594,6 +12594,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode GLAccountTextCode_GLAccountsORecoCurrencyErr = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.RecoCurrencyErr", DefaultText = "The reconcile method for an accounting currency account must be local currency",LocalDefaultText = @"שיטת ההתאמה עבור כרטיסים שקליים היא במטבע מקומי בלבד", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode GLAccountTextCode_GLAccountONotIncludedInTax = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.NotIncludedInTax", DefaultText = "Not included in any Tax Report",LocalDefaultText = @"לא דווחו", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLAccountOTotalObligo = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.TotalObligo", DefaultText = "Total Obligo",LocalDefaultText = @"אובליגו", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
