@@ -143,6 +143,8 @@ namespace Logitude.Accounting.Data.EntityPOCOs
 	    public bool IsSecurityLevelActivated { get; set; }
         [Column("VATreportEveryTwoMonths")]
 	    public bool VATreportEveryTwoMonths { get; set; }
+        [Column("CreateRevaluationJournal")]
+	    public bool CreateRevaluationJournal { get; set; }
     }
 }
 	 
