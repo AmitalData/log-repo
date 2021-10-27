@@ -2,6 +2,7 @@ import { RegexSelectors } from '../selectors/RegexSelectors';
 
 export class ShipmentSelectors extends RegexSelectors {
   //#region Shared
+  public static readonly CloseBtn = '#CloseBtn';
   public static readonly ShipmentMoreList = '#MenuButtons';
   public static readonly ShipmentTab = '#SHIP';
   public static readonly ContainersTab = '#CNFU';
@@ -360,7 +361,10 @@ export class ShipmentSelectors extends RegexSelectors {
   //#endregion
   //#region Delivery Leg
   public static readonly EditDelivery = "#Edit-Delivery"
+  public static readonly EditPickUp = "#Edit-PickUp"
   public static readonly DeliveryToPartnerName = "#ShipmentPickUpDelivery_ToPartnerCardId"
+  public static readonly PickUpDeliveryToPort = "#ShipmentPickUpDelivery_ToPortId"
+  public static readonly PickUpDeliveryFromPort = "#ShipmentPickUpDelivery_FromPortId"
   public static readonly PickUpDeliveryETDDate = "#date_ShipmentPickUpDelivery_ETD"
   public static readonly PickUpDeliveryETDTime = "#time_ShipmentPickUpDelivery_ETD"
   //#endregion
