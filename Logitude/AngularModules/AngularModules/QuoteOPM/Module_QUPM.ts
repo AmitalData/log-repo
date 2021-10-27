@@ -20,6 +20,7 @@ import { GenericTableModule } from 'Customs/Components/generic-table/generic-tab
 import {TabViewModule} from 'primeng/tabview';
 import {SplitButtonModule} from 'primeng/splitbutton';
 import { MenuModule } from 'primeng/menu';
+import { DropdownModule } from 'primeng/dropdown'
 
 @NgModule({
     imports: [InfrastructureModule,
@@ -39,6 +40,7 @@ import { MenuModule } from 'primeng/menu';
         TabViewModule,
         SplitButtonModule,
         MenuModule,
+        DropdownModule
     ],
     declarations: [...Components, ...SharedComponents],
     providers: [

@@ -26,6 +26,7 @@ import { Observable } from 'rxjs';
 import { filter, take } from 'rxjs/operators';
 import { ShipmentTypeList } from 'Shipment/EntityLists/ShipmentTypeList';
 import { ShipmentTypeListService } from 'Shipment/Services/StandardLists/ShipmentTypeListService';
+import { PackageTypeList } from 'Common/EntityLists/PackageTypeList';
 
 declare const window: any;
 
@@ -90,7 +91,20 @@ export class NewQuoteDataService {
         .subscribe((resp: any) => resolve(resp.Result));
     });
   }
+    async getPackageTypeTable(): Promise<PackageTypeList[]> {
+        const filters = new ApiQueryFilters();
+        //filters.addAdditionalFilter('InActive', false, null, null, "Equals", false, false, false, null, false, false);
+        filters.SortDirection = "Ascending";
+        // filters.PageIndex = 0;
+        // filters.PageSize = 50;
+        filters.GetAll = true;
+        return new Promise<PackageTypeList[]>(async (resolve, reject) => {
+            const resService: any = await this.entityListService.getByFilters('PackageType', filters).then();
 
+            resService.pipe(filterIsNotNull(), take(1))
+                .subscribe((resp: any) => resolve(resp.Result));
+        });
+    }
   async getPorts(directionId: string, transportModed: string): Promise<Port[]> {
     const res: ServiceResponse = await this.newQuoteOPWebService.GetPortsItemsList(directionId, transportModed, '', 1000000, false).toPromise();
     return res.Result as Port[];

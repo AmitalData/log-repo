@@ -1,79 +1,147 @@
-<h2 class="sub-header">
-  {{'QuoteOP.S.NewQuote.ExpectedOrderDetails' | TextCodeTranslationPipe}}
-  <span>(Please Insert Data of <p-button (click)="showDialog()" label="Fill Description" styleClass="p-button-link"></p-button>)</span>
-</h2>
 
-<div class="grid content-in-section" [formGroup]='formGroup'>
-  <div class="col-6 p-fluid">
-    <div class="p-field">
-      <label for="grossWeight">Grros Weight (KG)</label>
-      <p-inputNumber formControlName='grossWeight' id="grossWeight" mode="decimal" [useGrouping]="false">
-      </p-inputNumber>
+<div *ngIf="isExportSeaFcl" >
+    <h3 class="sub-header">
+        {{'QuoteOP.S.NewQuote.ExpectedOrderDetails' | TextCodeTranslationPipe}}
+    </h3>
+
+    <div class="grid content-in-section" [formGroup]='formGroup'>
+        <div class="col-2 p-fluid">
+            <div class="p-field">
+                <label for="quantity1">Quantity</label>
+                <p-inputNumber formControlName='quantity1' id="Quantity1" mode="decimal" [useGrouping]="false">
+                </p-inputNumber>
+            </div>
+            <div class="p-field">
+                <p-inputNumber formControlName='quantity2' id="Quantity2" mode="decimal" [useGrouping]="false">
+                </p-inputNumber>
+            </div>
+            <div class="p-field">
+                <p-inputNumber formControlName='quantity3' id="Quantity3" mode="decimal" [useGrouping]="false">
+                </p-inputNumber>
+            </div>
+            <div class="p-field">
+                <p-inputNumber formControlName='quantity4' id="Quantity4" mode="decimal" [useGrouping]="false">
+                </p-inputNumber>
+            </div>
+        </div>
+        <div class="col-3 p-fluid">
+            <div class="p-field">
+                <label for="quantityType1">Package Type</label>
+                <p-dropdown [disabled]="!formGroup.controls.quantity1?.value"
+                            inputId="packageType1" formControlName='quantityType1' [options]="packageTypes" placeholder="Select" optionLabel="name"></p-dropdown>
+            </div>
+            <div class="p-field">
+                <p-dropdown [disabled]="!formGroup.controls.quantity2?.value"
+                            inputId="packageType2" formControlName='quantityType2' [options]="packageTypes" placeholder="Select" optionLabel="name"></p-dropdown>
+            </div>
+            <div class="p-field">
+                <p-dropdown [disabled]="!formGroup.controls.quantity3?.value"
+                            inputId="packageType3" formControlName='quantityType3' [options]="packageTypes" placeholder="Select" optionLabel="name"></p-dropdown>
+            </div>
+            <div class="p-field">
+                <p-dropdown [disabled]="!formGroup.controls.quantity4?.value"
+                            inputId="packageType4" formControlName='quantityType4' [options]="packageTypes" placeholder="Select" optionLabel="name"></p-dropdown>
+            </div>
+        </div>
+         <div class="col-0.5 p-fluid"></div>
+
+        <div class="col-7 p-fluid">
+            <div class="p-field col-align">
+                <p-checkbox formControlName='isDangerous' [binary]="true"></p-checkbox>
+                <span class="checkbox-text">Dangerous Goods</span>
+            </div>
+            <div class="p-field">
+                <label for="descriptionOfGoods">Description of Goods</label>
+                <textarea formControlName='descriptionOfGoods' id="descriptionOfGoods" pInputTextarea [rows]="4"></textarea>
+            </div>
+
+            <div class="p-field">
+                <label for="notes">Notes</label>
+                <textarea formControlName='notes' id="notes" pInputTextarea [rows]="4"></textarea>
+            </div>
+        </div>
     </div>
 
-    <div class="p-field">
-      <label for="volume">Volume (CBM)</label>
-      <p-inputNumber formControlName='volume' id="volume" mode="decimal" [useGrouping]="false"></p-inputNumber>
-    </div>
-
-    <div class="p-field">
-      <label for="chargeableWeight">Chargeable Weight (KG)</label>
-      <p-inputNumber formControlName='chargeableWeight' id="chargeableWeight" mode="decimal" [useGrouping]="false">
-      </p-inputNumber>
-    </div>
-
-    <div class="p-field">
-      <label for="numberOfPackages">Number of Packages</label>
-      <p-inputNumber formControlName='numberOfPackages' id="numberOfPackages" mode="decimal" [useGrouping]="false">
-      </p-inputNumber>
-    </div>
-  </div>
-
-  <div class="col-6 p-fluid">
-    <p-checkbox formControlName='isDangerous' [binary]="true" label='Dangerous Goods'></p-checkbox>
-
-    <div class="p-field">
-      <label for="descriptionOfGoods">Description of Goods</label>
-      <textarea formControlName='descriptionOfGoods' id="descriptionOfGoods" pInputTextarea [rows]="3"></textarea>
-    </div>
-
-    <div class="p-field">
-      <label for="notes">Notes</label>
-      <textarea formControlName='notes' id="notes" pInputTextarea [rows]="3"></textarea>
-    </div>
-  </div>
+    
 </div>
 
-<p-dialog header="Fill Dimensions" [(visible)]="displayDialog" (onHide)='onDilogCancel()' styleClass="mydialog">
-  <p-button label='add package' (onClick)='addNewPackageForm()'></p-button>
-  <p-table [value]="formsPackage">
-    <ng-template pTemplate="header">
-      <tr>
-        <th>Quantity</th>
-        <th>L</th>
-        <th>W</th>
-        <th>H</th>
-        <th>Volume</th>
-        <th>Volumetric Weight</th>
-        <th>Gross Weight</th>
-        <th></th>
-      </tr>
-    </ng-template>
-    <ng-template pTemplate="body" let-form let-i="rowIndex">
-        <tr [formGroup]='form' class="p-fluid">
-          <td class="p-field"><p-inputNumber formControlName='quantity'></p-inputNumber> </td>
-          <td class="p-field"><p-inputNumber formControlName='l'></p-inputNumber> </td>
-          <td class="p-field"><p-inputNumber formControlName='w'></p-inputNumber> </td>
-          <td class="p-field"><p-inputNumber formControlName='h'></p-inputNumber> </td>
-          <td class="p-field"><p-inputNumber formControlName='volume'></p-inputNumber> </td>
-          <td class="p-field"><p-inputNumber formControlName='volumetricWeight'></p-inputNumber> </td>
-          <td class="p-field"><p-inputNumber formControlName='grossWeight'></p-inputNumber> </td>
-          <td>
-            <button pButton type="button" class="p-button-secondary" icon="pi pi-times" (click)='removePackage(i)'></button>
-          </td>
-        </tr>
-      </ng-template>
-    </p-table>
-    <p-button label='cancel' (onClick)='onDilogSave()'></p-button>
-    <p-button label='add' (onClick)='onDilogCancel()'></p-button>
-</p-dialog>
+<div *ngIf="!isExportSeaFcl">
+
+    <h3 class="sub-header">
+        {{'QuoteOP.S.NewQuote.ExpectedOrderDetails' | TextCodeTranslationPipe}}
+        <p-button (onClick)="addPackage()" [style]="{'float':'right'}" label="add package"></p-button>
+    </h3>
+    <div class="grid content-in-section" [formGroup]='formGroup'>
+        <div class="col-12 p-fluid">
+            <div class="grid content-in-section">
+                <div class="p-field col-2">
+                    <label for="quantity">Quantity</label>
+                </div>
+                <div class="p-field col-3">
+                    <label for="quantity">Dimensions(L-W-H)</label>
+                </div>
+                <div class="p-field col-3">
+                    <label for="quantity">Volume</label>
+                </div>
+                <div class="p-field col-3">
+                    <label for="quantity">GrossWeight</label>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 p-fluid" formArrayName="packages">
+
+            <div *ngFor='let x of packages.controls; let i = index' [formGroupName]="i">
+                <div class="grid content-in-section" [formGroup]='x'>
+                    <div class="p-field col-2 p-md-2">
+                        <p-inputNumber formControlName="quantity" [formGroup]='x' mode="decimal" [useGrouping]="false">
+                        </p-inputNumber>
+                    </div>
+
+                    <div class="p-field col-1 p-md-2">
+                        <p-inputNumber placeholder="L" formControlName='Ldimension' id="volume" mode="decimal" [useGrouping]="false"></p-inputNumber>
+                    </div>
+                    <div class="p-field col-1 p-md-2">
+                        <p-inputNumber placeholder="W" formControlName='Wdimension' id="volume" mode="decimal" [useGrouping]="false"></p-inputNumber>
+                    </div>
+                    <div class="p-field col-1 p-md-2">
+                        <p-inputNumber placeholder="H" formControlName='Hdimension' id="volume" mode="decimal" [useGrouping]="false"></p-inputNumber>
+                    </div>
+
+                    <div class="p-field col-3 p-md-6">
+                        <p-inputNumber formControlName='volume' id="volume" mode="decimal" [useGrouping]="false">
+                        </p-inputNumber>
+                    </div>
+
+                    <div class="p-field col-3 p-md-6">
+                        <p-inputNumber formControlName='grossWeight' id="grossWeight" mode="decimal" [useGrouping]="false">
+                        </p-inputNumber>
+                    </div>
+
+                    <p-button label="x" (click)="removePackage($event)" [disabled]="packages.controls.length < 2"></p-button>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-6 p-fluid" >
+            <div class="grid content-in-section" style="background: #e2f0fb">
+                <div style="background: white; margin: 1em !important" class="p-field col-5 p-fluid">number of packages</div>
+                <div style="background: white; margin: 1em !important" class="p-field col-5 p-fluid">number of packages</div>
+                <div style="background: white; margin: 1em !important" class="p-field col-5 p-fluid">number of packages</div>
+                <div style="background: white; margin: 1em !important" class="p-field col-5 p-fluid">volume</div>
+            </div>
+            </div>
+        <div class="col-6 p-fluid">
+                <p-checkbox formControlName='isDangerous' [binary]="true" label='Dangerous Goods'></p-checkbox>
+
+                <div class="p-field">
+                    <label for="descriptionOfGoods">Description of Goods</label>
+                    <textarea formControlName='descriptionOfGoods' id="descriptionOfGoods" pInputTextarea [rows]="3"></textarea>
+                </div>
+
+                <div class="p-field">
+                    <label for="notes">Notes</label>
+                    <textarea formControlName='notes' id="notes" pInputTextarea [rows]="3"></textarea>
+                </div>
+            </div>
+        </div>
+    </div>
