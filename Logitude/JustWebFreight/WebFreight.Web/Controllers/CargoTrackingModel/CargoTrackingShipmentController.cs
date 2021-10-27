@@ -77,6 +77,21 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
             }
 
         }
+        public HttpResponseMessage GetMainCargoShipmentPMBySecurityKey(string securityKey, int tenant)
+        {
+            try
+            {
+                CargoTrackingShipmentQueryService cargoTrackingShipmentQuery = new CargoTrackingShipmentQueryService(tenant);
+                CargoTrackingShipmentPM cargoTrackingShipmentPM = cargoTrackingShipmentQuery.GetMainShipmentByShipmentSecurityKey(securityKey, tenant);
+
+                return Request.CreateResponse(HttpStatusCode.OK, cargoTrackingShipmentPM);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
+        }
 
         private static int GetAuthinticatedTenant()
         {

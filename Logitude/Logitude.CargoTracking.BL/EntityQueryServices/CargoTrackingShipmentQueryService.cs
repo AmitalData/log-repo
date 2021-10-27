@@ -20,6 +20,8 @@ namespace Logitude.CargoTracking.BL.EntityQueryServices
 {
     public partial class CargoTrackingShipmentQueryService
     {
+        private const string ForwardingShipmentEntityType = "F";
+        private const string ShipmentOrderEntityType = "O";
 
         public CargoTrackingShipmentPM GetSingle(int id, bool getComposition, bool getFromCache)
         {
@@ -52,8 +54,36 @@ namespace Logitude.CargoTracking.BL.EntityQueryServices
             return cargoShipmentPM;
         }
 
+        public CargoTrackingShipmentPM GetMainShipmentByShipmentSecurityKey(string securityKey, int tenant)
+        {
+            CargoTrackingShipmentPM cargoShipmentPM = GetMainShipmentWithoutMapping(securityKey, tenant);
 
+            CargoTrackingShipmentMappingService cargoShipmentMapper = new CargoTrackingShipmentMappingService();
+            cargoShipmentMapper.MapCargoTrackingShipmentFields(cargoShipmentPM);
 
+            return cargoShipmentPM;
+        }
+
+        private CargoTrackingShipmentPM GetMainShipmentWithoutMapping(string securityKey, int tenant)
+        {
+            CargoTrackingShipmentPM cargoShipmentPM = GetCargoShipmentPMBySecurityKey(securityKey, tenant);
+
+            if (cargoShipmentPM.EntityType == ForwardingShipmentEntityType && cargoShipmentPM.CustomsShipmentHeaderId != null)
+            {
+                cargoShipmentPM = GetSinglePMById(cargoShipmentPM.CustomsShipmentHeaderId, tenant);
+            }
+            else if (cargoShipmentPM.EntityType == ShipmentOrderEntityType && cargoShipmentPM.ForwardingShipmentHeaderId != null)
+            {
+                cargoShipmentPM = GetSinglePMById(cargoShipmentPM.ForwardingShipmentHeaderId, tenant);
+
+                if (cargoShipmentPM.EntityType == ForwardingShipmentEntityType && cargoShipmentPM.CustomsShipmentHeaderId != null)
+                {
+                    cargoShipmentPM = GetSinglePMById(cargoShipmentPM.CustomsShipmentHeaderId, tenant);
+                }
+            }
+
+            return cargoShipmentPM;
+        }
 
         private CargoTrackingShipmentPM GetCargoShipmentPMByEntityId(string entityId, int tenant)
         {

@@ -168,19 +168,19 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                 if (shipment == null)
                     return Request.CreateResponse(HttpStatusCode.OK);
 
-                List<Milestone> shipmentMilestones = shipmentsQuery.BuildShipmentMilstones(shipment);
-                shipmentsQuery.SetMilestonesStatus(shipment, shipmentMilestones);
+                //List<Milestone> shipmentMilestones = shipmentsQuery.BuildShipmentMilstones(shipment);
+                //shipmentsQuery.SetMilestonesStatus(shipment, shipmentMilestones);
 
-                CargoTrackingShipmentWithMilestones cargoTrackingShipmentWithMilestones = new CargoTrackingShipmentWithMilestones()
-                {
-                    ShipmentList = shipment,
-                    Milestones = shipmentMilestones,
+                //CargoTrackingShipmentWithMilestones cargoTrackingShipmentWithMilestones = new CargoTrackingShipmentWithMilestones()
+                //{
+                //    ShipmentList = shipment,
+                //    Milestones = shipmentMilestones,
 
-                };
+                //};
 
                 CreateZoomEventForMixPanel(tenant, shipment, true);
 
-                HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, cargoTrackingShipmentWithMilestones);
+                HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, 0);
                 return reponseMessage;
             }
             catch (Exception ex)
@@ -203,19 +203,19 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                 if (shipment == null)
                     return Request.CreateResponse(HttpStatusCode.OK);
 
-                List<Milestone> shipmentMilestones = shipmentsQuery.BuildShipmentMilstones(shipment);
-                shipmentsQuery.SetMilestonesStatus(shipment, shipmentMilestones);
+                //List<Milestone> shipmentMilestones = shipmentsQuery.BuildShipmentMilstones(shipment);
+                //shipmentsQuery.SetMilestonesStatus(shipment, shipmentMilestones);
 
-                CargoTrackingShipmentWithMilestones cargoTrackingShipmentWithMilestones = new CargoTrackingShipmentWithMilestones()
-                {
-                    ShipmentList = shipment,
-                    Milestones = shipmentMilestones,
+                //CargoTrackingShipmentWithMilestones cargoTrackingShipmentWithMilestones = new CargoTrackingShipmentWithMilestones()
+                //{
+                //    ShipmentList = shipment,
+                //    Milestones = shipmentMilestones,
 
-                };
+                //};
 
                 CreateZoomEventForMixPanel(tenant, shipment, false);
 
-                HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, cargoTrackingShipmentWithMilestones);
+                HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, 0);
                 return reponseMessage;
             }
             catch (Exception ex)

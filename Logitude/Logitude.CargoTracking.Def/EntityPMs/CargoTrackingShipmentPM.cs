@@ -16,11 +16,50 @@ namespace Logitude.CargoTracking.Def.EntityPMs
 {
    public partial class CargoTrackingShipmentPM
    {
+        [DataMember]
         public string CustomsBrokerReference { get; set; }
+        [DataMember]
         public ShipmentCustomsData CustomsData { get; set; }
+        [DataMember]
         public List<RoutingStep> RoutingSteps { get; set; }
+        [DataMember]
+        public List<PartnerCard> PartnerCards { get; set; }
+        [DataMember]
         public List<CargoShipmentPackage> Packages { get; set; }
+        [DataMember]
         public List<CargoDocumentsFiling> DocumentsFilings { get; set; }
+        [DataMember]
+        public string ShipmentReferences { get; set; }
+        [DataMember]
+        public string ForwardingHouse { get; set; }
+        [DataMember]
+        public string ForwardingMaster { get; set; }
+        [DataMember]
+        public List<Milestone> Milestones { get; set; }
+        [DataMember]
+        public string IncotermName { get; set; }
+        [DataMember]
+        public string FutureMilstoneCode { get; set; }
+        [DataMember]
+        public DateTime? FutureMilstoneDate { get; set; }
+        [DataMember]
+        public string FutureMilstoneName { get; set; }
+
+        [DataMember]
+        public string WarehouseLegEnglishName { get; set; }
+        [DataMember]
+        public string TotalTax { get; set; }
+        [DataMember]
+        public string ShipmentTypeName { get; set; }
+        [DataMember]
+        public int? ShipmentOrderQuantity { get; set; }
+        [DataMember]
+        public string ShipmentOrderPONumber { get; set; }
+        [DataMember]
+        public string RouteFromPortCode { get; set; }
+        [DataMember]
+        public string RouteToPortCode { get; set; }
+
     }
 
     public class CargoDocumentsFiling
@@ -82,6 +121,10 @@ namespace Logitude.CargoTracking.Def.EntityPMs
     }
     public class RoutingStep
     {
+        public RoutingStep()
+        {
+            Directions = new List<RouteDirection>();
+        }
         public bool IsActive { get; set; }
         public string FromPortLabel { get; set; }
         public string ToPortLabel { get; set; }
@@ -103,6 +146,28 @@ namespace Logitude.CargoTracking.Def.EntityPMs
         public DateTime Date { get; set; }
         public string Label { get; set; }
         public string Direction { get; set; }
+    }
+    public class PartnerCard
+    {
+        public string Name { get; set; }
+        public string Type { get; set; }
+        public string Address { get; set; }
+        public string PhoneNumber { get; set; }
+        public string FaxNumber { get; set; }
+        public bool ShowDetails { get; set; } = false;
+    }
+    public class Milestone
+    {
+        public int Id { get; set; }
+        public string Code { get; set; }
+        public string Name { get; set; }
+        public string Notes { get; set; }
+        public DateTime? Date { get; set; }
+        public DateTime? EstimationDate { get; set; }
+        public bool? Done { get; set; }
+        public bool? IsEstimation { get; set; }
+        public bool? IsCurrent { get; set; }
+
     }
 
 

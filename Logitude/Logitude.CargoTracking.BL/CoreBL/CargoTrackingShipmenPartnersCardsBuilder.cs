@@ -14,6 +14,7 @@ namespace Logitude.CargoTracking.BL.EntityQueryServices
 {
     public class CargoTrackingShipmenPartnersCardsBuilder
     {
+        const string ShipmentOrderEntityType = "O";
         private const string AddressSeparator = "<br>";
         readonly List<PartnerCardMetaData> partnerCardsMetaDatas = new List<PartnerCardMetaData>
             {
@@ -43,27 +44,82 @@ namespace Logitude.CargoTracking.BL.EntityQueryServices
                 new PartnerCardMetaData("shipper", "ShipperId", "ShipperName", true)
             };
         List<AddressList> partnersAddresses;
-        List<PartnerCard> partnerCards;
+        List<PartnerCard> partnerCards = new List<PartnerCard>();
         ShipmentOrderPM shipmentOrderPM;
         ShipmentPM shipmentPM;
+        CargoTrackingShipmentPM cargoShipmentPM;
 
-        public CargoTrackingShipmenPartnersCardsBuilder(ShipmentOrderPM shipmentOrderPM, ShipmentPM shipmentPM)
+        public CargoTrackingShipmenPartnersCardsBuilder(ShipmentOrderPM shipmentOrderPM, ShipmentPM shipmentPM, CargoTrackingShipmentPM cargoShipmentPM)
         {
             this.shipmentOrderPM = shipmentOrderPM;
             this.shipmentPM = shipmentPM;
+            this.cargoShipmentPM = cargoShipmentPM;
         }
 
-        public void BuildPartnerCards()
+        public List<PartnerCard> BuildPartnerCards()
         {
+            GetPartnersAddresses();
             foreach (var partnerCardMetaData in partnerCardsMetaDatas)
             {
                 CreatePartnerCard(partnerCardMetaData);
             }
+
+            return partnerCards;
+        }
+
+        private void GetPartnersAddresses()
+        {
+            var partnersIds = GetShipmentPartnersIds(shipmentPM, cargoShipmentPM, shipmentOrderPM);
+            AddressQuery addressQuery = new AddressQuery(cargoShipmentPM.Tenant);
+            partnersAddresses = addressQuery.GetAddressesByCardIds(partnersIds, cargoShipmentPM.Tenant);
+        }
+        private List<string> GetShipmentPartnersIds(ShipmentPM shipmentPM, CargoTrackingShipmentPM cargoShipmentPM, ShipmentOrderPM shipmentOrderPM)
+        {
+            if (cargoShipmentPM.EntityType == ShipmentOrderEntityType)
+            {
+                return new List<string>() {
+                    shipmentOrderPM.ShipperId,
+                    shipmentOrderPM.ConsigneeId,
+                    shipmentOrderPM.AgentId,
+                    shipmentOrderPM.CarrierId
+                };
+            }
+            else
+            {
+
+                List<string> partnersIds = new List<string>() {
+                    shipmentPM.ShipperId,
+                    shipmentPM.ConsigneeId,
+                    shipmentPM.FreightForwarderId,
+                    shipmentPM.CustomerId,
+                    shipmentPM.AgentId,
+                    shipmentPM.IssuingCarrierAgentId,
+                    shipmentPM.CustomAgentExportId,
+                    shipmentPM.CustomAgentImportId,
+                    shipmentPM.Notify1Id,
+                    shipmentPM.Notify2Id,
+                    shipmentPM.ShipperNotExporterId,
+                    shipmentPM.ConsigneeNotImporterId,
+                    shipmentPM.CustomClearancePointId,
+                    shipmentPM.ColoaderId,
+                    shipmentPM.FreelancerId,
+                    shipmentPM.ConsolidatorId,
+                    shipmentPM.ReleasingAgentId,
+                    shipmentPM.MainCarriageCarrierId,
+                    shipmentPM.WarehouseLegWarehouseId,
+                    cargoShipmentPM.ShipperId
+                };
+
+                partnersIds.AddRange(shipmentPM.ShipmentDeliveries.Select(d => d.CarrierId).ToList());
+                partnersIds.AddRange(shipmentPM.ShipmentPickUps.Select(d => d.CarrierId).ToList());
+                return partnersIds;
+            }
+
         }
 
         private void CreatePartnerCard(PartnerCardMetaData partnerCardMetaData)
         {
-            if (partnerCardMetaData.IsFromShipmentOrder)
+            if (partnerCardMetaData.IsFromShipmentOrder && shipmentOrderPM != null)
                 CreateShipmetOrderPartnerCard(partnerCardMetaData);
             else
                 CreateShipmentPartnerCard(partnerCardMetaData);
@@ -99,7 +155,7 @@ namespace Logitude.CargoTracking.BL.EntityQueryServices
 
         public string GetProperty(object target, string name)
         {
-            return (string)target.GetType().GetProperty(name).GetValue(target, null);
+            return (string)target.GetType().GetProperty(name)?.GetValue(target, null);
         }
 
 
@@ -148,13 +204,5 @@ namespace Logitude.CargoTracking.BL.EntityQueryServices
         public string NameFieldName { get; set; }
         public bool IsFromShipmentOrder { get; set; }
     }
-    public class PartnerCard
-    {
-        public string Name { get; set; }
-        public string Type { get; set; }
-        public string Address { get; set; }
-        public string PhoneNumber { get; set; }
-        public string FaxNumber { get; set; }
-        public bool ShowDetails { get; set; } = false;
-    }
+   
 }

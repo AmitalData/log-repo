@@ -338,7 +338,7 @@ h1 {
     .slider .card:hover {
         box-shadow: initial;
     }
-    
+
     .slider {
         width: 100% !important;
     }
@@ -689,7 +689,7 @@ h1 {
     }
     .route-description{
         max-height: 44px;
-        white-space: normal   
+        white-space: normal
     }
     .package-list-table tr th{
         line-height: 10px;
@@ -759,4 +759,39 @@ h1 {
 }
 .no-milestones{
     height: 50px;
+}
+
+
+.no-result-div {
+    text-align: center;
+    /* padding-top: 130px; */
+    width: 600px;
+    margin: 0 auto;
+
+    margin-top: 200px;
+    line-height: 18px;
+    height: 140px;
+}
+
+.no-result-div p {
+    line-height: 18px;
+    font-size: 12px;
+    padding: 10px 15px;
+}
+.no-result-div .title {
+    padding-top: 10px;
+    font-size: 22px;
+}
+
+.auto-overflow{
+    overflow: auto;
+}
+
+@media screen and (max-width: 479px) {
+
+    .special-padding{
+        padding: 50px 10px 0 10px;
+        box-sizing: border-box;
+    }
+
 }
