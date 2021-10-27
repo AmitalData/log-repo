@@ -666,6 +666,18 @@ export function CheckBoxesInCopyShipmentWizerd() {
     cy.ClickCheckBox(ShipmentSelectors.ShipmentOnCarriageCheckBox)
     cy.ClickCheckBox(ShipmentSelectors.ShipmentIncludePackagesCheckBox)
 }
+
+export function AssertShipmentRoutingPickUpToPortValue(value) {
+    cy.Click(ShipmentSelectors.EditPickUp, null)
+    BaseAssertion.AssertElementHaveValue(ShipmentSelectors.PickUpDeliveryToPort, value)
+    cy.Click(ShipmentSelectors.CloseBtn, null)
+}
+
+export function AssertShipmentRoutingDeliveryFromPortValue(value) {
+    cy.Click(ShipmentSelectors.EditDelivery, null)
+    BaseAssertion.AssertElementHaveValue(ShipmentSelectors.PickUpDeliveryFromPort, value)
+    cy.Click(ShipmentSelectors.CloseBtn, null)
+}
 //#endregion
 //#region Update Closed Shipment
 export function UpdateClosedShipment() {
