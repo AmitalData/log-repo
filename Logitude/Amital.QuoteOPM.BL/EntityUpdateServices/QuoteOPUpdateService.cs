@@ -97,10 +97,7 @@ namespace Amital.QuoteOPM.BL.EntityUpdateServices
             }
 
             entityPM.QuoteProperties.ForEach(propertiesPM =>
-            {
-                propertiesPM.QuoteID = entityPM.Id;
-                propertiesPM.ChangeSetOp = ChangeSetOperation.Insert;
-            });
+                propertiesPM.ChangeSetOp = ChangeSetOperation.Insert);
 
             base.OnCreating(entityPM, entityParentPM);
         }

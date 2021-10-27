@@ -14,7 +14,9 @@ namespace Amital.QuoteOPM.BL.EntityUpdateServices
         {
             entityPM.Id = IdCounter.GetNumber("QuoteOPProperties", entityParentPM.Tenant).ToString();
             entityPM.QuoteID = entityParentPM.Id;
-            entityPM.Tenant = entityParentPM.Tenant;
+            entityPM.Tenant = entityParentPM.Tenant;            
+            entityPM.IndexOrder = CodeCounter.GetNumber("QuoteOPProperties", entityParentPM.Tenant);
+
 
             base.OnCreating(entityPM, entityParentPM);
         }
