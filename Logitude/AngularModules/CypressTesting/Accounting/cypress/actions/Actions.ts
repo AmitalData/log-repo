@@ -162,6 +162,19 @@ export function VoidAPInvoice() {
     cy.Click(ShipmentSelectors.ConfirmWindowYes, null);
 }
 
+export function AssertAPInvoiceMenuButtonsDimExceptReTransfer() {
+    BaseAssertion.AssertElementDisabled(AccountingSelectors.APInvoiceCancelApprovalButton, BaseSelectors.BeDisabled)
+    BaseAssertion.AssertElementDisabled(AccountingSelectors.APInvoiceReTransferButton, BaseSelectors.BeDisabled)
+    BaseAssertion.AssertElementDisabled(AccountingSelectors.APInvoiceCopyButton, BaseSelectors.BeDisabled)
+    BaseAssertion.AssertElementDisabled(AccountingSelectors.APInvoiceVoidButton, BaseSelectors.NotBeDisabled)
+}
+
+export function AssertAPInvoiceMenuButtonsNotDimExceptReTransfer() {
+    BaseAssertion.AssertElementDisabled(AccountingSelectors.APInvoiceCancelApprovalButton, BaseSelectors.NotBeDisabled)
+    BaseAssertion.AssertElementDisabled(AccountingSelectors.APInvoiceReTransferButton, BaseSelectors.BeDisabled)
+    BaseAssertion.AssertElementDisabled(AccountingSelectors.APInvoiceCopyButton, BaseSelectors.NotBeDisabled)
+    BaseAssertion.AssertElementDisabled(AccountingSelectors.APInvoiceVoidButton, BaseSelectors.NotBeDisabled)
+}
 //#endregion
 
 //#region ARInvoice

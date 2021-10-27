@@ -81,12 +81,20 @@ Feature: Copy AP Invoice Approve, Cancel Approval and Void
             | Branch              | Main Office |
         When receive invoice
         Then the invoice should create successfully
-        And the status value should be changed to "Waiting For Approval"
+        And the status value should be "Waiting For Approval"
+
+    Scenario: Assert all buttons in menu are dim except void button
+        When press on menu button
+        Then all buttons in menu should be dim except void button
 
     Scenario: Approve APInvoice
         When approve invoice
         Then the invoice should approve successfully
         And the status value should be "Approved"
+
+    Scenario: Assert all buttons in menu are not dim except void button
+        When press on menu button
+        Then all buttons in menu should not be dim except void button
 
     Scenario: Cancel the APInvoice approvement
         When cancel the invoice approvement
@@ -95,3 +103,4 @@ Feature: Copy AP Invoice Approve, Cancel Approval and Void
     Scenario: Void APInvoice
         When void invoice
         Then the invoice should void successfully
+        And the status value should be "Void"
