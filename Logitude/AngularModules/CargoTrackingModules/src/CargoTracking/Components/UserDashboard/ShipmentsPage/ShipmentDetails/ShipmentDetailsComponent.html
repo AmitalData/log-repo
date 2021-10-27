@@ -123,7 +123,7 @@
 
 
     <div style="order: 2;" #SliderWrapper class="slider-wrapper" [ngClass]="NoMilstonesFound ? 'slider-wrapper no-milestones': 'slider-wrapper'"
-         (wheel)="onMousewheel($event,false)" (pan)="logPan($event)">
+         (wheel)="onMousewheelOnMilestonesSlider($event)" (pan)="logPan($event)">
 
         <!-- Milestones -->
         <div *ngIf="NoMilstonesFound" class="shipment-header" style="vertical-align:middle;text-align:center">
@@ -591,7 +591,7 @@ package.ShipperSeal == null ? package.CarrierSeal :
 
         <div body>
             <div class="slider-wrapper" id="RoutingSliderWrapper" #RoutingSliderWrapper style="height:234px;background:rgba(59, 59, 59, 0.00);padding-bottom:10px"
-                 (wheel)="onMousewheel($event, true)" (pan)="logPan($event)">
+                 (wheel)="onMousewheelOnRoutingSlider($event)" (pan)="logPan($event)">
                 <div class="no-data-available" *ngIf="ShipmentRouteSteps?.length == 0">No Routing defined for this shipment </div>
 
                 <div *ngIf="ShipmentRouteSteps?.length > 0" class="pager left-arrow" [class.dim]="routingSliderMarginLeft==0 || routingSliderMarginCardCount==0"

@@ -57,6 +57,11 @@ export class ShipmentDetailsComponent implements AfterViewInit
     CustomsEntityType: string = "C";
     ForwardingEntityType: string = "F";
     OrderEntityType: string = "O";
+    RoutingPagersWidth : number = 100;
+    RoutingMobilePagersWidth : number = 150;
+    MaxWidthForMobileScreenForRouting: number = 470;
+    RoutingMobileMarginLeft: number = 55;
+
     public OverviewPanelTitle: string;
     public TypeTitle: string;
     PartnerCardTypesOfShipmentTransportMode = {
@@ -108,14 +113,25 @@ export class ShipmentDetailsComponent implements AfterViewInit
 
     }
 
-    onMousewheel(event: WheelEvent, isRoutingSlider: Boolean)
+    onMousewheelOnMilestonesSlider(event: WheelEvent)
     {
         event.preventDefault();
         if (event.deltaY > 0) {
-            isRoutingSlider ? this.MoveRoutingSlider('left') : this.MoveSlider('left');
+            this.MoveSlider('left');
         }
         if (event.deltaY < 0) {
-            isRoutingSlider ? this.MoveRoutingSlider('right') : this.MoveSlider('right');
+            this.MoveSlider('right');
+        }
+    }
+
+    onMousewheelOnRoutingSlider(event: WheelEvent)
+    {
+        event.preventDefault();
+        if (event.deltaY > 0) {
+            this.MoveRoutingSlider('left');
+        }
+        if (event.deltaY < 0) {
+            this.MoveRoutingSlider('right');
         }
     }
 
@@ -136,7 +152,7 @@ export class ShipmentDetailsComponent implements AfterViewInit
             var count = Math.floor((sliderWrapperWidth - PAGERS_WIDTH) / this.sliderCardWidth);
 
         if (screenwidth <= maxWidthForMobileScreen)
-            var mobileCount = this.CalculateVisibleSliderCardsCount(sliderWrapperWidth, mobilePagersWidth, this.sliderMobileCardWidth);
+            var mobileCount = this.CalculateVisibleSliderCardsCountForMobile(sliderWrapperWidth, mobilePagersWidth, this.sliderMobileCardWidth);
         this.sliderVisibleCardsCount = count == undefined ? mobileCount: count;
 
         this.sliderVisibleCardsWidth = count * this.sliderCardWidth;
@@ -146,28 +162,34 @@ export class ShipmentDetailsComponent implements AfterViewInit
     }
 
     InitRoutingSlider() {
-        var PAGERS_WIDTH = 100; // 100 * 2 pager
-        var mobilePagersWidth = 150; // 100 * 2 pager
         var screenwidth = window.innerWidth;
-
         var sliderWrapperWidth = this.RoutingSliderWrapperElement.nativeElement.offsetWidth;
-        const maxWidthForMobileScreen = 470;
-        if (screenwidth > maxWidthForMobileScreen)
-            var count = Math.floor((sliderWrapperWidth - PAGERS_WIDTH) / this.routingSliderCardWidth);
-
-        if (screenwidth <= maxWidthForMobileScreen)
-            var mobileCount = this.CalculateVisibleSliderCardsCount(sliderWrapperWidth, mobilePagersWidth, this.routingSliderMobileCardWidth);
-        this.routingSliderVisibleCardsCount = count == undefined ? mobileCount : count;
+        var count = this.CalculateRoutingSliderVisibleCardsWidth(screenwidth, sliderWrapperWidth);
 
         this.routingSliderVisibleCardsWidth = count * this.routingSliderCardWidth;
         this.routingSliderMarginCardCount = 0;
-        this.routingSliderMarginLeft =  0; // mobile: add
+        this.routingSliderMarginLeft =  0; 
 
     }
 
-    private CalculateVisibleSliderCardsCount(sliderWrapperWidth: number, mobilePagersWidth: number, sliderMobileCardWidth: number ) {
+    private CalculateRoutingSliderVisibleCardsWidth(screenwidth: number, sliderWrapperWidth: any) {
+        if (screenwidth > this.MaxWidthForMobileScreenForRouting)
+            var count = this.CalculateVisibleSliderCardsCountForWeb(sliderWrapperWidth);
+
+        if (screenwidth <= this.MaxWidthForMobileScreenForRouting)
+            var mobileCount = this.CalculateVisibleSliderCardsCountForMobile(sliderWrapperWidth, this.RoutingMobilePagersWidth, this.routingSliderMobileCardWidth);
+        this.routingSliderVisibleCardsCount = count == undefined ? mobileCount : count;
+        return count;
+    }
+
+    private CalculateVisibleSliderCardsCountForWeb(sliderWrapperWidth: any) {
+        return Math.floor((sliderWrapperWidth - this.RoutingPagersWidth) / this.routingSliderCardWidth);
+    }
+
+    private CalculateVisibleSliderCardsCountForMobile(sliderWrapperWidth: number, mobilePagersWidth: number, sliderMobileCardWidth: number ) {
         return Math.floor((sliderWrapperWidth - mobilePagersWidth) / sliderMobileCardWidth);
     }
+
     LoadShipment()
     {
         //this.isLoading = true;
@@ -650,17 +672,36 @@ export class ShipmentDetailsComponent implements AfterViewInit
     routingSliderVisibleCardsWidth: number = 0;
   
  
-    MoveRoutingSlider(dir) {
+    MoveRoutingSlider(direction) {
 
-        if (dir == 'right' && this.routingSliderMarginLeft == 0)
+        if (direction == 'right' && this.routingSliderMarginLeft == 0)
             return;
 
-        if (dir == 'left' && ((this.routingSliderMarginCardCount + this.routingSliderVisibleCardsCount) >= this.ShipmentRouteSteps.length) || (this.routingSliderVisibleCardsCount >= this.ShipmentRouteSteps.length))
+        if (direction == 'left' && ((this.routingSliderMarginCardCount + this.routingSliderVisibleCardsCount) >= this.ShipmentRouteSteps.length) || (this.routingSliderVisibleCardsCount >= this.ShipmentRouteSteps.length))
             return;
 
+        var margin = this.SetRoutingSliderMarginBasedOnDirection(direction);
+
+        this.SetRoutingSliderMarginLeft(margin);
+
+        var screenwidth = window.innerWidth;
+        if (screenwidth < this.MaxWidthForMobileScreenForRouting)
+            this.routingSliderMarginLeft - this.RoutingMobileMarginLeft;
+
+
+    }
+    private SetRoutingSliderMarginLeft(margin: number) {
+        if (margin > 0)
+            this.routingSliderMarginLeft = 0;
+
+        else
+            this.routingSliderMarginLeft = margin;
+    }
+
+    private SetRoutingSliderMarginBasedOnDirection(direction: any) {
         var margin = this.routingSliderMarginLeft;
-        // inc\dec
-        if (dir == 'left') {
+
+        if (direction == 'left') {
             margin -= this.routingSliderCardWidth;
             this.routingSliderMarginCardCount++;
         }
@@ -668,19 +709,9 @@ export class ShipmentDetailsComponent implements AfterViewInit
             margin += this.routingSliderCardWidth;
             this.routingSliderMarginCardCount--;
         }
-
-        // limit boundary
-        if (margin > 0)
-            this.routingSliderMarginLeft = 0;
-        else
-            this.routingSliderMarginLeft = margin;
-
-        var screenwidth = window.innerWidth;
-        if (screenwidth < 470)
-            this.routingSliderMarginLeft - 55;
-
-
+        return margin;
     }
+
     //#endregion
 
     GetModeIcon()
