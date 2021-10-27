@@ -1092,6 +1092,7 @@
     <Compile Include="DataProviders\UserDefinedReportDataProvider.cs" />
     <Compile Include="ExternalAPIs\RatesUpdateController.cs" />
     <Compile Include="ExternalAPIs\ShipmentNumbersController.cs" />
+    <Compile Include="ExternalAPIs\V1\EventTypeModule\EventTypeController.cs" />
     <Compile Include="ExternalAPIs\V1\GLAccountChequeDetailsController.cs" />
     <Compile Include="ExternalAPIs\V1\CargoTrackingShipmentDetailsController.cs" />
     <Compile Include="ExternalAPIs\V1\ShipmentOrderModule\ShipmentOrderController.cs" />
@@ -2627,6 +2628,7 @@
     <Compile Include="Helpers\ContainerStatuses\ContainerStatusesConnecterAnalyzer.cs" />
     <Compile Include="Helpers\DocumentTypeCalculateFileNameService.cs" />
     <Compile Include="Helpers\EntityPropertyValueService.cs" />
+    <Compile Include="Helpers\EventTypeModule\EventTypeService.cs" />
     <Compile Include="Helpers\ExcelReport\ExcelDataProviderFieldsBuilder.cs" />
     <Compile Include="Helpers\ExcelReport\ExcelReportFileService.cs" />
     <Compile Include="Helpers\ExcelReport\ExcelReportMrtBuilder.cs" />

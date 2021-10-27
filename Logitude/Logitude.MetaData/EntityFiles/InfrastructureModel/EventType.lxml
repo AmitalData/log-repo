@@ -2826,7 +2826,7 @@
         IsCompositKey="false"
         IsUpdateAllowed="false" />
       <DCField
-        DCFieldName="&quot;EventTypeStatusEntity&quot;"
+        DCFieldName="&quot;EventTypeName&quot;"
         FieldName="&quot;EnglishName&quot;"
         IsKey="false"
         IsManualMapping="false"

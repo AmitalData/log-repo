@@ -25,7 +25,7 @@ namespace Logitude.BL.InfrastructureModel.APIDataContract.ApiV1
     
     public string EventTypeCode { get; set; }
     
-    public string EventTypeStatusEntity { get; set; }
+    public string EventTypeName { get; set; }
     
     public EntityStatus EventTypeStatusEntity { get; set; }
     

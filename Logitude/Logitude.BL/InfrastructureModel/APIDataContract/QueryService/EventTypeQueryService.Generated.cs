@@ -67,7 +67,7 @@ using Simplog.Data.InfrastructureModel;
 				   var temp = new EventType(); 
 				   temp.Id = MyEntityPM.Id;
 				   temp.EventTypeCode = MyEntityPM.Code;
-				   temp.EventTypeStatusEntity = MyEntityPM.EnglishName; 
+				   temp.EventTypeName = MyEntityPM.EnglishName; 
 
 			  
 				   if(MyEntityPM.EntityStatusId != null)
@@ -134,9 +134,9 @@ using Simplog.Data.InfrastructureModel;
 						
 					}
                     
-					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.EventTypeStatusEntity))
-					{							//throw new ApplicationException("EventTypeStatusEntity Can't be update"); 
-							temp.EnglishName = MyEntity.EventTypeStatusEntity;
+					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.EventTypeName))
+					{							//throw new ApplicationException("EventTypeName Can't be update"); 
+							temp.EnglishName = MyEntity.EventTypeName;
 
 										}  
 
