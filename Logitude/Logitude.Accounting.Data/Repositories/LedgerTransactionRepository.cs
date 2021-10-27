@@ -25,7 +25,7 @@ namespace Logitude.Accounting.Data.Repositories
     {
         
         
-        
+        private const string  CreditTypeJournalLine = "1";
 
         public List<LedgerTransaction> GetMulti(EntityKeyFields entityKeys)
         {
@@ -1431,38 +1431,150 @@ on record.JournalId equals j.Id
 
 
         }
-        public IQueryable<LedgerTransaction> GetTaxReportsLedgerTransactionsByJournalIds(List<string> journalIds, int tenant, DateTime date, string accountId)
+        public List<LedgerTransactionList> GetTaxReportsLedgerTransactionsByJournalIds(List<string> journalIds, int tenant, DateTime date, string accountId)
         {
             int days = DateTime.DaysInMonth(date.Year, date.Month);
             DateTime reportDate = new DateTime(date.Year, date.Month, days);
-            
 
-            return (from a in context.LedgerTransactions
-                   join j in context.Journals on a.JournalId equals j.Id
-                   
+
+            List<LedgerTransactionList> transactions=(from ledger in context.LedgerTransactions
+                   join j in context.Journals on ledger.JournalId equals j.Id
                     join m in context.JournalAdditionalDatas on j.Id equals m.JournalId
-                    where j.AccountingEntityCode == "2" && (m.TaxReportId != null ) && a.Tenant == tenant
-                    && a.DocumentDate <= reportDate
-                    where journalIds.Contains(a.JournalId) && a.Tenant == tenant && a.AccountId == accountId
+                    where j.AccountingEntityCode == "2" && (m.TaxReportId != null ) && ledger.Tenant == tenant
+                    && ledger.DocumentDate <= reportDate
+                    where journalIds.Contains(ledger.JournalId) && ledger.Tenant == tenant && ledger.AccountId == accountId
 
-                    select a
-                    );
+                                                      select new LedgerTransactionList()
+                                                      {
+                                                          Id = ledger.Id,
+                                                          LocalAmountCredit = ledger.LocalAmountCredit,
+                                                          ForeignAmountDebit = ledger.ForeignAmountDebit,
+                                                          LocalAmountDebit = ledger.LocalAmountDebit,
+                                                          Tenant = ledger.Tenant,
+                                                          AccountingDate = ledger.AccountingDate,
+                                                          DocumentDate = ledger.DocumentDate,
+                                                          DueDate = ledger.DueDate,
+                                                          Reference1 = ledger.Reference1,
+                                                          Reference2 = ledger.Reference2,
+                                                          Reference3 = ledger.Reference3,
+                                                          AccountId = ledger.AccountId,
+                                                          OppositeAccountId = ledger.OppositeAccountId,
+                                                          JournalId = ledger.JournalId,
+                                                          Notes = ledger.Notes,
+                                                          JournalLineNumber = ledger.JournalLineNumber,
+                                                          SourceNumber = ledger.JournalLine.Journal.AccountingEntityReference, // display number
+                                                          SourceTypeCode = ledger.JournalLine.Journal.AccountingEntity.Code, // source type code from AccountingEntities
+                                                          SelectCheckBox = false,
+                                                          JournalNumber = ledger.JournalLine.Journal.JournalNumber,
+                                                          OpenAmount = ledger.OpenAmount,
+                                                          ReconcileMethodCode = ledger.Account.ReconcileMethodCode,
+                                                          OppositeAccountEnglishName = ledger.OppositeAccount != null ? ledger.OppositeAccount.EnglishName : null,
+                                                          OppositeAccountLocalName = ledger.OppositeAccount != null ? ledger.OppositeAccount.LocalName : null,
+                                                          OppositeAccountDisplayNumber = ledger.OppositeAccount != null ? ledger.OppositeAccount.DisplayNumber : null,
+                                                          OriginalAmount = 0,
+                                                          CalculatedForeignAmount = ledger.ForeignAmountCredit != 0 ? ledger.ForeignAmountCredit : ledger.ForeignAmountDebit,
+                                                          CalculatedLocalAmount = ledger.LocalAmountCredit != 0 ? ledger.LocalAmountCredit : ledger.LocalAmountDebit
+
+                                                      }).Distinct().ToList();
+            List<LedgerTransactionList> creditLines = GetCreditLinesFromSelectedLines(transactions);
+
+            List<string> journalids = creditLines.Select(d => d.JournalId).ToList();
+            transactions = transactions.Where(d => !journalIds.Contains(d.JournalId)).ToList();
+            return transactions.Concat(creditLines).ToList();
+
         }
-        public IQueryable<LedgerTransaction> GetLedgerTransactionsOutputNotIncludedInTaxReports(int tenant, string accountId)
+        public List<LedgerTransactionList> GetLedgerTransactionsOutputNotIncludedInTaxReports(int tenant, string accountId)
         {
 
-            IQueryable<LedgerTransaction> outputLines = (from ledger in context.LedgerTransactions
-                                                         join journal in context.Journals on ledger.JournalId equals journal.Id 
-                                                         join additional in context.JournalAdditionalDatas on journal.Id equals additional.JournalId 
-                                                         join taxReport in context.TaxReports on additional.TaxReportId equals taxReport.Id
-                                                         into transactiosjoin                                                        
-                                                         from taxreport in transactiosjoin.DefaultIfEmpty()
-                                                         where ledger.AccountId == accountId && journal.AccountingEntityCode== AccountingEntities.ARInvoice
-                                                         && ledger.Tenant== tenant && (taxreport.StatusCode != VatReportStatuses.Transmitted || additional.TaxReportId == null)
-                                                         select ledger).Distinct();
-            return outputLines;
-        }
+            List<LedgerTransactionList> outputLines = (from ledger in context.LedgerTransactions
+                                                       join journal in context.Journals on ledger.JournalId equals journal.Id
+                                                       join additional in context.JournalAdditionalDatas on journal.Id equals additional.JournalId
+                                                       join taxReport in context.TaxReports on additional.TaxReportId equals taxReport.Id
+                                                       into transactiosjoin
+                                                       from taxreport in transactiosjoin.DefaultIfEmpty()
+                                                       where ledger.AccountId == accountId && journal.AccountingEntityCode == AccountingEntities.ARInvoice
+                                                       && ledger.Tenant == tenant && (taxreport.StatusCode != VatReportStatuses.Transmitted || additional.TaxReportId == null)
 
+                                                       select new LedgerTransactionList()
+                                                       {
+                                                           Id = ledger.Id,
+                                                           LocalAmountCredit = ledger.LocalAmountCredit,
+                                                           ForeignAmountDebit = ledger.ForeignAmountDebit,
+                                                           LocalAmountDebit = ledger.LocalAmountDebit,
+                                                           Tenant = ledger.Tenant,
+                                                           AccountingDate = ledger.AccountingDate,
+                                                           DocumentDate = ledger.DocumentDate,
+                                                           DueDate = ledger.DueDate,
+                                                           Reference1 = ledger.Reference1,
+                                                           Reference2 = ledger.Reference2,
+                                                           Reference3 = ledger.Reference3,
+                                                           AccountId = ledger.AccountId,
+                                                           OppositeAccountId = ledger.OppositeAccountId,
+                                                           JournalId = ledger.JournalId,
+                                                           Notes = ledger.Notes,
+                                                           JournalLineNumber = ledger.JournalLineNumber,
+                                                           SourceNumber = ledger.JournalLine.Journal.AccountingEntityReference, // display number
+                                                           SourceTypeCode = ledger.JournalLine.Journal.AccountingEntity.Code, // source type code from AccountingEntities
+                                                           SelectCheckBox = false,
+                                                           JournalNumber = ledger.JournalLine.Journal.JournalNumber,
+                                                           OpenAmount = ledger.OpenAmount,
+                                                           ReconcileMethodCode = ledger.Account.ReconcileMethodCode,
+                                                           OppositeAccountEnglishName = ledger.OppositeAccount != null ? ledger.OppositeAccount.EnglishName : null,
+                                                             OppositeAccountLocalName = ledger.OppositeAccount != null ? ledger.OppositeAccount.LocalName : null,
+                                                             OppositeAccountDisplayNumber = ledger.OppositeAccount != null ? ledger.OppositeAccount.DisplayNumber : null,
+                                                           OriginalAmount = 0,
+                                                           CalculatedForeignAmount = ledger.ForeignAmountCredit != 0 ? ledger.ForeignAmountCredit : ledger.ForeignAmountDebit,
+                                                           CalculatedLocalAmount = ledger.LocalAmountCredit != 0 ? ledger.LocalAmountCredit : ledger.LocalAmountDebit
+
+                                                       }).Distinct().ToList();
+          List<LedgerTransactionList> creditLines=  GetCreditLinesFromSelectedLines(outputLines);
+          
+            List<string> journalIds = creditLines.Select(d => d.JournalId).ToList();
+            outputLines = outputLines.Where(d => !journalIds.Contains(d.JournalId)).ToList();
+          return  outputLines.Concat(creditLines).ToList();
+        }
+        private List<LedgerTransactionList> GetCreditLinesFromSelectedLines(List<LedgerTransactionList> outputLines)
+        {
+           return (from ledger in outputLines
+                                                 join journalLine in context.JournalLines
+                                                  on new { p1 = ledger.JournalId, p2 = ledger.JournalLineNumber } equals new { p1 = journalLine.JournalId, p2 = journalLine.Line }
+                                                 where journalLine.ActionCode == CreditTypeJournalLine 
+                                                 group ledger by ledger.JournalId into gp
+                                                 select new LedgerTransactionList()
+                                                 {
+                                                     Id = gp.FirstOrDefault().Id,
+                                                     LocalAmountDebit = gp.FirstOrDefault().LocalAmountDebit,
+                                                     LocalAmountCredit = gp.Sum(d => d.LocalAmountCredit),
+                                                     ForeignAmountDebit = gp.Sum(d => d.ForeignAmountDebit),
+                                                     Tenant = gp.FirstOrDefault().Tenant,
+                                                     AccountingDate = gp.FirstOrDefault().AccountingDate,
+                                                     DocumentDate = gp.FirstOrDefault().DocumentDate,
+                                                     DueDate = gp.FirstOrDefault().DueDate,
+                                                     Reference1 = gp.FirstOrDefault().Reference1,
+                                                     Reference2 = gp.FirstOrDefault().Reference2,
+                                                     Reference3 = gp.FirstOrDefault().Reference3,
+                                                     AccountId = gp.FirstOrDefault().AccountId,
+                                                     OppositeAccountId = gp.FirstOrDefault().OppositeAccountId,
+                                                     JournalId = gp.FirstOrDefault().JournalId,
+                                                     Notes = gp.FirstOrDefault().Notes,
+                                                     JournalLineNumber = gp.FirstOrDefault().JournalLineNumber,
+                                                     SourceNumber = gp.FirstOrDefault().SourceNumber, // display number
+                                                     SourceTypeCode = gp.FirstOrDefault().SourceTypeCode, // source type code from AccountingEntities
+                                                     SelectCheckBox = false,
+                                                     JournalNumber = gp.FirstOrDefault().JournalNumber,
+                                                     OpenAmount = gp.FirstOrDefault().OpenAmount,
+                                                     ReconcileMethodCode = gp.FirstOrDefault().ReconcileMethodCode,
+                                                     OppositeAccountEnglishName = gp.FirstOrDefault().OppositeAccountEnglishName,
+                                                     OppositeAccountLocalName =gp.FirstOrDefault().OppositeAccountLocalName,
+                                                     OppositeAccountDisplayNumber =gp.FirstOrDefault().OppositeAccountDisplayNumber,
+                                                     OriginalAmount = 0,
+                                                     CalculatedForeignAmount =gp.FirstOrDefault().CalculatedForeignAmount,// ledger.ForeignAmountCredit != 0 ? ledger.ForeignAmountCredit : ledger.ForeignAmountDebit,
+                                                     CalculatedLocalAmount = gp.FirstOrDefault().CalculatedLocalAmount,// ledger.LocalAmountCredit != 0 ? ledger.LocalAmountCredit : ledger.LocalAmountDebit
+
+                                                 }).ToList();
+
+
+        }
         public IQueryable<LedgerTransaction> GetLedgerTransactionsInputsNotIncludedInTaxReports(int tenant, FullAccountingSettingList setting)
         {
            
@@ -1543,5 +1655,5 @@ on record.JournalId equals j.Id
     {
        public const string Transmitted ="T";
     }
-   
+    
 }

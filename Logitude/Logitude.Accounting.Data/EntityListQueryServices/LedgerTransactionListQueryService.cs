@@ -85,17 +85,18 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 
         public List<LedgerTransactionList> GetReportLinesLedgerTransactions(string taxreportId, int tenant, string accountId)
         {        
-            IQueryable<LedgerTransaction> transactions = null;
-            IQueryable<LedgerTransaction> outputTransactions = null;
-            IQueryable<LedgerTransaction> inputTransactions = null;
+            List<LedgerTransactionList> transactions = null;
+            List<LedgerTransactionList> outputTransactions = null;
+            List<LedgerTransactionList> inputTransactions = null;
             TaxReportList taxReport = GetTaxReport(taxreportId, tenant);          
-            FullAccountingSettingList accountingSettingList = GetFullAccountingSetting(tenant);
-         
+            FullAccountingSettingList accountingSettingList = GetFullAccountingSetting(tenant);         
             
             if (accountId == accountingSettingList.VATInputsGLAccountId)
             {
-                transactions= inputTransactions = GetInputTransactions(taxReport, tenant, accountingSettingList);
-               
+                IQueryable<LedgerTransaction> inputs = GetInputTransactions(taxReport, tenant, accountingSettingList);
+              transactions=  inputTransactions = GetIqueryableList(inputs).Distinct().ToList();
+
+
             }
             if (accountId == accountingSettingList.VATOutputGLAccountId)
             {
@@ -103,9 +104,9 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
             }
             if (accountingSettingList.VATOutputGLAccountId == accountingSettingList.VATInputsGLAccountId)
             {
-                transactions = inputTransactions.Concat(outputTransactions);
+                transactions = inputTransactions.Concat(outputTransactions).ToList();
             }
-            return GetIqueryableList(transactions).Distinct().ToList();          
+            return transactions;          
         }
 
         private FullAccountingSettingList GetFullAccountingSetting(int tenant)
@@ -113,9 +114,9 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
             FullAccountingSettingListQueryService fullAccountingSettingListQueryService = new FullAccountingSettingListQueryService(context);
             return  fullAccountingSettingListQueryService.GetSingle(tenant.ToString());
         }
-        private IQueryable<LedgerTransaction> GetOutputTransactions(TaxReportList taxReport, int tenant, FullAccountingSettingList accountingSettingList)
+        private List<LedgerTransactionList> GetOutputTransactions(TaxReportList taxReport, int tenant, FullAccountingSettingList accountingSettingList)
         {
-            IQueryable<LedgerTransaction> outputTransactions;
+            List<LedgerTransactionList> outputTransactions;
             LedgerTransactionRepository ledgerTransactionRepository = new LedgerTransactionRepository(tenant);
             if (taxReport != null)
             {
