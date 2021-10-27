@@ -454,7 +454,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                     if (updateDocumentStatuscodeService.ConnectedAfterSend_Need2UpdateDocumentStatuscode(declarationPM,_DocumentsFilingPM))
                     {
                         LogitudeSettings.HandleLogMe("ConnectedAfterSend_Need2UpdateDocumentStatuscode", false, "CreateUD2LTService", stopLogAt);
-                        updateDocumentStatuscodeService.UpdateDocumentStatuscode(declarationPM, stopLogAt);
+                        updateDocumentStatuscodeService.UpdateDocumentStatuscode(declarationPM, stopLogAt,true);
                     }
                     shouldCreateDCAComm = true;
                 }
