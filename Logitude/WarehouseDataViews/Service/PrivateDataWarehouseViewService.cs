@@ -25,6 +25,8 @@ namespace WarehouseDataViews.Service
             if (!privateViewArgs.IsParentTenant)
             {
                 List<WarehouseView> customFieldViewLists = GetCustomFieldViewsLists(privateViewArgs.Tenant, dataWarehouseViews);
+                customFieldViewLists = customFieldViewLists.GroupBy(d => d.ViewName).Select(d => d.First()).ToList();
+
                 dataWarehouseViews = dataWarehouseViews.Concat(customFieldViewLists).ToList();
             }
 

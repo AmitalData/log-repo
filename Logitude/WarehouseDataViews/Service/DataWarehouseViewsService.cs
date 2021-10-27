@@ -60,8 +60,8 @@ namespace WarehouseDataViews.Service
                             RecordType = recordType,
                             ViewName = viewName,
                             ObjectTableName = objectTableName,
-                            MaxNumberOfCustomFields = maxNumberOfCustomFields, //!string.IsNullOrEmpty(parentFactCode) ? factTables.AsEnumerable().Where(d => d.Field<string>("Code") == parentFactCode).Select(d => d.Field<int>("MaxNumberOfCustomFields")).FirstOrDefault() : maxNumberOfCustomFields,
-                            HasCustomFields = hasCustomFields, //!string.IsNullOrEmpty(parentFactCode) ? factTables.AsEnumerable().Where(d => d.Field<string>("Code") == parentFactCode).Select(d=>d.Field<bool>("HasCustomFields")).FirstOrDefault() : hasCustomFields,
+                            MaxNumberOfCustomFields =!string.IsNullOrEmpty(parentFactCode) ? factTables.AsEnumerable().Where(d => d.Field<string>("Code") == parentFactCode).Select(d => d.Field<int>("MaxNumberOfCustomFields")).FirstOrDefault() : maxNumberOfCustomFields,
+                            HasCustomFields = !string.IsNullOrEmpty(parentFactCode) ? factTables.AsEnumerable().Where(d => d.Field<string>("Code") == parentFactCode).Select(d=>d.Field<bool>("HasCustomFields")).FirstOrDefault() : hasCustomFields,
                             AdditionalConditions = additionalConditions,
                             ParentFactCode = parentFactCode,
                         };
