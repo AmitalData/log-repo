@@ -48,6 +48,18 @@ export class MultiUpdateComponent extends BaseComponent implements OnInit {
     private isInit = true;
 
 
+    public BusyIndicatorText: string = null;
+    public ShowBusyIndicator: boolean = false;
+    public StartBusyIndicator(myText: string) {
+        this.BusyIndicatorText = myText;
+        this.ShowBusyIndicator = true;
+    }
+
+    public StopBusyIndicator() {
+        this.BusyIndicatorText = null;
+        this.ShowBusyIndicator = false;
+    }
+
     public get IsAllRecordSelected() { return this.isAllRecordSelected };
     public set IsAllRecordSelected(value: boolean) {
         this.isAllRecordSelected = value;
