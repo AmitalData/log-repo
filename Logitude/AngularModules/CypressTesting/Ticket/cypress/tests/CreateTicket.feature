@@ -1,4 +1,4 @@
-@smoke @release @stable @all
+@smoke @smoke2 @release @stable @all
 Feature: Create Ticket Test
 
     Scenario: Create New Ticket
