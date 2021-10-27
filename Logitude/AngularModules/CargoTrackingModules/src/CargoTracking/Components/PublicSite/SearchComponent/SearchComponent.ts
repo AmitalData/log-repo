@@ -255,7 +255,6 @@ export class SearchComponent implements AfterViewInit,OnInit, OnDestroy
                 this.CaptchaTextValue = "";
                 this.CaptchaImageUrl = result.CaptchaImage;
                 this.CaptchaKey = result.CaptchaKey;
-                this.IsShowAreaCaptcha = true;
             });
     }
 
