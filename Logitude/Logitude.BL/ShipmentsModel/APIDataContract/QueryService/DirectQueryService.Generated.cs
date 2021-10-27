@@ -534,19 +534,10 @@ using Simplog.Data.ShipmentsModel;
 				   temp.HAWBDate = MyEntityPM.HAWBDate; 
 
 			  
-				   if(MyEntityPM.OnCarriageCarrierId != null)
-				   {
-					   CardQueryService CardService38 = new CardQueryService(Tenant);
-					   					   temp.OnCarriageCarrier = CardService38.GetCardById(MyEntityPM.OnCarriageCarrierId,Tenant,ComputingPartnerName); 
-			       
-					   				   }
-				    
-
-			  
 				   if(MyEntityPM.OnCarriageTransportModeId != null)
 				   {
-					   TransportModeQueryService TransportModeService39 = new TransportModeQueryService(Tenant);
-					   					   temp.OnCarriageTransportMode = TransportModeService39.GetTransportModeById(MyEntityPM.OnCarriageTransportModeId,Tenant,ComputingPartnerName); 
+					   TransportModeQueryService TransportModeService38 = new TransportModeQueryService(Tenant);
+					   					   temp.OnCarriageTransportMode = TransportModeService38.GetTransportModeById(MyEntityPM.OnCarriageTransportModeId,Tenant,ComputingPartnerName); 
 			       
 					   				   }
 				    
@@ -554,8 +545,8 @@ using Simplog.Data.ShipmentsModel;
 			  
 				   if(MyEntityPM.OnCarriageFromPortId != null)
 				   {
-					   PortQueryService PortService40 = new PortQueryService(Tenant);
-					   					   temp.OnCarriageFromPort = PortService40.GetPortById(MyEntityPM.OnCarriageFromPortId,Tenant,ComputingPartnerName); 
+					   PortQueryService PortService39 = new PortQueryService(Tenant);
+					   					   temp.OnCarriageFromPort = PortService39.GetPortById(MyEntityPM.OnCarriageFromPortId,Tenant,ComputingPartnerName); 
 			       
 					   				   }
 				    
@@ -563,8 +554,17 @@ using Simplog.Data.ShipmentsModel;
 			  
 				   if(MyEntityPM.OnCarriageToPortId != null)
 				   {
-					   PortQueryService PortService41 = new PortQueryService(Tenant);
-					   					   temp.OnCarriageToPort = PortService41.GetPortById(MyEntityPM.OnCarriageToPortId,Tenant,ComputingPartnerName); 
+					   PortQueryService PortService40 = new PortQueryService(Tenant);
+					   					   temp.OnCarriageToPort = PortService40.GetPortById(MyEntityPM.OnCarriageToPortId,Tenant,ComputingPartnerName); 
+			       
+					   				   }
+				    
+
+			  
+				   if(MyEntityPM.OnCarriageCarrierId != null)
+				   {
+					   CardQueryService CardService41 = new CardQueryService(Tenant);
+					   					   temp.OnCarriageCarrier = CardService41.GetCardById(MyEntityPM.OnCarriageCarrierId,Tenant,ComputingPartnerName); 
 			       
 					   				   }
 				   
@@ -575,20 +575,10 @@ using Simplog.Data.ShipmentsModel;
 				   temp.OnCarriageETA = MyEntityPM.OnCarriageETA; 
 
 			  
-				   if(MyEntityPM.PreCarriageCarrierId != null)
-				   {
-					   CardQueryService CardService42 = new CardQueryService(Tenant);
-					   					   temp.PreCarriageCarrier = CardService42.GetCardById(MyEntityPM.PreCarriageCarrierId,Tenant,ComputingPartnerName); 
-			       
-					   				   }
-				   
-				   temp.PreCarriageCarrierNumber = MyEntityPM.PreCarriageCarrierNumber; 
-
-			  
 				   if(MyEntityPM.PreCarriageTransportModeId != null)
 				   {
-					   TransportModeQueryService TransportModeService43 = new TransportModeQueryService(Tenant);
-					   					   temp.PreCarriageTransportMode = TransportModeService43.GetTransportModeById(MyEntityPM.PreCarriageTransportModeId,Tenant,ComputingPartnerName); 
+					   TransportModeQueryService TransportModeService42 = new TransportModeQueryService(Tenant);
+					   					   temp.PreCarriageTransportMode = TransportModeService42.GetTransportModeById(MyEntityPM.PreCarriageTransportModeId,Tenant,ComputingPartnerName); 
 			       
 					   				   }
 				    
@@ -596,8 +586,8 @@ using Simplog.Data.ShipmentsModel;
 			  
 				   if(MyEntityPM.PreCarriageFromPortId != null)
 				   {
-					   PortQueryService PortService44 = new PortQueryService(Tenant);
-					   					   temp.PreCarriageFromPort = PortService44.GetPortById(MyEntityPM.PreCarriageFromPortId,Tenant,ComputingPartnerName); 
+					   PortQueryService PortService43 = new PortQueryService(Tenant);
+					   					   temp.PreCarriageFromPort = PortService43.GetPortById(MyEntityPM.PreCarriageFromPortId,Tenant,ComputingPartnerName); 
 			       
 					   				   }
 				    
@@ -605,11 +595,21 @@ using Simplog.Data.ShipmentsModel;
 			  
 				   if(MyEntityPM.PreCarriageToPortId != null)
 				   {
-					   PortQueryService PortService45 = new PortQueryService(Tenant);
-					   					   temp.PreCarriageToPort = PortService45.GetPortById(MyEntityPM.PreCarriageToPortId,Tenant,ComputingPartnerName); 
+					   PortQueryService PortService44 = new PortQueryService(Tenant);
+					   					   temp.PreCarriageToPort = PortService44.GetPortById(MyEntityPM.PreCarriageToPortId,Tenant,ComputingPartnerName); 
+			       
+					   				   }
+				    
+
+			  
+				   if(MyEntityPM.PreCarriageCarrierId != null)
+				   {
+					   CardQueryService CardService45 = new CardQueryService(Tenant);
+					   					   temp.PreCarriageCarrier = CardService45.GetCardById(MyEntityPM.PreCarriageCarrierId,Tenant,ComputingPartnerName); 
 			       
 					   				   }
 				   
+				   temp.PreCarriageCarrierNumber = MyEntityPM.PreCarriageCarrierNumber;
 				   temp.PreCarriageATD = MyEntityPM.PreCarriageATD;
 				   temp.PreCarriageATA = MyEntityPM.PreCarriageATA;
 				   temp.PreCarriageETD = MyEntityPM.PreCarriageETD;
@@ -1829,24 +1829,6 @@ using Simplog.Data.ShipmentsModel;
 					 
 
 					
-					CardQueryService OnCarriageCarrierCardService = new CardQueryService(Tenant);
-					if(MyEntity.OnCarriageCarrier != null)
-					{
-						var myOnCarriageCarrierPM = OnCarriageCarrierCardService.CardDataMappingAndValidatin(MyEntity.OnCarriageCarrier,Tenant,ComputingPartnerName,IsUpdate);
-						
-						if(myOnCarriageCarrierPM != null)
-						{ 
-
-						 								//throw new ApplicationException("OnCarriageCarrier Can't be update"); 
-								temp.OnCarriageCarrierId = myOnCarriageCarrierPM.Id;
-						  
-
-							
-						} 
-
-					}
-			
-					
 					TransportModeQueryService OnCarriageTransportModeTransportModeService = new TransportModeQueryService(Tenant);
 					if(MyEntity.OnCarriageTransportMode != null)
 					{
@@ -1901,6 +1883,24 @@ using Simplog.Data.ShipmentsModel;
 					}
 			
 					
+					CardQueryService OnCarriageCarrierCardService = new CardQueryService(Tenant);
+					if(MyEntity.OnCarriageCarrier != null)
+					{
+						var myOnCarriageCarrierPM = OnCarriageCarrierCardService.CardDataMappingAndValidatin(MyEntity.OnCarriageCarrier,Tenant,ComputingPartnerName,IsUpdate);
+						
+						if(myOnCarriageCarrierPM != null)
+						{ 
+
+						 								//throw new ApplicationException("OnCarriageCarrier Can't be update"); 
+								temp.OnCarriageCarrierId = myOnCarriageCarrierPM.Id;
+						  
+
+							
+						} 
+
+					}
+			
+					
                     							//throw new ApplicationException("OnCarriageCarrierNumber Can't be update"); 
 							temp.OnCarriageCarrierNumber = MyEntity.OnCarriageCarrierNumber;
 
@@ -1927,30 +1927,6 @@ using Simplog.Data.ShipmentsModel;
 					
                     							//throw new ApplicationException("OnCarriageETA Can't be update"); 
 							temp.OnCarriageETA = MyEntity.OnCarriageETA;
-
-					 
-
-					
-					CardQueryService PreCarriageCarrierCardService = new CardQueryService(Tenant);
-					if(MyEntity.PreCarriageCarrier != null)
-					{
-						var myPreCarriageCarrierPM = PreCarriageCarrierCardService.CardDataMappingAndValidatin(MyEntity.PreCarriageCarrier,Tenant,ComputingPartnerName,IsUpdate);
-						
-						if(myPreCarriageCarrierPM != null)
-						{ 
-
-						 								//throw new ApplicationException("PreCarriageCarrier Can't be update"); 
-								temp.PreCarriageCarrierId = myPreCarriageCarrierPM.Id;
-						  
-
-							
-						} 
-
-					}
-			
-					
-                    							//throw new ApplicationException("PreCarriageCarrierNumber Can't be update"); 
-							temp.PreCarriageCarrierNumber = MyEntity.PreCarriageCarrierNumber;
 
 					 
 
@@ -2008,6 +1984,30 @@ using Simplog.Data.ShipmentsModel;
 
 					}
 			
+					
+					CardQueryService PreCarriageCarrierCardService = new CardQueryService(Tenant);
+					if(MyEntity.PreCarriageCarrier != null)
+					{
+						var myPreCarriageCarrierPM = PreCarriageCarrierCardService.CardDataMappingAndValidatin(MyEntity.PreCarriageCarrier,Tenant,ComputingPartnerName,IsUpdate);
+						
+						if(myPreCarriageCarrierPM != null)
+						{ 
+
+						 								//throw new ApplicationException("PreCarriageCarrier Can't be update"); 
+								temp.PreCarriageCarrierId = myPreCarriageCarrierPM.Id;
+						  
+
+							
+						} 
+
+					}
+			
+					
+                    							//throw new ApplicationException("PreCarriageCarrierNumber Can't be update"); 
+							temp.PreCarriageCarrierNumber = MyEntity.PreCarriageCarrierNumber;
+
+					 
+
 					
                     							//throw new ApplicationException("PreCarriageATD Can't be update"); 
 							temp.PreCarriageATD = MyEntity.PreCarriageATD;

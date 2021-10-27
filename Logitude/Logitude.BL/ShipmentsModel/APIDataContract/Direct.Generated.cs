@@ -220,13 +220,13 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
     
     public DateTime? HAWBDate { get; set; }
     
-    public Card OnCarriageCarrier { get; set; }
-    
     public TransportMode OnCarriageTransportMode { get; set; }
     
     public Port OnCarriageFromPort { get; set; }
     
     public Port OnCarriageToPort { get; set; }
+    
+    public Card OnCarriageCarrier { get; set; }
     
     public string OnCarriageCarrierNumber { get; set; }
     
@@ -238,15 +238,15 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
     
     public DateTime? OnCarriageETA { get; set; }
     
-    public Card PreCarriageCarrier { get; set; }
-    
-    public string PreCarriageCarrierNumber { get; set; }
-    
     public TransportMode PreCarriageTransportMode { get; set; }
     
     public Port PreCarriageFromPort { get; set; }
     
     public Port PreCarriageToPort { get; set; }
+    
+    public Card PreCarriageCarrier { get; set; }
+    
+    public string PreCarriageCarrierNumber { get; set; }
     
     public DateTime? PreCarriageATD { get; set; }
     

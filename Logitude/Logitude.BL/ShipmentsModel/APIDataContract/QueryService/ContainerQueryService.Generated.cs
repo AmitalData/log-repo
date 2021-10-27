@@ -152,18 +152,18 @@ using Simplog.Data.ShipmentsModel;
 										}  
 
 					
-                    							//throw new ApplicationException("Volume Can't be update"); 
+                    
+					if(!IsUpdate)// && item.Volume != null)
+					{							//throw new ApplicationException("Volume Can't be update"); 
 							temp.Volume = item.Volume;
 
-					 
+										}  
 
 					
-                    
-					if(!IsUpdate)// && item.GrossWeight != null)
-					{							//throw new ApplicationException("GrossWeight Can't be update"); 
+                    							//throw new ApplicationException("GrossWeight Can't be update"); 
 							temp.Weight = item.GrossWeight;
 
-										}  
+					 
 
 					
                     
@@ -198,28 +198,22 @@ using Simplog.Data.ShipmentsModel;
 										}  
 
 					
-                    
-					if(!IsUpdate)// && !string.IsNullOrEmpty(item.Reference1))
-					{							//throw new ApplicationException("Reference1 Can't be update"); 
+                    							//throw new ApplicationException("Reference1 Can't be update"); 
 							temp.Reference1 = item.Reference1;
 
-										}  
+					 
 
 					
-                    
-					if(!IsUpdate)// && !string.IsNullOrEmpty(item.Reference2))
-					{							//throw new ApplicationException("Reference2 Can't be update"); 
+                    							//throw new ApplicationException("Reference2 Can't be update"); 
 							temp.Reference2 = item.Reference2;
 
-										}  
+					 
 
 					
-                    
-					if(!IsUpdate)// && !string.IsNullOrEmpty(item.Reference3))
-					{							//throw new ApplicationException("Reference3 Can't be update"); 
+                    							//throw new ApplicationException("Reference3 Can't be update"); 
 							temp.Reference3 = item.Reference3;
 
-										}  
+					 
 
 					
                     
@@ -230,20 +224,16 @@ using Simplog.Data.ShipmentsModel;
 										}  
 
 					
-                    
-					if(!IsUpdate)// && item.Pieces != null)
-					{							//throw new ApplicationException("Pieces Can't be update"); 
+                    							//throw new ApplicationException("Pieces Can't be update"); 
 							temp.Quantity = item.Pieces;
 
-										}  
+					 
 
 					
-                    
-					if(!IsUpdate)// && !string.IsNullOrEmpty(item.Reference4))
-					{							//throw new ApplicationException("Reference4 Can't be update"); 
+                    							//throw new ApplicationException("Reference4 Can't be update"); 
 							temp.Reference4 = item.Reference4;
 
-										}  
+					 
 
 					 
 
