@@ -8,7 +8,7 @@
     </ng-template>
     <ng-template pTemplate="header" let-columns>
         <tr>
-            <th>id</th>
+            <!-- <th>id</th> -->
             <th *ngFor='let col of columns' [pSortableColumn]="col.name" pResizableColumn>
                 {{col.alias}}
                 <p-sortIcon [field]="col.name"></p-sortIcon>
@@ -17,7 +17,7 @@
     </ng-template>
     <ng-template pTemplate="body" let-row let-columns="columns" let-rowIndex='rowIndex'>
         <tr style='height:34px' (click)='onSelectedRow(row)'>
-            <td>{{rowIndex}}</td>
+            <!-- <td>{{rowIndex}}</td> -->
             <td *ngFor='let col of columns'>{{row[col.name]}}</td>
         </tr>
     </ng-template>

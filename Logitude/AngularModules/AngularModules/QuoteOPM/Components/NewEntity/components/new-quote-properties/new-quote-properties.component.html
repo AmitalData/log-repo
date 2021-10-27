@@ -2,19 +2,19 @@
   <div formArrayName="properties">
     <p-tabView (onClose)="removeProperty($event)">
       <p-tabPanel *ngFor='let x of properties.controls; let i = index' [closable]='properties.controls.length > 1'
-        [formGroupName]="i">
+        [selected]='i ==index' [formGroupName]="i">
         <ng-template pTemplate="header">
           <span
-            *ngIf='!(x.value.fromPort?.Code || x.value.toPort?.Code || x.value.mainCarriageCarrier?.AIRLINE_ID || x.value.specialService?.SERVLEVEL_ID)'>Quote
+            *ngIf='!(x.value.fromPort?.Code || x.value.toPort?.Code || x.value.mainCarriageCarrier?.AIRLINE_ID || x.value.incoterm?.PTERMID)'>Quote
             properties</span>
           <span *ngIf='x.value.fromPort?.Code'>{{x.value.fromPort?.Code}}</span>
           <img
-            *ngIf='x.value.fromPort?.Code || x.value.toPort?.Code || x.value.mainCarriageCarrier?.AIRLINE_ID || x.value.specialService?.SERVLEVEL_ID'
+            *ngIf='x.value.fromPort?.Code || x.value.toPort?.Code || x.value.mainCarriageCarrier?.AIRLINE_ID || x.value.incoterm?.PTERMID'
             [src]="'assets/icons/' + (formGroup.value.transportMode?.Id === 'I' ? 'inland' : formGroup.value.transportMode?.Id === 'O' ? 'ocean' : 'airplane') + '.png'"
             alt="type transport">
           <span *ngIf='x.value.toPort?.Code'>{{x.value.toPort?.Code}},</span>
           <span *ngIf='x.value.mainCarriageCarrier?.AIRLINE_ID'>{{x.value.mainCarriageCarrier?.AIRLINE_ID}},</span>
-          <span *ngIf='x.value.specialService?.SERVLEVEL_ID'>{{x.value.specialService?.SERVLEVEL_ID}}</span>
+          <span *ngIf='x.value.incoterm?.PTERMID'>{{x.value.incoterm?.PTERMID}}</span>
         </ng-template>
         <h3 class="sub-header">Quote Properties</h3>
         <div class="grid content-in-section">
@@ -38,11 +38,12 @@
 
             <div class="p-field">
               <div class="p-field accordion-container">
-                <h4>{{"QuoteOP.S.NewQuote.Pickup" | TextCodeTranslationPipe}}</h4>
+                <h4 class="text-style simple-text">{{"QuoteOP.S.NewQuote.Pickup" | TextCodeTranslationPipe}}</h4>
                 <!-- <i [class]="'pi pi-angle-' + (pickup.hidden ? 'down': 'right')" -->
                 <i class='pi pi-angle-down' (click)='pickup.hidden = !pickup.hidden'></i>
                 <div #pickup hidden class="accordion-contect">
-                  <app-new-quote-address  [type]="'pickup'" [propertyForm]='x' [qouteForm]='formGroup' [EntityPM]='EntityPM'></app-new-quote-address>                  
+                  <app-new-quote-address [type]="'pickup'" [propertyForm]='x' [qouteForm]='formGroup'
+                    [EntityPM]='EntityPM'></app-new-quote-address>
                 </div>
               </div>
             </div>
@@ -65,12 +66,13 @@
 
             <div class="p-field">
               <div class="p-field accordion-container">
-                <h4>{{"QuoteOP.S.NewQuote.Delivery" | TextCodeTranslationPipe}}</h4>
-                <i class='pi pi-angle-down'  (click)='delivery.hidden = !delivery.hidden'></i>
+                <h4 class="text-style simple-text">{{"QuoteOP.S.NewQuote.Delivery" | TextCodeTranslationPipe}}</h4>
+                <i class='pi pi-angle-down' (click)='delivery.hidden = !delivery.hidden'></i>
                 <!-- <i [class]="'pi pi-angle-' + (delivery.hidden ? 'down': 'right')"
                   (click)='delivery.hidden = !delivery.hidden'></i> -->
                 <div #delivery hidden class="accordion-contect">
-                  <app-new-quote-address  [type]="'delivery'" [propertyForm]='x' [qouteForm]='formGroup' [EntityPM]='EntityPM'></app-new-quote-address>
+                  <app-new-quote-address [type]="'delivery'" [propertyForm]='x' [qouteForm]='formGroup'
+                    [EntityPM]='EntityPM'></app-new-quote-address>
                 </div>
               </div>
             </div>
@@ -79,7 +81,8 @@
           <div class="col-4 p-fluid">
             <div class="p-field">
               <app-autocomplate-table [columnsShow]="{SERVLEVEL_ID:'Code', Name: 'Name'}" [data]='specialServiceList'
-                [fieldShow]='"Name"' [label]="'Special Services Type'" [controlName]='"specialService"' [formGroup]='x'>
+                [fieldShow]='"Name"' [label]="'Special Services Type'" [controlName]='"specialService"' [formGroup]='x'
+                [searchIcon]='true'>
               </app-autocomplate-table>
             </div>
           </div>

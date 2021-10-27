@@ -29,7 +29,7 @@ export class NewQuotePartnerComponent implements OnInit {
     partner: new FormControl(),
     contact: new FormControl(),
     notes: new FormControl(),
-    reference1: new FormControl('', Validators.required),
+    reference1: new FormControl(),
     reference2: new FormControl(),
   })
 
