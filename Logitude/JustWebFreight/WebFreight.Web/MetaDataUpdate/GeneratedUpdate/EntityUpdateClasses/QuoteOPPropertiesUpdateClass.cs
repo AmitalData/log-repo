@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class QuoteOPPropertiesUpdateClass
    {  		
-		public const string HashString = "662817e68b36668541d457affc4a5c9d";
+		public const string HashString = "7abdb4878722ff73b6d96571c421da8d";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -102,7 +102,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    HasHelper =  false,
 			      				    HasShortTitle =  false,
 			      				    HasFiltersMenu =  false,
-			      				    IsEditable =  false,
+			      				    IsEditable =  true,
 			      				    IsNewWizard =  false,
 			      				    LookUp1 =  "Id",
 			      				    LookUp2 =  "Id",
@@ -114,20 +114,20 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    HasCounter =  false,
 			      				    EnableAddFromLOV =  false,
 			      				    IsRestrictable =  false,
-			      				    IsMain =  true,
+			      				    IsMain =  false,
 			      				    IsAutoComplete =  false,
 			      				    EnableEditFromLOV =  false,
 			      				    SortingByObjectField =  "Id",
 			      				    InActive =  false,
 			      				    IsSaveButtonVisible =  false,
-			      				    IsComposition =  false,
+			      				    IsComposition =  true,
 			      				    EnableSecurity =  true,
 			      				    AllowCustomFields =  false,
 			      				    HasDynamicHeader =  false,
 			      				    ObjectTableTypeCode =  "BR",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Quote Properties",
-			      				    Code =  "bbab",
+			      				    Code =  "5f11",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "QuoteOPM",
@@ -269,7 +269,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "Order",
+					 						FieldName =  "IndexOrder",
 					  						ObjectTableName =  "QuoteOPProperties",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -287,8 +287,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "Order",
-					  						ListPropertyPath =  "Order",
+					  						PMPropertyPath =  "IndexOrder",
+					  						ListPropertyPath =  "IndexOrder",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
@@ -306,12 +306,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInDocumentReferences =  false,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "Order",
-					  						DefaultText =  "Order",
-					  						FullLocalDefaultText =  "Order",
-					  						ListFieldLable =  "OrderListLable",
-					  						ListLableDefaultText =  "Order",
-					  						ListLocalDefaultText =  "Order",
+					  						FullFieldLable =  "IndexOrder",
+					  						DefaultText =  "IndexOrder",
+					  						FullLocalDefaultText =  "IndexOrder",
+					  						ListFieldLable =  "IndexOrderListLable",
+					  						ListLableDefaultText =  "IndexOrder",
+					  						ListLocalDefaultText =  "IndexOrder",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -994,13 +994,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-		   ObjectTable QuoteOPPropertiesObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "QuoteOPProperties" && d.Tenant == 0).FirstOrDefault(); 
-
-		   Feature QuoteOPPropertiesFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = QuoteOPPropertiesObjectTable.Id, Tenant = 0, NameTextCodeCode = "QuoteOPProperties.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,QuoteOPPropertiesObjectTable);
-		   Feature QuoteOPPropertiesFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = QuoteOPPropertiesObjectTable.Id, Tenant = 0, NameTextCodeCode = "QuoteOPProperties.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,QuoteOPPropertiesObjectTable);
-		   Feature QuoteOPPropertiesFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = QuoteOPPropertiesObjectTable.Id, Tenant = 0, NameTextCodeCode = "QuoteOPProperties.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,QuoteOPPropertiesObjectTable);
-		   Feature QuoteOPPropertiesFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = false, ObjectTableId = QuoteOPPropertiesObjectTable.Id, Tenant = 0, NameTextCodeCode = "QuoteOPProperties.Features.PackageFeature", NameTextCodeDefaultText = "QuoteOPProperties Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,QuoteOPPropertiesObjectTable);    
+	    {     
 	    
 		}
 

@@ -18,7 +18,7 @@ export class AutocomplateTableComponent {
   @Input() fieldShow: string = '';
   @Input() controlName: string = '';
   @Input() data: any[] = []
-  @Input() searchIcon: boolean = true;
+  @Input() searchIcon: boolean = false;
   @Input() dropIcon: boolean= false;
   @ViewChild('autoComplete') autoComplete: AutoComplete = null as any;
    @Input() set columnsShow(columns: any[]) {

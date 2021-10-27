@@ -90,7 +90,11 @@ namespace Amital.QuoteOPM.BL.EntityDataMappings
 	         TariffNumber, 
 	         TariffVersion, 
 	         IsRegionalTax, 
-	         TariffLineId,
+	         TariffLineId, 
+	         TariffCostNo, 
+	         TariffSaleNo, 
+	         TariffCostXML, 
+	         TariffSaleXML,
 	      }
 
 
@@ -202,7 +206,11 @@ namespace Amital.QuoteOPM.BL.EntityDataMappings
 	         IsRegionalTax, 
 	         CostRatio, 
 	         SaleRatio, 
-	         TariffLineId,
+	         TariffLineId, 
+	         TariffCostNo, 
+	         TariffSaleNo, 
+	         TariffCostXML, 
+	         TariffSaleXML,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -549,6 +557,26 @@ namespace Amital.QuoteOPM.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TariffLineId))
             {
 				entityPOCO.TariffLineId = entityPM.TariffLineId;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TariffCostNo))
+            {
+				entityPOCO.TariffCostNo = entityPM.TariffCostNo;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TariffSaleNo))
+            {
+				entityPOCO.TariffSaleNo = entityPM.TariffSaleNo;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TariffCostXML))
+            {
+				entityPOCO.TariffCostXML = entityPM.TariffCostXML;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TariffSaleXML))
+            {
+				entityPOCO.TariffSaleXML = entityPM.TariffSaleXML;
 			}
 			}
 
@@ -900,6 +928,26 @@ namespace Amital.QuoteOPM.BL.EntityDataMappings
 					entityPM.TariffLineId = entityPOCO.TariffLineId;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.TariffCostNo))
+            {
+					entityPM.TariffCostNo = entityPOCO.TariffCostNo;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.TariffSaleNo))
+            {
+					entityPM.TariffSaleNo = entityPOCO.TariffSaleNo;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.TariffCostXML))
+            {
+					entityPM.TariffCostXML = entityPOCO.TariffCostXML;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.TariffSaleXML))
+            {
+					entityPM.TariffSaleXML = entityPOCO.TariffSaleXML;
+            }
+
 		}
 
 		public void PMToOldPM(QuoteOPChargePM entityPM, QuoteOPChargePM oldEntityPM)
@@ -1246,6 +1294,26 @@ namespace Amital.QuoteOPM.BL.EntityDataMappings
                 oldEntityPM.TariffLineId = entityPM.TariffLineId;
             }
 			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TariffCostNo))
+            {
+                oldEntityPM.TariffCostNo = entityPM.TariffCostNo;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TariffSaleNo))
+            {
+                oldEntityPM.TariffSaleNo = entityPM.TariffSaleNo;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TariffCostXML))
+            {
+                oldEntityPM.TariffCostXML = entityPM.TariffCostXML;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TariffSaleXML))
+            {
+                oldEntityPM.TariffSaleXML = entityPM.TariffSaleXML;
+            }
+			
 		}
 
 	    public void EncodeBase64NVARCHARFields(QuoteOPChargePM entityPM)
@@ -1258,6 +1326,14 @@ namespace Amital.QuoteOPM.BL.EntityDataMappings
             if (!String.IsNullOrWhiteSpace(entityPM.Notes)) //T4 find type == nText 
             {
                 entityPM.Notes = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.Notes));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.TariffCostXML)) //T4 find type == nText 
+            {
+                entityPM.TariffCostXML = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.TariffCostXML));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.TariffSaleXML)) //T4 find type == nText 
+            {
+                entityPM.TariffSaleXML = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.TariffSaleXML));
             }
             entityPM.EncodeBase64NVARCHARFieldsBy=null;
 		}

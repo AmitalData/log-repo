@@ -188,9 +188,8 @@ export class ChargesTypeGeneralTabComponent extends BaseComponent implements OnI
                 myService.getSingleFromCache(this.EntityPM.ChargesGroupId).subscribe((myResponse: ServiceResponse) => {
                     if (!myResponse.HasError && myResponse.Result) {
                         this.ChargesGroupCode = myResponse.Result.Code;
-                        if (myResponse.Result.QuoteGroupSectionID != null) {
-                            this.QuoteGroupSectionID = myResponse.Result.QuoteGroupSectionID;
-                        }
+                        this.QuoteGroupSectionID = myResponse.Result.QuoteGroupSectionID;
+                        
                     } 
                 });
             }

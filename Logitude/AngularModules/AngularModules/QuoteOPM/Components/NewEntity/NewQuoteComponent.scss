@@ -66,6 +66,26 @@
     .ng-submitted .ng-invalid {
         border-color: #f44336;
     }
+
+    span.p-button-icon.pi.pi-calendar:before {
+        display: none;
+    }
+
+    span.p-button-icon.pi.pi-calendar {
+        width: 15px;
+        height: 100%;
+        background-image: url(assets/icons/calendar.svg);
+        background-size:100% 100%;
+        -o-background-size: 100% 100%;
+        -webkit-background-size: 100% 100%;
+        background-size:cover;
+    }
+
+    .ng-submitted p-autocomplete.ng-invalid input,
+    .ng-submitted p-autocomplete.ng-invalid .p-autocomplete-dropdown,
+    .ng-submitted .ng-invalid {
+        border-color: #f44336;
+    }
 }
 
 :host {

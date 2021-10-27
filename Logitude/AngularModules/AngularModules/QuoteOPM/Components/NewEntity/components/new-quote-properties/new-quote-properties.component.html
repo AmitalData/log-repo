@@ -22,17 +22,17 @@
           <div class="col-4 p-fluid">
             <div class="p-field">
               <app-autocomplate-table [columnsShow]="{Code:'Code', Name: 'Name',CountryName:'CountryName'}"
-                [data]='toPortList' [fieldShow]='"Name"'
+                [data]='toPortList' [fieldShow]='"Name"' [searchIcon]='true'
                 [label]="'QuoteOP.S.NewQuote.' + (formGroup.value.transportMode?.Id === 'A' ? 'Gateway': 'LoadingPort') | TextCodeTranslationPipe"
-                [controlName]='"fromPort"' [formGroup]='x' (onSelect)='onSelectedFromPort($event)'>
+                [controlName]='"fromPort"' [formGroup]='x'>
               </app-autocomplate-table>
             </div>
 
             <div class="p-field">
               <app-autocomplate-table [columnsShow]="{Code:'Code', Name: 'Name',CountryName:'CountryName'}"
-                [data]='fromPortList' [fieldShow]='"Name"'
+                [data]='fromPortList' [fieldShow]='"Name"' [searchIcon]='true'
                 [label]="'QuoteOP.S.NewQuote.' + (formGroup.value.transportMode?.Id === 'A' ? 'Destination': 'DischargePort') | TextCodeTranslationPipe"
-                [controlName]='"toPort"' [formGroup]='x' (onSelect)='onSelectedtoPort($event)'>
+                [controlName]='"toPort"' [formGroup]='x'>
               </app-autocomplate-table>
             </div>
 
@@ -42,7 +42,7 @@
                 <!-- <i [class]="'pi pi-angle-' + (pickup.hidden ? 'down': 'right')" -->
                 <i class='pi pi-angle-down' (click)='pickup.hidden = !pickup.hidden'></i>
                 <div #pickup hidden class="accordion-contect">
-                  <app-new-quote-pickup [propertyForm]='x' [qouteForm]='formGroup' [EntityPM]='EntityPM'></app-new-quote-pickup>
+                  <app-new-quote-address  [type]="'pickup'" [propertyForm]='x' [qouteForm]='formGroup' [EntityPM]='EntityPM'></app-new-quote-address>                  
                 </div>
               </div>
             </div>
@@ -51,16 +51,15 @@
           <div class="col-4 p-fluid">
             <div class="p-field">
               <app-autocomplate-table [columnsShow]="carrierColumns" [data]='mainCarriageCarrierList'
-                [fieldShow]='"Name"'
+                [fieldShow]='"Name"' [searchIcon]='true'
                 [label]="'QuoteOP.S.NewQuote.' + (formGroup.value.transportMode?.Id === 'A' ? 'Airline': 'Shippingline') | TextCodeTranslationPipe"
-                [controlName]='"mainCarriageCarrier"' [formGroup]='x' (onSelect)='onMainCarriageCarrier($event)'>
+                [controlName]='"mainCarriageCarrier"' [formGroup]='x'>
               </app-autocomplate-table>
             </div>
 
             <div class="p-field">
               <app-autocomplate-table [columnsShow]="{PTERMID:'Code', Name: 'Name'}" [data]='incotermList'
-                [fieldShow]='"Name"' [label]="'Incoterm'" [controlName]='"incoterm"' [formGroup]='x'
-                (onSelect)='onSelectedIncoterm($event)'>
+                [fieldShow]='"Name"' [label]="'Incoterm'" [controlName]='"incoterm"' [formGroup]='x' [dropIcon]='true'>
               </app-autocomplate-table>
             </div>
 
@@ -71,7 +70,7 @@
                 <!-- <i [class]="'pi pi-angle-' + (delivery.hidden ? 'down': 'right')"
                   (click)='delivery.hidden = !delivery.hidden'></i> -->
                 <div #delivery hidden class="accordion-contect">
-                  <app-new-quote-delivery [propertyForm]='x' [qouteForm]='formGroup' [EntityPM]='EntityPM'></app-new-quote-delivery>
+                  <app-new-quote-address  [type]="'delivery'" [propertyForm]='x' [qouteForm]='formGroup' [EntityPM]='EntityPM'></app-new-quote-address>
                 </div>
               </div>
             </div>
@@ -80,8 +79,7 @@
           <div class="col-4 p-fluid">
             <div class="p-field">
               <app-autocomplate-table [columnsShow]="{SERVLEVEL_ID:'Code', Name: 'Name'}" [data]='specialServiceList'
-                [fieldShow]='"Name"' [label]="'Special Services Type'" [controlName]='"specialService"' [formGroup]='x'
-                (onSelect)='onSelectedSpecialService($event)'>
+                [fieldShow]='"Name"' [label]="'Special Services Type'" [controlName]='"specialService"' [formGroup]='x'>
               </app-autocomplate-table>
             </div>
           </div>

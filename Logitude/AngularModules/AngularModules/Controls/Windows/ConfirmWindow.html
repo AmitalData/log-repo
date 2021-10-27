@@ -12,6 +12,7 @@
         background: -webkit-linear-gradient(rgba(21, 61, 110, 0.7) 0%, rgba(21, 61, 110, 0.2) 50%, rgba(21, 61, 110, 0.7) 100%);
         background: linear-gradient(rgba(21, 61, 110, 0.7) 0%, rgba(21, 61, 110, 0.2) 50%, rgba(21, 61, 110, 0.7) 100%);
         pointer-events: none;
+        z-index: 2;
     }
 
     .ConfirmWindow {
@@ -67,6 +68,10 @@
         background: -webkit-gradient(linear,50% 0%,50% 100%,color-stop(0,rgba(108, 132, 153, 1) ),color-stop(0.1827,rgba(112, 136, 156, 1) ),color-stop(0.3799,rgba(125, 147, 166, 1) ),color-stop(0.5838,rgba(147, 166, 182, 1) ),color-stop(0.7919,rgba(177, 192, 205, 1) ),color-stop(1,rgba(215, 225, 234, 1) ));
         background: -o-linear-gradient(-90deg, rgba(108, 132, 153, 1) 0%, rgba(112, 136, 156, 1) 18.27%, rgba(125, 147, 166, 1) 37.99%, rgba(147, 166, 182, 1) 58.38%, rgba(177, 192, 205, 1) 79.19%, rgba(215, 225, 234, 1) 100%);
         background: linear-gradient(180deg, rgba(108, 132, 153, 1) 0%, rgba(112, 136, 156, 1) 18.27%, rgba(125, 147, 166, 1) 37.99%, rgba(147, 166, 182, 1) 58.38%, rgba(177, 192, 205, 1) 79.19%, rgba(215, 225, 234, 1) 100%);
+    }
+
+    .MediaFillAbsolute {
+        z-index: 2;
     }
 </style>
 <LogitudeHotKeysComponent  (CTRL_S_HotKey)="OnCTRL_S_HotKeyPressed()"  (ESCHotKey)="OnEscHotKeyPressed()"></LogitudeHotKeysComponent>

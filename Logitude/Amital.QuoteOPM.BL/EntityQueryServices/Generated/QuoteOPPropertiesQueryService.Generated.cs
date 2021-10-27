@@ -17,7 +17,7 @@ using Amital.QuoteOPM.Data;
 using Simplog.Server.Infrastructure;
 namespace Amital.QuoteOPM.BL.EntityQueryServices
 { 
-   public partial class QuoteOPPropertiesQueryService: EntityQueryService<QuoteOPProperties,QuoteOPPropertiesKeys,QuoteOPPropertiesPM,object,QuoteOPPropertiesKeys>
+   public partial class QuoteOPPropertiesQueryService: EntityQueryService<QuoteOPProperties,QuoteOPPropertiesKeys,QuoteOPPropertiesPM,QuoteOPPM,QuoteOPKeys>
    {
    
         QuoteOPPropertiesRepository repository;

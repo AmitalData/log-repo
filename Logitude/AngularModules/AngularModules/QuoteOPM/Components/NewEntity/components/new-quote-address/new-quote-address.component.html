@@ -1,0 +1,46 @@
+<div [formGroup]='addressForm'>
+    <p-checkbox formControlName='include' [binary]="true"
+        [label]='"QuoteOP.O.NewQuote.Include" + capitalizeType | TextCodeTranslationPipe'></p-checkbox>        
+    <div [hidden]='!addressForm.controls.include.value'>
+        <div [hidden]='AddressList.length' class='container'>
+            <h5 class="text-style">{{"QuoteOP.S.NewQuote." + capitalizeType + "Address" | TextCodeTranslationPipe}}</h5>
+            <div class="p-fluid">
+                <div class="p-field">
+                    <label [for]="type + 'ZipCode'">{{"QuoteOP.S.NewQuote.ZipCode" | TextCodeTranslationPipe}}</label>
+                    <p-inputNumber formControlName='zipCode' [id]="type + 'ZipCode'" mode="decimal"
+                        [useGrouping]="false">
+                    </p-inputNumber>
+                </div>
+
+                <div class="p-field">
+                    <!-- <app-autocomplate-table [columnsShow]="['Name', 'LocalName', 'Country', 'State']" [data]='cityList'
+                    [fieldShow]='"Name"' [label]='"QuoteOP.S.NewQuote.City" | TextCodeTranslationPipe'
+                    [controlName]='"pickupCity"' [formGroup]='propertyForm' (onSelect)='onSelectedCity($event)'>
+                </app-autocomplate-table> -->
+                    <label [for]="type + 'City'">{{"QuoteOP.S.NewQuote.City" | TextCodeTranslationPipe}}</label>
+                    <input formControlName='city' [id]="type + 'City'" pInputText />
+                </div>
+
+                <div class="p-field">
+                    <app-autocomplate-table [columnsShow]="{Code:'Code',EnglishName:'Name'}" [data]='countryList'
+                        [fieldShow]='"EnglishName"' [label]='"QuoteOP.S.NewQuote.Country" | TextCodeTranslationPipe'
+                        [controlName]='"country"' [formGroup]='addressForm' [searchIcon]='true'>
+                    </app-autocomplate-table>
+                </div>
+            </div>
+        </div>
+
+        <div [hidden]='!AddressList.length'>
+            <div class="p-field">
+                <app-autocomplate-table [columnsShow]="['Description', 'Name', 'Address1']" [data]='AddressList'
+                    [fieldShow]='"Description"' [label]="'QuoteOP.S.NewQuote.Name' | TextCodeTranslationPipe"
+                    [controlName]='"address"' [formGroup]='addressForm' [dropIcon]='true' class="address-input">
+                </app-autocomplate-table>
+                <i class="pi pi-pencil" (click)='editAddress()' [ngClass]='{"disabled":!Address}'></i>
+                <i class="pi pi-plus" (click)='addAddress()'></i>
+            </div>
+
+            <app-address-textarea [Address]='Address'></app-address-textarea>
+        </div>
+    </div>
+</div>

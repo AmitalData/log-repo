@@ -12,7 +12,7 @@ namespace Logitude.CustomsMessaging.Dca
     public class DedicatedCourierDCAService
     {
 
-        public  DedicatedCourierDCAModel CreateDedicatedCourierDCA()
+        public DedicatedCourierDCAModel CreateDedicatedCourierDCA()
         {
             if (!string.IsNullOrWhiteSpace(ConfigurationManager.AppSettings.Get("DedicatedCourierDCA:Tenant")))//Task 147744: AMITALCUSTOMSSERVER העברת הטיפול בכספת בבלדרות לתהליך
             {
@@ -37,7 +37,7 @@ namespace Logitude.CustomsMessaging.Dca
                 {
                     throw new Exception($"DedicatedCourierDCA:BackupPath please create backupPath !!!  {backupPath} ");
                 }
-                bool UseTPL = !string.IsNullOrWhiteSpace( ConfigurationManager.AppSettings.Get("DedicatedCourierDCA:UseTPL"));
+                bool UseTPL = !string.IsNullOrWhiteSpace(ConfigurationManager.AppSettings.Get("DedicatedCourierDCA:UseTPL"));
                 Logger.LogMe($"DedicatedCourierDCA:UseTPL={UseTPL}", false);
 
                 return new DedicatedCourierDCAModel()

@@ -33,7 +33,8 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="Order"
+    Name="IndexOrder"
+    OldNames="Order"
     Type="int">
     <Constraints
       Nullable="false" />

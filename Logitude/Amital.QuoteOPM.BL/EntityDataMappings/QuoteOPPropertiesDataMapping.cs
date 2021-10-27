@@ -19,7 +19,18 @@ namespace Amital.QuoteOPM.BL.EntityDataMappings
 
         public void CustomPMToPOCO(QuoteOPPropertiesPM entityPM, QuoteOPProperties entityPOCO)
         {
-            //throw new NotImplementedException();
+            this.CustomMappedPOCOProperties.Add(POCOPropertyNames.Tenant);
+
+            this.CustomMappedPOCOProperties.Add(POCOPropertyNames.QuoteID);
+
+            this.CustomMappedPOCOProperties.Add(POCOPropertyNames.Id);
+
+            if (entityPM.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Insert)
+            {
+                entityPOCO.Tenant = entityPM.Tenant;
+                entityPOCO.QuoteID = entityPM.QuoteID;
+                entityPOCO.Id = entityPM.Id;
+            }
         }
 
         public void CustomPOCOToPM(QuoteOPPropertiesPM entityPM, QuoteOPProperties entityPOCO)

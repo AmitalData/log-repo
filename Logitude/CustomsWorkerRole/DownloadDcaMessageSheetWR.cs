@@ -31,7 +31,7 @@ namespace CustomsWorkerRole
 
 
         private readonly int _SeedDefaultTenant;
-        private readonly DedicatedCourierDCAModel _DedicatedCourierDCAModel=null;
+        private readonly DedicatedCourierDCAModel _DedicatedCourierDCAModel = null;
         private bool _OnStartDone;
         private List<Logitude.Customs.Def.EntityPMs.CustomsSettingPM> _AllCustomsSetting;
 
@@ -41,10 +41,10 @@ namespace CustomsWorkerRole
             _SeedDefaultTenant = 1;
             _SeedDefaultTenant = 0;
             var dedicatedCourierDCAService = new DedicatedCourierDCAService();
-            
+
             this._DedicatedCourierDCAModel = dedicatedCourierDCAService.CreateDedicatedCourierDCA();
         }
-        
+
         public override void Run()
         {
 
@@ -157,11 +157,11 @@ namespace CustomsWorkerRole
             {
                 costomSettingDCAList = costomSettingDCAList.Where(rec => rec.Tenant == debugTenant.GetValueOrDefault());
             }
-            if (_DedicatedCourierDCAModel!=null)
+            if (_DedicatedCourierDCAModel != null)
             {
                 costomSettingDCAList = _AllCustomsSetting
                     //.Where(env => env.CompanyType == "B")
-                    .Where(env=>env.Tenant== _DedicatedCourierDCAModel.Tenant);//Courier
+                    .Where(env => env.Tenant == _DedicatedCourierDCAModel.Tenant);//Courier
                 if (!costomSettingDCAList.Any())
                 {
                     Logger.LogMe("_DedicatedCourierDCAModel.Tenant is not valid!!!! must env.CompanyType == B and in customssetting !!", true);
@@ -208,5 +208,5 @@ namespace CustomsWorkerRole
             }
         }
     }
-    
+
 }

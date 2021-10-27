@@ -1,6 +1,6 @@
 <p-toast position="top-left"></p-toast>
 
-<form (submit)='create()'>
+<form (submit)='create()' [ngClass]='{"ng-submitted":isSubmit}'>
     <div class="section root-header">
         <h2 class="root-header-text">Create New Quote</h2>
     </div>
@@ -10,20 +10,17 @@
             <app-new-quote-left-side [formGroup]='formGroup' [EntityPM]='EntityPM'></app-new-quote-left-side>
         </div>
 
-
         <div class="col-10 right-side"
             [ngClass]="{'disabled':!formGroup.controls.direction?.value || !formGroup.controls.transportMode?.value ||  
     (formGroup.controls.transportMode?.value?.Name === 'Ocean' || formGroup.controls.transportMode?.value?.Name === 'Inland') &&  !formGroup.controls.shipmentType?.value}">
             <div class="section">
-                <app-new-quote-shipper [formGroup]='formGroup' [EntityPM]='EntityPM'></app-new-quote-shipper>
+                <app-new-quote-partner [type]='"shipper"' [formGroup]='formGroup' [EntityPM]='EntityPM'></app-new-quote-partner>
                 <hr>
-                <app-new-quote-consignee [formGroup]='formGroup' [EntityPM]='EntityPM'></app-new-quote-consignee>
+                <app-new-quote-partner [type]='"consignee"' [formGroup]='formGroup' [EntityPM]='EntityPM'></app-new-quote-partner>
                 <!-- <app-new-quote-my-customers [formGroup]='formGroup'></app-new-quote-my-customers> -->
             </div>
 
-            
             <app-new-quote-properties [formGroup]='formGroup' [EntityPM]='EntityPM'></app-new-quote-properties>
-            
 
             <div class="section">
                 <app-new-quote-general [formGroup]='formGroup' [EntityPM]='EntityPM'></app-new-quote-general>

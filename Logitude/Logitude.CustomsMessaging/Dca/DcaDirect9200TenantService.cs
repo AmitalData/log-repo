@@ -38,14 +38,14 @@ namespace Logitude.CustomsMessaging.Dca
         private bool _SaveError;
 
         public DcaDirect9200TenantService(
-            CustomsSettingPM costomSetting, List<string> allDcaPreFixWithoutInOutUpper, List<InterfaceTenantDefinitionManagementPM> interfaceListDCA, 
+            CustomsSettingPM costomSetting, List<string> allDcaPreFixWithoutInOutUpper, List<InterfaceTenantDefinitionManagementPM> interfaceListDCA,
             List<InterfaceTenantDefinitionManagementPM> allInterface, DedicatedCourierDCAModel dedicatedCourierDCAModel)
         {
             this._CustomsSettingPM = costomSetting;
             this._AllDcaPreFixWithoutInOutUpper = allDcaPreFixWithoutInOutUpper;
             this._InterfaceListDCA = interfaceListDCA;
             this._AllInterface = allInterface;
-            this._DedicatedCourierDCAModel =dedicatedCourierDCAModel;
+            this._DedicatedCourierDCAModel = dedicatedCourierDCAModel;
         }
 
         public Action SetLastActivity { get; set; }
@@ -57,7 +57,7 @@ namespace Logitude.CustomsMessaging.Dca
         {
 
             _SBInfoLog = new StringBuilder($"Tenant:{_CustomsSettingPM.Tenant} Start At {DateTime.Now}");
-            _SBErrorLog= new StringBuilder($"Tenant:{_CustomsSettingPM.Tenant} Start At {DateTime.Now}");
+            _SBErrorLog = new StringBuilder($"Tenant:{_CustomsSettingPM.Tenant} Start At {DateTime.Now}");
             sw = Stopwatch.StartNew();
             try
             {
@@ -174,21 +174,21 @@ namespace Logitude.CustomsMessaging.Dca
                 {
                     Parallel.ForEach(
                         response.OutgoingMessage.ToList(),
-                        new ParallelOptions {  MaxDegreeOfParallelism= 4 },//cpu
+                        new ParallelOptions { MaxDegreeOfParallelism = 4 },//cpu
                         itemOutgoingMessage => {
                             TPL_SaveInDB(correlationIdsCanClear, sbFilenameQueue, itemOutgoingMessage, exceptionBag);
                         }
                         );
 
                 }
-                exceptionBag.ToList().ForEach(err=> _SBErrorLog.AppendLine(err));
+                exceptionBag.ToList().ForEach(err => _SBErrorLog.AppendLine(err));
 
                 if (correlationIdsCanClear != null && correlationIdsCanClear.Count() > 0)
                 {
                     UpdateIIGCorralationAreDone(correlationIdsCanClear.ToList());
 
 
-                    
+
                     var l = sbFilenameQueue.ToList();
                     var sb1 = new StringBuilder();
                     l.ForEach(line => { sb1.AppendLine(line); });
@@ -221,7 +221,7 @@ namespace Logitude.CustomsMessaging.Dca
                     PeekWay = new NG_9100_MSG_OutgoingMessageRequestPeekWay()
                     {
                         Peek_Way = 2,
-                        Take = _CustomsSettingPM.QtyFeedbackInPendingMessage??20,
+                        Take = _CustomsSettingPM.QtyFeedbackInPendingMessage ?? 20,
                     },
                     GetOptions = null,
 
@@ -233,7 +233,7 @@ namespace Logitude.CustomsMessaging.Dca
 
                     }
                 };
-                
+
                 var myIIGGatewayMoreParams = new UnifreightIIG.Common.TheGateway.MoreParams() { MyOption = UnifreightIIG.Common.TheGateway.MoreParams.Options.None };
 
                 using (var uifreightSdkGateway = new UnifreightSdkGateway(_CustomsSettingPM.IIGServiceAddress))
@@ -261,21 +261,21 @@ namespace Logitude.CustomsMessaging.Dca
 
                 }
 
-                
+
 
                 if (correlationIdsCanClear != null && correlationIdsCanClear.Count() > 0)
                 {
                     UpdateIIGCorralationAreDone(correlationIdsCanClear);
 
-                    
+
 
                     Logger.LogMe(sbFilename.ToString(), false, "TenantDownloaderFilename");
                     string haveMore = response.Result.HowManyOtherWaitingMessages > 0 ? "Have more .." : "";
                     _SBInfoLog.AppendLine("All messages received  " + haveMore);
-                    
+
                 }
 
-               
+
             }
             catch (System.Exception ex)
             {
@@ -325,13 +325,13 @@ namespace Logitude.CustomsMessaging.Dca
                 _SaveError = true;
                 this._SBErrorLog.AppendLine("Error while UpdateIIGCorralationAreDone" + ee.ToString());
             }
-            
 
-            
+
+
         }
-        private  void TPL_SaveInDB(
-            ConcurrentBag<NG_9200_OutgoingMessageDeliveryApprovalListOfCorrelationIDs> correlationIDs, 
-            ConcurrentQueue<string> sbFilename, NG_9101_MSG_OutgoingMessageResponseOutgoingMessage itemOutgoingMessage, 
+        private void TPL_SaveInDB(
+            ConcurrentBag<NG_9200_OutgoingMessageDeliveryApprovalListOfCorrelationIDs> correlationIDs,
+            ConcurrentQueue<string> sbFilename, NG_9101_MSG_OutgoingMessageResponseOutgoingMessage itemOutgoingMessage,
             ConcurrentBag<string> exceptionBag)
         {
             try
@@ -411,11 +411,11 @@ IsStart(rec.InterfaceManagement.DcaPrefixName3, myFileName) ||
 IsStart(rec.InterfaceManagement.DcaPrefixName4, myFileName)
 );
 
-                if (messageDCA!=null && _AllDcaPreFixWithoutInOutUpper.Any(prefix=> myFileName.StartsWith(prefix, StringComparison.OrdinalIgnoreCase)))
+                if (messageDCA != null && _AllDcaPreFixWithoutInOutUpper.Any(prefix => myFileName.StartsWith(prefix, StringComparison.OrdinalIgnoreCase)))
                 {
                     try
                     {
-                        
+
 
                         SaveRequestSheet(messageDCA, dcaFile, itemOutgoingMessage.MSG);
 
@@ -434,12 +434,12 @@ IsStart(rec.InterfaceManagement.DcaPrefixName4, myFileName)
                 }
                 else
                 {
-                    
+
                     sbFilename.AppendLine($"NOT NEEDED!!!! {myFileName}");
                     Debug.WriteLine($"NOT NEEDED!!!! needed in our tenant =SaveInDB({myFileName})");
                     if (_DedicatedCourierDCAModel != null)
                     {
-                        string fileBackupPath=null;
+                        string fileBackupPath = null;
                         try
                         {
                             fileBackupPath = Path.Combine(_DedicatedCourierDCAModel.BackupPath, myFileName);
@@ -454,7 +454,7 @@ IsStart(rec.InterfaceManagement.DcaPrefixName4, myFileName)
                     NumOfMessages++;
                     correlationIDs.Add(new NG_9200_OutgoingMessageDeliveryApprovalListOfCorrelationIDs { CorrelationIDs = itemOutgoingMessage.CorrelationId });
                 }
-                
+
             }
             catch (System.Exception e)
             {

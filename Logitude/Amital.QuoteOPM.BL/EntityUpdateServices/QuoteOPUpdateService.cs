@@ -189,6 +189,9 @@ namespace Amital.QuoteOPM.BL.EntityUpdateServices
             var quoteOPPackageUpdateService = new QuoteOPPackageUpdateService(MainContext, new Dictionary<string, IContext>(), Tenant);
             quoteOPPackageUpdateService.UpdateMulti(entityPM.QuotePackages, entityPM.DeletedQuotePackages, entityPM, false);
 
+            var quoteOPPropertiesUpdateService = new QuoteOPPropertiesUpdateService(MainContext, new Dictionary<string, IContext>(), Tenant);
+            quoteOPPropertiesUpdateService.UpdateMulti(entityPM.QuoteProperties, entityPM.DeletedQuoteProperties, entityPM, false);
+
             QuoteOPChargeUpdateService quoteOPChargeUpdateService = new QuoteOPChargeUpdateService(MainContext, new Dictionary<string, IContext>(), Tenant);
             quoteOPChargeUpdateService.UpdateMulti(entityPM.QuoteCharges, entityPM.DeletedQuoteCharges, entityPM, false);
 

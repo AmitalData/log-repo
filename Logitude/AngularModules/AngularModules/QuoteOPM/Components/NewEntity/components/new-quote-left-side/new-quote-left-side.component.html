@@ -10,7 +10,7 @@
         </div>
     </div>
 
-    <div class='radio-section'>
+    <div class='radio-section' [ngClass]='{"disabled": !formGroup.controls.direction.value}'>
         <h4 class='label'>Transport</h4>
         <div class='radio-row' *ngFor='let x of transportModeList'
         [ngClass]="{'radio-checked':formGroup.controls.transportMode.value?.Name === x.Name}"
@@ -23,7 +23,7 @@
 
 <div class='radio-section' [hidden]='formGroup.controls.transportMode.value?.Name !== "Ocean" && formGroup.controls.transportMode.value?.Name !== "Inland"'>
     <h4 class='label'>Shipment Type</h4>
-    <div class='radio-row' *ngFor='let x of shipmentTypeList'
+    <div class='radio-row' *ngFor='let x of shipmentTypeListFilter'
         [ngClass]="{'radio-checked':formGroup.controls.shipmentType.value?.Name === x.Name}"        
         (click)='formGroup.controls.shipmentType.setValue(x)'>
         <label class="text-style" [for]="x.Name"><img [src]="icons[x.Name]"></label>

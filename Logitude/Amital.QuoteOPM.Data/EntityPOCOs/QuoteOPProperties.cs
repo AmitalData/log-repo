@@ -30,8 +30,8 @@ namespace Amital.QuoteOPM.Data.EntityPOCOs
 	    public string QuoteID { get; set; }
 	      
         public virtual QuoteOP QuoteOP { get; set; }
-        [Column("Order")]
-	    public int Order { get; set; }
+        [Column("IndexOrder")]
+	    public int IndexOrder { get; set; }
         [Column("FromPortId")]
 	    public string FromPortId { get; set; }
         [Column("ToPortId")]
