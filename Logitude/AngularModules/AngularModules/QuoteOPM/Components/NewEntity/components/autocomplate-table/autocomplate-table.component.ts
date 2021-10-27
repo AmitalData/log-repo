@@ -15,7 +15,9 @@ export class AutocomplateTableComponent {
   @Input() formGroup: FormGroup = null as any;
 
   @Input() label: string = '';
-  @Input() fieldShow: string = '';
+    @Input() fieldShow: string = '';
+    @Input() placeholder: string = '';
+    @Input() disabled: boolean = false;
   @Input() controlName: string = '';
   @Input() data: any[] = []
   @Input() searchIcon: boolean = false;
