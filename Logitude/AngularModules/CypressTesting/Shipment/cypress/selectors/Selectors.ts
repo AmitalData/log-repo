@@ -23,6 +23,7 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly RoutingTab_1 = "#ShipmentTHRoutings_1";
   public static readonly HouseMainCarriageCancelButton = "#MainCarriageCancelBtn"
   public static readonly ShipmentSaveCloseButton = '[id^=Shipment-SaveClose]'
+  public static readonly InvoiceStatus = "[data-cy='StatusValue']";
   //#endregion
 
   //#region Create shipment
