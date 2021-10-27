@@ -130,6 +130,16 @@ h1 {
     user-select: none;
 }
 
+#RoutingSliderWrapper .pager {
+    width: 50px;
+    display: inline-block;
+    cursor: pointer;
+    position: relative;
+    height: 100%;
+    user-select: none;
+}
+
+
     .pager:active {
         transform: scale(0.9);
     }
@@ -407,7 +417,39 @@ h1 {
             font-size: 9px !important;
         }
 
+    #RoutingSliderWrapper .pager {
+        position: absolute;
+        z-index: 1;
+        width: 20px;
+        background: #F5F6FF;
+        height: 150px;
+    }
 
+    .slider .cards .routing-timeline {
+        width: 70%;
+        height: 160px;
+        transition: margin-left 1s;
+        text-align: left;
+    }
+
+    .routing-step {
+        display: flex;
+        flex-flow: column-reverse;
+        font-size: 11px;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 15px;
+        position: relative;
+    }
+
+    .routing-banner{
+        margin: 10px 0px;
+    }
+
+    #RoutingSliderWrapper {
+        margin-top: 20px;
+        height:150px;
+    }
 }
 
 
@@ -416,16 +458,7 @@ h1 {
     display: flex;
     flex-flow: column wrap;
 }
-.routing-step{
-    display: flex;
-    flex-flow: row nowrap;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 15px;
-    font-size: 12px;
-    position: relative;
 
-}
 
     .routing-banner svg{
         width: 30px;
@@ -479,6 +512,7 @@ h1 {
         flex-flow: column nowrap;
         width: 200px;
     }
+
     .routing-card{
         order: -1;
         filter: drop-shadow(0 2px 4px #00000030);
@@ -557,6 +591,19 @@ h1 {
         height: 2px;
         left: 0;
         right: unset !important;
+    }
+
+    .routing-step {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 15px;
+        font-size: 12px;
+        position: relative;
+    }
+
+    #RoutingSliderWrapper{
+        height:234px;
     }
 }
 @media screen and (max-width: 479px){
