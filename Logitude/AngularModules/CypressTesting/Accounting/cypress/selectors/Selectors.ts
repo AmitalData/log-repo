@@ -44,6 +44,8 @@ export class AccountingSelectors extends RegexSelectors {
     public static readonly ReceiveInvoiceButton = '#ReceiveInvoice';
     public static readonly APInvoiceLineForiegnCurrencyAmount = '#APInvoiceLine_ForiegnCurrencyAmount';
     public static readonly APInvoiceAmountInInvoiceCurrency = '#APInvoice_AmountInInvoiceCurrency';
+    public static readonly APInvoiceReTransferButton = '#APInvoiceBReTransfer';
+    public static readonly APInvoiceCopyButton = '#APInvoiceBCopyInvoice';
 
     //#endregion
     //#region Receivable tab
