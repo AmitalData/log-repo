@@ -43,21 +43,14 @@ namespace Logitude.BL.InfrastructureModel.APIDataContract.ApiV1
 
         private EventsTypes BuildEventTypes(Simplog.Data.InfrastructureModel.EntityPOCOs.ObjectTable objectTable, IQueryable<EventTypePM> Events)
         {
-            EventsTypes EventTypeList = new EventsTypes();
-            EventTypeList.EntityObjectTable = objectTable.Name;
-            GetEventTypeDetails(Tenant, Events, EventTypeList);
-            return EventTypeList;
+            EventsTypes EventTypes = new EventsTypes();
+			EventTypes.EntityObjectTable = objectTable.Name;
+			EventTypes.Events = GetMappetEventTypes(Events);
+			 
+            return EventTypes;
         }
 
-        private void GetEventTypeDetails(int Tenant, IQueryable<EventTypePM> Events, EventsTypes EventTypeList)
-        {
-            EventTypeList.Events = new List<EventTypeDetails>();
-            foreach (var EventType in Events)
-            {
-                EventTypeList.Events.Add(EventTypeDetailsDataMapping(EventType, Tenant));
-            }
-        }
-
+  
         private IQueryable<EventTypePM> GetEventTypes(bool connectedToStatus, Simplog.Data.InfrastructureModel.EntityPOCOs.ObjectTable objectTable)
         {
             IQueryable<EventTypePM> Events = GetEventTypeWithStauses(objectTable.Id, this.Tenant, connectedToStatus);
@@ -98,25 +91,28 @@ namespace Logitude.BL.InfrastructureModel.APIDataContract.ApiV1
 
 			foreach (var eventItem in eventType)
             {
-				var EventTypeDetails = new EventTypeDetails()
-				{
-					Id = eventItem.Id,
-					EventTypeCode = eventItem.Code,
-					EventTypeName = eventItem.EnglishName,
-					EventTypeStatusEntity = GetEntityStatus(eventItem.EntityStatusId, eventItem.Tenant),
-					EventTypeCustomerView = eventItem.IsCustomerView,
-					EventTypeAgentView = eventItem.IsAgentView,
-
-				};
-
-                EventTypeList.Add(EventTypeDetails);
+                GetEventTypeDetaisInstance(EventTypeList, eventItem);
             }
 
 
-			return EventTypeList;
+            return EventTypeList;
  
 		}
 
+        private void GetEventTypeDetaisInstance(List<EventTypeDetails> EventTypeList, EventTypePM eventItem)
+        {
+            var EventTypeDetails = new EventTypeDetails()
+            {
+                EventTypeCode = eventItem.Code,
+                EventTypeName = eventItem.EnglishName,
+                EventTypeStatusEntity = GetEntityStatus(eventItem.EntityStatusId, eventItem.Tenant),
+                EventTypeCustomerView = eventItem.IsCustomerView,
+                EventTypeAgentView = eventItem.IsAgentView,
+
+            };
+
+            EventTypeList.Add(EventTypeDetails);
+        }
 
         private EntityStatus GetEntityStatus(string entityStatusId, int tenant)
         {

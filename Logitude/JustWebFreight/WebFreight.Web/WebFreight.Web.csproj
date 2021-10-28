@@ -2628,7 +2628,6 @@
     <Compile Include="Helpers\ContainerStatuses\ContainerStatusesConnecterAnalyzer.cs" />
     <Compile Include="Helpers\DocumentTypeCalculateFileNameService.cs" />
     <Compile Include="Helpers\EntityPropertyValueService.cs" />
-    <Compile Include="Helpers\EventTypeModule\EventTypeService.cs" />
     <Compile Include="Helpers\ExcelReport\ExcelDataProviderFieldsBuilder.cs" />
     <Compile Include="Helpers\ExcelReport\ExcelReportFileService.cs" />
     <Compile Include="Helpers\ExcelReport\ExcelReportMrtBuilder.cs" />
