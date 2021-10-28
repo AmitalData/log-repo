@@ -241,6 +241,8 @@ namespace Logitude.CargoTracking.Data.EntityPOCOs
 	    public DateTime? PaymentReceivedDate { get; set; }
         [Column("PaymentReceivedNotes")]
 	    public string PaymentReceivedNotes { get; set; }
+	    public string CustomsDeclarationNumber { get; set; }
+
     }
 }
 	 
