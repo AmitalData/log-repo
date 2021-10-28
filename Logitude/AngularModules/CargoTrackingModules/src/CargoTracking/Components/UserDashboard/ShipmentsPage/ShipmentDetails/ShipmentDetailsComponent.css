@@ -443,8 +443,12 @@ h1 {
         position: relative;
     }
 
-    .routing-banner{
+    .routing-banner {
         margin: 10px 0px;
+        border-bottom: 1px solid;
+        color: var(--secondaryColor);
+        width: 60px;
+        text-align: center;
     }
 
     #RoutingSliderWrapper {
