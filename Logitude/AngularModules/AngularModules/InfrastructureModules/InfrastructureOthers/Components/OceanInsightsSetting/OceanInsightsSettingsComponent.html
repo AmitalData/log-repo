@@ -15,7 +15,7 @@
                             <div class="TabControl">
                                 <div class="TabControlHead">
                                     <ul>
-                                        <li [class.Selected]="SelectedTabCode === 'G'" (click)="SelectedTabCode = 'G'" *ngIf="IsGeneralTabVisible">
+                                        <li [class.Selected]="SelectedTabCode === 'G'" (click)="SelectedTabCode = 'G'" *ngIf="IsVisibleForTenantZero">
                                             <div class="InnerChild">General</div>
                                         </li>
 
@@ -28,7 +28,7 @@
                                 <div class="TabControlBody">
 
                                     <!-- General -->
-                                    <table [hidden]="SelectedTabCode != 'G'" *ngIf="IsGeneralTabVisible">
+                                    <table [hidden]="SelectedTabCode != 'G'" *ngIf="IsVisibleForTenantZero">
                                         <tr>
                                             <td style="width: 10px;">
                                                 <div></div>
@@ -117,8 +117,10 @@
                                                                         <tr>
                                                                             <td style="width:100px; min-width:100px;max-width:100px;">Code</td>
                                                                             <td style="width:100%; min-width:100%;max-width:100%">Name</td>
-                                                                            <td style="width:130px; min-width:130px; max-width:130px;">Sending by Container</td>
-                                                                            <td style="width:100px; min-width:100px;max-width:100px;">Sending by BOL</td>
+                                                                            <td style="width:200px; min-width:200px; max-width:200px;">Allowed for Sending by Container</td>
+                                                                            <td style="width:200px; min-width:200px; max-width:200px;" *ngIf="!IsVisibleForTenantZero">Enabled for Sending by Container</td>
+                                                                            <td style="width:170px; min-width:170px;max-width:170px;">Allowed for Sending by BOL</td>
+                                                                            <td style="width:170px; min-width:170px;max-width:170px;" *ngIf="!IsVisibleForTenantZero">Enabled for Sending by BOL</td>
                                                                         </tr>
                                                                     </table>
                                                                 </div>
@@ -140,21 +142,33 @@
                                                                                                         {{item.Name}}
                                                                                                     </td>
 
-                                                                                                    <td class="GridViewCell" style="width:130px; min-width:130px; max-width:130px; padding:0;">
+                                                                                                    <td class="GridViewCell" style="width:200px; min-width:200px; max-width:200px; padding:0;">
                                                                                                         <div class="CenterCenter" style="width: 16px;">
-                                                                                                            <LogCheckBox [ObjectFieldName]="'IsSendingByContainer'" [Checked]="item.IsSendingByContainer" [ObjectTableName]="'ShippingLine'" [DataContext]="item.DataContext" [HideColumns]="true"></LogCheckBox>
+                                                                                                            <CheckBox [IsEnabled]="IsVisibleForTenantZero" [IsChecked]="item.TenantZeroIsSendingByContainer" (Checked)="item.TenantZeroIsSendingByContainer = $event"></CheckBox>
                                                                                                         </div>
                                                                                                     </td>
 
-                                                                                                    <td class="GridViewCell" style="width:100px; min-width:100px; max-width:100px; padding:0;">
+                                                                                                    <td class="GridViewCell" style="width:200px; min-width:200px; max-width:200px; padding:0;" *ngIf="!IsVisibleForTenantZero">
                                                                                                         <div class="CenterCenter" style="width: 16px;">
-                                                                                                            <LogCheckBox [ObjectFieldName]="'IsSendingByBillOfLading'" [Checked]="item.IsSendingByBillOfLading" [ObjectTableName]="'ShippingLine'" [DataContext]="item.DataContext" [HideColumns]="true"></LogCheckBox>
+                                                                                                            <CheckBox [IsEnabled]="item.IsSendingByContainerEnabled" [IsChecked]="item.IsSendingByContainer" (Checked)="item.IsSendingByContainer = $event"></CheckBox>
+                                                                                                        </div>
+                                                                                                    </td>
+
+                                                                                                    <td class="GridViewCell" style="width:170px; min-width:170px; max-width:170px; padding:0;">
+                                                                                                        <div class="CenterCenter" style="width: 16px;">
+                                                                                                            <CheckBox [IsEnabled]="IsVisibleForTenantZero" [IsChecked]="item.TenantZeroIsSendingByBillOfLading" (Checked)="item.TenantZeroIsSendingByBillOfLading = $event"></CheckBox>
+                                                                                                        </div>
+                                                                                                    </td>
+
+                                                                                                    <td class="GridViewCell" style="width:170px; min-width:170px; max-width:170px; padding:0;" *ngIf="!IsVisibleForTenantZero">
+                                                                                                        <div class="CenterCenter" style="width: 16px;">
+                                                                                                            <CheckBox [IsEnabled]="item.IsSendingByBillOfLadingEnabled" [IsChecked]="item.IsSendingByBillOfLading" (Checked)="item.IsSendingByBillOfLading = $event"></CheckBox>
                                                                                                         </div>
                                                                                                     </td>
                                                                                                 </tr>
 
                                                                                                 <tr>
-                                                                                                    <td colspan="4"></td>
+                                                                                                    <td colspan="6"></td>
                                                                                                 </tr>
                                                                                             </table>
 
@@ -204,7 +218,7 @@
                         <div></div>
                     </td>
 
-                    <td style="width: 57px;" *ngIf="IsGeneralTabVisible">
+                    <td style="width: 57px;">
                         <button class="RedButton" (click)="OkButtonClicked()">{{'General.B.Ok' | TextCodeTranslationPipe}}</button>
                     </td>
                 </tr>

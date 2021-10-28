@@ -1267,6 +1267,8 @@ export class MaintenanceComponent {
                     var logitudeWindow = new LogitudeWindow();
                     logitudeWindow.Title = "Ocean Insights Settings";
                     logitudeWindow.ShowCloseButton = true;
+                    logitudeWindow.Width = 1400;
+                    logitudeWindow.Height = 800;
                     logitudeWindow.Show('./InfrastructureModules/InfrastructureOthers/Components/OceanInsightsSetting/OceanInsightsSettingsComponent');
                     break;
                 }
