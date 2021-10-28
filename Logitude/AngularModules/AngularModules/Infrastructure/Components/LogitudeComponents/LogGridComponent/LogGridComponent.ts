@@ -61,6 +61,7 @@ export class LogGridComponent implements OnInit, AfterViewInit, OnChanges, OnDes
     public MarkIsChecked: EventEmitter<any> = new EventEmitter();
     @Output() DataLoaded = new EventEmitter();
     @Output() CountReady = new EventEmitter();
+    @Output() AllRecordsReady = new EventEmitter();
     @Output() FirstRowSelected = new EventEmitter();
     @Output() MenuHeaderchanged = new EventEmitter();
     @Output() RowOverEvent = new EventEmitter();
@@ -1425,6 +1426,7 @@ export class LogGridComponent implements OnInit, AfterViewInit, OnChanges, OnDes
     customHeight: number;
     requestedRowsReadySub: any;
     requestedRowCountSub: any;
+    allRecordsSub: any;
     SpotlightDataTemplate: string;
     public MyScrollTop: number = 0;
     public MySelectedRowIndex: number = null;
@@ -1565,6 +1567,12 @@ export class LogGridComponent implements OnInit, AfterViewInit, OnChanges, OnDes
             //    this.BackFromEditSub = null;
             //    this.MyScrollTop = (res.rowIndex * this.rowHeight) - this.rowHeight;
             //});
+        });
+        if (this.allRecordsSub) {
+            this.allRecordsSub.unsubscribe();
+        }
+        this.allRecordsSub = this.controller.allRecords.subscribe((res) => {
+            this.AllRecordsReady.emit(res);
         });
         this.GetRowCount(reload);
        };

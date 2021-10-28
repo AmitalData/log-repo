@@ -1916,6 +1916,7 @@
     <TypeScriptCompile Include="Infrastructure\EntityPMs\LastRunDetailPM.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityPMs\LBPTeamMemberPM.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityPMs\LogitudeLeadPM.ts" />
+    <TypeScriptCompile Include="Infrastructure\EntityPMs\MultiEntityUpdateLogPM.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityPMs\ObjectTableTabPM.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityPMs\PriceStepPM.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityPMs\RuleUpdateHistoryPM.ts" />
@@ -1955,6 +1956,7 @@
     <TypeScriptCompile Include="Infrastructure\Services\StandardPMs\DWQueryColumnPMService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardPMs\DWQueryFilterPMService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardPMs\HelpResourcePMService.ts" />
+    <TypeScriptCompile Include="Infrastructure\Services\StandardPMs\MultiEntityUpdateLogPMService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardPMs\TeamPMService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\WebServices\PrivateLabelsBrandingDataService.ts" />
     <TypeScriptCompile Include="Infrastructure\Utilities\PackageAmountCalculator.ts" />

@@ -96,6 +96,7 @@ import { PriceStepListService } from './Services/StandardLists/PriceStepListServ
 import { PriceStepPMService } from './Services/StandardPMs/PriceStepPMService';
 import { HelpResourceListService } from './Services/StandardLists/HelpResourceListService';
 import { HelpResourcePMService } from './Services/StandardPMs/HelpResourcePMService';
+import { MultiEntityUpdateLogPMService } from './Services/StandardPMs/MultiEntityUpdateLogPMService';
 
 export class ModuleProviders {
     
@@ -198,6 +199,7 @@ export class ModuleProviders {
             case "HelpResourceListService": { myResult = new HelpResourceListService(); break; }
             case "HelpResourcePMService": { myResult = new HelpResourcePMService(); break; }
             case "BIReportFolderExtendedListService": { myResult = new BIReportFolderExtendedListService(); break; }
+            case "MultiEntityUpdateLogPMService": { myResult = new MultiEntityUpdateLogPMService(); break; }
         }
 
         return myResult;
