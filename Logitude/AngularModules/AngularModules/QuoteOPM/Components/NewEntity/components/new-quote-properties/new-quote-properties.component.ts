@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
+import { AfterViewInit, Component, Input, OnInit, SimpleChanges } from '@angular/core';
 import { FormGroup, FormControl, FormArray, Validators } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 import { QuoteOPPM } from 'QuoteOPM/EntityPMs/QuoteOPPM';
@@ -9,7 +9,7 @@ import { Carrier, Incoterm, NewQuoteDataService, Port, SpecialService } from '..
   templateUrl: './new-quote-properties.component.html',
   styleUrls: ['./new-quote-properties.component.scss']
 })
-export class NewQuotePropertiesComponent implements OnInit {
+export class NewQuotePropertiesComponent implements OnInit,AfterViewInit {
   @Input() EntityPM: QuoteOPPM = null as any;
   @Input() formGroup: FormGroup = null as any;
 
@@ -45,6 +45,19 @@ export class NewQuotePropertiesComponent implements OnInit {
     private messageService: MessageService,
   ) { }
 
+  ngAfterViewInit(): void {
+    if(this.EntityPM!= null && this.EntityPM.Id!=null){
+       if(this.EntityPM.QuoteProperties.length>0){
+         for(let QuoteOpProperty of this.EntityPM.QuoteProperties){
+           //edit part
+           if(QuoteOpProperty.FromPortId){
+
+           }
+         }
+       }
+    }
+  }
+
   ngOnInit(): void {
     this.getIncoterms()
     let a = this.formArray[1]
@@ -53,7 +66,9 @@ export class NewQuotePropertiesComponent implements OnInit {
   ngOnChanges(changes: SimpleChanges) {
     if (!this.formGroup.contains('properties')) {
       this.addFormControls()
-      this.subscribeTransport()
+      if (this.formGroup.contains('transportMode')) {
+        this.subscribeTransport()
+      }
     }
   }
 

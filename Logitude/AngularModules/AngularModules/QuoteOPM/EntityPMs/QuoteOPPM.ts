@@ -1682,4 +1682,4 @@ export class QuoteOPPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

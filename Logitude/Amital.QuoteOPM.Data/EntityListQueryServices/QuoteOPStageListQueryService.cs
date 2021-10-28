@@ -51,9 +51,9 @@ namespace Amital.QuoteOPM.Data.EntityListQueryServices
 
 		private IQueryable<QuoteOPStage> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<QuoteOPStage> iQueryable, int tenant)
         {
-			throw new NotImplementedException();
+			return iQueryable;
 		}
-				private IQueryable<QuoteOPStage> ApplyBusinessUnitFilters(QueryOperations queryOperations,IQueryable<QuoteOPStage> iQueryable, int tenant)
+		private IQueryable<QuoteOPStage> ApplyBusinessUnitFilters(QueryOperations queryOperations,IQueryable<QuoteOPStage> iQueryable, int tenant)
         {
 			return iQueryable;
 		}

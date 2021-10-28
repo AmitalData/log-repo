@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
+import { Component, Input, OnInit, SimpleChanges, AfterViewInit } from '@angular/core';
 import { FormGroup, FormControl, FormArray } from '@angular/forms';
 import { QuoteOPPackagePM } from 'QuoteOPM/EntityPMs/QuoteOPPackagePM';
 import { QuoteOPPM } from 'QuoteOPM/EntityPMs/QuoteOPPM';
@@ -11,7 +11,7 @@ import { NewQuoteDataService } from '../../Services/new-quote-data/new-quote-dat
   templateUrl: './new-quote-expected-order.component.html',
   styleUrls: ['./new-quote-expected-order.component.scss']
 })
-export class NewQuoteExpectedOrderComponent implements OnInit {
+export class NewQuoteExpectedOrderComponent implements OnInit,AfterViewInit {
   @Input() formGroup: FormGroup = new FormGroup({});
   @Input() EntityPM: QuoteOPPM = null as any;
 
@@ -41,6 +41,33 @@ export class NewQuoteExpectedOrderComponent implements OnInit {
        
 
   }
+  
+  ngAfterViewInit():void{
+    if (this.EntityPM != null && this.EntityPM.Id != null) {
+      if (this.EntityPM.GrossWeight != null) {
+        this.formGroup.controls.grossWeight.setValue(this.EntityPM.GrossWeight);
+      }
+      if (this.EntityPM.Volume != null) {
+        this.formGroup.controls.volume.setValue(this.EntityPM.Volume);
+      }
+      if (this.EntityPM.ChargeableWeight != null) {
+        this.formGroup.controls.chargeableWeight.setValue(this.EntityPM.ChargeableWeight);
+      }
+      if (this.EntityPM.NumberOfPackages != null) {
+        this.formGroup.controls.numberOfPackages.setValue(this.EntityPM.NumberOfPackages);
+      }
+      if (this.EntityPM.IsDangerous != null) {
+        this.formGroup.controls.isDangerous.setValue(this.EntityPM.IsDangerous);
+      }
+      if (this.EntityPM.DescriptionOfGoods != null) {
+        this.formGroup.controls.descriptionOfGoods.setValue(this.EntityPM.DescriptionOfGoods);
+      }
+      if (this.EntityPM.Notes != null) {
+        this.formGroup.controls.notes.setValue(this.EntityPM.Notes);
+      }
+    }
+  }
+
 
     async getPackageTypes() {
         this.packageTypes = await this.newQuoteDataService.getPackageTypeTable();

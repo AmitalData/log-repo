@@ -90,6 +90,9 @@ namespace Amital.QuoteOPM.BL.EntityQueryServices
             QuoteOPDocumentVersionQueryService quoteOPDocumentVersionQueryService = new QuoteOPDocumentVersionQueryService(context);
             entityPM.QuoteDocumentVersions = quoteOPDocumentVersionQueryService.GetMulti(quoteOPKeys, true);
 
+            QuoteOPPropertiesQueryService quoteOPPropertiesQueryService = new QuoteOPPropertiesQueryService(context);
+            entityPM.QuoteProperties = quoteOPPropertiesQueryService.GetMulti(quoteOPKeys, true);
+
             SummeryFields(entityPM);
 
             CalcTotalReceivablesAmount(entityPM);

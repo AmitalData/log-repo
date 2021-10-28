@@ -24,36 +24,15 @@ import { DropdownModule } from 'primeng/dropdown'
 import { DialogsService } from './Components/NewEntity/Services/dialogs/dialogs.service';
 import { NewQuoteValidateEntityService } from './Components/NewEntity/Services/new-quote-validate-entity/new-quote-validate-entity.service';
 import { CommonModule } from '@angular/common';
+import { quoteOP } from './Components/NewEntity/quoteOP.module';
 
 @NgModule({
-    imports: [InfrastructureModule,
-        CommonModule,
-        FormsModule,
-        ReactiveFormsModule,
-        AutoCompleteModule,
-        RadioButtonModule,
-        InputTextModule,
-        CalendarModule,
-        InputNumberModule,
-        CheckboxModule,
-        ButtonModule,
-        TableModule,
-        DialogModule,
-        ToastModule,
-        GenericTableModule,
-        TabViewModule,
-        SplitButtonModule,
-        MenuModule,
-        DropdownModule
+    imports: [
+        InfrastructureModule,
+        quoteOP,
     ],
     declarations: [...Components, ...SharedComponents],
-    providers: [
-        NewQuoteDataService,
-        NewQuoteOPWebService,
-        MessageService,
-        DialogsService,
-        NewQuoteValidateEntityService,
-    ],
+
     entryComponents: [...Components, ...SharedComponents],
     exports: [...SharedComponents],
 })
