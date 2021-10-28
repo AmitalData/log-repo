@@ -125,6 +125,7 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
     }
     DisplayTaxReportFilter: boolean;
     GetFullAccountingSettings() {
+      
         this._entityListService.getSingle(SessionLocator.Tenant.toString(), "FullAccountingSetting").then((res: any) => {
             this.CurrentSession.StopBusyIndicator();
             res.subscribe(myResponse => {
@@ -133,12 +134,12 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
                     var res = myResponse.Result;
                     this.fullAccountingSetting = res;
                     if (this.fullAccountingSetting.VATInputsGLAccountId == this.EntityPM.Id || this.fullAccountingSetting.VATOutputGLAccountId == this.EntityPM.Id) {
-                        this.UseTaxreportFilter = true;
+                      //  this.UseTaxreportFilter = true;
                         this.DisplayTaxReportFilter = true;
                         this.GetTransmittedTaxReports();
                     }
                     else {
-                        this.UseTaxreportFilter = false;
+                     //   this.UseTaxreportFilter = false;
                         this.DisplayTaxReportFilter = false;
                     }
                 }
@@ -1121,7 +1122,8 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
                 this._dateTypeCode = '3';
                 break;
             case 'filter_Tax':
-                this._dateTypeCode = '4';
+                this._dateTypeCode = '4';              
+                this.UseTaxreportFilter = true;
                 this.ResetLTBFields();
                 this.NotIncludedInAnyTaxReport = true;
                 break;
