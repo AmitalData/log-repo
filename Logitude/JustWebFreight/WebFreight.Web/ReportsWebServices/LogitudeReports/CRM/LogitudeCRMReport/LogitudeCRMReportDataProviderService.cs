@@ -62,7 +62,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.CRM.LogitudeCRMRepor
             return logitudeCRMReportDataProvider;
         }
 
-        private static void SetSums(LogitudeCRMReportDataProvider logitudeCRMReportDataProvider)
+        private void SetSums(LogitudeCRMReportDataProvider logitudeCRMReportDataProvider)
         {
             logitudeCRMReportDataProvider.NumberOfUsers = logitudeCRMReportDataProvider.Customers.Sum(a => a.NumberOfUsers ?? 0);
             logitudeCRMReportDataProvider.TotalPrice = logitudeCRMReportDataProvider.Customers.Sum(a => a.TotalPrice ?? 0);
@@ -112,12 +112,12 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.CRM.LogitudeCRMRepor
             logitudeCRMReportDataProvider.TwelfthMonthNewIncomeTotal = GetOpportunityPeriodsNewIncomeTotal(logitudeCRMReportDataProvider, Month.December);
         }
 
-        private static int GetOpportunityPeriodsNumberOfUsersTotal(LogitudeCRMReportDataProvider logitudeCRMReportDataProvider, Month month)
+        private int GetOpportunityPeriodsNumberOfUsersTotal(LogitudeCRMReportDataProvider logitudeCRMReportDataProvider, Month month)
         {
             return logitudeCRMReportDataProvider.Customers.Sum(a => a.OpportunityPeriods.Where(b => b.PeriodName == ((int)month).ToString()).Sum(b => b.OpportunityPeriodSummaries.Sum(c => c.NumberOfUsers ?? 0)));
         }
 
-        private static decimal GetOpportunityPeriodsNewIncomeTotal(LogitudeCRMReportDataProvider logitudeCRMReportDataProvider, Month month)
+        private decimal GetOpportunityPeriodsNewIncomeTotal(LogitudeCRMReportDataProvider logitudeCRMReportDataProvider, Month month)
         {
             return logitudeCRMReportDataProvider.Customers.Sum(a => a.OpportunityPeriods.Where(b => b.PeriodName == ((int)month).ToString()).Sum(b => b.OpportunityPeriodSummaries.Sum(c => c.NewIncome ?? 0)));
         }
