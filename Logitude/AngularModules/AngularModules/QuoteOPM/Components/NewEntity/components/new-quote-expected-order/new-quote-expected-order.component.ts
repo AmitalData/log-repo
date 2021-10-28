@@ -84,7 +84,6 @@ export class NewQuoteExpectedOrderComponent implements OnInit,AfterViewInit {
             this.formGroup.controls.shipmentType?.value?.Name === 'FCL'
     }
     addFormControls() {
-        debugger;
 
         this.formGroup.addControl('quantity1', new FormControl(null, Validators.required));
         this.formGroup.addControl('quantity2', new FormControl());

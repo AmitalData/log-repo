@@ -20,7 +20,6 @@ export class QuoteOPAdditionalTabComponent extends BaseComponent implements OnIn
     constructor(public entityArgs: EntityArgs) {
         super();
         this._entityResourceService.getEntityResourceByTableName("QuoteOP").subscribe(response => {
-            debugger;
             this.EntityPM = this.entityArgs.EntityPM;
         });
     }
