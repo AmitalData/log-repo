@@ -118,7 +118,7 @@
             // 
             // btnConnect
             // 
-            this.btnConnect.Location = new System.Drawing.Point(515, 14);
+            this.btnConnect.Location = new System.Drawing.Point(511, 14);
             this.btnConnect.Margin = new System.Windows.Forms.Padding(4);
             this.btnConnect.Name = "btnConnect";
             this.btnConnect.Size = new System.Drawing.Size(137, 28);
@@ -200,7 +200,7 @@
             // lblMessage
             // 
             this.lblMessage.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblMessage.Location = new System.Drawing.Point(512, 50);
+            this.lblMessage.Location = new System.Drawing.Point(823, 25);
             this.lblMessage.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblMessage.Name = "lblMessage";
             this.lblMessage.Size = new System.Drawing.Size(318, 84);
@@ -363,7 +363,7 @@
             // 
             // connectToTest
             // 
-            this.connectToTest.Location = new System.Drawing.Point(686, 14);
+            this.connectToTest.Location = new System.Drawing.Point(668, 14);
             this.connectToTest.Margin = new System.Windows.Forms.Padding(4);
             this.connectToTest.Name = "connectToTest";
             this.connectToTest.Size = new System.Drawing.Size(137, 31);

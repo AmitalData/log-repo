@@ -250,6 +250,7 @@ namespace CloudRestClientTool
             txtServerUrl.Text = "https://test.logitudeworld.com/test/api/";
             txtCredentialsPrimary.Text = "1859482b-755c-4259-a2be-8b4dc2e531f0";
             ObjectTableTextBox.Text = "Shipment";
+            this.LoginWithCredentials();
         }
 
          
