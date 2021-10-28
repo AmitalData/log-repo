@@ -82,7 +82,7 @@ export class NewQuoteValidateEntityService {
     Object.keys(formGroup.controls).forEach((key: string) => {
       if (formGroup.controls[key] instanceof FormControl)
         Object.keys(formGroup.controls[key].errors || {}).forEach(keyError =>
-          this.errorList.push(`${key} feild is requierd`));
+          this.errorList.push(`${key} field is requierd`));
       else if (formGroup.controls[key] instanceof FormGroup)
         this.checkValidator(formGroup.controls[key] as FormGroup);
       else if (formGroup.controls[key] instanceof FormArray)

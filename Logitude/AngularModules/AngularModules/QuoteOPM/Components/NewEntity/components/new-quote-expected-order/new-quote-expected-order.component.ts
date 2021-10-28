@@ -70,7 +70,6 @@ export class NewQuoteExpectedOrderComponent implements OnInit,AfterViewInit {
 
 
     async getPackageTypes() {
-        debugger;
         this.packageTypes = await this.newQuoteDataService.getPackageTypeTable();
     }
   ngOnChanges(changes: SimpleChanges) {
@@ -158,7 +157,6 @@ export class NewQuoteExpectedOrderComponent implements OnInit,AfterViewInit {
     }
     removePackage( index: number ) {
         if (this.formArray.controls.length > 1) {
-            debugger;
             var remove_quantity = (this.formArray.at(index) as FormGroup).controls.quantity.value;
             this.calcTotalQuantity(remove_quantity, 0);
             var remove_grossWeight = (this.formArray.at(index) as FormGroup).controls.grossWeight.value;

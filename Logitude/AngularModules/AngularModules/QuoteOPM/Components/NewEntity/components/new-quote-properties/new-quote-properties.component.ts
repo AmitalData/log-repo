@@ -119,7 +119,7 @@ export class NewQuotePropertiesComponent implements OnInit,AfterViewInit {
       this.index = this.formArray.length;
       this.formArray.push(this.propForm)
     } else
-      this.messageService.add({ severity: 'error', summary: 'Property not add', detail: 'have feild in exist propreties that not vlid'})
+      this.messageService.add({ severity: 'error', summary: 'Property not add', detail: 'have field in exist propreties that not vlid'})
   }
 
   removeProperty(e: { originalEvent: PointerEvent, index: number }) {

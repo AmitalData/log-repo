@@ -1,4 +1,6 @@
-<div [formGroup]='addressForm'>
+<hr>
+
+<div [formGroup]='addressForm' class="form">
     <p-checkbox formControlName='include' [binary]="true"
         [label]='"QuoteOP.O.NewQuote.Include" + capitalizeType | TextCodeTranslationPipe'></p-checkbox>        
     <div [hidden]='!addressForm.controls.include.value'>

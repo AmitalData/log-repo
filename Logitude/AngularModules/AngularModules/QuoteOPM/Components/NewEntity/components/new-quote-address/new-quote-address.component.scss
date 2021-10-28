@@ -1,3 +1,13 @@
+hr {
+    height: 1px;
+    background: #ced4da;
+    margin-bottom: 23px;
+}
+
+.form {
+    margin: 0 13px;    
+}
+
 .container {
     border: 1px solid #ced4da;
     border-radius: 3px;
@@ -28,12 +38,12 @@ h5 {
 
 app-autocomplate-table.address-input {
     display: inline-block;
-    width: calc(100% - 70px);    
+    width: calc(100% - 70px);
 }
 
 .disabled {
     background-color: #cccccca3;
     color: #1084dc70;
     cursor: not-allowed;
-    pointer-events:none;
+    pointer-events: none;
 }
