@@ -44,14 +44,14 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
             this.entityRepository = new MultiEntityUpdateLogRepository(objectContext);
 
             this.contactRepository = new ContactRepository(CommonDataContext.GetContext(tenant));
-            this.GetLoggedContact();
+            this.loggedContact = GetLoggedContact();
         }
 
         public void Create(MultiEntityUpdateLogPM theEntityPm)
         {
             this.isNewEntity = true;
             this.entityPM = theEntityPm;
-            this.entityPM.XMLData = BuildXmlData(this.entityPM.XMLData);
+            this.entityPM.XMLData = ConvertToXml(this.entityPM.MultiEntityUpdateData);
             if (this.loggedContact != null)
             {
                 this.entityPM.CreatedByUserId = this.loggedContact.Id;
@@ -73,9 +73,8 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
             entityRepository.SubmitChanges();
         }
 
-        private string BuildXmlData(string jsonData)
+        private string ConvertToXml(MultiEntityUpdateData multiEntityUpdateData)
         {
-            var multiEntityUpdateData = JsonConvert.DeserializeObject<MultiEntityUpdateData>(jsonData);
 
             System.Type type1 = typeof(AutomationSetValue);
             System.Type type2 = typeof(MultiEntityUpdateData);
@@ -92,20 +91,18 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
             return LogitudeXmlSerializer.SerializeObjectToElementString(multiEntityUpdateData, types);
         }
 
-        private void GetLoggedContact()
+        private Contact GetLoggedContact()
         {
-
+            string email;
             if (HttpContext.Current != null && HttpContext.Current.User != null && HttpContext.Current.User.Identity != null && !string.IsNullOrEmpty(HttpContext.Current.User.Identity.Name))
             {
-                string email = HttpContext.Current.User.Identity.Name;
-                this.loggedContact = contactRepository.GetSingleContactByEmail(email, tenant);
+                email = HttpContext.Current.User.Identity.Name;
             }
             else
             {
-                string systemContactEmail = "system@tenant" + tenant.ToString() + ".com";
-                this.loggedContact = contactRepository.GetSingleContactByEmail(systemContactEmail, tenant);
-
+                email = "system@tenant" + tenant.ToString() + ".com";
             }
+            return contactRepository.GetSingleContactByEmail(email, tenant);
         }
 
     }

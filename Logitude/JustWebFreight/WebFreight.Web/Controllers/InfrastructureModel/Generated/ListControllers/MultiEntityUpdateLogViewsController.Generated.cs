@@ -57,7 +57,6 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                SecurityUtility.CheckContactFeature("MultiEntityUpdateLog", "READ", authToken.Tenant);
 				
 		    	IWebFreightContext MyContext = WebFreightContext.GetContext(authToken.Tenant);
 				MultiEntityUpdateLogRepository  multiEntityUpdateLogRepository = new MultiEntityUpdateLogRepository(MyContext);
@@ -95,12 +94,11 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                SecurityUtility.CheckContactFeature("MultiEntityUpdateLog", "READ", authToken.Tenant);
 
 
 				IWebFreightContext MyContext = WebFreightContext.GetContext(authToken.Tenant);
 				MultiEntityUpdateLogRepository  multiEntityUpdateLogRepository = new MultiEntityUpdateLogRepository(MyContext);
-				IQueryable<MultiEntityUpdateLog> entityPocos = multiEntityUpdateLogRepository.GetEntityUpdateLogs(authToken.Tenant);
+				IQueryable<MultiEntityUpdateLog> entityPocos = multiEntityUpdateLogRepository.GetMultiEntityUpdateLogs(authToken.Tenant);
 
 				MultiEntityUpdateLogQuery multiEntityUpdateLogQuery = new MultiEntityUpdateLogQuery(multiEntityUpdateLogRepository);
 			    IQueryable<MultiEntityUpdateLogList> entityLists = multiEntityUpdateLogQuery.GetIQueryableEntityList(entityPocos);
@@ -126,15 +124,13 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
 				int tenant = authToken.Tenant;
-				                
-				SecurityUtility.CheckContactFeature("MultiEntityUpdateLog", "READ", authToken.Tenant);
-	
+				
                 QueryOperations queryOperations = new QueryOperations()
                 {
                     ObjectTableName = "MultiEntityUpdateLog",
                     PageIndex = filters.PageIndex,
                     PageSize = filters.PageSize,
-                    QuerySection = "EntityUpdateLogs",
+                    QuerySection = "MultiEntityUpdateLogs",
                     SortByColumnName = filters.SortBy,
                     SortDirectin = filters.SortDirection,
 					GetAll = filters.GetAll, 
@@ -218,7 +214,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
 								
                 IWebFreightContext MyContext = WebFreightContext.GetContext(tenant);
                 MultiEntityUpdateLogRepository  multiEntityUpdateLogRepository = new MultiEntityUpdateLogRepository(MyContext);
-                IQueryable<MultiEntityUpdateLog> entityPocos = multiEntityUpdateLogRepository.GetEntityUpdateLogs(tenant);
+                IQueryable<MultiEntityUpdateLog> entityPocos = multiEntityUpdateLogRepository.GetMultiEntityUpdateLogs(tenant);
 
                 MultiEntityUpdateLogQuery multiEntityUpdateLogQuery = new MultiEntityUpdateLogQuery(multiEntityUpdateLogRepository);
                 

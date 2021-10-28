@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Logitude.BL.InfrastructureModel.DataContracts;
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace Logitude.BL.InfrastructureModel.EntityPMs
@@ -17,5 +18,6 @@ namespace Logitude.BL.InfrastructureModel.EntityPMs
         public string ObjectTableId { get; set; }
         public int RetryNumber { get; set; }
         public DateTime? StartDate { get; set; }
+        public MultiEntityUpdateData MultiEntityUpdateData { get; set; }
     }
 }

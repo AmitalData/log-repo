@@ -224,7 +224,7 @@ export class MultiUpdateComponent extends BaseComponent implements OnInit {
         }
 
 
-        var multiEntityUpdateLog = this.GetMultiEntityUpdateLog();
+        var multiEntityUpdateLog = this.BuildMultiEntityUpdateLog();
 
         this.CurrentSession.StartBusyIndicatorLoading();
         this.multiEntityUpdateLogPMService.insert(multiEntityUpdateLog).subscribe((myResponse: ServiceResponse) => {
@@ -235,21 +235,21 @@ export class MultiUpdateComponent extends BaseComponent implements OnInit {
         });
     }
 
-    GetMultiEntityUpdateLog(): MultiEntityUpdateLogPM {
+    BuildMultiEntityUpdateLog(): MultiEntityUpdateLogPM {
         var multiEntityUpdateLog = new MultiEntityUpdateLogPM();
 
         multiEntityUpdateLog.Tenant = SessionLocator.Tenant;
         multiEntityUpdateLog.ObjectTableId = this.ObjectTableId;
-        multiEntityUpdateLog.XMLData = this.BuildXmlData();
+        multiEntityUpdateLog.MultiEntityUpdateData = this.BuildMultiEntityUpdateData();
         return multiEntityUpdateLog;
     }
 
-    BuildXmlData(): string {
+    BuildMultiEntityUpdateData(): MultiEntityUpdateData {
         var multiEntityUpdateData = new MultiEntityUpdateData();
 
-        var automationSetValuelist: AutomationSetValue[] = [];
+        var setValueList: AutomationSetValue[] = [];
         this.AutomationSetValueLists.forEach((item) => {
-            automationSetValuelist.push(item.CurrentEntityPM);
+            setValueList.push(item.CurrentEntityPM);
         });
 
         var entities: MultiEntityUpdateDataEntity[] = [];
@@ -259,11 +259,11 @@ export class MultiUpdateComponent extends BaseComponent implements OnInit {
         });
 
         multiEntityUpdateData.UserId = SessionLocator.LoggedUserId;
-        multiEntityUpdateData.SetValueLists = automationSetValuelist;
+        multiEntityUpdateData.SetValueLists = setValueList;
         multiEntityUpdateData.Entities = entities;
         multiEntityUpdateData.ObjectTableId = this.ObjectTableId;
 
-        return JSON.stringify(multiEntityUpdateData);
+        return multiEntityUpdateData;
 
     }
 

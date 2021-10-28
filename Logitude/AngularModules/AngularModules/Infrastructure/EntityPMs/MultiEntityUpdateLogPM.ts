@@ -80,6 +80,11 @@ export class MultiEntityUpdateLogPM {
     public set StartDate(newValue: Date) { if (this.startDate != newValue) { this.startDate = newValue; this.MarkAsDirty("StartDate"); } }
        
 	 
+    private multiEntityUpdateData: any;
+    public get MultiEntityUpdateData() { return this.multiEntityUpdateData; }
+    public set MultiEntityUpdateData(newValue: any) { if (this.multiEntityUpdateData != newValue) { this.multiEntityUpdateData = newValue; this.MarkAsDirty("MultiEntityUpdateData"); } }
+       
+	 
 
     public OldEntityPM: MultiEntityUpdateLogPM;
 		

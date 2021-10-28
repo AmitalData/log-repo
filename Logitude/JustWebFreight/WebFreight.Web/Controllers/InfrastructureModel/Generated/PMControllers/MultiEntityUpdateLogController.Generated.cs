@@ -44,7 +44,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
 { 
 
     
-    public partial class EntityUpdateLogsController : ApiController
+    public partial class MultiEntityUpdateLogsController : ApiController
     {
 	  
        
@@ -56,8 +56,6 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
 			    string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-
-                SecurityUtility.CheckContactFeature("MultiEntityUpdateLog", "READ", authToken.Tenant);
                 MultiEntityUpdateLogQuery multiEntityUpdateLogQuery = new MultiEntityUpdateLogQuery(authToken.Tenant);
                 MultiEntityUpdateLogPM multiEntityUpdateLogPM = multiEntityUpdateLogQuery.GetSinglePM(id, authToken.Tenant);
                 
@@ -88,7 +86,6 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
                         string token = HttpContext.Current.Request.Headers["Token"];
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                        SecurityUtility.AuthenticationOnEntityTenant("MultiEntityUpdateLog", entityPM.Tenant, authToken.Tenant);
                 
                         IWebFreightContext MyContext = WebFreightContext.GetContext(entityPM.Tenant);
                         MultiEntityUpdateLogService service = new MultiEntityUpdateLogService(MyContext, entityPM.Tenant);
@@ -135,8 +132,6 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
                         string token = HttpContext.Current.Request.Headers["Token"];
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                        SecurityUtility.CheckContactFeature("MultiEntityUpdateLog", "UPDATE", authToken.Tenant);
-                        SecurityUtility.AuthenticationOnEntityTenant("MultiEntityUpdateLog", entityPM.Tenant, authToken.Tenant);
 
                         string entityName = "MultiEntityUpdateLog" + entityPM.Id + entityPM.Tenant;
                         string entityPmName = "MultiEntityUpdateLogPM" + entityPM.Id + entityPM.Tenant;
