@@ -2793,7 +2793,7 @@
   <Records />
   <DataContracts>
     <DataContract
-      Name="&quot;EventType&quot;"
+      Name="&quot;EventTypeDetails&quot;"
       Version="&quot;ApiV1&quot;">
       <DCField
         DCFieldName="&quot;Id&quot;"
