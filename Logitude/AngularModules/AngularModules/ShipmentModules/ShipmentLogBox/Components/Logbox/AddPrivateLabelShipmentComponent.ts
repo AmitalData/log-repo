@@ -198,14 +198,18 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
         this.BuildFiltersLists();
         this.SetUIProperties_Filters();
     }
-
-    private SetArgs(args: any) { 
+    private SetArgs(args: any) {
+        this.SetDirections(args);
         this.args = args;
         if (args.EntityPM) {
             this.EntityPM = args.EntityPM;
         }
     }
- 
+
+    private SetDirections(args: any) {
+        this.IsImportActivated = args.IsImportActivated;
+    }
+
 
     private GetDepartment() {
         this._DepartmentListService.getAll().subscribe((result: any) => {
