@@ -600,6 +600,12 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 //    throw new Exception("CustomsDocument must conncted to declaration "); ////task10676  yaron said it must be conncted to declaration !!
 
                 //}
+
+                //get field from interfaceManagment
+
+                var interfaceManagementQueryService = new InterfaceManagementQueryService(customContext);
+                var time = interfaceManagementQueryService.GetSingle("2715", false,true)?.SendTime;
+
                 var requestParams = new Logitude.CustomsMessaging.Common.RequestParams.D_NG_2715_MSG22002_AddAGlobalScannedAttachmentToEntityRequestParam()
                 {
                      MainInterfaceCode="2715",
@@ -612,6 +618,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     LoggingEntityId = declarationId,
                     LoggingObjectTableId2 = ObjectTableRepository.GetObjectTableByName("Customs.CustomsDocument"),//task10676 
                     LoggingEntityId2 = entityPM.DocumentsFilingId,
+                    FutureSendDateTime = entityPM.IsCustomSendTime && !string.IsNullOrEmpty(time) ? DateTime.Today.Add(TimeSpan.Parse(time)) : (DateTime?)null
                 };
                 if (String.IsNullOrWhiteSpace(declarationId) && !String.IsNullOrWhiteSpace(entityPM.ClaimId))
                 {
