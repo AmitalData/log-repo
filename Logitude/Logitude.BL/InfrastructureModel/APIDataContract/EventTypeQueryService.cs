@@ -53,8 +53,17 @@ namespace Logitude.BL.InfrastructureModel.APIDataContract.ApiV1
   
         private IQueryable<EventTypePM> GetEventTypes(bool connectedToStatus, Simplog.Data.InfrastructureModel.EntityPOCOs.ObjectTable objectTable)
         {
-            IQueryable<EventTypePM> Events = GetEventTypeWithStauses(objectTable.Id, this.Tenant, connectedToStatus);
+			IQueryable<EventTypePM> Events = null;
 
+			if (connectedToStatus)
+			{
+				Events = query.GetEventTypesByObjectTableConnectedToStatus(objectTable.Id, this.Tenant);
+			}
+			else
+			{
+				Events = query.GetEventTypesByObjectTable(objectTable.Id, this.Tenant);
+			}
+			  
             if (Events == null)
                 throw new ApplicationException("EventType with Object Table Name " + this.ObjectTableName + " doesn't exist");
             return Events;
@@ -69,21 +78,7 @@ namespace Logitude.BL.InfrastructureModel.APIDataContract.ApiV1
             return objectTable;
         }
 
-        private IQueryable<EventTypePM> GetEventTypeWithStauses(string objectTableId, int tenant, bool connectedToStatus)
-        {
-			IQueryable<EventTypePM> EventsList = null;
-
-			if (connectedToStatus)
-			{
-				EventsList = query.GetEventTypesByObjectTableConnectedToStatus(objectTableId, tenant);
-			}
-			else
-			{
-				EventsList = query.GetEventTypesByObjectTable(objectTableId, tenant);
-			}
-
-			return EventsList;
-		}
+         
 
         private List<EventTypeDetails> GetMappetEventTypes(IQueryable<EventTypePM> eventType)
 		{
@@ -91,40 +86,14 @@ namespace Logitude.BL.InfrastructureModel.APIDataContract.ApiV1
 
 			foreach (var eventItem in eventType)
             {
-                GetEventTypeDetaisInstance(EventTypeList, eventItem);
+				if(!eventItem.InActive)
+                EventTypeList.Add(EventTypeDetailsDataMapping(eventItem, Tenant)); 
             }
 
 
             return EventTypeList;
  
-		}
-
-        private void GetEventTypeDetaisInstance(List<EventTypeDetails> EventTypeList, EventTypePM eventItem)
-        {
-            var EventTypeDetails = new EventTypeDetails()
-            {
-                EventTypeCode = eventItem.Code,
-                EventTypeName = eventItem.EnglishName,
-                EventTypeStatusEntity = GetEntityStatus(eventItem.EntityStatusId, eventItem.Tenant),
-                EventTypeCustomerView = eventItem.IsCustomerView,
-                EventTypeAgentView = eventItem.IsAgentView,
-
-            };
-
-            EventTypeList.Add(EventTypeDetails);
-        }
-
-        private EntityStatus GetEntityStatus(string entityStatusId, int tenant)
-        {
-			EntityStatus entityStatus = new EntityStatus();
-			if (entityStatusId != null)
-			{
-				EntityStatusQueryService EntityStatusService0 = new EntityStatusQueryService(tenant);
-				entityStatus  = EntityStatusService0.GetEntityStatusById(entityStatusId, tenant);
-
-			}
-			return entityStatus;
-		}
+		}  
 		 
 	}
 }

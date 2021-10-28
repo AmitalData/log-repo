@@ -242,7 +242,7 @@ namespace CloudRestClientTool
 
         private string GetEventTypeAPI()
         {
-            return txtServerUrl.Text + "/" + "EventType" + "?objectTable=" + ObjectTableTextBox.Text + "&connectedToStatus=" + ConnectedToStatus.Checked;
+            return txtServerUrl.Text + "/" + "EventType" + "?objectTableName=" + ObjectTableTextBox.Text + "&connectedToStatus=" + ConnectedToStatus.Checked;
         }
 
         private void connectToTest_Click(object sender, EventArgs e)

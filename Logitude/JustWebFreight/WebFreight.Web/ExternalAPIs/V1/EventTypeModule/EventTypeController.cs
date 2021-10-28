@@ -25,13 +25,13 @@ namespace WebFreight.Web.ExternalAPIs.V1.ShipmentOrderModule
 {
     public class EventTypeController : ApiController
     {
-        public HttpResponseMessage Get(string objectTable, bool connectedToStatus)
+        public HttpResponseMessage Get(string objectTableName, bool connectedToStatus)
         {
             try
             { 
                 int tenant = GetTenantFromAuthenticationToken();
                 Authentication(tenant);
-                EventsTypes EventTypeList = new EventTypeDetailsQueryService(tenant, objectTable).GetEventTypeByObjectTable(connectedToStatus);
+                EventsTypes EventTypeList = new EventTypeDetailsQueryService(tenant, objectTableName).GetEventTypeByObjectTable(connectedToStatus);
                 return Request.CreateResponse(HttpStatusCode.OK, EventTypeList);
             }
             catch (Exception ex)
