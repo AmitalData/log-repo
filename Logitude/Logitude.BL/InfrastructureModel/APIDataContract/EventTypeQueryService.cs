@@ -1,0 +1,101 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using Logitude.BL.InfrastructureModel.EntityQueries; 
+using Logitude.BL.InfrastructureModel.EntityPMs;
+using Simplog.Data.InfrastructureModel;
+using Simplog.Data.InfrastructureModel.Repositories;
+
+namespace Logitude.BL.InfrastructureModel.APIDataContract.ApiV1
+{
+	public partial class EventTypeDetailsQueryService
+	{
+		protected int Tenant { get; set; }
+		protected string ObjectTableName { get; set; }
+
+		public EventTypeDetailsQueryService(int tenant, string objectTableName)
+        {
+			this.Tenant = tenant;
+			this.ObjectTableName = objectTableName;
+			context = WebFreightContext.GetContext(tenant);
+			query = new EventTypeQuery(tenant);
+
+		}
+		public EventsTypes GetEventTypeByObjectTable(bool connectedToStatus)
+		{
+			try
+            {
+                Simplog.Data.InfrastructureModel.EntityPOCOs.ObjectTable objectTable = GetObjectTableId(this.ObjectTableName);
+
+                IQueryable<EventTypePM> Events = GetEventTypes(connectedToStatus, objectTable);
+                EventsTypes EventTypeList = BuildEventTypes(objectTable, Events);
+
+                return EventTypeList;
+            }
+            catch (Exception ex)
+			{
+
+				throw ex;
+			}
+
+
+		}
+
+        private EventsTypes BuildEventTypes(Simplog.Data.InfrastructureModel.EntityPOCOs.ObjectTable objectTable, IQueryable<EventTypePM> Events)
+        {
+            EventsTypes EventTypes = new EventsTypes();
+			EventTypes.EntityObjectTable = objectTable.Name;
+			EventTypes.Events = GetMappetEventTypes(Events);
+			 
+            return EventTypes;
+        }
+
+  
+        private IQueryable<EventTypePM> GetEventTypes(bool connectedToStatus, Simplog.Data.InfrastructureModel.EntityPOCOs.ObjectTable objectTable)
+        {
+			IQueryable<EventTypePM> Events = null;
+
+			if (connectedToStatus)
+			{
+				Events = query.GetEventTypesByObjectTableConnectedToStatus(objectTable.Id, this.Tenant);
+			}
+			else
+			{
+				Events = query.GetEventTypesByObjectTable(objectTable.Id, this.Tenant);
+			}
+			  
+            if (Events == null)
+                throw new ApplicationException("EventType with Object Table Name " + this.ObjectTableName + " doesn't exist");
+            return Events;
+        }
+
+        private static Simplog.Data.InfrastructureModel.EntityPOCOs.ObjectTable GetObjectTableId(string objectTableName)
+        {
+            var objectTabelRepository = new ObjectTableRepository(0);
+            var objectTable = objectTabelRepository.GetObjectTableByName(objectTableName, 0, true);
+            if (objectTable == null)
+                throw new ApplicationException("Object Table Name " + objectTableName + " doesn't exist");
+            return objectTable;
+        }
+
+         
+
+        private List<EventTypeDetails> GetMappetEventTypes(IQueryable<EventTypePM> eventType)
+		{
+			List < EventTypeDetails > EventTypeList = new List<EventTypeDetails>();
+
+			foreach (var eventItem in eventType)
+            {
+				if(!eventItem.InActive)
+                EventTypeList.Add(EventTypeDetailsDataMapping(eventItem, Tenant)); 
+            }
+
+
+            return EventTypeList;
+ 
+		}  
+		 
+	}
+}
+
+ 

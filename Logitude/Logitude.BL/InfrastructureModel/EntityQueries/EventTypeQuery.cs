@@ -458,5 +458,44 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                  };
             return eventTypes;
         }
+
+        public IQueryable<EventTypePM> GetEventTypesByObjectTableConnectedToStatus(string objectTableId, int tenant)
+        { 
+            IQueryable<EventTypePM> eventTypes = from a in repository.context.EventType.Include("EntityStatus")
+                                                 where a.Tenant == tenant && a.ObjectTableId == objectTableId && !String.IsNullOrEmpty(a.EntityStatusId)
+                                                 select new EventTypePM()
+                                                 {
+                                                     Id = a.Id,
+                                                     Tenant = a.Tenant,
+                                                     Code = a.Code,
+                                                     AddedManually = a.AddedManually,
+                                                     IsManualEntry = a.IsManualEntry,
+                                                     LocalName = a.LocalName,
+                                                     EnglishName = a.EnglishName,
+                                                     EntityStatusId = a.EntityStatusId,
+                                                     ObjectTableId = a.ObjectTableId,
+                                                     IsFollowUp = a.IsFollowUp,
+                                                     FollowUpEnglishName = a.FollowUpEnglishName,
+                                                     FollowUpLocalName = a.FollowUpLocalName,
+                                                     ShortView = a.ShortView,
+                                                     ManualActivatedFollowUp = a.ManualActivatedFollowUp,
+                                                     InActive = a.InActive,
+                                                     SearchFields = a.SearchFields,
+                                                     CustomerRoleId = a.CustomerRoleId,
+                                                     AgentRoleId = a.AgentRoleId,
+                                                     EventTypeCategoryCode = a.EventTypeCategoryCode,
+                                                     IsCustomerView = a.IsCustomerView,
+                                                     IsAgentView = a.IsAgentView,
+                                                     IsSharedLogisticsEnabled = a.IsSharedLogisticsEnabled,
+                                                     EntityStatusName = a.EntityStatus != null ? a.EntityStatus.Name : null,
+                                                     ComputedLocalName = string.IsNullOrEmpty(a.LocalName) ? a.EnglishName : a.LocalName,
+                                                     AllowedInAutomation = a.AllowedInAutomation,
+                                                     CustomField = a.CustomField,
+                                                     IsStatusNotModified = a.IsStatusNotModified,
+
+                                                 };
+            return eventTypes;
+        }
+         
     }
 }
