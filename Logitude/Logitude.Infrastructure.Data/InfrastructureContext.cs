@@ -99,8 +99,9 @@ namespace Logitude.Infrastructure.Data
             modelBuilder.Configurations.Add(new TeamMemberBusinessRoleMap());
 	
             modelBuilder.Configurations.Add(new ToggleMap());
-				
-						 
+
+            modelBuilder.Configurations.Add(new MultiEntityUpdateLogMap());
+
             #region
             modelBuilder.Configurations.Add(new AccountingSystemMap());
             modelBuilder.Configurations.Add(new AccountingSettingMap());
