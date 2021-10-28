@@ -183,7 +183,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                                    MasterStorageSiteCode = cm.StorageSiteCode,
                                                                   DeclarationStorageSiteCode = d.StorageSiteCode,
                                                                   MasterHAWB = cm.HAWB,
-
+                                                                  TerminalReleaseDate=a.TerminalReleaseDate,
                                                                    CustomFileNo = d.CustomFileNo,
                                                                    TruckerId = a.Trucker.Card.Code,
                                                                   CrateNumber = a.CrateNumber,

@@ -2287,6 +2287,7 @@
   <ItemGroup>
     <Folder Include="DummyData\" />
     <Folder Include="Messaging\Customs\Save\" />
+    <Folder Include="Reports\" />
     <Folder Include="Tools\" />
   </ItemGroup>
   <ItemGroup>

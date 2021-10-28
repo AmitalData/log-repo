@@ -109,6 +109,7 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
                 {
                     loggedContactId = loggedContact.Id;
                 }
+                Boolean updateTerminalReleaseDate = false;
                 var unifreightFUStatusTaskService = new UnifreightFUStatusTaskService();
                 switch (mySTBMessage.StatusCode)
                 {
@@ -135,6 +136,8 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
                                 StatusCode = "OMN",
                                 EventDateTime = mySTBMessage.StatusDate
                             });
+                            this.UpadteTerminalReleaseDate(mySTBMessage`, theDecId);
+
                         }
                         break;
                     default:
@@ -200,6 +203,16 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
 
         }
 
+        private void UpadteTerminalReleaseDate(STBMessage mySTBMessage, string theDecId)
+        {
+            var customContext = CustomContext.GetContext(_CommunicationLog.Tenant);
+            var declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(_CommunicationLog.Tenant);
+            var currentDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(theDecId, true, false);
+            var declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(customContext, new Dictionary<string, IContext>(), _CommunicationLog.Tenant);
+            currentDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
+            currentDeclarationCourierStatusPM.TerminalReleaseDate = mySTBMessage.EventTime;
+            declarationCourierStatusUpdateService.Update(currentDeclarationCourierStatusPM, true);
+        }
 
         private static CourierHawbStatus GetSTBMessage(string communicationsData)
         {
