@@ -173,7 +173,7 @@ Then("the invoice should approve successfully", () => {
 });
 
 Then("the status value should be {string}", (statusValue) => {
-  BaseAssertion.AssertElementContain(ShipmentSelectors.InvoiceStatus, statusValue)
+  BaseAssertion.AssertElementContain(ShipmentSelectors.APInvoiceStatus, statusValue)
 });
 //#endregion
 

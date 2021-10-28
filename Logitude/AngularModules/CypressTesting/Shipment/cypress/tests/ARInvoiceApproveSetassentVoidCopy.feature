@@ -1,7 +1,7 @@
-@release @stable @all
-Feature: AR Invoice Create Customs Invoice
-    The user activates customs, creates a customer, creates a Direct Export Air shipment,
-    updates routings and packages, adds a receivable, creates and approves customs AR Invoice.
+@devsmoke @release @stable @all
+Feature: AR Invoice Approve, Set as Sent and Void
+    The user creates a Direct Export Air shipment, creates receivable,
+    creates AR Invoice, approve AR Invoice, set AR Invoice as sent and voids the AR Invoice.
 
     Scenario: Update Accounting System
         Given the user logged in
@@ -9,9 +9,12 @@ Feature: AR Invoice Create Customs Invoice
         When change the accounting system
         Then the accounting system should update successfully
 
-    Scenario: Activate Customs Management in Shipments
-        When the user activate customs settings
-        Then the customs settings should activate successfully
+    Scenario: enable void invoice settings
+        Given the user navigates to "invoice settings" in maintenance menu
+        Given accounting settings with the following details
+            | VoidInvoice | Allowed |
+        When update invoice settings
+        Then the invoice setting should update successfully
 
     Scenario: Create customer
         Given the user navigates to customers workspace
@@ -53,11 +56,23 @@ Feature: AR Invoice Create Customs Invoice
         When update shipment
         Then the direct should update successfully
 
-    Scenario: Create customs ARInvoice
-        Given a receivable with the following details
-            | ChargesType | UOM  | Quantity | UnitPrice | Currency | ExchangeRate |
-            | AFT         | GRWT | 5        | 20        | EUR      | 4            |
-        And an ARInvoice with the following details
+    Scenario: Add Payables
+        Given a payable with the following details
+            | ChargesType  | AFT  |
+            | UOM          | GRWT |
+            | Quantity     | 5    |
+            | UnitPrice    | 10   |
+            | Currency     | EUR  |
+            | ExchangeRate | 4    |
+        When add payables
+        Then the payables should add successfully
+
+    Scenario: Add Charges in Receivables by generating from payables
+        When generate receivables from payables
+        Then the receivables should generate successfully
+
+    Scenario: Create ARInvoice
+        Given an ARInvoice with a random invoice number and the following details
             | PartnerType         | Customer    |
             | InvoiceCurrency     | EUR         |
             | InvoiceExchangeRate | 4           |
@@ -75,3 +90,12 @@ Feature: AR Invoice Create Customs Invoice
         When approve invoice
         Then the invoice should approve successfully
         And the status value should be "Unpaid"
+
+    Scenario: Set ARInvoice as sent
+        When set invoice as sent
+        Then the invoice should set as sent successfully
+
+    Scenario: Void ARInvoice
+        When void invoice
+        Then the invoice should void successfully
+        And the status value should be "Void"

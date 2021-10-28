@@ -1,8 +1,10 @@
 import * as ShipmentActions from '../../actions/Actions';
+import * as CommonActions from '../../../../Common/cypress/actions/Actions';
 import { Given, When, Then } from 'cypress-cucumber-preprocessor/steps';
 import { ShipmentDetails } from '../../models/ShipmentDetails';
 import * as BaseAssertion from '../../../../Base/cypress/actions/Assertion';
 import * as BaseActions from '../../../../Base/cypress/actions/Actions';
+import { BaseSelectors } from '../../../../Base/cypress/selectors/BaseSelectors';
 import { CustomerDetails } from '../../../../Common/cypress/models/CustomerDetails';
 import { ShipmentSelectors } from '../../selectors/Selectors';
 import { MainCarriageLeg } from 'cypress/models/MainCarriageLeg';
@@ -10,9 +12,7 @@ import { PackagesDetails } from 'cypress/models/PackagesDetails';
 import { ReceivableDetails } from 'cypress/models/ReceivableDetails';
 import { ARInvoiceDetails } from '../../../../Accounting/cypress/models/ARInvoiceDetails';
 import { RequestAliases } from '../../../../Base/cypress/constants/RequestAliases';
-import * as CommonActions from '../../../../Common/cypress/actions/Actions';
 import * as AccountingActions from '../../../../Accounting/cypress/actions/Actions';
-import { BaseSelectors } from '../../../../Base/cypress/selectors/BaseSelectors';
 import * as Assists from "../../../../Base/cypress/assists/Assists";
 
 //#region variables
@@ -21,7 +21,6 @@ let shipmentNumber: string;
 let customerCode: string;
 let AccountingSystem: string;
 //#endregion
-
 //#region Update Accounting System
 Given("the user logged in", () => {
     cy.Login();
@@ -65,6 +64,7 @@ Then("the customer should create successfully", () => {
     });;
 });
 //#endregion
+
 //#region Create direct export air shipment
 Given("the user navigates to shipments workspace", () => {
     ShipmentActions.NavigatesToShipmentsWorkspace()
@@ -119,7 +119,7 @@ Then("the direct should update successfully", () => {
 });
 //#endregion
 
-//#region Create ARInvoice
+//#region Create customs credit note ARInvoice
 Given("a receivable with the following details", (dataTable) => {
     let receivableDetails = Assists.CreateSet<ReceivableDetails>(dataTable);
     ShipmentActions.FillReceivablesTab(receivableDetails);
@@ -127,9 +127,9 @@ Given("a receivable with the following details", (dataTable) => {
     BaseAssertion.AssertStatusCode(RequestAliases.ShipmentRequest, 200);
 });
 
-Given("an ARInvoice with the following details", (dataTable) => {
+Given("a customs credit note ARInvoice with a random invoice number and the following details", (dataTable) => {
     let ARInvoiceDetails = Assists.CreateInstance<ARInvoiceDetails>(dataTable, true);
-    AccountingActions.NewCustomsARInvoice()
+    AccountingActions.NewCustomsCreditNoteARInvoice()
     AccountingActions.FillARInvoiceDetails(ARInvoiceDetails);
 });
 
@@ -153,4 +153,3 @@ Then("the invoice should approve successfully", () => {
 Then("the status value should be {string}", (statusValue) => {
     BaseAssertion.AssertElementContain(ShipmentSelectors.ARInvoiceStatus, statusValue)
 });
-//#endregion
