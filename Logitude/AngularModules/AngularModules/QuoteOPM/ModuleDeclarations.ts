@@ -33,19 +33,7 @@ export const Components = [
         QuoteOPHelperComponent, 
         QuoteOPFiltersMenuComponent,  
         ApproveBuildShipmentComponent,
-
         QuoteEventNotesComponent,
-
-        NewQuoteLeftSideComponent,
-        NewQuoteMyCustomersComponent,
-        NewQuotePropertiesComponent,
-        NewQuoteGeneralComponent,
-        NewQuoteExpectedOrderComponent,
-        AddressTextareaComponent,
-        AutocomplateTableComponent,
-        NewQuoteAddressComponent,
-        BtnMenuPlusComponent,
-        NewQuotePartnerComponent,
     ];
 
 export const SharedComponents =

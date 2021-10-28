@@ -39,7 +39,10 @@ namespace Amital.QuoteOPM.BL.EntityDataMappings
 
         public void CustomPOCOToPM(QuoteOPPropertiesPM entityPM, QuoteOPProperties entityPOCO)
         {
-            //throw new NotImplementedException();
+            if(entityPOCO.FromPortId != null)
+            {
+
+            }
         }
     }
 

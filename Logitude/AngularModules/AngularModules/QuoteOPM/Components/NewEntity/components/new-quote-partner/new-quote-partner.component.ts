@@ -1,8 +1,16 @@
-import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+import { AfterViewInit, ChangeDetectorRef, Component, Input, OnInit, SimpleChanges } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AddressList } from 'Common/EntityLists/AddressList';
 import { CardList } from 'Common/EntityLists/CardList';
 import { ContactList } from 'Common/EntityLists/ContactList';
+import { CardPM } from 'Common/EntityPMs/CardPM';
+import { ContactListService } from 'Common/Services/StandardLists/ContactListService';
+import { CardPMService } from 'Common/Services/StandardPMs/CardPMService';
+import { ContactPMService } from 'Common/Services/StandardPMs/ContactPMService';
+import { any } from 'cypress/types/bluebird';
+import { BaseComponent } from 'Infrastructure/Components/LogitudeComponents/BaseComponent';
+import { EntityArgs } from 'Infrastructure/DataContracts/EntityArgs';
 import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator';
 import { MenuItem } from 'primeng/api';
 import { QuoteOPPM } from 'QuoteOPM/EntityPMs/QuoteOPPM';
@@ -14,7 +22,7 @@ import { NewQuoteDataService } from '../../Services/new-quote-data/new-quote-dat
   templateUrl: './new-quote-partner.component.html',
   styleUrls: ['./new-quote-partner.component.scss']
 })
-export class NewQuotePartnerComponent implements OnInit {
+export class NewQuotePartnerComponent extends BaseComponent implements OnInit, AfterViewInit {
   @Input() formGroup: FormGroup = null as any;
   @Input() EntityPM: QuoteOPPM = null as any;
   @Input() type: 'shipper' | 'consignee';
@@ -23,6 +31,10 @@ export class NewQuotePartnerComponent implements OnInit {
   contactsList: ContactList[] = []
   Address: AddressList = null as any;
   ddl: MenuItem[] = [];
+  ShipperContact: any;
+  ConsigneeContact: any;
+  ShipperId: any;
+  ConsigneeId: any;
 
 
   partnerform: FormGroup = new FormGroup({
@@ -33,7 +45,7 @@ export class NewQuotePartnerComponent implements OnInit {
     reference2: new FormControl(),
   })
 
-  get partnerType (): PartnerType  {
+  get partnerType(): PartnerType {
     return this.type === 'shipper' ? 'SH' : 'CO';
   }
 
@@ -44,8 +56,52 @@ export class NewQuotePartnerComponent implements OnInit {
   constructor(
     private newQuoteDataService: NewQuoteDataService,
     private dialogsService: DialogsService,
-    // private cdr: ChangeDetectorRef,
-  ) { }
+    public entityArgs: EntityArgs,
+    private CD: ChangeDetectorRef,
+
+  ) {
+    super();
+
+  }
+
+  ngAfterViewInit(): void {
+    if (this.EntityPM != null && this.EntityPM.Id != null) {
+      this.setPartners();
+    }
+
+  }
+
+
+
+  setPartners() {
+    var cardService = new CardPMService();
+    var contactService = new ContactListService();
+    if (this.EntityPM[this.capitalizeType + 'Id'] != null) {
+      cardService.get(this.EntityPM[this.capitalizeType + 'Id']).subscribe((cardResponse: any) => {
+        if (cardResponse.Result != null) {
+          this.partnerform.controls.partner.setValue(cardResponse.Result);
+        }
+        if (this.EntityPM[this.capitalizeType + 'ContactId'] != null) {
+          contactService.getSingle(this.EntityPM[this.capitalizeType + 'ContactId']).subscribe((ContactResponse: any) => {
+            if (ContactResponse.Result != null) {
+              this.partnerform.controls.contact.setValue(ContactResponse.Result);
+            }
+          });
+        }
+      });
+    }
+    if (this.EntityPM[this.capitalizeType + 'Reference1'] != null) {
+      this.partnerform.controls.reference1.setValue(this.EntityPM[this.capitalizeType + 'Reference1']);
+    }
+    if (this.EntityPM[this.capitalizeType + 'Reference2'] != null) {
+      this.partnerform.controls.reference2.setValue(this.EntityPM[this.capitalizeType + 'Reference2']);
+    }
+
+    if (this.EntityPM[this.capitalizeType + 'Note'] != null) {
+      this.partnerform.controls.ConsigneeNote.setValue(this.EntityPM[this.capitalizeType + 'Note']);
+    }
+    
+  }
 
   ngOnInit(): void {
     this.initCards();
@@ -71,11 +127,15 @@ export class NewQuotePartnerComponent implements OnInit {
 
   private subscribePartner() {
     this.partnerform.controls.partner.valueChanges.subscribe((partner: CardList) => {
-      this.partnerform.controls.contact.reset();
-      this.partnerform.controls.notes.setValue(partner?.Notes);
-      this.initContacts(partner?.Id);
-      this.setAddress(partner);
-      this.onSelectedName(partner);
+      if (partner != null) {
+        this.partnerform.controls.contact.reset();
+        if (!!partner.Notes) {
+          this.partnerform.controls.notes.setValue(partner?.Notes);
+        }
+        this.initContacts(partner?.Id);
+        this.setAddress(partner);
+        this.onSelectedName(partner);
+      }
       // this.cdr.detectChanges();
     })
   }
@@ -100,8 +160,8 @@ export class NewQuotePartnerComponent implements OnInit {
 
   private initDdl() {
     this.ddl = [
-      { label: TextCodeTranslator.Translate('QuoteOP.B.NewQuote.Add' + this.capitalizeType), command: ()=> this.dialogsService.addCustomer(this.capitalizeType) },
-      { label: TextCodeTranslator.Translate('QuoteOP.B.NewQuote.AddPotential'+ this.capitalizeType), command: ()=> this.dialogsService.addPotentialCustomer(this.capitalizeType) },
+      { label: TextCodeTranslator.Translate('QuoteOP.B.NewQuote.Add' + this.capitalizeType), command: () => this.dialogsService.addCustomer(this.capitalizeType) },
+      { label: TextCodeTranslator.Translate('QuoteOP.B.NewQuote.AddPotential' + this.capitalizeType), command: () => this.dialogsService.addPotentialCustomer(this.capitalizeType) },
     ];
   }
 
@@ -116,7 +176,7 @@ export class NewQuotePartnerComponent implements OnInit {
     this.EntityPM[this.capitalizeType + 'ContactId'] = val?.Id;
   }
 
-  addContact(){
-    this.dialogsService.addContact(this.partnerform.controls.partner.value.Id, this.partnerType )
+  addContact() {
+    this.dialogsService.addContact(this.partnerform.controls.partner.value.Id, this.partnerType)
   }
 }
