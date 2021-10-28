@@ -43,7 +43,6 @@ export class NewQuoteExpectedOrderComponent implements OnInit {
   }
 
     async getPackageTypes() {
-        debugger;
         this.packageTypes = await this.newQuoteDataService.getPackageTypeTable();
     }
   ngOnChanges(changes: SimpleChanges) {
@@ -58,8 +57,6 @@ export class NewQuoteExpectedOrderComponent implements OnInit {
             this.formGroup.controls.shipmentType?.value?.Name === 'FCL'
     }
     addFormControls() {
-        debugger;
-        
             this.formGroup.addControl('quantity1', new FormControl());
             this.formGroup.addControl('quantity2', new FormControl());
             this.formGroup.addControl('quantity3', new FormControl());
@@ -137,7 +134,6 @@ export class NewQuoteExpectedOrderComponent implements OnInit {
     }
     removePackage( index: number ) {
         if (this.formArray.controls.length > 1) {
-            debugger;
             var remove_quantity = (this.formArray.at(index) as FormGroup).controls.quantity.value;
             this.calcTotalQuantity(remove_quantity, 0);
             var remove_grossWeight = (this.formArray.at(index) as FormGroup).controls.grossWeight.value;
