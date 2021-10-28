@@ -436,6 +436,7 @@ h1 {
         display: flex;
         flex-flow: column-reverse;
         font-size: 11px;
+        width:300px;
         justify-content: space-between;
         align-items: center;
         margin-bottom: 15px;
@@ -449,6 +450,14 @@ h1 {
     #RoutingSliderWrapper {
         margin-top: 20px;
         height:150px;
+    }
+
+    #RoutingSliderWrapper .cards {
+        width:1200px;
+    }
+
+    .route-description {
+        max-width: 140px;
     }
 }
 
@@ -497,9 +506,7 @@ h1 {
 .route-direction{
     margin-bottom: 4px;
 }
-.route-description {
-    max-width: 150px;
-}
+
 
 .routing-step.active .route-direction svg path{
     fill: #fff !important;
@@ -605,10 +612,14 @@ h1 {
     #RoutingSliderWrapper{
         height:234px;
     }
+
+    .route-description {
+        max-width: 150px;
+    }
 }
 @media screen and (max-width: 479px){
-    .mobile-font-18{
-        font-size: 18px;
+    .mobile-font-12{
+        font-size: 12px;
     }
     .route-direction{
         align-self: flex-end;
