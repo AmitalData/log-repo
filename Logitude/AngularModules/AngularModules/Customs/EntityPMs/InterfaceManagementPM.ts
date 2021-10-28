@@ -149,6 +149,11 @@ export class InterfaceManagementPM {
     public set UseRabbitMQ(newValue: boolean) { if (this.useRabbitMQ != newValue) { this.useRabbitMQ = newValue; this.MarkAsDirty("UseRabbitMQ"); } }
        
 	 
+    private sendTime: string;
+    public get SendTime() { return this.sendTime; }
+    public set SendTime(newValue: string) { if (this.sendTime != newValue) { this.sendTime = newValue; this.MarkAsDirty("SendTime"); } }
+       
+	 
 
     public OldEntityPM: InterfaceManagementPM;
 		
