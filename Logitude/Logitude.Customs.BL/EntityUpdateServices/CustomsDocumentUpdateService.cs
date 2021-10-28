@@ -605,7 +605,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
                 var interfaceManagementQueryService = new InterfaceManagementQueryService(customContext);
                 var time = interfaceManagementQueryService.GetSingle("2715", false,true)?.SendTime;
-
+                var date = entityPM.IsCustomSendTime && !string.IsNullOrEmpty(time) ? DateTime.Today.Add(TimeSpan.Parse(time)) : (DateTime?)null;
                 var requestParams = new Logitude.CustomsMessaging.Common.RequestParams.D_NG_2715_MSG22002_AddAGlobalScannedAttachmentToEntityRequestParam()
                 {
                      MainInterfaceCode="2715",
@@ -618,8 +618,10 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     LoggingEntityId = declarationId,
                     LoggingObjectTableId2 = ObjectTableRepository.GetObjectTableByName("Customs.CustomsDocument"),//task10676 
                     LoggingEntityId2 = entityPM.DocumentsFilingId,
-                    FutureSendDateTime = entityPM.IsCustomSendTime && !string.IsNullOrEmpty(time) ? DateTime.Today.Add(TimeSpan.Parse(time)) : (DateTime?)null
-                };
+                    FutureSendDateTime = date,
+                    RequestVIAChangeDue = date.HasValue ?string.Concat("נרשמה בקשה מתוזמנת לשעה ", date.GetValueOrDefault().ToShortTimeString()) : ""
+
+            };
                 if (String.IsNullOrWhiteSpace(declarationId) && !String.IsNullOrWhiteSpace(entityPM.ClaimId))
                 {
                     requestParams.LoggingObjectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Claim");
@@ -700,7 +702,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 try
                 {
                     SBQMessageService.CreateSheetSBQMessage<Logitude.CustomsMessaging.Common.RequestParams.D_NG_2715_MSG22002_AddAGlobalScannedAttachmentToEntityRequestParam>(requestParams
-                        , false
+                        , false,requestParams.FutureSendDateTime
                         );
                     send = true;
                     Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine("send 2715 ");

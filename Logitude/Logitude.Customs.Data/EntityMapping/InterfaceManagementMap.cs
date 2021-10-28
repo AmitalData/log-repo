@@ -57,7 +57,7 @@ namespace Logitude.Customs.Data.EntityMapping
 
             this.Property(t => t.UseRabbitMQ).HasColumnName("UseRabbitMQ");
 
-            this.Property(t => t.SendTime).HasColumnName("SendTime");
+            this.Property(t => t.SendTime).HasColumnName("SendTime").HasMaxLength(0).IsUnicode(false);
         }
     }
 }

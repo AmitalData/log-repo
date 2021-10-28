@@ -121,7 +121,7 @@
   </Column>
   <Column
     Name="SendTime"
-    Type="time">
+    Type="varchar">
     <Constraints
       Nullable="true" />
   </Column>
