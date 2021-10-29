@@ -162,19 +162,34 @@ export function VoidAPInvoice() {
     cy.Click(ShipmentSelectors.ConfirmWindowYes, null);
 }
 
-export function AssertAPInvoiceMenuButtonsDimExceptReTransfer() {
+export function AssertAPInvoiceMenuButtonsDisabled() {
     BaseAssertion.AssertElementDisabled(AccountingSelectors.APInvoiceCancelApprovalButton, BaseSelectors.BeDisabled)
     BaseAssertion.AssertElementDisabled(AccountingSelectors.APInvoiceReTransferButton, BaseSelectors.BeDisabled)
     BaseAssertion.AssertElementDisabled(AccountingSelectors.APInvoiceCopyButton, BaseSelectors.BeDisabled)
     BaseAssertion.AssertElementDisabled(AccountingSelectors.APInvoiceVoidButton, BaseSelectors.NotBeDisabled)
 }
 
-export function AssertAPInvoiceMenuButtonsNotDimExceptReTransfer() {
+export function AssertAPInvoiceMenuButtonsEnabled() {
     BaseAssertion.AssertElementDisabled(AccountingSelectors.APInvoiceCancelApprovalButton, BaseSelectors.NotBeDisabled)
     BaseAssertion.AssertElementDisabled(AccountingSelectors.APInvoiceReTransferButton, BaseSelectors.BeDisabled)
     BaseAssertion.AssertElementDisabled(AccountingSelectors.APInvoiceCopyButton, BaseSelectors.NotBeDisabled)
     BaseAssertion.AssertElementDisabled(AccountingSelectors.APInvoiceVoidButton, BaseSelectors.NotBeDisabled)
 }
+
+export function AssertARInvoiceMenuButtonsDisabled() {
+    BaseAssertion.AssertElementDisabled(AccountingSelectors.ARInvoiceCancelDraftButton, BaseSelectors.NotBeDisabled)
+    BaseAssertion.AssertElementDisabled(AccountingSelectors.ARInvoiceAutoCreditButton, BaseSelectors.BeDisabled)
+    BaseAssertion.AssertElementDisabled(AccountingSelectors.ARInvoiceSetAsSentButton, BaseSelectors.NotBeDisabled)
+    BaseAssertion.AssertElementDisabled(AccountingSelectors.ARInvoiceReTransfer, BaseSelectors.BeDisabled)
+    BaseAssertion.AssertElementDisabled(AccountingSelectors.ARInvoiceVoidButton, BaseSelectors.BeDisabled)
+}
+
+export function AssertARInvoiceMenuButtonsEnabled() {
+    BaseAssertion.AssertElementDisabled(AccountingSelectors.ARInvoiceCancelDraftButton, BaseSelectors.BeDisabled)
+    BaseAssertion.AssertElementDisabled(AccountingSelectors.ARInvoiceAutoCreditButton, BaseSelectors.NotBeDisabled)
+    BaseAssertion.AssertElementDisabled(AccountingSelectors.ARInvoiceSetAsSentButton, BaseSelectors.NotBeDisabled)
+    BaseAssertion.AssertElementDisabled(AccountingSelectors.ARInvoiceReTransfer, BaseSelectors.BeDisabled)
+    BaseAssertion.AssertElementDisabled(AccountingSelectors.ARInvoiceVoidButton, BaseSelectors.NotBeDisabled)}
 //#endregion
 
 //#region ARInvoice
