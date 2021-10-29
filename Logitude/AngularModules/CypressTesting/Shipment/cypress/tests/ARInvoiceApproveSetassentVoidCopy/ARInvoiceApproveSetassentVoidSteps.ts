@@ -150,6 +150,21 @@ Then("the invoice should create successfully", () => {
     BaseAssertion.AssertStatusCode(RequestAliases.ARInvoicesRequest, 200);
 });
 //#endregion
+
+//#region Assert all buttons in menu are/aren't dim except void button
+When("press on menu button", () => {
+    cy.Click(BaseSelectors.ToggleButtonClass + BaseSelectors.LastElement, null)
+});
+
+Then("assert the status of menu buttons before approving the invoice", () => {
+    AccountingActions.AssertARInvoiceMenuButtonsDisabled()
+});
+
+Then("assert the status of menu buttons after approving the invoice", () => {
+    AccountingActions.AssertARInvoiceMenuButtonsEnabled()
+});
+//#endregion
+
 //#region Approve ARInvoice
 When("approve invoice", () => {
     AccountingActions.ARApproveInvoice()

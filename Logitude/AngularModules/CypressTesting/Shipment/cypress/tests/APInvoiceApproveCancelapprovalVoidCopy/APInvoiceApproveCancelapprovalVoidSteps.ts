@@ -156,11 +156,11 @@ When("press on menu button", () => {
 });
 
 Then("all buttons in menu should be dim except void button", () => {
-  AccountingActions.AssertAPInvoiceMenuButtonsDimExceptReTransfer()
+  AccountingActions.AssertAPInvoiceMenuButtonsDisabled()
 });
 
 Then("all buttons in menu should not be dim except void button", () => {
-  AccountingActions.AssertAPInvoiceMenuButtonsNotDimExceptReTransfer()
+  AccountingActions.AssertAPInvoiceMenuButtonsEnabled()
 });
 //#endregion
 

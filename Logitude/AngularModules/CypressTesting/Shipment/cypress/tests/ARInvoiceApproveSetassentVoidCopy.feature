@@ -86,10 +86,18 @@ Feature: AR Invoice Approve, Set as Sent and Void
         Then the invoice should create successfully
         And the status value should be "Draft"
 
+    Scenario: Assert the status of menu buttons before approving the invoice
+        When press on menu button
+        Then assert the status of menu buttons before approving the invoice
+
     Scenario: Approve ARInvoice
         When approve invoice
         Then the invoice should approve successfully
         And the status value should be "Unpaid"
+
+    Scenario: Assert the status of menu buttons after approving the invoice
+        When press on menu button
+        Then assert the status of menu buttons after approving the invoice
 
     Scenario: Set ARInvoice as sent
         When set invoice as sent
