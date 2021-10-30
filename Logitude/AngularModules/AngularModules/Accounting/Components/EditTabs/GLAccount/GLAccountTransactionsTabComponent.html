@@ -711,7 +711,7 @@
                     {{'Accounting.General.O.Difference' | TextCodeTranslationPipe}}
                 </div>
                 <div >
-                    <div style="font-size: 12px; color:#21a373;direction: ltr;" [class.red]="GetDifferenceAmount()<=0"
+                    <div style="font-size: 12px;direction: ltr;" [class.red]="GetDifferenceAmount()<0" [style.color]="GetDifferenceAmount()==0 ? 'black' :'#21a373' "
                          *ngIf="LTBSummery.EndBalanceLocal != undefined"> {{GetDifferenceAmount() | NumbersPipe:'N2'}}  {{TenantCurrency}}</div>
                 </div>
             </div>
