@@ -31,6 +31,7 @@ using System.Transactions;
 using System.Xml;
 using Simplog.Server.Infrastructure;
 using Logitude.BL.ShipmentsModel.DigitalModels;
+using System.Threading.Tasks;
 
 namespace Logitude.BL.ShipmentsModel.EntityQueries
 {
@@ -4289,6 +4290,32 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             }
 
             return null;
+        }
+
+        public List<ShipmentPM> GetShipmentPMsByIds(List<string> shipmentIds, int tenant)
+        {
+            if (shipmentIds.Count() == 0) return null;
+
+            List<Shipment> shipments = repository.GetShipmentsFromIds(shipmentIds, tenant);
+            if (shipments.Count() == 0) return null;
+
+            List<string> shipmentMasterDataIds = shipments.Select(shipment => shipment.MasterShipmentDataId).ToList();
+            List<ShipmentMasterData> shipmentMasterDatas = repository.GetShipmentMasterDatasFromIds(shipmentMasterDataIds, tenant);
+            List<ShipmentPM> shipmentPMs = new List<ShipmentPM>();
+
+            Parallel.ForEach(shipments, (shipment) => {
+                ShipmentPM shipmentPM = new ShipmentPM();
+                ShipmentMasterData masterData = shipmentMasterDatas.Where(shipmentMasterData => shipmentMasterData.Id == shipment.Id).FirstOrDefault();
+                shipmentPM = MapShipmentToShipmentPM(shipmentPM, shipment, null, masterData, true);
+                ShipmentPM securedPM = new ShipmentPM();
+                securedPM = SecuredMapping.GetMappedPM(shipmentPM, securedPM, "Shipment", tenant);
+                ShipmentPM shipmentPMWithRestrictions = BranchPermitionsFilter.AddUserBranchRestrictionFilters(new QueryOperations(), securedPM, tenant);
+                shipmentPMWithRestrictions = ProductPermitionsFilter.AddUserProductRestrictionFilters(new QueryOperations(), securedPM, tenant);
+
+                shipmentPMs.Add(shipmentPMWithRestrictions);
+            });
+
+            return shipmentPMs;
         }
 
         public ShipmentPM GetSingleShipmentPMByNumber(string shipmentNumber, int tenant)

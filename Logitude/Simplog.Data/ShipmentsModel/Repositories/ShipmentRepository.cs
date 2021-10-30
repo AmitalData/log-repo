@@ -949,5 +949,39 @@ namespace Simplog.Data.ShipmentsModel.Repositories
                                        select s).ToList();
             return standaloneShipments;
         }
+
+        public List<Shipment> GetShipmentsFromIds(List<string> shipmentIds, int tenant)
+        {
+            List<Shipment> shipments = new List<Shipment>();
+            if (shipmentIds.Count() == 0) return shipments;
+
+            IShipmentsContext shipmentsContext = ShipmentsContext.GetContext(tenant);
+            StringBuilder values = new StringBuilder();
+            values.AppendFormat("{0}", "'" + shipmentIds[0] + "'");
+            for (int i = 1; i < shipmentIds.Count; i++)
+                values.AppendFormat(", {0}", "'" + shipmentIds[i] + "'");
+
+            string sql = string.Format("SELECT * FROM Shipments WHERE ID IN ({0})", values);
+            shipments = shipmentsContext.GetActiveDbContext().Database.SqlQuery<Shipment>(sql).ToList();
+
+            return shipments;
+        }
+
+        public List<ShipmentMasterData> GetShipmentMasterDatasFromIds(List<string> shipmentMasterDataIds, int tenant)
+        {
+            List<ShipmentMasterData> ShipmentMasterDatas = new List<ShipmentMasterData>();
+            if (shipmentMasterDataIds.Count() == 0) return ShipmentMasterDatas;
+
+            IShipmentsContext shipmentMasterDatasContext = ShipmentsContext.GetContext(tenant);
+            StringBuilder values = new StringBuilder();
+            values.AppendFormat("{0}", "'" + shipmentMasterDataIds[0] + "'");
+            for (int i = 1; i < shipmentMasterDataIds.Count; i++)
+                values.AppendFormat(", {0}", "'" + shipmentMasterDataIds[i] + "'");
+
+            string sql = string.Format("SELECT * FROM ShipmentMasterDatas WHERE ID IN ({0})", values);
+            ShipmentMasterDatas = shipmentMasterDatasContext.GetActiveDbContext().Database.SqlQuery<ShipmentMasterData>(sql).ToList();
+
+            return ShipmentMasterDatas;
+        }
     }
 }

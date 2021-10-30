@@ -81,7 +81,7 @@ namespace Logitude.MetadataUpdate
             }
 
             Logitude.Server.Tools.ContainerAccessor.InitContainer();
-            InjectionUtil.Init(null, null, null, () => (new ByteCompressorUtil()) as IByteCompressorUtil, null, null,null);
+            InjectionUtil.Init(null, null, null, () => (new ByteCompressorUtil()) as IByteCompressorUtil, null, null,null, null);
             InfraRegistrationHelper.Register();
             CacheManager.CacheWrapper = new CacheWrapper(WorkerEntryPoint.Cache);
         }

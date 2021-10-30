@@ -200,7 +200,7 @@ namespace Logitude.Server.Tools.EntityChanges.AutomationResult
         }
 
 
-        private object ResolveSetFieldValue(List<Field> automationFieldLists, AutomationSetValue item)
+        public object ResolveSetFieldValue(List<Field> automationFieldLists, AutomationSetValue item)
         {
             object result = null;
 
