@@ -1097,6 +1097,7 @@
     </None>
     <None Include="EntityFiles\InfrastructureModel\DescriptionOfGoods.lxml" />
     <None Include="EntityFiles\InfrastructureModel\EntityStatusType.lxml" />
+    <None Include="EntityFiles\InfrastructureModel\MultiEntityUpdateLog.lxml" />
     <None Include="EntityFiles\InfrastructureModel\QueryExportExecutionLog.lxml" />
     <None Include="EntityFiles\InfrastructureModel\WorkerRoleName.lxml" />
     <None Include="EntityFiles\InvoiceModel\QBOGlobalTaxCalculation.lxml" />

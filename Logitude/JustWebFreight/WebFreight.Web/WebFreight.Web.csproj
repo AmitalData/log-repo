@@ -1041,6 +1041,7 @@
     <Compile Include="Controllers\InfrastructureModel\Extended\WorkerRoleNameExtendedController.cs" />
     <Compile Include="Controllers\InfrastructureModel\Extended\BIReportFolderExtendedController.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\ListControllers\EntityStatusTypeViewsController.Generated.cs" />
+    <Compile Include="Controllers\InfrastructureModel\Generated\PMControllers\MultiEntityUpdateLogController.Generated.cs" />
     <Compile Include="Controllers\Integration\Factories\IntegrationPartnerFactory.cs" />
     <Compile Include="Controllers\Integration\ModelIntegrationController.cs" />
     <Compile Include="Controllers\Integration\Quote\QuoteIntegrationBuilder.cs" />
@@ -1092,6 +1093,7 @@
     <Compile Include="DataProviders\UserDefinedReportDataProvider.cs" />
     <Compile Include="ExternalAPIs\RatesUpdateController.cs" />
     <Compile Include="ExternalAPIs\ShipmentNumbersController.cs" />
+    <Compile Include="ExternalAPIs\V1\EventTypeModule\EventTypeController.cs" />
     <Compile Include="ExternalAPIs\V1\GLAccountChequeDetailsController.cs" />
     <Compile Include="ExternalAPIs\V1\CargoTrackingShipmentDetailsController.cs" />
     <Compile Include="ExternalAPIs\V1\ShipmentOrderModule\ShipmentOrderController.cs" />
@@ -3261,6 +3263,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\InboundEmailLineUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\InboundEmailUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\MoveTypeUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\MultiEntityUpdateLogUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\ObjectFieldUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\ObjectTableUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\PrepaidCollectUpdateClass.cs" />

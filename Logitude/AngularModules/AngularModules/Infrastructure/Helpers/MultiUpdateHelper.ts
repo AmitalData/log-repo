@@ -1,4 +1,5 @@
 import { MessageWindow } from "Controls/Windows/MessageWindow";
+import { AppTool } from 'Infrastructure/Tools';
 
 
 export function IsMultiUpdateValid(title, rowCount): boolean {
@@ -13,6 +14,12 @@ export function IsMultiUpdateValid(title, rowCount): boolean {
         messageWindow.Show("Sorry! You can’t perform the multiple update process. The number of " + title + " in the view mustn't exceed 100");
         return false;
     }
+
+    if(AppTool.IsNullOrEmpty(rowCount)){
+        return false;
+    }
+
     return true;
+
 }
 

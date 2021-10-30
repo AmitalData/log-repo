@@ -1,4 +1,4 @@
-@stable @all @smoke
+@stable @all @smoke @smoke3
 Feature: Phone Call Create, Search, and Edit from CRM
     The user creates a phone call, searches for and edits it from the CRM Module.
 

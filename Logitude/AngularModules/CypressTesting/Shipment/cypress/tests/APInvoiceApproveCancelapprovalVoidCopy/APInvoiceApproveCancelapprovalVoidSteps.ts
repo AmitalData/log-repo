@@ -17,6 +17,7 @@ import * as Assists from "../../../../Base/cypress/assists/Assists";
 import * as MaintenanceActions from "../../../../Maintenance/cypress/actions/Actions";
 import { InvoiceSettingsDetails } from "../../../../Maintenance/cypress/models/InvoiceSettingsDetails";
 import { MaintenanceSelectors } from "../../../../Maintenance/cypress/selectors/Selectors";
+
 //#region variables
 let shipmentDetails: ShipmentDetails;
 let shipmentNumber: string;
@@ -24,10 +25,12 @@ let customerCode: string;
 let AccountingSystem: string;
 let invoiceSettingsDetails: InvoiceSettingsDetails;
 //#endregion
+
 //#region Update Accounting System
 Given("the user logged in", () => {
   cy.Login();
 });
+
 Given("accounting System as {string}", (accountingSystem) => {
   AccountingSystem = accountingSystem;
 });
@@ -39,6 +42,7 @@ Then("the accounting system should update successfully", () => {
   BaseAssertion.AssertElementNotExist(BaseSelectors.LogitudeWindow);
 });
 //#endregion
+
 //#region enable void invoice settings
 Given("the user navigates to {string} in maintenance menu", (InvoiceSettings) => {
   MaintenanceActions.OpenMaintenanceItemFromMaintenanceMenu(InvoiceSettings, MaintenanceSelectors.InvoiceSettingsMaintenanceItem)
@@ -56,7 +60,8 @@ When("update invoice settings", () => {
 Then("the invoice setting should update successfully", () => {
   MaintenanceActions.AssertUpdateInvoiceSettings()
 });
-//#endregio
+//#endregion
+
 //#region Create customer
 Given("the user navigates to customers workspace", () => {
   CommonActions.NavigatesToCustomersWorkspace();
@@ -115,29 +120,28 @@ Given("the user add package with the following details", (dataTable) => {
   Actions.FillPackageTab(shipmentDetails.TransportMode, packagesDetails)
 });
 //#endregion
+
 //#region Add Payables
 Given("a payable with the following details",
   (dataTable) => {
     const PayableData = Assists.CreateInstance<PayableDetails>(dataTable, true);
     Actions.FillPayablesTab(PayableData)
   });
-When("add payables",
-  () => {
-    Actions.UpdateShipment(ShipmentSelectors.ShipmentSaveButton)
+When("add payables", () => {
+  Actions.UpdateShipment(ShipmentSelectors.ShipmentSaveButton)
 
-  });
-Then("the payables should add successfully",
-  () => {
-    BaseAssertion.AssertStatusCode(RequestAliases.ShipmentRequest, 200)
-  });
+});
+Then("the payables should add successfully", () => {
+  BaseAssertion.AssertStatusCode(RequestAliases.ShipmentRequest, 200)
+});
 //#endregion
+
 //#region Create APInvoice
-Given("an APInvoice with a random invoice number and the following details",
-  (dataTable) => {
-    const APInvoiceData = Assists.CreateInstance<APInvoiceDetails>(dataTable, true);
-    cy.Click(AccountingSelectors.ReceiveInvoiceButton, null);
-    AccountingActions.FillAPInvoiceDetails(APInvoiceData)
-  });
+Given("an APInvoice with a random invoice number and the following details", (dataTable) => {
+  const APInvoiceData = Assists.CreateInstance<APInvoiceDetails>(dataTable, true);
+  cy.Click(AccountingSelectors.ReceiveInvoiceButton, null);
+  AccountingActions.FillAPInvoiceDetails(APInvoiceData)
+});
 When("receive invoice", () => {
   AccountingActions.ReceiveAPInvoice();
 });
@@ -145,6 +149,21 @@ Then("the invoice should create successfully", () => {
   BaseAssertion.AssertStatusCode(RequestAliases.APInvoicesRequest, 200);
 });
 //#endregion
+
+//#region Assert all buttons in menu are/aren't dim except void button
+When("press on menu button", () => {
+  cy.Click(BaseSelectors.ToggleButtonClass + BaseSelectors.LastElement, null)
+});
+
+Then("all buttons in menu should be dim except void button", () => {
+  AccountingActions.AssertAPInvoiceMenuButtonsDisabled()
+});
+
+Then("all buttons in menu should not be dim except void button", () => {
+  AccountingActions.AssertAPInvoiceMenuButtonsEnabled()
+});
+//#endregion
+
 //#region Approve APInvoice
 When("approve invoice", () => {
   AccountingActions.APApproveInvoice()
@@ -154,9 +173,10 @@ Then("the invoice should approve successfully", () => {
 });
 
 Then("the status value should be {string}", (statusValue) => {
-  BaseAssertion.AssertElementContain(ShipmentSelectors.InvoiceStatus, statusValue)
+  BaseAssertion.AssertElementContain(ShipmentSelectors.APInvoiceStatus, statusValue)
 });
 //#endregion
+
 //#region Cancel the APInvoice approvement
 When("cancel the invoice approvement", () => {
   AccountingActions.APInvoiceCancelApproval()
@@ -165,6 +185,7 @@ Then("the invoice should cancel successfully", () => {
   BaseAssertion.AssertStatusCode(RequestAliases.APInvoicesRequest, 200);
 });
 //#endregion
+
 //#region Void APInvoice
 When("void invoice", () => {
   AccountingActions.VoidAPInvoice()

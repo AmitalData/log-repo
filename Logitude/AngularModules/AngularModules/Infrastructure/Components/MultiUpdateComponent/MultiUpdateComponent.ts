@@ -10,6 +10,11 @@ import { AutomationSetValueViewModel } from '../Maintenance/Automation/ViewModel
 import { ObjectFieldPM } from 'Infrastructure/EntityPMs/ObjectFieldPM';
 import { ObjectTablePM } from 'Infrastructure/EntityPMs/ObjectTablePM';
 import { AppTool } from 'Infrastructure/Tools';
+import { MultiEntityUpdateLogPMService } from 'Infrastructure/Services/StandardPMs/MultiEntityUpdateLogPMService';
+import { ServiceResponse } from 'Infrastructure/DataContracts/ServiceResponse';
+import { MultiEntityUpdateLogPM } from 'Infrastructure/EntityPMs/MultiEntityUpdateLogPM';
+import { MultiEntityUpdateData } from 'Infrastructure/DataContracts/MultiEntityUpdateData';
+import { MultiEntityUpdateDataEntity } from 'Infrastructure/DataContracts/MultiEntityUpdateDataEntity';
 
 @Component({
     selector: 'MultiUpdateComponent',
@@ -50,6 +55,8 @@ export class MultiUpdateComponent extends BaseComponent implements OnInit {
 
     public BusyIndicatorText: string = null;
     public ShowBusyIndicator: boolean = false;
+    multiEntityUpdateLogPMService: MultiEntityUpdateLogPMService;
+
     public StartBusyIndicator(myText: string) {
         this.BusyIndicatorText = myText;
         this.ShowBusyIndicator = true;
@@ -68,6 +75,8 @@ export class MultiUpdateComponent extends BaseComponent implements OnInit {
 
     constructor(private _entityListService: EntityListService) {
         super();
+        this.multiEntityUpdateLogPMService = new MultiEntityUpdateLogPMService();
+
     }
 
     private CheckAllRecords() {
@@ -105,7 +114,8 @@ export class MultiUpdateComponent extends BaseComponent implements OnInit {
         filters = this.Filters;
         filters.SortBy = sortingCol;
         filters.SortDirection = sortingDir;
-        return this._entityListService.getByFilters(this.ObjectTableName, this.Filters, null);
+        filters.PageSize = 100;
+        return this._entityListService.getByFilters(this.ObjectTableName, filters, null);
     }
 
     SelectedRow: any;
@@ -117,15 +127,10 @@ export class MultiUpdateComponent extends BaseComponent implements OnInit {
         this.LoadList();
     }
 
-    OnDataLoaded(result) {
-        this.AllRecords = result.map(({ rowData }) => rowData);
-        if (this.isInit) {
-            this.IsAllRecordSelected = true;
-            this.isInit = false;
-            this.SelectedRecords = result.map(({ rowData }) => rowData).filter(a => a.IsChecked === undefined);
-            return;
-        }
-        this.SelectedRecords = result.map(({ rowData }) => rowData).filter(a => a.IsChecked === true);
+    AllRecordsReady(result) {
+        this.AllRecords = result;
+        this.SelectedRecords = result;
+        this.IsAllRecordSelected = true;
     }
 
     SetWindowArgs(args: any) {
@@ -218,12 +223,56 @@ export class MultiUpdateComponent extends BaseComponent implements OnInit {
             return;
         }
 
-        var automationSetValuelist: AutomationSetValue[] = [];
+
+        var multiEntityUpdateLog = this.BuildMultiEntityUpdateLog();
+
+        this.CurrentSession.StartBusyIndicatorLoading();
+        this.multiEntityUpdateLogPMService.insert(multiEntityUpdateLog).subscribe((myResponse: ServiceResponse) => {
+            this.CurrentSession.StopBusyIndicator();
+            if (!myResponse.HasError) {
+                this.CurrentSession.CloseCurrentWindow();
+            }
+        });
+    }
+
+    BuildMultiEntityUpdateLog(): MultiEntityUpdateLogPM {
+        var multiEntityUpdateLog = new MultiEntityUpdateLogPM();
+
+        multiEntityUpdateLog.Tenant = SessionLocator.Tenant;
+        multiEntityUpdateLog.ObjectTableId = this.ObjectTableId;
+        multiEntityUpdateLog.MultiEntityUpdateData = this.BuildMultiEntityUpdateData();
+        return multiEntityUpdateLog;
+    }
+
+    BuildMultiEntityUpdateData(): MultiEntityUpdateData {
+        var multiEntityUpdateData = new MultiEntityUpdateData();
+
+        var setValueList: AutomationSetValue[] = [];
         this.AutomationSetValueLists.forEach((item) => {
-            automationSetValuelist.push(item.CurrentEntityPM);
+            setValueList.push(item.CurrentEntityPM);
         });
 
+        var entities: MultiEntityUpdateDataEntity[] = [];
 
+        this.SelectedRecords.forEach((item) => {
+            entities.push(this.DataEntityMap(item));
+        });
+
+        multiEntityUpdateData.UserId = SessionLocator.LoggedUserId;
+        multiEntityUpdateData.SetValueLists = setValueList;
+        multiEntityUpdateData.Entities = entities;
+        multiEntityUpdateData.ObjectTableId = this.ObjectTableId;
+
+        return multiEntityUpdateData;
+
+    }
+
+    DataEntityMap(item: any): MultiEntityUpdateDataEntity {
+        var entity = new MultiEntityUpdateDataEntity();
+        entity.EntityId = item.Id;
+        entity.EntityNumber = item.ShipmentNumber;
+        entity.Tenant = SessionLocator.Tenant;
+        return entity;
     }
 
     IsUpdateValid(): boolean {

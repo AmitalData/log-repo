@@ -32,7 +32,7 @@
                     <td>
 
                         <AutomationsConditionAreaComponent [AutomationCondationLists]="AutomationSetValueLists"
-                            [Title]="'Set value area'" [TiggerComponent]="DataContext" [CondationListType]="'Set'"
+                            [Title]="'Update Fields Values'" [TiggerComponent]="DataContext" [CondationListType]="'Set'"
                             [NoEntity]="true"></AutomationsConditionAreaComponent>
 
                     </td>
@@ -101,7 +101,7 @@
                                     (AfterViewInitCompleted)="GridAfterViewInitCompleted($event)"
                                     (CountReady)="onCountReady($event)" [EnableRowHoverVisibility]="true"
                                     (CheckBoxChecked)="onCheckBoxChecked($event)"
-                                    [IsAllRecordsChecked]="IsAllRecordSelected" (DataLoaded)="OnDataLoaded($event)"
+                                    [IsAllRecordsChecked]="IsAllRecordSelected" (AllRecordsReady)="AllRecordsReady($event)"
                                     [CheckboxProp]="'Id'">
                                 </logitude-grid>
                             </div>
