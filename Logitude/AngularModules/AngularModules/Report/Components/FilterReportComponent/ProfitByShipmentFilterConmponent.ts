@@ -4,11 +4,10 @@ import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 import {ReportFliter} from '../../Components/Filters/ReportFliter';
 import {QueryFilterItem} from '../../Components/Filters/QueryFilterItem';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
-import {Component, OnInit, Output, ElementRef}  from '@angular/core';
+import {Component, OnInit}  from '@angular/core';
 import {AppTool} from '../../../Infrastructure/Tools';
 
-@Component({
-    
+@Component({    
     selector: 'ProfitByShipmentFilterConmponent',
     templateUrl: './ProfitByShipmentFilterConmponent.html',
     inputs: ['ReportsPreview']
@@ -75,7 +74,15 @@ export class ProfitByShipmentFilterConmponent extends BaseComponent implements O
     ngOnInit() {
         
     }
-    
+
+    private mySelectedTransportFilter: string = "All";
+    get SelectedTransportFilter() { return this.mySelectedTransportFilter; }
+    set SelectedTransportFilter(value: string) {
+        if (this.mySelectedTransportFilter != value) {
+            this.mySelectedTransportFilter = value;
+        }
+    }
+
     daysInMonth(aDate: Date) {
         return (new Date(aDate.getFullYear(), aDate.getMonth() + 1, 0)).getDate();
     }
@@ -175,6 +182,15 @@ export class ProfitByShipmentFilterConmponent extends BaseComponent implements O
             this.queryFilterItems.push(this.queryFilterItem);
         }
 
+        if (this.SelectedTransportFilter != "All") {
+            this.queryFilterItem = new QueryFilterItem();
+            this.queryFilterItem.DisplayInList = false;
+            this.queryFilterItem.FieldName = "TransportMode";
+            this.queryFilterItem.FieldValue = this.SelectedTransportFilter;
+            this.queryFilterItem.Operator = "Equals";
+            this.queryFilterItems.push(this.queryFilterItem);
+        }
+
         this.queryFilterItem = new QueryFilterItem();
         this.queryFilterItem.DisplayInList = false;
         this.queryFilterItem.FieldName = "IsByCreateDate";
@@ -223,6 +239,7 @@ export class ProfitByShipmentFilterConmponent extends BaseComponent implements O
     public IsCreateDateId: string = "IsCreateDateId_";
     public IsOperationalDateId: string = "IsOperationalDateId";
     public DateRadio: string = "DateRadio_";
+
     IsOperationalDateClicked() {
         this.IsByCreateDate = false;
     }
