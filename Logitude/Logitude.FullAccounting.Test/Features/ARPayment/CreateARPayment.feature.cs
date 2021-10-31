@@ -113,50 +113,50 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-                TechTalk.SpecFlow.Table table20 = new TechTalk.SpecFlow.Table(new string[] {
+                TechTalk.SpecFlow.Table table6 = new TechTalk.SpecFlow.Table(new string[] {
                             "property",
                             "Value"});
-                table20.AddRow(new string[] {
+                table6.AddRow(new string[] {
                             "Branch",
                             "BerzeitU"});
-                table20.AddRow(new string[] {
+                table6.AddRow(new string[] {
                             "LocalCurrency",
                             "NIS"});
-                table20.AddRow(new string[] {
+                table6.AddRow(new string[] {
                             "PaymentCurrency",
                             "NIS"});
-                table20.AddRow(new string[] {
+                table6.AddRow(new string[] {
                             "BillTo",
                             "FAC SpecFlowTest"});
-                table20.AddRow(new string[] {
+                table6.AddRow(new string[] {
                             "BillToPartnerTypeId",
                             "Customer"});
-                table20.AddRow(new string[] {
+                table6.AddRow(new string[] {
                             "AmountInLocalCurrency",
                             "1"});
-                table20.AddRow(new string[] {
+                table6.AddRow(new string[] {
                             "SATTransferStatusCode",
                             "Not Transfered"});
-                table20.AddRow(new string[] {
+                table6.AddRow(new string[] {
                             "PaymentCurrencyExchangeRate",
                             "1"});
-                table20.AddRow(new string[] {
+                table6.AddRow(new string[] {
                             "OpenAmountInLocalCurrency",
                             "1"});
-                table20.AddRow(new string[] {
+                table6.AddRow(new string[] {
                             "AccountingPaymentMethod",
                             "Cash"});
-                table20.AddRow(new string[] {
+                table6.AddRow(new string[] {
                             "AmountInPaymentCurrency",
                             "1"});
-                table20.AddRow(new string[] {
+                table6.AddRow(new string[] {
                             "OpenAmount",
                             "1"});
-                table20.AddRow(new string[] {
+                table6.AddRow(new string[] {
                             "Cashbook",
                             "CashNIS"});
 #line 6
- testRunner.Given("a ar payment with the following properties", ((string)(null)), table20, "Given ");
+ testRunner.Given("a ar payment with the following properties", ((string)(null)), table6, "Given ");
 #line hidden
 #line 21
  testRunner.When("create ar payment", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
