@@ -1,6 +1,42 @@
+:host ::ng-deep {
+    app-address-textarea {
+        textarea {
+            height: 136px;
+            font-size: 1rem;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif,
+                "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+        }
+
+        .google-map {
+            right: 20px;
+            bottom: 77px;
+        }
+
+        img {
+            width: 65px;
+            height: 65px;
+        }
+
+        googlemapsbutton img {
+            width: 38px !important;
+            height: 28px !important;
+        }
+    }
+
+    p-button button.p-button {
+        padding: 8px 7px !important;
+        top: 3px;
+        position: relative;
+    }
+}
+
+textarea {
+    height: 136px;
+}
+
 app-autocomplate-table {
     display: inline-block;
-    width: calc(100% - 100px);    
+    width: calc(100% - 69px);
 }
 
 app-btn-menu-plus {
@@ -12,15 +48,18 @@ app-btn-menu-plus {
     background: #0d89ec;
     color: #ffffff;
     border-color: #0d89ec;
- }
+}
 
 .plus-btn {
     border-color: #e2f0fb;
     background: #e2f0fb;
     color: #1084dc;
-    border-radius: 5px;
-    padding: 11px 25px;    
+    // border-radius: 5px;
+    padding: 8px 23px;
     cursor: pointer;
     float: right;
     margin-top: 12px;
+    position: relative;
+    top: 3px;
+    border-radius: 7px;    
 }

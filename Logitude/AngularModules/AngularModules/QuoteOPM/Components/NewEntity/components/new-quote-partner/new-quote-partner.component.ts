@@ -74,8 +74,8 @@ export class NewQuotePartnerComponent extends BaseComponent implements OnInit, A
 
 
   setPartners() {
-    var cardService = new CardPMService();
-    var contactService = new ContactListService();
+    const cardService = new CardPMService();
+    const contactService = new ContactListService();
     if (this.EntityPM[this.capitalizeType + 'Id'] != null) {
       cardService.get(this.EntityPM[this.capitalizeType + 'Id']).subscribe((cardResponse: any) => {
         if (cardResponse.Result != null) {
