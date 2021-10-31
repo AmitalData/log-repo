@@ -268,10 +268,7 @@
 
 	
 	 ---------------------VolumetricWeight---------------
-
 	 SET @FinalVolumetricWeight =  CAST(CAST(@VolumetricWeight AS FLOAT(20)) AS VARCHAR(36))  +' ('+ @ChargeableWeightUnitCode +')';
-
-
 	 ----------------------------------------------------
  
 	   SET @OrderGrossWeightWithUnitCode =  CAST(CAST(@OrderGrossWeight AS FLOAT(20)) AS VARCHAR(36))  +' ('+ @GrossWeightUnitCode +')';
@@ -280,7 +277,9 @@
     
      ----------------------------------------------------
 
-	
+	 if(@NumberOfPackages is null) begin set @NumberOfPackages= 0 end
+
+	     ----------------------------------------------------
 
 
 
