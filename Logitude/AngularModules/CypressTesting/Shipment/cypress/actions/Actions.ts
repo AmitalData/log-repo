@@ -962,7 +962,11 @@ function FillShipmentType(ShipmentType: string, TransportMode: string) {
         let shipmentTypeRadioSelector: string;
         if (Conditions.IsGroupage(ShipmentType)) {
             shipmentTypeRadioSelector = ShipmentSelectors.GroupageShipmentTypeRadio(TransportMode);
-        } else {
+        }
+        else if (TransportMode == "Inland") {
+            shipmentTypeRadioSelector = ShipmentSelectors.ShipmentTypeRadioInland(ShipmentType);
+        }
+        else {
             shipmentTypeRadioSelector = ShipmentSelectors.ShipmentTypeRadio(ShipmentType);
         }
         cy.ClickRadio(shipmentTypeRadioSelector);

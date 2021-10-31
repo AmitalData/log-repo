@@ -12,12 +12,10 @@ Given("the user logged in and navigates to shipments workspace", () => {
   Actions.NavigatesToShipmentsWorkspace()
 });
 
-Given("a direct shipment with the following details",
-  (dataTable) => {
-   let shipmentDetails = Assists.CreateInstance<ShipmentDetails>(dataTable, true);
-   ShipmentData = shipmentDetails;
-   Actions.OpenNewShipmentWizard(ShipmentData.ShipmentLevel);
-   Actions.FillShipmentWizardsFields(ShipmentData);
+Given("a direct shipment with the following details", (dataTable) => {
+  ShipmentData = Assists.CreateInstance<ShipmentDetails>(dataTable, true);
+  Actions.OpenNewShipmentWizard(ShipmentData.ShipmentLevel);
+  Actions.FillShipmentWizardsFields(ShipmentData);
 });
 
 When("create shipment", () => {
