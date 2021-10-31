@@ -18,14 +18,14 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly ShipmentConsignee = '#Shipment_ConsigneeId';
   public static readonly ShipmentCustomerType = '#Shipment_ShipmentCustomerTypeCode';
   public static readonly Backbutton_1 = '#EditBackbutton_1';
-  public static readonly Backbutton = '#EditBackbutton';
+  public static readonly Backbutton = '[id^=EditBackbutton]'
   public static readonly HouseHyperLink = ".HyperlinkButtonControl";
   public static readonly RoutingTab_1 = "#ShipmentTHRoutings_1";
   public static readonly HouseMainCarriageCancelButton = "#MainCarriageCancelBtn"
   public static readonly ShipmentSaveCloseButton = '[id^=Shipment-SaveClose]'
   public static readonly APInvoiceStatus = "[data-cy='StatusValue']";
   public static readonly ARInvoiceStatus = "[id^='ARInvoiceHeaderStatusName']";
-  
+
   //#endregion
 
   //#region Create shipment
@@ -260,7 +260,7 @@ export class ShipmentSelectors extends RegexSelectors {
   //#region operations and actions
   public static readonly NewAttachedHouse = '#NewHouseBtn';
   public static readonly CopyShipmentButton = '#ShipmentBCopyShipment';
-  public static readonly CancelShipmentButton = '#ShipmentBCancelShipment';
+  public static readonly CancelShipmentButton = '[id^=ShipmentBCancelShipment]'
   public static readonly ReactivateShipmentButton = '#ShipmentBReactivateShipment';
   public static readonly SplitShipmentButton = '#ShipmentBSplitShipment';
   public static readonly OperationalCloseButton = '#ShipmentBOperationalClose';
@@ -355,7 +355,7 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly ConvertToLCL = "#ShipmentBConverttoLCL";
   public static readonly ConvertToFCL = "#ShipmentBConverttoFCL";
   public static readonly ConvertToHouse = "#ShipmentBConvertShipmentFromDirectToHouse";
-  public static readonly ConvertToDirect = "#ShipmentBConvertShipmentFromHouseToDirect";
+  public static readonly ConvertToDirect = '[id^=ShipmentBConvertShipmentFromHouseToDirect]'
   public static readonly ConvertShipmentDirection = "#ShipmentBConvertShipmentDirection";
   public static readonly ShipmentTypeValue = "[data-cy='ShipmentTypeValue']";
   public static readonly ShipmentEventsRefreshButton = "[data-cy='EventsRefresh_Shipment'] button";
