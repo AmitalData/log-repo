@@ -1408,7 +1408,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                                                SearchFields = d.SearchFields,
                                                InActive = d.InActive,
                                            }).FirstOrDefault();
-                            DisinctContactEmail.Add(contact);
+
+                            if (contact != null) DisinctContactEmail.Add(contact);
                         }
                         //myResult = (from d in context.Contacts.GroupBy(c => c.Email).Select(c => c.FirstOrDefault())
                         //            where d.Tenant == tenant
