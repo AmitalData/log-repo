@@ -13,7 +13,6 @@ import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
 import {Output, EventEmitter}  from '@angular/core';
 import {PropertyChangedArgs} from '../../Infrastructure/EventEmitterArgs/PropertyChangedArgs';
 import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass';
-import { BankAccountPM } from './BankAccountPM';
 
 export class ARPaymentBankTranferPM {
 
@@ -84,9 +83,9 @@ export class ARPaymentBankTranferPM {
     public get ExchageRate() { return this.exchageRate; }
     public set ExchageRate(newValue: number) { if (this.exchageRate != newValue) { this.exchageRate = newValue; this.MarkAsDirty("ExchageRate"); } }
        
-    public OldEntityPM: ARPaymentBankTranferPM;
+	 
 
-    public BankAccount: any;
+    public OldEntityPM: ARPaymentBankTranferPM;
 		
     public IsDirty: boolean;
     public DisableMarkAsDirty: boolean = false;
@@ -113,4 +112,4 @@ export class ARPaymentBankTranferPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

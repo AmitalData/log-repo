@@ -54,7 +54,10 @@ export class ARPaymentValidator {
             this.ValidatePaymentChequeFields(entityPm, validationResults, msg);
     }
 
-
+    if (entityPm.AccountingPaymentMethodCode == "BT") {
+      if(entityPm.IsFullAccounting)
+          this.ValidateBankTransferFields(entityPm, validationResults, msg);
+    }
 
     if (entityPm.HasInvoicesErrors) {
       validationResults.push(TextCodeTranslator.Translate("ARPayment.M.PaymentInvoicesHaveErrors"));
@@ -152,6 +155,19 @@ export class ARPaymentValidator {
             validationResults.push(msg.replace("%FieldName", TextCodeTranslator.Translate("ARPayment.F.BankBranch")));
         }
     }
+
+    private ValidateBankTransferFields(entityPm: ARPaymentPM, validationResults: any[], msg: string) {
+      if (AppTool.IsNullOrEmpty(entityPm.AmountInPaymentCurrency)) {
+        validationResults.push(msg.replace("%FieldName", TextCodeTranslator.Translate("ARPayment.F.AmountInPaymentCurrency")));
+      }
+      if (AppTool.IsNullOrEmpty(entityPm.ValueDate)) {
+          validationResults.push(msg.replace("%FieldName", TextCodeTranslator.Translate("ARPayment.F.ValueDate")));
+      }
+      if (AppTool.IsNullOrEmpty(entityPm.BankAccountId)) {
+          validationResults.push(msg.replace("%FieldName", TextCodeTranslator.Translate("ARPayment.F.BankAccountId")));
+      }
+  }
+
     public static ValidateCurrenctEntity(entityPm: ARPaymentPM) {
         var errors = [];
 

@@ -239,7 +239,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                         LocalAmount = a.LocalAmount,
                         ForeignAmount = a.ForeignAmount,
                         ExchageRate = a.ExchageRate,
-                        BankAccount = a.BankAccount
+                        BankAccount = new BankAccountPM { Id = a.BankAccount?.Id, LocalName = a.BankAccount.LocalName,EnglishName = a.BankAccount.EnglishName, BankCode = "-" }
                     }).OrderBy(d => d.LineNumber).ToList();
         }
 

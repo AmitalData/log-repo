@@ -13,6 +13,7 @@ import { ObservableCollection } from '../../../../Infrastructure/Utilities/Obser
 import { ConfirmWindow } from '../../../../Controls/Windows/ConfirmWindow';
 import { ObjectsLocator } from '../../../../Infrastructure/Locators/ObjectsLocator';
 import { ARPaymentBankTranferPM } from 'Accounting/EntityPMs/ARPaymentBankTranferPM';
+import { BankAccountPM } from 'Accounting/EntityPMs/BankAccountPM';
 
 declare var window: any;
 
@@ -56,7 +57,8 @@ export class ARPaymentMultiBankTransfersComponent extends BaseComponent {
             this.UpdateBankTransferCounter();
             this.IsDisplayOnly =
                 this.paymentPM.StatusCode == 'AD' ||
-                this.paymentPM.StatusCode == 'VD'
+                this.paymentPM.StatusCode == 'VD' || 
+                this.paymentPM.StatusCode == 'BT'
                     ? true
                     : false;
         }
@@ -67,7 +69,6 @@ export class ARPaymentMultiBankTransfersComponent extends BaseComponent {
     FillItemSource() {
         this.ItemsSource.Clear();
         for (let item of this.paymentPM.ARPaymentBankTranfers) {
-            console.log('xxxx', item)
             this.ItemsSource.Insert(new PaymentBankTransferLine(item, this));
         }
     }
@@ -79,9 +80,11 @@ export class ARPaymentMultiBankTransfersComponent extends BaseComponent {
                 (bankTransfer.Tenant = this.paymentPM.Tenant);
             bankTransfer.LineNumber = 1;
             bankTransfer.BankAccountId = this.paymentPM.BankAccountId;
+            bankTransfer.BankAccount = this.paymentPM.BankAccount;
             bankTransfer.ValueDate = this.paymentPM.ValueDate;
             bankTransfer.PaymentRef = this.paymentPM.ChequeOrPaymentRef;
             bankTransfer.ForeignAmount = this.paymentPM.AmountInPaymentCurrency;
+            bankTransfer.PaymentId = '-';
             this.UpdatePaymentBankTransferList(bankTransfer);
         }
     }
@@ -105,6 +108,7 @@ export class ARPaymentMultiBankTransfersComponent extends BaseComponent {
                 (bankTransfer.PaymentId = this.paymentPM.Id),
                     (bankTransfer.Tenant = this.paymentPM.Tenant);
                 bankTransfer.LineNumber = latestLineNumber;
+                bankTransfer.PaymentId = '-';
                 this.UpdatePaymentBankTransferList(bankTransfer);
                 this.CalculateTotal();
                 this.BankTransfersCounter = latestLineNumber;
@@ -316,6 +320,16 @@ export class PaymentBankTransferLine extends BaseComponent {
     set BankAccountId(value: string) {
         if (this.entityPM.BankAccountId != value) {
             this.entityPM.BankAccountId = value;
+        }
+    }
+    
+    get BankAccount(){
+        return  this.entityPM.BankAccount;
+    }
+
+    set BankAccount(value: BankAccountPM) {
+        if (this.entityPM.BankAccount != value) {
+            this.entityPM.BankAccount = value;
         }
     }
 

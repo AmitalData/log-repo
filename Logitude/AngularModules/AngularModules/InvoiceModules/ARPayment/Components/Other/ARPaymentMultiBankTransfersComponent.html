@@ -41,7 +41,7 @@
 
 
 
-                                <log-column [header]="'ARPaymentBankTranfer.F.LineNumber' | TextCodeTranslationPipe" [width]="'70'" [Alignment]="isLTR?'left':'right'"  >
+                                <log-column [header]="'Line No.'" [width]="'70'" [Alignment]="isLTR?'left':'right'"  >
                                     <ng-template let-item>
                                         <log-cell-template #logcelltemplate [TabIndex]="-1">
                                             <div style="text-align:left" class="TextTrimming" text-start>
@@ -90,7 +90,7 @@
 
 
                                 </log-column>
-                                <log-column [header]="'ARPaymentBankTranfer.F.PaymentRef' | TextCodeTranslationPipe" [binding]="'PaymentRef'" [width]="'100'" [Editable]="true" [Alignment]="isLTR?'left':'right'"  >
+                                <log-column [header]="'Payment Reference'" [binding]="'PaymentRef'" [width]="'100'" [Editable]="true" [Alignment]="isLTR?'left':'right'"  >
                                     <ng-template let-item>
                                         <log-cell-template #logcelltemplate>
                                             <div class="TextTrimming" style="text-align:left" *ngIf="logcelltemplate.IsDisplayMode" text-start>
@@ -107,11 +107,11 @@
 
 
                                 </log-column>
-                                <log-column [header]="'ARPaymentBankTranfer.F.BankAccountId' | TextCodeTranslationPipe" [binding]="'Bank'" [width]="'80'" [Editable]="true"  [Alignment]="isLTR?'left':'right'"   >
+                                <log-column [header]="'Bank Account'" [binding]="'Bank'" [width]="'120'" [Editable]="true"  [Alignment]="isLTR?'left':'right'"   >
                                     <ng-template let-item>
                                         <log-cell-template #logcelltemplate>
                                             <div class="TextTrimming" style="text-align:left" *ngIf="logcelltemplate.IsDisplayMode" text-start>
-                                                <!-- <span>{{item.BankAccount.LocalName}}</span> -->
+                                                <span>{{item.BankAccount?.LocalName}}</span>
                                             </div>
                                             <div *ngIf="logcelltemplate.IsEditMode">
                                                 <!-- <LogLov 
@@ -127,7 +127,7 @@
                                                     <LogLov [ObjectFieldName]="'BankAccountId'"
                                                         [ObjectTableName]="ObjectTableName"
                                                         [DataContext]="DataContext"
-                                                        (SelectedItemChanged)="item.BankAccountId = $event?.Id"
+                                                        (SelectedItemChanged)="item.BankAccountId = $event?.Id; item.BankAccount = $event"
                                                         [LookUpTableName]="'BankAccount'"
                                                         [DisplayMemberPath]="'LocalName'"> </LogLov>
 

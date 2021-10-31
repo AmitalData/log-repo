@@ -1928,6 +1928,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
 				console.log('myResponse', myResponse);
 				if (myResponse != null && !myResponse.HasError) {
 					this.bankAccount = myResponse.Result;
+					this.EntityPM.BankAccount = this.bankAccount;
 					if (this.bankAccount != null && this.bankAccount.GLAccountCurrencyId != null && this.bankAccount.GLAccountCurrencyId != "multi") {
 						if (this.bankAccount.GLAccountCurrencyId != this.PaymentCurrencyId) {
 							this.GLAccountNumber = this.bankAccount.GLAccountNumber;
@@ -2296,10 +2297,10 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
     }
 	/* Bank Transferes */
 	AddBankTransfersButtonClicked() {
-        // var errors: string[] = this.ValidateChequeFields();
-        // if (errors.length > 0) {
-        //     return;
-        // }
+        var errors: string[] = this.ValidateBankTransferFields();
+        if (errors.length > 0) {
+            return;
+        }
         this.ShowMultiBankTransfersScreen();
     }
 
@@ -2307,7 +2308,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
         var windowArgs: any = {};
         windowArgs.EntityPM = this.EntityPM;
         var logWindow = new LogitudeWindow();
-        logWindow.Width = 600;
+        logWindow.Width = 630;
         logWindow.Height = 600;
         logWindow.ShowCloseButton = false;
         logWindow.WindowArgs = windowArgs;
@@ -2356,6 +2357,13 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
         this.ValueDate = bankTransfer?.ValueDate;
 		this.ChequeOrPaymentRef = bankTransfer?.PaymentRef;
         this.BankTransferAmount = bankTransfer?.ForeignAmount;
+    }
+
+	ValidateBankTransferFields() {
+        var errors: string[];
+        errors = this.ARPaymentValidator.Validate(this.EntityPM);
+        this.CurrentSession.CurrentEditComponent.ValidationErrorsList = errors;
+        return errors;
     }
 }
 

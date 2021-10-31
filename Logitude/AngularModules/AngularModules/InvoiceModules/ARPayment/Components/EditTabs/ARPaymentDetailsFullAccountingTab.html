@@ -463,6 +463,26 @@
                         </td>
 
                     </tr>
+
+                    <!-- Multiple bank transfers-->
+                    
+                    <tr style="height:22px" *ngIf="EntityPM.ARPaymentBankTranfers.length > 1">
+                        <td colspan="2">
+                            <table>
+                                <tr>
+                                    <!-- <td style="width:200px" colspan="2"></td>-->
+                                    <td>
+                                        <div style="width:500px;margin:0 400px;">
+                                            <div class="DisbleBox">
+                                                More than one Bank Transfer was created for this Payment. Click on the Edit button to view them
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td style="width:100%"></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
                     <!-- Cheque -->
                     <tr style="height:1px;" *ngIf="CollapsedIfCash">
                         <td>
@@ -647,13 +667,16 @@
                                                                 </div>
                                                             </td>
 
-                                                            <td *ngIf="isFullAccounting && AccountingPaymentMethodCode == 'BT'" style="width:10px">
-                                                                <div *ngIf="EntityPM.StatusCode !='AD'">
+                                                            <td *ngIf="isFullAccounting && AccountingPaymentMethodCode == 'BT'" style="width:50px">
+                                                                <div *ngIf="EntityPM.ARPaymentBankTranfers.length === 0">
                                                                     <IconButton [Name]="'Add'" [IsSmall]="true" (click)="AddBankTransfersButtonClicked()"></IconButton>
+                                                                    <div style="margin-left: 30px">
+                                                                        <HelpIcon [Header]="'Bank Transfer'" [Text]="'You can add multiple Bank Transfers by clicking on the Add Button'"></HelpIcon>
+                                                                    </div>
                                                                 </div>
-                                                                <!-- <div *ngIf="isMultipleCheques && EntityPM.StatusCode=='AD'">
-                                                                    <IconButton [Name]="'Edit'" [IsSmall]="true" (click)="DisplayChequesButtonClicked()"></IconButton>
-                                                                </div> -->
+                                                                <div *ngIf="EntityPM.ARPaymentBankTranfers.length > 0">
+                                                                    <IconButton [Name]="'Edit'" [IsSmall]="true" (click)="ShowMultiBankTransfersScreen()"></IconButton>
+                                                                </div>
                                                             </td>
                                                             <td>
                                                             </td>
@@ -695,6 +718,9 @@
                                     <td width="5px"></td>
                                     <td *ngIf="isMultipleCheques " style="width:20px">
                                         <img style="width:21px" src="./Images/Icons/RedX.png" title="{{'ARPayment.O.CantPerformReconciliation' | TextCodeTranslationPipe}}" />
+                                    </td>
+                                    <td *ngIf="EntityPM.ARPaymentBankTranfers.length > 1 " style="width:20px">
+                                        <img style="width:21px" src="./Images/Icons/RedX.png" title="{{'ARPaymentBankTransfer.O.ReconciliationInMultipleTransfers' | TextCodeTranslationPipe}}" />
                                     </td>
                                     <td>
                                         <div></div>

@@ -21,6 +21,7 @@ import {Output, EventEmitter}  from '@angular/core';
 import {PropertyChangedArgs} from '../../Infrastructure/EventEmitterArgs/PropertyChangedArgs';
 import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass';
 import { ARPaymentBankTranferPM } from 'Accounting/EntityPMs/ARPaymentBankTranferPM';
+import { BankAccountPM } from 'Accounting/EntityPMs/BankAccountPM';
 
 
 export class ARPaymentPM {
@@ -710,6 +711,7 @@ export class ARPaymentPM {
 	 
 
     public OldEntityPM: ARPaymentPM;
+    public BankAccount: BankAccountPM;
 		
     public IsDirty: boolean;
     public DisableMarkAsDirty: boolean = false;
