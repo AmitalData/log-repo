@@ -23,8 +23,7 @@ namespace CommunicationWorkerRole
             {
                 InitializeQueueService();
                 QueueResponse queueResponse = queueService.Receive(new TimeSpan(0, 0, 0, 10));
-
-                if (queueResponse.MessageId != null) GetStartedInQueueMessage(queueResponse);
+                if (queueResponse.MessageId != null) ExecuteQueue(queueResponse);
             }
             catch (Exception ex)
             {
@@ -40,7 +39,7 @@ namespace CommunicationWorkerRole
             queueService.InitializeQueue("MultiEntityUpdateQueue", 0);
         }
 
-        private void GetStartedInQueueMessage(QueueResponse queueResponse)
+        private void ExecuteQueue(QueueResponse queueResponse)
         {
             new MultiEntityUpdateService(queueService, queueResponse).ExecuteMultiEntityUpdateQueue();
         }

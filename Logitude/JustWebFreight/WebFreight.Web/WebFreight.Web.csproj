@@ -2732,7 +2732,7 @@
     <Compile Include="Helpers\SchedulerHelper.cs" />
     <Compile Include="Helpers\SecurityDocumentHelper.cs" />
     <Compile Include="Helpers\SendDocumentDataExernalService.cs" />
-    <Compile Include="Helpers\SendGrid\SendGridAnalyzer.cs" />
+    <Compile Include="Helpers\Quickbooks\SendGrid\SendGridAnalyzer.cs" />
     <Compile Include="Helpers\SharedLogisticContactHelper.cs" />
     <Compile Include="Helpers\SignUpHelper.cs" />
     <Compile Include="Helpers\SqlBulkInsert.cs" />
@@ -2749,6 +2749,9 @@
     <Compile Include="Helpers\UploadTariffHelper.cs" />
     <Compile Include="Helpers\Warehouse\WarehouseRelaseService.cs" />
     <Compile Include="Helpers\WorkerRole\BIReportExecutionService.cs" />
+    <Compile Include="Helpers\WorkerRole\MultiEntityUpdate\MultiEntityUpdateExecutionService.cs" />
+    <Compile Include="Helpers\WorkerRole\MultiEntityUpdate\MultiEntityUpdateGeneralService.cs" />
+    <Compile Include="Helpers\WorkerRole\MultiEntityUpdate\MultiEntityUpdateLogExecutionService.cs" />
     <Compile Include="Helpers\WorkerRole\PODImage\PODImageConverterService.cs" />
     <Compile Include="Helpers\WorkerRole\DocumentsExecutionService.cs" />
     <Compile Include="Helpers\WorkerRole\PODImage\IPODImageConverter.cs" />
