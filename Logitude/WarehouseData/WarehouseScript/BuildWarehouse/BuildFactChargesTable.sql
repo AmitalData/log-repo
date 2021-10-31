@@ -196,7 +196,7 @@
  
 	,NewDIM_ShipmentStatuses.Id_Number, ShipmentPayablesReceivables.InvoiceStatusCode, ShipmentPayablesReceivables.InvoiceDraftNumber, ShipmentPayablesReceivables.InvoiceLineDescription, ShipmentPayablesReceivables.InvoiceLineLocalDescription,ShipmentPayablesReceivables.ExpectedAmount, ShipmentPayablesReceivables.ExpectedAmountLocal,ShipmentPayablesReceivables.ExpectedAmountInProfitCurrency,
 	dw_Shipments.PlannedCargoReadyDate,dw_Shipments.ApprovedCargoReadyDate,dw_Shipments.Notify1Reference2,HandlerUser.Id_Number, AccountingClosedByUser.Id_Number,dw_Shipments.GrossWeightInKG, dw_Shipments.GrossWeightPerTon, dw_Shipments.OrderGrossWeight, dw_Shipments.BookingVolume,
-   dw_Shipments.VolumeInCBM , dw_Shipments.VolumetricWeight, dw_Shipments.NumberOfPackages, dw_Shipments.BookingNumberOfPackages, dw_Shipments.ChargeableWeightUnitCode
+   dw_Shipments.VolumeInCBM , dw_Shipments.VolumetricWeight, dw_Shipments.NumberOfPackages, dw_Shipments.BookingNumberOfPackages, dw_Shipments.ChargeableWeightUnitCode,dw_Shipments.GrossWeightUnitCode,dw_Shipments.VolumeUnitCode
 
 	 
 	
