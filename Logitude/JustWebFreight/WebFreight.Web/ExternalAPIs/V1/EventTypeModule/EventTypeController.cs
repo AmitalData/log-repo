@@ -20,8 +20,6 @@ using WebFreight.Web.Helpers.ExternalAPIHelpers;
 using WebFreight.Web.Security;
 using WebFreight.Web.Helpers.ShipmentOrderModule;
 using Logitude.BL.InfrastructureModel.APIDataContract.ApiV1;
-using Logitude.BL.CommonDataModel.EntityPMs;
-using Logitude.BL.CommonDataModel.EntityQueries;
 
 namespace WebFreight.Web.ExternalAPIs.V1.ShipmentOrderModule
 {
@@ -30,21 +28,11 @@ namespace WebFreight.Web.ExternalAPIs.V1.ShipmentOrderModule
         public HttpResponseMessage Get(string objectTableName, bool connectedToStatus)
         {
             try
-            { 
+            {
                 int tenant = GetTenantFromAuthenticationToken();
                 Authentication(tenant);
-                TenantPM tenantPM = TenantQuery.GetSingleTenantPM(tenant, false);
-                if (tenantPM.IsHybrid)
-                {
-                    EventsTypes EventTypeList = new EventTypeDetailsQueryService(tenant, objectTableName).GetEventTypeByObjectTable(connectedToStatus);
-                    return Request.CreateResponse(HttpStatusCode.OK, EventTypeList);
-                }
-                else
-                {
-                    throw new Exception("The Tenant " + tenantPM.Company+"("+tenantPM.Id+")" + " is not connected to a Hybrid Cloud tenant");
-                }
-                
-                
+                EventsTypes EventTypeList = new EventTypeDetailsQueryService(tenant, objectTableName).GetEventTypeByObjectTable(connectedToStatus);
+                return Request.CreateResponse(HttpStatusCode.OK, EventTypeList);
             }
             catch (Exception ex)
             {
@@ -52,7 +40,7 @@ namespace WebFreight.Web.ExternalAPIs.V1.ShipmentOrderModule
                 return Request.CreateResponse(apiExceptionResult.StatusCode, apiExceptionResult.Exception);
             }
         }
-  
+
         private int GetTenantFromAuthenticationToken()
         {
             string token = HttpContext.Current.Request.Headers["Token"];
