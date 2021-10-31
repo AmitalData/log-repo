@@ -236,6 +236,7 @@ export class CustomsRequestsSheetsComponent
         var service = new CustomsRequestsSheetWebService();
         var statistics = service.GetStatistics().subscribe((response: any) => {
             if (response.Result != null) {
+                this.SumRequests = 0;
                 this.customsRequestsSheetSummary = response.Result;
                 for (var request of (this.customsRequestsSheetSummary as any[])) {
                     this.SumRequests += request.count;
@@ -443,7 +444,7 @@ export class CustomsRequestsSheetsComponent
     }
 
     CRSSearch() {
-
+        this.GetStatistics();
         this.IsSearchButtonEnabled = false;
         //this.CurrentSession.StartBusyIndicator("");
         setTimeout(() => {
