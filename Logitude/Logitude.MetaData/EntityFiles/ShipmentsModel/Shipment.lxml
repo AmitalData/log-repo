@@ -99481,7 +99481,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;Direction&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -99497,7 +99497,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;TransportMode&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -99513,7 +99513,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;Shipper&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -99580,7 +99580,7 @@
         IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;ConsigneeReference1&quot;"
-        DCVersion="&quot;&quot;"
+        DCVersion="&quot;ApiV1&quot;"
         FieldName="&quot;ConsigneeReference1&quot;"
         IsKey="false"
         IsManualMapping="false"
@@ -99596,7 +99596,7 @@
         IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;ConsigneeReference2&quot;"
-        DCVersion="&quot;&quot;"
+        DCVersion="&quot;ApiV1&quot;"
         FieldName="&quot;ConsigneeReference2&quot;"
         IsKey="false"
         IsManualMapping="false"
@@ -99641,7 +99641,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;ToPort&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -99657,7 +99657,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;GrossWeightUnit&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -99673,7 +99673,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;ChargeableWeightUnit&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -99689,7 +99689,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;VolumeUnit&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -99705,7 +99705,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;Incoterm&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -99754,7 +99754,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;OceanOrInlandPackages&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -99771,7 +99771,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;Containers&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -99788,7 +99788,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;Commodity&quot;"
         FieldName="&quot;AWBCommodityItemNumber&quot;"
@@ -99850,7 +99850,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;NumberOfPackages&quot;"
         FieldName="&quot;NumberOfPackages&quot;"
@@ -99865,7 +99865,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;GrossWeight&quot;"
         FieldName="&quot;GrossWeight&quot;"
@@ -99913,6 +99913,7 @@
         IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;ChargeableWeight&quot;"
+        DCVersion="&quot;ApiV1&quot;"
         FieldName="&quot;ChargeableWeight&quot;"
         IsKey="false"
         IsManualMapping="false"
@@ -99925,7 +99926,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;Master&quot;"
         FieldName="&quot;Master&quot;"
@@ -100539,7 +100540,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;EstimatedFinalArrivalDate&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -100963,6 +100964,438 @@
         IsNullable="false"
         IsSpecialField="false"
         IsCustomType="true"
+        IsAttribute="false"
+        IgnoreCustomTypeCheck="false"
+        IsCloseField="false"
+        IsCompositKey="false"
+        IsUpdateAllowed="true" />
+      <DCField
+        DCFieldName="&quot;CutoffDate&quot;"
+        DCVersion="&quot;ApiV1&quot;"
+        FieldName="&quot;CutoffDate&quot;"
+        IsKey="false"
+        IsManualMapping="false"
+        IsMulti="false"
+        FieldsDataType="&quot;DateTime&quot;"
+        IsNullable="true"
+        IsSpecialField="false"
+        IsCustomType="false"
+        IsAttribute="false"
+        IgnoreCustomTypeCheck="false"
+        IsCloseField="false"
+        IsCompositKey="false"
+        IsUpdateAllowed="true" />
+      <DCField
+        DCFieldName="&quot;IsDangerous&quot;"
+        DCVersion="&quot;ApiV1&quot;"
+        FieldName="&quot;IsDangerous&quot;"
+        IsKey="false"
+        IsManualMapping="false"
+        IsMulti="false"
+        FieldsDataType="&quot;Boolean&quot;"
+        IsNullable="false"
+        IsSpecialField="false"
+        IsCustomType="false"
+        IsAttribute="false"
+        IgnoreCustomTypeCheck="false"
+        IsCloseField="false"
+        IsCompositKey="false"
+        IsUpdateAllowed="true" />
+      <DCField
+        DCFieldName="&quot;HAWBDate&quot;"
+        DCVersion="&quot;ApiV1&quot;"
+        FieldName="&quot;HAWBDate&quot;"
+        IsKey="false"
+        IsManualMapping="false"
+        IsMulti="false"
+        FieldsDataType="&quot;DateTime&quot;"
+        IsNullable="true"
+        IsSpecialField="false"
+        IsCustomType="false"
+        IsAttribute="false"
+        IgnoreCustomTypeCheck="false"
+        IsCloseField="false"
+        IsCompositKey="false"
+        IsUpdateAllowed="true" />
+      <DCField
+        DCFieldName="&quot;OnCarriageTransportMode&quot;"
+        DCVersion="&quot;ApiV1&quot;"
+        FieldName="&quot;OnCarriageTransportModeId&quot;"
+        IsKey="false"
+        IsManualMapping="false"
+        IsMulti="false"
+        FieldsDataType="&quot;TransportMode&quot;"
+        IsNullable="false"
+        IsSpecialField="false"
+        IsCustomType="true"
+        IsAttribute="false"
+        IgnoreCustomTypeCheck="false"
+        IsCloseField="false"
+        IsCompositKey="false"
+        IsUpdateAllowed="true" />
+      <DCField
+        DCFieldName="&quot;OnCarriageFromPort&quot;"
+        DCVersion="&quot;ApiV1&quot;"
+        FieldName="&quot;OnCarriageFromPortId&quot;"
+        IsKey="false"
+        IsManualMapping="false"
+        IsMulti="false"
+        FieldsDataType="&quot;Port&quot;"
+        IsNullable="false"
+        IsSpecialField="false"
+        IsCustomType="true"
+        IsAttribute="false"
+        IgnoreCustomTypeCheck="false"
+        IsCloseField="false"
+        IsCompositKey="false"
+        IsUpdateAllowed="true" />
+      <DCField
+        DCFieldName="&quot;OnCarriageToPort&quot;"
+        DCVersion="&quot;ApiV1&quot;"
+        FieldName="&quot;OnCarriageToPortId&quot;"
+        IsKey="false"
+        IsManualMapping="false"
+        IsMulti="false"
+        FieldsDataType="&quot;Port&quot;"
+        IsNullable="false"
+        IsSpecialField="false"
+        IsCustomType="true"
+        IsAttribute="false"
+        IgnoreCustomTypeCheck="false"
+        IsCloseField="false"
+        IsCompositKey="false"
+        IsUpdateAllowed="true" />
+      <DCField
+        DCFieldName="&quot;OnCarriageCarrier&quot;"
+        DCVersion="&quot;ApiV1&quot;"
+        FieldName="&quot;OnCarriageCarrierId&quot;"
+        IsKey="false"
+        IsManualMapping="false"
+        IsMulti="false"
+        FieldsDataType="&quot;Card&quot;"
+        IsNullable="false"
+        IsSpecialField="false"
+        IsCustomType="true"
+        IsAttribute="false"
+        IgnoreCustomTypeCheck="false"
+        IsCloseField="false"
+        IsCompositKey="false"
+        IsUpdateAllowed="true" />
+      <DCField
+        DCFieldName="&quot;OnCarriageCarrierNumber&quot;"
+        DCVersion="&quot;ApiV1&quot;"
+        FieldName="&quot;OnCarriageCarrierNumber&quot;"
+        IsKey="false"
+        IsManualMapping="false"
+        IsMulti="false"
+        FieldsDataType="&quot;Text&quot;"
+        IsNullable="false"
+        IsSpecialField="false"
+        IsCustomType="false"
+        IsAttribute="false"
+        IgnoreCustomTypeCheck="false"
+        IsCloseField="false"
+        IsCompositKey="false"
+        IsUpdateAllowed="true" />
+      <DCField
+        DCFieldName="&quot;OnCarriageATD&quot;"
+        DCVersion="&quot;ApiV1&quot;"
+        FieldName="&quot;OnCarriageATD&quot;"
+        IsKey="false"
+        IsManualMapping="false"
+        IsMulti="false"
+        FieldsDataType="&quot;DateTime&quot;"
+        IsNullable="true"
+        IsSpecialField="false"
+        IsCustomType="false"
+        IsAttribute="false"
+        IgnoreCustomTypeCheck="false"
+        IsCloseField="false"
+        IsCompositKey="false"
+        IsUpdateAllowed="true" />
+      <DCField
+        DCFieldName="&quot;OnCarriageATA&quot;"
+        DCVersion="&quot;ApiV1&quot;"
+        FieldName="&quot;OnCarriageATA&quot;"
+        IsKey="false"
+        IsManualMapping="false"
+        IsMulti="false"
+        FieldsDataType="&quot;DateTime&quot;"
+        IsNullable="true"
+        IsSpecialField="false"
+        IsCustomType="false"
+        IsAttribute="false"
+        IgnoreCustomTypeCheck="false"
+        IsCloseField="false"
+        IsCompositKey="false"
+        IsUpdateAllowed="true" />
+      <DCField
+        DCFieldName="&quot;OnCarriageETD&quot;"
+        DCVersion="&quot;ApiV1&quot;"
+        FieldName="&quot;OnCarriageETD&quot;"
+        IsKey="false"
+        IsManualMapping="false"
+        IsMulti="false"
+        FieldsDataType="&quot;DateTime&quot;"
+        IsNullable="true"
+        IsSpecialField="false"
+        IsCustomType="false"
+        IsAttribute="false"
+        IgnoreCustomTypeCheck="false"
+        IsCloseField="false"
+        IsCompositKey="false"
+        IsUpdateAllowed="true" />
+      <DCField
+        DCFieldName="&quot;OnCarriageETA&quot;"
+        DCVersion="&quot;ApiV1&quot;"
+        FieldName="&quot;OnCarriageETA&quot;"
+        IsKey="false"
+        IsManualMapping="false"
+        IsMulti="false"
+        FieldsDataType="&quot;DateTime&quot;"
+        IsNullable="true"
+        IsSpecialField="false"
+        IsCustomType="false"
+        IsAttribute="false"
+        IgnoreCustomTypeCheck="false"
+        IsCloseField="false"
+        IsCompositKey="false"
+        IsUpdateAllowed="true" />
+      <DCField
+        DCFieldName="&quot;PreCarriageTransportMode&quot;"
+        DCVersion="&quot;ApiV1&quot;"
+        FieldName="&quot;PreCarriageTransportModeId&quot;"
+        IsKey="false"
+        IsManualMapping="false"
+        IsMulti="false"
+        FieldsDataType="&quot;TransportMode&quot;"
+        IsNullable="false"
+        IsSpecialField="false"
+        IsCustomType="true"
+        IsAttribute="false"
+        IgnoreCustomTypeCheck="false"
+        IsCloseField="false"
+        IsCompositKey="false"
+        IsUpdateAllowed="true" />
+      <DCField
+        DCFieldName="&quot;PreCarriageFromPort&quot;"
+        DCVersion="&quot;ApiV1&quot;"
+        FieldName="&quot;PreCarriageFromPortId&quot;"
+        IsKey="false"
+        IsManualMapping="false"
+        IsMulti="false"
+        FieldsDataType="&quot;Port&quot;"
+        IsNullable="false"
+        IsSpecialField="false"
+        IsCustomType="true"
+        IsAttribute="false"
+        IgnoreCustomTypeCheck="false"
+        IsCloseField="false"
+        IsCompositKey="false"
+        IsUpdateAllowed="true" />
+      <DCField
+        DCFieldName="&quot;PreCarriageToPort&quot;"
+        DCVersion="&quot;ApiV1&quot;"
+        FieldName="&quot;PreCarriageToPortId&quot;"
+        IsKey="false"
+        IsManualMapping="false"
+        IsMulti="false"
+        FieldsDataType="&quot;Port&quot;"
+        IsNullable="false"
+        IsSpecialField="false"
+        IsCustomType="true"
+        IsAttribute="false"
+        IgnoreCustomTypeCheck="false"
+        IsCloseField="false"
+        IsCompositKey="false"
+        IsUpdateAllowed="true" />
+      <DCField
+        DCFieldName="&quot;PreCarriageCarrier&quot;"
+        DCVersion="&quot;ApiV1&quot;"
+        FieldName="&quot;PreCarriageCarrierId&quot;"
+        IsKey="false"
+        IsManualMapping="false"
+        IsMulti="false"
+        FieldsDataType="&quot;Card&quot;"
+        IsNullable="false"
+        IsSpecialField="false"
+        IsCustomType="true"
+        IsAttribute="false"
+        IgnoreCustomTypeCheck="false"
+        IsCloseField="false"
+        IsCompositKey="false"
+        IsUpdateAllowed="true" />
+      <DCField
+        DCFieldName="&quot;PreCarriageCarrierNumber&quot;"
+        DCVersion="&quot;ApiV1&quot;"
+        FieldName="&quot;PreCarriageCarrierNumber&quot;"
+        IsKey="false"
+        IsManualMapping="false"
+        IsMulti="false"
+        FieldsDataType="&quot;Text&quot;"
+        IsNullable="false"
+        IsSpecialField="false"
+        IsCustomType="false"
+        IsAttribute="false"
+        IgnoreCustomTypeCheck="false"
+        IsCloseField="false"
+        IsCompositKey="false"
+        IsUpdateAllowed="true" />
+      <DCField
+        DCFieldName="&quot;PreCarriageATD&quot;"
+        DCVersion="&quot;ApiV1&quot;"
+        FieldName="&quot;PreCarriageATD&quot;"
+        IsKey="false"
+        IsManualMapping="false"
+        IsMulti="false"
+        FieldsDataType="&quot;DateTime&quot;"
+        IsNullable="true"
+        IsSpecialField="false"
+        IsCustomType="false"
+        IsAttribute="false"
+        IgnoreCustomTypeCheck="false"
+        IsCloseField="false"
+        IsCompositKey="false"
+        IsUpdateAllowed="true" />
+      <DCField
+        DCFieldName="&quot;PreCarriageATA&quot;"
+        DCVersion="&quot;ApiV1&quot;"
+        FieldName="&quot;PreCarriageATA&quot;"
+        IsKey="false"
+        IsManualMapping="false"
+        IsMulti="false"
+        FieldsDataType="&quot;DateTime&quot;"
+        IsNullable="true"
+        IsSpecialField="false"
+        IsCustomType="false"
+        IsAttribute="false"
+        IgnoreCustomTypeCheck="false"
+        IsCloseField="false"
+        IsCompositKey="false"
+        IsUpdateAllowed="true" />
+      <DCField
+        DCFieldName="&quot;PreCarriageETD&quot;"
+        DCVersion="&quot;ApiV1&quot;"
+        FieldName="&quot;PreCarriageETD&quot;"
+        IsKey="false"
+        IsManualMapping="false"
+        IsMulti="false"
+        FieldsDataType="&quot;DateTime&quot;"
+        IsNullable="true"
+        IsSpecialField="false"
+        IsCustomType="false"
+        IsAttribute="false"
+        IgnoreCustomTypeCheck="false"
+        IsCloseField="false"
+        IsCompositKey="false"
+        IsUpdateAllowed="true" />
+      <DCField
+        DCFieldName="&quot;PreCarriageETA&quot;"
+        DCVersion="&quot;ApiV1&quot;"
+        FieldName="&quot;PreCarriageETA&quot;"
+        IsKey="false"
+        IsManualMapping="false"
+        IsMulti="false"
+        FieldsDataType="&quot;DateTime&quot;"
+        IsNullable="true"
+        IsSpecialField="false"
+        IsCustomType="false"
+        IsAttribute="false"
+        IgnoreCustomTypeCheck="false"
+        IsCloseField="false"
+        IsCompositKey="false"
+        IsUpdateAllowed="true" />
+      <DCField
+        DCFieldName="&quot;ConsigneeNotImporter&quot;"
+        DCVersion="&quot;ApiV1&quot;"
+        FieldName="&quot;ConsigneeNotImporterId&quot;"
+        IsKey="false"
+        IsManualMapping="false"
+        IsMulti="false"
+        FieldsDataType="&quot;Card&quot;"
+        IsNullable="false"
+        IsSpecialField="false"
+        IsCustomType="true"
+        IsAttribute="false"
+        IgnoreCustomTypeCheck="false"
+        IsCloseField="false"
+        IsCompositKey="false"
+        IsUpdateAllowed="true" />
+      <DCField
+        DCFieldName="&quot;DeclarationNumber&quot;"
+        DCVersion="&quot;ApiV1&quot;"
+        FieldName="&quot;DeclarationNumber&quot;"
+        IsKey="false"
+        IsManualMapping="false"
+        IsMulti="false"
+        FieldsDataType="&quot;Text&quot;"
+        IsNullable="false"
+        IsSpecialField="false"
+        IsCustomType="false"
+        IsAttribute="false"
+        IgnoreCustomTypeCheck="false"
+        IsCloseField="false"
+        IsCompositKey="false"
+        IsUpdateAllowed="true" />
+      <DCField
+        DCFieldName="&quot;DeclarationDate&quot;"
+        DCVersion="&quot;ApiV1&quot;"
+        FieldName="&quot;DeclarationDate&quot;"
+        IsKey="false"
+        IsManualMapping="false"
+        IsMulti="false"
+        FieldsDataType="&quot;DateTime&quot;"
+        IsNullable="true"
+        IsSpecialField="false"
+        IsCustomType="false"
+        IsAttribute="false"
+        IgnoreCustomTypeCheck="false"
+        IsCloseField="false"
+        IsCompositKey="false"
+        IsUpdateAllowed="true" />
+      <DCField
+        DCFieldName="&quot;BookingConfirmationNotes&quot;"
+        DCVersion="&quot;ApiV1&quot;"
+        FieldName="&quot;BookingConfirmationNotes&quot;"
+        IsKey="false"
+        IsManualMapping="false"
+        IsMulti="false"
+        FieldsDataType="&quot;nText&quot;"
+        IsNullable="false"
+        IsSpecialField="false"
+        IsCustomType="false"
+        IsAttribute="false"
+        IgnoreCustomTypeCheck="false"
+        IsCloseField="false"
+        IsCompositKey="false"
+        IsUpdateAllowed="true" />
+      <DCField
+        DCFieldName="&quot;FreightRelease&quot;"
+        DCVersion="&quot;ApiV1&quot;"
+        FieldName="&quot;FreightRelease&quot;"
+        IsKey="false"
+        IsManualMapping="false"
+        IsMulti="false"
+        FieldsDataType="&quot;DateTime&quot;"
+        IsNullable="true"
+        IsSpecialField="false"
+        IsCustomType="false"
+        IsAttribute="false"
+        IgnoreCustomTypeCheck="false"
+        IsCloseField="false"
+        IsCompositKey="false"
+        IsUpdateAllowed="true" />
+      <DCField
+        DCFieldName="&quot;TerminalAvailable&quot;"
+        DCVersion="&quot;ApiV1&quot;"
+        FieldName="&quot;TerminalAvailable&quot;"
+        IsKey="false"
+        IsManualMapping="false"
+        IsMulti="false"
+        FieldsDataType="&quot;DateTime&quot;"
+        IsNullable="true"
+        IsSpecialField="false"
+        IsCustomType="false"
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"

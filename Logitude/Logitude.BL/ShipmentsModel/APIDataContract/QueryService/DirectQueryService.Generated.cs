@@ -528,13 +528,112 @@ using Simplog.Data.ShipmentsModel;
 					   					   temp.MainCarriageToPort = PortService37.GetPortById(MyEntityPM.MainCarriageToPortId,Tenant,ComputingPartnerName); 
 			       
 					   				   }
+				   
+				   temp.CutoffDate = MyEntityPM.CutoffDate;
+				   temp.IsDangerous = MyEntityPM.IsDangerous;
+				   temp.HAWBDate = MyEntityPM.HAWBDate; 
+
+			  
+				   if(MyEntityPM.OnCarriageTransportModeId != null)
+				   {
+					   TransportModeQueryService TransportModeService38 = new TransportModeQueryService(Tenant);
+					   					   temp.OnCarriageTransportMode = TransportModeService38.GetTransportModeById(MyEntityPM.OnCarriageTransportModeId,Tenant,ComputingPartnerName); 
+			       
+					   				   }
 				    
+
+			  
+				   if(MyEntityPM.OnCarriageFromPortId != null)
+				   {
+					   PortQueryService PortService39 = new PortQueryService(Tenant);
+					   					   temp.OnCarriageFromPort = PortService39.GetPortById(MyEntityPM.OnCarriageFromPortId,Tenant,ComputingPartnerName); 
+			       
+					   				   }
+				    
+
+			  
+				   if(MyEntityPM.OnCarriageToPortId != null)
+				   {
+					   PortQueryService PortService40 = new PortQueryService(Tenant);
+					   					   temp.OnCarriageToPort = PortService40.GetPortById(MyEntityPM.OnCarriageToPortId,Tenant,ComputingPartnerName); 
+			       
+					   				   }
+				    
+
+			  
+				   if(MyEntityPM.OnCarriageCarrierId != null)
+				   {
+					   CardQueryService CardService41 = new CardQueryService(Tenant);
+					   					   temp.OnCarriageCarrier = CardService41.GetCardById(MyEntityPM.OnCarriageCarrierId,Tenant,ComputingPartnerName); 
+			       
+					   				   }
+				   
+				   temp.OnCarriageCarrierNumber = MyEntityPM.OnCarriageCarrierNumber;
+				   temp.OnCarriageATD = MyEntityPM.OnCarriageATD;
+				   temp.OnCarriageATA = MyEntityPM.OnCarriageATA;
+				   temp.OnCarriageETD = MyEntityPM.OnCarriageETD;
+				   temp.OnCarriageETA = MyEntityPM.OnCarriageETA; 
+
+			  
+				   if(MyEntityPM.PreCarriageTransportModeId != null)
+				   {
+					   TransportModeQueryService TransportModeService42 = new TransportModeQueryService(Tenant);
+					   					   temp.PreCarriageTransportMode = TransportModeService42.GetTransportModeById(MyEntityPM.PreCarriageTransportModeId,Tenant,ComputingPartnerName); 
+			       
+					   				   }
+				    
+
+			  
+				   if(MyEntityPM.PreCarriageFromPortId != null)
+				   {
+					   PortQueryService PortService43 = new PortQueryService(Tenant);
+					   					   temp.PreCarriageFromPort = PortService43.GetPortById(MyEntityPM.PreCarriageFromPortId,Tenant,ComputingPartnerName); 
+			       
+					   				   }
+				    
+
+			  
+				   if(MyEntityPM.PreCarriageToPortId != null)
+				   {
+					   PortQueryService PortService44 = new PortQueryService(Tenant);
+					   					   temp.PreCarriageToPort = PortService44.GetPortById(MyEntityPM.PreCarriageToPortId,Tenant,ComputingPartnerName); 
+			       
+					   				   }
+				    
+
+			  
+				   if(MyEntityPM.PreCarriageCarrierId != null)
+				   {
+					   CardQueryService CardService45 = new CardQueryService(Tenant);
+					   					   temp.PreCarriageCarrier = CardService45.GetCardById(MyEntityPM.PreCarriageCarrierId,Tenant,ComputingPartnerName); 
+			       
+					   				   }
+				   
+				   temp.PreCarriageCarrierNumber = MyEntityPM.PreCarriageCarrierNumber;
+				   temp.PreCarriageATD = MyEntityPM.PreCarriageATD;
+				   temp.PreCarriageATA = MyEntityPM.PreCarriageATA;
+				   temp.PreCarriageETD = MyEntityPM.PreCarriageETD;
+				   temp.PreCarriageETA = MyEntityPM.PreCarriageETA; 
+
+			  
+				   if(MyEntityPM.ConsigneeNotImporterId != null)
+				   {
+					   CardQueryService CardService46 = new CardQueryService(Tenant);
+					   					   temp.ConsigneeNotImporter = CardService46.GetCardById(MyEntityPM.ConsigneeNotImporterId,Tenant,ComputingPartnerName); 
+			       
+					   				   }
+				   
+				   temp.DeclarationNumber = MyEntityPM.DeclarationNumber;
+				   temp.DeclarationDate = MyEntityPM.DeclarationDate;
+				   temp.BookingConfirmationNotes = MyEntityPM.BookingConfirmationNotes;
+				   temp.FreightRelease = MyEntityPM.FreightRelease;
+				   temp.TerminalAvailable = MyEntityPM.TerminalAvailable; 
 
 			  
 				   if(MyEntityPM.Notify1Id != null)
 				   {
-					   CardQueryService CardService38 = new CardQueryService(Tenant);
-					   					   temp.Notify1 = CardService38.GetCardById(MyEntityPM.Notify1Id,Tenant,ComputingPartnerName); 
+					   CardQueryService CardService47 = new CardQueryService(Tenant);
+					   					   temp.Notify1 = CardService47.GetCardById(MyEntityPM.Notify1Id,Tenant,ComputingPartnerName); 
 			       
 					   				   }
 				   					
@@ -596,12 +695,9 @@ using Simplog.Data.ShipmentsModel;
 						if(myShipmentTypePM != null)
 						{ 
 
-						 
-							if(!IsUpdate)
-							{								//throw new ApplicationException("ShipmentType Can't be update"); 
+						 								//throw new ApplicationException("ShipmentType Can't be update"); 
 								temp.ShipmentTypeId = myShipmentTypePM.Id;
 						  
-							}  
 
 							
 						} 
@@ -617,12 +713,9 @@ using Simplog.Data.ShipmentsModel;
 						if(myDirectionPM != null)
 						{ 
 
-						 
-							if(!IsUpdate)
-							{								//throw new ApplicationException("Direction Can't be update"); 
+						 								//throw new ApplicationException("Direction Can't be update"); 
 								temp.DirectionId = myDirectionPM.Id;
 						  
-							}  
 
 							
 						} 
@@ -638,12 +731,9 @@ using Simplog.Data.ShipmentsModel;
 						if(myTransportModePM != null)
 						{ 
 
-						 
-							if(!IsUpdate)
-							{								//throw new ApplicationException("TransportMode Can't be update"); 
+						 								//throw new ApplicationException("TransportMode Can't be update"); 
 								temp.TransportModeId = myTransportModePM.Id;
 						  
-							}  
 
 							
 						} 
@@ -737,12 +827,9 @@ using Simplog.Data.ShipmentsModel;
 						if(myFromPortPM != null)
 						{ 
 
-						 
-							if(!IsUpdate)
-							{								//throw new ApplicationException("FromPort Can't be update"); 
+						 								//throw new ApplicationException("FromPort Can't be update"); 
 								temp.FromPortId = myFromPortPM.Id;
 						  
-							}  
 
 							
 						} 
@@ -758,12 +845,9 @@ using Simplog.Data.ShipmentsModel;
 						if(myToPortPM != null)
 						{ 
 
-						 
-							if(!IsUpdate)
-							{								//throw new ApplicationException("ToPort Can't be update"); 
+						 								//throw new ApplicationException("ToPort Can't be update"); 
 								temp.ToPortId = myToPortPM.Id;
 						  
-							}  
 
 							
 						} 
@@ -779,12 +863,9 @@ using Simplog.Data.ShipmentsModel;
 						if(myGrossWeightUnitPM != null)
 						{ 
 
-						 
-							if(!IsUpdate)
-							{								//throw new ApplicationException("GrossWeightUnit Can't be update"); 
+						 								//throw new ApplicationException("GrossWeightUnit Can't be update"); 
 								temp.GrossWeightUnitCode = myGrossWeightUnitPM.Code;
 						  
-							}  
 
 							
 						} 
@@ -800,12 +881,9 @@ using Simplog.Data.ShipmentsModel;
 						if(myChargeableWeightUnitPM != null)
 						{ 
 
-						 
-							if(!IsUpdate)
-							{								//throw new ApplicationException("ChargeableWeightUnit Can't be update"); 
+						 								//throw new ApplicationException("ChargeableWeightUnit Can't be update"); 
 								temp.ChargeableWeightUnitCode = myChargeableWeightUnitPM.Code;
 						  
-							}  
 
 							
 						} 
@@ -821,12 +899,9 @@ using Simplog.Data.ShipmentsModel;
 						if(myVolumeUnitPM != null)
 						{ 
 
-						 
-							if(!IsUpdate)
-							{								//throw new ApplicationException("VolumeUnit Can't be update"); 
+						 								//throw new ApplicationException("VolumeUnit Can't be update"); 
 								temp.VolumeUnitCode = myVolumeUnitPM.Code;
 						  
-							}  
 
 							
 						} 
@@ -863,14 +938,11 @@ using Simplog.Data.ShipmentsModel;
 
 					if(MyEntity.AirPackages != null && MyEntity.AirPackages.Count > 0)
 					{
-						AirPackageQueryService AirPackageService39 = new AirPackageQueryService(Tenant);
-						  
-						if(!IsUpdate)
-						{								//throw new ApplicationException("AirPackages Can't be update"); 
-								temp.ShipmentPackages = AirPackageService39.AirPackageCustomDataMappingAndValidatin(MyEntity,MyEntity.AirPackages,Tenant,ComputingPartnerName);
+						AirPackageQueryService AirPackageService48 = new AirPackageQueryService(Tenant);
+						 								//throw new ApplicationException("AirPackages Can't be update"); 
+								temp.ShipmentPackages = AirPackageService48.AirPackageCustomDataMappingAndValidatin(MyEntity,MyEntity.AirPackages,Tenant,ComputingPartnerName);
 
 					 
-						}  
 
 						
 					}
@@ -879,14 +951,11 @@ using Simplog.Data.ShipmentsModel;
 
 					if(MyEntity.OceanOrInlandPackages != null && MyEntity.OceanOrInlandPackages.Count > 0)
 					{
-						OceanOrInlandPackageQueryService OceanOrInlandPackageService39 = new OceanOrInlandPackageQueryService(Tenant);
-						  
-						if(!IsUpdate)
-						{								//throw new ApplicationException("OceanOrInlandPackages Can't be update"); 
-								temp.ShipmentPackages = OceanOrInlandPackageService39.OceanOrInlandPackageCustomDataMappingAndValidatin(MyEntity,MyEntity.OceanOrInlandPackages,Tenant,ComputingPartnerName);
+						OceanOrInlandPackageQueryService OceanOrInlandPackageService48 = new OceanOrInlandPackageQueryService(Tenant);
+						 								//throw new ApplicationException("OceanOrInlandPackages Can't be update"); 
+								temp.ShipmentPackages = OceanOrInlandPackageService48.OceanOrInlandPackageCustomDataMappingAndValidatin(MyEntity,MyEntity.OceanOrInlandPackages,Tenant,ComputingPartnerName);
 
 					 
-						}  
 
 						
 					}
@@ -895,14 +964,11 @@ using Simplog.Data.ShipmentsModel;
 
 					if(MyEntity.Containers != null && MyEntity.Containers.Count > 0)
 					{
-						ContainerQueryService ContainerService39 = new ContainerQueryService(Tenant);
-						  
-						if(!IsUpdate)
-						{								//throw new ApplicationException("Containers Can't be update"); 
-								temp.ShipmentPackages = ContainerService39.ContainerCustomDataMappingAndValidatin(MyEntity,MyEntity.Containers,Tenant,ComputingPartnerName);
+						ContainerQueryService ContainerService48 = new ContainerQueryService(Tenant);
+						 								//throw new ApplicationException("Containers Can't be update"); 
+								temp.ShipmentPackages = ContainerService48.ContainerCustomDataMappingAndValidatin(MyEntity,MyEntity.Containers,Tenant,ComputingPartnerName);
 
 					 
-						}  
 
 						
 					}
@@ -952,20 +1018,16 @@ using Simplog.Data.ShipmentsModel;
 					}
 			
 					
-                    
-					if(!IsUpdate)// && MyEntity.TEU != null)
-					{							//throw new ApplicationException("TEU Can't be update"); 
+                    							//throw new ApplicationException("TEU Can't be update"); 
 							temp.TEU = MyEntity.TEU;
 
-										}  
+					 
 
 					
-                    
-					if(!IsUpdate)// && MyEntity.NumberOfPackages != null)
-					{							//throw new ApplicationException("NumberOfPackages Can't be update"); 
+                    							//throw new ApplicationException("NumberOfPackages Can't be update"); 
 							temp.NumberOfPackages = MyEntity.NumberOfPackages;
 
-										}  
+					 
 
 					
                     
@@ -992,12 +1054,10 @@ using Simplog.Data.ShipmentsModel;
 										}  
 
 					
-                    
-					if(!IsUpdate)// && MyEntity.ChargeableWeight != null)
-					{							//throw new ApplicationException("ChargeableWeight Can't be update"); 
+                    							//throw new ApplicationException("ChargeableWeight Can't be update"); 
 							temp.ChargeableWeight = MyEntity.ChargeableWeight;
 
-										}  
+					 
 
 					
                     							//throw new ApplicationException("Master Can't be update"); 
@@ -1038,9 +1098,9 @@ using Simplog.Data.ShipmentsModel;
 
 					if(MyEntity.Deliveries != null && MyEntity.Deliveries.Count > 0)
 					{
-						DeliveryQueryService DeliveryService39 = new DeliveryQueryService(Tenant);
+						DeliveryQueryService DeliveryService48 = new DeliveryQueryService(Tenant);
 						 								//throw new ApplicationException("Deliveries Can't be update"); 
-								temp.ShipmentDeliveries = DeliveryService39.DeliveryDataMappingAndValidatin(MyEntity.Deliveries,Tenant,ComputingPartnerName,IsUpdate);
+								temp.ShipmentDeliveries = DeliveryService48.DeliveryDataMappingAndValidatin(MyEntity.Deliveries,Tenant,ComputingPartnerName,IsUpdate);
 
 					 
 
@@ -1051,9 +1111,9 @@ using Simplog.Data.ShipmentsModel;
 
 					if(MyEntity.PickUps != null && MyEntity.PickUps.Count > 0)
 					{
-						PickUpQueryService PickUpService39 = new PickUpQueryService(Tenant);
+						PickUpQueryService PickUpService48 = new PickUpQueryService(Tenant);
 						 								//throw new ApplicationException("PickUps Can't be update"); 
-								temp.ShipmentPickUps = PickUpService39.PickUpDataMappingAndValidatin(MyEntity.PickUps,Tenant,ComputingPartnerName,IsUpdate);
+								temp.ShipmentPickUps = PickUpService48.PickUpDataMappingAndValidatin(MyEntity.PickUps,Tenant,ComputingPartnerName,IsUpdate);
 
 					 
 
@@ -1165,11 +1225,11 @@ using Simplog.Data.ShipmentsModel;
 
 					if(MyEntity.Receivables != null && MyEntity.Receivables.Count > 0)
 					{
-						ReceivableQueryService ReceivableService39 = new ReceivableQueryService(Tenant);
+						ReceivableQueryService ReceivableService48 = new ReceivableQueryService(Tenant);
 						  
 						if(!IsUpdate)
 						{								//throw new ApplicationException("Receivables Can't be update"); 
-								temp.ShipmentReceivables = ReceivableService39.ReceivableDataMappingAndValidatin(MyEntity.Receivables,Tenant,ComputingPartnerName,IsUpdate);
+								temp.ShipmentReceivables = ReceivableService48.ReceivableDataMappingAndValidatin(MyEntity.Receivables,Tenant,ComputingPartnerName,IsUpdate);
 
 					 
 						}  
@@ -1181,11 +1241,11 @@ using Simplog.Data.ShipmentsModel;
 
 					if(MyEntity.Payables != null && MyEntity.Payables.Count > 0)
 					{
-						PayableQueryService PayableService39 = new PayableQueryService(Tenant);
+						PayableQueryService PayableService48 = new PayableQueryService(Tenant);
 						  
 						if(!IsUpdate)
 						{								//throw new ApplicationException("Payables Can't be update"); 
-								temp.ShipmentPayables = PayableService39.PayableDataMappingAndValidatin(MyEntity.Payables,Tenant,ComputingPartnerName,IsUpdate);
+								temp.ShipmentPayables = PayableService48.PayableDataMappingAndValidatin(MyEntity.Payables,Tenant,ComputingPartnerName,IsUpdate);
 
 					 
 						}  
@@ -1424,9 +1484,9 @@ using Simplog.Data.ShipmentsModel;
 
 					if(MyEntity.MainCarriageLegs != null && MyEntity.MainCarriageLegs.Count > 0)
 					{
-						MainCarriageLegQueryService MainCarriageLegService39 = new MainCarriageLegQueryService(Tenant);
+						MainCarriageLegQueryService MainCarriageLegService48 = new MainCarriageLegQueryService(Tenant);
 						 								//throw new ApplicationException("MainCarriageLegs Can't be update"); 
-								temp.MainCarriageLegs = MainCarriageLegService39.MainCarriageLegDataMappingAndValidatin(MyEntity.MainCarriageLegs,Tenant,ComputingPartnerName,IsUpdate);
+								temp.MainCarriageLegs = MainCarriageLegService48.MainCarriageLegDataMappingAndValidatin(MyEntity.MainCarriageLegs,Tenant,ComputingPartnerName,IsUpdate);
 
 					 
 
@@ -1471,12 +1531,10 @@ using Simplog.Data.ShipmentsModel;
 					}
 			
 					
-                    
-					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.BookingConfirmationNumber))
-					{							//throw new ApplicationException("BookingConfirmationNumber Can't be update"); 
+                    							//throw new ApplicationException("BookingConfirmationNumber Can't be update"); 
 							temp.BookingConfirmationNumber = MyEntity.BookingConfirmationNumber;
 
-										}  
+					 
 
 					
                     
@@ -1752,6 +1810,276 @@ using Simplog.Data.ShipmentsModel;
 
 					}
 			
+					
+                    							//throw new ApplicationException("CutoffDate Can't be update"); 
+							temp.CutoffDate = MyEntity.CutoffDate;
+
+					 
+
+					
+                    							//throw new ApplicationException("IsDangerous Can't be update"); 
+							temp.IsDangerous = MyEntity.IsDangerous;
+
+					 
+
+					
+                    							//throw new ApplicationException("HAWBDate Can't be update"); 
+							temp.HAWBDate = MyEntity.HAWBDate;
+
+					 
+
+					
+					TransportModeQueryService OnCarriageTransportModeTransportModeService = new TransportModeQueryService(Tenant);
+					if(MyEntity.OnCarriageTransportMode != null)
+					{
+						var myOnCarriageTransportModePM = OnCarriageTransportModeTransportModeService.TransportModeDataMappingAndValidatin(MyEntity.OnCarriageTransportMode,Tenant,ComputingPartnerName,IsUpdate);
+						
+						if(myOnCarriageTransportModePM != null)
+						{ 
+
+						 								//throw new ApplicationException("OnCarriageTransportMode Can't be update"); 
+								temp.OnCarriageTransportModeId = myOnCarriageTransportModePM.Id;
+						  
+
+							
+						} 
+
+					}
+			
+					
+					PortQueryService OnCarriageFromPortPortService = new PortQueryService(Tenant);
+					if(MyEntity.OnCarriageFromPort != null)
+					{
+						var myOnCarriageFromPortPM = OnCarriageFromPortPortService.PortDataMappingAndValidatin(MyEntity.OnCarriageFromPort,Tenant,ComputingPartnerName,IsUpdate);
+						
+						if(myOnCarriageFromPortPM != null)
+						{ 
+
+						 								//throw new ApplicationException("OnCarriageFromPort Can't be update"); 
+								temp.OnCarriageFromPortId = myOnCarriageFromPortPM.Id;
+						  
+
+							
+						} 
+
+					}
+			
+					
+					PortQueryService OnCarriageToPortPortService = new PortQueryService(Tenant);
+					if(MyEntity.OnCarriageToPort != null)
+					{
+						var myOnCarriageToPortPM = OnCarriageToPortPortService.PortDataMappingAndValidatin(MyEntity.OnCarriageToPort,Tenant,ComputingPartnerName,IsUpdate);
+						
+						if(myOnCarriageToPortPM != null)
+						{ 
+
+						 								//throw new ApplicationException("OnCarriageToPort Can't be update"); 
+								temp.OnCarriageToPortId = myOnCarriageToPortPM.Id;
+						  
+
+							
+						} 
+
+					}
+			
+					
+					CardQueryService OnCarriageCarrierCardService = new CardQueryService(Tenant);
+					if(MyEntity.OnCarriageCarrier != null)
+					{
+						var myOnCarriageCarrierPM = OnCarriageCarrierCardService.CardDataMappingAndValidatin(MyEntity.OnCarriageCarrier,Tenant,ComputingPartnerName,IsUpdate);
+						
+						if(myOnCarriageCarrierPM != null)
+						{ 
+
+						 								//throw new ApplicationException("OnCarriageCarrier Can't be update"); 
+								temp.OnCarriageCarrierId = myOnCarriageCarrierPM.Id;
+						  
+
+							
+						} 
+
+					}
+			
+					
+                    							//throw new ApplicationException("OnCarriageCarrierNumber Can't be update"); 
+							temp.OnCarriageCarrierNumber = MyEntity.OnCarriageCarrierNumber;
+
+					 
+
+					
+                    							//throw new ApplicationException("OnCarriageATD Can't be update"); 
+							temp.OnCarriageATD = MyEntity.OnCarriageATD;
+
+					 
+
+					
+                    							//throw new ApplicationException("OnCarriageATA Can't be update"); 
+							temp.OnCarriageATA = MyEntity.OnCarriageATA;
+
+					 
+
+					
+                    							//throw new ApplicationException("OnCarriageETD Can't be update"); 
+							temp.OnCarriageETD = MyEntity.OnCarriageETD;
+
+					 
+
+					
+                    							//throw new ApplicationException("OnCarriageETA Can't be update"); 
+							temp.OnCarriageETA = MyEntity.OnCarriageETA;
+
+					 
+
+					
+					TransportModeQueryService PreCarriageTransportModeTransportModeService = new TransportModeQueryService(Tenant);
+					if(MyEntity.PreCarriageTransportMode != null)
+					{
+						var myPreCarriageTransportModePM = PreCarriageTransportModeTransportModeService.TransportModeDataMappingAndValidatin(MyEntity.PreCarriageTransportMode,Tenant,ComputingPartnerName,IsUpdate);
+						
+						if(myPreCarriageTransportModePM != null)
+						{ 
+
+						 								//throw new ApplicationException("PreCarriageTransportMode Can't be update"); 
+								temp.PreCarriageTransportModeId = myPreCarriageTransportModePM.Id;
+						  
+
+							
+						} 
+
+					}
+			
+					
+					PortQueryService PreCarriageFromPortPortService = new PortQueryService(Tenant);
+					if(MyEntity.PreCarriageFromPort != null)
+					{
+						var myPreCarriageFromPortPM = PreCarriageFromPortPortService.PortDataMappingAndValidatin(MyEntity.PreCarriageFromPort,Tenant,ComputingPartnerName,IsUpdate);
+						
+						if(myPreCarriageFromPortPM != null)
+						{ 
+
+						 								//throw new ApplicationException("PreCarriageFromPort Can't be update"); 
+								temp.PreCarriageFromPortId = myPreCarriageFromPortPM.Id;
+						  
+
+							
+						} 
+
+					}
+			
+					
+					PortQueryService PreCarriageToPortPortService = new PortQueryService(Tenant);
+					if(MyEntity.PreCarriageToPort != null)
+					{
+						var myPreCarriageToPortPM = PreCarriageToPortPortService.PortDataMappingAndValidatin(MyEntity.PreCarriageToPort,Tenant,ComputingPartnerName,IsUpdate);
+						
+						if(myPreCarriageToPortPM != null)
+						{ 
+
+						 								//throw new ApplicationException("PreCarriageToPort Can't be update"); 
+								temp.PreCarriageToPortId = myPreCarriageToPortPM.Id;
+						  
+
+							
+						} 
+
+					}
+			
+					
+					CardQueryService PreCarriageCarrierCardService = new CardQueryService(Tenant);
+					if(MyEntity.PreCarriageCarrier != null)
+					{
+						var myPreCarriageCarrierPM = PreCarriageCarrierCardService.CardDataMappingAndValidatin(MyEntity.PreCarriageCarrier,Tenant,ComputingPartnerName,IsUpdate);
+						
+						if(myPreCarriageCarrierPM != null)
+						{ 
+
+						 								//throw new ApplicationException("PreCarriageCarrier Can't be update"); 
+								temp.PreCarriageCarrierId = myPreCarriageCarrierPM.Id;
+						  
+
+							
+						} 
+
+					}
+			
+					
+                    							//throw new ApplicationException("PreCarriageCarrierNumber Can't be update"); 
+							temp.PreCarriageCarrierNumber = MyEntity.PreCarriageCarrierNumber;
+
+					 
+
+					
+                    							//throw new ApplicationException("PreCarriageATD Can't be update"); 
+							temp.PreCarriageATD = MyEntity.PreCarriageATD;
+
+					 
+
+					
+                    							//throw new ApplicationException("PreCarriageATA Can't be update"); 
+							temp.PreCarriageATA = MyEntity.PreCarriageATA;
+
+					 
+
+					
+                    							//throw new ApplicationException("PreCarriageETD Can't be update"); 
+							temp.PreCarriageETD = MyEntity.PreCarriageETD;
+
+					 
+
+					
+                    							//throw new ApplicationException("PreCarriageETA Can't be update"); 
+							temp.PreCarriageETA = MyEntity.PreCarriageETA;
+
+					 
+
+					
+					CardQueryService ConsigneeNotImporterCardService = new CardQueryService(Tenant);
+					if(MyEntity.ConsigneeNotImporter != null)
+					{
+						var myConsigneeNotImporterPM = ConsigneeNotImporterCardService.CardDataMappingAndValidatin(MyEntity.ConsigneeNotImporter,Tenant,ComputingPartnerName,IsUpdate);
+						
+						if(myConsigneeNotImporterPM != null)
+						{ 
+
+						 								//throw new ApplicationException("ConsigneeNotImporter Can't be update"); 
+								temp.ConsigneeNotImporterId = myConsigneeNotImporterPM.Id;
+						  
+
+							
+						} 
+
+					}
+			
+					
+                    							//throw new ApplicationException("DeclarationNumber Can't be update"); 
+							temp.DeclarationNumber = MyEntity.DeclarationNumber;
+
+					 
+
+					
+                    							//throw new ApplicationException("DeclarationDate Can't be update"); 
+							temp.DeclarationDate = MyEntity.DeclarationDate;
+
+					 
+
+					
+                    							//throw new ApplicationException("BookingConfirmationNotes Can't be update"); 
+							temp.BookingConfirmationNotes = MyEntity.BookingConfirmationNotes;
+
+					 
+
+					
+                    							//throw new ApplicationException("FreightRelease Can't be update"); 
+							temp.FreightRelease = MyEntity.FreightRelease;
+
+					 
+
+					
+                    							//throw new ApplicationException("TerminalAvailable Can't be update"); 
+							temp.TerminalAvailable = MyEntity.TerminalAvailable;
+
+					 
+
 					
 					CardQueryService Notify1CardService = new CardQueryService(Tenant);
 					if(MyEntity.Notify1 != null)
