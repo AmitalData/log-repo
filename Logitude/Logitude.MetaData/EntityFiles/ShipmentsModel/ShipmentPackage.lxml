@@ -36,7 +36,7 @@
   MaxNumberOfCustomFields="0"
   ParentTableName="Shipment"
   DefaultText="&quot;Shipment Package&quot;"
-  Code="&quot;e2c1&quot;"
+  Code="&quot;3127&quot;"
   Name="&quot;ShipmentPackage&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Shipment&quot;"
@@ -9271,7 +9271,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;GrossWeight&quot;"
         DCVersion="&quot;&quot;"
@@ -9496,7 +9496,7 @@
         IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;Length&quot;"
-        DCVersion="&quot;&quot;"
+        DCVersion="&quot;ApiV1&quot;"
         FieldName="&quot;Length&quot;"
         IsKey="false"
         IsManualMapping="false"
@@ -9512,7 +9512,7 @@
         IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;Width&quot;"
-        DCVersion="&quot;&quot;"
+        DCVersion="&quot;ApiV1&quot;"
         FieldName="&quot;Width&quot;"
         IsKey="false"
         IsManualMapping="false"
@@ -9528,7 +9528,7 @@
         IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;Height&quot;"
-        DCVersion="&quot;&quot;"
+        DCVersion="&quot;ApiV1&quot;"
         FieldName="&quot;Height&quot;"
         IsKey="false"
         IsManualMapping="false"
@@ -9544,7 +9544,7 @@
         IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;Pieces&quot;"
-        DCVersion="&quot;&quot;"
+        DCVersion="&quot;ApiV1&quot;"
         FieldName="&quot;Quantity&quot;"
         IsKey="false"
         IsManualMapping="false"
@@ -9560,7 +9560,7 @@
         IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;Volume&quot;"
-        DCVersion="&quot;&quot;"
+        DCVersion="&quot;ApiV1&quot;"
         FieldName="&quot;Volume&quot;"
         IsKey="false"
         IsManualMapping="false"
@@ -9718,6 +9718,7 @@
         IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;Length&quot;"
+        DCVersion="&quot;ApiV1&quot;"
         FieldName="&quot;Length&quot;"
         IsKey="false"
         IsManualMapping="false"
@@ -9733,6 +9734,7 @@
         IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;Width&quot;"
+        DCVersion="&quot;ApiV1&quot;"
         FieldName="&quot;Width&quot;"
         IsKey="false"
         IsManualMapping="false"
@@ -9748,6 +9750,7 @@
         IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;Height&quot;"
+        DCVersion="&quot;ApiV1&quot;"
         FieldName="&quot;Height&quot;"
         IsKey="false"
         IsManualMapping="false"
@@ -9763,6 +9766,7 @@
         IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;Pieces&quot;"
+        DCVersion="&quot;ApiV1&quot;"
         FieldName="&quot;Quantity&quot;"
         IsKey="false"
         IsManualMapping="false"
@@ -9778,6 +9782,7 @@
         IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;Volume&quot;"
+        DCVersion="&quot;ApiV1&quot;"
         FieldName="&quot;Volume&quot;"
         IsKey="false"
         IsManualMapping="false"
@@ -9793,6 +9798,7 @@
         IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;GrossWeight&quot;"
+        DCVersion="&quot;ApiV1&quot;"
         FieldName="&quot;Weight&quot;"
         IsKey="false"
         IsManualMapping="false"

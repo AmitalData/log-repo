@@ -930,13 +930,10 @@ using Simplog.Data.ShipmentsModel;
 					if(MyEntity.AirPackages != null && MyEntity.AirPackages.Count > 0)
 					{
 						AirPackageQueryService AirPackageService47 = new AirPackageQueryService(Tenant);
-						  
-						if(!IsUpdate)
-						{								//throw new ApplicationException("AirPackages Can't be update"); 
+						 								//throw new ApplicationException("AirPackages Can't be update"); 
 								temp.ShipmentPackages = AirPackageService47.AirPackageCustomDataMappingAndValidatin(MyEntity,MyEntity.AirPackages,Tenant,ComputingPartnerName);
 
 					 
-						}  
 
 						
 					}
@@ -946,13 +943,10 @@ using Simplog.Data.ShipmentsModel;
 					if(MyEntity.OceanOrInlandPackages != null && MyEntity.OceanOrInlandPackages.Count > 0)
 					{
 						OceanOrInlandPackageQueryService OceanOrInlandPackageService47 = new OceanOrInlandPackageQueryService(Tenant);
-						  
-						if(!IsUpdate)
-						{								//throw new ApplicationException("OceanOrInlandPackages Can't be update"); 
+						 								//throw new ApplicationException("OceanOrInlandPackages Can't be update"); 
 								temp.ShipmentPackages = OceanOrInlandPackageService47.OceanOrInlandPackageCustomDataMappingAndValidatin(MyEntity,MyEntity.OceanOrInlandPackages,Tenant,ComputingPartnerName);
 
 					 
-						}  
 
 						
 					}
@@ -962,13 +956,10 @@ using Simplog.Data.ShipmentsModel;
 					if(MyEntity.Containers != null && MyEntity.Containers.Count > 0)
 					{
 						ContainerQueryService ContainerService47 = new ContainerQueryService(Tenant);
-						  
-						if(!IsUpdate)
-						{								//throw new ApplicationException("Containers Can't be update"); 
+						 								//throw new ApplicationException("Containers Can't be update"); 
 								temp.ShipmentPackages = ContainerService47.ContainerCustomDataMappingAndValidatin(MyEntity,MyEntity.Containers,Tenant,ComputingPartnerName);
 
 					 
-						}  
 
 						
 					}
