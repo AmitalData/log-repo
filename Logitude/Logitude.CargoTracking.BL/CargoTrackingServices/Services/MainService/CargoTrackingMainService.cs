@@ -24,7 +24,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
-
+using System.Xml;
 
 namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
 {
@@ -882,16 +882,39 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
 
             return _recordUpdated;
         }
+        private bool CheckWhichMethodUse()
+        {
+            XmlDocument _document = new XmlDocument();
+            _document.Load("./CargoTrackingConfig.xml");
 
+            var node = _document.GetElementsByTagName("ApplyNewMethod");
+            foreach (XmlNode item in node)
+            {
+                return item.InnerText.ToLower() == "true";
+            }
+            return false;
+
+        }
         private void BuildShipments(UpdateCargoTrackingRecords updateCargoTrackingRecords)
         {
-            if(updateCargoTrackingRecords == null)
+
+            if (CheckWhichMethodUse())
+            {
+                BuildShipmentsNew(updateCargoTrackingRecords);
+            }
+            else
             {
                 UpdateCargoTrackingCondition(updateCargoTrackingRecords, ShipmentTable_GetAllCustomsShipmentsThatContainForwardingShipments);
                 UpdateCargoTrackingCondition(updateCargoTrackingRecords, ShipmentTable_GetAllNonCustomShipmentsThatContainForwardingShipments, true);
                 UpdateCargoTrackingCondition(updateCargoTrackingRecords, ShipmentTable_GetShipmentOrders, true);
             }
-            
+
+
+
+        }
+
+        private void BuildShipmentsNew(UpdateCargoTrackingRecords updateCargoTrackingRecords)
+        {
             var cargoTrackingShipmentsService = new CargoTrackingShipmentsService();
             var result = cargoTrackingShipmentsService.Update(updateCargoTrackingRecords);
             updateCargoTrackingRecords.NumberRecordUpdated += result.RecordsNumber;
@@ -906,10 +929,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
                 ServiceHelper.UpdateWaterMarkAfterFinishCheck(updateCargoTrackingRecords.CargoTrackingUpdateDataBaseArgs.BuildCargoArgs.Table, result.LastUpdateDate, updateCargoTrackingRecords.CargoTrackingUpdateDataBaseArgs.BuildCargoArgs);
 
             }
-
         }
-
-
 
         private void UpdateCargoTrackingCondition(UpdateCargoTrackingRecords updateCargoTrackingRecords, int CurrentCondition, bool IsUpadteWaterMark = false)
         {
