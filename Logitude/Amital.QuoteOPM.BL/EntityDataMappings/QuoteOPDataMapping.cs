@@ -546,7 +546,6 @@ namespace Amital.QuoteOPM.BL.EntityDataMappings
             if (entityPOCO.ConsigneeId != null)
             {
                 Card loadedCard = CardRepository.GetSingleCard(entityPOCO.ConsigneeId, tenant, false);
-                entityPM.ConsigneeId = loadedCard;
                 entityPM.ConsigneeNote = loadedCard.Notes;
 
                 if (loadedCard.PartnerTypeId == "PO")
