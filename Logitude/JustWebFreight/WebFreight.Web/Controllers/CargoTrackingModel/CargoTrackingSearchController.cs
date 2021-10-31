@@ -181,7 +181,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
 
                 CreateZoomEventForMixPanel(tenant, shipment, true);
 
-                HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, 0);
+                HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, shipment);
                 return reponseMessage;
             }
             catch (Exception ex)
