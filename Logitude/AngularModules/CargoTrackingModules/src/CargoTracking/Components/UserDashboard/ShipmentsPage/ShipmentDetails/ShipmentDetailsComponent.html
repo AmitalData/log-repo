@@ -752,8 +752,8 @@ package.ShipperSeal == null ? package.CarrierSeal :
                         </div>
                     </div>
                 </div>
-                <div *ngIf="ShipmentRouteSteps?.length > 0" class="pager right-arrow" (click)="MoveRoutingSlider('left')" 
-                     [class.dim]="((routingSliderMarginCardCount+routingSliderVisibleCardsCount)>=ShipmentRouteSteps.length) || (routingSliderVisibleCardsCount >= ShipmentRouteSteps.length)">
+                <div *ngIf="cargoTrackingShipmentPM.RoutingSteps?.length > 0" class="pager right-arrow" (click)="MoveRoutingSlider('left')"
+                     [class.dim]="((routingSliderMarginCardCount+routingSliderVisibleCardsCount)>=cargoTrackingShipmentPM.RoutingSteps.length) || (routingSliderVisibleCardsCount >= cargoTrackingShipmentPM.RoutingSteps.length)">
                     <img src="./assets/images/icons/right-arrow@2x.png" alt="" />
                 </div>
 

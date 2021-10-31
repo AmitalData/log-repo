@@ -336,7 +336,7 @@ export class ShipmentDetailsComponent implements OnInit,AfterViewInit
 
         this.routingSliderVisibleCardsWidth = count * this.routingSliderCardWidth;
         this.routingSliderMarginCardCount = 0;
-        this.routingSliderMarginLeft =  0; 
+        this.routingSliderMarginLeft =  0;
 
     }
 
@@ -541,14 +541,14 @@ export class ShipmentDetailsComponent implements OnInit,AfterViewInit
     routingSliderMobileCardWidth: number = 320;
     routingSliderVisibleCardsCount: number = 1;
     routingSliderVisibleCardsWidth: number = 0;
-  
- 
+
+
     MoveRoutingSlider(direction) {
 
         if (direction == 'right' && this.routingSliderMarginLeft == 0)
             return;
 
-        if (direction == 'left' && ((this.routingSliderMarginCardCount + this.routingSliderVisibleCardsCount) >= this.ShipmentRouteSteps.length) || (this.routingSliderVisibleCardsCount >= this.ShipmentRouteSteps.length))
+        if (direction == 'left' && ((this.routingSliderMarginCardCount + this.routingSliderVisibleCardsCount) >= this.cargoTrackingShipmentPM.RoutingSteps.length) || (this.routingSliderVisibleCardsCount >= this.cargoTrackingShipmentPM.RoutingSteps.length))
             return;
 
         var margin = this.SetRoutingSliderMarginBasedOnDirection(direction);
