@@ -113,7 +113,7 @@ export class ShipmentDetailsComponent implements OnInit,AfterViewInit
         this.SecurityKey = _id;
 
         this.route.queryParams.subscribe(params => {
-            this.SecurityKey = params['SecurityKey'];
+            this.SecurityKey = params['SecurityKey'] || this.SecurityKey;
             this._tenant = params['Tenant'];
             this.focusOnPanel = params['Panel'];
         });
