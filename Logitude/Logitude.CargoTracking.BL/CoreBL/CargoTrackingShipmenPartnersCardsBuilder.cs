@@ -119,7 +119,7 @@ namespace Logitude.CargoTracking.BL.EntityQueryServices
 
         private void CreatePartnerCard(PartnerCardMetaData partnerCardMetaData)
         {
-            if (partnerCardMetaData.IsFromShipmentOrder && shipmentOrderPM != null)
+            if (partnerCardMetaData.IsFromShipmentOrder)
                 CreateShipmetOrderPartnerCard(partnerCardMetaData);
             else
                 CreateShipmentPartnerCard(partnerCardMetaData);
@@ -141,6 +141,8 @@ namespace Logitude.CargoTracking.BL.EntityQueryServices
 
         private void CreateShipmetOrderPartnerCard(PartnerCardMetaData partnerCardMetaData)
         {
+            if (shipmentOrderPM == null)
+                return;
             var id = GetProperty(shipmentOrderPM, partnerCardMetaData.IdFieldName);
             if (id != null)
                 partnerCards.Add(new PartnerCard()
