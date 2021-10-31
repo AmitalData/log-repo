@@ -392,6 +392,26 @@ export function AddInsidePackage(packagesDetails: PackagesDetails[]) {
 //#endregion
 
 //#region House Shipment Tab
+export function AssertHouseWizerdInsideMaster() {
+    AssertHouseDirectionDim()
+    AssertHouseTransportModeDim()
+    BaseAssertion.AssertElementDisabled(ShipmentSelectors.ShipmentMainCarriageFromPort, BaseSelectors.BeDisabled)
+    BaseAssertion.AssertElementDisabled(ShipmentSelectors.ShipmentMainCarriageToPort, BaseSelectors.BeDisabled)
+}
+
+function AssertHouseDirectionDim() {
+    BaseAssertion.AssertElementDisabled(ShipmentSelectors.DirectionRadio(BaseSelectors.Export), BaseSelectors.BeDisabled)
+    BaseAssertion.AssertElementDisabled(ShipmentSelectors.DirectionRadio(BaseSelectors.Import), BaseSelectors.BeDisabled)
+    BaseAssertion.AssertElementDisabled(ShipmentSelectors.DirectionRadio(BaseSelectors.Domestic), BaseSelectors.BeDisabled)
+    BaseAssertion.AssertElementDisabled(ShipmentSelectors.DirectionRadio(BaseSelectors.Drop), BaseSelectors.BeDisabled)
+}
+
+function AssertHouseTransportModeDim() {
+    BaseAssertion.AssertElementDisabled(ShipmentSelectors.TransportModeRadio(BaseSelectors.Air), BaseSelectors.BeDisabled)
+    BaseAssertion.AssertElementDisabled(ShipmentSelectors.TransportModeRadio(BaseSelectors.Ocean), BaseSelectors.BeDisabled)
+    BaseAssertion.AssertElementDisabled(ShipmentSelectors.TransportModeRadio(BaseSelectors.Inland), BaseSelectors.BeDisabled)
+}
+
 export function CreateNewAttachedHouse(Shipper: string) {
     cy.Click(ShipmentSelectors.NewAttachedHouse, null);
     FillHouseInShipmentsTab(Shipper);
