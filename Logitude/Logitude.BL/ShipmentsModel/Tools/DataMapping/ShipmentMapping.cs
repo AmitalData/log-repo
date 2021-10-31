@@ -1941,6 +1941,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             entityPoco.CustomerContactId = entityPM.CustomerContactId;
             entityPoco.CustomerReference1 = entityPM.CustomerReference1;
             entityPoco.CustomerReference2 = entityPM.CustomerReference2;
+            entityPoco.CustomerReference3 = entityPM.CustomerReference3;
 
             entityPoco.FreightForwarderId = entityPM.FreightForwarderId;
             entityPoco.FreightForwarderAddressId = entityPM.FreightForwarderAddressId;
@@ -2522,6 +2523,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
                     MethodHelper.AddToSearchFields(ref mySearchFields, myCard.EnglishName);
                     MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.CustomerReference1);
                     MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.CustomerReference2);
+                    MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.CustomerReference3);
                 }
             }
 

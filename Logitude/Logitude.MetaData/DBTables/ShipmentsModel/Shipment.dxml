@@ -3268,6 +3268,13 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="CustomerReference3"
+    Type="varchar"
+    Size="300">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="CountryForStatisticsId"
     ReferencedTable="Countries"

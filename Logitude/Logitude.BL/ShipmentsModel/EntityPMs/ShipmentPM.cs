@@ -586,6 +586,9 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string CustomerReference2 { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string CustomerReference3 { get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string CustomerName { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
