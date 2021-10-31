@@ -119,35 +119,35 @@ this.ScenarioInitialize(scenarioInfo);
 #line 7
  testRunner.Given("glAccount", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
-                TechTalk.SpecFlow.Table table25 = new TechTalk.SpecFlow.Table(new string[] {
+                TechTalk.SpecFlow.Table table11 = new TechTalk.SpecFlow.Table(new string[] {
                             "property",
                             "Value"});
-                table25.AddRow(new string[] {
+                table11.AddRow(new string[] {
                             "IsMultiCurrency",
                             "true"});
-                table25.AddRow(new string[] {
+                table11.AddRow(new string[] {
                             "DisplayNumber",
                             "Unique Number"});
-                table25.AddRow(new string[] {
+                table11.AddRow(new string[] {
                             "AccountTypeCode",
                             "Vendor"});
-                table25.AddRow(new string[] {
+                table11.AddRow(new string[] {
                             "LocalName",
                             "VendGlAccountLocal"});
-                table25.AddRow(new string[] {
+                table11.AddRow(new string[] {
                             "EnglishName",
                             "VendGlAccountEnglish"});
-                table25.AddRow(new string[] {
+                table11.AddRow(new string[] {
                             "RevenueExpenseType",
                             "Other"});
-                table25.AddRow(new string[] {
+                table11.AddRow(new string[] {
                             "IsControlAccount",
                             "false"});
-                table25.AddRow(new string[] {
+                table11.AddRow(new string[] {
                             "ControlAccountId",
                             "1921681254"});
 #line 8
- testRunner.And("following new glAccount properties", ((string)(null)), table25, "And ");
+ testRunner.And("following new glAccount properties", ((string)(null)), table11, "And ");
 #line hidden
 #line 18
  testRunner.When("update glAccount", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");

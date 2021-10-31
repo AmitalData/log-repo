@@ -113,35 +113,35 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-                TechTalk.SpecFlow.Table table21 = new TechTalk.SpecFlow.Table(new string[] {
+                TechTalk.SpecFlow.Table table7 = new TechTalk.SpecFlow.Table(new string[] {
                             "property",
                             "Value"});
-                table21.AddRow(new string[] {
+                table7.AddRow(new string[] {
                             "Bank",
                             "bank1"});
-                table21.AddRow(new string[] {
+                table7.AddRow(new string[] {
                             "BranchNumber",
                             "1"});
-                table21.AddRow(new string[] {
+                table7.AddRow(new string[] {
                             "AccountNumber",
                             "Random"});
-                table21.AddRow(new string[] {
+                table7.AddRow(new string[] {
                             "Currency",
                             "NIS"});
-                table21.AddRow(new string[] {
+                table7.AddRow(new string[] {
                             "GLAccount",
                             "New Account"});
-                table21.AddRow(new string[] {
+                table7.AddRow(new string[] {
                             "DeferredGLAccountId",
                             "New Account"});
-                table21.AddRow(new string[] {
+                table7.AddRow(new string[] {
                             "TransferGLAcccountId",
                             "New Account"});
-                table21.AddRow(new string[] {
+                table7.AddRow(new string[] {
                             "Name",
                             "bank account Test"});
 #line 6
- testRunner.Given("a bank account with the following properties", ((string)(null)), table21, "Given ");
+ testRunner.Given("a bank account with the following properties", ((string)(null)), table7, "Given ");
 #line hidden
 #line 16
  testRunner.When("create bank account", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");

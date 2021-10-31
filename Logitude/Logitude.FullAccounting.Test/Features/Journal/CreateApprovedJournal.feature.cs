@@ -113,7 +113,7 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-                TechTalk.SpecFlow.Table table26 = new TechTalk.SpecFlow.Table(new string[] {
+                TechTalk.SpecFlow.Table table12 = new TechTalk.SpecFlow.Table(new string[] {
                             "Line",
                             "Action",
                             "AccountingDate",
@@ -124,7 +124,7 @@ this.ScenarioInitialize(scenarioInfo);
                             "LocalAmount",
                             "CurrencyId",
                             "ExchangeRate"});
-                table26.AddRow(new string[] {
+                table12.AddRow(new string[] {
                             "1",
                             "Credit",
                             "09/01/2021",
@@ -135,7 +135,7 @@ this.ScenarioInitialize(scenarioInfo);
                             "5",
                             "NIS",
                             "1"});
-                table26.AddRow(new string[] {
+                table12.AddRow(new string[] {
                             "2",
                             "Debit",
                             "09/01/2021",
@@ -147,34 +147,34 @@ this.ScenarioInitialize(scenarioInfo);
                             "NIS",
                             "1"});
 #line 6
- testRunner.Given("I have the following Journal lines:", ((string)(null)), table26, "Given ");
+ testRunner.Given("I have the following Journal lines:", ((string)(null)), table12, "Given ");
 #line hidden
-                TechTalk.SpecFlow.Table table27 = new TechTalk.SpecFlow.Table(new string[] {
+                TechTalk.SpecFlow.Table table13 = new TechTalk.SpecFlow.Table(new string[] {
                             "property",
                             "Value"});
-                table27.AddRow(new string[] {
+                table13.AddRow(new string[] {
                             "AccountingDate",
                             "09/01/2021"});
-                table27.AddRow(new string[] {
+                table13.AddRow(new string[] {
                             "currencyId",
                             "NIS"});
-                table27.AddRow(new string[] {
+                table13.AddRow(new string[] {
                             "statusCode",
                             "Approved"});
-                table27.AddRow(new string[] {
+                table13.AddRow(new string[] {
                             "typeCode",
                             "0"});
-                table27.AddRow(new string[] {
+                table13.AddRow(new string[] {
                             "DueDate",
                             "09/24/2021"});
-                table27.AddRow(new string[] {
+                table13.AddRow(new string[] {
                             "DocumentDate",
                             "09/01/2021"});
-                table27.AddRow(new string[] {
+                table13.AddRow(new string[] {
                             "journalLines",
                             "1,2"});
 #line 10
- testRunner.And("a journal with the following properties", ((string)(null)), table27, "And ");
+ testRunner.And("a journal with the following properties", ((string)(null)), table13, "And ");
 #line hidden
 #line 19
  testRunner.When("create approved journal", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");

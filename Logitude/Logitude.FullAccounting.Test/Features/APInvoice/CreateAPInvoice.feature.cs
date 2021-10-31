@@ -113,7 +113,7 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-                TechTalk.SpecFlow.Table table15 = new TechTalk.SpecFlow.Table(new string[] {
+                TechTalk.SpecFlow.Table table1 = new TechTalk.SpecFlow.Table(new string[] {
                             "Description",
                             "VatType",
                             "ForiegnCurrencyIdByCode",
@@ -124,7 +124,7 @@ this.ScenarioInitialize(scenarioInfo);
                             "ProfitCurrencyAmount",
                             "LocalCurrencyAmount",
                             "ForiegnCurrencyAmount"});
-                table15.AddRow(new string[] {
+                table1.AddRow(new string[] {
                             "SpecFlowTest",
                             "Zero",
                             "NIS",
@@ -136,40 +136,40 @@ this.ScenarioInitialize(scenarioInfo);
                             "1",
                             "1"});
 #line 6
- testRunner.Given("I have the following AP invoice lines:", ((string)(null)), table15, "Given ");
+ testRunner.Given("I have the following AP invoice lines:", ((string)(null)), table1, "Given ");
 #line hidden
-                TechTalk.SpecFlow.Table table16 = new TechTalk.SpecFlow.Table(new string[] {
+                TechTalk.SpecFlow.Table table2 = new TechTalk.SpecFlow.Table(new string[] {
                             "property",
                             "Value"});
-                table16.AddRow(new string[] {
+                table2.AddRow(new string[] {
                             "Vendor",
                             "Vendor1"});
-                table16.AddRow(new string[] {
+                table2.AddRow(new string[] {
                             "Branch",
                             "BerzeitU"});
-                table16.AddRow(new string[] {
+                table2.AddRow(new string[] {
                             "InvoiceCurrency",
                             "NIS"});
-                table16.AddRow(new string[] {
+                table2.AddRow(new string[] {
                             "InvoiceCurrencyExchangeRate",
                             "1"});
-                table16.AddRow(new string[] {
+                table2.AddRow(new string[] {
                             "ProfitCurrency",
                             "NIS"});
-                table16.AddRow(new string[] {
+                table2.AddRow(new string[] {
                             "ProfitCurrencyExchangeRate",
                             "1"});
-                table16.AddRow(new string[] {
+                table2.AddRow(new string[] {
                             "DueDate",
                             "Tomorrow"});
-                table16.AddRow(new string[] {
+                table2.AddRow(new string[] {
                             "InvoiceNumber",
                             "Random number"});
-                table16.AddRow(new string[] {
+                table2.AddRow(new string[] {
                             "VATNumber",
                             "1"});
 #line 9
- testRunner.And("a AP invoice with the following properties", ((string)(null)), table16, "And ");
+ testRunner.And("a AP invoice with the following properties", ((string)(null)), table2, "And ");
 #line hidden
 #line 20
  testRunner.When("create AP invoice", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");

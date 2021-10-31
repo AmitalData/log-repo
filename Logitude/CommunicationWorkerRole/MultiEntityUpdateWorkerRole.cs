@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Web;
+using WebFreight.Web.Helpers.WorkerRole.MultiEntityUpdate;
 
 namespace CommunicationWorkerRole
 {
@@ -41,7 +42,7 @@ namespace CommunicationWorkerRole
 
         private void ExecuteQueue(QueueResponse queueResponse)
         {
-            new MultiEntityUpdateService(queueService, queueResponse).ExecuteMultiEntityUpdateQueue();
+            new MultiEntityUpdateExecutionService(queueService, queueResponse).ExecuteMultiEntityUpdateQueue();
         }
 
         public void ConnectClient()
