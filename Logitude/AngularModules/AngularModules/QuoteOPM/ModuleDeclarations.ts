@@ -10,17 +10,7 @@ import {ApproveBuildShipmentComponent} from './Components/MenuButtons/ApproveBui
 import {QuoteEventNotesComponent} from './Components/MenuButtons/QuoteEventNotesComponent';
 
 import { QuoteSaleCurrencyTypeComponent } from './Components/Shared/QuoteSaleCurrencyTypeComponent';
-import { NewQuoteExpectedOrderComponent } from './Components/NewEntity/components/new-quote-expected-order/new-quote-expected-order.component';
-import { NewQuoteGeneralComponent } from './Components/NewEntity/components/new-quote-general/new-quote-general.component';
-import { NewQuoteLeftSideComponent } from './Components/NewEntity/components/new-quote-left-side/new-quote-left-side.component';
-import { NewQuoteMyCustomersComponent } from './Components/NewEntity/components/new-quote-my-customers/new-quote-my-customers.component';
-import { NewQuotePropertiesComponent } from './Components/NewEntity/components/new-quote-properties/new-quote-properties.component';
-import { AddressTextareaComponent } from './Components/NewEntity/components/address-textarea/address-textarea.component';
-import { AutocomplateTableComponent } from './Components/NewEntity/components/autocomplate-table/autocomplate-table.component';
 import { NewQuoteComponentOld } from './Components/NewEntity/NewQuoteComponent.old';
-import { NewQuoteAddressComponent } from './Components/NewEntity/components/new-quote-address/new-quote-address.component';
-import { BtnMenuPlusComponent } from './Components/NewEntity/components/btn-menu-plus/btn-menu-plus.component';
-import { NewQuotePartnerComponent } from './Components/NewEntity/components/new-quote-partner/new-quote-partner.component';
 
 export const Components = [
         FieldTemplateComponent,

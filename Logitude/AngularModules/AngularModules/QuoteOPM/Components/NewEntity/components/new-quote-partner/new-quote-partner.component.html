@@ -1,48 +1,50 @@
-<h3 class="sub-header">{{'QuoteOP.F.' + capitalizeType | TextCodeTranslationPipe}}</h3>
+<app-accordion [(isHidden)]='isHidden' class="partner" [label]='"QuoteOP.F." + capitalizeType | TextCodeTranslationPipe'>
 
-<div class="grid content-in-section" [formGroup]='partnerform'>
-  <div class="col-6 p-fluid">
-    <div class="p-field">
-      <app-autocomplate-table
-        [columnsShow]="['Code', 'EnglishName', 'Address1', 'CityName', 'CountryName', 'PartnerTypeName']"
-        [data]='cardsList' [fieldShow]='"EnglishName"' [label]="'Name'" [controlName]='"partner"'
-        [formGroup]='partnerform' [searchIcon]='true'>
-      </app-autocomplate-table>
-
-      <app-btn-menu-plus [ddl]='ddl'></app-btn-menu-plus>
-    </div>
-
-    <div *ngIf='Address'>
+  <div class="grid content-in-section" [formGroup]='partnerform'>
+    <div class="col-6 p-fluid">
       <div class="p-field">
-        <app-address-textarea [Address]='Address'></app-address-textarea>
-      </div>
-
-      <div class="p-field">
-        <label [for]="type + 'reference1'">Reference 1</label>
-        <input formControlName="reference1" [id]="type + 'reference1'" type="text" pInputText>
-      </div>
-    </div>
-  </div>
-
-  <div class="col-6 p-fluid">
-    <div *ngIf='Address'>
-      <div class="p-field">
-        <app-autocomplate-table [columnsShow]="['Email', 'EnglishName']" [data]='contactsList'
-          [fieldShow]='"EnglishName"' [label]="'Contact'" [controlName]='"contact"' [formGroup]='partnerform'
-          (onSelect)='onSelectedContact($event)' [dropIcon]='true'>
+        <app-autocomplate-table
+          [columnsShow]="['Code', 'EnglishName', 'Address1', 'CityName', 'CountryName', 'PartnerTypeName']"
+          [data]='cardsList' [fieldShow]='"EnglishName"' [label]="'Name'" [controlName]='"partner"'
+          [formGroup]='partnerform' [searchIcon]='true'>
         </app-autocomplate-table>
-        
-        <i class="pi pi-plus plus-btn" (click)='addContact()'></i>
-      </div>
-      <div class="p-field">
-        <label [for]="type + 'notes'">{{'QuoteOP.S.NewQuote.' + capitalizeType + 'Notes' | TextCodeTranslationPipe}}</label>
-        <textarea formControlName="notes" [id]="type + 'notes'" pInputTextarea [rows]="4"></textarea>
+
+        <app-btn-menu-plus [ddl]='ddl'></app-btn-menu-plus>
       </div>
 
-      <div class="p-field">
-        <label [for]="type + 'reference2'">{{capitalizeType}} Ref 2</label>
-        <input formControlName="reference2" [id]="type + 'reference2'" type="text" pInputText>
+      <div *ngIf='Address'>
+        <div class="p-field">
+          <app-address-textarea [Address]='Address'></app-address-textarea>
+        </div>
+
+        <div class="p-field">
+          <label [for]="type + 'reference1'">Reference 1</label>
+          <input formControlName="reference1" [id]="type + 'reference1'" type="text" pInputText>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-6 p-fluid">
+      <div *ngIf='Address'>
+        <div class="p-field">
+          <app-autocomplate-table [columnsShow]="['Email', 'EnglishName']" [data]='contactsList'
+            [fieldShow]='"EnglishName"' [label]="'Contact'" [controlName]='"contact"' [formGroup]='partnerform'
+            (onSelect)='onSelectedContact($event)' [dropIcon]='true'>
+          </app-autocomplate-table>
+
+          <i class="pi pi-plus plus-btn" (click)='addContact()'></i>
+        </div>
+        <div class="p-field">
+          <label [for]="type + 'notes'">{{'QuoteOP.S.NewQuote.' + capitalizeType + 'Notes' |
+            TextCodeTranslationPipe}}</label>
+          <textarea formControlName="notes" [id]="type + 'notes'" pInputTextarea [rows]="4"></textarea>
+        </div>
+
+        <div class="p-field">
+          <label [for]="type + 'reference2'">{{capitalizeType}} Ref 2</label>
+          <input formControlName="reference2" [id]="type + 'reference2'" type="text" pInputText>
+        </div>
       </div>
     </div>
   </div>
-</div>
+</app-accordion>

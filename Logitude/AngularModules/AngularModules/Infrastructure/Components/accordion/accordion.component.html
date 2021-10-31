@@ -1,0 +1,7 @@
+<div class="accordion-container">
+    <h4>{{label}}</h4>
+    <i class='pi pi-angle-down' (click)='toggleHidden()'></i>
+    <div [hidden]='isHidden' class="accordion-contect">
+        <ng-content></ng-content>
+    </div>
+</div>

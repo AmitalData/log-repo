@@ -3,6 +3,7 @@ import { NgModule } from "@angular/core";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { GenericTableModule } from "Customs/Components/generic-table/generic-table.module";
 import { NewQuoteOPWebService } from "Customs/Services/WebServices/NewQuoteOPWebService";
+import { AccordionModule } from "Infrastructure/Components/accordion/accordion.module";
 import { InfrastructureModule } from "Infrastructure/Module_INFR";
 import { MessageService } from "primeng/api";
 import { AutoCompleteModule } from "primeng/autocomplete";
@@ -54,6 +55,7 @@ import { NewQuoteValidateEntityService } from "./Services/new-quote-validate-ent
         SplitButtonModule,
         MenuModule,
         DropdownModule,
+        AccordionModule, 
     ],
     declarations: 
     [
