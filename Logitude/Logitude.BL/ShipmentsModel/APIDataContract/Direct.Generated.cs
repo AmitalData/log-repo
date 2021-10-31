@@ -267,7 +267,6 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
     public DateTime? FreightRelease { get; set; }
     
     public DateTime? TerminalAvailable { get; set; }
-
     
     public Card Notify1 { get; set; }
 
