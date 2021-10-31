@@ -103,7 +103,7 @@ namespace Unifreight.BL.EntityQueryServices
                  AIRLINE_ID = o.AIRLINEID,
                  Prefix = o.AIRLINENUM,
              });
-            ETBAIRLINEquery = ETBAIRLINEquery.Skip(queryOperations.PageIndex);
+            ETBAIRLINEquery = ETBAIRLINEquery.Skip(queryOperations.PageIndex * queryOperations.PageSize);
             ETBAIRLINEquery = ETBAIRLINEquery.Take(queryOperations.PageSize);
             return ETBAIRLINEquery.ToList();
 
