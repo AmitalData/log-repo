@@ -341,8 +341,8 @@ namespace Logitude.CargoTracking.BL.EntityQueryServices
 
         private void SetRoutePortsCodes(CargoTrackingShipmentPM cargoShipmentPM)
         {
-            CargoTrackingPortPM fromPort = GetCargoPort(cargoShipmentPM.FromPortCode);
-            CargoTrackingPortPM toPort = GetCargoPort(cargoShipmentPM.ToPortCode);
+            CargoTrackingPortPM fromPort = GetCargoPort(cargoShipmentPM.FromPortId);
+            CargoTrackingPortPM toPort = GetCargoPort(cargoShipmentPM.ToPortId);
 
             cargoShipmentPM.RouteFromPortCode = fromPort?.Code;
             cargoShipmentPM.RouteToPortCode = toPort?.Code;
