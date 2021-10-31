@@ -46,6 +46,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CargoTrackingShipmentOrderService } from '../CargoTracking/Services/Others/CargoTrackingShipmentOrderService';
 import { IconButtonComponent } from '../Infrastructure/Components/IconButton/IconButtonComponent';
+import { DateTimeFormatPipe } from '../Infrastructure/Pipes/DateTimeFormatPipe';
 
 export function getBaseUrl() {
     return document.getElementsByTagName('base')[0].href;
@@ -76,6 +77,7 @@ export function getBaseUrl() {
         ToolTipComponent,
         MultipleSelectionComponent,
         IconButtonComponent,
+        DateTimeFormatPipe,
 
 
         //Erros
@@ -113,6 +115,7 @@ export function getBaseUrl() {
         LoginServiceHelper,
         CargoTrackingShipmentOrderService,
         DatePipe,
+        DateTimeFormatPipe,
         { provide: 'BASE_URL', useFactory: getBaseUrl, deps: [] },
         { provide: MAT_DIALOG_DATA, useValue: {} },
         { provide: MatDialogRef, useValue: {} }

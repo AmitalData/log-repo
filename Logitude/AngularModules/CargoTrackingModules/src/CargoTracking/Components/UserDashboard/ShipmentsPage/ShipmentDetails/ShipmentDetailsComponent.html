@@ -165,7 +165,7 @@
                         {{card.Date | date: 'dd'}}
                         <span style="display:inline-flex;flex-direction:column-reverse">
                             <span style="flex:50%">{{card.Date | date: 'MMM'}}</span>
-                            <span style="flex:50%">{{card.Date | date: 'HH:mm'}}</span>
+                            <span style="flex:50%">{{card.Date | date: 'HH:mm' | dateTimeFormat}}</span>
                         </span>
                     </div>
 

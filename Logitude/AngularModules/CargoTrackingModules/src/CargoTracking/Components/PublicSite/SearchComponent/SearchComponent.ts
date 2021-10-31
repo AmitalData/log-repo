@@ -9,6 +9,8 @@ import { CargoTrackingBrandingData } from 'src/CargoTracking/DataContracts/Cargo
 import { CaptchaParameters } from 'src/CargoTracking/DataContracts/CaptchaParameters';
 import { ServiceResponse } from 'src/CargoTracking/DataContracts/ServiceResponse';
 import { MessageWindowComponent } from '../../../../Infrastructure/Components/MessageWindow/MessageWindowComponent';
+import { DateTimeFormatPipe } from '../../../../Infrastructure/Pipes/DateTimeFormatPipe';
+
 import { MatDialog } from '@angular/material/dialog';
 
 
@@ -45,7 +47,8 @@ export class SearchComponent implements AfterViewInit,OnInit, OnDestroy
         private location: Location,
         private searchService: CargoTrackingSearchService,
         public dialog: MatDialog,
-        public DatePipe: DatePipe)
+        public DatePipe: DatePipe,
+        public dateTimeFormatPipe: DateTimeFormatPipe)
     {
         this.GetSearchTextFromURI();
         this.listenToRouterEvents();
@@ -415,7 +418,7 @@ export class SearchComponent implements AfterViewInit,OnInit, OnDestroy
         let status = name;
         if (shipment.FutureMilstoneDate){
             let date = shipment.FutureMilstoneDate;
-            status += "\n on " + this.DatePipe.transform(date, 'd-MMM-y, HH:mm');
+            status += "\n on " + this.dateTimeFormatPipe.transform(this.DatePipe.transform(date, 'd-MMM-y, HH:mm'));
         }
         return status;
     }
@@ -427,7 +430,7 @@ export class SearchComponent implements AfterViewInit,OnInit, OnDestroy
 
         if (shipment.CurrentMilestoneDate){
             var date = shipment.CurrentMilestoneDate;
-            status += "\n on " + this.DatePipe.transform(date, 'd-MMM-y, HH:mm')
+            status += "\n on " + this.dateTimeFormatPipe.transform(this.DatePipe.transform(date, 'd-MMM-y, HH:mm'));
         }
         return status;
     }
