@@ -86,7 +86,7 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
         this.isControlAccount = this.EntityPM.IsControlAccount;
         this.LogitudeGridExportToExcelComponent = new LogitudeGridExportToExcelComponent();
         this.GetCurrencies();
-
+       
         this.LoadDefaultValues();
 
         this.LoadAllScreenData();
@@ -113,6 +113,7 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
                     if (_CurrentEditComponentId == this.CurrentSession.CurrentEditComponent.ComponentId) {
                         if (tabCode == "GATR") {
                             this.LoadAllScreenData();
+                            this.SetDateFilterWidth();
                         }
                     }
                 })
@@ -121,7 +122,17 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
 
         this.GetTransactionsCurrencies();
         this.GetFullAccountingSettings();
-        
+      
+    }
+    public DateFilterWidth: number;
+    SetDateFilterWidth() {
+        if (this.DisplayTaxReportFilter) {
+            this.DateFilterWidth = this.isRTL ? 300 : 370;
+        }
+        else {
+            this.DateFilterWidth= 270;
+        }
+       
     }
     DisplayTaxReportFilter: boolean;
     GetFullAccountingSettings() {
@@ -135,11 +146,13 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
                     if (this.fullAccountingSetting.VATInputsGLAccountId == this.EntityPM.Id || this.fullAccountingSetting.VATOutputGLAccountId == this.EntityPM.Id) {
                         this.UseTaxreportFilter = true;
                         this.DisplayTaxReportFilter = true;
+                        this.SetDateFilterWidth();
                         this.GetTransmittedTaxReports();
                     }
                     else {
                         this.UseTaxreportFilter = false;
                         this.DisplayTaxReportFilter = false;
+                        this.SetDateFilterWidth();
                     }
                 }
             })
@@ -150,8 +163,8 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
             this.TenatTaxReports = response.Result;
             this.CurrentSession.StopBusyIndicator();
             if (this.TenatTaxReports != null) {
-                this.TenatTaxReports.forEach(p => {                   
-                    this.TaxReportLists.push(new CodeNameClass(p.Id,this.FormatTaxReportDate(p.TaxReportMonth)));                   
+                this.TenatTaxReports.forEach(p => {
+                    this.TaxReportLists.push(new CodeNameClass(p.Id, this.FormatTaxReportDate(p.TaxReportMonth) ));                   
                 });
              
             }
@@ -324,8 +337,9 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
         if (this.notIncludedInAnyTaxReport != value) {
             this.notIncludedInAnyTaxReport = value;
             this.SelectedTaxReport = null;
-            this.RefreshButtonClicked();
+            
         }
+        this.RefreshButtonClicked();
     }
 
     //#endregion
@@ -1119,6 +1133,7 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
                 break;
             case 'filter_Tax':
                 this._dateTypeCode = '4';
+                this.UseTaxreportFilter = true;
                 this.ResetLTBFields();
                 this.NotIncludedInAnyTaxReport = true;
                 break;
