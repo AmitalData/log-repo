@@ -3029,7 +3029,7 @@ namespace WebFreight.Web
             ShipmentMobilePM shipmentMobilePM = new ShipmentMobilePM()
             {
                 Id = pm.Id,
-             //   Declaration No
+                //   Declaration No
                 OnCarriageCarrierName = pm.OnCarriageCarrierName,
                 Transshipment1CarrierName = pm.Transshipment1CarrierName,
                 CustomConnectToShipment = pm.CustomConnectToShipment,
@@ -3039,13 +3039,13 @@ namespace WebFreight.Web
                 ExceptionDate = pm.ExceptionDate,
                 ExceptionDescription = pm.ExceptionDescription,
                 ForeignPartnerCountryCode = pm.ForeignPartnerCountryCode,
-             
-                ShipmentLevelCode = pm.ShipmentLevelCode,
-                 NumberOfContainers = pm.NumberOfContainers,
-                    AgentReference1 = pm.AgentReference1,
 
-                  CustomFileId = pm.CustomFileId,
-                  CustomFileNumber = pm.CustomFileNumber,
+                ShipmentLevelCode = pm.ShipmentLevelCode,
+                NumberOfContainers = pm.NumberOfContainers,
+                AgentReference1 = pm.AgentReference1,
+
+                CustomFileId = pm.CustomFileId,
+                CustomFileNumber = pm.CustomFileNumber,
                 CustomsDeclarationNumber = pm.CustomsDeclarationNumber,
 
                 AgentReference2 = pm.AgentReference2,
@@ -3077,17 +3077,17 @@ namespace WebFreight.Web
                 GrossWeight = pm.GrossWeight,
                 CurrentUserId = pm.CurrentUserId,
                 Tenant = pm.Tenant,
-  
+
                 ShipmentNumber = pm.ShipmentNumber,
                 DirectionId = pm.DirectionId,
                 DirectionName = pm.DirectionName,
                 TransportModeId = pm.TransportModeId,
                 TransportModeName = pm.TransportModeName,
                 ShipmentTypeId = pm.ShipmentTypeId,
-              
+
                 House = pm.House,
                 CreateDateTime = pm.CreateDateTime,
- 
+
 
                 //[Timestamp]
 
@@ -3096,7 +3096,7 @@ namespace WebFreight.Web
                 ChargeableWeightUnitCode = pm.ChargeableWeightUnitCode,
                 DimensionsUnitCode = pm.DimensionsUnitCode,
                 VolumetricWeight = pm.VolumetricWeight,
-         
+
                 Volume = pm.Volume,
                 NumberOfPackages = pm.NumberOfPackages,
 
@@ -3109,13 +3109,13 @@ namespace WebFreight.Web
                 ShipmentDeliveries = pm.ShipmentDeliveries,
                 ShipmentPackages = pm.ShipmentPackages,
                 ShipmentOrderPackages = pm.ShipmentOrderPackages,
-               
+
 
                 #endregion
 
                 #region Routings
 
-       
+
                 PreCarriageTransportModeId = pm.PreCarriageTransportModeId,
                 PreCarriageFromPortId = pm.PreCarriageFromPortId,
                 PreCarriageToPortId = pm.PreCarriageToPortId,
@@ -3140,14 +3140,14 @@ namespace WebFreight.Web
                 OnCarriageTransportModeId = pm.OnCarriageTransportModeId,
                 OnCarriageFromPortId = pm.OnCarriageFromPortId,
                 OnCarriageToPortId = pm.OnCarriageToPortId,
-              
+
                 OnCarriageCarrierNumber = pm.OnCarriageCarrierNumber,
-       
+
                 OnCarriageCarrierCode = pm.OnCarriageCarrierCode,
                 OnCarriageFromPortCode = pm.OnCarriageFromPortCode,
                 OnCarriageFromPortName = pm.OnCarriageFromPortName,
                 OnCarriageFromPortCountryCode = pm.OnCarriageFromPortCountryCode,
-               
+
                 OnCarriageToPortCode = pm.OnCarriageToPortCode,
                 OnCarriageToPortName = pm.OnCarriageToPortName,
                 OnCarriageToPortCountryCode = pm.OnCarriageToPortCountryCode,
@@ -3161,7 +3161,7 @@ namespace WebFreight.Web
                 MainCarriageCarrierCode = pm.MainCarriageCarrierCode,
                 MainCarriageFromPortCode = pm.MainCarriageFromPortCode,
                 MainCarriageFromPortName = pm.MainCarriageFromPortName,
-            
+
                 MainCarriageFromPortCountryCode = pm.MainCarriageFromPortCountryCode,
                 MainCarriageToPortCode = pm.MainCarriageToPortCode,
                 MainCarriageToPortName = pm.MainCarriageToPortName,
@@ -3193,7 +3193,7 @@ namespace WebFreight.Web
                 Transshipment1ToPortCode = pm.Transshipment1ToPortCode,
                 Transshipment1ToPortName = pm.Transshipment1ToPortName,
                 Transshipment1ToPortCountryCode = pm.Transshipment1ToPortCountryCode,
-    
+
 
                 Transshipment2FromPortId = pm.Transshipment2FromPortId,
                 Transshipment2ToPortId = pm.Transshipment2ToPortId,
@@ -3203,16 +3203,16 @@ namespace WebFreight.Web
                 Transshipment2ETA = pm.Transshipment2ETA,
 
                 Transshipment2CarrierNumber = pm.Transshipment2CarrierNumber,
-        
+
                 Transshipment2CarrierCode = pm.Transshipment2CarrierCode,
                 Transshipment2FromPortCode = pm.Transshipment2FromPortCode,
                 Transshipment2FromPortName = pm.Transshipment2FromPortName,
                 Transshipment2FromPortCountryCode = pm.Transshipment2FromPortCountryCode,
-    
+
                 Transshipment2ToPortCode = pm.Transshipment2ToPortCode,
                 Transshipment2ToPortName = pm.Transshipment2ToPortName,
                 Transshipment2ToPortCountryCode = pm.Transshipment2ToPortCountryCode,
-              
+
 
                 Transshipment3FromPortId = pm.Transshipment3FromPortId,
                 Transshipment3ToPortId = pm.Transshipment3ToPortId,
@@ -3222,47 +3222,46 @@ namespace WebFreight.Web
                 Transshipment3ETA = pm.Transshipment3ETA,
 
                 Transshipment3CarrierNumber = pm.Transshipment3CarrierNumber,
-   
+
                 Transshipment3CarrierCode = pm.Transshipment3CarrierCode,
                 Transshipment3FromPortCode = pm.Transshipment3FromPortCode,
                 Transshipment3FromPortName = pm.Transshipment3FromPortName,
                 Transshipment3FromPortCountryCode = pm.Transshipment3FromPortCountryCode,
-       
+
                 Transshipment3ToPortCode = pm.Transshipment3ToPortCode,
                 Transshipment3ToPortName = pm.Transshipment3ToPortName,
                 Transshipment3ToPortCountryCode = pm.Transshipment3ToPortCountryCode,
-   
 
 
 
 
 
- 
+
+
                 FromPortName = pm.FromPortName,
 
                 FromPortCountryName = pm.FromPortCountryName,
 
-             
+
                 ToPortName = pm.ToPortName,
-  
+
                 ToPortCountryName = pm.ToPortCountryName,
 
 
                 #endregion
 
-          
-
-               #region partner
 
 
-          ShipperName = pm.ShipperName,
+                #region partner
+
+
+                ShipperName = pm.ShipperName,
 
 
 
-          ConsigneeName = pm.ConsigneeName,
-          CustomerReference1 = pm.CustomerReference1,
-          CustomerReference2 = pm.CustomerReference2,
-
+                ConsigneeName = pm.ConsigneeName,
+                CustomerReference1 = pm.CustomerReference1,
+                CustomerReference2 = pm.CustomerReference2,
                 #endregion
             };
 

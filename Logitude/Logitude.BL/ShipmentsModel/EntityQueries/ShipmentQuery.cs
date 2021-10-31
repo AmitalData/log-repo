@@ -863,6 +863,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.CustomerContactId = shipment.CustomerContactId;
             shipmentPM.CustomerReference1 = shipment.CustomerReference1;
             shipmentPM.CustomerReference2 = shipment.CustomerReference2;
+            shipmentPM.CustomerReference3 = shipment.CustomerReference3;
 
             if (!string.IsNullOrEmpty(shipment.CustomerId))
             {
@@ -3826,6 +3827,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
             shipmentPM.CustomerReference1 = shipment.CustomerReference1;
             shipmentPM.CustomerReference2 = shipment.CustomerReference2;
+            shipmentPM.CustomerReference3 = shipment.CustomerReference3;
 
             ShipmentPM returnShipment = BranchPermitionsFilter.AddUserBranchRestrictionFilters(new QueryOperations(), shipmentPM, tenant);
             returnShipment = ProductPermitionsFilter.AddUserProductRestrictionFilters(new QueryOperations(), shipmentPM, tenant);
@@ -4542,6 +4544,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                         CustomerNote = s.CustomerCard != null ? s.CustomerCard.Notes : null,
                                                         CustomerReference1 = s.CustomerReference1,
                                                         CustomerReference2 = s.CustomerReference2,
+                                                        CustomerReference3 = s.CustomerReference3,
                                                         DangerousClassNumber = s.DangerousClassNumber,
                                                         DangerousFlashPoint = s.DangerousFlashPoint,
                                                         DangerousIMDGCode = s.DangerousIMDGCode,
@@ -5204,6 +5207,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                         CustomerNote = s.CustomerCard != null ? s.CustomerCard.Notes : null,
                                                         CustomerReference1 = s.CustomerReference1,
                                                         CustomerReference2 = s.CustomerReference2,
+                                                        CustomerReference3 = s.CustomerReference3,
 
 
                                                         DescriptionOfGoods = s.DescriptionOfGoods,
