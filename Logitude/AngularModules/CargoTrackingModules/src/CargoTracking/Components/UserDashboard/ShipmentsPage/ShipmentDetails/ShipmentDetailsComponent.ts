@@ -204,6 +204,7 @@ export class ShipmentDetailsComponent implements OnInit,AfterViewInit
         setTimeout(() =>
         {
             this.InitSlider();
+            this.InitRoutingSlider();
             this.BuildSliderCards();
 
             if (this.isSharedLink && this.focusOnPanel)
