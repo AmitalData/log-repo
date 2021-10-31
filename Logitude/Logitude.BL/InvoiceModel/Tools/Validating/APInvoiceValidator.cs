@@ -45,6 +45,11 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
         {
             string msgRequired = TranslateTextsClass.Translate("General.M.FieldIsRequired", entityPM.Tenant);
 
+            if (!isNew)
+            {
+                ValidateConcurrencyGUID(entityPM, entityPOCO);
+            }
+
             ValidateInvoiceFields(entityPM);
 
             AccountingSetting accountingSetting = (from d in commonContext.AccountingSettings where d.Id == entityPM.Tenant select d).FirstOrDefault();
@@ -75,8 +80,6 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                 }
             }
             
-           // CheckInvoiceNumberFormat(entityPM.InvoiceNumber, entityPM.Tenant);
-
             if (entityPM.IsMultipleEntities)
             {
                 #region
@@ -940,6 +943,14 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                     string msg = TranslateTextsClass.Translate("General.M.CantUpdateRecord", entityPM.Tenant);
                     throw new ApplicationException(msg);
                 }
+            }
+        }
+        private static void ValidateConcurrencyGUID(APInvoicePM entityPM, APInvoice entityPOCO)
+        {
+            if (!entityPM.ConcurrencyGUID.Equals(entityPOCO.ConcurrencyGUID) && !entityPM.NewConcurrencyGUID.Equals(entityPOCO.ConcurrencyGUID))
+            {
+                string msg = TranslateTextsClass.Translate("General.M.CantUpdateRecord", entityPM.Tenant);
+                throw new OptimisticConcurrencyException(msg);
             }
         }
     }

@@ -834,6 +834,21 @@ export class APInvoicePM {
     public set GlobalTaxCalculation(newValue: string) { if (this.globalTaxCalculation != newValue) { this.globalTaxCalculation = newValue; this.MarkAsDirty("GlobalTaxCalculation"); } }
        
 	 
+    private isUpdateFromPaymentService: boolean;
+    public get IsUpdateFromPaymentService() { return this.isUpdateFromPaymentService; }
+    public set IsUpdateFromPaymentService(newValue: boolean) { if (this.isUpdateFromPaymentService != newValue) { this.isUpdateFromPaymentService = newValue; this.MarkAsDirty("IsUpdateFromPaymentService"); } }
+       
+	 
+    private concurrencyGUID: string;
+    public get ConcurrencyGUID() { return this.concurrencyGUID; }
+    public set ConcurrencyGUID(newValue: string) { if (this.concurrencyGUID != newValue) { this.concurrencyGUID = newValue; this.MarkAsDirty("ConcurrencyGUID"); } }
+       
+	 
+    private newConcurrencyGUID: string;
+    public get NewConcurrencyGUID() { return this.newConcurrencyGUID; }
+    public set NewConcurrencyGUID(newValue: string) { if (this.newConcurrencyGUID != newValue) { this.newConcurrencyGUID = newValue; this.MarkAsDirty("NewConcurrencyGUID"); } }
+       
+	 
 
     public OldEntityPM: APInvoicePM;
 		

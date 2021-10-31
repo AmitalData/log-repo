@@ -347,5 +347,9 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public string CopiedFrom { get; set; }
         public string GlobalTaxCalculation { get; set; }
         public bool IsUpdateFromPaymentService { get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string ConcurrencyGUID { get; set; }
+        public string NewConcurrencyGUID { get; set; }
     }
 }

@@ -8,6 +8,7 @@ using Logitude.BL.Security;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.EntityQueries;
 using Logitude.Server.Tools.Helpers;
+using System;
 
 namespace Logitude.BL.InvoiceModel.Tools.DataMapping
 {
@@ -189,6 +190,17 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
             entityPM.SetCancelApproval = false;
             entityPM.SetReTransfer = false;
             entityPM.SetReSendQBO = false;
+
+            if (isNewState)
+            {
+                if (entityPM.NewConcurrencyGUID == null)
+                {
+                    entityPM.NewConcurrencyGUID = Guid.NewGuid().ToString();
+                }
+            }
+
+            entity.ConcurrencyGUID = entityPM.NewConcurrencyGUID;
+            entityPM.ConcurrencyGUID = entity.ConcurrencyGUID;
         }
 
         public static void MapInvoiceLine(APInvoiceLinePM entityPM, APInvoiceLine entity, bool isNewState)
