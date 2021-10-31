@@ -168,16 +168,16 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                 CargoTrackingShipmentList shipment = shipmentsQuery.GetShipment(SecurityKey, tenant);
                 if (shipment == null)
                     return Request.CreateResponse(HttpStatusCode.OK);
+                
+                List<Milestone> shipmentMilestones = shipmentsQuery.BuildShipmentMilstones(shipment);
+                shipmentsQuery.SetMilestonesStatus(shipment, shipmentMilestones);
 
-                //List<Milestone> shipmentMilestones = shipmentsQuery.BuildShipmentMilstones(shipment);
-                //shipmentsQuery.SetMilestonesStatus(shipment, shipmentMilestones);
+                CargoTrackingShipmentWithMilestones cargoTrackingShipmentWithMilestones = new CargoTrackingShipmentWithMilestones()
+                {
+                    ShipmentList = shipment,
+                    Milestones = shipmentMilestones,
 
-                //CargoTrackingShipmentWithMilestones cargoTrackingShipmentWithMilestones = new CargoTrackingShipmentWithMilestones()
-                //{
-                //    ShipmentList = shipment,
-                //    Milestones = shipmentMilestones,
-
-                //};
+                };
 
                 CreateZoomEventForMixPanel(tenant, shipment, true);
 
