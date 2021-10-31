@@ -274,7 +274,7 @@
 
 	 ----------------------------------------------------
  
-	    SET @OrderGrossWeightWithUnitCode =  CAST(CAST(@OrderGrossWeight AS FLOAT(20)) AS VARCHAR(36))  +' ('+ @GrossWeightUnitCode +')';
+	   SET @OrderGrossWeightWithUnitCode =  CAST(CAST(@OrderGrossWeight AS FLOAT(20)) AS VARCHAR(36))  +' ('+ @GrossWeightUnitCode +')';
 		SET @OrderVolumeWithUnitCode =  CAST(CAST(@BookingVolume AS FLOAT(20)) AS VARCHAR(36))  +' ('+ @VolumeUnitCode +')';
 	      
     
@@ -408,7 +408,7 @@
      @ChargesType ,  @InvoiceNumber ,@InvoiceCurrency ,@InvoiceCurrencyExchangeRate ,   @OpenPayablesinLocal,@OpenPayablesinProfit,@AccountedPayablesinLocal , @AccountedPayablesinProfit, @OpenReceivablesinLocal,@OpenReceivablesinProfit,@AccountedReceivablesinLocal,@AccountedReceivablesinProfit, @IsOpenReceivable,@IsOpenPayable, @VATamountinInvoiceCurrency ,@PayableId,@ReceivableId,@BillTo ,@Vendor,@InvoiceId, 
  
 	 dbo.GetDateFormateAsNumber(@OperationalCloseDate), dbo.GetDateFormateAsNumber(@AccountingCloseDate), dbo.GetDateFormateAsNumber(@RegistryDate), @ProjectNumber, @Shipper, @Consignee, @Routing, @Incoterm, dbo.GetDateFormateAsNumber(@InvoiceDate), @InvoiceLineAmountForeign, @ForiegnCurrencyId, @InvoiceChargeLineDescription, @ChargeTypeNote, @HousesOpenPayablesInLocal, @HousesOpenPayablesInProfit, @HousesACCTPayablesInLocal, @HousesACCTPayablesInProfit, @HousesOpenReceivablesInLocal, @HousesOpenReceivablesInProfit, @HousesACCTReceivablesInLocal, @HousesACCTReceivablesInProfit,
-	 @InvoiceLineDescription, @InvoiceLineLocalDescription,@ExpectedAmount, @ExpectedAmountLocal,@ExpectedAmountInProfitCurrency,@PlannedCargoReadyDate,@ApprovedCargoReadyDate,@Notify1Reference2,@HandlerUser, @AccountingClosedByUser, @TotalGrossWeightInKG, @GrossWeightPerTon, @OrderGrossWeight,@OrderGrossWeightinTon, @BookingVolume,
+	 @InvoiceLineDescription, @InvoiceLineLocalDescription,@ExpectedAmount, @ExpectedAmountLocal,@ExpectedAmountInProfitCurrency,@PlannedCargoReadyDate,@ApprovedCargoReadyDate,@Notify1Reference2,@HandlerUser, @AccountingClosedByUser, @TotalGrossWeightInKG, @GrossWeightPerTon, @OrderGrossWeightWithUnitCode,@OrderGrossWeightinTon, @OrderVolumeWithUnitCode,
      @TotalVolumeInCBM, @FinalVolumetricWeight,@NumberOfPackages, @BookingNumberOfPackages)
  
 
@@ -432,9 +432,9 @@ END CATCH
 	,@ReceivablesTotalAmount , @ReceivablesTotalAmountLocal, @ReceivablesInvoiceLineId,@VATamountinInvoiceCurrency,	@PayableId ,@ReceivableId,@BillTo ,@Vendor , @InvoiceId 
 	,@OperationalCloseDate, @AccountingCloseDate, @RegistryDate, @ProjectNumber, @Shipper, @Consignee, @Routing, @Incoterm, @InvoiceDate, @InvoiceLineAmountForeign, @ForiegnCurrencyId, @InvoiceChargeLineDescription, @ChargeTypeNote, @HousesOpenPayablesInLocal, @HousesOpenPayablesInProfit, @HousesACCTPayablesInLocal, @HousesACCTPayablesInProfit, @HousesOpenReceivablesInLocal, @HousesOpenReceivablesInProfit, @HousesACCTReceivablesInLocal, @HousesACCTReceivablesInProfit
  
-     ,@ComputedStatus, @ShipmentPayablesReceivablesInvoiceStatusCode, @ShipmentPayablesReceivablesInvoiceDraftNumber,@InvoiceLineDescription, @InvoiceLineLocalDescription,@ExpectedAmount, @ExpectedAmountLocal,@ExpectedAmountInProfitCurrency,@PlannedCargoReadyDate,@ApprovedCargoReadyDate,@Notify1Reference2,@HandlerUser,@AccountingClosedByUser,@TotalGrossWeightInKG, @GrossWeightPerTon, @OrderGrossWeight, @BookingVolume,
-     @TotalVolumeInCBM, @VolumetricWeight,@NumberOfPackages, @BookingNumberOfPackages,@ChargeableWeightUnitCode, @GrossWeightUnitCode, @VolumeUnitCode
-
+     ,@ComputedStatus, @ShipmentPayablesReceivablesInvoiceStatusCode, @ShipmentPayablesReceivablesInvoiceDraftNumber,@InvoiceLineDescription, @InvoiceLineLocalDescription,@ExpectedAmount, @ExpectedAmountLocal,@ExpectedAmountInProfitCurrency,@PlannedCargoReadyDate,@ApprovedCargoReadyDate,@Notify1Reference2,@HandlerUser,@AccountingClosedByUser,
+	 @TotalGrossWeightInKG, @GrossWeightPerTon, @OrderGrossWeight, @BookingVolume,
+ @TotalVolumeInCBM, @VolumetricWeight,@NumberOfPackages, @BookingNumberOfPackages, @ChargeableWeightUnitCode, @GrossWeightUnitCode, @VolumeUnitCode
 		End
 	CLOSE ShipmentsChargesCursor
 	DEALLOCATE ShipmentsChargesCursor
