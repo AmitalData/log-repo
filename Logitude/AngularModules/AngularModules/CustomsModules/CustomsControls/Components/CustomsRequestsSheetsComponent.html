@@ -554,7 +554,9 @@
                     <tfoot style="width: 100%; width: calc(100% - 18px); display: table;">
                         <tr>
                             <td style="width:50%" class="Statistics"></td>
-                            <td style="width:50% " class="Statistics">{{SumRequests}}</td>
+                            <td style="width:50% " class="Statistics">
+                                <span *ngIf="SumRequests > 0">{{SumRequests}}</span>
+                            </td>
                         </tr>
                     </tfoot>
                 </table>
