@@ -110,12 +110,12 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-                TechTalk.SpecFlow.Table table24 = new TechTalk.SpecFlow.Table(new string[] {
+                TechTalk.SpecFlow.Table table10 = new TechTalk.SpecFlow.Table(new string[] {
                             "Name"});
-                table24.AddRow(new string[] {
+                table10.AddRow(new string[] {
                             "Test"});
 #line 6
- testRunner.Given("a customer with the following properties", ((string)(null)), table24, "Given ");
+ testRunner.Given("a customer with the following properties", ((string)(null)), table10, "Given ");
 #line hidden
 #line 9
  testRunner.When("create customer", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
