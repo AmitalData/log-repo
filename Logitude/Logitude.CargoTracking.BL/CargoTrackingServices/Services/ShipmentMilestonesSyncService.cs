@@ -12,8 +12,63 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
 {
     public class ShipmentMilestonesSyncService
     {
-		List<string> forwardingMilstonesFields = new List<string>();
-        List<string> customsMilstonesFields = new List<string>();
+        List<string> customsMilstonesFields = new List<string>
+            {
+                "ToWarehouseDone",
+                "ToWarehouseDate",
+                "ToWarehouseEstimationDate",
+                "ToWarehouseNotes",
+                "AssignedCustomsAgentDone",
+                "AssignedCustomsAgentDate",
+                "AssignedCustomsAgentEstDate",
+                "AssignedCustomsAgentNotes",
+                "CustomsPaymentDone",
+                "CustomsPaymentDate",
+                "ClearanceDone",
+                "ClearanceDate",
+                "AssignedTruckerDone",
+                "AssignedTruckerDate",
+                "AssignedTruckerEstimationDate",
+                "AssignedTruckerNotes",
+                "DeliveryDone",
+                "DeliveryDate",
+                "DeliveryEstimationDate",
+                "DeliveryNotes",
+                "DeliveryExceptionReason",
+                "DeliveredDone",
+                "DeliveredDate",
+                "DeliveredEstimationDate",
+                "GatepassArrivedDone",
+                "GatepassArrivedDate",
+                "GatepassArrivedEstDate",
+                "GatepassArrivedNotes",
+                "DocumentInspectionDate",
+                "DocumentInspectionEstDate",
+                "DocumentInspectionDone",
+                "DocumentInspectionNotes",
+                "GoodsClassificationDate",
+                "GoodsClassificationDone",
+                "GoodsClassificationNotes",
+                "GoodsClassificationEstDate"
+            };
+        List<string> forwardingMilstonesFields = new List<string>
+            {
+                "PickupDate",
+                "PickupDone",
+                "PickupEstimationDate",
+                "FromWarehouseDone",
+                "FromWarehouseDate",
+                "FromWarehouseEstimationDate",
+                "FromWarehouseNotes",
+                "DepartureDone",
+                "DepartureDate",
+                "DepartureEstimationDate",
+                "ArrivalDone",
+                "ArrivalDate",
+                "ArrivalEstimationDate",
+                "CreatedDone",
+                "CreateDate"
+            };
         List<string> orderMilstonesFields = new List<string>
             {
                 "PickupDate",
@@ -25,7 +80,6 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
 
         public void SyncShipmentMilstones(CargoTrackingArgs cargoArgs)
         {
-            FillMilstonesFieldsList();
 
             // move fields from order to forwarding
             // & if fields of forwarding is empty, fill their values from order
@@ -50,11 +104,6 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
 
             sql = DisconnectShipments(cargoArgs);
             //ExcuteSqlScriptForSourceDatabase(cargoArgs, sql);
-        }
-        private void FillMilstonesFieldsList()
-        {
-            FillForwardingMilstonesFieldsList();
-            FillCustomsMilstonesFieldsList();
         }
         private string BuildScriptForUpdatingForwardingShipmentMilstonesFromShipmentOrder()
         { // order
@@ -230,66 +279,6 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
             ServiceHelper.ExecuteSql(sql, cargoArgs.SourceConnectionString);
         }
 
-        private void FillForwardingMilstonesFieldsList()
-        {
-            forwardingMilstonesFields.Add("PickupDate");
-            forwardingMilstonesFields.Add("PickupDone");
-            forwardingMilstonesFields.Add("PickupEstimationDate");
-            forwardingMilstonesFields.Add("FromWarehouseDone");
-            forwardingMilstonesFields.Add("FromWarehouseDate");
-            forwardingMilstonesFields.Add("FromWarehouseEstimationDate");
-            forwardingMilstonesFields.Add("FromWarehouseNotes");
-            forwardingMilstonesFields.Add("DepartureDone");
-            forwardingMilstonesFields.Add("DepartureDate");
-            forwardingMilstonesFields.Add("DepartureEstimationDate");
-            forwardingMilstonesFields.Add("ArrivalDone");
-            forwardingMilstonesFields.Add("ArrivalDate");
-            forwardingMilstonesFields.Add("ArrivalEstimationDate");
-            forwardingMilstonesFields.Add("CreatedDone");
-            forwardingMilstonesFields.Add("CreateDate");
-
-        }
-
-        private void FillCustomsMilstonesFieldsList()
-        {
-            customsMilstonesFields.Add("ToWarehouseDone");
-            customsMilstonesFields.Add("ToWarehouseDate");
-            customsMilstonesFields.Add("ToWarehouseEstimationDate");
-            customsMilstonesFields.Add("ToWarehouseNotes");
-            customsMilstonesFields.Add("AssignedCustomsAgentDone");
-            customsMilstonesFields.Add("AssignedCustomsAgentDate");
-            customsMilstonesFields.Add("AssignedCustomsAgentEstDate");
-            customsMilstonesFields.Add("AssignedCustomsAgentNotes");
-            customsMilstonesFields.Add("CustomsPaymentDone");
-            customsMilstonesFields.Add("CustomsPaymentDate");
-            customsMilstonesFields.Add("ClearanceDone");
-            customsMilstonesFields.Add("ClearanceDate");
-            customsMilstonesFields.Add("AssignedTruckerDone");
-            customsMilstonesFields.Add("AssignedTruckerDate");
-            customsMilstonesFields.Add("AssignedTruckerEstimationDate");
-            customsMilstonesFields.Add("AssignedTruckerNotes");
-            customsMilstonesFields.Add("DeliveryDone");
-            customsMilstonesFields.Add("DeliveryDate");
-            customsMilstonesFields.Add("DeliveryEstimationDate");
-            customsMilstonesFields.Add("DeliveryNotes");
-            customsMilstonesFields.Add("DeliveryExceptionReason");
-            customsMilstonesFields.Add("DeliveredDone");
-            customsMilstonesFields.Add("DeliveredDate");
-            customsMilstonesFields.Add("DeliveredEstimationDate");
-            customsMilstonesFields.Add("GatepassArrivedDone");
-            customsMilstonesFields.Add("GatepassArrivedDate");
-            customsMilstonesFields.Add("GatepassArrivedEstDate");
-            customsMilstonesFields.Add("GatepassArrivedNotes");
-            customsMilstonesFields.Add("DocumentInspectionDate");
-            customsMilstonesFields.Add("DocumentInspectionEstDate");
-            customsMilstonesFields.Add("DocumentInspectionDone");
-            customsMilstonesFields.Add("DocumentInspectionNotes");
-            customsMilstonesFields.Add("GoodsClassificationDate");
-            customsMilstonesFields.Add("GoodsClassificationDone");
-            customsMilstonesFields.Add("GoodsClassificationNotes");
-            customsMilstonesFields.Add("GoodsClassificationEstDate");
-
-        }
 
         private string BuildCustomsUpdatedFields()
         {

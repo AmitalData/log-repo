@@ -449,6 +449,8 @@ namespace WebFreight.Web
                                                      House = entity.House,
                                                      LongMaster = entity.TransportModeId == "A" ? (m.AirlinePrefix != null && m.Master != null ? m.AirlinePrefix + "-" + m.Master : m.Master) : m.Master,
                                                      IsStandalonePickupDelivery = entity.IsStandalonePickupDelivery,
+                                                     CustomerReference1 = entity.CustomerReference1,
+                                                     CustomerReference2 = entity.CustomerReference2,
                                                  };
             return shipments;
         }
@@ -506,6 +508,8 @@ namespace WebFreight.Web
                                                      CustomConnectToShipment = entity.CustomConnectToShipment,
                                                      ForeignPartnerCountryCode = entity.ForeignPartnerCountryCode,
                                                      IsStandalonePickupDelivery = entity.IsStandalonePickupDelivery,
+                                                     CustomerReference1 = entity.CustomerReference1,
+                                                     CustomerReference2 = entity.CustomerReference2,
                                                  };
             return shipments;
         }
@@ -953,6 +957,7 @@ namespace WebFreight.Web
                              ProjectNumber = f.ProjectNumber,
                              Tenant = f.Tenant,
                              IsStandalonePickupDelivery = f.IsStandalonePickupDelivery,
+
                          };
 
             return query2;
@@ -2964,6 +2969,8 @@ namespace WebFreight.Web
                                                      ShipmentMasterDataId = entity.MasterShipmentDataId,
                                                      CustomConnectToShipment = entity.CustomConnectToShipment,
                                                      IsStandalonePickupDelivery = entity.IsStandalonePickupDelivery,
+                                                     CustomerReference1 = entity.CustomerReference1,
+                                                     CustomerReference2 = entity.CustomerReference2,
                                                  };
             return shipments;
         }
@@ -3253,13 +3260,14 @@ namespace WebFreight.Web
 
 
           ConsigneeName = pm.ConsigneeName,
+          CustomerReference1 = pm.CustomerReference1,
+          CustomerReference2 = pm.CustomerReference2,
 
-
-                 #endregion
+                #endregion
             };
 
 
-            shipmentMobilePM.MobileShipmentReference = GetMobileReference(shipmentMobilePM,null);
+           shipmentMobilePM.MobileShipmentReference = GetMobileReference(shipmentMobilePM,null);
 
 
             if (pm.ShipmentLevelCode == "H" && string.IsNullOrEmpty(pm.MasterShipmentDataId))
@@ -3279,55 +3287,13 @@ namespace WebFreight.Web
 
         private string GetMobileReference(ShipmentMobilePM shipmentMobilePM , ShipmentList shipmentlist)
         {
-            string _myRef = "";
-
-            string shipmentLevelCode = shipmentMobilePM != null ? shipmentMobilePM.ShipmentLevelCode : shipmentlist.ShipmentLevelCode;
-            string directionId = shipmentMobilePM != null ? shipmentMobilePM.DirectionId : shipmentlist.DirectionId;
-
-
-            string agentReference1 = shipmentMobilePM != null ? shipmentMobilePM.AgentReference1 : shipmentlist.AgentReference1;
-            string agentReference2 = shipmentMobilePM != null ? shipmentMobilePM.AgentReference2 : shipmentlist.AgentReference2;
-
-            string shipperReference1 = shipmentMobilePM != null ? shipmentMobilePM.ShipperReference1 : shipmentlist.ShipperReference1;
-            string shipperReference2 = shipmentMobilePM != null ? shipmentMobilePM.ShipperReference2 : shipmentlist.ShipperReference2;
-
-            string consigneeReference2 = shipmentMobilePM != null ? shipmentMobilePM.ConsigneeReference2 : shipmentlist.ConsigneeReference2;
-            string consigneeReference1 = shipmentMobilePM != null ? shipmentMobilePM.ConsigneeReference1 : shipmentlist.ConsigneeReference1;
-
-            if (shipmentLevelCode == "C")
+            string customerReference1 = shipmentMobilePM != null ? shipmentMobilePM.CustomerReference1 : shipmentlist.CustomerReference1;
+            string customerReference2 = shipmentMobilePM != null ? shipmentMobilePM.CustomerReference2 : shipmentlist.CustomerReference2;
+            string _myRef = customerReference1;
+            if (!string.IsNullOrEmpty(customerReference2))
             {
-
-
-                _myRef = agentReference1;
-                if (!string.IsNullOrEmpty(agentReference2))
-                {
-                    _myRef = _myRef == "" ? agentReference2 : _myRef + ", " + agentReference2;
-                }
+                _myRef = string.IsNullOrEmpty(_myRef) ? customerReference2 : _myRef + ", " + customerReference2;
             }
-            else
-            {
-
-                if (directionId == "E" || directionId == "R")
-                {
-                    _myRef =shipperReference1;
-                    if (!string.IsNullOrEmpty(shipperReference2))
-                    {
-                        _myRef = _myRef == "" ? shipperReference2 : _myRef + ", " + shipperReference2;
-                    }
-                }
-
-                else
-                {
-                    _myRef = consigneeReference1;
-                    if (!string.IsNullOrEmpty(consigneeReference2))
-                    {
-                        _myRef = _myRef == "" ? consigneeReference2 : _myRef + ", " + consigneeReference2;
-                    }
-                }
-            }
-
-            if (_myRef == ", ") _myRef = "";
-
             return _myRef;
         }
     }

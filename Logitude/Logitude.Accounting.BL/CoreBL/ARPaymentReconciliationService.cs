@@ -45,6 +45,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 CalculatePaymentStatus(paymentPM);
 
                 ARPaymentService paymentService = new ARPaymentService(_invoiceContext, entityPM.Tenant);
+                paymentPM.UpdateAmountAndStatuses = true;
                 paymentService.Update(paymentPM);
 
             }

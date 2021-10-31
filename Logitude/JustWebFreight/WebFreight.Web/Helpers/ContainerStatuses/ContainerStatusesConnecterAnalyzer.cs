@@ -837,8 +837,8 @@ namespace WebFreight.Web.Helpers.Analyzers
                     logitudeOceanInsightsResponse = new LogitudeOceanInsightsResponse()
                     {
                         Id = IdCounter.GetNumber("LogitudeOceanInsightsResponse", tenant),
-                        FirstResponseDate = TenantServerConfigration.GetCurrentDateTime(tenant),
-                        LastResponseDate = TenantServerConfigration.GetCurrentDateTime(tenant),
+                        FirstResponseDate = TenantServerConfigration.GetCurrentDateTime(logitudeTenant.Value),
+                        LastResponseDate = TenantServerConfigration.GetCurrentDateTime(logitudeTenant.Value),
                         ContainerNumber = container_number,
                         SCACCode = carrier_scac,
                         Tenant = logitudeTenant != null ? logitudeTenant.Value: tenant,
@@ -848,7 +848,7 @@ namespace WebFreight.Web.Helpers.Analyzers
                 }
                 else
                 {
-                    logitudeOceanInsightsResponse.LastResponseDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+                    logitudeOceanInsightsResponse.LastResponseDate = TenantServerConfigration.GetCurrentDateTime(logitudeTenant.Value);
                     logitudeOceanInsightsResponseRepository.Update(logitudeOceanInsightsResponse);
                 }
 
@@ -868,7 +868,7 @@ namespace WebFreight.Web.Helpers.Analyzers
         private void CreateShipmentContainerStatus(LogitudeOceanInsightsRequest oceanInsight)
         {
             string iHash = this.GetHashedData(oceanInsight.ShipmentId);
-            DateTime logDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+            DateTime logDate = TenantServerConfigration.GetCurrentDateTime(logitudeTenant.Value);
             DateTime? eventDate = this.GetEventDate();
             double containerWeight = this.GetContainerWeight();
             DateTime? departureDate = this.ComputeDepartureDate();
@@ -2254,7 +2254,7 @@ namespace WebFreight.Web.Helpers.Analyzers
                     if (commLog != null)
                     {
                         commLog.CommunicationStatusTypeCode = "F";
-                        commLog.LastStatusDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+                        commLog.LastStatusDate = TenantServerConfigration.GetCurrentDateTime(logitudeTenant.Value);
                         commLog.LastStatusDateUTC = DateTime.UtcNow;
                         commLog.ExceptionMessage = analyzeQueue.ErrorMessage;
 

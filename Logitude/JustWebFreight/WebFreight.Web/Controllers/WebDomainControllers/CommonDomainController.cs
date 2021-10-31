@@ -94,7 +94,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 int tenant = authToken.Tenant;
                 SecurityUtility.AuthenticationOnTenant(tenant);
                 string loggedUserEmail = authToken.Email;
-                byte[] data = ExportPartnersUploadTemplateToExcel(tenant) ;
+                byte[] data = ExportPartnersUploadTemplateToExcel(tenant);
                 string fileName = "Partners Upload Template";
                 if (data != null)
                 {
@@ -146,7 +146,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                                        {
                                            Code = a.Id,
                                            Name = a.Name,
-                                           
+
                                        }).ToList();
             }
         }
@@ -159,7 +159,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             sheet2.Range["A1"].CellStyle.Font.FontName = "Calibri";
             sheet2.Range["A1"].CellStyle.Font.Color = ExcelKnownColors.White;
             sheet2.Range["A1"].CellStyle.Color = System.Drawing.Color.Gray;
-            sheet2.Range["A1"].CellStyle.HorizontalAlignment = ExcelHAlign.HAlignCenter;   
+            sheet2.Range["A1"].CellStyle.HorizontalAlignment = ExcelHAlign.HAlignCenter;
             DataTable dataTable2 = this.ConvertToDataTable(partnersTypes_Sheet);
             sheet2.ImportDataTable(dataTable2, true, 1, 1);
         }
@@ -306,7 +306,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
             }
 
-            
+
             return document != null ? document.Id : null;
         }
         private DataTable ConvertToDataTable<T>(IList<T> data)
@@ -546,7 +546,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-        
+
         public HttpResponseMessage GetBlueSnapSecretToken(string VaultedShopperId, string countryname)
         {
             try
@@ -678,7 +678,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-        
+
         public HttpResponseMessage GetPortCopyToCurrentTenant(string entityId)
         {
             try
@@ -837,7 +837,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                                                                        LongMaster = x.TransportModeId == "A" ? (!string.IsNullOrEmpty(m.AirlinePrefix) && !string.IsNullOrEmpty(m.Master) ? m.AirlinePrefix + "-" + m.Master : "") : m.Master,
                                                                        House = x.House,
                                                                        ShipmentLevelCode = x.ShipmentLevelCode,
-                                                                       AgentName = x.AgentCard == null? null : x.AgentCard.EnglishName,
+                                                                       AgentName = x.AgentCard == null ? null : x.AgentCard.EnglishName,
                                                                        OpenPayablesInProfitCurrency = x.OpenPayablesInProfitCurrency,
                                                                        AccountedPayablesInProfitCurrency = x.AccountedPayablesInProfitCurrency,
                                                                        OpenPayablesInLocalCurrency = x.OpenPayablesInLocalCurrency,
@@ -1388,30 +1388,45 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 int tenant = authToken.Tenant;
 
                 List<ContactList> myResult = new List<ContactList>();
+                List<ContactList> DisinctContactEmail = new List<ContactList>();
                 if (!string.IsNullOrEmpty(emails))
                 {
                     List<string> emailsList = emails.ToLower().Split(';').Select(p => p.Trim()).ToList().Where(s => !string.IsNullOrWhiteSpace(s)).ToList();
                     if (emailsList.Count() > 0)
                     {
                         ICommonDataContext context = CommonDataContext.GetContext(tenant);
-
-                        myResult = (from d in context.Contacts.GroupBy(c => c.Email).Select(c => c.FirstOrDefault())
-                                    where d.Tenant == tenant
-                                    && d.Email != null
-                                    && emailsList.Contains(d.Email.ToLower())
-                                    select new ContactList()
-                                    {
-                                        Id = d.Id,
-                                        Tenant = d.Tenant,
-                                        Email = d.Email,
-                                        EnglishName = d.EnglishName,
-                                        SearchFields = d.SearchFields,
-                                        InActive = d.InActive,
-                                    }).ToList();
+                        foreach (var email in emailsList)
+                        {
+                            var contact = (from d in context.Contacts
+                                           where d.Tenant == tenant && d.Email == email
+                                           select new ContactList()
+                                           {
+                                               Id = d.Id,
+                                               Tenant = d.Tenant,
+                                               Email = d.Email,
+                                               EnglishName = d.EnglishName,
+                                               SearchFields = d.SearchFields,
+                                               InActive = d.InActive,
+                                           }).FirstOrDefault();
+                            DisinctContactEmail.Add(contact);
+                        }
+                        //myResult = (from d in context.Contacts.GroupBy(c => c.Email).Select(c => c.FirstOrDefault())
+                        //            where d.Tenant == tenant
+                        //            && d.Email != null
+                        //            && emailsList.Contains(d.Email)
+                        //            select new ContactList()
+                        //            {
+                        //                Id = d.Id,
+                        //                Tenant = d.Tenant,
+                        //                Email = d.Email,
+                        //                EnglishName = d.EnglishName,
+                        //                SearchFields = d.SearchFields,
+                        //                InActive = d.InActive,
+                        //            }).ToList();
                     }
                 }
 
-                return Request.CreateResponse(HttpStatusCode.OK, myResult);
+                return Request.CreateResponse(HttpStatusCode.OK, DisinctContactEmail);
             }
 
             catch (Exception ex)
@@ -2806,7 +2821,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 ChargesTypeQuery chargesTypeQuery = new ChargesTypeQuery(authToken.Tenant);
 
-                ChargesTypeList chargesTypeList = chargesTypeQuery.GetSingleChargesTypeListByCode(code, authToken.Tenant);                
+                ChargesTypeList chargesTypeList = chargesTypeQuery.GetSingleChargesTypeListByCode(code, authToken.Tenant);
 
                 return Request.CreateResponse(HttpStatusCode.OK, chargesTypeList);
             }

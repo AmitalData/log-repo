@@ -50,6 +50,7 @@ namespace WebFreight.Web.ReportsWebServices
         private AddressRepository addressRepository;       
         private byte[] output;
         private BranchRepository branchRepository;
+        private ShipmentRepository shipmentRepository;
 
         [WebMethod]
         public byte[] GetPickupData(string entityId, string entityObjectTableId, string childEntityId, string childEntityObjectTableId, int tenant)
@@ -100,7 +101,7 @@ namespace WebFreight.Web.ReportsWebServices
             this.portRepository = new PortRepository(commonContext);
             this.addressRepository = new AddressRepository(commonContext);
             this.branchRepository = new BranchRepository(tenant);
-            ShipmentRepository shipmentRepository = new ShipmentRepository(shipmentsContext);
+            this.shipmentRepository = new ShipmentRepository(shipmentsContext);
             ShipmentQuery shipmentQuery = new ShipmentQuery(shipmentRepository);
 
             shipment = shipmentQuery.GetSinglePM(entityId, tenant);
@@ -234,6 +235,7 @@ namespace WebFreight.Web.ReportsWebServices
             this.MapShipmentCustomFields();
             this.MapShipmentCustomClearancePoint();
             this.MapShipmentCustomsAgent();
+            this.MapMasterShipmentNumber();
         }
         private void MapBranchData()
         {
@@ -1297,6 +1299,7 @@ namespace WebFreight.Web.ReportsWebServices
             return fullAddress;
         }
 
+
         private string GetCardContactDetails(string contactId)
         {
             string contactDetails = "";
@@ -1312,6 +1315,28 @@ namespace WebFreight.Web.ReportsWebServices
             }
             return string.Join(",", new string[] { contact.EnglishName, contact.BusinessPhone, contact.Email }
                          .Where(s => !string.IsNullOrEmpty(s)));
+        }
+
+        private void MapMasterShipmentNumber()
+        {
+            if (shipment.ShipmentLevelCode == "C")
+            {
+                dataProvider.MasterShipmentNumber = shipment.ShipmentNumber;
+            }
+
+            else if (shipment.ShipmentLevelCode == "H" && !string.IsNullOrEmpty(shipment.MasterShipmentDataId))
+            {
+                SetMasterShipmentNumberForConnectedHouse();
+            }
+        }
+
+        private void SetMasterShipmentNumberForConnectedHouse()
+        {
+            Shipment masterData  = shipmentRepository.GetSingleShipment(shipment.MasterShipmentDataId, tenant);
+            if (masterData != null)
+            {
+                dataProvider.MasterShipmentNumber = masterData.ShipmentNumber;
+            }
         }
     }
 }
