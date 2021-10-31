@@ -16,6 +16,7 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
         public string XMLData { get; set; }
         public string ObjectTableId { get; set; }
         public int RetryNumber { get; set; }
+        public int UpdatedEntitiesNumber { get; set; }
         public DateTime? StartDate { get; set; }
     }
 }

@@ -12,6 +12,8 @@ namespace Logitude.BL.InfrastructureModel.DataContracts
     {
         [DataMember]
         public string ObjectTableId { get; set; }
+        [DataMember]
+        public string ObjectTableName { get; set; }
 
         [DataMember]
         public string UserId { get; set; }
@@ -40,5 +42,8 @@ namespace Logitude.BL.InfrastructureModel.DataContracts
 
         [DataMember]
         public string Exception { get; set; }
+
+        [DataMember]
+        public string StatusCode { get; set; }
     }
 }

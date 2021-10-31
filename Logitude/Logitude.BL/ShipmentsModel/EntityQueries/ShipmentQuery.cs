@@ -1844,14 +1844,16 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     shipmentPM.LocalCustomsSentByUserName = myContact.EnglishName;
                 }
             }
-
+            if (shipment.EntityStatus != null)
+            {
+                shipmentPM.StatusName = shipment.EntityStatus.Name;
+                shipmentPM.StatusWeight = shipment.EntityStatus.StatusWeight;
+            }
             shipmentPM.OriginShipmentId = shipment.OriginShipmentId;
             shipmentPM.FBLIsFromStock = shipment.FBLIsFromStock;
             shipmentPM.StatusId = shipment.StatusId;
-            shipmentPM.StatusName = shipment.EntityStatus.Name;
             shipmentPM.StatusLocation = shipment.StatusLocation;
             shipmentPM.StatusDate = shipment.StatusDate;
-            shipmentPM.StatusWeight = shipment.EntityStatus.StatusWeight;
             shipmentPM.LastSentByUserId = shipment.LastSentByUserId;
             shipmentPM.ProfitCurrencyId = shipment.ProfitCurrencyId;
             shipmentPM.ProfitExchangeRate = shipment.ProfitExchangeRate;

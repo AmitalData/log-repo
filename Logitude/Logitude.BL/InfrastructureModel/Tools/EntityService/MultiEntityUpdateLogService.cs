@@ -12,6 +12,8 @@ using Newtonsoft.Json;
 using Logitude.BL.InfrastructureModel.DataContracts;
 using Simplog.Data.Helpers;
 using Logitude.Server.Tools;
+using Logitude.Server.Tools.QueueService;
+using System.Collections.Generic;
 
 namespace Logitude.BL.InfrastructureModel.Tools.EntityService
 {
@@ -51,7 +53,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
         {
             this.isNewEntity = true;
             this.entityPM = theEntityPm;
-            this.entityPM.XMLData = ConvertToXml(this.entityPM.MultiEntityUpdateData);
+            this.entityPM.XMLData = LogitudeXmlSerializer.SerializeObjectToXmlString(theEntityPm.MultiEntityUpdateData);// ConvertToXml(theEntityPm.MultiEntityUpdateData);
             if (this.loggedContact != null)
             {
                 this.entityPM.CreatedByUserId = this.loggedContact.Id;
@@ -61,6 +63,15 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
             MultiEntityUpdateLogMapping.MapEntity(theEntityPm, Poco, isNewEntity);
             entityRepository.Add(Poco);
             entityRepository.SubmitChanges();
+            BuildQueue(Poco);
+
+        }
+
+        private void BuildQueue(MultiEntityUpdateLog poco)
+        {
+            IQueueService queueservice = new DbQueueService();
+            queueservice.InitializeQueue("MultiEntityUpdateQueue", poco.Tenant);
+            queueservice.Send(new Dictionary<string, string>() { { "MultiEntityUpdateId", poco.Id }, { "Tenant", poco.Tenant.ToString() }, }, poco.Tenant);
         }
 
         public void Update(MultiEntityUpdateLogPM theEntityPm)
@@ -77,16 +88,14 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
         {
 
             System.Type type1 = typeof(AutomationSetValue);
-            System.Type type2 = typeof(MultiEntityUpdateData);
-            System.Type type3 = typeof(MultiEntityUpdateDataEntity);
-            System.Type type4 = "string".GetType();
+            System.Type type2 = typeof(MultiEntityUpdateDataEntity);
+            System.Type type3 = "string".GetType();
 
 
-            System.Type[] types = new System.Type[4];
+            System.Type[] types = new System.Type[3];
             types[0] = type1;
             types[1] = type2;
             types[2] = type3;
-            types[3] = type4;
 
             return LogitudeXmlSerializer.SerializeObjectToElementString(multiEntityUpdateData, types);
         }

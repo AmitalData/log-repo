@@ -55,6 +55,7 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.DoneDate).HasColumnName("DoneDate");
             this.Property(t => t.ObjectTableId).HasColumnName("ObjectTableId");
             this.Property(t => t.RetryNumber).HasColumnName("RetryNumber");
+            this.Property(t => t.UpdatedEntitiesNumber).HasColumnName("UpdatedEntitiesNumber");
             this.Property(t => t.StartDate).HasColumnName("StartDate");
 
         }

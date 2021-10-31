@@ -325,6 +325,7 @@
     <Content Include="Infrastructure\Components\Maintenance\Automation\AutomationConditionsDetailsComponent.html" />
     <Content Include="Infrastructure\Components\Maintenance\Automation\AutomationResult\CreateTaskResultComponent.html" />
     <Content Include="Infrastructure\Components\Maintenance\Automation\AutomationsConditionsViewDetailsComponent.html" />
+    <Content Include="Infrastructure\Components\MultiUpdateComponent\MultiUpdateComponent.html" />
     <Content Include="InvoiceModules\ARPayment\Components\Other\ARPaymentMultiChequesComponent.html" />
     <Content Include="SharedLogistics\Components\CargoTrackingMilestonesPermissiosComponent.html" />
     <Content Include="ShipmentModules\ShipmentAWB\Components\AWBWizard\Packages\AWBAddEditCommodityComponent.html" />
@@ -1856,6 +1857,7 @@
     <TypeScriptCompile Include="Infrastructure\Components\Maintenance\BatchTaskExecution\BTEParameterTabComponent\BTEParameterTabComponent.ts" />
     <TypeScriptCompile Include="Infrastructure\Components\Maintenance\CacheLogComponent.ts" />
     <TypeScriptCompile Include="Infrastructure\Components\MenuButtons\AnalyzeQueueMenuButtonsHandler.ts" />
+    <TypeScriptCompile Include="Infrastructure\Components\MultiUpdateComponent\MultiUpdateComponent.ts" />
     <TypeScriptCompile Include="Infrastructure\Components\NewViewComponent\ChooseUserComponent.ts" />
     <TypeScriptCompile Include="Infrastructure\Components\QueryColumnsComponents\btnUpdateComponent.ts" />
     <TypeScriptCompile Include="Infrastructure\Components\QueryColumnsComponents\DWLogSearchAddFieldsComponent.ts" />

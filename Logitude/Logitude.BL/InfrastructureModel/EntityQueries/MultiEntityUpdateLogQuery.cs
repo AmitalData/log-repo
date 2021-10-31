@@ -41,6 +41,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         XMLData = a.XMLData,
                         ObjectTableId = a.ObjectTableId,
                         RetryNumber = a.RetryNumber,
+                        UpdatedEntitiesNumber = a.UpdatedEntitiesNumber,
                         StartDate = a.StartDate,
 
                     }).FirstOrDefault();

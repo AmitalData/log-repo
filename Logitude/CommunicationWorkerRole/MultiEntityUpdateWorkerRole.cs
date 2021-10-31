@@ -42,10 +42,7 @@ namespace CommunicationWorkerRole
 
         private void GetStartedInQueueMessage(QueueResponse queueResponse)
         {
-            ThreadStart multiEntityUpdateServiceThreadStart = (() => new MultiEntityUpdateService(queueService, queueResponse).ExecuteMultiEntityUpdateQueue());
-            multiEntityUpdateServiceThreadStart += () => { LogDoneItemInMemory(); };
-            new Thread(multiEntityUpdateServiceThreadStart) { IsBackground = true }.Start();
-            queueService.Complete();
+            new MultiEntityUpdateService(queueService, queueResponse).ExecuteMultiEntityUpdateQueue();
         }
 
         public void ConnectClient()
