@@ -5,12 +5,14 @@ import { ModuleProviders } from './ModuleProviders';
 
 import { ToastModule } from 'primeng/toast';
 import { quoteOP } from './Components/NewEntity/quoteOP.module';
+import { ButtonModule } from 'primeng/button';
 
 @NgModule({
     imports: [
         InfrastructureModule,
         quoteOP,
         ToastModule,
+        ButtonModule,
     ],
     declarations: [...Components, ...SharedComponents],
 

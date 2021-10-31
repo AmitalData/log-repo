@@ -9,7 +9,7 @@ import { Carrier, Incoterm, NewQuoteDataService, Port, SpecialService } from '..
   templateUrl: './new-quote-properties.component.html',
   styleUrls: ['./new-quote-properties.component.scss']
 })
-export class NewQuotePropertiesComponent implements OnInit,AfterViewInit {
+export class NewQuotePropertiesComponent implements OnInit, AfterViewInit {
   @Input() EntityPM: QuoteOPPM = null as any;
   @Input() formGroup: FormGroup = null as any;
 
@@ -23,7 +23,7 @@ export class NewQuotePropertiesComponent implements OnInit,AfterViewInit {
   carrierColumns: any = {}
   formArray: FormArray = new FormArray([this.propForm]);
   index: number = 0;
- 
+
   get propForm(): FormGroup {
     return new FormGroup({
       fromPort: new FormControl('', Validators.required),
@@ -46,15 +46,15 @@ export class NewQuotePropertiesComponent implements OnInit,AfterViewInit {
   ) { }
 
   ngAfterViewInit(): void {
-    if(this.EntityPM!= null && this.EntityPM.Id!=null){
-       if(this.EntityPM.QuoteProperties.length>0){
-         for(let QuoteOpProperty of this.EntityPM.QuoteProperties){
-           //edit part
-           if(QuoteOpProperty.FromPortId){
+    if (this.EntityPM != null && this.EntityPM.Id != null) {
+      if (this.EntityPM.QuoteProperties.length > 0) {
+        for (let QuoteOpProperty of this.EntityPM.QuoteProperties) {
+          //edit part
+          if (QuoteOpProperty.FromPortId) {
 
-           }
-         }
-       }
+          }
+        }
+      }
     }
   }
 
@@ -103,7 +103,7 @@ export class NewQuotePropertiesComponent implements OnInit,AfterViewInit {
 
   async getMainCarriageCarrier() {
     this.mainCarriageCarrierList = await this.newQuoteDataService.getCarrierses(this.directionId, this.transportModeId);
-    this.mainCarriageCarrierList = this.sortArray(this.mainCarriageCarrierList, 'Name')
+    this.mainCarriageCarrierList = this.mainCarriageCarrierList ? this.sortArray(this.mainCarriageCarrierList, 'Name') : []
 
     this.carrierColumns = this.directionId === "E" ? { AIRLINE_ID: 'Code' } : { VENDOR_ID: 'Code' }
     this.carrierColumns = { ...this.carrierColumns, ...{ Name: 'Name', Prefix: 'Prefix' } }
@@ -114,12 +114,11 @@ export class NewQuotePropertiesComponent implements OnInit,AfterViewInit {
   }
 
   addProperty() {
-    console.log(this.formArray)
-    if(this.formArray.valid){
+    if (this.formArray.valid) {
       this.index = this.formArray.length;
       this.formArray.push(this.propForm)
     } else
-      this.messageService.add({ severity: 'error', summary: 'Property not add', detail: 'have field in exist propreties that not vlid'})
+      this.messageService.add({ severity: 'error', summary: 'Property not add', detail: 'have field in exist propreties that not vlid' })
   }
 
   removeProperty(e: { originalEvent: PointerEvent, index: number }) {
@@ -128,6 +127,6 @@ export class NewQuotePropertiesComponent implements OnInit,AfterViewInit {
   }
 
   sortArray(arr: any[], prop: string): any[] {
-    return arr.sort((a,b) => (a[prop] > b[prop]) ? 1 : ((b[prop] > a[prop]) ? -1 : 0))  
+    return arr.sort((a, b) => (a[prop] > b[prop]) ? 1 : ((b[prop] > a[prop]) ? -1 : 0))
   }
 }

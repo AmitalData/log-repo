@@ -1,0 +1,24 @@
+.accordion-container {
+    padding: 7px 0px;
+    border-radius: 7px;
+    background-color: white;
+
+    h4 {
+        display: inline;
+        margin-left: 19px;
+        position: relative;
+    }
+
+    .pi {
+        float: right;
+        margin-right: 7px;        
+    }
+
+    .pi-angle-down:before {
+        content: "\e902";
+    }
+}
+
+.accordion-contect {
+    margin-top: 20px;
+}

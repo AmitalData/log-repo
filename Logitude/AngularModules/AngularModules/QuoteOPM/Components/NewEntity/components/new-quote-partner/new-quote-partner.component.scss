@@ -26,40 +26,61 @@
     p-button button.p-button {
         padding: 8px 7px !important;
         top: 3px;
-        position: relative;
+        position: relative;        
     }
-}
 
-textarea {
-    height: 136px;
-}
+    app-accordion {
+        display: block;
+        padding: 12px 0;
 
-app-autocomplate-table {
-    display: inline-block;
-    width: calc(100% - 69px);
-}
+        .accordion-contect {
+            border-top: 1px solid var(--surface-200);
+        }
 
-app-btn-menu-plus {
-    float: right;
-    margin-top: 12px;
-}
+        h4 {
+            font-size: 17px;
+            font-weight: bold;
+        }
 
-.plus-btn:hover {
-    background: #0d89ec;
-    color: #ffffff;
-    border-color: #0d89ec;
-}
+        .accordion-container > i.pi-angle-down {
+            margin-right: 18px !important;
+            margin-top: 6px;
+            // margin-left: 7px;
+            color: #1084dc;
+        }
+    }
 
-.plus-btn {
-    border-color: #e2f0fb;
-    background: #e2f0fb;
-    color: #1084dc;
-    // border-radius: 5px;
-    padding: 8px 23px;
-    cursor: pointer;
-    float: right;
-    margin-top: 12px;
-    position: relative;
-    top: 3px;
-    border-radius: 7px;    
+    textarea {
+        height: 136px;
+    }
+
+    app-autocomplate-table {
+        display: inline-block;
+        width: calc(100% - 69px);
+    }
+
+    app-btn-menu-plus {
+        float: right;
+        margin-top: 12px;
+    }
+
+    .plus-btn:hover {
+        background: #0d89ec;
+        color: #ffffff;
+        border-color: #0d89ec;
+    }
+
+    .plus-btn {
+        border-color: #e2f0fb;
+        background: #e2f0fb;
+        color: #1084dc;
+        // border-radius: 5px;
+        padding: 8px 23px;
+        cursor: pointer;
+        float: right;
+        margin-top: 12px;
+        position: relative;
+        top: 3px;
+        border-radius: 7px;
+    }
 }

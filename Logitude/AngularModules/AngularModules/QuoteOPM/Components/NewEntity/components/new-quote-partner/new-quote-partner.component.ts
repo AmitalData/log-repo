@@ -1,5 +1,5 @@
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
-import { AfterViewInit, ChangeDetectorRef, Component, Input, OnInit, SimpleChanges } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, Input, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AddressList } from 'Common/EntityLists/AddressList';
 import { CardList } from 'Common/EntityLists/CardList';
@@ -11,9 +11,11 @@ import { ContactPMService } from 'Common/Services/StandardPMs/ContactPMService';
 import { any } from 'cypress/types/bluebird';
 import { BaseComponent } from 'Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { EntityArgs } from 'Infrastructure/DataContracts/EntityArgs';
+import { DirectionList } from 'Infrastructure/EntityLists/DirectionList';
 import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator';
 import { MenuItem } from 'primeng/api';
 import { QuoteOPPM } from 'QuoteOPM/EntityPMs/QuoteOPPM';
+import { filter } from 'rxjs/operators';
 import { DialogsService, PartnerType } from '../../Services/dialogs/dialogs.service';
 import { NewQuoteDataService } from '../../Services/new-quote-data/new-quote-data.service';
 
@@ -35,7 +37,7 @@ export class NewQuotePartnerComponent extends BaseComponent implements OnInit, A
   ConsigneeContact: any;
   ShipperId: any;
   ConsigneeId: any;
-
+  isHidden:boolean = true;
 
   partnerform: FormGroup = new FormGroup({
     partner: new FormControl(),
@@ -58,20 +60,15 @@ export class NewQuotePartnerComponent extends BaseComponent implements OnInit, A
     private dialogsService: DialogsService,
     public entityArgs: EntityArgs,
     private CD: ChangeDetectorRef,
-
   ) {
     super();
-
   }
 
   ngAfterViewInit(): void {
     if (this.EntityPM != null && this.EntityPM.Id != null) {
       this.setPartners();
     }
-
   }
-
-
 
   setPartners() {
     const cardService = new CardPMService();
@@ -100,7 +97,6 @@ export class NewQuotePartnerComponent extends BaseComponent implements OnInit, A
     if (this.EntityPM[this.capitalizeType + 'Note'] != null) {
       this.partnerform.controls.ConsigneeNote.setValue(this.EntityPM[this.capitalizeType + 'Note']);
     }
-    
   }
 
   ngOnInit(): void {
@@ -144,6 +140,8 @@ export class NewQuotePartnerComponent extends BaseComponent implements OnInit, A
     this.partnerform.controls.notes.valueChanges.subscribe(newVal => this.EntityPM[this.capitalizeType + 'Note'] = newVal);
     this.partnerform.controls.reference1.valueChanges.subscribe(newVal => this.EntityPM[this.capitalizeType + 'Reference1'] = newVal);
     this.partnerform.controls.reference2.valueChanges.subscribe(newVal => this.EntityPM[this.capitalizeType + 'Reference2'] = newVal);
+    this.formGroup.controls.direction.valueChanges.subscribe((val:DirectionList)=>
+      this.isHidden = !((val.Name === 'Import' && this.type === 'consignee') || (val.Name === 'Export' && this.type === 'shipper')));
   }
 
   private async setAddress(partner: CardList): Promise<void> {

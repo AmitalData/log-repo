@@ -13,10 +13,21 @@
         <div class="col-10 right-side"
             [ngClass]="{'disabled':!formGroup.controls.direction?.value || !formGroup.controls.transportMode?.value ||  
     (formGroup.controls.transportMode?.value?.Name === 'Ocean' || formGroup.controls.transportMode?.value?.Name === 'Inland') &&  !formGroup.controls.shipmentType?.value}">
+
             <div class="section">
-                <app-new-quote-partner [type]='"shipper"' [formGroup]='formGroup' [EntityPM]='EntityPM'></app-new-quote-partner>
-                <hr>
-                <app-new-quote-partner [type]='"consignee"' [formGroup]='formGroup' [EntityPM]='EntityPM'></app-new-quote-partner>
+                <div class="p-field accordion-container">
+                    <h4 class="text-style simple-text">{{"QuoteOP.S.NewQuote.Pickup" | TextCodeTranslationPipe}}</h4>
+                    <i class='pi pi-angle-down' (click)='shipper.hidden = !shipper.hidden'></i>
+                    <div #shipper hidden class="accordion-contect">
+                        <app-new-quote-partner [type]='"shipper"' [formGroup]='formGroup' [EntityPM]='EntityPM'>
+                        </app-new-quote-partner>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <app-new-quote-partner [type]='"consignee"' [formGroup]='formGroup' [EntityPM]='EntityPM'></app-new-quote-partner>                
+                <!-- <hr> -->
                 <!-- <app-new-quote-my-customers [formGroup]='formGroup'></app-new-quote-my-customers> -->
             </div>
 
