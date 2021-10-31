@@ -273,7 +273,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CustomMapping
             item.PackagesQuantity = row.CustomPackagesQuantity;
             item.DirectionId = row.CustomDirectionId;
             item.ShipmentLevelCode = row.CustomShipmentLevelCode;
-            item.ForwardingShipmentNumber = row.CustomForwardingShipmentNumber;
+            item.ForwardingShipmentNumber = row.ForwardingShipmentNumber;
             item.ShipmentTypeCode = row.CustomShipmentTypeCode;
             item.FromWarehouseNotes = row.CustomFromWarehouseNotes;
             item.ToWarehouseEstimationDate = row.CustomToWarehouseEstimationDate;
@@ -300,10 +300,10 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CustomMapping
             item.DeliveryNotes = string.IsNullOrEmpty(row.CustomCarrierLocalName) ? row.CustomCarrierEnglishName : row.CustomCarrierLocalName;
             item.DeliveryExceptionReason = row.CustomDeliveryExceptionReason;
             item.GrossWeightUnitCode = row.CustomGrossWeightUnitCode;
-            item.ForwardingHouse = row.CustomForwardingHouse;
+            item.ForwardingHouse = row.ForwardingHouse;
             item.CustomsDeclarationNumber = row.CustomsDeclarationNumber;
-            item.ForwardingMaster = row.CustomForwardingMaster;
-            item.ForwardingShipmentLevelCode = row.CustomForwardingShipmentLevelCode;
+            item.ForwardingMaster = row.ForwardingMaster;
+            item.ForwardingShipmentLevelCode = row.ForwardingShipmentLevelCode;
             item.GoodsClassificationDate = row.CustomGoodsClassificationDate;
             //item.GoodsClassificationEstDate    = row.CustomGoodsClassificationEstDate    ;
             //item.GoodsClassificationNotes = row.CustomGoodsClassificationNotes;
