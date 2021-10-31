@@ -122,7 +122,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
             {
 
                 List<string> outputTaxReportsJournalsIds = GetTaxReportLinesJournalIds(taxReport, InputOutput.Output);
-                outputTransactions = GetTaxReportsLedgerTransactionsByJournalIds(outputTaxReportsJournalsIds, tenant, taxReport.TaxReportMonth, accountingSettingList.VATOutputGLAccountId);
+                outputTransactions = GetTaxReportsLedgerTransactionsByJournalIds(outputTaxReportsJournalsIds, taxReport, accountingSettingList.VATOutputGLAccountId);
             }
             else
             {
@@ -131,16 +131,16 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
             return outputTransactions;
         }
 
-        public List<LedgerTransactionList> GetTaxReportsLedgerTransactionsByJournalIds(List<string> journalIds, int tenant, DateTime date, string accountId)
+        public List<LedgerTransactionList> GetTaxReportsLedgerTransactionsByJournalIds(List<string> journalIds, TaxReportList taxReport, string accountId)
         {
-            int days = DateTime.DaysInMonth(date.Year, date.Month);
-            DateTime reportDate = new DateTime(date.Year, date.Month, days);
+            int days = DateTime.DaysInMonth(taxReport.TaxReportMonth.Year, taxReport.TaxReportMonth.Month);
+            DateTime reportDate = new DateTime(taxReport.TaxReportMonth.Year, taxReport.TaxReportMonth.Month, days);
             List<LedgerTransactionList> transactions = (from ledger in context.LedgerTransactions
                                                         join j in context.Journals on ledger.JournalId equals j.Id
                                                         join m in context.JournalAdditionalDatas on j.Id equals m.JournalId
-                                                        where j.AccountingEntityCode == "2" && (m.TaxReportId != null) && ledger.Tenant == tenant
+                                                        where j.AccountingEntityCode == AccountingEntities.ARInvoice && (m.TaxReportId != null) && ledger.Tenant == taxReport.Tenant
                                                         && ledger.DocumentDate <= reportDate
-                                                        where journalIds.Contains(ledger.JournalId) && ledger.Tenant == tenant && ledger.AccountId == accountId
+                                                        where journalIds.Contains(ledger.JournalId) && ledger.Tenant == taxReport.Tenant && ledger.AccountId == accountId
 
                                                         select new LedgerTransactionList()
                                                         {
@@ -177,12 +177,21 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                             CalculatedLocalAmount = ledger.LocalAmountCredit != 0 ? ledger.LocalAmountCredit : ledger.LocalAmountDebit
 
                                                         }).Distinct().ToList();
-
-            List<LedgerTransactionList> creditLines = GetCreditLinesFromSelectedLines(transactions);
-            List<string> journalids = creditLines.Select(d => d.JournalId).ToList();
-            transactions = transactions.Where(d => !journalids.Contains(d.JournalId)).ToList();
+           
+            List<LedgerTransactionList> creditLines = GetTaxJournalLines(transactions);
+            transactions= ExcludeDuplicatedLinesForTheSameJournal(creditLines, transactions);         
             return transactions.Concat(creditLines).ToList();
 
+        }
+        private List<LedgerTransactionList> ExcludeDuplicatedLinesForTheSameJournal(List<LedgerTransactionList> creditLines, List<LedgerTransactionList> transactions)
+        {
+            List<string> journalids = creditLines.Select(d => d.JournalId).ToList();
+            transactions = transactions.Where(d => !journalids.Contains(d.JournalId)).ToList();
+            return transactions;
+        }
+        private List<LedgerTransactionList> GetTaxJournalLines(List<LedgerTransactionList> transactions)
+        {
+            return GetCreditLinesFromSelectedTransactionsGroupedByJournalId(transactions);
         }
         public List<LedgerTransactionList> GetLedgerTransactionsOutputNotIncludedInTaxReports(int tenant, string accountId)
         {
@@ -230,13 +239,11 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                            CalculatedLocalAmount = ledger.LocalAmountCredit != 0 ? ledger.LocalAmountCredit : ledger.LocalAmountDebit
 
                                                        }).Distinct().ToList();
-            List<LedgerTransactionList> creditLines = GetCreditLinesFromSelectedLines(outputLines);
-
-            List<string> journalIds = creditLines.Select(d => d.JournalId).ToList();
-            outputLines = outputLines.Where(d => !journalIds.Contains(d.JournalId)).ToList();
+            List<LedgerTransactionList> creditLines = GetTaxJournalLines(outputLines);
+            outputLines = ExcludeDuplicatedLinesForTheSameJournal(creditLines, outputLines);
             return outputLines.Concat(creditLines).ToList();
         }
-        private List<LedgerTransactionList> GetCreditLinesFromSelectedLines(List<LedgerTransactionList> outputLines)
+        private List<LedgerTransactionList> GetCreditLinesFromSelectedTransactionsGroupedByJournalId(List<LedgerTransactionList> outputLines)
         {
             return (from ledger in outputLines
                     join journalLine in context.JournalLines
