@@ -182,8 +182,15 @@ namespace CloudRestClientTool
 
                         switch (operationCombo.SelectedItem)
                         {
-                            case "Get": 
-                                response = await GetEventTypes(client, response); 
+                            case "Get":
+                                if (string.IsNullOrEmpty(ObjectTableTextBox.Text))
+                                {
+                                    ShowObjectTableExceptionMessage();
+                                    return;
+                                }
+                                else
+                                    response = await GetEventTypes(client, response);
+
                                 break;
                             default:
                                 MessageBox.Show("select a service to test");
@@ -225,19 +232,15 @@ namespace CloudRestClientTool
             this.Cursor = Cursors.Default;
         }
 
-        private async Task<HttpResponseMessage> GetEventTypes(HttpClient client, HttpResponseMessage response)
+        private void ShowObjectTableExceptionMessage()
         {
-            if (!string.IsNullOrEmpty(ObjectTableTextBox.Text))
-            {
-                response = await client.GetAsync(GetEventTypeAPI());
-            }
-            else
-            {
-                MessageBox.Show("Please insert object table name");
-                this.Cursor = Cursors.Default;
-            }
+            MessageBox.Show("Please insert object table name");
+            this.Cursor = Cursors.Default;  
+        }
 
-            return response;
+        private async Task<HttpResponseMessage> GetEventTypes(HttpClient client, HttpResponseMessage response)
+        { 
+            return await client.GetAsync(GetEventTypeAPI()); 
         }
 
         private string GetEventTypeAPI()
