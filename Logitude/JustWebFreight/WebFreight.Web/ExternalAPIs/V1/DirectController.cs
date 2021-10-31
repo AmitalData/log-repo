@@ -1183,6 +1183,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
             }
             return false;
         }
+
         private bool IsAllDimensionsNotNull(ShipmentPackagePM shipmentPackagePM)
         {
            return ((shipmentPackagePM.Width != null && shipmentPackagePM.Height != null && shipmentPackagePM.Length != null) && shipmentPackagePM.Volume != null);
