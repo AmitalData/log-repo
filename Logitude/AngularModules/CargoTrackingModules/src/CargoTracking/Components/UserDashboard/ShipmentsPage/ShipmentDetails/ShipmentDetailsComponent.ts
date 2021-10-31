@@ -385,7 +385,7 @@ export class ShipmentDetailsComponent implements OnInit,AfterViewInit
         if(shipmentList.DirectionId == ShipmentDirections.Import || shipmentList.EntityType == ShipmentDirections.Customs)
         {
             return shipmentList.ShipperName;
-        } else if(shipmentList.DirectionId == ShipmentDirections.Import) {
+        } else if(shipmentList.DirectionId == ShipmentDirections.Export) {
             return shipmentList.ConsigneeName;
         }
         return '';
