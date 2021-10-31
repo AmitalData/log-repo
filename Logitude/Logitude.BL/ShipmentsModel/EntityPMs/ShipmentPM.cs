@@ -2743,6 +2743,7 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string AccountingClosedByUserId { get; set; }
         public string HouseMasterConcurrencyGUID { get; set; }
         public string HouseMasterNewConcurrencyGUID { get; set; }
+        public bool IsPODReceived { get; set; }
     }
 
     public class TransshipmentLeg
