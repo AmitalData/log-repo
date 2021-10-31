@@ -90,6 +90,11 @@ namespace WebFreight.Web.Helpers.ExcelReport
                         return typeof(LedgerTransactionsDataProvider);
                     }
 
+                case "TRBR":
+                    {
+                        return typeof(RevenueExpenseDataProvider);
+                    }
+
                 case "RALS":
                     {
                         return typeof(AirlineStatisticsDataProvider);

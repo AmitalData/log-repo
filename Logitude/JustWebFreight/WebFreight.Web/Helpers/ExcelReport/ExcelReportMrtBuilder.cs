@@ -120,7 +120,7 @@ namespace WebFreight.Web.Helpers.ExcelReport
             StiText text = new StiText(new RectangleD(posX, posY, columnWidth, 0.5))
             {
                 HorAlignment = StiTextHorAlignment.Center,
-                Name = item.Name + "Text",
+                Name = GetNameFromExpression(item.Expression) + "Text",
                 Text = item.Expression
             };
             text.HorAlignment = StiTextHorAlignment.Center;
@@ -131,12 +131,17 @@ namespace WebFreight.Web.Helpers.ExcelReport
             stiBand.Components.Add(text);
         }
 
+        private string GetNameFromExpression(string expression)
+        {
+            return expression.Replace("{", string.Empty).Replace("}", string.Empty).Replace(".", string.Empty);
+        }
+
         private void CreateVariableHeader(StiHeaderBand stiBand, int columnWidth, double posX, double posY, DataProviderField item)
         {
             StiText hText = new StiText(new RectangleD(posX, posY, columnWidth, 0.5))
             {
                 HorAlignment = StiTextHorAlignment.Center,
-                Name = item.Name + "TextLabel",
+                Name = GetNameFromExpression(item.Expression) + "TextLabel",
                 Text = item.Text + " : ",
             };
             hText.HorAlignment = StiTextHorAlignment.Center;
@@ -212,7 +217,7 @@ namespace WebFreight.Web.Helpers.ExcelReport
             StiHeaderBand headerBand = new StiHeaderBand
             {
                 Height = 0.3,
-                Name = dataProviderField.Name + "HeaderBand",
+                Name = GetNameFromExpression(dataProviderField.Expression) + "HeaderBand",
                 PrintIfEmpty = true,
                 PrintOnAllPages = true
             };
@@ -223,7 +228,7 @@ namespace WebFreight.Web.Helpers.ExcelReport
             {
                 BusinessObjectGuid = GetBusinessObjectGuid(dataProviderField),
                 Height = 0.3,
-                Name = dataProviderField.Name + "DataBand",
+                Name = GetNameFromExpression(dataProviderField.Expression) + "DataBand",
             };
             page.Components.Add(dataBand);
 
@@ -257,7 +262,7 @@ namespace WebFreight.Web.Helpers.ExcelReport
             StiText hText = new StiText(new RectangleD(pos, 0, columnWidth, 0.5))
             {
                 HorAlignment = StiTextHorAlignment.Center,
-                Name = item.Name + "Text",
+                Name = GetNameFromExpression(item.Expression) + "Text",
                 Text = item.Expression,
                 Border = new StiBorder(StiBorderSides.All, Color.FromArgb(89, 89, 89), 1, StiPenStyle.Solid)
             };
@@ -274,7 +279,7 @@ namespace WebFreight.Web.Helpers.ExcelReport
             StiText hText = new StiText(new RectangleD(pos, 0, columnWidth, 0.5))
             {
                 HorAlignment = StiTextHorAlignment.Center,
-                Name = item.Name + "HeaderLabel",
+                Name = GetNameFromExpression(item.Expression) + "HeaderLabel",
                 Text = item.Text,
                 Brush = new StiSolidBrush(Color.RoyalBlue),
                 Border = new StiBorder(StiBorderSides.All, Color.FromArgb(89, 89, 89), 1, StiPenStyle.Solid)
