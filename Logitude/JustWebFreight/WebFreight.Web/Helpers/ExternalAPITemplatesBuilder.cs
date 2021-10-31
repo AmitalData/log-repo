@@ -13,10 +13,10 @@ namespace WebFreight.Web.Helpers
         private TenantPM tenantPM;
         private TenantQuery tenantQuery;
         private string[] generalTenantsAPISNames= new[] { "House", "Direct", "Master", "Rates Update" };
-        private string[] hypridTenantsAPISNames = new[] { "Customs", "Quote", "Customer", "Vendor" };
+        private string[] hypridTenantsAPISNames = new[] { "Customs", "Quote", "Customer", "Vendor", "Cargo Tracking Shipment Details" };
         private string[] fullAccountingTenantsAPISNames = new[] { "Customer", "Vendor", "ARPayment", "Cancel ARPayment", "APInvoice Cancellation",
                                                                   "ARInvoice", "APInvoice", "ARInvoice Additional Data", "Journal", "GLAccount" , 
-                                                                  "Customer Open Files Amount", "GL Account More Data","Cargo Tracking Shipment Details" };
+                                                                  "Customer Open Files Amount", "GL Account More Data" };
         private Dictionary<string,string> XMLRequestTexts;
 
         public ExternalAPITemplatesBuilder(int tenant)

@@ -61,6 +61,7 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
     public FromPort: string;
     public ShowAddDocument: boolean = false;
     public ChangePageButton: string = "Next";
+    public IsImportActivated: boolean = false;
     constructor() {
         super(); 
         this.InitializeServices();
@@ -189,7 +190,7 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
         this.SetExportShipmentArgs(args);
     }
 
-    private SetExportShipmentArgs(args: any) {
+    private SetExportShipmentArgs(args: any) { 
         this.SetArgs(args);
         this.GetBranch();
         this.GetDepartment();
@@ -197,13 +198,18 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
         this.BuildFiltersLists();
         this.SetUIProperties_Filters();
     }
-
     private SetArgs(args: any) {
+        this.SetDirections(args);
         this.args = args;
         if (args.EntityPM) {
             this.EntityPM = args.EntityPM;
         }
     }
+
+    private SetDirections(args: any) {
+        this.IsImportActivated = args.IsImportActivated;
+    }
+
 
     private GetDepartment() {
         this._DepartmentListService.getAll().subscribe((result: any) => {
@@ -253,10 +259,19 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
 
     private BuildDirectionsList() {
         this.DirectionsList = [];
-        this.DirectionsList.push(new FilterClass("E", "Export"));
-        this.DirectionsList.push(new FilterClass("C", "Customs"));
-    }
+        this.DirectionsList.push(new FilterClass("E", "Export"));  
+
+         this.SetCustomOption(); 
+    } 
      
+    private SetCustomOption() {
+        if (SessionLocator.PrivateLableSettings.IsImportActivated && this.IsImportActivated) {
+            this.DirectionsList.push(new FilterClass("C", "Customs"));
+        }
+    }
+
+    
+
 
     public get BranchId() { return this.EntityPM.BranchId }
     public set BranchId(newValue: string) { this.EntityPM.BranchId = newValue; }

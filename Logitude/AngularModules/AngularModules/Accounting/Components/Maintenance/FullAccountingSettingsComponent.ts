@@ -484,6 +484,14 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
         }
     }
 
+    get CreateRevaluationJournal() { return this.EntityPM.CreateRevaluationJournal; }
+    set CreateRevaluationJournal(value: boolean) {
+        if (this.EntityPM.CreateRevaluationJournal != value) {
+            this.EntityPM.CreateRevaluationJournal = value;
+            this.SetUIProperties();
+        }
+    }
+
     get NumberOfAgingMonths () { return this.EntityPM.NumberOfAgingMonths ; }
     set NumberOfAgingMonths (value: number) {
         if (this.EntityPM.NumberOfAgingMonths  != value) {

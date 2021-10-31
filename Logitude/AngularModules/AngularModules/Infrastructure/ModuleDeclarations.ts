@@ -147,7 +147,7 @@ import {DWLogSearchWindowFieldsComponent} from './Components/QueryColumnsCompone
 import { ChooseUserComponent } from './Components/NewViewComponent/ChooseUserComponent';
 
 import {DWLogSearchAddFieldsComponent} from './Components/QueryColumnsComponents/DWLogSearchAddFieldsComponent';
-
+import { MultiUpdateComponent } from './Components/MultiUpdateComponent/MultiUpdateComponent';
 
 
 
@@ -393,7 +393,9 @@ export const Components =
         PrivateLabelLoginProcessComponent,
          
         AutomationConditionsDetailsComponent,
-        AutomationsConditionsViewDetailsComponent
+        AutomationsConditionsViewDetailsComponent,
+
+        MultiUpdateComponent
 
         
     ];
@@ -504,6 +506,8 @@ export class ModuleDeclarations {
             case 'SendDocumentResultComponent': { myResult = SendDocumentResultComponent; break; } 
             case 'PrivateLabelLoginProcessComponent': { myResult = PrivateLabelLoginProcessComponent; break; } 
             case 'CreateTaskResultComponent': { myResult = CreateTaskResultComponent; break; }
+
+            case 'MultiUpdateComponent': { myResult = MultiUpdateComponent; break; }
                  
                  
 

@@ -2115,6 +2115,7 @@
     <Content Include="Usefull Scripts\Queries\04_AccountsPayables.sql" />
     <Content Include="Usefull Scripts\Queries\05_AccountsTransfer.sql" />
     <Content Include="Usefull Scripts\Queries\06_CRM_Activities.sql" />
+    <Content Include="Usefull Scripts\Samar\CreateContainerStatusAndEventTypes.sql" />
     <Content Include="Usefull Scripts\SearchFields\[Ayman] Contacts.sql" />
     <Content Include="Usefull Scripts\SearchFields\[Ayman] Contacts2.sql" />
     <Content Include="Usefull Scripts\SearchFields\[Ayman] Payments.sql" />

@@ -741,7 +741,7 @@ namespace WebFreight.Web.Helpers
             }
 
 
-            string additionalCondition = new DWObjectTableAdditionalConditionService(dWObjectTablePM).Get(isDWQueryUsedAdditionalFact);
+            string additionalCondition = new DWObjectTableAdditionalConditionService(dWObjectTablePM).Get();
 
             List<string>shipmentLevelLists = GetShipmentLevelListsByRecordType(dWObjectTablePM.RecordType);
             if (shipmentLevelLists.Count() > 0)

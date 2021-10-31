@@ -92,6 +92,8 @@ namespace Logitude.Accounting.Data.EntityMapping
             this.Property(t => t.IsSecurityLevelActivated).HasColumnName("IsSecurityLevelActivated");
 
             this.Property(t => t.VATreportEveryTwoMonths).HasColumnName("VATreportEveryTwoMonths");
+
+            this.Property(t => t.CreateRevaluationJournal).HasColumnName("CreateRevaluationJournal");
         }
     }
 }

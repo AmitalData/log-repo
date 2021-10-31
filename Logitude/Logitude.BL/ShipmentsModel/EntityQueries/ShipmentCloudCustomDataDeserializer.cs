@@ -21,6 +21,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
             if (data != null && !string.IsNullOrEmpty(data.DeclarationXmlData))
             {
+                CustomData.IsImporterApprovalRequried = data.IsImporterApprovalRequried;
                 CustomData.ApprovedByUserName = data.ApprovedByUserName;
                 CustomData.VersionApproved = data.VersionApproved;
                 CustomData.ApproveDateTime = data.ApproveDateTime;
@@ -86,7 +87,6 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
                 CustomData.GoodsValueDetails = new List<GoodsValueDetails>();
                 CustomData.TaxesDetails = new List<TaxesDetails>();
-                MapIsImporterApprovalRequriedField(CustomData, xmldoc);
                 XmlNodeList CustomsFileNo = xmldoc.GetElementsByTagName("customs_file_num");
                 if (CustomsFileNo[0] != null)
                 {
@@ -280,24 +280,6 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             }
 
             return CustomData;
-        }
-        
-        public bool GetIsImporterApprovalRequriedValue(string declarationXmlData)
-        {
-            ShipmentAdditionalCloudCustomData shipmentAdditionalCloudCustomData = new ShipmentAdditionalCloudCustomData();
-            shipmentAdditionalCloudCustomData.IsImporterApprovalRequried = true;
-            shipmentAdditionalCloudCustomData = MapDeclarationXmlDataToShipmentAdditionalCloudCustomData(shipmentAdditionalCloudCustomData, declarationXmlData);
-            
-            return shipmentAdditionalCloudCustomData.IsImporterApprovalRequried;
-        }
-        
-        private static void MapIsImporterApprovalRequriedField(ShipmentAdditionalCloudCustomData CustomData, XmlDocument xmldoc)
-        {
-            XmlNodeList IsImporterApprovalRequired = xmldoc.GetElementsByTagName("IsImporterApprovalRequired");
-            if (IsImporterApprovalRequired[0]?.InnerText?.ToLower() == "false")
-            {
-                CustomData.IsImporterApprovalRequried = false;
-            }
         }
     }
 }

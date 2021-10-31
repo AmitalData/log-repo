@@ -1,4 +1,4 @@
-@release @all @smoke
+@release @all @smoke @smoke3
 Feature: Cancel Quote
     The user creates a quote, cancels quote and assert quote appears in cancelled quotes queries
 

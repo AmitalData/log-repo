@@ -1,4 +1,4 @@
-@release @all @stable @smoke
+@release @all @stable @smoke @smoke3
 Feature: Create Quote, Add PickUp And Add Delivery
     The user creates a quote,add pickup and add delivery
 

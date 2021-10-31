@@ -154,20 +154,6 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Common
             return Request.CreateResponse(HttpStatusCode.OK, iQueryable.OrderByDescending(o => o.LocalDateTime));
         }
 
-        public HttpResponseMessage GetLastUserLoginIpSameAsLoggedUserIpAndBrowser(string userId, int tenant, bool getUser)
-        {
-            UserLoginLogQuery userLoginLogQuery = new UserLoginLogQuery(tenant);
-            UserLoginLogList lastUserLoginLogList = userLoginLogQuery.GetUserLoginLogListsByTenant(userId, tenant).OrderByDescending(d => d.GMTDateTime).FirstOrDefault();
-            bool isSameUser = lastUserLoginLogList.IP == AuthenticationUtil.GetIP4Address() && lastUserLoginLogList.Browser != null && lastUserLoginLogList.Browser.ToLower() == HttpContext.Current.Request.Browser.Type.ToLower();
-            if (isSameUser && getUser)
-            {
-                return Request.CreateResponse(HttpStatusCode.OK, lastUserLoginLogList);
-            }
-            return Request.CreateResponse(HttpStatusCode.OK, isSameUser);
-
-        }
-
-
         public HttpResponseMessage GetUpdateUser(string userId, bool setAngularAsDefault, int tenant)
         {
             UserRepository userRepository = new UserRepository(tenant);

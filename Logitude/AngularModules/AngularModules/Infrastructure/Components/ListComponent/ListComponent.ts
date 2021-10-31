@@ -45,6 +45,7 @@ import { LogGridComponent } from '../LogitudeComponents/LogGridComponent/LogGrid
 import { LogGridComponentV2 } from '../LogitudeComponents/LogGridComponent/LogGridComponentV2';
 import { UserDefinedReportPM } from 'Accounting/EntityPMs/UserDefinedReportPM';
 import { GLAccountSecurityLevelService } from 'Accounting/Utilities/GLAccountSecurityLevelService';
+import { IsMultiUpdateValid } from 'Infrastructure/Helpers/MultiUpdateHelper';
 
 @Component({
 
@@ -966,8 +967,28 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
     }
 
     MutliUpdate() {
-        console.log("Multi Update");
+        if (!IsMultiUpdateValid(this.Title, this.dataSource.rowCount)) {
+            return;
+        }
+        let newWindow = new LogitudeWindow();
+        newWindow.Width = 1050;
+        newWindow.Height = 700;
+        newWindow.Title = "Multi Update " + this.Title;
+
+        let windowArgs: any = {};
+        windowArgs.QueryCode = this.SelectedQueryCode;
+        windowArgs.Filters = this.CurrentQueryFilters;
+        windowArgs.Columns = this.columns;
+        windowArgs.ObjectTable = this.ObjectTable;
+        windowArgs.Title = this.Title;
+
+        newWindow.WindowArgs = windowArgs;
+        newWindow.Show('./Infrastructure/Components/MultiUpdateComponent/MultiUpdateComponent');
+        newWindow.WindowClosed.subscribe(($event: any) => {
+            this.RefreshBtnClick();
+        });
     }
+
     ViewInitCompleted(event) {
         //this.afterViewGridInitCompleted.emit(event);
         this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName, 0).subscribe((response:any) => {

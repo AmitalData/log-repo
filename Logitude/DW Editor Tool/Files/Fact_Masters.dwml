@@ -1,4 +1,4 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<entity Id="&quot;ffa6fa3e-ad2e-4ace-ad86-30acd57feaf3&quot;" Code="&quot;Fact_Masters&quot;" Name="&quot;Fact_Masters&quot;" TypeCode="&quot;Fact&quot;" IsClosed="false" DataViewName="&quot;factMasters&quot;" HasPivotColumn="false" ParentFactCode="&quot;Fact_Shipments&quot;" RecordType="&quot;Master&quot;" DisplayName="&quot;Masters&quot;" ObjectTableName="&quot;Shipment&quot;" HasCustomFields="false" MaxNumberOfCustomFields="0" AdditionalConditions="&quot; Fact_Shipments.[Is Standalone Pickup Delivery] = 0&quot;">
+<entity Id="&quot;ffa6fa3e-ad2e-4ace-ad86-30acd57feaf3&quot;" Code="&quot;Fact_Masters&quot;" Name="&quot;Fact_Masters&quot;" TypeCode="&quot;Fact&quot;" IsClosed="false" DataViewName="&quot;factMasters&quot;" HasPivotColumn="false" ParentFactCode="&quot;Fact_Shipments&quot;" RecordType="&quot;Master&quot;" DisplayName="&quot;Masters&quot;" ObjectTableName="&quot;Shipment&quot;" HasCustomFields="false" MaxNumberOfCustomFields="0">
   <fields />
 </entity>

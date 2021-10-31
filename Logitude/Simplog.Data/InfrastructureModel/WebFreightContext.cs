@@ -1023,5 +1023,12 @@ namespace Simplog.Data.InfrastructureModel
             get;
             set;
         }
+
+        public IDbSet<MultiEntityUpdateLog> MultiEntityUpdateLogs
+        {
+            get;
+            set;
+        }
+
     }
 }

@@ -1216,6 +1216,29 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
+	  private bool createRevaluationJournal ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool CreateRevaluationJournal  
+	   {
+	    
+	     get
+		{
+		   return createRevaluationJournal;
+		 }
+		 set
+		 {
+		   if(createRevaluationJournal != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CreateRevaluationJournal",OldValue=createRevaluationJournal,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   createRevaluationJournal=value;
+		   }
+			
+		 }
+	   }
    }
    
 }
