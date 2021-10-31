@@ -48,7 +48,7 @@ namespace WebFreight.Web.Helpers.WorkerRole.MultiEntityUpdate
         public void Update()
         {
             multiEntityUpdateData = GetMultiEntityUpdateData();
-            objectFields = GetSetValueObjectFields();
+            objectFields = objectFieldRepository.GetAutomationObjectFieldsByObjectTableId(multiEntityUpdateData.ObjectTableId, (int)tenant);
             IEnumerable<List<MultiEntityUpdateDataEntity>> listOfMultiEntityUpdateDataEntities = multiEntityUpdateGeneralService.SplitListIntoNList(multiEntityUpdateData.Entities, numberOfExecutedEntitiesEachUpdate);
             listOfMultiEntityUpdateDataEntities.ToList().ForEach(entities =>
             {
@@ -62,11 +62,6 @@ namespace WebFreight.Web.Helpers.WorkerRole.MultiEntityUpdate
             return !string.IsNullOrEmpty(multiEntityUpdateLogPM.XMLData) ? LogitudeXmlSerializer.DeserializeObject<MultiEntityUpdateData>(multiEntityUpdateLogPM.XMLData) : null;
         }
 
-        private List<ObjectField> GetSetValueObjectFields()
-        {
-            return objectFieldRepository.GetAutomationObjectFieldsByObjectTableId(multiEntityUpdateData.ObjectTableId, (int)tenant);
-        }
-        
         private void HandleUpdateEntities(List<MultiEntityUpdateDataEntity> entityList)
         {
             object entityPMs = GetListofEntityPMs(entityList);
@@ -76,6 +71,8 @@ namespace WebFreight.Web.Helpers.WorkerRole.MultiEntityUpdate
             });
             multiEntityUpdateLogService.Update(new MultiEntityUpdateLogArgs() { StatusCode = "P", UpdatedEntitiesNumber = multiEntityUpdateLogPM.UpdatedEntitiesNumber });
         }
+
+
         private object GetListofEntityPMs(List<MultiEntityUpdateDataEntity> multiEntityUpdateDataEntities)
         {
             List<string> multiEntityUpdateDataEntitiesIds = multiEntityUpdateDataEntities.Select(multiEntityUpdateDataEntity => multiEntityUpdateDataEntity.EntityId).ToList();
@@ -133,7 +130,7 @@ namespace WebFreight.Web.Helpers.WorkerRole.MultiEntityUpdate
                 item.Value = entityPM.GetType().GetProperty(item.Value.Replace(multiEntityUpdateData.ObjectTableName + ".", ""))?.GetValue(entityPM)?.ToString();
                 item.OperatorCode = "SV";
             }
-            ObjectField objectField = objectFields.Where(objectField2 => objectField2.FieldCode == item.ObjectFieldCode).FirstOrDefault();
+            ObjectField objectField = objectFields.Where(d => d.FieldCode == item.ObjectFieldCode).FirstOrDefault();
             object newfieldValue = automationSetValueResultService.ResolveSetFieldValue(new List<Field>(), item);
             SetPropertyValueToEntity(objectField, entityPM, newfieldValue);
         }
