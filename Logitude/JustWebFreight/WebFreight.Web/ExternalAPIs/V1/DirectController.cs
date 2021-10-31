@@ -907,9 +907,9 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 shipmentPM.IncludesCustoms = true;
                 return;
             }
-            if (shipmentPM.DeclarationDate != null && string.IsNullOrEmpty(shipmentPM.DeclarationNumber))
+            if (shipmentPM.DeclarationDate == null && !string.IsNullOrEmpty(shipmentPM.DeclarationNumber))
             {
-                throw new ApplicationException("Declaration Number Field Is Required");
+                throw new ApplicationException("Declaration Date Field Is Required");
             }
             shipmentPM.IncludesCustoms = true;
         }
@@ -958,14 +958,11 @@ namespace WebFreight.Web.ExternalAPIs.V1
         {
             double? calculatedVolume = ComputeHelper.ComputeVolume(shipmentPackagePM, entityPM);
 
-            if (IsOneOfTheDimensionsNull(shipmentPackagePM))
+            if (IsOneOfTheDimensionsNotNull(shipmentPackagePM))
             {
                 shipmentPackagePM.Volume = calculatedVolume;
             }
-            else if (IsAllDimensionsNotNull(shipmentPackagePM) && (calculatedVolume != shipmentPackagePM.Volume))
-            {
-                throw new ApplicationException("Can not set Width,Height,Length and Volume form API ");
-            }
+
         }
 
         private void ValidateUpdateShipmentPackages(ShipmentPM entityPM)
@@ -983,10 +980,6 @@ namespace WebFreight.Web.ExternalAPIs.V1
 
         private void ValidateShipmentPackageItem(ShipmentPackagePM item, ShipmentPM entityPM)
         {
-            if (entityPM.ShipmentTypeId == "FCLD" || entityPM.ShipmentTypeId == "FTL")
-            {
-                item.IsContainer = true;
-            }
             this.ValidateShipmentPackageDimensionsAndVolume(item, entityPM);
 
             if (!item.IsContainer)
@@ -1001,7 +994,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 this.ValidateInsidePackage(item, entityPM);
             }
 
-            item.VolumetricWeight = ComputeHelper.ComputeVolumetricWeight(item, entityPM);
+            item.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
         }
 
         private void ValidateInsidePackage(ShipmentPackagePM item, ShipmentPM entityPM)
@@ -1167,7 +1160,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
             return isValid;
         }
 
-        private bool IsOneOfTheDimensionsNull(ShipmentPackagePM shipmentPackagePM)
+        private bool IsOneOfTheDimensionsNotNull(ShipmentPackagePM shipmentPackagePM)
         {
             if (shipmentPackagePM.Width != null)
             {
@@ -1182,11 +1175,6 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 return true;
             }
             return false;
-        }
-
-        private bool IsAllDimensionsNotNull(ShipmentPackagePM shipmentPackagePM)
-        {
-           return ((shipmentPackagePM.Width != null && shipmentPackagePM.Height != null && shipmentPackagePM.Length != null) && shipmentPackagePM.Volume != null);
         }
 
     }
