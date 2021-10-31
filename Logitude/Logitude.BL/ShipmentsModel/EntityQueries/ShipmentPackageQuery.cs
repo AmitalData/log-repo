@@ -66,7 +66,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             return myResult;
         }
 
-        public ShipmentPackagePM GetSinglePM(string shipmentId, int tenant)
+        public ShipmentPackagePM GetSinglePM(string shipmentPackageId, int tenant)
         {
             InsideShipmentPackageRepository insideShipmentPackagesRepository = new InsideShipmentPackageRepository(repository.context);
             InsideShipmentPackageQuery insideShipmentPackageQuery = new InsideShipmentPackageQuery(insideShipmentPackagesRepository);
@@ -79,7 +79,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
             ShipmentPackagePM myResult
                 = (from a in repository.context.ShipmentPackages.Include("PackageType").Include("LastStatus").Include("Horse")
-                   where a.ShipmentId == shipmentId && a.Tenant == tenant
+                   where a.Id == shipmentPackageId && a.Tenant == tenant
                    select new ShipmentPackagePM()
                    {
                        ClassNumber = a.ClassNumber,
@@ -193,9 +193,9 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                        ContainerStatusSourceCode = a.ContainerStatusSourceCode,
                    }).FirstOrDefault();
 
-            myResult.InsideShipmentPackages = insideShipmentPackageQuery.GetInsideShipmentPackages(myResult.Id, tenant);
-            myResult.ShipmentPackageItems = shipmentPackageItemQuery.GetShipmentPackageItems(myResult.Id, tenant);
-            myResult.ShipmentPackageHarmonizes = shipmentPackageHarmonizeQuery.GetShipmentPackageHarmonizes(myResult.Id, tenant);
+            myResult.InsideShipmentPackages = insideShipmentPackageQuery.GetInsideShipmentPackages(myResult?.Id, tenant);
+            myResult.ShipmentPackageItems = shipmentPackageItemQuery.GetShipmentPackageItems(myResult?.Id, tenant);
+            myResult.ShipmentPackageHarmonizes = shipmentPackageHarmonizeQuery.GetShipmentPackageHarmonizes(myResult?.Id, tenant);
             this.MapTheLastStatusName(myResult);
             return myResult;
         }
