@@ -95,7 +95,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.CRM.LogitudeCRMRepor
             {
                 return opportunityCRMDetails.Total * (100 - (tenantManagement.ResellerCommission ?? 0)) / 100;
             }
-            return opportunityCRMDetails.TotalNet;
+            return opportunityCRMDetails.Total;
         }
 
         private List<Card> GetResellersForIds(List<string> cardIds)

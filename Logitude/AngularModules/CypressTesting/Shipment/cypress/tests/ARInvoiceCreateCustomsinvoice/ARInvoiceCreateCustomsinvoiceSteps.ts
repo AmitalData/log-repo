@@ -149,4 +149,8 @@ When("approve invoice", () => {
 Then("the invoice should approve successfully", () => {
     BaseAssertion.AssertStatusCode(RequestAliases.ARInvoicesRequest, 200);
 });
+
+Then("the status value should be {string}", (statusValue) => {
+    BaseAssertion.AssertElementContain(ShipmentSelectors.ARInvoiceStatus, statusValue)
+});
 //#endregion

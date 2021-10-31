@@ -2,6 +2,7 @@ import { RegexSelectors } from '../selectors/RegexSelectors';
 
 export class ShipmentSelectors extends RegexSelectors {
   //#region Shared
+  public static readonly CloseBtn = '#CloseBtn';
   public static readonly ShipmentMoreList = '#MenuButtons';
   public static readonly ShipmentTab = '#SHIP';
   public static readonly ContainersTab = '#CNFU';
@@ -22,6 +23,9 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly RoutingTab_1 = "#ShipmentTHRoutings_1";
   public static readonly HouseMainCarriageCancelButton = "#MainCarriageCancelBtn"
   public static readonly ShipmentSaveCloseButton = '[id^=Shipment-SaveClose]'
+  public static readonly APInvoiceStatus = "[data-cy='StatusValue']";
+  public static readonly ARInvoiceStatus = "[id^='ARInvoiceHeaderStatusName']";
+  
   //#endregion
 
   //#region Create shipment
@@ -360,7 +364,10 @@ export class ShipmentSelectors extends RegexSelectors {
   //#endregion
   //#region Delivery Leg
   public static readonly EditDelivery = "#Edit-Delivery"
+  public static readonly EditPickUp = "#Edit-PickUp"
   public static readonly DeliveryToPartnerName = "#ShipmentPickUpDelivery_ToPartnerCardId"
+  public static readonly PickUpDeliveryToPort = "#ShipmentPickUpDelivery_ToPortId"
+  public static readonly PickUpDeliveryFromPort = "#ShipmentPickUpDelivery_FromPortId"
   public static readonly PickUpDeliveryETDDate = "#date_ShipmentPickUpDelivery_ETD"
   public static readonly PickUpDeliveryETDTime = "#time_ShipmentPickUpDelivery_ETD"
   //#endregion

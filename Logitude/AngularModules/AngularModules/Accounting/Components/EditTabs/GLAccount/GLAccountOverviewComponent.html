@@ -746,6 +746,16 @@
                                             </div> a-->
                                         </div>
 
+                                            <!-- 7 -->
+                                        <div class="credit-limit-row" >
+                                            <div class="label TextTrimming"  style="font-weight: bold;padding-top: 7px;" [class.fnt-sz-14]="!showLocal" float-start text-start>
+                                                {{ 'GLAccount.O.TotalObligo' | TextCodeTranslationPipe }}
+                                            </div>
+                                            <div style="text-align: right; padding-top: 8px;"class="amount" float-start >
+                                                    {{GetTotalObligo() | NumbersPipe:'N2'}}
+                                            </div>
+                                        </div>
+
                                     </div>
                                 </div>
 

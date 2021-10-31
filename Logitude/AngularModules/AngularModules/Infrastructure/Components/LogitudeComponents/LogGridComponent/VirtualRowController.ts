@@ -14,6 +14,7 @@ export class VirtualRowController implements OnInit, OnChanges {
     private rowsRequested: IRow[];
     @Output() requestedRowsReady = new EventEmitter();
     @Output() requestedRowCount = new EventEmitter();
+    @Output() allRecords = new EventEmitter();
     firstRow: number = 0;
 
 
@@ -117,6 +118,7 @@ export class VirtualRowController implements OnInit, OnChanges {
                            
                                    
                                     this.requestedRowCount.emit(viewResponse.Count);
+                                    this.allRecords.emit(viewResponse.Result);
                                 }
                             }
                         }

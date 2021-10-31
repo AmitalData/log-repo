@@ -2080,5 +2080,7 @@ namespace Simplog.Data.InfrastructureModel
         public IDbSet<WorkerRoleName> WorkerRoleNames => throw new NotImplementedException();
 
         public IDbSet<QueryExportExecutionLog> QueryExportExecutionLogs => throw new NotImplementedException();
+
+        public IDbSet<MultiEntityUpdateLog> MultiEntityUpdateLogs => throw new NotImplementedException();
     }
 }

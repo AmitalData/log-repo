@@ -111,6 +111,7 @@ namespace Simplog.Data.InfrastructureModel
 
         IDbSet<QueryExportExecutionLog> QueryExportExecutionLogs { get; }
         IDbSet<EntityStatusType> EntityStatusTypes { get; }
+        IDbSet<MultiEntityUpdateLog> MultiEntityUpdateLogs { get; }
 
         void SetAsModified(object entity);
         void DetectChanges();

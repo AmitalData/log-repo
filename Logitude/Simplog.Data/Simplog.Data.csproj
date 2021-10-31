@@ -587,10 +587,12 @@
     <Compile Include="Helpers\AutomationSendDocument.cs" />
     <Compile Include="Helpers\AutomationSendInterface.cs" />
     <Compile Include="Helpers\DocumentDefultAttachment.cs" />
+    <Compile Include="Helpers\LogitudeSettingConfigration.cs" />
     <Compile Include="InfrastructureModel\EntityPOCOs\DWCategories.cs" />
     <Compile Include="InfrastructureModel\EntityPOCOs\DWObjectField.cs" />
     <Compile Include="InfrastructureModel\EntityPOCOs\DWObjectFieldCategories.cs" />
     <Compile Include="InfrastructureModel\EntityPOCOs\DWObjectTable.cs" />
+    <Compile Include="InfrastructureModel\EntityPOCOs\MultiEntityUpdateLog.cs" />
     <Compile Include="InfrastructureModel\EntityPOCOs\QueryExportExecutionLog.cs" />
     <Compile Include="InfrastructureModel\EntityPOCOs\EntityStatusType.cs" />
     <Compile Include="InfrastructureModel\EntityPOCOs\WorkerRoleName.cs" />
@@ -608,6 +610,7 @@
     <Compile Include="InfrastructureModel\Mapping\DWQueryColumnMap.cs" />
     <Compile Include="InfrastructureModel\Mapping\DWQueryFilterMap.cs" />
     <Compile Include="InfrastructureModel\Mapping\EntityStatusTypeMap.cs" />
+    <Compile Include="InfrastructureModel\Mapping\MultiEntityUpdateLogMap.cs" />
     <Compile Include="InfrastructureModel\Mapping\QueryExportExecutionLogMap.cs" />
     <Compile Include="InfrastructureModel\Mapping\WokerRoleNameMap.cs" />
     <Compile Include="InfrastructureModel\Mapping\DWSubQueryMap.cs" />
@@ -622,6 +625,7 @@
     <Compile Include="InfrastructureModel\Repositories\DWObjectTableRepository.cs" />
     <Compile Include="InfrastructureModel\Repositories\DWCategoriesRepository.cs" />
     <Compile Include="InfrastructureModel\Repositories\EntityStatusTypeRepository.cs" />
+    <Compile Include="InfrastructureModel\Repositories\MultiEntityUpdateLogRepository.cs" />
     <Compile Include="InfrastructureModel\Repositories\QueryExportExecutionLogRepository.cs" />
     <Compile Include="InfrastructureModel\Repositories\WorkerRoleNameRepository.cs" />
     <Compile Include="InfrastructureModel\Repositories\DWSubQueryRepository.cs" />

@@ -100,7 +100,7 @@ namespace WebFreight.Web.App_Code
                     {
                         LogPM.Refrence = LogBoxShipment.ForwarderShipmentNumber;
                         apiLogsService.Update(LogPM);
-                        LogBoxShipment.IsImporterApprovalRequired = GetIsImporterApprovalRequriedValue(ApprovalRequest);
+                        LogBoxShipment.IsImporterApprovalRequired = true;
                         LogBoxShipment.DeclarationXMLData = ApprovalRequest.DeclarationXmlData;
                         string systemEmail = "system@tenant" + ApprovalRequest.Tenant + ".com";
                         IShipmentsContext objectContext = ShipmentsContext.GetContext(ApprovalRequest.Tenant);
@@ -140,13 +140,6 @@ namespace WebFreight.Web.App_Code
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
-        }
-
-        private bool GetIsImporterApprovalRequriedValue(DeclarationApprovalRequestPM ApprovalRequest)
-        {
-            ShipmentCloudCustomDataDeserializer shipmentCloudCustomDataDeserializer = new ShipmentCloudCustomDataDeserializer();
-            bool IsImporterApprovalRequried = shipmentCloudCustomDataDeserializer.GetIsImporterApprovalRequriedValue(ApprovalRequest.DeclarationXmlData);
-            return IsImporterApprovalRequried;
         }
     }
 }

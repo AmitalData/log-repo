@@ -136,6 +136,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Extended
                 XmlDocument xmldoc = new XmlDocument();
                 xmldoc.LoadXml(data_out);
 
+                CustomData.IsImporterApprovalRequried = data.IsImporterApprovalRequried;
                 CustomData.ApprovedByUserName = data.ApprovedByUserName;
                 CustomData.VersionApproved = data.VersionApproved;
                 CustomData.ApproveDateTime = data.ApproveDateTime;
@@ -143,7 +144,6 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Extended
                 CustomData.DocumentsApprovedByUserName = data.DocumentsApprovedByUserName;
                 CustomData.GoodsValueDetails = new List<GoodsValueDetails>();
                 CustomData.TaxesDetails = new List<TaxesDetails>();
-                MapIsImporterApprovalRequriedField(data, CustomData, xmldoc);
 
                 XmlNodeList CustomsFileNo = xmldoc.GetElementsByTagName("customs_file_num");
                 if (CustomsFileNo[0] != null)
@@ -363,19 +363,6 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Extended
             }
 
             return CustomData;
-        }
-
-        private static void MapIsImporterApprovalRequriedField(ShipmentAdditionalCloudData data, ShipmentAdditionalCloudCustomData CustomData, XmlDocument xmldoc)
-        {
-            XmlNodeList IsImporterApprovalRequired = xmldoc.GetElementsByTagName("IsImporterApprovalRequired");
-            if (IsImporterApprovalRequired[0]?.InnerText?.ToLower() == "false")
-            {
-                CustomData.IsImporterApprovalRequried = false;
-            }
-            else
-            {
-                CustomData.IsImporterApprovalRequried = data.IsImporterApprovalRequried;
-            }
         }
 
         public HttpResponseMessage GetSingleData(string id)

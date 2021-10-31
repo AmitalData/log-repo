@@ -26,7 +26,7 @@ namespace WebFreight.Web.Helpers.APIHelpers
         ShipmentQuery query;
         List<MilestoneData> milestoneDatas;
         ICargoTrackingContext MyContext;
-        Dictionary<string, string> mileStoneCodes;
+        Dictionary<string, string> milestoneCodes;
 
 
         public CargoTrackingShipmentDetailsInstanceCreator(int tenant)
@@ -133,21 +133,29 @@ namespace WebFreight.Web.Helpers.APIHelpers
 
         private void BuildMileStoneCodesDictionary()
         {
-            mileStoneCodes = new Dictionary<string, string>(){
-                {CargoTrackingMilestoneValues.Booking, "BKN"},
-                {CargoTrackingMilestoneValues.Pickup, "PIC"},
-                {CargoTrackingMilestoneValues.FromWarehouse, "FWH"},
-                {CargoTrackingMilestoneValues.Departure, "DPT"},
-                {CargoTrackingMilestoneValues.Arrival, "ATA"},
-                {CargoTrackingMilestoneValues.ToWarehouse, "TWH"},
-                {CargoTrackingMilestoneValues.AssignedToCustomsBroker, "ASG"},
-                {CargoTrackingMilestoneValues.CustomsProcess, "CSP"},
-                {CargoTrackingMilestoneValues.CustomsPayment, "RSH"},
-                {CargoTrackingMilestoneValues.Clearance, "RSG"},
-                {CargoTrackingMilestoneValues.AssignedToTrucker, "TRG"},
-                {CargoTrackingMilestoneValues.DeliveryOut, "DTC"},
-                {CargoTrackingMilestoneValues.Delivered, "POD"},
-            };
+            milestoneCodes = new Dictionary<string, string>(){
+                { CargoTrackingMilestoneValues.NoMilstone, "NOM"},
+                { CargoTrackingMilestoneValues.Created, "CRT"},
+                { CargoTrackingMilestoneValues.Booking, "BKN"},
+                { CargoTrackingMilestoneValues.Pickup, "PIC"},
+                { CargoTrackingMilestoneValues.FromWarehouse, "FWH"},
+                { CargoTrackingMilestoneValues.Departure, "DPT"},
+                { CargoTrackingMilestoneValues.Arrival, "ATA"},
+                { CargoTrackingMilestoneValues.ToWarehouse, "TWH"},
+                { CargoTrackingMilestoneValues.AssignedToCustomsBroker, "ASG"},
+                { CargoTrackingMilestoneValues.CustomsProcess, "CSP"},
+                { CargoTrackingMilestoneValues.GoodsClassification, "GDC"},
+                { CargoTrackingMilestoneValues.DocumentInspection, "DOC"},
+                { CargoTrackingMilestoneValues.PaymentRequested,  "PRQ"},
+                { CargoTrackingMilestoneValues.PaymentReceived,  "PRC"},
+                { CargoTrackingMilestoneValues.CustomsPayment, "RSH"},
+                { CargoTrackingMilestoneValues.Clearance, "RSG"},
+                { CargoTrackingMilestoneValues.GatepassArrived, "GTA"},
+                { CargoTrackingMilestoneValues.AssignedToTrucker, "TRG"},
+                { CargoTrackingMilestoneValues.DeliveryOut, "DTC"},
+                { CargoTrackingMilestoneValues.Delivered, "POD"},
+                { CargoTrackingMilestoneValues.Invoiced, "INV"},
+            };           
         }
 
         private List<Milestone> GetAllShipmentMilestones(CargoTrackingShipmentList cargoTrackingShipment)
@@ -466,7 +474,7 @@ namespace WebFreight.Web.Helpers.APIHelpers
         }
         private string getMilestoneCode(string milestoneId)
         {
-            return mileStoneCodes[milestoneId];
+            return milestoneCodes[milestoneId];
         }
 
 

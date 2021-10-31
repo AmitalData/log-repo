@@ -56,7 +56,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         SecondPeriodsMonths, 
 	         ThirdsPeriodsMonths, 
 	         IsSecurityLevelActivated, 
-	         VATreportEveryTwoMonths,
+	         VATreportEveryTwoMonths, 
+	         CreateRevaluationJournal,
 	      }
 
 
@@ -114,7 +115,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         SecondPeriodsMonths, 
 	         ThirdsPeriodsMonths, 
 	         IsSecurityLevelActivated, 
-	         VATreportEveryTwoMonths,
+	         VATreportEveryTwoMonths, 
+	         CreateRevaluationJournal,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -291,6 +293,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.VATreportEveryTwoMonths))
             {
 				entityPOCO.VATreportEveryTwoMonths = entityPM.VATreportEveryTwoMonths;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CreateRevaluationJournal))
+            {
+				entityPOCO.CreateRevaluationJournal = entityPM.CreateRevaluationJournal;
 			}
 			}
 
@@ -472,6 +479,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 					entityPM.VATreportEveryTwoMonths = entityPOCO.VATreportEveryTwoMonths;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CreateRevaluationJournal))
+            {
+					entityPM.CreateRevaluationJournal = entityPOCO.CreateRevaluationJournal;
+            }
+
 		}
 
 		public void PMToOldPM(FullAccountingSettingPM entityPM, FullAccountingSettingPM oldEntityPM)
@@ -646,6 +658,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.VATreportEveryTwoMonths))
             {
                 oldEntityPM.VATreportEveryTwoMonths = entityPM.VATreportEveryTwoMonths;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CreateRevaluationJournal))
+            {
+                oldEntityPM.CreateRevaluationJournal = entityPM.CreateRevaluationJournal;
             }
 			
 		}

@@ -478,6 +478,7 @@ namespace WebFreight.Web.ReportsWebServices
             QueryFilterItem filterItem_IsByCreateDate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "IsByCreateDate").FirstOrDefault();
             QueryFilterItem filterItem_DepartmentId = queryOperations.QueryFilterItems.Where(d => d.FieldName == "DepartmentId").FirstOrDefault();
             QueryFilterItem filterItem_CarrierId = queryOperations.QueryFilterItems.Where(d => d.FieldName == "CarrierId").FirstOrDefault();
+            QueryFilterItem filterItem_TransportMode = queryOperations.QueryFilterItems.Where(d => d.FieldName == "TransportMode").FirstOrDefault();
 
             DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
             DateTime myStartDate = todayDate.AddMonths(-1);
@@ -493,6 +494,7 @@ namespace WebFreight.Web.ReportsWebServices
             bool isByCreateDate = false;
             string departmentId = null;
             string carrierId = null;
+            string transportMode = null;
 
             if (filterItem_AccountingClosed != null)
             {
@@ -574,6 +576,14 @@ namespace WebFreight.Web.ReportsWebServices
                 if (filterItem_CarrierId.FieldValue != null)
                 {
                     carrierId = filterItem_CarrierId.FieldValue.ToString();
+                }
+            }
+
+            if (filterItem_TransportMode != null)
+            {
+                if (filterItem_TransportMode.FieldValue != null)
+                {
+                    transportMode = filterItem_TransportMode.FieldValue.ToString();
                 }
             }
             #endregion
@@ -659,6 +669,11 @@ namespace WebFreight.Web.ReportsWebServices
             if (!string.IsNullOrEmpty(carrierId))
             {
                 shipments = shipments.Where(d => d.MainCarriageCarrierId == carrierId);
+            }
+
+            if (!string.IsNullOrEmpty(transportMode))
+            {
+                shipments = shipments.Where(d => d.TransportModeId == transportMode);
             }
             #endregion
 
