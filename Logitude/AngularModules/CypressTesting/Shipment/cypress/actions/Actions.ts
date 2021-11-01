@@ -517,6 +517,12 @@ export function GenerateReceivablesFromPayables() {
 }
 //#endregion
 //#region Routing Tab
+export function AddWarehouseLegPickups(warehouseLegTerminal) {
+    cy.Click(ShipmentSelectors.AddWarehouseLegPickups, null)
+    cy.FillLogLov(ShipmentSelectors.WarehouseLegTerminal, warehouseLegTerminal, true)
+    cy.Click(BaseSelectors.RedButton + BaseSelectors.LastElement, null)
+}
+
 export function FillPickupRouting() {
     cy.get(ShipmentSelectors.RoutingToggle)
     cy.Click(ShipmentSelectors.RoutingToggle, null)
