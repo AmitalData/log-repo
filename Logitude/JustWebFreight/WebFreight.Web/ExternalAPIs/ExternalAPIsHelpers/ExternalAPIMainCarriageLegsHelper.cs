@@ -1,27 +1,24 @@
-﻿using Logitude.BL.ShipmentsModel.APIDataContract.ApiV1;
-using Logitude.BL.ShipmentsModel.EntityPMs;
-using Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours.Validators;
-using Logitude.BL.ShipmentsModel.Tools.Validating;
+﻿using Logitude.BL.ShipmentsModel.EntityPMs;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.Helpers;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System;
 using System.Collections.Generic;
-using System.EnterpriseServices;
 using System.Linq;
 using System.Web;
+using Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours.Validators;
+using Simplog.Data.Helpers;
 
-namespace WebFreight.Web.Helpers.APIHelpers
+namespace WebFreight.Web.ExternalAPIs.ExternalAPIsHelpers
 {
-    public class APITransshipmentHelper
+    public class ExternalAPIMainCarriageLegsHelper
     {
         private int tenant;
         private ShipmentPM shipmentPM;
         private PortRepository portRepository;
         private CardRepository cardRepository;
         private AirlineRepository airlineRepository;
-        public APITransshipmentHelper(ShipmentPM shipment, int tenant)
+        public ExternalAPIMainCarriageLegsHelper(ShipmentPM shipment, int tenant)
         {
             ICommonDataContext commonContext = CommonDataContext.GetContext(tenant);
             portRepository = new PortRepository(commonContext);
@@ -32,7 +29,7 @@ namespace WebFreight.Web.Helpers.APIHelpers
             this.tenant = tenant;
         }
 
-        public void ValidateTransshipments()
+        public void ValidateMainCarriageLegs()
         {
             foreach (TransshipmentLeg item in shipmentPM.MainCarriageLegs.OrderBy(d => d.LegIndex))
             {
@@ -215,12 +212,6 @@ namespace WebFreight.Web.Helpers.APIHelpers
                     {
                         throw new ApplicationException("Main Carriage Leg 1 Master field already used in another Shipment");
                     }
-
-                    //bool isFieldExists = ShipmentValidating.IsMasterFieldUsedByAnotherShipment(shipmentPM.Id, item.MasterNumber, shipmentPM.AirlinePrefix, shipmentPM.DirectionId, shipmentPM.TransportModeId, shipmentPM.ShipmentLevelCode, shipmentPM.IsCancelled, tenant);
-                    //if (isFieldExists)
-                    //{
-                    //    throw new ApplicationException("Main Carriage Leg 1 Master field already used in another Shipment");
-                    //}
                 }
             }
         }
@@ -643,18 +634,6 @@ namespace WebFreight.Web.Helpers.APIHelpers
                 {
                     myResult = false;
                 }
-
-                //if (date1 > date2)
-                //{
-                //    int ticks = (date1 - date2).Value.Milliseconds;
-                //    int seconds = ticks / 1000;
-                //    int minutes = seconds / 60;
-
-                //    if (minutes > (24 * 60))
-                //    {
-                //        myResult = false;
-                //    }
-                //}
             }
 
             return myResult;
@@ -671,15 +650,6 @@ namespace WebFreight.Web.Helpers.APIHelpers
                 if (date > date2)
                 {
                     myResult = false;
-
-                    //int ticks = (date - date2).Value.Milliseconds;
-                    //int seconds = ticks / 1000;
-                    //int minutes = seconds / 60;
-
-                    //if (minutes > (24 * 60))
-                    //{
-                    //    myResult = false;
-                    //}
                 }
             }
 
@@ -828,6 +798,5 @@ namespace WebFreight.Web.Helpers.APIHelpers
             shipmentPM.Transshipment3ETD = null;
             shipmentPM.Transshipment3CarrierPrefix = null;
         }
-
     }
 }
