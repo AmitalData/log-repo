@@ -66,7 +66,7 @@ When("the user goes to the main carriage leg of the created house", () => {
 });
 
 Then("all fields of the main carriage leg should be dim", () => {
-    Actions.AssertMainCarriageLegFieldsDisableForConnectedHouse()
+    Actions.AssertMainCarriageLegFieldsDisable()
 });
 //#endregion
 

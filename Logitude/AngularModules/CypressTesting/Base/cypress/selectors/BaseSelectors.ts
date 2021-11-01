@@ -93,6 +93,8 @@ export class BaseSelectors extends RegexSelectors {
 
     //#endregion
     //#region general
+    public static readonly ToggleButtonDisabledClass = 'ToggleButton ToggleButtonDisabled';
+    public static readonly ToggleButtonClassName = 'ToggleButton';
     public static readonly ToggleButtonClass = '.ToggleButton';
     public static readonly label = "label"
     public static readonly button = "button"
