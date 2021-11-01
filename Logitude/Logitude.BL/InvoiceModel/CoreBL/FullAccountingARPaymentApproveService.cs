@@ -232,7 +232,7 @@ namespace Logitude.BL.InvoiceModel.CoreBL
             }
         }
         private void SaveARPaymentBankTranfer(ARPaymentBankTranferPM aRPaymentBankTranfer)
-        {
+        {   
             ARPaymentBankTranfer poco = new ARPaymentBankTranfer();
             ARPaymentBankTranferMapping.MapEntity(aRPaymentBankTranfer, poco, true);
             paymentBankTranferRepository.Add(poco);
@@ -251,6 +251,7 @@ namespace Logitude.BL.InvoiceModel.CoreBL
         {
             ARPaymentBankTranferPM aRPaymentBankTranfer = new ARPaymentBankTranferPM
             {
+                Id = IdCounter.GetNumber("ARPaymentBankTranfer", arpaymentPM.Tenant).ToString(),
                 LineNumber = lineNumberCounter++,
                 PaymentId = arpaymentPM.Id,
                 Tenant = arpaymentPM.Tenant,

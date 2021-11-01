@@ -671,7 +671,7 @@
                                                                 <div *ngIf="EntityPM.ARPaymentBankTranfers.length === 0">
                                                                     <IconButton [Name]="'Add'" [IsSmall]="true" (click)="AddBankTransfersButtonClicked()"></IconButton>
                                                                     <div style="margin-left: 30px">
-                                                                        <HelpIcon [Header]="{{'ARPayment.O.BankTransfers'  | TextCodeTranslationPipe}}"></HelpIcon>
+                                                                        <HelpIcon [Header]="'ARPayment.O.BankTransfers' | TextCodeTranslationPipe" [Text]="'ARPayment.M.AddBankTransfersHint' | TextCodeTranslationPipe"></HelpIcon>
                                                                     </div>
                                                                 </div>
                                                                 <div *ngIf="EntityPM.ARPaymentBankTranfers.length > 0">

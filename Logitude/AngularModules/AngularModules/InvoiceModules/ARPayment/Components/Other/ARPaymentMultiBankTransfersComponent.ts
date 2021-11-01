@@ -202,7 +202,7 @@ export class ARPaymentMultiBankTransfersComponent extends BaseComponent {
                 this.FIELD_IS_REQUIERD.replace(
                     '%FieldName',
                     TextCodeTranslator.Translate(
-                        'ARPayment.S.Details.ChequeRef'
+                        'ARPayment.F.PaymentRef'
                     )
                 )
             );
@@ -211,7 +211,7 @@ export class ARPaymentMultiBankTransfersComponent extends BaseComponent {
             this.ValidationErrorsList.push(
                 this.FIELD_IS_REQUIERD.replace(
                     '%FieldName',
-                    TextCodeTranslator.Translate('ARPayment.F.Bank')
+                    TextCodeTranslator.Translate('ARPayment.F.BankAccountLiteId')
                 )
             );
         }
