@@ -75,14 +75,14 @@ namespace Amital.QuoteOPM.Data.EntityPOCOs
 	    public bool IsByContainer { get; set; }
         [Column("EstimateProfitEdited")]
 	    public bool EstimateProfitEdited { get; set; }
-        [ForeignKey("PickUpAddressEntity")]
-        [Column("FromAddressId")]
-	    public string FromAddressId { get; set; }
+     //   [ForeignKey("PickUpAddressEntity")]
+     //   [Column("FromAddressId")]
+	    //public string FromAddressId { get; set; }
 	      
         public virtual Address PickUpAddressEntity { get; set; }
-        [ForeignKey("DeliveryAddressEntity")]
-        [Column("ToAddressId")]
-	    public string ToAddressId { get; set; }
+     //   [ForeignKey("DeliveryAddressEntity")]
+     //   [Column("ToAddressId")]
+	    //public string ToAddressId { get; set; }
 	      
         public virtual Address DeliveryAddressEntity { get; set; }
         [Column("OpportunityId")]
