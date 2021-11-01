@@ -176,9 +176,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             LoggingUserId = requestParams.LoggingUserId,
                             RequestVIA = SendRequestVIA.WebServiceBatch,
                             UnifreightListOnServerOnly = UnifreightListOnServerOnly_BankeId,
-                          //  TransmitionDateTime = DateTime.Now.AddHours(-2),
-                            FutureSendDateTime = DateTime.Now.AddHours(-2) ,  
-                              
+
                         };
 
                         SBQMessageService.CreateSheetSBQMessage<GenericRequestParams>(requestParams2755, false);
