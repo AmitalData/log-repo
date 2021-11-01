@@ -1,5 +1,6 @@
 import { AfterViewInit, Component, Input, OnInit, SimpleChanges } from '@angular/core';
 import { FormGroup, FormControl, FormArray, Validators } from '@angular/forms';
+import { ApiQueryFilters } from 'Infrastructure/DataContracts/ApiQueryFilters';
 import { MessageService } from 'primeng/api';
 import { QuoteOPPM } from 'QuoteOPM/EntityPMs/QuoteOPPM';
 import { Carrier, Incoterm, NewQuoteDataService, Port, SpecialService } from '../../Services/new-quote-data/new-quote-data.service';
@@ -102,7 +103,11 @@ export class NewQuotePropertiesComponent implements OnInit, AfterViewInit {
   }
 
   async getMainCarriageCarrier() {
-    this.mainCarriageCarrierList = await this.newQuoteDataService.getCarrierses(this.directionId, this.transportModeId);
+    const filters = new ApiQueryFilters();
+    filters.PageIndex = 0;
+    filters.PageSize = 100;
+
+    this.mainCarriageCarrierList = await this.newQuoteDataService.getCarrierses(this.directionId, this.transportModeId, filters);
     this.mainCarriageCarrierList = this.mainCarriageCarrierList ? this.sortArray(this.mainCarriageCarrierList, 'Name') : []
 
     this.carrierColumns = this.directionId === "E" ? { AIRLINE_ID: 'Code' } : { VENDOR_ID: 'Code' }
@@ -118,7 +123,7 @@ export class NewQuotePropertiesComponent implements OnInit, AfterViewInit {
       this.index = this.formArray.length;
       this.formArray.push(this.propForm)
     } else
-      this.messageService.add({ severity: 'error', summary: 'Property not add', detail: 'have field in exist propreties that not vlid' })
+      this.messageService.add({ severity: 'error', summary: 'Property not add', detail: 'Not all the field in Quote Properties were entered/filled' })
   }
 
   removeProperty(e: { originalEvent: PointerEvent, index: number }) {

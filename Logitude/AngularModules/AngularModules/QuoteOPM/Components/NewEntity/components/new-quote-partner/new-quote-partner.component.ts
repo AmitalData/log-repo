@@ -37,7 +37,7 @@ export class NewQuotePartnerComponent extends BaseComponent implements OnInit, A
   ConsigneeContact: any;
   ShipperId: any;
   ConsigneeId: any;
-  isHidden:boolean = true;
+  isHidden: boolean = true;
 
   partnerform: FormGroup = new FormGroup({
     partner: new FormControl(),
@@ -125,9 +125,12 @@ export class NewQuotePartnerComponent extends BaseComponent implements OnInit, A
     this.partnerform.controls.partner.valueChanges.subscribe((partner: CardList) => {
       if (partner != null) {
         this.partnerform.controls.contact.reset();
-        if (!!partner.Notes) {
+        this.partnerform.controls.contact.setValidators(partner ? Validators.required : null)
+        this.partnerform.controls.contact.updateValueAndValidity()
+
+        if (!!partner.Notes)
           this.partnerform.controls.notes.setValue(partner?.Notes);
-        }
+
         this.initContacts(partner?.Id);
         this.setAddress(partner);
         this.onSelectedName(partner);
@@ -140,7 +143,7 @@ export class NewQuotePartnerComponent extends BaseComponent implements OnInit, A
     this.partnerform.controls.notes.valueChanges.subscribe(newVal => this.EntityPM[this.capitalizeType + 'Note'] = newVal);
     this.partnerform.controls.reference1.valueChanges.subscribe(newVal => this.EntityPM[this.capitalizeType + 'Reference1'] = newVal);
     this.partnerform.controls.reference2.valueChanges.subscribe(newVal => this.EntityPM[this.capitalizeType + 'Reference2'] = newVal);
-    this.formGroup.controls.direction.valueChanges.subscribe((val:DirectionList)=>
+    this.formGroup.controls.direction.valueChanges.subscribe((val: DirectionList) =>
       this.isHidden = !((val.Name === 'Import' && this.type === 'consignee') || (val.Name === 'Export' && this.type === 'shipper')));
   }
 

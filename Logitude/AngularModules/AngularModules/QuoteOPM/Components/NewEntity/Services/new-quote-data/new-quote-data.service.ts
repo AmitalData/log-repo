@@ -106,9 +106,9 @@ export class NewQuoteDataService {
     return res.Result as Port[];
   }
 
-  async getCarrierses(directionId: string, transportModed: string): Promise<Carrier[]> {
-    const res: ServiceResponse = await this.newQuoteOPWebService.GetCarriersItemsList(directionId, transportModed, '', 1000000, false).toPromise();
-    return res.Result as Carrier[];
+  async getCarrierses(directionId: string, transportModed: string, filter: ApiQueryFilters): Promise<Carrier[]> {
+    const res: ServiceResponse = await this.newQuoteOPWebService.GetCarriersItemsList(directionId, transportModed, filter).toPromise();
+    return res.Result.body as Carrier[];
   }
 
   async getSpecialServices(directionId: string, transportModed: string): Promise<SpecialService[]> {

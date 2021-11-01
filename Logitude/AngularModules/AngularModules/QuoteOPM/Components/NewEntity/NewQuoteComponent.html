@@ -15,18 +15,13 @@
     (formGroup.controls.transportMode?.value?.Name === 'Ocean' || formGroup.controls.transportMode?.value?.Name === 'Inland') &&  !formGroup.controls.shipmentType?.value}">
 
             <div class="section">
-                <div class="p-field accordion-container">
-                    <h4 class="text-style simple-text">{{"QuoteOP.S.NewQuote.Pickup" | TextCodeTranslationPipe}}</h4>
-                    <i class='pi pi-angle-down' (click)='shipper.hidden = !shipper.hidden'></i>
-                    <div #shipper hidden class="accordion-contect">
-                        <app-new-quote-partner [type]='"shipper"' [formGroup]='formGroup' [EntityPM]='EntityPM'>
-                        </app-new-quote-partner>
-                    </div>
-                </div>
+                <app-new-quote-partner [type]='"shipper"' [formGroup]='formGroup' [EntityPM]='EntityPM'>
+                </app-new-quote-partner>
             </div>
 
             <div class="section">
-                <app-new-quote-partner [type]='"consignee"' [formGroup]='formGroup' [EntityPM]='EntityPM'></app-new-quote-partner>                
+                <app-new-quote-partner [type]='"consignee"' [formGroup]='formGroup' [EntityPM]='EntityPM'>
+                </app-new-quote-partner>
                 <!-- <hr> -->
                 <!-- <app-new-quote-my-customers [formGroup]='formGroup'></app-new-quote-my-customers> -->
             </div>
@@ -43,13 +38,17 @@
             </div>
 
             <div class="section">
-                <h2 class="sub-header">Additional Fields</h2>
+                <app-accordion label='Additional Fields'></app-accordion>
             </div>
 
         </div>
     </div>
     <div class="section-btn">
-        <button pButton type="button" label="Cancel" class="p-button-danger" (click)='cancel()'></button>
-        <button pButton type="submit" label="Create" class="p-button-primary"></button>
+        <button pButton type="button" label="Cancel" class="p-button-danger" (click)='cancel()'>
+            <i class='pi pi-times-circle'></i>
+        </button>
+        <button pButton type="submit" label="Create" class="p-button-primary">
+            <i class='pi pi-plus-circle'></i>
+        </button>
     </div>
 </form>

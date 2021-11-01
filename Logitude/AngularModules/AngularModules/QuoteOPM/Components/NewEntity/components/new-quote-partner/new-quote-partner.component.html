@@ -4,7 +4,7 @@
     <div class="col-6 p-fluid">
       <div class="p-field">
         <app-autocomplate-table
-          [columnsShow]="['Code', 'EnglishName', 'Address1', 'CityName', 'CountryName', 'PartnerTypeName']"
+          [columnsShow]="{Code: 'Code', EnglishName: 'English Name', Address1:'Address', CityName: 'City Name', CountryName: 'Country Name', PartnerTypeName: 'Partner Type Name'}"
           [data]='cardsList' [fieldShow]='"EnglishName"' [label]="'Name'" [controlName]='"partner"'
           [formGroup]='partnerform' [searchIcon]='true'>
         </app-autocomplate-table>

@@ -110,6 +110,27 @@
     .ng-submitted .ng-invalid {
         border-color: #f44336;
     }
+
+    app-accordion {
+        display: block;
+        padding: 12px 0;
+
+        .accordion-contect {
+            border-top: 1px solid var(--surface-200);
+        }
+
+        h4 {
+            font-size: 17px;
+            font-weight: bold;
+        }
+
+        .accordion-container > i.pi-angle-down {
+            margin-right: 18px !important;
+            margin-top: 6px;
+            // margin-left: 7px;
+            color: #1084dc;
+        }
+    }
 }
 
 :host {
@@ -123,6 +144,7 @@
 .container {
     height: 81%;
     margin: 0px;
+    margin-top: 2px;    
 }
 
 .section {
@@ -138,13 +160,32 @@
     padding: 20px;
     margin-bottom: 0;
 
+    .pi {
+        color: black;
+        margin-right: 8px;
+        align-self: end;
+        font-size: 13px;
+    }
+
+    button {
+        color: black;
+    }
+
+    .p-button-danger:hover,
     .p-button-danger {
         margin-right: 30px;
+        background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(186, 206, 227, 1) 100%);
+        border: 1px solid #6A8299;
+    }
+    
+    .p-button-primary {
+        background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(237, 192, 147, 1) 100%) !important;
+        border: 1px solid #6A8299;
     }
 }
 
 .root-header {
-    margin-bottom: 8px;
+    margin-bottom: 2px;
     padding: 13px 20px;
     border-radius: 0;
 
@@ -168,7 +209,8 @@ hr {
 .right-side {
     padding-left: 13px;
     padding-right: 17px;
-    padding-top: 13px;
+    padding-top: 0px;
+    margin-top: 15px;
     overflow-x: hidden;
     height: 100%;
     position: relative;
@@ -177,7 +219,7 @@ hr {
 .disabled {
     pointer-events: none;
     opacity: 0.5;
-    background: #ccc;
+    // background: #ccc;
 }
 
 
