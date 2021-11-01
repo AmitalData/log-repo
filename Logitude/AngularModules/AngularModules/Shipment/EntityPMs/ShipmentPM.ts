@@ -1108,6 +1108,11 @@ export class ShipmentPM {
     private customerReference2: string;
     public get CustomerReference2() { return this.customerReference2; }
     public set CustomerReference2(newValue: string) { if (this.customerReference2 != newValue) { this.customerReference2 = newValue; this.MarkAsDirty("CustomerReference2"); } }
+
+
+    private customerReference3: string;
+    public get CustomerReference3() { return this.customerReference3; }
+    public set CustomerReference3(newValue: string) { if (this.customerReference3 != newValue) { this.customerReference3 = newValue; this.MarkAsDirty("CustomerReference3"); } }
        
 	 
     private customerName: string;

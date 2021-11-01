@@ -23,6 +23,10 @@ export class BaseSelectors extends RegexSelectors {
     public static readonly Warehouse = "#MaintenanceItemMTWH"
     public static readonly Vendor = "#MaintenanceItemMTVD"
     public static readonly MessageErrorRedButton = 'button[id^=MessageWindow_Ok]'
+    public static readonly TenantVolumeUnitCode = "#Tenant_VolumeUnitCode"
+    public static readonly TenantGrossWeightUnitCode = "#Tenant_GrossWeightUnitCode"
+    public static readonly TenantChargeableWeightUnitCode = "#Tenant_ChargeableWeightUnitCode"
+
     //#endregion
     //#region charge Types
     public static readonly ChargesTypeAccounting = "#ChargesTypeTHAccounting"
@@ -93,6 +97,8 @@ export class BaseSelectors extends RegexSelectors {
 
     //#endregion
     //#region general
+    public static readonly ToggleButtonDisabledClass = 'ToggleButton ToggleButtonDisabled';
+    public static readonly ToggleButtonClassName = 'ToggleButton';
     public static readonly ToggleButtonClass = '.ToggleButton';
     public static readonly label = "label"
     public static readonly button = "button"

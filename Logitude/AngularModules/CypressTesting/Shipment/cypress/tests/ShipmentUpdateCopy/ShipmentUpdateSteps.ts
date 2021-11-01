@@ -86,6 +86,10 @@ Given("add pre carriage and on carriage from port {string} to port {string}", (f
     Actions.FillPreCarriageRouting(shipmentDetails.TransportMode, fromPort, toPort)
     Actions.FillOnCarriageRouting(shipmentDetails.TransportMode, fromPort, toPort)
 });
+
+Given("add a warehouse with {string} as a terminal", (warehouseLegTerminal) => {
+    Actions.AddWarehouseLegPickups(warehouseLegTerminal)
+});
 //#endregion
 
 //#region  Update payables tab given step

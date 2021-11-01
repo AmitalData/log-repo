@@ -31,6 +31,7 @@ using System.Transactions;
 using System.Xml;
 using Simplog.Server.Infrastructure;
 using Logitude.BL.ShipmentsModel.DigitalModels;
+using System.Threading.Tasks;
 
 namespace Logitude.BL.ShipmentsModel.EntityQueries
 {
@@ -119,8 +120,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
             TransportModeRepository transmodeRep = new TransportModeRepository(webFreightContext);
 
-            ShipmentLevelRepository shipmentLevelRep = new ShipmentLevelRepository(repository.context);
-            ShipmentPickUpDeliveryRepository shipmentPickUpDeliveryRepository = new ShipmentPickUpDeliveryRepository(repository.context);
+            ShipmentLevelRepository shipmentLevelRep = new ShipmentLevelRepository(tenant);
+            ShipmentPickUpDeliveryRepository shipmentPickUpDeliveryRepository = new ShipmentPickUpDeliveryRepository(tenant);
             ShipmentDeliveryQuery shipmentDeliveryQuery = new ShipmentDeliveryQuery(shipmentPickUpDeliveryRepository);
             ShipmentPickUpQuery shipmentPickUpQuery = new ShipmentPickUpQuery(shipmentPickUpDeliveryRepository);
             DirectionRepository directionRep = new DirectionRepository(webFreightContext);
@@ -863,6 +864,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.CustomerContactId = shipment.CustomerContactId;
             shipmentPM.CustomerReference1 = shipment.CustomerReference1;
             shipmentPM.CustomerReference2 = shipment.CustomerReference2;
+            shipmentPM.CustomerReference3 = shipment.CustomerReference3;
 
             if (!string.IsNullOrEmpty(shipment.CustomerId))
             {
@@ -1843,14 +1845,16 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     shipmentPM.LocalCustomsSentByUserName = myContact.EnglishName;
                 }
             }
-
+            if (shipment.EntityStatus != null)
+            {
+                shipmentPM.StatusName = shipment.EntityStatus.Name;
+                shipmentPM.StatusWeight = shipment.EntityStatus.StatusWeight;
+            }
             shipmentPM.OriginShipmentId = shipment.OriginShipmentId;
             shipmentPM.FBLIsFromStock = shipment.FBLIsFromStock;
             shipmentPM.StatusId = shipment.StatusId;
-            shipmentPM.StatusName = shipment.EntityStatus.Name;
             shipmentPM.StatusLocation = shipment.StatusLocation;
             shipmentPM.StatusDate = shipment.StatusDate;
-            shipmentPM.StatusWeight = shipment.EntityStatus.StatusWeight;
             shipmentPM.LastSentByUserId = shipment.LastSentByUserId;
             shipmentPM.ProfitCurrencyId = shipment.ProfitCurrencyId;
             shipmentPM.ProfitExchangeRate = shipment.ProfitExchangeRate;
@@ -2015,23 +2019,23 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 #endregion
 
                 #region Order Packages
-                ShipmentOrderPackageRepository shipmentOrderPackageRepository = new ShipmentOrderPackageRepository(repository.context);
+                ShipmentOrderPackageRepository shipmentOrderPackageRepository = new ShipmentOrderPackageRepository(tenant);
                 ShipmentOrderPackageQuery shipmentOrderPackageQuery = new ShipmentOrderPackageQuery(shipmentOrderPackageRepository);
                 shipmentPM.ShipmentOrderPackages = shipmentOrderPackageQuery.GetShipmentOrderPackagesByShipment(shipment.Id, shipment.Tenant);
                 #endregion
 
                 #region Shipment Assembleies
-                ShipmentAssemblyRepository shipmentAssemblyRepository = new ShipmentAssemblyRepository(repository.context);
+                ShipmentAssemblyRepository shipmentAssemblyRepository = new ShipmentAssemblyRepository(tenant);
                 ShipmentAssemblyQuery shipmentAssemblyQuery = new ShipmentAssemblyQuery(shipmentAssemblyRepository);
 
                 shipmentPM.ShipmentAssemblies = shipmentAssemblyQuery.GetShipmentAssemblies(shipment.Id, shipment.Tenant);
                 #endregion
 
                 #region Packages | Commodities
-                ShipmentPackageRepository shipmentPackageRepository = new ShipmentPackageRepository(repository.context);
+                ShipmentPackageRepository shipmentPackageRepository = new ShipmentPackageRepository(tenant);
                 ShipmentPackageQuery shipmentPackageQuery = new ShipmentPackageQuery(shipmentPackageRepository);
 
-                ShipmentCommodityRepository shipmentCommodityRepository = new ShipmentCommodityRepository(repository.context);
+                ShipmentCommodityRepository shipmentCommodityRepository = new ShipmentCommodityRepository(tenant);
                 ShipmentCommodityQuery shipmentCommodityQuery = new ShipmentCommodityQuery(shipmentCommodityRepository);
                 #endregion
 
@@ -2040,7 +2044,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 #endregion
 
                 #region shipment receivables
-                ShipmentReceivableRepository shipmentReceivablesRepository = new ShipmentReceivableRepository(repository.context);
+                ShipmentReceivableRepository shipmentReceivablesRepository = new ShipmentReceivableRepository(tenant);
                 ShipmentReceivableQuery shipmentReceivablesQuery = new ShipmentReceivableQuery(shipmentReceivablesRepository);
                 shipmentPM.ShipmentReceivables = shipmentReceivablesQuery.GetShipmentReceivablePMsByShipmentId(shipment.Id, shipment.Tenant);
 
@@ -2051,7 +2055,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 #endregion
 
                 #region shipment payables
-                ShipmentPayableRepository shipmentPayableRepository = new ShipmentPayableRepository(repository.context);
+                ShipmentPayableRepository shipmentPayableRepository = new ShipmentPayableRepository(tenant);
                 ShipmentPayableQuery shipmentPayableQuery = new ShipmentPayableQuery(shipmentPayableRepository);
                 shipmentPM.ShipmentPayables = shipmentPayableQuery.GetShipmentPayablePMsByShipment(shipment.Id, shipment.Tenant);
 
@@ -2094,13 +2098,13 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 #endregion
 
                 #region AWB Print Onlies
-                ShipmentAWBPrintOnlyRepository shipmentAWBPrintOnlyRepository = new ShipmentAWBPrintOnlyRepository(repository.context);
+                ShipmentAWBPrintOnlyRepository shipmentAWBPrintOnlyRepository = new ShipmentAWBPrintOnlyRepository(tenant);
                 ShipmentAWBPrintOnlyQuery shipmentAwbPrintOnlyQuery = new ShipmentAWBPrintOnlyQuery(shipmentAWBPrintOnlyRepository);
                 shipmentPM.ShipmentAWBPrintOnlies = shipmentAwbPrintOnlyQuery.GetShipmentAWBPrintOnlyPMsByShipment(shipment.Id, shipment.Tenant);
                 #endregion
 
                 #region AWBOCIPMs
-                AWBOCIRepository aWBOCIRepository = new AWBOCIRepository(repository.context);
+                AWBOCIRepository aWBOCIRepository = new AWBOCIRepository(tenant);
                 AWBOCIQuery aWBOCIQuery = new AWBOCIQuery(aWBOCIRepository);
                 shipmentPM.AWBOCIPMs = aWBOCIQuery.GetAWBOCIPMsByShipmentId(shipmentPM.Id, shipmentPM.Tenant).ToList();
                 #endregion
@@ -2232,13 +2236,13 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 #endregion
 
                 #region ShipmentStoragePricings
-                ShipmentStoragePricingRepository shipmentStoragePricingRepository = new ShipmentStoragePricingRepository(repository.context);
+                ShipmentStoragePricingRepository shipmentStoragePricingRepository = new ShipmentStoragePricingRepository(tenant);
                 ShipmentStoragePricingQuery shipmentStoragePricingQuery = new ShipmentStoragePricingQuery(shipmentStoragePricingRepository);
                 shipmentPM.ShipmentStoragePricings = shipmentStoragePricingQuery.GetShipmentStoragePricingsByShipmentId(shipment.Id, shipment.Tenant);
                 #endregion
 
                 #region ShipmentProductItems
-                ShipmentProductItemRepository shipmentProductItemRepository = new ShipmentProductItemRepository(repository.context);
+                ShipmentProductItemRepository shipmentProductItemRepository = new ShipmentProductItemRepository(tenant);
                 ShipmentProductItemQuery shipmentProductItemQuery = new ShipmentProductItemQuery(shipmentProductItemRepository);
 
                 shipmentPM.ShipmentProductItems = shipmentProductItemQuery.GetShipmentProductItems(shipment.Id, shipment.Tenant);
@@ -2537,12 +2541,12 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 this.MapINTTRABookingXMLFields(shipmentPM);
             }
 
-            INTTRABookingStatusRepository iNTTRABookingStatusRepository = new INTTRABookingStatusRepository(repository.context);
+            INTTRABookingStatusRepository iNTTRABookingStatusRepository = new INTTRABookingStatusRepository(tenant);
             if (!string.IsNullOrEmpty(shipmentPM.INTTRABookingStatusCode))
                 shipmentPM.INTTRABookingStatusName = iNTTRABookingStatusRepository.GetSingleINTTRABookingStatus(shipmentPM.INTTRABookingStatusCode).Name;
 
 
-            INTTRABookingTransStatusRepository iNTTRABookingTransStatusRepository = new INTTRABookingTransStatusRepository(repository.context);
+            INTTRABookingTransStatusRepository iNTTRABookingTransStatusRepository = new INTTRABookingTransStatusRepository(tenant);
             if (!string.IsNullOrEmpty(shipmentPM.INTTRABookingTransStatusCode))
                 shipmentPM.INTTRABookingTransStatusName = iNTTRABookingTransStatusRepository.GetSingleINTTRABookingTransStatus(shipmentPM.INTTRABookingTransStatusCode).Name;
 
@@ -2923,8 +2927,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             PortRepository portsRep = new PortRepository(commonContext);
             TransportModeRepository transmodeRep = new TransportModeRepository(webFreightContext);
             VesselRepository vesselRep = new VesselRepository(commonContext);
-            ShipmentLevelRepository shipmentLevelRep = new ShipmentLevelRepository(repository.context);
-            ShipmentPickUpDeliveryRepository shipmentPickUpDeliveryRepository = new ShipmentPickUpDeliveryRepository(repository.context);
+            ShipmentLevelRepository shipmentLevelRep = new ShipmentLevelRepository(tenant);
+            ShipmentPickUpDeliveryRepository shipmentPickUpDeliveryRepository = new ShipmentPickUpDeliveryRepository(tenant);
             ShipmentDeliveryQuery shipmentDeliveryQuery = new ShipmentDeliveryQuery(shipmentPickUpDeliveryRepository);
             ShipmentPickUpQuery shipmentPickUpQuery = new ShipmentPickUpQuery(shipmentPickUpDeliveryRepository);
             DirectionRepository directionRep = new DirectionRepository(webFreightContext);
@@ -3760,10 +3764,10 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             {
                 #region Collections
 
-                ShipmentOrderPackageRepository shipmentOrderPackageRepository = new ShipmentOrderPackageRepository(repository.context);
+                ShipmentOrderPackageRepository shipmentOrderPackageRepository = new ShipmentOrderPackageRepository(tenant);
                 ShipmentOrderPackageQuery shipmentOrderPackageQuery = new ShipmentOrderPackageQuery(shipmentOrderPackageRepository);
 
-                ShipmentPackageRepository shipmentPackageRepository = new ShipmentPackageRepository(repository.context);
+                ShipmentPackageRepository shipmentPackageRepository = new ShipmentPackageRepository(tenant);
                 ShipmentPackageQuery shipmentPackageQuery = new ShipmentPackageQuery(shipmentPackageRepository);
 
                 #region shipment order packages
@@ -3830,6 +3834,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
             shipmentPM.CustomerReference1 = shipment.CustomerReference1;
             shipmentPM.CustomerReference2 = shipment.CustomerReference2;
+            shipmentPM.CustomerReference3 = shipment.CustomerReference3;
 
             ShipmentPM returnShipment = BranchPermitionsFilter.AddUserBranchRestrictionFilters(new QueryOperations(), shipmentPM, tenant);
             returnShipment = ProductPermitionsFilter.AddUserProductRestrictionFilters(new QueryOperations(), shipmentPM, tenant);
@@ -4308,6 +4313,32 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             return null;
         }
 
+        public List<ShipmentPM> GetShipmentPMsByIds(List<string> shipmentIds, int tenant)
+        {
+            if (shipmentIds.Count() == 0) return null;
+
+            List<Shipment> shipments = repository.GetShipmentsFromIds(shipmentIds, tenant);
+            if (shipments.Count() == 0) return null;
+
+            List<string> shipmentMasterDataIds = shipments.Select(shipment => shipment.MasterShipmentDataId).ToList();
+            List<ShipmentMasterData> shipmentMasterDatas = repository.GetShipmentMasterDatasFromIds(shipmentMasterDataIds, tenant);
+            List<ShipmentPM> shipmentPMs = new List<ShipmentPM>();
+
+            Parallel.ForEach(shipments, (shipment) => {
+                ShipmentPM shipmentPM = new ShipmentPM();
+                ShipmentMasterData masterData = shipmentMasterDatas.Where(shipmentMasterData => shipmentMasterData.Id == shipment.Id).FirstOrDefault();
+                shipmentPM = MapShipmentToShipmentPM(shipmentPM, shipment, null, masterData, true);
+                ShipmentPM securedPM = new ShipmentPM();
+                securedPM = SecuredMapping.GetMappedPM(shipmentPM, securedPM, "Shipment", tenant);
+                ShipmentPM shipmentPMWithRestrictions = BranchPermitionsFilter.AddUserBranchRestrictionFilters(new QueryOperations(), securedPM, tenant);
+                shipmentPMWithRestrictions = ProductPermitionsFilter.AddUserProductRestrictionFilters(new QueryOperations(), securedPM, tenant);
+
+                shipmentPMs.Add(shipmentPMWithRestrictions);
+            });
+
+            return shipmentPMs;
+        }
+
         public ShipmentPM GetSingleShipmentPMByNumber(string shipmentNumber, int tenant)
         {
             if (!string.IsNullOrEmpty(shipmentNumber))
@@ -4547,6 +4578,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                         CustomerNote = s.CustomerCard != null ? s.CustomerCard.Notes : null,
                                                         CustomerReference1 = s.CustomerReference1,
                                                         CustomerReference2 = s.CustomerReference2,
+                                                        CustomerReference3 = s.CustomerReference3,
                                                         DangerousClassNumber = s.DangerousClassNumber,
                                                         DangerousFlashPoint = s.DangerousFlashPoint,
                                                         DangerousIMDGCode = s.DangerousIMDGCode,
@@ -5209,6 +5241,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                         CustomerNote = s.CustomerCard != null ? s.CustomerCard.Notes : null,
                                                         CustomerReference1 = s.CustomerReference1,
                                                         CustomerReference2 = s.CustomerReference2,
+                                                        CustomerReference3 = s.CustomerReference3,
 
 
                                                         DescriptionOfGoods = s.DescriptionOfGoods,

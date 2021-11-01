@@ -576,10 +576,13 @@
     <Compile Include="InvoiceModel\CloseTables\EnumGenerated\QBOGlobalTaxCalculationStruct.Generated.cs" />
     <Compile Include="InvoiceModel\CoreBL\FullAccountingARPaymentApproveService.cs" />
     <Compile Include="InvoiceModel\CustomFilters\ARInvoiceTypeCustomFilter.cs" />
+    <Compile Include="InvoiceModel\EntityLists\ARPaymentBankTranferList.cs" />
     <Compile Include="InvoiceModel\EntityLists\QBOGlobalTaxCalculationList.cs" />
+    <Compile Include="InvoiceModel\EntityPMs\ARPaymentBankTranferPM.cs" />
     <Compile Include="InvoiceModel\EntityPMs\ARPaymentChequeReplicaPM.cs" />
     <Compile Include="InvoiceModel\EntityPMs\ARPaymentChequeStatusReplicaPM.cs" />
     <Compile Include="InvoiceModel\EntityPMs\QBOGlobalTaxCalculationPM.cs" />
+    <Compile Include="InvoiceModel\EntityQueries\ARPaymentBankTranferQuery.cs" />
     <Compile Include="InvoiceModel\EntityQueries\ARPaymentChequeReplicaQuery.cs" />
     <Compile Include="InvoiceModel\EntityQueries\ARPaymentChequeStatusReplicaQuery.cs" />
     <Compile Include="InvoiceModel\EntityQueries\QBOGlobalTaxCalculationQuery.cs" />
@@ -593,6 +596,7 @@
     <Compile Include="InvoiceModel\Tools\Behaviours\ARInvoiceBehaviours\ARInvoiceFieldsBehaviour.cs" />
     <Compile Include="InvoiceModel\Tools\Behaviours\ARInvoiceBehaviours\ARInvoiceShipmentsDataBehaviour.cs" />
     <Compile Include="InvoiceModel\Tools\Behaviours\EntityAutomationAPInvoiceMappingPMFields.cs" />
+    <Compile Include="InvoiceModel\Tools\DataMapping\ARPaymentBankTranferMapping.cs" />
     <Compile Include="InvoiceModel\Tools\FullAccountingARPaymentValidatorArguments.cs" />
     <Compile Include="InvoiceModel\Tools\Initializers\APInvoiceServiceInitializer.cs" />
     <Compile Include="InvoiceModel\Tools\Initializers\ARInvoiceServiceInitializer.cs" />

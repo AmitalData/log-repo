@@ -75,6 +75,11 @@ export class MultiEntityUpdateLogPM {
     public set RetryNumber(newValue: number) { if (this.retryNumber != newValue) { this.retryNumber = newValue; this.MarkAsDirty("RetryNumber"); } }
        
 	 
+    private updatedEntitiesNumber: number;
+    public get UpdatedEntitiesNumber() { return this.updatedEntitiesNumber; }
+    public set UpdatedEntitiesNumber(newValue: number) { if (this.updatedEntitiesNumber != newValue) { this.updatedEntitiesNumber = newValue; this.MarkAsDirty("UpdatedEntitiesNumber"); } }
+       
+	 
     private startDate: Date;
     public get StartDate() { return this.startDate; }
     public set StartDate(newValue: Date) { if (this.startDate != newValue) { this.startDate = newValue; this.MarkAsDirty("StartDate"); } }

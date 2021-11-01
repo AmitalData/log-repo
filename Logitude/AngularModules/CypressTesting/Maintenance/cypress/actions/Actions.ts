@@ -860,7 +860,6 @@ function DefinePutCustomerSettings() {
 
 export function AssertPutCustomerSettings() {
     BaseAssertion.AssertStatusCode(RequestAliases.Tenants, 200);
-
 }
 //#endregion
 

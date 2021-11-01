@@ -2,6 +2,7 @@ using Logitude.CargoTracking.Data.EntityLists;
 using Logitude.CargoTracking.Data.EntityPOCOs;
 using Logitude.CargoTracking.Data.Repositories;
 using Logitude.CargoTracking.Def.DataContracts;
+using Logitude.CargoTracking.Def.EntityPMs;
 using Simplog.Server.Infrastructure.DataContracts;
 using System;
 using System.Collections.Generic;
@@ -363,8 +364,8 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
             {
                 if (shipment.CurrentMilestoneCode == null)
                 {
-                    List<Milestone> shipmentMilestones = BuildShipmentMilstones(shipment);
-                    SetMilestonesStatus(shipment, shipmentMilestones);
+                    //List<Milestone> shipmentMilestones = BuildShipmentMilstones(shipment);
+                    //SetMilestonesStatus(shipment, shipmentMilestones);
                 }
             }
 
@@ -612,8 +613,8 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
             {
                 //if (shipment.CurrentMilestoneCode == null)
                 //{
-                List<Milestone> shipmentMilestones = BuildShipmentMilstones(shipment);
-                SetMilestonesStatus(shipment, shipmentMilestones);
+                //List<Milestone> shipmentMilestones = BuildShipmentMilstones(shipment);
+                //SetMilestonesStatus(shipment, shipmentMilestones);
                 //}
             }
             return shipmetsLists;
@@ -721,313 +722,6 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
         }
 
 
-        public void SetMilestonesStatus(CargoTrackingShipmentList shipment, List<Milestone> shipmentMilestones)
-        {
-
-            SetCurrentMilestone(shipmentMilestones);
-            SetDoneMilstones(shipmentMilestones);
-            SetFutureMilstoneForShipment(shipment, shipmentMilestones);
-        }
-
-        private void SetDoneMilstones(List<Milestone> shipmentMilestones)
-        {
-            Milestone currentMilstone = shipmentMilestones.FirstOrDefault(d => d.IsCurrent == true);
-            if (currentMilstone != null)
-            {
-                var doneMilstones = shipmentMilestones.Where(milstone => milstone.Id < currentMilstone.Id).ToList();
-                doneMilstones.ForEach(doneMilstone =>
-                {
-                    doneMilstone.Done = true;
-                    doneMilstone.IsEstimation = false;
-                });
-            }
-        }
-
-        private void SetCurrentMilestone(List<Milestone> milestones)
-        {
-            Milestone currentMilstone = GetMostRecentNotEstimatedMilestone(milestones);
-            if (currentMilstone != null)
-                currentMilstone.IsCurrent = true;
-        }
-        private Milestone GetMostRecentNotEstimatedMilestone(List<Milestone> milestones)
-        {
-            return milestones.Where(s => s.IsEstimation != true && s.Date != null).OrderByDescending(s => s.Id).FirstOrDefault();
-        }
-
-        public List<Milestone> BuildShipmentMilstones(CargoTrackingShipmentList shipment)
-        {
-            List<Milestone> milestones = new List<Milestone>();
-
-            milestones.Add(new Milestone()
-            {
-                Id = 1,
-                Code = "Created",
-                Name = "Created",
-                Date = shipment.CreateDate,
-                EstimationDate = null,
-                Done = true,
-                Notes = null,
-                IsCurrent = false,
-                IsEstimation =false
-            });
-
-
-            milestones.Add(new Milestone()
-            {
-                Id = 2,
-                Code = "Booking",
-                Name = "Booking",
-                Date = shipment.BookingDate,
-                EstimationDate = shipment.BookingEstimationDate,
-                Done = shipment.BookingDone,
-                Notes = null,
-                IsCurrent = false,
-                IsEstimation = shipment.BookingDate == null && shipment.BookingEstimationDate != null
-            });
-            milestones.Add(new Milestone()
-            {
-                Id = 3,
-                Code = "Pickup",
-                Name = "Pickup",
-                Date = shipment.PickupDate,
-                EstimationDate = shipment.PickupEstimationDate,
-                Done = shipment.PickupDone,
-                Notes = null,
-                IsCurrent = false,
-                IsEstimation = shipment.PickupDate == null && shipment.PickupEstimationDate != null
-            });
-            milestones.Add(new Milestone()
-            {
-                Id = 4,
-                Code = "OriginWarehouse",
-                Name = "Origin Warehouse",
-                Date = shipment.FromWarehouseDate,
-                EstimationDate = shipment.FromWarehouseEstimationDate,
-                Done = shipment.FromWarehouseDone,
-                Notes = shipment.FromWarehouseNotes,
-                IsCurrent = false,
-                IsEstimation = shipment.FromWarehouseDate == null && shipment.FromWarehouseEstimationDate != null
-            });
-            milestones.Add(new Milestone()
-            {
-                Id = 5,
-                Code = "Departure",
-                Name = "Departure",
-                Date = shipment.DepartureDate,
-                EstimationDate = shipment.DepartureEstimationDate,
-                Done = shipment.DepartureDone,
-                Notes = null,
-                IsCurrent = false,
-                IsEstimation = shipment.DepartureDate == null && shipment.DepartureEstimationDate != null
-            });
-            milestones.Add(new Milestone()
-            {
-                Id = 6,
-                Code = "Arrival",
-                Name = "Arrival",
-                Date = shipment.ArrivalDate,
-                EstimationDate = shipment.ArrivalEstimationDate,
-                Done = shipment.ArrivalDone,
-                Notes = null,
-                IsCurrent = false,
-                IsEstimation = shipment.ArrivalDate == null && shipment.ArrivalEstimationDate != null
-            });
-            milestones.Add(new Milestone()
-            {
-                Id = 7,
-                Code = "DestinationWarehouse",
-                Name = "Destination Warehouse",
-                Date = shipment.ToWarehouseDate,
-                EstimationDate = shipment.ToWarehouseEstimationDate,
-                Done = shipment.ToWarehouseDone,
-                Notes = shipment.ToWarehouseNotes,
-                IsCurrent = false,
-                IsEstimation = shipment.ToWarehouseDate == null && shipment.ToWarehouseEstimationDate != null
-            });
-            milestones.Add(new Milestone()
-            {
-                Id = 8,
-                Code = "AssignedToCustomsBroker",
-                Name = "Assigned To Customs Broker",
-                Date = shipment.AssignedCustomsAgentDate,
-                EstimationDate = shipment.AssignedCustomsAgentEstDate,
-                Done = shipment.AssignedCustomsAgentDone,
-                Notes = shipment.AssignedCustomsAgentNotes,
-                IsCurrent = false,
-                IsEstimation = shipment.AssignedCustomsAgentDate == null && shipment.AssignedCustomsAgentEstDate != null
-            });
-            milestones.Add(new Milestone()
-            {
-                Id = 9,
-                Code = "CustomsProcess",
-                Name = "Customs Process",
-                //Date = Shipment.process,
-                EstimationDate = null,
-                //Done = Shipment.CustomsPaymentDone,
-                Notes = null,
-                IsCurrent = false,
-                //IsEstimation = !Shipment.CustomsPaymentDone
-            });
-            milestones.Add(new Milestone()
-            {
-                Id = 10,
-                Code = "GoodsClassification",
-                Name = "Goods Classification",
-                Date = shipment.GoodsClassificationDate,
-                EstimationDate = shipment.GoodsClassificationEstDate,
-                Done = shipment.GoodsClassificationDone,
-                Notes = shipment.GoodsClassificationNotes,
-                IsCurrent = false,
-                IsEstimation = shipment.GoodsClassificationDate == null && shipment.GoodsClassificationEstDate != null
-            });
-            milestones.Add(new Milestone()
-            {
-                Id = 11,
-                Code = "DocumentInspection",
-                Name = "Document Inspection",
-                Date = shipment.DocumentInspectionDate,
-                EstimationDate = shipment.DocumentInspectionEstDate,
-                Done = shipment.DocumentInspectionDone,
-                Notes = shipment.DocumentInspectionNotes,
-                IsCurrent = false,
-                IsEstimation = shipment.DocumentInspectionDate == null && shipment.DocumentInspectionEstDate != null
-            });
-            milestones.Add(new Milestone()
-            {
-                Id = 12,
-                Code = "PaymentRequested",
-                Name = "Payment Requested",
-                Date = shipment.PaymentRequiredDate,
-                EstimationDate = shipment.PaymentRequiredEstimationDate,
-                Done = shipment.PaymentRequiredDone,
-                Notes = shipment.PaymentRequiredNotes,
-                IsCurrent = false,
-                IsEstimation = shipment.PaymentRequiredDate == null && shipment.PaymentRequiredEstimationDate != null
-            });
-            milestones.Add(new Milestone()
-            {
-                Id = 13,
-                Code = "PaymentReceived",
-                Name = "Payment Received",
-                Date = shipment.PaymentReceivedDate,
-                EstimationDate = shipment.PaymentReceivedEstomationDate,
-                Done = shipment.PaymentReceivedDone,
-                Notes = shipment.PaymentReceivedNotes,
-                IsCurrent = false,
-                IsEstimation = shipment.PaymentReceivedDate == null && shipment.PaymentReceivedEstomationDate != null
-            });
-            milestones.Add(new Milestone()
-            {
-                Id = 14,
-                Code = "CustomsPayment",
-                Name = "Customs Payment",
-                Date = shipment.CustomsPaymentDate,
-                EstimationDate = null,
-                Done = shipment.CustomsPaymentDone,
-                Notes = null,
-                IsCurrent = false,
-                IsEstimation = shipment.CustomsPaymentDone != true
-            });
-            milestones.Add(new Milestone()
-            {
-                Id = 15,
-                Code = "Clearance",
-                Name = "Clearance",
-                Date = shipment.ClearanceDate,
-                EstimationDate = null,
-                Done = shipment.ClearanceDone,
-                Notes = null,
-                IsCurrent = false,
-                IsEstimation = shipment.ClearanceDone != true
-            });
-            milestones.Add(new Milestone()
-            {
-                Id = 16,
-                Code = "GatepassArrived",
-                Name = "Gatepass Arrived",
-                Date = shipment.GatepassArrivedDate,
-                EstimationDate = shipment.GatepassArrivedEstDate,
-                Done = shipment.GatepassArrivedDone,
-                Notes = shipment.GatepassArrivedNotes,
-                IsCurrent = false,
-                IsEstimation = shipment.GatepassArrivedDate == null && shipment.GatepassArrivedEstDate != null
-            });
-            milestones.Add(new Milestone()
-            {
-                Id = 17,
-                Code = "AssignedToTrucker",
-                Name = "Assigned To Trucker",
-                Date = shipment.AssignedTruckerDate,
-                EstimationDate = shipment.AssignedTruckerEstimationDate,
-                Done = shipment.AssignedTruckerDone,
-                Notes = null,
-                IsCurrent = false,
-                IsEstimation = shipment.AssignedTruckerDate == null && shipment.AssignedTruckerEstimationDate != null
-            });
-            milestones.Add(new Milestone()
-            {
-                Id = 18,
-                Code = "DeliveryOnTheWay",
-                Name = "Delivery on the way",
-                Date = shipment.DeliveryDate,
-                EstimationDate = shipment.DeliveryEstimationDate,
-                Done = shipment.DeliveryDone,
-                Notes = shipment.DeliveryNotes,
-                IsCurrent = false,
-                IsEstimation = shipment.DeliveryDate == null && shipment.DeliveryEstimationDate != null
-            });
-            milestones.Add(new Milestone()
-            {
-                Id = 19,
-                Code = "Delivered",
-                Name = "Delivered",
-                Date = shipment.DeliveredDate,
-                EstimationDate = shipment.DeliveredEstimationDate,
-                Done = shipment.DeliveredDone,
-                Notes = null,
-                IsCurrent = false,
-                IsEstimation = shipment.DeliveredDate == null && shipment.DeliveredEstimationDate != null
-            });
-            milestones.Add(new Milestone()
-            {
-                Id = 20,
-                Code = "Invoiced",
-                Name = "Invoiced",
-                //Date = Shipment.invoi,
-                //EstimationDate = Shipment.DeliveredEstimationDate,
-                //Done = Shipment.DeliveredDone,
-                Notes = null,
-                IsCurrent = false,
-                //IsEstimation = !Shipment.DeliveredDone
-            });
-
-            milestones = milestones.OrderByDescending(d => d.Id).ToList();
-            //.OrderByDescending(s => s.IsEstimation == true ? s.EstimationDate : s.Date)
-            //.ThenByDescending(s => s.Id)
-            //.ToList();
-
-
-            return milestones;
-        }
-
-        private void SetFutureMilstoneForShipment(CargoTrackingShipmentList Shipment, List<Milestone> milestones)
-        {
-            Milestone futureMilstone = GetMostRecentEstimatedMilestone(milestones);
-
-            if (futureMilstone != null)
-            {
-                Shipment.FutureMilstoneCode = futureMilstone.Code;
-                Shipment.FutureMilstoneName = futureMilstone.Name;
-                Shipment.FutureMilstoneDate = futureMilstone.EstimationDate;
-            }
-        }
-
-        private static Milestone GetMostRecentEstimatedMilestone(List<Milestone> milestones)
-        {
-            return milestones.Where(s => s.IsEstimation == true && s.EstimationDate != null)
-                                                        .OrderByDescending(s => s.Id)
-                                                        .FirstOrDefault();
-        }
 
         public CargoTrackingShipmentList GetShipment(string SecurityKey, int tenant)
         {
@@ -1063,22 +757,320 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
             var shipmets = repo.GetBySecurityKey(SecurityKey, tenant);
             return shipmets.FirstOrDefault();
         }
+
+        public List<Milestone> BuildShipmentMilstones(CargoTrackingShipmentList cargoShipmentPM)
+        {
+            var milestones = new List<Milestone>
+            {
+                new Milestone()
+                {
+                    Id = 1,
+                    Code = "Created",
+                    Name = "Created",
+                    Date = cargoShipmentPM.CreateDate,
+                    EstimationDate = null,
+                    Done = true,
+                    Notes = null,
+                    IsCurrent = false,
+                    IsEstimation = false
+                },
+
+
+                new Milestone()
+                {
+                    Id = 2,
+                    Code = "Booking",
+                    Name = "Booking",
+                    Date = cargoShipmentPM.BookingDate,
+                    EstimationDate = cargoShipmentPM.BookingEstimationDate,
+                    Done = cargoShipmentPM.BookingDone,
+                    Notes = null,
+                    IsCurrent = false,
+                    IsEstimation = cargoShipmentPM.BookingDate == null && cargoShipmentPM.BookingEstimationDate != null
+                },
+                new Milestone()
+                {
+                    Id = 3,
+                    Code = "Pickup",
+                    Name = "Pickup",
+                    Date = cargoShipmentPM.PickupDate,
+                    EstimationDate = cargoShipmentPM.PickupEstimationDate,
+                    Done = cargoShipmentPM.PickupDone,
+                    Notes = null,
+                    IsCurrent = false,
+                    IsEstimation = cargoShipmentPM.PickupDate == null && cargoShipmentPM.PickupEstimationDate != null
+                },
+                new Milestone()
+                {
+                    Id = 4,
+                    Code = "OriginWarehouse",
+                    Name = "Origin Warehouse",
+                    Date = cargoShipmentPM.FromWarehouseDate,
+                    EstimationDate = cargoShipmentPM.FromWarehouseEstimationDate,
+                    Done = cargoShipmentPM.FromWarehouseDone,
+                    Notes = cargoShipmentPM.FromWarehouseNotes,
+                    IsCurrent = false,
+                    IsEstimation = cargoShipmentPM.FromWarehouseDate == null && cargoShipmentPM.FromWarehouseEstimationDate != null
+                },
+                new Milestone()
+                {
+                    Id = 5,
+                    Code = "Departure",
+                    Name = "Departure",
+                    Date = cargoShipmentPM.DepartureDate,
+                    EstimationDate = cargoShipmentPM.DepartureEstimationDate,
+                    Done = cargoShipmentPM.DepartureDone,
+                    Notes = null,
+                    IsCurrent = false,
+                    IsEstimation = cargoShipmentPM.DepartureDate == null && cargoShipmentPM.DepartureEstimationDate != null
+                },
+                new Milestone()
+                {
+                    Id = 6,
+                    Code = "Arrival",
+                    Name = "Arrival",
+                    Date = cargoShipmentPM.ArrivalDate,
+                    EstimationDate = cargoShipmentPM.ArrivalEstimationDate,
+                    Done = cargoShipmentPM.ArrivalDone,
+                    Notes = null,
+                    IsCurrent = false,
+                    IsEstimation = cargoShipmentPM.ArrivalDate == null && cargoShipmentPM.ArrivalEstimationDate != null
+                },
+                new Milestone()
+                {
+                    Id = 7,
+                    Code = "DestinationWarehouse",
+                    Name = "Destination Warehouse",
+                    Date = cargoShipmentPM.ToWarehouseDate,
+                    EstimationDate = cargoShipmentPM.ToWarehouseEstimationDate,
+                    Done = cargoShipmentPM.ToWarehouseDone,
+                    Notes = cargoShipmentPM.ToWarehouseNotes,
+                    IsCurrent = false,
+                    IsEstimation = cargoShipmentPM.ToWarehouseDate == null && cargoShipmentPM.ToWarehouseEstimationDate != null
+                },
+                new Milestone()
+                {
+                    Id = 8,
+                    Code = "AssignedToCustomsBroker",
+                    Name = "Assigned To Customs Broker",
+                    Date = cargoShipmentPM.AssignedCustomsAgentDate,
+                    EstimationDate = cargoShipmentPM.AssignedCustomsAgentEstDate,
+                    Done = cargoShipmentPM.AssignedCustomsAgentDone,
+                    Notes = cargoShipmentPM.AssignedCustomsAgentNotes,
+                    IsCurrent = false,
+                    IsEstimation = cargoShipmentPM.AssignedCustomsAgentDate == null && cargoShipmentPM.AssignedCustomsAgentEstDate != null
+                },
+                new Milestone()
+                {
+                    Id = 9,
+                    Code = "CustomsProcess",
+                    Name = "Customs Process",
+                    //Date = cargoShipmentPM.process,
+                    EstimationDate = null,
+                    //Done = cargoShipmentPM.CustomsPaymentDone,
+                    Notes = null,
+                    IsCurrent = false,
+                    //IsEstimation = !cargoShipmentPM.CustomsPaymentDone
+                },
+                new Milestone()
+                {
+                    Id = 10,
+                    Code = "GoodsClassification",
+                    Name = "Goods Classification",
+                    Date = cargoShipmentPM.GoodsClassificationDate,
+                    EstimationDate = cargoShipmentPM.GoodsClassificationEstDate,
+                    Done = cargoShipmentPM.GoodsClassificationDone,
+                    Notes = cargoShipmentPM.GoodsClassificationNotes,
+                    IsCurrent = false,
+                    IsEstimation = cargoShipmentPM.GoodsClassificationDate == null && cargoShipmentPM.GoodsClassificationEstDate != null
+                },
+                new Milestone()
+                {
+                    Id = 11,
+                    Code = "DocumentInspection",
+                    Name = "Document Inspection",
+                    Date = cargoShipmentPM.DocumentInspectionDate,
+                    EstimationDate = cargoShipmentPM.DocumentInspectionEstDate,
+                    Done = cargoShipmentPM.DocumentInspectionDone,
+                    Notes = cargoShipmentPM.DocumentInspectionNotes,
+                    IsCurrent = false,
+                    IsEstimation = cargoShipmentPM.DocumentInspectionDate == null && cargoShipmentPM.DocumentInspectionEstDate != null
+                },
+                new Milestone()
+                {
+                    Id = 12,
+                    Code = "PaymentRequested",
+                    Name = "Payment Requested",
+                    Date = cargoShipmentPM.PaymentRequiredDate,
+                    EstimationDate = cargoShipmentPM.PaymentRequiredEstimationDate,
+                    Done = cargoShipmentPM.PaymentRequiredDone,
+                    Notes = cargoShipmentPM.PaymentRequiredNotes,
+                    IsCurrent = false,
+                    IsEstimation = cargoShipmentPM.PaymentRequiredDate == null && cargoShipmentPM.PaymentRequiredEstimationDate != null
+                },
+                new Milestone()
+                {
+                    Id = 13,
+                    Code = "PaymentReceived",
+                    Name = "Payment Received",
+                    Date = cargoShipmentPM.PaymentReceivedDate,
+                    EstimationDate = cargoShipmentPM.PaymentReceivedEstomationDate,
+                    Done = cargoShipmentPM.PaymentReceivedDone,
+                    Notes = cargoShipmentPM.PaymentReceivedNotes,
+                    IsCurrent = false,
+                    IsEstimation = cargoShipmentPM.PaymentReceivedDate == null && cargoShipmentPM.PaymentReceivedEstomationDate != null
+                },
+                new Milestone()
+                {
+                    Id = 14,
+                    Code = "CustomsPayment",
+                    Name = "Customs Payment",
+                    Date = cargoShipmentPM.CustomsPaymentDate,
+                    EstimationDate = null,
+                    Done = cargoShipmentPM.CustomsPaymentDone,
+                    Notes = null,
+                    IsCurrent = false,
+                    IsEstimation = cargoShipmentPM.CustomsPaymentDone != true
+                },
+                new Milestone()
+                {
+                    Id = 15,
+                    Code = "Clearance",
+                    Name = "Clearance",
+                    Date = cargoShipmentPM.ClearanceDate,
+                    EstimationDate = null,
+                    Done = cargoShipmentPM.ClearanceDone,
+                    Notes = null,
+                    IsCurrent = false,
+                    IsEstimation = cargoShipmentPM.ClearanceDone != true
+                },
+                new Milestone()
+                {
+                    Id = 16,
+                    Code = "GatepassArrived",
+                    Name = "Gatepass Arrived",
+                    Date = cargoShipmentPM.GatepassArrivedDate,
+                    EstimationDate = cargoShipmentPM.GatepassArrivedEstDate,
+                    Done = cargoShipmentPM.GatepassArrivedDone,
+                    Notes = cargoShipmentPM.GatepassArrivedNotes,
+                    IsCurrent = false,
+                    IsEstimation = cargoShipmentPM.GatepassArrivedDate == null && cargoShipmentPM.GatepassArrivedEstDate != null
+                },
+                new Milestone()
+                {
+                    Id = 17,
+                    Code = "AssignedToTrucker",
+                    Name = "Assigned To Trucker",
+                    Date = cargoShipmentPM.AssignedTruckerDate,
+                    EstimationDate = cargoShipmentPM.AssignedTruckerEstimationDate,
+                    Done = cargoShipmentPM.AssignedTruckerDone,
+                    Notes = null,
+                    IsCurrent = false,
+                    IsEstimation = cargoShipmentPM.AssignedTruckerDate == null && cargoShipmentPM.AssignedTruckerEstimationDate != null
+                },
+                new Milestone()
+                {
+                    Id = 18,
+                    Code = "DeliveryOnTheWay",
+                    Name = "Delivery on the way",
+                    Date = cargoShipmentPM.DeliveryDate,
+                    EstimationDate = cargoShipmentPM.DeliveryEstimationDate,
+                    Done = cargoShipmentPM.DeliveryDone,
+                    Notes = cargoShipmentPM.DeliveryNotes,
+                    IsCurrent = false,
+                    IsEstimation = cargoShipmentPM.DeliveryDate == null && cargoShipmentPM.DeliveryEstimationDate != null
+                },
+                new Milestone()
+                {
+                    Id = 19,
+                    Code = "Delivered",
+                    Name = "Delivered",
+                    Date = cargoShipmentPM.DeliveredDate,
+                    EstimationDate = cargoShipmentPM.DeliveredEstimationDate,
+                    Done = cargoShipmentPM.DeliveredDone,
+                    Notes = null,
+                    IsCurrent = false,
+                    IsEstimation = cargoShipmentPM.DeliveredDate == null && cargoShipmentPM.DeliveredEstimationDate != null
+                },
+                new Milestone()
+                {
+                    Id = 20,
+                    Code = "Invoiced",
+                    Name = "Invoiced",
+                    //Date = cargoShipmentPM.invoi,
+                    //EstimationDate = cargoShipmentPM.DeliveredEstimationDate,
+                    //Done = cargoShipmentPM.DeliveredDone,
+                    Notes = null,
+                    IsCurrent = false,
+                    //IsEstimation = !cargoShipmentPM.DeliveredDone
+                }
+            };
+
+            return milestones.OrderByDescending(d => d.Id).ToList();
+        }
+        public void SetMilestonesStatus(CargoTrackingShipmentList cargoShipmentPM, List<Milestone> milestone)
+        {
+            SetCurrentMilestone(cargoShipmentPM, milestone);
+            SetDoneMilstones(cargoShipmentPM, milestone);
+            SetFutureMilstoneForShipment(cargoShipmentPM, milestone);
+        }
+        private void SetCurrentMilestone(CargoTrackingShipmentList cargoShipmentPM, List<Milestone> milestone)
+        {
+            Milestone currentMilstone = GetMostRecentNotEstimatedMilestone(milestone);
+            if (currentMilstone != null)
+                currentMilstone.IsCurrent = true;
+        }
+        private void SetDoneMilstones(CargoTrackingShipmentList cargoShipmentPM, List<Milestone> milestone)
+        {
+            Milestone currentMilstone = milestone.FirstOrDefault(d => d.IsCurrent == true);
+            if (currentMilstone != null)
+            {
+                var doneMilstones = milestone.Where(milstone => milstone.Id < currentMilstone.Id).ToList();
+                doneMilstones.ForEach(doneMilstone =>
+                {
+                    doneMilstone.Done = true;
+                    doneMilstone.IsEstimation = false;
+                });
+            }
+        }
+        private Milestone GetMostRecentNotEstimatedMilestone(List<Milestone> milestones)
+        {
+            return milestones.Where(s => s.IsEstimation != true && s.Date != null).OrderByDescending(s => s.Id).FirstOrDefault();
+        }
+        private void SetFutureMilstoneForShipment(CargoTrackingShipmentList cargoShipmentPM, List<Milestone> milestone)
+        {
+            Milestone futureMilstone = GetMostRecentEstimatedMilestone(milestone);
+
+            if (futureMilstone != null)
+            {
+                cargoShipmentPM.FutureMilstoneCode = futureMilstone.Code;
+                cargoShipmentPM.FutureMilstoneName = futureMilstone.Name;
+                cargoShipmentPM.FutureMilstoneDate = futureMilstone.EstimationDate;
+            }
+        }
+
+        private static Milestone GetMostRecentEstimatedMilestone(List<Milestone> milestones)
+        {
+            return milestones.Where(s => s.IsEstimation == true && s.EstimationDate != null)
+                                                        .OrderByDescending(s => s.Id)
+                                                        .FirstOrDefault();
+        }
     }
 
 
-    public class Milestone
-    {
-        public int Id { get; set; }
-        public string Code { get; set; }
-        public string Name { get; set; }
-        public string Notes { get; set; }
-        public DateTime? Date { get; set; }
-        public DateTime? EstimationDate { get; set; }
-        public bool? Done { get; set; }
-        public bool? IsEstimation { get; set; }
-        public bool? IsCurrent { get; set; }
+    //public class Milestone
+    //{
+    //    public int Id { get; set; }
+    //    public string Code { get; set; }
+    //    public string Name { get; set; }
+    //    public string Notes { get; set; }
+    //    public DateTime? Date { get; set; }
+    //    public DateTime? EstimationDate { get; set; }
+    //    public bool? Done { get; set; }
+    //    public bool? IsEstimation { get; set; }
+    //    public bool? IsCurrent { get; set; }
 
-    }
+    //}
     public class CargoTrackingShipmentWithMilestones
     {
         public List<Milestone> Milestones { get; set; }

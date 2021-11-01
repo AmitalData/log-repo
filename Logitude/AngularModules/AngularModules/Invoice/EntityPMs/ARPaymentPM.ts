@@ -13,6 +13,8 @@ import {ARPaymentInvoicePM} from './ARPaymentInvoicePM';
 import {LedgerTransactionPM} from './../../Accounting/EntityPMs/LedgerTransactionPM';
 
 import {ARPaymentChequeReplicaPM} from './ARPaymentChequeReplicaPM';
+
+import {ARPaymentBankTranferPM} from './ARPaymentBankTranferPM';
 import {ARPaymentPMCustomCode} from '../EntityPMCustomCode/ARPaymentPMCustomCode';
 import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
@@ -604,6 +606,42 @@ export class ARPaymentPM {
         }
     }
 	    //public ARPaymentChequeReplicas: Array<ARPaymentChequeReplicaPMPM>= [];
+      
+	private aRPaymentBankTranfers: ARPaymentBankTranferPM[];
+    get  ARPaymentBankTranfers() {
+        if (this.aRPaymentBankTranfers == null) {
+            this.aRPaymentBankTranfers = [];
+        }
+
+        return this.aRPaymentBankTranfers;
+    }
+    set  ARPaymentBankTranfers(newValue: ARPaymentBankTranferPM[]) {
+        if (this.aRPaymentBankTranfers != newValue) {
+            this.aRPaymentBankTranfers = newValue;
+        }
+    }
+    public AddARPaymentBankTranferPM(item: ARPaymentBankTranferPM) {
+        if (item != null) {
+            var index = this.ARPaymentBankTranfers.indexOf(item);
+            if (index == -1) {
+
+                item.EntityParentPM = this;
+
+                this. ARPaymentBankTranfers.push(item);
+                this.MarkAsDirty();
+            }
+        }
+    }
+    public RemoveARPaymentBankTranferPM(item: ARPaymentBankTranferPM) {
+        if (item != null) {
+            var index = this.ARPaymentBankTranfers.indexOf(item);
+            if (index > -1) {
+                this. ARPaymentBankTranfers.splice(index, 1);
+                this.MarkAsDirty();
+            }
+        }
+    }
+	    //public ARPaymentBankTranfers: Array<ARPaymentBankTranferPMPM>= [];
      private isPaymentNumberManuallySet: boolean;
     public get IsPaymentNumberManuallySet() { return this.isPaymentNumberManuallySet; }
     public set IsPaymentNumberManuallySet(newValue: boolean) { if (this.isPaymentNumberManuallySet != newValue) { this.isPaymentNumberManuallySet = newValue; this.MarkAsDirty("IsPaymentNumberManuallySet"); } }
@@ -672,6 +710,11 @@ export class ARPaymentPM {
     private partnerId: string;
     public get PartnerId() { return this.partnerId; }
     public set PartnerId(newValue: string) { if (this.partnerId != newValue) { this.partnerId = newValue; this.MarkAsDirty("PartnerId"); } }
+       
+	 
+    private updateAmountAndStatuses: boolean;
+    public get UpdateAmountAndStatuses() { return this.updateAmountAndStatuses; }
+    public set UpdateAmountAndStatuses(newValue: boolean) { if (this.updateAmountAndStatuses != newValue) { this.updateAmountAndStatuses = newValue; this.MarkAsDirty("UpdateAmountAndStatuses"); } }
        
 	 
 

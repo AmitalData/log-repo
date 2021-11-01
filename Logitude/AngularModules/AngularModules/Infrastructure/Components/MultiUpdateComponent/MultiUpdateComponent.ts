@@ -262,6 +262,7 @@ export class MultiUpdateComponent extends BaseComponent implements OnInit {
         multiEntityUpdateData.SetValueLists = setValueList;
         multiEntityUpdateData.Entities = entities;
         multiEntityUpdateData.ObjectTableId = this.ObjectTableId;
+        multiEntityUpdateData.ObjectTableName = this.ObjectTableName;
 
         return multiEntityUpdateData;
 
@@ -272,6 +273,7 @@ export class MultiUpdateComponent extends BaseComponent implements OnInit {
         entity.EntityId = item.Id;
         entity.EntityNumber = item.ShipmentNumber;
         entity.Tenant = SessionLocator.Tenant;
+        entity.StatusCode = "W";
         return entity;
     }
 

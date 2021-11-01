@@ -116,7 +116,7 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
                 }
             }
         }
-
+       
 
         //Dummy Fields
         public bool SetVoided { get; set; }
@@ -202,7 +202,30 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
                 }
             }
         }
+        private List<ARPaymentBankTranferPM> paymentBankTranferPMs;
+        [Include]
+        [Composition]
+        [Association("ARPaymentARPaymentBankTranfers", "Id", "PaymentId")]
+        public virtual List<ARPaymentBankTranferPM> ARPaymentBankTranfers
+        {
+            get
+            {
+                if (paymentBankTranferPMs == null)
+                {
+                    paymentBankTranferPMs = new List<ARPaymentBankTranferPM>();
+                }
 
+                return this.paymentBankTranferPMs;
+            }
+            set
+            {
+                if (value != null)
+                {
+                    paymentBankTranferPMs = value;
+                }
+            }
+        }
+        
         public bool IsPaymentNumberManuallySet { get; set; }
 
 

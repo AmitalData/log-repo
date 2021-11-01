@@ -700,17 +700,25 @@
                 {{'Accounting.General.O.TotalInLocalCurrency' | TextCodeTranslationPipe}}
             </div>
             <div class="">
-                <div class="footer-cell" [style.float]="isRTL ? 'right' : 'left'">
+                <div class="footer-cell" [style.float]="isRTL ? 'right' : 'left'" style="padding-bottom:3px">
                     <!-- Basel syas: the total is equal to close amount -->
                     <div style="font-size: 15px; color:#21a373;direction: ltr;" [class.red]="LTBSummery.EndBalanceLocal<=0"
                         *ngIf="LTBSummery.EndBalanceLocal != undefined">{{LTBSummery.EndBalanceLocal |
                         NumbersPipe:'N2'}} {{TenantCurrency}}</div>
                 </div>
 
-
+            </div>
+            <div   style="width: 300px;display:flex; flex-direction: row" >
+                <div class="footer-title" style="font-size:12px;margin-right:10px">
+                    {{'Accounting.General.O.Difference' | TextCodeTranslationPipe}}
+                </div>
+                <div >
+                    <div style="font-size: 12px;direction: ltr;" [class.red]="GetDifferenceAmount()<0" [style.color]="GetDifferenceAmount()==0 ? 'black' :'#21a373' "
+                         *ngIf="LTBSummery.EndBalanceLocal != undefined"> {{GetDifferenceAmount() | NumbersPipe:'N2'}}  {{TenantCurrency}}</div>
+                </div>
             </div>
         </div>
-
+     
         <div float-start style="width: calc(100% - 300px); overflow: auto;" *ngIf="TenantCurrency != EntityPM.CurrencyCode">
             <div class="footer-title">
                 {{'Accounting.General.O.TotalInCurrencies' | TextCodeTranslationPipe}}

@@ -4,4 +4,5 @@ export class MultiEntityUpdateDataEntity{
     public EntityNumber: string;
     public HasException: boolean;
     public Exception: string;
+    public StatusCode: string;
 }

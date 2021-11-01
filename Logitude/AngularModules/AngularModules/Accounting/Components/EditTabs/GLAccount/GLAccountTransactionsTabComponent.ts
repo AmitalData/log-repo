@@ -136,6 +136,7 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
     }
     DisplayTaxReportFilter: boolean;
     GetFullAccountingSettings() {
+      
         this._entityListService.getSingle(SessionLocator.Tenant.toString(), "FullAccountingSetting").then((res: any) => {
             this.CurrentSession.StopBusyIndicator();
             res.subscribe(myResponse => {
@@ -144,13 +145,13 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
                     var res = myResponse.Result;
                     this.fullAccountingSetting = res;
                     if (this.fullAccountingSetting.VATInputsGLAccountId == this.EntityPM.Id || this.fullAccountingSetting.VATOutputGLAccountId == this.EntityPM.Id) {
-                        this.UseTaxreportFilter = true;
+                      //  this.UseTaxreportFilter = true;
                         this.DisplayTaxReportFilter = true;
                         this.SetDateFilterWidth();
                         this.GetTransmittedTaxReports();
                     }
                     else {
-                        this.UseTaxreportFilter = false;
+                     //   this.UseTaxreportFilter = false;
                         this.DisplayTaxReportFilter = false;
                         this.SetDateFilterWidth();
                     }
@@ -798,6 +799,9 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
         return result;
     }
 
+    GetDifferenceAmount() {
+        return this.LTBSummery.EndBalanceLocal - this.GetOpenBalanceAmount();
+    }
     //#endregion
 
     //#region Date Filters Validation
@@ -1117,9 +1121,9 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
 
         //Task 46666: Transaction Tab - date filter new design
         // <DateTypeCode>2</DateTypeCode> 1/2/3
-        // Accounting- - code 1- חשבונאי
+        // Accounting- - code 1- חשבונםי
         // Due - code 2 - לגביה
-        // Reference -code-3-  אסמכתא
+        // Reference -code-3-  םסמכתם
 
         switch (this.filterSelectedValue) {
             case 'filter_accounting':
@@ -1132,7 +1136,7 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
                 this._dateTypeCode = '3';
                 break;
             case 'filter_Tax':
-                this._dateTypeCode = '4';
+                this._dateTypeCode = '4';              
                 this.UseTaxreportFilter = true;
                 this.ResetLTBFields();
                 this.NotIncludedInAnyTaxReport = true;

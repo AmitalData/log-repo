@@ -45,11 +45,12 @@ namespace Logitude.Accounting.BL.Validators
         public const string M_AfterConversion_noallJournalLinehaveExternalReconcileNumber = "CreatedByReconciliationAfterConversion : no all Journal Line have ExternalReconcileNumber";
         public const string M_AfterConversion_JournalLinehavenotthesameExternalReconcileNumber = "CreatedByReconciliationAfterConversion : Journal Line have not the same ExternalReconcileNumber";
         public const string M_InReconcileProgress = "Ledger Transaction was found InReconcileProgress";
-
+        private const string DifferentAccountsBlockingMessage = "Reconciliation.O.DifferentAccounts";
         private static ReconciliationPM reconciliation;
         public static ValidationResult IsReconciliationValid(ReconciliationPM myReconciliationPM, ValidationContext context)
         {
             reconciliation = myReconciliationPM;
+
 
             bool useLocal = true;
             var user = GetLoggedContact(myReconciliationPM.Tenant);
@@ -105,14 +106,14 @@ namespace Logitude.Accounting.BL.Validators
             //
             // Check Lines
 
-            var myDataProvider = context.GetService(typeof(IReconciliationValidatorContextDataProvider)) as IReconciliationValidatorContextDataProvider;
-            var transactionsId = reconciliation.ReconciliationLines.Where(d => d.TransactionId != null).Select(a => a.TransactionId).ToList();
-            List<LedgerTransactionPM> transactionsPMList = //transQuery.GetLedgerTransactionPMsByIdList(transactionsId, myReconciliationPM.Tenant);
-            myDataProvider.GetLedgerTransactionPMsByIdList(transactionsId, myReconciliationPM.Tenant);
+            List<LedgerTransactionPM> transactionsPMs =  GetReconciliationTransactions(myReconciliationPM, context);
+
+            BlockDifferentAccountsReconciliation(errorsList, transactionsPMs);
 
             var transactionIdList = myReconciliationPM.ReconciliationLines.Select(rec => rec.TransactionId).ToList();
             ///List<LedgerTransactionPM> ledgerTransactionPMs = null;
             GLAccountPM myGLAccount = null;
+            IReconciliationValidatorContextDataProvider myDataProvider = context.GetService(typeof(IReconciliationValidatorContextDataProvider)) as IReconciliationValidatorContextDataProvider;
             if (myDataProvider != null)
             {
                 ///ledgerTransactionPMs = myDataProvider.GetLedgerTransactionPMsByIdList(transactionIdList, myReconciliationPM.Tenant);
@@ -131,7 +132,7 @@ namespace Logitude.Accounting.BL.Validators
             }
             if (!myReconciliationPM.CreateAutoReconcileWhileStreamingService)
             {
-                var inReconcileProgressIDs = transactionsPMList.Where(r => r.InReconcileProgress).Select(r => r.Id).ToList();
+                var inReconcileProgressIDs = transactionsPMs.Where(r => r.InReconcileProgress).Select(r => r.Id).ToList();
                 if (inReconcileProgressIDs.Count > 0)
                 {
                     AddError(errorsList, M_InReconcileProgress);
@@ -143,7 +144,7 @@ namespace Logitude.Accounting.BL.Validators
             {
                 if (reconciliationLine.ChangeSetOp != ChangeSetOperation.None)// in 
                 {
-                    CheckReconciliationLine(errorsList, transactionsPMList /*ledgerTransactionPMs*/, myGLAccount, ref sum, reconciliationLine
+                    CheckReconciliationLine(errorsList, transactionsPMs /*ledgerTransactionPMs*/, myGLAccount, ref sum, reconciliationLine
                         , myReconciliationPM.CreatedByReconciliationAfterConversion
                         , myReconciliationPM.CreatedByReconciliationStageB);
                 }
@@ -175,6 +176,24 @@ namespace Logitude.Accounting.BL.Validators
                 }
                 errorString = errorString.Remove(errorString.Length - 1);
                 return new ValidationResult(errorString);
+            }
+        }
+
+        private static List<LedgerTransactionPM> GetReconciliationTransactions(ReconciliationPM myReconciliationPM, ValidationContext context)
+        {
+            IReconciliationValidatorContextDataProvider myDataProvider = context.GetService(typeof(IReconciliationValidatorContextDataProvider)) as IReconciliationValidatorContextDataProvider;
+            var transactionsId = reconciliation.ReconciliationLines.Where(d => d.TransactionId != null).Select(a => a.TransactionId).ToList();
+            
+            List<LedgerTransactionPM> transactionsPMs = myDataProvider.GetLedgerTransactionPMsByIdList(transactionsId, myReconciliationPM.Tenant);
+            return transactionsPMs;
+        }
+
+        private static void BlockDifferentAccountsReconciliation(List<string> errorsList, List<LedgerTransactionPM> transactionsPMList)
+        {
+            var isReconcileWithDifferentAccounts = transactionsPMList.GroupBy(transaction => transaction.AccountId).Count() > 1;
+            if (isReconcileWithDifferentAccounts == true)
+            {
+                AddError(errorsList, DifferentAccountsBlockingMessage);
             }
         }
 

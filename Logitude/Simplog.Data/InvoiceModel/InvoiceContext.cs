@@ -110,6 +110,7 @@ namespace Simplog.Data.InvoiceModel
             modelBuilder.Configurations.Add(new APPaymentTransferStatusMap());
             modelBuilder.Configurations.Add(new ARInvoiceStockMap());
             modelBuilder.Configurations.Add(new ARInvoiceStockLineMap());
+            modelBuilder.Configurations.Add(new ARPaymentBankTranferMap());
 
             modelBuilder.Configurations.Add(new AWBChargesCodeMap());
             modelBuilder.Configurations.Add(new AWBSpecialHandlingCodeMap());
@@ -482,7 +483,7 @@ namespace Simplog.Data.InvoiceModel
         public IDbSet<ARPaymentChequeStatusReplica> ARPaymentChequeStatusReplicas { get; set; }
         public IDbSet<ARInvoiceChargesConstraint> ARInvoiceChargesConstraints { get; set; }
         public IDbSet<QBOGlobalTaxCalculation> QBOGlobalTaxCalculations { get; set; }
-
+        public IDbSet<ARPaymentBankTranfer> ARPaymentBankTranfers { get; set; }
         public void DetectChanges()
         {
             this.ChangeTracker.DetectChanges();

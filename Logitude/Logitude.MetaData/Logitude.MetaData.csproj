@@ -186,6 +186,7 @@
     <None Include="DBScripts\CommonModel\202111011306_PODDocumentWR.sxml" />
     <None Include="DBScripts\CommonModel\202109021051_AddDefaultValueForSecurityLevel.sxml" />
     <None Include="DBScripts\CommonModel\202109021049_UpdateUsersSecurityLevel.sxml" />
+    <None Include="DBScripts\GlobalModel\202110271507_AddMultiEntityUpdateWR.sxml" />
     <None Include="DBScripts\GlobalModel\AddCollaborationToolContainerWRsBatchService.sxml" />
     <None Include="DBScripts\CommonModel\UpdateAutomaticLastUpdateDateOnVatType.sxml" />
     <None Include="DBScripts\GlobalModel\PODImageConverterServiceBatchService.sxml" />
@@ -962,6 +963,7 @@
     <None Include="DBTables\InvoiceModel\ARInvoiceTransferStatus.dxml" />
     <None Include="DBTables\InvoiceModel\ARInvoiceType.dxml" />
     <None Include="DBTables\InvoiceModel\ARPayment.dxml" />
+    <None Include="DBTables\InvoiceModel\ARPaymentBankTranfer.dxml" />
     <None Include="DBTables\InvoiceModel\ARPaymentStatus.dxml" />
     <None Include="DBTables\InvoiceModel\ARPaymentTransferStatus.dxml" />
     <None Include="DBTables\InvoiceModel\BankAccountLite.dxml" />
@@ -1101,6 +1103,9 @@
     <None Include="EntityFiles\InfrastructureModel\MultiEntityUpdateLog.lxml" />
     <None Include="EntityFiles\InfrastructureModel\QueryExportExecutionLog.lxml" />
     <None Include="EntityFiles\InfrastructureModel\WorkerRoleName.lxml" />
+    <None Include="EntityFiles\InvoiceModel\ARPaymentBankTranfer.lxml">
+      <SubType>Component</SubType>
+    </None>
     <None Include="EntityFiles\InvoiceModel\QBOGlobalTaxCalculation.lxml" />
     <None Include="EntityFiles\QuoteModel\QuoteComputedField.lxml" />
     <None Include="EntityFiles\QuoteModel\QuoteSalesTotal.lxml" />

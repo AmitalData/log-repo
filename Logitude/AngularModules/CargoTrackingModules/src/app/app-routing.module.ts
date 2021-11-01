@@ -20,6 +20,7 @@ const routes: Routes = [
     { path: 'cargo-tracking/login', component: LoginComponent },
     { path: 'cargo-tracking/resetpassword', component: ResetPasswordComponent },
     { path: 'cargo-tracking/changepassword', component: ChangePasswordComponent },
+    { path: 'cargo-tracking/shipment-link', component: ShipmentDetailsComponent, data:{isSharedLink: true} },
     {
         path: 'cargo-tracking',
         component: UserDashboardComponent,
@@ -37,7 +38,7 @@ const routes: Routes = [
         path: 'public-tracking/search',
         component: HomeComponent,
         children: [
-            { path: "", component: SearchComponent },  
+            { path: "", component: SearchComponent },
             { path: "shipment/:SecurityKey", component: PublicShipmentDetailsComponent },
             { path: "shipment", redirectTo: 'public-tracking/search' },
             { path: ":searchKey", component: SearchComponent },

@@ -15,15 +15,18 @@ namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
                 entity.Id = IdCounter.GetNumber("MultiEntityUpdateLog", entity.Tenant).ToString(); ;
                 entity.CreateDate = TenantServerConfigration.GetCurrentDateTime(0);
                 entity.CreatedByUserId = entityPM.CreatedByUserId;
-                entity.StatusCode = "C";
-                entity.RetryNumber = 0;
+                entityPM.StatusCode = "W";
+                entityPM.RetryNumber = 0;
             }
 
+            entity.UpdatedEntitiesNumber = entityPM.UpdatedEntitiesNumber;
             entity.ExceptionMessage = entityPM.ExceptionMessage;
             entity.DoneDate = entityPM.DoneDate;
             entity.XMLData = entityPM.XMLData;
             entity.ObjectTableId = entityPM.ObjectTableId;
             entity.StartDate = entityPM.StartDate;
+            entity.StatusCode = entityPM.StatusCode;
+            entity.RetryNumber = entityPM.RetryNumber;
         }
     }
 }

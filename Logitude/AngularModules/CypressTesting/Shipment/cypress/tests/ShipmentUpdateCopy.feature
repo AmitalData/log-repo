@@ -61,6 +61,7 @@ Feature: Shipment Update
     And the user add new pickup
     And add delivery with "TestAgent" as a partner routing
     And add pre carriage and on carriage from port "JFK" to port "MIA"
+    And add a warehouse with "TestWarehouse" as a terminal
     When update shipment
     Then the direct should update successfully
 

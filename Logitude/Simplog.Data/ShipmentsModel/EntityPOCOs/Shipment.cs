@@ -218,6 +218,7 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string CustomerContactId { get; set; }
         public string CustomerReference1 { get; set; }
         public string CustomerReference2 { get; set; }
+        public string CustomerReference3 { get; set; }
         public string FreightForwarderId { get; set; }
         public string FreightForwarderAddressId { get; set; }
         public string FreightForwarderContactId { get; set; }
