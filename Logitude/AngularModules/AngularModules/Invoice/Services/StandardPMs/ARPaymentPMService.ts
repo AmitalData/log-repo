@@ -24,8 +24,9 @@ import {PerformanceLogger} from '../../../Infrastructure/Utilities/PerformanceLo
 import {ARPaymentPM} from '../../EntityPMs/ARPaymentPM';
 
 import {ARPaymentInvoicePM} from '../../EntityPMs/ARPaymentInvoicePM';
-import {LedgerTransactionPM} from '../../EntityPMs/LedgerTransactionPM';
+import {LedgerTransactionPM} from 'Accounting/EntityPMs/LedgerTransactionPM';
 import {ARPaymentChequeReplicaPM} from '../../EntityPMs/ARPaymentChequeReplicaPM';
+import {ARPaymentBankTranferPM} from '../../EntityPMs/ARPaymentBankTranferPM';
 import {ARPaymentPMInitService} from '../../EntityPMInitServices/ARPaymentPMInitService';
 import {ARPaymentValidator} from '../../Validators/ARPaymentValidator';
 
@@ -206,6 +207,7 @@ export class ARPaymentPMService {
                this.MapPaymentInvoices(entityPM, jsonPM, mapParent); // Call composition tables map methods
                this.MapInvoicesLedgerTransactions(entityPM, jsonPM, mapParent); // Call composition tables map methods
                this.MapARPaymentChequeReplicas(entityPM, jsonPM, mapParent); // Call composition tables map methods
+               this.MapARPaymentBankTranfers(entityPM, jsonPM, mapParent); // Call composition tables map methods
 			 
             
 
@@ -237,6 +239,15 @@ export class ARPaymentPMService {
 						
 							 
             entityPM.OldEntityPM.ARPaymentChequeReplicas.push(newARPaymentChequeReplicaPM);
+            }
+			   			   			   
+            entityPM.OldEntityPM.ARPaymentBankTranfers = [];
+            for (var item in entityPM.ARPaymentBankTranfers) {
+            var myARPaymentBankTranferPM = entityPM.ARPaymentBankTranfers[item];
+            var newARPaymentBankTranferPM: ARPaymentBankTranferPM = this.clone(myARPaymentBankTranferPM);
+						
+							 
+            entityPM.OldEntityPM.ARPaymentBankTranfers.push(newARPaymentBankTranferPM);
             }
 			   
 		}
@@ -459,6 +470,98 @@ export class ARPaymentPMService {
                         
                         deletedPM.OldEntityPM = null;
                         entityPM.ARPaymentChequeReplicas.push(deletedPM);
+                    }
+                }
+            }
+        }
+    }
+    MapARPaymentBankTranfers(entityPM: ARPaymentPM, jsonPM: any, mapParent: boolean = true) {
+
+        var oldARPaymentBankTranfers: ARPaymentBankTranferPM[] = [];
+        if (entityPM.OldEntityPM && !mapParent) {
+            oldARPaymentBankTranfers = entityPM.OldEntityPM.ARPaymentBankTranfers;
+        }
+
+        entityPM.ARPaymentBankTranfers = new Array<ARPaymentBankTranferPM>();
+        for (var item in jsonPM.ARPaymentBankTranfers) {
+            var jItem = jsonPM.ARPaymentBankTranfers[item];
+            if (mapParent && (jItem.ChangeSetOp == "Delete" || jItem.ChangeSetOp == 3)) {
+                continue;
+            }
+            var newARPaymentBankTranferPM: ARPaymentBankTranferPM;
+	  
+            if (mapParent) {
+                newARPaymentBankTranferPM = new ARPaymentBankTranferPM(entityPM);
+            }
+            else
+            {
+                newARPaymentBankTranferPM = new ARPaymentBankTranferPM(null);
+            }
+ 			newARPaymentBankTranferPM.DisableMarkAsDirty = true;
+               
+            var pmKeysArray = Object.keys(jItem);
+            for (var pmKey in pmKeysArray) {
+                if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
+                    continue;
+                }
+                var pmProperty = pmKeysArray[pmKey];
+                newARPaymentBankTranferPM[pmProperty] = jItem[pmProperty];
+            }
+           
+			 
+            if (mapParent) {
+                newARPaymentBankTranferPM.UniqueKey = Guid.newGuid();
+                newARPaymentBankTranferPM.ChangeSetOp = "None";
+                jItem.ChangeSetOp = "None";
+                newARPaymentBankTranferPM.OldEntityPM = this.clone(newARPaymentBankTranferPM);
+
+				
+            }
+            else {
+                if (newARPaymentBankTranferPM.UniqueKey) {
+
+                    if (jItem.IsDirty)
+                        newARPaymentBankTranferPM.ChangeSetOp = "Update";
+                }
+                else {
+                        newARPaymentBankTranferPM.ChangeSetOp = "Insert";
+                }
+ 
+                newARPaymentBankTranferPM.OldEntityPM = null;
+                newARPaymentBankTranferPM.EntityParentPM = null;
+            }
+			 newARPaymentBankTranferPM.DisableMarkAsDirty = false;
+			 newARPaymentBankTranferPM.IsDirty = false;
+            entityPM.ARPaymentBankTranfers.push(newARPaymentBankTranferPM);
+        }
+        if (oldARPaymentBankTranfers) {
+            
+            for (var itemKey in oldARPaymentBankTranfers) {
+                if (entityPM.ARPaymentBankTranfers.filter(p=> p.UniqueKey === oldARPaymentBankTranfers[itemKey].UniqueKey).length === 0) {
+				
+                    if (oldARPaymentBankTranfers[itemKey]) {
+                        //oldARPaymentBankTranfers[itemKey].ChangeSetOp = "Delete";
+                        //entityPM.ARPaymentBankTranfers.push(oldARPaymentBankTranfers[itemKey]);
+						var oldItemJson = oldARPaymentBankTranfers[itemKey];
+                        var deletedPM: ARPaymentBankTranferPM = new ARPaymentBankTranferPM(null);
+						deletedPM.DisableMarkAsDirty = true;
+                        var pmKeys = Object.keys(oldItemJson);
+                        for (var key in pmKeys) {
+
+                            if ((!mapParent && pmKeys[key] === "entityParentPM") || pmKeys[key] === "UIProperties" || pmKeys[key] === "OldEntityPM" || pmKeys[key] === "PropertyChanged") {
+                                continue;
+                            }
+
+                            var property = pmKeys[key];
+                            deletedPM[property] = oldItemJson[property];
+                        }
+
+					    deletedPM.DisableMarkAsDirty = false;
+                        deletedPM.IsDirty = false;
+                        deletedPM.ChangeSetOp = "Delete";
+                        
+                        deletedPM.OldEntityPM = null;
+                        entityPM.ARPaymentBankTranfers.push(deletedPM);
                     }
                 }
             }

@@ -960,6 +960,7 @@
     <None Include="DBTables\InvoiceModel\ARInvoiceTransferStatus.dxml" />
     <None Include="DBTables\InvoiceModel\ARInvoiceType.dxml" />
     <None Include="DBTables\InvoiceModel\ARPayment.dxml" />
+    <None Include="DBTables\InvoiceModel\ARPaymentBankTranfer.dxml" />
     <None Include="DBTables\InvoiceModel\ARPaymentStatus.dxml" />
     <None Include="DBTables\InvoiceModel\ARPaymentTransferStatus.dxml" />
     <None Include="DBTables\InvoiceModel\BankAccountLite.dxml" />

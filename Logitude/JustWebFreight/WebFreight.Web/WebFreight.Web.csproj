@@ -1046,7 +1046,6 @@
     <Compile Include="Controllers\Integration\Quote\QuoteIntegrationVariables.cs" />
     <Compile Include="Controllers\Integration\Shipment\ShipmentIntegrationBuilder.cs" />
     <Compile Include="Controllers\Integration\Shipment\ShipmentIntegrationVariables.cs" />
-    <Compile Include="Controllers\InvoiceModel\Generated\ListControllers\ARPaymentBankTranferViewsController.Generated.cs" />
     <Compile Include="Controllers\InvoiceModel\Generated\ListControllers\QBOGlobalTaxCalculationViewsController.Generated.cs" />
     <Compile Include="Controllers\InvoiceModel\Generated\PMControllers\ARPaymentBankTranferController.Generated.cs" />
     <Compile Include="Controllers\QuoteModel\Generated\PMControllers\QuoteClosingReasonController.Generated.cs" />

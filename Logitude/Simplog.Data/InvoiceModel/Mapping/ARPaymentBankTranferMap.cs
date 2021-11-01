@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InvoiceModel.EntityPOCOs;
 using System.Data.Entity.ModelConfiguration;
 
 

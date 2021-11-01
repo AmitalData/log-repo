@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 {
    public class ARPaymentBankTranferUpdateClass
    {  		
-		public const string HashString = "5aecb064ea0ae4219013e7b7d949a6df";
+		public const string HashString = "0f2dec3783b753f748a4df8cd0c46d52";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -113,14 +113,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			      				    SortingByObjectField =  "Id",
 			      				    InActive =  false,
 			      				    IsSaveButtonVisible =  false,
-			      				    IsComposition =  false,
+			      				    IsComposition =  true,
 			      				    EnableSecurity =  false,
 			      				    AllowCustomFields =  false,
 			      				    HasDynamicHeader =  false,
 			      				    ObjectTableTypeCode =  "BR",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "ARPayment Bank Tranfer",
-			      				    Code =  "b26d",
+			      				    Code =  "c639",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Invoice",
@@ -746,13 +746,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-		   ObjectTable ARPaymentBankTranferObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "ARPaymentBankTranfer" && d.Tenant == 0).FirstOrDefault(); 
-
-		   Feature ARPaymentBankTranferFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = ARPaymentBankTranferObjectTable.Id, Tenant = 0, NameTextCodeCode = "ARPaymentBankTranfer.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ARPaymentBankTranferObjectTable);
-		   Feature ARPaymentBankTranferFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = ARPaymentBankTranferObjectTable.Id, Tenant = 0, NameTextCodeCode = "ARPaymentBankTranfer.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ARPaymentBankTranferObjectTable);
-		   Feature ARPaymentBankTranferFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = ARPaymentBankTranferObjectTable.Id, Tenant = 0, NameTextCodeCode = "ARPaymentBankTranfer.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ARPaymentBankTranferObjectTable);
-		   Feature ARPaymentBankTranferFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = false, ObjectTableId = ARPaymentBankTranferObjectTable.Id, Tenant = 0, NameTextCodeCode = "ARPaymentBankTranfer.Features.PackageFeature", NameTextCodeDefaultText = "ARPaymentBankTranfer Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ARPaymentBankTranferObjectTable);    
+	    {     
 	    
 		}
 

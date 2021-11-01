@@ -834,6 +834,11 @@ export class APInvoicePM {
     public set GlobalTaxCalculation(newValue: string) { if (this.globalTaxCalculation != newValue) { this.globalTaxCalculation = newValue; this.MarkAsDirty("GlobalTaxCalculation"); } }
        
 	 
+    private isUpdateFromPaymentService: boolean;
+    public get IsUpdateFromPaymentService() { return this.isUpdateFromPaymentService; }
+    public set IsUpdateFromPaymentService(newValue: boolean) { if (this.isUpdateFromPaymentService != newValue) { this.isUpdateFromPaymentService = newValue; this.MarkAsDirty("IsUpdateFromPaymentService"); } }
+       
+	 
 
     public OldEntityPM: APInvoicePM;
 		
