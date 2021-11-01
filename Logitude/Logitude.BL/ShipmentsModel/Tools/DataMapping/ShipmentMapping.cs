@@ -483,6 +483,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             entityPoco.PrivateLabelIncludePickup = entityPM.PrivateLabelIncludePickup;
             entityPoco.PrivateLabelIncludeDelivery = entityPM.PrivateLabelIncludeDelivery;
             entityPoco.RequestedFlightDate = entityPM.RequestedFlightDate;
+            entityPoco.IsPODReceived = entityPM.IsPODReceived;
+            entityPoco.PODReceivedDate = entityPM.PODReceivedDate;
 
             BuildSearchField(entityPM, entityPoco, entityMasterData, myPackagesList);
             if (!LBcurrentTenant.IsDocumentsArchive)

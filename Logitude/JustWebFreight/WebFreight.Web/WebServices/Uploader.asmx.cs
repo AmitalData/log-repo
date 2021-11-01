@@ -44,6 +44,7 @@ using Logitude.BL.Helpers;
 using Simplog.Data.ShipmentsModel;
 using Logitude.BL.ShipmentsModel.EntityQueries;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
+using Logitude.Server.Tools.QueueService;
 
 namespace WebFreight.Web.WebServices
 {
@@ -515,7 +516,7 @@ namespace WebFreight.Web.WebServices
 
 
                     UpdateDocument(commonContext, document);
-
+                    OpenPODDocumentUploderQueue(extDocPM, commonContext);
                     //else // In Azure
                     //{
                     //string filename = document.Id + "." + document.Extension;
@@ -559,6 +560,18 @@ namespace WebFreight.Web.WebServices
             }
         }
 
+        private void OpenPODDocumentUploderQueue(DocumentsFilingPM documentsFiling, ICommonDataContext commonContext)
+        {
+            if (documentsFiling.DocumentTypeCode == "POD")
+            {
+                IQueueService queueservice = new DbQueueService();
+                queueservice.InitializeQueue("PODDocumnetUploaderQueue", documentsFiling.Tenant);
+                queueservice.Send(new Dictionary<string, string>() { { "EntityId", documentsFiling.Id }, { "Tenant", documentsFiling.Tenant.ToString() },
+                                                                     { "IsPODDocumentUploaded", false.ToString() }, { "IsPODDocumentDeleted", true.ToString() }, { "PODRecived", documentsFiling.ReceivedDate.ToString() } },
+                                                                      documentsFiling.Tenant, null, null, null, null);
+            }
+        }
+       
         public byte[] GetPageTiffAsB64FromTarByTenantComIdPage(
            string documentId, int tenant, int currPage, out string TiffPageLines,
             out string ErrorMessage

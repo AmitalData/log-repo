@@ -482,5 +482,6 @@ export class ShipmentList {
 		ContainersNumbersandTypesArray: string;
 		CustomerContactName: string;
 		CustomerContactEmail: string;
+		PODReceivedDate: Date;
 	
 }

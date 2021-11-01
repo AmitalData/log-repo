@@ -879,6 +879,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             entityRepository.Update(Poco);
             entityRepository.SubmitChanges();
 
+            this.OpenPODDocumentUploderQueue(theEntityPm);
 
 
             RunDocumentPopulateAutomaticDatesService(theEntityPm);
@@ -905,6 +906,24 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             }
 
             AddShipmentUpdateKafkaQueueMessage(theEntityPm);
+        }
+
+        private void OpenPODDocumentUploderQueue(DocumentsFilingPM documentFiling)
+        {            
+            var shipmentObjectTable = ObjectTableRepository.GetSingleObjectTable(documentFiling.ObjectTableId, tenant, false);
+            if (!(shipmentObjectTable != null && shipmentObjectTable.Name == "Shipment" && documentFiling.DocumentTypeCode == "POD"))
+            {
+                return;
+            }
+            if(!(documentFiling.HasFile && documentFiling.Received))
+            {
+                return;
+            }
+            IQueueService queueservice = new DbQueueService();
+            queueservice.InitializeQueue("PODDocumnetUploaderQueue", documentFiling.Tenant);
+            queueservice.Send(new Dictionary<string, string>() { { "EntityId", documentFiling.Id }, { "Tenant", documentFiling.Tenant.ToString() },
+                                                                 { "IsPODDocumentUploaded", true.ToString() }, { "IsPODDocumentDeleted", false.ToString() }, { "PODRecived", documentFiling.ReceivedDate.ToString() } },
+                                                                  documentFiling.Tenant, null, null, null, null);
         }
 
         private void RunDocumentPopulateAutomaticDatesService(DocumentsFilingPM theEntityPm)
