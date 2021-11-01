@@ -228,7 +228,13 @@ using Simplog.Data.InvoiceModel;
 					{   
 					    throw new ApplicationException("APInvoice with Id " + MyEntity.Id + " doesn't exist");
 					} 
-					
+										 
+					if(IsUpdate == true)
+					{
+					    
+					      temp.NewConcurrencyGUID = Guid.NewGuid().ToString(); 
+						
+					}
                     
 					if(!IsUpdate)// && MyEntity.Tenant != null)
 					{							//throw new ApplicationException("Tenant Can't be update"); 

@@ -39,7 +39,7 @@
   MaxNumberOfCustomFields="0"
   ParentTableName="ARPayment"
   DefaultText="&quot;ARPayment Bank Tranfer&quot;"
-  Code="&quot;c639&quot;"
+  Code="&quot;200d&quot;"
   Name="&quot; Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Invoice&quot;"
@@ -960,7 +960,132 @@
       IsFollowUp="false" />
   </EventTypes>
   <Records />
-  <DataContracts />
+  <DataContracts>
+    <DataContract
+      Name="&quot;ARPaymentBankTranfer&quot;"
+      Version="&quot;ApiV1&quot;">
+      <DCField
+        DCFieldName="&quot;Id&quot;"
+        FieldName="&quot;Id&quot;"
+        IsKey="true"
+        IsManualMapping="false"
+        IsMulti="false"
+        FieldsDataType="&quot;Text&quot;"
+        IsNullable="false"
+        IsSpecialField="false"
+        IsCustomType="false"
+        IsAttribute="false"
+        IgnoreCustomTypeCheck="false"
+        IsCloseField="false"
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
+      <DCField
+        DCFieldName="&quot;Tenant&quot;"
+        FieldName="&quot;Tenant&quot;"
+        IsKey="false"
+        IsManualMapping="false"
+        IsMulti="false"
+        FieldsDataType="&quot;Integer&quot;"
+        IsNullable="false"
+        IsSpecialField="false"
+        IsCustomType="false"
+        IsAttribute="false"
+        IgnoreCustomTypeCheck="false"
+        IsCloseField="false"
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
+      <DCField
+        DCFieldName="&quot;LineNumber&quot;"
+        FieldName="&quot;LineNumber&quot;"
+        IsKey="false"
+        IsManualMapping="false"
+        IsMulti="false"
+        FieldsDataType="&quot;Integer&quot;"
+        IsNullable="false"
+        IsSpecialField="false"
+        IsCustomType="false"
+        IsAttribute="false"
+        IgnoreCustomTypeCheck="false"
+        IsCloseField="false"
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
+      <DCField
+        DCFieldName="&quot;PaymentRef&quot;"
+        FieldName="&quot;PaymentRef&quot;"
+        IsKey="false"
+        IsManualMapping="false"
+        IsMulti="false"
+        FieldsDataType="&quot;Text&quot;"
+        IsNullable="true"
+        IsSpecialField="false"
+        IsCustomType="false"
+        IsAttribute="false"
+        IgnoreCustomTypeCheck="false"
+        IsCloseField="false"
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
+      <DCField
+        DCFieldName="&quot;ValueDate&quot;"
+        FieldName="&quot;ValueDate&quot;"
+        IsKey="false"
+        IsManualMapping="false"
+        IsMulti="false"
+        FieldsDataType="&quot;DateTime&quot;"
+        IsNullable="false"
+        IsSpecialField="false"
+        IsCustomType="false"
+        IsAttribute="false"
+        IgnoreCustomTypeCheck="false"
+        IsCloseField="false"
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
+      <DCField
+        DCFieldName="&quot;LocalAmount&quot;"
+        FieldName="&quot;LocalAmount&quot;"
+        IsKey="false"
+        IsManualMapping="false"
+        IsMulti="false"
+        FieldsDataType="&quot;Decimal&quot;"
+        IsNullable="false"
+        IsSpecialField="false"
+        IsCustomType="false"
+        IsAttribute="false"
+        IgnoreCustomTypeCheck="false"
+        IsCloseField="false"
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
+      <DCField
+        DCFieldName="&quot;ForeignAmount&quot;"
+        FieldName="&quot;ForeignAmount&quot;"
+        IsKey="false"
+        IsManualMapping="false"
+        IsMulti="false"
+        FieldsDataType="&quot;Decimal&quot;"
+        IsNullable="false"
+        IsSpecialField="false"
+        IsCustomType="false"
+        IsAttribute="false"
+        IgnoreCustomTypeCheck="false"
+        IsCloseField="false"
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
+      <DCField
+        DCFieldName="&quot;BankAccountNumber&quot;"
+        FieldName="&quot;BankAccountId&quot;"
+        IsKey="false"
+        IsManualMapping="false"
+        IsMulti="false"
+        FieldsDataType="&quot;Text&quot;"
+        IsNullable="false"
+        IsSpecialField="false"
+        IsCustomType="false"
+        IsAttribute="false"
+        IgnoreCustomTypeCheck="false"
+        IsCloseField="false"
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
+    </DataContract>
+  </DataContracts>
   <AdditionalTextCodes />
   <AdditionalFeatures />
 </entity>
