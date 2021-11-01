@@ -211,7 +211,9 @@ namespace Amital.QuoteOPM.BL.EntityDataMappings
 	         DescriptionRightToLeft, 
 	         AutomaticLastUpdateDate, 
 	         IsMultiCurrency, 
-	         SpecialServiceId,
+	         SpecialServiceId, 
+	         FromAddressId, 
+	         ToAddressId,
 	      }
 
 
@@ -497,7 +499,9 @@ namespace Amital.QuoteOPM.BL.EntityDataMappings
 	         IsRefreshQuoteFollowUps, 
 	         ConvertTransportMode, 
 	         SpecialServiceId, 
-	         SpecialServiceName,
+	         SpecialServiceName, 
+	         FromAddressId, 
+	         ToAddressId,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -1424,6 +1428,16 @@ namespace Amital.QuoteOPM.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SpecialServiceId))
             {
 				entityPOCO.SpecialServiceId = entityPM.SpecialServiceId;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FromAddressId))
+            {
+				entityPOCO.FromAddressId = entityPM.FromAddressId;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ToAddressId))
+            {
+				entityPOCO.ToAddressId = entityPM.ToAddressId;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -2357,6 +2371,16 @@ namespace Amital.QuoteOPM.BL.EntityDataMappings
 					entityPM.SpecialServiceId = entityPOCO.SpecialServiceId;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.FromAddressId))
+            {
+					entityPM.FromAddressId = entityPOCO.FromAddressId;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ToAddressId))
+            {
+					entityPM.ToAddressId = entityPOCO.ToAddressId;
+            }
+
 		}
 
 		public void PMToOldPM(QuoteOPPM entityPM, QuoteOPPM oldEntityPM)
@@ -3283,6 +3307,16 @@ namespace Amital.QuoteOPM.BL.EntityDataMappings
                 oldEntityPM.SpecialServiceId = entityPM.SpecialServiceId;
             }
 			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FromAddressId))
+            {
+                oldEntityPM.FromAddressId = entityPM.FromAddressId;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ToAddressId))
+            {
+                oldEntityPM.ToAddressId = entityPM.ToAddressId;
+            }
+			
 		}
 
 	    public void EncodeBase64NVARCHARFields(QuoteOPPM entityPM)
@@ -3431,6 +3465,14 @@ namespace Amital.QuoteOPM.BL.EntityDataMappings
             if (!String.IsNullOrWhiteSpace(entityPM.Field20)) //T4 find type == nText 
             {
                 entityPM.Field20 = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.Field20));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.FromAddressId)) //T4 find type == nText 
+            {
+                entityPM.FromAddressId = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.FromAddressId));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.ToAddressId)) //T4 find type == nText 
+            {
+                entityPM.ToAddressId = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.ToAddressId));
             }
             entityPM.EncodeBase64NVARCHARFieldsBy=null;
 		}

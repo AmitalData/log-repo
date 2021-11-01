@@ -552,6 +552,10 @@ namespace Amital.QuoteOPM.Data.EntityPOCOs
 	    public bool IsMultiCurrency { get; set; }
         [Column("SpecialServiceId")]
 	    public string SpecialServiceId { get; set; }
+        [Column("FromAddressId")]
+	    public string FromAddressId { get; set; }
+        [Column("ToAddressId")]
+	    public string ToAddressId { get; set; }
     }
 }
 	 

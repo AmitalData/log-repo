@@ -1654,6 +1654,16 @@ export class QuoteOPPM {
             this.quoteProperties = newValue;
         }
     }
+    private fromAddressId: string;
+    public get FromAddressId() { return this.fromAddressId; }
+    public set FromAddressId(newValue: string) { if (this.fromAddressId != newValue) { this.fromAddressId = newValue; this.MarkAsDirty("FromAddressId"); } }
+       
+	 
+    private toAddressId: string;
+    public get ToAddressId() { return this.toAddressId; }
+    public set ToAddressId(newValue: string) { if (this.toAddressId != newValue) { this.toAddressId = newValue; this.MarkAsDirty("ToAddressId"); } }
+       
+	 
 
     public OldEntityPM: QuoteOPPM;
 		
@@ -1682,4 +1692,4 @@ export class QuoteOPPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}
