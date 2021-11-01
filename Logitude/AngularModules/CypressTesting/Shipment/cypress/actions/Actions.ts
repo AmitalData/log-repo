@@ -284,7 +284,32 @@ export function DeleteOrderPackage() {
     cy.Click(BaseSelectors.DeleteButton + BaseSelectors.FirstElement, null)
     cy.Click(BaseSelectors.RedButton + BaseSelectors.LastElement, null)
 }
+
+export function AssertOrdersTabWorkSpaceFieldsDisable() {
+    BaseAssertion.AssertElementDisabled(ShipmentSelectors.OrdersAddPackage, BaseSelectors.BeDisabled)
+    AssertOrdersTabDetailsDim()
+    AssertOrdersTabBookingConfirmationDim()
+}
+
+function AssertOrdersTabDetailsDim() {
+    BaseAssertion.AssertElementDisabled(ShipmentSelectors.ShipmentBookingNumberOfPackages, BaseSelectors.BeDisabled)
+    BaseAssertion.AssertElementDisabled(ShipmentSelectors.ShipmentOrderGrossWeight, BaseSelectors.BeDisabled)
+    BaseAssertion.AssertElementDisabled(ShipmentSelectors.ShipmentBookingVolume, BaseSelectors.BeDisabled)
+    BaseAssertion.AssertElementDisabled(ShipmentSelectors.ShipmentOrderChargeableWeight, BaseSelectors.BeDisabled)
+    BaseAssertion.AssertElementDisabled(ShipmentSelectors.ShipmentOrderIsDangerouseGoods, BaseSelectors.BeDisabled)
+}
+
+function AssertOrdersTabBookingConfirmationDim() {
+    BaseAssertion.AssertElementDisabled(ShipmentSelectors.ShipmentMainCarriageCarrierId, BaseSelectors.BeDisabled)
+    BaseAssertion.AssertElementDisabled(ShipmentSelectors.ShipmentFlightNumber, BaseSelectors.BeDisabled)
+    BaseAssertion.AssertElementDisabled(ShipmentSelectors.ShipmentBookingConfirmationNumber, BaseSelectors.BeDisabled)
+    BaseAssertion.AssertElementDisabled(ShipmentSelectors.ShipmentBookingConfirmedBy, BaseSelectors.BeDisabled)
+    BaseAssertion.AssertElementDisabled(ShipmentSelectors.MainCarriageCutOffDate, BaseSelectors.BeDisabled)
+    BaseAssertion.AssertElementDisabled(ShipmentSelectors.MainCarriageCutOffTime, BaseSelectors.BeDisabled)
+    BaseAssertion.AssertElementDisabled(ShipmentSelectors.ShipmentINTTRAContractNumber, BaseSelectors.BeDisabled)
+}
 //#endregion
+
 //#region Partner Tab
 export function FillPartnersTab(direction: string, transportMode: string, partnersDetails: PartnersDetails) {
     cy.Click(ShipmentSelectors.PartnersTab, null)
@@ -332,7 +357,32 @@ function DeletePartner(selector) {
     cy.Click("#Delete-" + selector, null)
     cy.Click(BaseSelectors.RedButton, null)
 }
+
+export function AssertCannotAddEditPartners() {
+    BaseAssertion.AssertElementHaveClass(ShipmentSelectors.PartnerToggle, BaseSelectors.ToggleButtonDisabledClass)
+    AssertPartnerShipperFieledsDisable()
+}
+
+function AssertPartnerShipperFieledsDisable() {
+    cy.Click(ShipmentSelectors.PartnerEditShipper, null)
+    BaseAssertion.AssertElementDisabled(ShipmentSelectors.ShipmentShipper, BaseSelectors.BeDisabled)
+    BaseAssertion.AssertElementDisabled(ShipmentSelectors.ShipmentShipperAddressId, BaseSelectors.BeDisabled)
+    BaseAssertion.AssertElementDisabled(ShipmentSelectors.ShipmentShipperContactId, BaseSelectors.BeDisabled)
+}
+
+export function AssertAddEditPartners() {
+    BaseAssertion.AssertElementHaveClass(ShipmentSelectors.PartnerToggle, BaseSelectors.ToggleButtonClassName)
+    AssertPartnerShipperFieledsEnable()
+}
+
+function AssertPartnerShipperFieledsEnable() {
+    cy.Click(ShipmentSelectors.PartnerEditShipper, null)
+    BaseAssertion.AssertElementDisabled(ShipmentSelectors.ShipmentShipper, BaseSelectors.NotBeDisabled)
+    BaseAssertion.AssertElementDisabled(ShipmentSelectors.ShipmentShipperAddressId, BaseSelectors.NotBeDisabled)
+    BaseAssertion.AssertElementDisabled(ShipmentSelectors.ShipmentShipperContactId, BaseSelectors.NotBeDisabled)
+}
 //#endregion
+
 //#region Package Tab
 export function FillPackageTab(transportMode: string, packagesDetails: PackagesDetails[], shipmentType?: string) {
     cy.Click(ShipmentSelectors.PackagesTab_Number + BaseSelectors.LastElement, null)
@@ -385,6 +435,13 @@ export function AddInsidePackage(packagesDetails: PackagesDetails[]) {
         cy.get(ShipmentSelectors.InsidePackageDescription).type(packagesDetails[i].Description.toString());
     }
     cy.Click("#OKInsidePackage", null)
+}
+
+export function AssertPackagesTabWorkSpaceFieldsDisable() {
+    BaseAssertion.AssertElementDisabled(ShipmentSelectors.AddPackage, BaseSelectors.BeDisabled)
+    BaseAssertion.AssertElementDisabled(ShipmentSelectors.DeletePackages, BaseSelectors.BeDisabled)
+    BaseAssertion.AssertElementDisabled(ShipmentSelectors.PackageGrossWeight, BaseSelectors.BeDisabled)
+    BaseAssertion.AssertElementDisabled(ShipmentSelectors.PackageChargeableWeight, BaseSelectors.BeDisabled)
 }
 //#endregion
 
@@ -454,7 +511,7 @@ export function NavigateMainCarriageLegForConnectedHouse() {
     cy.get(ShipmentSelectors.EditRoutingMainCarriage).click({ force: true })
 }
 
-export function AssertMainCarriageLegFieldsDisableForConnectedHouse() {
+export function AssertMainCarriageLegFieldsDisable() {
     AssertMainCarriagePortsFieldsDisable()
     AssertMainCarriageDatesFieldsDisable()
     cy.get(ShipmentSelectors.HouseMainCarriageCancelButton).click({ force: true })
@@ -650,7 +707,21 @@ export function ValidateStoragePricing(AmountList: WarehouseStorage[], expectedW
     BaseAssertion.AssertElementContain(BaseSelectors.LogitudeScrollViewer, ShipmentSelectors.ContainsWeight + expectedWeight)
 }
 
+export function AssertRoutingTabWorkSpaceButtonsDisable() {
+    BaseAssertion.AssertElementHaveClass(ShipmentSelectors.RoutingToggle, BaseSelectors.ToggleButtonDisabledClass)
+    BaseAssertion.AssertElementDisabled(ShipmentSelectors.AddPickUp, BaseSelectors.BeDisabled)
+    BaseAssertion.AssertElementDisabled(ShipmentSelectors.AddDelivery, BaseSelectors.BeDisabled)
+    BaseAssertion.AssertElementDisabled(ShipmentSelectors.AddWarehouseLegPickups, BaseSelectors.BeDisabled)
+}
+
+export function AssertRoutingTabWorkSpaceButtonsEnable() {
+    BaseAssertion.AssertElementHaveClass(ShipmentSelectors.RoutingToggle, BaseSelectors.ToggleButtonClassName)
+    BaseAssertion.AssertElementDisabled(ShipmentSelectors.AddPickUp, BaseSelectors.NotBeDisabled)
+    BaseAssertion.AssertElementDisabled(ShipmentSelectors.AddDelivery, BaseSelectors.NotBeDisabled)
+    BaseAssertion.AssertElementDisabled(ShipmentSelectors.AddWarehouseLegPickups, BaseSelectors.NotBeDisabled)
+}
 //#endregion
+
 //#region Payables Tab
 export function FillPayablesTab(payableDetails: PayableDetails) {
     cy.Click(ShipmentSelectors.PayablesTab, null)
