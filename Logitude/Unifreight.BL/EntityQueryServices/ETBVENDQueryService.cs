@@ -147,5 +147,4 @@ namespace Unifreight.BL.EntityQueryServices
         }
     }
 }
-}
 
