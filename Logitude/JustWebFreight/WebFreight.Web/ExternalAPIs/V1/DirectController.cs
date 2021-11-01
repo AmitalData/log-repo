@@ -432,7 +432,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                             this.ValidateOnCarriageDates(directPM);
                             this.ValidatePreCarriageDates(directPM);
                             this.UpdatePartners(MyContext, directPM);
-
+                            ComputeHelper.ComputeTotals(directPM);
                             ShipmentService service = new ShipmentService(MyContext, directPM, SecurityUtility.GetAuthenticatedUser());
                             service.Update(true);
                         }
@@ -994,7 +994,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
             {
                 this.ValidateInsidePackage(item, entityPM);
             }
-
+            item.VolumetricWeight = ComputeHelper.ComputeVolumetricWeight(item, entityPM);
             item.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
         }
 
