@@ -44,8 +44,6 @@ namespace Logitude.CustomsMessaging.ResponseServices
             //List<DeclarationCourierStatusPM> listPM = new List<DeclarationCourierStatusPM>();
             var repo = new DeclarationCourierStatusRepository(context);
             List<DeclarationCourierStatus> listPoco = new List<DeclarationCourierStatus>();
-
-            requestParams.FutureSendDateTime = DateTime.Now.AddHours(-2);
             if (customResponse.ServerSplitDeclarationsList != null && customResponse.ServerSplitDeclarationsList.Count > 0)
             {
 

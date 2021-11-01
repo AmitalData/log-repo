@@ -54,7 +54,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 LoggingObjectTableId = objectTableId,
                 LoggingEntityId = customsResponse.CourierMasterId,
                 LoggingEntityReference = customsResponse.master,
-                FutureSendDateTime = DateTime.Now.AddHours(-2),
+
                 LoggingUserId = customsResponse.LoggingUserId,
                 RequestName = $" שידור הגשה בלדר " + customsResponse.master + " "
             };
@@ -116,7 +116,6 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 tenant = tenant,
                 ClientFilterDeclarationsList = DeclarationsList,
                 MyMoreParams = "",
-                
                 ResponseContentHeader = new DefaultResponseContentHeader()
                 {
                     TransmitionDateTime = transmitionDateTime
