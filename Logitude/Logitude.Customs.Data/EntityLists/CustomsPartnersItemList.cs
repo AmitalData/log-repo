@@ -13,6 +13,7 @@ namespace Logitude.Customs.Data.EntityLists
         [DataMember]
         public List<GITITEMCR> GITITEMCRs { get; set; }
 
+        [DataMember]
         public string TariffID;
     }
 }
