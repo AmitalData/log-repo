@@ -23,6 +23,7 @@ import { SendPayReadyLowRequestParams } from '../../../../Customs/DataContract/R
 import { SendALLCorrectRequestParams } from '../../../../Customs/DataContract/RequestParams/SendALLCorrectRequestParams';
 import { CourierWorksheetSharedDataService } from '../../../../Customs/Services/DataChange/CourierWorksheetSharedDataService';
 import { CustomsSettingExtendedListService } from '../../../../Customs/Services/ExtendedLists/CustomsSettingExtendedListService';
+import { InterfaceManagementPMService } from '../../../../Customs/Services/StandardPMs/InterfaceManagementPMService';
 import { CustomsRequestsSheetPM } from '../../../../Customs/EntityPMs/CustomsRequestsSheetPM';
 import { SendUnCorrectDocumentsRequestParams } from '../../../../Customs/DataContract/RequestParams/SendUnCorrectDocumentsRequestParams';
 import { CourierPendingReasonListService } from '../../../../Customs/Services/StandardLists/CourierPendingReasonListService';
@@ -115,6 +116,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
     @Output() CustomBackFromEditevent = new EventEmitter();
 
     public IsDisplayOnly: boolean = false;
+    public IsSendDocumentsFromQueueButton: boolean = false;
     public DisplayOnlyMessage: string = "";
     private currentSession = SessionLocator.SelectedSession;
     private ChangedUnloadPortSite: boolean ;
@@ -141,6 +143,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
         //        });
         //);
         this.GetMamanPUR();
+        this.GetIsSendDocumentsFromQueueButton();
          this.isAllowAccounting = FeatureLocator.HasFeaturePermession("Customs.CourierMaster", "AllowAccounting")
     }
     //PseventRowSelectEventSubscribe: any;
@@ -156,6 +159,9 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
                     this.RefreshButtonClicked();
                 }
             });
+
+        
+        
         this.ChangedUnloadPortSite = false;
         //if (!AppTool.IsNullOrEmpty(this.PendingFilter)) {
         //    setTimeout(() => {
@@ -1877,6 +1883,21 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
                 });
             });
 
+    }
+
+    private GetIsSendDocumentsFromQueueButton() {
+        var myInterfaceManagementPMService = new InterfaceManagementPMService();
+        myInterfaceManagementPMService.get("2715")
+            .subscribe((response: any) => {
+                this.IsSendDocumentsFromQueueButton = false;
+                if (!response.HasError)
+                {
+                    if (response.Result != null && !AppTool.IsNullOrEmpty(response.Result.SendTime))
+                    {
+                       this.IsSendDocumentsFromQueueButton = true;
+                    }
+                }
+            });
     }
     private GetMamanPUR() {//ILMMN;ILOVL
         var myCustomsSettingExtendedListService = new CustomsSettingExtendedListService();
