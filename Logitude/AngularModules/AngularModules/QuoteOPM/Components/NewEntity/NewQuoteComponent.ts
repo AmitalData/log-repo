@@ -85,12 +85,12 @@ export class NewQuoteComponent {
         this.EntityPM.FromAddressCity = (propertyForm.delivery as FormGroup).value.city
         this.EntityPM.FromAddressCountryId = (propertyForm.delivery as FormGroup).value.country?.Id
         this.EntityPM.FromAddressZipCode = (propertyForm.delivery as FormGroup).value.zipCode
-        this.EntityPM.DeliveryAddressId = (propertyForm.delivery as FormGroup).value.address?.Id
+        this.EntityPM.ToAddressId = (propertyForm.delivery as FormGroup).value.address?.Id
 
         this.EntityPM.ToAddressCity = (propertyForm.pickup as FormGroup).value.city
         this.EntityPM.ToAddressCountryId = (propertyForm.pickup as FormGroup).value.country?.Id
         this.EntityPM.ToAddressZipCode = (propertyForm.pickup as FormGroup).value.zipCode
-        this.EntityPM.PickUpAddressId= (propertyForm.pickup as FormGroup).value.address?.Id
+        this.EntityPM.FromAddressId= (propertyForm.pickup as FormGroup).value.address?.Id
 
         this.EntityPM.ToPortId = propertyForm.toPort.value?.Code
         this.EntityPM.FromPortId = propertyForm.fromPort.value?.Code
