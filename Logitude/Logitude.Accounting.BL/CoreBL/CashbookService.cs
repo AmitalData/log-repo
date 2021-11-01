@@ -33,6 +33,8 @@ namespace Logitude.Accounting.BL.CoreBL
 {
     public class CashbookService
     {
+        List<string> allowedStatuses = new List<string>() { ARPaymentChequeStatusValues.InCashbook, ARPaymentChequeStatusValues.ReturnedFromBank };
+
         public string RecalculateCashbookTotals(int tenant)
         {
             int updatedCount = 0;
@@ -47,9 +49,10 @@ namespace Logitude.Accounting.BL.CoreBL
             {
                 foreach (CashBookPM cashbook in cashbooksList)
                 {
+                    
                     List<CashBookLinePM> cashbookLines = cashbook.CashBookLines;
-                    List<CashBookLinePM> filteredCashbookLines = cashbookLines.Where(d => d.ARPChequeStatusCode != "5").ToList(); //5- Returned to Customer
-                    filteredCashbookLines = filteredCashbookLines.Where(d => d.IsDeposited == false).ToList(); //5- Returned to Customer
+                    List<CashBookLinePM> filteredCashbookLines = cashbookLines.Where(d => allowedStatuses.Contains(d.ARPChequeStatusCode)).ToList();
+                    filteredCashbookLines = filteredCashbookLines.Where(d => d.IsDeposited == false).ToList(); 
                     decimal total = 0;
                     total = filteredCashbookLines.Sum(d => d.ForeignAmount);
 
