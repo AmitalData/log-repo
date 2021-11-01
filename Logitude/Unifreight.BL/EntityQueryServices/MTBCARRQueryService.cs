@@ -11,11 +11,16 @@ using Unifreight.Data.AmitalModel.Repsitories;
 using Unifreight.BL.EntityDataMappings;
 using Unifreight.BL.EntityPMs.UGenerated;
 using Unifreight.Data.AmitalModel.EntityPOCOs;
+using static Unifreight.BL.BL.QuoteOpCarriers;
+using Simplog.Server.Infrastructure.DataContracts;
+using Simplog.Server.Infrastructure.Helpers;
 
 namespace Unifreight.BL.EntityQueryServices
 {
     public class MTBCARRQueryService : EntityQueryService<MTBCARR, MTBCARRKeys, MTBCARRPM, object, MTBCARRKeys>
     {
+        private AmitalContext MainContext;
+
         public MTBCARRQueryService(AmitalContext context)
         {
             MainContext = context;
@@ -32,6 +37,76 @@ namespace Unifreight.BL.EntityQueryServices
         protected override Simplog.Server.Infrastructure.EntityKeyFields GetKeys(MTBCARR entityPOCO)
         {
             return new MTBCARRKeys() { AIRLINEID = entityPOCO.AIRLINEID };
+        }
+        public List<Carriers> GetList(QueryOperations queryOperations)
+        {
+            GenericFilter filter = new GenericFilter();
+            GenericSort sortClass = new GenericSort();
+            var MTBCARRquery = (from a in MainContext.MTBCARRs
+                                   select a);
+            var cols = new Dictionary<string, string>()
+            {
+                { "Name", "NAMEENG" },
+                { "AIRLINE_ID", "AIRLINEID" },
+                { "Prefix", "" },
+            };
+
+
+            foreach (var item in queryOperations.QueryFilterItems)
+            {
+                switch (item.FieldName)
+                {
+                    case "Name":
+                        MTBCARRquery = MTBCARRquery.Where(o => o.NAMEENG.Contains(item.FieldValue.ToString()));
+                        break;
+                    case "AIRLINE_ID":
+                        MTBCARRquery = MTBCARRquery.Where(o => o.AIRLINEID.Contains(item.FieldValue.ToString()));
+                        break;
+                }
+            }
+
+            if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
+            {
+                switch (queryOperations.SortByColumnName)
+                {
+                    case "Name":
+                        if (cols.ContainsKey(queryOperations.SortByColumnName) && queryOperations.SortDirectin.ToLower() == "ascending")
+                        {
+                            MTBCARRquery = MTBCARRquery.OrderBy(o => o.NAMEENG);
+                        }
+                        else
+                        {
+                            MTBCARRquery = MTBCARRquery.OrderByDescending(o => o.NAMEENG);
+                        }
+                        break;
+                    case "AIRLINE_ID":
+                        if (cols.ContainsKey(queryOperations.SortByColumnName) && queryOperations.SortDirectin.ToLower() == "ascending")
+                        {
+                            MTBCARRquery = MTBCARRquery.OrderBy(o => o.AIRLINEID);
+                        }
+                        else
+                        {
+                            MTBCARRquery = MTBCARRquery.OrderByDescending(o => o.AIRLINEID);
+                        }
+                        break;
+                }
+
+            }
+            else
+            {
+                MTBCARRquery = MTBCARRquery.OrderBy(o => o.NAMEENG);
+            }
+            var res = MTBCARRquery.Select(o => new Carriers
+            {
+                Name = o.NAMEENG,
+                AIRLINE_ID = o.AIRLINEID,
+                Prefix = "",
+            });
+            res = res.Skip(queryOperations.PageIndex * queryOperations.PageSize);
+            res = res.Take(queryOperations.PageSize);
+
+            List<Carriers> carrier = res.ToList();
+            return carrier;
         }
     }
 }

@@ -14,6 +14,7 @@ using Unifreight.Data.AmitalModel.EntityPOCOs;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
 using System.Reflection;
+using static Unifreight.BL.BL.QuoteOpCarriers;
 
 namespace Unifreight.BL.EntityQueryServices
 {
@@ -39,22 +40,35 @@ namespace Unifreight.BL.EntityQueryServices
         {
             return new ETBAIRLINEKeys() { AIRLINEID = entityPOCO.AIRLINEID };
         }
-        public List<ETBAIRLINE> GetList(QueryOperations queryOperations)
+        public List<Carriers> GetList(QueryOperations queryOperations)
         {
             GenericFilter filter = new GenericFilter();
             GenericSort sortClass = new GenericSort();
             var ETBAIRLINEquery = (from a in MainContext.ETBAIRLINEs
                                    select a);
-            foreach (var item in queryOperations.QueryFilterItems)
-            {
-                ETBAIRLINEquery = ETBAIRLINEquery.Where(o => o.SEARCHENG.Contains(item.FieldValue.ToString()));
-            }
             var cols = new Dictionary<string, string>()
             {
                 { "Name", "NAMEENG" },
                 { "AIRLINE_ID", "AIRLINEID" },
                 { "Prefix", "AIRLINENUM" },
             };
+
+
+            foreach (var item in queryOperations.QueryFilterItems)
+            {
+                switch (item.FieldName)
+                {
+                    case "Name":
+                        ETBAIRLINEquery = ETBAIRLINEquery.Where(o => o.NAMEENG.Contains(item.FieldValue.ToString()));
+                        break;
+                    case "AIRLINE_ID":
+                        ETBAIRLINEquery = ETBAIRLINEquery.Where(o => o.AIRLINEID.Contains(item.FieldValue.ToString()));
+                        break;
+                    case "Prefix":
+                        ETBAIRLINEquery = ETBAIRLINEquery.Where(o => o.AIRLINENUM.Contains(item.FieldValue.ToString()));
+                        break;
+                }
+            }
 
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
@@ -97,16 +111,17 @@ namespace Unifreight.BL.EntityQueryServices
             {
                 ETBAIRLINEquery = ETBAIRLINEquery.OrderBy(o=>o.NAMEENG);
             }
-            ETBAIRLINEquery.Select(o => new
-             {
+            var res=ETBAIRLINEquery.Select(o => new Carriers
+            {
                  Name = o.NAMEENG,
                  AIRLINE_ID = o.AIRLINEID,
                  Prefix = o.AIRLINENUM,
              });
-            ETBAIRLINEquery = ETBAIRLINEquery.Skip(queryOperations.PageIndex * queryOperations.PageSize);
-            ETBAIRLINEquery = ETBAIRLINEquery.Take(queryOperations.PageSize);
-            return ETBAIRLINEquery.ToList();
-
+            res = res.Skip(queryOperations.PageIndex * queryOperations.PageSize);
+            res = res.Take(queryOperations.PageSize);
+            
+            List<Carriers> carrier = res.ToList();
+            return carrier;
         }
        
 

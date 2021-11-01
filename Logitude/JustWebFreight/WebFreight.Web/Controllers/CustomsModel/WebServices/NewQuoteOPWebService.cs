@@ -20,6 +20,7 @@ using Unifreight.Data.AmitalModel;
 using Unifreight.Data.AmitalModel.Repsitories;
 using WebFreight.Web.CustomWebServices;
 using WebFreight.Web.Helpers;
+using Unifreight.BL.BL;
 
 namespace WebFreight.Web.Controllers.CustomsModel.WebServices
 {
@@ -114,6 +115,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                 {
                     new ObjectField() { FieldName = "Name",DataTypeCode="Text" },
                     new ObjectField() { FieldName = "AIRLINE_ID",DataTypeCode="Text" },
+                    new ObjectField() { FieldName = "VENDOR_ID",DataTypeCode="Text" },
                     new ObjectField() { FieldName = "Prefix",DataTypeCode="Text" }
                 };
                 if (!string.IsNullOrEmpty(filters.AdditionalFilters))
@@ -142,81 +144,11 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                         }
                     }
                 }
-                CustomsSettingQueryService settingService = new CustomsSettingQueryService(tenant);
-                CustomsSettingPM setting = settingService.GetSettingByTenantN(tenant);
+                var quoteOpCarriers = new QuoteOpCarriers(tenant);
+                var carriersList=quoteOpCarriers.GetCarriersItemsList(DIRECTIONID,TRANSPORTMODEID,queryOperations);
+                return Request.CreateResponse(HttpStatusCode.OK, carriersList);
 
-                if (setting.IsConnectedToUniFreight)
-                {
-
-                    if (DIRECTIONID == "E" && TRANSPORTMODEID == "A")
-                    {
-                        var queryservice = new ETBAIRLINEQueryService(GetAmitalContext(tenant));
-                        var ETBAIRLINEList = queryservice.GetList(queryOperations);
-
-                        return Request.CreateResponse(HttpStatusCode.OK, ETBAIRLINEList);
-                    }
-                    if (DIRECTIONID == "E" && TRANSPORTMODEID == "O")
-                    {
-
-
-                        var MTBCARRRepo = new MTBCARRRepository(GetAmitalContext(tenant));
-                        var MTBCARRquery =
-                         MTBCARRRepo
-                            .GetAll().Select(o => new
-                            {
-                                Name = o.NAMEENG,
-                                AIRLINE_ID = o.AIRLINEID,
-                                Prefix = "",
-                            })
-                        ;
-                        MTBCARRquery = MTBCARRquery.Distinct();
-                    //    MTBCARRquery = MTBCARRquery.Take(top);
-
-                        var MTBCARRList = MTBCARRquery.ToList();
-                        return Request.CreateResponse(HttpStatusCode.OK, MTBCARRList);
-                    }
-                    if (DIRECTIONID == "I" && TRANSPORTMODEID == "A")
-                    {
-
-                        var ETBVENDRepo = new ETBVENDRepository(GetAmitalContext(tenant));
-                        var ETBVENDquery =
-                         ETBVENDRepo
-                            .GetAll().Where(a => a.ISHANDAGNT == "A").Select(o => new
-                            {
-                                Name = o.NAMEENG,
-                                VENDOR_ID = o.VENDORID,
-                                Prefix = o.VENDORPREFIX,
-                            })
-                        ;
-                        ETBVENDquery = ETBVENDquery.Distinct();
-                    //    ETBVENDquery = ETBVENDquery.Take(top);
-
-                        var ETBVENDList = ETBVENDquery.ToList();
-                        return Request.CreateResponse(HttpStatusCode.OK, ETBVENDList);
-                    }
-                    if (DIRECTIONID == "I" && TRANSPORTMODEID == "O")
-                    {
-
-                        var ETBVENDRepo2 = new ETBVENDRepository(GetAmitalContext(tenant));
-                        var ETBVENDquery2 =
-                         ETBVENDRepo2
-                            .GetAll().Where(a => a.ISHANDAGNT == "S").Select(o => new
-                            {
-                                Name = o.NAMEENG,
-                                VENDOR_ID = o.VENDORID,
-                                Prefix = "",
-                            })
-                        ;
-                        ETBVENDquery2 = ETBVENDquery2.Distinct();
-                   //     ETBVENDquery2 = ETBVENDquery2.Take(top);
-
-                        var ETBVENDList2 = ETBVENDquery2.ToList();
-                        return Request.CreateResponse(HttpStatusCode.OK, ETBVENDList2);
-                    }
-
-
-                }
-                return Request.CreateResponse(HttpStatusCode.OK);
+               
             }
             catch (Exception ex)
             {
