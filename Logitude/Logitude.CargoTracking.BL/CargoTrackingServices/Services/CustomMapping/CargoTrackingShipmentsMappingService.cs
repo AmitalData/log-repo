@@ -200,6 +200,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CustomMapping
             item.DeliveredEstimationDate = row.ForwardingDeliveredEstimationDate;
             item.FirstPickupETD = row.ForwardingFirstPickupETD;
             item.WarehouseLegActualEntryDate = row.ForwardingWarehouseLegActualEntryDate;
+            item.FromWarehouseEstimationDate = row.ForwardingFromWarehouseEstimationDate;
             item.WarehouseLegExpectedEntryDate = row.ForwardingWarehouseLegExpectedEntryDate;
             item.WarehouseLegRemarks = row.ForwardingWarehouseLegRemarks;
             item.DeclarationDate = row.ForwardingDeclarationDate;
@@ -216,9 +217,9 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CustomMapping
             item.DeliveryNotes = string.IsNullOrEmpty(row.ForwardingCarrierLocalName) ? row.ForwardingCarrierEnglishName : row.ForwardingCarrierLocalName;
             item.DeliveryExceptionReason = row.ForwardingDeliveryExceptionReason;
             item.GrossWeightUnitCode = row.ForwardingGrossWeightUnitCode;
-            item.ForwardingHouse = row.ForwardingHouse;
-            item.ForwardingMaster = row.ForwardingMaster;
-            item.ForwardingShipmentLevelCode = row.ForwardingShipmentLevelCode;
+            //item.ForwardingHouse = row.ForwardingHouse;
+            //item.ForwardingMaster = row.ForwardingMaster;
+            //item.ForwardingShipmentLevelCode = row.ForwardingShipmentLevelCode;
             item.GoodsClassificationDate = row.ForwardingGoodsClassificationDate;
             //item.GoodsClassificationEstDate    = row.ForwardingGoodsClassificationEstDate    ;
             item.GoodsClassificationNotes = row.ForwardingGoodsClassificationNotes;
@@ -283,6 +284,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CustomMapping
             item.DeliveredEstimationDate = row.CustomDeliveredEstimationDate;
             item.FirstPickupETD = row.CustomFirstPickupETD;
             item.WarehouseLegActualEntryDate = row.CustomWarehouseLegActualEntryDate;
+            item.FromWarehouseEstimationDate = row.CustomFromWarehouseEstimationDate;
             item.WarehouseLegExpectedEntryDate = row.CustomWarehouseLegExpectedEntryDate;
             item.WarehouseLegRemarks = row.CustomWarehouseLegRemarks;
             item.DeclarationDate = row.CustomDeclarationDate;
@@ -327,12 +329,12 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CustomMapping
         private void SetForwardingWarehouseFeilds(CargoTrackingShipment item, CargoTrackingShipmentQueryResult row)
         {
             item.FromWarehouseDate = row.ForwardingDirectionId == Codes.ExportDirection ? row.ForwardingWarehouseLegActualEntryDate : null;
-            item.FromWarehouseEstimationDate = row.ForwardingDirectionId == Codes.ExportDirection ? row.ForwardingWarehouseLegExpectedEntryDate : null;
-            item.FromWarehouseNotes = row.ForwardingDirectionId == Codes.ExportDirection ? row.ForwardingWarehouseLegRemarks : null;
+            item.FromWarehouseEstimationDate = row.ForwardingDirectionId == Codes.ExportDirection ? row.ForwardingFromWarehouseEstimationDate : null;
+            item.FromWarehouseNotes = row.ForwardingDirectionId == Codes.ExportDirection ? row.ForwardingFromWarehouseNotes : null;
 
             item.ToWarehouseDate = row.ForwardingDirectionId == Codes.ImportDirection ? row.ForwardingWarehouseLegActualEntryDate : null;
-            item.ToWarehouseEstimationDate = row.ForwardingDirectionId == Codes.ImportDirection ? row.ForwardingWarehouseLegExpectedEntryDate : null;
-            item.ToWarehouseNotes = row.ForwardingDirectionId == Codes.ImportDirection ? row.ForwardingWarehouseLegRemarks : null;
+            item.ToWarehouseEstimationDate = row.ForwardingDirectionId == Codes.ImportDirection ? row.ForwardingToWarehouseEstimationDate : null;
+            item.ToWarehouseNotes = row.ForwardingDirectionId == Codes.ImportDirection ? row.ForwardingToWarehouseNotes : null;
 
         }
         private void SetCustomWarehouseFeilds(CargoTrackingShipment item, CargoTrackingShipmentQueryResult row)
