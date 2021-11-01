@@ -16,7 +16,6 @@
         </td>
         <!-- <td colspan="2">
             <SearchTextBox [ObjectTableName]="ObjectTableName"  [PlaceHolder]="'ARPayment.M.SearchByTransferReference'  | TextCodeTranslationPipe" (SearchTextChangeEvent)="onSearchTextChangeEvent($event)"></SearchTextBox>
-
         </td> -->
 
         <td style="width: 25px;height: 20px;padding: 5px;padding-bottom: 0px;">
@@ -117,16 +116,6 @@
                                                 <span>{{item.BankAccount?.LocalName}}</span>
                                             </div>
                                             <div *ngIf="logcelltemplate.IsEditMode">
-                                                <!-- <LogLov 
-                                                    [ObjectFieldName]="'BankAccountId'"
-                                                    [SelectedValue]="BankAccountId"
-                                                    (SelectedItemChanged)="console.log($event)"
-                                                    [ObjectTableName]="ObjectTableName" 
-                                                    [DataContext]="DataContext"
-                                                    [DisplayMemberPath]="'LocalName'"
-                                                    [LookUpTableName]="'BankAccount'">
-                                                    </LogLov> -->
-
                                                     <LogLov [ObjectFieldName]="'BankAccountId'"
                                                         [ObjectTableName]="ObjectTableName"
                                                         [DataContext]="DataContext"
@@ -138,18 +127,6 @@
                                         </log-cell-template>
                                     </ng-template>
                                 </log-column>
-
-                                <!-- <LogLov [ObjectFieldName]="'StandardInterestRateBaseId'"
-                                [ObjectTableName]="'GLAccountInterestPeriod'"
-                                [DataContext]="item"
-                                (SelectedItemChanged)="item.StandardInterestRateBase = $event"
-                                [LookUpTableName]="'InterestBasesType'"
-                                [DisplayMemberPath]="'LocalName'"
-                                [HideColumns]="true"
-                                [RunToggleMode]="true"
-                                [FocusOnMe]="'true'">
-                        </LogLov> -->
-
                                 
                                 <log-column [width]="'40'" [Editable]="true" [Alignment]="'right'" [visibility]="'collapsed'">
                                     <ng-template let-item>
@@ -164,11 +141,6 @@
                                     </ng-template>
                                 </log-column>
 
-
-
-
-
-
                             </logitude-edit-grid>
                         </div>
                     </td>
@@ -176,9 +148,6 @@
                 </tr>
             </table>
         </td>
-
-
-
     </tr>
 
     <tr style="height: 32px;">
@@ -186,7 +155,7 @@
             <table style="height: 22px;">
                 <tr>
                     <td style="width:85px; padding-right: 15px;" colspan="6">
-                        <div class="footer-title" style="color: #3b95d5;font-size:14px" >  {{'Accounting.General.O.Totals' | TextCodeTranslationPipe}}: {{TotalAmount | NumbersPipe:'N2'}} ({{paymentPM.gLAccountCurrencyCode}})</div>
+                        <div class="footer-title" style="color: #3b95d5;font-size:14px" >  {{'Accounting.General.O.Totals' | TextCodeTranslationPipe}}: {{TotalAmount | NumbersPipe:'N2'}} {{paymentPM.PaymentCurrencySign}}</div>
                     </td>
                     <td>
                         <div></div>
@@ -209,4 +178,3 @@
     </tr>
 
 </table>
-

@@ -11166,6 +11166,12 @@
       LocalDefaultText="&quot;חיפוש ע&quot;י אסמכתא של העברה&quot;"
       TextCodeTypeCode="&quot;M&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ARPayment.M.AddBankTransfersHint&quot;"
+      DefaultText="&quot;You can add multiple Bank Transfers by clicking on the Add Button&quot;"
+      LocalDefaultText="&quot;אתה יכול להוסיף מספר העברות בנקאיות על ידי לחיצה על כפתור הוסף&quot;"
+      TextCodeTypeCode="&quot;M&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature

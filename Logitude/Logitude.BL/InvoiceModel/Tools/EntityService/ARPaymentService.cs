@@ -1034,6 +1034,12 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 var chequesNumbers = String.Join(",", paymentPM.ARPaymentChequeReplicas.Select(x => x.ChequeNumber));
                 MethodHelper.AddToSearchFields(ref mySearchFields, chequesNumbers);
             }
+            if (paymentPM.ARPaymentBankTranfers.Any())
+            {
+                var bankTransfersReferences = String.Join(",", paymentPM.ARPaymentBankTranfers.Select(x => x.PaymentRef));
+                MethodHelper.AddToSearchFields(ref mySearchFields, bankTransfersReferences);
+            }
+            
             MethodHelper.AddToSearchFields(ref mySearchFields, paymentPM.PrintNotes);
 
             #region Card

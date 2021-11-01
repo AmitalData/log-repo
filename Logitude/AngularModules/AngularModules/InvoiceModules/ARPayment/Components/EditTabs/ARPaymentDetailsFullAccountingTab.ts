@@ -2066,7 +2066,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
             if (this.EntityPM.AccountingPaymentMethodCode == "BT") {
                 this.UpdateBankTransferAmountFieldForBankTransferPayment();
             }
-            this.CalculatePaymentTotalAmount();
+            this.CalculatePaymentTotalAmountForBankTransfers();
         }
     }
 
@@ -2343,13 +2343,27 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
         if (this.EntityPM.ARPaymentBankTranfers.length > 0) {
             var firstBankTransfer: ARPaymentBankTranferPM = this.EntityPM.ARPaymentBankTranfers.filter(d => d.LineNumber == 1)[0];
             this.MapBankTransferFields(firstBankTransfer);
-            this.CalculatePaymentTotalAmount();
+            this.CalculatePaymentTotalAmountForBankTransfers();
 
         }
         else if (this.EntityPM.ARPaymentBankTranfers.length == 0) {
             this.MapBankTransferFields(null);
         }
 
+    }
+
+	CalculatePaymentTotalAmountForBankTransfers() {
+           
+        var total = 0;
+        for (let bankTransfer of this.EntityPM.ARPaymentBankTranfers) {
+            if (!AppTool.IsNullOrEmpty(bankTransfer.ForeignAmount)) {
+                total += bankTransfer.ForeignAmount;
+            }
+        }
+        if (this.EntityPM.ARPaymentBankTranfers.length >0)
+        this.AmountInPaymentCurrency = total;
+        this.ComputeLocalAmount();
+        this.SetPaymentAmount();
     }
 
 	MapBankTransferFields(bankTransfer: ARPaymentBankTranferPM) {

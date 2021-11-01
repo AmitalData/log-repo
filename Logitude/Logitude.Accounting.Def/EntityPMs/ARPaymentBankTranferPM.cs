@@ -9,8 +9,13 @@ namespace Logitude.Accounting.Def.EntityPMs
    public partial class ARPaymentBankTranferPM : EntityPM
    {
         [DataMember]
-        public BankAccountPM BankAccount { get; set; }
+        public BankAccountLightPM BankAccount { get; set; }
    }
-   
+
+    public class BankAccountLightPM { 
+        public string Id { get; set; }
+        public string LocalName { get; set; }
+        public string EnglishName { get; set; }
+    }
 }
 	 
