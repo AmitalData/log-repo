@@ -185,6 +185,13 @@ export class ARPaymentMultiBankTransfersComponent extends BaseComponent {
             return true;
         }
     }
+
+    onSearchTextChangeEvent($event) {
+        if(!AppTool.IsNullOrEmpty($event)){
+            this.ItemsSource.Collection = this.ItemsSource.Collection.filter(x => x.PaymentRef == $event);
+        }
+    }
+
     OkButtonClicked() {
         if (this.CheckRequiredFileds()) {
             this.CurrentSession.CloseCurrentWindowEmit('ok');

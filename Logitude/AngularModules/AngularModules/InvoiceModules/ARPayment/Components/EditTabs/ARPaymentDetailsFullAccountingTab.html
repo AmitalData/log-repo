@@ -474,7 +474,7 @@
                                     <td>
                                         <div style="width:500px;margin:0 400px;">
                                             <div class="DisbleBox">
-                                                More than one Bank Transfer was created for this Payment. Click on the Edit button to view them
+                                                {{'ARPayment.M.MoreThanPaymentBankTransfer' | TextCodeTranslationPipe }}
                                             </div>
                                         </div>
                                     </td>
@@ -720,7 +720,7 @@
                                         <img style="width:21px" src="./Images/Icons/RedX.png" title="{{'ARPayment.O.CantPerformReconciliation' | TextCodeTranslationPipe}}" />
                                     </td>
                                     <td *ngIf="EntityPM.ARPaymentBankTranfers.length > 1 " style="width:20px">
-                                        <img style="width:21px" src="./Images/Icons/RedX.png" title="{{'ARPaymentBankTransfer.O.ReconciliationInMultipleTransfers' | TextCodeTranslationPipe}}" />
+                                        <img style="width:21px" src="./Images/Icons/RedX.png" title="{{'ARPayment.O.ReconciliationInMultipleTransfers' | TextCodeTranslationPipe }}" />
                                     </td>
                                     <td>
                                         <div></div>

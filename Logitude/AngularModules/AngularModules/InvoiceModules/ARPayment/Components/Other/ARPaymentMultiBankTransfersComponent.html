@@ -12,9 +12,12 @@
 
       
         <td style="width:85px; padding-right: 15px;" colspan="6">
-            <div style="color: #3b95d5;font-size:16px">{{'ARPaymentBankTransfer.O.BankTransfers'  | TextCodeTranslationPipe}} ({{BankTransfersCounter}})</div>
+            <div style="color: #3b95d5;font-size:16px">{{'ARPayment.O.BankTransfers'  | TextCodeTranslationPipe}} ({{BankTransfersCounter}})</div>
         </td>
-      
+        <!-- <td colspan="2">
+            <SearchTextBox [ObjectTableName]="ObjectTableName"  [PlaceHolder]="'ARPayment.M.SearchByTransferReference'  | TextCodeTranslationPipe" (SearchTextChangeEvent)="onSearchTextChangeEvent($event)"></SearchTextBox>
+
+        </td> -->
 
         <td style="width: 25px;height: 20px;padding: 5px;padding-bottom: 0px;">
             <div><IconButton [IsEnabled]="!IsDisplayOnly" [IsSmall]="true" [Name]="'Add'" (click)="AddNewBankTransfer()" style="float:left;"></IconButton></div>
@@ -41,7 +44,7 @@
 
 
 
-                                <log-column [header]="'Line No.'" [width]="'70'" [Alignment]="isLTR?'left':'right'"  >
+                                <log-column [header]="'ARPayment.F.LineNumber' | TextCodeTranslationPipe" [width]="'70'" [Alignment]="isLTR?'left':'right'"  >
                                     <ng-template let-item>
                                         <log-cell-template #logcelltemplate [TabIndex]="-1">
                                             <div style="text-align:left" class="TextTrimming" text-start>
@@ -90,7 +93,7 @@
 
 
                                 </log-column>
-                                <log-column [header]="'Payment Reference'" [binding]="'PaymentRef'" [width]="'100'" [Editable]="true" [Alignment]="isLTR?'left':'right'"  >
+                                <log-column [header]="'ARPayment.F.PaymentRef' | TextCodeTranslationPipe" [binding]="'PaymentRef'" [width]="'100'" [Editable]="true" [Alignment]="isLTR?'left':'right'"  >
                                     <ng-template let-item>
                                         <log-cell-template #logcelltemplate>
                                             <div class="TextTrimming" style="text-align:left" *ngIf="logcelltemplate.IsDisplayMode" text-start>
@@ -107,7 +110,7 @@
 
 
                                 </log-column>
-                                <log-column [header]="'Bank Account'" [binding]="'Bank'" [width]="'120'" [Editable]="true"  [Alignment]="isLTR?'left':'right'"   >
+                                <log-column [header]="'ARPayment.F.BankAccountLiteId' | TextCodeTranslationPipe" [binding]="'Bank'" [width]="'120'" [Editable]="true"  [Alignment]="isLTR?'left':'right'"   >
                                     <ng-template let-item>
                                         <log-cell-template #logcelltemplate>
                                             <div class="TextTrimming" style="text-align:left" *ngIf="logcelltemplate.IsDisplayMode" text-start>
