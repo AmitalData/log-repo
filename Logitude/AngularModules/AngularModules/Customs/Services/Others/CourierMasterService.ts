@@ -467,7 +467,31 @@ export class CourierMasterService {
 
         });
     }
+    
+    GetSendDocumentsFromQueue(courierMasterId, MAWB) {
+        var authHeader = new Headers();
+        authHeader.append('Token', SessionInfo.Token);
+        var callTime = new Date();
+        return defer(() => {
+            return this._http.get(this._apiUrl + '/GetSendDocumentsFromQueue?' + 'courierMasterId=' + courierMasterId + '&MAWB=' + MAWB, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var messString = response;
 
+
+
+
+
+                var serviceResponse: ServiceResponse;
+                serviceResponse = new ServiceResponse();
+                serviceResponse.Result = messString;
+
+
+
+                return serviceResponse;
+
+            }), catchError(ServiceHelper.HandleServiceError));
+        });
+
+    }
     GetSendALLCorrectManifest(CourierMasterId, HAWB, CourierDeclarationStatusCode) {
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);

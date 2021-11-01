@@ -2066,6 +2066,20 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
             });
     }
 
+    SendDocumentsFromQueue() {
+
+
+        this._CourierMasterService.GetSendDocumentsFromQueue(this.entityPM.Id, this.entityPM.MAWB)
+            .subscribe((res: any) => {
+                SessionLocator.SelectedSession.StopBusyIndicator();
+                var myMessageWindow = new MessageWindow();
+                myMessageWindow.Show(res.Result);
+                myMessageWindow.WindowClosed.subscribe(s => {
+                    this.RefreshButtonClicked();
+                });
+            });
+    }
+
 
     OpenFlight() {
         var confirmWindow = new ConfirmWindow();

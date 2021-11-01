@@ -2690,7 +2690,23 @@ namespace Logitude.Customs.Def.ClosedTable
                 InterfaceType = "B",
                 //  NeedSignature = false
             });
+            all.Add(new InterfaceManagementDetails()
+            {
+                Code = "UCB2715SendNow",
 
+                ///DCAInUniCourierBatchSend_MsgMessagingService
+                InOut = InOutEnum.I.ToString(),
+                Description = "שידור מסמכים ממתינים בתור ",// "Unifreight Courier *2715* Batch Send",
+                DcaPrefixName = "UnifreightCourier_UCB2715SendNow_Out.",
+                DefaultSendOptionsCode = null,
+                DefaultPriority = 5,
+                AllowRestore = true,
+                Active = true,
+                SendAsDual = false,
+                ResponseInterfaceCode = "",
+                InterfaceType = "B",
+                //  NeedSignature = false
+            });
             all.Add(new InterfaceManagementDetails()
             {
                 //TML ==>https://www.abbreviations.com/abbreviation/terminal
