@@ -44,8 +44,6 @@ namespace Logitude.CustomsMessaging.ResponseServices
             //List<DeclarationCourierStatusPM> listPM = new List<DeclarationCourierStatusPM>();
             var repo = new DeclarationCourierStatusRepository(context);
             List<DeclarationCourierStatus> listPoco = new List<DeclarationCourierStatus>();
-
-            requestParams.FutureSendDateTime = DateTime.Now.AddHours(-2);
             if (customResponse.ServerSplitDeclarationsList != null && customResponse.ServerSplitDeclarationsList.Count > 0)
             {
 
@@ -178,9 +176,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             LoggingUserId = requestParams.LoggingUserId,
                             RequestVIA = SendRequestVIA.WebServiceBatch,
                             UnifreightListOnServerOnly = UnifreightListOnServerOnly_BankeId,
-                          //  TransmitionDateTime = DateTime.Now.AddHours(-2),
-                            FutureSendDateTime = DateTime.Now.AddHours(-2) ,  
-                              
+
                         };
 
                         SBQMessageService.CreateSheetSBQMessage<GenericRequestParams>(requestParams2755, false);
