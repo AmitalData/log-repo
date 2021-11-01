@@ -185,9 +185,6 @@
     <None Include="DBTables\WithholdingTaxDeductionType.dxml" />
     <None Include="EntityFiles\AccountingCompanyType.lxml" />
     <None Include="EntityFiles\AccountingNote.lxml" />
-    <None Include="EntityFiles\ARPaymentBankTranfer.lxml">
-      <SubType>Component</SubType>
-    </None>
     <None Include="EntityFiles\ARPaymentsJournal.lxml" />
     <None Include="EntityFiles\CalculatedChartsOfAccount.lxml" />
     <None Include="EntityFiles\CalculatedChartsOfAccountsLine.lxml" />

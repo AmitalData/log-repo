@@ -847,7 +847,8 @@ export class APInvoicePM {
     private newConcurrencyGUID: string;
     public get NewConcurrencyGUID() { return this.newConcurrencyGUID; }
     public set NewConcurrencyGUID(newValue: string) { if (this.newConcurrencyGUID != newValue) { this.newConcurrencyGUID = newValue; this.MarkAsDirty("NewConcurrencyGUID"); } }
-       
+
+  
 	 
 
     public OldEntityPM: APInvoicePM;
@@ -877,4 +878,4 @@ export class APInvoicePM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

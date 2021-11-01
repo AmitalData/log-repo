@@ -78,8 +78,6 @@ namespace Logitude.Accounting.Data
 	
             modelBuilder.Configurations.Add(new AccountingPeriodMap());
 	
-            modelBuilder.Configurations.Add(new ARPaymentBankTranferMap());
-	
             modelBuilder.Configurations.Add(new ARPaymentChequeMap());
 	
             modelBuilder.Configurations.Add(new ARPaymentChequeStatusMap());
@@ -260,12 +258,6 @@ namespace Logitude.Accounting.Data
 	
             modelBuilder.Configurations.Add(new WithholdingTaxDeductionTypeMap());
 				
-				
-			modelBuilder.Entity<ARPaymentBankTranfer>().Property(x => x.LocalAmount).HasPrecision(16, 2);
-				
-			modelBuilder.Entity<ARPaymentBankTranfer>().Property(x => x.ForeignAmount).HasPrecision(16, 2);
-				
-			modelBuilder.Entity<ARPaymentBankTranfer>().Property(x => x.ExchageRate).HasPrecision(16, 2);
 				
 			modelBuilder.Entity<ARPaymentCheque>().Property(x => x.LocalAmount).HasPrecision(16, 2);
 				
@@ -746,12 +738,6 @@ namespace Logitude.Accounting.Data
 	 }
 	
 	 public IDbSet<AccountingPeriod> AccountingPeriods 
-	 {
-	      get; set;
-	 
-	 }
-	
-	 public IDbSet<ARPaymentBankTranfer> ARPaymentBankTranfers 
 	 {
 	      get; set;
 	 
