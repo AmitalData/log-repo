@@ -516,7 +516,7 @@ namespace WebFreight.Web.WebServices
 
 
                     UpdateDocument(commonContext, document);
-                    MapPODReceivedShipmentField(extDocPM, commonContext);
+                    OpenPODDocumentUploderQueue(extDocPM, commonContext);
                     //else // In Azure
                     //{
                     //string filename = document.Id + "." + document.Extension;
@@ -560,48 +560,18 @@ namespace WebFreight.Web.WebServices
             }
         }
 
-        private void MapPODReceivedShipmentField(DocumentsFilingPM documentsFiling, ICommonDataContext commonContext)
+        private void OpenPODDocumentUploderQueue(DocumentsFilingPM documentsFiling, ICommonDataContext commonContext)
         {
             if (documentsFiling.DocumentTypeCode == "POD")
             {
                 IQueueService queueservice = new DbQueueService();
                 queueservice.InitializeQueue("PODDocumnetUploaderQueue", documentsFiling.Tenant);
                 queueservice.Send(new Dictionary<string, string>() { { "EntityId", documentsFiling.Id }, { "Tenant", documentsFiling.Tenant.ToString() },
-                                                                     { "IsUploaded", false.ToString() }, { "IsDeleted", true.ToString() }, { "PODRecived", documentsFiling.ReceivedDate.ToString() } },
+                                                                     { "IsPODDocumentUploaded", false.ToString() }, { "IsPODDocumentDeleted", true.ToString() }, { "PODRecived", documentsFiling.ReceivedDate.ToString() } },
                                                                       documentsFiling.Tenant, null, null, null, null);
             }
         }
-
-        private List<DocumentsFilingPM> GetShipmentDocsIn(DocumentsFilingPM documentsFiling, ICommonDataContext commonContext)
-        {
-            var tenant = documentsFiling.Tenant;
-            ICommonDataContext commonDataContext = CommonDataContext.GetContext(tenant);
-            DocumentsFilingRepository documentsFilingRepository = new DocumentsFilingRepository(commonDataContext);
-            var documentsFilings = (from a in commonContext.DocumentsFilings.Include("DocumentType")
-                                    where a.Tenant == tenant && a.EntityId == documentsFiling.EntityId
-                                    && a.ObjectTableId == documentsFiling.ObjectTableId
-                                    && a.IsDeleted == false
-                                    && (a.DocumentType != null && a.DocumentType.Code == "POD")
-                                    select new DocumentsFilingPM()
-                                    {
-                                        Id = a.Id,
-                                    }).ToList();
-
-            return documentsFilings;
-        }
-        private void UpdateSHipment(List<DocumentsFilingPM> documentsFilings, DocumentsFilingPM documentsFiling)
-        {
-            var tenant = documentsFiling.Tenant;
-            if (documentsFilings == null || (documentsFilings != null && documentsFilings.Count() == 0))
-            {
-                ShipmentRepository shipmentRepository = new ShipmentRepository(tenant);
-                Shipment shipment = shipmentRepository.GetSingleShipment(documentsFiling.EntityId, tenant);
-                shipment.IsPODReceived = false;
-                shipmentRepository.Update(shipment);
-                shipmentRepository.SubmitChanges();
-            }
-        }
-
+       
         public byte[] GetPageTiffAsB64FromTarByTenantComIdPage(
            string documentId, int tenant, int currPage, out string TiffPageLines,
             out string ErrorMessage

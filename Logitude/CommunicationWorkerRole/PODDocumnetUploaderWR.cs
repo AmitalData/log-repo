@@ -20,9 +20,9 @@ namespace CommunicationWorkerRole
     {
         DbQueueService queueService;
         int tenant;
-        string entityID = "";
-        bool isUploaded = false;
-        bool isDeleted = false;
+        string documentsFilingId = "";
+        bool isPODDocumentUploaded = false;
+        bool isPODDocumentDeleted = false;
         DateTime? podRecivedDate;
         public override bool OnStart()
         {
@@ -62,7 +62,8 @@ namespace CommunicationWorkerRole
                 try
                 {
                     MapQueueResponse(queueResponse);
-                    RunUpdatingPODUploaded();
+                    HandelPODShipmentFields();
+                    queueService.Complete();
                 }
                 catch (Exception ex)
                 {
@@ -75,37 +76,36 @@ namespace CommunicationWorkerRole
             {
                 Thread.Sleep(new TimeSpan(0, 0, 1));
             }
-            queueService.Complete();
         }
 
         private void MapQueueResponse(QueueResponse queueResponse)
         {
             tenant = int.Parse(queueResponse.MessageValues["Tenant"].ToString());
-            entityID = queueResponse.MessageValues["EntityId"].ToString();
-            isUploaded = bool.Parse(queueResponse.MessageValues["IsUploaded"].ToString());
-            isDeleted = bool.Parse(queueResponse.MessageValues["IsDeleted"].ToString());
+            documentsFilingId = queueResponse.MessageValues["EntityId"].ToString();
+            isPODDocumentUploaded = bool.Parse(queueResponse.MessageValues["IsPODDocumentUploaded"].ToString());
+            isPODDocumentDeleted = bool.Parse(queueResponse.MessageValues["IsPODDocumentDeleted"].ToString());
             podRecivedDate = DateTime.Parse(queueResponse.MessageValues["PODRecived"].ToString());
         }
 
-        private void RunUpdatingPODUploaded()
+        private void HandelPODShipmentFields()
         {
-            if (string.IsNullOrEmpty(entityID))
+            if (string.IsNullOrEmpty(documentsFilingId))
             {
                 return;
             }
-            DocumentsFilingPM documentsFilingPM = GetDocumentsFilingPM(entityID, tenant);
+            DocumentsFilingPM documentsFilingPM = GetDocumentsFilingPM(documentsFilingId, tenant);
             if (documentsFilingPM == null)
             {
                 return;
             }
 
-            if (this.isDeleted)
+            if (isPODDocumentDeleted)
             {
-                MapPODDeletedShipmentField(documentsFilingPM);
+                HandelPODShipmentFieldsWhenDeletingPODDocument(documentsFilingPM);
             }
-            else if (isUploaded)
+            else if (isPODDocumentUploaded)
             {
-                MapPODUploadedShipmentField(documentsFilingPM);
+                HandelPODShipmentFieldsWhenUploadingPODDocument(documentsFilingPM);
             }
         }
 
@@ -120,19 +120,19 @@ namespace CommunicationWorkerRole
             return documentsFilingQuery?.GetSinglePM(documentsFilingId, tenant);
         }
 
-        private void MapPODDeletedShipmentField(DocumentsFilingPM documentsFiling)
+        private void HandelPODShipmentFieldsWhenDeletingPODDocument(DocumentsFilingPM documentsFiling)
         {           
             ICommonDataContext commonContext = CommonDataContext.GetContext(tenant);
             ObjectTableRepository ObjectTableRepository = new ObjectTableRepository(tenant); ;
             var shipmentObjectTable = ObjectTableRepository.GetSingleObjectTable(documentsFiling.ObjectTableId, tenant, false);
             if (shipmentObjectTable != null && shipmentObjectTable.Name == "Shipment")
             {
-                var documentsFilings = this.GetShipmentDocsIn(documentsFiling, commonContext);
-                this.UpdatePODDeletedShipmentField(documentsFilings, documentsFiling);
+                var documentsFilings = this.GetShipmentDocumentFilings(documentsFiling, commonContext);
+                this.UpdatePODShipmentWhenDeletingPODDocument(documentsFilings, documentsFiling);
             }
         }
 
-        private List<DocumentsFilingPM> GetShipmentDocsIn(DocumentsFilingPM documentsFiling, ICommonDataContext commonContext)
+        private List<DocumentsFilingPM> GetShipmentDocumentFilings(DocumentsFilingPM documentsFiling, ICommonDataContext commonContext)
         {
             ICommonDataContext commonDataContext = CommonDataContext.GetContext(tenant);
             DocumentsFilingRepository documentsFilingRepository = new DocumentsFilingRepository(commonDataContext);
@@ -150,7 +150,7 @@ namespace CommunicationWorkerRole
             return documentsFilings;
         }
 
-        private void UpdatePODDeletedShipmentField(List<DocumentsFilingPM> documentsFilings, DocumentsFilingPM documentsFiling)
+        private void UpdatePODShipmentWhenDeletingPODDocument(List<DocumentsFilingPM> documentsFilings, DocumentsFilingPM documentsFiling)
         {
             if (documentsFilings == null || (documentsFilings != null && documentsFilings.Count() == 0))
             {
@@ -162,7 +162,7 @@ namespace CommunicationWorkerRole
             }
         }
 
-        private void MapPODUploadedShipmentField(DocumentsFilingPM documentFiling)
+        private void HandelPODShipmentFieldsWhenUploadingPODDocument(DocumentsFilingPM documentFiling)
         {
             ObjectTableRepository ObjectTableRepository = new ObjectTableRepository(tenant);
             var shipmentObjectTable = ObjectTableRepository.GetSingleObjectTable(documentFiling.ObjectTableId, tenant, false);

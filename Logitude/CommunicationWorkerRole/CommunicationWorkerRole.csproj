@@ -389,6 +389,7 @@
     <Compile Include="MultiEntityUpdate\IMultiEntityUpdater.cs" />
     <Compile Include="MultiEntityUpdate\MultiEntityUpdater.cs" />
     <Compile Include="MultiEntityUpdate\ShipmentUpdater.cs" />
+    <Compile Include="PODDocumnetUploaderWR.cs" />
     <Compile Include="PODImageConverterWorkerRole.cs" />
     <Compile Include="MultiEntityUpdateWorkerRole.cs" />
     <Compile Include="Services\MultiEntityUpdateService.cs" />
