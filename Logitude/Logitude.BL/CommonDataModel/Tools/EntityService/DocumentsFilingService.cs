@@ -909,16 +909,21 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         }
 
         private void MapPODReceivedShipmentField(DocumentsFilingPM documentFiling)
-        {
+        {            
             var shipmentObjectTable = ObjectTableRepository.GetSingleObjectTable(documentFiling.ObjectTableId, tenant, false);
-            if (shipmentObjectTable != null && shipmentObjectTable.Name == "Shipment" && documentFiling.DocumentTypeCode == "POD")
+            if (!(shipmentObjectTable != null && shipmentObjectTable.Name == "Shipment" && documentFiling.DocumentTypeCode == "POD"))
             {
-                ShipmentRepository shipmentRepository = new ShipmentRepository(tenant);
-                Shipment shipment = shipmentRepository.GetSingleShipment(documentFiling.EntityId, tenant);
-                shipment.IsPODReceived = true;
-                shipmentRepository.Update(shipment);
-                shipmentRepository.SubmitChanges();
+                return;
             }
+            if(!(documentFiling.HasFile && documentFiling.Received))
+            {
+                return;
+            }
+            IQueueService queueservice = new DbQueueService();
+            queueservice.InitializeQueue("PODDocumnetUploaderQueue", documentFiling.Tenant);
+            queueservice.Send(new Dictionary<string, string>() { { "EntityId", documentFiling.Id }, { "Tenant", documentFiling.Tenant.ToString() },
+                                                                 { "IsUploaded", true.ToString() }, { "IsDeleted", false.ToString() }, { "PODRecived", documentFiling.ReceivedDate.ToString() } },
+                                                                  documentFiling.Tenant, null, null, null, null);
         }
 
         private void RunDocumentPopulateAutomaticDatesService(DocumentsFilingPM theEntityPm)

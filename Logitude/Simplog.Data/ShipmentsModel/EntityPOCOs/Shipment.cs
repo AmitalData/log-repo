@@ -712,5 +712,7 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
 
        public bool IsPODReceived { get; set; }
 
+       public DateTime? PODReceivedDate { get; set; }
+
     }
 }

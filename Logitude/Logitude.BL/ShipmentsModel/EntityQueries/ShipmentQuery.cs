@@ -1993,6 +1993,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.FirstPickupETD = shipment.FirstPickupETD;
             shipmentPM.WarehouseLegLastFreeDate = shipment.WarehouseLegLastFreeDate;
             shipmentPM.IsPODReceived = shipment.IsPODReceived;
+            shipmentPM.PODReceivedDate = shipment.PODReceivedDate;
 
             if (shipment.MoveTypeId != null)
             {
@@ -3743,6 +3744,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.To = shipment.To;
             shipmentPM.Origin = shipment.Origin;
             shipmentPM.IsPODReceived = shipment.IsPODReceived;
+            shipmentPM.PODReceivedDate = shipment.PODReceivedDate;
 
             if (!string.IsNullOrEmpty(shipment.LastSharedEventId))
             {
@@ -3851,6 +3853,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 shipmentPM.IsImporterApprovalRequired = GetIsImporterApprovalRequried(shipment.Id, shipment.Tenant);
                 #endregion
             }
+            shipmentPM.PODReceivedDate = shipment.PODReceivedDate;
             shipmentPM.IsPODReceived = shipment.IsPODReceived;
             shipmentPM.IsHTSMissing = shipment.IsHTSMissing;
             shipmentPM.IsStandalonePickupDelivery = shipment.IsStandalonePickupDelivery;

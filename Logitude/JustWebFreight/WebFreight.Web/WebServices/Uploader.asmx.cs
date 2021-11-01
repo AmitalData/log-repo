@@ -44,6 +44,7 @@ using Logitude.BL.Helpers;
 using Simplog.Data.ShipmentsModel;
 using Logitude.BL.ShipmentsModel.EntityQueries;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
+using Logitude.Server.Tools.QueueService;
 
 namespace WebFreight.Web.WebServices
 {
@@ -561,13 +562,13 @@ namespace WebFreight.Web.WebServices
 
         private void MapPODReceivedShipmentField(DocumentsFilingPM documentsFiling, ICommonDataContext commonContext)
         {
-            int tenant = documentsFiling.Tenant;
-            ObjectTableRepository ObjectTableRepository = new ObjectTableRepository(tenant); ;
-            var shipmentObjectTable = ObjectTableRepository.GetSingleObjectTable(documentsFiling.ObjectTableId, tenant, false);
-            if (shipmentObjectTable != null && shipmentObjectTable.Name == "Shipment")
+            if (documentsFiling.DocumentTypeCode == "POD")
             {
-                var documentsFilings = this.GetShipmentDocsIn(documentsFiling, commonContext);
-                this.UpdateSHipment(documentsFilings, documentsFiling);
+                IQueueService queueservice = new DbQueueService();
+                queueservice.InitializeQueue("PODDocumnetUploaderQueue", documentsFiling.Tenant);
+                queueservice.Send(new Dictionary<string, string>() { { "EntityId", documentsFiling.Id }, { "Tenant", documentsFiling.Tenant.ToString() },
+                                                                     { "IsUploaded", false.ToString() }, { "IsDeleted", true.ToString() }, { "PODRecived", documentsFiling.ReceivedDate.ToString() } },
+                                                                      documentsFiling.Tenant, null, null, null, null);
             }
         }
 
