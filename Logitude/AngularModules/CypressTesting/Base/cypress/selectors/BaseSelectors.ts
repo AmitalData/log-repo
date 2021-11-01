@@ -23,6 +23,10 @@ export class BaseSelectors extends RegexSelectors {
     public static readonly Warehouse = "#MaintenanceItemMTWH"
     public static readonly Vendor = "#MaintenanceItemMTVD"
     public static readonly MessageErrorRedButton = 'button[id^=MessageWindow_Ok]'
+    public static readonly TenantVolumeUnitCode = "#Tenant_VolumeUnitCode"
+    public static readonly TenantGrossWeightUnitCode = "#Tenant_GrossWeightUnitCode"
+    public static readonly TenantChargeableWeightUnitCode = "#Tenant_ChargeableWeightUnitCode"
+
     //#endregion
     //#region charge Types
     public static readonly ChargesTypeAccounting = "#ChargesTypeTHAccounting"

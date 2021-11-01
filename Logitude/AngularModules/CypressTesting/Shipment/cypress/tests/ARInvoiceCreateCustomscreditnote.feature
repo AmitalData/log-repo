@@ -1,7 +1,7 @@
 @release @dev @all
 Feature: AR Invoice Create Customs Credit Note
     The user activates customs, creates a customer, creates a Direct Export Air shipment, updates routings and packages,
-     adds a receivable, creates and approves customs AR Invoice, creates and approves customs credit note.
+    adds a receivable, creates and approves customs AR Invoice, creates and approves customs credit note.
 
     Scenario: Update Accounting System
         Given the user logged in
@@ -69,7 +69,9 @@ Feature: AR Invoice Create Customs Credit Note
             | VATType             | Zero        |
         When create invoice
         Then the invoice should create successfully
+        And the status value should be "Draft"
 
     Scenario: Approve customs credit note ARInvoice
         When approve invoice
         Then the invoice should approve successfully
+        And the status value should be "Unpaid"
