@@ -17,6 +17,7 @@ namespace Simplog.Server.Infrastructure.Helpers
         private Func<IByteCompressorUtil> _ByteCompressorUtilProvider;
         private Func<IHtmlEditorHelper> _HtmlEditorHelper;
         private Func<IEntityUpdateReflectorService> _EntityUpdateReflectorService;
+        private Func<IEntityGetReflectorService> entityGetReflectorService;
 
         private I_IISManager _IISManager;
 
@@ -91,7 +92,8 @@ namespace Simplog.Server.Infrastructure.Helpers
             Func<IByteCompressorUtil> iByteCompressorUtilProvider,
             I_IISManager myIISManager,
             Func<IHtmlEditorHelper> myIHtmlEditorHelper,
-            Func<IEntityUpdateReflectorService> myEntityUpdateReflectorService
+            Func<IEntityUpdateReflectorService> myEntityUpdateReflectorService,
+            Func<IEntityGetReflectorService> myEntityGetReflectorService
 
             )
         {
@@ -107,6 +109,7 @@ namespace Simplog.Server.Infrastructure.Helpers
             _Instance._HtmlEditorHelper = myIHtmlEditorHelper;
             _Instance._IISManager = myIISManager;
             _Instance._EntityUpdateReflectorService = myEntityUpdateReflectorService;
+            _Instance.entityGetReflectorService = myEntityGetReflectorService;
 
 
         }
@@ -148,6 +151,10 @@ namespace Simplog.Server.Infrastructure.Helpers
         {
              _EntityUpdateReflectorService().UpdateEntity(entityPM, entityName, tenant);
         }
+        public object GetEntity(EntityGetReflector entityGetReflector)
+        {
+            return entityGetReflectorService().GetEntity(entityGetReflector);
+        }
 
     }
 
@@ -177,8 +184,10 @@ namespace Simplog.Server.Infrastructure.Helpers
         void UpdateEntity(object entityPM, string entityName, int tenant);
     }
 
-
-
+    public interface IEntityGetReflectorService
+    {
+        object GetEntity(EntityGetReflector entityGetReflector);
+    }
 }
 
 

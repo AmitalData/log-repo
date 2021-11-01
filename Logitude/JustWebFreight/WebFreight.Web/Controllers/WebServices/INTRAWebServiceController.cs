@@ -256,7 +256,7 @@ namespace WebFreight.Web.Controllers.WebServices
 
                     IShipmentsContext myContext = ShipmentsContext.GetContext(tenant);
 
-                    List<ShipmentContainerStatusList> myResult = new List<ShipmentContainerStatusList>();   
+                    List<ShipmentContainerStatusList> myResult = new List<ShipmentContainerStatusList>();
 
                     myResult = (from d in myContext.ShipmentContainerStatuses.Include("INTTRAStatus").DefaultIfEmpty().Include("LocationPort").DefaultIfEmpty().Include("ContainerStatus").DefaultIfEmpty().Include("ContainerStatusSource").DefaultIfEmpty()
                                 where d.Tenant == tenant
@@ -285,11 +285,15 @@ namespace WebFreight.Web.Controllers.WebServices
                                     Location = d.Location,
                                     StatusSource = d.StatusSource,
                                     StatusSourceName = d.ContainerStatusSource == null ? "" : d.ContainerStatusSource.Name,
-                                    StatusName = d.INTTRAStatus == null ? (d.ContainerStatus == null? null: d.ContainerStatus.Name) : d.INTTRAStatus.Name,
+                                    StatusName = d.INTTRAStatus == null ? (d.ContainerStatus == null ? null : d.ContainerStatus.Name) : d.INTTRAStatus.Name,
                                     LocationCode = d.LocationPort == null ? "" : d.LocationPort.CombinedCode,
                                     LocationName = d.LocationPort == null ? "" : d.LocationPort.EnglishName,
                                 }).ToList();
 
+                    //myResult = myResult
+                    //          .GroupBy(p => new { p.StatusName, p.EventDate,  p.StatusSource, p.VesselName, p.ArrivalDate, p.DepartureDate })
+                    //          .Select(g => g.FirstOrDefault())
+                    //          .ToList();
                     scope.Complete();
                     return Request.CreateResponse(HttpStatusCode.OK, myResult.OrderByDescending(o => o.EventDate));
                 }

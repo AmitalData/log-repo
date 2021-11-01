@@ -284,6 +284,11 @@ export class FullAccountingSettingPM {
     public set VATreportEveryTwoMonths(newValue: boolean) { if (this.vATreportEveryTwoMonths != newValue) { this.vATreportEveryTwoMonths = newValue; this.MarkAsDirty("VATreportEveryTwoMonths"); } }
        
 	 
+    private createRevaluationJournal: boolean;
+    public get CreateRevaluationJournal() { return this.createRevaluationJournal; }
+    public set CreateRevaluationJournal(newValue: boolean) { if (this.createRevaluationJournal != newValue) { this.createRevaluationJournal = newValue; this.MarkAsDirty("CreateRevaluationJournal"); } }
+       
+	 
 
     public OldEntityPM: FullAccountingSettingPM;
 		

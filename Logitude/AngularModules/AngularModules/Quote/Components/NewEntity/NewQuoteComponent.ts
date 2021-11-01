@@ -919,6 +919,8 @@ export class NewQuoteComponent extends BaseComponent implements OnInit, AfterVie
     set ShipperReference1(newValue: string) {
         if (this.EntityPM.ShipperReference1 != newValue) {
             this.EntityPM.ShipperReference1 = newValue;
+            this.SetCustomerReference1();
+
         }
     }
 
@@ -926,6 +928,24 @@ export class NewQuoteComponent extends BaseComponent implements OnInit, AfterVie
     set ShipperReference2(newValue: string) {
         if (this.EntityPM.ShipperReference2 != newValue) {
             this.EntityPM.ShipperReference2 = newValue;
+            this.SetCustomerReference2();
+        }
+    }
+
+    SetCustomerReference1() {
+        if (this.IsConsigneeMyCustomer) {
+            this.EntityPM.CustomerReference1 = this.EntityPM.ConsigneeReference1;
+        }
+        if (this.isShipperMyCustomer) {
+            this.EntityPM.CustomerReference1 = this.EntityPM.ShipperReference1;
+        }
+    }
+    SetCustomerReference2() {
+        if (this.IsConsigneeMyCustomer) {
+            this.EntityPM.CustomerReference2 = this.EntityPM.ConsigneeReference2;
+        }
+        if (this.isShipperMyCustomer) {
+            this.EntityPM.CustomerReference2 = this.EntityPM.ShipperReference2;
         }
     }
 
@@ -1053,6 +1073,7 @@ export class NewQuoteComponent extends BaseComponent implements OnInit, AfterVie
     set ConsigneeReference1(newValue: string) {
         if (this.EntityPM.ConsigneeReference1 != newValue) {
             this.EntityPM.ConsigneeReference1 = newValue;
+            this.SetCustomerReference1();
         }
     }
 
@@ -1060,6 +1081,7 @@ export class NewQuoteComponent extends BaseComponent implements OnInit, AfterVie
     set ConsigneeReference2(newValue: string) {
         if (this.EntityPM.ConsigneeReference2 != newValue) {
             this.EntityPM.ConsigneeReference2 = newValue;
+            this.SetCustomerReference2();
         }
     }
 
@@ -3299,6 +3321,8 @@ export class NewQuoteComponent extends BaseComponent implements OnInit, AfterVie
 
                 this.InitializeCopy_Objects();
                 this.OnFiltersChanged();
+                this.SetCustomerReference1();
+                this.SetCustomerReference2();
             }
         }
     }

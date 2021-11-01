@@ -189,7 +189,7 @@
                                     <div *ngIf="IsHeaderScreenTemplate">
                                         <table>
                                             <tr>
-                                                <td style="width: 1px;" [ngStyle]="{color: Entity[FieldName] | StringToColorPipe}">{{Entity[FieldName]}}</td>
+                                                <td [attr.data-cy]="'StatusValue'" style="width: 1px;" [ngStyle]="{color: Entity[FieldName] | StringToColorPipe}">{{Entity[FieldName]}}</td>
 
                                                 <td style="width: 1px; padding-left: 2px;" *ngIf="Entity[FieldName] == 'Paid'">
                                                     <img style="vertical-align:middle;" src="./Images/Icons/IsClosed.png" />

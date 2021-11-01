@@ -795,7 +795,13 @@ namespace Simplog.Data.InvoiceModel.Mocks
                 throw new NotImplementedException();
             }
         }
-
+        public IDbSet<ARPaymentBankTranfer> ARPaymentBankTranfers
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+        }
         public IDbSet<ARInvoiceChargesConstraint> ARInvoiceChargesConstraints => throw new NotImplementedException();
 
         public IDbSet<QBOGlobalTaxCalculation> QBOGlobalTaxCalculations {

@@ -386,7 +386,12 @@
     <Compile Include="ContainerRequestWorkeRole.cs" />
     <Compile Include="ContainerStatusesReceiverWR.cs" />
     <Compile Include="ContainerUpdateWR.cs" />
+    <Compile Include="MultiEntityUpdate\IMultiEntityUpdater.cs" />
+    <Compile Include="MultiEntityUpdate\MultiEntityUpdater.cs" />
+    <Compile Include="MultiEntityUpdate\ShipmentUpdater.cs" />
     <Compile Include="PODImageConverterWorkerRole.cs" />
+    <Compile Include="MultiEntityUpdateWorkerRole.cs" />
+    <Compile Include="Services\MultiEntityUpdateService.cs" />
     <Compile Include="WebHookCommunicationWorkerRole.cs" />
     <Compile Include="Service References\LoginServiceReference\Reference.cs">
       <AutoGen>True</AutoGen>

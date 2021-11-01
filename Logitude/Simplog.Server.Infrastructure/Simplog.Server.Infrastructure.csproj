@@ -200,6 +200,7 @@
     <Compile Include="Helpers\DatabaseInitializer.cs" />
     <Compile Include="Helpers\AmitalDebuggerUtil.cs" />
     <Compile Include="Helpers\DbContextBaseTest.Ext.cs" />
+    <Compile Include="Helpers\EntityGetReflector.cs" />
     <Compile Include="Helpers\GenericFilter.cs" />
     <Compile Include="Helpers\GenericSort.cs" />
     <Compile Include="Helpers\ICacheWrapper.cs" />

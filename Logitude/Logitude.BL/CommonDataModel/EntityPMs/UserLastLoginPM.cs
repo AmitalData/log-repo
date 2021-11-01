@@ -15,6 +15,7 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public DateTime? LoginDateTime { get; set; }
         public int Tenant { get; set; }
         public string UserId { get; set; }
+        public string WorkEnvironment { get; set; }
 
 
         public UserPM User { get; set; }

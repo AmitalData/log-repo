@@ -126,7 +126,12 @@
    declare @VolumetricWeight as float
    declare @NumberOfPackages as int
    declare @BookingNumberOfPackages as  int
-
+   declare @ChargeableWeightUnitCode as varchar(3)
+   declare @FinalVolumetricWeight as varchar(40)
+   declare @OrderGrossWeightWithUnitCode as  varchar(40)
+   declare @OrderVolumeWithUnitCode as  varchar(40)
+   declare @GrossWeightUnitCode as  varchar(3)
+   declare @VolumeUnitCode as  varchar(3)
 
 	DECLARE ShipmentsChargesCursor CURSOR READ_ONLY
 	FOR
@@ -216,7 +221,7 @@
  
 	,DIM_ShipmentStatuses.Id_Number, ShipmentPayablesReceivables.InvoiceStatusCode, ShipmentPayablesReceivables.InvoiceDraftNumber, ShipmentPayablesReceivables.InvoiceLineDescription, ShipmentPayablesReceivables.InvoiceLineLocalDescription,ShipmentPayablesReceivables.ExpectedAmount, ShipmentPayablesReceivables.ExpectedAmountLocal,ShipmentPayablesReceivables.ExpectedAmountInProfitCurrency,	dw_Shipments.PlannedCargoReadyDate,dw_Shipments.ApprovedCargoReadyDate,dw_Shipments.Notify1Reference2,HandlerUser.Id_Number,AccountingClosedByUser.Id_Number,
 	dw_Shipments.GrossWeightInKG, dw_Shipments.GrossWeightPerTon, dw_Shipments.OrderGrossWeight, dw_Shipments.BookingVolume,
-dw_Shipments.VolumeInCBM , dw_Shipments.VolumetricWeight, dw_Shipments.NumberOfPackages, dw_Shipments.BookingNumberOfPackages
+dw_Shipments.VolumeInCBM, dw_Shipments.VolumetricWeight, dw_Shipments.NumberOfPackages, dw_Shipments.BookingNumberOfPackages, dw_Shipments.ChargeableWeightUnitCode,dw_Shipments.GrossWeightUnitCode,dw_Shipments.VolumeUnitCode
 
 	
 	From dw_Shipments
@@ -268,7 +273,7 @@ dw_Shipments.VolumeInCBM , dw_Shipments.VolumetricWeight, dw_Shipments.NumberOfP
  
 		,@ComputedStatus, @ShipmentPayablesReceivablesInvoiceStatusCode, @ShipmentPayablesReceivablesInvoiceDraftNumber, @InvoiceLineDescription, @InvoiceLineLocalDescription,@ExpectedAmount, @ExpectedAmountLocal,@ExpectedAmountInProfitCurrency,
 		@PlannedCargoReadyDate,@ApprovedCargoReadyDate,@Notify1Reference2,@HandlerUser,@AccountingClosedByUser,@TotalGrossWeightInKG, @GrossWeightPerTon, @OrderGrossWeight, @BookingVolume,
- @TotalVolumeInCBM, @VolumetricWeight,@NumberOfPackages, @BookingNumberOfPackages
+ @TotalVolumeInCBM, @VolumetricWeight,@NumberOfPackages, @BookingNumberOfPackages, @ChargeableWeightUnitCode, @GrossWeightUnitCode, @VolumeUnitCode
 
 	
 
@@ -282,8 +287,23 @@ dw_Shipments.VolumeInCBM , dw_Shipments.VolumetricWeight, dw_Shipments.NumberOfP
 	declare @OrderGrossWeightinTon as   float =null
 	if(@OrderGrossWeight is not null and @OrderGrossWeight!=0)
 	begin set @OrderGrossWeightinTon = @OrderGrossWeight / @percentage   end
+	 
+	
+ ---------------------VolumetricWeight---------------
+	 SET @FinalVolumetricWeight =  CAST(CAST(@VolumetricWeight AS FLOAT(20)) AS VARCHAR(36))  +' ('+ @ChargeableWeightUnitCode +')';
+	 ----------------------------------------------------
+ 
+	   SET @OrderGrossWeightWithUnitCode =  CAST(CAST(@OrderGrossWeight AS FLOAT(20)) AS VARCHAR(36))  +' ('+ @GrossWeightUnitCode +')';
+		SET @OrderVolumeWithUnitCode =  CAST(CAST(@BookingVolume AS FLOAT(20)) AS VARCHAR(36))  +' ('+ @VolumeUnitCode +')';
+	      
+    
+     ---------------------------------------------------- 
 
-	 -------------------------------
+	 if(@NumberOfPackages is null) begin set @NumberOfPackages= 0 end
+
+	     ----------------------------------------------------
+	
+
 	declare @OpenReceivablesinLocal as float =0
    declare @AccountedReceivablesinLocal as float =0
    declare @OpenReceivablesinProfit as float =0
@@ -404,8 +424,8 @@ dw_Shipments.VolumeInCBM , dw_Shipments.VolumetricWeight, dw_Shipments.NumberOfP
      @ChargesType ,  @InvoiceNumber ,@InvoiceCurrency ,@InvoiceCurrencyExchangeRate ,   @OpenPayablesinLocal,@OpenPayablesinProfit,@AccountedPayablesinLocal , @AccountedPayablesinProfit, @OpenReceivablesinLocal,@OpenReceivablesinProfit,@AccountedReceivablesinLocal,@AccountedReceivablesinProfit, @IsOpenReceivable,@IsOpenPayable, @VATamountinInvoiceCurrency , @PayableId,@ReceivableId,@BillTo , @Vendor , @InvoiceId,
  
 	 dbo.GetDateFormateAsNumber(@OperationalCloseDate), dbo.GetDateFormateAsNumber(@AccountingCloseDate), dbo.GetDateFormateAsNumber(@RegistryDate), @ProjectNumber, @Shipper, @Consignee, @Routing, @Incoterm, dbo.GetDateFormateAsNumber(@InvoiceDate),  @InvoiceLineAmountForeign, @ForiegnCurrencyId,@InvoiceChargeLineDescription, @ChargeTypeNote, @HousesOpenPayablesInLocal, @HousesOpenPayablesInProfit, @HousesACCTPayablesInLocal, @HousesACCTPayablesInProfit, @HousesOpenReceivablesInLocal, @HousesOpenReceivablesInProfit, @HousesACCTReceivablesInLocal, @HousesACCTReceivablesInProfit,
-	 @InvoiceLineDescription, @InvoiceLineLocalDescription,@ExpectedAmount, @ExpectedAmountLocal,@ExpectedAmountInProfitCurrency,@PlannedCargoReadyDate,@ApprovedCargoReadyDate,@Notify1Reference2,@HandlerUser,@AccountingClosedByUser,@TotalGrossWeightInKG, @GrossWeightPerTon, @OrderGrossWeight,@OrderGrossWeightinTon, @BookingVolume,
- @TotalVolumeInCBM, @VolumetricWeight,@NumberOfPackages, @BookingNumberOfPackages)
+	 @InvoiceLineDescription, @InvoiceLineLocalDescription,@ExpectedAmount, @ExpectedAmountLocal,@ExpectedAmountInProfitCurrency,@PlannedCargoReadyDate,@ApprovedCargoReadyDate,@Notify1Reference2,@HandlerUser,@AccountingClosedByUser,@TotalGrossWeightInKG, @GrossWeightPerTon,  @OrderGrossWeightWithUnitCode,@OrderGrossWeightinTon, @OrderVolumeWithUnitCode,
+     @TotalVolumeInCBM, @FinalVolumetricWeight,@NumberOfPackages, @BookingNumberOfPackages)
  
 
 	END TRY 
@@ -430,7 +450,7 @@ END CATCH
 	,@OperationalCloseDate, @AccountingCloseDate, @RegistryDate, @ProjectNumber, @Shipper, @Consignee, @Routing, @Incoterm, @InvoiceDate, @InvoiceLineAmountForeign, @ForiegnCurrencyId,@InvoiceChargeLineDescription, @ChargeTypeNote, @HousesOpenPayablesInLocal, @HousesOpenPayablesInProfit, @HousesACCTPayablesInLocal, @HousesACCTPayablesInProfit, @HousesOpenReceivablesInLocal, @HousesOpenReceivablesInProfit, @HousesACCTReceivablesInLocal, @HousesACCTReceivablesInProfit
  
 ,@ComputedStatus, @ShipmentPayablesReceivablesInvoiceStatusCode, @ShipmentPayablesReceivablesInvoiceDraftNumber,@InvoiceLineDescription, @InvoiceLineLocalDescription,@ExpectedAmount, @ExpectedAmountLocal,@ExpectedAmountInProfitCurrency,@PlannedCargoReadyDate,@ApprovedCargoReadyDate,@Notify1Reference2,@HandlerUser,@AccountingClosedByUser,@TotalGrossWeightInKG, @GrossWeightPerTon, @OrderGrossWeight, @BookingVolume,
- @TotalVolumeInCBM, @VolumetricWeight,@NumberOfPackages, @BookingNumberOfPackages
+ @TotalVolumeInCBM, @VolumetricWeight,@NumberOfPackages, @BookingNumberOfPackages, @ChargeableWeightUnitCode, @GrossWeightUnitCode, @VolumeUnitCode
 		End
 	CLOSE ShipmentsChargesCursor
 	DEALLOCATE ShipmentsChargesCursor

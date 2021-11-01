@@ -12,8 +12,8 @@ import { ServiceResponse } from '../../../../Infrastructure/DataContracts/Servic
 import { ObservableCollection } from '../../../../Infrastructure/Utilities/ObservableCollection';
 import { ConfirmWindow } from '../../../../Controls/Windows/ConfirmWindow';
 import { ObjectsLocator } from '../../../../Infrastructure/Locators/ObjectsLocator';
-import { ARPaymentBankTranferPM } from 'Accounting/EntityPMs/ARPaymentBankTranferPM';
 import { BankAccountPM } from 'Accounting/EntityPMs/BankAccountPM';
+import { ARPaymentBankTranferPM } from 'Invoice/EntityPMs/ARPaymentBankTranferPM';
 
 declare var window: any;
 
@@ -74,8 +74,7 @@ export class ARPaymentMultiBankTransfersComponent extends BaseComponent {
     }
     AddFirstBankTransferRecord() {
         if (this.paymentPM.ARPaymentBankTranfers.length == 0) {
-            var bankTransfer: ARPaymentBankTranferPM =
-                new ARPaymentBankTranferPM();
+            var bankTransfer: ARPaymentBankTranferPM = new ARPaymentBankTranferPM(this.paymentPM);
             (bankTransfer.PaymentId = this.paymentPM.Id),
                 (bankTransfer.Tenant = this.paymentPM.Tenant);
             bankTransfer.LineNumber = 1;
@@ -104,7 +103,7 @@ export class ARPaymentMultiBankTransfersComponent extends BaseComponent {
                 latestLineNumber = this.GetLatestBankTransferLineNumber();
                 latestLineNumber += 1;
                 var bankTransfer: ARPaymentBankTranferPM =
-                    new ARPaymentBankTranferPM();
+                    new ARPaymentBankTranferPM(this.paymentPM);
                 (bankTransfer.PaymentId = this.paymentPM.Id),
                     (bankTransfer.Tenant = this.paymentPM.Tenant);
                 bankTransfer.LineNumber = latestLineNumber;
@@ -153,7 +152,7 @@ export class ARPaymentMultiBankTransfersComponent extends BaseComponent {
         this.MapEntitytoEntity(entityToClone, clonedEntity);
         clonedEntity.ARPaymentBankTranfers = [];
         entityToClone.ARPaymentBankTranfers.forEach((itemMod) => {
-            var clonedItemMod = new ARPaymentBankTranferPM();
+            var clonedItemMod = new ARPaymentBankTranferPM(this.paymentPM);
             this.MapEntitytoEntity(itemMod, clonedItemMod);
             clonedEntity.ARPaymentBankTranfers.push(clonedItemMod);
         });

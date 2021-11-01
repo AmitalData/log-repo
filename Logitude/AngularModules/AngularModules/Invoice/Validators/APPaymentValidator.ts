@@ -3,6 +3,7 @@ import {AppTool, DateTool} from '../../Infrastructure/Tools';
 import {Validator} from '../../Infrastructure/Validators/Validator';
 import {APPaymentPM} from '../EntityPMs/APPaymentPM';
 import {ObjectsLocator} from '../../Infrastructure/Locators/ObjectsLocator';
+import { SessionLocator } from '../../Infrastructure/Utilities/SessionLocator';
 
 export class APPaymentValidator {
     public Validate(entityPm: APPaymentPM) {
@@ -18,7 +19,7 @@ export class APPaymentValidator {
             validationResults.push(msg.replace("%FieldName", "Register Date"));
         }
 
-        else if (DateTool.GetDateParts(entityPm.RegisterDate).DateTicks > DateTool.GetCurrentDateAsUtcForAccountingValidation().valueOf()) {
+        else if (DateTool.GetDateParts(entityPm.RegisterDate).DateTicks > DateTool.GetCurrentDateAsUtcForAccountingValidation(SessionLocator.TenantPM.TimeZoneOffset).valueOf()) {
             validationResults.push(TextCodeTranslator.Translate("APPayment.M.CantSetFutureDatePayment"));
         }
 

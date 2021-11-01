@@ -13,6 +13,7 @@ import {ARPaymentInvoicePM} from './ARPaymentInvoicePM';
 import {LedgerTransactionPM} from './../../Accounting/EntityPMs/LedgerTransactionPM';
 
 import {ARPaymentChequeReplicaPM} from './ARPaymentChequeReplicaPM';
+
 import {ARPaymentPMCustomCode} from '../EntityPMCustomCode/ARPaymentPMCustomCode';
 import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
@@ -20,8 +21,8 @@ import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
 import {Output, EventEmitter}  from '@angular/core';
 import {PropertyChangedArgs} from '../../Infrastructure/EventEmitterArgs/PropertyChangedArgs';
 import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass';
-import { ARPaymentBankTranferPM } from 'Accounting/EntityPMs/ARPaymentBankTranferPM';
 import { BankAccountPM } from 'Accounting/EntityPMs/BankAccountPM';
+import { ARPaymentBankTranferPM } from 'Invoice/EntityPMs/ARPaymentBankTranferPM';
 
 
 export class ARPaymentPM {
@@ -606,7 +607,9 @@ export class ARPaymentPM {
         }
     }
 
-    private aRPaymentBankTranfers: ARPaymentBankTranferPM[];
+	    //public ARPaymentChequeReplicas: Array<ARPaymentChequeReplicaPMPM>= [];
+      
+	private aRPaymentBankTranfers: ARPaymentBankTranferPM[];
     get  ARPaymentBankTranfers() {
         if (this.aRPaymentBankTranfers == null) {
             this.aRPaymentBankTranfers = [];
@@ -619,12 +622,14 @@ export class ARPaymentPM {
             this.aRPaymentBankTranfers = newValue;
         }
     }
-
     public AddARPaymentBankTranferPM(item: ARPaymentBankTranferPM) {
         if (item != null) {
             var index = this.ARPaymentBankTranfers.indexOf(item);
             if (index == -1) {
-                this.ARPaymentBankTranfers.push(item);
+
+                item.EntityParentPM = this;
+
+                this. ARPaymentBankTranfers.push(item);
                 this.MarkAsDirty();
             }
         }
@@ -638,7 +643,7 @@ export class ARPaymentPM {
             }
         }
     }
-	    //public ARPaymentChequeReplicas: Array<ARPaymentChequeReplicaPMPM>= [];
+	    //public ARPaymentBankTranfers: Array<ARPaymentBankTranferPMPM>= [];
      private isPaymentNumberManuallySet: boolean;
     public get IsPaymentNumberManuallySet() { return this.isPaymentNumberManuallySet; }
     public set IsPaymentNumberManuallySet(newValue: boolean) { if (this.isPaymentNumberManuallySet != newValue) { this.isPaymentNumberManuallySet = newValue; this.MarkAsDirty("IsPaymentNumberManuallySet"); } }
@@ -707,6 +712,11 @@ export class ARPaymentPM {
     private partnerId: string;
     public get PartnerId() { return this.partnerId; }
     public set PartnerId(newValue: string) { if (this.partnerId != newValue) { this.partnerId = newValue; this.MarkAsDirty("PartnerId"); } }
+       
+	 
+    private updateAmountAndStatuses: boolean;
+    public get UpdateAmountAndStatuses() { return this.updateAmountAndStatuses; }
+    public set UpdateAmountAndStatuses(newValue: boolean) { if (this.updateAmountAndStatuses != newValue) { this.updateAmountAndStatuses = newValue; this.MarkAsDirty("UpdateAmountAndStatuses"); } }
        
 	 
 

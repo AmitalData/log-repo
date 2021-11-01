@@ -71,7 +71,6 @@ namespace WebFreight.Web.DataProviders
         public string Transshipment3ETD { get; set; }
         public string CuttOffDateTime { get; set; }
         public string CuttOffTime { get; set; }
-
         public List<Packages> PackagesList { get; set; }
         public List<PayableLine> PayablesList { get; set; }
         public List<PickUpDeliveryLine> PickUpsList { get; set; }
@@ -131,7 +130,6 @@ namespace WebFreight.Web.DataProviders
         public string ShipmentField38 { get; set; }
         public string ShipmentField39 { get; set; }
         public string ShipmentField40 { get; set; }
-
         public string MoveTypeCode { get; set; }
         public string MoveTypeName { get; set; }
         public string ChargeableWeight { get; set; }
@@ -188,33 +186,25 @@ namespace WebFreight.Web.DataProviders
         public string CustomerPrimaryContactName { get; set; }
         public string CustomerName { get; set; }
         public string CustomerAddress { get; set; }
-
         public string AgentName { get; set; }
         public string AgentPrimaryContactName { get; set; }        
         public int? TotalQuantity { get; set; } //  It must display the total number of packages in a certain shipment.
-
         public DateTime? Transshipment1ETD_DateTime { get; set; }
         public DateTime? Transshipment2ETD_DateTime { get; set; }
         public DateTime? MainCarriageETD_DateTime { get; set; }
-
         public DateTime? MainCarriageETA_DateTime { get; set; }
         public DateTime? Transshipment1ETA_DateTime { get; set; }
         public DateTime? Transshipment2ETA_DateTime { get; set; }
         public DateTime? Transshipment3ETD_DateTime { get; set; }
         public DateTime? Transshipment3ETA_DateTime { get; set; }
-
-
         public string ReleasingAgentName { get; set; }
         public string ReleasingAgentAddress { get; set; }
-
         public string BranchAddress { get; set; }
         public string PlaceOfDelivery { get; set; }
         public string PickUpAddress { get; set; }
         public string PlaceOfReceiptCountryName { get; set; }
-
         public DateTime? OBLDate { get; set; }
         public DateTime? CutOffDate_DateTime { get; set; }
-
         public DateTime? FreightRelease { get; set; }
         public DateTime? TerminalAvailable { get; set; }
         public string ISFNumber { get; set; }
@@ -224,13 +214,10 @@ namespace WebFreight.Web.DataProviders
         public string FMCNumber { get; set; }
         public string ENSNumber { get; set; }
         public DateTime? ENSDate { get; set; }
-
         public string OBLType { get; set; }
         public DateTime? DocumentsClosingDate { get; set; }
         public TimeSpan? DocumentsClosingTime { get; set; }
-
         public List<ShipmentAssemblyLine> Assemblies { get; set; }
-
         public string OriginCountryName { get; set; }
 
         // Warehouse Fields 
@@ -251,12 +238,10 @@ namespace WebFreight.Web.DataProviders
         public string Salesman { get; set; }
         public string SpecialServicesType { get; set; }
         public string ShipmentSubTypeName { get; set; }
-
         public string ConsigneeContactName { get; set; }
         public string ConsigneeContactPhone { get; set; }
-
         public string ConsigneeAddress { get; set; }
-
+        public string MasterShipmentNumber { get; set; }
     }
 
     public class Packages

@@ -300,6 +300,7 @@
     <Content Include="CustomsModules\CustomsDeclarationModules\DeclarationTabs\Components\Classification\CasualSupplierDetailsComponent.html" />
     <Content Include="CustomsModules\CustomsDeclarationModules\DeclarationTabs\Components\DeclarationAmendment\DeclarationAmendmentComponent.html" />
     <Content Include="CustomsModules\CustomsDeclarationModules\DeclarationTabs\Components\General\ConsigmentTabContent\ExportConsigmentContentComponent.html" />
+    <Content Include="Images\Icons\MultiUpdate.png" />
     <Content Include="Images\Icons\WhatsApp.png" />
     <Content Include="Images\LoginScreen\LogBoxLogo.png" />
     <Content Include="Images\PrivateLabel\MainImage.png" />
@@ -324,6 +325,7 @@
     <Content Include="Infrastructure\Components\Maintenance\Automation\AutomationConditionsDetailsComponent.html" />
     <Content Include="Infrastructure\Components\Maintenance\Automation\AutomationResult\CreateTaskResultComponent.html" />
     <Content Include="Infrastructure\Components\Maintenance\Automation\AutomationsConditionsViewDetailsComponent.html" />
+    <Content Include="Infrastructure\Components\MultiUpdateComponent\MultiUpdateComponent.html" />
     <Content Include="InvoiceModules\ARPayment\Components\Other\ARPaymentMultiChequesComponent.html" />
     <Content Include="SharedLogistics\Components\CargoTrackingMilestonesPermissiosComponent.html" />
     <Content Include="ShipmentModules\ShipmentAWB\Components\AWBWizard\Packages\AWBAddEditCommodityComponent.html" />
@@ -1855,6 +1857,7 @@
     <TypeScriptCompile Include="Infrastructure\Components\Maintenance\BatchTaskExecution\BTEParameterTabComponent\BTEParameterTabComponent.ts" />
     <TypeScriptCompile Include="Infrastructure\Components\Maintenance\CacheLogComponent.ts" />
     <TypeScriptCompile Include="Infrastructure\Components\MenuButtons\AnalyzeQueueMenuButtonsHandler.ts" />
+    <TypeScriptCompile Include="Infrastructure\Components\MultiUpdateComponent\MultiUpdateComponent.ts" />
     <TypeScriptCompile Include="Infrastructure\Components\NewViewComponent\ChooseUserComponent.ts" />
     <TypeScriptCompile Include="Infrastructure\Components\QueryColumnsComponents\btnUpdateComponent.ts" />
     <TypeScriptCompile Include="Infrastructure\Components\QueryColumnsComponents\DWLogSearchAddFieldsComponent.ts" />
@@ -1920,6 +1923,7 @@
     <TypeScriptCompile Include="Infrastructure\EntityPMs\LastRunDetailPM.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityPMs\LBPTeamMemberPM.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityPMs\LogitudeLeadPM.ts" />
+    <TypeScriptCompile Include="Infrastructure\EntityPMs\MultiEntityUpdateLogPM.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityPMs\ObjectTableTabPM.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityPMs\PriceStepPM.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityPMs\RuleUpdateHistoryPM.ts" />
@@ -1959,6 +1963,7 @@
     <TypeScriptCompile Include="Infrastructure\Services\StandardPMs\DWQueryColumnPMService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardPMs\DWQueryFilterPMService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardPMs\HelpResourcePMService.ts" />
+    <TypeScriptCompile Include="Infrastructure\Services\StandardPMs\MultiEntityUpdateLogPMService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardPMs\TeamPMService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\WebServices\PrivateLabelsBrandingDataService.ts" />
     <TypeScriptCompile Include="Infrastructure\Utilities\PackageAmountCalculator.ts" />

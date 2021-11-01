@@ -51,6 +51,7 @@ Then("the direct shipment should save successfully", () => {
 });
 //#endregion
 
+//#region Copy Direct export air shipment
 When("copy the shipment", () => {
   Actions.CopyShipment(shipmentDetails.ShipmentLevel);
 });
@@ -58,3 +59,29 @@ When("copy the shipment", () => {
 Then("a shipment copy should create successfully", () => {
   BaseAssertion.AssertStatusCode(RequestAliases.ShipmentRequest, 200);
 });
+//#endregion
+
+//#region Assert packages tab
+When("navigates packages tab", () => {
+  cy.Navigate(ShipmentSelectors.ShipmentPackagesTab)
+});
+
+Then("the direct shipment should should has the following package details", (dataTable) => {
+  let packageDetailsList = Assists.CreateSet<PackagesDetails>(dataTable);
+  Actions.ValidatePackageDetails(ShipmentSelectors.ShipmentPackagesTab, packageDetailsList[0], ShipmentSelectors.Shipment_GrossWeight, true)
+});
+//#endregion
+
+//#region Assert routing tab
+When("navigates routing tab", () => {
+  cy.Navigate(ShipmentSelectors.RoutingTab_1)
+});
+
+Then("the pick up has {string} as to port value", (value) => {
+  Actions.AssertShipmentRoutingPickUpToPortValue(value)
+});
+
+Then("the delivery has {string} as from port value", (value) => {
+  Actions.AssertShipmentRoutingDeliveryFromPortValue(value)
+});
+//#endregion

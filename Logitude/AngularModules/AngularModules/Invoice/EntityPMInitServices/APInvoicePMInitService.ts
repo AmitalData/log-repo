@@ -4,6 +4,7 @@ import {SessionLocator} from '../../Infrastructure/Utilities/SessionLocator';
 import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {APInvoicePM} from '../EntityPMs/APInvoicePM';
 import {InvoiceTool} from '../Tools';
+import { AppTool } from '../../Infrastructure/Tools'; 
 
 export class APInvoicePMInitService {
 
@@ -24,6 +25,7 @@ export class APInvoicePMInitService {
             entityPM.PaymentTermId = SessionLocator.TenantPM.PaymentTermId;
             entityPM.SubTotalInLocalCurrency = 0;
             entityPM.SubTotalInInvoiceCurrency = 0;
+            entityPM.NewConcurrencyGUID = AppTool.GetNewGuid();
         }
     }
 

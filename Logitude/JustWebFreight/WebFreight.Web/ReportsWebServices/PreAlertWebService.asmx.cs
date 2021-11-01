@@ -52,6 +52,8 @@ namespace WebFreight.Web.ReportsWebServices
         AddressRepository addressRepository;
         PortRepository portRepository;
         CardQuery cardQuery;
+        private ShipmentPM shipmentpm;
+        private ShipmentRepository shipmentRepository;
 
         [WebMethod]
         public byte[] GetPreAlertData(string shipmentid, int tenant, string documentTypeId)
@@ -103,9 +105,9 @@ namespace WebFreight.Web.ReportsWebServices
             commonContext = CommonDataContext.GetContext(tenant);
             countryRepository = new CountryRepository(commonContext);
             cardQuery = new CardQuery(tenant);
-            ShipmentRepository shipmentRepository = new ShipmentRepository(shipmentsContext);
+            shipmentRepository = new ShipmentRepository(shipmentsContext);
             ShipmentQuery shipmentQuery = new ShipmentQuery(shipmentRepository);
-            ShipmentPM shipmentpm = shipmentQuery.GetSinglePM(shipmentid, tenant);
+            shipmentpm = shipmentQuery.GetSinglePM(shipmentid, tenant);
 
             TenantQuery tenantQuery = new TenantQuery(tenant);
             tenantpm = tenantQuery.GetSinglePM(tenant);
@@ -115,6 +117,8 @@ namespace WebFreight.Web.ReportsWebServices
 
             if (shipmentpm != null)
             {
+                this.MapMasterShipmentNumber();
+
                 ContactRepository contactRepository = new ContactRepository(tenant);
                 addressRepository = new AddressRepository(tenant);
                 portRepository = new PortRepository(tenant);
@@ -2074,6 +2078,26 @@ namespace WebFreight.Web.ReportsWebServices
 
             totalPrepaidString = totalPrepaid;
             totalCollectString = totalCollect;
+        }
+        private void MapMasterShipmentNumber()
+        {
+            if (shipmentpm.ShipmentLevelCode == "C")
+            {
+                prealertDataProvider.MasterShipmentNumber = shipmentpm.ShipmentNumber;
+            }
+
+            else if (shipmentpm.ShipmentLevelCode == "H" && !string.IsNullOrEmpty(shipmentpm.MasterShipmentDataId))
+            {
+                SetMasterShipmentNumberForConnectedHouse();
+            }
+        }
+        private void SetMasterShipmentNumberForConnectedHouse()
+        {
+            Shipment masterData = shipmentRepository.GetSingleShipment(shipmentpm.MasterShipmentDataId, tenant);
+            if (masterData != null)
+            {
+                prealertDataProvider.MasterShipmentNumber = masterData.ShipmentNumber;
+            }
         }
     }
 }

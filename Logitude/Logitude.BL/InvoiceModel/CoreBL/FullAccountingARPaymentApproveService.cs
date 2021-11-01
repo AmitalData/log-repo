@@ -51,6 +51,7 @@ namespace Logitude.BL.InvoiceModel.CoreBL
         bool IsCashPayment { get { return paymentPM.AccountingPaymentMethodCode == "CA"; } }
         bool IsChequePayment { get { return paymentPM.AccountingPaymentMethodCode == "CH"; } }
         bool IsBankTransferPayment { get { return paymentPM.AccountingPaymentMethodCode == "BT"; } }
+        private ARPaymentBankTranferRepository paymentBankTranferRepository;
 
         JournalPM journal;
         public FullAccountingARPaymentApproveService(ARPaymentPM paymentPM, int tenant, bool isNewEntity)
@@ -58,6 +59,7 @@ namespace Logitude.BL.InvoiceModel.CoreBL
             this.paymentPM = paymentPM;
             this.tenant = tenant;
             this.isNewEntity = isNewEntity;
+            paymentBankTranferRepository = new ARPaymentBankTranferRepository(tenant);
 
             GetPaymentRelatedEntities();
         }
@@ -229,11 +231,12 @@ namespace Logitude.BL.InvoiceModel.CoreBL
                 CreateInterestTransactionLineForBankTransfer(aRPaymentBankTranferPM, paymentPM);
             }
         }
-
-        private static void SaveARPaymentBankTranfer(ARPaymentBankTranferPM aRPaymentBankTranfer)
+        private void SaveARPaymentBankTranfer(ARPaymentBankTranferPM aRPaymentBankTranfer)
         {
-            IARPaymentBankTranferUpdateServiceExt arPaymentBankTranferQuery = ContainerAccessor.Container.Resolve(typeof(IARPaymentBankTranferUpdateServiceExt), "ARPaymentBankTranferUpdateServiceExt", new ParameterOverride("", 1)) as IARPaymentBankTranferUpdateServiceExt;
-            arPaymentBankTranferQuery.Update(aRPaymentBankTranfer);
+            ARPaymentBankTranfer poco = new ARPaymentBankTranfer();
+            ARPaymentBankTranferMapping.MapEntity(aRPaymentBankTranfer, poco, true);
+            paymentBankTranferRepository.Add(poco);
+            paymentBankTranferRepository.SubmitChanges();
         }
 
         private int GetInitialLineNumberForBankTransfer(ARPaymentPM arpaymentPM)

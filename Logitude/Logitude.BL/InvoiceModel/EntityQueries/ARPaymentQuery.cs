@@ -222,25 +222,31 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
 
         private List<ARPaymentBankTranferPM> GetARPaymentBankTranfersByPaymentId(string paymentid, int tenant)
         {
+            IBankAccountQueryServiceExt bankAccountQuery = ContainerAccessor.Container.Resolve(typeof(IBankAccountQueryServiceExt), "BankAccountQueryServiceExt", new ParameterOverride("", 1)) as IBankAccountQueryServiceExt;
+            
             ARPaymentBankTranferRepository aRPaymentBankTranferRepository = new ARPaymentBankTranferRepository(tenant);
-            List<ARPaymentBankTranfer> arPaymentBankTranfers = aRPaymentBankTranferRepository.GetARPaymentBankTranfersByPaymentId(paymentid, tenant).ToList();
+            List<ARPaymentBankTranfer> arPaymentBankTranfers = aRPaymentBankTranferRepository.GetARPaymentBankTranfers(paymentid, tenant).ToList();
+            var list = (from a in arPaymentBankTranfers
+                        select new ARPaymentBankTranferPM()
+                        {
+                            Id = a.Id,
+                            Tenant = a.Tenant,
+                            PaymentId = a.PaymentId,
+                            PaymentRef = a.PaymentRef,
+                            ValueDate = a.ValueDate,
+                            BankAccountId = a.BankAccountId,
+                            CurrencyId = a.CurrencyId,
+                            LineNumber = a.LineNumber,
+                            LocalAmount = a.LocalAmount,
+                            ForeignAmount = a.ForeignAmount,
+                            ExchageRate = a.ExchageRate,
+                        }).OrderBy(d => d.LineNumber).ToList();
 
-            return (from a in arPaymentBankTranfers
-                    select new ARPaymentBankTranferPM()
-                    {
-                        Id = a.Id,
-                        Tenant = a.Tenant,
-                        PaymentId = a.PaymentId,
-                        PaymentRef = a.PaymentRef,
-                        ValueDate = a.ValueDate,
-                        BankAccountId = a.BankAccountId,
-                        CurrencyId = a.CurrencyId,
-                        LineNumber = a.LineNumber,
-                        LocalAmount = a.LocalAmount,
-                        ForeignAmount = a.ForeignAmount,
-                        ExchageRate = a.ExchageRate,
-                        BankAccount = new BankAccountLightPM { Id = a.BankAccount?.Id, LocalName = a.BankAccount.LocalName,EnglishName = a.BankAccount.EnglishName}
-                    }).OrderBy(d => d.LineNumber).ToList();
+                        list.ForEach(item => {
+                            BankAccountPM bankAccount = bankAccountQuery.GetByFirstOrDefault(item.BankAccountId, tenant);
+                            item.BankAccount = new BankAccountLightPM { Id = bankAccount.Id, LocalName = bankAccount.LocalName, EnglishName = bankAccount.EnglishName };
+                        });
+            return list;
         }
 
         void SetGLAccountFields(ARPaymentPM paymentPM)

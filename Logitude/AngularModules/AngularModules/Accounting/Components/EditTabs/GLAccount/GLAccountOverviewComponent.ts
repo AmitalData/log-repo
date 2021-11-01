@@ -767,6 +767,12 @@ export class GLAccountOverviewComponent extends BaseComponent {
     IsInsuredCreditLimitDefined() {
         return this.InsuredCreditLimit != 0;
     }
+
+    GetTotalObligo() {
+        return this.OpenShipments +
+            ((this.GLAccountMoreData.TotFutureOpenChequesInLocalCur ? this.GLAccountMoreData.TotFutureOpenChequesInLocalCur : 0) + this.externalTransactionsTotal) +
+            (this.GLAccountMoreData.BalanceInLocalCurrency ?this. GLAccountMoreData.BalanceInLocalCurrency : 0);
+    }
     //
 
     //#endregion
@@ -951,6 +957,8 @@ export class GLAccountOverviewComponent extends BaseComponent {
     //
 
     //#endregion
+
+
 
 
 }

@@ -141,7 +141,7 @@ namespace WebFreight.Web.Controllers.WebServices
                                 ConnectedToEntity = false,
                                 ConnectedToTenant = false,
                                 FileSize = fileBytes.Length,
-                                Tenant = tenant,
+                                //Tenant = tenant,
                                 FileName = "XmlString Simulator",
                             };
 

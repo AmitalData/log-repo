@@ -247,6 +247,12 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="CreateRevaluationJournal"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
   <Relation
     ForeignKeyColumn="DefaultVATTypeId"
     ReferencedTable="VatTypes"

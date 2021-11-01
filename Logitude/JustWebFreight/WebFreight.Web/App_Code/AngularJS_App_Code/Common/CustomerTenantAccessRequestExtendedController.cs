@@ -129,6 +129,29 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Common
             }
         }
 
+        public HttpResponseMessage GetByTenantAndForwarderId(int tenant, string forwarderId)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+
+                SecurityUtility.CheckContactFeature("CustomerTenantAccessRequest", "READ", authToken.Tenant);
+                CustomerTenantAccessRequestQuery CustomerTenantAccessRequestQuery = new CustomerTenantAccessRequestQuery(authToken.Tenant);
+                CustomerTenantAccessRequestPM CustomerTenantAccessRequestPM = CustomerTenantAccessRequestQuery.GetByTenantAndForwarderId(tenant, forwarderId);
+
+                return Request.CreateResponse(HttpStatusCode.OK, CustomerTenantAccessRequestPM);
+
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
+        }
+
+
         // DELETE api/<controller>/5
         public void Delete(int id)
         {

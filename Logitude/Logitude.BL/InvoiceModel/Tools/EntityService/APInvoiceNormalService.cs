@@ -1396,6 +1396,12 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     {
                         entity.ShipmentPayableLineStatusCode = "ACCT";
                     }
+
+                    else if (entity.OpenAmount == 0 && entity.AccountedAmount == 0 && entity.Quantity == 0 && entity.UnitPrice != 0 
+                        && (entity.ShipmentPayableLineStatusCode == "ACCT" || entity.ShipmentPayableLineStatusCode == "PACC"))
+                    {
+                        entity.ShipmentPayableLineStatusCode = "OAMT";
+                    }
                 }
             }
         }

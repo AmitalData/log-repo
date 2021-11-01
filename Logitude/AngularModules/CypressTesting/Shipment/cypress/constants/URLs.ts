@@ -13,6 +13,7 @@ export class URLs {
     public static readonly GetMenuButtonGrouppms = "**/getmenubuttongrouppms?**"
     public static readonly Queries = '**/queries';
     public static readonly DeleteQuery = '**/queries?**';
+    public static readonly Tenants = "**/tenants"
 
     //INTTRA
     public static readonly FTPDetails = "**/ftpdetails";

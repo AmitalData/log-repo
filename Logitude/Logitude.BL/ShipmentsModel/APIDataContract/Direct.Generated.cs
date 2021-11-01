@@ -213,6 +213,62 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
     public Port MainCarriageFromPort { get; set; }
     
     public Port MainCarriageToPort { get; set; }
+    
+    public DateTime? CutoffDate { get; set; }
+    
+    public bool IsDangerous { get; set; }
+    
+    public DateTime? HAWBDate { get; set; }
+    
+    public TransportMode OnCarriageTransportMode { get; set; }
+    
+    public Port OnCarriageFromPort { get; set; }
+    
+    public Port OnCarriageToPort { get; set; }
+    
+    public Card OnCarriageCarrier { get; set; }
+    
+    public string OnCarriageCarrierNumber { get; set; }
+    
+    public DateTime? OnCarriageATD { get; set; }
+    
+    public DateTime? OnCarriageATA { get; set; }
+    
+    public DateTime? OnCarriageETD { get; set; }
+    
+    public DateTime? OnCarriageETA { get; set; }
+    
+    public TransportMode PreCarriageTransportMode { get; set; }
+    
+    public Port PreCarriageFromPort { get; set; }
+    
+    public Port PreCarriageToPort { get; set; }
+    
+    public Card PreCarriageCarrier { get; set; }
+    
+    public string PreCarriageCarrierNumber { get; set; }
+    
+    public DateTime? PreCarriageATD { get; set; }
+    
+    public DateTime? PreCarriageATA { get; set; }
+    
+    public DateTime? PreCarriageETD { get; set; }
+    
+    public DateTime? PreCarriageETA { get; set; }
+    
+    public Card ConsigneeNotImporter { get; set; }
+    
+    public string DeclarationNumber { get; set; }
+    
+    public DateTime? DeclarationDate { get; set; }
+    
+    public string BookingConfirmationNotes { get; set; }
+    
+    public DateTime? FreightRelease { get; set; }
+    
+    public DateTime? TerminalAvailable { get; set; }
+    
+    public Card Notify1 { get; set; }
 
     public  string  ComputingPartnerCode { get; set; }
 

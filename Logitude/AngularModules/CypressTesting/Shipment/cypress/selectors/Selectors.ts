@@ -2,6 +2,7 @@ import { RegexSelectors } from '../selectors/RegexSelectors';
 
 export class ShipmentSelectors extends RegexSelectors {
   //#region Shared
+  public static readonly CloseBtn = '#CloseBtn';
   public static readonly ShipmentMoreList = '#MenuButtons';
   public static readonly ShipmentTab = '#SHIP';
   public static readonly ContainersTab = '#CNFU';
@@ -17,11 +18,14 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly ShipmentConsignee = '#Shipment_ConsigneeId';
   public static readonly ShipmentCustomerType = '#Shipment_ShipmentCustomerTypeCode';
   public static readonly Backbutton_1 = '#EditBackbutton_1';
-  public static readonly Backbutton = '#EditBackbutton';
+  public static readonly Backbutton = '[id^=EditBackbutton]'
   public static readonly HouseHyperLink = ".HyperlinkButtonControl";
   public static readonly RoutingTab_1 = "#ShipmentTHRoutings_1";
   public static readonly HouseMainCarriageCancelButton = "#MainCarriageCancelBtn"
   public static readonly ShipmentSaveCloseButton = '[id^=Shipment-SaveClose]'
+  public static readonly APInvoiceStatus = "[data-cy='StatusValue']";
+  public static readonly ARInvoiceStatus = "[id^='ARInvoiceHeaderStatusName']";
+
   //#endregion
 
   //#region Create shipment
@@ -53,6 +57,7 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly EventsTab = '#ShipmentTHEvents';
   public static readonly ConnectionsTab = '#ShipmentTHConnections';
   public static readonly CustomsTab = '#ShipmentTHCustoms';
+  public static readonly StartWithPayablesTab = '[id^=ShipmentTHPayables]'
   //#endregion
 
   //#region General tab
@@ -141,6 +146,7 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly EditPackage = '#Edit';
   public static readonly PackageGrossWeight = '#Shipment_GrossWeight';
   public static readonly PackagePartialSplit = '#PartialSplit';
+  public static readonly HyperLinkGenerateFromOrderPackage = '#GenerateBTN';
 
   public static readonly DeliveryATDTime = '#time_ShipmentPackage_DeliveryATD';
   public static readonly DeliveryATDDate = '#date_ShipmentPackage_DeliveryATD';
@@ -152,6 +158,10 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly EmptyContainerReturnATADate = '#date_ShipmentPackage_EmptyContainerReturnATA';
   public static readonly PickUpDeliveryATDTime = '#time_ShipmentPickUpDelivery_ATD';
   public static readonly PickUpDeliveryATDDate = '#date_ShipmentPickUpDelivery_ATD';
+
+  public static readonly ShipmentRatio = '#Shipment_Ratio';
+  public static readonly ShipmentGrossWeightUnitCode = '#Shipment_GrossWeightUnitCode';
+
   //#endregion
 
   //#region Routing tab fields
@@ -208,6 +218,9 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly OnCarriageOKBtn = '#OnCarriageOKBtn';
   public static readonly MainCarrigeVessel = 'input[id^=Shipment_MainCarriageVesselId_]';
   public static readonly MainCarrigeVoyageNo = 'input[id^=Shipment_MainCarriageCarrierNumber_]';
+  public static readonly AddWarehouseLegPickups = '#Add-WarehouseLeg_Pickups';
+  public static readonly WarehouseLegTerminal = '#Shipment_WarehouseLegWarehouseId';
+
   //Warehouse
   public static readonly ShipmentWarehouseLegExpectedEntryDate = "#date_Shipment_WarehouseLegExpectedEntryDate"
   public static readonly ShipmentWarehouseLegActualEntryDate = "#date_Shipment_WarehouseLegActualEntryDate"
@@ -236,7 +249,10 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly LogLovShipmentReceivableCurrencyId = "#LogLov_ShipmentReceivable_CurrencyId"
   //#endregion
 
-  //#region Payable tab fields
+  //#region Payable tab
+  public static readonly MasterExpectedAmount = "[data-cy='MasterExpectedAmount']";
+  public static readonly HouseExpectedAmount = "[data-cy='HouseExpectedAmount']";
+  public static readonly SumOfAmount = "[data-cy='SumOfAmount']";
   public static readonly AddNewPayableLine = '#AddPayable button';
   public static readonly AddPayableOkButton = '#Ok-AddPayableBtn';
   public static readonly ShipmentPayableChargesType = '#ShipmentPayable_ChargesTypeId';
@@ -251,7 +267,7 @@ export class ShipmentSelectors extends RegexSelectors {
   //#region operations and actions
   public static readonly NewAttachedHouse = '#NewHouseBtn';
   public static readonly CopyShipmentButton = '#ShipmentBCopyShipment';
-  public static readonly CancelShipmentButton = '#ShipmentBCancelShipment';
+  public static readonly CancelShipmentButton = '[id^=ShipmentBCancelShipment]'
   public static readonly ReactivateShipmentButton = '#ShipmentBReactivateShipment';
   public static readonly SplitShipmentButton = '#ShipmentBSplitShipment';
   public static readonly OperationalCloseButton = '#ShipmentBOperationalClose';
@@ -346,7 +362,7 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly ConvertToLCL = "#ShipmentBConverttoLCL";
   public static readonly ConvertToFCL = "#ShipmentBConverttoFCL";
   public static readonly ConvertToHouse = "#ShipmentBConvertShipmentFromDirectToHouse";
-  public static readonly ConvertToDirect = "#ShipmentBConvertShipmentFromHouseToDirect";
+  public static readonly ConvertToDirect = '[id^=ShipmentBConvertShipmentFromHouseToDirect]'
   public static readonly ConvertShipmentDirection = "#ShipmentBConvertShipmentDirection";
   public static readonly ShipmentTypeValue = "[data-cy='ShipmentTypeValue']";
   public static readonly ShipmentEventsRefreshButton = "[data-cy='EventsRefresh_Shipment'] button";
@@ -355,12 +371,14 @@ export class ShipmentSelectors extends RegexSelectors {
   //#endregion
   //#region Delivery Leg
   public static readonly EditDelivery = "#Edit-Delivery"
+  public static readonly EditPickUp = "#Edit-PickUp"
   public static readonly DeliveryToPartnerName = "#ShipmentPickUpDelivery_ToPartnerCardId"
+  public static readonly PickUpDeliveryToPort = "#ShipmentPickUpDelivery_ToPortId"
+  public static readonly PickUpDeliveryFromPort = "#ShipmentPickUpDelivery_FromPortId"
   public static readonly PickUpDeliveryETDDate = "#date_ShipmentPickUpDelivery_ETD"
   public static readonly PickUpDeliveryETDTime = "#time_ShipmentPickUpDelivery_ETD"
   //#endregion
-  public static readonly ComponentBusyIndicator = "#EditComponentBusyIndicator_0"
-
+  public static readonly ComponentBusyIndicator = "div[id^='EditComponentBusyIndicator']:last";
 
   //#region Shipment view
   public static readonly ShipmentList = "#Shipments-O-Q";

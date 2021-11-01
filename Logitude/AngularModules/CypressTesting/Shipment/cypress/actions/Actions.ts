@@ -281,7 +281,7 @@ export function FillOrdersTab(packagesDetails: PackagesDetails[], shipmentType?:
 }
 
 export function DeleteOrderPackage() {
-    cy.Click(BaseSelectors.DeleteButton, null)
+    cy.Click(BaseSelectors.DeleteButton + BaseSelectors.FirstElement, null)
     cy.Click(BaseSelectors.RedButton + BaseSelectors.LastElement, null)
 }
 //#endregion
@@ -336,9 +336,6 @@ function DeletePartner(selector) {
 //#region Package Tab
 export function FillPackageTab(transportMode: string, packagesDetails: PackagesDetails[], shipmentType?: string) {
     cy.Click(ShipmentSelectors.PackagesTab_Number + BaseSelectors.LastElement, null)
-    // for (let i = 0; i < packagesDetails.length; i++) {
-    //     packagesDetails[i].ContainerNumber = packagesDetails[i].ContainerNumber == 'Random' ? GetGeneratedRandomContainerNumber() : packagesDetails[i].ContainerNumber;
-    // }
     for (let i = 0; i < packagesDetails.length; i++) {
         cy.Click(ShipmentSelectors.AddPackage, null)
         if (Conditions.HasPacakageType(shipmentType)) {
@@ -368,6 +365,11 @@ export function FillPackageTab(transportMode: string, packagesDetails: PackagesD
     }
 }
 
+export function GenerateFromOrderPackage() {
+    cy.Click(ShipmentSelectors.PackagesTab_Number + BaseSelectors.LastElement, null)
+    cy.Click(ShipmentSelectors.HyperLinkGenerateFromOrderPackage, null)
+}
+
 export function DeleteShipmentPackages() {
     cy.Click(ShipmentSelectors.DeletePackages, null)
     cy.Click(BaseSelectors.RedButton + BaseSelectors.LastElement, null)
@@ -387,6 +389,26 @@ export function AddInsidePackage(packagesDetails: PackagesDetails[]) {
 //#endregion
 
 //#region House Shipment Tab
+export function AssertHouseWizerdInsideMaster() {
+    AssertHouseDirectionDim()
+    AssertHouseTransportModeDim()
+    BaseAssertion.AssertElementDisabled(ShipmentSelectors.ShipmentMainCarriageFromPort, BaseSelectors.BeDisabled)
+    BaseAssertion.AssertElementDisabled(ShipmentSelectors.ShipmentMainCarriageToPort, BaseSelectors.BeDisabled)
+}
+
+function AssertHouseDirectionDim() {
+    BaseAssertion.AssertElementDisabled(ShipmentSelectors.DirectionRadio(BaseSelectors.Export), BaseSelectors.BeDisabled)
+    BaseAssertion.AssertElementDisabled(ShipmentSelectors.DirectionRadio(BaseSelectors.Import), BaseSelectors.BeDisabled)
+    BaseAssertion.AssertElementDisabled(ShipmentSelectors.DirectionRadio(BaseSelectors.Domestic), BaseSelectors.BeDisabled)
+    BaseAssertion.AssertElementDisabled(ShipmentSelectors.DirectionRadio(BaseSelectors.Drop), BaseSelectors.BeDisabled)
+}
+
+function AssertHouseTransportModeDim() {
+    BaseAssertion.AssertElementDisabled(ShipmentSelectors.TransportModeRadio(BaseSelectors.Air), BaseSelectors.BeDisabled)
+    BaseAssertion.AssertElementDisabled(ShipmentSelectors.TransportModeRadio(BaseSelectors.Ocean), BaseSelectors.BeDisabled)
+    BaseAssertion.AssertElementDisabled(ShipmentSelectors.TransportModeRadio(BaseSelectors.Inland), BaseSelectors.BeDisabled)
+}
+
 export function CreateNewAttachedHouse(Shipper: string) {
     cy.Click(ShipmentSelectors.NewAttachedHouse, null);
     FillHouseInShipmentsTab(Shipper);
@@ -495,6 +517,12 @@ export function GenerateReceivablesFromPayables() {
 }
 //#endregion
 //#region Routing Tab
+export function AddWarehouseLegPickups(warehouseLegTerminal) {
+    cy.Click(ShipmentSelectors.AddWarehouseLegPickups, null)
+    cy.FillLogLov(ShipmentSelectors.WarehouseLegTerminal, warehouseLegTerminal, true)
+    cy.Click(BaseSelectors.RedButton + BaseSelectors.LastElement, null)
+}
+
 export function FillPickupRouting() {
     cy.get(ShipmentSelectors.RoutingToggle)
     cy.Click(ShipmentSelectors.RoutingToggle, null)
@@ -660,6 +688,18 @@ export function CheckBoxesInCopyShipmentWizerd() {
     cy.ClickCheckBox(ShipmentSelectors.ShipmentPreCarriageCheckBox)
     cy.ClickCheckBox(ShipmentSelectors.ShipmentOnCarriageCheckBox)
     cy.ClickCheckBox(ShipmentSelectors.ShipmentIncludePackagesCheckBox)
+}
+
+export function AssertShipmentRoutingPickUpToPortValue(value) {
+    cy.Click(ShipmentSelectors.EditPickUp, null)
+    BaseAssertion.AssertElementHaveValue(ShipmentSelectors.PickUpDeliveryToPort, value)
+    cy.Click(ShipmentSelectors.CloseBtn, null)
+}
+
+export function AssertShipmentRoutingDeliveryFromPortValue(value) {
+    cy.Click(ShipmentSelectors.EditDelivery, null)
+    BaseAssertion.AssertElementHaveValue(ShipmentSelectors.PickUpDeliveryFromPort, value)
+    cy.Click(ShipmentSelectors.CloseBtn, null)
 }
 //#endregion
 //#region Update Closed Shipment
@@ -945,7 +985,11 @@ function FillShipmentType(ShipmentType: string, TransportMode: string) {
         let shipmentTypeRadioSelector: string;
         if (Conditions.IsGroupage(ShipmentType)) {
             shipmentTypeRadioSelector = ShipmentSelectors.GroupageShipmentTypeRadio(TransportMode);
-        } else {
+        }
+        else if (TransportMode == "Inland") {
+            shipmentTypeRadioSelector = ShipmentSelectors.ShipmentTypeRadioInland(ShipmentType);
+        }
+        else {
             shipmentTypeRadioSelector = ShipmentSelectors.ShipmentTypeRadio(ShipmentType);
         }
         cy.ClickRadio(shipmentTypeRadioSelector);

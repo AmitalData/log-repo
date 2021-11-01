@@ -159,6 +159,8 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
     public string ShipperNotExporterReference2 { get; set; }
     
     public DateTime? CustomsClearanceDate { get; set; }
+    
+    public Card Notify1 { get; set; }
 
     public  string  ComputingPartnerCode { get; set; }
 

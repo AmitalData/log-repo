@@ -44,6 +44,8 @@ export class AccountingSelectors extends RegexSelectors {
     public static readonly ReceiveInvoiceButton = '#ReceiveInvoice';
     public static readonly APInvoiceLineForiegnCurrencyAmount = '#APInvoiceLine_ForiegnCurrencyAmount';
     public static readonly APInvoiceAmountInInvoiceCurrency = '#APInvoice_AmountInInvoiceCurrency';
+    public static readonly APInvoiceReTransferButton = '#APInvoiceBReTransfer';
+    public static readonly APInvoiceCopyButton = '#APInvoiceBCopyInvoice';
 
     //#endregion
     //#region Receivable tab
@@ -104,7 +106,9 @@ export class AccountingSelectors extends RegexSelectors {
     public static readonly APInvoiceBranch = '#APInvoice_BranchId';
     public static readonly LogLovARInvoicePartnerId = "#LogLov_ARInvoice_PartnerId"
     public static readonly IsConsolidationChecked = "checkbox[id^='IsConsolidationChecked']"
+    public static readonly ARInvoiceReTransfer = '#ARInvoiceBReTransfer'
     //#region contain 
+
     public static readonly ContainDraftInvoices = "Draft Invoices"
     public static readonly ContainExport = "Export"
     public static readonly ContainTransferredSuccessfully = "Transferred Successfully"

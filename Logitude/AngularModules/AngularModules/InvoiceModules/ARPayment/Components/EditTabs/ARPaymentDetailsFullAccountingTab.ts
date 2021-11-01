@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ARPaymentBankTranferPM } from 'Accounting/EntityPMs/ARPaymentBankTranferPM';
+import { ARPaymentBankTranferPM } from 'Invoice/EntityPMs/ARPaymentBankTranferPM';
 import { BankAccountPM } from '../../../../Accounting/EntityPMs/BankAccountPM';
 import { CashBookPM } from '../../../../Accounting/EntityPMs/CashBookPM';
 import { GLAccountPM } from '../../../../Accounting/EntityPMs/GLAccountPM';

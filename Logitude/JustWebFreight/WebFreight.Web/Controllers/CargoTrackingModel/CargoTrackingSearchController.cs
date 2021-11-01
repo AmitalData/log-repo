@@ -138,7 +138,8 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
         {
             if (searchKey != null)
             {
-                MixPanelEventTracker eventTracker = new MixPanelEventTracker(ProjectToken, GetUserEmail(), tenant);
+                string userName = isPublic ? null : GetUserEmail();
+                MixPanelEventTracker eventTracker = new MixPanelEventTracker(ProjectToken, userName, tenant);
                 MixPanelEvent searchEvent = BuildMixPanelSearchEvent(searchKey, shipments, isPublic);
                 eventTracker.TrackEvent(searchEvent);
             }
@@ -167,7 +168,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                 CargoTrackingShipmentList shipment = shipmentsQuery.GetShipment(SecurityKey, tenant);
                 if (shipment == null)
                     return Request.CreateResponse(HttpStatusCode.OK);
-
+                
                 List<Milestone> shipmentMilestones = shipmentsQuery.BuildShipmentMilstones(shipment);
                 shipmentsQuery.SetMilestonesStatus(shipment, shipmentMilestones);
 
@@ -203,19 +204,19 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                 if (shipment == null)
                     return Request.CreateResponse(HttpStatusCode.OK);
 
-                List<Milestone> shipmentMilestones = shipmentsQuery.BuildShipmentMilstones(shipment);
-                shipmentsQuery.SetMilestonesStatus(shipment, shipmentMilestones);
+                //List<Milestone> shipmentMilestones = shipmentsQuery.BuildShipmentMilstones(shipment);
+                //shipmentsQuery.SetMilestonesStatus(shipment, shipmentMilestones);
 
-                CargoTrackingShipmentWithMilestones cargoTrackingShipmentWithMilestones = new CargoTrackingShipmentWithMilestones()
-                {
-                    ShipmentList = shipment,
-                    Milestones = shipmentMilestones,
+                //CargoTrackingShipmentWithMilestones cargoTrackingShipmentWithMilestones = new CargoTrackingShipmentWithMilestones()
+                //{
+                //    ShipmentList = shipment,
+                //    Milestones = shipmentMilestones,
 
-                };
+                //};
 
                 CreateZoomEventForMixPanel(tenant, shipment, false);
 
-                HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, cargoTrackingShipmentWithMilestones);
+                HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, 0);
                 return reponseMessage;
             }
             catch (Exception ex)
@@ -242,8 +243,8 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
         private static void CreateZoomEventForMixPanel(int tenant, CargoTrackingShipmentList shipment, bool isPublic)
         {
             MixPanelEvent zoomEvent = BuildMixPanelZoomEvent(shipment.ShipmentNumber,isPublic);
-
-            MixPanelEventTracker eventTracker = new MixPanelEventTracker(ProjectToken, GetUserEmail(), tenant);
+            string userName = isPublic ? null : GetUserEmail();
+            MixPanelEventTracker eventTracker = new MixPanelEventTracker(ProjectToken, userName, tenant);
             eventTracker.TrackEvent(zoomEvent);
         }
 

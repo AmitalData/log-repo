@@ -385,7 +385,6 @@
     <Compile Include="EntityDataMappings\AccountingIntegrityCheckDataMapping.cs" />
     <Compile Include="EntityDataMappings\AccountingNoteDataMapping.cs" />
     <Compile Include="EntityDataMappings\AccountingPeriodDataMapping.cs" />
-    <Compile Include="EntityDataMappings\ARPaymentBankTranferDataMapping.cs" />
     <Compile Include="EntityDataMappings\ARPaymentChequeDataMapping.cs" />
     <Compile Include="EntityDataMappings\ARPaymentChequeStatusDataMapping.cs" />
     <Compile Include="EntityDataMappings\ARPaymentsJournalDataMapping.cs" />
@@ -420,7 +419,6 @@
     <Compile Include="EntityDataMappings\Generated\AccountingIntegrityCheckDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\AccountingNoteDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\AccountingPeriodDataMapping.Generated.cs" />
-    <Compile Include="EntityDataMappings\Generated\ARPaymentBankTranferDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\ARPaymentChequeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\ARPaymentChequeStatusDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\ARPaymentsJournalDataMapping.Generated.cs" />
@@ -576,7 +574,6 @@
     <Compile Include="EntityDataMappings\VatReportStatusDataMapping.cs" />
     <Compile Include="EntityDataMappings\WithholdingTaxDeductionTypeDataMapping.cs" />
     <Compile Include="EntityPMs\JournalLinePM.cs" />
-    <Compile Include="EntityQueryServiceExt\ARPaymentBankTranferQueryServiceExt.cs" />
     <Compile Include="EntityQueryServiceExt\LedgerTransactionQueryServiceExt.cs" />
     <Compile Include="EntityQueryServiceExt\ARPaymentChequeQueryServiceExt.cs" />
     <Compile Include="EntityQueryServiceExt\BankAccountQueryServiceExt.cs" />
@@ -590,7 +587,6 @@
     <Compile Include="EntityQueryServiceExt\GLAccountWithholdingTaxQueryServiceExt.cs" />
     <Compile Include="EntityQueryServiceExt\JournalQueryServiceExt.cs" />
     <Compile Include="EntityQueryServiceExt\PaymentChequeQueryServiceExt.cs" />
-    <Compile Include="EntityQueryServices\ARPaymentBankTranferQueryService.cs" />
     <Compile Include="EntityQueryServices\AccountingCompanyTypeQueryService.cs" />
     <Compile Include="EntityQueryServices\AccountingEntityQueryService.cs" />
     <Compile Include="EntityQueryServices\ARPaymentChequeQueryService.cs" />
@@ -611,7 +607,6 @@
     <Compile Include="EntityQueryServices\Generated\AccountingCompanyTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\AccountingIntegrityCheckQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\AccountingNoteQueryService.Generated.cs" />
-    <Compile Include="EntityQueryServices\Generated\ARPaymentBankTranferQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\ARPaymentChequeStatusQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\ARPaymentsJournalQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\AutomaticExternalReconcileMethodQueryService.Generated.cs" />
@@ -703,7 +698,6 @@
     <Compile Include="EntityQueryServices\WithholdingTaxDeductionTypeQueryService.cs" />
     <Compile Include="EntityUpdateServiceExt\ARPaymentChequeUpdateServiceExt.cs" />
     <Compile Include="EntityUpdateServiceExt\GLAccountCardsDataUpdateService.cs" />
-    <Compile Include="EntityUpdateServiceExt\ARPaymentBankTranferUpdateServiceExt.cs" />
     <Compile Include="EntityUpdateServiceExt\InterestReportsConnectedInvoiceUpdateServiceExt.cs" />
     <Compile Include="EntityUpdateServiceExt\InterestReportUpdateServiceExt.cs" />
     <Compile Include="EntityUpdateServiceExt\BankCodeUpdateServiceExt.cs" />
@@ -720,7 +714,6 @@
     <Compile Include="EntityUpdateServices\BankAccountTraceEventService.cs" />
     <Compile Include="EntityUpdateServices\CalculatedChartsOfAccountsLineUpdateService.cs" />
     <Compile Include="EntityUpdateServices\CalculatedChartsOfAccountUpdateService.cs" />
-    <Compile Include="EntityUpdateServices\Generated\ARPaymentBankTranferUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\ARPaymentsJournalUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\CalculatedChartsLineTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\CalculatedChartsOfAccountsLineUpdateService.Generated.cs" />

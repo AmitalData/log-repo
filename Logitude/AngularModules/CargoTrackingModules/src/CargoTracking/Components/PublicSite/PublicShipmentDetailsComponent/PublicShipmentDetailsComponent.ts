@@ -9,6 +9,7 @@ import { CargoTrackingMilestoneService } from 'src/CargoTracking/Services/Others
 import { CargoTrackingMilestoneList } from 'src/CargoTracking/EntityLists/CargoTrackingMilestoneList';
 import { CargoTrackingMilestones } from 'src/CargoTracking/DataContracts/CargoTrackingMilestones';
 
+const shipmentOrderEntityType = 'O';
 @Component({
     selector: 'PublicShipmentDetailsComponent',
     styleUrls: ['./PublicShipmentDetailsComponent.css'],
@@ -49,6 +50,11 @@ export class PublicShipmentDetailsComponent implements OnInit
     get tenant(){
        return CargoTrackingBrandingData.Tenant;
     }
+
+    get isShipmentOrder(){
+        return this.Shipment.EntityType == shipmentOrderEntityType;
+     }
+
 
     milestones:CargoTrackingMilestoneList[];
 
@@ -251,7 +257,7 @@ export class PublicShipmentDetailsComponent implements OnInit
     }
     SetMilestonesFields(result: CargoTrackingShipmentWithMilestones)
     {
-        
+
         this.AllMilestoneFields = result.Milestones;
         if (this.AllMilestoneFields) {
             this.AllMilestoneFields.forEach(S =>
@@ -289,7 +295,7 @@ export class PublicShipmentDetailsComponent implements OnInit
         }
     }
 
-    public ShipmentWithMilestones: CargoTrackingShipmentWithMilestones;
+    public ShipmentWithMilestones: any;
     public AllMilestoneFields: Milestone[];
     public CompletedMilestoneFields: Milestone[] = [];
     public FuturesMilestoneFields: Milestone[] = [];

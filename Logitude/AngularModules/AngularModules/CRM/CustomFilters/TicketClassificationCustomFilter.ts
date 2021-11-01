@@ -1,4 +1,4 @@
-﻿import { TicketClassificationList} from '../EntityLists/TicketClassificationList';
+import { TicketClassificationList} from '../EntityLists/TicketClassificationList';
 import {AppTool} from '../../Infrastructure/Tools';
 
 export class  TicketClassificationCustomFilter {
@@ -15,7 +15,7 @@ export class  TicketClassificationCustomFilter {
                     var myId = value.split('!')[0];
 
                     if (myCheck == "S") {
-                        data = data.filter(d => d.ParentId != null && d.ParentId.startsWith(myId) && d.Inactive == false);
+                        data = data.filter(d => d.ParentId != null && (d.ParentId == myId || d.ParentId.startsWith(myId+'-') )&& d.Inactive == false);
                     }
 
                     else if (myCheck == "F") {

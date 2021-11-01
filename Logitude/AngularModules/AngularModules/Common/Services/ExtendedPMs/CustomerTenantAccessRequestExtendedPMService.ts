@@ -54,6 +54,32 @@ export class CustomerTenantAccessRequestExtendedPMService {
             });                    
     }
 
+    getByForwarderId(tenant: number, forwarderId: string) {
+
+
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+
+        return defer(() => {
+            return this._http.get(this._apiUrl + '/getByTenantAndForwarderId?' + 'tenant=' + tenant + '&forwarderId=' + forwarderId, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var pm = response;
+
+
+                var entity: CustomerTenantAccessRequestPM;
+                if (pm) {
+                    entity = this.MapJsonToEntityPM(pm);
+                }
+
+                var serviceResponse: ServiceResponse;
+                serviceResponse = new ServiceResponse();
+                serviceResponse.Result = entity;
+                return serviceResponse;
+
+            }), catchError(ServiceHelper.HandleServiceError));
+        });
+    }
+
+
  insert(entityPM: CustomerTenantAccessRequestPM) {
          
         return defer(() => {

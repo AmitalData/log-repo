@@ -292,6 +292,19 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
         }
 
+        public List<string> GetPartnersForRequest(int PartnerTenant, List<string> Ids)
+        {
+            List<string> partners = (from a in repository.context.HybridPartners
+                                  where a.PartnerTenant == PartnerTenant && Ids.Contains(a.Id)
+                                        select a.Id).ToList();
+             
+            return partners;
+
+
+        }
+
+       
+
 
 
     }
