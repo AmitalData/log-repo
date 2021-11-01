@@ -47,6 +47,7 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CargoTrackingShipmentOrderService } from '../CargoTracking/Services/Others/CargoTrackingShipmentOrderService';
 import { IconButtonComponent } from '../Infrastructure/Components/IconButton/IconButtonComponent';
 import { DateTimeFormatPipe } from '../Infrastructure/Pipes/DateTimeFormatPipe';
+import { CargoTrackingShipmentExtendedService } from 'src/CargoTracking/Services/Others/CargoTrackingShipmentExtendedService';
 
 export function getBaseUrl() {
     return document.getElementsByTagName('base')[0].href;
@@ -114,6 +115,7 @@ export function getBaseUrl() {
         AuthService,
         LoginServiceHelper,
         CargoTrackingShipmentOrderService,
+        CargoTrackingShipmentExtendedService,
         DatePipe,
         DateTimeFormatPipe,
         { provide: 'BASE_URL', useFactory: getBaseUrl, deps: [] },

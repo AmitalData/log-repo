@@ -1,171 +1,96 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Logitude.BL.CommonDataModel.APIDataContract;
-using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
-using Logitude.BL.CommonDataModel.EntityPMs;
+﻿using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
-using Logitude.BL.DataContracts;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.EntityQueries;
-using Logitude.CargoTracking.BL.APIDataContract;
-using Logitude.CargoTracking.BL.CloseTables;
-using Logitude.CargoTracking.BL.EntityQueryServices;
-using Logitude.CargoTracking.Data;
-using Logitude.CargoTracking.Data.EntityListQueryServices;
-using Logitude.CargoTracking.Data.EntityLists;
-using Logitude.CargoTracking.Data.EntityPOCOs;
 using Logitude.CargoTracking.Def.EntityPMs;
-using Logitude.Server.Tools;
+using Logitude.ShipmentOrderModule.BL.EntityQueryServices;
+using Logitude.ShipmentOrderModule.Def.EntityPMs;
+using System.Collections.Generic;
+using System.Linq;
 
-namespace WebFreight.Web.Helpers.APIHelpers
+namespace Logitude.CargoTracking.BL.EntityQueryServices
 {
-    public class CargoTrackingShipmentDetailsInstanceCreator
+    public class CargoTrackingShipmentMappingService
     {
-        private int tenant;
-        ShipmentQuery query;
-        List<MilestoneData> milestoneDatas;
-        ICargoTrackingContext MyContext;
-        Dictionary<string, string> milestoneCodes;
+        public CargoTrackingShipmentPM cargoShipmentPM;
+        ShipmentOrderPM shipmentOrderPM;
+        ShipmentPM shipmentPM;
 
 
-        public CargoTrackingShipmentDetailsInstanceCreator(int tenant)
+        public void MapCargoTrackingShipmentFields(CargoTrackingShipmentPM cargoShipmentPM)
         {
-            this.tenant = tenant;
-            query = new ShipmentQuery(tenant);
-            milestoneDatas = new List<MilestoneData>();
-            MyContext = CargoTrackingContext.GetContext(tenant);
+            this.cargoShipmentPM = cargoShipmentPM;
+            GetConnectedEntities();
+
+            MapShipmentPMFields();
+            BuildShipmentRoute();
+            FillShipmentPackages();
+            FillCustomsData();
+            FillDocumentsFilings();
+            BuildPartnerCards();
+            BuildShipmentMilstones();
+            SetMilestonesStatus();
+            SetRoutePortsCodes(cargoShipmentPM);
         }
 
-        public CargoTrackingShipmentDetailsResult CreateCargoTrackingShipmentDetailsResultInstance(string houseNumber)
+       
+        private void GetConnectedEntities()
         {
-            CargoTrackingShipmentDetailsResult cargoTrackingShipmentDetailsResult = new CargoTrackingShipmentDetailsResult();
-            CargoTrackingShipmentDetails cargoTrackingShipmentDetails = CreateCargoTrackingShipmentDetailsInstance(houseNumber);
-            if (cargoTrackingShipmentDetails == null) { cargoTrackingShipmentDetailsResult.HasMoreThanOneShipmentWithSameHouse = true; }
-            cargoTrackingShipmentDetailsResult.CargoTrackingShipmentDetails = cargoTrackingShipmentDetails;
-            return cargoTrackingShipmentDetailsResult;
+            GetShipmentOrder();
+            GetShipmentPM();
         }
-        private CargoTrackingShipmentDetails CreateCargoTrackingShipmentDetailsInstance(string houseNumber)
+        private void MapShipmentPMFields()
         {
-            string shipmentId = query.GetShipmentIdIfOneShipmentHaveHouseNumber(houseNumber, tenant);
-            if (string.IsNullOrEmpty(shipmentId)) { return null; }
-
-            return CreateMappedCargoTrackingShipmentDetailsInstance(shipmentId);
+            cargoShipmentPM.CustomsBrokerReference = shipmentPM.CustomFileNumber;
+            cargoShipmentPM.ContainersNumbers = shipmentPM.ContainersNumbers;
+            cargoShipmentPM.IncotermName = shipmentOrderPM != null ? shipmentOrderPM.IncotermName : shipmentPM.IncotermName;
+            cargoShipmentPM.WarehouseLegEnglishName = shipmentPM.WarehouseLegEnglishName;
+            cargoShipmentPM.ImportManifest = shipmentPM.ImportManifest;
+            cargoShipmentPM.TotalTax = shipmentPM.TotalTax;
+            cargoShipmentPM.ShipmentTypeName = shipmentPM.ShipmentTypeName;
+            cargoShipmentPM.ShipmentOrderQuantity = shipmentOrderPM?.Quantity;
+            cargoShipmentPM.ShipmentOrderPONumber = shipmentOrderPM?.PONumber;
         }
-
-        private CargoTrackingShipmentDetails CreateMappedCargoTrackingShipmentDetailsInstance(string shipmentId)
+        private void BuildShipmentRoute()
         {
-            ShipmentPM shipment = query.GetSinglePM(shipmentId, tenant);
-            CargoTrackingShipmentList cargoTrackingShipment = GetCargoTrackingShipmentByShipmentId(shipmentId);
-            return CreateCargoTrackingShipmentDetailsInstance(shipment, cargoTrackingShipment);
+            CargoTrackingShipmentRouteBuilder routeBuilder = new CargoTrackingShipmentRouteBuilder(shipmentOrderPM, shipmentPM);
+            cargoShipmentPM.RoutingSteps = routeBuilder.BuildRoute();
         }
-
-        private CargoTrackingShipmentDetails CreateCargoTrackingShipmentDetailsInstance(ShipmentPM shipment, CargoTrackingShipmentList cargoTrackingShipment)
+        private void FillShipmentPackages()
         {
-            return new CargoTrackingShipmentDetails()
+            List<ShipmentPackagePM> shipmentPackages = GetShipmentPackages();
+
+            cargoShipmentPM.Packages = new List<CargoShipmentPackage>();
+            foreach (var package in shipmentPackages)
             {
-                CourierBLNumber = shipment.House,
-                ShipmentNumber = shipment.ShipmentNumber,
-                CarrierPrefixAWB = GetCarrierPrefixAWB(shipment, cargoTrackingShipment),
-                EstimatedArrivalDateTime = cargoTrackingShipment.ArrivalEstimationDate,
-                ActualArrivalDateTime = cargoTrackingShipment.ArrivalDate,
-                PaymentDateTime = cargoTrackingShipment.CustomsPaymentDate,
-                CustomsClearanceDateTime = cargoTrackingShipment.ClearanceDate,
-                IsPaymentRequired = shipment.IsPaymentRequired,
-                ChargesAmountInNIS = GetTotalChargesInNIS(shipment.PaymentRequestXML),
-                IsCustomerIDNumberRequired = shipment.IsUserIDNumberRequired,
-                LastMileDetails = GetCardConnectedToShipment(shipment),
-                ShipmentMilestones = GetShipmentMilestones(cargoTrackingShipment),
-            };
+                MapShipmentPackage(package);
+            }
         }
+        private void FillCustomsData()
+        {
+            CargoTrackingShipmentCustomsData customsData = GetShipmentCustomsData();
+            BuildCargoShipmentCustomsData(customsData);
+            BuildCustomsTaxDetails(customsData);
+        }
+        private void FillDocumentsFilings()
+        {
+            List<DocumentsFilingPM> documentsFilingPM = GetShipmentDocumentsFilings();
 
-        private CargoTrackingShipmentList GetCargoTrackingShipmentByShipmentId(string shipmentId)
-        {
-            CargoTrackingShipmentListQueryService cargoTrackingService = new CargoTrackingShipmentListQueryService(MyContext);
-            CargoTrackingShipmentList cargoTrackingShipments = cargoTrackingService.GetCargoTrackingShipmentByEntityId(shipmentId, tenant);
-            return cargoTrackingShipments;
-        }
-        private string GetCarrierPrefixAWB(ShipmentPM shipment, CargoTrackingShipmentList cargoTrackingShipment)
-        {
-            if (string.IsNullOrEmpty(shipment.AirlinePrefix)) { return cargoTrackingShipment.Master; }
-            return String.Concat(shipment.AirlinePrefix, "-", cargoTrackingShipment.Master);
-        }
-        private string GetTotalChargesInNIS(string paymentRequestXML)
-        {
-            if (string.IsNullOrEmpty(paymentRequestXML)) { return null; }
-
-            var paymentRequest = LogitudeXmlSerializer.DeserializeObject<RequestPayment>(paymentRequestXML);
-            if (paymentRequest == null) { return null; }
-            return paymentRequest.TotalChargesInNIS;
-        }
-        private LastMileDetails GetCardConnectedToShipment(ShipmentPM shipment)
-        {
-            CardPM cardPM = GetCardConnectedToTrucker(shipment);
-            if (cardPM == null) { return null; }
-            return CreateLastMilestoneDetailsInstance(cardPM);
-        }
-
-        private CardPM GetCardConnectedToTrucker(ShipmentPM shipment)
-        {
-            CardQuery cardQuery = new CardQuery(tenant);
-            CardPM cardPM = cardQuery.GetSinglePM(shipment.TruckerId, tenant);
-            return cardPM;
-        }
-
-        private static LastMileDetails CreateLastMilestoneDetailsInstance(CardPM cardPM)
-        {
-            return new LastMileDetails()
+            cargoShipmentPM.DocumentsFilings = new List<CargoDocumentsFiling>();
+            foreach (var documentFiling in documentsFilingPM)
             {
-                Code = cardPM.Code,
-                EnglishName = cardPM.EnglishName,
-                LocalName = cardPM.LocalName,
-            };
+                MapCargoDocumentsFromDocumentsFilings(documentFiling);
+            }
+        }
+        private void BuildPartnerCards()
+        {
+            CargoTrackingShipmenPartnersCardsBuilder partnerCardsBuilder = new CargoTrackingShipmenPartnersCardsBuilder(shipmentOrderPM, shipmentPM, cargoShipmentPM);
+            cargoShipmentPM.PartnerCards = partnerCardsBuilder.BuildPartnerCards();
         }
 
-        private List<MilestoneData> GetShipmentMilestones(CargoTrackingShipmentList cargoTrackingShipment)
+        public void BuildShipmentMilstones()
         {
-            BuildMileStoneCodesDictionary();
-            List<Milestone> allMilestones = GetAllShipmentMilestones(cargoTrackingShipment);
-            if (allMilestones == null) { return null; }
-            allMilestones.OrderBy(m => m.Id);
-            return FillMilestoneDatasList(cargoTrackingShipment, allMilestones);
-        }
-
-        private void BuildMileStoneCodesDictionary()
-        {
-            milestoneCodes = new Dictionary<string, string>(){
-                { CargoTrackingMilestoneValues.NoMilstone, "NOM"},
-                { CargoTrackingMilestoneValues.Created, "CRT"},
-                { CargoTrackingMilestoneValues.Booking, "BKN"},
-                { CargoTrackingMilestoneValues.Pickup, "PIC"},
-                { CargoTrackingMilestoneValues.FromWarehouse, "FWH"},
-                { CargoTrackingMilestoneValues.Departure, "DPT"},
-                { CargoTrackingMilestoneValues.Arrival, "ATA"},
-                { CargoTrackingMilestoneValues.ToWarehouse, "TWH"},
-                { CargoTrackingMilestoneValues.AssignedToCustomsBroker, "ASG"},
-                { CargoTrackingMilestoneValues.CustomsProcess, "CSP"},
-                { CargoTrackingMilestoneValues.GoodsClassification, "GDC"},
-                { CargoTrackingMilestoneValues.DocumentInspection, "DOC"},
-                { CargoTrackingMilestoneValues.PaymentRequested,  "PRQ"},
-                { CargoTrackingMilestoneValues.PaymentReceived,  "PRC"},
-                { CargoTrackingMilestoneValues.CustomsPayment, "RSH"},
-                { CargoTrackingMilestoneValues.Clearance, "RSG"},
-                { CargoTrackingMilestoneValues.GatepassArrived, "GTA"},
-                { CargoTrackingMilestoneValues.AssignedToTrucker, "TRG"},
-                { CargoTrackingMilestoneValues.DeliveryOut, "DTC"},
-                { CargoTrackingMilestoneValues.Delivered, "POD"},
-                { CargoTrackingMilestoneValues.Invoiced, "INV"},
-            };           
-        }
-
-        private List<Milestone> GetAllShipmentMilestones(CargoTrackingShipmentList cargoTrackingShipment)
-        {
-            return BuildShipmentMilstones(cargoTrackingShipment);
-        }
-
-        public List<Milestone> BuildShipmentMilstones(CargoTrackingShipmentList cargoShipmentPM)
-        {
-            var milestones  = new List<Milestone>
+            cargoShipmentPM.Milestones = new List<Milestone>
             {
                 new Milestone()
                 {
@@ -411,72 +336,178 @@ namespace WebFreight.Web.Helpers.APIHelpers
                 }
             };
 
-            return milestones.OrderByDescending(d => d.Id).ToList();
+            cargoShipmentPM.Milestones = cargoShipmentPM.Milestones.OrderByDescending(d => d.Id).ToList();
         }
-        private List<MilestoneData> FillMilestoneDatasList(CargoTrackingShipmentList cargoTrackingShipment, List<Milestone> allMilestones)
-        {
-            AddNewMilestoneDataToMilestoneDatas(cargoTrackingShipment);
-            List<CargoTrackingMilestoneList> CargoTrackingMilestoneList = GetCargoTrackingMilestoneList();
-            foreach (Milestone milestone in allMilestones.OrderBy(m => m.Id))
-            {
-                CreateMappedMilestoneDataInstance(CargoTrackingMilestoneList, milestone);
-            }
 
-            return milestoneDatas;
-        }
-        private void AddNewMilestoneDataToMilestoneDatas(CargoTrackingShipmentList cargoTrackingShipment)
+        private void SetRoutePortsCodes(CargoTrackingShipmentPM cargoShipmentPM)
         {
-            MilestoneData milestoneData = CreateMilestoneDataInstance(cargoTrackingShipment);
-            milestoneDatas.Add(milestoneData);
+            CargoTrackingPortPM fromPort = GetCargoPort(cargoShipmentPM.FromPortId);
+            CargoTrackingPortPM toPort = GetCargoPort(cargoShipmentPM.ToPortId);
+
+            cargoShipmentPM.RouteFromPortCode = fromPort?.Code;
+            cargoShipmentPM.RouteToPortCode = toPort?.Code;
         }
-        private static MilestoneData CreateMilestoneDataInstance(CargoTrackingShipmentList cargoTrackingShipment)
+        private CargoTrackingPortPM GetCargoPort(string id)
         {
-            return new MilestoneData()
+            CargoTrackingPortQueryService cargoTrackingPortQuery = new CargoTrackingPortQueryService(cargoShipmentPM.Tenant);
+            cargoTrackingPortQuery.InitializeSettings();
+            CargoTrackingPortPM cargoTrackingPortPM = cargoTrackingPortQuery.GetSingle(id, true, false);
+            return cargoTrackingPortPM;
+        }
+
+        private ShipmentOrderPM GetShipmentOrder()
+        {
+            ShipmentOrderQueryService shipmentOrderQuery = new ShipmentOrderQueryService(cargoShipmentPM.Tenant);
+            shipmentOrderPM = shipmentOrderQuery.GetSingle(cargoShipmentPM.EntityId, true, false);
+            return shipmentOrderPM;
+        }
+        private ShipmentPM GetShipmentPM()
+        {
+            ShipmentQuery shipmentQuery = new ShipmentQuery(cargoShipmentPM.Tenant);
+            shipmentPM = shipmentQuery.GetShipmentPMForCargoTrackingByEntityId(cargoShipmentPM.EntityId, cargoShipmentPM.Tenant);
+            return shipmentPM;
+        }
+       
+        private List<ShipmentPackagePM> GetShipmentPackages()
+        {
+            ShipmentQuery shipmentQuery = new ShipmentQuery(cargoShipmentPM.Tenant);
+            List<ShipmentPackagePM> shipmentPackages = shipmentQuery.GetPackagesOfShipment(cargoShipmentPM.Tenant, cargoShipmentPM.EntityId);
+            return shipmentPackages;
+        }
+        private void MapShipmentPackage(ShipmentPackagePM package)
+        {
+            cargoShipmentPM.Packages.Add(new CargoShipmentPackage()
             {
-                EnglishName = "Created",
-                LocalName = "נוצר",
-                Code = "OPN",
-                Date = cargoTrackingShipment.CreateDate.ToString("dd/MM/yyyy"),
-                Time = cargoTrackingShipment.CreateDate.ToString("HH:mm"),
+                Id = package.Id,
+                Tenant = package.Tenant,
+                PackageTypeName = package.PackageTypeName,
+                ContainerNumber = package.ContainerNumber,
+                ShipperSeal = package.ShipperSeal,
+                CarrierSeal = package.CarrierSeal,
+                Quantity = package.Quantity,
+                Weight = package.Weight,
+                Volume = package.Volume,
+                Height = package.Height,
+                Length = package.Length,
+                Width = package.Width
+            });
+        }
+        private CargoTrackingShipmentCustomsData GetShipmentCustomsData()
+        {
+            ShipmentQuery shipmentQuery = new ShipmentQuery(cargoShipmentPM.Tenant);
+            CargoTrackingShipmentCustomsData customsData = shipmentQuery.GetCargoTrackingShipmentCustomsData(cargoShipmentPM.EntityId, cargoShipmentPM.Tenant);
+            return customsData;
+        }
+        private void BuildCargoShipmentCustomsData(CargoTrackingShipmentCustomsData customsData)
+        {
+            if (customsData == null)
+                return;
+            cargoShipmentPM.CustomsData = new ShipmentCustomsData()
+            {
+                DeclarationNumber = customsData.DeclarationNumber,
+                DeclarationStatus = customsData.DeclarationStatus,
+                CurrencySign = customsData.CurrencySign,
+                CurrencyCode = customsData.CurrencyCode,
+                CurrencyName = customsData.CurrencyName,
+                GoodsDescription = customsData.GoodsDescription,
+                ImporterVatAmount = customsData.ImporterVatAmount,
+                TotalValueInNIS = customsData.TotalValueInNIS,
+                TotalValueInForeignCurrency = customsData.TotalValueInForeignCurrency,
+                TotalTax = customsData.TotalTax,
+                ImporterId = customsData.ImporterId,
+                CargoIdentifier1 = customsData.CargoIdentifier1,
+                CargoIdentifier2 = customsData.CargoIdentifier2,
+                CargoIdentifier3 = customsData.CargoIdentifier3
             };
         }
-        private List<CargoTrackingMilestoneList> GetCargoTrackingMilestoneList()
+        private void BuildCustomsTaxDetails(CargoTrackingShipmentCustomsData customsData)
         {
-            CargoTrackingMilestoneListQueryService queryService = new CargoTrackingMilestoneListQueryService(MyContext);
-            List<CargoTrackingMilestoneList> CargoTrackingMilestoneList = queryService.GetList(tenant);
-            return CargoTrackingMilestoneList;
-        }
+            if (customsData == null)
+                return;
 
-        private void CreateMappedMilestoneDataInstance(List<CargoTrackingMilestoneList> cargoTrackingMilestoneList, Milestone milestone)
-        {
-            CargoTrackingMilestoneList cargoTrackingMilestone = cargoTrackingMilestoneList.Find(m => m.Code == milestone.Id.ToString());
-            bool isMilestoneHaveDateOREstimationDate = milestone.EstimationDate != null || milestone.Date != null;
-            if (cargoTrackingMilestone != null && isMilestoneHaveDateOREstimationDate)
+            cargoShipmentPM.CustomsData.TaxDetails = new List<Def.EntityPMs.CargoTrackingShipmentCustomTaxDetails>();
+            foreach (var details in customsData.TaxDetails)
             {
-                MilestoneData milestoneData = CreateMilestoneDataInstance(milestone, cargoTrackingMilestone);
-                milestoneDatas.Add(milestoneData);
+                cargoShipmentPM.CustomsData.TaxDetails.Add(new Def.EntityPMs.CargoTrackingShipmentCustomTaxDetails()
+                {
+                    TaxAmount = details.TaxAmount,
+                    TaxBasis = details.TaxBasis,
+                    TaxTypeName = details.TaxTypeName
+                });
+            }
+        }
+        private List<DocumentsFilingPM> GetShipmentDocumentsFilings()
+        {
+            DocumentsFilingQuery documentsFilingQuery = new DocumentsFilingQuery(cargoShipmentPM.Tenant);
+            List<DocumentsFilingPM> documentsFilingPM = documentsFilingQuery.GetInputDocumentsFilingPMsByEntityId(cargoShipmentPM.EntityId, cargoShipmentPM.Tenant);
+            return documentsFilingPM;
+        }
+        private void MapCargoDocumentsFromDocumentsFilings(DocumentsFilingPM document)
+        {
+            cargoShipmentPM.DocumentsFilings.Add(new CargoDocumentsFiling()
+            {
+                Id = document.Id,
+                Tenant = document.Tenant,
+                DocumentId = document.DocumentId,
+                Code = document.Code,
+                DocumentTypeId = document.DocumentTypeId,
+                DocumentTypeName = document.DocumentTypeName,
+                DocumentTypeCode = document.DocumentTypeCode,
+                CreateDate = document.CreateDate,
+                IsDigitallySigned = document.IsDigitallySigned,
+                SecurityId = document.SecurityId,
+                CustomReference = document.CustomReference
+            });
+        }
+        public void SetMilestonesStatus()
+        {
+            SetCurrentMilestone();
+            SetDoneMilstones();
+            SetFutureMilstoneForShipment();
+        }
+        private void SetCurrentMilestone()
+        {
+            Milestone currentMilstone = GetMostRecentNotEstimatedMilestone(cargoShipmentPM.Milestones);
+            if (currentMilstone != null)
+                currentMilstone.IsCurrent = true;
+        }
+        private void SetDoneMilstones()
+        {
+            Milestone currentMilstone = cargoShipmentPM.Milestones.FirstOrDefault(d => d.IsCurrent == true);
+            if (currentMilstone != null)
+            {
+                var doneMilstones = cargoShipmentPM.Milestones.Where(milstone => milstone.Id < currentMilstone.Id).ToList();
+                doneMilstones.ForEach(doneMilstone =>
+                {
+                    doneMilstone.Done = true;
+                    doneMilstone.IsEstimation = false;
+                });
+            }
+        }
+        private Milestone GetMostRecentNotEstimatedMilestone(List<Milestone> milestones)
+        {
+            return milestones.Where(s => s.IsEstimation != true && s.Date != null).OrderByDescending(s => s.Id).FirstOrDefault();
+        }
+        private void SetFutureMilstoneForShipment()
+        {
+            Milestone futureMilstone = GetMostRecentEstimatedMilestone(cargoShipmentPM.Milestones);
+
+            if (futureMilstone != null)
+            {
+                cargoShipmentPM.FutureMilstoneCode = futureMilstone.Code;
+                cargoShipmentPM.FutureMilstoneName = futureMilstone.Name;
+                cargoShipmentPM.FutureMilstoneDate = futureMilstone.EstimationDate;
             }
         }
 
-        private MilestoneData CreateMilestoneDataInstance(Milestone milestone, CargoTrackingMilestoneList cargoTrackingMilestone)
+        private static Milestone GetMostRecentEstimatedMilestone(List<Milestone> milestones)
         {
-            return new MilestoneData()
-            {
-                EnglishName = cargoTrackingMilestone.EnglishName,
-                LocalName = cargoTrackingMilestone.LocalName,
-                Code = getMilestoneCode(milestone.Id.ToString()),
-                Date = milestone.Date?.ToString("dd/MM/yyyy"),
-                Time = milestone.Date?.ToString("HH:mm"),
-                EstimationDate = milestone.Date == null ? milestone.EstimationDate?.ToString("dd/MM/yyyy") : null,
-                EstimationTime = milestone.Date == null ? milestone.EstimationDate?.ToString("HH:mm") : null,
-                Remarks = milestone.Notes,
-            };
+            return milestones.Where(s => s.IsEstimation == true && s.EstimationDate != null)
+                                                        .OrderByDescending(s => s.Id)
+                                                        .FirstOrDefault();
         }
-        private string getMilestoneCode(string milestoneId)
-        {
-            return milestoneCodes[milestoneId];
-        }
-
-
     }
+
+
+
 }

@@ -295,7 +295,7 @@ export class PublicShipmentDetailsComponent implements OnInit
         }
     }
 
-    public ShipmentWithMilestones: CargoTrackingShipmentWithMilestones;
+    public ShipmentWithMilestones: any;
     public AllMilestoneFields: Milestone[];
     public CompletedMilestoneFields: Milestone[] = [];
     public FuturesMilestoneFields: Milestone[] = [];
