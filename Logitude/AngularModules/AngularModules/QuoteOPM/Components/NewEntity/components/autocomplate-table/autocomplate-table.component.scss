@@ -4,7 +4,7 @@
             padding: 0;
             li.p-autocomplete-item {
                 padding: 0 !important;
-                border-top: 1px solid rgb(167, 169, 172);
+                border-bottom: 1px solid rgb(167, 169, 172);
                 height: 26px;
             }
             
@@ -23,8 +23,8 @@
                 div {
                     // background-image: linear-gradient(to bottom,  #bbbdbd 0%,#8f9192 100%);
                     color: #0d89ec;
-                    border-right: 1px solid #8f8f8f;
-                    border-left: 1px solid #bcbcbc;
+                    border-right: 1px solid #0d89ec;
+                    border-left: 1px solid #bee2ff;
                     background: #e2f0fb;
                 }
             }

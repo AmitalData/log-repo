@@ -1,8 +1,10 @@
 import { Component, Input, OnInit, SimpleChanges, AfterViewInit } from '@angular/core';
 import { FormGroup, FormControl, FormArray, Validators } from '@angular/forms';
+import { TransportModeList } from 'Infrastructure/EntityLists/TransportModeList';
 import { QuoteOPPackagePM } from 'QuoteOPM/EntityPMs/QuoteOPPackagePM';
 import { QuoteOPPM } from 'QuoteOPM/EntityPMs/QuoteOPPM';
 import { pairwise, startWith } from 'rxjs/operators';
+import { ShipmentTypeList } from 'Shipment/EntityLists/ShipmentTypeList';
 import { PackageTypeList } from '../../../../../Common/EntityLists/PackageTypeList';
 import { NewQuoteDataService } from '../../Services/new-quote-data/new-quote-data.service';
 
@@ -20,6 +22,8 @@ export class NewQuoteExpectedOrderComponent implements OnInit, AfterViewInit {
   totalQuantity: number = 0;
   totalGrossWeight: number = 0.00;
   totalVolume: number = 0.00;
+  isExportSeaFcl: boolean = true;
+
   get propForm(): FormGroup {
     return new FormGroup({
       volume: new FormControl(),
@@ -38,8 +42,7 @@ export class NewQuoteExpectedOrderComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.getPackageTypes();
-
-
+    this.onTransportAndShipmentChange();
   }
 
   ngAfterViewInit(): void {
@@ -68,23 +71,26 @@ export class NewQuoteExpectedOrderComponent implements OnInit, AfterViewInit {
     }
   }
 
-
   async getPackageTypes() {
     this.packageTypes = await this.newQuoteDataService.getPackageTypeTable();
   }
+
   ngOnChanges(changes: SimpleChanges) {
     if (!this.formGroup.contains('descriptionOfGoods')) {
       this.addFormControls();
       this.subscribeCtrl();
     }
-  }
-  get isExportSeaFcl(): boolean {
-    return this.formGroup.controls.direction?.value?.Id === "E" &&
+  }  
+
+  onTransportAndShipmentChange(): void {
+    this.isExportSeaFcl =  this.formGroup.controls.direction?.value?.Id === "E" &&
       this.formGroup.controls.transportMode?.value?.Id === 'O' &&
       this.formGroup.controls.shipmentType?.value?.Name === 'FCL'
-  }
-  addFormControls() {
 
+      // if()
+  }
+
+  addFormControls() {
     this.formGroup.addControl('quantity1', new FormControl(null, Validators.required));
     this.formGroup.addControl('quantity2', new FormControl());
     this.formGroup.addControl('quantity3', new FormControl());
@@ -114,7 +120,7 @@ export class NewQuoteExpectedOrderComponent implements OnInit, AfterViewInit {
   }
 
   subscribeCtrl() {
-    if (this.isExportSeaFcl) {
+    // if (this.isExportSeaFcl) {
       this.formGroup.controls.quantity1.valueChanges.subscribe(val => this.EntityPM.PackageType1Quantity = val);
       this.formGroup.controls.quantity2.valueChanges.subscribe(val => this.EntityPM.PackageType2Quantity = val);
       this.formGroup.controls.quantity3.valueChanges.subscribe(val => this.EntityPM.PackageType3Quantity = val);
@@ -123,20 +129,24 @@ export class NewQuoteExpectedOrderComponent implements OnInit, AfterViewInit {
       this.formGroup.controls.quantityType2.valueChanges.subscribe(val => this.EntityPM.PackageType2Id = val);
       this.formGroup.controls.quantityType3.valueChanges.subscribe(val => this.EntityPM.PackageType3Id = val);
       this.formGroup.controls.quantityType4.valueChanges.subscribe(val => this.EntityPM.PackageType4Id = val);
-    }
-    else {
+      
+    // }
+    // else {
       //this.formGroup.controls.packages.valueChanges.subscribe(val => this.EntityPM.QuotePackages = val);
-
+      
       //this.attachPackages();
       /*this.formGroup.controls.grossWeight.valueChanges.subscribe(val=> this.EntityPM.GrossWeight = val);
       this.formGroup.controls.volume.valueChanges.subscribe(val=> this.EntityPM.Volume = val);
       this.formGroup.controls.chargeableWeight.valueChanges.subscribe(val=> this.EntityPM.ChargeableWeight = val);
       this.formGroup.controls.numberOfPackages.valueChanges.subscribe(val=> this.EntityPM.NumberOfPackages = val);*/
-    }
-
+    // }
+    
     this.formGroup.controls.isDangerous.valueChanges.subscribe(val => this.EntityPM.IsDangerous = val);
     this.formGroup.controls.descriptionOfGoods.valueChanges.subscribe(val => this.EntityPM.DescriptionOfGoods = val);
     this.formGroup.controls.notes.valueChanges.subscribe(val => this.EntityPM.Notes = val);
+    
+    this.formGroup.controls.transportMode.valueChanges.subscribe((val:TransportModeList) => this.onTransportAndShipmentChange());      
+    this.formGroup.controls.shipmentType.valueChanges.subscribe((val:ShipmentTypeList) => this.onTransportAndShipmentChange());      
   }
 
   addPackage() {
