@@ -80,6 +80,12 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="UpdatedEntitiesNumber"
+    Type="int">
+    <Constraints
+      Nullable="false" />
+  </Column>
   <Relation
     ForeignKeyColumn="CreatedByUserId"
     ReferencedTable="Users"
