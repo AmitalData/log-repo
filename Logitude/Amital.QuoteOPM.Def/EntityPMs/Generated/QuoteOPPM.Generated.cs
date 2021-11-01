@@ -6795,7 +6795,53 @@ namespace Amital.QuoteOPM.Def.EntityPMs
               }
              set {  deletedQuoteProperties = value; }
 	    }
-	     }
+	  	  private string fromAddressId ;
+	  	  
+       
+	   [CustomValidation(typeof(QuoteOPMValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string FromAddressId  
+	   {
+	    
+	     get
+		{
+		   return fromAddressId;
+		 }
+		 set
+		 {
+		   if(fromAddressId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="FromAddressId",OldValue=fromAddressId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   fromAddressId=value;
+		   }
+			
+		 }
+	   }
+	  private string toAddressId ;
+	  	  
+       
+	   [CustomValidation(typeof(QuoteOPMValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ToAddressId  
+	   {
+	    
+	     get
+		{
+		   return toAddressId;
+		 }
+		 set
+		 {
+		   if(toAddressId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ToAddressId",OldValue=toAddressId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   toAddressId=value;
+		   }
+			
+		 }
+	   }
+   }
    
 }
 	 
