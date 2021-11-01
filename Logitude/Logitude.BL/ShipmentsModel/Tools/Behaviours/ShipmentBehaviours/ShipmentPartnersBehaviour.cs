@@ -34,6 +34,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
             HandleReleasingAgent();
             HandleFreightForwarder();
             HandleInlandDemosticPartners();
+            HandleConsigneeNotImporter();
         }
 
         private void HandleShipper()
@@ -296,6 +297,39 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
                 }
             }
         }
+        private void HandleConsigneeNotImporter()
+        {
+            string cardId = entityPM.ConsigneeNotImporterId;
+
+            if (string.IsNullOrEmpty(cardId))
+            {
+                entityPM.ConsigneeNotImporterName = null;
+                entityPM.ConsigneeNotImporterNote = null;
+                entityPM.ConsigneeNotImporterContactId = null;
+                entityPM.ConsigneeNotImporterAddressId = null;
+                entityPM.ConsigneeNotImporterReference = null;
+            }
+
+            else if (entityPM.IsExternalAPI)
+            {
+                Card card = CardRepository.GetSingleCard(cardId, initializer.Tenant, true);
+                if (card != null)
+                {
+                    entityPM.ConsigneeNotImporterName = card.EnglishName;
+
+                    if (string.IsNullOrWhiteSpace(entityPM.ConsigneeNotImporterContactId))
+                    {
+                        entityPM.ConsigneeNotImporterContactId = card.PrimaryContactId;
+                    }
+
+                    if (string.IsNullOrWhiteSpace(entityPM.ConsigneeNotImporterAddressId))
+                    {
+                        entityPM.ConsigneeNotImporterAddressId = initializer.AddressRepository.GetMainAddressId(cardId, initializer.Tenant);
+                    }
+                }
+            }
+        }
+
         private bool IsShipmentFromToLogbox()
         {
             bool isShipmentFromUNF = entityPM.IsHybrid;
