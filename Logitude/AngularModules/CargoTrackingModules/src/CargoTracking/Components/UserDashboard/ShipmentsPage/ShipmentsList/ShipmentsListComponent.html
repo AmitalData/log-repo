@@ -364,7 +364,7 @@
                                 <div class="subtitle hide-mobile" [attr.src]="SetEstimationORActualDate(shipment)">
                                     {{TitleOfEstimationORActualDate}}</div>
                                 <div class="value truncateText">
-                                    {{ValueOfEstimationORActualDate | date: 'd-MMM-y, HH:mm'}}
+                                    {{ValueOfEstimationORActualDate | date: 'd-MMM-y, HH:mm' | dateTimeFormat}}
                                 </div>
 
                             </div>
@@ -444,7 +444,7 @@
 
 
                                 <div class="subtitle hide-mobile">Estimated Date</div>
-                                <div class="value hide-mobile">{{ shipment.FutureMilstoneDate | date: 'd-MMM-y, HH:mm' }}</div>
+                                <div class="value hide-mobile">{{ shipment.FutureMilstoneDate | date: 'd-MMM-y, HH:mm' | dateTimeFormat }}</div>
                             </div>
                         </div>
 
