@@ -595,6 +595,29 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private string sendTime ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string SendTime  
+	   {
+	    
+	     get
+		{
+		   return sendTime;
+		 }
+		 set
+		 {
+		   if(sendTime != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="SendTime",OldValue=sendTime,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   sendTime=value;
+		   }
+			
+		 }
+	   }
    }
    
 }
