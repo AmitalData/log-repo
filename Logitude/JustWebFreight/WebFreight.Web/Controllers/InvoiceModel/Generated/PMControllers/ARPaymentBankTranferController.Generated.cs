@@ -30,20 +30,17 @@ using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-using WebFreight.Web.Helpers;
-using WebFreight.Web.Security;
-using System.Transactions;
 using Logitude.BL.Helpers;
-using Logitude.Accounting.Data.EntityPOCOs;
-using Logitude.Accounting.Def.EntityPMs;
-using Logitude.Accounting.Data;
-using Logitude.Accounting.BL;
-using Logitude.Accounting.Data.EntityLists;
-using Logitude.Accounting.BL.EntityUpdateServices;
-using Logitude.Accounting.Data.EntityListQueryServices;
-using Logitude.Accounting.BL.EntityQueryServices;
+using System.Transactions;
+using Simplog.Data.InvoiceModel.EntityPOCOs;
+using Logitude.BL.InvoiceModel.EntityPMs;
+using Simplog.Data.InvoiceModel;
+using Logitude.BL.InvoiceModel;
+using Logitude.BL.InvoiceModel.EntityLists;
+using Logitude.BL.InvoiceModel.EntityQueries;
+using Logitude.BL.InvoiceModel.Tools.EntityService;
 
-namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
+namespace WebFreight.Web.Controllers.InvoiceModel.Generated.PMControllers
 { 
 
     
@@ -55,20 +52,18 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
         {
 		  try
             {
-                string logKey = PerformanceLogger.LogCurrentTime();
+			    string logKey = PerformanceLogger.LogCurrentTime();
 			    string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                ARPaymentBankTranferQuery aRPaymentBankTranferQuery = new ARPaymentBankTranferQuery(authToken.Tenant);
+                ARPaymentBankTranferPM aRPaymentBankTranferPM = aRPaymentBankTranferQuery.GetSinglePM(id, authToken.Tenant);
                 
-                IAccountingContext MyContext = AccountingContext.GetContext(authToken.Tenant);
-                ARPaymentBankTranferQueryService aRPaymentBankTranferQuery = new ARPaymentBankTranferQueryService(MyContext);
-				aRPaymentBankTranferQuery.InitializeSettings();
-                ARPaymentBankTranferPM aRPaymentBankTranferPM = aRPaymentBankTranferQuery.GetSingle(id,true,false);
-
 				PerformanceLogger.AddServerExecutionTimeHeader(logKey);
-            
+
                 return Request.CreateResponse(HttpStatusCode.OK, aRPaymentBankTranferPM);
-			 }
+			 
+			}
             catch (Exception ex)
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
@@ -78,34 +73,34 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 
          
 		
-		
-	   public HttpResponseMessage Post(ARPaymentBankTranferPM entityPM)
+
+        public HttpResponseMessage Post(ARPaymentBankTranferPM entityPM)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
+                    string logKey = PerformanceLogger.LogCurrentTime();
                     using (TransactionScope scope = TransactionFactory.GetTransaction())
                     {
-                        string logKey = PerformanceLogger.LogCurrentTime();
                         string token = HttpContext.Current.Request.Headers["Token"];
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                    
-                        IAccountingContext MyContext = AccountingContext.GetContext(entityPM.Tenant);
-                        ARPaymentBankTranferUpdateService service = new ARPaymentBankTranferUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);
-                        entityPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert;
-                        service.Update(entityPM, true);
-
+                
+                        IInvoiceContext MyContext = InvoiceContext.GetContext(entityPM.Tenant);
+                        ARPaymentBankTranferService service = new ARPaymentBankTranferService(MyContext, entityPM.Tenant);
+                        service.Create(entityPM);
+				
                         //ObjectTableRepository objectTabelRepository = new ObjectTableRepository(entityPM.Tenant);
-                        //ObjectTable objectTable = objectTabelRepository.GetObjectTableByName("ARPaymentBankTranfer", 0, true);
+                        // ObjectTable objectTable = objectTabelRepository.GetObjectTableByName("ARPaymentBankTranfer", 0, true);
                         //string email = HttpContext.Current.User.Identity.Name;
-                        //ContactRepository contactRepository = new ContactRepository(entityPM.Tenant);
+                        // ContactRepository contactRepository = new ContactRepository(entityPM.Tenant);
                         //Contact loggedContact = contactRepository.GetSingleContactByEmail(email, entityPM.Tenant);
                         //if (loggedContact != null)
                         //{
-                           //ActivityLog.AddAcitivityLog(entityPM.Id, objectTable.Id, entityPM.Tenant, "N", loggedContact.Id);
+                        //    ActivityLog.AddAcitivityLog(entityPM.Id, objectTable.Id, entityPM.Tenant, "U", loggedContact.Id);
                         //}
+
                         scope.Complete();
                         PerformanceLogger.AddServerExecutionTimeHeader(logKey);
 
@@ -131,18 +126,29 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
             {
                 try
                 {
+                    string logKey = PerformanceLogger.LogCurrentTime();
                     using (TransactionScope scope = TransactionFactory.GetTransaction())
                     {
-                        string logKey = PerformanceLogger.LogCurrentTime();					                        
                         string token = HttpContext.Current.Request.Headers["Token"];
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
 
-                        IAccountingContext MyContext = AccountingContext.GetContext(entityPM.Tenant);
-                        ARPaymentBankTranferUpdateService service = new ARPaymentBankTranferUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);
-						service.InitializeEntityPM(entityPM);
-                        entityPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
-                        service.Update(entityPM, true);
+                        string entityName = "ARPaymentBankTranfer" + entityPM.Id + entityPM.Tenant;
+                        string entityPmName = "ARPaymentBankTranferPM" + entityPM.Id + entityPM.Tenant;
+                        if (CacheManager.CacheWrapper.Get(entityName) != null)
+                        {
+                            CacheManager.CacheWrapper.Invalidate(entityName);
+                        }
+                        if (CacheManager.CacheWrapper.Get(entityPmName) != null)
+                        {
+                            CacheManager.CacheWrapper.Invalidate(entityPmName);
+                        }
+                
+                        IInvoiceContext MyContext = InvoiceContext.GetContext(entityPM.Tenant);
+                        ARPaymentBankTranferService service = new ARPaymentBankTranferService(MyContext, entityPM.Tenant);
+ 
+                        service.Update(entityPM);
+
                         //ObjectTableRepository objectTabelRepository = new ObjectTableRepository(entityPM.Tenant);
                         //ObjectTable objectTable = objectTabelRepository.GetObjectTableByName("ARPaymentBankTranfer", 0, true);
                         //string email = HttpContext.Current.User.Identity.Name;
@@ -150,11 +156,13 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                         //Contact loggedContact = contactRepository.GetSingleContactByEmail(email, entityPM.Tenant);
                         //if (loggedContact != null)
                         //{
-                           //ActivityLog.AddAcitivityLog(entityPM.Id, objectTable.Id, entityPM.Tenant, "U", loggedContact.Id);
+                        //   ActivityLog.AddAcitivityLog(entityPM.Id, objectTable.Id, entityPM.Tenant, "U", loggedContact.Id);
                         //}
+
 
                         scope.Complete();
                         PerformanceLogger.AddServerExecutionTimeHeader(logKey);
+
                         return Request.CreateResponse(HttpStatusCode.OK, entityPM);
                     }
                 }

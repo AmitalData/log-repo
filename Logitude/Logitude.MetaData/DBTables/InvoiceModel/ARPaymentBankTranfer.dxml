@@ -3,7 +3,7 @@
   Name="ARPaymentBankTranfers"
   Schema="dbo"
   DBType="Main"
-  Module="Accounting">
+  Module="Invoice">
   <Column
     Name="Id"
     Type="varchar"

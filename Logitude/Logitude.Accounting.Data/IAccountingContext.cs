@@ -22,7 +22,6 @@ namespace Logitude.Accounting.Data
 		 IDbSet<AccountingIntegrityCheck> AccountingIntegrityChecks { get; }
 		 IDbSet<AccountingNote> AccountingNotes { get; }
 		 IDbSet<AccountingPeriod> AccountingPeriods { get; }
-		 IDbSet<ARPaymentBankTranfer> ARPaymentBankTranfers { get; }
 		 IDbSet<ARPaymentCheque> ARPaymentCheques { get; }
 		 IDbSet<ARPaymentChequeStatus> ARPaymentChequeStatuses { get; }
 		 IDbSet<ARPaymentsJournal> ARPaymentsJournals { get; }

@@ -576,7 +576,6 @@
     <Compile Include="EntityDataMappings\VatReportStatusDataMapping.cs" />
     <Compile Include="EntityDataMappings\WithholdingTaxDeductionTypeDataMapping.cs" />
     <Compile Include="EntityPMs\JournalLinePM.cs" />
-    <Compile Include="EntityQueryServiceExt\ARPaymentBankTranferQueryServiceExt.cs" />
     <Compile Include="EntityQueryServiceExt\LedgerTransactionQueryServiceExt.cs" />
     <Compile Include="EntityQueryServiceExt\ARPaymentChequeQueryServiceExt.cs" />
     <Compile Include="EntityQueryServiceExt\BankAccountQueryServiceExt.cs" />
@@ -703,7 +702,6 @@
     <Compile Include="EntityQueryServices\WithholdingTaxDeductionTypeQueryService.cs" />
     <Compile Include="EntityUpdateServiceExt\ARPaymentChequeUpdateServiceExt.cs" />
     <Compile Include="EntityUpdateServiceExt\GLAccountCardsDataUpdateService.cs" />
-    <Compile Include="EntityUpdateServiceExt\ARPaymentBankTranferUpdateServiceExt.cs" />
     <Compile Include="EntityUpdateServiceExt\InterestReportsConnectedInvoiceUpdateServiceExt.cs" />
     <Compile Include="EntityUpdateServiceExt\InterestReportUpdateServiceExt.cs" />
     <Compile Include="EntityUpdateServiceExt\BankCodeUpdateServiceExt.cs" />

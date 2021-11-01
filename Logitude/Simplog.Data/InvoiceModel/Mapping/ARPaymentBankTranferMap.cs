@@ -8,12 +8,11 @@ using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using System.Data.Entity.ModelConfiguration;
-using Logitude.Accounting.Data.EntityPOCOs;
-using Logitude.Accounting.Data;
- 
-namespace Logitude.Accounting.Data.EntityMapping
+
+
+namespace Simplog.Data.InvoiceModel.Mapping
 {
- 
+
     public class ARPaymentBankTranferMap : EntityTypeConfiguration<ARPaymentBankTranfer>
     {
 	    string dbms;

@@ -650,6 +650,7 @@
     <Compile Include="InvoiceModel\Mapping\ARInvoiceStockLineMap.cs" />
     <Compile Include="InvoiceModel\Mapping\ARInvoiceStockMap.cs" />
     <Compile Include="InvoiceModel\Mapping\ARInvoiceStocksStatusMap.cs" />
+    <Compile Include="InvoiceModel\Mapping\ARPaymentBankTranferMap.cs" />
     <Compile Include="InvoiceModel\Mapping\ARPaymentChequeReplicaMap.cs" />
     <Compile Include="InvoiceModel\Mapping\ARPaymentChequeStatusReplicaMap.cs" />
     <Compile Include="InvoiceModel\Mapping\BankAccountLiteMap.cs" />

@@ -254,7 +254,6 @@
     <Compile Include="EntityLists\Generated\VatReportStatusList.Generated.cs" />
     <Compile Include="EntityMapping\AccountingIntegrityCheckMap.cs" />
     <Compile Include="EntityMapping\AccountingNoteMap.cs" />
-    <Compile Include="EntityMapping\ARPaymentBankTranferMap.cs" />
     <Compile Include="EntityMapping\ARPaymentsJournalMap.cs" />
     <Compile Include="EntityMapping\AutomaticExternalReconcileMethodMap.cs" />
     <Compile Include="EntityMapping\BankPageEntryTypeMap.cs" />

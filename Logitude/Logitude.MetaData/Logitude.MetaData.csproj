@@ -1099,6 +1099,9 @@
     <None Include="EntityFiles\InfrastructureModel\MultiEntityUpdateLog.lxml" />
     <None Include="EntityFiles\InfrastructureModel\QueryExportExecutionLog.lxml" />
     <None Include="EntityFiles\InfrastructureModel\WorkerRoleName.lxml" />
+    <None Include="EntityFiles\InvoiceModel\ARPaymentBankTranfer.lxml">
+      <SubType>Component</SubType>
+    </None>
     <None Include="EntityFiles\InvoiceModel\QBOGlobalTaxCalculation.lxml" />
     <None Include="EntityFiles\QuoteModel\QuoteComputedField.lxml" />
     <None Include="EntityFiles\QuoteModel\QuoteSalesTotal.lxml" />
