@@ -680,6 +680,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
 			this.UIProperties.SetEnabled("CreditCardTypeId", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("BranchId", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("ChequeAmount", this.ObjectTableName, false);
+            this.UIProperties.SetEnabled("BankTransferAmount", this.ObjectTableName, false);
 			if (this.isFullAccounting) {
 				this.UIProperties.SetEnabled("BankAccountId", this.ObjectTableName, false);
 			}
@@ -698,6 +699,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
 			this.UIProperties.SetEnabled("CreditCardTypeId", this.ObjectTableName, true);
 			this.UIProperties.SetEnabled("BranchId", this.ObjectTableName, true);
             this.UIProperties.SetEnabled("ChequeAmount", this.ObjectTableName, true);
+            this.UIProperties.SetEnabled("BankTransferAmount", this.ObjectTableName, true);
 
 			if (AppTool.IsNullOrEmpty(this.EntityPM.BillToId)) {
 				this.UIProperties.SetEnabled("BillToAddressId", this.ObjectTableName, false);
