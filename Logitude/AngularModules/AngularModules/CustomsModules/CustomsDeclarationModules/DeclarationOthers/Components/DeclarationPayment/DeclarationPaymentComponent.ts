@@ -355,7 +355,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
         this.paymentPM.FuturePaymentDateTime = newValue;
     }
 
-    public get AutomaticPayment() { return (this.paymentPM.AutomaticPayment ? this.paymentPM.AutomaticPayment : null) }
+    public get AutomaticPayment() { return (this.paymentPM ? this.paymentPM.AutomaticPayment : 0) }
     public set AutomaticPayment(newValue: number) {
         this.paymentPM.AutomaticPayment = newValue;
     }
@@ -2402,10 +2402,13 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
                 .subscribe(res1 => {
                 });
         } else {
-            if (this.AutomaticPayment != 1)
+            if (this.AutomaticPayment != 1){
                 this.declarationMessagesService.PostSendPaymentOnly(params)
                     .subscribe(res1 => {
                     });
+                }else{
+                    SessionLocator.SelectedSession.CloseCurrentWindow();
+                }
         }
     }
 
