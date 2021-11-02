@@ -243,7 +243,7 @@ namespace Logitude.BL.InvoiceModel.CoreBL
         {   
             ARPaymentBankTranfer poco = new ARPaymentBankTranfer();
             ARPaymentBankTranferMapping.MapEntity(aRPaymentBankTranfer, poco, true);
-            paymentPM.ARPaymentBankTranfers.Add(aRPaymentBankTranfer);
+            
             paymentBankTranferRepository.Add(poco);
             paymentBankTranferRepository.SubmitChanges();
         }
@@ -293,6 +293,7 @@ namespace Logitude.BL.InvoiceModel.CoreBL
                 ForeignAmount = (decimal)arpaymentPM.AmountInPaymentCurrency.Value,
                 ChangeSetOp = ChangeSetOperation.Insert
             };
+            paymentPM.ARPaymentBankTranfers.Add(aRPaymentBankTranfer);
             return aRPaymentBankTranfer;
         }
 
