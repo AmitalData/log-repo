@@ -8,6 +8,7 @@ using Logitude.Customs.BL.EntityUpdateServices;
 using Logitude.Customs.BL.Messaging.Customs;
 using Logitude.Customs.BL.Messaging.U2L.ImportDeclaration;
 using Logitude.Customs.Data;
+using Logitude.Customs.Data.EntityKeys;
 using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Data.Repsitories;
 using Logitude.Customs.Def.EntityPMs;
@@ -154,7 +155,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommMasterCourier
                     }
                     this._CourierMasterPM.ChangeSetOp = ChangeSetOperation.Update;
                 }
-                
+
                 _CourierMasterPM.AirlineId = airlineId;
                 _CourierMasterPM.MAWB = _LogitudeMasterCourier.MAWB;
                 if(string.IsNullOrWhiteSpace(_CourierMasterPM.MAWBTypeCode))_CourierMasterPM.MAWBTypeCode = "740";
@@ -253,6 +254,19 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommMasterCourier
                 }
                 if (!string.IsNullOrWhiteSpace(_LogitudeMasterCourier.UnifreightLeadingFile) && string.IsNullOrWhiteSpace(_CourierMasterPM.UnifreightLeadingFile)) _CourierMasterPM.UnifreightLeadingFile = _LogitudeMasterCourier.UnifreightLeadingFile;
 
+                if (_LOGIMASTERCOUR.WAYBILLS != null && _LOGIMASTERCOUR.WAYBILLS[0].wb != null)
+                {
+                    if (this._LOGIMASTERCOUR.WAYBILLS.FirstOrDefault().wb.Count() > 0)
+                    {
+                        MyGenericResponseObj.Stage = "Start Connect Declarations To Master By WayBill ";
+                        foreach (var wayBill in this._LOGIMASTERCOUR.WAYBILLS[0].wb)
+                        {
+                            ConnectDeclarationToMasterByWayBill(wayBill, _LogitudeMasterCourier.MAWB);
+                        }
+                        MyGenericResponseObj.Stage = "Done Connecting Declarations To Master By WayBill";
+                    }
+                }
+
                 myCourierMasterUpdateService.Update(this._CourierMasterPM, true);
 
                 AppendLogLine("CourierMasterUpdate:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
@@ -292,6 +306,85 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommMasterCourier
             }
             
         }
+
+        private void ConnectDeclarationToMasterByWayBill(string wayBill, string mAWB)
+        {
+            var myQueryService = new DeclarationQueryService(_context);
+            var MyDeclarationIDs = myQueryService.GetListByCourierHAWB(wayBill, this._CourierMasterPM.Tenant);
+            if(MyDeclarationIDs == null || String.IsNullOrWhiteSpace(MyDeclarationIDs.FirstOrDefault()))
+            {
+                AppendLogLine("couldn't find Declaration by wayBill " + wayBill);
+                return;
+            }
+            foreach (var id in MyDeclarationIDs)
+            {
+                DeclarationPM MyDeclarationPM = myQueryService.GetSingle(id, false, true);
+                if(MyDeclarationPM != null && MyDeclarationPM.Id != null)
+                {
+                    CheckMasterToUpdate(MyDeclarationPM, mAWB);
+                }
+                else
+                {
+                    AppendLogLine("couldn't find Declaration by wayBill " + wayBill);
+                }
+            }
+        }
+
+        
+
+        private void CheckMasterToUpdate(DeclarationPM _MyDeclarationPM, string mAWB)
+        {
+            
+            if (_CourierMasterPM != null)
+            {
+                CourierDeclarationPM _CourierDeclarationPM = new CourierDeclarationPM();
+                var myCourierDeclarationQueryService = new CourierDeclarationQueryService(_context);
+                var myCourierDeclarationUpdateService = new CourierDeclarationUpdateService(_context, new Dictionary<string, IContext>(), _CourierMasterPM.Tenant);
+                _CourierDeclarationPM = myCourierDeclarationQueryService.GetSingle(_MyDeclarationPM.Id, _CourierMasterPM.Id, false, true);
+                if (_CourierDeclarationPM == null)
+                {
+                    _CourierDeclarationPM = new CourierDeclarationPM();
+                    _CourierDeclarationPM.ChangeSetOp = ChangeSetOperation.Insert;
+                    _CourierDeclarationPM.DeclarationId = _MyDeclarationPM.Id;
+                    _CourierDeclarationPM.CourierMasterId = _CourierMasterPM.Id;
+                }
+                else
+                {
+                    _CourierDeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
+                }
+                if (_CourierDeclarationPM.SequenceNumeric == null)
+                {
+                    int? sequenceNumericMax = myCourierDeclarationQueryService.GetCourierMasterMaxSequenceNumeric(_CourierDeclarationPM.CourierMasterId, _CourierMasterPM.Tenant);
+                    if (sequenceNumericMax == null)
+                    {
+                        sequenceNumericMax = 0;
+                    }
+                    _CourierDeclarationPM.SequenceNumeric = sequenceNumericMax + 1;
+                }
+                _CourierDeclarationPM.Tenant = _CourierMasterPM.Tenant;
+
+                _context = CustomContext.GetContext(ResolvedTenant());
+
+                AppendLogLine("try to update CourierDeclaration for DeclarationPM.Id: " + _MyDeclarationPM.Id + " CourierMasterPM.Id: " + _CourierMasterPM.Id);
+                try
+                {
+                    myCourierDeclarationUpdateService.Update(_CourierDeclarationPM, true);
+                }
+                catch (DbEntityValidationException ex)
+                {
+                    var FormatedException = ExceptionFormatUtil.GetFormated(ex);
+                    AppendLogLine("ProccessRequest():Exception " + FormatedException.ToString() + Environment.NewLine + "---------------------------------------------");
+                    return;
+                }
+                catch (Exception e)
+                {
+                    AppendLogLine("ProccessRequest():Exception " + e.ToString() + Environment.NewLine + "---------------------------------------------");
+                    return;
+                }
+            }
+        }
+
+
 
         private string TranslateIntegratorIndex(string integratorIndex)
         {
