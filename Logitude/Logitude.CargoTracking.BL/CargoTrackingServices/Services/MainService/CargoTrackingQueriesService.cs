@@ -34,41 +34,53 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.MainService
 			var query = $@"
 				select * from (
 					select 
-					id as OrderId, 
-					Tenant as OrderTenant , 
-					ShipmentId as OrderForwardingShipmentHeaderId , 
-					CustomerId as OrderCustomerId , 
-					TransportModeId as OrderTransportModeId , 
-					Master as OrderMaster , 
-					House as OrderHouse , 
-					OrderNumber as OrderShipmentNumber , 
-					OriginPortId as OrderFromPortId , 
-					DestinationPortId as OrderToPortId , 
-					ShipperId as OrderShipperId , 
-					ConsigneeId as OrderConsigneeId , 
-					GrossWeight as OrderGrossWeight , 
-					Volume as OrderVolume , 
-					PickupActualDateTime as OrderPickupDate , 
-					CreateDate as OrderCreateDate , 
-					SecurityKey as OrderSecurityKey , 
-					CasualSupplierName as OrderConsigneeName , 
-					CasualImporterName as OrderShipperName , 
-					CustomerReferences as OrderCustomerReference , 
-					PickupEstimatedDateTime as OrderPickupEstimationDate , 
-					ATD as OrderDepartureDate , 
-					ETD as OrderDepartureEstimationDate , 
-					ATA as OrderArrivalDate , 
-					ETA as OrderArrivalEstimationDate , 
-					Quantity as OrderPackagesQuantity , 
-					DirectionId as OrderDirectionId , 
-					ShipmentLevelCode as OrderShipmentLevelCode , 
-					ShipmentNumber as OrderForwardingShipmentNumber , 
-					LastExceptionDate as OrderLastExceptionDate , 
-					LastExceptionDescription as OrderLastExceptionDescription , 
-					BookingConfirmationDate as OrderBookingDate , 
-					UpdateDate as OrderAutomaticLastUpdateDate
+					OrderTable.id as OrderId, 
+					OrderTable.Tenant as OrderTenant , 
+					OrderTable.ShipmentId as OrderForwardingShipmentHeaderId , 
+					OrderTable.CustomerId as OrderCustomerId , 
+					OrderTable.TransportModeId as OrderTransportModeId , 
+					OrderTable.Master as OrderMaster , 
+					OrderTable.House as OrderHouse , 
+					OrderTable.OrderNumber as OrderShipmentNumber , 
+					OrderTable.OriginPortId as OrderFromPortId , 
+					OrderTable.DestinationPortId as OrderToPortId , 
+					OrderTable.ShipperId as OrderShipperId , 
+					OrderTable.ConsigneeId as OrderConsigneeId , 
+					OrderTable.GrossWeight as OrderGrossWeight , 
+					OrderTable.Volume as OrderVolume , 
+					OrderTable.PickupActualDateTime as OrderPickupDate , 
+					OrderTable.CreateDate as OrderCreateDate , 
+					OrderTable.SecurityKey as OrderSecurityKey , 
+					OrderTable.CustomerReferences as OrderCustomerReference , 
+					OrderTable.PickupEstimatedDateTime as OrderPickupEstimationDate , 
+					OrderTable.ATD as OrderDepartureDate , 
+					OrderTable.ETD as OrderDepartureEstimationDate , 
+					OrderTable.ATA as OrderArrivalDate , 
+					OrderTable.ETA as OrderArrivalEstimationDate , 
+					OrderTable.Quantity as OrderPackagesQuantity , 
+					OrderTable.DirectionId as OrderDirectionId , 
+					OrderTable.ShipmentLevelCode as OrderShipmentLevelCode , 
+					OrderTable.ShipmentNumber as OrderForwardingShipmentNumber , 
+					OrderTable.LastExceptionDate as OrderLastExceptionDate , 
+					OrderTable.LastExceptionDescription as OrderLastExceptionDescription , 
+					OrderTable.BookingConfirmationDate as OrderBookingDate , 
+					OrderTable.UpdateDate as OrderAutomaticLastUpdateDate,
+					(case 
+						when OrderTable.DirectionId = 'E' AND OrderTable.ConsigneeId IS NOT NULL 
+							then ConsigneeCardForOrder.EnglishName 
+						when OrderTable.DirectionId = 'E' AND OrderTable.ConsigneeId IS NULL 
+							then OrderTable.CasualSupplierName end
+					) as OrderConsigneeName,
+					(case 
+						when OrderTable.DirectionId = 'I' AND OrderTable.ShipperId IS NOT NULL 
+							then ShipperCardForOrder.EnglishName	
+						when OrderTable.DirectionId = 'I' AND OrderTable.ShipperId IS NULL 
+							then OrderTable.CasualImporterName end 
+					) as OrderShipperName 
 					
-					from ShipmentOrders
+					from ShipmentOrders OrderTable
+					LEFT OUTER JOIN dbo.Cards ConsigneeCardForOrder    ON ConsigneeCardForOrder.Id = ConsigneeId
+					LEFT OUTER JOIN dbo.Cards ShipperCardForOrder    ON ShipperCardForOrder.Id = ShipperId
 				
 					where 
 					
@@ -152,7 +164,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.MainService
 					
 					{forwardingShipmentCondition}
 				
-				) as  ForwardingShipmentTable1 on OrderShipmentTable.OrderId = ForwardingShipmentTable1.ForwardingId
+				) as  ForwardingShipmentTable1 on OrderShipmentTable.OrderForwardingShipmentHeaderId = ForwardingShipmentTable1.ForwardingId
 				full join 
 				(
 					select CustomShipmentTable.Id as CustomId, 
@@ -200,6 +212,8 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.MainService
 					CustomShipmentTable.AssginedToCustomsAgentDate  as CustomAssignedCustomsAgentDate , 
 					CustomShipmentTable.AutomaticLastUpdateDate as CustomAutomaticLastUpdateDate, 
 					CustomShipmentTable.GrossWeightUnitCode as CustomGrossWeightUnitCode , 
+					CustomShipmentTable.ExceptionDate as CustomExceptionDate , 
+					CustomShipmentTable.LastExceptionDescription as CustomCurrentMilestoneExceptionDescription , 
 					CustomShipmentTable.ShipmentTypeId as CustomShipmentTypeCode , 
 					MasterTableForCustom.ImportManifest as CustomImportManifest, 
 					MasterTableForCustom.MainCarriageATD as CustomDepartureDate , 
@@ -210,8 +224,8 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.MainService
 					AdditionalDataTableForCustom.DocumentInspection as CustomDocumentInspectionDate , 
 					AdditionalDataTableForCustom.GoodsClassification as CustomGoodsClassificationDate , 
 					AdditionalDataTableForCustom.IsPaymentRequired as CustomIsPaymentRequired , 
-					AdditionalDataTableForCustom.PaymentDateTime as CustomPaymentDateTime ,
-					AdditionalDataTableForCustom.PaymentRequestDateTime as CustomPaymentReceivedDate ,
+					AdditionalDataTableForCustom.PaymentDateTime as CustomPaymentDateTime , 
+					AdditionalDataTableForCustom.PaymentRequestDateTime as CustomPaymentReceivedDate , 
 					AdditionalDataTableForCustom.GatepassDocumentsReady as CustomGatepassArrivedDate , 
 					ComputedTableForCustom.FinalDeliveryATD as CustomDeliveryDate , 
 					ComputedTableForCustom.FinalDeliveryETD  as CustomDeliveryEstimationDate , 
@@ -297,12 +311,12 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.MainService
 			var tenantCondishin = "";
 			if (tenant != null)
 			{
-				tenantCondishin = $"OrderShipmentTable.Tenant = {tenant}  and ";
+				tenantCondishin = $"OrderTable.Tenant = {tenant}  and ";
 			}
 			var condishins = $@"
             
-				CreateDate >= '{fromDate.Value.Date.ToString("MM/dd/yyyy hh:mm:ss.fff tt")}' and
-			    CreateDate <= '{toDate.Value.Date.ToString("MM/dd/yyyy hh:mm:ss.fff tt")}'
+				OrderTable.CreateDate >= '{fromDate.Value.Date.ToString("MM/dd/yyyy hh:mm:ss.fff tt")}' and
+			    OrderTable.CreateDate <= '{toDate.Value.Date.ToString("MM/dd/yyyy hh:mm:ss.fff tt")}'
                 {tenantCondishin}
 			
             ";
@@ -339,7 +353,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.MainService
 
 			var condishins = $@"
             
-				UpdateDate > '{lastUpdate}'
+				OrderTable.UpdateDate > '{lastUpdate}'
 			
             ";
 			return condishins;

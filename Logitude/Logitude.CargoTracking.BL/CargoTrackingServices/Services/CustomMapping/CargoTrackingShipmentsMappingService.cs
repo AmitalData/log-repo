@@ -156,7 +156,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CustomMapping
             item.DirectionId = row.OrderDirectionId;
             item.ShipmentLevelCode = row.OrderShipmentLevelCode;
             //item.ForwardingShipmentNumber = row.OrderForwardingShipmentNumber;
-            item.CurrentMilestoneExceptions = row.OrderLastExceptionDate?.ToString().Concat(", ") + row.OrderLastExceptionDescription;
+            item.CurrentMilestoneExceptions = row.OrderLastExceptionDate?.ToString("MM/dd/yyyy hh:mm:ss.fff tt").Concat(", ") + row.OrderLastExceptionDescription;
             item.BookingDate = row.OrderBookingDate;
         }
         private void FillForwardingFeilds(CargoTrackingShipment item, CargoTrackingShipmentQueryResult row)
@@ -240,6 +240,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CustomMapping
             item.PaymentReceivedEstomationDate = row.ForwardingPaymentReceivedEstomationDate;
             item.PaymentReceivedDate = row.ForwardingPaymentReceivedDate;
             item.PaymentReceivedNotes = row.ForwardingPaymentReceivedNotes;
+            item.CurrentMilestoneExceptions = row.ForwardingExceptionDate?.ToString("MM/dd/yyyy hh:mm:ss.fff tt").Concat(", ") + row.ForwardingCurrentMilestoneExceptionDescription;
 
         }
         private void FillCustomFeilds(CargoTrackingShipment item, CargoTrackingShipmentQueryResult row)
@@ -326,6 +327,8 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CustomMapping
             item.PaymentRequiredNotes = row.CustomPaymentRequiredNotes;
             item.CustomsPaymentDate = row.CustomPaymentDateTime;
             item.PaymentReceivedEstomationDate = row.CustomPaymentReceivedEstomationDate;
+            item.CurrentMilestoneExceptions = row.ForwardingExceptionDate?.ToString("MM/dd/yyyy hh:mm:ss.fff tt").Concat(", ") + row.ForwardingCurrentMilestoneExceptionDescription;
+
 
         }
         private void SetForwardingWarehouseFeilds(CargoTrackingShipment item, CargoTrackingShipmentQueryResult row)

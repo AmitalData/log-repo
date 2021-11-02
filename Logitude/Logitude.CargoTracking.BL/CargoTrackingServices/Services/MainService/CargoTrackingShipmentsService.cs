@@ -138,20 +138,20 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.MainService
                 forwarding = map.GetForwarding(row);
                 CargoTrackingShipments.Add(forwarding);
                 if (order != null)
-                    SyncMilestones(order, forwarding);
+                    SyncForwardingMilestones(order, forwarding);
             }
             if (row.CustomShipmentLevelCode == Codes.CustomShipmentLevelCode && CheckIsAddedOrExist(Codes.CustomType, row.CustomId, addRowsDictionary))
             {
                 custom = map.GetCustom(row);
                 CargoTrackingShipments.Add(custom);
                 if (forwarding != null)
-                    SyncMilestones(forwarding, custom);
+                    SyncCustomeMilestones(forwarding, custom);
             }
             return CargoTrackingShipments;
         }
-        private void SyncMilestones(CargoTrackingShipment from, CargoTrackingShipment to)
+        private void SyncCustomeMilestones(CargoTrackingShipment from, CargoTrackingShipment to)
         {
-            //from order
+            //from forwarding
             to.CreateDate = from.CreateDate;
             to.BookingDate = from.BookingDate ?? to.BookingDate;
             to.PickupEstimationDate = from.PickupEstimationDate;
@@ -167,8 +167,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.MainService
             to.DepartureEstimationDate = from.DepartureEstimationDate ?? to.DepartureEstimationDate;
             to.ArrivalDate = from.ArrivalDate ?? to.ArrivalDate;
             to.ArrivalEstimationDate = from.ArrivalEstimationDate ?? to.ArrivalEstimationDate;
-
-            //from forwarding if not exist in custom
+            //from Customs
             to.WarehouseLegActualEntryDate = to.WarehouseLegActualEntryDate ?? from.WarehouseLegActualEntryDate;
             to.WarehouseLegExpectedEntryDate = to.WarehouseLegExpectedEntryDate ?? from.WarehouseLegExpectedEntryDate;
             to.WarehouseLegRemarks = to.WarehouseLegRemarks ?? from.WarehouseLegRemarks;
@@ -192,6 +191,28 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.MainService
             to.PaymentRequiredNotes = to.PaymentRequiredNotes ?? from.PaymentRequiredNotes;
             to.ClearanceDate = to.ClearanceDate ?? from.ClearanceDate;
             to.CustomsClearanceDate = to.CustomsClearanceDate ?? from.CustomsClearanceDate;
+
+        }
+        private void SyncForwardingMilestones(CargoTrackingShipment from, CargoTrackingShipment to)
+        {
+            //from order
+            to.CreateDate = from.CreateDate;
+            to.BookingDate = from.BookingDate ?? to.BookingDate;
+            to.PickupEstimationDate = from.PickupEstimationDate;
+            to.FirstPickupETD = from.PickupDate ?? to.PickupDate;
+            to.PickupDate = from.PickupDate ?? to.PickupDate;
+
+            //from forwarding
+            to.FromWarehouseDate = to.FromWarehouseDate ?? from.FromWarehouseDate;
+            to.FromWarehouseEstimationDate = to.FromWarehouseEstimationDate ?? from.FromWarehouseEstimationDate;
+            to.FromWarehouseNotes = to.FromWarehouseNotes ?? from.FromWarehouseNotes;
+
+            to.DepartureDate = to.DepartureDate ?? from.DepartureDate;
+            to.DepartureEstimationDate = from.DepartureEstimationDate ?? to.DepartureEstimationDate;
+            to.ArrivalDate = to.ArrivalDate ?? from.ArrivalDate;
+            to.ArrivalEstimationDate = to.ArrivalEstimationDate ?? from.ArrivalEstimationDate;
+
+            
 
         }
         private bool CheckIsAddedOrExist(string key, string Id, Dictionary<string, string> addRowsDictionary)
