@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class InterestReportUpdateClass
    {  		
-		public const string HashString = "ff54af67df89912aa7bde042c8545471";
+		public const string HashString = "dbdb906f53553ceff3a57c9c55a028a8";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -2688,10 +2688,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Category1Name",
-					  						DefaultText =  "Category1 Name",
+					  						DefaultText =  "Category 1 Name",
 					  						FullLocalDefaultText =  "שם קטגוריה 1",
 					  						ListFieldLable =  "Category1NameListLable",
-					  						ListLableDefaultText =  "Category1 Name",
+					  						ListLableDefaultText =  "Category 1 Name",
 					  						ListLocalDefaultText =  "שם קטגוריה 1",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
@@ -2794,6 +2794,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "Category3Name",
 					  						ListPropertyPath =  "Category3Name",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -2855,6 +2856,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "Category4Name",
 					  						ListPropertyPath =  "Category4Name",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -2895,7 +2897,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "Categor5Name",
+					 						FieldName =  "Category5Name",
 					  						ObjectTableName =  "InterestReport",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -2913,8 +2915,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "Categor5Name",
-					  						ListPropertyPath =  "Categor5Name",
+					  						PMPropertyPath =  "Category5Name",
+					  						ListPropertyPath =  "Category5Name",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -2931,11 +2934,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInDocumentReferences =  false,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "Categor5Name",
-					  						DefaultText =  "Categor 5 Name",
+					  						FullFieldLable =  "Category5Name",
+					  						DefaultText =  "Category 5 Name",
 					  						FullLocalDefaultText =  "שם קטגוריה 5",
-					  						ListFieldLable =  "Categor5NameListLable",
-					  						ListLableDefaultText =  "Categor 5 Name",
+					  						ListFieldLable =  "Category5NameListLable",
+					  						ListLableDefaultText =  "Category 5 Name",
 					  						ListLocalDefaultText =  "שם קטגוריה 5",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
@@ -2976,6 +2979,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "Category1LocalName",
 					  						ListPropertyPath =  "Category1LocalName",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -3035,6 +3039,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "Category2LocalName",
 					  						ListPropertyPath =  "Category2LocalName",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -3094,6 +3099,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "Category3LocalName",
 					  						ListPropertyPath =  "Category3LocalName",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -3153,6 +3159,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "Category4LocalName",
 					  						ListPropertyPath =  "Category4LocalName",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -3212,6 +3219,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "Category5LocalName",
 					  						ListPropertyPath =  "Category5LocalName",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,

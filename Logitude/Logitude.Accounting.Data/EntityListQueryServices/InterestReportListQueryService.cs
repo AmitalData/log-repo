@@ -80,7 +80,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 											 Category2Name = a.GLAccount.Category2.EnglishName,
 											 Category3Name = a.GLAccount.Category3.EnglishName,
 											 Category4Name = a.GLAccount.Category4.EnglishName,
-											 Categor5Name = a.GLAccount.Category5.EnglishName,
+											 Category5Name = a.GLAccount.Category5.EnglishName,
 											 Category1LocalName= a.GLAccount.Category1.LocalName,
 											 Category2LocalName = a.GLAccount.Category2.LocalName,
 											 Category3LocalName = a.GLAccount.Category3.LocalName,

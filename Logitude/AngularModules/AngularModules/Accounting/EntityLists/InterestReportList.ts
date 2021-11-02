@@ -45,7 +45,7 @@ export class InterestReportList {
 	Category2Name: string;
 	Category3Name: string;
 	Category4Name: string;
-	Categor5Name: string;
+	Category5Name: string;
 	Category1LocalName: string;
 	Category2LocalName: string;
 	Category3LocalName: string;

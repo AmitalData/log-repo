@@ -89,7 +89,7 @@ namespace Logitude.Accounting.Data.EntityLists
        [DataMember]
        public string Category4Name  { get; set; }
        [DataMember]
-       public string Categor5Name  { get; set; }
+       public string Category5Name  { get; set; }
        [DataMember]
        public string Category1LocalName  { get; set; }
        [DataMember]
