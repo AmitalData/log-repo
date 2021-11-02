@@ -308,6 +308,14 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
             container.ShipmentOnCarriageATD = this.initializer.EntityPM?.OnCarriageATD;
             container.ShipmentOriginAgentId = this.initializer.EntityPM?.AgentId;
             container.ShipmentDestinationAgentId = this.initializer.EntityPM?.FreightForwarderId;
+
+            container.ShipmentNumber = this.initializer.EntityPM?.ShipmentNumber;
+            container.ContainersCount = this.initializer.EntityPM?.NumberOfContainers;
+            container.HandlerId = this.initializer.EntityPM?.HandlerUserId;
+            container.CustomerId = this.initializer.EntityPM?.CustomerId;
+            container.OPClosed = this.initializer.EntityPM != null ? this.initializer.EntityPM.IsOperationalClosed : false;
+            container.ShipmentTypeId = this.initializer.EntityPM?.ShipmentTypeId;
+
             this.MapContainerFieldsFromShipmentPickup(container);
             this.MapContainerFieldsFromShipmentDelivery(container);
         }
