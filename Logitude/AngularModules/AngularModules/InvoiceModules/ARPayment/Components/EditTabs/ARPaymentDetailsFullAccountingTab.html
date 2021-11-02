@@ -463,6 +463,26 @@
                         </td>
 
                     </tr>
+
+                    <!-- Multiple bank transfers-->
+                    
+                    <tr style="height:22px" *ngIf="EntityPM.ARPaymentBankTranfers.length > 1">
+                        <td colspan="2">
+                            <table>
+                                <tr>
+                                    <!-- <td style="width:200px" colspan="2"></td>-->
+                                    <td>
+                                        <div style="width:500px;margin:0 400px;">
+                                            <div class="DisbleBox">
+                                                {{'ARPayment.M.MoreThanPaymentBankTransfer' | TextCodeTranslationPipe }}
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td style="width:100%"></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
                     <!-- Cheque -->
                     <tr style="height:1px;" *ngIf="CollapsedIfCash">
                         <td>
@@ -550,7 +570,7 @@
                                             </tr>
 
                                             <tr>
-                                                <td style="width:150px;" *ngIf="AccountingPaymentMethodCode != 'CH'">
+                                                <td style="width:150px;" *ngIf="AccountingPaymentMethodCode != 'CH' && AccountingPaymentMethodCode != 'BT'">
                                                     <LogTextBox [ObjectFieldName]="'AmountInPaymentCurrency'"
                                                                 [DigitsAfterPoint]="2" [Text]="AmountInPaymentCurrency"
                                                                 [InputType]="'double'" [ObjectTableName]="ObjectTableName"
@@ -561,6 +581,15 @@
 
                                                     <LogTextBox [ObjectFieldName]="'ChequeAmount'"
                                                                 [Text]="ChequeAmount"
+                                                                [InputType]="'double'"
+                                                                [DataContext]="DataContext"
+                                                                [NoObjectField]="true"
+                                                                [ObjectTableName]="ObjectTableName"></LogTextBox>
+                                                </td>
+                                                <td style="width:150px;" *ngIf="isFullAccounting && AccountingPaymentMethodCode == 'BT'">
+
+                                                    <LogTextBox [ObjectFieldName]="'BankTransferAmount'"
+                                                                [Text]="BankTransferAmount"
                                                                 [InputType]="'double'"
                                                                 [DataContext]="DataContext"
                                                                 [NoObjectField]="true"
@@ -646,6 +675,18 @@
                                                                     <IconButton [Name]="'Edit'" [IsSmall]="true" (click)="DisplayChequesButtonClicked()"></IconButton>
                                                                 </div>
                                                             </td>
+
+                                                            <td *ngIf="isFullAccounting && AccountingPaymentMethodCode == 'BT'" style="width:50px">
+                                                                <div *ngIf="EntityPM.ARPaymentBankTranfers.length === 0">
+                                                                    <IconButton [Name]="'Add'" [IsSmall]="true" (click)="AddBankTransfersButtonClicked()"></IconButton>
+                                                                    <div style="margin-left: 30px">
+                                                                        <HelpIcon [Header]="'ARPayment.O.BankTransfers' | TextCodeTranslationPipe" [Text]="'ARPayment.M.AddBankTransfersHint' | TextCodeTranslationPipe"></HelpIcon>
+                                                                    </div>
+                                                                </div>
+                                                                <div *ngIf="EntityPM.ARPaymentBankTranfers.length > 0">
+                                                                    <IconButton [Name]="'Edit'" [IsSmall]="true" (click)="ShowMultiBankTransfersScreen()"></IconButton>
+                                                                </div>
+                                                            </td>
                                                             <td>
                                                             </td>
                                                         </tr>
@@ -686,6 +727,9 @@
                                     <td width="5px"></td>
                                     <td *ngIf="isMultipleCheques " style="width:20px">
                                         <img style="width:21px" src="./Images/Icons/RedX.png" title="{{'ARPayment.O.CantPerformReconciliation' | TextCodeTranslationPipe}}" />
+                                    </td>
+                                    <td *ngIf="EntityPM.ARPaymentBankTranfers.length > 1 " style="width:20px">
+                                        <img style="width:21px" src="./Images/Icons/RedX.png" title="{{'ARPayment.O.ReconciliationInMultipleTransfers' | TextCodeTranslationPipe }}" />
                                     </td>
                                     <td>
                                         <div></div>

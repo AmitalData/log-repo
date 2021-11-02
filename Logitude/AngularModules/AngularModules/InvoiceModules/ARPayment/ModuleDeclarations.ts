@@ -9,6 +9,7 @@ import {EditMultiCurrency} from './Components/EditTabs/EditMultiCurrency';
 import {ARPaymentDetailsFullAccountingTab} from './Components/EditTabs/ARPaymentDetailsFullAccountingTab';
 import {CancelARPaymentComponent} from './Components/Other/CancelARPaymentComponent';
 import { ARPaymentMultiChequesComponent } from './Components/Other/ARPaymentMultiChequesComponent';
+import { ARPaymentMultiBankTransfersComponent } from './Components/Other/ARPaymentMultiBankTransfersComponent';
 export const Components =
     [
         NewARPaymentComponent,
@@ -21,7 +22,8 @@ export const Components =
         ARPaymentGeneralTabComponent,
         ARPaymentDetailsFullAccountingTab,
         CancelARPaymentComponent,
-        ARPaymentMultiChequesComponent
+        ARPaymentMultiChequesComponent,
+        ARPaymentMultiBankTransfersComponent
     ];
 
 export class ModuleDeclarations {
@@ -41,6 +43,7 @@ export class ModuleDeclarations {
             case "CancelARPaymentComponent": { myResult = CancelARPaymentComponent; break; }
             case "ARPaymentDetailsFullAccountingTab": { myResult = ARPaymentDetailsFullAccountingTab; break; }
             case "ARPaymentMultiChequesComponent": { myResult = ARPaymentMultiChequesComponent; break; }
+            case "ARPaymentMultiBankTransfersComponent": { myResult = ARPaymentMultiBankTransfersComponent; break; }
         }
 
         return myResult;

@@ -202,30 +202,9 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
                 }
             }
         }
-        private List<ARPaymentBankTranferPM> paymentBankTranferPMs;
-        [Include]
-        [Composition]
-        [Association("ARPaymentARPaymentBankTranfers", "Id", "PaymentId")]
-        public virtual List<ARPaymentBankTranferPM> ARPaymentBankTranfers
-        {
-            get
-            {
-                if (paymentBankTranferPMs == null)
-                {
-                    paymentBankTranferPMs = new List<ARPaymentBankTranferPM>();
-                }
 
-                return this.paymentBankTranferPMs;
-            }
-            set
-            {
-                if (value != null)
-                {
-                    paymentBankTranferPMs = value;
-                }
-            }
-        }
-        
+        public List<ARPaymentBankTranferPM> ARPaymentBankTranfers { get; set; }
+
         public bool IsPaymentNumberManuallySet { get; set; }
 
 

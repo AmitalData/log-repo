@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ARPaymentBankTranferPM } from 'Invoice/EntityPMs/ARPaymentBankTranferPM';
 import { BankAccountPM } from '../../../../Accounting/EntityPMs/BankAccountPM';
 import { CashBookPM } from '../../../../Accounting/EntityPMs/CashBookPM';
 import { GLAccountPM } from '../../../../Accounting/EntityPMs/GLAccountPM';
@@ -72,9 +73,11 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
 	public ARPaymentChequeStatusColor = "black";
 	BankFieldsVisibile: boolean;
 	isMultipleCheques: boolean = false;
+	isMultipleBankTransfers: boolean = false;
     public OpenAmountCurrency: string;
     ARPaymentValidator: ARPaymentValidator;
     public chequeAmount: number;
+	public bankTransferAmount: number;
 	public InvoiceAmountCurrency: string = TextCodeTranslator.Translate("Accounting.O.ARP.InvoiceAmount") + " (" + SessionLocator.TenantPM.CurrencyCode + ")";
 	public PaymenyAmount: number;
 	get TextStore()
@@ -108,9 +111,14 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
 		this.ComputeLocalAmount();
         this.SetPaymentAmount();
         this.SetChequeAmount();
+		this.SetBankTransfersAmount();
 		if (this.EntityPM.ARPaymentChequeReplicas.length > 1) {
 			this.isMultipleCheques = true;
 		}
+		if (this.EntityPM.ARPaymentBankTranfers.length > 1) {
+			this.isMultipleBankTransfers = true;
+		}
+
 		this.isFullAccounting = SessionLocator.TenantPM.AccountingActivated;
 		this.originalPaymentOpenAmount = this.EntityPM.OpenAmount;
 		this.paymentAmountTotal = this.EntityPM.AmountInPaymentCurrency;
@@ -168,6 +176,17 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
             this.chequeAmount = firstCheque.ForeignAmount;
         }
     }
+
+	private SetBankTransfersAmount() {
+        if (this.EntityPM.ARPaymentBankTranfers.length == 0) {
+            this.bankTransferAmount = this.EntityPM.AmountInPaymentCurrency;
+        }
+        else {
+            var firstBankTransfer = this.EntityPM.ARPaymentBankTranfers.filter(d => d.LineNumber == 1)[0];
+            this.bankTransferAmount = firstBankTransfer.ForeignAmount;
+        }
+    }
+
 	private InitializeBillToLov() {
         
 		this.DisplayFieldsFromList = "Code,CalculatedEnglishName,GLAccountDisplayNumber,CityName,CountryCode,PartnerTypeName";
@@ -821,6 +840,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
 	{
 		this.UIProperties.SetRequired("BankAccountId", this.ObjectTableName, false);
 		if (this.isFullAccounting == true && this.AccountingPaymentMethodCode == "BT") {
+			this.UpdatePaymentBankTranferFields();
 			if (AppTool.IsNullOrEmpty(this.BankAccountId)) {
 				this.UIProperties.SetRequired("BankAccountId", this.ObjectTableName, true);
 			}
@@ -1602,6 +1622,19 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
         }
     }
 
+	UpdatePaymentBankTranferFields() {
+        if (this.EntityPM.ARPaymentBankTranfers.length > 0) {
+            this.EntityPM.ARPaymentBankTranfers.filter(d => d.LineNumber == 1).forEach((bankTransfer: ARPaymentBankTranferPM) => {
+                if (bankTransfer) {
+                    bankTransfer.BankAccountId = this.BankAccountId;
+                    bankTransfer.ValueDate = this.ValueDate;
+                    bankTransfer.PaymentRef = this.ChequeOrPaymentRef;
+					bankTransfer.ForeignAmount = this.BankTransferAmount;
+                }
+            });
+        }
+    }
+
     UpdateBankFieldForPaymentCheque() {
         if (this.EntityPM.ARPaymentChequeReplicas.length > 0) {
             this.EntityPM.ARPaymentChequeReplicas.filter(d => d.LineNumber == 1).forEach((cheque: ARPaymentChequeReplicaPM) => {
@@ -1918,8 +1951,10 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
 		if (!AppTool.IsNullOrEmpty(this.BankAccountId)) {
 			service.get(this.BankAccountId).subscribe((myResponse: ServiceResponse) =>
 			{
+				console.log('myResponse', myResponse);
 				if (myResponse != null && !myResponse.HasError) {
 					this.bankAccount = myResponse.Result;
+					this.EntityPM.BankAccount = this.bankAccount;
 					if (this.bankAccount != null && this.bankAccount.GLAccountCurrencyId != null && this.bankAccount.GLAccountCurrencyId != "multi") {
 						if (this.bankAccount.GLAccountCurrencyId != this.PaymentCurrencyId) {
 							this.GLAccountNumber = this.bankAccount.GLAccountNumber;
@@ -1988,6 +2023,10 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
                 this.UpdateChequeAmountFieldForPaymentCheque();
             }
 
+			if (this.EntityPM.AccountingPaymentMethodCode == "BT") {
+                this.UpdateBankTransferAmountFieldForBankTransferPayment();
+            }
+
 			this.ItemsSource.Collection.forEach(item =>
 			{
 				item.SetUIProperties();
@@ -2041,6 +2080,22 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
             this.CalculatePaymentTotalAmount();
         }
     }
+
+	get BankTransferAmount() { return this.bankTransferAmount }
+    set BankTransferAmount(value: number) {
+        if (this.bankTransferAmount != value) {
+            if (this.EntityPM.ARPaymentBankTranfers.length == 1 || this.EntityPM.ARPaymentBankTranfers.length == 0) {
+                this.bankTransferAmount = value;
+                this.AmountInPaymentCurrency = value;
+            }
+            this.bankTransferAmount = value;
+            if (this.EntityPM.AccountingPaymentMethodCode == "BT") {
+                this.UpdateBankTransferAmountFieldForBankTransferPayment();
+            }
+            this.CalculatePaymentTotalAmountForBankTransfers();
+        }
+    }
+
 	ComputeOpenAmount()
 	{
 		this.OpenAmount = this.AmountInPaymentCurrency - this.Summary_AmountPaid;
@@ -2265,6 +2320,90 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
     }
     DisplayChequesButtonClicked() {
         this.ShowMultiChequeScreen();
+    }
+	/* Bank Transferes */
+	AddBankTransfersButtonClicked() {
+        var errors: string[] = this.ValidateBankTransferFields();
+        if (errors.length > 0) {
+            return;
+        }
+        this.ShowMultiBankTransfersScreen();
+    }
+
+	ShowMultiBankTransfersScreen() {
+        var windowArgs: any = {};
+        windowArgs.EntityPM = this.EntityPM;
+        var logWindow = new LogitudeWindow();
+        logWindow.Width = 630;
+        logWindow.Height = 600;
+        logWindow.ShowCloseButton = false;
+        logWindow.WindowArgs = windowArgs;
+        logWindow.WindowClosed.subscribe(($event: any) => this.UpdateBankTransfersSection($event));
+        logWindow.Show('./InvoiceModules/ARPayment/Components/Other/ARPaymentMultiBankTransfersComponent');
+    }
+
+	UpdateBankTransfersSection(event: any) {
+        if (event == 'ok') {
+            this.isMultipleBankTransfers = false;
+            if (this.EntityPM.ARPaymentBankTranfers.length > 1) {
+                this.isMultipleBankTransfers = true;
+                this.GetData();
+            }
+            if (this.EntityPM.ARPaymentBankTranfers.length >= 0) {
+                this.SetDefaultBankTransfersFields();
+            }
+        }
+    }
+
+	UpdateBankTransferAmountFieldForBankTransferPayment() {
+        if (this.EntityPM.ARPaymentBankTranfers.length > 0) {
+            this.EntityPM.ARPaymentBankTranfers.filter(d => d.LineNumber == 1).forEach((bankTransfer: ARPaymentBankTranferPM) => {
+                if (bankTransfer) {
+                    bankTransfer.ForeignAmount = this.BankTransferAmount;
+                }
+            });
+        }
+    }
+
+	SetDefaultBankTransfersFields() {
+        if (this.EntityPM.ARPaymentBankTranfers.length > 0) {
+            var firstBankTransfer: ARPaymentBankTranferPM = this.EntityPM.ARPaymentBankTranfers.filter(d => d.LineNumber == 1)[0];
+            this.MapBankTransferFields(firstBankTransfer);
+            this.CalculatePaymentTotalAmountForBankTransfers();
+
+        }
+        else if (this.EntityPM.ARPaymentBankTranfers.length == 0) {
+            this.MapBankTransferFields(null);
+        }
+
+    }
+
+	CalculatePaymentTotalAmountForBankTransfers() {
+           
+        var total = 0;
+        for (let bankTransfer of this.EntityPM.ARPaymentBankTranfers) {
+            if (!AppTool.IsNullOrEmpty(bankTransfer.ForeignAmount)) {
+                total += bankTransfer.ForeignAmount;
+            }
+        }
+        if (this.EntityPM.ARPaymentBankTranfers.length >0)
+        this.AmountInPaymentCurrency = total;
+        this.ComputeLocalAmount();
+        this.SetPaymentAmount();
+    }
+
+	MapBankTransferFields(bankTransfer: ARPaymentBankTranferPM) {
+        this.BankAccountId = bankTransfer?.BankAccountId;
+        this.ValueDate = bankTransfer?.ValueDate;
+		this.ChequeOrPaymentRef = bankTransfer?.PaymentRef;
+        this.BankTransferAmount = bankTransfer?.ForeignAmount;
+    }
+
+	ValidateBankTransferFields() {
+        var errors: string[];
+        errors = this.ARPaymentValidator.Validate(this.EntityPM);
+        this.CurrentSession.CurrentEditComponent.ValidationErrorsList = errors;
+        return errors;
     }
 }
 

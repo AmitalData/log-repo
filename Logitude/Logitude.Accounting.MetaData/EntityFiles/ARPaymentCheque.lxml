@@ -40,7 +40,7 @@
   MaxNumberOfCustomFields="0"
   LocalDefaultText="&quot;שורת המחאה&quot;"
   DefaultText="&quot;Cheque Line&quot;"
-  Code="&quot;2923&quot;"
+  Code="&quot;177d&quot;"
   Name="&quot;ARPaymentCheque Query Group&quot;"
   GenerateDomainService="true"
   ClientModuleName="&quot;Accounting&quot;"

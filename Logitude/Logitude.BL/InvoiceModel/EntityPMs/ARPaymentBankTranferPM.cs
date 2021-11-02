@@ -30,5 +30,13 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public decimal LocalAmount { get; set; }
         public decimal ForeignAmount { get; set; }
         public decimal ExchageRate { get; set; }
+        public BankAccountLightPM BankAccount { get; set; }
+    }
+
+    public class BankAccountLightPM
+    {
+        public string Id { get; set; }
+        public string LocalName { get; set; }
+        public string EnglishName { get; set; }
     }
 }

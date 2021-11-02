@@ -14,7 +14,6 @@ import {LedgerTransactionPM} from './../../Accounting/EntityPMs/LedgerTransactio
 
 import {ARPaymentChequeReplicaPM} from './ARPaymentChequeReplicaPM';
 
-import {ARPaymentBankTranferPM} from './ARPaymentBankTranferPM';
 import {ARPaymentPMCustomCode} from '../EntityPMCustomCode/ARPaymentPMCustomCode';
 import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
@@ -22,6 +21,8 @@ import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
 import {Output, EventEmitter}  from '@angular/core';
 import {PropertyChangedArgs} from '../../Infrastructure/EventEmitterArgs/PropertyChangedArgs';
 import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass';
+import { BankAccountPM } from 'Accounting/EntityPMs/BankAccountPM';
+import { ARPaymentBankTranferPM } from 'Invoice/EntityPMs/ARPaymentBankTranferPM';
 
 
 export class ARPaymentPM {
@@ -605,6 +606,7 @@ export class ARPaymentPM {
             }
         }
     }
+
 	    //public ARPaymentChequeReplicas: Array<ARPaymentChequeReplicaPMPM>= [];
       
 	private aRPaymentBankTranfers: ARPaymentBankTranferPM[];
@@ -719,6 +721,7 @@ export class ARPaymentPM {
 	 
 
     public OldEntityPM: ARPaymentPM;
+    public BankAccount: BankAccountPM;
 		
     public IsDirty: boolean;
     public DisableMarkAsDirty: boolean = false;
@@ -745,4 +748,4 @@ export class ARPaymentPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}
