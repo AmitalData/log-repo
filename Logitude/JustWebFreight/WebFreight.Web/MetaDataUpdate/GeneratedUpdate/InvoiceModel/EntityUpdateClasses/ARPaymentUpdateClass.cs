@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 {
    public class ARPaymentUpdateClass
    {  		
-		public const string HashString = "0bbd7b74f9ee292cee56ced0b1b33599";
+		public const string HashString = "5a6bb1a585fbd7067bc778174ef21e04";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -6825,9 +6825,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 
  		   TextCode ARPaymentTextCode_ARPaymentOReconciliationInMultipleTransfers = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPayment.O.ReconciliationInMultipleTransfers", DefaultText = "Can't perform ARPayment Reconciliation from this screen in multiple Transfers case",LocalDefaultText = @"לא ניתן לבצע התאמות בקבלה עם מספר העברות", ObjectTableId = ARPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode ARPaymentTextCode_ARPaymentMMoreThanPaymentBankTransfer = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPayment.M.MoreThanPaymentBankTransfer", DefaultText = "More than one Bank Transfer that was created for this Payment. You can view them by clicking on the Edit button",LocalDefaultText = @"בקבלה זאת קיימות יותר מהעברה בנק אחת ,", ObjectTableId = ARPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode ARPaymentTextCode_ARPaymentMMoreThanPaymentBankTransfer = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPayment.M.MoreThanPaymentBankTransfer", DefaultText = "More than one Bank Transfer that was created for this Payment. You can view them by clicking on the Edit button",LocalDefaultText = "בקבלה זאת קיימות יותר מהעברה בנק אחת , ניתן לראות את רשימת העברות ע''י לחיצה על ערוך", ObjectTableId = ARPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode ARPaymentTextCode_ARPaymentOBankTransfers = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPayment.O.BankTransfers", DefaultText = "Bank Transfers",LocalDefaultText = @"העברות בנקאיות", ObjectTableId = ARPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode ARPaymentTextCode_ARPaymentMBankTransfers = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPayment.M.BankTransfers", DefaultText = "Bank Transfers",LocalDefaultText = @"העברות בנקאיות", ObjectTableId = ARPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode ARPaymentTextCode_ARPaymentFLineNumber = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPayment.F.LineNumber", DefaultText = "Line No.",LocalDefaultText = @"שורה", ObjectTableId = ARPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "F", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 

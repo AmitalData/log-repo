@@ -11206,7 +11206,7 @@
     <TextCode
       Code="&quot;ARPayment.M.MoreThanPaymentBankTransfer&quot;"
       DefaultText="&quot;More than one Bank Transfer that was created for this Payment. You can view them by clicking on the Edit button&quot;"
-      LocalDefaultText="&quot;בקבלה זאת קיימות יותר מהעברה בנק אחת ,&quot;"
+      LocalDefaultText="&quot;בקבלה זאת קיימות יותר מהעברה בנק אחת , ניתן לראות את רשימת העברות ע&quot;י לחיצה על ערוך&quot;"
       TextCodeTypeCode="&quot;M&quot;"
       IsSpellChecked="false" />
     <TextCode
