@@ -286,5 +286,19 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
 
         [ForeignKey("ShipmentDestinationAgentId")]
         public virtual Card ShipmentDestinationAgent { get; set; }
+
+        public string ShipmentNumber { get; set; }
+        public int? ContainersCount { get; set; }
+        public string HandlerId { get; set; }
+        [ForeignKey("HandlerId")]
+        public virtual User Handler { get; set; }
+        public string CustomerId { get; set; }
+        [ForeignKey("CustomerId")]
+        public virtual Card CustomerCard { get; set; }
+        public bool OPClosed { get; set; }
+        public string ShipmentTypeId { get; set; }
+        [ForeignKey("ShipmentTypeId")]
+        public virtual ShipmentType ShipmentType { get; set; }
+
     }
 }
