@@ -278,5 +278,24 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string ShipmentDestinationAgentId { get; set; }
         public string ShipmentOriginAgentName { get; set; }
         public string ShipmentDestinationAgentName { get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string ShipmentNumber { get; set; }
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public int? ContainersCount { get; set; }
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string HandlerId { get; set; }
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string HandlerName { get; set; }
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string CustomerId { get; set; }
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string CustomerName { get; set; }
+        public bool OPClosed { get; set; }
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string ShipmentTypeId { get; set; }
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string ShipmentTypeName { get; set; }
+
     }
 }
