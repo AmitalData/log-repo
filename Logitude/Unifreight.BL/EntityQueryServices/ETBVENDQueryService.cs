@@ -65,6 +65,9 @@ namespace Unifreight.BL.EntityQueryServices
                     case "Prefix":
                         ETBVENDquery = ETBVENDquery.Where(o => o.VENDORPREFIX.Contains(item.FieldValue.ToString()));
                         break;
+                    case "SearchFields":
+                        ETBVENDquery = ETBVENDquery.Where(o => o.SEARCHENG.Contains(item.FieldValue.ToString()));
+                        break;
                 }
             }
 
@@ -104,6 +107,16 @@ namespace Unifreight.BL.EntityQueryServices
                         else
                         {
                             ETBVENDquery = ETBVENDquery.OrderByDescending(o => o.VENDORPREFIX);
+                        }
+                        break;
+                    case "SearchFields":
+                        if (cols.ContainsKey(queryOperations.SortByColumnName) && queryOperations.SortDirectin.ToLower() == "ascending")
+                        {
+                            ETBVENDquery = ETBVENDquery.OrderBy(o => o.SEARCHENG);
+                        }
+                        else
+                        {
+                            ETBVENDquery = ETBVENDquery.OrderByDescending(o => o.SEARCHENG);
                         }
                         break;
                 }

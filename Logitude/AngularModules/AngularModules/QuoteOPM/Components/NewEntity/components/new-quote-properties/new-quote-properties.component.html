@@ -51,8 +51,8 @@
 
           <div class="col-4 p-fluid">
             <div class="p-field">
-              <app-autocomplate-table [columnsShow]="carrierColumns" [data]='mainCarriageCarrierList'
-                [fieldShow]='"Name"' [searchIcon]='true'
+              <app-autocomplate-table [columnsShow]="carrierColumns" [getDataFunc]='mainCarriageCarrierFunc'
+                [virtualScroll]='true' [columnsFilter]='["SearchFields"]' [fieldShow]='"Name"' [searchIcon]='true'
                 [label]="'QuoteOP.S.NewQuote.' + (formGroup.value.transportMode?.Id === 'A' ? 'Airline': 'Shippingline') | TextCodeTranslationPipe"
                 [controlName]='"mainCarriageCarrier"' [formGroup]='x'>
               </app-autocomplate-table>

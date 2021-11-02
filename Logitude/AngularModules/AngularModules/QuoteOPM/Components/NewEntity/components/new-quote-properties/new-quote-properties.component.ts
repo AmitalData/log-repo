@@ -17,7 +17,7 @@ export class NewQuotePropertiesComponent implements OnInit, AfterViewInit {
   fromPortList: Port[] = []
   toPortList: Port[] = []
   specialServiceList: SpecialService[] = []
-  mainCarriageCarrierList: Carrier[] = []
+  mainCarriageCarrierFunc:(filter: ApiQueryFilters) => Promise<any[]> = null as any;
   incotermList: Incoterm[] = []
   transportModeId: string = '';
   directionId: string = '';
@@ -107,8 +107,7 @@ export class NewQuotePropertiesComponent implements OnInit, AfterViewInit {
     filters.PageIndex = 0;
     filters.PageSize = 100;
 
-    this.mainCarriageCarrierList = await this.newQuoteDataService.getCarrierses(this.directionId, this.transportModeId, filters);
-    this.mainCarriageCarrierList = this.mainCarriageCarrierList ? this.sortArray(this.mainCarriageCarrierList, 'Name') : []
+    this.mainCarriageCarrierFunc = (qf: ApiQueryFilters) => this.newQuoteDataService.getCarrierses(this.directionId, this.transportModeId, qf);
 
     this.carrierColumns = this.directionId === "E" ? { AIRLINE_ID: 'Code' } : { VENDOR_ID: 'Code' }
     this.carrierColumns = { ...this.carrierColumns, ...{ Name: 'Name', Prefix: 'Prefix' } }
