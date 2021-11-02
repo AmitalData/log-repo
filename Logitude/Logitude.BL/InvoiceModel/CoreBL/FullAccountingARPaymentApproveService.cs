@@ -224,9 +224,17 @@ namespace Logitude.BL.InvoiceModel.CoreBL
         public void AddNewBankTransfers()
         {
             int LineNumberCounter = GetInitialLineNumberForBankTransfer(paymentPM);
-            foreach (ARPaymentBankTranferPM bankTransfer in paymentPM.ARPaymentBankTranfers)
+            if (paymentPM.ARPaymentBankTranfers.Any()) {
+                foreach (ARPaymentBankTranferPM bankTransfer in paymentPM.ARPaymentBankTranfers)
+                {
+                    ARPaymentBankTranferPM aRPaymentBankTranferPM = InitializeARPaymentBankTransfer(paymentPM, bankTransfer, ref LineNumberCounter);
+                    SaveARPaymentBankTranfer(aRPaymentBankTranferPM);
+                    CreateInterestTransactionLineForBankTransfer(aRPaymentBankTranferPM, paymentPM);
+                }
+            }
+            else
             {
-                ARPaymentBankTranferPM aRPaymentBankTranferPM = InitializeARPaymentBankTransfer(paymentPM, bankTransfer, ref LineNumberCounter);
+                ARPaymentBankTranferPM aRPaymentBankTranferPM = CreateFirstARPaymentBankTransfer(paymentPM);
                 SaveARPaymentBankTranfer(aRPaymentBankTranferPM);
                 CreateInterestTransactionLineForBankTransfer(aRPaymentBankTranferPM, paymentPM);
             }
@@ -235,6 +243,7 @@ namespace Logitude.BL.InvoiceModel.CoreBL
         {   
             ARPaymentBankTranfer poco = new ARPaymentBankTranfer();
             ARPaymentBankTranferMapping.MapEntity(aRPaymentBankTranfer, poco, true);
+            paymentPM.ARPaymentBankTranfers.Add(aRPaymentBankTranfer);
             paymentBankTranferRepository.Add(poco);
             paymentBankTranferRepository.SubmitChanges();
         }
@@ -262,6 +271,26 @@ namespace Logitude.BL.InvoiceModel.CoreBL
                 CurrencyId = arpaymentPM.PaymentCurrencyId,
                 LocalAmount = (bankTranfer.ForeignAmount * (decimal)arpaymentPM.PaymentCurrencyExchangeRate),
                 ForeignAmount = (decimal)bankTranfer.ForeignAmount,
+                ChangeSetOp = ChangeSetOperation.Insert
+            };
+            return aRPaymentBankTranfer;
+        }
+
+        private ARPaymentBankTranferPM CreateFirstARPaymentBankTransfer(ARPaymentPM arpaymentPM)
+        {
+            ARPaymentBankTranferPM aRPaymentBankTranfer = new ARPaymentBankTranferPM
+            {
+                Id = IdCounter.GetNumber("ARPaymentBankTranfer", arpaymentPM.Tenant).ToString(),
+                LineNumber = 1,
+                PaymentId = arpaymentPM.Id,
+                Tenant = arpaymentPM.Tenant,
+                PaymentRef = arpaymentPM.ChequeOrPaymentRef,
+                ValueDate = arpaymentPM.ValueDate.Value,
+                BankAccountId = arpaymentPM.BankAccountId,
+                ExchageRate = (decimal)arpaymentPM.PaymentCurrencyExchangeRate,
+                CurrencyId = arpaymentPM.PaymentCurrencyId,
+                LocalAmount = (decimal)arpaymentPM.AmountInLocalCurrency.Value,
+                ForeignAmount = (decimal)arpaymentPM.AmountInPaymentCurrency.Value,
                 ChangeSetOp = ChangeSetOperation.Insert
             };
             return aRPaymentBankTranfer;
