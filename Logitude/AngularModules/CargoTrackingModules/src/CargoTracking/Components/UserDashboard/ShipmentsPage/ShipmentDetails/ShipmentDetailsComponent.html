@@ -404,18 +404,18 @@ cargoTrackingShipmentPM.ArrivalDate |
     <panel style="order: 4;" [Title]="'Cargo Info'" [Name]="'Cargo'" [HaveDetailsSection]=" cargoTrackingShipmentPM.EntityType != 'O'"
            [ShowWhitePanelOnMobile]="true"
 
-           [DetailsTitle]="Shipment.ShipmentList.TransportModeId != 'A' ? 'Container List' : 'Packages List'"
+           [DetailsTitle]="cargoTrackingShipmentPM.TransportModeId != 'A' ? 'Container List' : 'Packages List'"
            [InputDetailsSectionToggleEvent]="DetailsSectionToggleEvent"
            (OutputDetailsSectionToggleEvent)="ChangeShowDetailsSectionValue($event)">
 
         <div body>
 
-            <div class="data-cards" *ngIf="Shipment&& Shipment.ShipmentList">
-                <div  *ngIf="Shipment.ShipmentList.EntityType != 'O'" class="hide-mobile" style="width:170px">
+            <div class="data-cards" *ngIf="cargoTrackingShipmentPM">
+                <div  *ngIf="cargoTrackingShipmentPM.EntityType != 'O'" class="hide-mobile" style="width:170px">
                   
-                    <div class="title" *ngIf="Shipment.ShipmentList.TransportModeId == 'A'">PACKAGE TYPE</div>
-                    <div class="title" *ngIf="Shipment.ShipmentList.TransportModeId != 'A'">CONTAINER TYPE</div>
-                    <div *ngIf="Shipment.ShipmentList.EntityType != 'O'" style="width:170px">
+                    <div class="title" *ngIf="cargoTrackingShipmentPM.TransportModeId == 'A'">PACKAGE TYPE</div>
+                    <div class="title" *ngIf="cargoTrackingShipmentPM.TransportModeId != 'A'">CONTAINER TYPE</div>
+                    <div *ngIf="cargoTrackingShipmentPM.EntityType != 'O'" style="width:170px">
                         <div *ngFor="let package of cargoTrackingShipmentPM.Packages.slice(0,2), let i = index" style="display:flex;flex-direction:row">
                             <div class="description TextTrimming"> {{package.PackageTypeName}}</div>
                             <i class="las la-chevron-circle-up" style="color: var(--MainColor);margin-top:5px"
