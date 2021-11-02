@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.MainService
 {
-    public static class CargoTrackingShipmentsQueriesService
+    public static class CargoTrackingQueriesService
 	{
 
         public static string GetQuery(CargoTrackingUpdateDataBaseArgs cargoTrackingUpdateDataBaseArgs)
@@ -161,6 +161,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.MainService
 					CustomShipmentTable.TransportModeId as CustomTransportModeId , 
 					CustomShipmentTable.House as CustomHouse  , 
 					CustomShipmentTable.House as CustomsDeclarationNumber ,  
+					CustomShipmentTable.ShipmentNumber as CustomShipmentNumber , 
 					CustomShipmentTable.FromPortId as CustomFromPortId , 
 					CustomShipmentTable.ToPortId as CustomToPortId , 
 					CustomShipmentTable.ShipperId as CustomShipperId , 
@@ -189,7 +190,6 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.MainService
 					CustomShipmentTable.WarehouseLegRemarks as CustomFromWarehouseNotes , 
 					CustomShipmentTable.WarehouseLegExpectedEntryDate  as CustomToWarehouseEstimationDate , 
 					CustomShipmentTable.WarehouseLegRemarks  as CustomToWarehouseNotes , 
-					CustomShipmentTable.CustomsClearanceDate as CustomClearanceDate , 
 					CustomShipmentTable.FirstPickupETD as CustomFirstPickupETD , 
 					CustomShipmentTable.WarehouseLegActualEntryDate as CustomWarehouseLegActualEntryDate , 
 					CustomShipmentTable.CustomsClearanceDate as CustomsClearanceDate , 
@@ -210,7 +210,8 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.MainService
 					AdditionalDataTableForCustom.DocumentInspection as CustomDocumentInspectionDate , 
 					AdditionalDataTableForCustom.GoodsClassification as CustomGoodsClassificationDate , 
 					AdditionalDataTableForCustom.IsPaymentRequired as CustomIsPaymentRequired , 
-					AdditionalDataTableForCustom.PaymentDateTime as CustomPaymentDateTime , 
+					AdditionalDataTableForCustom.PaymentDateTime as CustomPaymentDateTime ,
+					AdditionalDataTableForCustom.PaymentRequestDateTime as CustomPaymentReceivedDate ,
 					AdditionalDataTableForCustom.GatepassDocumentsReady as CustomGatepassArrivedDate , 
 					ComputedTableForCustom.FinalDeliveryATD as CustomDeliveryDate , 
 					ComputedTableForCustom.FinalDeliveryETD  as CustomDeliveryEstimationDate , 
@@ -338,12 +339,31 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.MainService
 
 			var condishins = $@"
             
-				CreateDate > '{lastUpdate}'
+				UpdateDate > '{lastUpdate}'
 			
             ";
 			return condishins;
 		}
 
+		public static string GetDeleteSearchesQuery(List<Data.EntityPOCOs.CargoTrackingShipment> cargoTrackingShipments, string tableName)
+        {
+			if (cargoTrackingShipments.Count <= 0)
+				return "";
+			var ids = "";
+			foreach (var item in cargoTrackingShipments)
+			{
+				ids += $"'{item.EntityId}' ,";
+			}
+			ids = ids.Substring(0,ids.Length - 1);
+			var query = $@"
+			delete from {tableName} where ShipmentId  in 
+			(
+				{ids}
+			)
+			";
+            
+			return query;
 
+		}
 	}
 }

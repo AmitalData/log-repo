@@ -215,17 +215,37 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.MainService
                     bulk.DestinationTableName = runBulkArgs.TableName;
                     bulk.BulkInsert(runBulkArgs.CargoTrackingShipments);
                 }
-                if (!string.IsNullOrEmpty(runBulkArgs.InnerTableName))
-                {
-                    var cargoTrackingShipmentSearches = GetCargoTrackingShipmentSearches(runBulkArgs.CargoTrackingShipments);
-                    using (var bulk = new BulkOperation<CargoTrackingShipmentSearch>(connection))
-                    {
-                        bulk.DestinationTableName = runBulkArgs.InnerTableName;
-                        bulk.BulkInsert(cargoTrackingShipmentSearches);
-                    }
-                }
+                AddShipmentSearches(runBulkArgs, connection);
 
             }
+        }
+        private void AddShipmentSearches(RunBulkArgs runBulkArgs, SqlConnection connection)
+        {
+
+            if (string.IsNullOrEmpty(runBulkArgs.InnerTableName))
+            {
+                return;
+            }
+            var cargoTrackingShipmentSearches = GetCargoTrackingShipmentSearches(runBulkArgs.CargoTrackingShipments);
+
+            if (!runBulkArgs.IsUpdateFromBuild)
+            {
+                DeleteOldSearches(runBulkArgs.CargoTrackingShipments, connection, runBulkArgs.InnerTableName);
+            }
+            using (var bulk = new BulkOperation<CargoTrackingShipmentSearch>(connection))
+            {
+                bulk.DestinationTableName = runBulkArgs.InnerTableName;
+                bulk.BulkInsert(cargoTrackingShipmentSearches);
+            }
+
+        }
+
+        private void DeleteOldSearches(List<CargoTrackingShipment> cargoTrackingShipments, SqlConnection sqlConnection, string tableName)
+        {
+            var query = CargoTrackingQueriesService.GetDeleteSearchesQuery(cargoTrackingShipments, tableName);
+            SqlCommand sqlCommand = new SqlCommand(query, sqlConnection);
+            sqlCommand.CommandTimeout = int.MaxValue;
+            sqlCommand.ExecuteNonQuery();
         }
 
         private List<CargoTrackingShipmentSearch> GetCargoTrackingShipmentSearches(List<CargoTrackingShipment> cargoTrackingShipments)
@@ -262,22 +282,13 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.MainService
                     bulk.AutoMapKeyExpression = c => new { c.EntityType, c.EntityId, c.Tenant };
                     bulk.BulkMerge(runBulkArgs.CargoTrackingShipments);
                 }
-                if (string.IsNullOrEmpty(runBulkArgs.InnerTableName))
-                {
-                    var cargoTrackingShipmentSearches = GetCargoTrackingShipmentSearches(runBulkArgs.CargoTrackingShipments);
-                    using (var bulk = new BulkOperation<CargoTrackingShipmentSearch>(connection))
-                    {
-                        bulk.DestinationTableName = runBulkArgs.TableName;
-                        bulk.AutoMapKeyExpression = c => new { c.ShipmentId, c.SearchFields, c.Tenant };
-                        bulk.BulkMerge(cargoTrackingShipmentSearches);
-                    }
-                }
+                AddShipmentSearches(runBulkArgs, connection);
             }
         }
 
         private SqlDataReader GetReaderForCargoTrackingShipments(SqlConnection sourceConnection, UpdateCargoTrackingRecords updateCargoTrackingRecords)
         {
-            var query = CargoTrackingShipmentsQueriesService.GetQuery(updateCargoTrackingRecords.CargoTrackingUpdateDataBaseArgs);
+            var query = CargoTrackingQueriesService.GetQuery(updateCargoTrackingRecords.CargoTrackingUpdateDataBaseArgs);
 
             SqlCommand commandSourceData = new SqlCommand(query, sourceConnection);
             commandSourceData.Transaction = sourceConnection.BeginTransaction(IsolationLevel.Snapshot);
@@ -288,6 +299,6 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.MainService
 
 
 
-        
+
     }
 }

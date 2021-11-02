@@ -99,7 +99,7 @@
     <Compile Include="CargoTrackingServices\Services\CargoTrackingSetLogic\CargoTrackingShipmentsOrderLogicService.cs" />
     <Compile Include="CargoTrackingServices\Services\CustomMapping\CargoTrackingShipmentsMappingService.cs" />
     <Compile Include="CargoTrackingServices\Services\MainService\CargoTrackingQueriesService.cs" />
-    <Compile Include="CargoTrackingServices\Services\MainService\CargoTrackingShipmentsQueriesService.cs" />
+    <Compile Include="CargoTrackingServices\Services\MainService\CargoTrackingShipmentsService.cs" />
     <Compile Include="CargoTrackingServices\Services\SearchService\CargoTrackingSearchServiceExtend.cs" />
     <Compile Include="CargoTrackingServices\Services\ShipmentOldValuesService.cs" />
     <Compile Include="CargoTrackingServices\Services\ShipmentMilestonesSyncService.cs" />

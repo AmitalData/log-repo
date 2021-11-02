@@ -20,10 +20,11 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.SearchService
             var cargoTrackingShipmentSearchFull = new CargoTrackingShipmentSearch()
             {
                 IsPublic = isPublic,
-                SearchFields = "Master",
+                ReferenceType = "Master",
                 ShipmentDate = shipment.CreateDate,
                 ShipmentId = shipment.EntityId,
-                ReferenceType = shipment.Master
+                Tenant = shipment.Tenant,
+                SearchFields = shipment.Master
             };
             list.Add(cargoTrackingShipmentSearchFull);
 
@@ -40,10 +41,11 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.SearchService
             var cargoTrackingShipmentSearchFull = new CargoTrackingShipmentSearch()
             {
                 IsPublic = true,
-                SearchFields = "House",
+                ReferenceType = "House",
                 ShipmentDate = shipment.CreateDate,
                 ShipmentId = shipment.EntityId,
-                ReferenceType = shipment.House
+                Tenant = shipment.Tenant,
+                SearchFields = shipment.House
             };
             list.Add(cargoTrackingShipmentSearchFull);
             var splits = shipment.House.Split('-');
@@ -56,10 +58,11 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.SearchService
                 var cargoTrackingShipmentSearch = new CargoTrackingShipmentSearch()
                 {
                     IsPublic = true,
-                    SearchFields = "House",
+                    ReferenceType = "House",
                     ShipmentDate = shipment.CreateDate,
                     ShipmentId = shipment.EntityId,
-                    ReferenceType = item
+                    Tenant = shipment.Tenant,
+                    SearchFields = item
                 };
                 list.Add(cargoTrackingShipmentSearch);
             }
@@ -84,10 +87,11 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.SearchService
                 var cargoTrackingShipmentSearch = new CargoTrackingShipmentSearch()
                 {
                     IsPublic = isPublic,
-                    SearchFields = "Container Numbers",
+                    ReferenceType = "Container Numbers",
                     ShipmentDate = shipment.CreateDate,
                     ShipmentId = shipment.EntityId,
-                    ReferenceType = item
+                    Tenant = shipment.Tenant,
+                    SearchFields = item
                 };
                 list.Add(cargoTrackingShipmentSearch);
             }
@@ -116,10 +120,11 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.SearchService
                 var cargoTrackingShipmentSearch = new CargoTrackingShipmentSearch()
                 {
                     IsPublic = true,
-                    SearchFields = "Forwarding Customer Reference",
+                    ReferenceType = "Customer Reference",
                     ShipmentDate = shipment.CreateDate,
                     ShipmentId = shipment.EntityId,
-                    ReferenceType = forwardingCustomerReference
+                    Tenant = shipment.Tenant,
+                    SearchFields = forwardingCustomerReference
                 };
                 list.Add(cargoTrackingShipmentSearch);
             }
@@ -140,10 +145,11 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.SearchService
             var cargoTrackingShipmentSearch = new CargoTrackingShipmentSearch()
             {
                 IsPublic = false,
-                SearchFields = "Consignee Name",
+                ReferenceType = "Consignee Name",
                 ShipmentDate = shipment.CreateDate,
                 ShipmentId = shipment.EntityId,
-                ReferenceType = shipment.ConsigneeName
+                Tenant = shipment.Tenant,
+                SearchFields = shipment.ConsigneeName
             };
             list.Add(cargoTrackingShipmentSearch);
             return list;
@@ -155,17 +161,18 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.SearchService
             {
                 return list;
             }
-            if(shipment.ShipperName.Length > 30)
+            if (shipment.ShipperName.Length > 30)
             {
                 shipment.ShipperName = shipment.ShipperName.Substring(29);
             }
             var cargoTrackingShipmentSearch = new CargoTrackingShipmentSearch()
             {
                 IsPublic = false,
-                SearchFields = "Shipper Name",
+                ReferenceType = "Shipper Name",
                 ShipmentDate = shipment.CreateDate,
                 ShipmentId = shipment.EntityId,
-                ReferenceType = shipment.ShipperName
+                Tenant = shipment.Tenant,
+                SearchFields = shipment.ShipperName
             };
             list.Add(cargoTrackingShipmentSearch);
 
@@ -183,10 +190,11 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.SearchService
             var cargoTrackingShipmentSearch = new CargoTrackingShipmentSearch()
             {
                 IsPublic = false,
-                SearchFields = "Forwarding Shipment Number",
+                ReferenceType = "Forwarding Shipment Number",
                 ShipmentDate = shipment.CreateDate,
                 ShipmentId = shipment.EntityId,
-                ReferenceType = shipment.ForwardingShipmentNumber
+                Tenant = shipment.Tenant,
+                SearchFields = shipment.ForwardingShipmentNumber
             };
             list.Add(cargoTrackingShipmentSearch);
             return list;
@@ -203,10 +211,11 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.SearchService
             var cargoTrackingShipmentSearch = new CargoTrackingShipmentSearch()
             {
                 IsPublic = false,
-                SearchFields = "Customs Declaration Number",
+                ReferenceType = "Customs Declaration Number",
                 ShipmentDate = shipment.CreateDate,
                 ShipmentId = shipment.EntityId,
-                ReferenceType = shipment.CustomsDeclarationNumber
+                Tenant = shipment.Tenant,
+                SearchFields = shipment.CustomsDeclarationNumber
             };
             list.Add(cargoTrackingShipmentSearch);
 
@@ -225,10 +234,11 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.SearchService
             var cargoTrackingShipmentSearch = new CargoTrackingShipmentSearch()
             {
                 IsPublic = true,
-                SearchFields = "Shipment Number",
+                ReferenceType = "Shipment Number",
                 ShipmentDate = shipment.CreateDate,
                 ShipmentId = shipment.EntityId,
-                ReferenceType = shipment.ShipmentNumber
+                Tenant = shipment.Tenant,
+                SearchFields = shipment.ShipmentNumber
             };
             list.Add(cargoTrackingShipmentSearch);
             if (splits.Length < 2)
@@ -238,10 +248,11 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.SearchService
             var cargoTrackingShipmentSearch2 = new CargoTrackingShipmentSearch()
             {
                 IsPublic = true,
-                SearchFields = "Shipment Number",
+                ReferenceType = "Shipment Number",
                 ShipmentDate = shipment.CreateDate,
                 ShipmentId = shipment.EntityId,
-                ReferenceType = splits[1]
+                Tenant = shipment.Tenant,
+                SearchFields = splits[1]
             };
             list.Add(cargoTrackingShipmentSearch2);
             return list;

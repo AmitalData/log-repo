@@ -48,7 +48,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CustomMapping
             SetCustomCustomerReference(item, row);
             SetMilestonesDoneFields(item);
             SetCurrentMilestone(item);
-            item.IsMainRecord = GetIsMainRecord(Codes.ForwardingType, row);
+            item.IsMainRecord = GetIsMainRecord(Codes.CustomType, row);
             SetExceptionDescription(item, row);
             return item;
         }
@@ -108,7 +108,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CustomMapping
             item.DepartureDone = item.DepartureDate.HasValue;
             item.ArrivalDone = item.ArrivalDate.HasValue;
             item.FromWarehouseDone = item.FromWarehouseDate.HasValue && item.DirectionId == Codes.ExportDirection;
-            item.FromWarehouseDone = item.ToWarehouseDate.HasValue && item.DirectionId == Codes.ImportDirection;
+            item.ToWarehouseDone = item.ToWarehouseDate.HasValue && item.DirectionId == Codes.ImportDirection;
             item.CustomsPaymentDone = item.CustomsPaymentDate.HasValue;
             item.ClearanceDone = item.ClearanceDate.HasValue;
             item.DeliveredDone = item.DeliveredDate.HasValue;
@@ -119,7 +119,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CustomMapping
             item.DocumentInspectionDone = item.DocumentInspectionDate.HasValue;
             item.GatepassArrivedDone = item.GatepassArrivedDate.HasValue;
             item.PaymentReceivedDone = item.PaymentReceivedDate.HasValue;
-            item.ToWarehouseDone = item.ToWarehouseDate.HasValue;
+            item.PaymentRequiredDone = item.PaymentRequiredDate.HasValue;
 
 
         }
@@ -214,7 +214,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CustomMapping
             item.AssignedCustomsAgentExcReason = row.ForwardingAssignedCustomsAgentExcReason;
             item.DeliveryDate = row.ForwardingDeliveryDate;
             item.DeliveryEstimationDate = row.ForwardingDeliveryEstimationDate;
-            item.DeliveryNotes = string.IsNullOrEmpty(row.ForwardingCarrierLocalName) ? row.ForwardingCarrierEnglishName : row.ForwardingCarrierLocalName;
+            item.DeliveryNotes = !string.IsNullOrEmpty(row.ForwardingCarrierLocalName) ? "Via: "+row.ForwardingCarrierLocalName : !string.IsNullOrEmpty(row.ForwardingCarrierEnglishName) ? "Via: " + row.ForwardingCarrierEnglishName : "";
             item.DeliveryExceptionReason = row.ForwardingDeliveryExceptionReason;
             item.GrossWeightUnitCode = row.ForwardingGrossWeightUnitCode;
             //item.ForwardingHouse = row.ForwardingHouse;
@@ -289,6 +289,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CustomMapping
             item.WarehouseLegRemarks = row.CustomWarehouseLegRemarks;
             item.DeclarationDate = row.CustomDeclarationDate;
             item.CustomsClearanceDate = row.CustomsClearanceDate;
+            item.ClearanceDate = row.CustomsClearanceDate;
             item.ContainersNumbers = row.CustomContainersNumbers;
             item.AssignedTruckerDate = row.CustomAssignedTruckerDate;
             item.AssignedTruckerEstimationDate = row.CustomAssignedTruckerEstimationDate;
@@ -321,8 +322,9 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CustomMapping
             //item.BookingNotes                  = row.CustomBookingNotes                  ;
             //item.BookingExceptionReason        = row.CustomBookingExceptionReason        ;
             item.PaymentRequiredEstimationDate = row.CustomPaymentRequiredEstimationDate;
-            item.PaymentRequiredDate = row.CustomIsPaymentRequired && row.CustomPaymentDateTime != null ? row.CustomPaymentRequiredDate : null;
+            item.PaymentRequiredDate = row.CustomIsPaymentRequired && row.CustomPaymentDateTime != null ? row.CustomPaymentReceivedDate : null;
             item.PaymentRequiredNotes = row.CustomPaymentRequiredNotes;
+            item.CustomsPaymentDate = row.CustomPaymentDateTime;
             item.PaymentReceivedEstomationDate = row.CustomPaymentReceivedEstomationDate;
 
         }
