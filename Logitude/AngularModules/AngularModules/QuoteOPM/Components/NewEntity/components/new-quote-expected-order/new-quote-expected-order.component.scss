@@ -1,7 +1,7 @@
 :host ::ng-deep {
     .mydialog {
         width: 1000px;
-        
+
         button {
             margin: 8px;
         }
@@ -11,5 +11,47 @@
 @media screen and (max-width: 1200px) {
     .mydialog {
         width: 100vw;
+    }
+}
+
+.dimensions {
+    padding-bottom: 0px;
+}
+
+.dimensions-header {
+    text-align: start;
+    font-weight: bold;
+    font-size: 14px;
+    padding-bottom: 15px;
+    margin: 0 27px;
+}
+
+.summery {
+    background: #e7f4ff;
+    border-radius: 10px;
+    text-align: center;
+
+    .summery-header {
+        text-align: start;
+        font-weight: bold;
+        font-size: 14px;
+    }
+
+    .summery-item {
+        background: #fdfcfc;
+        margin: 1em !important;
+        border-radius: 16px;
+
+        h4 {
+            font-weight: bold;
+            font-size: 14px;
+            color: #1084dc;
+        }
+
+        label {
+            left: 0px;
+            top: 8px;
+            background: #fdfcfc;
+        }
     }
 }
