@@ -89,13 +89,11 @@ namespace Logitude.Accounting.Data.Repositories
         }
         private List<string> GetEnableChequeStatusesForCashbook()
         {
-            List<string> EnablesARPChequeStatusCode = new List<string>();
-            EnablesARPChequeStatusCode.Add("1");
-            EnablesARPChequeStatusCode.Add("2");
-            EnablesARPChequeStatusCode.Add("3");
-            EnablesARPChequeStatusCode.Add("4");
-            EnablesARPChequeStatusCode.Add("7");
-
+            List<string> EnablesARPChequeStatusCode = new List<string>
+            {
+                "1",
+                "4"
+            };
             return EnablesARPChequeStatusCode;
 
         }
