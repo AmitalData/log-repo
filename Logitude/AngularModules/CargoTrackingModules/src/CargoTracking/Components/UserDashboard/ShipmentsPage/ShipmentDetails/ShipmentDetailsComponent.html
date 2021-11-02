@@ -416,13 +416,13 @@ cargoTrackingShipmentPM.ArrivalDate |
                     <div class="title" *ngIf="Shipment.ShipmentList.TransportModeId == 'A'">PACKAGE TYPE</div>
                     <div class="title" *ngIf="Shipment.ShipmentList.TransportModeId != 'A'">CONTAINER TYPE</div>
                     <div *ngIf="Shipment.ShipmentList.EntityType != 'O'" style="width:170px">
-                        <div *ngFor="let package of ShipmentPackages?.slice(0,2), let i = index" style="display:flex;flex-direction:row">
+                        <div *ngFor="let package of cargoTrackingShipmentPM.Packages.slice(0,2), let i = index" style="display:flex;flex-direction:row">
                             <div class="description TextTrimming"> {{package.PackageTypeName}}</div>
                             <i class="las la-chevron-circle-up" style="color: var(--MainColor);margin-top:5px"
-                               *ngIf="ShipmentPackages.length > 1 && i == 1 && ShowDetailsSection" (click)="ShowMoreLinkClicked()"></i>
+                               *ngIf="cargoTrackingShipmentPM.Packages.length > 1 && i == 1 && ShowDetailsSection" (click)="ShowMoreLinkClicked()"></i>
 
                             <i class="las la-chevron-circle-down" style="color: var(--MainColor);margin-top:5px"
-                               *ngIf="ShipmentPackages.length > 1 && i == 1 && !ShowDetailsSection" (click)="ShowMoreLinkClicked()"></i>
+                               *ngIf="cargoTrackingShipmentPM.Packages.length > 1 && i == 1 && !ShowDetailsSection" (click)="ShowMoreLinkClicked()"></i>
                         </div>
                     </div>
                 </div>
