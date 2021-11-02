@@ -197,16 +197,6 @@ export class ARPaymentMultiBankTransfersComponent extends BaseComponent {
         }
     }
     private ValidateBankTransferFields(bankTransfer: ARPaymentBankTranferPM) {
-        if (AppTool.IsNullOrEmpty(bankTransfer.PaymentRef)) {
-            this.ValidationErrorsList.push(
-                this.FIELD_IS_REQUIERD.replace(
-                    '%FieldName',
-                    TextCodeTranslator.Translate(
-                        'ARPayment.F.PaymentRef'
-                    )
-                )
-            );
-        }
         if (AppTool.IsNullOrEmpty(bankTransfer.BankAccountId)) {
             this.ValidationErrorsList.push(
                 this.FIELD_IS_REQUIERD.replace(
@@ -234,22 +224,22 @@ export class ARPaymentMultiBankTransfersComponent extends BaseComponent {
             );
         }
 
-        this.ValidateDuplicateBankTransferNumbers(bankTransfer.PaymentRef);
+        // this.ValidateDuplicateBankTransferNumbers(bankTransfer.PaymentRef);
     }
 
-    ValidateDuplicateBankTransferNumbers(bankTransferRef: string) {
-        var isDuplicateChequeNumber =
-            this.paymentPM.ARPaymentBankTranfers?.filter(
-                (c) => c.PaymentRef == bankTransferRef
-            ).length > 1;
-        if (isDuplicateChequeNumber) {
-            this.ValidationErrorsList.push(
-                TextCodeTranslator.Translate(
-                    'Accounting.M.MoreThanChequeWithTheSameChequeNumber'
-                )
-            );
-        }
-    }
+    // ValidateDuplicateBankTransferNumbers(bankTransferRef: string) {
+    //     var isDuplicateChequeNumber =
+    //         this.paymentPM.ARPaymentBankTranfers?.filter(
+    //             (c) => c.PaymentRef == bankTransferRef
+    //         ).length > 1;
+    //     if (isDuplicateChequeNumber) {
+    //         this.ValidationErrorsList.push(
+    //             TextCodeTranslator.Translate(
+    //                 'Accounting.M.MoreThanChequeWithTheSameChequeNumber'
+    //             )
+    //         );
+    //     }
+    // }
     public SelectedRow: any = null;
     OnRowSelected(itemComponent: any) {
         this.SelectedRow = itemComponent;
