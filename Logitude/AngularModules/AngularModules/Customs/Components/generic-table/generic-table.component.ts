@@ -49,7 +49,7 @@ export class GenericTableComponent implements OnInit {
     this.filterVal = val
 
     if (this.config.data.getData) {
-      this.table.clearCache()
+      // this.table.clearCache()
       this.data = Array.from({ length: 100 });;
       this.addDataFromFunc(0);
     } else
@@ -61,7 +61,7 @@ export class GenericTableComponent implements OnInit {
 
     this.sortField = e.field as string;
     this.sortOrder = e.order as number
-    this.table.clearCache()
+    // this.table.clearCache()
     this.data = Array.from({ length: 100 });
     this.addDataFromFunc(0);
   }

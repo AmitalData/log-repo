@@ -79,9 +79,4 @@
     ReferencedTable="QuoteOPs"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
-  <Relation
-    ForeignKeyColumn="PackageTypeId"
-    ReferencedTable="PackageTypes"
-    ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
 </Table>
