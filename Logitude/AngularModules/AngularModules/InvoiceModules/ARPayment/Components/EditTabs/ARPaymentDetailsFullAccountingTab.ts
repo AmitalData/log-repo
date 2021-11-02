@@ -111,6 +111,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
 		this.ComputeLocalAmount();
         this.SetPaymentAmount();
         this.SetChequeAmount();
+		this.SetBankTransfersAmount();
 		if (this.EntityPM.ARPaymentChequeReplicas.length > 1) {
 			this.isMultipleCheques = true;
 		}
@@ -175,6 +176,17 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
             this.chequeAmount = firstCheque.ForeignAmount;
         }
     }
+
+	private SetBankTransfersAmount() {
+        if (this.EntityPM.ARPaymentBankTranfers.length == 0) {
+            this.bankTransferAmount = this.EntityPM.AmountInPaymentCurrency;
+        }
+        else {
+            var firstBankTransfer = this.EntityPM.ARPaymentBankTranfers.filter(d => d.LineNumber == 1)[0];
+            this.bankTransferAmount = firstBankTransfer.ForeignAmount;
+        }
+    }
+
 	private InitializeBillToLov() {
         
 		this.DisplayFieldsFromList = "Code,CalculatedEnglishName,GLAccountDisplayNumber,CityName,CountryCode,PartnerTypeName";
@@ -828,6 +840,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
 	{
 		this.UIProperties.SetRequired("BankAccountId", this.ObjectTableName, false);
 		if (this.isFullAccounting == true && this.AccountingPaymentMethodCode == "BT") {
+			this.UpdatePaymentBankTranferFields();
 			if (AppTool.IsNullOrEmpty(this.BankAccountId)) {
 				this.UIProperties.SetRequired("BankAccountId", this.ObjectTableName, true);
 			}
@@ -1604,6 +1617,19 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
                     cheque.ValueDate = this.ValueDate;
                     cheque.ForeignAmount = this.ChequeAmount;
                     cheque.ChequeNumber = this.ChequeOrPaymentRef
+                }
+            });
+        }
+    }
+
+	UpdatePaymentBankTranferFields() {
+        if (this.EntityPM.ARPaymentBankTranfers.length > 0) {
+            this.EntityPM.ARPaymentBankTranfers.filter(d => d.LineNumber == 1).forEach((bankTransfer: ARPaymentBankTranferPM) => {
+                if (bankTransfer) {
+                    bankTransfer.BankAccountId = this.BankAccountId;
+                    bankTransfer.ValueDate = this.ValueDate;
+                    bankTransfer.PaymentRef = this.ChequeOrPaymentRef;
+					bankTransfer.ForeignAmount = this.BankTransferAmount;
                 }
             });
         }
