@@ -142,7 +142,7 @@
 }
 
 .container {
-    height: 81%;
+    height: calc(100% - 126px);
     margin: 0px;
     margin-top: 2px;    
 }
@@ -154,11 +154,10 @@
 }
 
 .section-btn {
-    height: 67px;
     border-radius: 0;
     text-align: right;
     padding: 20px;
-    margin-bottom: 0;
+    margin-top: 15px;
 
     .pi {
         color: black;
@@ -173,7 +172,7 @@
 
     .p-button-danger:hover,
     .p-button-danger {
-        margin-right: 30px;
+        margin-right: 7px;
         background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(186, 206, 227, 1) 100%);
         border: 1px solid #6A8299;
     }
@@ -181,6 +180,10 @@
     .p-button-primary {
         background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(237, 192, 147, 1) 100%) !important;
         border: 1px solid #6A8299;
+    }
+
+    .p-button.p-button-danger:not(a):not(.p-disabled):hover {
+        color: inherit;
     }
 }
 

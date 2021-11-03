@@ -28,7 +28,8 @@ export class GenericTableService {
     if (!data) throw ("Generic Table cannot be get null or undefined data");
 
     const config: DynamicDialogConfig = {}
-    config.width = '70vw';
+    config.width = '800px';
+    config.height = '600px'
     config.header = header;
     config.data = { data: data, columns: columns, getData: getDataFunction, rowTake: rowTake }
 
