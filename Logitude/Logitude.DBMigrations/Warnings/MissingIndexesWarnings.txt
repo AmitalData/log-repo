@@ -1,6 +1,0 @@
-Warning: Missing Index In DXML File Report.dxml, The Found Index On DB Is IX_FeatureId, The Index Should Added To The DXML File
-Warning: Missing Index In DXML File ObjectTable.dxml, The Found Index On DB Is IX_FK_DescriptionObjectTableTextCode, The Index Should Added To The DXML File
-Warning: Missing Index In DXML File ObjectTable.dxml, The Found Index On DB Is IX_FK_ScreenObjectTable, The Index Should Added To The DXML File
-Warning: Missing Index In DXML File ObjectTable.dxml, The Found Index On DB Is IX_NewButtonTextCodeId, The Index Should Added To The DXML File
-Warning: Missing Index In DXML File APInvoice.dxml, The Found Index On DB Is IX_APInvoices_MainEntityId, The Index Should Added To The DXML File
-Warning: Missing Index In DXML File APInvoice.dxml, The Found Index On DB Is IX_APInvoices_Tenant_IsClosed_StatusCode, The Index Should Added To The DXML File

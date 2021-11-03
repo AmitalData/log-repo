@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class ExternalReconciliationUpdateClass
    {  		
-		public const string HashString = "303c9ef461ba24559c1c9f107621fc17";
+		public const string HashString = "0db55672f9465f6a62e292c4063e868f";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -122,7 +122,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "התאמה",
 			      				    DefaultText =  "External Reconciliation",
-			      				    Code =  "33b6",
+			      				    Code =  "b94a",
 			      				    Name =  "ExternalReconciliation Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Accounting",
@@ -995,6 +995,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 		   Feature ExternalReconciliationFeature_ExtRecoGenerateTestRecords = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ExtRecoGenerateTestRecords", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ExternalReconciliationObjectTable.Id, Tenant = 0, NameTextCodeCode = "ExternalReconciliation.Features.ExtRecoGenerateTestRecords", NameTextCodeDefaultText = @"Generate Test Records" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ExternalReconciliationObjectTable);
 
+		   Feature ExternalReconciliationFeature_ExtRecoCreateBankTransferPY = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ExtRecoCreateBankTransferPY", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ExternalReconciliationObjectTable.Id, Tenant = 0, NameTextCodeCode = "ExternalReconciliation.Features.ExtRecoCreateBankTransferPY", NameTextCodeDefaultText = @"Create Bank Transfer Payment Button" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ExternalReconciliationObjectTable);
+
    
 	    
 		}
@@ -1123,6 +1125,16 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode ExternalReconciliationTextCode_ExternalReconciliationOCantAdjustLedgersOnly = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ExternalReconciliation.O.CantAdjustLedgersOnly", DefaultText = "Cant adjust only transaction lines",LocalDefaultText = @"לא ניתן לבצע התאמה עם שורות מהכרטיס בלבד", ObjectTableId = ExternalReconciliationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode ExternalReconciliationTextCode_ExternalReconciliationOCantReconcileTransferTransactionsWithMultipleBankPages = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ExternalReconciliation.O.CantReconcileTransferTransactionsWithMultipleBankPages", DefaultText = "You can't Reconcile Transfer Transactions with multiple bank pages. Please select only one bank page",LocalDefaultText = @"לא ניתן להתאים תנועה מכרטיס דחויים עם יותר משורה אחת מצד הבנק, נא לבחור שורה אחת בכל פעם", ObjectTableId = ExternalReconciliationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ExternalReconciliationTextCode_ExternalReconciliationOCreateBankTransferInfo = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ExternalReconciliation.O.CreateBankTransferInfo", DefaultText = "Once you select one or more bank Page lines, this option allows you to create and reconcile a new AR Payment with the selected lines",LocalDefaultText = @"אופציה זו מאפשרת להפיק קבלה משורת דף בנק אחת או יותר", ObjectTableId = ExternalReconciliationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ExternalReconciliationTextCode_ExternalReconciliationOBankTransferDifferenceMsg = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ExternalReconciliation.O.BankTransferDifferenceMsg", DefaultText = "Please check the selected lines. The difference should be less than zero in order to create the payment",LocalDefaultText = @"נא לבחור תנועות פתוחות בסכום חובה גדול מאפס", ObjectTableId = ExternalReconciliationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ExternalReconciliationTextCode_ExternalReconciliationOBTOnlyBankPages = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ExternalReconciliation.O.BTOnlyBankPages", DefaultText = "Please select only bank pages in order to continue",LocalDefaultText = @"על מנת להפיק קבלה יש לבחור דפי בנק בלבד", ObjectTableId = ExternalReconciliationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ExternalReconciliationTextCode_ExternalReconciliationOBTbackgroundCreationMSG = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ExternalReconciliation.O.BTbackgroundCreationMSG", DefaultText = "AR Payment #number has been created successfully. The external reconciliation is being created in the background",LocalDefaultText = @"נוצרה קבלה 123 , ההתאמה תבוצע ברקע", ObjectTableId = ExternalReconciliationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ExternalReconciliationTextCode_ExternalReconciliationOBTUnsavedChanges = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ExternalReconciliation.O.BTUnsavedChanges", DefaultText = "This AR Payment has unsaved changes do you want to save it considering that no external Reconciliation will be done if the payment isn't approved?",LocalDefaultText = @"בקבלה זאת בוצעו שינויים שטרם נשמרו , האם ברצונך לשמור זאת בהתחשב בכך שהתאמה חיצונית לא תתבצע אם הקבלה לא תאושר", ObjectTableId = ExternalReconciliationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

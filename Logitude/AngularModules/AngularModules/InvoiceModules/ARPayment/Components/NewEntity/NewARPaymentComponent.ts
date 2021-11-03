@@ -82,7 +82,7 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
         if (this.invoicePm == null) {
             this.invoicePm = new ARInvoicePM();
         }
-        
+
 
         if(SessionLocator.TenantPM.AccountingActivated)
             this.invoicePm.IsFullAccounting = true;
@@ -90,9 +90,9 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
         if (SessionLocator.SATInterfaceSettings.SATInterfaceCode != "NONE") {
             this.DisplaySATSettings = true;
 
-           
+
                 this.DisplayFechaPago = true;
-          
+
         }
 
         if (FeatureLocator.HasFeaturePermession("General", "General.Features.SystemCurrencies")) {
@@ -187,10 +187,21 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
         }
     }
 
+    preselectedPaymentMethodCode;
+    selectedAmount;
+    preSelectedCurrencyId;
     SetWindowArgs(args: any) {
         if (args) {
             this.invoicePm = args['ARInvoice'];
             this.customerId = args['CustomerId'];
+
+            if(args.AccountingPaymentMethodCode){
+                this.preselectedPaymentMethodCode = args.AccountingPaymentMethodCode;
+                this.selectedAmount = args.PaymentAmount;
+                this.preSelectedCurrencyId = args.Currency;
+                this.RegisterDate = new Date();
+            }
+
         }
 
         if (this.invoicePm != null) {
@@ -288,6 +299,12 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
         myService1.getAll().subscribe((response: ServiceResponse) => {
             if (response != null) {
                 this.AllMethods = response.Result;
+                if(this.preselectedPaymentMethodCode){
+                    var preselectedMethod = this.AllMethods.find(m=>m.Code == this.preselectedPaymentMethodCode);
+                    this.AccountingPaymentMethodId = preselectedMethod.Id;
+                    this.UIProperties.SetEnabled("AccountingPaymentMethodId", this.ObjectTableName, false);
+
+                }
             }
         });
     }
@@ -321,7 +338,11 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
                 this.PartnerId = this.customerId;
             }
 
-            this.PaymentCurrencyId = SessionLocator.TenantPM.CurrencyId;
+            if(!this.preSelectedCurrencyId)
+                this.PaymentCurrencyId = SessionLocator.TenantPM.CurrencyId;
+            else
+                this.PaymentCurrencyId = this.preSelectedCurrencyId;
+
             this.newARPaymentPM.PaymentCurrencyExchangeRate = 1;
         }
 
@@ -516,6 +537,8 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
         this.newARPaymentPM.UpdateDate = DateTool.GetCurrentDateAsUtc();
         this.newARPaymentPM.LocalCurrencyId = SessionLocator.TenantPM.CurrencyId;
         this.newARPaymentPM.RegisterDate = DateTool.GetCurrentDateAsUtc();
+        this.newARPaymentPM.AmountInPaymentCurrency = this.selectedAmount;
+        this.newARPaymentPM.PaymentCurrencyId = this.preSelectedCurrencyId;
 
         if (!SessionLocator.LoggedUserPM.IsCustomerCare) {
             this.newARPaymentPM.BranchId = SessionLocator.LoggedUserPM.BranchId;
@@ -664,12 +687,13 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
             this.AccountingPaymentMethodId = null;
             this.AccountingPaymentMethodCode = null;
             this.SATPaymentMethodCode = null;
-            this.PaymentCurrencyId = SessionLocator.TenantPM.CurrencyId;
+            if(!this.preSelectedCurrencyId)
+                this.PaymentCurrencyId = SessionLocator.TenantPM.CurrencyId;
             this.newARPaymentPM.BillToPartnerTypeId = null;
         }
 
         else {
-            if (!AppTool.IsNullOrEmpty(list.InvoiceCurrencyId)) {
+            if (!AppTool.IsNullOrEmpty(list.InvoiceCurrencyId) && !this.preSelectedCurrencyId) {
                 this.PaymentCurrencyId = list.InvoiceCurrencyId;
             }
             if (!AppTool.IsNullOrEmpty(list.SATPaymentMethodCode)) {
@@ -686,7 +710,7 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
                     myGLAccountPMService.get(list.GLAccountId).subscribe((myResponse: ServiceResponse) => {
                         if (!myResponse.HasError) {
                             var glaccount: GLAccountPM = myResponse.Result;
-                            if (glaccount != null && !glaccount.IsMultiCurrency) {
+                            if (glaccount != null && !glaccount.IsMultiCurrency && !this.preSelectedCurrencyId) {
                                 this.PaymentCurrencyId = glaccount.CurrencyId;
                             }
                         }
