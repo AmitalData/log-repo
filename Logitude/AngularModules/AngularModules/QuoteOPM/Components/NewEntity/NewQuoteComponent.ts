@@ -23,7 +23,7 @@ export class NewQuoteComponent {
 
     constructor(
         private newQuoteDataService: NewQuoteDataService,
-        private messageService: MessageService,
+        private msg: MessageService,
         private ValidateService: NewQuoteValidateEntityService,
     ) { }
 
@@ -47,7 +47,7 @@ export class NewQuoteComponent {
 
         this.newQuoteDataService.creatingNewQuote(this.EntityPM)
             .then(() => SessionLocator.SelectedSession.CloseCurrentWindowEmit('OK'))
-            .catch((err: string[]) => this.messageService.add({ severity: 'error', summary: 'Create new quote failed', detail: err.join(', ')}))
+            .catch((err: string[]) => this.msg.add({ severity: 'error', summary: 'Create new quote failed', detail: err.join(', ')}))
             .finally(() => SessionLocator.SelectedSession.CurrentWindow.StopBusyIndicator())
 
         // console.log(this.EntityPM)

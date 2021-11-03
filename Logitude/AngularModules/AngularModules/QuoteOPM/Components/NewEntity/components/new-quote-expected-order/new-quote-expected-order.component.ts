@@ -1,6 +1,8 @@
 import { Component, Input, OnInit, SimpleChanges, AfterViewInit } from '@angular/core';
 import { FormGroup, FormControl, FormArray, Validators } from '@angular/forms';
 import { TransportModeList } from 'Infrastructure/EntityLists/TransportModeList';
+import { requiredOneFromMultiValidator } from 'Infrastructure/Validators/requiredOneFromMultiValidator';
+import { MessageService } from 'primeng/api';
 import { QuoteOPPackagePM } from 'QuoteOPM/EntityPMs/QuoteOPPackagePM';
 import { QuoteOPPM } from 'QuoteOPM/EntityPMs/QuoteOPPM';
 import { pairwise, startWith } from 'rxjs/operators';
@@ -22,23 +24,29 @@ export class NewQuoteExpectedOrderComponent implements OnInit, AfterViewInit {
   totalQuantity: number = 0;
   totalGrossWeight: number = 0.00;
   totalVolume: number = 0.00;
-  isExportSeaFcl: boolean = true;
+  isSeaFcl: boolean = true;
 
   get propForm(): FormGroup {
-    return new FormGroup({
-      volume: new FormControl(),
-      grossWeight: new FormControl(),
+    const a: any = { b: null };
+    a.b = new FormGroup({
+      volume: new FormControl(null, requiredOneFromMultiValidator(a, 'b', 'volume', 'grossWeight')),
+      grossWeight: new FormControl(null, requiredOneFromMultiValidator(a, 'b', 'grossWeight', 'volume')),
+      packageType: new FormControl(),
       quantity: new FormControl(),
       Ldimension: new FormControl(),
       Wdimension: new FormControl(),
       Hdimension: new FormControl(),
     })
+    return a.b
   }
   get packages(): any {
     return this.formGroup.get('packages') as any;
   }
   packageTypes: PackageTypeList[] = []
-  constructor(private newQuoteDataService: NewQuoteDataService,) { }
+  constructor(
+    private newQuoteDataService: NewQuoteDataService,
+    private msg: MessageService,
+  ) { }
 
   ngOnInit(): void {
     this.getPackageTypes();
@@ -80,39 +88,44 @@ export class NewQuoteExpectedOrderComponent implements OnInit, AfterViewInit {
       this.addFormControls();
       this.subscribeCtrl();
     }
-  }  
+  }
 
   onTransportAndShipmentChange(): void {
-    this.isExportSeaFcl =  this.formGroup.controls.direction?.value?.Id === "E" &&
-      this.formGroup.controls.transportMode?.value?.Id === 'O' &&
-      this.formGroup.controls.shipmentType?.value?.Name === 'FCL'
+    this.isSeaFcl = this.formGroup.controls.transportMode?.value?.Id === 'O' && this.formGroup.controls.shipmentType?.value?.Name === 'FCL';
 
-      // if()
+    ['quantity1', 'quantityType1'].forEach(ctrl => {
+      this.formGroup.controls[ctrl].setValidators(this.isSeaFcl ? [Validators.required] : [])
+      this.formGroup.controls[ctrl].updateValueAndValidity()
+    })
+
+    this.isSeaFcl ? this.formArray.disable() : this.formArray.enable();      
   }
 
   addFormControls() {
-    this.formGroup.addControl('quantity1', new FormControl(null, Validators.required));
+    this.formGroup.addControl('quantity1', new FormControl());
     this.formGroup.addControl('quantity2', new FormControl());
     this.formGroup.addControl('quantity3', new FormControl());
     this.formGroup.addControl('quantity4', new FormControl());
-    this.formGroup.addControl('quantityType1', new FormControl(null, Validators.required));
+    this.formGroup.addControl('quantityType1', new FormControl());
     this.formGroup.addControl('quantityType2', new FormControl());
     this.formGroup.addControl('quantityType3', new FormControl());
     this.formGroup.addControl('quantityType4', new FormControl());
     var form = this.propForm;
-    form.controls.volume.disable();
-    form.controls.grossWeight.disable();
-    form.controls.Ldimension.disable();
-    form.controls.Wdimension.disable();
-    form.controls.Hdimension.disable();
-    form.controls.quantity.valueChanges.pipe(startWith(null), pairwise()).subscribe(([prev, next]: [any, any]) => { this.disableForm(form); this.calcTotalQuantity(prev, next) });
-    form.controls.grossWeight.valueChanges.pipe(startWith(null), pairwise()).subscribe(([prev, next]: [any, any]) => { this.calcTotalGrossWeight(prev, next) });
-    form.controls.volume.valueChanges.pipe(startWith(null), pairwise()).subscribe(([prev, next]: [any, any]) => { if (prev != next) { this.disableDimensionsForm(form, next); this.calcTotalVolume(prev, next) } });
-    form.controls.Ldimension.valueChanges.pipe(startWith(null), pairwise()).subscribe(([prev, next]: [any, any]) => { if (prev != next) this.disablevolumeForm(form) });
-    form.controls.Wdimension.valueChanges.pipe(startWith(null), pairwise()).subscribe(([prev, next]: [any, any]) => { if (prev != next) this.disablevolumeForm(form) });
-    form.controls.Hdimension.valueChanges.pipe(startWith(null), pairwise()).subscribe(([prev, next]: [any, any]) => { if (prev != next) this.disablevolumeForm(form) });
 
-    this.formArray = new FormArray([form]);
+    this.formArray = new FormArray([]);
+    this.addPackage()
+    // form.controls.volume.disable();
+    // form.controls.grossWeight.disable();
+    // form.controls.Ldimension.disable();
+    // form.controls.Wdimension.disable();
+    // form.controls.Hdimension.disable();
+    // form.controls.quantity.valueChanges.pipe(startWith(null), pairwise()).subscribe(([prev, next]: [any, any]) => { this.disableForm(form); this.calcTotalQuantity(prev, next) });
+    // form.controls.grossWeight.valueChanges.pipe(startWith(null), pairwise()).subscribe(([prev, next]: [any, any]) => { this.calcTotalGrossWeight(prev, next) });
+    // form.controls.volume.valueChanges.pipe(startWith(null), pairwise()).subscribe(([prev, next]: [any, any]) => { if (prev != next) { this.disableDimensionsForm(form, next); this.calcTotalVolume(prev, next) } });
+    // form.controls.Ldimension.valueChanges.pipe(startWith(null), pairwise()).subscribe(([prev, next]: [any, any]) => { if (prev != next) this.disablevolumeForm(form) });
+    // form.controls.Wdimension.valueChanges.pipe(startWith(null), pairwise()).subscribe(([prev, next]: [any, any]) => { if (prev != next) this.disablevolumeForm(form) });
+    // form.controls.Hdimension.valueChanges.pipe(startWith(null), pairwise()).subscribe(([prev, next]: [any, any]) => { if (prev != next) this.disablevolumeForm(form) });
+
     this.formGroup.addControl('packages', this.formArray);
     this.formGroup.addControl('isDangerous', new FormControl());
     this.formGroup.addControl('descriptionOfGoods', new FormControl());
@@ -121,38 +134,41 @@ export class NewQuoteExpectedOrderComponent implements OnInit, AfterViewInit {
 
   subscribeCtrl() {
     // if (this.isExportSeaFcl) {
-      this.formGroup.controls.quantity1.valueChanges.subscribe(val => this.EntityPM.PackageType1Quantity = val);
-      this.formGroup.controls.quantity2.valueChanges.subscribe(val => this.EntityPM.PackageType2Quantity = val);
-      this.formGroup.controls.quantity3.valueChanges.subscribe(val => this.EntityPM.PackageType3Quantity = val);
-      this.formGroup.controls.quantity4.valueChanges.subscribe(val => this.EntityPM.PackageType4Quantity = val);
-      this.formGroup.controls.quantityType1.valueChanges.subscribe(val => this.EntityPM.PackageType1Id = val);
-      this.formGroup.controls.quantityType2.valueChanges.subscribe(val => this.EntityPM.PackageType2Id = val);
-      this.formGroup.controls.quantityType3.valueChanges.subscribe(val => this.EntityPM.PackageType3Id = val);
-      this.formGroup.controls.quantityType4.valueChanges.subscribe(val => this.EntityPM.PackageType4Id = val);
-      
+    this.formGroup.controls.quantity1.valueChanges.subscribe(val => this.EntityPM.PackageType1Quantity = val);
+    this.formGroup.controls.quantity2.valueChanges.subscribe(val => this.EntityPM.PackageType2Quantity = val);
+    this.formGroup.controls.quantity3.valueChanges.subscribe(val => this.EntityPM.PackageType3Quantity = val);
+    this.formGroup.controls.quantity4.valueChanges.subscribe(val => this.EntityPM.PackageType4Quantity = val);
+    this.formGroup.controls.quantityType1.valueChanges.subscribe(val => this.EntityPM.PackageType1Id = val);
+    this.formGroup.controls.quantityType2.valueChanges.subscribe(val => this.EntityPM.PackageType2Id = val);
+    this.formGroup.controls.quantityType3.valueChanges.subscribe(val => this.EntityPM.PackageType3Id = val);
+    this.formGroup.controls.quantityType4.valueChanges.subscribe(val => this.EntityPM.PackageType4Id = val);
+
     // }
     // else {
-      //this.formGroup.controls.packages.valueChanges.subscribe(val => this.EntityPM.QuotePackages = val);
-      
-      //this.attachPackages();
-      /*this.formGroup.controls.grossWeight.valueChanges.subscribe(val=> this.EntityPM.GrossWeight = val);
-      this.formGroup.controls.volume.valueChanges.subscribe(val=> this.EntityPM.Volume = val);
-      this.formGroup.controls.chargeableWeight.valueChanges.subscribe(val=> this.EntityPM.ChargeableWeight = val);
-      this.formGroup.controls.numberOfPackages.valueChanges.subscribe(val=> this.EntityPM.NumberOfPackages = val);*/
+    //this.formGroup.controls.packages.valueChanges.subscribe(val => this.EntityPM.QuotePackages = val);
+
+    //this.attachPackages();
+    /*this.formGroup.controls.grossWeight.valueChanges.subscribe(val=> this.EntityPM.GrossWeight = val);
+    this.formGroup.controls.volume.valueChanges.subscribe(val=> this.EntityPM.Volume = val);
+    this.formGroup.controls.chargeableWeight.valueChanges.subscribe(val=> this.EntityPM.ChargeableWeight = val);
+    this.formGroup.controls.numberOfPackages.valueChanges.subscribe(val=> this.EntityPM.NumberOfPackages = val);*/
     // }
-    
+
     this.formGroup.controls.isDangerous.valueChanges.subscribe(val => this.EntityPM.IsDangerous = val);
     this.formGroup.controls.descriptionOfGoods.valueChanges.subscribe(val => this.EntityPM.DescriptionOfGoods = val);
     this.formGroup.controls.notes.valueChanges.subscribe(val => this.EntityPM.Notes = val);
-    
-    this.formGroup.controls.transportMode.valueChanges.subscribe((val:TransportModeList) => this.onTransportAndShipmentChange());      
-    this.formGroup.controls.shipmentType.valueChanges.subscribe((val:ShipmentTypeList) => this.onTransportAndShipmentChange());      
+
+    this.formGroup.controls.transportMode.valueChanges.subscribe((val: TransportModeList) => this.onTransportAndShipmentChange());
+    this.formGroup.controls.shipmentType.valueChanges.subscribe((val: ShipmentTypeList) => this.onTransportAndShipmentChange());
   }
 
   addPackage() {
-    var form = this.propForm;
-    form.controls.volume.disable();
-    form.controls.grossWeight.disable();
+    if (this.formArray.invalid) {
+      this.msg.add({ severity: 'error', summary: 'Add new package failed', detail: 'some packeges not have "Gross Weight" or "volume"' })
+      return;
+    }
+
+    const form = this.propForm;
     form.controls.Ldimension.disable();
     form.controls.Wdimension.disable();
     form.controls.Hdimension.disable();
@@ -196,16 +212,16 @@ export class NewQuoteExpectedOrderComponent implements OnInit, AfterViewInit {
   }
   disableForm(form: FormGroup) {
     if (form.controls.quantity.value) {
-      form.controls.volume.enable();
-      form.controls.grossWeight.enable();
+      // form.controls.volume.enable();
+      // form.controls.grossWeight.enable();
       form.controls.Ldimension.enable();
       form.controls.Wdimension.enable();
       form.controls.Hdimension.enable();
 
     }
     else {
-      form.controls.volume.disable();
-      form.controls.grossWeight.disable();
+      // form.controls.volume.disable();
+      // form.controls.grossWeight.disable();
       form.controls.Ldimension.disable();
       form.controls.Wdimension.disable();
       form.controls.Hdimension.disable();

@@ -1,63 +1,28 @@
-
-<div *ngIf="isExportSeaFcl" >
+<div *ngIf="isSeaFcl">
     <h3 class="sub-header">
         {{'QuoteOP.S.NewQuote.ExpectedOrderDetails' | TextCodeTranslationPipe}}
     </h3>
 
     <div class="grid content-in-section" [formGroup]='formGroup'>
         <div class="col-2 p-fluid">
-            <div class="p-field">
-                <label for="quantity1">Quantity</label>
-                <p-inputNumber formControlName='quantity1' id="Quantity1" mode="decimal" [useGrouping]="false">
-                </p-inputNumber>
-            </div>
-            <div class="p-field">
-                <p-inputNumber formControlName='quantity2' id="Quantity2" mode="decimal" [useGrouping]="false">
-                </p-inputNumber>
-            </div>
-            <div class="p-field">
-                <p-inputNumber formControlName='quantity3' id="Quantity3" mode="decimal" [useGrouping]="false">
-                </p-inputNumber>
-            </div>
-            <div class="p-field">
-                <p-inputNumber formControlName='quantity4' id="Quantity4" mode="decimal" [useGrouping]="false">
+            <label>Quantity</label>
+            <div class="p-field" *ngFor='let i of [1,2,3,4]'>
+                <p-inputNumber [formControlName]='"quantity" + i' mode="decimal" [useGrouping]="false">
                 </p-inputNumber>
             </div>
         </div>
+        <!--<p-dropdown [disabled]="!formGroup.controls.quantity1?.value"
+                    inputId="packageType1" formControlName='quantityType1' [options]="packageTypes" placeholder="Select" optionLabel="name"></p-dropdown>-->
         <div class="col-3 p-fluid">
-            <div class="p-field">
-                <label for="quantityType1">Package Type</label>
-                <!--<p-dropdown [disabled]="!formGroup.controls.quantity1?.value"
-                            inputId="packageType1" formControlName='quantityType1' [options]="packageTypes" placeholder="Select" optionLabel="name"></p-dropdown>-->
-                <app-autocomplate-table [columnsShow]="{Code:'Code',EnglishName:'English Name'}" [data]='packageTypes' [dropIcon]='true'
-                                        [placeholder]='"Select"'
-                                        [disabled]='!formGroup.controls.quantity1?.value'
-                                        [fieldShow]='"EnglishName"' [controlName]='"quantityType1"' [formGroup]='formGroup'>
-                </app-autocomplate-table>
-            </div>
-            <div class="p-field">
-                <app-autocomplate-table [columnsShow]="{Code:'Code',EnglishName:'English Name'}" [data]='packageTypes' [dropIcon]='true'
-                                        [placeholder]='"Select"'
-                                        [disabled]='!formGroup.controls.quantity2?.value'
-                                        [fieldShow]='"EnglishName"' [controlName]='"quantityType2"' [formGroup]='formGroup'>
-                </app-autocomplate-table>
-            </div>
-            <div class="p-field">
-                <app-autocomplate-table [columnsShow]="{Code:'Code',EnglishName:'English Name'}" [data]='packageTypes' [dropIcon]='true'
-                                        [placeholder]='"Select"'
-                                        [disabled]='!formGroup.controls.quantity3?.value'
-                                        [fieldShow]='"EnglishName"' [controlName]='"quantityType3"' [formGroup]='formGroup'>
-                </app-autocomplate-table>
-            </div>
-            <div class="p-field">
-                <app-autocomplate-table [columnsShow]="{Code:'Code',EnglishName:'English Name'}" [data]='packageTypes' [dropIcon]='true'
-                                        [placeholder]='"Select"'
-                                        [disabled]='!formGroup.controls.quantity4?.value'
-                                        [fieldShow]='"EnglishName"' [controlName]='"quantityType4"' [formGroup]='formGroup'>
+            <label>Package Type</label>
+            <div class="p-field" *ngFor='let i of [1,2,3,4]'>
+                <app-autocomplate-table [columnsShow]="{Code:'Code',EnglishName:'English Name'}" [data]='packageTypes'
+                    [dropIcon]='true' [placeholder]='"Select"' [disabled]='!formGroup.controls.quantity1?.value'
+                    [fieldShow]='"EnglishName"' [controlName]='"quantityType" + i' [formGroup]='formGroup'>
                 </app-autocomplate-table>
             </div>
         </div>
-         <div class="col-0.5 p-fluid"></div>
+        <div class="col-0.5 p-fluid"></div>
 
         <div class="col-7 p-fluid">
             <div class="p-field col-align">
@@ -66,7 +31,8 @@
             </div>
             <div class="p-field">
                 <label for="descriptionOfGoods">Description of Goods</label>
-                <textarea formControlName='descriptionOfGoods' id="descriptionOfGoods" pInputTextarea [rows]="4"></textarea>
+                <textarea formControlName='descriptionOfGoods' id="descriptionOfGoods" pInputTextarea
+                    [rows]="4"></textarea>
             </div>
 
             <div class="p-field">
@@ -75,33 +41,35 @@
             </div>
         </div>
     </div>
-
-    
 </div>
 
-<div *ngIf="!isExportSeaFcl">
+<div *ngIf="!isSeaFcl">
 
     <h3 class="sub-header">
         {{'QuoteOP.S.NewQuote.ExpectedOrderDetails' | TextCodeTranslationPipe}}
-        <p-button (onClick)="addPackage()" [style]="{'float':'right', 'color': '#2196F3','background-color': 'white'}" label="add package"></p-button>
+        <p-button (onClick)="addPackage()" [style]="{'float':'right', 'color': '#2196F3','background-color': 'white'}"
+            label="add package"></p-button>
     </h3>
-    
-    <h5 style="text-align: start; font-weight: bold; font-size: 14px; padding-bottom: 15px; margin: 0 27px; ">File Dimensions</h5>
-    
+
+    <h5 class="dimensions-header">File Dimensions</h5>
+
     <div class="grid content-in-section" [formGroup]='formGroup'>
 
-        <div class="col-12 p-fluid" style="padding-bottom:0px">
+        <div class="col-12 p-fluid dimensions">
             <div class="grid">
-                <div class="col-2" style="padding-bottom:0px">
+                <div class="col-2">
                     <label for="quantity">Quantity</label>
                 </div>
-                <div class="col-3" style="padding-bottom:0px">
+                <div class="col-2">
+                    <label for="quantity">Package Type</label>
+                </div>
+                <div class="col-2">
                     <label for="quantity">Dimensions(L-W-H)</label>
                 </div>
-                <div class="col-3" style="padding-bottom:0px">
+                <div class="col-2">
                     <label for="quantity">Volume</label>
                 </div>
-                <div class="col-3" style="padding-bottom:0px">
+                <div class="col-2">
                     <label for="quantity">GrossWeight</label>
                 </div>
             </div>
@@ -110,28 +78,40 @@
 
             <div *ngFor='let x of packages.controls; let i = index' [formGroupName]="i">
                 <div class="grid" [formGroup]='x'>
-                    <div class="p-field col-2 p-md-2">
+                    <div class="p-field col-3 p-md-2">
                         <p-inputNumber formControlName="quantity" [formGroup]='x' mode="decimal" [useGrouping]="false">
                         </p-inputNumber>
                     </div>
-
-                    <div class="p-field col-1 p-md-2">
-                        <p-inputNumber placeholder="L" formControlName='Ldimension' id="volume" mode="decimal" [useGrouping]="false"></p-inputNumber>
-                    </div>
-                    <div class="p-field col-1 p-md-2">
-                        <p-inputNumber placeholder="W" formControlName='Wdimension' id="volume" mode="decimal" [useGrouping]="false"></p-inputNumber>
-                    </div>
-                    <div class="p-field col-1 p-md-2">
-                        <p-inputNumber placeholder="H" formControlName='Hdimension' id="volume" mode="decimal" [useGrouping]="false"></p-inputNumber>
+                    
+                    <div class="p-field col-6 p-md-2">
+                        <app-autocomplate-table [columnsShow]="{Code:'Code',EnglishName:'English Name'}" [data]='packageTypes'
+                        [dropIcon]='true' [placeholder]='"Select"' [disabled]='!x.controls.quantity?.value'
+                        [fieldShow]='"EnglishName"' controlName='packageType' [formGroup]='x'>
+                    </app-autocomplate-table>
                     </div>
 
-                    <div class="p-field col-3 p-md-6">
-                        <p-inputNumber formControlName='volume' id="volume" mode="decimal" [useGrouping]="false" [minFractionDigits]="2" [maxFractionDigits]="2">
+                    <div class="p-field col-1 p-md-2">
+                        <p-inputNumber placeholder="L" formControlName='Ldimension' id="volume" mode="decimal"
+                            [useGrouping]="false"></p-inputNumber>
+                    </div>
+                    <div class="p-field col-1 p-md-2">
+                        <p-inputNumber placeholder="W" formControlName='Wdimension' id="volume" mode="decimal"
+                            [useGrouping]="false"></p-inputNumber>
+                    </div>
+                    <div class="p-field col-1 p-md-2">
+                        <p-inputNumber placeholder="H" formControlName='Hdimension' id="volume" mode="decimal"
+                            [useGrouping]="false"></p-inputNumber>
+                    </div>
+
+                    <div class="p-field col-6 p-md-6">
+                        <p-inputNumber formControlName='volume' id="volume" mode="decimal" [useGrouping]="false"
+                            [minFractionDigits]="2" [maxFractionDigits]="2">
                         </p-inputNumber>
                     </div>
 
-                    <div class="p-field col-3 p-md-6">
-                        <p-inputNumber formControlName='grossWeight' id="grossWeight" mode="decimal" [useGrouping]="false" [minFractionDigits]="2" [maxFractionDigits]="2">
+                    <div class="p-field col-6 p-md-6">
+                        <p-inputNumber formControlName='grossWeight' id="grossWeight" mode="decimal"
+                            [useGrouping]="false" [minFractionDigits]="2" [maxFractionDigits]="2">
                         </p-inputNumber>
                     </div>
 
@@ -141,30 +121,29 @@
             </div>
         </div>
         <div class="col-6 p-fluid">
-
-            <div class="grid" style="background: #e7f4ff;border-radius:10px; text-align: center">
+            <div class="grid summery">
                 <div class="col-10 p-fluid">
-                    <h4 style="text-align: start;font-weight:bold;font-size:14px">Summary</h4>
+                    <h4 class="summery-header">Summary</h4>
                 </div>
-                <div style="background: #fdfcfc; margin: 1em !important; border-radius: 16px " class="p-field col-5 p-fluid">
+                <div class="p-field col-5 p-fluid summery-item">
                     <br />
-                    <h4 style="font-weight: bold; font-size: 14px; color: #1084DC">{{totalQuantity}}</h4>
-                    <label style="left: 0px; top: 8px; background: #fdfcfc">Number of Packages</label>
+                    <h4 >{{totalQuantity}}</h4>
+                    <label>Number of Packages</label>
                 </div>
-                <div style="background: #fdfcfc; margin: 1em !important; border-radius: 16px" class="p-field col-5 p-fluid">
+                <div class="p-field col-5 p-fluid summery-item">
                     <br />
-                    <h4 style="font-weight: bold; font-size: 14px; color: #1084DC">{{(totalGrossWeight).toFixed(2)}}</h4>
-                    <label style="left: 0px; top: 8px; background: #fdfcfc">Gross Weight (KG)</label>
+                    <h4 >{{(totalGrossWeight).toFixed(2)}}</h4>
+                    <label>Gross Weight (KG)</label>
                 </div>
-                <div style="background: #fdfcfc; margin: 1em !important; border-radius: 16px" class="p-field col-5 p-fluid">
+                <div class="p-field col-5 p-fluid summery-item">
                     <br />
-                    <h4 style="font-weight: bold; font-size: 14px; color: #1084DC">{{totalVolume.toFixed(3)}}</h4>
-                    <label style="left: 0px; top: 8px; background: #fdfcfc">Volume (CBM)</label>
+                    <h4 >{{totalVolume.toFixed(3)}}</h4>
+                    <label>Volume (CBM)</label>
                 </div>
-                <div style="background: #fdfcfc; margin: 1em !important; border-radius: 16px" class="p-field col-5 p-fluid">
+                <div class="p-field col-5 p-fluid summery-item">
                     <br />
-                    <h4 style="font-weight: bold; font-size: 14px; color: #1084DC">{{(totalGrossWeight).toFixed(2)}}</h4>
-                    <label style="left: 0px; top: 8px; background: #fdfcfc">Chargeable Weight (MT)</label>
+                    <h4 >{{(totalGrossWeight).toFixed(2)}}</h4>
+                    <label>Chargeable Weight (MT)</label>
                 </div>
             </div>
         </div>
@@ -173,7 +152,8 @@
 
             <div class="p-field">
                 <label for="descriptionOfGoods">Description of Goods</label>
-                <textarea formControlName='descriptionOfGoods' id="descriptionOfGoods" pInputTextarea [rows]="4"></textarea>
+                <textarea formControlName='descriptionOfGoods' id="descriptionOfGoods" pInputTextarea
+                    [rows]="4"></textarea>
             </div>
 
             <div class="p-field">
