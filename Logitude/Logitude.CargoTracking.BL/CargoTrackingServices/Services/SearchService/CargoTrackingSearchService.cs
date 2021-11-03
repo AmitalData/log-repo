@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.SearchService
 {
 
-    public static class CargoTrackingSearchService
+    public static partial class CargoTrackingSearchService
     {
 
         public static List<string> PrivateRefrencesList = new List<string>() { "ConsigneeName", "ShipperName" };
