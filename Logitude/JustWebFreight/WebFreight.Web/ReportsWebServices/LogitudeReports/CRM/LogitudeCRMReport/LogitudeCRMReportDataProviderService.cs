@@ -160,14 +160,22 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.CRM.LogitudeCRMRepor
 
                 Opportunities = GetOpportunityItems(opportunityCRMDetail.ToList()),
                 HasError = HasError(opportunityCRMDetail.ToList()),
-                CurrentTotal = opportunityCRMDetail.ToList().Sum(b => b.Total),
-                OpportunityPeriods = GetPeriods(opportunityCRMDetail.ToList()),
-                TotalNetBeforeYear = GetTotalNetBeforeYear(opportunityCRMDetail.ToList()),
+                CurrentTotal = CalculateNetValue(opportunityCRMDetail.ToList().Sum(b => b.Total), opportunityCRMDetail.First().ResellerCommission),
+                OpportunityPeriods = GetPeriods(opportunityCRMDetail.ToList(), opportunityCRMDetail.First().ResellerCommission),
+                TotalNetBeforeYear = CalculateNetValue(GetTotalNetBeforeYear(opportunityCRMDetail.ToList()), opportunityCRMDetail.First().ResellerCommission),
                 InActive = opportunityCRMDetail.First().InActive,
             };
         }
 
-        private decimal? GetTotalNetBeforeYear(IEnumerable<OpportunityCRMDetails> opportunityDetails)
+        private decimal CalculateNetValue(decimal value, int? resellerCommission)
+        {
+            if (!logitudeCRMReportFilter.ShowNet)
+                return value;
+
+            return value * (100 - (resellerCommission ?? 0)) / 100;
+        }
+
+        private decimal GetTotalNetBeforeYear(IEnumerable<OpportunityCRMDetails> opportunityDetails)
         {
             return opportunityDetails.Where(a => a.ActualClosingDate.Year < DateTime.Now.Year).Sum(a => a.Total);
         }
@@ -184,14 +192,14 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.CRM.LogitudeCRMRepor
                 }).ToList();
         }
 
-        private List<OpportunityPeriod> GetPeriods(IEnumerable<OpportunityCRMDetails> opportunityDetails)
+        private List<OpportunityPeriod> GetPeriods(IEnumerable<OpportunityCRMDetails> opportunityDetails, int? resellerCommission)
         {
             List<OpportunityPeriod> periods = new List<OpportunityPeriod>();
             for (int i = 1; i <= 12; i++)
             {
                 OpportunityPeriod opportunityPeriod = new OpportunityPeriod();
                 opportunityPeriod.PeriodName = i.ToString();
-                opportunityPeriod.OpportunityPeriodSummaries = GetOpportunityPeriodSummaries(opportunityDetails, i);
+                opportunityPeriod.OpportunityPeriodSummaries = GetOpportunityPeriodSummaries(opportunityDetails, i, resellerCommission);
                 opportunityPeriod.Total = opportunityPeriod.OpportunityPeriodSummaries?.Sum(a => a.NewIncome ?? 0) ?? 0;
                 periods.Add(opportunityPeriod);
             }
@@ -199,7 +207,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.CRM.LogitudeCRMRepor
             return periods;
         }
 
-        private List<OpportunityPeriodSummary> GetOpportunityPeriodSummaries(IEnumerable<OpportunityCRMDetails> opportunityDetails, int mounth)
+        private List<OpportunityPeriodSummary> GetOpportunityPeriodSummaries(IEnumerable<OpportunityCRMDetails> opportunityDetails, int mounth, int? resellerCommission)
         {
             return opportunityDetails
                 .Where(b => b.ActualClosingDate.Year == DateTime.Now.Year && b.ActualClosingDate.Month == mounth)
@@ -208,7 +216,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.CRM.LogitudeCRMRepor
                 {
                     NumberOfUsers = a.Sum(b => b.NumberOfUsers),
                     IsNewCustomer = a.Where(b => b.IsNewCustomer != null).OrderByDescending(b => b.ActualClosingDate).FirstOrDefault()?.IsNewCustomer,
-                    NewIncome = a.Sum(b => b.Total),
+                    NewIncome = CalculateNetValue(a.Sum(b => b.Total), resellerCommission),
                 }).ToList();
         }
 
