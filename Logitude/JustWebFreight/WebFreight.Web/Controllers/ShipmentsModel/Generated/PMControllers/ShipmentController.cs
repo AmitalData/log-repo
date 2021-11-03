@@ -894,9 +894,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
 
             return Request.CreateResponse(HttpStatusCode.OK, shipmentsAdditionalFields);
         }
-
-        [HttpPost]
-        public HttpResponseMessage GetDigitalFiltersCounts(DigitalFilters digitalFilters)
+        public HttpResponseMessage GetDigitalFiltersCounts(string CustomerId, int leastStatusWeight, int greatestStatusWeight)
         {
             string token = HttpContext.Current.Request.Headers["Token"];
             AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
@@ -906,7 +904,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
             SecurityUtility.CheckContactFeature("Shipment", "READ", tenant);
 
             ShipmentQuery shipmentQuery = new ShipmentQuery(tenant);
-            var digitalFiltersCounts = shipmentQuery.GetDigitalFiltersCounts(tenant, digitalFilters);
+            var digitalFiltersCounts = shipmentQuery.GetDigitalFiltersCounts(tenant, CustomerId, leastStatusWeight, greatestStatusWeight);
 
             return Request.CreateResponse(HttpStatusCode.OK, digitalFiltersCounts);
         }
