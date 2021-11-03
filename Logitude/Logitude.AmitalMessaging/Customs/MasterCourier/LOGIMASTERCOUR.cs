@@ -44,7 +44,7 @@ public partial class LOGIMASTERCOUR
     }
 
     /// <remarks/>
-    [System.Xml.Serialization.XmlArrayItemAttribute("wb", IsNullable = false)]
+    [System.Xml.Serialization.XmlElementAttribute("WAYBILLS")]
     public WAYBILLS[] WAYBILLS
     {
         get
@@ -349,11 +349,10 @@ public partial class LogitudeMasterCourier
 public partial class WAYBILLS
 {
 
-    private string[] wbField;
+    private string wbField;
 
     /// <remarks/>
-    [System.Xml.Serialization.XmlElementAttribute("wb")]
-    public string[] wb
+    public string wb
     {
         get
         {

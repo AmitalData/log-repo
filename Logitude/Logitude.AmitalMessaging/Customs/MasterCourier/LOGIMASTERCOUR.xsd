@@ -4,7 +4,7 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" maxOccurs="unbounded" ref="LogitudeMasterCourier" />
-        <xs:element ref="WAYBILLS" />
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="WAYBILLS" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -53,7 +53,7 @@
   <xs:element name="WAYBILLS">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" maxOccurs="unbounded" ref="wb" />
+        <xs:element ref="wb" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
