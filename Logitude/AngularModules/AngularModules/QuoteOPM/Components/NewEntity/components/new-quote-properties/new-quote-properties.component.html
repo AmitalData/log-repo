@@ -8,10 +8,10 @@
             *ngIf='!(x.value.fromPort?.Code || x.value.toPort?.Code || x.value.mainCarriageCarrier?.AIRLINE_ID || x.value.incoterm?.PTERMID)'>Quote
             properties</span>
           <span *ngIf='x.value.fromPort?.Code'>{{x.value.fromPort?.Code}}</span>
-          <img
+          <div
             *ngIf='x.value.fromPort?.Code || x.value.toPort?.Code || x.value.mainCarriageCarrier?.AIRLINE_ID || x.value.incoterm?.PTERMID'
-            [src]="'assets/icons/' + (formGroup.value.transportMode?.Id === 'I' ? 'inland' : formGroup.value.transportMode?.Id === 'O' ? 'ocean' : 'airplane') + '.png'"
-            alt="type transport">
+            [class]="'transport-img ' + (formGroup.value.transportMode?.Id === 'I' ? 'inland' : formGroup.value.transportMode?.Id === 'O' ? 'ocean' : 'airplane')"
+            alt="type transport"></div>
           <span *ngIf='x.value.toPort?.Code'>{{x.value.toPort?.Code}},</span>
           <span *ngIf='x.value.mainCarriageCarrier?.AIRLINE_ID'>{{x.value.mainCarriageCarrier?.AIRLINE_ID}},</span>
           <span *ngIf='x.value.incoterm?.PTERMID'>{{x.value.incoterm?.PTERMID}}</span>
