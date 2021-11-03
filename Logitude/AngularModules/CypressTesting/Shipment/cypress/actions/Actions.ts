@@ -339,7 +339,6 @@ export function FillPartnersTab(direction: string, transportMode: string, partne
 
 export function DeletePartnersInPartnersTab(partnersDetails: PartnersDetails) {
     DeletePartner(partnersDetails.Consignee)
-    DeletePartner(partnersDetails.Agent)
     DeletePartner(partnersDetails.CustomsAgentExport)
     DeletePartner(partnersDetails.CustomsAgentImport)
     DeletePartner(partnersDetails.Notify1)
