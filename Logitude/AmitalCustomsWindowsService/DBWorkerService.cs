@@ -19,6 +19,8 @@ using CustomsWorkerRole;
 using Logitude.Customs.BL.PatchDistribution;
 using System.Diagnostics;
 using CommunicationWorkerRole;
+using System.IO;
+using Logitude.CustomsMessaging.Dca;
 
 namespace AmitalCustomsWindowsService
 {
@@ -35,9 +37,9 @@ namespace AmitalCustomsWindowsService
         {
             try
             {
-                
 
-                var myDB= GlobalContext.GetContext((int)TimeSpan.FromMinutes(2).TotalSeconds,true) as DbContextBase;
+
+                var myDB = GlobalContext.GetContext((int)TimeSpan.FromMinutes(2).TotalSeconds, true) as DbContextBase;
                 var myDualRepository = new DualRepository(myDB);
                 var dt = myDualRepository.GetServerDateTime(true);
                 return true;
@@ -57,7 +59,7 @@ namespace AmitalCustomsWindowsService
                 w.InvokeStatistics();
             });
         }
-        
+
 
         public void EnshureThreadWorking(bool forceStartAgain)
         {
@@ -68,7 +70,7 @@ namespace AmitalCustomsWindowsService
                 StopThreads();
                 return;
             }
-            
+
             LoadWorkerFromDB();
             if (forceStartAgain)
             {
@@ -77,7 +79,7 @@ namespace AmitalCustomsWindowsService
 
             AllThreadsAreAlive();
 
-            
+
         }
 
         public static bool IsOldDB()
@@ -96,12 +98,12 @@ namespace AmitalCustomsWindowsService
                 var assemblyUtil = new Logitude.Server.Tools.Helpers.AssemblyUtil();
                 var prodInfo = assemblyUtil.GetProductInfo(typeof(JustWebFreight.WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses.MyEntityUpdateClass).Assembly);
                 var assemblyVersion = assemblyUtil.GetVersion(prodInfo);
-                
+
 
 
                 var patchDistributionMatch = new PatchDistributionMatch();
                 var _PatchDistributionMatchModel = patchDistributionMatch.GetPatchDistributionMatchModel(assemblyVersion);
-                
+
                 Debug.WriteLine(_PatchDistributionMatchModel.Message);
 
                 if (assemblyVersion == "1.0.0.0" || _PatchDistributionMatchModel.LastClosed_DBMigration == null)
@@ -119,8 +121,8 @@ namespace AmitalCustomsWindowsService
 
                 }
                 if (
-                    _PatchDistributionMatchModel.MyAssemblyDBMigrationModel.MinorVersion 
-                    > 
+                    _PatchDistributionMatchModel.MyAssemblyDBMigrationModel.MinorVersion
+                    >
                     _PatchDistributionMatchModel.LastClosed_DBMigration.MinorVersion)
                 {
                     Logger.LogMe($"shuttttdown !!!OldDB !!! MyAssemblyDBMigrationModel.MinorVersion {_PatchDistributionMatchModel.MyAssemblyDBMigrationModel.MinorVersion }> _PatchDistributionMatchModel.LastClosed_DBMigration.MinorVersion {_PatchDistributionMatchModel.LastClosed_DBMigration.MinorVersion}", true);
@@ -128,7 +130,7 @@ namespace AmitalCustomsWindowsService
                 }
                 return false;
             }
-            catch (Exception ee )
+            catch (Exception ee)
             {
                 Logger.LogMe("IsOldDB -- " + ee.ToString(), true);
                 return true;
@@ -158,10 +160,10 @@ namespace AmitalCustomsWindowsService
                     }
                     //_Threads[iWorker] = new Thread(_Workers[iWorker].Run);
                     //_Threads[iWorker].Start();
-                    
+
                 }
             }
-            
+
         }
 
         private void StartThread(int iWorker)
@@ -191,7 +193,7 @@ namespace AmitalCustomsWindowsService
                 List<BatchServicesDefinitionPM> BatchServicesDefinitions = GetBatchServicesDefinitions();
                 LoadWorkerFromDB(BatchServicesDefinitions);
 
-                
+
                 for (int iWorker = 0; iWorker < _Workers.Count; iWorker++)
                 {
                     StartThread(iWorker);
@@ -233,7 +235,7 @@ namespace AmitalCustomsWindowsService
             ///itzik +  ihab  listOfWorkerEntryPoint.Add(new CommunicationWorkerRole.CommunicationLogWorkerRoleWinService());
             listOfWorkerEntryPoint.Add(new CommunicationWorkerRole.FTPCommunicationWorkerRoleWinService());
 
-            
+
 
             listOfWorkerEntryPoint.Add(new SendWEBAPIMessage2MamanWR());
             listOfWorkerEntryPoint.Add(new FTPToAnalyzeQueueWR());
@@ -253,8 +255,17 @@ namespace AmitalCustomsWindowsService
             {
                 BatchServicesDefinitions = BatchServicesDefinitions.Where(r => r.ClassName != "DownloadDcaMessageSheetWR").ToList();
             }
+            var dedicatedCourierDCAService = new DedicatedCourierDCAService();
+            var modelDedicatedCourierDCA = dedicatedCourierDCAService.CreateDedicatedCourierDCA();
+            if (modelDedicatedCourierDCA != null)//Task 147744: AMITALCUSTOMSSERVER העברת הטיפול בכספת בבלדרות לתהליך
+            {
+                listOfWorkerEntryPoint = new List<Logitude.Server.Tools.WorkerEntryPoint>();
+                listOfWorkerEntryPoint.Add(new DownloadDcaMessageSheetWR());
+                var AddWorkerFromAppSettingGenericMethod = addWorkerFromAppSettingMethodInfoDB.MakeGenericMethod(new Type[] { (new DownloadDcaMessageSheetWR()).GetType() });
+                AddWorkerFromAppSettingGenericMethod.Invoke(this, new object[] { (object)suppresDoOnlyCheck }); 
+                return;
+            }
 
-            
 
             foreach (var batchServicesDefinitionPM in BatchServicesDefinitions)
             {
@@ -267,7 +278,6 @@ namespace AmitalCustomsWindowsService
                         AddWorkerFromAppSettingGenericMethod.Invoke(this, new object[] { (object)suppresDoOnlyCheck });
                     }
                 }
-
             }
             ////FROM CONFIG !!! 
             SingletonFTPCommunicationLogQueue(listOfWorkerEntryPoint);
@@ -290,6 +300,8 @@ namespace AmitalCustomsWindowsService
             }
 
         }
+
+
 
         private List<BatchServicesDefinitionPM> GetBatchServicesDefinitions()
         {
@@ -334,9 +346,9 @@ namespace AmitalCustomsWindowsService
                 {
                     Thread.Sleep(1000);
                 }
-                
-               
-                
+
+
+
 
             }
             catch (Exception e)
@@ -349,7 +361,7 @@ namespace AmitalCustomsWindowsService
 
         private void StopThread(int iWorker)
         {
-            
+
             _Workers[iWorker].ServiceStarted = false;//== dispose !!!
             Logger.LogMe(GetThreadName(iWorker), false, "StopThread");
         }
