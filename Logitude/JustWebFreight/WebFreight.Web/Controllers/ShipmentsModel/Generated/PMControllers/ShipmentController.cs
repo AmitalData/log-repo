@@ -894,5 +894,21 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
 
             return Request.CreateResponse(HttpStatusCode.OK, shipmentsAdditionalFields);
         }
+
+        [HttpPost]
+        public HttpResponseMessage GetDigitalFiltersCounts(DigitalFilters digitalFilters)
+        {
+            string token = HttpContext.Current.Request.Headers["Token"];
+            AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+            int tenant = authToken.Tenant;
+
+            SecurityUtility.AuthenticationOnTenant(tenant);
+            SecurityUtility.CheckContactFeature("Shipment", "READ", tenant);
+
+            ShipmentQuery shipmentQuery = new ShipmentQuery(tenant);
+            var digitalFiltersCounts = shipmentQuery.GetDigitalFiltersCounts(tenant, digitalFilters);
+
+            return Request.CreateResponse(HttpStatusCode.OK, digitalFiltersCounts);
+        }
     }
 }
