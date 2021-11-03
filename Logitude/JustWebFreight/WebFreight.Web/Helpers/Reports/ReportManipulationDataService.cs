@@ -41,18 +41,18 @@ namespace WebFreight.Web.Helpers.Reports
                             .Where(prop => prop.GetValue(dataProvider) is IList).ToList();
             foreach (PropertyInfo propInfo in properties)
             {
-                AddBusniessObjectFieldNameForListHaveData(allBusniessListObjectFieldNames, propInfo);
+                string busniessObjectFieldName = GetBusniessObjectFieldNameForListHaveData(propInfo);
+                if(!string.IsNullOrEmpty(busniessObjectFieldName)) allBusniessListObjectFieldNames.Add(busniessObjectFieldName);
             }
 
             return allBusniessListObjectFieldNames;
         }
 
-        private void AddBusniessObjectFieldNameForListHaveData(List<string> allBusniessListObjectFieldNames, PropertyInfo propInfo)
+        private string GetBusniessObjectFieldNameForListHaveData(PropertyInfo propInfo)
         {
             object value = propInfo.GetValue(dataProvider, null);
             List<object> genericList = (value as IEnumerable<object>).Cast<object>()?.ToList();
-            if (IsListHaveData(genericList))
-                allBusniessListObjectFieldNames.Add(propInfo.Name);
+            return IsListHaveData(genericList) ? (propInfo.Name) : "";
         }
 
         private bool IsListHaveData(List<object> genericList)
