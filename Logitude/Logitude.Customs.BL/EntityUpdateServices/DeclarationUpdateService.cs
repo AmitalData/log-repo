@@ -351,9 +351,9 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 }
 
 
-                var entityAmend = declarationQueryService.GetAcceptDeclarationAmendment(entityPM.Id, entityPM.Tenant);
+               // var entityAmend = declarationQueryService.GetAcceptDeclarationAmendment(entityPM.Id, entityPM.Tenant);
 
-                if (entityPM.IsConnectedToUnifreight && (entityAmend == null || entityPM.Id== entityAmend.Id ))
+                if (entityPM.IsConnectedToUnifreight && !(!string.IsNullOrEmpty( entityPM.AmendmentMessage) && string.IsNullOrEmpty(entityPM.DeclarationNumber)))
                 {
                     UpdateUnifreight(entityPM);
                 }

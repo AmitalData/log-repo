@@ -356,10 +356,10 @@ namespace Logitude.Customs.BL.Messaging.U2L.Scheduler
                     MethodTypeCode = "1",
                     Amount = myDeclarationPM.TotalTax,
                     ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert,
-
+                    
                     BankCode = customBank.BankCode,
                     BranchCode = customBank.BranchCode,
-                    PayerActivityTypeCode = "1",// customBank.PayerTypeCode,
+                    PayerActivityTypeCode = "0",// customBank.PayerTypeCode,
                     AccountNumber = customBank.AccountNumber,
                     CustomsBranchId = customBank.CustomsBranchId
                 };

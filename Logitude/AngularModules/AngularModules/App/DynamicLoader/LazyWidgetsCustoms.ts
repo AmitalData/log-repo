@@ -57,6 +57,7 @@ export const LazyWidgets: { path: string, loadChildren: () => Promise<NgModuleFa
     { loadChildren: () => import('../../CustomsModules/InvoiceQueue/ModuleInvoiceQueue').then(m => m.ModuleInvoiceQueue), path: 'InvoiceQueue' },
     
     { loadChildren: () => import('../../CustomsModules/CustomsContainerization/ModuleCustomsContainerization').then(m => m.ModuleCustomsContainerization), path: 'CustomsContainerization' },
+    { loadChildren: () => import('../../CustomsModules/CustomsReport/ModuleCustomsReports').then(m => m.ModuleCustomsReports), path: 'CustomsReport' },
 
 ];
 

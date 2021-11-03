@@ -1,0 +1,113 @@
+
+<style type="text/css">
+    .BoxItem:hover {
+        background: #EAEEF5;
+    }
+
+    .BoxItem .Title {
+        cursor: pointer;
+        width: 1px;
+        white-space: nowrap;
+    }
+
+    .BoxItem .Description {
+        width: 100%;
+        height: 70px;
+        max-height: 70px;
+        font-size: 12px;
+        line-height: 18px;
+        color: #595B5B;
+        white-space: normal;
+        word-wrap: break-word;
+        text-overflow: ellipsis;
+        overflow: hidden;
+    }
+
+    .BoxItem {
+        float: right;
+        width: calc(50% - 24px);
+        height: 110px;
+        border: 1px solid #DADADA;
+        margin-right: 20px;
+        margin-top: 5px;
+        margin-bottom: 10px;
+        -webkit-border-radius: 7px;
+        -moz-border-radius: 7px;
+        border-radius: 7px;
+        -webkit-box-shadow: 0px 0px 4px 2px rgba(209,209,209,0.5);
+        -moz-box-shadow: 0px 0px 4px 2px rgba(209,209,209,0.5);
+        box-shadow: 0px 0px 4px 2px rgba(209,209,209,0.5);
+    }
+</style>
+
+<table>
+    <tr>
+        <td>
+            <table>
+                <tr class="SectionHeader" style="height: 27px">
+                    <td colspan="2" style="text-align: right;">
+                        <label>Customs Reports</label>
+                    </td>
+                </tr>
+
+                <tr style="height:10px;">
+                    <td></td>
+                </tr>
+
+                <tr style="height: 23px;">
+                    <td style="width: 220px;">
+                        <SearchTextBox (SearchTextChangeEvent)="Search($event)"></SearchTextBox>
+                    </td>
+                    <td></td>
+                </tr>
+                <tr style="height:10px;">
+                    <td></td>
+                </tr>
+                <tr>
+                    <td class="CellStretch" colspan="2">
+                        <div class="CellContent">
+                            <div class="ScrollViewer">
+                                <ul class="ScrollContent">
+                                    <li class="BoxItem" *ngFor="let item of ItemsSource">
+                                        <table *ngIf="item.SuppressMenuShow === true ? false : true">
+                                            <tr>
+                                                <td style="width:100px;">
+                                                    <img class="CenterCenter" src="./Images/Maintenance/Table.png" />
+                                                </td>
+
+                                                <td style="vertical-align: top;">
+                                                    <table>
+                                                        <tr style="height:30px; vertical-align:bottom" >
+                                                            <td style="vertical-align: bottom">
+                                                                <div [attr.id]="'RequestSheet_' + item.MainInterfaceCode" (click)="ItemClicked(item)" class="Title" style="font-size:16px; color: #1B90CB; text-decoration: underline;">{{item.TranslatedName}}</div>
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td style="height: 30%;">
+                                                               <!-- <div class="Description">
+                                                                    {{item.DescriptionText}}
+                                                                </div>-->
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+
+                                                </td>
+
+                                                <td style="width: 15px;">
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+
+
+            </table>
+        </td>
+    </tr>
+</table>
