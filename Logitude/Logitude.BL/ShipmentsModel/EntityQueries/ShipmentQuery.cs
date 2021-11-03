@@ -29,7 +29,8 @@ using System.Linq;
 using System.Reflection;
 using System.Transactions;
 using System.Xml;
-using Simplog.Server.Infrastructure; 
+using Simplog.Server.Infrastructure;
+using Logitude.BL.ShipmentsModel.DigitalModels;
 
 namespace Logitude.BL.ShipmentsModel.EntityQueries
 {
@@ -14118,6 +14119,47 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             return filteredShipmentPackages;
         }
 
+        public DigitalFiltersCounts GetDigitalFiltersCounts(int tenant, DigitalFilters digitalFilters)
+        {
+            (int allShipmentsCount, int activeShipmentsCount) = GetActiveShipmentsCount(tenant, digitalFilters);
+            (int atOriginShipmentCount, int inTransitShipmentCount, int atDestinationShipmentCount) = GetShipmentStatusWeightCounts(tenant, digitalFilters);
+
+            return new DigitalFiltersCounts
+            {
+                All = allShipmentsCount,
+                Active = activeShipmentsCount,
+                Closed = allShipmentsCount - activeShipmentsCount,
+                AtOrigin = atOriginShipmentCount,
+                InTransit = inTransitShipmentCount,
+                AtDestination = atDestinationShipmentCount
+            };
+        }
+
+        private Tuple<int, int> GetActiveShipmentsCount(int tenant, DigitalFilters digitalFilters)
+        {
+            var shipmentsFilteredByCustomerId = repository.context.Shipments.Where(shipment => shipment.CustomerId == digitalFilters.CustomerId &&
+                                                                                   shipment.Tenant == tenant).AsQueryable();
+            var activeShipments = shipmentsFilteredByCustomerId.Where(shipment => shipment.IsOperationalClosed == false).AsQueryable();
+
+            int allShipmentsCount = shipmentsFilteredByCustomerId.Count();
+            int activeShipmentsCount = activeShipments.Count();
+
+            return Tuple.Create(allShipmentsCount, activeShipmentsCount);
+        }
+
+        private Tuple<int, int, int> GetShipmentStatusWeightCounts(int tenant, DigitalFilters digitalFilters)
+        {
+            ShipmentRepository shipmentRepository = new ShipmentRepository(tenant);
+            IQueryable<ShipmentDataView> shipmentsDataView = shipmentRepository.GetShipmentViewsByTenant(tenant);
+            IQueryable<ShipmentDataView> activeShipmentsDataViewFilteredByCustomerId = shipmentsDataView.Where(shipment => shipment.CustomerId == digitalFilters.CustomerId &&
+                                                                                               shipment.IsOperationalClosed == false).AsQueryable();
+            int atOriginShipmentCount = activeShipmentsDataViewFilteredByCustomerId.Where(shipment => shipment.ShipmentStatusWeight <= digitalFilters.leastStatusWeight).Count();
+            int inTransitShipmentCount = activeShipmentsDataViewFilteredByCustomerId.Where(shipment => shipment.ShipmentStatusWeight > digitalFilters.leastStatusWeight &&
+                                                                                                       shipment.ShipmentStatusWeight < digitalFilters.greatestStatusWeight).Count();
+            int atDestinationShipmentCount = activeShipmentsDataViewFilteredByCustomerId.Where(shipment => shipment.ShipmentStatusWeight >= digitalFilters.greatestStatusWeight).Count();
+
+            return Tuple.Create(atOriginShipmentCount, inTransitShipmentCount, atDestinationShipmentCount);
+        }
     }
 
     public class CargoTrackingShipmentCustomsData

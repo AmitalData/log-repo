@@ -6,6 +6,7 @@ using Logitude.BL.GlobalModel.EntityPMs;
 using Logitude.BL.GlobalModel.EntityQueries;
 using Logitude.BL.Helpers;
 using Logitude.BL.ShipmentsModel.CustomFilters;
+using Logitude.BL.ShipmentsModel.DigitalModels;
 using Logitude.BL.ShipmentsModel.EntityLists;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.EntityQueries;
@@ -879,5 +880,20 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
             }
         }
 
+        [HttpPost]
+        public HttpResponseMessage GetDigitalFiltersCounts(DigitalFilters digitalFilters)
+        {
+            string token = HttpContext.Current.Request.Headers["Token"];
+            AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+            int tenant = authToken.Tenant;
+
+            SecurityUtility.AuthenticationOnTenant(tenant);
+            SecurityUtility.CheckContactFeature("Shipment", "READ", tenant);
+
+            ShipmentQuery shipmentQuery = new ShipmentQuery(tenant);
+            var digitalFiltersCounts = shipmentQuery.GetDigitalFiltersCounts(tenant, digitalFilters);
+
+            return Request.CreateResponse(HttpStatusCode.OK, digitalFiltersCounts);
+        }
     }
 }
