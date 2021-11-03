@@ -254,22 +254,24 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommMasterCourier
                 }
                 if (!string.IsNullOrWhiteSpace(_LogitudeMasterCourier.UnifreightLeadingFile) && string.IsNullOrWhiteSpace(_CourierMasterPM.UnifreightLeadingFile)) _CourierMasterPM.UnifreightLeadingFile = _LogitudeMasterCourier.UnifreightLeadingFile;
 
-                if (_LOGIMASTERCOUR.WAYBILLS != null && _LOGIMASTERCOUR.WAYBILLS[0].wb != null)
-                {
-                    if (this._LOGIMASTERCOUR.WAYBILLS.FirstOrDefault().wb.Count() > 0)
-                    {
-                        MyGenericResponseObj.Stage = "Start Connect Declarations To Master By WayBill ";
-                        foreach (var wayBill in this._LOGIMASTERCOUR.WAYBILLS[0].wb)
-                        {
-                            ConnectDeclarationToMasterByWayBill(wayBill, _LogitudeMasterCourier.MAWB);
-                        }
-                        MyGenericResponseObj.Stage = "Done Connecting Declarations To Master By WayBill";
-                    }
-                }
-
                 myCourierMasterUpdateService.Update(this._CourierMasterPM, true);
 
                 AppendLogLine("CourierMasterUpdate:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
+
+                _context = CustomContext.GetContext(ResolvedTenant());
+
+                if (_LOGIMASTERCOUR.WAYBILLS != null && _LOGIMASTERCOUR.WAYBILLS.Count() > 0)
+                {
+                    MyGenericResponseObj.Stage = "Start Connect Declarations To Master By WayBill ";
+                    foreach (var wayBill in this._LOGIMASTERCOUR.WAYBILLS)
+                    {
+                        if (wayBill != null && !String.IsNullOrWhiteSpace(wayBill.wb))
+                        {
+                            ConnectDeclarationToMasterByWayBill(wayBill.wb, _LogitudeMasterCourier.MAWB);
+                        }
+                    }
+                    MyGenericResponseObj.Stage = "Done Connecting Declarations To Master By WayBill";
+                }
 
                 MyGenericResponseObj.Stage = "Done All ";
                 MyGenericResponseObj.ApplicationId = this._CourierMasterPM.Id;
@@ -301,10 +303,9 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommMasterCourier
             }
             if(!String.IsNullOrWhiteSpace(MyGenericResponseObj.StatusType.ToString()) && MyGenericResponseObj.StatusType != GenericResponseObj.StatusEnum.Success)
             {
-                AppendLogLine("Master Courier Upsert Error " + Environment.NewLine + Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.ToString(1000));
+                AppendLogLine("Master Courier Upsert Error " + Environment.NewLine + Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.ToString(2000));
                 return;
             }
-            
         }
 
         private void ConnectDeclarationToMasterByWayBill(string wayBill, string mAWB)
@@ -321,7 +322,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommMasterCourier
                 DeclarationPM MyDeclarationPM = myQueryService.GetSingle(id, false, true);
                 if(MyDeclarationPM != null && MyDeclarationPM.Id != null)
                 {
-                    CheckMasterToUpdate(MyDeclarationPM, mAWB);
+                    CheckCourierDeclarationToUpdate(MyDeclarationPM, mAWB);
                 }
                 else
                 {
@@ -332,7 +333,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommMasterCourier
 
         
 
-        private void CheckMasterToUpdate(DeclarationPM _MyDeclarationPM, string mAWB)
+        private void CheckCourierDeclarationToUpdate(DeclarationPM _MyDeclarationPM, string mAWB)
         {
             
             if (_CourierMasterPM != null)
@@ -362,8 +363,6 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommMasterCourier
                     _CourierDeclarationPM.SequenceNumeric = sequenceNumericMax + 1;
                 }
                 _CourierDeclarationPM.Tenant = _CourierMasterPM.Tenant;
-
-                _context = CustomContext.GetContext(ResolvedTenant());
 
                 AppendLogLine("try to update CourierDeclaration for DeclarationPM.Id: " + _MyDeclarationPM.Id + " CourierMasterPM.Id: " + _CourierMasterPM.Id);
                 try
