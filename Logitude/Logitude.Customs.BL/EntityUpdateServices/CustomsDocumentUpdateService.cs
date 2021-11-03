@@ -679,16 +679,17 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 }
 
                 var _CustomsRequestsSheetQueryService = new CustomsRequestsSheetQueryService(requestParams.Tenant);
-                 var listRequestInProgress = _CustomsRequestsSheetQueryService.GetRequestInProgress(
-                            requestParams.Tenant, requestParams.InterfaceTypeCode,
-                        ObjectTableRepository.GetObjectTableByName("Customs.Declaration"), requestParams.DeclaretionId,
-                        ObjectTableRepository.GetObjectTableByName("Customs.CustomsDocument"), requestParams.DocumentsFilingId,
-                        null);
-                if (listRequestInProgress != null && listRequestInProgress.Count > 0)
-                {
-                    Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine("2715 RequestInProgress stop create a new one !! ");
-                    return false;
-                }
+
+                //var   listRequestInProgress = _CustomsRequestsSheetQueryService.GetRequestInProgress(
+                //            requestParams.Tenant, requestParams.InterfaceTypeCode,
+                //        ObjectTabelRepository.GetObjectTableByName("Customs.Declaration"), requestParams.DeclaretionId,
+                //        ObjectTabelRepository.GetObjectTableByName("Customs.CustomsDocument"), requestParams.DocumentsFilingId, 
+                //        null);
+                //if (listRequestInProgress != null && listRequestInProgress.Count >0)
+                //{
+                //    Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine("2715 RequestInProgress stop create a new one !! ");
+                //    return;
+                //}
 
                 try
                 {
