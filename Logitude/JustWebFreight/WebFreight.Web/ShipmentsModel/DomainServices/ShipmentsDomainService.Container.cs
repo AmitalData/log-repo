@@ -128,14 +128,8 @@ namespace WebFreight.Web.ShipmentsModel.DomainServices
             listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
 
             iQueryable = filter.GetFilteredQuery<Container>(nonListQueryOperation, iQueryable);
-
-            var query2 = from a in iQueryable
-                         select new ContainerList()
-                         {
-                             Id = a.Id,
-                             Tenant = a.Tenant,
-                             SearchFields = a.SearchFields,
-                         };
+            ContainerQuery containerQuery = new ContainerQuery(tenant);
+            var query2 = containerQuery.GetIQueryableEntityList(iQueryable); 
 
             query2 = filter.GetFilteredQuery<ContainerList>(listQueryOperation, query2);
             int count = query2.Count();
