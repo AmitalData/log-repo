@@ -120,7 +120,6 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.HelperClasses
         public DateTime? ForwardingPaymentDateTime { get; set; }
         public DateTime? ForwardingPaymentReceivedDate { get; set; }
         public string ForwardingPaymentReceivedNotes { get; set; }
-        public string ForwardingExceptionDescription { get; set; }
         public DateTime? ForwardingAutomaticLastUpdateDate { get; set; }
 
 
@@ -194,9 +193,10 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.HelperClasses
         public string CustomGrossWeightUnitCode { get; set; }
         public string CustomForwardingShipmentNumber { get; set; }
         public string CustomShipmentTypeCode { get; set; }
-        public string CustomCurrentMilestoneExceptions { get; set; }
+        public string CustomCurrentMilestoneExceptionDescription { get; set; }
         public string CustomForwardingHouse { get; set; }
         public string CustomForwardingMaster { get; set; }
+        public DateTime? CustomExceptionDate { get; set; }
         public DateTime? CustomGoodsClassificationDate { get; set; }
         public DateTime? CustomGoodsClassificationEstDate { get; set; }
         public DateTime? CustomGoodsClassificationNotes { get; set; }

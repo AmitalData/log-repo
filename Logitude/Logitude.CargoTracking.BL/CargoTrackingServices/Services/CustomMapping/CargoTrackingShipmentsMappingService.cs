@@ -20,6 +20,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CustomMapping
             item.ShipmentTypeCode = GetShipmentTypeCodeByTransportMode(row.OrderTransportModeId);
             SetMilestonesDoneFields(item);
             SetCurrentMilestone(item);
+            SetOrderExceptionDescription(item, row);
             return item;
         }
 
@@ -34,12 +35,12 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CustomMapping
             SetMilestonesDoneFields(item);
             SetCurrentMilestone(item);
             item.IsMainRecord = GetIsMainRecord(Codes.ForwardingType, row);
-            SetExceptionDescription(item, row);
+            SetForwardingExceptionDescription(item, row);
 
             return item;
         }
 
-        
+
         public CargoTrackingShipment GetCustom(CargoTrackingShipmentQueryResult row)
         {
             var item = new CargoTrackingShipment();
@@ -49,19 +50,42 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CustomMapping
             SetMilestonesDoneFields(item);
             SetCurrentMilestone(item);
             item.IsMainRecord = GetIsMainRecord(Codes.CustomType, row);
-            SetExceptionDescription(item, row);
+            SetCustomExceptionDescription(item, row);
             return item;
         }
-
-        private void SetExceptionDescription(CargoTrackingShipment item, CargoTrackingShipmentQueryResult row)
+        private void SetOrderExceptionDescription(CargoTrackingShipment item, CargoTrackingShipmentQueryResult row)
         {
-            if(!item.ClearanceDone.HasValue || !item.ClearanceDone.Value)
-            {
-                item.CurrentMilestoneExceptions = row.ForwardingExceptionDate?.ToString().Concat(", ") + row.ForwardingExceptionDescription;
-            }
+            item.CurrentMilestoneExceptions = "";
+            if (row.OrderLastExceptionDate.HasValue)
+                item.CurrentMilestoneExceptions = row.OrderLastExceptionDate?.ToString() + ", ";
+            item.CurrentMilestoneExceptions += row.OrderLastExceptionDescription;
+
         }
 
-        
+        private void SetForwardingExceptionDescription(CargoTrackingShipment item, CargoTrackingShipmentQueryResult row)
+        {
+            item.CurrentMilestoneExceptions = "";
+            if (item.ClearanceDone.HasValue && item.ClearanceDone.Value)
+            {
+                return;
+            }
+            if (row.ForwardingExceptionDate.HasValue)
+                item.CurrentMilestoneExceptions = row.ForwardingExceptionDate?.ToString() + ", ";
+            item.CurrentMilestoneExceptions += row.ForwardingCurrentMilestoneExceptionDescription;
+
+        }
+        private void SetCustomExceptionDescription(CargoTrackingShipment item, CargoTrackingShipmentQueryResult row)
+        {
+            item.CurrentMilestoneExceptions = "";
+            if (item.ClearanceDone.HasValue && item.ClearanceDone.Value)
+            {
+                return;
+            }
+            if (row.CustomExceptionDate.HasValue)
+                item.CurrentMilestoneExceptions = row.CustomExceptionDate?.ToString() + ", ";
+            item.CurrentMilestoneExceptions += row.CustomCurrentMilestoneExceptionDescription;
+        }
+
 
 
         private string GetString(object cell)
@@ -156,7 +180,6 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CustomMapping
             item.DirectionId = row.OrderDirectionId;
             item.ShipmentLevelCode = row.OrderShipmentLevelCode;
             //item.ForwardingShipmentNumber = row.OrderForwardingShipmentNumber;
-            item.CurrentMilestoneExceptions = row.OrderLastExceptionDate?.ToString("MM/dd/yyyy hh:mm:ss.fff tt").Concat(", ") + row.OrderLastExceptionDescription;
             item.BookingDate = row.OrderBookingDate;
         }
         private void FillForwardingFeilds(CargoTrackingShipment item, CargoTrackingShipmentQueryResult row)
@@ -214,7 +237,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CustomMapping
             item.AssignedCustomsAgentExcReason = row.ForwardingAssignedCustomsAgentExcReason;
             item.DeliveryDate = row.ForwardingDeliveryDate;
             item.DeliveryEstimationDate = row.ForwardingDeliveryEstimationDate;
-            item.DeliveryNotes = !string.IsNullOrEmpty(row.ForwardingCarrierLocalName) ? "Via: "+row.ForwardingCarrierLocalName : !string.IsNullOrEmpty(row.ForwardingCarrierEnglishName) ? "Via: " + row.ForwardingCarrierEnglishName : "";
+            item.DeliveryNotes = !string.IsNullOrEmpty(row.ForwardingCarrierLocalName) ? "Via: " + row.ForwardingCarrierLocalName : !string.IsNullOrEmpty(row.ForwardingCarrierEnglishName) ? "Via: " + row.ForwardingCarrierEnglishName : "";
             item.DeliveryExceptionReason = row.ForwardingDeliveryExceptionReason;
             item.GrossWeightUnitCode = row.ForwardingGrossWeightUnitCode;
             //item.ForwardingHouse = row.ForwardingHouse;

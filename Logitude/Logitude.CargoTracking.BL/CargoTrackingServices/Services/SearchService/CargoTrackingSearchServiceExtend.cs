@@ -9,7 +9,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.SearchService
 {
     public static partial class CargoTrackingSearchService
     {
-        public static List<CargoTrackingShipmentSearch> GetMasterReferences(CargoTrackingShipment shipment)
+        public static List<CargoTrackingShipmentSearch> GetMasterReferences(CargoTrackingShipment shipment, string entityId)
         {
             var list = new List<CargoTrackingShipmentSearch>();
             if (string.IsNullOrEmpty(shipment.Master))
@@ -22,7 +22,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.SearchService
                 IsPublic = isPublic,
                 ReferenceType = "Master",
                 ShipmentDate = shipment.CreateDate,
-                ShipmentId = shipment.EntityId,
+                ShipmentId = entityId,
                 Tenant = shipment.Tenant,
                 SearchFields = shipment.Master
             };
@@ -31,7 +31,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.SearchService
             return list;
         }
 
-        public static List<CargoTrackingShipmentSearch> GetHouseReferences(CargoTrackingShipment shipment)
+        public static List<CargoTrackingShipmentSearch> GetHouseReferences(CargoTrackingShipment shipment, string entityId)
         {
             var list = new List<CargoTrackingShipmentSearch>();
             if (string.IsNullOrEmpty(shipment.House))
@@ -43,12 +43,16 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.SearchService
                 IsPublic = true,
                 ReferenceType = "House",
                 ShipmentDate = shipment.CreateDate,
-                ShipmentId = shipment.EntityId,
+                ShipmentId = entityId,
                 Tenant = shipment.Tenant,
                 SearchFields = shipment.House
             };
             list.Add(cargoTrackingShipmentSearchFull);
             var splits = shipment.House.Split('-');
+
+            if (splits.Length <= 1)
+                return list;
+
             foreach (var item in splits)
             {
                 if (string.IsNullOrEmpty(item))
@@ -60,7 +64,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.SearchService
                     IsPublic = true,
                     ReferenceType = "House",
                     ShipmentDate = shipment.CreateDate,
-                    ShipmentId = shipment.EntityId,
+                    ShipmentId = entityId,
                     Tenant = shipment.Tenant,
                     SearchFields = item
                 };
@@ -69,7 +73,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.SearchService
             return list;
         }
 
-        public static List<CargoTrackingShipmentSearch> GetContainerNumbersReferences(CargoTrackingShipment shipment)
+        public static List<CargoTrackingShipmentSearch> GetContainerNumbersReferences(CargoTrackingShipment shipment, string entityId)
         {
             var list = new List<CargoTrackingShipmentSearch>();
             if (string.IsNullOrEmpty(shipment.ContainersNumbers))
@@ -89,7 +93,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.SearchService
                     IsPublic = isPublic,
                     ReferenceType = "Container Numbers",
                     ShipmentDate = shipment.CreateDate,
-                    ShipmentId = shipment.EntityId,
+                    ShipmentId = entityId,
                     Tenant = shipment.Tenant,
                     SearchFields = item
                 };
@@ -98,7 +102,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.SearchService
             return list;
         }
 
-        public static List<CargoTrackingShipmentSearch> GetCustomerReferenceReferences(CargoTrackingShipment shipment)
+        public static List<CargoTrackingShipmentSearch> GetCustomerReferenceReferences(CargoTrackingShipment shipment, string entityId)
         {
             var list = new List<CargoTrackingShipmentSearch>();
             if (string.IsNullOrEmpty(shipment.CustomerReference))
@@ -122,7 +126,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.SearchService
                     IsPublic = true,
                     ReferenceType = "Customer Reference",
                     ShipmentDate = shipment.CreateDate,
-                    ShipmentId = shipment.EntityId,
+                    ShipmentId = entityId,
                     Tenant = shipment.Tenant,
                     SearchFields = forwardingCustomerReference
                 };
@@ -131,7 +135,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.SearchService
             return list;
         }
 
-        public static List<CargoTrackingShipmentSearch> GetConsigneeNameReferences(CargoTrackingShipment shipment)
+        public static List<CargoTrackingShipmentSearch> GetConsigneeNameReferences(CargoTrackingShipment shipment, string entityId)
         {
             var list = new List<CargoTrackingShipmentSearch>();
             if (string.IsNullOrEmpty(shipment.ConsigneeName))
@@ -147,14 +151,14 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.SearchService
                 IsPublic = false,
                 ReferenceType = "Consignee Name",
                 ShipmentDate = shipment.CreateDate,
-                ShipmentId = shipment.EntityId,
+                ShipmentId = entityId,
                 Tenant = shipment.Tenant,
                 SearchFields = shipment.ConsigneeName
             };
             list.Add(cargoTrackingShipmentSearch);
             return list;
         }
-        public static List<CargoTrackingShipmentSearch> GetShipperNameReferences(CargoTrackingShipment shipment)
+        public static List<CargoTrackingShipmentSearch> GetShipperNameReferences(CargoTrackingShipment shipment, string entityId)
         {
             var list = new List<CargoTrackingShipmentSearch>();
             if (string.IsNullOrEmpty(shipment.ShipperName))
@@ -170,7 +174,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.SearchService
                 IsPublic = false,
                 ReferenceType = "Shipper Name",
                 ShipmentDate = shipment.CreateDate,
-                ShipmentId = shipment.EntityId,
+                ShipmentId = entityId,
                 Tenant = shipment.Tenant,
                 SearchFields = shipment.ShipperName
             };
@@ -180,7 +184,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.SearchService
             return list;
         }
 
-        public static List<CargoTrackingShipmentSearch> GetForwarderShipmentNumberReferences(CargoTrackingShipment shipment)
+        public static List<CargoTrackingShipmentSearch> GetForwarderShipmentNumberReferences(CargoTrackingShipment shipment, string entityId)
         {
             var list = new List<CargoTrackingShipmentSearch>();
             if (string.IsNullOrEmpty(shipment.ForwardingShipmentNumber))
@@ -192,7 +196,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.SearchService
                 IsPublic = false,
                 ReferenceType = "Forwarding Shipment Number",
                 ShipmentDate = shipment.CreateDate,
-                ShipmentId = shipment.EntityId,
+                ShipmentId = entityId,
                 Tenant = shipment.Tenant,
                 SearchFields = shipment.ForwardingShipmentNumber
             };
@@ -201,7 +205,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.SearchService
         }
 
 
-        public static List<CargoTrackingShipmentSearch> GetCustomsDeclarationNumberReferences(CargoTrackingShipment shipment)
+        public static List<CargoTrackingShipmentSearch> GetCustomsDeclarationNumberReferences(CargoTrackingShipment shipment, string entityId)
         {
             var list = new List<CargoTrackingShipmentSearch>();
             if (string.IsNullOrEmpty(shipment.CustomsDeclarationNumber))
@@ -213,7 +217,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.SearchService
                 IsPublic = false,
                 ReferenceType = "Customs Declaration Number",
                 ShipmentDate = shipment.CreateDate,
-                ShipmentId = shipment.EntityId,
+                ShipmentId = entityId,
                 Tenant = shipment.Tenant,
                 SearchFields = shipment.CustomsDeclarationNumber
             };
@@ -223,7 +227,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.SearchService
             return list;
         }
 
-        public static List<CargoTrackingShipmentSearch> GetShipmentNumberReferences(CargoTrackingShipment shipment)
+        public static List<CargoTrackingShipmentSearch> GetShipmentNumberReferences(CargoTrackingShipment shipment,string entityId)
         {
             var list = new List<CargoTrackingShipmentSearch>();
             if (string.IsNullOrEmpty(shipment.ShipmentNumber))
@@ -236,21 +240,21 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.SearchService
                 IsPublic = true,
                 ReferenceType = "Shipment Number",
                 ShipmentDate = shipment.CreateDate,
-                ShipmentId = shipment.EntityId,
+                ShipmentId = entityId,
                 Tenant = shipment.Tenant,
                 SearchFields = shipment.ShipmentNumber
             };
             list.Add(cargoTrackingShipmentSearch);
-            if (splits.Length < 2)
-            {
+
+            if (splits.Length <= 1)
                 return list;
-            }
+
             var cargoTrackingShipmentSearch2 = new CargoTrackingShipmentSearch()
             {
                 IsPublic = true,
                 ReferenceType = "Shipment Number",
                 ShipmentDate = shipment.CreateDate,
-                ShipmentId = shipment.EntityId,
+                ShipmentId = entityId,
                 Tenant = shipment.Tenant,
                 SearchFields = splits[1]
             };

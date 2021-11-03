@@ -138,14 +138,20 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.MainService
                 forwarding = map.GetForwarding(row);
                 CargoTrackingShipments.Add(forwarding);
                 if (order != null)
+                {
                     SyncForwardingMilestones(order, forwarding);
+                    forwarding.Chiled = order;
+                }
             }
             if (row.CustomShipmentLevelCode == Codes.CustomShipmentLevelCode && CheckIsAddedOrExist(Codes.CustomType, row.CustomId, addRowsDictionary))
             {
                 custom = map.GetCustom(row);
                 CargoTrackingShipments.Add(custom);
                 if (forwarding != null)
+                {
                     SyncCustomeMilestones(forwarding, custom);
+                    custom.Chiled = forwarding;
+                }
             }
             return CargoTrackingShipments;
         }
@@ -274,23 +280,33 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.MainService
             var cargoTrackingShipmentSearchs = new List<CargoTrackingShipmentSearch>();
             foreach (var shipment in cargoTrackingShipments)
             {
-                if (CargoTrackingSearchService.IsShipmentValidToCreateRefrences(shipment))
-                {
-                    cargoTrackingShipmentSearchs.AddRange(CargoTrackingSearchService.GetShipmentNumberReferences(shipment));
-                    cargoTrackingShipmentSearchs.AddRange(CargoTrackingSearchService.GetCustomsDeclarationNumberReferences(shipment));
-                    cargoTrackingShipmentSearchs.AddRange(CargoTrackingSearchService.GetForwarderShipmentNumberReferences(shipment));
-                    cargoTrackingShipmentSearchs.AddRange(CargoTrackingSearchService.GetShipperNameReferences(shipment));
-                    cargoTrackingShipmentSearchs.AddRange(CargoTrackingSearchService.GetConsigneeNameReferences(shipment));
-                    cargoTrackingShipmentSearchs.AddRange(CargoTrackingSearchService.GetCustomerReferenceReferences(shipment));
-                    cargoTrackingShipmentSearchs.AddRange(CargoTrackingSearchService.GetContainerNumbersReferences(shipment));
-                    cargoTrackingShipmentSearchs.AddRange(CargoTrackingSearchService.GetHouseReferences(shipment));
-                    cargoTrackingShipmentSearchs.AddRange(CargoTrackingSearchService.GetMasterReferences(shipment));
-                }
-
+                cargoTrackingShipmentSearchs.AddRange(AddShipmentSearchesToList(shipment, shipment.EntityId));
             }
             return cargoTrackingShipmentSearchs;
         }
 
+        private List<CargoTrackingShipmentSearch> AddShipmentSearchesToList(CargoTrackingShipment shipment, string entityId)
+        {
+            var cargoTrackingShipmentSearchs = new List<CargoTrackingShipmentSearch>();
+
+            if (CargoTrackingSearchService.IsShipmentValidToCreateRefrences(shipment))
+            {
+                cargoTrackingShipmentSearchs.AddRange(CargoTrackingSearchService.GetShipmentNumberReferences(shipment, entityId));
+                cargoTrackingShipmentSearchs.AddRange(CargoTrackingSearchService.GetCustomsDeclarationNumberReferences(shipment, entityId));
+                cargoTrackingShipmentSearchs.AddRange(CargoTrackingSearchService.GetForwarderShipmentNumberReferences(shipment, entityId));
+                cargoTrackingShipmentSearchs.AddRange(CargoTrackingSearchService.GetShipperNameReferences(shipment, entityId));
+                cargoTrackingShipmentSearchs.AddRange(CargoTrackingSearchService.GetConsigneeNameReferences(shipment, entityId));
+                cargoTrackingShipmentSearchs.AddRange(CargoTrackingSearchService.GetCustomerReferenceReferences(shipment, entityId));
+                cargoTrackingShipmentSearchs.AddRange(CargoTrackingSearchService.GetContainerNumbersReferences(shipment, entityId));
+                cargoTrackingShipmentSearchs.AddRange(CargoTrackingSearchService.GetHouseReferences(shipment, entityId));
+                cargoTrackingShipmentSearchs.AddRange(CargoTrackingSearchService.GetMasterReferences(shipment, entityId));
+            }
+            if(shipment.Chiled != null)
+            {
+                cargoTrackingShipmentSearchs.AddRange(AddShipmentSearchesToList(shipment.Chiled, entityId));
+            }
+            return cargoTrackingShipmentSearchs;
+        }
 
         private void BulkMarge(RunBulkArgs runBulkArgs)
         {

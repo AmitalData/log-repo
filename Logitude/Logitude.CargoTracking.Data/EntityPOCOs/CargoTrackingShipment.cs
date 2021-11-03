@@ -242,7 +242,7 @@ namespace Logitude.CargoTracking.Data.EntityPOCOs
         [Column("PaymentReceivedNotes")]
 	    public string PaymentReceivedNotes { get; set; }
 	    public string CustomsDeclarationNumber { get; set; }
-
+        public CargoTrackingShipment Chiled { get; set; }
     }
 }
 	 
