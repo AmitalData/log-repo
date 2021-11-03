@@ -139,11 +139,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
             FollowUpsCustomFilter customfilters = new FollowUpsCustomFilter(tenant);
             IQueryable<ShipmentFollowUpDataView> shipments = shipmentRepository.GetShipmentFollowUpDataViewByTenant(tenant);
 
-            int count1 = shipments.Count();
-
             shipments = customfilters.GetShipmentFollowUpFilteredQuery(queryOperations, shipments);
-
-            count1 = shipments.Count();
 
             QueryOperations nonListQueryOperation = new QueryOperations();
             nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList();
@@ -152,8 +148,6 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
 
             shipments = genericFilter.GetFilteredQuery<ShipmentFollowUpDataView>(nonListQueryOperation, shipments);
             int skippedShipments = queryOperations.PageIndex;
-
-            count1 = shipments.Count();
 
             var entityLists = from f in shipments
                               select new ShipmentList()
@@ -372,13 +366,9 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                                   HandlerUserId = f.HandlerUserId,
                                   HandlerUserName = f.HandlerUserName,
                               };
-
-            int count2 = entityLists.Count();
-
+                       
             entityLists = genericFilter.GetFilteredQuery<ShipmentList>(listQueryOperation, entityLists);
-
-            count2 = entityLists.Count();
-
+            
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(ShipmentList).GetProperty(queryOperations.SortByColumnName);
