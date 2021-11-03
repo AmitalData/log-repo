@@ -14,7 +14,7 @@
     }
 }
 
-.dimensions {
+.dimensions-labels {
     padding-bottom: 0px;
 }
 
@@ -53,5 +53,37 @@
             top: 8px;
             background: #fdfcfc;
         }
+    }
+}
+
+.packages-row {
+    display: flex;
+
+    > * {
+        margin: 0 5px;
+    }
+
+    .quantity {
+        flex: 3;
+    }
+
+    .package-type {
+        flex: 5;
+    }
+
+    .dimensions {
+        flex: 1;
+    }
+
+    .volume {
+        flex: 6;
+    }
+
+    .gross-weight {
+        flex: 5;
+    }
+
+    p-button {
+        flex: 1;
     }
 }
