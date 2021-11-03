@@ -29,7 +29,7 @@ export function AssertCreateChequeDeposit() {
 }
 
 export function SelectAllCheques() {
-    cy.Click(BaseSelectors.CheckBox + BaseSelectors.FirstElement, null)
+    cy.Click(BaseSelectors.CheckBoxLine + BaseSelectors.FirstElement, null)
 }
 
 export function ApproveChequeDeposit() {
