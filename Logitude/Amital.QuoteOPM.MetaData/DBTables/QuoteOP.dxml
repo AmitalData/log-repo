@@ -1261,20 +1261,6 @@
     <Constraints
       Nullable="true" />
   </Column>
-  <Column
-    Name="FromAddressId"
-    Type="nvarchar"
-    Size="250">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="ToAddressId"
-    Type="nvarchar"
-    Size="250">
-    <Constraints
-      Nullable="true" />
-  </Column>
   <Relation
     ForeignKeyColumn="QuoteTemplateId"
     ReferencedTable="QuoteOPTemplates"

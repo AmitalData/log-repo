@@ -402,10 +402,6 @@ namespace Amital.QuoteOPM.Data.EntityMapping
             this.Property(t => t.IsMultiCurrency).HasColumnName("IsMultiCurrency");
 
             this.Property(t => t.SpecialServiceId).HasColumnName("SpecialServiceId").HasMaxLength(15).IsUnicode(false);
-
-            this.Property(t => t.FromAddressId).HasColumnName("FromAddressId").HasMaxLength(250).IsUnicode(true);
-
-            this.Property(t => t.ToAddressId).HasColumnName("ToAddressId").HasMaxLength(250).IsUnicode(true);
         }
     }
 }
