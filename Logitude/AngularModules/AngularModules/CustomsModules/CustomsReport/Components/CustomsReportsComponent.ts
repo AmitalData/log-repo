@@ -26,7 +26,6 @@ export class CustomsReportsComponent implements OnInit {
     public ItemsSource: CustomsMenuItem[];
     public IsFromWindow: boolean = false;
     constructor(private _entityResourceService: EntityResourceService) {
-        debugger;
     }
 
     ngOnInit() {

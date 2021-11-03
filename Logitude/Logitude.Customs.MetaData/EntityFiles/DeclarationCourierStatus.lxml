@@ -37,7 +37,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Declaration Courier Status&quot;"
-  Code="&quot;cd00&quot;"
+  Code="&quot;dd40&quot;"
   Name="&quot;Customs.DeclarationCourierStatus Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
@@ -5989,6 +5989,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;TerminalReleaseDate&quot;"
     ListPropertyPath="&quot;TerminalReleaseDate&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -6076,6 +6077,31 @@
   </EventTypes>
   <Records />
   <DataContracts />
-  <AdditionalTextCodes />
+  <AdditionalTextCodes>
+    <TextCode
+      Code="&quot;Customs.DeclarationCourierStatus.O.FromDateLanding&quot;"
+      DefaultText="&quot;From Date Landing&quot;"
+      LocalDefaultText="&quot;מתאריך נחיתה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.DeclarationCourierStatus.O.ToDateLanding&quot;"
+      DefaultText="&quot;ToDateLanding&quot;"
+      LocalDefaultText="&quot;עד תאריך נחיתה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.DeclarationCourierStatus.O.Integrator&quot;"
+      DefaultText="&quot;Integrator&quot;"
+      LocalDefaultText="&quot;אינטגרטור&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.DeclarationCourierStatus.O.ReportType&quot;"
+      DefaultText="&quot;Report Type&quot;"
+      LocalDefaultText="&quot;סוג דוח&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+  </AdditionalTextCodes>
   <AdditionalFeatures />
 </entity>

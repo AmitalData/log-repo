@@ -5,8 +5,9 @@ import { ModuleCustomsControls } from '../CustomsControls/ModuleCustomsControls'
 import { CustomsReportsComponent } from './Components/CustomsReportsComponent';
 @NgModule({
     imports: [InfrastructureModule, ModuleCustomsControls],
-    exports:  [ModuleCustomsControls],
-    declarations: [CustomsReportsComponent],
+    exports: [...Components,ModuleCustomsControls],
+    declarations: [...Components],
+    entryComponents: [...Components],
 })
 
 export class ModuleCustomsReports {

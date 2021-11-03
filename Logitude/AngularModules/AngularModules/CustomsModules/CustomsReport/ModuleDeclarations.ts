@@ -1,8 +1,10 @@
 import { CustomsReportsComponent } from "./Components/CustomsReportsComponent";
+import { SLAReportComponent } from "./Components/Reports/SLAReportComponent";
 
 export const Components =
     [
         CustomsReportsComponent,
+        SLAReportComponent,
     ];
 
 export class ModuleDeclarations {
@@ -12,6 +14,8 @@ export class ModuleDeclarations {
 
         switch (name) {
             case "CustomsReportsComponent": { myResult = CustomsReportsComponent; break; }
+            case "SLAReportComponent": { myResult = SLAReportComponent; break; }
+
         }
 
         return myResult;

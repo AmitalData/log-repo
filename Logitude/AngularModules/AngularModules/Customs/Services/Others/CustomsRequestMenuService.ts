@@ -27,7 +27,7 @@ export class CustomsRequestMenuService {
     }
     private buildReportsList(){
         this._CustomsRequestMenuItems = [];
-        this._CustomsRequestMenuItems.push(new CustomsMenuItem("תור חשבוניות - זמני", "InvoiceQueue", './CustomsModules/InvoiceQueue/Components/InvoiceQueueComponent', 1600, 800, "1111"));
+        this._CustomsRequestMenuItems.push(new CustomsMenuItem("דוח SLA", "SLAReport", './CustomsModules/CustomsReport/Components/Reports/SLAReportComponent', 350, 250, "1111"));
     }
     private buildCustomsList() {
         this._CustomsRequestMenuItems = [];
