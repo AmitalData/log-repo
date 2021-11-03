@@ -8,12 +8,16 @@ using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Web;
 using System.Web.Http;
+using WebFreight.Web.CustomWebServices.BL.XLSReports;
 using WebFreight.Web.Helpers;
+
 
 namespace WebFreight.Web.Controllers.CustomsModel.WebServices
 {
@@ -71,6 +75,28 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
 
+        }
+
+        public HttpResponseMessage GetSLAReport2Excel(string tenant,string fromDate,string toDate,string integratorCode,string reportType)
+        {
+            try
+            {
+                var slaReports = new SlaReport();
+               /* var ErrorObject = (List<CertificateErrorView>)CacheManager.CacheWrapper.Get(key + "IKEA-ErrorList");
+                var o = new SupplierInvioceItemCertificats();
+                var result = o.ExportErrors(tenant, ErrorObject);*/
+                HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.OK);
+                //var item = slaReports.GetSlaReport(report);
+                //response.Content = new StreamContent(new MemoryStream(item));
+                response.Content.Headers.ContentType = new MediaTypeHeaderValue("application/ms-excel");
+                response.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment");
+                response.Content.Headers.ContentDisposition.FileName =Guid.NewGuid().ToString() + ".xls";
+                return response;
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
         }
 
     }
