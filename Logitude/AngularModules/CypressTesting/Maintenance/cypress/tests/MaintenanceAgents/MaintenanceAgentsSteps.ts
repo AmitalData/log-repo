@@ -5,9 +5,6 @@ import { ContactDetails } from "../../models/ContactDetails";
 import { MaintenanceSelectors } from "../../selectors/Selectors";
 import { CardDetails } from "../../models/CardDetails";
 import { Constants } from "../../constants/Constants";
-import * as BaseActions from "../../../../Base/cypress/actions/Actions"
-import { CardBillingTabDetails } from "../../models/CardBillingTabDetails";
-import { EventTypeDetails } from "../../../../Base/cypress/models/EventTypeDetails";
 import * as MaintenanceBaseActions from "../../actions/BaseActions"
 
 let code = null

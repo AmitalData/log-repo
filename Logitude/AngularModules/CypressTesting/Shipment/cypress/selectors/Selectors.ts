@@ -128,6 +128,9 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly ShipmentReleasingAgent = '#Shipment_ReleasingAgentId';
   public static readonly PartnerOKButton = '#PartnerOKbtn';
   public static readonly PartnerEditShipper = '#Edit-Shipper';
+  public static readonly PartnerEditAgent = '#Edit-Agent';
+  public static readonly AddPartnerButton = '[id^=Add-Partner]'
+  
   //#endregion
 
   //#region Package tab fields
