@@ -7,9 +7,9 @@ Feature: AR Invoice
         And an AR Invoice with the following details
             | BillTo          | BDDCustomer |
             | InvoiceCurrency | NIS         |
-            | InvoiceDate     | Today       |
+            | InvoiceDate     | 03/09/2021  |
             | PaymentTerm     | Cash        |
-            | DueDate         | Today       |
+            | DueDate         | 03/09/2021  |
             | VATNo           | Zero        |
             | Branch          | Main Office |
             | VATType         | Zero        |
