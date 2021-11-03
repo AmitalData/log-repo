@@ -1066,51 +1066,6 @@ export class ContainerPM {
     public set ShipmentDestinationAgentName(newValue: string) { if (this.shipmentDestinationAgentName != newValue) { this.shipmentDestinationAgentName = newValue; this.MarkAsDirty("ShipmentDestinationAgentName"); } }
        
 	 
-    private shipmentNumber: string;
-    public get ShipmentNumber() { return this.shipmentNumber; }
-    public set ShipmentNumber(newValue: string) { if (this.shipmentNumber != newValue) { this.shipmentNumber = newValue; this.MarkAsDirty("ShipmentNumber"); } }
-       
-	 
-    private containersCount: number;
-    public get ContainersCount() { return this.containersCount; }
-    public set ContainersCount(newValue: number) { if (this.containersCount != newValue) { this.containersCount = newValue; this.MarkAsDirty("ContainersCount"); } }
-       
-	 
-    private handlerId: string;
-    public get HandlerId() { return this.handlerId; }
-    public set HandlerId(newValue: string) { if (this.handlerId != newValue) { this.handlerId = newValue; this.MarkAsDirty("HandlerId"); } }
-       
-	 
-    private handlerName: string;
-    public get HandlerName() { return this.handlerName; }
-    public set HandlerName(newValue: string) { if (this.handlerName != newValue) { this.handlerName = newValue; this.MarkAsDirty("HandlerName"); } }
-       
-	 
-    private customerId: string;
-    public get CustomerId() { return this.customerId; }
-    public set CustomerId(newValue: string) { if (this.customerId != newValue) { this.customerId = newValue; this.MarkAsDirty("CustomerId"); } }
-       
-	 
-    private customerName: string;
-    public get CustomerName() { return this.customerName; }
-    public set CustomerName(newValue: string) { if (this.customerName != newValue) { this.customerName = newValue; this.MarkAsDirty("CustomerName"); } }
-       
-	 
-    private oPClosed: boolean;
-    public get OPClosed() { return this.oPClosed; }
-    public set OPClosed(newValue: boolean) { if (this.oPClosed != newValue) { this.oPClosed = newValue; this.MarkAsDirty("OPClosed"); } }
-       
-	 
-    private shipmentTypeId: string;
-    public get ShipmentTypeId() { return this.shipmentTypeId; }
-    public set ShipmentTypeId(newValue: string) { if (this.shipmentTypeId != newValue) { this.shipmentTypeId = newValue; this.MarkAsDirty("ShipmentTypeId"); } }
-       
-	 
-    private shipmentTypeName: string;
-    public get ShipmentTypeName() { return this.shipmentTypeName; }
-    public set ShipmentTypeName(newValue: string) { if (this.shipmentTypeName != newValue) { this.shipmentTypeName = newValue; this.MarkAsDirty("ShipmentTypeName"); } }
-       
-	 
 
     public OldEntityPM: ContainerPM;
 		
