@@ -5,6 +5,7 @@ export class ARPaymentSelectors {
     public static readonly PaymentMethod = '#ARPayment_AccountingPaymentMethodId';
     public static readonly PaymentAmount = '#ARPayment_AmountInPaymentCurrency';
     public static readonly PaymentBranch = '#ARPayment_BranchId';
+    public static readonly RegisterDate = '#RegisterDate';
 
     public static readonly ARPaymentTabInsideShipment = '#ARInvoiceTHARPayments';
     public static readonly OkAddARPayment = '#ok-AddARPayment';
