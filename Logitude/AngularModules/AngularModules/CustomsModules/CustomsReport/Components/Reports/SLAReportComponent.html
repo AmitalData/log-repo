@@ -35,7 +35,12 @@
 </style>
 <div *ngIf="EntityResource">
     <table>
-        <tr style="height: 30px;">
+        <tr style="height:1px;" *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0">
+            <td colspan="4" style="padding: 3px;">
+                <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+            </td>
+        </tr>
+        <tr *ngIf="ValidationErrorsList == null"style="height: 30px;">
             <td>
                 <div></div>
             </td>
