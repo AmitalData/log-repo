@@ -75,16 +75,16 @@ namespace Amital.QuoteOPM.Data.EntityPOCOs
 	    public bool IsByContainer { get; set; }
         [Column("EstimateProfitEdited")]
 	    public bool EstimateProfitEdited { get; set; }
-     //   [ForeignKey("PickUpAddressEntity")]
-     //   [Column("FromAddressId")]
-	    //public string FromAddressId { get; set; }
+        [ForeignKey("FromAddress")]
+        [Column("FromAddressId")]
+	    public string FromAddressId { get; set; }
 	      
-        public virtual Address PickUpAddressEntity { get; set; }
-     //   [ForeignKey("DeliveryAddressEntity")]
-     //   [Column("ToAddressId")]
-	    //public string ToAddressId { get; set; }
+        public virtual Address FromAddress { get; set; }
+        [ForeignKey("ToAddress")]
+        [Column("ToAddressId")]
+	    public string ToAddressId { get; set; }
 	      
-        public virtual Address DeliveryAddressEntity { get; set; }
+        public virtual Address ToAddress { get; set; }
         [Column("OpportunityId")]
 	    public string OpportunityId { get; set; }
         [Column("MinimumFreightCost")]
@@ -552,10 +552,6 @@ namespace Amital.QuoteOPM.Data.EntityPOCOs
 	    public bool IsMultiCurrency { get; set; }
         [Column("SpecialServiceId")]
 	    public string SpecialServiceId { get; set; }
-        [Column("FromAddressId")]
-	    public string FromAddressId { get; set; }
-        [Column("ToAddressId")]
-	    public string ToAddressId { get; set; }
     }
 }
 	 

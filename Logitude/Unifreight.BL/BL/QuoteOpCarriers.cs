@@ -36,6 +36,7 @@ namespace Unifreight.BL.BL
             {
                 var queryservice = new ETBAIRLINEQueryService(GetAmitalContext(tenant));
                 var ETBAIRLINEList = queryservice.GetList(queryOperations);
+                return ETBAIRLINEList;
             }
             if (DIRECTIONID == "E" && TRANSPORTMODEID == "O")
             {

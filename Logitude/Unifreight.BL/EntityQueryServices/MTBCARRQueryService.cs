@@ -43,7 +43,7 @@ namespace Unifreight.BL.EntityQueryServices
             GenericFilter filter = new GenericFilter();
             GenericSort sortClass = new GenericSort();
             var MTBCARRquery = (from a in MainContext.MTBCARRs
-                                   select a);
+                                select a);
             var cols = new Dictionary<string, string>()
             {
                 { "Name", "NAMEENG" },
@@ -62,6 +62,10 @@ namespace Unifreight.BL.EntityQueryServices
                     case "AIRLINE_ID":
                         MTBCARRquery = MTBCARRquery.Where(o => o.AIRLINEID.Contains(item.FieldValue.ToString()));
                         break;
+                    case "SearchFields":
+                        MTBCARRquery = MTBCARRquery.Where(o => o.SEARCHENG.Contains(item.FieldValue.ToString()));
+                        break;
+
                 }
             }
 
@@ -89,6 +93,17 @@ namespace Unifreight.BL.EntityQueryServices
                             MTBCARRquery = MTBCARRquery.OrderByDescending(o => o.AIRLINEID);
                         }
                         break;
+                    case "SearchFields":
+                        if (cols.ContainsKey(queryOperations.SortByColumnName) && queryOperations.SortDirectin.ToLower() == "ascending")
+                        {
+                            MTBCARRquery = MTBCARRquery.OrderBy(o => o.SEARCHENG);
+                        }
+                        else
+                        {
+                            MTBCARRquery = MTBCARRquery.OrderByDescending(o => o.SEARCHENG);
+                        }
+                        break;
+
                 }
 
             }

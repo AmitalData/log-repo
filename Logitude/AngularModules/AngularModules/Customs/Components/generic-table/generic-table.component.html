@@ -1,4 +1,4 @@
-<p-table [value]="data" [columns]="columns" #table [(first)]='first' [scrollable]='true' scrollHeight="55vh"
+<p-table [value]="data" [columns]="columns" #table  [scrollable]='true' scrollHeight="55vh"
     [globalFilterFields]='columnsNames' [rows]='rows' [resizableColumns]="true" [virtualScroll]="lazy"
     [virtualRowHeight]="34" [lazy]="lazy" (onLazyLoad)="loadLazy($event)" (onSort)='onSort($event)'>
     <ng-template pTemplate="caption">
@@ -29,4 +29,3 @@
         </tr>
     </ng-template>
 </p-table>
-<p>

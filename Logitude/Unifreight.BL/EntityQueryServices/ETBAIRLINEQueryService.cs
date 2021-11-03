@@ -67,6 +67,9 @@ namespace Unifreight.BL.EntityQueryServices
                     case "Prefix":
                         ETBAIRLINEquery = ETBAIRLINEquery.Where(o => o.AIRLINENUM.Contains(item.FieldValue.ToString()));
                         break;
+                    case "SearchFields":
+                        ETBAIRLINEquery = ETBAIRLINEquery.Where(o => o.SEARCHENG.Contains(item.FieldValue.ToString()));
+                        break;
                 }
             }
 
@@ -102,6 +105,16 @@ namespace Unifreight.BL.EntityQueryServices
                         else
                         {
                             ETBAIRLINEquery = ETBAIRLINEquery.OrderByDescending(o => o.AIRLINENUM);
+                        }
+                        break;
+                    case "SearchFields":
+                        if (cols.ContainsKey(queryOperations.SortByColumnName) && queryOperations.SortDirectin.ToLower() == "ascending")
+                        {
+                            ETBAIRLINEquery = ETBAIRLINEquery.OrderBy(o => o.SEARCHENG);
+                        }
+                        else
+                        {
+                            ETBAIRLINEquery = ETBAIRLINEquery.OrderByDescending(o => o.SEARCHENG);
                         }
                         break;
                 }

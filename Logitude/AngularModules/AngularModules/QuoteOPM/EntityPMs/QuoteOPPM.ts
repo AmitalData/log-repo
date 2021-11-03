@@ -144,6 +144,16 @@ export class QuoteOPPM {
     public set EstimateProfitEdited(newValue: boolean) { if (this.estimateProfitEdited != newValue) { this.estimateProfitEdited = newValue; this.MarkAsDirty("EstimateProfitEdited"); } }
        
 	 
+    private fromAddressId: string;
+    public get FromAddressId() { return this.fromAddressId; }
+    public set FromAddressId(newValue: string) { if (this.fromAddressId != newValue) { this.fromAddressId = newValue; this.MarkAsDirty("FromAddressId"); } }
+       
+	 
+    private toAddressId: string;
+    public get ToAddressId() { return this.toAddressId; }
+    public set ToAddressId(newValue: string) { if (this.toAddressId != newValue) { this.toAddressId = newValue; this.MarkAsDirty("ToAddressId"); } }
+       
+	 
     private opportunityId: string;
     public get OpportunityId() { return this.opportunityId; }
     public set OpportunityId(newValue: string) { if (this.opportunityId != newValue) { this.opportunityId = newValue; this.MarkAsDirty("OpportunityId"); } }
@@ -1654,16 +1664,6 @@ export class QuoteOPPM {
             this.quoteProperties = newValue;
         }
     }
-    private fromAddressId: string;
-    public get FromAddressId() { return this.fromAddressId; }
-    public set FromAddressId(newValue: string) { if (this.fromAddressId != newValue) { this.fromAddressId = newValue; this.MarkAsDirty("FromAddressId"); } }
-       
-	 
-    private toAddressId: string;
-    public get ToAddressId() { return this.toAddressId; }
-    public set ToAddressId(newValue: string) { if (this.toAddressId != newValue) { this.toAddressId = newValue; this.MarkAsDirty("ToAddressId"); } }
-       
-	 
 
     public OldEntityPM: QuoteOPPM;
 		

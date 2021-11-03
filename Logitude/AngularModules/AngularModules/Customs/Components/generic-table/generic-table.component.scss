@@ -3,6 +3,10 @@
         display: none;
     }
 
+    .p-datatable-scrollable-body {
+        height: 400px;
+    }
+
     tbody tr.ng-star-inserted:hover {
         background: #c9c9c9;
     }
@@ -10,5 +14,5 @@
 
 :host {
     display: block;
-    height: 630px;
+    height: 300px;
 }

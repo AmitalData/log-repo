@@ -79,7 +79,7 @@ export class NewQuoteGeneralComponent implements OnInit {
   }
 
   private initDefaultValue(dateNow: Date) {
-    this.formGroup.addControl('moveType', new FormControl('', Validators.required));
+    this.formGroup.addControl('moveType', new FormControl());
     this.formGroup.addControl('startDate', new FormControl(dateNow, Validators.required));
     this.formGroup.addControl('expirationDays', new FormControl(null, Validators.required));
     this.formGroup.addControl('expirationDate', new FormControl(null, Validators.required));
