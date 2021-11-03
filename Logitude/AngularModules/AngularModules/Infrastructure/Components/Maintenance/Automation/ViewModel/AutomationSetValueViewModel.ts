@@ -134,14 +134,31 @@ export class AutomationSetValueViewModel extends BaseComponent implements OnInit
         this.AutomationCondationFieldListFilterItems = new ApiQueryFilters();
         this.AutomationCondationFieldListFilterItems.addAdditionalFilter("ObjectTableId", this.AddEditAutomationsViewModel.ObjectTableId, null, null, "Equals", false, false, false, "string");
         this.AutomationCondationFieldListFilterItems.addAdditionalFilter("CanAutomateSetValue", true, null, null, "Equals", true, false, false, "boolean");
+        
+        var recordType = this.GetRecordType();
+        if(!AppTool.IsNullOrEmpty(recordType)){
+            this.AutomationCondationFieldListFilterItems.addAdditionalFilter("RecordType", recordType, null, null, "Equals", true, false, false, "string");
+        }
 
 
+    }
+
+    GetRecordType() {
+        if (!AppTool.IsNullOrEmpty(this.AddEditAutomationsViewModel?.DataViewModel?.ObjectTableName)) {
+            return this.AddEditAutomationsViewModel?.DataViewModel?.ObjectTableName;
+        }
+        return null;
     }
 
     InitCustomLOVFilters(objectFieldPM: ObjectFieldPM) {
         this.CustomAutomationCondationFieldListFilterItems = new ApiQueryFilters();
         this.CustomAutomationCondationFieldListFilterItems.addAdditionalFilter("ObjectTableId", this.AddEditAutomationsViewModel.ObjectTableId, null, null, "Equals", false, false, false, "string");
         this.CustomAutomationCondationFieldListFilterItems.addAdditionalFilter("AllowedinAutomationConditions", true, null, null, "Equals", false, false, false, "boolean");
+      
+        var recordType = this.GetRecordType();
+        if (!AppTool.IsNullOrEmpty(recordType)) {
+            this.AutomationCondationFieldListFilterItems.addAdditionalFilter("RecordType", recordType, null, null, "Equals", true, false, false, "string");
+        }
 
         if (this.SelectedCustomField) {
             if (this.SelectedCustomField.DataTypeCode == "LookUp") {
