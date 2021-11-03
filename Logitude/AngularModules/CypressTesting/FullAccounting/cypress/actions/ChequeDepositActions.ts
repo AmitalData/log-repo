@@ -14,7 +14,7 @@ export function NavigatesChequeDepositWizerd() {
 }
 
 export function FillChequeDepositDetails(chequeDepositDetails: ChequeDepositDetails) {
-    cy.FillLogTextBox(ChequeDepositSelectors.AccountingDate, ".")
+    cy.FillLogTextBox(ChequeDepositSelectors.AccountingDate, chequeDepositDetails.AccountingDate)
     cy.FillLogLov(ChequeDepositSelectors.CashBook, chequeDepositDetails.CashBook, true)
     cy.FillLogLov(ChequeDepositSelectors.BankAccount, chequeDepositDetails.BankAccount, true)
 }

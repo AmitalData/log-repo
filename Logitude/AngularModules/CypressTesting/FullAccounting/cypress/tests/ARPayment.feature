@@ -6,6 +6,7 @@ Feature: AR Payment
         Given the user logged in and navigates to Full Accounting workspace
         And an AR Payment with the following details
             | Partner         | BDDCustomer |
+            | RegisterDate    | 13/09/2021  |
             | PaymentCurrency | NIS         |
             | PaymentMethod   | Cash        |
             | PaymentAmount   | 1000        |
