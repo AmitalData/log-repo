@@ -263,7 +263,6 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CustomMapping
             item.PaymentReceivedEstomationDate = row.ForwardingPaymentReceivedEstomationDate;
             item.PaymentReceivedDate = row.ForwardingPaymentReceivedDate;
             item.PaymentReceivedNotes = row.ForwardingPaymentReceivedNotes;
-            item.CurrentMilestoneExceptions = row.ForwardingExceptionDate?.ToString("MM/dd/yyyy hh:mm:ss.fff tt").Concat(", ") + row.ForwardingCurrentMilestoneExceptionDescription;
 
         }
         private void FillCustomFeilds(CargoTrackingShipment item, CargoTrackingShipmentQueryResult row)
@@ -350,7 +349,6 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CustomMapping
             item.PaymentRequiredNotes = row.CustomPaymentRequiredNotes;
             item.CustomsPaymentDate = row.CustomPaymentDateTime;
             item.PaymentReceivedEstomationDate = row.CustomPaymentReceivedEstomationDate;
-            item.CurrentMilestoneExceptions = row.ForwardingExceptionDate?.ToString("MM/dd/yyyy hh:mm:ss.fff tt").Concat(", ") + row.ForwardingCurrentMilestoneExceptionDescription;
 
 
         }
