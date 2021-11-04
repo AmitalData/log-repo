@@ -842,7 +842,6 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
 	{
 		this.UIProperties.SetRequired("BankAccountId", this.ObjectTableName, false);
 		if (this.isFullAccounting == true && this.AccountingPaymentMethodCode == "BT") {
-			this.UpdatePaymentBankTranferFields();
 			if (AppTool.IsNullOrEmpty(this.BankAccountId)) {
 				this.UIProperties.SetRequired("BankAccountId", this.ObjectTableName, true);
 			}
@@ -1259,6 +1258,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
 						if (list) {
 							this.PaymentCurrencyCode = list.Code;
 							this.PaymentCurrencySign = list.Sign;
+							this.EntityPM.PaymentCurrencySign = list.Sign;
 						}
 					}
 				});
@@ -1637,6 +1637,16 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
         }
     }
 
+	UpdatePaymentBankTranferBankAccountField() {
+        if (this.EntityPM.ARPaymentBankTranfers.length > 0) {
+            this.EntityPM.ARPaymentBankTranfers.filter(d => d.LineNumber == 1).forEach((bankTransfer: ARPaymentBankTranferPM) => {
+                if (bankTransfer) {
+                    bankTransfer.BankAccountId = this.BankAccountId;
+                }
+            });
+        }
+    }
+
     UpdateBankFieldForPaymentCheque() {
         if (this.EntityPM.ARPaymentChequeReplicas.length > 0) {
             this.EntityPM.ARPaymentChequeReplicas.filter(d => d.LineNumber == 1).forEach((cheque: ARPaymentChequeReplicaPM) => {
@@ -1686,6 +1696,27 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
         }
     }
 
+	UpdateValueDateFieldForPaymentBankTransfer() {
+        if (this.EntityPM.ARPaymentBankTranfers.length > 0) {
+            this.EntityPM.ARPaymentBankTranfers.filter(d => d.LineNumber == 1).forEach((aRPaymentBankTranfer: ARPaymentBankTranferPM) => {
+                if (aRPaymentBankTranfer) {
+                    aRPaymentBankTranfer.ValueDate = this.ValueDate;
+                }
+            });
+        }
+    }
+
+	UpdatePaymentRefFieldForPaymentBankTransfer() {
+        if (this.EntityPM.ARPaymentBankTranfers.length > 0) {
+            this.EntityPM.ARPaymentBankTranfers.filter(d => d.LineNumber == 1).forEach((aRPaymentBankTranfer: ARPaymentBankTranferPM) => {
+                if (aRPaymentBankTranfer) {
+                    aRPaymentBankTranfer.PaymentRef = this.ChequeOrPaymentRef;
+                }
+            });
+        }
+    }
+
+
     UpdateChequeAmountFieldForPaymentCheque() {
         if (this.EntityPM.ARPaymentChequeReplicas.length > 0) {
             this.EntityPM.ARPaymentChequeReplicas.filter(d => d.LineNumber == 1).forEach((cheque: ARPaymentChequeReplicaPM) => {
@@ -1695,6 +1726,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
             });
         }
     }
+	
 
     UpdatePaymentChequeBankBranchField() {
         if (this.EntityPM.ARPaymentChequeReplicas.length > 0) {
@@ -1868,6 +1900,10 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
                 if (this.EntityPM.AccountingPaymentMethodCode == "CH") {
                     this.UpdateValueDateFieldForPaymentCheque();
                 }
+
+				if (this.EntityPM.AccountingPaymentMethodCode == "BT") {
+                    this.UpdateValueDateFieldForPaymentBankTransfer();
+                }
             }
 		}
 	}
@@ -1889,7 +1925,13 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
 		if (this.EntityPM != null) {
 			if (this.EntityPM.ChequeOrPaymentRef != value) {
 				this.EntityPM.ChequeOrPaymentRef = value;
-				this.SetUIProperties_Cheque();
+				if (this.EntityPM.AccountingPaymentMethodCode == "CH") {
+					this.SetUIProperties_Cheque();
+				}
+				if (this.EntityPM.AccountingPaymentMethodCode == "BT") {
+                    this.UpdatePaymentRefFieldForPaymentBankTransfer();
+					this.SetUIProperties_BankTransfer();
+				}
 			}
 		}
 	}
@@ -1940,6 +1982,10 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
 				else {
 					this.UIProperties.SetRequired("BankAccountId", this.ObjectTableName, true);
 				}
+
+				if (this.EntityPM.AccountingPaymentMethodCode == "BT") {
+                    this.UpdatePaymentBankTranferBankAccountField();
+                }
 			}
 		}
 	}
@@ -2395,10 +2441,10 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
     }
 
 	MapBankTransferFields(bankTransfer: ARPaymentBankTranferPM) {
-        this.BankAccountId = bankTransfer?.BankAccountId;
-        this.ValueDate = bankTransfer?.ValueDate;
-		this.ChequeOrPaymentRef = bankTransfer?.PaymentRef;
-        this.BankTransferAmount = bankTransfer?.ForeignAmount;
+        this.BankAccountId = bankTransfer != null ? bankTransfer.BankAccountId : null;
+        this.ValueDate = bankTransfer != null ? bankTransfer.ValueDate : null;
+		this.ChequeOrPaymentRef = bankTransfer != null ? bankTransfer.PaymentRef : null;
+        this.BankTransferAmount = bankTransfer != null ? bankTransfer.ForeignAmount : null;
     }
 
 	ValidateBankTransferFields() {
