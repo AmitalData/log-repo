@@ -1163,7 +1163,7 @@ namespace WebFreight.Web.Helpers
 
                 case "OSBC":
                     {
-                        dataProvider = logitudeReportsWebService.LoadOpenShipmentsByCustomerDataProvider(filters, reportFliter.tenant);
+                        dataProvider = logitudeReportsWebService.LoadOpenShipmentsByCustomerDataProvider(filters, reportFliter, reportFliter.tenant);
                         break;
                     }
 

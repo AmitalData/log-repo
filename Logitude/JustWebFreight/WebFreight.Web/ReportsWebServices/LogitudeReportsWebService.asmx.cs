@@ -10191,7 +10191,7 @@ namespace WebFreight.Web.ReportsWebServices
         #endregion
 
         #region Open Shipments By Customer
-        public byte[] LoadOpenShipmentsByCustomerDataProvider(byte[] xmlFilters, int tenant)
+        public byte[] LoadOpenShipmentsByCustomerDataProvider(byte[] xmlFilters, ReportFliter reportFliter, int tenant)
         {
             OpenShipmentsByCustomerDataProvider dataprovider = GetOpenShipmentsByCustomerDataProvider(xmlFilters, tenant);
             XmlSerializer serializer = new XmlSerializer(typeof(OpenShipmentsByCustomerDataProvider));
@@ -10201,6 +10201,8 @@ namespace WebFreight.Web.ReportsWebServices
             var reader = new StreamReader(memstream);
             string content = reader.ReadToEnd();
             byte[] bytearray = memstream.ToArray();
+            ReportManipulationDataService reportManipulationDataService = new ReportManipulationDataService(dataprovider, reportFliter);
+            bytearray = reportManipulationDataService.IsDataProviderHaveListWithValues() ? bytearray : null;
             return bytearray;
         }
 
