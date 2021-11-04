@@ -56,7 +56,7 @@ namespace Logitude.Server.Tools.Utils
 
         }
 
-        public void LogIt(
+        public void SBLog(
             string appSettingKeyValueIsLogUntilDateyyyyMMdd,
             StringBuilder stringBuilder
             )

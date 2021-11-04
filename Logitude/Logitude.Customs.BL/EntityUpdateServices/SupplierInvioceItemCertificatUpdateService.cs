@@ -203,8 +203,8 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         .AppendLine(cmd);
 
                     var logChangesService = new LogChangesService();
-                    logChangesService.LogIt(
-                        appSettingKeyValueIsLogUntilDateyyyyMMdd: SIICerExemptionHD379305,
+                    logChangesService.SBLog(
+                        SIICerExemptionHD379305,
                         stringBuilder);
                 }
             }
@@ -430,6 +430,10 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         .AppendLine($"UpdateCertificateConnectedItems(declarationId:{declarationId},certificateExemptionTypeCode:{certificateExemptionTypeCode})")
                         .AppendLine($"CertificateExemptionTypeCode:cmd.Contains(92)={cmd.Contains("92")}")
                         .AppendLine(cmd);
+                    var logChangesService = new LogChangesService();
+                    logChangesService.SBLog(
+                        SIICerExemptionHD379305,
+                        stringBuilder);
 
                 }
             }
@@ -567,7 +571,10 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                                 .AppendLine($"UpdateCertificateConnectedItems(declarationId:{declarationId},certificateExemptionTypeCode:{certificateExemptionTypeCode})")
                                 .AppendLine($"CertificateExemptionTypeCode:cmd.Contains(92)={cmd.Contains("92")}")
                                 .AppendLine(updateCmd);
-
+                            var logChangesService = new LogChangesService();
+                            logChangesService.SBLog(
+                                SIICerExemptionHD379305,
+                                stringBuilder);
                         }
                     }
 
@@ -631,6 +638,10 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                                 .AppendLine($"UpdateCertificateConnectedItems(declarationId:{declarationId},certificateExemptionTypeCode:{certificateExemptionTypeCode})")
                                 .AppendLine($"CertificateExemptionTypeCode:cmd.Contains(92)={cmd.Contains("92")}")
                                 .AppendLine(updateCmd);
+                            var logChangesService = new LogChangesService();
+                            logChangesService.SBLog(
+                                SIICerExemptionHD379305,
+                                stringBuilder);
                         }
                     }
                     else
@@ -862,6 +873,10 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         .AppendLine(cmd)
                         .AppendLine($"CertificateExemptionTypeCode:cmd1.Contains(92)={cmd1.Contains("92")}")
                     .AppendLine(cmd1);
+                    var logChangesService = new LogChangesService();
+                    logChangesService.SBLog(
+                        SIICerExemptionHD379305,
+                        stringBuilder);
                 }
             }
             else
@@ -894,7 +909,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             {
                 var logChangesService = new LogChangesService();
                 logChangesService.LogIt<SupplierInvioceItemCertificatPM, SupplierInvioceItemCertificat>(
-                    appSettingKeyValueIsLogUntilDateyyyyMMdd: SIICerExemptionHD379305,
+                    SIICerExemptionHD379305,
                     entityPM, entityPOCO);
             }
         }
