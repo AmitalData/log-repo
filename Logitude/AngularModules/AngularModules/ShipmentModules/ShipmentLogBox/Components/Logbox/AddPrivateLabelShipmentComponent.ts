@@ -502,6 +502,9 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
     public get ShipperName() { return this.EntityPM.ShipperName }
     public set ShipperName(newValue: string) { this.EntityPM.ShipperName = newValue; }
 
+    public get ConsigneeName() { return this.EntityPM.ConsigneeName }
+    public set ConsigneeName(newValue: string) { this.EntityPM.ConsigneeName = newValue; }
+     
 
     get PrivateLabelInvoiceNumber() { return this.EntityPM.PrivateLabelInvoiceNumber; }
     set PrivateLabelInvoiceNumber(newValue: string) {

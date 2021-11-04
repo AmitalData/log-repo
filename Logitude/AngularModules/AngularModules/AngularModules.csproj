@@ -7498,6 +7498,7 @@
     <TypeScriptCompile Include="ShipmentModules\ShipmentLogBox\Components\Logbox\TaxScreenComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentLogBox\Components\Logbox\DSVApprovePaymentComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentLogBox\Components\Logbox\AddEditPrivateLabelShipmentComponent.ts" />
+    <TypeScriptCompile Include="Shipment\Components\ListTemplates\SupplierConsigneeListTemplate.ts" />
     <TypeScriptCompile Include="Shipment\Components\ListTemplates\TaskCellDisplayListTemplate.ts" />
     <TypeScriptCompile Include="Shipment\Components\MenuButtons\MasterActionConfirmationComponent.ts" />
     <TypeScriptCompile Include="Shipment\Components\MenuButtons\ShipmenDirectionConvertComponent.ts" />
