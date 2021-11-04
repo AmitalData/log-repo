@@ -12,9 +12,9 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CustomMapping
 {
     public class CargoTrackingShipmentsMappingService
     {
-        public CargoTrackingShipmentContext GetOrder(CargoTrackingShipmentQueryResult row)
+        public CargoTrackingShipmentResources GetOrder(CargoTrackingShipmentQueryResult row)
         {
-            var cargoTrackingShipmentContext = new CargoTrackingShipmentContext();
+            var cargoTrackingShipmentContext = new CargoTrackingShipmentResources();
             var item = new CargoTrackingShipment();
             FillOrderFeilds(item, row);
             item.IsMainRecord = GetIsMainRecord(Codes.OrderType, row);
@@ -28,9 +28,9 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CustomMapping
 
 
 
-        public CargoTrackingShipmentContext GetForwarding(CargoTrackingShipmentQueryResult row)
+        public CargoTrackingShipmentResources GetForwarding(CargoTrackingShipmentQueryResult row)
         {
-            var cargoTrackingShipmentContext = new CargoTrackingShipmentContext();
+            var cargoTrackingShipmentContext = new CargoTrackingShipmentResources();
             var item = new CargoTrackingShipment();
             FillForwardingFeilds(item, row);
             SetForwardingWarehouseFeilds(item, row);
@@ -44,9 +44,9 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CustomMapping
         }
 
 
-        public CargoTrackingShipmentContext GetCustom(CargoTrackingShipmentQueryResult row)
+        public CargoTrackingShipmentResources GetCustom(CargoTrackingShipmentQueryResult row)
         {
-            var cargoTrackingShipmentContext = new CargoTrackingShipmentContext();
+            var cargoTrackingShipmentContext = new CargoTrackingShipmentResources();
             var item = new CargoTrackingShipment();
             FillCustomFeilds(item, row);
             SetCustomWarehouseFeilds(item, row);

@@ -206,7 +206,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.SearchService
         }
 
 
-        public static List<CargoTrackingShipmentSearch> GetCustomsDeclarationNumberReferences(CargoTrackingShipmentContext shipmentContext, string entityId)
+        public static List<CargoTrackingShipmentSearch> GetCustomsDeclarationNumberReferences(CargoTrackingShipmentResources shipmentContext, string entityId)
         {
             var list = new List<CargoTrackingShipmentSearch>();
             if (string.IsNullOrEmpty(shipmentContext.CustomsDeclarationNumber))

@@ -359,7 +359,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.MainService
 			return condishins;
 		}
 
-		public static string GetDeleteSearchesQuery(List<CargoTrackingShipmentContext> cargoTrackingShipments, string tableName)
+		public static string GetDeleteSearchesQuery(List<CargoTrackingShipmentResources> cargoTrackingShipments, string tableName)
         {
 			if (cargoTrackingShipments.Count <= 0)
 				return "";

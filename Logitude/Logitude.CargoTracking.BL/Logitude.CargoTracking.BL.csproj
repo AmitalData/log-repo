@@ -83,7 +83,7 @@
     <Compile Include="CargoTrackingServices\DBTablesCopy\Generated\CargoTrackingWatermarkDxml.Generated.cs" />
     <Compile Include="CargoTrackingServices\HelperClasses\CargoTrackingArgs.cs" />
     <Compile Include="CargoTrackingServices\HelperClasses\BulkDataPreperation.cs" />
-    <Compile Include="CargoTrackingServices\HelperClasses\CargoTrackingShipmentContext.cs" />
+    <Compile Include="CargoTrackingServices\HelperClasses\CargoTrackingShipmentResources.cs" />
     <Compile Include="CargoTrackingServices\HelperClasses\CargoTrackingShipmentQueryResult.cs" />
     <Compile Include="CargoTrackingServices\HelperClasses\CargoTrackingShipmentsServiceResults.cs" />
     <Compile Include="CargoTrackingServices\HelperClasses\ReferencecArgs.cs" />

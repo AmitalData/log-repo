@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace Logitude.CargoTracking.BL.CargoTrackingServices.HelperClasses
 {
-    public class CargoTrackingShipmentContext
+    public class CargoTrackingShipmentResources
     {
         public string CustomsDeclarationNumber { get; set; }
-        public CargoTrackingShipmentContext Chiled { get; set; }
+        public CargoTrackingShipmentResources Child { get; set; }
         public CargoTrackingShipment CargoTrackingShipment { get; set; }
 
         

@@ -39,7 +39,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.MainService
                 TableName = "dbo." + updateCargoTrackingRecords.CargoTrackingUpdateDataBaseArgs.BuildCargoArgs.Table.CargoTracking_TableName,
                 InnerTableName = "dbo." + updateCargoTrackingRecords.CargoTrackingUpdateDataBaseArgs.BuildCargoArgs.Table.CargoTracking_InnerTableName,
                 IsUpdateFromBuild = updateCargoTrackingRecords.CargoTrackingUpdateDataBaseArgs.IsUpdateFromBuild,
-                CargoTrackingShipmentContexts = new List<CargoTrackingShipmentContext>()
+                CargoTrackingShipmentContexts = new List<CargoTrackingShipmentResources>()
             };
 
             var results = new CargoTrackingShipmentsServiceResults();
@@ -123,11 +123,11 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.MainService
             }
         }
 
-        private List<CargoTrackingShipmentContext> GetShipmentsFromRow(CargoTrackingShipmentQueryResult row, Dictionary<string, string> addRowsDictionary)
+        private List<CargoTrackingShipmentResources> GetShipmentsFromRow(CargoTrackingShipmentQueryResult row, Dictionary<string, string> addRowsDictionary)
         {
-            var cargoTrackingShipmentContext = new List<CargoTrackingShipmentContext>();
+            var cargoTrackingShipmentContext = new List<CargoTrackingShipmentResources>();
             var map = new CargoTrackingShipmentsMappingService();
-            CargoTrackingShipmentContext order = null, forwarding = null, custom = null;
+            CargoTrackingShipmentResources order = null, forwarding = null, custom = null;
             if (CheckIsAddedOrExist(Codes.OrderType, row.OrderId, addRowsDictionary))
             {
                 order = map.GetOrder(row);
@@ -140,7 +140,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.MainService
                 if (order != null)
                 {
                     SyncForwardingMilestones(order.CargoTrackingShipment, forwarding.CargoTrackingShipment);
-                    forwarding.Chiled = order;
+                    forwarding.Child = order;
                 }
             }
             if (row.CustomShipmentLevelCode == Codes.CustomShipmentLevelCode && CheckIsAddedOrExist(Codes.CustomType, row.CustomId, addRowsDictionary))
@@ -150,7 +150,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.MainService
                 if (forwarding != null)
                 {
                     SyncCustomeMilestones(forwarding.CargoTrackingShipment, custom.CargoTrackingShipment);
-                    custom.Chiled = forwarding;
+                    custom.Child = forwarding;
                 }
             }
             return cargoTrackingShipmentContext;
@@ -268,7 +268,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.MainService
 
         }
 
-        private void DeleteOldSearches(List<CargoTrackingShipmentContext> cargoTrackingShipmentContexts, SqlConnection sqlConnection, string tableName)
+        private void DeleteOldSearches(List<CargoTrackingShipmentResources> cargoTrackingShipmentContexts, SqlConnection sqlConnection, string tableName)
         {
             var query = CargoTrackingQueriesService.GetDeleteSearchesQuery(cargoTrackingShipmentContexts, tableName);
             SqlCommand sqlCommand = new SqlCommand(query, sqlConnection);
@@ -276,7 +276,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.MainService
             sqlCommand.ExecuteNonQuery();
         }
 
-        private List<CargoTrackingShipmentSearch> GetCargoTrackingShipmentSearches(List<CargoTrackingShipmentContext> cargoTrackingShipmentContexts)
+        private List<CargoTrackingShipmentSearch> GetCargoTrackingShipmentSearches(List<CargoTrackingShipmentResources> cargoTrackingShipmentContexts)
         {
             var cargoTrackingShipmentSearchs = new List<CargoTrackingShipmentSearch>();
             foreach (var shipment in cargoTrackingShipmentContexts)
@@ -286,7 +286,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.MainService
             return cargoTrackingShipmentSearchs;
         }
 
-        private List<CargoTrackingShipmentSearch> AddShipmentSearchesToList(CargoTrackingShipmentContext shipment, string entityId)
+        private List<CargoTrackingShipmentSearch> AddShipmentSearchesToList(CargoTrackingShipmentResources shipment, string entityId)
         {
             var cargoTrackingShipmentSearchs = new List<CargoTrackingShipmentSearch>();
 
@@ -302,9 +302,9 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.MainService
                 cargoTrackingShipmentSearchs.AddRange(CargoTrackingSearchService.GetHouseReferences(shipment.CargoTrackingShipment, entityId));
                 cargoTrackingShipmentSearchs.AddRange(CargoTrackingSearchService.GetMasterReferences(shipment.CargoTrackingShipment, entityId));
             }
-            if(shipment.Chiled != null)
+            if(shipment.Child != null)
             {
-                cargoTrackingShipmentSearchs.AddRange(AddShipmentSearchesToList(shipment.Chiled, entityId));
+                cargoTrackingShipmentSearchs.AddRange(AddShipmentSearchesToList(shipment.Child, entityId));
             }
             return cargoTrackingShipmentSearchs;
         }
