@@ -130,7 +130,9 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly PartnerEditShipper = '#Edit-Shipper';
   public static readonly PartnerEditAgent = '#Edit-Agent';
   public static readonly AddPartnerButton = '[id^=Add-Partner]'
-  
+  public static readonly ShipmentAgentContact = '#Shipment_AgentContactId';
+  public static readonly SetCustomerText = '.SetCustomerText';
+
   //#endregion
 
   //#region Package tab fields
