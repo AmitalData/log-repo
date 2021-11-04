@@ -214,6 +214,7 @@ export class ContainerizationMenuButtonsHandler implements OnDestroy {
                     {
                         this.DeclarationsStatusRequestMethod();
                         break;
+
                     }
 
                 case "CancelContainerization":
@@ -244,7 +245,7 @@ export class ContainerizationMenuButtonsHandler implements OnDestroy {
         currRequestParams.DeclarationList = this.EntityPM.ConnectedDeclarations;
         currRequestParams.RequestVIA = SendRequestVIA.WebServiceInteractive;
         currRequestParams.Tenant = SessionLocator.Tenant;
-        //currRequestParams.RequestOrigin = "DeclarationStatusRequestViewModel";
+       currRequestParams.RequestOrigin = "DeclarationStatusRequestViewModel";
         var _DeclarationMessagesService = new DeclarationMessagesService();
         this.CurrentSession.StartBusyIndicator("Sending...");
 
