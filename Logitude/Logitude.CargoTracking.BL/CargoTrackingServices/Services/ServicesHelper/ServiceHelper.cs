@@ -275,11 +275,16 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.ServicesHelpe
 
         public static void UpdateWaterMarkAfterFinishCheck(CargoTrackingTable table, DateTime? automaticLastUpdateDate, CargoTrackingArgs buildCargoArgs)
         {
+            int ShipmentTable_GetShipmentOrders = 3;
             if (table != null && table.Main_CargoTracking_TableName != "CargoTrackingWatermarks")
             {
 
                 if (automaticLastUpdateDate != null) {
                     var lastUpdateDate = automaticLastUpdateDate.Value.ToString("MM/dd/yyyy hh:mm:ss.fff tt");
+                    if (buildCargoArgs.Table.CurrentCondition == ShipmentTable_GetShipmentOrders)
+                    {
+                        lastUpdateDate = automaticLastUpdateDate.Value.AddHours(-3).ToString("MM/dd/yyyy hh:mm:ss.fff tt");
+                    } 
                     UpdateWaterMarksTable(table, lastUpdateDate, buildCargoArgs.DestinationConnectionString);
                 } 
  
