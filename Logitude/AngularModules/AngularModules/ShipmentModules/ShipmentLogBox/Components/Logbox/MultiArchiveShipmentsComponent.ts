@@ -49,6 +49,7 @@ export class MultiArchiveShipmentsComponent extends BaseComponent implements OnI
     public isLogbox = SystemEnvironmentService.IsLogBox();
     public IsExportActivated: boolean = false;
     public IsImportActivated: boolean = false;
+    public HasLogBoxExportToggle: boolean = false;
 
     constructor(private _entityListService: EntityListService) {
         super();
@@ -56,6 +57,17 @@ export class MultiArchiveShipmentsComponent extends BaseComponent implements OnI
         this._PortExtendedPMService = new PortExtendedPMService();
         this._ShipmentPMService = new ShipmentPMService();
         this._EntityStatusExtendedListService = new EntityStatusExtendedListService();
+        this.setLogBoxExportToggle();
+        
+    }
+
+
+    private setLogBoxExportToggle() {
+        let exportFeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "LEX")[0];
+        if (exportFeatureToggle) {
+            this.HasLogBoxExportToggle = true;
+
+        }
     }
 
     ngOnInit() {
