@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,6 +25,8 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
         public virtual QueueDefinition QueueDefinition { get; set; }
         //public QueueMessageMoreDetails QueueMessageMoreDetails { get; set; }
 
-   
+        [Column("TenantPriority")]
+        public int? TenantPriority { get; set; }
+
     }
 }
