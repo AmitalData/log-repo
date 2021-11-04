@@ -1,12 +1,13 @@
 import { DOCUMENT } from '@angular/common';
 import { ChangeDetectorRef, Component, EventEmitter, HostListener, Inject, Input, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { AbstractControl, FormGroup } from '@angular/forms';
-import { GenericTableColumn } from 'Customs/Components/generic-table/generic-table.component';
-import { GenericTableService } from 'Customs/Components/generic-table/generic-table.service';
+import { GenericTableColumn } from 'Infrastructure/Components/generic-table/generic-table.component';
+import { GenericTableService } from 'Infrastructure/Components/generic-table/generic-table.service';
 import { ApiQueryFilters } from 'Infrastructure/DataContracts/ApiQueryFilters';
 import { AutoComplete } from 'primeng/autocomplete';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
 import { take } from 'rxjs/operators';
+import { LogtuideTableDataService } from './logtuide-table-data.service';
 // import { Subscription } from 'rxjs';
 
 @Component({
@@ -24,12 +25,13 @@ export class AutocomplateTableComponent {
   @Input() disabled: boolean = false;
   @Input() controlName: string = '';
   @Input() data: any[] = []
+  @Input() getDataFunc: (filter: ApiQueryFilters) => Promise<any[]> = null as any;
+  @Input() logTableName: string = '';
   @Input() columnsFilter: string[] = []
   @Input() searchIcon: boolean = false;
   @Input() dropIcon: boolean = false;
   @Input() virtualScroll: boolean = false;
   @Input() itemSize: number = 26;
-  @Input() getDataFunc: (filter: ApiQueryFilters) => Promise<any[]> = null as any;
   @Input() set columnsShow(columns: any) {
     this.initColumns(columns);
   }
@@ -47,9 +49,14 @@ export class AutocomplateTableComponent {
   constructor(
     @Inject(DOCUMENT) private document: any,
     private genericTableService: GenericTableService,
+    private logtuideTableDataService: LogtuideTableDataService,
   ) { }
 
   ngOnInit() {
+    this.InitColumns();
+  }
+
+  private InitColumns() {
     if (this.data.length && !this.columnsNames.length)
       this.columnsShow = Object.keys(this.data[0]);
   }
@@ -106,7 +113,7 @@ export class AutocomplateTableComponent {
     const recordSelected: any = await new Promise<any>(async (resolve) => {
       const dialogRef: DynamicDialogRef = !!this.getDataFunc ?
         await this.genericTableService.openByApiOpenQuoeryFilter(this.getDataFunc, this.label, this.columnsFilter, columns) :
-        this.genericTableService.open(this.data, this.label, columns);
+        this.genericTableService.open(this.data, this.label + ' Search', columns, null, this.logTableName);
 
       dialogRef.onClose.pipe(take(1)).subscribe(x => resolve(x));
     });

@@ -1,0 +1,37 @@
+:host ::ng-deep {
+    .p-paginator-bottom {
+        display: none;
+    }
+
+    .p-datatable-scrollable-body {
+        height: 400px;
+    }
+
+    tbody tr.ng-star-inserted:hover {
+        background: #c9c9c9 !important;
+    }
+
+    .highlight-row {
+        background: #efefef !important;
+    }
+
+    th {
+        color: #1084dc !important;
+        background: #e2f0fb !important;
+        
+        i {
+            color: #1084dc !important;
+        }
+    }
+}
+
+:host {
+    display: block;
+    height: 300px;
+}
+
+::ng-deep .generic-table {
+    .p-dialog-header {
+        text-align: right;
+    }
+}

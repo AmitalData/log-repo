@@ -24,14 +24,15 @@ export class GenericTableService {
     private dataService: GenericTableDataService,
   ) { }
 
-  open(data: any[], header: string = '', columns: string[] | GenericTableColumn[] = null as any, getDataFunction: () => any = null as any, rowTake: number = 100): DynamicDialogRef {
+  open(data: any[], header: string = '', columns: string[] | GenericTableColumn[] = null as any, getDataFunction: () => any = null as any, tableName: string = '', rowTake: number = 100): DynamicDialogRef {
     if (!data) throw ("Generic Table cannot be get null or undefined data");
 
     const config: DynamicDialogConfig = {}
     config.width = '800px';
     config.height = '600px'
     config.header = header;
-    config.data = { data: data, columns: columns, getData: getDataFunction, rowTake: rowTake }
+    config.styleClass = 'generic-table';
+    config.data = { data: data, columns: columns, getData: getDataFunction, rowTake: rowTake, tableName: tableName}
 
     return this.dialogService.open(GenericTableComponent, config);
   }
@@ -99,7 +100,7 @@ export class GenericTableService {
         this.dataService.getTableWithFilter(tableName, val, pageIndex, this.rowsTake, columnFilter, sortField, sortOrder) :
       null;
 
-    return this.open(data, header, columns, getDataFunction)
+    return this.open(data, header, columns, getDataFunction, tableName)
   }
 
   columnsCleansing(columns: string[] | GenericTableColumn[] | null, data: any[]): [GenericTableColumn[], string[]] {
