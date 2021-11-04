@@ -131,10 +131,10 @@ ELSE      Begin
 IF not EXISTS(SELECT 1 FROM [dbo].[DWCategories] 
           WHERE Code = 'PartnerAddresses')
 		  Begin  
-				INSERT INTO [dbo].[DWCategories] ([Code],[Name],[Index]) VALUES('PartnerAddresses','Partner Addresses',120)
+				INSERT INTO [dbo].[DWCategories] ([Code],[Name],[Index]) VALUES('PartnerAddresses','Shipment Partner Addresses',120)
 		  End
 ELSE      Begin 
-				UPDATE [dbo].[DWCategories] Set [dbo].[DWCategories].[Index] = 120 WHERE [dbo].[DWCategories].[Code] = 'PartnerAddresses'	  
+				UPDATE [dbo].[DWCategories] Set [dbo].[DWCategories].[Index] = 120, [dbo].[DWCategories].[Name] = 'Shipment Partner Addresses' WHERE [dbo].[DWCategories].[Code] = 'PartnerAddresses'	  
 		  End
 
 
@@ -142,10 +142,10 @@ ELSE      Begin
 IF not EXISTS(SELECT 1 FROM [dbo].[DWCategories] 
           WHERE Code = 'PartnerContacts')
 		  Begin  
-				INSERT INTO [dbo].[DWCategories] ([Code],[Name],[Index]) VALUES('PartnerContacts','Partner Contacts',130)
+				INSERT INTO [dbo].[DWCategories] ([Code],[Name],[Index]) VALUES('PartnerContacts','Shipment Partner Contacts',130)
 		  End
 ELSE      Begin 
-				UPDATE [dbo].[DWCategories] Set [dbo].[DWCategories].[Index] = 130 WHERE [dbo].[DWCategories].[Code] = 'PartnerContacts'	  
+				UPDATE [dbo].[DWCategories] Set [dbo].[DWCategories].[Index] = 130, [dbo].[DWCategories].[Name] = 'Shipment Partner Contacts' WHERE [dbo].[DWCategories].[Code] = 'PartnerContacts'	  
 		  End
 
 
