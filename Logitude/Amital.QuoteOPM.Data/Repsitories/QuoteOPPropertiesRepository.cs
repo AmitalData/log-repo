@@ -1,4 +1,4 @@
- 
+
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -12,16 +12,18 @@ using Simplog.Server.Infrastructure;
 
 namespace Amital.QuoteOPM.Data.Repsitories
 {
-   public partial class QuoteOPPropertiesRepository:IRepository<QuoteOPProperties>
-   {
-        
-		public List<QuoteOPProperties> GetMulti(EntityKeyFields entityKeys)
+    public partial class QuoteOPPropertiesRepository : IRepository<QuoteOPProperties>
+    {
+
+        public List<QuoteOPProperties> GetMulti(EntityKeyFields entityKeys)
         {
-            
-			throw new NotImplementedException();
+            QuoteOPKeys quoteOPKeys = entityKeys as QuoteOPKeys;
+            return (from a in context.QuoteOPPropertiess
+                    where a.QuoteID == quoteOPKeys.Id
+                    select a).ToList();
+
         }
 
-   }
+    }
 
 }
-   

@@ -1,8 +1,11 @@
-import { ChangeDetectorRef, Component, EventEmitter, Input, Output, SimpleChanges, ViewChild } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
+import { ChangeDetectorRef, Component, EventEmitter, HostListener, Inject, Input, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { AbstractControl, FormGroup } from '@angular/forms';
 import { GenericTableColumn } from 'Customs/Components/generic-table/generic-table.component';
 import { GenericTableService } from 'Customs/Components/generic-table/generic-table.service';
+import { ApiQueryFilters } from 'Infrastructure/DataContracts/ApiQueryFilters';
 import { AutoComplete } from 'primeng/autocomplete';
+import { DynamicDialogRef } from 'primeng/dynamicdialog';
 import { take } from 'rxjs/operators';
 // import { Subscription } from 'rxjs';
 
@@ -12,16 +15,22 @@ import { take } from 'rxjs/operators';
   styleUrls: ['./autocomplate-table.component.scss']
 })
 export class AutocomplateTableComponent {
-  @Input() formGroup: FormGroup = null as any;
+  @ViewChild('autoComplete') autoComplete: AutoComplete = null as any;
 
-  @Input() label: string = '';
+  @Input() formGroup: FormGroup = null as any;
+  @Input() label: any = '';
   @Input() fieldShow: string = '';
+  @Input() placeholder: string = '';
+  @Input() disabled: boolean = false;
   @Input() controlName: string = '';
   @Input() data: any[] = []
+  @Input() columnsFilter: string[] = []
   @Input() searchIcon: boolean = false;
-  @Input() dropIcon: boolean= false;
-  @ViewChild('autoComplete') autoComplete: AutoComplete = null as any;
-   @Input() set columnsShow(columns: any[]) {
+  @Input() dropIcon: boolean = false;
+  @Input() virtualScroll: boolean = false;
+  @Input() itemSize: number = 26;
+  @Input() getDataFunc: (filter: ApiQueryFilters) => Promise<any[]> = null as any;
+  @Input() set columnsShow(columns: any) {
     this.initColumns(columns);
   }
   @Output() onSelect = new EventEmitter()
@@ -30,30 +39,43 @@ export class AutocomplateTableComponent {
   columnsNames: string[] = [];
   columnsHeader: any = [];
   selectedChoice: any;
+  rowTake = 200;
+  index: number = 0;
+  isGetAll: boolean = false;
+  filterVal: string = ''
 
   constructor(
+    @Inject(DOCUMENT) private document: any,
     private genericTableService: GenericTableService,
-  ) {}
+  ) { }
 
-  // subscribeRef: Subscription = null as any;
+  ngOnInit() {
+    if (this.data.length && !this.columnsNames.length)
+      this.columnsShow = Object.keys(this.data[0]);
+  }
 
-  // constructor(private cdref: ChangeDetectorRef){}
+  async getDataFromFunc() {
+    const filters: ApiQueryFilters = new ApiQueryFilters()
+    filters.PageIndex = this.index;
+    filters.PageSize = this.rowTake;
 
-  // ngOnDestroy() {
-  //   this.subscribeRef?.unsubscribe()
-  // }
+    if (this.filterVal)
+      (this.columnsFilter?.length ? this.columnsFilter : this.columnsNames)
+        .forEach(col => filters.addAdditionalFilter(col, this.filterVal, null, null, "Contains", false, false, false, "Text", false, false));
 
-  // ngOnChanges(changes: SimpleChanges) {
-  //   if (this.formGroup && !this.subscribeRef) 
-  //     this.subscribeCtrl();
-  // }
+    const data = await this.getDataFunc(filters)
+    this.isGetAll = data.length !== this.rowTake;
 
-  // private subscribeCtrl() {
-  //   this.subscribeRef = this.formGroup.controls[this.controlName].valueChanges.subscribe(val=> {
-  //     this.selectedChoice = val
-  //     this.cdref.detectChanges();
-  //   })
-  // }
+    this.selected = this.index === 0 ? data : this.selected.concat(data)
+
+    if (this.selected.length && !this.columnsNames.length)
+      this.columnsShow = Object.keys(this.selected[0]);
+  }
+
+  initialData() {
+    this.isGetAll = false;
+    this.selected = [];
+  }
 
   private initColumns(columns: any[]) {
     if (typeof columns[0] === 'string') {
@@ -66,17 +88,30 @@ export class AutocomplateTableComponent {
   }
 
   search(event: any) {
+    if (this.getDataFunc !== null) {
+      this.filterVal = event.query;
+      this.isGetAll = false;
+      this.index = 0;
+      this.getDataFromFunc();
+      return;
+    }
+
     this.selected = this.data?.filter(this.searchValueInObject(event.query, this.columnsNames));
     this.selected.unshift(this.columnsHeader);
   }
 
   async openSearchDialog() {
-    const columns: GenericTableColumn[] = Object.keys(this.columnsHeader).map(columnsName => { return { name: columnsName , alias: this.columnsHeader[columnsName] } }) 
+    const columns: GenericTableColumn[] = Object.keys(this.columnsHeader).map(columnsName => { return { name: columnsName, alias: this.columnsHeader[columnsName] } })
     // const recordSelected: any = await this.genericTableService.open(this.data, this.label, columns).onClose.toPromise()
-    const recordSelected: any = await new Promise<any>((resolve) => 
-      this.genericTableService.open(this.data, this.label, columns).onClose.pipe(take(1)).subscribe(x=>resolve(x)));      
-    
-      this.formGroup.controls[this.controlName].setValue(recordSelected)
+    const recordSelected: any = await new Promise<any>(async (resolve) => {
+      const dialogRef: DynamicDialogRef = !!this.getDataFunc ?
+        await this.genericTableService.openByApiOpenQuoeryFilter(this.getDataFunc, this.label, this.columnsFilter, columns) :
+        this.genericTableService.open(this.data, this.label, columns);
+
+      dialogRef.onClose.pipe(take(1)).subscribe(x => resolve(x));
+    });
+
+    this.formGroup.controls[this.controlName].setValue(recordSelected)
   }
 
   onSelected(val: any) {
@@ -104,5 +139,25 @@ export class AutocomplateTableComponent {
     const obj: any = {};
     arr.forEach(x => { obj[x] = x })
     return obj;
+  }
+
+  ngDoCheck() {
+    if (!!this.getDataFunc)
+      this.getNewData()
+  }
+
+  getNewData() {
+    const elms: HTMLCollection = this.document.getElementsByClassName('cdk-virtual-scroll-content-wrapper');
+    if (!elms.length) return;
+    const div: HTMLDivElement = elms[0] as HTMLDivElement;
+    const transform: string = div.style.transform;
+    const px: number = + transform.substring(transform.indexOf('(') + 1, transform.length - 3)
+    if (!px) return;
+    const rowIndex = px / this.itemSize + 10;
+
+    if (50 + this.index * rowIndex < rowIndex) {
+      this.index++;
+      this.getDataFromFunc();
+    }
   }
 }

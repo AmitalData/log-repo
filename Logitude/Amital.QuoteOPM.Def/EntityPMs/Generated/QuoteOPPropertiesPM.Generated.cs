@@ -112,25 +112,25 @@ namespace Amital.QuoteOPM.Def.EntityPMs
 			
 		 }
 	   }
-	  private int order ;
+	  private int indexOrder ;
 	  	  
        
 	   [CustomValidation(typeof(QuoteOPMValidationClass), "ValidateClass")]
 	   [DataMember]
-       public int Order  
+       public int IndexOrder  
 	   {
 	    
 	     get
 		{
-		   return order;
+		   return indexOrder;
 		 }
 		 set
 		 {
-		   if(order != value)
+		   if(indexOrder != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Order",OldValue=order,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IndexOrder",OldValue=indexOrder,NewValue=value,PropertyType="int"};
 		    NotifyPropertyChanged(values);
-		   order=value;
+		   indexOrder=value;
 		   }
 			
 		 }

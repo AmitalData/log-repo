@@ -1,9 +1,11 @@
-<div [formGroup]='addressForm'>
+<hr>
+
+<div [formGroup]='addressForm' class="form">
     <p-checkbox formControlName='include' [binary]="true"
         [label]='"QuoteOP.O.NewQuote.Include" + capitalizeType | TextCodeTranslationPipe'></p-checkbox>        
-    <div [hidden]='!addressForm.controls.include.value' class='contianer'>
-        <div [hidden]='AddressList.length'>
-            <h5>{{"QuoteOP.S.NewQuote.Address" + capitalizeType | TextCodeTranslationPipe}}</h5>
+    <div [hidden]='!addressForm.controls.include.value'>
+        <div [hidden]='AddressList.length' class='container'>
+            <h5 class="text-style">{{"QuoteOP.S.NewQuote." + capitalizeType + "Address" | TextCodeTranslationPipe}}</h5>
             <div class="p-fluid">
                 <div class="p-field">
                     <label [for]="type + 'ZipCode'">{{"QuoteOP.S.NewQuote.ZipCode" | TextCodeTranslationPipe}}</label>

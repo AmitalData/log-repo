@@ -22,6 +22,7 @@ import { Observable } from 'rxjs';
 import { filter, take } from 'rxjs/operators';
 import { ShipmentTypeList } from 'Shipment/EntityLists/ShipmentTypeList';
 import { ShipmentTypeListService } from 'Shipment/Services/StandardLists/ShipmentTypeListService';
+import { PackageTypeList } from 'Common/EntityLists/PackageTypeList';
 
 declare const window: any;
 
@@ -86,15 +87,28 @@ export class NewQuoteDataService {
         .subscribe((resp: any) => resolve(resp.Result));
     });
   }
+    async getPackageTypeTable(): Promise<PackageTypeList[]> {
+        const filters = new ApiQueryFilters();
+        //filters.addAdditionalFilter('InActive', false, null, null, "Equals", false, false, false, null, false, false);
+        filters.SortDirection = "Ascending";
+        // filters.PageIndex = 0;
+        // filters.PageSize = 50;
+        filters.GetAll = true;
+        return new Promise<PackageTypeList[]>(async (resolve, reject) => {
+            const resService: any = await this.entityListService.getByFilters('PackageType', filters).then();
 
+            resService.pipe(filterIsNotNull(), take(1))
+                .subscribe((resp: any) => resolve(resp.Result));
+        });
+    }
   async getPorts(directionId: string, transportModed: string): Promise<Port[]> {
     const res: ServiceResponse = await this.newQuoteOPWebService.GetPortsItemsList(directionId, transportModed, '', 1000000, false).toPromise();
     return res.Result as Port[];
   }
 
-  async getCarrierses(directionId: string, transportModed: string): Promise<Carrier[]> {
-    const res: ServiceResponse = await this.newQuoteOPWebService.GetCarriersItemsList(directionId, transportModed, '', 1000000, false).toPromise();
-    return res.Result as Carrier[];
+  async getCarrierses(directionId: string, transportModed: string, filter: ApiQueryFilters): Promise<Carrier[]> {
+    const res: ServiceResponse = await this.newQuoteOPWebService.GetCarriersItemsList(directionId, transportModed, filter).toPromise();
+    return res.Result.body as Carrier[];
   }
 
   async getSpecialServices(directionId: string, transportModed: string): Promise<SpecialService[]> {
@@ -167,7 +181,7 @@ export class NewQuoteDataService {
 
   creatingNewQuote(entityPM: QuoteOPPM): Promise<any> {
     return new Promise<any>((resolve, reject) => {
-      new QuoteOPPMService().insert(entityPM, false)
+      new QuoteOPPMService().insert(entityPM)
         .pipe(filterIsNotNull(), take(1))
         .subscribe((myResponse: ServiceResponse) => {
           if (myResponse.HasError)

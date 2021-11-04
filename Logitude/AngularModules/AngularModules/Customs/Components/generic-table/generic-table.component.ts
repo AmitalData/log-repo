@@ -17,10 +17,10 @@ export class GenericTableComponent implements OnInit {
   columnsNames: string[] = [];
   rows: number = 100;
   lazy: boolean = false;
-  first = 0;
   sortField: string = ''
   sortOrder: number = 1;
   filterVal: string = '';
+  allRowGet: boolean = false;
 
   constructor(
     private config: DynamicDialogConfig,
@@ -41,16 +41,15 @@ export class GenericTableComponent implements OnInit {
   }
 
   async loadLazy(e: LazyLoadEvent) {
-    // console.log('loadLazy',e )
-    this.addDataFromFunc(e.first as number);
+    this.addDataFromFunc(e.rows - this.config.data.rowTake);
   }
 
   filterTable(val: string) {
     this.filterVal = val
 
     if (this.config.data.getData) {
-      this.table.clearCache()
-      this.data = Array.from({ length: 100 });;
+      this.data = Array.from({ length: this.config.data.rowTake });
+      this.allRowGet = false;
       this.addDataFromFunc(0);
     } else
       this.table.filterGlobal(val, 'contains')
@@ -58,21 +57,30 @@ export class GenericTableComponent implements OnInit {
 
   async onSort(e: SortEvent) {
     if (!this.lazy) return;
-
+        
+    this.allRowGet = false;
     this.sortField = e.field as string;
-    this.sortOrder = e.order as number
-    this.table.clearCache()
-    this.data = Array.from({ length: 100 });
+    this.sortOrder = e.order as number    
+    this.data = Array.from({ length: this.config.data.rowTake });
     this.addDataFromFunc(0);
   }
 
   async addDataFromFunc(index: number) {
-    let loadedData: any[] = await this.config.data.getData(this.filterVal, index, this.sortField, this.sortOrder);
-    Array.prototype.splice.apply(this.data, [index, 100, ...loadedData]);
-    Array.prototype.splice.apply(this.data, [index + 100, 0, ...Array.from({ length: 100 })]);
+    if(this.allRowGet) return;
+
+    const loadedData: any[] = await this.config.data.getData(this.filterVal, index / this.config.data.rowTake, this.sortField, this.sortOrder);
+
+    Array.prototype.splice.apply(this.data, [index, this.config.data.rowTake, ...loadedData]);
+    Array.prototype.splice.apply(this.data, [index + this.config.data.rowTake, 0, ...Array.from({ length: this.config.data.rowTake })]);
     this.data = [...this.data]
+
+    this.allRowGet = loadedData.length !== this.config.data.rowTake;
+    if(this.allRowGet) {
+      const rowsHave: number = index + loadedData.length;
+      Array.prototype.splice.apply(this.data, [rowsHave, this.data.length - rowsHave]);
+    }
   }
-  
+
   onSelectedRow(e: any) {
     this.dialogRef.close(e)
   }

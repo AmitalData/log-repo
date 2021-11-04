@@ -113,8 +113,11 @@ namespace Logitude.Customs.BL.Messaging.U2L.DeclarationDocuments
                                 var myCustomsDocumentPointerPMListforDec = myCustomsDocumentPointerPMList.Where(o => o.ParentEntityCode == "Declaration" && o.ParentEntityId == _MyDeclarationPM.Id);
                                 if(myCustomsDocumentPointerPMListforDec != null && myCustomsDocumentPointerPMListforDec.Count() > 0)
                                 {
-                                    var updateDocumentStatuscodeService = new UpdateDocumentStatuscodeService();
-                                    updateDocumentStatuscodeService.UpdateDocumentStatuscode(this._MyDeclarationPM, DateTime.MinValue);
+                                    if (this._MyDeclarationPM.IsCourierDeclaration)
+                                    {
+                                        var updateDocumentStatuscodeService = new UpdateDocumentStatuscodeService();
+                                        updateDocumentStatuscodeService.UpdateDocumentStatuscode(this._MyDeclarationPM, DateTime.MinValue, false);
+                                    }
                                     throw new BusinessErrorException("Ticket already Exist for this Document");
                                 }
                             }
@@ -259,6 +262,13 @@ namespace Logitude.Customs.BL.Messaging.U2L.DeclarationDocuments
             {
                 AppendLogLine($"this._LogitudeDocs.COM_ID is null nothing done ");
             }
+            if (this._MyDeclarationPM.IsCourierDeclaration)
+            {
+                var updateDocumentStatuscodeService = new UpdateDocumentStatuscodeService();
+                updateDocumentStatuscodeService.UpdateDocumentStatuscode(this._MyDeclarationPM, DateTime.MinValue, false);
+
+            }
+
             DeclarationUpdateService DeclarationUpdateService = new DeclarationUpdateService(dbContext, new Dictionary<string, IContext>(), ResolvedTenant());
             this._MyDeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
             this._MyDeclarationPM.MarkAsChanged = true;
@@ -367,9 +377,11 @@ namespace Logitude.Customs.BL.Messaging.U2L.DeclarationDocuments
         {
             throw new NotImplementedException();
         }
+
     
     }
 
+    
     public class UpdateDocumentStatuscodeService
     {
         public bool ConnectedAfterSend_Need2UpdateDocumentStatuscode(DeclarationPM declarationPM, DocumentsFilingPM _DocumentsFilingPM)
@@ -390,7 +402,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.DeclarationDocuments
 
         }
 
-        public  void UpdateDocumentStatuscode(DeclarationPM connectedDeclarationPM, DateTime stopLogAt)
+        public void UpdateDocumentStatuscode(DeclarationPM connectedDeclarationPM, DateTime stopLogAt, bool newTrans)
         {
 
             ICustomContext context = CustomContext.GetContext(connectedDeclarationPM.Tenant);
@@ -406,7 +418,9 @@ namespace Logitude.Customs.BL.Messaging.U2L.DeclarationDocuments
                 {
                     LogMessagingUtil.Instance.AppendLine($"currentDeclarationCourierStatusPM.DocumentStatusCode: {currentDeclarationCourierStatusPM.DocumentStatusCode}  change 2 V");
                     LogitudeSettings.HandleLogMe($"currentDeclarationCourierStatusPM.DocumentStatusCode: {currentDeclarationCourierStatusPM.DocumentStatusCode}  change 2 V", false, "CreateUD2LTService", stopLogAt);
-                    using (var trans = TransactionFactory.GetNewTransaction())
+                    using (var trans =
+                        newTrans ? TransactionFactory.GetNewTransaction() : TransactionFactory.GetTransaction()
+                        )
                     {
                         DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(context, new Dictionary<string, IContext>(), connectedDeclarationPM.Tenant);
                         currentDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;

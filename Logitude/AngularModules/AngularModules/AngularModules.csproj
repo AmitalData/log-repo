@@ -374,8 +374,20 @@
     <Content Include="QuoteOPM\Components\Helpers\QuoteOPHelperComponent.html" />
     <Content Include="QuoteOPM\Components\MenuButtons\ApproveBuildShipmentComponent.html" />
     <Content Include="QuoteOPM\Components\MenuButtons\QuoteEventNotesComponent.html" />
+    <Content Include="QuoteOPM\Components\NewEntity\components\address-textarea\address-textarea.component.html" />
+    <Content Include="QuoteOPM\Components\NewEntity\components\autocomplate-table\autocomplate-table.component.html" />
+    <Content Include="QuoteOPM\Components\NewEntity\components\new-quote-consignee\new-quote-consignee.component.html" />
+    <Content Include="QuoteOPM\Components\NewEntity\components\new-quote-delivery\new-quote-delivery.component.html" />
+    <Content Include="QuoteOPM\Components\NewEntity\components\new-quote-expected-order\new-quote-expected-order.component.html" />
+    <Content Include="QuoteOPM\Components\NewEntity\components\new-quote-general\new-quote-general.component.html" />
+    <Content Include="QuoteOPM\Components\NewEntity\components\new-quote-left-side\new-quote-left-side.component.html" />
+    <Content Include="QuoteOPM\Components\NewEntity\components\new-quote-my-customers\new-quote-my-customers.component.html" />
+    <Content Include="QuoteOPM\Components\NewEntity\components\new-quote-pickup\new-quote-pickup.component.html" />
+    <Content Include="QuoteOPM\Components\NewEntity\components\new-quote-properties\new-quote-properties.component.html" />
+    <Content Include="QuoteOPM\Components\NewEntity\components\new-quote-shipper\new-quote-shipper.component.html" />
     <Content Include="QuoteOPM\Components\NewEntity\NewQuoteAddEditDimensionsComponent.html" />
     <Content Include="QuoteOPM\Components\NewEntity\NewQuoteComponent.html" />
+    <Content Include="QuoteOPM\Components\NewEntity\NewQuoteComponent.old.html" />
     <Content Include="QuoteOPM\Components\NewEntity\QuoteDimensionsComponent.html" />
     <Content Include="QuoteOPM\Components\Shared\QuoteSaleCurrencyTypeComponent.html" />
     <Content Include="QuoteOPM\Components\ShortTitles\QuoteOPShortTitleComponent.html" />
@@ -4800,9 +4812,36 @@
     <TypeScriptCompile Include="QuoteOPM\Components\MenuButtons\ApproveBuildShipmentComponent.ts" />
     <TypeScriptCompile Include="QuoteOPM\Components\MenuButtons\QuoteEventNotesComponent.ts" />
     <TypeScriptCompile Include="QuoteOPM\Components\MenuButtons\QuoteOPMenuButtonsHandler.ts" />
+    <TypeScriptCompile Include="QuoteOPM\Components\NewEntity\components\address-textarea\address-textarea.component.spec.ts" />
+    <TypeScriptCompile Include="QuoteOPM\Components\NewEntity\components\address-textarea\address-textarea.component.ts" />
+    <TypeScriptCompile Include="QuoteOPM\Components\NewEntity\components\autocomplate-table\autocomplate-table.component.spec.ts" />
+    <TypeScriptCompile Include="QuoteOPM\Components\NewEntity\components\autocomplate-table\autocomplate-table.component.ts" />
+    <TypeScriptCompile Include="QuoteOPM\Components\NewEntity\components\btn-menu-plus\btn-menu-plus.component.spec.ts" />
+    <TypeScriptCompile Include="QuoteOPM\Components\NewEntity\components\btn-menu-plus\btn-menu-plus.component.ts" />
+    <TypeScriptCompile Include="QuoteOPM\Components\NewEntity\components\new-quote-consignee\new-quote-consignee.component.spec.ts" />
+    <TypeScriptCompile Include="QuoteOPM\Components\NewEntity\components\new-quote-consignee\new-quote-consignee.component.ts" />
+    <TypeScriptCompile Include="QuoteOPM\Components\NewEntity\components\new-quote-delivery\new-quote-delivery.component.spec.ts" />
+    <TypeScriptCompile Include="QuoteOPM\Components\NewEntity\components\new-quote-delivery\new-quote-delivery.component.ts" />
+    <TypeScriptCompile Include="QuoteOPM\Components\NewEntity\components\new-quote-expected-order\new-quote-expected-order.component.spec.ts" />
+    <TypeScriptCompile Include="QuoteOPM\Components\NewEntity\components\new-quote-expected-order\new-quote-expected-order.component.ts" />
+    <TypeScriptCompile Include="QuoteOPM\Components\NewEntity\components\new-quote-general\new-quote-general.component.spec.ts" />
+    <TypeScriptCompile Include="QuoteOPM\Components\NewEntity\components\new-quote-general\new-quote-general.component.ts" />
+    <TypeScriptCompile Include="QuoteOPM\Components\NewEntity\components\new-quote-left-side\new-quote-left-side.component.spec.ts" />
+    <TypeScriptCompile Include="QuoteOPM\Components\NewEntity\components\new-quote-left-side\new-quote-left-side.component.ts" />
+    <TypeScriptCompile Include="QuoteOPM\Components\NewEntity\components\new-quote-my-customers\new-quote-my-customers.component.spec.ts" />
+    <TypeScriptCompile Include="QuoteOPM\Components\NewEntity\components\new-quote-my-customers\new-quote-my-customers.component.ts" />
+    <TypeScriptCompile Include="QuoteOPM\Components\NewEntity\components\new-quote-pickup\new-quote-pickup.component.spec.ts" />
+    <TypeScriptCompile Include="QuoteOPM\Components\NewEntity\components\new-quote-pickup\new-quote-pickup.component.ts" />
+    <TypeScriptCompile Include="QuoteOPM\Components\NewEntity\components\new-quote-properties\new-quote-properties.component.spec.ts" />
+    <TypeScriptCompile Include="QuoteOPM\Components\NewEntity\components\new-quote-properties\new-quote-properties.component.ts" />
+    <TypeScriptCompile Include="QuoteOPM\Components\NewEntity\components\new-quote-shipper\new-quote-shipper.component.spec.ts" />
+    <TypeScriptCompile Include="QuoteOPM\Components\NewEntity\components\new-quote-shipper\new-quote-shipper.component.ts" />
     <TypeScriptCompile Include="QuoteOPM\Components\NewEntity\NewQuoteAddEditDimensionsComponent.ts" />
+    <TypeScriptCompile Include="QuoteOPM\Components\NewEntity\NewQuoteComponent.old.ts" />
     <TypeScriptCompile Include="QuoteOPM\Components\NewEntity\NewQuoteComponent.ts" />
     <TypeScriptCompile Include="QuoteOPM\Components\NewEntity\QuoteDimensionsComponent.ts" />
+    <TypeScriptCompile Include="QuoteOPM\Components\NewEntity\Services\new-quote-data\new-quote-data.service.spec.ts" />
+    <TypeScriptCompile Include="QuoteOPM\Components\NewEntity\Services\new-quote-data\new-quote-data.service.ts" />
     <TypeScriptCompile Include="QuoteOPM\Components\Shared\QuoteSaleCurrencyTypeComponent.ts" />
     <TypeScriptCompile Include="QuoteOPM\Components\ShortTitles\QuoteOPShortTitleComponent.ts" />
     <TypeScriptCompile Include="QuoteOPM\Components\Templates\FieldTemplateComponent.ts" />
@@ -8875,6 +8914,22 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="cypress\fixtures\pdf-test.pdf" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="QuoteOPM\Components\NewEntity\components\address-textarea\address-textarea.component.scss" />
+    <Content Include="QuoteOPM\Components\NewEntity\components\autocomplate-table\autocomplate-table.component.scss" />
+    <Content Include="QuoteOPM\Components\NewEntity\components\new-quote-consignee\new-quote-consignee.component.scss" />
+    <Content Include="QuoteOPM\Components\NewEntity\components\new-quote-delivery\new-quote-delivery.component.scss" />
+    <Content Include="QuoteOPM\Components\NewEntity\components\new-quote-expected-order\new-quote-expected-order.component.scss" />
+    <Content Include="QuoteOPM\Components\NewEntity\components\new-quote-general\new-quote-general.component.scss" />
+    <Content Include="QuoteOPM\Components\NewEntity\components\new-quote-left-side\new-quote-left-side.component.scss" />
+    <Content Include="QuoteOPM\Components\NewEntity\components\new-quote-my-customers\new-quote-my-customers.component.scss" />
+    <Content Include="QuoteOPM\Components\NewEntity\components\new-quote-pickup\new-quote-pickup.component.scss" />
+    <Content Include="QuoteOPM\Components\NewEntity\components\new-quote-properties\new-quote-properties.component.scss" />
+    <Content Include="QuoteOPM\Components\NewEntity\components\new-quote-shipper\new-quote-shipper.component.scss" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="QuoteOPM\Components\NewEntity\NewQuoteComponent.scss" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">12.0</VisualStudioVersion>

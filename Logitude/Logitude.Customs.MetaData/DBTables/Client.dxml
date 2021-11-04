@@ -239,4 +239,7 @@
     ReferencedTable="FacilitationTypes"
     ReferencedColumn="Code"
     ReferencedTableSchema="Customs" />
+
+	<Index
+    Columns="Code" />
 </Table>

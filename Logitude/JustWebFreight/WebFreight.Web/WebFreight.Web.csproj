@@ -1085,6 +1085,8 @@
     <Compile Include="Controllers\CargoTrackingModel\CargoTrackingBrandingController.cs" />
     <Compile Include="Controllers\QuoteOPMModel\Generated\ListControllers\OPSpecialServicesTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\QuoteOPMModel\Generated\ListControllers\QuoteOPPropertiesViewsController.Generated.cs" />
+    <Compile Include="Controllers\QuoteOPMModel\Generated\ListControllers\QuoteOPStageViewsController.Generated.cs" />
+    <Compile Include="Controllers\QuoteOPMModel\Generated\ListControllers\QuoteOPTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\QuoteOPMModel\Generated\ListControllers\QuoteOPViewsController.Generated.cs" />
     <Compile Include="Controllers\QuoteOPMModel\Generated\PMControllers\OPSpecialServicesTypeController.Generated.cs" />
     <Compile Include="Controllers\QuoteOPMModel\Generated\PMControllers\QuoteOPController.Generated.cs" />

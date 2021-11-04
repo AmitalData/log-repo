@@ -700,7 +700,7 @@ export class QuotesComponent extends BaseComponent {
         var args = new NewQuoteComponentArgs();
         var logWindow = new LogitudeWindow();
         //logWindow.RTL = false;
-        logWindow.Width = oldWizard ? 1200 : 1100;
+        logWindow.Width = oldWizard ? 1200 : 975;
         logWindow.Height = 800;
         logWindow.WindowArgs = args;
         logWindow.Title = TextCodeTranslator.Translate("Quote.S.NewQuote.CreateNewQuote");

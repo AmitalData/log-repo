@@ -31,7 +31,7 @@ namespace Amital.QuoteOPM.Data.EntityMapping
 
             this.Property(t => t.QuoteID).HasColumnName("QuoteID").HasMaxLength(15).IsUnicode(false);
 
-            this.Property(t => t.Order).HasColumnName("Order");
+            this.Property(t => t.IndexOrder).HasColumnName("IndexOrder");
 
             this.Property(t => t.FromPortId).HasColumnName("FromPortId").HasMaxLength(15).IsUnicode(false);
 

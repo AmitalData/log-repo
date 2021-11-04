@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, Input, OnInit, SimpleChanges } from '@angular/core';
-import { FormGroup, FormControl, AbstractControl } from '@angular/forms';
+import { FormGroup, FormControl, AbstractControl, Validators, ValidationErrors, ValidatorFn } from '@angular/forms';
 import { AddressList } from 'Common/EntityLists/AddressList';
 import { CardList } from 'Common/EntityLists/CardList';
 import { CountryCityList } from 'Common/EntityLists/CountryCityList';
@@ -63,6 +63,7 @@ export class NewQuoteAddressComponent implements OnInit {
     this.addForm()
     this.subscribeCtrls();
     this.initDefaultValue()
+    this.setvalidatorToCityAndCountry()
   }
 
   private async InitCountries() {
@@ -78,23 +79,21 @@ export class NewQuoteAddressComponent implements OnInit {
     this.cardList = await this.newQuoteDataService.getCardsTable();
   }
 
-  // ngOnChanges(changes: SimpleChanges) {
-  //   if (!this.propertyForm.contains(this.type)) {
-
-  //   }
-  // }
-
   addForm() {
     this.propertyForm.addControl(this.type, this.addressForm)
   }
 
   subscribeCtrls() {
+    this.addressForm.controls.include.valueChanges.subscribe(() => this.setvalidatorToCityAndCountry());
+
     this.addressForm.controls.address.valueChanges.subscribe((addressId: AddressList) => {
       this.Address = this.AddressList.find(x => x == addressId)
       this.cdr.detectChanges()
     });
 
     this.partnerCtrl.valueChanges.subscribe(async (partner: CardList) => {
+      this.setvalidatorToCityAndCountry();
+
       if (partner) 
         await this.initPartnerData(partner);
       else {
@@ -103,6 +102,14 @@ export class NewQuoteAddressComponent implements OnInit {
         this.addressForm.controls.address.setValue(null)
       }
     });
+  }
+
+  private setvalidatorToCityAndCountry() {
+    const validator: ValidatorFn | null = !this.partnerCtrl.value && this.addressForm.controls.include.value ? Validators.required : null;
+    this.addressForm.controls.city.setValidators(validator);
+    this.addressForm.controls.city.updateValueAndValidity();
+    this.addressForm.controls.country.setValidators(validator);
+    this.addressForm.controls.country.updateValueAndValidity();
   }
 
   private async initPartnerData(partner: CardList) {

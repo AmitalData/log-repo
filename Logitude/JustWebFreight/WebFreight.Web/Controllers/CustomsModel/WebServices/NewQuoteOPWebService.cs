@@ -5,6 +5,8 @@ using Logitude.CustomsMessaging.Common.ResponseData;
 using Logitude.CustomsMessaging.MessagingServices;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Server.Infrastructure.DataContracts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,10 +14,13 @@ using System.Net;
 using System.Net.Http;
 using System.Web;
 using System.Web.Http;
+using System.Web.Script.Serialization;
+using Unifreight.BL.EntityQueryServices;
 using Unifreight.Data.AmitalModel;
 using Unifreight.Data.AmitalModel.Repsitories;
 using WebFreight.Web.CustomWebServices;
 using WebFreight.Web.Helpers;
+using Unifreight.BL.BL;
 
 namespace WebFreight.Web.Controllers.CustomsModel.WebServices
 {
@@ -89,7 +94,8 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
             }
         }
 
-        public HttpResponseMessage GetCarriersItemsList(string DIRECTIONID, string TRANSPORTMODEID, string search, int top, bool searchNULLVendor = true)
+        [HttpGet]
+        public HttpResponseMessage GetCarriersItemsList(string DIRECTIONID, string TRANSPORTMODEID, [FromUri] ApiQueryFilters filters)
         {
             try
             {
@@ -97,97 +103,52 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
 
-                if (search != null && (search.ToLower() == "undefined" || search.ToLower() == "null"))
+                QueryOperations queryOperations = new QueryOperations()
                 {
-                    search = null;
-                }
-
-                CustomsSettingQueryService settingService = new CustomsSettingQueryService(tenant);
-                CustomsSettingPM setting = settingService.GetSettingByTenantN(tenant);
-
-                if (setting.IsConnectedToUniFreight)
+                    PageIndex = filters.PageIndex,
+                    PageSize = filters.PageSize,
+                    SortDirectin = filters.SortDirection,
+                    SortByColumnName = filters.SortBy,
+                    
+                };
+                List<ObjectField> objectFields = new List<ObjectField>
                 {
+                    new ObjectField() { FieldName = "Name",DataTypeCode="Text" },
+                    new ObjectField() { FieldName = "AIRLINE_ID",DataTypeCode="Text" },
+                    new ObjectField() { FieldName = "VENDOR_ID",DataTypeCode="Text" },
+                    new ObjectField() { FieldName = "Prefix",DataTypeCode="Text" }
+                };
+                if (!string.IsNullOrEmpty(filters.AdditionalFilters))
+                {
+                    JavaScriptSerializer JsonConvert = new JavaScriptSerializer();
+                    var filters_list = JsonConvert.Deserialize<List<QueryFilterItem>>(filters.AdditionalFilters);
 
-                    if (DIRECTIONID == "E" && TRANSPORTMODEID == "A")
+                    foreach (QueryFilterItem filter in filters_list)
                     {
-                        var ETBAIRLINERepo = new ETBAIRLINERepository(GetAmitalContext(tenant));
-                        var ETBAIRLINEquery =
-                         ETBAIRLINERepo
-                            .GetAll().Select(o => new
-                            {
-                                Name = o.NAMEENG,
-                                AIRLINE_ID = o.AIRLINEID,
-                                Prefix = o.AIRLINENUM,
-                            })
-                        ;
-                        ETBAIRLINEquery = ETBAIRLINEquery.Distinct();
-                        ETBAIRLINEquery = ETBAIRLINEquery.Take(top);
+                        ObjectField field = objectFields.FirstOrDefault(f => f.FieldName == filter.FieldName);
+                        if (field != null)
+                        {
+                            string valuestring1 = filter.FieldValue != null ? filter.FieldValue.ToString() : null;
+                            object value1 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring1);
 
-                        var ETBAIRLINEList = ETBAIRLINEquery.ToList();
-                        return Request.CreateResponse(HttpStatusCode.OK, ETBAIRLINEList);
+                            string valuestring2 = filter.FieldValue2 != null ? filter.FieldValue2.ToString() : null;
+                            object value2 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring2);
+
+                            //queryOperations.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList);
+                            queryOperations.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList, field.IsCustom, field.DataTypeCode);
+
+                        }
+                        else
+                        {
+                            queryOperations.SetFilter(filter.FieldName, filter.FieldValue, filter.IsCustom, filter.Operator, filter.FieldValue2, filter.DisplayInList);
+                        }
                     }
-                    if (DIRECTIONID == "E" && TRANSPORTMODEID == "O")
-                    {
-
-
-                        var MTBCARRRepo = new MTBCARRRepository(GetAmitalContext(tenant));
-                        var MTBCARRquery =
-                         MTBCARRRepo
-                            .GetAll().Select(o => new
-                            {
-                                Name = o.NAMEENG,
-                                AIRLINE_ID = o.AIRLINEID,
-                                Prefix = "",
-                            })
-                        ;
-                        MTBCARRquery = MTBCARRquery.Distinct();
-                        MTBCARRquery = MTBCARRquery.Take(top);
-
-                        var MTBCARRList = MTBCARRquery.ToList();
-                        return Request.CreateResponse(HttpStatusCode.OK, MTBCARRList);
-                    }
-                    if (DIRECTIONID == "I" && TRANSPORTMODEID == "A")
-                    {
-
-                        var ETBVENDRepo = new ETBVENDRepository(GetAmitalContext(tenant));
-                        var ETBVENDquery =
-                         ETBVENDRepo
-                            .GetAll().Where(a => a.ISHANDAGNT == "A").Select(o => new
-                            {
-                                Name = o.NAMEENG,
-                                VENDOR_ID = o.VENDORID,
-                                Prefix = o.VENDORPREFIX,
-                            })
-                        ;
-                        ETBVENDquery = ETBVENDquery.Distinct();
-                        ETBVENDquery = ETBVENDquery.Take(top);
-
-                        var ETBVENDList = ETBVENDquery.ToList();
-                        return Request.CreateResponse(HttpStatusCode.OK, ETBVENDList);
-                    }
-                    if (DIRECTIONID == "I" && TRANSPORTMODEID == "O")
-                    {
-
-                        var ETBVENDRepo2 = new ETBVENDRepository(GetAmitalContext(tenant));
-                        var ETBVENDquery2 =
-                         ETBVENDRepo2
-                            .GetAll().Where(a => a.ISHANDAGNT == "S").Select(o => new
-                            {
-                                Name = o.NAMEENG,
-                                VENDOR_ID = o.VENDORID,
-                                Prefix = "",
-                            })
-                        ;
-                        ETBVENDquery2 = ETBVENDquery2.Distinct();
-                        ETBVENDquery2 = ETBVENDquery2.Take(top);
-
-                        var ETBVENDList2 = ETBVENDquery2.ToList();
-                        return Request.CreateResponse(HttpStatusCode.OK, ETBVENDList2);
-                    }
-
-
                 }
-                return Request.CreateResponse(HttpStatusCode.OK);
+                var quoteOpCarriers = new QuoteOpCarriers(tenant);
+                var carriersList=quoteOpCarriers.GetCarriersItemsList(DIRECTIONID,TRANSPORTMODEID,queryOperations);
+                return Request.CreateResponse(HttpStatusCode.OK, carriersList);
+
+               
             }
             catch (Exception ex)
             {

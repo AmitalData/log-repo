@@ -1,5 +1,12 @@
-:host ::ng-deep .p-radiobutton {
-    display: none;
+:host ::ng-deep {
+    .p-radiobutton {
+        display: none;
+    }
+
+    .radio-row:hover .simple-text,
+    .radio-checked .simple-text {
+        color: #1084dc !important;
+    }
 }
 
 .label {
@@ -16,10 +23,14 @@ p-radiobutton {
     margin-bottom: 20px;
 }
 
+.radio-row:hover,
 .radio-checked {
     background-color: #e2f0fb;
-    color: #1084DC !important;
- }
+}
+
+.radio-checked {
+    border: 1px solid #1084dc;
+}
 
 .radio-row {
     font-size: 12px;

@@ -7,6 +7,7 @@ import { QuoteOPPMInitService } from "QuoteOPM/EntityPMInitServices/QuoteOPPMIni
 import { QuoteOPPM } from "QuoteOPM/EntityPMs/QuoteOPPM";
 import { QuoteOPPropertiesPM } from "QuoteOPM/EntityPMs/QuoteOPPropertiesPM";
 import { QuoteOPPMService } from "QuoteOPM/Services/StandardPMs/QuoteOPPMService";
+import { filter } from "rxjs/operators";
 import { NewQuoteDataService } from "./Services/new-quote-data/new-quote-data.service";
 import { NewQuoteValidateEntityService } from "./Services/new-quote-validate-entity/new-quote-validate-entity.service";
 
@@ -18,10 +19,11 @@ import { NewQuoteValidateEntityService } from "./Services/new-quote-validate-ent
 export class NewQuoteComponent {
     EntityPM: QuoteOPPM = new QuoteOPPM();
     formGroup = new FormGroup({});
+    isSubmit: boolean = false;
 
     constructor(
         private newQuoteDataService: NewQuoteDataService,
-        private messageService: MessageService,
+        private msg: MessageService,
         private ValidateService: NewQuoteValidateEntityService,
     ) { }
 
@@ -32,7 +34,8 @@ export class NewQuoteComponent {
         //     this.test()
     }
 
-    async create() {
+    async create() {        
+        this.isSubmit = true;
         if(!this.ValidateService.validate(this.formGroup)) return;
         if (this.formGroup.invalid) return;
 
@@ -44,7 +47,7 @@ export class NewQuoteComponent {
 
         this.newQuoteDataService.creatingNewQuote(this.EntityPM)
             .then(() => SessionLocator.SelectedSession.CloseCurrentWindowEmit('OK'))
-            .catch((err: string[]) => this.messageService.add({ severity: 'error', summary: 'Create new quote failed', detail: err.join(', ')}))
+            .catch((err: string[]) => this.msg.add({ severity: 'error', summary: 'Create new quote failed', detail: err.join(', ')}))
             .finally(() => SessionLocator.SelectedSession.CurrentWindow.StopBusyIndicator())
 
         // console.log(this.EntityPM)
@@ -82,12 +85,12 @@ export class NewQuoteComponent {
         this.EntityPM.FromAddressCity = (propertyForm.delivery as FormGroup).value.city
         this.EntityPM.FromAddressCountryId = (propertyForm.delivery as FormGroup).value.country?.Id
         this.EntityPM.FromAddressZipCode = (propertyForm.delivery as FormGroup).value.zipCode
-        this.EntityPM.DeliveryAddressId = (propertyForm.delivery as FormGroup).value.address?.Id
+        this.EntityPM.ToAddressId = (propertyForm.delivery as FormGroup).value.address?.Id
 
         this.EntityPM.ToAddressCity = (propertyForm.pickup as FormGroup).value.city
         this.EntityPM.ToAddressCountryId = (propertyForm.pickup as FormGroup).value.country?.Id
         this.EntityPM.ToAddressZipCode = (propertyForm.pickup as FormGroup).value.zipCode
-        this.EntityPM.PickUpAddressId= (propertyForm.pickup as FormGroup).value.address?.Id
+        this.EntityPM.FromAddressId= (propertyForm.pickup as FormGroup).value.address?.Id
 
         this.EntityPM.ToPortId = propertyForm.toPort.value?.Code
         this.EntityPM.FromPortId = propertyForm.fromPort.value?.Code

@@ -1,5 +1,7 @@
-import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
+import { AfterViewInit, Component, Input, OnInit, SimpleChanges } from '@angular/core';
 import { FormGroup, FormControl, FormArray, Validators } from '@angular/forms';
+import { ApiQueryFilters } from 'Infrastructure/DataContracts/ApiQueryFilters';
+import { MessageService } from 'primeng/api';
 import { QuoteOPPM } from 'QuoteOPM/EntityPMs/QuoteOPPM';
 import { Carrier, Incoterm, NewQuoteDataService, Port, SpecialService } from '../../Services/new-quote-data/new-quote-data.service';
 
@@ -8,28 +10,29 @@ import { Carrier, Incoterm, NewQuoteDataService, Port, SpecialService } from '..
   templateUrl: './new-quote-properties.component.html',
   styleUrls: ['./new-quote-properties.component.scss']
 })
-export class NewQuotePropertiesComponent implements OnInit {
+export class NewQuotePropertiesComponent implements OnInit, AfterViewInit {
   @Input() EntityPM: QuoteOPPM = null as any;
   @Input() formGroup: FormGroup = null as any;
 
   fromPortList: Port[] = []
   toPortList: Port[] = []
   specialServiceList: SpecialService[] = []
-  mainCarriageCarrierList: Carrier[] = []
+  mainCarriageCarrierFunc:(filter: ApiQueryFilters) => Promise<any[]> = null as any;
   incotermList: Incoterm[] = []
   transportModeId: string = '';
   directionId: string = '';
   carrierColumns: any = {}
   formArray: FormArray = new FormArray([this.propForm]);
- 
+  index: number = 0;
+
   get propForm(): FormGroup {
     return new FormGroup({
       fromPort: new FormControl('', Validators.required),
-      toPort: new FormControl(),
+      toPort: new FormControl('', Validators.required),
       specialService: new FormControl(),
-      mainCarriageCarrier: new FormControl(),
-      incoterm: new FormControl(),
-      delivery: new FormGroup({}),
+      mainCarriageCarrier: new FormControl('', Validators.required),
+      incoterm: new FormControl('', Validators.required),
+      // delivery: new FormGroup({}),
       // pickup: new FormGroup({}),
     })
   }
@@ -40,7 +43,21 @@ export class NewQuotePropertiesComponent implements OnInit {
 
   constructor(
     private newQuoteDataService: NewQuoteDataService,
+    private messageService: MessageService,
   ) { }
+
+  ngAfterViewInit(): void {
+    if (this.EntityPM != null && this.EntityPM.Id != null) {
+      if (this.EntityPM.QuoteProperties.length > 0) {
+        for (let QuoteOpProperty of this.EntityPM.QuoteProperties) {
+          //edit part
+          if (QuoteOpProperty.FromPortId) {
+
+          }
+        }
+      }
+    }
+  }
 
   ngOnInit(): void {
     this.getIncoterms()
@@ -50,7 +67,9 @@ export class NewQuotePropertiesComponent implements OnInit {
   ngOnChanges(changes: SimpleChanges) {
     if (!this.formGroup.contains('properties')) {
       this.addFormControls()
-      this.subscribeTransport()
+      if (this.formGroup.contains('transportMode')) {
+        this.subscribeTransport()
+      }
     }
   }
 
@@ -84,7 +103,11 @@ export class NewQuotePropertiesComponent implements OnInit {
   }
 
   async getMainCarriageCarrier() {
-    this.mainCarriageCarrierList = await this.newQuoteDataService.getCarrierses(this.directionId, this.transportModeId);
+    const filters = new ApiQueryFilters();
+    filters.PageIndex = 0;
+    filters.PageSize = 100;
+
+    this.mainCarriageCarrierFunc = (qf: ApiQueryFilters) => this.newQuoteDataService.getCarrierses(this.directionId, this.transportModeId, qf);
 
     this.carrierColumns = this.directionId === "E" ? { AIRLINE_ID: 'Code' } : { VENDOR_ID: 'Code' }
     this.carrierColumns = { ...this.carrierColumns, ...{ Name: 'Name', Prefix: 'Prefix' } }
@@ -95,10 +118,19 @@ export class NewQuotePropertiesComponent implements OnInit {
   }
 
   addProperty() {
-    this.formArray.push(this.propForm)
+    if (this.formArray.valid) {
+      this.index = this.formArray.length;
+      this.formArray.push(this.propForm)
+    } else
+      this.messageService.add({ severity: 'error', summary: 'Property not add', detail: 'Not all the field in Quote Properties were entered/filled' })
   }
 
   removeProperty(e: { originalEvent: PointerEvent, index: number }) {
+    this.index = 0
     this.formArray.removeAt(e.index)
+  }
+
+  sortArray(arr: any[], prop: string): any[] {
+    return arr.sort((a, b) => (a[prop] > b[prop]) ? 1 : ((b[prop] > a[prop]) ? -1 : 0))
   }
 }

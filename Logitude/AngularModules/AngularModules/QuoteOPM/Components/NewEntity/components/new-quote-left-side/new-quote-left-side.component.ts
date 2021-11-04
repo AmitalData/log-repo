@@ -29,10 +29,14 @@ export class NewQuoteLeftSideComponent implements OnInit {
     Domestic: 'assets/icons/house.png',
     Import: 'assets/icons/box-down.png',
     Drop: 'assets/icons/recycle.png',
-    FTL: 'assets/icons/inland.png',
-    FCL: 'assets/icons/inland.png',
-    LTL: 'assets/icons/inland.png',
-    LCL: 'assets/icons/inland.png',
+    FTL: './Images/CellIcons/Container.png',
+    FCL: './Images/CellIcons/Container.png',
+    LTL: './Images/CellIcons/Package.png',
+    LCL: './Images/CellIcons/Package.png',
+    // FTL: 'assets/icons/inland.png',
+    // FCL: 'assets/icons/inland.png',
+    // LTL: 'assets/icons/inland.png',
+    // LCL: 'assets/icons/inland.png',
   }
 
   constructor(

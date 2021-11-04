@@ -4,7 +4,7 @@
   <div class="col-12">
     <h5 class="text-style">Quote Type</h5>
     <div class='radio-row' *ngFor='let x of quoteTypes'>
-      <p-radioButton name="quoteTypeGroup" (click)='checkType(x.code)' [value]="x.code" formControlName="quoteType"
+      <p-radioButton (click)='checkType(x.code)' [value]="x.code" formControlName="quoteType"
         [label]='x.text'></p-radioButton>
     </div>
   </div>
@@ -16,20 +16,18 @@
 
   <div class="col-3 p-field">
     <label for="expirationDate_Date">Expiration Date</label>
-    <p-calendar formControlName='expirationDate' id="expirationDate_Date" showTime="true"showTime="true" showIcon='true'></p-calendar>
+    <p-calendar formControlName='expirationDate' id="expirationDate_Date" showTime="true" showIcon='true'></p-calendar>
   </div>
 
   <div class="col-6 p-field">
     <label for="expirationDays">Expiration Days</label>
-    <p-inputNumber formControlName="expirationDays" mode="decimal" inputId="expirationDays" [useGrouping]="false"
-      (onInput)="expirationDaysChange($event)">
+    <p-inputNumber formControlName="expirationDays" mode="decimal" inputId="expirationDays" [useGrouping]="false">
     </p-inputNumber>
   </div>
 
   <div class="col-3 p-field">
-    <app-autocomplate-table [columnsShow]="{Code:'Code',MoveTypeEnglishName:'English Name'}" [data]='moveTypes'
-      [fieldShow]='"MoveTypeEnglishName"' [label]="'Move Type'" [controlName]='"moveType"' [formGroup]='formGroup'
-      (onSelect)='onSelectedMoveType($event)'>
+    <app-autocomplate-table [columnsShow]="{Code:'Code',MoveTypeEnglishName:'English Name'}" [data]='moveTypes' [dropIcon]='true'
+      [fieldShow]='"MoveTypeEnglishName"' [label]="'Move Type'" [controlName]='"moveType"' [formGroup]='formGroup'>
     </app-autocomplate-table>
   </div>
 
@@ -40,7 +38,7 @@
 
   <div class="col-3 p-field col-align">
     <p-inputNumber  formControlName='automaticallyCloseDays' mode="decimal" [useGrouping]="false"
-      (onInput)="closeDaysChange($event)" [disabled]='!formGroup.controls.isAutomaticallyClosed.value'
+      [disabled]='!formGroup.controls.isAutomaticallyClosed.value'
        inputStyleClass='close-days'></p-inputNumber>
        <span class="close-days-text">{{'QuoteOP.S.NewQuote.Days' | TextCodeTranslationPipe}}</span>
   </div>

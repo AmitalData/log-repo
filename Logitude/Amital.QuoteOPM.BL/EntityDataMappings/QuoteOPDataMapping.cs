@@ -298,7 +298,7 @@ namespace Amital.QuoteOPM.BL.EntityDataMappings
             QuoteOPChargeQueryService quoteChargeQuery = new  QuoteOPChargeQueryService(quoteChargeRepository);
             QuoteOPPackageQueryService quotePackageQuery = new  QuoteOPPackageQueryService(quotePackageRepository);
             QuoteOPTotalVATQueryService myTotalVATQuery = new  QuoteOPTotalVATQueryService(myTotalVATRepository);
-
+           
 
             bool isInlandDomestic = (entityPOCO.DirectionId == "D" && entityPOCO.TransportModeId == "I");
 
@@ -614,7 +614,7 @@ namespace Amital.QuoteOPM.BL.EntityDataMappings
             #region Pickup Delivery
             entityPM.IncludePickUp = entityPOCO.IncludePickUp;
             entityPM.IncludeDelivery = entityPOCO.IncludeDelivery;
-            entityPM.PickUpAddressId = entityPOCO.FromAddressId;
+            entityPM.FromAddressId = entityPOCO.FromAddressId;
             entityPM.DeliveryAddressId = entityPOCO.ToAddressId;
             entityPM.FromAddressCity = entityPOCO.FromAddressCity;
             entityPM.FromAddressZipCode = entityPOCO.FromAddressZipCode;
