@@ -227,8 +227,9 @@
                 </td>
 
                 <td *ngIf="ShowReportsTemlatesLists && IsShowReportManageTemplateLink && !IsSchedulerReport" style="width:40px"><div style="width:40px"></div></td>
+                <td *ngIf="ShowReportsTemlatesLists && IsShowReportManageTemplateLink && !IsEnableReportTemplateExcel" style="width:60px"><div style="width:60px">Template:</div></td>
 
-                <td style="width:150px;vertical-align:middle;">
+                <td *ngIf="IsEnableReportTemplateExcel" style="width:150px;vertical-align:middle;">
                     <div style="width:150px;vertical-align:central;background-color:#D1D6D8" tabindex="0" class="ToggleButton">
                         <div sstyle="background-color:#D1D6D8">
 

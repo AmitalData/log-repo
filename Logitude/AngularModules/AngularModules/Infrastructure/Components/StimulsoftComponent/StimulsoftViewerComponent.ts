@@ -88,6 +88,8 @@ export class StimulsoftViewerComponent implements OnInit {
     public documentTypeTemplatePMService: DocumentTypeTemplatePMService;
     public reportService: ReportService;
     reportsTemplateListExtendedService: ReportsTemplateListExtendedService;
+    IsEnableReportTemplateExcel: boolean = false;
+
 
 
     public _documentTypeTemplatePMExtendedService: DocumentTypeTemplatePMExtendedService;
@@ -137,6 +139,10 @@ export class StimulsoftViewerComponent implements OnInit {
                 this.SetStimualData();
 
             }
+        }
+
+        if (FeatureLocator.HasFeaturePermession("ReportsTemplate", "ReportTemplateExcel")) {
+            this.IsEnableReportTemplateExcel = true;
         }
 
     }
