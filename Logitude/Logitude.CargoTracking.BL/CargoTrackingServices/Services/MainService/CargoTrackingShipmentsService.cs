@@ -239,7 +239,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.MainService
                 connection.Open();
                 using (var bulk = new BulkOperation<CargoTrackingShipment>(connection))
                 {
-                    var list = runBulkArgs.CargoTrackingShipmentContexts.Select(e => e.CargoTrackingShipment);
+                    var list = runBulkArgs.CargoTrackingShipmentContexts.Select(e => e.CargoTrackingShipment).ToList();
                     bulk.DestinationTableName = runBulkArgs.TableName;
                     bulk.BulkInsert(list);
                 }
@@ -316,7 +316,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.MainService
                 connection.Open();
                 using (var bulk = new BulkOperation<CargoTrackingShipment>(connection))
                 {
-                    var list = runBulkArgs.CargoTrackingShipmentContexts.Select(e => e.CargoTrackingShipment);
+                    var list = runBulkArgs.CargoTrackingShipmentContexts.Select(e => e.CargoTrackingShipment).ToList();
                     bulk.DestinationTableName = runBulkArgs.TableName;
                     bulk.AutoMapKeyExpression = c => new { c.EntityType, c.EntityId, c.Tenant };
                     bulk.BulkMerge(list);
