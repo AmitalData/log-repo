@@ -70,3 +70,13 @@ Feature: Add Delete partners
       | Fax           | 888888      |
     When create agent
     Then the agent should create successfully
+
+  Scenario: Select contact
+    Given "TestContact" as a contact
+    When update shipment
+    Then the direct should update successfully
+
+  Scenario: Set agent my customer
+    Given set agent as my customer
+    When update shipment
+    Then the direct should update successfully

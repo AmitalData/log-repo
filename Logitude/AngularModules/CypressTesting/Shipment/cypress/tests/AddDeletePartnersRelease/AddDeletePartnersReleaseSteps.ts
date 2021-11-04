@@ -64,6 +64,19 @@ Then("the agent should create successfully", () => {
 });
 //#endregion
 
+//#region Select contact
+Given("{string} as a contact", (contact) => {
+    cy.FillLogLov(ShipmentSelectors.ShipmentAgentContact, contact, true)
+    cy.Click(BaseSelectors.RedButton + BaseSelectors.LastElement, null)
+});
+//#endregion
+
+//#regionset agent as my customer
+Given("set agent as my customer", () => {
+    cy.Click(ShipmentSelectors.SetCustomerText + BaseSelectors.FirstElement, null)
+});
+//#endregion
+
 //#region Actions steps
 When("create shipment", () => {
     Actions.CreateShipment(shipmentDetails.ShipmentLevel);
