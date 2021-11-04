@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator';
 import { LazyLoadEvent, SortEvent } from 'primeng/api';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Table } from 'primeng/table';
@@ -12,6 +13,7 @@ import { GenericTableService } from './generic-table.service';
 export class GenericTableComponent implements OnInit {
   @ViewChild('table') table: Table = null as any;
 
+  placeholder: string = '';
   data: any[] = []//Array.from({ length: 1000 }) //[];
   columns: GenericTableColumn[] = [];
   columnsNames: string[] = [];
@@ -31,6 +33,11 @@ export class GenericTableComponent implements OnInit {
   ngOnInit(): void {
     this.insertData(this.config.data);
     this.lazy = !!this.config.data.getData
+    this.creasteSearchText();
+  }
+
+  creasteSearchText() {
+    this.placeholder = TextCodeTranslator.Translate(this.config.data.tableName + ".F.SearchFields") || TextCodeTranslator.Translate("General.O.Search");
   }
 
   insertData(dataTable: GenericTableDataTable) {
@@ -57,16 +64,16 @@ export class GenericTableComponent implements OnInit {
 
   async onSort(e: SortEvent) {
     if (!this.lazy) return;
-        
+
     this.allRowGet = false;
     this.sortField = e.field as string;
-    this.sortOrder = e.order as number    
+    this.sortOrder = e.order as number
     this.data = Array.from({ length: this.config.data.rowTake });
     this.addDataFromFunc(0);
   }
 
   async addDataFromFunc(index: number) {
-    if(this.allRowGet) return;
+    if (this.allRowGet) return;
 
     const loadedData: any[] = await this.config.data.getData(this.filterVal, index / this.config.data.rowTake, this.sortField, this.sortOrder);
 
@@ -75,7 +82,7 @@ export class GenericTableComponent implements OnInit {
     this.data = [...this.data]
 
     this.allRowGet = loadedData.length !== this.config.data.rowTake;
-    if(this.allRowGet) {
+    if (this.allRowGet) {
       const rowsHave: number = index + loadedData.length;
       Array.prototype.splice.apply(this.data, [rowsHave, this.data.length - rowsHave]);
     }

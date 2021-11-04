@@ -8,6 +8,7 @@ import {InputTextModule} from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
 import { PaginatorModule } from 'primeng/paginator';
 import { GenericTableDataService } from './generic-table-data.service';
+import { DraggableModule } from 'Infrastructure/Directives/draggable/draggable.module';
 
 
 @NgModule({
@@ -29,6 +30,7 @@ import { GenericTableDataService } from './generic-table-data.service';
     InputTextModule,
     ButtonModule,
     PaginatorModule,
+    DraggableModule,
   ],entryComponents: [
     GenericTableComponent    
   ]
