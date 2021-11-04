@@ -806,6 +806,10 @@ namespace WebFreight.Web.ExternalAPIs.V1
         }
         private void InitOceanOrInlandPackages(Direct entity)
         {
+            if (entity.OceanOrInlandPackages == null)
+            {
+                return;
+            }
             foreach (OceanOrInlandPackage item in entity.OceanOrInlandPackages)
             {
                 if (item.PackageType != null)
