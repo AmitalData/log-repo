@@ -324,6 +324,7 @@ namespace CommunicationWorkerRole
                                                     ShipmentCustomerTypeCode = ForwarderShipment.ShipmentCustomerTypeCode,
                                                     IsCancelled = ForwarderShipment.IsCancelled,
                                                     ShipperName = ForwarderShipment.ShipperName,
+                                                    ConsigneeName = ForwarderShipment.ConsigneeName,
                                                     CarrierTransportDocumentNumber = ForwarderShipment.CarrierTransportDocumentNumber,
                                                     //ForwarderPartnerId = Partner.Id,
                                                     FreightPrepaidCollectId = ForwarderShipment.FreightPrepaidCollectId,

@@ -979,6 +979,10 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     }
                 }
             }
+            else
+            {
+                shipmentPM.ConsigneeName = shipment.ConsigneeName;
+            }
             #endregion
 
             #region Agent
