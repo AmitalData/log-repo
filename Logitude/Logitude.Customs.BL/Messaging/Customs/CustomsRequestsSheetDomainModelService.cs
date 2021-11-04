@@ -2617,6 +2617,19 @@ After that Remove file  from DCA  .. ");
                             this.MyCustomsRequestsSheetPM.InterfaceTypeCode,
                             this.MyCustomsRequestsSheetPM.Id);
         }
+
+
+        public void ReCreateNow()
+        {
+
+            
+            CustomsCommandEnum nxtCustomsCommandEnum = CustomsCommandEnum.CustomsCommandGetCustomRequestWR;
+            SBQMessageService.CreateBasic<CustomsCommandEnum>(
+                            nxtCustomsCommandEnum,
+                            this.MyCustomsRequestsSheetPM.Tenant,
+                            this.MyCustomsRequestsSheetPM.InterfaceTypeCode,
+                            this.MyCustomsRequestsSheetPM.Id);
+        }
     }
 
 
