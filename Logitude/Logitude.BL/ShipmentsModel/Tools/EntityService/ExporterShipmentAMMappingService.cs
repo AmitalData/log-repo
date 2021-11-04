@@ -43,9 +43,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             newAExporterShipmentAM.Consignee = GetCard(shipmentPM.ConsigneeId);
         }
 
-        private CodeProperties GetCard(string agentId)
+        private CodeProperties GetCard(string cardId)
         {
-            Card card = cardsReporistory.GetSingleCard(agentId, shipmentPM.Tenant);
+            Card card = cardsReporistory.GetSingleCard(cardId, shipmentPM.Tenant);
             string cardCode = "";
             if (card != null)
             {
