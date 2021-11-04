@@ -1712,7 +1712,6 @@
     <Compile Include="EntityUpdateServices\DeclarationCargoSplitUpdateService.cs" />
     <Compile Include="EntityUpdateServices\PendingByKeywordUpdateService.cs" />
     <Compile Include="EntityUpdateServices\SuppInvoiceItemsAbachStatementUpdateService.cs" />
-    <Compile Include="EntityUpdateServices\SupplierInvioceItemCertificatUpdateService.sql.cs" />
     <Compile Include="EntityUpdateServices\SupplierInvoiceUCRpdateService.cs" />
     <Compile Include="EntityUpdateServices\SupplierInvoicePaymentUpdateService.cs" />
     <Compile Include="EntityUpdateServices\SupplierInvoiceItemVehicleAddUpdateService.cs" />
