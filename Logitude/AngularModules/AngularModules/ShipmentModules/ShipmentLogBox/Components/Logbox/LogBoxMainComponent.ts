@@ -70,9 +70,19 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
         var FeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "LEX")[0];
         if (FeatureToggle) {
             this.ToggleIsExportShipments = true;
-        } 
+        }
+        this.checkAirShipmentToggle();
     }
-     
+
+    private checkAirShipmentToggle() {
+        let AirShipmentFeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "PLE")[0];
+        if (AirShipmentFeatureToggle) {
+            this.HasExportShipmentToggle = true;
+
+        }
+    }
+
+
     private InitializeServices() {
         this.myShipmentDomainService = new ShipmentDomainService();
         this.myUserPMService = new UserExtendedPMService();
