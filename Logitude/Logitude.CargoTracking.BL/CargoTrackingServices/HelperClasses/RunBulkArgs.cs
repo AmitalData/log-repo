@@ -9,7 +9,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.HelperClasses
 {
     public class RunBulkArgs
     {
-        public List<CargoTrackingShipment> CargoTrackingShipments { get; set; }
+        public List<CargoTrackingShipmentContext> CargoTrackingShipmentContexts { get; set; }
         public string TableName { get; set; }
         public string InnerTableName { get; set; }
         public string ConnectionString { get; set; }
