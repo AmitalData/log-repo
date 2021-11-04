@@ -1,0 +1,45 @@
+﻿<Script DBType="Main" Module="Invoice" AOT="true"  TargetTableName="ARPaymentBankTranfers">
+  <Sql Version="1">
+    <![CDATA[
+  
+declare @Tenant as int
+declare @Id as varchar(15)
+declare @AccountingPaymentMethodId as  varchar(15)
+declare @ChequeOrPaymentRef as  varchar(30)
+declare @AmountInLocalCurrency as float
+declare @AmountInPaymentCurrency as float
+declare @PaymentCurrencyExchangeRate as float
+declare @ValueDate as DateTime
+declare @BankAccountId as varchar(15)
+declare @PaymentCurrencyId as varchar(15)
+DECLARE @PaymentMethodCode varchar(2);
+
+	DECLARE ARPaymentCursor CURSOR READ_ONLY
+	FOR
+	SELECT Id,Tenant,AccountingPaymentMethodId,ChequeOrPaymentRef,AmountInLocalCurrency,AmountInPaymentCurrency,PaymentCurrencyExchangeRate,ValueDate,BankAccountId,PaymentCurrencyId
+	From ARPayments 
+	OPEN ARPaymentCursor FETCH NEXT FROM ARPaymentCursor INTO @Id,@Tenant,@AccountingPaymentMethodId,@ChequeOrPaymentRef,@AmountInLocalCurrency,@AmountInPaymentCurrency,@PaymentCurrencyExchangeRate,@ValueDate,@BankAccountId,@PaymentCurrencyId
+	WHILE @@FETCH_STATUS = 0
+	BEGIN
+	
+	if exists (select code from AccountingPaymentMethods where Id= @AccountingPaymentMethodId and Tenant = @Tenant and code='BT')
+	    begin
+	    if not exists (select paymentid from ARPaymentBankTranfers where paymentid =@Id and Tenant = @Tenant)
+	    begin
+	        DECLARE  @newId varchar(15) ;
+   	        
+	        EXECUTE usp_GetNextTableIdValue @newId OUTPUT,'ARPaymentBankTranfers'
+	        insert into ARPaymentBankTranfers(Id,Tenant,SearchFields,PaymentId,LineNumber,PaymentRef,ValueDate,BankAccountId,CurrencyId,LocalAmount,ForeignAmount,ExchageRate)
+	        values(@newId,@Tenant,CONCAT(@ChequeOrPaymentRef,',',@AmountInLocalCurrency),@Id,'1',@ChequeOrPaymentRef,@ValueDate,@BankAccountId,@PaymentCurrencyId,@AmountInLocalCurrency,@AmountInPaymentCurrency,@PaymentCurrencyExchangeRate)
+	    end
+    end
+
+
+	FETCH NEXT FROM ARPaymentCursor INTO @Id,@Tenant,@AccountingPaymentMethodId,@ChequeOrPaymentRef,@AmountInLocalCurrency,@AmountInPaymentCurrency,@PaymentCurrencyExchangeRate,@ValueDate,@BankAccountId,@PaymentCurrencyId
+	END
+	CLOSE ARPaymentCursor
+	DEALLOCATE ARPaymentCursor
+  
+    ]]>
+  </Sql>
+</Script>
