@@ -111,3 +111,7 @@ When("void invoice", () => {
 Then("the invoice should void successfully", () => {
     BaseAssertion.AssertStatusCode(RequestAliases.ARInvoicesRequest, 200);
 });
+
+Then("the status value should be {string}", (statusValue) => {
+    BaseAssertion.AssertElementContain(ShipmentSelectors.ARInvoiceStatus, statusValue)
+});
