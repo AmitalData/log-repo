@@ -577,6 +577,7 @@ export class CargoTrackingShipmentPM {
     private bookingExceptionReason: string;
     public get BookingExceptionReason() { return this.bookingExceptionReason; }
     public set BookingExceptionReason(newValue: string) { if (this.bookingExceptionReason != newValue) { this.bookingExceptionReason = newValue; this.MarkAsDirty("BookingExceptionReason"); } }
+       
 	 
     private paymentRequiredDone: boolean;
     public get PaymentRequiredDone() { return this.paymentRequiredDone; }
@@ -646,4 +647,4 @@ export class CargoTrackingShipmentPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

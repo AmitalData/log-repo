@@ -12,8 +12,9 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CustomMapping
 {
     public class CargoTrackingShipmentsMappingService
     {
-        public CargoTrackingShipment GetOrder(CargoTrackingShipmentQueryResult row)
+        public CargoTrackingShipmentResources GetOrder(CargoTrackingShipmentQueryResult row)
         {
+            var cargoTrackingShipmentContext = new CargoTrackingShipmentResources();
             var item = new CargoTrackingShipment();
             FillOrderFeilds(item, row);
             item.IsMainRecord = GetIsMainRecord(Codes.OrderType, row);
@@ -21,13 +22,15 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CustomMapping
             SetMilestonesDoneFields(item);
             SetCurrentMilestone(item);
             SetOrderExceptionDescription(item, row);
-            return item;
+            cargoTrackingShipmentContext.CargoTrackingShipment = item;
+            return cargoTrackingShipmentContext;
         }
 
 
 
-        public CargoTrackingShipment GetForwarding(CargoTrackingShipmentQueryResult row)
+        public CargoTrackingShipmentResources GetForwarding(CargoTrackingShipmentQueryResult row)
         {
+            var cargoTrackingShipmentContext = new CargoTrackingShipmentResources();
             var item = new CargoTrackingShipment();
             FillForwardingFeilds(item, row);
             SetForwardingWarehouseFeilds(item, row);
@@ -36,13 +39,14 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CustomMapping
             SetCurrentMilestone(item);
             item.IsMainRecord = GetIsMainRecord(Codes.ForwardingType, row);
             SetForwardingExceptionDescription(item, row);
-
-            return item;
+            cargoTrackingShipmentContext.CargoTrackingShipment = item;
+            return cargoTrackingShipmentContext;
         }
 
 
-        public CargoTrackingShipment GetCustom(CargoTrackingShipmentQueryResult row)
+        public CargoTrackingShipmentResources GetCustom(CargoTrackingShipmentQueryResult row)
         {
+            var cargoTrackingShipmentContext = new CargoTrackingShipmentResources();
             var item = new CargoTrackingShipment();
             FillCustomFeilds(item, row);
             SetCustomWarehouseFeilds(item, row);
@@ -51,7 +55,9 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CustomMapping
             SetCurrentMilestone(item);
             item.IsMainRecord = GetIsMainRecord(Codes.CustomType, row);
             SetCustomExceptionDescription(item, row);
-            return item;
+            cargoTrackingShipmentContext.CargoTrackingShipment = item;
+            cargoTrackingShipmentContext.CustomsDeclarationNumber = row.CustomsDeclarationNumber;
+            return cargoTrackingShipmentContext;
         }
         private void SetOrderExceptionDescription(CargoTrackingShipment item, CargoTrackingShipmentQueryResult row)
         {
@@ -328,7 +334,6 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CustomMapping
             item.DeliveryExceptionReason = row.CustomDeliveryExceptionReason;
             item.GrossWeightUnitCode = row.CustomGrossWeightUnitCode;
             item.ForwardingHouse = row.ForwardingHouse;
-            item.CustomsDeclarationNumber = row.CustomsDeclarationNumber;
             item.ForwardingMaster = row.ForwardingMaster;
             item.ForwardingShipmentLevelCode = row.ForwardingShipmentLevelCode;
             item.GoodsClassificationDate = row.CustomGoodsClassificationDate;
