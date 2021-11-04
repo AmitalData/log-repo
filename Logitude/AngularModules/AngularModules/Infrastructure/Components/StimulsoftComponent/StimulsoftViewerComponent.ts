@@ -530,21 +530,13 @@ export class StimulsoftViewerComponent implements OnInit {
         }
     }
 
-    ReportTemplatesChange(item) {
+    ReportTemplatesChange(item, runReport) {
         if (this.StimulsoftArgData) {
             if (item) {
                 this.StimulsoftArgData.DefaultTemplateId = item.Id;
                 this.StimulsoftArgData.TemplateDescription = item.Description;
-                if (this.StimulsoftArgData.ReportFilterConmponent) {
-
-                    if (this.StimulsoftArgData.ReportFilterConmponent['RunReport']) {
-                        this.StimulsoftArgData.ReportFilterConmponent.RunReport(true);
-                    } else if (this.StimulsoftArgData.ReportFilterConmponent['RunButtonClicked']) {
-                        this.StimulsoftArgData.ReportFilterConmponent.RunButtonClicked();
-                    }
-
-
-
+                if (this.StimulsoftArgData.ReportFilterConmponent && runReport) {
+                    this.RunReport();
                 }
             } else {
                 this.StimulsoftArgData.DefaultTemplateId = "";
@@ -552,6 +544,17 @@ export class StimulsoftViewerComponent implements OnInit {
         }
     }
 
+
+    private RunReport() {
+        if (this.StimulsoftArgData.ReportFilterConmponent['RunReport']) {
+            this.StimulsoftArgData.ReportFilterConmponent.RunReport(true);
+            return;
+        }
+        if (this.StimulsoftArgData.ReportFilterConmponent['RunButtonClicked']) {
+            this.StimulsoftArgData.ReportFilterConmponent.RunButtonClicked();
+            return;
+        }
+    }
 
     CustomPixel(pixel: any) {
 
@@ -835,14 +838,14 @@ export class StimulsoftViewerComponent implements OnInit {
 
                         var defultTemplateId: any = cmpRef.instance.EntityPM ? this.GetDefaultTemplate(cmpRef.instance.EntityPM) : "";
 
-                        this.LoadReportTemplate(defultTemplateId);
+                        this.LoadReportTemplate(defultTemplateId, true);
 
                     });
 
                     cmpRef.instance.SaveAndCloseCompleted.subscribe((isSaveSuccess: boolean) => {
                         if (isSaveSuccess) {
                             var defultTemplateId: any = cmpRef.instance.EntityPM ? this.GetDefaultTemplate(cmpRef.instance.EntityPM) : "";
-                            this.LoadReportTemplate(defultTemplateId);
+                            this.LoadReportTemplate(defultTemplateId, true);
                         }
                     });
 
@@ -851,7 +854,7 @@ export class StimulsoftViewerComponent implements OnInit {
     }
 
     IsRefreshReportsTemplateList: boolean = false;
-    LoadReportTemplate(defultTemplateId: any) {
+    LoadReportTemplate(defultTemplateId: any, runReport) {
 
         this.reportsTemplateListExtendedService.getReportsTemplateListsByReportId(this.StimulsoftArgData.ReportsPreviewComponent.Report.Id, this.TemplateType).subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
@@ -864,7 +867,7 @@ export class StimulsoftViewerComponent implements OnInit {
 
                 this.SelectedReportsTemplateList = this.ReportsTemplatesLists.filter(d => d.Id == this.StimulsoftArgData.DefaultTemplateId)[0];
                 this.IsRefreshReportsTemplateList = !this.IsRefreshReportsTemplateList;
-                this.ReportTemplatesChange(item);
+                this.ReportTemplatesChange(item, runReport);
 
             }
 
@@ -894,7 +897,10 @@ export class StimulsoftViewerComponent implements OnInit {
 
     ReportTypeClick(type: string, text: string) {
         this.TemplateType = type;
-        this.LoadReportTemplate(this.GetDefaultTemplate(this.StimulsoftArgData.ReportsPreviewComponent.Report));
+
+        var defulatReportId = this.GetDefaultTemplate(this.StimulsoftArgData.ReportsPreviewComponent.Report);
+        this.StimulsoftArgData.DefaultTemplateId = defulatReportId;
+        this.LoadReportTemplate(defulatReportId, false);
         document.getElementById("templateType").innerHTML = text;
     }
 

@@ -802,10 +802,7 @@ namespace WebFreight.Web.Helpers
                 byte[] filters = GetReportFilters(reportFliter.QueryFilterItemLists);
                 byte[] reportDataProvider = BuildReportDataProvider(reportFliter, filters);
                 if (reportDataProvider == null && reportFliter.IsSchedulerReport) return report;
-                ReportsTemplatesWebService reportsTemplatesWebService = new ReportsTemplatesWebService();
-                ReportsTemplatesVersionRepository reportsTemplatesVersionRepository = new ReportsTemplatesVersionRepository(reportFliter.tenant);
-                string reportDocumentId = reportsTemplatesVersionRepository.GetReportDocumentIdByReportTemplateId(reportFliter.DefaultTemplateId, reportFliter.tenant);
-                byte[] template = reportsTemplatesWebService.GetReportTemplate(reportDocumentId, reportFliter.tenant, false);
+                byte[] template = GetReportByteByType(reportFliter);
                 if (template == null) throw new Exception("Report Template is missing");
                 else
                 {
@@ -814,6 +811,25 @@ namespace WebFreight.Web.Helpers
                 }
             }
             return report;
+        }
+
+        private byte[] GetReportByteByType(ReportFliter reportFliter)
+        {
+
+            ReportsTemplatesVersionRepository reportsTemplatesVersionRepository = new ReportsTemplatesVersionRepository(reportFliter.tenant);
+            ReportsTemplateRepository reportsTemplateRepository = new ReportsTemplateRepository(reportFliter.tenant);
+
+            string reportDocumentId = reportsTemplatesVersionRepository.GetReportDocumentIdByReportTemplateId(reportFliter.DefaultTemplateId, reportFliter.tenant);
+            var reportsTemplate = reportsTemplateRepository.GetSingleReportsTemplate(reportFliter.DefaultTemplateId, reportFliter.tenant);
+
+            if (reportsTemplate.TemplateType == "E")
+            {
+                return new ExcelReportMrtBuilder(reportFliter.tenant).Build(reportsTemplate, reportDocumentId, true);
+            }
+
+            ReportsTemplatesWebService reportsTemplatesWebService = new ReportsTemplatesWebService();
+            return reportsTemplatesWebService.GetReportTemplate(reportDocumentId, reportFliter.tenant, false);
+
         }
 
         public byte[] GetReportFilters(List<QueryFilterItem> queryFilterItemLists)
