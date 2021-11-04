@@ -745,6 +745,29 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private bool isCustomSendTime ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsCustomSendTime  
+	   {
+	    
+	     get
+		{
+		   return isCustomSendTime;
+		 }
+		 set
+		 {
+		   if(isCustomSendTime != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsCustomSendTime",OldValue=isCustomSendTime,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isCustomSendTime=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

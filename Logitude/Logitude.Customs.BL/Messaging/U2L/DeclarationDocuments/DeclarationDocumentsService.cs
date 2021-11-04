@@ -244,6 +244,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.DeclarationDocuments
                         if (String.IsNullOrWhiteSpace(customsDocumentPM.CustomsDocId))
                         {
                             customsDocumentPM.IsSendToQueue = true;
+                            customsDocumentPM.IsCustomSendTime = true;
                             myCustomsDocumentUpdateService.IgnoreSendFailure = true;
                             AppendLogLine("myCustomsDocumentUpdateService.Update:IsSendToQueue = true");
                             if (customsDocumentPM.ChangeSetOp != ChangeSetOperation.Update) customsDocumentPM.ChangeSetOp = ChangeSetOperation.Update;
