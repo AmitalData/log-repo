@@ -308,13 +308,15 @@
                                 <div class="value uppercase truncateText">{{ shipment.ShipmentNumber }}</div>
 
                                 <div class="subtitle" [attr.src]="SetConsignmentNumber(shipment)">
+                                    {{shipment.House != null || shipment.Master != null }}
+                                    <span *ngIf="shipment.ForwardingShipmentLevelCode == 'D' && shipment.Master">Master</span>
+                                    <span *ngIf="shipment.ForwardingShipmentLevelCode == 'D' && !shipment.Master && shipment.House">House</span>
 
-                                    <span *ngIf="shipment.ForwardingShipmentLevelCode == 'D'">Master</span>
-                                    <span *ngIf="shipment.ForwardingShipmentLevelCode == 'H'">House</span>
-                                    <span
-                                        *ngIf="shipment.EntityType == 'C' && !shipment.ForwardingShipmentHeaderId && shipment.House">House</span>
-                                    <span
-                                        *ngIf="shipment.EntityType == 'C' && !shipment.ForwardingShipmentHeaderId && shipment.Master && !shipment.House">Master</span>
+                                    <span *ngIf="shipment.ForwardingShipmentLevelCode == 'H' && shipment.House">House</span>
+                                    <span *ngIf="shipment.ForwardingShipmentLevelCode == 'H' && !shipment.House && shipment.Master">Master</span>
+
+                                    <span *ngIf="shipment.EntityType == 'C' && !shipment.ForwardingShipmentHeaderId && shipment.House">House</span>
+                                    <span *ngIf="shipment.EntityType == 'C' && !shipment.ForwardingShipmentHeaderId && shipment.Master && !shipment.House">Master</span>
                                     <!-- Consignment No. -->
                                 </div>
                                 <div class="value uppercase truncateText">

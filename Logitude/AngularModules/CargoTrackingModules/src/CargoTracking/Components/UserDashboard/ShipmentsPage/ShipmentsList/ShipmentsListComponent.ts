@@ -626,11 +626,11 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
 
     SetConsignmentNumber(shipment: CargoTrackingShipmentList) {
         if (shipment.ShipmentLevelCode == 'D') {
-            this.ConsignmentNumber = shipment.Master;
+            this.ConsignmentNumber = shipment.Master != null ? shipment.Master : shipment.House;
         }
 
         else if (shipment.ShipmentLevelCode == 'H') {
-            this.ConsignmentNumber = shipment.House;
+            this.ConsignmentNumber = shipment.House != null ? shipment.House : shipment.Master;;
         }
     }
 

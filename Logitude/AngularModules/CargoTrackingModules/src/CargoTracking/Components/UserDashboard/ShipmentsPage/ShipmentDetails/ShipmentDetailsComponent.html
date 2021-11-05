@@ -410,7 +410,7 @@ Shipment.ShipmentList.ArrivalDate |
                 </div>
                 <div>
                     <div class="title">volume</div>
-                    <div class="description">{{Shipment.ShipmentList.Volume }}</div>
+                    <div  style="display:inline" class="description">{{Shipment.ShipmentList.Volume }}</div><span *ngIf="Shipment.ShipmentList.Volume" style="display:inline">  CBM</span>
                 </div>
                 <div *ngIf=" Shipment.ShipmentList.EntityType != 'O'">
                     <div class="title">storage site</div>
