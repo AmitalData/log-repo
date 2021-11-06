@@ -382,8 +382,7 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
         this.EntityPM.IsImporterShipment = true;
         this.EntityPM.CustomerId = SessionLocator.TenantPM.CustomerId;
         this.EntityPM.CustomerName = SessionLocator.TenantPM.CustomerId; 
-        this.EntityPM.CreatedByUserId = SessionLocator.LoggedUserId;
-        this.EntityPM.ConsigneeId = SessionLocator.TenantPM.CustomerId;
+        this.EntityPM.CreatedByUserId = SessionLocator.LoggedUserId; 
         this.EntityPM.NewConcurrencyGUID = Guid.newGuid();
         this.EntityPM.Tenant = SessionLocator.Tenant;
         this.EntityPM.ShipmentCustomerTypeCode = "SHI";
