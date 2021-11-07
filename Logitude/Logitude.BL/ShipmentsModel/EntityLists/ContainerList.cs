@@ -228,5 +228,7 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public bool OPClosed { get; set; }
         public string ShipmentTypeId { get; set; }
         public string ShipmentTypeName { get; set; }
+        public DateTime? ShipmentCreateDate { get; set; }
+
     }
 }

@@ -1,4 +1,5 @@
-﻿using Logitude.CargoTracking.Data.EntityPOCOs;
+﻿using Logitude.CargoTracking.BL.CargoTrackingServices.HelperClasses;
+using Logitude.CargoTracking.Data.EntityPOCOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -205,10 +206,10 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.SearchService
         }
 
 
-        public static List<CargoTrackingShipmentSearch> GetCustomsDeclarationNumberReferences(CargoTrackingShipment shipment, string entityId)
+        public static List<CargoTrackingShipmentSearch> GetCustomsDeclarationNumberReferences(CargoTrackingShipmentResources shipmentContext, string entityId)
         {
             var list = new List<CargoTrackingShipmentSearch>();
-            if (string.IsNullOrEmpty(shipment.CustomsDeclarationNumber))
+            if (string.IsNullOrEmpty(shipmentContext.CustomsDeclarationNumber))
             {
                 return list;
             }
@@ -216,10 +217,10 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.SearchService
             {
                 IsPublic = false,
                 ReferenceType = "Customs Declaration Number",
-                ShipmentDate = shipment.CreateDate,
+                ShipmentDate = shipmentContext.CargoTrackingShipment.CreateDate,
                 ShipmentId = entityId,
-                Tenant = shipment.Tenant,
-                SearchFields = shipment.CustomsDeclarationNumber
+                Tenant = shipmentContext.CargoTrackingShipment.Tenant,
+                SearchFields = shipmentContext.CustomsDeclarationNumber
             };
             list.Add(cargoTrackingShipmentSearch);
 

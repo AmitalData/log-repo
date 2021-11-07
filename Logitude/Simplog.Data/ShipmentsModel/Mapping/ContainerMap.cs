@@ -183,7 +183,6 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.LastFreeDayDate).HasColumnName("LastFreeDayDate");
             this.Property(t => t.TerminalAddressId).HasColumnName("TerminalAddressId");
 
-
             this.Property(t => t.ShipmentPickupETA).HasColumnName("ShipmentPickupETA");
             this.Property(t => t.ShipmentPickupETD).HasColumnName("ShipmentPickupETD");
             this.Property(t => t.ShipmentPickupATA).HasColumnName("ShipmentPickupATA");
@@ -224,6 +223,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.CustomerId).HasColumnName("CustomerId");
             this.Property(t => t.OPClosed).HasColumnName("OPClosed");
             this.Property(t => t.ShipmentTypeId).HasColumnName("ShipmentTypeId");
+            this.Property(t => t.ShipmentCreateDate).HasColumnName("ShipmentCreateDate");
 
             this.HasOptional(t => t.CarrierCard).WithMany().HasForeignKey(d => d.MainCarriageCarrierId).WillCascadeOnDelete(false); 
             this.HasOptional(t => t.ShipmentPackage).WithMany().HasForeignKey(d => d.ShipmentPackagesId).WillCascadeOnDelete(false);

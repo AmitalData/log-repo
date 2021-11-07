@@ -6,11 +6,8 @@ using Simplog.Data.ShipmentsModel.Repositories;
 using Logitude.BL.ShipmentsModel.EntityLists;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
-using Logitude.BL.CommonDataModel.EntityPMs;
-using Logitude.BL.CommonDataModel.EntityQueries;
 using System.Data.Entity;
 using Simplog.Server.Infrastructure.DataContracts;
-using Logitude.BL.Helpers;
 
 namespace Logitude.BL.ShipmentsModel.EntityQueries
 {
@@ -241,6 +238,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     HandlerName = entityPoco.Handler?.Contact?.EnglishName,
                     CustomerId = entityPoco.CustomerId,
                     CustomerName = entityPoco.CustomerCard?.EnglishName,
+                    ShipmentCreateDate = entityPoco.ShipmentCreateDate,
                 };
 
                 MapCustomFields(result, entityPoco);
@@ -480,6 +478,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         HandlerName = a.Handler != null ? (a.Handler.Contact != null? a.Handler.Contact.EnglishName:"") : "",
                         CustomerId = a.CustomerId,
                         CustomerName = a.CustomerCard != null ? a.CustomerCard.EnglishName: "",
+                        ShipmentCreateDate = a.ShipmentCreateDate,
 
                     }).ToList();
         }
@@ -710,6 +709,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                    HandlerName = entity.Handler != null ? (entity.Handler.Contact != null ? entity.Handler.Contact.EnglishName : "") : "",
                                                    CustomerId = entity.CustomerId,
                                                    CustomerName = entity.CustomerCard != null ? entity.CustomerCard.EnglishName : "",
+                                                   ShipmentCreateDate = entity.ShipmentCreateDate,
                                                };
             return result;
         }
@@ -927,6 +927,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     HandlerName = container.Handler != null ? (container.Handler.Contact != null ? container.Handler.Contact.EnglishName : "") : "",
                     CustomerId = container.CustomerId,
                     CustomerName = container.CustomerCard != null ? container.CustomerCard.EnglishName : "",
+                    ShipmentCreateDate = container.ShipmentCreateDate,
                 };
                 MapCustomFields(containerPM, container);
             }
@@ -1151,6 +1152,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     HandlerName = entityPoco.Handler != null ? (entityPoco.Handler.Contact != null ? entityPoco.Handler.Contact.EnglishName : "") : "",
                     CustomerId = entityPoco.CustomerId,
                     CustomerName = entityPoco.CustomerCard != null ? entityPoco.CustomerCard.EnglishName : "",
+                    ShipmentCreateDate = entityPoco.ShipmentCreateDate,
                 };
             }
 

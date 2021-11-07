@@ -359,14 +359,14 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.MainService
 			return condishins;
 		}
 
-		public static string GetDeleteSearchesQuery(List<Data.EntityPOCOs.CargoTrackingShipment> cargoTrackingShipments, string tableName)
+		public static string GetDeleteSearchesQuery(List<CargoTrackingShipmentResources> cargoTrackingShipments, string tableName)
         {
 			if (cargoTrackingShipments.Count <= 0)
 				return "";
 			var ids = "";
 			foreach (var item in cargoTrackingShipments)
 			{
-				ids += $"'{item.EntityId}' ,";
+				ids += $"'{item.CargoTrackingShipment.EntityId}' ,";
 			}
 			ids = ids.Substring(0,ids.Length - 1);
 			var query = $@"
