@@ -111,9 +111,11 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     id = physicalCheckQueryService.GetIdByCheckId(customResponse.NoticeToClient.checkId.ToString(), requestParams.Tenant);
                 }
 
+                LogMessagingUtil.Instance.AppendLine("checkId = " + id);
                 if (!string.IsNullOrWhiteSpace(id))
                 {
                     physicalCheck = physicalCheckQueryService.GetSingle(id, true, false);
+                    LogMessagingUtil.Instance.AppendLine("NoticeToClient.operationCode = " + NoticeToClient.operationCode.ToString());
                     switch (NoticeToClient.operationCode.ToString())
                     {
                         case "1":
@@ -167,8 +169,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                 eventContextTagModelList.Add(myUpdateEventContextTagModel2);
                             }
 
+                            LogMessagingUtil.Instance.AppendLine("NoticeToClient.QueueType = " + NoticeToClient.QueueType.ToString());
                             if (NoticeToClient.QueueType == 1 || NoticeToClient.QueueType == 3)
                             {
+                                LogMessagingUtil.Instance.AppendLine("raise Event SFC , תיק זומן לבדיקה באתר משקף");
                                 var myUpdateEventContextTagModel2 = new EventContextTagModel()
                                 {
                                     CallProccessID = EventContextTagModel.ProccessEnum.CH_NG_190_MSG1_NoticeToClientResponseServiceUpdate,
@@ -211,6 +215,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 }
                 else
                 {
+                    LogMessagingUtil.Instance.AppendLine("NoticeToClient.operationCode = " + NoticeToClient.operationCode.ToString());
                     switch (NoticeToClient.operationCode.ToString())
                     {
                         case "1":
@@ -238,9 +243,12 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                 declarationUpdateService.Update(myDeclarationPM, true);
 
                             }
+                            LogMessagingUtil.Instance.AppendLine("NoticeToClient.QueueType = " + NoticeToClient.QueueType.ToString());
 
                             if (NoticeToClient.QueueType == 1 || NoticeToClient.QueueType == 3)
                             {
+                                LogMessagingUtil.Instance.AppendLine("raise Event SFC , תיק זומן לבדיקה באתר משקף");
+
                                 var myInsertEventContextTagModel2 = new EventContextTagModel()
                                 {
                                     CallProccessID = EventContextTagModel.ProccessEnum.CH_NG_190_MSG1_NoticeToClientResponseServiceUpdate,
