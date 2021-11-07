@@ -259,8 +259,7 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 	         PaymentReceivedNotes,
 	         PoNumber,
 	      }
-	      }
-	      }
+
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
         List<PMPropertyNames> CustomMappedPMProperties=new List<PMPropertyNames>();
@@ -800,7 +799,7 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 			}
 
 			}
-			}
+			
 
 		public void POCOToPM(CargoTrackingShipmentPM entityPM, CargoTrackingShipment entityPOCO)
         {
