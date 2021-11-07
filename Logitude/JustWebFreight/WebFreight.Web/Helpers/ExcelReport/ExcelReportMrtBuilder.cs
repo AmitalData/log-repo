@@ -3,14 +3,12 @@ using Simplog.Data.CommonDataModel.Repositories;
 using Stimulsoft.Base.Drawing;
 using Stimulsoft.Report;
 using Stimulsoft.Report.Components;
-using Stimulsoft.Report.Components.Table;
 using Stimulsoft.Report.Components.TextFormats;
 using Stimulsoft.Report.Dictionary;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using System.Web;
 using WebFreight.Web.DataContracts;
 
 namespace WebFreight.Web.Helpers.ExcelReport
@@ -23,6 +21,9 @@ namespace WebFreight.Web.Helpers.ExcelReport
         private readonly ExcelDataProviderFieldsBuilder excelDataProviderFieldsBuilder;
         private StiReport stiReport;
         private Report report;
+        private int columnWidth = 2;
+        private double positionX;
+        private double positionY;
         public ExcelReportMrtBuilder(int tenant)
         {
             this.tenant = tenant;
@@ -43,11 +44,11 @@ namespace WebFreight.Web.Helpers.ExcelReport
 
             BuildDataProvider();
 
-            if(selectedFields!=null && selectedFields.Count > 0)
+            if (selectedFields != null && selectedFields.Count > 0)
             {
                 BuildReport(selectedFields);
             }
-    
+
             return stiReport.SaveToByteArray();
         }
 
@@ -82,19 +83,20 @@ namespace WebFreight.Web.Helpers.ExcelReport
             }
         }
 
-        private StiText CreateVariableText(int columnWidth, double positionX, double positionY, DataProviderField item)
+        private StiText CreateVariableText(DataProviderField variable)
         {
             StiText stiText = new StiText(new RectangleD(positionX, positionY, columnWidth, 0.5))
             {
                 HorAlignment = StiTextHorAlignment.Center,
-                Name = GetNameFromExpression(item.Expression) + "Text",
-                Text = item.Expression
+                Name = GetNameFromExpression(variable.Expression) + "Text",
+                Text = variable.Expression
             };
             stiText.HorAlignment = StiTextHorAlignment.Center;
             stiText.VertAlignment = StiVertAlignment.Center;
             stiText.Font = new Font("Arial", 8, FontStyle.Regular);
             stiText.TextBrush = new StiSolidBrush(Color.Black);
             stiText.WordWrap = true;
+            positionX += columnWidth;
             return stiText;
         }
 
@@ -103,19 +105,20 @@ namespace WebFreight.Web.Helpers.ExcelReport
             return expression.Replace("{", string.Empty).Replace("}", string.Empty).Replace(".", string.Empty);
         }
 
-        private StiText CreateVariableHeader(int columnWidth, double positionX, double positionY, DataProviderField item)
+        private StiText CreateVariableHeader(DataProviderField variable)
         {
             StiText stiText = new StiText(new RectangleD(positionX, positionY, columnWidth, 0.5))
             {
                 HorAlignment = StiTextHorAlignment.Center,
-                Name = GetNameFromExpression(item.Expression) + "TextLabel",
-                Text = item.Text + " : ",
+                Name = GetNameFromExpression(variable.Expression) + "TextLabel",
+                Text = variable.Text + " : ",
             };
             stiText.HorAlignment = StiTextHorAlignment.Center;
             stiText.VertAlignment = StiVertAlignment.Center;
             stiText.Font = new Font("Arial", 8, FontStyle.Bold);
             stiText.TextBrush = new StiSolidBrush(Color.Black);
             stiText.WordWrap = true;
+            positionX += columnWidth;
             return stiText;
         }
 
@@ -123,46 +126,60 @@ namespace WebFreight.Web.Helpers.ExcelReport
         {
             var variables = dataProviderFields.Where(x => x.Type != "List" && x.Type != "Class").ToList();
 
+            StiPageHeaderBand stiPageHeaderBand = CreateStiPageHeaderBand(variables.Count());
+            StiText stiText = CreateHeaderText(text, page);
 
-            StiPageHeaderBand stiBand = new StiPageHeaderBand
-            {
-                Height = ((double)variables.Count() / 4) + 0.7,
-                Name = "PageHeaderBand",
-            };
-            page.Components.Add(stiBand);
+            page.Components.Add(stiPageHeaderBand);
+            stiPageHeaderBand.Components.Add(stiText);
 
-            StiText stiText = new StiText(new RectangleD(0, 0, page.Width, page.Height / 20), text)
+            AddVariablesToHeader(variables, stiPageHeaderBand);
+        }
+
+        private StiText CreateHeaderText(string text, StiPage page)
+        {
+            return new StiText(new RectangleD(0, 0, page.Width, page.Height / 20), text)
             {
                 HorAlignment = StiTextHorAlignment.Center,
                 Font = new Font("Arial", 22.5f),
                 Name = "PageHeaderText",
             };
-            stiBand.Components.Add(stiText);
-            BindVariables(variables, stiBand);
         }
 
-        private void BindVariables(List<DataProviderField> variables, StiPageHeaderBand stiBand)
+        private StiPageHeaderBand CreateStiPageHeaderBand(int variablesCount)
         {
-            int columnWidth = 2;
-            double positionX = 0;
-            double positionY = 0.5;
-            foreach (var item in variables)
+            StiPageHeaderBand stiBand = new StiPageHeaderBand
             {
-                AddVariablesToHeader(stiBand, columnWidth, ref positionX, ref positionY, item);
+                Height = ((double)variablesCount / 4) + 0.7,
+                Name = "PageHeaderBand",
+            };
+            return stiBand;
+        }
+
+        private void AddVariablesToHeader(List<DataProviderField> variables, StiPageHeaderBand stiPageHeaderBand)
+        {
+            SetDefaultVariablesPositions();
+            foreach (var variable in variables)
+            {
+                AddVariableToHeader(stiPageHeaderBand, variable);
             }
         }
 
-        private void AddVariablesToHeader(StiPageHeaderBand stiBand, int columnWidth, ref double positionX, ref double positionY, DataProviderField item)
+        private void AddVariableToHeader(StiPageHeaderBand stiPageHeaderBand, DataProviderField variable)
         {
             if (positionX != 0 && positionX % 8 == 0)
             {
                 positionX = 0;
                 positionY += 0.5;
             }
-            stiBand.Components.Add(CreateVariableHeader(columnWidth, positionX, positionY, item));
-            positionX += columnWidth;
-            stiBand.Components.Add(CreateVariableText(columnWidth, positionX, positionY, item));
-            positionX += columnWidth;
+            stiPageHeaderBand.Components.Add(CreateVariableHeader(variable));
+            stiPageHeaderBand.Components.Add(CreateVariableText(variable));
+
+        }
+
+        private void SetDefaultVariablesPositions()
+        {
+            positionX = 0;
+            positionY = 0.5;
         }
 
         private void AddFooter(StiPage page)
@@ -227,7 +244,6 @@ namespace WebFreight.Web.Helpers.ExcelReport
             page.Components.Add(dataBand);
 
 
-            int columnWidth = 2;
             double pos = 0;
             totalWidth = columnWidth * dataProviderField.Fields.Count();
             foreach (var item in dataProviderField.Fields.Where(x => x.Type != "List" && x.Type != "Class").ToList())
