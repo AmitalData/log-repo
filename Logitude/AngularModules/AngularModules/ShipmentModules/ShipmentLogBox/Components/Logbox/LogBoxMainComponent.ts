@@ -79,7 +79,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
     } 
      
     private HasOneDirectionFilter() {
-        return ((!this.IsExportActivated && !this.IsImportActivated) || (this.IsExportActivated && !this.IsImportActivated) || (this.IsImportActivated && !this.IsExportActivated));
+        return !(this.IsExportActivated && this.IsImportActivated)
     }
 
     private InitializeServices() {
@@ -412,11 +412,9 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
     SetPrivateLabelDirectionFilters(shipmentsQueriesCountsArgs: ShipmentsQueriesCountsArgs) {
 
         if (!shipmentsQueriesCountsArgs.DirectionId && this.ShowDirectionFilters) {
-            shipmentsQueriesCountsArgs.DirectionId = 'I';
-            shipmentsQueriesCountsArgs.DirectionOperator = 'NotEqual'; 
+            this.ExecludeImportShipmentsFilters(shipmentsQueriesCountsArgs); 
         } else {
-            this.SetCustomShipmentFilters(shipmentsQueriesCountsArgs);
-            this.SetExportShipmentFilters(shipmentsQueriesCountsArgs);
+            this.SetPrivateLabelDriectionId(shipmentsQueriesCountsArgs);
         }
 
         if (!this.IsImportActivated && !this.IsExportActivated) {
@@ -426,6 +424,16 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
          
 
     }
+    private SetPrivateLabelDriectionId(shipmentsQueriesCountsArgs: ShipmentsQueriesCountsArgs) {
+        this.SetCustomShipmentFilters(shipmentsQueriesCountsArgs);
+        this.SetExportShipmentFilters(shipmentsQueriesCountsArgs);
+    }
+
+    private ExecludeImportShipmentsFilters(shipmentsQueriesCountsArgs: ShipmentsQueriesCountsArgs) {
+        shipmentsQueriesCountsArgs.DirectionId = 'I';
+        shipmentsQueriesCountsArgs.DirectionOperator = 'NotEqual';
+    }
+
     SetFilterOptions(directionId: string, directionOperator: string, shipmentsQueriesCountsArgs: ShipmentsQueriesCountsArgs) {
         this.SelectedDirectionFilter = directionId;;
         shipmentsQueriesCountsArgs.DirectionId = directionId;

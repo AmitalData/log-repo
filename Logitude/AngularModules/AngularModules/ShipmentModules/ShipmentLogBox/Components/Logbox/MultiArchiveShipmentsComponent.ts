@@ -84,12 +84,16 @@ export class MultiArchiveShipmentsComponent extends BaseComponent implements OnI
 
     SetDirectionsFilters() {
         if (this.IsPrivateLabel && this.HasOneDirectionFilter()) {
-            this.ShowDirectionFilters = false;
-            this.SetDefaultCustomDirection();
+            this.SetFiltersOptions();
         }
         else {
             this.ShowDirectionFilters = true;
         }
+    }
+
+    private SetFiltersOptions() {
+        this.ShowDirectionFilters = false;
+        this.SetDefaultCustomDirection();
     }
 
     private SetDefaultCustomDirection() {
@@ -99,7 +103,7 @@ export class MultiArchiveShipmentsComponent extends BaseComponent implements OnI
     }
 
     private HasOneDirectionFilter() {
-        return ((!this.IsExportActivated && !this.IsImportActivated) || (this.IsExportActivated && !this.IsImportActivated) || (this.IsImportActivated && !this.IsExportActivated));
+        return !(this.IsExportActivated && this.IsImportActivated)
     }
 
 
