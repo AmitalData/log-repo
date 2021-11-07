@@ -3394,7 +3394,7 @@ namespace HypredTest
                 QuoteNumber = "1000",
                 TruckerId = "TEP",
                 AssignedToTruckerDate = DateTime.Today,
-                ForwarderPartnerId = "BV",
+                FreightForwarderId = "BV",
             };
 
             ShipmentProxy.ShipmentWcfServiceClient shipmentservice = new ShipmentProxy.ShipmentWcfServiceClient();

@@ -234,7 +234,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.ServicesHelpe
         }
         public static void UpdateWaterMarksTable(CargoTrackingTable table, string date, string connectionString)
         {
-            var todayDate = TenantServerConfigration.GetCurrentDateTime(0);
+            var todayDate = TenantServerConfigration.GetCurrentDateTime(0).ToString("MM/dd/yyyy hh:mm:ss.fff tt");
             string setLastUpdateDateCommand = "update  CargoTrackingWatermarks set LastUpdateDate = '" + date + "',LastRun = '" + todayDate + "' where tableName = '" + table.Main_CargoTracking_TableName + "'";
             ExecuteSql(setLastUpdateDateCommand, connectionString);
 
