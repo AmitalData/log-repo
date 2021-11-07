@@ -116,7 +116,7 @@
                     </td>
 
                     <td style="width: 142px; vertical-align: middle; position:relative;">
-                        <DirectionsFilter [HideExport]="isLogbox || !HasLogBoxExportToggle" [ShowCustomFilter]="isLogbox" [HideImportDomistic]="!IsImportActivated" [HideAMANACFilters]="'true'" (SelectedValueChanged)="SelectedDirectionFilter = $event"></DirectionsFilter>
+                         <DirectionsFilter *ngIf="ShowDirectionFilters" [HideExport]="isLogbox || !IsExportActivated" [ShowCustomFilter]="isLogbox|| IsImportActivated" [HideImportDomistic]="isLogbox|| IsPrivateLabel" [HideAMANACFilters]="true" (SelectedValueChanged)="SelectedDirectionFilter = $event"></DirectionsFilter>
                     </td>
                    
 

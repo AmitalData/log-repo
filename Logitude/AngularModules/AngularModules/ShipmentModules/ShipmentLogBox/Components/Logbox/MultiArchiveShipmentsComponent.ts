@@ -49,7 +49,8 @@ export class MultiArchiveShipmentsComponent extends BaseComponent implements OnI
     public isLogbox = SystemEnvironmentService.IsLogBox();
     public IsExportActivated: boolean = false;
     public IsImportActivated: boolean = false;
-    public HasLogBoxExportToggle: boolean = false;
+    public HasLogBoxExportToggle: boolean = false; 
+    public ShowDirectionFilters: boolean = false;
 
     constructor(private _entityListService: EntityListService) {
         super();
@@ -65,22 +66,47 @@ export class MultiArchiveShipmentsComponent extends BaseComponent implements OnI
     private setLogBoxExportToggle() {
         let exportFeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "LEX")[0];
         if (exportFeatureToggle) {
-            this.HasLogBoxExportToggle = true;
-
+            this.SetExportFields();
         }
     }
 
+    private SetExportFields() {
+        this.HasLogBoxExportToggle = true;
+        this.IsExportActivated = true;
+    }
+
     ngOnInit() {
-        this.handlePrivateLable();
+        this.handlePrivateLable(); 
+        this.SetDirectionsFilters();
         this.LoadImporterShipments();
     }
+
+
+    SetDirectionsFilters() {
+        if (this.IsPrivateLabel && this.HasOneDirectionFilter()) {
+            this.ShowDirectionFilters = false;
+            if (!this.IsImportActivated && !this.IsExportActivated) {
+                this.IsImportActivated = true;
+            }
+        }
+        else {
+            this.ShowDirectionFilters = true;
+        }
+    }
+
+    private HasOneDirectionFilter() {
+        return ((!this.IsExportActivated && !this.IsImportActivated) || (this.IsExportActivated && !this.IsImportActivated) || (this.IsImportActivated && !this.IsExportActivated));
+    }
+
 
     private handlePrivateLable() {
         if (SessionLocator.PrivateLableSettings) {
             this.IsPrivateLabel = true;
             this.IsDSV = SessionLocator.PrivateLableSettings.PrivateLabelDomain.toLowerCase().indexOf("dsv") > -1;
-            this.IsExportActivated = SessionLocator.PrivateLableSettings.IsExportActivated;
+            //this.IsExportActivated = SessionLocator.PrivateLableSettings.IsExportActivated;
             this.IsImportActivated = SessionLocator.PrivateLableSettings.IsImportActivated;
+
+           
         }
     }
 
@@ -388,7 +414,7 @@ export class MultiArchiveShipmentsComponent extends BaseComponent implements OnI
         }
 
         this.FilterLogboxShipments();
-
+        this.FilterPrivateLabelShipments();
         this.filterAgrs.SortBy = "StatusDate";
         this.filterAgrs.SortDirection = "Descending";
         this.MenuHeaderchangeevent.emit({ Filters: this.filterAgrs, IgnoreFilter: false });
@@ -397,6 +423,47 @@ export class MultiArchiveShipmentsComponent extends BaseComponent implements OnI
     private FilterLogboxShipments() {
         if (this.isLogbox) {
             this.filterAgrs.addAdditionalFilter("DirectionId", "E", null, null, "NotEqual", true, true, false, "String");
+        }
+    }
+
+    FilterPrivateLabelShipments() {
+
+        if (this.ShowDirectionFilters) {
+            this.filterAgrs.addAdditionalFilter("DirectionId", "I", null, null, "NotEqual", true, true, false, "String");
+        } else {
+            if (this.IsImportActivated) {
+                this.filterAgrs.addAdditionalFilter("DirectionId", "C", null, null, "Equal", true, true, false, "String");
+            }
+            if (this.IsExportActivated) {
+                this.filterAgrs.addAdditionalFilter("DirectionId", "E", null, null, "Equal", true, true, false, "String");
+            }
+        }
+
+    }
+
+    SetDefaultFilters() {
+        if (!this.IsImportActivated && !this.IsExportActivated) {
+            this.IsImportActivated = true;
+            this.filterAgrs.addAdditionalFilter("DirectionId", "C", null, null, "Equal", true, true, false, "String");
+        }
+    }
+    private SetImportAdditonalFilters() {
+      //  if (this.IsImportActivated && this.IsExportActivated) {
+            this.filterAgrs.addAdditionalFilter("DirectionId", "I", null, null, "NotEqual", true, true, false, "String");
+     //   }
+    }
+
+    private SetExportAdditonalFilters() {
+        if (!this.IsImportActivated && this.IsExportActivated) {
+            this.filterAgrs.addAdditionalFilter("DirectionId", "E", null, null, "Equal", true, true, false, "String");
+
+        }
+    }
+
+    private SetCustomAdditonalFilters() {
+        if (this.IsImportActivated && !this.IsExportActivated) {
+            this.filterAgrs.addAdditionalFilter("DirectionId", "C", null, null, "Equal", true, true, false, "String");
+
         }
     }
     private AddDirectionFilter() {
