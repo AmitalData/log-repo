@@ -333,12 +333,12 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
 
         private void TraceBookingArrangement()
         {
-            if (entityMasterData.MainCarriageETD == null && entityPM.MainCarriageETD != null)
+            if (entityMasterData != null && entityMasterData.MainCarriageETD == null && entityPM.MainCarriageETD != null)
             {
                 this.CreateTraceEvent("BKAR");
             }
 
-            else if (entityMasterData.MainCarriageETD != null && entityPM.MainCarriageETD == null)
+            else if (entityMasterData != null && entityMasterData.MainCarriageETD != null && entityPM.MainCarriageETD == null)
             {
                 this.DeleteTraceEvent("BKAR");
             }

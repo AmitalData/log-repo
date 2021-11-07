@@ -76,7 +76,7 @@ export class AccountingSelectors extends RegexSelectors {
     public static readonly ARPaymentSave = '#ARPayment-Save';
     public static readonly ARPaymentBApprove = '#ARPaymentBApprove';
     public static readonly ARPaymentCurrency = '#ARPayment_PaymentCurrencyId';
-    
+
     //#endregion
     //#region ARInvoice
     public static readonly ARInvoiceBranch = '#ARInvoice_BranchId';
@@ -85,7 +85,7 @@ export class AccountingSelectors extends RegexSelectors {
     public static readonly ARInvoicePaymentTerm = '#ARInvoice_PaymentTermId';
     public static readonly ARInvoiceInvoiceDate = '#date_ARInvoice_InvoiceDate';
     public static readonly ARInvoiceInvoiceCurrency = '#ARInvoice_InvoiceCurrencyId';
-    public static readonly LogLovARInvoiceInvoiceCurrency ="#LogLov_ARInvoice_InvoiceCurrencyId"
+    public static readonly LogLovARInvoiceInvoiceCurrency = "#LogLov_ARInvoice_InvoiceCurrencyId"
     public static readonly ARInvoicePartner = "#ARInvoice_PartnerId"
     public static readonly CreateCreditNoteARInvoiceButton = '#CreateCreditNote';
     public static readonly CreateARInvoiceButton = '#CreateARInvoice';
@@ -94,6 +94,7 @@ export class AccountingSelectors extends RegexSelectors {
     public static readonly ARInvoiceVatType = '#ARInvoice_VatTypeId';
     public static readonly ARInvoiceApproveButton = "button[id^='ARInvoiceBApprove']:last";
     public static readonly ARInvoiceSetAsSentButton = '#ARInvoiceBSetAsSent';
+    public static readonly ARInvoiceEventNote = '#ARInvoice_EventNote';
     public static readonly ARInvoiceAutoCreditButton = '#ARInvoiceBAutoCredit';
     public static readonly ARInvoiceSaveButton = '#ARInvoiceBSaveAsDraft';
     public static readonly ARInvoiceVoidButton = '#ARInvoiceBVoid';
@@ -107,6 +108,13 @@ export class AccountingSelectors extends RegexSelectors {
     public static readonly LogLovARInvoicePartnerId = "#LogLov_ARInvoice_PartnerId"
     public static readonly IsConsolidationChecked = "checkbox[id^='IsConsolidationChecked']"
     public static readonly ARInvoiceReTransfer = '#ARInvoiceBReTransfer'
+    public static readonly ARInvoiceBillTo = '#ARInvoice_BillToId';
+    public static readonly ARInvoiceBillToAddress = '#ARInvoice_BillToAddressId';
+    public static readonly ARInvoiceRegionalTax = '#ARInvoice_RegionalTaxId';
+    public static readonly ARInvoiceInvoiceNumber = '#ARInvoice_InvoiceNumber';
+    public static readonly ARInvoiceEventsTab = '#ARInvoiceTHEvents';
+    public static readonly ARInvoiceDetails = '#ARInvoiceTHDetails';
+
     //#region contain 
 
     public static readonly ContainDraftInvoices = "Draft Invoices"
@@ -114,7 +122,7 @@ export class AccountingSelectors extends RegexSelectors {
     public static readonly ContainTransferredSuccessfully = "Transferred Successfully"
     public static readonly ContainNotReadyInvoices = "Not Ready Invoices"
     public static readonly ContainNewTransfer = "New Transfer"
-    
+
     public static readonly ContainsARInvoice = "ARInvoice:";
     public static readonly AutoCredit = "Auto Credit";
     public static readonly AutoCredited = "Auto Credited";
@@ -152,13 +160,13 @@ export class AccountingSelectors extends RegexSelectors {
 
     public static readonly ARInvoiceHeaderStatusName = "[id^='ARInvoiceHeaderStatusName']:last";
     //#endregion
-//#region check all in new transfer window
-public static readonly CheckAll='[data-cy="CheckALL"]'
-//#endregion
+    //#region check all in new transfer window
+    public static readonly CheckAll = '[data-cy="CheckALL"]'
+    //#endregion
     public static EditShipmentLineIcon(ShipmentNumber: string): string {
         return "iconbutton[data-cy^=EditShipmentLine_" + ShipmentNumber + "]";
     }
-    public static TransferCheckBox(ARInvoiceNumber:string){
+    public static TransferCheckBox(ARInvoiceNumber: string) {
         return "[data-cy='CheckBox" + ARInvoiceNumber + "']";
     }
 }

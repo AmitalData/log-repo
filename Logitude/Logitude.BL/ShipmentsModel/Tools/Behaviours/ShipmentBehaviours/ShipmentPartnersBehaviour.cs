@@ -35,6 +35,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
             HandleFreightForwarder();
             HandleNotify1();
             HandleInlandDemosticPartners();            
+            HandleConsigneeNotImporter();
         }
 
         private void HandleShipper()
@@ -357,6 +358,38 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
             else
             {
                 entityPM.Notify1ContactId = card.PrimaryContactId;
+            }
+        }
+        private void HandleConsigneeNotImporter()
+        {
+            string cardId = entityPM.ConsigneeNotImporterId;
+
+            if (string.IsNullOrEmpty(cardId))
+            {
+                entityPM.ConsigneeNotImporterName = null;
+                entityPM.ConsigneeNotImporterNote = null;
+                entityPM.ConsigneeNotImporterContactId = null;
+                entityPM.ConsigneeNotImporterAddressId = null;
+                entityPM.ConsigneeNotImporterReference = null;
+            }
+
+            else if (entityPM.IsExternalAPI)
+            {
+                Card card = CardRepository.GetSingleCard(cardId, initializer.Tenant, true);
+                if (card != null)
+                {
+                    entityPM.ConsigneeNotImporterName = card.EnglishName;
+
+                    if (string.IsNullOrWhiteSpace(entityPM.ConsigneeNotImporterContactId))
+                    {
+                        entityPM.ConsigneeNotImporterContactId = card.PrimaryContactId;
+                    }
+
+                    if (string.IsNullOrWhiteSpace(entityPM.ConsigneeNotImporterAddressId))
+                    {
+                        entityPM.ConsigneeNotImporterAddressId = initializer.AddressRepository.GetMainAddressId(cardId, initializer.Tenant);
+                    }
+                }
             }
         }
 

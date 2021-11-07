@@ -382,8 +382,7 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
         this.EntityPM.IsImporterShipment = true;
         this.EntityPM.CustomerId = SessionLocator.TenantPM.CustomerId;
         this.EntityPM.CustomerName = SessionLocator.TenantPM.CustomerId; 
-        this.EntityPM.CreatedByUserId = SessionLocator.LoggedUserId;
-        this.EntityPM.ConsigneeId = SessionLocator.TenantPM.CustomerId;
+        this.EntityPM.CreatedByUserId = SessionLocator.LoggedUserId; 
         this.EntityPM.NewConcurrencyGUID = Guid.newGuid();
         this.EntityPM.Tenant = SessionLocator.Tenant;
         this.EntityPM.ShipmentCustomerTypeCode = "SHI";
@@ -518,6 +517,9 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
     public get ShipperName() { return this.EntityPM.ShipperName }
     public set ShipperName(newValue: string) { this.EntityPM.ShipperName = newValue; }
 
+    public get ConsigneeName() { return this.EntityPM.ConsigneeName }
+    public set ConsigneeName(newValue: string) { this.EntityPM.ConsigneeName = newValue; }
+     
 
     get PrivateLabelInvoiceNumber() { return this.EntityPM.PrivateLabelInvoiceNumber; }
     set PrivateLabelInvoiceNumber(newValue: string) {

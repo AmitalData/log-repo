@@ -19,6 +19,7 @@ export function FillAPInvoiceDetails(aPInvoiceDetails: APInvoiceDetails) {
     cy.FillLogTextBox(APInvoiceSelectors.APInvoiceInvoiceNumber, generatedInvoiceNumber)
     cy.FillLogTextBox(APInvoiceSelectors.APInvoiceAmountInInvoice, aPInvoiceDetails.InvoiceAmount);
     cy.FillDate(APInvoiceSelectors.APInvoiceInvoiceDate, aPInvoiceDetails.InvoiceDate)
+    cy.FillDate(APInvoiceSelectors.APInvoiceAccountingDate, aPInvoiceDetails.AccountingDate)
 }
 
 export function CreateAPInvoice() {

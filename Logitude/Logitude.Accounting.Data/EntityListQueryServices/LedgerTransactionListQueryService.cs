@@ -178,7 +178,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 
                                                         }).Distinct().ToList();
            
-            List<LedgerTransactionList> creditLines = GetTaxJournalLines(transactions);
+            List<LedgerTransactionList> creditLines = GetTaxJournalLines(transactions, taxReport.Tenant);
             transactions= ExcludeDuplicatedLinesForTheSameJournal(creditLines, transactions);         
             return transactions.Concat(creditLines).ToList();
 
@@ -189,9 +189,10 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
             transactions = transactions.Where(d => !journalids.Contains(d.JournalId)).ToList();
             return transactions;
         }
-        private List<LedgerTransactionList> GetTaxJournalLines(List<LedgerTransactionList> transactions)
+        private List<LedgerTransactionList> GetTaxJournalLines(List<LedgerTransactionList> transactions, int tenant)
         {
-            return GetCreditLinesFromSelectedTransactionsGroupedByJournalId(transactions);
+            List<JournalLine> journalLines = GetJournalLinesForTransactions(transactions, tenant);
+            return GetCreditLinesFromSelectedTransactionsGroupedByJournalId(transactions, journalLines);
         }
         public List<LedgerTransactionList> GetLedgerTransactionsOutputNotIncludedInTaxReports(int tenant, string accountId)
         {
@@ -239,15 +240,22 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                            CalculatedLocalAmount = ledger.LocalAmountCredit != 0 ? ledger.LocalAmountCredit : ledger.LocalAmountDebit
 
                                                        }).Distinct().ToList();
-            List<LedgerTransactionList> creditLines = GetTaxJournalLines(outputLines);
+            List<LedgerTransactionList> creditLines = GetTaxJournalLines(outputLines, tenant);
             outputLines = ExcludeDuplicatedLinesForTheSameJournal(creditLines, outputLines);
             return outputLines.Concat(creditLines).ToList();
         }
-        private List<LedgerTransactionList> GetCreditLinesFromSelectedTransactionsGroupedByJournalId(List<LedgerTransactionList> outputLines)
+        private List<JournalLine> GetJournalLinesForTransactions(List<LedgerTransactionList> transactions, int tenant)
+        {
+            List<string> transactionIds = transactions.Select(d => d.Id).ToList();
+            JournalLineRepository journalLineRepository = new JournalLineRepository(tenant);
+            return journalLineRepository.GetJournalLineByLedgerTransactionIdList(transactionIds, tenant);
+        }
+        private List<LedgerTransactionList> GetCreditLinesFromSelectedTransactionsGroupedByJournalId(List<LedgerTransactionList> outputLines, List<JournalLine> JournalLines)
+
         {
             return (from ledger in outputLines
-                    join journalLine in context.JournalLines
-                     on new { p1 = ledger.JournalId, p2 = ledger.JournalLineNumber } equals new { p1 = journalLine.JournalId, p2 = journalLine.Line }
+                    join journalLine in JournalLines
+                on new { ledger.JournalId, Line = ledger.JournalLineNumber } equals new { journalLine.JournalId, journalLine.Line }
                     where journalLine.ActionCode == CreditTypeJournalLine
                     group ledger by ledger.JournalId into gp
                     select new LedgerTransactionList()

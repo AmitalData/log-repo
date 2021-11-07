@@ -867,6 +867,10 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
             {
                 entityPM.ShipperName = entityAM.ShipperName;
             }
+            if (!string.IsNullOrEmpty(entityAM.ConsigneeName))
+            {
+                entityPM.ConsigneeName = entityAM.ConsigneeName;
+            }
             if (!string.IsNullOrEmpty(entityAM.CarrierTransportDocumentNumber))
             {
                 entityPM.CarrierTransportDocumentNumber = entityAM.CarrierTransportDocumentNumber;

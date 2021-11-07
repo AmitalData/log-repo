@@ -15,6 +15,7 @@ export function FillAPPayment(aPPaymentDetails: APPaymentDetails) {
     cy.FillLogLov(APPaymentSelectors.APPaymentVendor, aPPaymentDetails.Vendor, false)
     cy.FillLogLov(APPaymentSelectors.APPaymentMethod, aPPaymentDetails.PaymentMethod, true)
     cy.FillLogTextBox(APPaymentSelectors.APPaymentAmount, aPPaymentDetails.PaymentAmount)
+    cy.FillLogTextBox(APPaymentSelectors.APPaymentRegisterDate, aPPaymentDetails.RegisterDate)
 }
 
 export function SaveAPPayment() {

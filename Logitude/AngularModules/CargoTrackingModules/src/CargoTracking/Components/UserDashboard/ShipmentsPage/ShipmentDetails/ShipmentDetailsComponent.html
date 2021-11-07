@@ -403,22 +403,26 @@ cargoTrackingShipmentPM.ArrivalDate |
 
     <panel style="order: 4;" [Title]="'Cargo Info'" [Name]="'Cargo'" [HaveDetailsSection]=" cargoTrackingShipmentPM.EntityType != 'O'"
            [ShowWhitePanelOnMobile]="true"
+
            [DetailsTitle]="cargoTrackingShipmentPM.TransportModeId != 'A' ? 'Container List' : 'Packages List'"
-           [DetailsSectionToggleEvent]="DetailsSectionToggleEvent">
+           [InputDetailsSectionToggleEvent]="DetailsSectionToggleEvent"
+           (OutputDetailsSectionToggleEvent)="ChangeShowDetailsSectionValue($event)">
 
         <div body>
-            <div class="data-cards" *ngIf="cargoTrackingShipmentPM">
-                <div  *ngIf="cargoTrackingShipmentPM.EntityType != 'O'" class="hide-mobile">
 
+            <div class="data-cards" *ngIf="cargoTrackingShipmentPM">
+                <div  *ngIf="cargoTrackingShipmentPM.EntityType != 'O'" class="hide-mobile" style="width:170px">
+                  
                     <div class="title" *ngIf="cargoTrackingShipmentPM.TransportModeId == 'A'">PACKAGE TYPE</div>
                     <div class="title" *ngIf="cargoTrackingShipmentPM.TransportModeId != 'A'">CONTAINER TYPE</div>
-                    <div *ngIf="cargoTrackingShipmentPM.EntityType != 'O'" class="description">
-                        <div *ngFor="let package of cargoTrackingShipmentPM.Packages?.slice(0,1), let i = index">
-                            {{package.PackageTypeName}}
-                            <a *ngIf="cargoTrackingShipmentPM.Packages.length > 1 && i == 0" (click)="ShowMoreLinkClicked()"
-                               style="cursor: pointer; font-size: 11px;color:var(--MainColor)">
-                                {{ShowDetailsSection?'Show less':'Show more'}}
-                            </a>
+                    <div *ngIf="cargoTrackingShipmentPM.EntityType != 'O'" style="width:170px">
+                        <div *ngFor="let package of cargoTrackingShipmentPM.Packages.slice(0,2), let i = index" style="display:flex;flex-direction:row">
+                            <div class="description TextTrimming"> {{package.PackageTypeName}}</div>
+                            <i class="las la-chevron-circle-up" style="color: var(--MainColor);margin-top:5px"
+                               *ngIf="cargoTrackingShipmentPM.Packages.length > 1 && i == 1 && ShowDetailsSection" (click)="ShowMoreLinkClicked()"></i>
+
+                            <i class="las la-chevron-circle-down" style="color: var(--MainColor);margin-top:5px"
+                               *ngIf="cargoTrackingShipmentPM.Packages.length > 1 && i == 1 && !ShowDetailsSection" (click)="ShowMoreLinkClicked()"></i>
                         </div>
                     </div>
                 </div>
@@ -457,8 +461,11 @@ cargoTrackingShipmentPM.ArrivalDate |
                     <div class="description">
                         <div *ngFor="let container of ContainersNumbers?.slice(0,2), let i = index">
                             {{container}}
-                            <a *ngIf="ContainersNumbers.length > 2 && i == 1" (click)="ShowMoreLinkClicked()"
-                               style="cursor: pointer; font-size: 11px;color:var(--MainColor)"> {{ShowDetailsSection?'Show less':'Show more'}} </a>
+                            <i class="las la-chevron-circle-up" style="color: var(--MainColor)"
+                               *ngIf="ContainersNumbers.length > 2 && i == 1 && ShowDetailsSection" (click)="ShowMoreLinkClicked()"></i>
+
+                            <i class="las la-chevron-circle-down" style="color: var(--MainColor)"
+                               *ngIf="ContainersNumbers.length > 2 && i == 1 && !ShowDetailsSection" (click)="ShowMoreLinkClicked()"></i>
                         </div>
                     </div>
                 </div>

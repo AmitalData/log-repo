@@ -14,7 +14,10 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly ConfirmWindowYes = '#ConfirmWindow_Yes_0';
   public static readonly SaveClose = '#SaveClose';
   public static readonly ShipmentSaveButton = '#Shipment-Save';
+  public static readonly ShipmentSaveButton_Number = '[id^=Shipment-Save_]'
   public static readonly ShipmentShipper = '#Shipment_ShipperId';
+  public static readonly ShipmentShipperAddressId = '#Shipment_ShipperAddressId';
+  public static readonly ShipmentShipperContactId = '#Shipment_ShipperContactId';
   public static readonly ShipmentConsignee = '#Shipment_ConsigneeId';
   public static readonly ShipmentCustomerType = '#Shipment_ShipmentCustomerTypeCode';
   public static readonly Backbutton_1 = '#EditBackbutton_1';
@@ -51,6 +54,7 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly PackagesTab_Number = '[id^=ShipmentTHPackages]'
   public static readonly ReceivablesTab = '#ShipmentTHReceivables';
   public static readonly RoutingsTab = '#ShipmentTHRoutings';
+  public static readonly RoutingsTab_Number = '[id^=ShipmentTHRoutings]'
   public static readonly PayablesTab = '#ShipmentTHPayables';
   public static readonly DocsOutTab = '#ShipmentTHDocsOut';
   public static readonly DocsInTabb = '#ShipmentTHDocsIn';
@@ -87,6 +91,11 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly OrderPackageWidth = '#ShipmentOrderPackage_Width';
   public static readonly OrderPackageHeight = '#ShipmentOrderPackage_Height';
   public static readonly OrderOKButton = '#OrderOKbtn';
+  public static readonly ShipmentOrderGrossWeight = '#Shipment_OrderGrossWeight';
+  public static readonly ShipmentBookingVolume = '#Shipment_BookingVolume';
+  public static readonly ShipmentOrderChargeableWeight = '#Shipment_OrderChargeableWeight';
+  public static readonly ShipmentOrderIsDangerouseGoods = '#Shipment_OrderIsDangerouseGoods';
+
   //#endregion
 
   //#region Partner tab
@@ -121,6 +130,11 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly ShipmentReleasingAgent = '#Shipment_ReleasingAgentId';
   public static readonly PartnerOKButton = '#PartnerOKbtn';
   public static readonly PartnerEditShipper = '#Edit-Shipper';
+  public static readonly PartnerEditAgent = '#Edit-Agent';
+  public static readonly AddPartnerButton = '[id^=Add-Partner]'
+  public static readonly ShipmentAgentContact = '#Shipment_AgentContactId';
+  public static readonly SetCustomerText = '.SetCustomerText';
+
   //#endregion
 
   //#region Package tab fields
@@ -166,9 +180,12 @@ export class ShipmentSelectors extends RegexSelectors {
 
   //#region Routing tab fields
   public static readonly RoutingToggle = '#RoutingToggle';
+  public static readonly RoutingToggle_Number = '[id^=RoutingToggle]'
   public static readonly StorageCalculationScreen = '.LogitudeSectionBody';
   public static readonly PickUp = '#PickUp';
+  public static readonly AddPickUp = '#Add-PickUp';
   public static readonly Delivery = '#Delivery';
+  public static readonly AddDelivery = '#Add-Delivery';
   public static readonly PreCarriage = '#PreCarriage';
   public static readonly AddWarehouse = '#Add-WarehouseLeg';
   public static readonly EditWarehouseLeg = '#Edit-WarehouseLeg';
@@ -211,15 +228,24 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly ShipmentPreCarriageFromPort = '#Shipment_PreCarriageFromPortId';
   public static readonly ShipmentPreCarriageToPort = '#Shipment_PreCarriageToPortId';
   public static readonly PreCarriageOKBtn = '#PreCarriageOKBtn';
+  public static readonly EditPreCarriage_Number = '[id^=Edit-PreCarriage]'
   public static readonly ShipmentOnCarriageTransportMode = '#Shipment_OnCarriageTransportModeId';
   public static readonly ShipmentOnCarriageFromPort = '#Shipment_OnCarriageFromPortId';
   public static readonly OnCarriage = '#OnCarriage';
   public static readonly ShipmentOnCarriageToPort = '#Shipment_OnCarriageToPortId';
   public static readonly OnCarriageOKBtn = '#OnCarriageOKBtn';
+  public static readonly EditOnCarriage_Number = '[id^=Edit-OnCarriage]'
   public static readonly MainCarrigeVessel = 'input[id^=Shipment_MainCarriageVesselId_]';
   public static readonly MainCarrigeVoyageNo = 'input[id^=Shipment_MainCarriageCarrierNumber_]';
   public static readonly AddWarehouseLegPickups = '#Add-WarehouseLeg_Pickups';
   public static readonly WarehouseLegTerminal = '#Shipment_WarehouseLegWarehouseId';
+
+  public static readonly PreForwarding = '#PreForwarding';
+  public static readonly OnForwarding = '#OnForwarding';
+  public static readonly ShipmentPreForwardingTransportModeId = '#Shipment_PreForwardingTransportModeId';
+  public static readonly ShipmentPreForwardingFromPortId = '#Shipment_PreForwardingFromPortId';
+  public static readonly ShipmentOnForwardingTransportModeId = '#Shipment_OnForwardingTransportModeId';
+  public static readonly ShipmentOnForwardingToPortId = '#Shipment_OnForwardingToPortId';
 
   //Warehouse
   public static readonly ShipmentWarehouseLegExpectedEntryDate = "#date_Shipment_WarehouseLegExpectedEntryDate"
@@ -316,6 +342,7 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly ShipmentMainCarriageETDTime = "#time_Shipment_MainCarriageETD";
   public static readonly ShipmentDescriptionOfGoods = "#Shipment_DescriptionOfGoods";
   public static readonly ShipmentBookingConfirmationNumber = "#Shipment_BookingConfirmationNumber";
+  public static readonly ShipmentBookingConfirmedBy = "#Shipment_BookingConfirmedBy";
   public static readonly EditShipper = "#Edit-Shipper";
   public static readonly ShipmentShipperContact = "#Shipment_ShipperContactId";
   public static readonly ContactEnglishName = "#Contact_EnglishName";

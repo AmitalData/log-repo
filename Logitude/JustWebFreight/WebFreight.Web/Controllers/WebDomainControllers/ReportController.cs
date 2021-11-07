@@ -39,7 +39,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 List<ReportList> result = new List<ReportList>();
                 ReportRepository reportRepository = new ReportRepository(tenant);
                 ReportQuery reportQuery = new ReportQuery(reportRepository);
-                List<ReportList> reportLists = reportQuery.GetReportListsByGroupIdAndTenant(groupId, tenant).Where(d => d.Code == "CUPA" || !string.IsNullOrEmpty(d.DefaultTemplateId)).OrderBy(d => d.Name).ToList();
+                List<ReportList> reportLists = reportQuery.GetReportListsByGroupIdAndTenant(groupId, tenant).Where(d => d.Code == "CUPA" || !string.IsNullOrEmpty(d.DefaultTemplateId) || !string.IsNullOrEmpty(d.DefaultExcelTemplateId)).OrderBy(d => d.Name).ToList();
 
                 return Request.CreateResponse(HttpStatusCode.OK, reportLists);
             }

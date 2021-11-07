@@ -51,12 +51,32 @@ Feature: AR Invoice Credit Note Approve, Set as Sent and Void
         Then the invoice should approve successfully
         And the status value should be "Unpaid"
 
+    Scenario: Assert invoice details screen fields after approving the invoice
+        Then the details screen fields should be disabled
+
+    Scenario: Assert link of the invoice exsit
+        Given navigates receivables tab
+        Then the link of the invoice should be exsit
+
     Scenario: Set credit note ARInvoice as sent
-        When set invoice as sent
+        Given navigates invoice workspace
+        When set invoice as sent with "sent invoice" as a note
         Then the invoice should set as sent successfully
         And the status value should be "Unpaid"
+        And the following event should appear in events tab
+            | Event        | Notes        |
+            | Invoice Sent | sent invoice |
 
     Scenario: Void credit note ARInvoice
         When void invoice
         Then the invoice should void successfully
         And the status value should be "Void"
+
+    Scenario: Assert invoice details screen fields after void the invoice
+        Given navigates details tab
+        Then the details screen fields should be disabled
+
+    Scenario: Assert link of the invoice not exsit and delete receivable existes
+        Given navigates receivables tab
+        Then the link of the invoice should not be exsit
+        And delete receivable button should appear

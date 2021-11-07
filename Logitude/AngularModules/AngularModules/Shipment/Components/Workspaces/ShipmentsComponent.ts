@@ -708,7 +708,7 @@ export class ShipmentsComponent {
             this.filterAgrs.addAdditionalFilter("DirectionId", this.SelectedDirectionFilter, null, null, "Equals", false, true, false, "string");
         }
 
-        if (!AppTool.IsNullOrEmpty(this.SelectedTransportFilter) && this.SelectedDirectionFilter != "All") {
+        if (!AppTool.IsNullOrEmpty(this.SelectedTransportFilter) && this.SelectedTransportFilter != "All") {
             this.filterAgrs.addAdditionalFilter("TransportModeId", this.SelectedTransportFilter, null, null, "Equals", false, true, false, "string");
         }
     }

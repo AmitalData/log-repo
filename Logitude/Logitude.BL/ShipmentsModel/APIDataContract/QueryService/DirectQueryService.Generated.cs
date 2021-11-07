@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -1018,10 +1018,12 @@ using Simplog.Data.ShipmentsModel;
 					}
 			
 					
-                    							//throw new ApplicationException("TEU Can't be update"); 
+                    
+					if(!IsUpdate)// && MyEntity.TEU != null)
+					{							//throw new ApplicationException("TEU Can't be update"); 
 							temp.TEU = MyEntity.TEU;
 
-					 
+										}  
 
 					
                     							//throw new ApplicationException("NumberOfPackages Can't be update"); 
@@ -2109,4 +2111,4 @@ using Simplog.Data.ShipmentsModel;
         }
 		 
    }
-}
+}

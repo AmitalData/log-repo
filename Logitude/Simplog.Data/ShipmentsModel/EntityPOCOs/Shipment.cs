@@ -711,5 +711,9 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
 
         public virtual EntityStatus BillingStatus { get; set; }
 
+       public bool IsPODReceived { get; set; }
+
+       public DateTime? PODReceivedDate { get; set; }
+
     }
 }

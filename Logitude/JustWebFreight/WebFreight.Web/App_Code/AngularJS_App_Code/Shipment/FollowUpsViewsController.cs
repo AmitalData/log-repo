@@ -138,6 +138,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
             GenericSort sortClass = new GenericSort();
             FollowUpsCustomFilter customfilters = new FollowUpsCustomFilter(tenant);
             IQueryable<ShipmentFollowUpDataView> shipments = shipmentRepository.GetShipmentFollowUpDataViewByTenant(tenant);
+
             shipments = customfilters.GetShipmentFollowUpFilteredQuery(queryOperations, shipments);
 
             QueryOperations nonListQueryOperation = new QueryOperations();
@@ -360,10 +361,14 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                                   MainCarriageVesselName = f.MainCarriageVesselName,
                                   PreForwardingETD = f.PreForwardingETD,
                                   PreCarriageETD = f.PreCarriageETD,
+                                  PlannedCargoReadyDate = f.PlannedCargoReadyDate,
+                                  ApprovedCargoReadyDate = f.ApprovedCargoReadyDate,
+                                  HandlerUserId = f.HandlerUserId,
+                                  HandlerUserName = f.HandlerUserName,
                               };
-
+                       
             entityLists = genericFilter.GetFilteredQuery<ShipmentList>(listQueryOperation, entityLists);
-
+            
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(ShipmentList).GetProperty(queryOperations.SortByColumnName);

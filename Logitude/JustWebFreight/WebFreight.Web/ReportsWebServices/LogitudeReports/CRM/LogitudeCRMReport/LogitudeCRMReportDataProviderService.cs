@@ -74,42 +74,57 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.CRM.LogitudeCRMRepor
             logitudeCRMReportDataProvider.CurrentTotal = logitudeCRMReportDataProvider.Customers.Sum(a => a.CurrentTotal ?? 0);
             logitudeCRMReportDataProvider.TotalNetBeforeYear = logitudeCRMReportDataProvider.Customers.Sum(a => a.TotalNetBeforeYear ?? 0);
 
+            SetNumberOfUsersTotals(logitudeCRMReportDataProvider);
+            SetNewIncomeTotals(logitudeCRMReportDataProvider);
+            SetNewCustomerTotals(logitudeCRMReportDataProvider);
+        }
 
-            logitudeCRMReportDataProvider.FirstMonthNumberOfUsersTotal = GetOpportunityPeriodsNumberOfUsersTotal(logitudeCRMReportDataProvider, Month.January);
+        private void SetNewCustomerTotals(LogitudeCRMReportDataProvider logitudeCRMReportDataProvider)
+        {
+            logitudeCRMReportDataProvider.FirstMonthNewCustomerTotal = GetOpportunityPeriodsNewCustomerTotal(logitudeCRMReportDataProvider, Month.January);
+            logitudeCRMReportDataProvider.SecondMonthNewCustomerTotal = GetOpportunityPeriodsNewCustomerTotal(logitudeCRMReportDataProvider, Month.February);
+            logitudeCRMReportDataProvider.ThirdMonthNewCustomerTotal = GetOpportunityPeriodsNewCustomerTotal(logitudeCRMReportDataProvider, Month.March);
+            logitudeCRMReportDataProvider.FourthMonthNewCustomerTotal = GetOpportunityPeriodsNewCustomerTotal(logitudeCRMReportDataProvider, Month.April);
+            logitudeCRMReportDataProvider.FifthMonthNewCustomerTotal = GetOpportunityPeriodsNewCustomerTotal(logitudeCRMReportDataProvider, Month.May);
+            logitudeCRMReportDataProvider.SixthMonthNewCustomerTotal = GetOpportunityPeriodsNewCustomerTotal(logitudeCRMReportDataProvider, Month.June);
+            logitudeCRMReportDataProvider.SeventhMonthNewCustomerTotal = GetOpportunityPeriodsNewCustomerTotal(logitudeCRMReportDataProvider, Month.July);
+            logitudeCRMReportDataProvider.EighthMonthNewCustomerTotal = GetOpportunityPeriodsNewCustomerTotal(logitudeCRMReportDataProvider, Month.August);
+            logitudeCRMReportDataProvider.NinthMonthNewCustomerTotal = GetOpportunityPeriodsNewCustomerTotal(logitudeCRMReportDataProvider, Month.September);
+            logitudeCRMReportDataProvider.TenthMonthNewCustomerTotal = GetOpportunityPeriodsNewCustomerTotal(logitudeCRMReportDataProvider, Month.October);
+            logitudeCRMReportDataProvider.EleventhMonthNewCustomerTotal = GetOpportunityPeriodsNewCustomerTotal(logitudeCRMReportDataProvider, Month.November);
+            logitudeCRMReportDataProvider.TwelfthMonthNewCustomerTotal = GetOpportunityPeriodsNewCustomerTotal(logitudeCRMReportDataProvider, Month.December);
+        }
+
+        private void SetNewIncomeTotals(LogitudeCRMReportDataProvider logitudeCRMReportDataProvider)
+        {
             logitudeCRMReportDataProvider.FirstMonthNewIncomeTotal = GetOpportunityPeriodsNewIncomeTotal(logitudeCRMReportDataProvider, Month.January);
-
-            logitudeCRMReportDataProvider.SecondMonthNumberOfUsersTotal = GetOpportunityPeriodsNumberOfUsersTotal(logitudeCRMReportDataProvider, Month.February);
             logitudeCRMReportDataProvider.SecondMonthNewIncomeTotal = GetOpportunityPeriodsNewIncomeTotal(logitudeCRMReportDataProvider, Month.February);
-
-            logitudeCRMReportDataProvider.ThirdMonthNumberOfUsersTotal = GetOpportunityPeriodsNumberOfUsersTotal(logitudeCRMReportDataProvider, Month.March);
             logitudeCRMReportDataProvider.ThirdMonthNewIncomeTotal = GetOpportunityPeriodsNewIncomeTotal(logitudeCRMReportDataProvider, Month.March);
-
-            logitudeCRMReportDataProvider.FourthMonthNumberOfUsersTotal = GetOpportunityPeriodsNumberOfUsersTotal(logitudeCRMReportDataProvider, Month.April);
             logitudeCRMReportDataProvider.FourthMonthNewIncomeTotal = GetOpportunityPeriodsNewIncomeTotal(logitudeCRMReportDataProvider, Month.April);
-
-            logitudeCRMReportDataProvider.FifthMonthNumberOfUsersTotal = GetOpportunityPeriodsNumberOfUsersTotal(logitudeCRMReportDataProvider, Month.May);
             logitudeCRMReportDataProvider.FifthMonthNewIncomeTotal = GetOpportunityPeriodsNewIncomeTotal(logitudeCRMReportDataProvider, Month.May);
-
-            logitudeCRMReportDataProvider.SixthMonthNumberOfUsersTotal = GetOpportunityPeriodsNumberOfUsersTotal(logitudeCRMReportDataProvider, Month.June);
             logitudeCRMReportDataProvider.SixthMonthNewIncomeTotal = GetOpportunityPeriodsNewIncomeTotal(logitudeCRMReportDataProvider, Month.June);
-
-            logitudeCRMReportDataProvider.SeventhMonthNumberOfUsersTotal = GetOpportunityPeriodsNumberOfUsersTotal(logitudeCRMReportDataProvider, Month.July);
             logitudeCRMReportDataProvider.SeventhMonthNewIncomeTotal = GetOpportunityPeriodsNewIncomeTotal(logitudeCRMReportDataProvider, Month.July);
-
-            logitudeCRMReportDataProvider.EighthMonthNumberOfUsersTotal = GetOpportunityPeriodsNumberOfUsersTotal(logitudeCRMReportDataProvider, Month.August);
             logitudeCRMReportDataProvider.EighthMonthNewIncomeTotal = GetOpportunityPeriodsNewIncomeTotal(logitudeCRMReportDataProvider, Month.August);
-
-            logitudeCRMReportDataProvider.NinthMonthNumberOfUsersTotal = GetOpportunityPeriodsNumberOfUsersTotal(logitudeCRMReportDataProvider, Month.September);
             logitudeCRMReportDataProvider.NinthMonthNewIncomeTotal = GetOpportunityPeriodsNewIncomeTotal(logitudeCRMReportDataProvider, Month.September);
-
-            logitudeCRMReportDataProvider.TenthMonthNumberOfUsersTotal = GetOpportunityPeriodsNumberOfUsersTotal(logitudeCRMReportDataProvider, Month.October);
             logitudeCRMReportDataProvider.TenthMonthNewIncomeTotal = GetOpportunityPeriodsNewIncomeTotal(logitudeCRMReportDataProvider, Month.October);
-
-            logitudeCRMReportDataProvider.EleventhMonthNumberOfUsersTotal = GetOpportunityPeriodsNumberOfUsersTotal(logitudeCRMReportDataProvider, Month.November);
             logitudeCRMReportDataProvider.EleventhMonthNewIncomeTotal = GetOpportunityPeriodsNewIncomeTotal(logitudeCRMReportDataProvider, Month.November);
-
-            logitudeCRMReportDataProvider.TwelfthMonthNumberOfUsersTotal = GetOpportunityPeriodsNumberOfUsersTotal(logitudeCRMReportDataProvider, Month.December);
             logitudeCRMReportDataProvider.TwelfthMonthNewIncomeTotal = GetOpportunityPeriodsNewIncomeTotal(logitudeCRMReportDataProvider, Month.December);
+        }
+
+        private void SetNumberOfUsersTotals(LogitudeCRMReportDataProvider logitudeCRMReportDataProvider)
+        {
+            logitudeCRMReportDataProvider.FirstMonthNumberOfUsersTotal = GetOpportunityPeriodsNumberOfUsersTotal(logitudeCRMReportDataProvider, Month.January);
+            logitudeCRMReportDataProvider.SecondMonthNumberOfUsersTotal = GetOpportunityPeriodsNumberOfUsersTotal(logitudeCRMReportDataProvider, Month.February);
+            logitudeCRMReportDataProvider.ThirdMonthNumberOfUsersTotal = GetOpportunityPeriodsNumberOfUsersTotal(logitudeCRMReportDataProvider, Month.March);
+            logitudeCRMReportDataProvider.FourthMonthNumberOfUsersTotal = GetOpportunityPeriodsNumberOfUsersTotal(logitudeCRMReportDataProvider, Month.April);
+            logitudeCRMReportDataProvider.FifthMonthNumberOfUsersTotal = GetOpportunityPeriodsNumberOfUsersTotal(logitudeCRMReportDataProvider, Month.May);
+            logitudeCRMReportDataProvider.SixthMonthNumberOfUsersTotal = GetOpportunityPeriodsNumberOfUsersTotal(logitudeCRMReportDataProvider, Month.June);
+            logitudeCRMReportDataProvider.SeventhMonthNumberOfUsersTotal = GetOpportunityPeriodsNumberOfUsersTotal(logitudeCRMReportDataProvider, Month.July);
+            logitudeCRMReportDataProvider.EighthMonthNumberOfUsersTotal = GetOpportunityPeriodsNumberOfUsersTotal(logitudeCRMReportDataProvider, Month.August);
+            logitudeCRMReportDataProvider.NinthMonthNumberOfUsersTotal = GetOpportunityPeriodsNumberOfUsersTotal(logitudeCRMReportDataProvider, Month.September);
+            logitudeCRMReportDataProvider.EleventhMonthNumberOfUsersTotal = GetOpportunityPeriodsNumberOfUsersTotal(logitudeCRMReportDataProvider, Month.November);
+            logitudeCRMReportDataProvider.TenthMonthNumberOfUsersTotal = GetOpportunityPeriodsNumberOfUsersTotal(logitudeCRMReportDataProvider, Month.October);
+            logitudeCRMReportDataProvider.TwelfthMonthNumberOfUsersTotal = GetOpportunityPeriodsNumberOfUsersTotal(logitudeCRMReportDataProvider, Month.December);
         }
 
         private int GetOpportunityPeriodsNumberOfUsersTotal(LogitudeCRMReportDataProvider logitudeCRMReportDataProvider, Month month)
@@ -121,6 +136,11 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.CRM.LogitudeCRMRepor
         {
             return logitudeCRMReportDataProvider.Customers.Sum(a => a.OpportunityPeriods.Where(b => b.PeriodName == ((int)month).ToString()).Sum(b => b.OpportunityPeriodSummaries.Sum(c => c.NewIncome ?? 0)));
         }
+        private int GetOpportunityPeriodsNewCustomerTotal(LogitudeCRMReportDataProvider logitudeCRMReportDataProvider, Month month)
+        {
+            return logitudeCRMReportDataProvider.Customers.Sum(a => a.OpportunityPeriods.Where(b => b.PeriodName == ((int)month).ToString()).Sum(b => b.OpportunityPeriodSummaries.Sum(c => c.IsNewCustomer ?? 0)));
+        }
+
 
         private CustomerItem MappOpportunityToCustomer(IGrouping<string, OpportunityCRMDetails> opportunityCRMDetail)
         {
@@ -140,14 +160,22 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.CRM.LogitudeCRMRepor
 
                 Opportunities = GetOpportunityItems(opportunityCRMDetail.ToList()),
                 HasError = HasError(opportunityCRMDetail.ToList()),
-                CurrentTotal = opportunityCRMDetail.ToList().Sum(b => b.Total),
-                OpportunityPeriods = GetPeriods(opportunityCRMDetail.ToList()),
-                TotalNetBeforeYear = GetTotalNetBeforeYear(opportunityCRMDetail.ToList()),
+                CurrentTotal = CalculateNetValue(opportunityCRMDetail.ToList().Sum(b => b.Total), opportunityCRMDetail.First().ResellerCommission),
+                OpportunityPeriods = GetPeriods(opportunityCRMDetail.ToList(), opportunityCRMDetail.First().ResellerCommission),
+                TotalNetBeforeYear = CalculateNetValue(GetTotalNetBeforeYear(opportunityCRMDetail.ToList()), opportunityCRMDetail.First().ResellerCommission),
                 InActive = opportunityCRMDetail.First().InActive,
             };
         }
 
-        private decimal? GetTotalNetBeforeYear(IEnumerable<OpportunityCRMDetails> opportunityDetails)
+        private decimal CalculateNetValue(decimal value, int? resellerCommission)
+        {
+            if (!logitudeCRMReportFilter.ShowNet)
+                return value;
+
+            return value * (100 - (resellerCommission ?? 0)) / 100;
+        }
+
+        private decimal GetTotalNetBeforeYear(IEnumerable<OpportunityCRMDetails> opportunityDetails)
         {
             return opportunityDetails.Where(a => a.ActualClosingDate.Year < DateTime.Now.Year).Sum(a => a.Total);
         }
@@ -164,14 +192,14 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.CRM.LogitudeCRMRepor
                 }).ToList();
         }
 
-        private List<OpportunityPeriod> GetPeriods(IEnumerable<OpportunityCRMDetails> opportunityDetails)
+        private List<OpportunityPeriod> GetPeriods(IEnumerable<OpportunityCRMDetails> opportunityDetails, int? resellerCommission)
         {
             List<OpportunityPeriod> periods = new List<OpportunityPeriod>();
             for (int i = 1; i <= 12; i++)
             {
                 OpportunityPeriod opportunityPeriod = new OpportunityPeriod();
                 opportunityPeriod.PeriodName = i.ToString();
-                opportunityPeriod.OpportunityPeriodSummaries = GetOpportunityPeriodSummaries(opportunityDetails, i);
+                opportunityPeriod.OpportunityPeriodSummaries = GetOpportunityPeriodSummaries(opportunityDetails, i, resellerCommission);
                 opportunityPeriod.Total = opportunityPeriod.OpportunityPeriodSummaries?.Sum(a => a.NewIncome ?? 0) ?? 0;
                 periods.Add(opportunityPeriod);
             }
@@ -179,7 +207,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.CRM.LogitudeCRMRepor
             return periods;
         }
 
-        private List<OpportunityPeriodSummary> GetOpportunityPeriodSummaries(IEnumerable<OpportunityCRMDetails> opportunityDetails, int mounth)
+        private List<OpportunityPeriodSummary> GetOpportunityPeriodSummaries(IEnumerable<OpportunityCRMDetails> opportunityDetails, int mounth, int? resellerCommission)
         {
             return opportunityDetails
                 .Where(b => b.ActualClosingDate.Year == DateTime.Now.Year && b.ActualClosingDate.Month == mounth)
@@ -188,7 +216,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.CRM.LogitudeCRMRepor
                 {
                     NumberOfUsers = a.Sum(b => b.NumberOfUsers),
                     IsNewCustomer = a.Where(b => b.IsNewCustomer != null).OrderByDescending(b => b.ActualClosingDate).FirstOrDefault()?.IsNewCustomer,
-                    NewIncome = a.Sum(b => b.Total),
+                    NewIncome = CalculateNetValue(a.Sum(b => b.Total), resellerCommission),
                 }).ToList();
         }
 

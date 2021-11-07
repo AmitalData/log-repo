@@ -3269,6 +3269,18 @@
       Nullable="true" />
   </Column>
   <Column
+    Name="IsPODReceived"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="PODReceivedDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
     Name="CustomerReference3"
     Type="varchar"
     Size="300">

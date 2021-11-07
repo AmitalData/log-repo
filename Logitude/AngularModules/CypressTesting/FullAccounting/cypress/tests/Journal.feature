@@ -1,4 +1,4 @@
-@devsmoke
+@smoke
 Feature: Journal
     The user creates new Journal, add new line and approve the Journal
 
@@ -12,6 +12,7 @@ Feature: Journal
             | CreditAccount | KHTest     |
             | DebitAccount  | KHTest     |
             | Amount        | 100        |
+        And fill "01/09/2021" as accounting date
         When save as draft
         Then the journal should create successfully
 

@@ -197,6 +197,9 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Data.Linq" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Linq.Dynamic.Core, Version=1.2.13.0, Culture=neutral, PublicKeyToken=0f07ec44de6ac832, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Linq.Dynamic.Core.1.2.13\lib\net46\System.Linq.Dynamic.Core.dll</HintPath>
+    </Reference>
     <Reference Include="System.Memory, Version=4.0.1.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Memory.4.5.0\lib\netstandard2.0\System.Memory.dll</HintPath>
     </Reference>
@@ -603,7 +606,9 @@
     <Compile Include="InvoiceModel\Tools\QuickbooksService.cs" />
     <Compile Include="ShipmentsModel\APIDataContract\PickUpDeliveryFromToType.Generated.cs" />
     <Compile Include="ShipmentsModel\APIDataContract\QueryService\PickUpDeliveryFromToTypeQueryService.Generated.cs" />
+    <Compile Include="ShipmentsModel\CustomFilters\DigitalCustomFilter.cs" />
     <Compile Include="ShipmentsModel\DigitalModels\ShipmentAdditionalFields.cs" />
+    <Compile Include="ShipmentsModel\DigitalModels\DigitalFiltersCounts.cs" />
     <Compile Include="ShipmentsModel\EntityAMs\Packages.cs" />
     <Compile Include="QuoteModel\APIDataContract\QueryService\QuotePriceStepsQueryService.Generated.cs" />
     <Compile Include="QuoteModel\APIDataContract\QuotePriceSteps.Generated.cs" />

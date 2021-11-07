@@ -39,6 +39,7 @@ namespace Logitude.BL.ShipmentsModel.EntityAMs
         public string DescriptionOfGoods { get; set; }
         public CodeProperties Customer { get; set; }
         public string ShipperName { get; set; }
+        public string ConsigneeName { get; set; } 
         public CodeProperties PreCarriageFromPort { get; set; }
         public CodeProperties PreCarriageToPort { get; set; }
         public CodeProperties OnCarriageToPort { get; set; }
@@ -80,6 +81,8 @@ namespace Logitude.BL.ShipmentsModel.EntityAMs
         public string VolumeUnitCode { get; set; }
         public string ForwardingPartnerId { get; set; }
         public string ForwardingPartnerTenant { get; set; }
+        public CodeProperties Agent { get; set; }
+
 
         /*
         HasException , ExceptionDate , ExceptionDescription

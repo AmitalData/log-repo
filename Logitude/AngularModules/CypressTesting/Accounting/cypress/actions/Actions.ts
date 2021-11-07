@@ -189,13 +189,12 @@ export function AssertARInvoiceMenuButtonsEnabled() {
     BaseAssertion.AssertElementDisabled(AccountingSelectors.ARInvoiceAutoCreditButton, BaseSelectors.NotBeDisabled)
     BaseAssertion.AssertElementDisabled(AccountingSelectors.ARInvoiceSetAsSentButton, BaseSelectors.NotBeDisabled)
     BaseAssertion.AssertElementDisabled(AccountingSelectors.ARInvoiceReTransfer, BaseSelectors.BeDisabled)
-    BaseAssertion.AssertElementDisabled(AccountingSelectors.ARInvoiceVoidButton, BaseSelectors.NotBeDisabled)}
+    BaseAssertion.AssertElementDisabled(AccountingSelectors.ARInvoiceVoidButton, BaseSelectors.NotBeDisabled)
+}
 //#endregion
 
 //#region ARInvoice
 export function FillARInvoiceDetails(aRInvoiceDetails: ARInvoiceDetails) {
-    // cy.get(".ComboBox").click();
-    // cy.get(".FillParent").find(".TextTrimming").contains("Customer").click()
     if (aRInvoiceDetails.Partner) {
         cy.FillLogLov(AccountingSelectors.ARInvoicePartner, aRInvoiceDetails.Partner, false)
     }
@@ -241,11 +240,12 @@ export function PostARApproveInvoice() {
     cy.Click(AccountingSelectors.ARInvoiceApproveButton, null)
 }
 
-export function SetAsSentARInvoice() {
+export function SetAsSentARInvoice(notes) {
     cy.Click(BaseSelectors.MoreList, null, true)
     cy.Click(AccountingSelectors.ARInvoiceSetAsSentButton, null)
+    cy.FillLogTextBox(AccountingSelectors.ARInvoiceEventNote, notes)
     cy.DefineRequestWait(RestAPI.PUT, AccountingURLs.ARInvoices, RequestAliases.ARInvoicesRequest)
-    cy.Click("button", "Confirm");
+    cy.Click(BaseSelectors.RedButton + BaseSelectors.LastElement, null);
 }
 
 export function VoidARInvoice() {
@@ -277,6 +277,21 @@ export function AutoCreditARInvoice() {
 export function ApproveAutoCreditARInvoice() {
     PostARApproveInvoice();
     cy.Click(ShipmentSelectors.ConfirmWindowYes, null);
+}
+
+export function AssertARInvoiceDetailsFieldsDisabled() {
+    BaseAssertion.AssertElementDisabled(AccountingSelectors.ARInvoicePartner, BaseSelectors.BeDisabled)
+    BaseAssertion.AssertElementDisabled(AccountingSelectors.ARInvoiceBillTo, BaseSelectors.BeDisabled)
+    BaseAssertion.AssertElementDisabled(AccountingSelectors.ARInvoiceBillToAddress, BaseSelectors.BeDisabled)
+    BaseAssertion.AssertElementDisabled(AccountingSelectors.ARInvoicePaymentTerm, BaseSelectors.BeDisabled)
+    BaseAssertion.AssertElementDisabled(AccountingSelectors.ARInvoiceDueDate, BaseSelectors.BeDisabled)
+    BaseAssertion.AssertElementDisabled(AccountingSelectors.ARInvoiceRegionalTax, BaseSelectors.BeDisabled)
+    BaseAssertion.AssertElementDisabled(AccountingSelectors.ARInvoiceInvoiceCurrency, BaseSelectors.BeDisabled)
+    BaseAssertion.AssertElementDisabled(AccountingSelectors.ARInvoiceExchangeRate, BaseSelectors.BeDisabled)
+    BaseAssertion.AssertElementDisabled(AccountingSelectors.ARInvoiceInvoiceNumber, BaseSelectors.BeDisabled)
+    BaseAssertion.AssertElementDisabled(AccountingSelectors.ARInvoiceVatNumber, BaseSelectors.BeDisabled)
+    BaseAssertion.AssertElementDisabled(AccountingSelectors.ARInvoiceInvoiceDate, BaseSelectors.BeDisabled)
+    BaseAssertion.AssertElementDisabled(AccountingSelectors.ARInvoiceVatType, BaseSelectors.BeDisabled)
 }
 //#endregion
 

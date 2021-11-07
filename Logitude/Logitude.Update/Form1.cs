@@ -850,6 +850,7 @@ User/Pass",
             }
             conStrLabel.Text = "DB: " + ConfigurationManager.ConnectionStrings["Globalstr"].ConnectionString;
 
+            LoggedContactResolver.RegisterLoggedContactUtil();
 
 
         }
