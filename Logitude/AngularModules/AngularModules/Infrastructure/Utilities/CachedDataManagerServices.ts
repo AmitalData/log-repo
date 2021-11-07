@@ -57,6 +57,7 @@ import {WarehouseListService} from '../../Common/Services/StandardLists/Warehous
 import { JournalActionTypeListService } from '../../Accounting/Services/StandardLists/JournalActionTypeListService';
 import { BluesnapContractTypeListService } from '../Services/StandardLists/BluesnapContractTypeListService'; 
 import { HorseListService } from '../../Common/Services/StandardLists/HorseListService';
+import { PortTimeZoneListService } from '../../Common/Services/StandardLists/PortTimeZoneListService';
 
 //customs
 import {InternationalSiteListService} from '../../Customs/Services/StandardLists/InternationalSiteListService'; 
@@ -235,14 +236,13 @@ export class CachedDataManagerServices {
             case "Customs.CancellationReasonRequestTypeListService ": { myResult = new CancellationReasonRequestTypeListService(); break; }
             case "Customs.CancellationRequestStatusListService ": { myResult = new CancellationRequestStatusListService(); break; }
             case "Customs.ReferantTeamListService": { myResult = new ReferantTeamListService(); break; }
-
-            case "AWBAdditionalHandlingInfoListService": { myResult = new AWBAdditionalHandlingInfoListService(); break; }
- 
+            case "AWBAdditionalHandlingInfoListService": { myResult = new AWBAdditionalHandlingInfoListService(); break; } 
             case "TariffProductListService": { myResult = new TariffProductListService(); break; }    
             case "AWBAdditionalHandlingInfoListService": { myResult = new AWBAdditionalHandlingInfoListService(); break; }    
             case "TariffProductListService": { myResult = new TariffProductListService(); break; }
             case "ShipmentSubTypeListService": { myResult = new ShipmentSubTypeListService(); break; }
             case "HorseListService": { myResult = new HorseListService(); break; }
+            case "PortTimeZoneListService": { myResult = new PortTimeZoneListService(); break; }
 
             default: {
 

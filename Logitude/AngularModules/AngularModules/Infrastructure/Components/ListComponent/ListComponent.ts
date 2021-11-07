@@ -1700,15 +1700,12 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
             myObjectTableName = "Contact";
         }
 
-
          if (this._ListComponentArgs.SuppressOnRowSelectedField == true) {
              this._ListComponentArgs.SuppressOnRowSelectedField = false;
              console.log("SuppressOnRowSelectedField");
              return;
          }
 
-        //this.CurrentSession.StartBusyIndicator("Loading ...");
-        //var BackGridEvent = $event.BackFromEdit;
         if ($event != null) {
             if (!this.isEditControlOpened) {
                 var entityList = $event.rowData;
@@ -1720,13 +1717,12 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                     case "Customs.CustomsHouseType":
                     case "Customs.CustomDocumentType":
                     case "Customs.UIMessage":
-                    //case "Customs.CourierPendingReason":
                     case "Customs.CurrencyType":
                     case "Customs.CustomsCountry":
                     case "Customs.ExceptionReason":
                     case "Customs.ReferantTeam":
                     case "HelpResource":
-                    //case "Customs.InternationalSite":
+                    case "PortTimeZone":
                         selectedEntityId = $event.rowData.Code;
                         break;
                     case "Customs.DeclarationReferantData":

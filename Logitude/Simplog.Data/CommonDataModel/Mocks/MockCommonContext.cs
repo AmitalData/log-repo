@@ -2802,6 +2802,8 @@ namespace Simplog.Data.CommonDataModel.Mocks
 
         public IDbSet<DWHEnvironmentSetting> DWHEnvironmentSettings { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
+        public IDbSet<PortTimeZone> PortTimeZones => throw new NotImplementedException();
+
 
 
 

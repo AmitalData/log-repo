@@ -211,6 +211,8 @@ import { ReportExecutionLogListService } from './Services/StandardLists/ReportEx
 import { ReportExecutionLogPMService } from './Services/StandardPMs/ReportExecutionLogPMService';
 import { ProductItemListService } from './Services/StandardLists/ProductItemListService';
 import { DocumentFileService } from './Services/DocumentServices/DocumentFileService';
+import { PortTimeZoneListService } from './Services/StandardLists/PortTimeZoneListService';
+import { PortTimeZonePMService } from './Services/StandardPMs/PortTimeZonePMService';
 
 export class ModuleProviders {
     public static GetInstance(name: string) {
@@ -425,6 +427,8 @@ export class ModuleProviders {
             case "ProductItemListService": { myResult = new ProductItemListService(); break; }
             case "DocumentFileService": { myResult = new DocumentFileService(); break; }
             case "ShippingLineExtendedPMService": { myResult = new ShippingLineExtendedPMService(); break; }
+            case "PortTimeZoneListService": { myResult = new PortTimeZoneListService(); break; }
+            case "PortTimeZonePMService": { myResult = new PortTimeZonePMService(); break; }
         }
 
         return myResult;

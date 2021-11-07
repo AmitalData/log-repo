@@ -152,5 +152,8 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
 
         [DataMember]
         public bool CountryIsGreaterChinese { get; set; }
+
+        [DataMember]
+        public string PortTimeZoneCode { get; set; }
     }
 }

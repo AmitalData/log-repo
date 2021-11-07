@@ -83,6 +83,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                       CombinedCode = a.CombinedCode,
                                       StateCode = a.StateCode,
                                       StateName = a.StateName,
+                                      PortTimeZoneCode = a.PortTimeZoneCode,
                                   }).FirstOrDefault();
 
                         if (entity != null)
@@ -138,6 +139,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   CountryEC = a.Country.EC,
                                   StateName = a.StateName,
                                   StateCode = a.StateCode,
+                                  PortTimeZoneCode = a.PortTimeZoneCode,
                               }).FirstOrDefault();
                 }
 
@@ -201,6 +203,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                           StateName = a.StateName,
                                           CountryIsNorthAmerica = a.Country.IsNorthAmerica,
                                           CountryIsGreaterChinese = a.Country.IsGreaterChina,
+                                          PortTimeZoneCode = a.PortTimeZoneCode,
                                       }).FirstOrDefault();
                             
                             if (CacheManager.CacheWrapper.Get(entityName) == null && entity != null)
@@ -212,8 +215,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         else
                         {
                             entity = (PortPM)CacheManager.CacheWrapper.Get(entityName);
-                        }
-                    
+                        }                  
 
                    
                 }
@@ -261,6 +263,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   StateName = a.StateName,
                                   CountryIsNorthAmerica = a.Country.IsNorthAmerica,
                                   CountryIsGreaterChinese = a.Country.IsGreaterChina,
+                                  PortTimeZoneCode = a.PortTimeZoneCode,
                               }).FirstOrDefault();
                 }
 
@@ -308,6 +311,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                             CombinedCode = a.CombinedCode,
                                             StateName = a.StateName,
                                             StateCode = a.StateCode,
+                                            PortTimeZoneCode = a.PortTimeZoneCode,
                                         });
             return ports;
         }
@@ -359,6 +363,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                             CombinedCode = a.CombinedCode,
                                             StateName = a.StateName,
                                             StateCode = a.StateCode,
+                                            PortTimeZoneCode = a.PortTimeZoneCode,
                                         });
             return ports;
         }
@@ -403,6 +408,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                 CombinedCode = a.CombinedCode,
                                                 StateName = a.StateName,
                                                 StateCode = a.StateCode,
+                                                PortTimeZoneCode = a.PortTimeZoneCode,
                                             });
                 return ports;
             }
@@ -444,6 +450,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                 CombinedCode = a.CombinedCode,
                                                 StateName = a.StateName,
                                                 StateCode = a.StateCode,
+                                                PortTimeZoneCode = a.PortTimeZoneCode,
                                             });
                 return ports;
             }
@@ -493,6 +500,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                              CombinedCode = a.CombinedCode,
                              StateName = a.StateName,
                              StateCode = a.StateCode,
+                             PortTimeZoneCode = a.PortTimeZoneCode,
                          }).AsQueryable();
 
             IQueryable<PortPM> query2 = null;

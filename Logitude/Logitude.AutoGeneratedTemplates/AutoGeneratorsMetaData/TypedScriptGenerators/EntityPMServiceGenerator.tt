@@ -66,7 +66,7 @@ public void GenerateEntityPMService(string xmlFilePath,string outputFilePath,str
 
 		 if( entity.IsClosed.GetType() == typeof(string))
       	{
-	    	if(entity.IsClosed == "true")
+	    	if(entity.IsClosed == "true" && entity.ObjectTableName.Trim('"') != "PortTimeZone")
 	    	{
 	    		return;
 	    	}

@@ -463,7 +463,7 @@ namespace Simplog.Data.CommonDataModel
             modelBuilder.Configurations.Add(new HorseMap());
             modelBuilder.Configurations.Add(new CargoTenantMilestoneDefinitionMap());
             modelBuilder.Configurations.Add(new DWHEnvironmentSettingMap());
-
+            modelBuilder.Configurations.Add(new PortTimeZoneMap());
 
 
             base.OnModelCreating(modelBuilder);
@@ -1036,7 +1036,7 @@ namespace Simplog.Data.CommonDataModel
         public IDbSet<HTSCode> HTSCodes { get; set; }
         public IDbSet<DWHEnvironmentSetting> DWHEnvironmentSettings { get; set; }
 
-
+        public IDbSet<PortTimeZone> PortTimeZones { get; set; }
 
 
         public DbConnection GetConnection()

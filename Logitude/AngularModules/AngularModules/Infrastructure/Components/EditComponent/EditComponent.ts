@@ -814,6 +814,10 @@ export class EditComponent implements OnDestroy {
 
             }
 
+            //if (this.ObjectTableName == "PortTimeZone") {
+            //    myTabsSorted.push(tab);
+            //}
+
             if (FeatureLocator.IsFeatureGrantedByUniqeCode(tab.FeatureUniqeCode)) {
 
                 if (this.ObjectTableName == "GLAccount") {
