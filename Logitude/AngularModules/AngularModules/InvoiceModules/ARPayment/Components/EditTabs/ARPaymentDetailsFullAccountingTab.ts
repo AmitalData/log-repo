@@ -169,13 +169,13 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
         }
     }
 	private InitializeBillToLov() {
-        
+
 		this.DisplayFieldsFromList = "Code,CalculatedEnglishName,GLAccountDisplayNumber,CityName,CountryCode,PartnerTypeName";
         this.DisplayLocalFieldsFromList = "Code,CalculatedLocalName,GLAccountDisplayNumber,CityName,CountryCode,PartnerTypeName";
 		this.BillToLovSizeForFullAccounting = 550;
-        
+
 	}
-	
+
 	SetAmountCurrencyCode()
 	{
 		if (this.EntityPM)
@@ -690,6 +690,11 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
 			if (this.isFullAccounting) {
 				this.UIProperties.SetEnabled("BankAccountId", this.ObjectTableName, true);
 			}
+            if(this.EntityPM.ForceUsingBankTransferMethod)
+				this.UIProperties.SetEnabled("AccountingPaymentMethodId", this.ObjectTableName, false);
+            if(this.EntityPM.PresetValueDate)
+                this.UIProperties.SetEnabled("ValueDate", this.ObjectTableName, false);
+
 		}
 		this.SetBankRequired();
 	}
@@ -756,8 +761,8 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
 	}
 	SetUIProperties_Cheque()
 	{
-        if (this.isFullAccounting && this.AccountingPaymentMethodCode == "CH") {        
-            this.UpdatePaymentChequeFields();          
+        if (this.isFullAccounting && this.AccountingPaymentMethodCode == "CH") {
+            this.UpdatePaymentChequeFields();
 			this.UIProperties.SetRequired("BankBranch", this.ObjectTableName, AppTool.IsNullOrEmpty(this.BankBranch));
 			this.UIProperties.SetRequired("Account", this.ObjectTableName, AppTool.IsNullOrEmpty(this.Account));
 			var service: InvoiceDomainService = new InvoiceDomainService();
@@ -1836,10 +1841,10 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
             }
 		}
 	}
-	
+
   SetUIProperties_ValueDate() {
       this.UIProperties.SetRequired("ValueDate", this.ObjectTableName, this.ValueDate != null ? false : true);
-    
+
   }
 
 	get ChequeOrPaymentRef()
@@ -2242,7 +2247,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
 
     }
     CalculatePaymentTotalAmount() {
-           
+
         var total = 0;
         for (let cheque of this.EntityPM.ARPaymentChequeReplicas) {
             if (!AppTool.IsNullOrEmpty(cheque.ForeignAmount)) {

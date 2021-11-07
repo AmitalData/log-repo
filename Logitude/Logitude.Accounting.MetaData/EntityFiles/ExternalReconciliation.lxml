@@ -39,7 +39,7 @@
   MaxNumberOfCustomFields="0"
   LocalDefaultText="&quot;התאמה&quot;"
   DefaultText="&quot;External Reconciliation&quot;"
-  Code="&quot;b94a&quot;"
+  Code="&quot;09ab&quot;"
   Name="&quot;ExternalReconciliation Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Accounting&quot;"
@@ -1369,6 +1369,12 @@
       Code="&quot;ExternalReconciliation.O.BTUnsavedChanges&quot;"
       DefaultText="&quot;This AR Payment has unsaved changes do you want to save it considering that no external Reconciliation will be done if the payment isn't approved?&quot;"
       LocalDefaultText="&quot;בקבלה זאת בוצעו שינויים שטרם נשמרו , האם ברצונך לשמור זאת בהתחשב בכך שהתאמה חיצונית לא תתבצע אם הקבלה לא תאושר&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ExternalReconciliation.O.FutureValueDate&quot;"
+      DefaultText="&quot;Value date must be greater than or equals to today's Date&quot;"
+      LocalDefaultText="&quot;תאריך ערך צריך להיות קטן מתאריך נוכחי&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>

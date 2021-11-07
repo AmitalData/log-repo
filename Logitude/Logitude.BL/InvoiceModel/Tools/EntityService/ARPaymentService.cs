@@ -2020,6 +2020,19 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 CheckLinesAmountToReconcileLimit(_payment);
                 CheckCreditLinesAmountToReconcile(_payment);
                 CheckLinesAmountToReconcileTotal(_payment);
+
+                if (_payment.ForceUsingBankTransferMethod == true)
+                {
+                    var now = TenantServerConfigration.GetCurrentDateTime(tenant);
+                    if (_payment.ValueDate > now)
+                    {
+
+                        ContactPM loggedContact = GetLoggedContactPM(_payment.Tenant);
+                        bool showLocal = loggedContact != null ? (!loggedContact.DontShowLocal) : false;
+
+                        throw new ApplicationException(TextCodesTranslator.TranslateText("ExternalReconciliation.O.FutureValueDate", _payment.Tenant, showLocal));
+                    }
+                }
             }
 
         }

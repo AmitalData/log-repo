@@ -81,7 +81,7 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
     private CurrentSession = SessionLocator.SelectedSession;
     ExternalPagesTitle: string;
     CreatedReconciliationsCount: number = 0;
-
+    SessionEvent;
     entityListService: EntityListService = new EntityListService();
     ledgerTransactionExtendedListService: LedgerTransactionExtendedListService = new LedgerTransactionExtendedListService();
     _ExternalReconciliationExtendedListService: ExternalReconciliationExtendedListService = new ExternalReconciliationExtendedListService();
@@ -90,6 +90,8 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
     _ExternalReconciliationOpService: ExternalReconciliationOpService = new ExternalReconciliationOpService();
 
     CreateBankTransferButtonFeatureEnabled = false;
+    showBankTransferAlert = false;
+    createdPaymentNumber;
 
     constructor(private CD: ChangeDetectorRef) {
         super();
@@ -168,6 +170,7 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
         this.ReloadScreen();
         this.ExtPageReloadScreen();
         this.GetFeatures();
+        this.Listen();
 
     }
     ngAfterViewInit() {
@@ -178,6 +181,18 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
     private GetFeatures()
     {
         this.CreateBankTransferButtonFeatureEnabled = !!FeatureLocator.IsFeatureGrantedByCode("ExtRecoCreateBankTransferPY");
+    }
+    Listen(){
+        this.SessionEvent = this.CurrentSession.SessionEvent.subscribe(s => {
+            if (s && s.Name == "BankTransferARPaymentCreated") {
+                this.createdPaymentNumber = s.PaymentNumber;
+                this.showBankTransferAlert = true;
+            }
+        });
+    }
+
+    GetBankTransferAlertMessage(){
+        return TextCodeTranslator.Translate('ExternalReconciliation.O.BTbackgroundCreationMSG').replace('#number',this.createdPaymentNumber);
     }
 
     //#region Properties
@@ -1821,8 +1836,8 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
 
     private ValidateSelectedPageLinesTotals()
     {
-        var externalPagesTotal = this.GetSelectedExternalPageLinesTotal();
-        if (externalPagesTotal < 0) {
+        // var externalPagesCreditTotal = this.GetSelectedExternalPageLinesCreditTotal();
+        if (this.extPageTransactionsTotal > 0) {
             this.ValidationErrorsList.push(this.BankTransferDifferenceMessage);
         }
     }
@@ -1838,28 +1853,54 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
         logWindow.Title = this.NewARPaymentTitle;
         logWindow.Width = NewARPaymentWindowWidth;
         logWindow.Height = NewARPaymentWindowHeight;
-        logWindow.WindowArgs = {
-            AccountingPaymentMethodCode: BankTransferPaymentMethodCode,
-            PaymentAmount: this.GetSelectedExternalPageLinesTotal(),
-            Currency: this.GetGLAccountCurrency(),
-        }
+        this.SetNewBankTransferWindowArguments(logWindow);
+
         logWindow.Show("./InvoiceModules/ARPayment/Components/NewEntity/NewARPaymentComponent");
         logWindow.WindowClosed.subscribe(($event: any) =>
         {
+            this.ReloadScreen();
+            this.ExtPageReloadScreen();
+            this.TransactionSelectedLines = new ObservableCollection([]);
+            this.ExtPageSelectedLines = new ObservableCollection([]);
 
+            setTimeout(() => {
+                this.RefreshButtonClicked();
+            }, 1000);
         });
 
     }
 
-    private GetSelectedExternalPageLinesTotal()
+    private SetNewBankTransferWindowArguments(logWindow: LogitudeWindow)
+    {
+        logWindow.WindowArgs = {
+            AccountingPaymentMethodCode: BankTransferPaymentMethodCode,
+            PaymentAmount: this.GetSelectedExternalPageLinesCreditTotal(),
+            Currency: this.GetGLAccountCurrency(),
+            ExteranlPageLinesIds: this.GetSelectedPageLinesIds()
+        };
+
+        const singleBankPageLineSelected = this.ExtPageSelectedLines.Length > 1;
+        if (singleBankPageLineSelected) {
+            logWindow.WindowArgs.ValueDate = this.ExtPageSelectedLines.Collection[0].ReferenceDate;
+
+        }
+    }
+
+    private GetSelectedPageLinesIds()
+    {
+        return this.ExtPageSelectedLines.Collection.map(line => line.Id).join(',');
+    }
+
+    private GetSelectedExternalPageLinesCreditTotal()
     {
         var externalPagesTotal = 0;
-        this.ExtPageSelectedLines.Collection.forEach(line =>
+        this.ExtPageSelectedLines.Collection.forEach((line:ExtPageLineModel) =>
         {
             externalPagesTotal += line.Amount;
         });
         return externalPagesTotal;
     }
+
 }
 
 

@@ -27,7 +27,7 @@ import { ServiceLocator } from '../../../Infrastructure/Locators/ServiceLocator'
 import { HeaderScreenDataResult } from '../../Interface/IHeaderScreenService';
 
 
-@Component({    
+@Component({
     templateUrl: './EditComponent.html',
     providers: [EntityArgs],
 })
@@ -85,8 +85,8 @@ export class EditComponent implements OnDestroy {
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
     public CurrentSession = SessionLocator.SelectedSession;
     public IsReloadNeeded: boolean = false;
-    
-    
+
+
 
     constructor(private entityPMService: EntityPMService, private entityArgs: EntityArgs, private _entityResourceService: EntityResourceService, private _totangoService: TotangoService, private cd: ChangeDetectorRef) {
         this.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Loading"));
@@ -96,7 +96,7 @@ export class EditComponent implements OnDestroy {
         this.EditComponentCellId = "EditComponentCellId_" + this.CurrentSession.SessionIndex + "_" + this.ComponentIndex;
         this.LayoutDirection = ObjectsLocator.GlobalSetting == undefined ? "ltr" : ObjectsLocator.GlobalSetting.LayoutDirection;
         this.WorkEnvironment = ObjectsLocator.GlobalSetting == undefined ? "logitude" : ObjectsLocator.GlobalSetting.WorkEnvironment;
-        
+
     }
 
     OnSaveAndCloseHotKey(){
@@ -113,7 +113,7 @@ export class EditComponent implements OnDestroy {
     }
 
     OnArrowLeftHotKeyPressed(){
-        if(this.PreviousButtonDisabled==false 
+        if(this.PreviousButtonDisabled==false
                      && this.NextPreviousVisible==true){
         console.log("Moving Previous ");
         this.Previous();
@@ -878,7 +878,7 @@ export class EditComponent implements OnDestroy {
             this.TabsItemsSource.push(itemTab);
         });
     }
-    
+
 
 
     private BuildTabsItemsSource() {
@@ -890,7 +890,7 @@ export class EditComponent implements OnDestroy {
             if (tabsService) {
                 allTabs = tabsService.GetTabs({ ObjectTableId: this.ObjectTableId, EntityPM: this.EntityPM });
             }
-     
+
             this.FillTabsItemsSource(allTabs);
             if (this.TabControlBodyViewContainerRef)
                 this.SetSelectedTab();
@@ -904,7 +904,7 @@ export class EditComponent implements OnDestroy {
 
         if (this.ObjectTable.Name.indexOf('Customs.') > -1) {
             return this.ObjectTable.Name.split('.')[1];
-        } 
+        }
         else return this.ObjectTable.Name;
     }
 
@@ -1020,7 +1020,7 @@ export class EditComponent implements OnDestroy {
                 break;
             }
 
-          
+
             case "ARPayment": {
 
                 if (this.EntityPM.IsFullAccounting) {
@@ -1037,9 +1037,9 @@ export class EditComponent implements OnDestroy {
             }
         }
         this.EditComponentController.FilterTabs(allTabs);
-          
-          
-          
+
+
+
         return allTabs;
     }
     private OnEntityCreated() {
@@ -1262,11 +1262,17 @@ export class EditComponent implements OnDestroy {
     //}
 
     // Commands
-    BackButtonClicked() {
+    BackButtonClicked()
+    {
         var IsARInvoiceNeedsConfirmation = this.CheckIfFullAccountingARInvoiceNeedsConfirmation();
         var isNeedingConfirmation = this.NeedCloseConfirmation();
+        const showBankTransferConfirmation = (this.EntityPM.IsDirty && this.ObjectTableName == "ARPayment" && this.EntityPM.ForceUsingBankTransferMethod && SessionLocator.TenantPM.AccountingActivated);
 
-        if (IsARInvoiceNeedsConfirmation) {
+        if(showBankTransferConfirmation){
+            this.ShowBankTransferConfirmationMessage();
+        }
+
+        else if (IsARInvoiceNeedsConfirmation) {
             this.ShowConfirmationMessageForARInvoice();
         }
 
@@ -1376,6 +1382,22 @@ export class EditComponent implements OnDestroy {
             else if (confirmWindow.No) {
                 ConfirmationMessageArgs.NoAction();
             }
+        });
+    }
+
+    ShowBankTransferConfirmationMessage() {
+        var confirmWindow = new ConfirmWindow();
+        confirmWindow.Width = 450;
+        confirmWindow.Height = 190;
+        confirmWindow.ShowCancelButton = true;
+        confirmWindow.ShowNoButton = false;
+        confirmWindow.Title = TextCodeTranslator.Translate("General.O.UnSavedChanges");
+        confirmWindow.YesButtonText = TextCodeTranslator.Translate("General.B.Ok");
+        confirmWindow.Show(TextCodeTranslator.Translate("ExternalReconciliation.O.BTUnsavedChanges"));
+
+        confirmWindow.WindowClosed.subscribe((event: any) => {
+            if (confirmWindow.Yes)
+                this.Close();
         });
     }
 
@@ -1843,7 +1865,7 @@ export class EditComponent implements OnDestroy {
 
     LoadSplitComponent() {
 
-       
+
         let locs = this.AllLocations.toArray();
         let myLocation: LocationDirective = locs.filter(f => f.Code == 'SplitComponentLocation')[0];
 
@@ -1946,7 +1968,7 @@ export class EditComponent implements OnDestroy {
         //}
 
         this.CurrentSession.RemoveEditComponent(this);
-        
+
         this.ngOnDestroy();
 
 

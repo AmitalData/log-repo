@@ -151,8 +151,8 @@
     </Content>
     <Content Include="AutoGenerators\InvoiceClassesGenerator.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>InvoiceClassesGenerator.cs</LastGenOutput>
       <LastOutputs>.\InvoiceClassesGenerator.cs</LastOutputs>
+      <LastGenOutput>InvoiceClassesGenerator.cs</LastGenOutput>
     </Content>
     <Content Include="AutoGenerators\LogitudeClassesGenerator.tt">
       <Generator>TextTemplatingFileGenerator</Generator>

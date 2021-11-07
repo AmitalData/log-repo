@@ -419,6 +419,28 @@
 
         </tr>
 
+          <!-- BankTransfer Alert -->
+          <tr *ngIf="showBankTransferAlert" style="height:1px;">
+            <td colspan="2">
+
+                <div class="SaveAlert" [style.text-align]="isRTL ? 'right' : 'left'"
+                     style="margin: 0 auto;margin-bottom: 8px;min-width: 325px;height: 24px;width: fit-content;background: #c0e8c2;border: 1px solid #54a758;color: #6a7769;position: relative;padding: 3px 5px;border-radius: 5px; padding-left: 40px;"
+                     [style.padding-left]="isRTL ? '40px' : 'initial'"
+                     [style.padding-right]="isRTL ? 'initial' : '40px'">
+
+                    <div class="alert-close" (click)="showBankTransferAlert = false" [style.right]="isRTL ? 'initial' : '5px'"
+                         [style.left]="isRTL ? '5px' : 'initial'"
+                         style="color: #439c47;text-decoration: underline;top: 3px;">
+                        {{'Accounting.General.B.Close' | TextCodeTranslationPipe}}
+                    </div>
+                    <div>
+                        {{GetBankTransferAlertMessage()}}
+                    </div>
+                </div>
+            </td>
+
+        </tr>
+
         <!-- Validation Box-->
         <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
             <td colspan="2">

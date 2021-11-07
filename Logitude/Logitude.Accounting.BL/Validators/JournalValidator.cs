@@ -719,11 +719,14 @@ accountingValidationContextServiceProvider
 
                 List<string> ledgerTransactionIds = myJournalPM.JournalExternalReconciles.Where(r => !String.IsNullOrWhiteSpace(r.LedgerTransactionId)).Select(r => r.LedgerTransactionId).ToList();
 
+                var skipAccountValidation = myJournalPM.JournalExternalReconciles.Any(r => r.SkipAccountsValidation == true);
+
                 myExternalReconcileAdjustBankFeesService.PrapareAndValid(myJournalPM.Tenant, reconcileExternalPageLineIdList, adjustGLAccountId, out listOfpageLineList, out listOfpageList, CheckWhileStreaming,
 
             
                     ledgerTransactionIds,
-                    out string accountingCurrencyId, out List<LedgerTransactionPM> ledgerTransactionList
+                    out string accountingCurrencyId, out List<LedgerTransactionPM> ledgerTransactionList,
+                    skipAccountValidation
                     );
 
 
