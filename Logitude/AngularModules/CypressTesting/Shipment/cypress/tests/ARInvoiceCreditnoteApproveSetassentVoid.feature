@@ -52,7 +52,7 @@ Feature: AR Invoice Credit Note Approve, Set as Sent and Void
         And the status value should be "Unpaid"
 
     Scenario: Set credit note ARInvoice as sent
-        When set invoice as sent
+        When set invoice as sent with "sent invoice" as a note
         Then the invoice should set as sent successfully
         And the status value should be "Unpaid"
 
