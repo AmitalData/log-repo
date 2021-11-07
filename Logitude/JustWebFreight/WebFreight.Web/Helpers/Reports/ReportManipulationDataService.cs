@@ -27,6 +27,7 @@ namespace WebFreight.Web.Helpers.Reports
             reportsTemplatesWebService = new ReportsTemplatesWebService();
             reportsTemplatesVersionRepository = new ReportsTemplatesVersionRepository(reportFliter.tenant);
             reportsTemplateRepository = new ReportsTemplateRepository(reportFliter.tenant);
+            excelReportMrtBuilder = new ExcelReportMrtBuilder(reportFliter.tenant);
         }
 
         public bool IsDataProviderHaveListWithValues()
@@ -97,7 +98,7 @@ namespace WebFreight.Web.Helpers.Reports
 
             if (reportsTemplate.TemplateType == "E")
             {
-                return new ExcelReportMrtBuilder(reportFliter.tenant).Build(reportsTemplate, reportDocumentId, true);
+                return excelReportMrtBuilder.Build(reportsTemplate, reportDocumentId, true);
             }
             return reportsTemplatesWebService.GetReportTemplate(reportDocumentId, reportFliter.tenant, false);
         }
