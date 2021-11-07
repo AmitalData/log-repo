@@ -1,6 +1,7 @@
 @release @stable @all
 Feature: AR Invoice Cancel Draft
     The user creates a Direct Export Air shipment, creates receivable, creates AR Invoice draft and cancels it.
+
     Scenario: Update Accounting System
         Given the user logged in
         Given accounting System as "None"
@@ -39,3 +40,12 @@ Feature: AR Invoice Cancel Draft
     Scenario: Cancel draft ARInvoice
         When cancel draft
         Then the invoice should cancel successfully
+        And the status value should be "Cancelled"
+
+    Scenario: Assert invoice details screen fields after cancelling the invoice
+        Given navigates details tab
+        Then the details screen fields should be disabled
+
+    Scenario: Assert link of the invoice not exsit
+        Given navigates receivables tab
+        Then the link of the invoice should not be exsit

@@ -122,7 +122,7 @@ Then("the status value should be {string}", (statusValue) => {
 //#endregion
 
 //#region Assert invoice details screen fields after approving the invoice
-Then("navigates details tab", () => {
+Given("navigates details tab", () => {
     cy.Click(AccountingSelectors.ARInvoiceDetails, null)
 });
 
