@@ -419,7 +419,10 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
             this.SetExportShipmentFilters(shipmentsQueriesCountsArgs);
         }
 
-        this.SetDefalutFilter(shipmentsQueriesCountsArgs);
+        if (!this.IsImportActivated && !this.IsExportActivated) {
+            this.SetDefalutFilter(shipmentsQueriesCountsArgs);
+        }
+      
          
 
     }
@@ -443,23 +446,12 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
     }
 
     private SetDefalutFilter(shipmentsQueriesCountsArgs: ShipmentsQueriesCountsArgs) {
-        if (!this.IsImportActivated && !this.IsExportActivated) {
-            this.IsImportActivated = true; 
-             this.SelectedDirectionFilter = 'C'; 
-            shipmentsQueriesCountsArgs.DirectionId = 'C';
-            shipmentsQueriesCountsArgs.DirectionOperator = 'Equal';
-            this.ShowDirectionFilters = false;
-        }
+         
+            this.IsImportActivated = true;
+            this.SetFilterOptions('C', 'Equal', shipmentsQueriesCountsArgs); 
+            this.ShowDirectionFilters = false; 
     }
-
-    private ExcludeImportFilters(shipmentsQueriesCountsArgs: ShipmentsQueriesCountsArgs) {
-        if (this.ShowDirectionFilters) {
-            shipmentsQueriesCountsArgs.DirectionId = 'I';
-            shipmentsQueriesCountsArgs.DirectionOperator = 'NotEqual';
-
-        }
-    }
-     
+ 
 
     private setAllShipmentsQueriesCounts(myResult: ImporterQueriesDataCounts) {
         this.AgentShipmentsCount = myResult.AgentShipmentsCount > 1000 ? "1000+" : myResult.AgentShipmentsCount.toString();
