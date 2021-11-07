@@ -713,7 +713,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                     _MyDeclarationPM.IsDiamondDeclaration = true;
                 }
 
-                UpdateTrucker();
+             //   UpdateTrucker();
 
                 if (string.IsNullOrWhiteSpace(_AmitalCustomsFile.IsCourierDeclaration) || (!string.IsNullOrWhiteSpace(_AmitalCustomsFile.IsCourierDeclaration) && _AmitalCustomsFile.IsCourierDeclaration.ToLower() != "true"))
                 {
@@ -847,6 +847,9 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 #endif
 
                 }
+
+
+                UpdateTrucker();
 
                 if (String.IsNullOrWhiteSpace(_MyDeclarationPM.Id))
                 {
