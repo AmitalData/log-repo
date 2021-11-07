@@ -303,6 +303,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     toSetDeclarationChanged = true;
                 }
             }
+            entityPM.ShortHAWB = entityPM.HAWB;
 
             base.OnUpdating(entityPM, entityPOCO);
         }
