@@ -35,6 +35,8 @@ export class ARPaymentMultiBankTransfersComponent extends BaseComponent {
     private CurrentSession = SessionLocator.SelectedSession;
     public BankTransfersCounter: number;
     public TotalAmount: number;
+    public TotalLocalAmount: number;
+    public TenantCurrencySign: string;
     public isLTR: boolean;
     constructor() {
         super();
@@ -62,6 +64,7 @@ export class ARPaymentMultiBankTransfersComponent extends BaseComponent {
                     ? true
                     : false;
         }
+        this.TenantCurrencySign = SessionLocator.TenantPM.CurrencySign;
     }
     UpdateBankTransferCounter() {
         this.BankTransfersCounter = this.paymentPM.ARPaymentBankTranfers.length;
@@ -136,7 +139,11 @@ export class ARPaymentMultiBankTransfersComponent extends BaseComponent {
 
     CalculateTotal() {
         this.TotalAmount = 0;
+        this.TotalLocalAmount = 0;
         for (let bankTransfer of this.ItemsSource.Collection) {
+            if(this.paymentPM.LocalCurrencyCode != this.paymentPM.PaymentCurrencyCode && this.paymentPM.PaymentCurrencyExchangeRate) {
+                this.TotalLocalAmount += bankTransfer.ForeignAmount * this.paymentPM.PaymentCurrencyExchangeRate;
+            }
             if (!AppTool.IsNullOrEmpty(bankTransfer.ForeignAmount))
                 this.TotalAmount += bankTransfer.ForeignAmount;
         }
