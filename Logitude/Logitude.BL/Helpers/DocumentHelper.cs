@@ -181,7 +181,7 @@ namespace Logitude.BL.Helpers
                     catch (Exception ex)
                     {
                         string data = "@ Tenant : " + tenant.Id + "@ DocumentId : " + document.Id + "@ Exception : " + ex.Message;
-                        AzureLog.SaveLogsInStorage(data, "P", DateTime.Now, "", "", 0, "", "Encryption Document", null);
+                        //AzureLog.SaveLogsInStorage(data, "P", DateTime.Now, "", "", 0, "", "Encryption Document", null);
                         ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "EncryptionDocument:Tenant = " + tenant.Id + "@DocumentId=" + document.Id, null, null);
                     }
                 }
