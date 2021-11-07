@@ -157,7 +157,7 @@
                     <td style="width:85px; padding-right: 15px;" colspan="6">
                         <div class="footer-title" style="color: #3b95d5;font-size:14px" >  {{'Accounting.General.O.Totals' | TextCodeTranslationPipe}}: 
                             <span class="amount">{{paymentPM.PaymentCurrencySign}} {{TotalAmount | NumbersPipe:'N2'}} </span> 
-                            <span *ngIf="paymentPM.LocalCurrencyCode != paymentPM.PaymentCurrencyCode "> | 
+                            <span *ngIf="paymentPM.LocalCurrencyId != paymentPM.PaymentCurrencyId "> | 
                             <span class="amount">{{TenantCurrencySign}} {{TotalLocalAmount | NumbersPipe:'N2'}}</span></span>
                         </div>
                     </td>
