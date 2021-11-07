@@ -681,6 +681,9 @@ namespace WebFreight.Web.WcfApi
                     MapForwarderPartnert(entityPM, cardsReporistory);
                     #endregion
 
+                    #region FreightForwarder
+                    MapFreightForwarder(entityPM, cardsReporistory);
+                    #endregion
 
                     #region PaymentRequestDateTime
                     MapPaymentRequestDateTime(entityPM, shipmentAdditionalCloudDataRepository, shipmentRepository);
@@ -931,6 +934,23 @@ namespace WebFreight.Web.WcfApi
             shipmentAdditionalCloudDataRepository.Update(shipmentAdditionalCloudData);
             shipmentAdditionalCloudDataRepository.SubmitChanges();
         }
+        private void MapFreightForwarder(ShipmentPM entityPM, CardRepository cardsReporistory)
+        {
+            if (entityPM.FreightForwarderId != null)
+            {
+                string cardId = cardsReporistory.GetCardIdByCode(entityPM.FreightForwarderId, entityPM.Tenant);
+                if (!string.IsNullOrEmpty(cardId))
+                {
+                    entityPM.FreightForwarderId = cardId;
+                }
+                else
+                {
+                    throw new ApplicationException("FreightForwarderId field doesn't exist in the database,Upsert this entity before using it.");
+                }
+            }
+
+        }
+
 
         private void MapForwarderPartnert(ShipmentPM entityPM, CardRepository cardsReporistory)
         {
