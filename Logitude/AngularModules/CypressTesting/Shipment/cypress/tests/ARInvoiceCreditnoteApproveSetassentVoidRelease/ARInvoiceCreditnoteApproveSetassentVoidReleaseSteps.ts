@@ -109,6 +109,7 @@ Then("the invoice should create successfully", () => {
 When("approve invoice", () => {
     AccountingActions.ARApproveInvoice()
 });
+
 Then("the invoice should approve successfully", () => {
     BaseAssertion.AssertStatusCode(RequestAliases.ARInvoicesRequest, 200).then((interception) => {
         invoiceNumber = interception.response.body.InvoiceNumber;
