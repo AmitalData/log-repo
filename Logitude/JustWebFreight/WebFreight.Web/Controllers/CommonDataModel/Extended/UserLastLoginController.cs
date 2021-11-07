@@ -12,6 +12,7 @@ using Logitude.Server.Tools.Counters;
 using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Data.Helpers;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
@@ -76,6 +77,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
                         {
                             UserLastLogin entity = repository.GetSingleUserLastLogin(entityPM.Id, entityPM.Tenant, false);
                             entity.ComputerId = entityPM.ComputerId;
+                            entity.WorkEnvironment = LogitudeSettingConfigration.GetWorkEnvironment();
                             repository.Update(entity);
                             repository.SubmitChanges();
                         }

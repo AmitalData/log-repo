@@ -9,7 +9,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
         public UserLastLoginMap()
         {
             // Primary Key
-            this.HasKey(t => t.Id);
+            this.HasKey(t => new { t.Id, t.ComputerId, t.WorkEnvironment });
 
             // Properties
             this.Property(t => t.ComputerId)
@@ -20,6 +20,10 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.Id)
                 .IsRequired()
                 .HasMaxLength(15)
+                .IsUnicode(false);
+
+            this.Property(t => t.WorkEnvironment)
+                .HasMaxLength(40)
                 .IsUnicode(false);
 
             // Table & Column Mappings

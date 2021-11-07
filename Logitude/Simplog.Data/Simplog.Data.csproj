@@ -587,6 +587,7 @@
     <Compile Include="Helpers\AutomationSendDocument.cs" />
     <Compile Include="Helpers\AutomationSendInterface.cs" />
     <Compile Include="Helpers\DocumentDefultAttachment.cs" />
+    <Compile Include="Helpers\LogitudeSettingConfigration.cs" />
     <Compile Include="InfrastructureModel\EntityPOCOs\DWCategories.cs" />
     <Compile Include="InfrastructureModel\EntityPOCOs\DWObjectField.cs" />
     <Compile Include="InfrastructureModel\EntityPOCOs\DWObjectFieldCategories.cs" />
