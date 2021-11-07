@@ -299,6 +299,7 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string ShipmentTypeId { get; set; }
         [ForeignKey("ShipmentTypeId")]
         public virtual ShipmentType ShipmentType { get; set; }
+        public DateTime? ShipmentCreateDate { get; set; }
 
     }
 }

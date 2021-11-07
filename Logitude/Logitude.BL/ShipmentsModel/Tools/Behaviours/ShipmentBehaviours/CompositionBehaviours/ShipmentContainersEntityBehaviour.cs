@@ -260,6 +260,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
                 container.UpdateDate = TenantServerConfigration.GetCurrentDateTime(this.initializer.Tenant);
                 container.UpdatedByUserId = this.initializer.LoggedContactId;
                 container.ShipmentPackagesId = shipmentPackage.Id;
+                container.ShipmentCreateDate = this.initializer.EntityPM?.CreateDateTime;
             }
             container.MainCarriageCarrierId = this.initializer.EntityPM.MainCarriageCarrierId;
             container.MainCarriageCarrierNumber = this.initializer.EntityPM.MainCarriageCarrierNumber;
@@ -308,14 +309,12 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
             container.ShipmentOnCarriageATD = this.initializer.EntityPM?.OnCarriageATD;
             container.ShipmentOriginAgentId = this.initializer.EntityPM?.AgentId;
             container.ShipmentDestinationAgentId = this.initializer.EntityPM?.FreightForwarderId;
-
             container.ShipmentNumber = this.initializer.EntityPM?.ShipmentNumber;
             container.ContainersCount = this.initializer.EntityPM?.NumberOfContainers;
             container.HandlerId = this.initializer.EntityPM?.HandlerUserId;
             container.CustomerId = this.initializer.EntityPM?.CustomerId;
             container.OPClosed = this.initializer.EntityPM != null ? this.initializer.EntityPM.IsOperationalClosed : false;
             container.ShipmentTypeId = this.initializer.EntityPM?.ShipmentTypeId;
-
             this.MapContainerFieldsFromShipmentPickup(container);
             this.MapContainerFieldsFromShipmentDelivery(container);
         }
