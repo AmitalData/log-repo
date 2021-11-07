@@ -76,46 +76,13 @@ namespace WebFreight.Web.Helpers.ExcelReport
         {
             foreach (StiPage page in stiReport.Pages)
             {
-                AddVariables(selectedFields, page);
                 AddExcelReportLists(selectedFields, page);
-                AddHeader(report.Name, page);
+                AddHeader(selectedFields, report.Name, page);
                 AddFooter(page);
             }
         }
 
-        private void AddVariables(List<DataProviderField> dataProviderFields, StiPage page)
-        {
-            var variables = dataProviderFields.Where(x => x.Type != "List" && x.Type != "Class").ToList();
-
-            StiHeaderBand stiBand = new StiHeaderBand
-            {
-                Height = ((double)variables.Count() / 4) + 0.2,
-                Name = "VariablesHeader",
-            };
-            page.Components.Add(stiBand);
-
-
-            int columnWidth = 2;
-            double posX = 0;
-            double posY = 0;
-            foreach (var item in variables)
-            {
-                if (posX != 0 && posX % 8 == 0)
-                {
-                    posX = 0;
-                    posY += 0.5;
-                }
-                CreateVariableHeader(stiBand, columnWidth, posX, posY, item);
-
-                posX += columnWidth;
-
-                CreateVariableText(stiBand, columnWidth, posX, posY, item);
-
-                posX += columnWidth;
-            }
-        }
-
-        private void CreateVariableText(StiHeaderBand stiBand, int columnWidth, double posX, double posY, DataProviderField item)
+        private void CreateVariableText(StiPageHeaderBand stiBand, int columnWidth, double posX, double posY, DataProviderField item)
         {
             StiText text = new StiText(new RectangleD(posX, posY, columnWidth, 0.5))
             {
@@ -136,7 +103,7 @@ namespace WebFreight.Web.Helpers.ExcelReport
             return expression.Replace("{", string.Empty).Replace("}", string.Empty).Replace(".", string.Empty);
         }
 
-        private void CreateVariableHeader(StiHeaderBand stiBand, int columnWidth, double posX, double posY, DataProviderField item)
+        private void CreateVariableHeader(StiPageHeaderBand stiBand, int columnWidth, double posX, double posY, DataProviderField item)
         {
             StiText hText = new StiText(new RectangleD(posX, posY, columnWidth, 0.5))
             {
@@ -152,12 +119,14 @@ namespace WebFreight.Web.Helpers.ExcelReport
             stiBand.Components.Add(hText);
         }
 
-        private void AddHeader(string text, StiPage page)
+        private void AddHeader(List<DataProviderField> dataProviderFields, string text, StiPage page)
         {
+            var variables = dataProviderFields.Where(x => x.Type != "List" && x.Type != "Class").ToList();
+
 
             StiPageHeaderBand stiBand = new StiPageHeaderBand
             {
-                Height = 0.5,
+                Height = ((double)variables.Count() / 4) + 0.7,
                 Name = "PageHeaderBand",
             };
             page.Components.Add(stiBand);
@@ -169,6 +138,26 @@ namespace WebFreight.Web.Helpers.ExcelReport
                 Name = "PageHeaderText",
             };
             stiBand.Components.Add(stiText);
+
+
+            int columnWidth = 2;
+            double posX = 0;
+            double posY = 0.5;
+            foreach (var item in variables)
+            {
+                if (posX != 0 && posX % 8 == 0)
+                {
+                    posX = 0;
+                    posY += 0.5;
+                }
+                CreateVariableHeader(stiBand, columnWidth, posX, posY, item);
+
+                posX += columnWidth;
+
+                CreateVariableText(stiBand, columnWidth, posX, posY, item);
+
+                posX += columnWidth;
+            }
         }
 
         private void AddFooter(StiPage page)

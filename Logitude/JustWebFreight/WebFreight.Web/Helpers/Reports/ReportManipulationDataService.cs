@@ -7,6 +7,7 @@ using System.Reflection;
 using System.Text;
 using System.Web;
 using WebFreight.Web.DataProviders;
+using WebFreight.Web.Helpers.ExcelReport;
 using WebFreight.Web.ReportsWebServices;
 
 namespace WebFreight.Web.Helpers.Reports
@@ -14,15 +15,18 @@ namespace WebFreight.Web.Helpers.Reports
     public class ReportManipulationDataService
     {
         private object dataProvider;
-        private ReportFliter reportFliter;
-        ReportsTemplatesWebService reportsTemplatesWebService;
-        ReportsTemplatesVersionRepository reportsTemplatesVersionRepository;
+        private readonly ReportFliter reportFliter;
+        private readonly ReportsTemplatesWebService reportsTemplatesWebService;
+        private readonly ReportsTemplatesVersionRepository reportsTemplatesVersionRepository;
+        private readonly ReportsTemplateRepository reportsTemplateRepository;
+        private readonly ExcelReportMrtBuilder excelReportMrtBuilder;
         public ReportManipulationDataService(object dataProvider, ReportFliter reportFliter)
         {
             this.dataProvider = dataProvider;
             this.reportFliter = reportFliter;
             reportsTemplatesWebService = new ReportsTemplatesWebService();
             reportsTemplatesVersionRepository = new ReportsTemplatesVersionRepository(reportFliter.tenant);
+            reportsTemplateRepository = new ReportsTemplateRepository(reportFliter.tenant);
         }
 
         public bool IsDataProviderHaveListWithValues()
@@ -87,9 +91,15 @@ namespace WebFreight.Web.Helpers.Reports
 
         private byte[] GetReportTemplateByReportTemplateId()
         {
+
             string reportDocumentId = reportsTemplatesVersionRepository.GetReportDocumentIdByReportTemplateId(reportFliter.DefaultTemplateId, reportFliter.tenant);
-            byte[] template = reportsTemplatesWebService.GetReportTemplate(reportDocumentId, reportFliter.tenant, false);
-            return template;
+            var reportsTemplate = reportsTemplateRepository.GetSingleReportsTemplate(reportFliter.DefaultTemplateId, reportFliter.tenant);
+
+            if (reportsTemplate.TemplateType == "E")
+            {
+                return new ExcelReportMrtBuilder(reportFliter.tenant).Build(reportsTemplate, reportDocumentId, true);
+            }
+            return reportsTemplatesWebService.GetReportTemplate(reportDocumentId, reportFliter.tenant, false);
         }
 
         private List<string> GetallBusniessListObjectFieldGuids(string reportTemplateAsXmlString, List<string> allBusniessListObjectFieldNames)
