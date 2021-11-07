@@ -1,0 +1,180 @@
+
+
+
+<table>
+
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+        <td colspan="7">
+            <ValidationSummary [ItemsSource]="ValidationErrorsList" [SingleLine]="false"></ValidationSummary>
+        </td>
+    </tr>
+    <tr>
+
+      
+        <td style="width:85px; padding-right: 15px;" colspan="6">
+            <div style="color: #3b95d5;font-size:16px">{{'ARPayment.M.BankTransfers'  | TextCodeTranslationPipe}} ({{BankTransfersCounter}})</div>
+        </td>
+        <!-- <td colspan="2">
+            <SearchTextBox [ObjectTableName]="ObjectTableName"  [PlaceHolder]="'ARPayment.M.SearchByTransferReference'  | TextCodeTranslationPipe" (SearchTextChangeEvent)="onSearchTextChangeEvent($event)"></SearchTextBox>
+        </td> -->
+
+        <td style="width: 25px;height: 20px;padding: 5px;padding-bottom: 0px;">
+            <div><IconButton [IsEnabled]="!IsDisplayOnly" [IsSmall]="true" [Name]="'Add'" (click)="AddNewBankTransfer()" style="float:left;"></IconButton></div>
+        </td>
+    </tr>
+
+    <tr style="height:5px"></tr>
+    <tr style="height:100%;bottom:5px">
+        <td colspan="7">
+            <table>
+                <tr>
+                
+                    <td colspan="5" style="padding-right:10px">
+
+                        <div class="CellContent" style="bottom: 5px;padding:5px">
+                            <logitude-edit-grid GridWidth="100%"
+                                                GridHeight="100%"
+                                                (RowEnded)="OnRowEnded($event)"
+                                                (Ondblclick)="OnFocus()"
+                                                [IsReadOnly]="IsDisplayOnly"
+                                                [ItemSource]="ItemsSource"
+                                                (SelectedItemChanged)="OnRowSelected($event)"
+                                                [SelectedRow]="SelectedRow">
+
+
+
+                                <log-column [header]="'ARPayment.F.LineNumber' | TextCodeTranslationPipe" [width]="'70'" [Alignment]="isLTR?'left':'right'"  >
+                                    <ng-template let-item>
+                                        <log-cell-template #logcelltemplate [TabIndex]="-1">
+                                            <div style="text-align:left" class="TextTrimming" text-start>
+                                                <span >{{item.LineNumber}}</span>
+                                            </div>
+                                        </log-cell-template>
+                                    </ng-template>
+                                </log-column>
+
+
+                                <log-column [header]="('ARPayment.F.AmountInPaymentCurrency' | TextCodeTranslationPipe) + ' (' + paymentPM.PaymentCurrencyCode + ')'" [binding]="'ForeignAmount'" [width]="'150'" [Editable]="true" [Alignment]="isLTR?'left':'right'"  >
+                                    <ng-template let-item>
+                                        <log-cell-template #logcelltemplate>
+                                            <div class="TextTrimming" style="text-align:right" *ngIf="logcelltemplate.IsDisplayMode" >
+                                                <span>{{item.ForeignAmount}}</span>
+                                            </div>
+                                            <div *ngIf="logcelltemplate.IsEditMode">
+                                                <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'ForeignAmount'" [DataContext]="item" [InputType]="'decimal'"
+                                                            [Text]="item.ForeignAmount" [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+
+                                            </div>
+                                        </log-cell-template>
+                                    </ng-template>
+
+
+                                </log-column>
+
+
+
+                                <log-column [header]="'ARPayment.F.ValueDate' | TextCodeTranslationPipe" [binding]="'ValueDate'" [width]="'95'" [Editable]="true" [Alignment]="isLTR?'left':'right'" >
+                                    <ng-template let-item>
+                                        <log-cell-template #logcelltemplate>
+                                            <div class="TextTrimming" style="text-align:left" *ngIf="logcelltemplate.IsDisplayMode" text-start>
+                                                <span>{{item.ValueDate | DateTimeToDatePipe}}</span>
+                                            </div>
+                                            <div *ngIf="logcelltemplate.IsEditMode">
+                                                <LogDatePicker [FocusOnMe]="'true'"
+                                                               [ObjectFieldName]="'ValueDate'"
+                                                               [SelectedDateValue]="item.ValueDate"
+                                                               [ObjectTableName]="ObjectTableName" [InputType]="'date'" [HideColumns]="true"
+                                                               [DataContext]="item"></LogDatePicker>
+
+                                            </div>
+                                        </log-cell-template>
+                                    </ng-template>
+
+
+                                </log-column>
+                                <log-column [header]="'ARPayment.F.PaymentRef' | TextCodeTranslationPipe" [binding]="'PaymentRef'" [width]="'100'" [Editable]="true" [Alignment]="isLTR?'left':'right'"  >
+                                    <ng-template let-item>
+                                        <log-cell-template #logcelltemplate>
+                                            <div class="TextTrimming" style="text-align:left" *ngIf="logcelltemplate.IsDisplayMode" text-start>
+                                                <span>{{item.PaymentRef}}</span>
+                                            </div>
+                                            <div *ngIf="logcelltemplate.IsEditMode">
+                                                <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'PaymentRef'" [DataContext]="item"
+                                                            [Text]="item.PaymentRef" [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+
+
+                                            </div>
+                                        </log-cell-template>
+                                    </ng-template>
+
+
+                                </log-column>
+                                <log-column [header]="'ARPayment.F.BankAccountLiteId' | TextCodeTranslationPipe" [binding]="'Bank'" [width]="'120'" [Editable]="true"  [Alignment]="isLTR?'left':'right'"   >
+                                    <ng-template let-item>
+                                        <log-cell-template #logcelltemplate>
+                                            <div class="TextTrimming" style="text-align:left" *ngIf="logcelltemplate.IsDisplayMode" text-start>
+                                                <span>{{item.BankAccount?.LocalName}}</span>
+                                            </div>
+                                            <div *ngIf="logcelltemplate.IsEditMode">
+                                                    <LogLov [ObjectFieldName]="'BankAccountId'"
+                                                        [ObjectTableName]="ObjectTableName"
+                                                        [DataContext]="DataContext"
+                                                        (SelectedItemChanged)="item.BankAccountId = $event?.Id; item.BankAccount = $event"
+                                                        [LookUpTableName]="'BankAccount'"
+                                                        [DisplayMemberPath]="'LocalName'"> </LogLov>
+
+                                            </div>
+                                        </log-cell-template>
+                                    </ng-template>
+                                </log-column>
+                                
+                                <log-column [width]="'40'" [Editable]="true" [Alignment]="'right'" [visibility]="'collapsed'">
+                                    <ng-template let-item>
+                                        <log-cell-template [IgnoreMods]="true" #logcelltemplate>
+                                            <div style="width: 30px; float: right; height:20px;padding-top:3px">
+                                                <IconButton [Name]="'Delete'" [IsSmall]="true" (click)="item.DeleteButtonClicked()" [IsEnabled]="!IsDisplayOnly"></IconButton>
+                                            </div>
+
+
+
+                                        </log-cell-template>
+                                    </ng-template>
+                                </log-column>
+
+                            </logitude-edit-grid>
+                        </div>
+                    </td>
+
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+    <tr style="height: 32px;">
+        <td colspan="7" style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td style="width:85px; padding-right: 15px;" colspan="6">
+                        <div class="footer-title" style="color: #3b95d5;font-size:14px" >  {{'Accounting.General.O.Totals' | TextCodeTranslationPipe}}: {{TotalAmount | NumbersPipe:'N2'}} {{paymentPM.PaymentCurrencySign}}</div>
+                    </td>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="Button" (click)="CancelButtonClicked()">{{'General.B.Cancel' | TextCodeTranslationPipe}}</button>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="RedButton" (click)="OkButtonClicked()" [disabled]="IsDisplayOnly">{{'General.B.Ok' | TextCodeTranslationPipe}}</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+</table>

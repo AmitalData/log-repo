@@ -36,6 +36,11 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
             {
                 if (item.IsCustom)
                 {
+                    if (item.FieldName == "DigitalQuickSearch")
+                    {
+                        queryableData = DigitalCustomFilter.ApplyDigitalQuickSearchFilter(item, queryableData);
+                    }
+
                     if (item.FieldName == "ActualDataDateYearMonth")
                     {
                         int year = Convert.ToInt32(item.FieldValue);

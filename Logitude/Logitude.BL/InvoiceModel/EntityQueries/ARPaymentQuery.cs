@@ -163,7 +163,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
 
             payment.ARPaymentChequeReplicas = GetARPaymentChequeReplicasByPaymentId(payment.Id, tenant);
             payment.ARPaymentBankTranfers = GetARPaymentBankTranfersByPaymentId(payment.Id, tenant);
-
+            
             SetGLAccountFields(payment);
             payment =  SetJournalFields(payment);
 
@@ -223,7 +223,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
         private List<ARPaymentBankTranferPM> GetARPaymentBankTranfersByPaymentId(string paymentid, int tenant)
         {
             IBankAccountQueryServiceExt bankAccountQuery = ContainerAccessor.Container.Resolve(typeof(IBankAccountQueryServiceExt), "BankAccountQueryServiceExt", new ParameterOverride("", 1)) as IBankAccountQueryServiceExt;
-
+            
             ARPaymentBankTranferRepository aRPaymentBankTranferRepository = new ARPaymentBankTranferRepository(tenant);
             List<ARPaymentBankTranfer> arPaymentBankTranfers = aRPaymentBankTranferRepository.GetARPaymentBankTranfers(paymentid, tenant).ToList();
             var list = (from a in arPaymentBankTranfers
@@ -242,12 +242,13 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                             ExchageRate = a.ExchageRate,
                         }).OrderBy(d => d.LineNumber).ToList();
 
-            list.ForEach(item => {
-                BankAccountPM bankAccount = bankAccountQuery.GetByFirstOrDefault(item.BankAccountId, tenant);
-                //item.BankAccount = new BankAccountLightPM { Id = bankAccount.Id, LocalName = bankAccount.LocalName, EnglishName = bankAccount.EnglishName };
-            });
+                        list.ForEach(item => {
+                            BankAccountPM bankAccount = bankAccountQuery.GetByFirstOrDefault(item.BankAccountId, tenant);
+                            item.BankAccount = new BankAccountLightPM { Id = bankAccount.Id, LocalName = bankAccount.LocalName, EnglishName = bankAccount.EnglishName };
+                        });
             return list;
         }
+
         void SetGLAccountFields(ARPaymentPM paymentPM)
         {
 

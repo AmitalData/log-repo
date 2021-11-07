@@ -13,6 +13,10 @@ using System.Data.Entity;
 using System.Linq;
 using System.Threading;
 using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.ShipmentsModel.Tools.TraceEvents;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Logitude.Server.Tools.Helpers;
+using Simplog.Data.InfrastructureModel;
 
 namespace CommunicationWorkerRole
 {
@@ -24,6 +28,16 @@ namespace CommunicationWorkerRole
         bool isPODDocumentUploaded = false;
         bool isPODDocumentDeleted = false;
         DateTime? podRecivedDate;
+        Shipment shipment;
+        private List<EventType> allEventTypes;
+        private string objectTableId;
+        private string objectTableName = "Shipment";
+        TraceEventRepository traceEventRepository;
+        private IWebFreightContext objectContext;
+        ObjectTable objectTable;
+        private ShipmentMasterDataRepository shipmentMasterDataRepository;
+        ShipmentRepository shipmentRepository;
+
         public override bool OnStart()
         {
             ThreadId = Guid.NewGuid().ToString();
@@ -62,6 +76,8 @@ namespace CommunicationWorkerRole
                 try
                 {
                     MapQueueResponse(queueResponse);
+                    InitializeServices();
+                    FillEventTraces();
                     HandelPODShipmentFields();
                     queueService.Complete();
                 }
@@ -108,10 +124,25 @@ namespace CommunicationWorkerRole
                 HandelPODShipmentFieldsWhenUploadingPODDocument(documentsFilingPM);
             }
         }
-
-        private DocumentsFilingPM GetDocumentsFilingPM(string documentsFilingId , int tenant)
+        private void InitializeServices()
         {
-            if(string.IsNullOrEmpty(documentsFilingId))
+            objectContext = WebFreightContext.GetContext(tenant);
+            var objectTabelRepository = new ObjectTableRepository(objectContext);
+            traceEventRepository = new TraceEventRepository(objectContext);
+            objectTable = objectTabelRepository.GetObjectTableByName(objectTableName, 0, true);
+            shipmentMasterDataRepository = new ShipmentMasterDataRepository(tenant);
+            shipmentRepository = new ShipmentRepository(tenant);
+        }
+
+        private void FillEventTraces()
+        {
+            this.objectTableId = objectTable.Id;
+            var eventTypeRepository = new EventTypeRepository(objectContext);
+            this.allEventTypes = eventTypeRepository.GetEventTypesByTenantAndObjectTableId(tenant, objectTableId).ToList();
+        }
+        private DocumentsFilingPM GetDocumentsFilingPM(string documentsFilingId, int tenant)
+        {
+            if (string.IsNullOrEmpty(documentsFilingId))
             {
                 return null;
             }
@@ -121,7 +152,7 @@ namespace CommunicationWorkerRole
         }
 
         private void HandelPODShipmentFieldsWhenDeletingPODDocument(DocumentsFilingPM documentsFiling)
-        {           
+        {
             ICommonDataContext commonContext = CommonDataContext.GetContext(tenant);
             ObjectTableRepository ObjectTableRepository = new ObjectTableRepository(tenant); ;
             var shipmentObjectTable = ObjectTableRepository.GetSingleObjectTable(documentsFiling.ObjectTableId, tenant, false);
@@ -172,19 +203,135 @@ namespace CommunicationWorkerRole
             }
         }
 
-        private void UpdateShipment(string shipmentId,bool isPODReceived, DateTime? podReceivedDate)
+        private void UpdateShipment(string shipmentId, bool isPODReceived, DateTime? podReceivedDate)
         {
             if (string.IsNullOrEmpty(shipmentId))
             {
                 return;
             }
-
-            ShipmentRepository shipmentRepository = new ShipmentRepository(tenant);
-            Shipment shipment = shipmentRepository.GetSingleShipment(shipmentId, tenant);
+            shipment = shipmentRepository.GetSingleShipment(shipmentId, tenant);
             shipment.IsPODReceived = isPODReceived;
             shipment.PODReceivedDate = podReceivedDate;
+            this.HandelPODShipmentEvent(isPODReceived, podReceivedDate);
             shipmentRepository.Update(shipment);
             shipmentRepository.SubmitChanges();
+        }
+
+        private void HandelPODShipmentEvent(bool isPODReceived, DateTime? podReceivedDate)
+        {
+            if (!isPODReceived && podReceivedDate == null)
+            {
+                this.DeleteTraceEvent("PIOD");
+            }
+            else
+            {
+                this.CreateTraceEvent("PIOD");
+            }
+        }
+
+        private void CreateTraceEvent(string eventTypeCode)
+        {
+            EventTracer.CreateTraceEvent(new EventTracerArgs()
+            {
+                Tenant = tenant,
+                EventTypeCode = eventTypeCode,
+                UserId = shipment?.UpdatedByUserId,
+                EntityId = shipment?.Id,
+                ObjectTableName = "Shipment"
+            });
+        }
+
+        private void DeleteTraceEvent(string eventTypeCode)
+        {
+            if (!string.IsNullOrEmpty(eventTypeCode))
+            {
+                EventType eventType = allEventTypes.Where(d => d.Code == eventTypeCode).FirstOrDefault();
+
+                if (eventType != null)
+                {
+                    List<TraceEvent> AllEventTraces = this.traceEventRepository.GetAllTraceEventsByEventType(shipment?.Id, eventType.Id, tenant).ToList();
+
+                    if (AllEventTraces.Count > 0)
+                    {
+                        foreach (TraceEvent iTraceEvent in AllEventTraces)
+                        {
+                            iTraceEvent.Deleted = true;
+                            traceEventRepository.Update(iTraceEvent);
+                        }
+
+                        traceEventRepository.SubmitChanges();
+
+                        if (!string.IsNullOrEmpty(eventType.EntityStatusId))
+                        {
+                            TraceEvent previousEvent = null;
+
+                            List<TraceEvent> iTraceEventList = (from a in objectContext.TraceEvent.Include("EventType").Include("EventType.EntityStatus")
+                                                                where a.Tenant == tenant
+                                                                && a.EntityId == shipment.Id
+                                                                && a.ObjectTableId == objectTableId
+                                                                && a.EventType.EntityStatus != null
+                                                                && a.Deleted == false
+                                                                select a).ToList();
+
+                            foreach (TraceEvent e in iTraceEventList)
+                            {
+                                if (!e.Deleted)
+                                {
+                                    if (e.EventType.EntityStatus != null)
+                                    {
+                                        if (previousEvent == null)
+                                        {
+                                            previousEvent = e;
+                                        }
+
+                                        else
+                                        {
+                                            if (e.EventType.EntityStatus.StatusWeight > previousEvent.EventType.EntityStatus.StatusWeight)
+                                            {
+                                                previousEvent = e;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            string statusId = null;
+                            DateTime? statusDate;
+                            DateTime? lastStatusLogDate;
+                            string statusLocation;
+                            if (previousEvent != null)
+                            {
+                                statusId = previousEvent.EventType.EntityStatusId;
+                                statusDate = previousEvent.EventDateTime;
+                                lastStatusLogDate = previousEvent.EventDateTime;
+                                statusLocation = previousEvent.Location;
+                            }
+                            else
+                            {
+                                EventType firstEventType = allEventTypes.Where(d => d.Code == "ORDR").FirstOrDefault();
+                                statusId = firstEventType.EntityStatusId;
+                                statusDate = shipment.CreateDateTime;
+                                lastStatusLogDate = shipment.CreateDateTime;
+                                statusLocation = null;
+                            }
+
+                            shipment.StatusId = statusId;
+                            shipment.StatusDate = statusDate;
+                            shipment.StatusLocation = statusLocation;
+                            shipment.LastStatusLogDate = lastStatusLogDate;
+
+                            if (shipment.ShipmentLevelCode == "D" || shipment.ShipmentLevelCode == "C")
+                            {
+                                var entityMasterData = shipmentMasterDataRepository.GetSingleMasterData(shipment.Id);
+                                entityMasterData.StatusId = statusId;
+                                entityMasterData.StatusDate = statusDate;
+                                entityMasterData.StatusLocation = statusLocation;
+                                shipmentMasterDataRepository.Update(entityMasterData);
+                                shipmentMasterDataRepository.SubmitChanges();
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 }

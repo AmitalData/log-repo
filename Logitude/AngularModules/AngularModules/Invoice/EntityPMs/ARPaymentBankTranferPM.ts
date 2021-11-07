@@ -14,6 +14,7 @@ import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
 import {Output, EventEmitter}  from '@angular/core';
 import {PropertyChangedArgs} from '../../Infrastructure/EventEmitterArgs/PropertyChangedArgs';
 import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass';
+import { BankAccountPM } from 'Accounting/EntityPMs/BankAccountPM';
 
 
 export class ARPaymentBankTranferPM {
@@ -67,7 +68,8 @@ export class ARPaymentBankTranferPM {
     public get BankAccountId() { return this.bankAccountId; }
     public set BankAccountId(newValue: string) { if (this.bankAccountId != newValue) { this.bankAccountId = newValue; this.MarkAsDirty("BankAccountId"); } }
        
-	 
+    public BankAccount: BankAccountPM;
+    
     private currencyId: string;
     public get CurrencyId() { return this.currencyId; }
     public set CurrencyId(newValue: string) { if (this.currencyId != newValue) { this.currencyId = newValue; this.MarkAsDirty("CurrencyId"); } }
@@ -128,4 +130,4 @@ export class ARPaymentBankTranferPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

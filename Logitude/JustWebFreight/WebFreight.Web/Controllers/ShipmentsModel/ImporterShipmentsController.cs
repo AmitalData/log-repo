@@ -790,6 +790,11 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
                 Responce.ErrorMessage = "BranchId field is required.";
                 return Responce;
             }
+
+            entityPM.AgentId = GetCardId(entityAM, entityAM.Agent);
+            entityPM.ConsigneeId = GetCardId(entityAM, entityAM.Consignee); 
+
+
             if (entityAM.Department != null)
             {
                 DepartmentRepository Repo = new DepartmentRepository(entityAM.ImporterTenant);
@@ -826,6 +831,8 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
                     entityPM.ShipperId = ShipperId;
                 }
             }
+          
+
             //    else
             //    {
             //        Responce.ErrorType = "Validation Error";
@@ -868,7 +875,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
             //        return Responce;
             //    }
             //}
-             
+
             entityPM.MainCarriageETA = entityAM.MainCarriageETA;
             entityPM.MainCarriageATA = entityAM.MainCarriageATA;
             entityPM.MainCarriageATD = entityAM.MainCarriageATD;
@@ -1092,6 +1099,11 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
             {
                 entityPM.ShipperName = entityAM.ShipperName;
             }
+            if (!string.IsNullOrEmpty(entityAM.ConsigneeName))
+            {
+                entityPM.ConsigneeName = entityAM.ConsigneeName;
+            }
+
             if (!string.IsNullOrEmpty(entityAM.CarrierTransportDocumentNumber))
             {
                 entityPM.CarrierTransportDocumentNumber = entityAM.CarrierTransportDocumentNumber;
@@ -1242,5 +1254,18 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
             return null;
         }
 
+        private string GetCardId(ShipmentAM entityAM, CodeProperties card)
+        {
+            if (!string.IsNullOrEmpty(card.Code) || !string.IsNullOrEmpty(card.Id))
+            {
+                var cardId = CardCodePropertiesMapping.GetCardIdFromCardProperties(entityAM.ImporterTenant, card);
+                if (!string.IsNullOrEmpty(cardId))
+                {
+                    return cardId;
+                }
+            }
+
+            return null;
+        }
     }
 }

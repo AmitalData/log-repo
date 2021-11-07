@@ -82,6 +82,7 @@ using Logitude.BL.CommonDataModel.Tools.EntityService;
 using System.Reflection;
 using System.Collections;
 using WebFreight.Web.Helpers;
+using WebFreight.Web.Helpers.Reports;
 
 namespace WebFreight.Web.ReportsWebServices
 {
@@ -10167,7 +10168,8 @@ namespace WebFreight.Web.ReportsWebServices
             var reader = new StreamReader(memstream);
             string content = reader.ReadToEnd();
             byte[] bytearray = memstream.ToArray();
-            bytearray = IsDataProviderHaveListWithValues(dataprovider, reportFliter) ? bytearray : null;
+            ReportManipulationDataService reportManipulationDataService = new ReportManipulationDataService(dataprovider, reportFliter);
+            bytearray = reportManipulationDataService.IsDataProviderHaveListWithValues() ? bytearray : null;
             return bytearray;
         }
 
@@ -10189,7 +10191,7 @@ namespace WebFreight.Web.ReportsWebServices
         #endregion
 
         #region Open Shipments By Customer
-        public byte[] LoadOpenShipmentsByCustomerDataProvider(byte[] xmlFilters, int tenant)
+        public byte[] LoadOpenShipmentsByCustomerDataProvider(byte[] xmlFilters, ReportFliter reportFliter, int tenant)
         {
             OpenShipmentsByCustomerDataProvider dataprovider = GetOpenShipmentsByCustomerDataProvider(xmlFilters, tenant);
             XmlSerializer serializer = new XmlSerializer(typeof(OpenShipmentsByCustomerDataProvider));
@@ -10199,6 +10201,8 @@ namespace WebFreight.Web.ReportsWebServices
             var reader = new StreamReader(memstream);
             string content = reader.ReadToEnd();
             byte[] bytearray = memstream.ToArray();
+            ReportManipulationDataService reportManipulationDataService = new ReportManipulationDataService(dataprovider, reportFliter);
+            bytearray = reportManipulationDataService.IsDataProviderHaveListWithValues() ? bytearray : null;
             return bytearray;
         }
 
@@ -12064,7 +12068,8 @@ namespace WebFreight.Web.ReportsWebServices
             var reader = new StreamReader(memstream);
             string content = reader.ReadToEnd();
             byte[] bytearray = memstream.ToArray();
-            bytearray = IsDataProviderHaveListWithValues(dataprovider, reportFliter) ? bytearray : null;
+            ReportManipulationDataService reportManipulationDataService = new ReportManipulationDataService(dataprovider, reportFliter);
+            bytearray = reportManipulationDataService.IsDataProviderHaveListWithValues() ? bytearray : null;
             return bytearray;
         }
 
@@ -12976,41 +12981,7 @@ namespace WebFreight.Web.ReportsWebServices
             return email;
         }
 
-        private bool IsDataProviderHaveListWithValues(object dataProvider, ReportFliter reportFliter)
-        {
-            if (!reportFliter.IsSchedulerReport) return true;
-            if (reportFliter.SendIfEmpty) return true;
-            List<PropertyInfo> properties = dataProvider?.GetType()?.GetProperties()?
-                .Where(prop => prop.GetValue(dataProvider) is IList).ToList();
-            foreach (PropertyInfo propInfo in properties)
-            {
-                object value = propInfo.GetValue(dataProvider, null);
-                List<object> genericList = (value as IEnumerable<object>).Cast<object>()?.ToList();
-                if (IsListHaveData(genericList)) return true;
-            }
-
-            return false;
-        }
-
-        private bool IsListHaveData(List<object> genericList)
-        {
-            bool listHaveData = false;
-            if (genericList != null && genericList.Count() == 1 && typeof(GLAccountBalanceList).IsInstanceOfType(genericList[0]))
-            {
-                listHaveData = GLAccountBalanceListsHaveData(genericList) ? true : false;
-            }
-            else if (genericList != null && genericList.Count() > 0)
-            {
-                listHaveData = true;
-            }
-            return listHaveData;
-        }
-        private bool GLAccountBalanceListsHaveData(List<object> genericList)
-        {
-            GLAccountBalanceList gLAccountBalanceLists = (GLAccountBalanceList)genericList[0];
-            string GLAccountBalanceCurrencyId = gLAccountBalanceLists.CurrencyId;
-            return !string.IsNullOrEmpty(GLAccountBalanceCurrencyId);
-        }
+        
 
         private ContactPM GetLoggedContact(int tenant)
         {

@@ -41,6 +41,16 @@ export class InterestReportList {
 	CreditAllotmentPercentage: number;
 	CalCreditAllotmentCommission: number;
 	CalculatedPostponedChequesCommision: number;
+	Category1Name: string;
+	Category2Name: string;
+	Category3Name: string;
+	Category4Name: string;
+	Category5Name: string;
+	Category1LocalName: string;
+	Category2LocalName: string;
+	Category3LocalName: string;
+	Category4LocalName: string;
+	Category5LocalName: string;
 	
 }
  

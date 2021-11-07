@@ -11213,6 +11213,54 @@
       LocalDefaultText="&quot;לא ניתן לבצע התאמות בקבלה עם ריבוי המחאות&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ARPayment.O.ReconciliationInMultipleTransfers&quot;"
+      DefaultText="&quot;Can't perform ARPayment Reconciliation from this screen in multiple Transfers case&quot;"
+      LocalDefaultText="&quot;לא ניתן לבצע התאמות בקבלה עם מספר העברות&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ARPayment.M.MoreThanPaymentBankTransfer&quot;"
+      DefaultText="&quot;More than one Bank Transfer that was created for this Payment. You can view them by clicking on the Edit button&quot;"
+      LocalDefaultText="&quot;בקבלה זאת קיימות יותר מהעברה בנק אחת , ניתן לראות את רשימת העברות ע&quot;י לחיצה על ערוך&quot;"
+      TextCodeTypeCode="&quot;M&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ARPayment.M.BankTransfers&quot;"
+      DefaultText="&quot;Bank Transfers&quot;"
+      LocalDefaultText="&quot;העברות בנקאיות&quot;"
+      TextCodeTypeCode="&quot;M&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ARPayment.F.LineNumber&quot;"
+      DefaultText="&quot;Line No.&quot;"
+      LocalDefaultText="&quot;שורה&quot;"
+      TextCodeTypeCode="&quot;F&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ARPayment.F.PaymentRef&quot;"
+      DefaultText="&quot;Payment Reference&quot;"
+      LocalDefaultText="&quot;אסמכתא קבלה&quot;"
+      TextCodeTypeCode="&quot;F&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ARPayment.F.BankAccount&quot;"
+      DefaultText="&quot;Bank Account&quot;"
+      LocalDefaultText="&quot;חשבון בנק&quot;"
+      TextCodeTypeCode="&quot;F&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ARPayment.M.SearchByTransferReference&quot;"
+      DefaultText="&quot;Search by Transfer Reference&quot;"
+      LocalDefaultText="&quot;חיפוש ע&quot;י אסמכתא של העברה&quot;"
+      TextCodeTypeCode="&quot;M&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ARPayment.M.AddBankTransfersHint&quot;"
+      DefaultText="&quot;You can add multiple Bank Transfers by clicking on the Add Button&quot;"
+      LocalDefaultText="&quot;אתה יכול להוסיף מספר העברות בנקאיות על ידי לחיצה על כפתור הוסף&quot;"
+      TextCodeTypeCode="&quot;M&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature

@@ -161,10 +161,10 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 CreateChequeInCashBook(_arpaymentPM);
             }
 
-            if (ARPaymentMethod != null && ARPaymentMethod.Code == BankTransferARPaymentAccountingMethod )
-            {
-                CreateARPaymentBankTranfer(_arpaymentPM);
-            }
+            //if (ARPaymentMethod != null && ARPaymentMethod.Code == BankTransferARPaymentAccountingMethod)
+            //{
+            //    CreateARPaymentBankTranfer(_arpaymentPM);
+            //}
 
             TraceConnected();
 
@@ -678,33 +678,35 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         private void CreateInterestTransactionLine(ARPaymentPM payment,bool isFromVoidARPayment=false)
         {
             if (tenantPOCO != null && 
-                tenantPOCO.AccountingActivated && payment.AccountingPaymentMethodCode != ChequeARPaymentAccountingMethod
+                tenantPOCO.AccountingActivated && payment.AccountingPaymentMethodCode != ChequeARPaymentAccountingMethod && payment.AccountingPaymentMethodCode != BankTransferARPaymentAccountingMethod
                && payment.BillToPartnerTypeId == PartnerTypeId_Customer)
             {
             InterestTransactionPM interestTransaction = MapInterestTransactionPMFromARPaymentPM(payment, isFromVoidARPayment);
             SaveInterestTransaction(interestTransaction);
             }
-            else  if(tenantPOCO != null && tenantPOCO.AccountingActivated && payment.AccountingPaymentMethodCode == ChequeARPaymentAccountingMethod && isFromVoidARPayment)
+            else  if(tenantPOCO != null && tenantPOCO.AccountingActivated && (payment.AccountingPaymentMethodCode == ChequeARPaymentAccountingMethod ||
+                payment.AccountingPaymentMethodCode == BankTransferARPaymentAccountingMethod)
+                && isFromVoidARPayment)
             {
-                CancelARPaymentChequesInterestTransactions(payment);
+                CancelARPaymentInterestTransactions(payment);
                 
             }
         }
-        private void CancelARPaymentChequesInterestTransactions(ARPaymentPM payment)
+        private void CancelARPaymentInterestTransactions(ARPaymentPM payment)
         {
-            List<InterestTransactionPM> interestTransactions = GetARPaymentChequeInterestTransactions(payment);
+            List<InterestTransactionPM> interestTransactions = GetARPaymentInterestTransactions(payment);
             if (interestTransactions.Count > 0)
             {
                 int MaxLineNumber = interestTransactions.Max(d => d.OriginalEntityLineNumber);
                 foreach (InterestTransactionPM transaction in interestTransactions)
                 {
                     MaxLineNumber++;
-                    InterestTransactionPM interestTransaction = MapInterestTransactionPMFromARPaymentCheque(transaction, payment, MaxLineNumber);
+                    InterestTransactionPM interestTransaction = MapInterestTransactionPMFromARPayment(transaction, payment, MaxLineNumber);
                     SaveInterestTransaction(interestTransaction);
                 }
             }
         }
-        private List<InterestTransactionPM> GetARPaymentChequeInterestTransactions(ARPaymentPM payment)
+        private List<InterestTransactionPM> GetARPaymentInterestTransactions(ARPaymentPM payment)
         {
             IInterestTransactionQueryServiceExt interestTransactionQueryServiceExt = ContainerAccessor.Container.Resolve(typeof(IInterestTransactionQueryServiceExt), "InterestTransactionQueryServiceExt", new ParameterOverride("", 1)) as IInterestTransactionQueryServiceExt;
             return  interestTransactionQueryServiceExt.GetInterestTransactionsByPaymentId(payment.Id, payment.Tenant);
@@ -738,7 +740,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             return interestTransaction;
         }
 
-        private InterestTransactionPM MapInterestTransactionPMFromARPaymentCheque(InterestTransactionPM transaction, ARPaymentPM payment,  int lineNumber)
+        private InterestTransactionPM MapInterestTransactionPMFromARPayment(InterestTransactionPM transaction, ARPaymentPM payment,  int lineNumber)
         {
             GLAccountPM account = GetGLAccount(payment.BillToId, payment.Tenant);
             InterestTransactionPM interestTransaction = new InterestTransactionPM()
@@ -1027,6 +1029,12 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 var chequesNumbers = String.Join(",", paymentPM.ARPaymentChequeReplicas.Select(x => x.ChequeNumber));
                 MethodHelper.AddToSearchFields(ref mySearchFields, chequesNumbers);
             }
+            if (paymentPM.ARPaymentBankTranfers.Any())
+            {
+                var bankTransfersReferences = String.Join(",", paymentPM.ARPaymentBankTranfers.Select(x => x.PaymentRef));
+                MethodHelper.AddToSearchFields(ref mySearchFields, bankTransfersReferences);
+            }
+            
             MethodHelper.AddToSearchFields(ref mySearchFields, paymentPM.PrintNotes);
 
             #region Card
@@ -1620,7 +1628,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                             CreateVoidedARPaymentEvent("ARPayment Cancel");
                             CancelJournal(entityPm);
                             CreateInterestTransactionLine(entityPm, true);
-                            CancelledInterestTransactions(entityPm);
+                            // CancelledInterestTransactions(entityPm);
                         }
                     }
                 }

@@ -39,7 +39,7 @@
   MaxNumberOfCustomFields="0"
   ParentTableName="ARPayment"
   DefaultText="&quot;ARPayment Bank Tranfer&quot;"
-  Code="&quot;200d&quot;"
+  Code="&quot;e7a1&quot;"
   Name="&quot; Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Invoice&quot;"

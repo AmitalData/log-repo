@@ -1,6 +1,7 @@
 export class JournalSelectors {
     public static readonly JournalTab = "#FAJournal";
     public static readonly NewJournalButton = '#NewJournal';
+    public static readonly AccountingDate = '#date_Journal_AccountingDate';
     public static readonly ActionName = '#JournalLine_ActionId';
     public static readonly ActionRefDate = '#edit-log-grid_0_00_3_0';
     public static readonly ActionDueDate = '#edit-log-grid_0_00_4_0';
