@@ -138,26 +138,31 @@ namespace WebFreight.Web.Helpers.ExcelReport
                 Name = "PageHeaderText",
             };
             stiBand.Components.Add(stiText);
-            AddVariablesToHeader(variables, stiBand);
+            BindVariables(variables, stiBand);
         }
 
-        private void AddVariablesToHeader(List<DataProviderField> variables, StiPageHeaderBand stiBand)
+        private void BindVariables(List<DataProviderField> variables, StiPageHeaderBand stiBand)
         {
             int columnWidth = 2;
             double positionX = 0;
             double positionY = 0.5;
             foreach (var item in variables)
             {
-                if (positionX != 0 && positionX % 8 == 0)
-                {
-                    positionX = 0;
-                    positionY += 0.5;
-                }
-                stiBand.Components.Add(CreateVariableHeader(columnWidth, positionX, positionY, item));
-                positionX += columnWidth;
-                stiBand.Components.Add(CreateVariableText(columnWidth, positionX, positionY, item));
-                positionX += columnWidth;
+                AddVariablesToHeader(stiBand, columnWidth, ref positionX, ref positionY, item);
             }
+        }
+
+        private void AddVariablesToHeader(StiPageHeaderBand stiBand, int columnWidth, ref double positionX, ref double positionY, DataProviderField item)
+        {
+            if (positionX != 0 && positionX % 8 == 0)
+            {
+                positionX = 0;
+                positionY += 0.5;
+            }
+            stiBand.Components.Add(CreateVariableHeader(columnWidth, positionX, positionY, item));
+            positionX += columnWidth;
+            stiBand.Components.Add(CreateVariableText(columnWidth, positionX, positionY, item));
+            positionX += columnWidth;
         }
 
         private void AddFooter(StiPage page)
