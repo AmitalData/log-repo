@@ -93,6 +93,7 @@
     <Compile Include="BuildWarehouseForm.Designer.cs">
       <DependentUpon>BuildWarehouseForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Service\DataWarehouseBatchService.cs" />
     <Compile Include="Service\EnvironmentDWTableUnUseSqlProvider.cs" />
     <Compile Include="Service\FeatureDataWarehouseService.cs" />
     <Compile Include="Service\WarehouseHelper.cs" />
