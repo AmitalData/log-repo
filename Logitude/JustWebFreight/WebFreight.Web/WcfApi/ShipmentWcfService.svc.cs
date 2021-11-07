@@ -936,18 +936,14 @@ namespace WebFreight.Web.WcfApi
         }
         private void MapFreightForwarder(ShipmentPM entityPM, CardRepository cardsReporistory)
         {
-            if (entityPM.FreightForwarderId != null)
-            {
-                string cardId = cardsReporistory.GetCardIdByCode(entityPM.FreightForwarderId, entityPM.Tenant);
-                if (!string.IsNullOrEmpty(cardId))
-                {
-                    entityPM.FreightForwarderId = cardId;
-                }
-                else
-                {
-                    throw new ApplicationException("FreightForwarderId field doesn't exist in the database,Upsert this entity before using it.");
-                }
-            }
+            if (entityPM.FreightForwarderId == null)
+                return;
+            string cardId = cardsReporistory.GetCardIdByCode(entityPM.FreightForwarderId, entityPM.Tenant);
+
+            if(string.IsNullOrEmpty(cardId))
+                throw new ApplicationException("FreightForwarderId field doesn't exist in the database,Upsert this entity before using it.");
+
+            entityPM.FreightForwarderId = cardId;
 
         }
 
