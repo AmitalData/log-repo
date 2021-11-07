@@ -1,5 +1,6 @@
 import {Component,ViewChild, ElementRef, AfterViewInit, HostListener, Input, EventEmitter, OnInit, Inject} from '@angular/core';
 import { Router, ActivatedRoute, Data } from '@angular/router';
+
 import { FormBuilder } from '@angular/forms';
 import { CargoTrackingSearchService } from 'src/CargoTracking/Services/Others/CargoTrackingSearchService';
 import { CargoTrackingShipmentList } from 'src/CargoTracking/EntityLists/CargoTrackingShipmentList';
@@ -676,6 +677,10 @@ export class ShipmentDetailsComponent implements OnInit,AfterViewInit
                 description: text,
             }
         });
+    }
+
+    ChangeShowDetailsSectionValue(newValue) {
+        this.ShowDetailsSection = newValue;
     }
 }
 

@@ -1,18 +1,13 @@
-﻿using Logitude.BL.CommonDataModel.EntityPMs;
-using Logitude.BL.CommonDataModel.EntityQueries;
+﻿using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.ShipmentsModel.APIDataContract.ApiV1;
 using Logitude.BL.ShipmentsModel.EntityPMs;
-using Logitude.BL.ShipmentsModel.EntityQueries;
 using Logitude.BL.ShipmentsModel.Tools.EntityService;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.InfrastructureModel;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.ShipmentsModel;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
-using Simplog.Data.ShipmentsModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
@@ -26,16 +21,11 @@ using WebFreight.Web.DataContracts;
 using WebFreight.Web.Helpers.APIHelpers;
 using WebFreight.Web.Helpers.ExternalAPIHelpers;
 using WebFreight.Web.Security;
-using WebFreight.Web.Validators;
-using Simplog.Data.InfrastructureModel.Repositories;
-using Simplog.Data.Helpers;
-using Logitude.BL.DataContracts;
-using Logitude.BL.InfrastructureModel.EntityQueries;
-using Logitude.BL.ShipmentsModel.Tools.Validating;
 using Logitude.Infrastructure.Data;
 using Logitude.Infrastructure.Data.Repsitories;
-using Logitude.Infrastructure.Data.EntityListQueryServices;
 using Logitude.Infrastructure.Data.EntityPOCOs;
+using WebFreight.Web.ExternalAPIs.ExternalAPIsHelpers;
+using Simplog.Data.Helpers;
 
 namespace WebFreight.Web.ExternalAPIs.V1
 {
@@ -102,175 +92,32 @@ namespace WebFreight.Web.ExternalAPIs.V1
                             computingPartnerCode = entity.ComputingPartnerCode;
                         }
 
-                        if (entity.TransportMode != null)
-                        {
-                            if(entity.ShipmentType != null)
-                            {
-                                if (!IsInlandDomesticShipment(entity))
-                                {
-                                    if (entity.TransportMode.Code != "A")
-                                    {
-                                        if (entity.OceanOrInlandPackages != null && entity.OceanOrInlandPackages.Count > 0)
-                                        {
-                                            foreach (OceanOrInlandPackage item in entity.OceanOrInlandPackages)
-                                            {
-                                                if (item.InsidePackages != null && item.InsidePackages.Count > 0)
-                                                {
-                                                    foreach (InsidePackage itemInside in item.InsidePackages)
-                                                    {
-                                                        if (itemInside.PackageType != null)
-                                                        {
-                                                            Logitude.BL.CommonDataModel.APIDataContract.ApiV1.PackageTypeQueryService PackageTypeService0 = new Logitude.BL.CommonDataModel.APIDataContract.ApiV1.PackageTypeQueryService(authToken.Tenant);
-                                                            PackageTypePM PackageTypePM = PackageTypeService0.PackageTypeDataMappingAndValidatin(itemInside.PackageType, authToken.Tenant);
-                                                            if (PackageTypePM != null)
-                                                            {
-                                                                if (PackageTypePM.IsContainer == true)
-                                                                {
-                                                                    throw new ApplicationException("Invalid Inside Package Type Code");
-                                                                }
-                                                            }
-                                                            else
-                                                            {
-                                                                itemInside.PackageType = null;
-                                                            }
-                                                        }
-                                                    }
-                                                }
+                        ExternalAPIXMLEntityValidator externalAPIXMLEntityValidator = new ExternalAPIXMLEntityValidator(authToken.Tenant);
+                        externalAPIXMLEntityValidator.ValidateDirectEntity(entity);
+                        this.InitOceanOrInlandPackages(entity);                        
 
-                                                if (item.PackageType == null)
-                                                {
-                                                    string message = entity.ShipmentType.Code.Contains("LCL") ? "Package Type is required" : "Container Type is required";
-                                                    throw new ApplicationException(message);
-                                                }
-
-                                                else
-                                                {
-                                                    if (entity.ShipmentType.Code.Contains("FCL") || entity.ShipmentType.Code.Contains("FTL"))
-                                                    {
-                                                        if (item.Pieces == null || item.Pieces == 0)
-                                                        {
-                                                            item.Pieces = 1;
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-
-                                else
-                                {
-                                    entity.OceanOrInlandPackages = null;
-                                }
-                            }
-
-                            if(entity.TransportMode.Code == "A")
-                            {
-                                this.ValidateMasterNumberAndCarrier(entity);
-                            }
-
-                            else
-                            {
-                                if (entity.ShipmentType == null || (entity.ShipmentType != null && string.IsNullOrEmpty(entity.ShipmentType.Code)))
-                                {
-                                    throw new ApplicationException("Missing Shipment Type");
-                                }
-                            }
-                        }
-
-                        if (entity.Receivables != null && entity.Receivables.Count > 0)
-                        {
-                            foreach (Receivable item in entity.Receivables)
-                            {
-                                if (item.ChargesType == null)
-                                {
-                                    throw new ApplicationException("Receivable Charges Type is required");
-                                }
-
-                                if (item.Currency == null)
-                                {
-                                    string currancy = null;
-
-                                    if (item.ChargesType != null)
-                                    {
-                                        currancy = CheckReceivablesChargesTypeCurrency(item.ChargesType.Code, authToken.Tenant);
-                                    }
-
-                                    if (string.IsNullOrEmpty(currancy))
-                                    {
-                                        throw new ApplicationException("Receivable Currency is required");
-                                    }
-                                }
-                            }
-                        }
-
-                        if (entity.Payables != null && entity.Payables.Count > 0)
-                        {
-                            foreach (Payable item in entity.Payables)
-                            {
-                                if (item.ChargesType == null)
-                                {
-                                    throw new ApplicationException("Payable Charges Type is required");
-                                }
-
-
-                                if (item.Currency == null)
-                                {
-                                    string currancy = null;
-
-                                    if (item.ChargesType != null)
-                                    {
-                                        currancy = CheckPayablesChargesTypeCurrency(item.ChargesType.Code, authToken.Tenant);
-                                    }
-
-                                    if (string.IsNullOrEmpty(currancy))
-                                    {
-                                        throw new ApplicationException("Payable Currency is required");
-                                    }
-                                }
-                            }
-                        }
-                        
-                        if(entity.FromPort != null && entity.ToPort != null)
-                        {
-                            if(entity.MainCarriageLegs != null && entity.MainCarriageLegs.Count > 0)
-                            {
-                                throw new ApplicationException("You can't use the From Port/ To Port with the Main Carriage Legs");
-                            }
-                        }
-                        else
-                        {
-                            if (entity.MainCarriageLegs == null || entity.MainCarriageLegs.Count == 0)
-                            {
-                                throw new ApplicationException("You must send the From Port/ To Port or the Main Carriage Legs");
-                            }
-                        }
-                        
                         IShipmentsContext MyContext = ShipmentsContext.GetContext(authToken.Tenant);
                         DirectQueryService mappingService = new DirectQueryService(authToken.Tenant);
                         ShipmentPM entityPM = mappingService.DirectCustomDataMappingAndValidatin(entity, authToken.Tenant, computingPartnerCode);
                         entityPM.IsExternalAPI = true;
 
-                        this.ValidateUnitCodes(entityPM);
-                        this.ValidateAirShipmentCarrier(entityPM, authToken.Tenant);
-                        this.ValidateShipmentClosure(entity, entityPM, authToken.Tenant);
+                        ExternalAPIShipmentValidator externalAPIShipmentValidator = new ExternalAPIShipmentValidator(entityPM, authToken.Tenant);
+                        externalAPIShipmentValidator.ValidateUnitCodes();
+                        externalAPIShipmentValidator.ValidateAirShipmentCarrier();
+                        externalAPIShipmentValidator.ValidateShipmentClosure();
+                        externalAPIShipmentValidator.ValidatePickupDeliveryPackages();
+                        externalAPIShipmentValidator.ValidatePartnersDueToDirection();
+
+                        this.SetClosurePropertiers(entityPM);
+                        this.SetMasterNumberProperties(entityPM);
+                        this.SetPrepaidCollectIds(entityPM);
 
                         AddressRepository addressRepository = new AddressRepository(entityPM.Tenant);
                         this.ValidateAndSetCustomerData(entityPM, addressRepository, authToken.Tenant);
-
-                        if (!string.IsNullOrEmpty(entityPM.IncotermId))
-                        {
-                            IncotermRepository myIncotermRepository = new IncotermRepository(entityPM.Tenant);
-                            Incoterm myIncoterm = myIncotermRepository.GetSingleIncoterm(entityPM.IncotermId, entityPM.Tenant);
-                            if (myIncoterm != null)
-                            {
-                                entityPM.FreightPrepaidCollectId = myIncoterm.Freight;
-                                entityPM.OtherPrepaidCollectId = myIncoterm.OtherCharges;
-                            }
-                        }
                         this.ValidateCustomsFields(entityPM);
                         this.ValidateOnCarriageDates(entityPM);
                         this.ValidatePreCarriageDates(entityPM);
+
                         if (!IsInlandDomesticShipment(entityPM))
                         {
                             if (entityPM.ShipmentPackages.Count > 0)
@@ -327,6 +174,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         {
                             entityPM = this.ValidateInlandDomesticShipment(entityPM);
                         }
+
                         ComputeHelper.ComputeTotals(entityPM);
 
                         APIReceivablePayableHelper receivablePayableHelper = new APIReceivablePayableHelper(entityPM, authToken.Tenant);
@@ -336,15 +184,10 @@ namespace WebFreight.Web.ExternalAPIs.V1
 
                         if (entityPM.MainCarriageLegs != null && entityPM.MainCarriageLegs.Count > 0)
                         {
-                            APITransshipmentHelper aPITransshipmentHelper = new APITransshipmentHelper(entityPM, authToken.Tenant);
-                            aPITransshipmentHelper.ValidateTransshipments();
-                            aPITransshipmentHelper.MapTransshipments();
-                        }
-
-                        if ((IsShipmentHasPickup(entityPM) || IsShipmentHasDelivery(entityPM)) && IsOceanInsightFeatureToggleExistInTenant(authToken.Tenant))
-                        {
-                            ValidatePickupDeliveryPackages(entityPM);
-                        }
+                            ExternalAPIMainCarriageLegsHelper externalAPIMainCarriageLegsHelper = new ExternalAPIMainCarriageLegsHelper(entityPM, authToken.Tenant);
+                            externalAPIMainCarriageLegsHelper.ValidateMainCarriageLegs();
+                            externalAPIMainCarriageLegsHelper.MapTransshipments();
+                        }                        
 
                         if (!string.IsNullOrEmpty(entity.ComputingPartnerCode))
                         {
@@ -415,9 +258,9 @@ namespace WebFreight.Web.ExternalAPIs.V1
                             }
                             if (!IsInlandDomesticShipment(directPM))
                             {
-                                APITransshipmentHelper aPITransshipmentHelper = new APITransshipmentHelper(directPM, authToken.Tenant);
-                                aPITransshipmentHelper.ValidateTransshipments();
-                                aPITransshipmentHelper.MapTransshipments();
+                                ExternalAPIMainCarriageLegsHelper externalAPIMainCarriageLegsHelper = new ExternalAPIMainCarriageLegsHelper(directPM, authToken.Tenant);
+                                externalAPIMainCarriageLegsHelper.ValidateMainCarriageLegs();
+                                externalAPIMainCarriageLegsHelper.MapTransshipments();
 
                                 AddressRepository addressRepository = new AddressRepository(authToken.Tenant);
                                 this.ValidateAndSetCustomerData(directPM, addressRepository, authToken.Tenant);
@@ -432,7 +275,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                             this.ValidateOnCarriageDates(directPM);
                             this.ValidatePreCarriageDates(directPM);
                             this.UpdatePartners(MyContext, directPM);
-
+                            ComputeHelper.ComputeTotals(directPM);
                             ShipmentService service = new ShipmentService(MyContext, directPM, SecurityUtility.GetAuthenticatedUser());
                             service.Update(true);
                         }
@@ -547,36 +390,6 @@ namespace WebFreight.Web.ExternalAPIs.V1
             }
         }
 
-        private string CheckReceivablesChargesTypeCurrency(string chargeTypeCode, int tenant)
-        {
-            string currency = null;
-            if (!string.IsNullOrEmpty(chargeTypeCode))
-            {
-                ChargesTypeRepository chargesTypeRepository = new ChargesTypeRepository(tenant);
-                var chergeType = chargesTypeRepository.GetSingleChargesTypeByCode(chargeTypeCode, tenant);
-                if (chergeType != null && !string.IsNullOrEmpty(chergeType.ReceivablesDefaultCurrencyId))
-                {
-                    currency = chergeType.ReceivablesDefaultCurrencyId;
-                }
-            }
-            return currency;
-        }
-
-        private string CheckPayablesChargesTypeCurrency(string chargeTypeCode, int tenant)
-        {
-            string currency = null;
-            if (!string.IsNullOrEmpty(chargeTypeCode))
-            {
-                ChargesTypeRepository chargesTypeRepository = new ChargesTypeRepository(tenant);
-                var chergeType = chargesTypeRepository.GetSingleChargesTypeByCode(chargeTypeCode, tenant);
-                if (chergeType != null && !string.IsNullOrEmpty(chergeType.PayablesDefaultCurrencyId))
-                {
-                    currency = chergeType.PayablesDefaultCurrencyId;
-                }
-            }
-            return currency;
-        }
-
         private void ValidateMasterNumberAndCarrier(Direct entity)
         {
             bool validate = false;
@@ -599,156 +412,6 @@ namespace WebFreight.Web.ExternalAPIs.V1
             if (validate)
             {
                 throw new ApplicationException("Main Carriage Carrier is required when sending MAWB");
-            }
-        }
-
-        private void ValidateUnitCodes(ShipmentPM entityPM)
-        {
-            if (string.IsNullOrEmpty(entityPM.VolumeUnitCode))
-            {
-                throw new ApplicationException("Missing volume unit code");
-            }
-
-            if (string.IsNullOrEmpty(entityPM.DimensionsUnitCode))
-            {
-                throw new ApplicationException("Missing dimensions unit code");
-            }
-
-            if (string.IsNullOrEmpty(entityPM.GrossWeightUnitCode))
-            {
-                throw new ApplicationException("Missing gross weight unit code");
-            }
-
-            if (string.IsNullOrEmpty(entityPM.ChargeableWeightUnitCode))
-            {
-                throw new ApplicationException("Missing chargeable weight unit code");
-            }
-
-            switch (entityPM.VolumeUnitCode)
-            {
-                case "CBF":
-                    {
-                        if (entityPM.DimensionsUnitCode == "Cm")
-                        {
-                            throw new ApplicationException("When volume unit is CBF, dimensions unit should be Inch or Ft");
-                        }
-                        break;
-                    }
-
-                case "CBI":
-                    {
-                        if (entityPM.DimensionsUnitCode != "Inc")
-                        {
-                            throw new ApplicationException("When volume unit is CBI, dimensions unit should be Inch");
-                        }
-                        break;
-                    }
-
-                case "CBM":
-                    {
-                        if (entityPM.DimensionsUnitCode != "Cm")
-                        {
-                            throw new ApplicationException("When volume unit is CBM, dimensions unit should be Cm");
-                        }
-                        break;
-                    }
-            }
-        }
-
-        private void ValidateAirShipmentCarrier(ShipmentPM entityPM, int tenant)
-        {
-            if (entityPM.TransportModeId == "A")
-            {
-                if (string.IsNullOrEmpty(entityPM.MainCarriageCarrierId))
-                {
-                    if (!string.IsNullOrEmpty(entityPM.Master) || !string.IsNullOrEmpty(entityPM.MainCarriageCarrierNumber))
-                    {
-                        throw new ApplicationException("Missing Main carriage carrier");
-                    }
-                }
-
-                else
-                {
-                    AirlineRepository airlineRepository = new AirlineRepository(tenant);
-                    Airline airline = airlineRepository.GetSingleAirline(entityPM.MainCarriageCarrierId, tenant);
-                    if (airline != null)
-                    {
-                        entityPM.CarrierIsCheckDigit = airline.CheckDigit;
-                        entityPM.CarrierIsLimitedLength = airline.LimitedLength;
-                    }
-                }
-            }
-        }
-
-        private void ValidateShipmentClosure(Direct entity, ShipmentPM entityPM, int tenant)
-        {
-            if (entity.IsOperationalClosed)
-            {
-                string errorMessage = "";
-
-                RulesValidator validator = new RulesValidator();
-                validator.Initialize(tenant);
-                List<ObjectTableRuleField> requiredFields = validator.ValidateAllRequiredFieldRules(entityPM, "Shipment", tenant);
-
-                IWebFreightContext webFreightContext = WebFreightContext.GetContext(tenant);
-                ObjectFieldRepository ObjectFieldRepository = new ObjectFieldRepository(webFreightContext);
-                if (requiredFields.Count > 0)
-                {
-                    foreach (ObjectTableRuleField field in requiredFields)
-                    {
-                        ObjectField f = ObjectFieldRepository.GetSingleObjectFieldByCode(field.ObjectFieldCode, tenant);
-                        errorMessage = errorMessage + ", " + TranslateTextsClass.GetTranslation("General.M.FieldIsRequired", f.FullNameTextCode.Code, null, null, field.Tenant);
-                    }
-                }
-
-                if (!string.IsNullOrEmpty(errorMessage))
-                {
-                    errorMessage = errorMessage.TrimStart(',');
-                    throw new ApplicationException("Due to operational closed: " + errorMessage);
-                }
-
-                entityPM.OperationalCloseDate = TenantServerConfigration.GetCurrentDateTime(tenant);
-            }
-
-            if (entity.IsAccountingClosed)
-            {
-                AccountingSettingRepository accountingSettingRepository = new AccountingSettingRepository(tenant);
-                AccountingSetting accountingSetting = accountingSettingRepository.GetSingleAccountingSetting(tenant);
-
-                bool hasOpenPayables = false;
-                bool hasOpenReceivables = false;
-                if (entity.Receivables.Count() > 0)
-                {
-                    if (entity.Receivables.Where(p => p.Amount != null && p.Amount != 0).Any())
-                    {
-                        hasOpenReceivables = true;
-                    }
-                }
-
-                if (accountingSetting != null && !accountingSetting.AllowClosureWithoutPayables)
-                {
-                    if (entity.Payables.Count() > 0)
-                    {
-                        if (entity.Payables.Where(p => p.Amount != null && p.Amount != 0).Any())
-                        {
-                            hasOpenPayables = true;
-                        }
-                    }
-                }
-
-                if (hasOpenPayables || hasOpenReceivables)
-                {
-                    throw new ApplicationException("can’t close for accounting if there are any open payables/receivables.");
-                }
-
-                if (!entity.IsOperationalClosed)
-                {
-                    throw new ApplicationException("Shipment shoud be closed operationally");
-                }
-                else
-                {
-                    entityPM.AccountingCloseDate = TenantServerConfigration.GetCurrentDateTime(tenant);
-                }
             }
         }
 
@@ -871,31 +534,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
             {
                 throw new ApplicationException("Invalid InlandDomesticFromTypeCode");
             }
-        }
-
-        private void ValidatePickupDeliveryPackages(ShipmentPM shipmentPM)
-        {
-            if (IsShipmentHasPickup(shipmentPM))
-            {
-                foreach (ShipmentPickUpPM pickUp in shipmentPM.ShipmentPickUps)
-                {
-                    if (pickUp.ShipmentPickUpDeliveryPackages != null && pickUp.ShipmentPickUpDeliveryPackages.Count > 0)
-                    {
-                        throw new ApplicationException("Creating Pickup package details is not permitted from the API");
-                    }
-                }
-            }
-            if (IsShipmentHasDelivery(shipmentPM))
-            {
-                foreach (ShipmentDeliveryPM delivery in shipmentPM.ShipmentDeliveries)
-                {
-                    if (delivery.ShipmentPickUpDeliveryPackages != null && delivery.ShipmentPickUpDeliveryPackages.Count > 0)
-                    {
-                        throw new ApplicationException("Creating Delivery package details is not permitted from the API");
-                    }
-                }
-            }
-        }
+        }        
 
         private void ValidateCustomsFields(ShipmentPM shipmentPM)
         {
@@ -994,7 +633,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
             {
                 this.ValidateInsidePackage(item, entityPM);
             }
-
+            item.VolumetricWeight = ComputeHelper.ComputeVolumetricWeight(item, entityPM);
             item.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
         }
 
@@ -1028,64 +667,26 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 inside.VolumetricWeight = ComputeHelper.ComputeInsideVolumetricWeight(inside, entityPM);
             });
         }
+        private bool IsInlandDomesticShipment(Direct entity)
+        {
+            bool isInland = false;
+            bool isDomestic = false;
+            if (entity.Direction != null)
+            {
+                isDomestic = entity.Direction.Code == "D" ? true : false;
+            }
+
+            if (entity.TransportMode != null)
+            {
+                isInland = entity.TransportMode.Code == "I" ? true : false;
+            }
+
+            return isDomestic && isInland;
+        }
 
         private bool IsInlandDomesticShipment(ShipmentPM entityPM)
         {
             return entityPM.DirectionId == "D" && entityPM.TransportModeId == "I";
-        }
-
-        private bool IsInlandDomesticShipment(Direct entityPM)
-        {
-            bool isInland = false;
-            bool isDomestic = false;
-            if (entityPM.Direction != null)
-            {
-                isDomestic = entityPM.Direction.Code == "D" ? true : false;
-            }
-            if (entityPM.TransportMode != null)
-            {
-                isInland = entityPM.TransportMode.Code == "I" ? true : false;
-            }
-            return isDomestic && isInland;
-        }
-
-        private bool IsOceanInsightFeatureToggleExistInTenant(int tenant)
-        {
-            string ocaenInsightFeatureToggleCode = "OIC";
-            IInfrastructureContext context = InfrastructureContext.GetContext(0);
-            FeatureToggleRepository repository = new FeatureToggleRepository(context);
-            IQueryable<FeatureToggle> featureToggles = repository.GetAll(0);
-            List<FeatureToggle> featureTogglesList = featureToggles.ToList();
-            if (featureTogglesList != null)
-            {
-                return IsFeatureToggleExistInMultiOrSingleTenant(featureTogglesList.Find(a => a.ToggleCode == ocaenInsightFeatureToggleCode), tenant);
-            }
-            return false;
-        }
-
-        private bool IsFeatureToggleExistInMultiOrSingleTenant(FeatureToggle ocaenInsightFeatureToggle, int tenant)
-        {
-            if (ocaenInsightFeatureToggle == null)
-                return false;
-
-            if (ocaenInsightFeatureToggle.IsMultiTenant)
-            {
-                return ((tenant >= ocaenInsightFeatureToggle.FromTenantNumber) && (ocaenInsightFeatureToggle.ToTenantNumber <= tenant));
-            }
-            else
-            {
-                return (tenant == ocaenInsightFeatureToggle.TenantNumber);
-            }
-        }
-
-        private bool IsShipmentHasPickup(ShipmentPM shipmentPM)
-        {
-            return shipmentPM.ShipmentPickUps != null && shipmentPM.ShipmentPickUps.Count > 0;
-        }
-
-        private bool IsShipmentHasDelivery(ShipmentPM shipmentPM)
-        {
-            return shipmentPM.ShipmentDeliveries != null && shipmentPM.ShipmentDeliveries.Count > 0;
         }
 
         private bool IsAddingCustomsFields(ShipmentPM shipmentPM)
@@ -1201,6 +802,68 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 AddressRepository addressRepository = new AddressRepository(shipmentPM.Tenant);
                 shipmentPM.Notify1AddressId = addressRepository.GetMainAddressId(card.Id, shipmentPM.Tenant);
                 shipmentPM.Notify1ContactId = card.PrimaryContactId;
+            }
+        }
+        private void InitOceanOrInlandPackages(Direct entity)
+        {
+            foreach (OceanOrInlandPackage item in entity.OceanOrInlandPackages)
+            {
+                if (item.PackageType != null)
+                {
+                    if (entity.ShipmentType != null && (entity.ShipmentType.Code.Contains("FCL") || entity.ShipmentType.Code.Contains("FTL")))
+                    {
+                        if (item.Pieces == null || item.Pieces == 0)
+                        {
+                            item.Pieces = 1;
+                        }
+                    }
+                }
+            }
+
+            if (entity.ShipmentType != null)
+            {
+                if (this.IsInlandDomesticShipment(entity))
+                {
+                    entity.OceanOrInlandPackages = null;
+                }
+            }
+        }
+        private void SetClosurePropertiers(ShipmentPM entityPM)
+        {
+            if (entityPM.IsOperationalClosed)
+            {
+                entityPM.OperationalCloseDate = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
+            }
+
+            if (entityPM.IsAccountingClosed)
+            {
+                entityPM.AccountingCloseDate = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
+            }
+        }
+        private void SetMasterNumberProperties(ShipmentPM entityPM)
+        {
+            if (entityPM.TransportModeId == "A")
+            {
+                AirlineRepository airlineRepository = new AirlineRepository(entityPM.Tenant);
+                Airline airline = airlineRepository.GetSingleAirline(entityPM.MainCarriageCarrierId, entityPM.Tenant);
+                if (airline != null)
+                {
+                    entityPM.CarrierIsCheckDigit = airline.CheckDigit;
+                    entityPM.CarrierIsLimitedLength = airline.LimitedLength;
+                }
+            }
+        }
+        private void SetPrepaidCollectIds(ShipmentPM entityPM)
+        {
+            if (!string.IsNullOrEmpty(entityPM.IncotermId))
+            {
+                IncotermRepository myIncotermRepository = new IncotermRepository(entityPM.Tenant);
+                Incoterm myIncoterm = myIncotermRepository.GetSingleIncoterm(entityPM.IncotermId, entityPM.Tenant);
+                if (myIncoterm != null)
+                {
+                    entityPM.FreightPrepaidCollectId = myIncoterm.Freight;
+                    entityPM.OtherPrepaidCollectId = myIncoterm.OtherCharges;
+                }
             }
         }
     }

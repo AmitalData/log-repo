@@ -1368,8 +1368,8 @@ on record.JournalId equals j.Id
                             && a.DocumentDate <= endOfTaxReportDate
                             && a.AccountId == setting.VATInputsGLAccountId 
                             && a.Tenant == tenant 
-                            && a.LocalAmountDebit != 0 
-                            && a.OppositeAccountId != setting.VATOutputGLAccountId
+                            && a.LocalAmountDebit != 0
+                            && a.OppositeAccountId != setting.VATOutputGLAccountId 
 
                     select new TaxReportData()
                     {
@@ -1404,8 +1404,8 @@ on record.JournalId equals j.Id
                     join m in context.JournalAdditionalDatas on new { a.JournalId, a.JournalLineNumber } equals new { m.JournalId, m.JournalLineNumber }
 
                     where (m.TaxReportId != null )
-                            && a.DocumentDate <= endOfTaxReportDate
-                           
+                            && a.DocumentDate <= endOfTaxReportDate && j.StatusCode != JournalStatuses.Voided && j.OriginalJournalId == null
+
                             && a.Tenant == tenant
                             && a.LocalAmountDebit != 0
                            && a.AccountId== accountId
@@ -1440,7 +1440,7 @@ on record.JournalId equals j.Id
                                                         where (ledger.OppositeAccountId != setting.VATOutputGLAccountId || ledger.OppositeAccountId == null)
                                                        && ledger.Tenant == tenant
                                                       && ledger.LocalAmountDebit != 0
-                                                      && ledger.AccountId == setting.VATInputsGLAccountId
+                                                      && ledger.AccountId == setting.VATInputsGLAccountId && journal.StatusCode != JournalStatuses.Voided && journal.OriginalJournalId == null
                                                       && (taxreport.StatusCode != VatReportStatuses.Transmitted || additional.TaxReportId == null)
                                                         select ledger).Distinct();
             List<LedgerTransaction> list2 = inputLines.ToList();
@@ -1508,5 +1508,8 @@ on record.JournalId equals j.Id
     {
        public const string Transmitted ="T";
     }
-    
+    public struct JournalStatuses
+    {
+        public const string Voided = "3";
+    }
 }

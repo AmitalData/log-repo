@@ -854,6 +854,11 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         }
         private string GetUserRoles_New()
         {
+            if(this.entityPm == null || (this.entityPm!= null && this.entityPm.RolePMLists == null))
+            {
+                return null;
+            }
+
             string roles = "";
             foreach (RolePM role in this.entityPm.RolePMLists)
             {

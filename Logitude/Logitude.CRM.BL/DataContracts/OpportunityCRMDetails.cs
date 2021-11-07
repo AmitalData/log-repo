@@ -25,7 +25,7 @@ namespace Logitude.CRM.BL.DataContracts
         public decimal Total { get; set; }
         public string Field4 { get; set; }
         public decimal? TotalNet { get; set; }
-        public string IsNewCustomer { get; set; }
+        public int? IsNewCustomer { get; set; }
         public string OpportunityTypeCode { get; set; }
         public bool IsCancelled { get; set; }
         public DateTime CreateDate { get; set; }
