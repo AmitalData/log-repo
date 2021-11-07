@@ -100,6 +100,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
     _SelectedDOCTabValue: string = 'MX'; // Correct/InCorrect/InProgress/ReadyToSend
 
     public columns: any[] = null;
+    public columnsPending: any[] = null;
 
     IsActionButtonsEnabled: boolean = false;
     IsInit: boolean = false;
@@ -150,6 +151,8 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
     ngOnInit() {
         this.IsInit = true;
         this.BuildColumns();
+        this.BuildColumnsPending();
+
         this._CourierWorksheetSharedDataService.CurrentMessage
             .subscribe(message => {
                 if (message == "DoRefresh") {
@@ -864,6 +867,247 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
 
     RefreshMasterRequiredFields() {
 
+    }
+    BuildColumnsPending() {
+        this.columnsPending = [];
+
+        this.columnsPending.push({
+            FieldName: "MyDeclarationCheckBox",
+            DataTypeCode: 'String',
+            Display: '',
+            IsCustomTemplate: true,
+            Styles: { width: '27px' },
+            //IsCheckBox: true
+            HtmlListComponentName: 'CourierWorksheetListTemplate',
+            HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
+        });
+
+        this.columnsPending.push({
+            FieldName: 'CourierHawb',
+            DataTypeCode: 'String',
+            Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.CourierHawb"),
+            Styles: { width: '108px' },
+            IsCustomTemplate: true,
+            HtmlListComponentName: 'CourierWorksheetListTemplate',
+            HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
+            ServerSideSortable: true,
+            SortByName: 'CourierHawb'
+        });
+        //SortByName: 'CourierHawb'
+
+        this.columnsPending.push({
+            FieldName: 'ProcedureCurrentName',
+            DataTypeCode: 'String',
+            Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.ProcedureCurrentName"),
+            Styles: { width: '117px' },
+            IsCustomTemplate: true,
+            ServerSideSortable: true,
+            SortByName: 'ProcedureCurrentName'
+        });
+
+        this.columnsPending.push({
+            FieldName: 'HighLowValue',
+            DataTypeCode: 'String',
+            Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.FastIndividualProcessCode"),
+            Styles: { width: '67px' },
+            IsCustomTemplate: true,
+            HtmlListComponentName: 'CourierWorksheetListTemplate',
+            HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
+            ServerSideSortable: true,
+            SortByName: 'FastIndividualProcessCode'
+        });
+
+        this.columnsPending.push({
+            FieldName: 'ImporterName',
+            DataTypeCode: 'String',
+            Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.CustomerName"),
+            Styles: { width: '173px' },
+            IsCustomTemplate: true,
+            ServerSideSortable: true,
+            SortByName: 'ImporterName'
+        });
+
+        this.columnsPending.push({
+            FieldName: 'ImporterCode',
+            DataTypeCode: 'String',
+            Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.ImporterCode"),
+            Styles: { width: '90px' },
+            IsCustomTemplate: true,
+            ServerSideSortable: true,
+            SortByName: 'SortedImporterCode'
+        });
+
+        this.columnsPending.push({
+            FieldName: 'DocumentStatusCode',
+            DataTypeCode: 'String',
+            Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.DocumentStatusCode"),
+            Styles: { width: '55px' },
+            IsCustomTemplate: true,
+            HtmlListComponentName: 'CourierWorksheetListTemplate',
+            HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
+            ServerSideSortable: true,
+            SortByName: 'SortedDocumentStatusCode'
+        });
+
+        this.columnsPending.push({
+            FieldName: 'IsCourierMissingClassification',
+            DataTypeCode: 'String',
+            Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.IsCourierMissingClassification"),
+            Styles: { width: '53px' },
+            IsCustomTemplate: true,
+            HtmlListComponentName: 'CourierWorksheetListTemplate',
+            HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
+            ServerSideSortable: true,
+            SortByName: 'IsCourierMissingClassification'
+        });
+
+        this.columnsPending.push({
+            FieldName: 'CourierManifestStatusCode',
+            DataTypeCode: 'String',
+            Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.CourierManifestStatusCode"),
+            Styles: { width: '53px' },
+            IsCustomTemplate: true,
+            HtmlListComponentName: 'CourierWorksheetListTemplate',
+            HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
+            ServerSideSortable: true,
+            SortByName: 'SortedCourierManifestStatus'
+        });
+
+        this.columnsPending.push({
+            FieldName: 'CourierDeclarationStatusCode',
+            DataTypeCode: 'String',
+            Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.CourierDeclarationStatusCode"),
+            Styles: { width: '53px' },
+            IsCustomTemplate: true,
+            HtmlListComponentName: 'CourierWorksheetListTemplate',
+            HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
+            ServerSideSortable: true,
+            SortByName: 'SortedCourierDeclarationStatus'
+        });
+
+        this.columnsPending.push({
+            FieldName: 'CourierPaymentStatusCode',
+            DataTypeCode: 'String',
+            Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.CourierPaymentStatusCode"),
+            Styles: { width: '53px' },
+            IsCustomTemplate: true,
+            HtmlListComponentName: 'CourierWorksheetListTemplate',
+            HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
+            ServerSideSortable: true,
+            SortByName: 'CourierPaymentStatusCode'
+        });
+
+        this.columnsPending.push({
+            FieldName: 'CourierCustomStatusName',
+            DataTypeCode: 'String',
+            Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.CourierCustomStatusName"),
+            Styles: { width: '75px' },
+            IsCustomTemplate: true,
+            HtmlListComponentName: 'CourierWorksheetListTemplate',
+            HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
+            ServerSideSortable: true,
+            SortByName: 'CourierCustomStatusName'
+        });
+
+        this.columnsPending.push({
+            FieldName: 'StorageSiteStatusCode',
+            DataTypeCode: 'String',
+            Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.StorageSiteStatusCode"),
+            Styles: { width: '98px' },
+            IsCustomTemplate: true,
+            HtmlListComponentName: 'CourierWorksheetListTemplate',
+            HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
+            ServerSideSortable: true,
+            SortByName: 'StorageSiteStatusCode'
+        });
+
+        this.columnsPending.push({
+            FieldName: 'SpecialActionStatus',
+            DataTypeCode: 'String',
+            Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.SpecialActionStatus"),
+            Styles: { width: '54px' },
+            IsCustomTemplate: true,
+            HtmlListComponentName: 'CourierWorksheetListTemplate',
+            HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
+            ServerSideSortable: true,
+            SortByName: 'SpecialActionStatus'
+        });
+
+        this.columnsPending.push({
+            FieldName: 'DeclarationStatusTypeName',
+            DataTypeCode: 'String',
+            Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.DeclarationStatusTypeName"),
+            Styles: { width: '188px' },
+            IsCustomTemplate: true,
+            ServerSideSortable: true,
+            SortByName: 'DeclarationStatusTypeName'
+        });
+
+        this.columnsPending.push({
+            FieldName: 'CourierPendingReasonName',
+            DataTypeCode: 'String',
+            Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.CourierPendingReasonList"),
+            Styles: { width: '105px' },
+            IsCustomTemplate: true,
+            HtmlListComponentName: 'CourierWorksheetListTemplate',
+            HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
+            ServerSideSortable: true,
+            SortByName: 'CourierPendingReasonName'
+        });
+        this.columnsPending.push({
+            FieldName: 'TruckerName',
+            DataTypeCode: 'String',
+            Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.TruckerName"),
+            Styles: { width: '115px' },
+            IsCustomTemplate: true,
+            ServerSideSortable: true,
+            SortByName: 'TruckerName'
+        });
+
+        this.columnsPending.push({
+            FieldName: 'LastMileStatusCode',
+            DataTypeCode: 'String',
+            Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.LastMileStatusCode"),
+            Styles: { width: '73px' },
+            IsCustomTemplate: true,
+            HtmlListComponentName: 'CourierWorksheetListTemplate',
+            HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
+            ServerSideSortable: true,
+            SortByName: 'LastMileStatusCode'
+        });
+
+        this.columnsPending.push({
+            FieldName: 'IsClosedForFollowUp',
+            DataTypeCode: 'String',
+            Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.IsClosedForFollowUp"),
+            Styles: { width: '62px' },
+            IsCustomTemplate: true,
+            HtmlListComponentName: 'CourierWorksheetListTemplate',
+            HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
+            ServerSideSortable: true,
+            SortByName: 'IsClosedForFollowUp'
+        });
+
+        this.columnsPending.push({
+            FieldName: 'CourierPendingReasonList',
+            DataTypeCode: 'String',
+            //Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.IsClosedForFollowUp"),
+            Styles: { width: '37px' },
+            IsCustomTemplate: true,
+            HtmlListComponentName: 'CourierWorksheetListTemplate',
+            HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
+            ServerSideSortable: false
+        });
+        this.columnsPending.push({
+            FieldName: 'SendSplitButton',
+            DataTypeCode: 'String',
+            //Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.IsClosedForFollowUp"),
+            Styles: { width: '99px' },
+            IsCustomTemplate: true,
+            HtmlListComponentName: 'CourierWorksheetListTemplate',
+            HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
+            ServerSideSortable: false
+        });
     }
 
     BuildColumns() {
