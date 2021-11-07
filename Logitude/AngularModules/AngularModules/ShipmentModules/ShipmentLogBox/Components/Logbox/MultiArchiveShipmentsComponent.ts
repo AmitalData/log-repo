@@ -85,12 +85,16 @@ export class MultiArchiveShipmentsComponent extends BaseComponent implements OnI
     SetDirectionsFilters() {
         if (this.IsPrivateLabel && this.HasOneDirectionFilter()) {
             this.ShowDirectionFilters = false;
-            if (!this.IsImportActivated && !this.IsExportActivated) {
-                this.IsImportActivated = true;
-            }
+            this.SetDefaultCustomDirection();
         }
         else {
             this.ShowDirectionFilters = true;
+        }
+    }
+
+    private SetDefaultCustomDirection() {
+        if (!this.IsImportActivated && !this.IsExportActivated) {
+            this.IsImportActivated = true;
         }
     }
 
@@ -431,14 +435,18 @@ export class MultiArchiveShipmentsComponent extends BaseComponent implements OnI
         if (this.ShowDirectionFilters) {
             this.filterAgrs.addAdditionalFilter("DirectionId", "I", null, null, "NotEqual", true, true, false, "String");
         } else {
-            if (this.IsImportActivated) {
-                this.filterAgrs.addAdditionalFilter("DirectionId", "C", null, null, "Equal", true, true, false, "String");
-            }
-            if (this.IsExportActivated) {
-                this.filterAgrs.addAdditionalFilter("DirectionId", "E", null, null, "Equal", true, true, false, "String");
-            }
+            this.SetPrivateLabelDirection();
         }
 
+    }
+
+    private SetPrivateLabelDirection() {
+        if (this.IsImportActivated) {
+            this.filterAgrs.addAdditionalFilter("DirectionId", "C", null, null, "Equal", true, true, false, "String");
+        }
+        if (this.IsExportActivated) {
+            this.filterAgrs.addAdditionalFilter("DirectionId", "E", null, null, "Equal", true, true, false, "String");
+        }
     }
 
     SetDefaultFilters() {
@@ -447,25 +455,7 @@ export class MultiArchiveShipmentsComponent extends BaseComponent implements OnI
             this.filterAgrs.addAdditionalFilter("DirectionId", "C", null, null, "Equal", true, true, false, "String");
         }
     }
-    private SetImportAdditonalFilters() {
-      //  if (this.IsImportActivated && this.IsExportActivated) {
-            this.filterAgrs.addAdditionalFilter("DirectionId", "I", null, null, "NotEqual", true, true, false, "String");
-     //   }
-    }
-
-    private SetExportAdditonalFilters() {
-        if (!this.IsImportActivated && this.IsExportActivated) {
-            this.filterAgrs.addAdditionalFilter("DirectionId", "E", null, null, "Equal", true, true, false, "String");
-
-        }
-    }
-
-    private SetCustomAdditonalFilters() {
-        if (this.IsImportActivated && !this.IsExportActivated) {
-            this.filterAgrs.addAdditionalFilter("DirectionId", "C", null, null, "Equal", true, true, false, "String");
-
-        }
-    }
+  
     private AddDirectionFilter() {
         this.filterAgrs.addAdditionalFilter("DirectionId", this.SelectedDirectionFilter, null, null, "Equals", false, true, false, "string", this.selectedDirectionFilter == "All" ? true : false);
     }

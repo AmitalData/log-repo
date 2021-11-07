@@ -412,8 +412,8 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
     SetPrivateLabelDirectionFilters(shipmentsQueriesCountsArgs: ShipmentsQueriesCountsArgs) {
 
         if (!shipmentsQueriesCountsArgs.DirectionId && this.ShowDirectionFilters) {
-    
-            this.ExcludeImportFilters(shipmentsQueriesCountsArgs);
+            shipmentsQueriesCountsArgs.DirectionId = 'I';
+            shipmentsQueriesCountsArgs.DirectionOperator = 'NotEqual'; 
         } else {
             this.SetCustomShipmentFilters(shipmentsQueriesCountsArgs);
             this.SetExportShipmentFilters(shipmentsQueriesCountsArgs);
@@ -423,20 +423,22 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
          
 
     }
+    SetFilterOptions(directionId: string, directionOperator: string, shipmentsQueriesCountsArgs: ShipmentsQueriesCountsArgs) {
+        this.SelectedDirectionFilter = directionId;;
+        shipmentsQueriesCountsArgs.DirectionId = directionId;
+        shipmentsQueriesCountsArgs.DirectionOperator = directionOperator; 
+    }
 
     private SetExportShipmentFilters(shipmentsQueriesCountsArgs: ShipmentsQueriesCountsArgs) {
         if (this.IsExportActivated && !this.IsImportActivated) {
-            this.SelectedDirectionFilter = 'E';
-            shipmentsQueriesCountsArgs.DirectionId = 'E';
-            shipmentsQueriesCountsArgs.DirectionOperator = 'Equal';
+            this.SetFilterOptions('E', 'Equal', shipmentsQueriesCountsArgs);
         }
     }
 
     private SetCustomShipmentFilters(shipmentsQueriesCountsArgs: ShipmentsQueriesCountsArgs) {
         if (this.IsImportActivated && !this.IsExportActivated) {
-            this.SelectedDirectionFilter = 'C';
-            shipmentsQueriesCountsArgs.DirectionId = 'C';
-            shipmentsQueriesCountsArgs.DirectionOperator = 'Equal';
+            this.SetFilterOptions('C', 'Equal', shipmentsQueriesCountsArgs);
+          
         }
     }
 
