@@ -228,11 +228,13 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string ShipperContactId { get; set; }
         public string ShipperReference1 { get; set; }
         public string ShipperReference2 { get; set; }
+        public string ShipperReference3 { get; set; }
         public string ConsigneeId { get; set; }
         public string ConsigneeAddressId { get; set; }
         public string ConsigneeContactId { get; set; }
         public string ConsigneeReference1 { get; set; }
         public string ConsigneeReference2 { get; set; }
+        public string ConsigneeReference3 { get; set; }
         public string AgentId { get; set; }
         public string AgentAddressId { get; set; }
         public string AgentContactId { get; set; }

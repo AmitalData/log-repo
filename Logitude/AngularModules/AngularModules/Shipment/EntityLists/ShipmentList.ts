@@ -225,9 +225,11 @@ export class ShipmentList {
 		ShipperId: string;
 		ShipperReference1: string;
 		ShipperReference2: string;
+		ShipperReference3: string;
 		Consignee: string;
 		ConsigneeReference1: string;
 		ConsigneeReference2: string;
+		ConsigneeReference3: string;
 		FromCountryCode: string;
 		ToCountryCode: string;
 		TEU: number;
@@ -280,6 +282,7 @@ export class ShipmentList {
 		CustomerName: string;
 		CustomerReference1: string;
 		CustomerReference2: string;
+		CustomerReference3: string;
 		ConsolidatorId: string;
 		ConsolidatorName: string;
 		ConsolidatorNote: string;
