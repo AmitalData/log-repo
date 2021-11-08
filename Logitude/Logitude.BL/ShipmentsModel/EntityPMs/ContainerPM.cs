@@ -296,6 +296,7 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string ShipmentTypeId { get; set; }
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string ShipmentTypeName { get; set; }
+        public DateTime? ShipmentCreateDate { get; set; }
 
     }
 }

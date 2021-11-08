@@ -215,5 +215,15 @@ export class ContainerList {
 		ShipmentDestinationAgentId: string;
 		ShipmentOriginAgentName: string;
 		ShipmentDestinationAgentName: string;
+		ShipmentNumber: string;
+		ContainersCount: number;
+		HandlerId: string;
+		HandlerName: string;
+		CustomerId: string;
+		CustomerName: string;
+		OPClosed: boolean;
+		ShipmentTypeId: string;
+		ShipmentTypeName: string;
+		ShipmentCreateDate: Date;
 	
 }
