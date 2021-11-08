@@ -40,8 +40,8 @@
   </Column>
   <Column
     Name="PaymentRef"
-    Type="varchar"
-    Size="15">
+    Type="nvarchar"
+    Size="30">
     <Constraints
       Nullable="true" />
   </Column>
