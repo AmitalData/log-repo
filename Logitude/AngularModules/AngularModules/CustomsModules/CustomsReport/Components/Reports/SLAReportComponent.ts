@@ -4,7 +4,7 @@ import { KeyValuePair } from "CustomsModules/CustomsCourier/Components/CourierWo
 import { resetHistory } from "cypress/types/sinon";
 import { BaseComponent } from "Infrastructure/Components/LogitudeComponents/BaseComponent";
 import { EntityResourceService } from "Infrastructure/Services/EntityResourceService";
-import { DateTool } from "Infrastructure/Tools";
+import { AppTool, DateTool } from "Infrastructure/Tools";
 import { ServiceHelper } from "Infrastructure/Utilities/ServiceHelper";
 import { SessionLocator } from "Infrastructure/Utilities/SessionLocator";
 
@@ -24,6 +24,7 @@ export class SLAReportComponent extends BaseComponent implements OnInit {
     ExportAsExcelButtonIsEnabled: boolean = false;
     private CurrentSession = SessionLocator;
     SlaReportSettings: SlaReportSettings;
+    public ValidationErrorsList: string[];
 
 
     constructor(private _entityResourceService: EntityResourceService, private http: HttpClient) {
@@ -42,14 +43,14 @@ export class SLAReportComponent extends BaseComponent implements OnInit {
     get FromRequestCreateDate() { return this._FromRequestCreateDate; }
     set FromRequestCreateDate(val: Date) {
         this._FromRequestCreateDate = val;
-        this.SlaReportSettings.FromRequestCreateDate=val;
+        this.SlaReportSettings.FromRequestCreateDate = val;
     }
 
     _ToRequestCreateDate
     get ToRequestCreateDate() { return this._ToRequestCreateDate; }
     set ToRequestCreateDate(val: Date) {
-        this._ToRequestCreateDate
-        this.SlaReportSettings.ToRequestCreateDate=val;
+        this._ToRequestCreateDate=val;
+        this.SlaReportSettings.ToRequestCreateDate = val;
     }
 
     _IntegratorCode: string;
@@ -69,27 +70,42 @@ export class SLAReportComponent extends BaseComponent implements OnInit {
     }
 
     ExportExcel() {
-        this.GetSlaReportSettings();
-         var url = ServiceHelper.GetLogitudeURL() + 'api/DeclarationCourierStatusWebService/GetSLAReport2Excel?'+ this.GetSlaReportSettings();
-         window.open(url);
-       /* var url = ServiceHelper.GetLogitudeURL() + 'api/DeclarationCourierStatusWebService/GetSLAReport2Excel';
-        this.http.put(url, this.SlaReportSettings).subscribe((res: any) => {
-            debugger;
-            let blob = new Blob([res], { type:  "application/ms-excel"});
-            let url = window.URL.createObjectURL(blob);
-            let pwa = window.open(url);
-        });*/
+        var errors: string[] = [];
+        if (!this.FromRequestCreateDate) {
+            errors.push("חובה לבחור מתאריך ");
+        }
+        if (!this.ToRequestCreateDate) {
+            errors.push("חובה לבחור עד תאריך ");
+        }
+        if (AppTool.IsNullOrEmpty(this._SelectReportType_Key)) {
+            errors.push("חובה לבחור סוג דוח ");
+        }
+        this.ValidationErrorsList = errors;
+        if (this.ValidationErrorsList.length == 0) {
+            this.GetSlaReportSettings();
+            var url = ServiceHelper.GetLogitudeURL() + 'api/DeclarationCourierStatusWebService/GetSLAReport2Excel?' + this.GetSlaReportSettings();
+            window.open(url);
+        }
     }
 
-    GetSlaReportSettings(){
-        this.SlaReportSettings.Tenant= this.CurrentSession.Tenant;
-         var url='tenant=' + this.SlaReportSettings.Tenant.toString();
-         url='&fromDate=' + this.SlaReportSettings.FromRequestCreateDate.toDateString();
-         url='&toDate=' + this.SlaReportSettings.ToRequestCreateDate.toDateString();
-         url='&integratorCode=' + this.SlaReportSettings.IntegratorCode;
-         url='&reportType=' + this.SlaReportSettings.ReportType;
-         return url;
+    GetSlaReportSettings() {
+        this.SlaReportSettings.Tenant = this.CurrentSession.Tenant;
+        var url = 'tenant=' + this.SlaReportSettings.Tenant.toString();
+        url += '&fromDate=' + this.GetDateWithoutTime(this.SlaReportSettings.FromRequestCreateDate);
+        url += '&toDate=' + this.GetDateWithoutTime(this.SlaReportSettings.ToRequestCreateDate);
+        url += '&integratorCode=' + this.IntegratorCode;
+        url += '&reportType=' + this._SelectReportType_Key;
+        return url;
 
+    }
+
+    GetDateWithoutTime(datetime) {
+        if (datetime) {
+            var date = new Date(datetime.getTime());
+            date.setHours(0, 0, 0, 0);
+             return date.toLocaleDateString('he-IL', {timeZone:'Asia/Jerusalem'}).replace(/\D/g,'/')
+            return date.toJSON();
+        }
     }
 
     CancelButtonClicked() {

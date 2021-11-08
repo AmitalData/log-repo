@@ -1107,6 +1107,8 @@
     <Compile Include="Controllers\WebDomainControllers\PotentialAddressController.cs" />
     <Compile Include="Controllers\WebServices\ShipmentContainersWebServiceController.cs" />
     <Compile Include="CustomWebServices\BL\XLSReports\SlaReport.cs" />
+    <Compile Include="CustomWebServices\BL\XLSReports\SlaReportTypes\SlaDetailedReport.cs" />
+    <Compile Include="CustomWebServices\BL\XLSReports\SlaReportTypes\SlaConcentratedReport.cs" />
     <Compile Include="DataContracts\AccountingPartnerApiFilters.cs" />
     <Compile Include="DataContracts\UserCredentials.cs" />
     <Compile Include="DataContracts\CargoTrackingBrandingDataRequest.cs" />

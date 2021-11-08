@@ -82,12 +82,9 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
             try
             {
                 var slaReports = new SlaReport();
-               /* var ErrorObject = (List<CertificateErrorView>)CacheManager.CacheWrapper.Get(key + "IKEA-ErrorList");
-                var o = new SupplierInvioceItemCertificats();
-                var result = o.ExportErrors(tenant, ErrorObject);*/
                 HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.OK);
-                //var item = slaReports.GetSlaReport(report);
-                //response.Content = new StreamContent(new MemoryStream(item));
+                var item = slaReports.GetSlaReport(fromDate,toDate,integratorCode,reportType,tenant);
+                response.Content = new StreamContent(new MemoryStream(item));
                 response.Content.Headers.ContentType = new MediaTypeHeaderValue("application/ms-excel");
                 response.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment");
                 response.Content.Headers.ContentDisposition.FileName =Guid.NewGuid().ToString() + ".xls";
