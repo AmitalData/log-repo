@@ -7,12 +7,10 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
     {
         [Key]
         public string Id { get; set; }
-        [Key]
         public string ComputerId { get; set; }
         public DateTime? LoginDateTime { get; set; }
         public int Tenant { get; set; }
 
-        [Key]
         public string WorkEnvironment { get; set; }
 
 
