@@ -38,6 +38,7 @@ using Logitude.CRM.Data.EntityPOCOs;
 using Logitude.CRM.BL.EntityPMs;
 using Logitude.CRM.Data;
 using Logitude.CRM.BL;
+using Logitude.BL.Helpers;
 using Logitude.CRM.Data.EntityLists;
 using Logitude.CRM.BL.EntityUpdateServices;
 using Logitude.CRM.Data.EntityListQueryServices;
@@ -63,6 +64,8 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 	                ICRMContext MyContext = CRMContext.GetContext(authToken.Tenant);
                 TicketListQueryService ticketQuery = new TicketListQueryService(MyContext);
                 TicketList ticketList = ticketQuery.GetSingle(id);
+                CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+                customFieldResolver.SetCustomFieldsValues("Ticket",  authToken.Tenant, new List<TicketList> { ticketList }.Cast<object>().ToList());
  				PerformanceLogger.AddServerExecutionTimeHeader(logKey);
 				           
                 return Request.CreateResponse(HttpStatusCode.OK,  ticketList);
@@ -86,6 +89,8 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 	                ICRMContext MyContext = CRMContext.GetContext(authToken.Tenant);
                 TicketListQueryService ticketQuery = new TicketListQueryService(MyContext);
                 List<TicketList> result = ticketQuery.GetList(authToken.Tenant);
+                CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+                customFieldResolver.SetCustomFieldsValues("Ticket",  authToken.Tenant, result.Cast<object>().ToList());
 				PerformanceLogger.AddServerExecutionTimeHeader(logKey);
 
                 return Request.CreateResponse(HttpStatusCode.OK, result);
@@ -207,6 +212,8 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 }
 
                 response.Result = entityLists;
+                CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+                customFieldResolver.SetCustomFieldsValues("Ticket",  authToken.Tenant, entityLists.Cast<object>().ToList());
                 HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, response);
 				PerformanceLogger.AddServerExecutionTimeHeader(logKey);
 
