@@ -51,10 +51,17 @@ Given("add delivery with {string} as a partner routing", (partner) => {
   Actions.FillDeliveryRouting(partner)
 });
 //#endregio
-Given("the user edit pick expected departure with {string} as a value",(expectedDeparture)=>{
-//cy.FillLogTextBox
+Given("the user edit pick window",()=>{
+cy.Navigate(ShipmentSelectors.EditPickUp,true)
+})
+Given("add expected departure with {string} as a value",(expectedDeparture)=>{
+cy.FillLogTextBox(ShipmentSelectors.PickUpDeliveryETDDate,'01/10/2021',false)
 
 })
+
+When("save pickup",(()=>{
+    cy.Navigate(ShipmentSelectors.SaveClose,true) 
+}))
 Then("the status value should be {string}", (statusValue) => {
   BaseAssertion.AssertElementContain(ShipmentSelectors.RoutingStatus, statusValue)
 });

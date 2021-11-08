@@ -23,10 +23,10 @@ Feature: Status in Routings Tab
         And the status value should be "Order"
 
     Scenario: Add Expected Departure date for the pickup
-        Given the user edit pick expected departure with '01/10/2021' as a value
+        Given the user edit pick window
+        And add expected departure with '01/10/2021' as a value
         When save pickup
-        Then the direct should update successfully
-        And The status of the shipment  equal Pick Up Arranged
+        Then the status value should be "Pick Up Arranged"
 
     Scenario: Add Actual Departure date for the pickup
         Given the user edit pickup with the following details
