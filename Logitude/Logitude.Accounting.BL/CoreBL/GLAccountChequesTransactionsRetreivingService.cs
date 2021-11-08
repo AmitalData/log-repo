@@ -46,7 +46,8 @@ namespace Logitude.Accounting.BL.CoreBL
                     join arpaymentchequeStatus in accountingContext.ARPaymentChequeStatuses on arpaymentcheque.StatusCode equals arpaymentchequeStatus.Code
 
                     where transaction.Tenant == tenant && transaction.AccountId == accountId && journal.AccountingEntityCode == AccountingEntityValues.ARPayment && 
-                    transaction.Reference2 ==arpaymentcheque.ChequeNumber && arpaymentcheque.StatusCode != ARPaymentChequeStatuses.ReturnToCustomer
+                    transaction.Reference2 ==arpaymentcheque.ChequeNumber && arpaymentcheque.StatusCode != ARPaymentChequeStatuses.ReturnToCustomer 
+                    && arpaymentcheque.StatusCode != ARPaymentChequeStatuses.Redeemed
 
                     select new LedgerTransactionList()
                     {
@@ -134,5 +135,5 @@ namespace Logitude.Accounting.BL.CoreBL
 public struct ARPaymentChequeStatuses
 {
     public const string ReturnToCustomer = "5";
- 
+    public const string Redeemed = "6";
 }
