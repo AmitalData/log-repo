@@ -154,7 +154,6 @@ Then("the status value should be {string}", (statusValue) => {
   });
 //#region Disconnect the invoice from the AP Payment
 Given("disconnect the invoice from the AP Payment", () => {
-    cy.Click(ShipmentSelectors.Backbutton+BaseSelectors.LastElement, null)
   APPaymentActions.DisConnectAPPaymentFromInvoice(invoiceNumber)
 });
 //#endregion

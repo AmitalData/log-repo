@@ -61,7 +61,7 @@ export function ConnectAPPaymentToInvoice(invoiceNumber) {
 }
 
 export function DisConnectAPPaymentFromInvoice(invoiceNumber) {
-    cy.Click(BaseSelectors.HyperlinkButtonControl, invoiceNumber, true)
+    //cy.Click(BaseSelectors.HyperlinkButtonControl, invoiceNumber, true)
     cy.Click(BaseSelectors.DefaultMenuItem, "Payments")
     cy.DefineRequestWait(RestAPI.PUT, AccountingURLs.APInvoices, RequestAliases.APInvoicesRequest)
     cy.Click(APPaymentSelectors.ShipmentPaymentDisconnectButton, null)
