@@ -25,7 +25,7 @@ namespace WarehouseData.Helper
         public void BuildDimensionTable(string connectionString, TableClass table)
         {
             StringBuilder stringBuilder = new StringBuilder();
-            stringBuilder.Append(generalDataWarehouseService.CreateSqlDataWarehouseTable(table));
+            stringBuilder.Append(generalDataWarehouseService.CreateSqlTempDataWarehouseTable(table));
          
             var sqlInsertNotSpecifiedRecordArgs = new SqlInsertNotSpecifiedRecordArgs()
             {
@@ -35,10 +35,7 @@ namespace WarehouseData.Helper
                 TableName = ("#" + table.DWObjectTableCode + "Temp ")
             };
 
-            if(table.Dw_TableName == "dw_Ports")
-            {
 
-            }
             stringBuilder.Append(generalDataWarehouseService.GetSqlInsertNotSpecifiedRecorderToDB(sqlInsertNotSpecifiedRecordArgs));
 
             stringBuilder.Append(generalDataWarehouseService.GetDataWarehouseScriptByForderAndScriptName("BuildWarehouse", table.BuildScriptName));

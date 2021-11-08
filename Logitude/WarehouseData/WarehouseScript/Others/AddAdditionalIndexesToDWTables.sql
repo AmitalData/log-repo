@@ -1,5 +1,5 @@
 CREATE NONCLUSTERED INDEX [IX_dw_Addresses_AddressTypeId_CardId] ON[dbo].[dw_Addresses]([AddressTypeId],[CardId])
 CREATE NONCLUSTERED INDEX [IX_dw_Partners_SalesmanUserId_AutomaticLastUpdateDate] ON[dbo].[dw_Partners]([SalesmanUserId],[AutomaticLastUpdateDate])
 CREATE NONCLUSTERED INDEX [IX_APInvoice_Tenant_AutomaticLastUpdateDate] ON [dbo].[dw_APInvoices] ([Tenant],[AutomaticLastUpdateDate])
-CREATE NONCLUSTERED INDEX [IX_Shipment_ShipmentLevelCode_IsStandalonePickupDelivery_IsCancelled] ON [dbo].[dw_Shipments] ([ShipmentLevelCode],[IsStandalonePickupDelivery],[IsCancelled])
-CREATE NONCLUSTERED INDEX [IX_Shipment_ShipmentLevelCode_IsStandalonePickupDelivery_AutomaticLastUpdateDate] ON [dbo].[dw_Shipments] ([ShipmentLevelCode],[IsStandalonePickupDelivery],[AutomaticLastUpdateDate])
+CREATE NONCLUSTERED INDEX [IX_Shipment_IsCancelled_ShipmentLevelCode_RowNumber_Fact_Shipments] ON [dbo].[dw_Shipments] ([IsCancelled] , [ShipmentLevelCode],[RowNumber_Fact_Shipments])
+CREATE NONCLUSTERED INDEX [IX_Shipment_ShipmentLevelCode_AutomaticLastUpdateDate] ON [dbo].[dw_Shipments] ([ShipmentLevelCode],[AutomaticLastUpdateDate])

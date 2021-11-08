@@ -1147,8 +1147,8 @@ namespace WebFreight.Web.Helpers.Analyzers
                 container.LIFLocation = containerUpdatedFields.LIFLocation;
                 container.EstimatedLIFArrival = containerUpdatedFields.EstimatedLIFArrival;
                 container.ActualLIFArrival = containerUpdatedFields.ActualLIFArrival;
-                container.EstimatedLIFDeparture = containerUpdatedFields.EstimatedLIFDeparture;
-                container.ActualLIFDeparture = containerUpdatedFields.ActualLIFDeparture;
+                container.EstimatedOnCarriageDeparture = containerUpdatedFields.EstimatedOnCarriageDeparture;
+                container.ActualOnCarriageDeparture = containerUpdatedFields.ActualOnCarriageDeparture;
                 container.EmptyReturnLocation = containerUpdatedFields.EmptyReturnLocation;
                 container.EstimatedEmptyReturn = containerUpdatedFields.EstimatedEmptyReturn;
                 container.ActualEmptyReturn = containerUpdatedFields.ActualEmptyReturn;
@@ -1290,8 +1290,8 @@ namespace WebFreight.Web.Helpers.Analyzers
             containerUpdatedFields.LIFLocation = this.GetTranslatedPortCode(lif_loc_locode);
             containerUpdatedFields.EstimatedLIFArrival = ComputeEstimatedLIFArrival();
             containerUpdatedFields.ActualLIFArrival = ComputeActualLIFArrival();
-            containerUpdatedFields.EstimatedLIFDeparture = ComputeEstimatedLIFDeparture();
-            containerUpdatedFields.ActualLIFDeparture = this.ComputeActualLIFDeparture();
+            containerUpdatedFields.EstimatedOnCarriageDeparture = ComputeEstimatedOnCarriageDeparture();
+            containerUpdatedFields.ActualOnCarriageDeparture = this.ComputeActualOnCarriageDeparture();
             containerUpdatedFields.EmptyReturnLocation = this.GetTranslatedPortCode(empty_return_loc_locode);
             containerUpdatedFields.EstimatedEmptyReturn = this.ComputeEstimatedEmptyReturn();
             containerUpdatedFields.ActualEmptyReturn = this.ComputeActualEmptyReturn();
@@ -1986,7 +1986,7 @@ namespace WebFreight.Web.Helpers.Analyzers
             }
             return null;
         }
-        private DateTime? ComputeEstimatedLIFDeparture()
+        private DateTime? ComputeEstimatedOnCarriageDeparture()
         {
             if (!string.IsNullOrEmpty(lif_departure_planned_last))
             {
@@ -1999,7 +1999,7 @@ namespace WebFreight.Web.Helpers.Analyzers
             }
             return null;
         }
-        private DateTime? ComputeActualLIFDeparture()
+        private DateTime? ComputeActualOnCarriageDeparture()
         {
             if (!string.IsNullOrEmpty(lif_departure_actual))
             {
@@ -2436,8 +2436,8 @@ namespace WebFreight.Web.Helpers.Analyzers
         public string LIFLocation { get; set; }
         public DateTime? EstimatedLIFArrival { get; set; }
         public DateTime? ActualLIFArrival { get; set; }
-        public DateTime? EstimatedLIFDeparture { get; set; }
-        public DateTime? ActualLIFDeparture { get; set; }
+        public DateTime? EstimatedOnCarriageDeparture { get; set; }
+        public DateTime? ActualOnCarriageDeparture { get; set; }
         public string GateIn { get; set; }
         public string GateOut { get; set; }
         public string EmptyReturnLocation { get; set; }

@@ -20,6 +20,7 @@ let shipmentDetails: ShipmentDetails;
 let shipmentNumber: string;
 let customerCode: string;
 let AccountingSystem: string;
+let invoiceNumber: string;
 //#endregion
 //#region Update Accounting System
 Given("the user logged in", () => {
@@ -147,9 +148,27 @@ When("approve invoice", () => {
     AccountingActions.ARApproveInvoice()
 });
 Then("the invoice should approve successfully", () => {
-    BaseAssertion.AssertStatusCode(RequestAliases.ARInvoicesRequest, 200);
+    BaseAssertion.AssertStatusCode(RequestAliases.ARInvoicesRequest, 200).then((interception) => {
+        invoiceNumber = interception.response.body.InvoiceNumber;
+    });
 });
 
 Then("the status value should be {string}", (statusValue) => {
     BaseAssertion.AssertElementContain(ShipmentSelectors.ARInvoiceStatus, statusValue)
 });
+
+//#region Assert invoice details screen fields after approving the invoice
+Then("the details screen fields should be disabled", () => {
+    AccountingActions.AssertARInvoiceDetailsFieldsDisabled()
+});
+//#endregion
+
+//#region Assert link of the invoice exsit
+Given("navigates receivables tab", () => {
+    cy.Click(ShipmentSelectors.Backbutton + BaseSelectors.LastElement, null)
+});
+
+Then("the link of the invoice should be exsit", () => {
+    BaseAssertion.AssertElementContain(BaseSelectors.HyperlinkButtonControl, invoiceNumber)
+});
+//#endregion

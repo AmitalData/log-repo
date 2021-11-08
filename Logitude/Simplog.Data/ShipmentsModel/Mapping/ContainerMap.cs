@@ -162,8 +162,8 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.LIFLocation).HasColumnName("LIFLocation");
             this.Property(t => t.EstimatedLIFArrival).HasColumnName("EstimatedLIFArrival");
             this.Property(t => t.ActualLIFArrival).HasColumnName("ActualLIFArrival");
-            this.Property(t => t.EstimatedLIFDeparture).HasColumnName("EstimatedLIFDeparture");
-            this.Property(t => t.ActualLIFDeparture).HasColumnName("ActualLIFDeparture");
+            this.Property(t => t.EstimatedOnCarriageDeparture).HasColumnName("EstimatedOnCarriageDeparture");
+            this.Property(t => t.ActualOnCarriageDeparture).HasColumnName("ActualOnCarriageDeparture");
             this.Property(t => t.GateIn).HasColumnName("GateIn");
             this.Property(t => t.GateOut).HasColumnName("GateOut");
             this.Property(t => t.EmptyReturnLocation).HasColumnName("EmptyReturnLocation");

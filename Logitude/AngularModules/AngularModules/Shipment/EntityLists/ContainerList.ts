@@ -125,8 +125,8 @@ export class ContainerList {
 		ActualDelivery: Date;
 		EstimatedLIFArrival: Date;
 		ActualLIFArrival: Date;
-		EstimatedLIFDeparture: Date;
-		ActualLIFDeparture: Date;
+		EstimatedOnCarriageDeparture: Date;
+		ActualOnCarriageDeparture: Date;
 		GateIn: Date;
 		GateOut: Date;
 		EstimatedEmptyReturn: Date;

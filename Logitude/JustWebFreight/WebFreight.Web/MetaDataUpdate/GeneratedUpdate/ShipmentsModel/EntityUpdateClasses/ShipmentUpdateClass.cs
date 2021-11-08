@@ -48096,7 +48096,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 
 		   Feature ShipmentFeature_CHILDPICKUPDELIVERY = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CHILDPICKUPDELIVERY", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.CHILDPICKUPDELIVERY", NameTextCodeDefaultText = @"Add Child Pick Up / Delivery", ToggleCode = "CPH" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ShipmentObjectTable);
 
+
 		   Feature ShipmentFeature_MULTIUPDATE = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "MULTIUPDATE", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.MULTIUPDATE", NameTextCodeDefaultText = @"Multi Update" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ShipmentObjectTable);
+
+		   Feature ShipmentFeature_ContainerStatusSimulator = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ContainerStatusSimulator", FeatureTypeCode = "ACT", Packagable = false, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.ContainerStatusSimulator", NameTextCodeDefaultText = @"Container Status Simulator" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ShipmentObjectTable);
+
 
    
 	    

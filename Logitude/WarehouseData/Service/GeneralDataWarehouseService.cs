@@ -42,22 +42,39 @@ namespace WarehouseData.Helper
             return cmd;
         }
 
-        public string CreateSqlDataWarehouseTable(TableClass table)
+        public string CreateSqlAcualDataWarehouseTable(TableClass table)
+        {
+            string sqlString = "If OBJECT_ID('New" + table.DWObjectTableCode + "','U')  IS NOT NULL Begin  Drop Table New" + table.DWObjectTableCode + " End \r\n";
+            sqlString += " CREATE TABLE New" + table.DWObjectTableCode + " ( \r\n";
+            foreach (DWObjectFieldDB field in table.DWObjectFieldDBLists)
+            {
+                sqlString += (field.FieldName + GetDataWarehouseSqlFieldType(field, table) + ",\r\n" );
+            }
+            sqlString = sqlString.Remove(sqlString.Length - 1, 1);
+            sqlString += ");";
+            return sqlString;
+        }
+
+
+        public string CreateSqlTempDataWarehouseTable(TableClass table , bool addPrimaryKey = false)
         {
             string sql = "If(OBJECT_ID('tempdb..#" + table.DWObjectTableCode + "Temp') Is Not Null) Begin  Drop Table #" + table.DWObjectTableCode + "Temp End \r\n";
             sql += " CREATE TABLE #" + table.DWObjectTableCode + "Temp ( \r\n";
             foreach (DWObjectFieldDB field in table.DWObjectFieldDBLists)
             {
+                if (table.UseBatches && field.IsPrimaryKey) continue;
                 sql += field.FieldName + " ";
-                sql += GetDataWarehouseSqlFieldType(field);
+                sql += GetDataWarehouseSqlFieldType(field , table);
                 sql += ",\r\n";
+
             }
             sql += ");";
             sql = sql.Replace(",);", ");");
             return sql;
         }
 
-        private string GetDataWarehouseSqlFieldType(DWObjectFieldDB field)
+
+        private string GetDataWarehouseSqlFieldType(DWObjectFieldDB field , TableClass table)
         {
             string sqlFieldtype = string.Empty;
             if (field.DataTypeCode == "nText") sqlFieldtype += "nvarchar(" + field.MaxLength + ")";
@@ -71,8 +88,7 @@ namespace WarehouseData.Helper
             if (field.IsRequired) sqlFieldtype += " not null";
             if (field.IsPrimaryKey)
             {
-                if (field.FieldName == "[Id_Number]") sqlFieldtype += " identity(1, 1)";
-                sqlFieldtype += "  primary key";
+                if (field.FieldName == "[Id_Number]") sqlFieldtype +=( " identity(1, 1)") + ( !table.UseBatches ? "  primary key" :"") ;
             }
 
             return sqlFieldtype;
@@ -80,12 +96,26 @@ namespace WarehouseData.Helper
 
         public string GetSqlCopyDataFromTempTableToActualTable(TableClass table)
         {
-            string result = "If OBJECT_ID('New" + table.DWObjectTableCode + "','U')  IS NOT NULL Begin  Drop Table New" + table.DWObjectTableCode + " End \r\n";
+
+            string result = table.UseBatches ? "":  "If OBJECT_ID('New" + table.DWObjectTableCode + "','U')  IS NOT NULL Begin  Drop Table New" + table.DWObjectTableCode + " End \r\n";
             result += (" SELECT *  INTO New" + table.DWObjectTableCode + " FROM #" + table.DWObjectTableCode + "Temp \r\n");
             result += (" If(OBJECT_ID('tempdb..#" + table.DWObjectTableCode + "Temp') Is Not Null) Begin  Drop Table #" + table.DWObjectTableCode + "Temp End \r\n\r\n");
 
             return result;
         }
+
+
+        public string GetSqlnsertDataIntoActualTableFromTemp(TableClass table)
+        {
+            string result = (" INSERT INTO New" + table.DWObjectTableCode + " SELECT * from #" + table.DWObjectTableCode + "Temp \r\n");
+            result += (" If(OBJECT_ID('tempdb..#" + table.DWObjectTableCode + "Temp') Is Not Null) Begin  Drop Table #" + table.DWObjectTableCode + "Temp End \r\n\r\n");
+
+            return result;
+        }
+
+
+
+
         public void ExecuteSql(string sqlString, string connectionString)
         {
 
@@ -139,7 +169,8 @@ namespace WarehouseData.Helper
             tableNameLists.Add(new TableClass() { TableName = "ShipmentReceivable", AdditionalIndexes = "ShipmentId", ParentKeyName = "ShipmentId", DispayInScreen = true, DBTableName = "ShipmentReceivables", Dw_TableName = "dw_ShipmentReceivables", KeyName = "Id", RelatedFactTables = new List<string> { "Fact_Charges" } });
             tableNameLists.Add(new TableClass() { TableName = "ARInvoiceLine", ParentKeyName = "ARInvoiceId", FieldsDBName = "ARInvoiceId,ReceivableId", DispayInScreen = true, AdditionalIndexes = "ReceivableId", DBTableName = "ARInvoiceLines", Dw_TableName = "dw_ARInvoiceLines", KeyName = "Id", RelatedFactTables = new List<string> { "Fact_Charges" } });
             tableNameLists.Add(new TableClass() { TableName = "ARInvoice", RelatedEntities = tableNameLists.Where(d => d.TableName == "ARInvoiceLine").ToList(), HasConstraint = true, DispayInScreen = true, DBTableName = "ARInvoices", Dw_TableName = "dw_ARInvoices", KeyName = "Id",ParentKeyName ="MainEntityId" ,RelatedFactTables = new List<string> { "Fact_Charges", "Fact_Invoices", "Fact_ARInvoices" } });
-            tableNameLists.Add(new TableClass() { TableName = "Shipment", RelatedEntities = tableNameLists.Where(d => d.TableName == "ShipmentPayable" || d.TableName == "ShipmentReceivable").ToList(), KeyName = "Id", DBTableName = "Shipments", Dw_TableName = "dw_Shipments", HasConstraint = true, DispayInScreen = true, RelatedFactTables = new List<string> { "Fact_Charges" , "Fact_Shipments" }, HasNotSpecifiedValue =true});
+            tableNameLists.Add(new TableClass() { TableName = "Shipment", RelatedEntities = tableNameLists.Where(d => d.TableName == "ShipmentPayable" || d.TableName == "ShipmentReceivable").ToList(), KeyName = "Id", DBTableName = "Shipments", Dw_TableName = "dw_Shipments", HasConstraint = true, DispayInScreen = true, RelatedFactTables = new List<string> { "Fact_Charges" , "Fact_Shipments" }, HasNotSpecifiedValue =true , UseBatches
+                = true });
             
             tableNameLists.Add(new TableClass() { TableName = "Quote", KeyName = "Id", DBTableName = "Quotes", Dw_TableName = "dw_Quotes", HasConstraint = true, DispayInScreen = true ,RelatedFactTables = new List<string> { "Fact_Quotes" } });
             tableNameLists.Add(new TableClass() { TableName = "QuoteComputedField", DBTableName = "QuoteComputedFields", Dw_TableName = "dw_QuoteComputedFields", KeyName = "Id", HasConstraint = true, DispayInScreen = true, RelatedFactTables = new List<string> { "Fact_Quotes" } });
@@ -183,7 +214,7 @@ namespace WarehouseData.Helper
             tableNameLists.Add(new TableClass() { TableName = "ShipmentSubType", DBTableName = "ShipmentSubTypes", Dw_TableName = "dw_ShipmentSubTypes", KeyName = "Id", HasDimensionTable = true, DWObjectTableCode = "DIM_ShipmentSubTypes", BuildScriptName = "BuildShipmentSubTypeDimensionTable", IncrementalScriptName = "UpdateShipmentSubTypeDimensionTable", HasConstraint = true, DispayInScreen = true, RelatedFactTables = new List<string> { "Fact_ARInvoices", "Fact_Shipments" } });
 
             //Fact Table
-            tableNameLists.Add(new TableClass() { TableName = "Shipment", FieldIndexes = "Source Tenant,Parent Tenant,Id,DirectHouse", DWObjectTableCode = "Fact_Shipments", KeyName = "Id", DWTableKeyName = "Id", Dw_TableName = "dw_Shipments", HasFactTable = true, BuildScriptName = "BuildFactShipmentTable", IncrementalScriptName = "UpdateFactShipmentTable", DispayInScreen = true, RelatedFactTables = new List<string>() { "Fact_Shipments" } });
+            tableNameLists.Add(new TableClass() { BatchesCount=7, UseBatches = true, TableName = "Shipment", FieldIndexes = "Source Tenant,Parent Tenant,Id,DirectHouse", DWObjectTableCode = "Fact_Shipments", KeyName = "Id", DWTableKeyName = "Id", Dw_TableName = "dw_Shipments", HasFactTable = true, BuildScriptName = "BuildFactShipmentTable", IncrementalScriptName = "UpdateFactShipmentTable", DispayInScreen = true, RelatedFactTables = new List<string>() { "Fact_Shipments" } });
             tableNameLists.Add(new TableClass() { TableName = "Shipment", FieldIndexes = "Source Tenant,Parent Tenant,Shipment Id,DirectHouse", DWObjectTableCode = "Fact_Charges", Dw_TableName = "dw_Shipments", KeyName = "[Shipment Id]", DWTableKeyName = "Id", HasFactTable = true, BuildScriptName = "BuildFactChargesTable", IncrementalScriptName = "UpdateFactChargesTable", DispayInScreen = true, RelatedFactTables = new List<string>() { "Fact_Charges" } });
             tableNameLists.Add(new TableClass() { TableName = "Quote", DWObjectTableCode = "Fact_Quotes", Dw_TableName = "dw_Quotes", KeyName = "Id", DWTableKeyName = "Id", HasFactTable = true, BuildScriptName = "BuildFactQuotesTable", IncrementalScriptName = "UpdateFactQuoteTable", DispayInScreen = true, RelatedFactTables = new List<string> { "Fact_Quotes" } });
             tableNameLists.Add(new TableClass() { HasMultipleDWTables = true,  MultipleDW_TablesNames = new List<string> { "dw_ARInvoices", "dw_APInvoices" }, MultipleTablesNames = new List<string> { "ARInvoice", "APInvoice" }, TableName = "Invoice", DWObjectTableCode = "Fact_Invoices", KeyName = "Id", DWTableKeyName = "Id", HasFactTable = true, BuildScriptName = "BuildFactInvoicesTable", IncrementalScriptName = "UpdateFactInvoicesTable", DispayInScreen = true, RelatedFactTables = new List<string> { "Fact_Invoices" } });
@@ -368,7 +399,7 @@ namespace WarehouseData.Helper
             string[] columnNameLists = dataTable.Columns.Cast<DataColumn>().Select(x => x.ColumnName).ToArray();
             foreach (string column in columnNameLists)
             {
-                columnNames += column + ",";
+                columnNames += !column.Contains("RowNumber") ? (column + ",") : "";
             }
             if (!string.IsNullOrEmpty(columnNames))
             {

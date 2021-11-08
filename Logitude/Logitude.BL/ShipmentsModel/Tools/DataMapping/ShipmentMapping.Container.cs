@@ -132,8 +132,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             container.LIFLocation = containerPM.LIFLocation;
             container.EstimatedLIFArrival = containerPM.EstimatedLIFArrival;
             container.ActualLIFArrival = containerPM.ActualLIFArrival;
-            container.EstimatedLIFDeparture = containerPM.EstimatedLIFDeparture;
-            container.ActualLIFDeparture = containerPM.ActualLIFDeparture;
+            container.EstimatedOnCarriageDeparture = containerPM.EstimatedOnCarriageDeparture;
+            container.ActualOnCarriageDeparture = containerPM.ActualOnCarriageDeparture;
             container.GateIn = containerPM.GateIn;
             container.GateOut = containerPM.GateOut;
             container.EmptyReturnLocation = containerPM.EmptyReturnLocation;

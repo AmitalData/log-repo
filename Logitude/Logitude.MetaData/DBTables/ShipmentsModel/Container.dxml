@@ -754,13 +754,15 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="EstimatedLIFDeparture"
+    Name="EstimatedOnCarriageDeparture"
+    OldNames="EstimatedLIFDeparture"
     Type="datetime">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
-    Name="ActualLIFDeparture"
+    Name="ActualOnCarriageDeparture"
+    OldNames="ActualLIFDeparture"
     Type="datetime">
     <Constraints
       Nullable="true" />
