@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class ReconciliationUpdateClass
    {  		
-		public const string HashString = "da2d0c1f353918a04ad558ae5ec1583f";
+		public const string HashString = "63b09b0e4729f848fe683ea93b7d582c";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -122,7 +122,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "התאמה",
 			      				    DefaultText =  "Reconciliation",
-			      				    Code =  "ded7",
+			      				    Code =  "2455",
 			      				    Name =  "Reconciliation Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Accounting",
@@ -1234,6 +1234,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode ReconciliationTextCode_ReconciliationOCantReconcileMutipleAPPayment = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Reconciliation.O.CantReconcileMutipleAPPayment", DefaultText = "Can’t include more than one AP payment in the same reconciliation",LocalDefaultText = @"לא ניתן לכלול יותר מתשלום אחד באותה התאמה", ObjectTableId = ReconciliationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode ReconciliationTextCode_ReconciliationOAdditionalReconciliationsHasBeenCreated = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Reconciliation.O.AdditionalReconciliationsHasBeenCreated", DefaultText = "Reconcile has been created, additional Reconciliations of the Transfer will be created in the background and can be found on the in the Reconcile Management screen at the end of the process",LocalDefaultText = @" התאמות נוצרו, התאמות נוספות לתנועות מחשבון הדחויים יווצרו ברקע וניתן יהיה לראותם במסך ניהול ההתאמות בסיום התהליך ", ObjectTableId = ReconciliationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ReconciliationTextCode_ReconciliationODifferentAccounts = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Reconciliation.O.DifferentAccounts", DefaultText = "The reconciliation lines are from different accounts",LocalDefaultText = @"השורות בהתאמה מחשבונות שונים", ObjectTableId = ReconciliationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

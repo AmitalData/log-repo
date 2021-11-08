@@ -586,6 +586,9 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string CustomerReference2 { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string CustomerReference3 { get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string CustomerName { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
@@ -2743,6 +2746,9 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string AccountingClosedByUserId { get; set; }
         public string HouseMasterConcurrencyGUID { get; set; }
         public string HouseMasterNewConcurrencyGUID { get; set; }
+        public bool IsPODReceived { get; set; }
+        public DateTime? PODReceivedDate { get; set; }
+
     }
 
     public class TransshipmentLeg
@@ -2750,8 +2756,11 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string Id { get; set; }
         public int LegIndex { get; set; }
         public string FromPortId { get; set; }
+        public string FromPortCode { get; set; }
         public string ToPortId { get; set; }
+        public string ToPortCode { get; set; }
         public string CarrierId { get; set; }
+        public string CarrierName { get; set; }
         public string CarrierNumber { get; set; }
         public string VesselId { get; set; }        
         public string MasterNumber { get; set; }

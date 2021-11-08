@@ -389,6 +389,14 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "SAL,Use Security Access Level", 
                 Description = "Use Security Access Level", 
 			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Name = "Same User Login Enabled", 
+                Description = "User can login to different environment at the same time", 
+                Code = "ULE", 
+                SearchFields = "ULE,Same User Login Enabled", 
+			});
 			
             return all;
        }

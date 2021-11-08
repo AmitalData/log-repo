@@ -140,6 +140,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.CustomerContactId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.CustomerReference1).HasMaxLength(50).IsUnicode(false);
             this.Property(t => t.CustomerReference2).HasMaxLength(50).IsUnicode(false);
+            this.Property(t => t.CustomerReference3).HasMaxLength(300).IsUnicode(false);
             this.Property(t => t.ShipmentCustomerTypeCode).HasMaxLength(4).IsUnicode(false);
             this.Property(t => t.CustomAgentExportAddressId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.CustomAgentExportContactId).HasMaxLength(15).IsUnicode(false);
@@ -512,6 +513,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.CustomerContactId).HasColumnName("CustomerContactId");
             this.Property(t => t.CustomerReference1).HasColumnName("CustomerReference1");
             this.Property(t => t.CustomerReference2).HasColumnName("CustomerReference2");
+            this.Property(t => t.CustomerReference3).HasColumnName("CustomerReference3");
             this.Property(t => t.ShipmentCustomerTypeCode).HasColumnName("ShipmentCustomerTypeCode");
             this.Property(t => t.CustomAgentExportAddressId).HasColumnName("CustomAgentExportAddressId");
             this.Property(t => t.CustomAgentExportContactId).HasColumnName("CustomAgentExportContactId");
@@ -721,6 +723,8 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.TruckerId).HasColumnName("TruckerId");
             this.Property(t => t.AssignedToTruckerDate).HasColumnName("AssignedToTruckerDate"); 
             this.Property(t => t.AssginedToCustomsAgentDate).HasColumnName("AssginedToCustomsAgentDate");
+            this.Property(t => t.IsPODReceived).HasColumnName("IsPODReceived");
+            this.Property(t => t.PODReceivedDate).HasColumnName("PODReceivedDate");
 
             dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
             if (dbms == "oracle")

@@ -179,6 +179,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                              MasterShipmentNumbers = a.MasterShipmentNumbers,
                              HouseNumbers = a.HouseNumbers,
                              GlobalTaxCalculation = a.GlobalTaxCalculation,
+                             ConcurrencyGUID = a.ConcurrencyGUID,
                          });          
 
             return query;
@@ -445,6 +446,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                     }
                 }
 
+                entityPM.NewConcurrencyGUID = Guid.NewGuid().ToString();
                 entityPM.TransferLines = this.GetAPInvoiceTransferLines(entityPM, allInvoiceLines, allInvoiceLinesPM);
 
                 //Full Accounting 

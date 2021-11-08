@@ -480,5 +480,8 @@ export class ShipmentList {
 		ShipperNotExporterReference2: string;
 		TruckContainerNumber: string;
 		ContainersNumbersandTypesArray: string;
+		CustomerContactName: string;
+		CustomerContactEmail: string;
+		PODReceivedDate: Date;
 	
 }

@@ -23,8 +23,8 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
         {
 
 
-        IQueryable<InterestReportList> query = (from a in iQueryable
-                                            select new InterestReportList()
+        IQueryable<InterestReportList> query = (from a in iQueryable.Include("GLAccount")
+												select new InterestReportList()
 											{
                      
 					                          Id = a.Id,
@@ -76,8 +76,17 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 											  CalCreditAllotmentCommission = a.CalCreditAllotmentCommission,
 
 											 CalculatedPostponedChequesCommision = a.CalculatedPostponedChequesCommision,
-
-											});
+											 Category1Name = a.GLAccount.Category1.EnglishName,
+											 Category2Name = a.GLAccount.Category2.EnglishName,
+											 Category3Name = a.GLAccount.Category3.EnglishName,
+											 Category4Name = a.GLAccount.Category4.EnglishName,
+											 Category5Name = a.GLAccount.Category5.EnglishName,
+											 Category1LocalName= a.GLAccount.Category1.LocalName,
+											 Category2LocalName = a.GLAccount.Category2.LocalName,
+											 Category3LocalName = a.GLAccount.Category3.LocalName,
+											 Category4LocalName = a.GLAccount.Category4.LocalName,
+											 Category5LocalName = a.GLAccount.Category5.LocalName
+												});
             return query;
 		}
 

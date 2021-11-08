@@ -23,6 +23,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 entityStatus.StatusWeight = entityStatusDetails.StatusWeight;
                 entityStatus.Tenant = entityStatusDetails.Tenant;
                 entityStatus.InActive = entityStatusDetails.InActive;
+                entityStatus.EntityStatusTypeCode = entityStatusDetails.EntityStatusTypeCode;
                 entityStatus.SearchFields = entityStatusDetails.Code + "," + entityStatusDetails.Name;               
                 entityStatusRepository.Update(entityStatus);
 
@@ -38,6 +39,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                     DisplayName = !string.IsNullOrEmpty(entityStatusDetails.DisplayName)? entityStatusDetails.DisplayName: entityStatusDetails.Name,
                     Code = entityStatusDetails.Code,
                     InActive = entityStatusDetails.InActive,
+                    EntityStatusTypeCode = entityStatusDetails.EntityStatusTypeCode,
                     Id = IdCounter.GetNumber("EntityStatus",entityStatusDetails.Tenant).ToString(),
                     SearchFields = entityStatusDetails.Code + "," + entityStatusDetails.Name,
                 };

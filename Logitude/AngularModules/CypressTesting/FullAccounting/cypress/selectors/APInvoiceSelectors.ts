@@ -6,6 +6,7 @@ export class APInvoiceSelectors {
     public static readonly APInvoiceInvoiceCurrency = '#APInvoice_InvoiceCurrencyId';
     public static readonly APInvoiceInvoiceExchangeRate = '#APInvoice_InvoiceCurrencyExchangeRate';
     public static readonly APInvoiceInvoiceDate = '#date_APInvoice_InvoiceDate';
+    public static readonly APInvoiceAccountingDate = '#date_APInvoice_AccountingDate';
     public static readonly APInvoicePaymentTerm = '#APInvoice_PaymentTermId';
     public static readonly APInvoiceDueDate = '#date_APInvoice_DueDate';
     public static readonly APInvoiceVATNumber = '#APInvoice_VATNumber'
@@ -28,7 +29,7 @@ export class APInvoiceSelectors {
     public static readonly APInvoiceLineAmount = '#APInvoiceLine_InvoiceCurrencyAmount';
     public static readonly AddAPInvoiceLineButton = '#Ok-AddAPInvoiceLine';
     public static readonly APInvoiceLineRows = '[id^=edit-log-gridRows]';
-    
+
     public static readonly APInvoiceApproveButton = '#APInvoiceBApprove';
 
 

@@ -234,7 +234,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.ServicesHelpe
         }
         public static void UpdateWaterMarksTable(CargoTrackingTable table, string date, string connectionString)
         {
-            var todayDate = TenantServerConfigration.GetCurrentDateTime(0);
+            var todayDate = TenantServerConfigration.GetCurrentDateTime(0).ToString("MM/dd/yyyy hh:mm:ss.fff tt");
             string setLastUpdateDateCommand = "update  CargoTrackingWatermarks set LastUpdateDate = '" + date + "',LastRun = '" + todayDate + "' where tableName = '" + table.Main_CargoTracking_TableName + "'";
             ExecuteSql(setLastUpdateDateCommand, connectionString);
 
@@ -275,11 +275,16 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.ServicesHelpe
 
         public static void UpdateWaterMarkAfterFinishCheck(CargoTrackingTable table, DateTime? automaticLastUpdateDate, CargoTrackingArgs buildCargoArgs)
         {
+            int ShipmentTable_GetShipmentOrders = 3;
             if (table != null && table.Main_CargoTracking_TableName != "CargoTrackingWatermarks")
             {
 
                 if (automaticLastUpdateDate != null) {
                     var lastUpdateDate = automaticLastUpdateDate.Value.ToString("MM/dd/yyyy hh:mm:ss.fff tt");
+                    if (buildCargoArgs.Table.CurrentCondition == ShipmentTable_GetShipmentOrders)
+                    {
+                        lastUpdateDate = automaticLastUpdateDate.Value.AddHours(-3).ToString("MM/dd/yyyy hh:mm:ss.fff tt");
+                    } 
                     UpdateWaterMarksTable(table, lastUpdateDate, buildCargoArgs.DestinationConnectionString);
                 } 
  

@@ -38,7 +38,7 @@
         </div>
 
         <div class="field">
-            <div class="label">Shipment ID</div>
+            <div class="label" > {{ isShipmentOrder ? 'Order ID' : 'Shipment ID'}} </div>
             <div class="value">{{ Shipment.ShipmentNumber }}</div>
         </div>
 
@@ -84,8 +84,8 @@
 
     <div class="panel-container">
         <div class="tab-selector" *ngIf="isTabletView">
-            <div [class.active]="SelectedTab=='steps'" (click)="TabToggleClicked('steps')">Shipment Milestones</div>
-            <div [class.active]="SelectedTab=='details'" (click)="TabToggleClicked('details')">Shipment Details</div>
+            <div [class.active]="SelectedTab=='steps'" (click)="TabToggleClicked('steps')">{{ isShipmentOrder ? 'Order Milestones' : 'Shipment Milestones'}} </div>
+            <div [class.active]="SelectedTab=='details'" (click)="TabToggleClicked('details')">{{ isShipmentOrder ? 'Order Details' : 'Shipment Details'}} </div>
         </div>
 
         <div *ngIf="(isTabletView && SelectedTab=='steps') || !isTabletView" class="panel left">
@@ -204,7 +204,7 @@
                             <ng-container *ngIf="item.EstimationDate">
                                 <div class="tick"> </div>
                                 <div class="caption" style="width: 205px;">{{item.Name}}</div>
-                                <div class="date" style="width: 130px;">{{item.EstimationDate | date: 'dd/MM/yyyy, HH:mm'}}</div>
+                                <div class="date" style="width: 130px;">{{item.EstimationDate | date: 'dd/MM/yyyy, HH:mm' | dateTimeFormat}}</div>
                                 <div class="desc" style="width: calc(100% - 450px); padding: 0;" [attr.title]="item.Notes">{{item.Notes}} </div>
                             </ng-container>
                         </li>
@@ -216,7 +216,7 @@
                             <ng-container>
                                 <div class="tick"> </div>
                                 <div class="caption" style="width: 205px;">{{CurrentMilestoneField.Name}}</div>
-                                <div class="date" style="width: 130px;">{{CurrentMilestoneField.Date | date: 'dd/MM/yyyy, HH:mm'}}</div>
+                                <div class="date" style="width: 130px;">{{CurrentMilestoneField.Date | date: 'dd/MM/yyyy, HH:mm' | dateTimeFormat}}</div>
                                 <div class="desc" style="width: calc(100% - 450px); padding: 0;" [attr.title]="CurrentMilestoneField.Notes">{{CurrentMilestoneField.Notes}}</div>
                             </ng-container>
                         </li>
@@ -228,7 +228,7 @@
                             <ng-container *ngIf="item.Date">
                                 <div class="tick"> <img src="./assets/images/icons/tick.png" alt=""> </div>
                                 <div class="caption" style="width: 205px;">{{item.Name}}</div>
-                                <div class="date" style="width: 130px;">{{item.Date | date: 'dd/MM/yyyy, HH:mm'}}</div>
+                                <div class="date" style="width: 130px;">{{item.Date | date: 'dd/MM/yyyy, HH:mm' | dateTimeFormat}}</div>
                                 <div class="desc" style="width: calc(100% - 450px); padding: 0;" [attr.title]="item.Notes">{{item.Notes}}</div>
                             </ng-container>
                         </li>
@@ -248,7 +248,8 @@
         <div *ngIf="(isTabletView && SelectedTab=='details') || !isTabletView" class="panel right">
             <div class="shipment-details">
 
-                <h2 class="hide-mobile hide-tablet">Shipment Details</h2>
+                <h2 class="hide-mobile hide-tablet" *ngIf="!isShipmentOrder">Shipment Details</h2>
+                <h2 class="hide-mobile hide-tablet" *ngIf="isShipmentOrder">Order Details</h2>
 
                 <div class="field">
                     <div class="label">{{ShipmentLabel}}</div>
@@ -266,7 +267,7 @@
                 </div>
 
 
-                <div class="field">
+                <div class="field" *ngIf="!isShipmentOrder">
                     <div class="label">
                         Containers <span *ngIf="Shipment.TransportModeId == 'O'">({{Shipment.ShipmentTypeCode?.toString().substring(0,3)}})</span>
                     </div>
@@ -286,7 +287,7 @@
 
                 </div>
 
-                <div class="field">
+                <div class="field" *ngIf="!isShipmentOrder">
                     <div class="label">Import Manifest</div>
                     <div class="value">{{Shipment.ImportManifest}}</div>
                 </div>

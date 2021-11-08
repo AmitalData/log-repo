@@ -156,7 +156,7 @@ SELECT        dbo.Shipments.Id, dbo.Shipments.Tenant, dbo.Shipments.ShipmentNumb
 						 ConsolidatorCards.EnglishName AS ConsolidatorName, ConsolidatorCards.Notes AS ConsolidatorNote,
 						 FreightForwarderCards.EnglishName AS FreightForwarderName, 
                          FreightForwarderCards.Notes AS FreightForwarderNote, ShipperCards.Notes AS ShipperNote, ReleasingAgentCards.EnglishName AS ReleasingAgentName, 
-                         ConsigneeCards.EnglishName AS ConsigneeName,ConsigneeCards.EnglishName AS Consignee, ConsigneeCards.Notes AS ConsigneeNote, AgentComputedCards.EnglishName AS AgentName,						 
+                         dbo.Shipments.ConsigneeName,ConsigneeCards.EnglishName AS Consignee, ConsigneeCards.Notes AS ConsigneeNote, AgentComputedCards.EnglishName AS AgentName,						 
                          AgentCards.Notes AS AgentNote, AgentCards.EnglishName AS Agent, CustomAgentExportCards.EnglishName AS CustomAgentExportName, CustomAgentExportCards.Notes AS CustomAgentExportNote, 
                          CustomAgentImportCards.EnglishName AS CustomAgentImportName, CustomAgentImportCards.Notes AS CustomAgentImportNote, 
                          Notify1Cards.EnglishName AS Notify1Name, Notify1Cards.Notes AS Notify1Note, Notify2Cards.EnglishName AS Notify2Name, Notify2Cards.Notes AS Notify2Note, 
@@ -289,6 +289,7 @@ SELECT        dbo.Shipments.Id, dbo.Shipments.Tenant, dbo.Shipments.ShipmentNumb
 						CASE WHEN (dbo.ShipmentMasterDatas.MainCarriageATA IS NOT NULL) THEN dbo.ShipmentMasterDatas.MainCarriageATA ELSE dbo.ShipmentMasterDatas.MainCarriageETA END AS MainCarriageExpectedOrActual, 
 						CASE WHEN (dbo.ShipmentMasterDatas.MainCarriageATA IS NOT NULL) THEN N'ATA' ELSE N'ETA' END AS MainCarriageETAOrATA, 
 						CASE WHEN (MasterShipmentDataId IS NOT NULL) THEN CASE WHEN (ShipmentMasterDataEntityStatus.StatusWeight > dbo.EntityStatus.StatusWeight) THEN ShipmentMasterDataEntityStatus.Id ELSE dbo.EntityStatus.Id END ELSE dbo.EntityStatus.Id END AS StatusId, 
+            CASE WHEN (MasterShipmentDataId IS NOT NULL) THEN CASE WHEN (ShipmentMasterDataEntityStatus.StatusWeight > dbo.EntityStatus.StatusWeight) THEN ShipmentMasterDataEntityStatus.StatusWeight ELSE dbo.EntityStatus.StatusWeight END ELSE dbo.EntityStatus.StatusWeight END AS StatusWeight, 
             dbo.Shipments.ComputedStatusDate as StatusDate,
 
 						CASE WHEN (MasterShipmentDataId IS NOT NULL) THEN CASE WHEN (ShipmentMasterDataEntityStatus.StatusWeight > dbo.EntityStatus.StatusWeight) THEN ShipmentMasterDataEntityStatus.Name ELSE dbo.EntityStatus.Name END ELSE dbo.EntityStatus.Name END AS StatusName, 

@@ -23,6 +23,10 @@ export class BaseSelectors extends RegexSelectors {
     public static readonly Warehouse = "#MaintenanceItemMTWH"
     public static readonly Vendor = "#MaintenanceItemMTVD"
     public static readonly MessageErrorRedButton = 'button[id^=MessageWindow_Ok]'
+    public static readonly TenantVolumeUnitCode = "#Tenant_VolumeUnitCode"
+    public static readonly TenantGrossWeightUnitCode = "#Tenant_GrossWeightUnitCode"
+    public static readonly TenantChargeableWeightUnitCode = "#Tenant_ChargeableWeightUnitCode"
+
     //#endregion
     //#region charge Types
     public static readonly ChargesTypeAccounting = "#ChargesTypeTHAccounting"
@@ -93,6 +97,8 @@ export class BaseSelectors extends RegexSelectors {
 
     //#endregion
     //#region general
+    public static readonly ToggleButtonDisabledClass = 'ToggleButton ToggleButtonDisabled';
+    public static readonly ToggleButtonClassName = 'ToggleButton';
     public static readonly ToggleButtonClass = '.ToggleButton';
     public static readonly label = "label"
     public static readonly button = "button"
@@ -207,6 +213,7 @@ export class BaseSelectors extends RegexSelectors {
     public static readonly SearchTextboxInput = "searchtextbox input";
     public static readonly QuickSearchDropDown = ".QuickSearchDropDown";
     public static readonly MenuButtons = "#MenuButtons";
+    public static readonly MenuButtons_Number = '[id^=MenuButtons]'
     public static readonly ComboBox = ".ComboBox";
     public static readonly ToggleIconImage = "img[src='Images/ToggleIcon.png']";
     public static readonly SelectedComboboxItem = ".ComboBoxDropdown li[class='SelectedComboboxItem']";
@@ -237,4 +244,13 @@ export class BaseSelectors extends RegexSelectors {
     //#region  colors
     public static readonly RedColor = "rgb(255, 0, 0)"
     //#endregion
+
+    public static readonly Export = "Export"
+    public static readonly Import = "Import"
+    public static readonly Domestic = "Domestic"
+    public static readonly Drop = "Drop"
+    public static readonly Air = "Air"
+    public static readonly Ocean = "Ocean"
+    public static readonly Inland = "Inland"
+
 }

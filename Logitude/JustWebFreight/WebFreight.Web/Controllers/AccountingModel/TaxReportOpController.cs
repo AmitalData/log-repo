@@ -390,10 +390,10 @@ namespace WebFreight.Web.Controllers.AccountingModel
                 SecurityUtility.CheckContactFeature("TaxReport", "NEW", authToken.Tenant);
                 int tenant = authToken.Tenant;
                 TaxReportQueryService taxReportQueryService = new TaxReportQueryService(tenant);
-                List<TaxReportPM> reportPMs= taxReportQueryService.GetTransmittedTaxReports(tenant);
+                List<TaxReportPM> reports= taxReportQueryService.GetTransmittedTaxReports(tenant);
               
 
-                return Request.CreateResponse(HttpStatusCode.OK, reportPMs);
+                return Request.CreateResponse(HttpStatusCode.OK, reports);
             }
 
             catch (Exception ex)

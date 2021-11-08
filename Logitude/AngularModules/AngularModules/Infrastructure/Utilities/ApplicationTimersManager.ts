@@ -21,7 +21,6 @@ import { SignalRChannelService } from '../Services/SignalRServices/SignalRChanne
 import {ObjectsLocator} from '../Locators/ObjectsLocator';
 import { interval } from 'rxjs';
 import { timeInterval } from 'rxjs/operators';
-import { UserExtendedPMService } from '../../Common/Services/ExtendedPMs/UserExtendedPMService';
 
 @Injectable()
 
@@ -35,7 +34,6 @@ export class ApplicationTimersManager {
     userLastLoginPMService: UserLastLoginPMService;
     //signalRGeneralService: SignalRGeneralService;
     signalRChannelService: SignalRChannelService;
-    userExtendedPMService: UserExtendedPMService;
 
     @Output() SignoutCompleted = new EventEmitter();
     private CurrentSession = SessionLocator.SelectedSession;
@@ -46,7 +44,6 @@ export class ApplicationTimersManager {
         this.logitudeApplicationService = new LogitudeApplicationService();
         this.userLastLoginPMService = new UserLastLoginPMService();
         this.performanceLogService = new PerformanceLogService();
-        this.userExtendedPMService = new UserExtendedPMService();
         //this.signalRGeneralService = new SignalRGeneralService();
        
     }
@@ -175,20 +172,26 @@ export class ApplicationTimersManager {
         });
     }
 
-
     private HandleComputerIdChangedForLoggedUser(lastloginPM: UserLastLoginPM) {
         let computerId: string = SessionLocator.GetComputerIdFromStorage();
         if (AppTool.IsNullOrEmpty(computerId)) return;
         if (lastloginPM.ComputerId == computerId) return;
         if (ObjectsLocator.GlobalSetting.SameUserLoginEnabled) return;
         let workEnvironment: string = this.GetWorkEnvironment();
-        if (lastloginPM.ComputerId != computerId && lastloginPM.WorkEnvironment?.toLowerCase() != workEnvironment?.toLowerCase()) return;
+        if (this.IsSameUserLoginEnabledWithDifferentEnvironmentToggle() && lastloginPM.ComputerId != computerId && lastloginPM.WorkEnvironment?.toLowerCase() != workEnvironment?.toLowerCase()) return;
         this.HandleUserUnlocked();
     }
 
     private GetWorkEnvironment(): string {
         if (AppTool.IsNullOrEmpty(ObjectsLocator?.GlobalSetting?.WorkEnvironment)) return "logitude";
         return ObjectsLocator?.GlobalSetting?.WorkEnvironment?.toLowerCase() == "logbox" ? location.href.toLowerCase().indexOf('.logbox.') > -1 ? "logbox" : "privatelabel" : ObjectsLocator?.GlobalSetting?.WorkEnvironment;
+    }
+
+    private IsSameUserLoginEnabledWithDifferentEnvironmentToggle() {
+        let SameUserLoginEnabledWithDifferentEnvironmentToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "ULE")[0];
+        if (SameUserLoginEnabledWithDifferentEnvironmentToggle)
+            return true;
+        return false;
     }
 
     private HandleUserUnlocked() {
@@ -219,7 +222,6 @@ export class ApplicationTimersManager {
             this.IsUserUnlock = false;
         });
     }
-
 
     IsUpgradingEnd: boolean = false;
     private CheckIsupgradingSystem() {

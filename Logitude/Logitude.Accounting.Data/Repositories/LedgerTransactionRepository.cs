@@ -24,9 +24,6 @@ namespace Logitude.Accounting.Data.Repositories
     public partial class LedgerTransactionRepository : IRepository<LedgerTransaction>
     {
         
-        
-        
-
         public List<LedgerTransaction> GetMulti(EntityKeyFields entityKeys)
         {
             LedgerTransactionKeys ledgerTransactionKeys = entityKeys as LedgerTransactionKeys;
@@ -1371,8 +1368,8 @@ on record.JournalId equals j.Id
                             && a.DocumentDate <= endOfTaxReportDate
                             && a.AccountId == setting.VATInputsGLAccountId 
                             && a.Tenant == tenant 
-                            && a.LocalAmountDebit != 0 
-                            && a.OppositeAccountId != setting.VATOutputGLAccountId
+                            && a.LocalAmountDebit != 0
+                            && a.OppositeAccountId != setting.VATOutputGLAccountId 
 
                     select new TaxReportData()
                     {
@@ -1407,8 +1404,8 @@ on record.JournalId equals j.Id
                     join m in context.JournalAdditionalDatas on new { a.JournalId, a.JournalLineNumber } equals new { m.JournalId, m.JournalLineNumber }
 
                     where (m.TaxReportId != null )
-                            && a.DocumentDate <= endOfTaxReportDate
-                           
+                            && a.DocumentDate <= endOfTaxReportDate && j.StatusCode != JournalStatuses.Voided && j.OriginalJournalId == null
+
                             && a.Tenant == tenant
                             && a.LocalAmountDebit != 0
                            && a.AccountId== accountId
@@ -1431,49 +1428,20 @@ on record.JournalId equals j.Id
 
 
         }
-        public IQueryable<LedgerTransaction> GetTaxReportsLedgerTransactionsByJournalIds(List<string> journalIds, int tenant, DateTime date, string accountId)
-        {
-            int days = DateTime.DaysInMonth(date.Year, date.Month);
-            DateTime reportDate = new DateTime(date.Year, date.Month, days);
-            
-
-            return (from a in context.LedgerTransactions
-                   join j in context.Journals on a.JournalId equals j.Id
-                   
-                    join m in context.JournalAdditionalDatas on j.Id equals m.JournalId
-                    where j.AccountingEntityCode == "2" && (m.TaxReportId != null ) && a.Tenant == tenant
-                    && a.DocumentDate <= reportDate
-                    where journalIds.Contains(a.JournalId) && a.Tenant == tenant && a.AccountId == accountId
-
-                    select a
-                    );
-        }
-        public IQueryable<LedgerTransaction> GetLedgerTransactionsOutputNotIncludedInTaxReports(int tenant, string accountId)
-        {
-
-            IQueryable<LedgerTransaction> outputLines = (from ledger in context.LedgerTransactions
-                                                         join journal in context.Journals on ledger.JournalId equals journal.Id
-                                                         join additional in context.JournalAdditionalDatas on journal.Id equals additional.JournalId
-                                                         join taxReport in context.TaxReports on additional.TaxReportId equals taxReport.Id
-                                                         where journal.AccountingEntityCode == AccountingEntities.ARInvoice && ledger.Tenant == tenant
-                                                         && ledger.AccountId == accountId && taxReport.StatusCode != VatReportStatuses.Transmitted
-                                                         select ledger).Distinct();
-            List<LedgerTransaction> list = outputLines.ToList();          
-            return outputLines;
-        }
-
-        public IQueryable<LedgerTransaction> GetLedgerTransactionsInputsNotIncludedInTaxReports(int tenant, FullAccountingSettingList setting)
+             public IQueryable<LedgerTransaction> GetLedgerTransactionsInputsNotIncludedInTaxReports(int tenant, FullAccountingSettingList setting)
         {
            
             IQueryable<LedgerTransaction> inputLines = (from ledger in context.LedgerTransactions
                                                         join journal in context.Journals on ledger.JournalId equals journal.Id
                                                         join additional in context.JournalAdditionalDatas on new { ledger.JournalId, ledger.JournalLineNumber } equals new { additional.JournalId, additional.JournalLineNumber }
                                                         join taxReport in context.TaxReports on additional.TaxReportId equals taxReport.Id
+                                                        into transactiosjoin
+                                                        from taxreport in transactiosjoin.DefaultIfEmpty()
                                                         where (ledger.OppositeAccountId != setting.VATOutputGLAccountId || ledger.OppositeAccountId == null)
                                                        && ledger.Tenant == tenant
                                                       && ledger.LocalAmountDebit != 0
-                                                      && ledger.AccountId == setting.VATInputsGLAccountId
-                                                      && taxReport.StatusCode != VatReportStatuses.Transmitted
+                                                      && ledger.AccountId == setting.VATInputsGLAccountId && journal.StatusCode != JournalStatuses.Voided && journal.OriginalJournalId == null
+                                                      && (taxreport.StatusCode != VatReportStatuses.Transmitted || additional.TaxReportId == null)
                                                         select ledger).Distinct();
             List<LedgerTransaction> list2 = inputLines.ToList();
 
@@ -1540,5 +1508,8 @@ on record.JournalId equals j.Id
     {
        public const string Transmitted ="T";
     }
-   
+    public struct JournalStatuses
+    {
+        public const string Voided = "3";
+    }
 }

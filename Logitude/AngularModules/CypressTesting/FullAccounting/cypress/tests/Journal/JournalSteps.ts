@@ -3,6 +3,7 @@ import * as JournalActions from '../../actions/JournalActions';
 import * as Actions from '../../actions/Actions';
 import * as Assists from "../../../../Base/cypress/assists/Assists";
 import { JournalLineActionDetails } from '../../models/JournalLineActionDetails';
+import { JournalSelectors } from '../../selectors/JournalSelectors';
 
 //#region Create new Journal
 Given("the user logged in and navigates to Full Accounting workspace", () => {
@@ -17,6 +18,10 @@ Given("navigate journal workspace", () => {
 Given("a journal line action with the following details", (dataTable) => {
     let journalLineActionDetails = Assists.CreateInstance<JournalLineActionDetails>(dataTable, true);
     JournalActions.FillLineActionDetails(journalLineActionDetails)
+});
+
+Given("fill {string} as accounting date", (accountingDate) => {
+    cy.FillLogTextBox(JournalSelectors.AccountingDate, accountingDate)
 });
 
 When("save as draft", () => {

@@ -35,6 +35,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
             HandleFreightForwarder();
             HandleNotify1();
             HandleInlandDemosticPartners();            
+            HandleConsigneeNotImporter();
         }
 
         private void HandleShipper()
@@ -307,12 +308,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
             }
 
             else if (entityPM.IsExternalAPI || entityPM.IsHybrid)
-            {
-                Card card = CardRepository.GetSingleCard(cardId, initializer.Tenant, true);
-                if (card != null)
-                {
-                    MapNotify1FieldsFromNotify1Card(card);                   
-                }
+            {                
+                MapNotify1FieldsFromNotify1Card(cardId);
             }
         }
         private void ResetNotify1Properties()
@@ -323,17 +320,20 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
             entityPM.Notify1AddressId = null;
             entityPM.Notify1Reference2 = null;
         }
-        private void MapNotify1FieldsFromNotify1Card(Card card)
+        private void MapNotify1FieldsFromNotify1Card(string cardId)
         {
-            entityPM.Notify1Name = card.EnglishName;
-
+            Card card = CardRepository.GetSingleCard(cardId, initializer.Tenant, true);
+            if (card != null)
+            {
+                entityPM.Notify1Name = card.EnglishName;
+                MapNotify1Address(card);
+                MapNotify1Contact(card);               
+            }
+        }
+        private void MapNotify1Address(Card card)
+        {
             if (entityPM.IsExternalAPI)
             {
-                if (string.IsNullOrEmpty(entityPM.Notify1ContactId))
-                {
-                    entityPM.Notify1ContactId = card.PrimaryContactId;
-                }
-
                 if (string.IsNullOrEmpty(entityPM.Notify1AddressId))
                 {
                     entityPM.Notify1AddressId = initializer.AddressRepository.GetMainAddressId(card.Id, initializer.Tenant);
@@ -342,10 +342,57 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
 
             else
             {
-                entityPM.Notify1ContactId = card.PrimaryContactId;
                 entityPM.Notify1AddressId = initializer.AddressRepository.GetMainAddressId(card.Id, initializer.Tenant);
             }
         }
+        private void MapNotify1Contact(Card card)
+        {
+            if (entityPM.IsExternalAPI)
+            {
+                if (string.IsNullOrEmpty(entityPM.Notify1ContactId))
+                {
+                    entityPM.Notify1ContactId = card.PrimaryContactId;
+                }
+            }
+
+            else
+            {
+                entityPM.Notify1ContactId = card.PrimaryContactId;
+            }
+        }
+        private void HandleConsigneeNotImporter()
+        {
+            string cardId = entityPM.ConsigneeNotImporterId;
+
+            if (string.IsNullOrEmpty(cardId))
+            {
+                entityPM.ConsigneeNotImporterName = null;
+                entityPM.ConsigneeNotImporterNote = null;
+                entityPM.ConsigneeNotImporterContactId = null;
+                entityPM.ConsigneeNotImporterAddressId = null;
+                entityPM.ConsigneeNotImporterReference = null;
+            }
+
+            else if (entityPM.IsExternalAPI)
+            {
+                Card card = CardRepository.GetSingleCard(cardId, initializer.Tenant, true);
+                if (card != null)
+                {
+                    entityPM.ConsigneeNotImporterName = card.EnglishName;
+
+                    if (string.IsNullOrWhiteSpace(entityPM.ConsigneeNotImporterContactId))
+                    {
+                        entityPM.ConsigneeNotImporterContactId = card.PrimaryContactId;
+                    }
+
+                    if (string.IsNullOrWhiteSpace(entityPM.ConsigneeNotImporterAddressId))
+                    {
+                        entityPM.ConsigneeNotImporterAddressId = initializer.AddressRepository.GetMainAddressId(cardId, initializer.Tenant);
+                    }
+                }
+            }
+        }
+
         private bool IsShipmentFromToLogbox()
         {
             bool isShipmentFromUNF = entityPM.IsHybrid;

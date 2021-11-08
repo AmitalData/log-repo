@@ -39,7 +39,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Toggle&quot;"
-  Code="&quot;f8c6&quot;"
+  Code="&quot;a011&quot;"
   Name="&quot; Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;Name&quot;"
@@ -625,6 +625,11 @@
       Name="&quot;Use Security Access Level&quot;"
       SearchFields="&quot;SAL,Use Security Access Level&quot;"
       Description="&quot;Use Security Access Level&quot;" />
+    <Record
+      Name="&quot;Same User Login Enabled&quot;"
+      Description="&quot;User can login to different environment at the same time&quot;"
+      Code="&quot;ULE&quot;"
+      SearchFields="&quot;ULE,Same User Login Enabled&quot;" />
   </Records>
   <DataContracts />
   <AdditionalTextCodes />

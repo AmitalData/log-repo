@@ -88,7 +88,7 @@ namespace WebFreight.Web.Stimulsoft
                         {
                             LogitudeStiWebDesigner.ShowSaveButton = false;
                             LogitudeStiWebDesigner.ShowSaveDialog = false;
-                            LogitudeStiWebDesigner.ShowDictionary = templateType == "E";
+                            LogitudeStiWebDesigner.ShowDictionary = false;
                             LogitudeStiWebDesigner.ShowReportTree = false;
                             LogitudeStiWebDesigner.ShowPanel = false;
                             LogitudeStiWebDesigner.ShowTooltips = false;
@@ -96,6 +96,7 @@ namespace WebFreight.Web.Stimulsoft
                             LogitudeStiWebDesigner.ShowFileMenu = false;
                             LogitudeStiWebDesigner.ShowInsertButton = false;
                             LogitudeStiWebDesigner.ShowLayoutButton = false;
+                            LogitudeStiWebDesigner.ShowPreviewButton = templateType != "E";
                             LogitudeStiWebDesigner.ViewStateMode = ViewStateMode.Disabled;
                             LogitudeStiWebDesigner.Enabled = false;
                             //  LogitudeStiWebDesigner.ShowPropertiesGrid = false;

@@ -208,6 +208,13 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             container.ShipmentDeliveryATD = containerPM.ShipmentDeliveryATD;
             container.ShipmentOriginAgentId = containerPM.ShipmentOriginAgentId;
             container.ShipmentDestinationAgentId = containerPM.ShipmentDestinationAgentId;
+            container.ShipmentNumber = containerPM.ShipmentNumber;
+            container.ContainersCount = containerPM.ContainersCount;
+            container.HandlerId = containerPM.HandlerId;
+            container.CustomerId = containerPM.CustomerId;
+            container.OPClosed = containerPM.OPClosed;
+            container.ShipmentTypeId = containerPM.ShipmentTypeId;
+            container.ShipmentCreateDate = containerPM.ShipmentCreateDate;
             BuildSearchField(containerPM, container);
         }
 

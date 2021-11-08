@@ -116,7 +116,7 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
                 }
             }
         }
-
+       
 
         //Dummy Fields
         public bool SetVoided { get; set; }
@@ -203,6 +203,8 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
             }
         }
 
+        public List<ARPaymentBankTranferPM> ARPaymentBankTranfers { get; set; }
+
         public bool IsPaymentNumberManuallySet { get; set; }
 
 
@@ -253,6 +255,7 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public bool ForceUsingBankTransferMethod { get; set; }
         public string ReconcileExternalPagesIds { get; set; }
 
+        public bool UpdateAmountAndStatuses { get; set; }
 
     }
 }

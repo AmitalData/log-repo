@@ -98,9 +98,10 @@ Then("the invoice should approve successfully", () => {
     BaseAssertion.AssertStatusCode(RequestAliases.ARInvoicesRequest, 200);
 });
 
-When("set invoice as sent", () => {
-    AccountingActions.SetAsSentARInvoice()
+When("set invoice as sent with {string} as a note", (notes) => {
+    AccountingActions.SetAsSentARInvoice(notes)
 });
+
 Then("the invoice should set as sent successfully", () => {
     BaseAssertion.AssertStatusCode(RequestAliases.ARInvoicesRequest, 200);
 });
@@ -110,4 +111,8 @@ When("void invoice", () => {
 });
 Then("the invoice should void successfully", () => {
     BaseAssertion.AssertStatusCode(RequestAliases.ARInvoicesRequest, 200);
+});
+
+Then("the status value should be {string}", (statusValue) => {
+    BaseAssertion.AssertElementContain(ShipmentSelectors.ARInvoiceStatus, statusValue)
 });

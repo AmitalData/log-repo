@@ -218,6 +218,7 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string CustomerContactId { get; set; }
         public string CustomerReference1 { get; set; }
         public string CustomerReference2 { get; set; }
+        public string CustomerReference3 { get; set; }
         public string FreightForwarderId { get; set; }
         public string FreightForwarderAddressId { get; set; }
         public string FreightForwarderContactId { get; set; }
@@ -709,6 +710,10 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public virtual EntityStatus OperationalStatus { get; set; }
 
         public virtual EntityStatus BillingStatus { get; set; }
+
+       public bool IsPODReceived { get; set; }
+
+       public DateTime? PODReceivedDate { get; set; }
 
     }
 }

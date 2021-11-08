@@ -70,7 +70,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
 
             var fromScript = $"FROM dbo.{table.DBTableName} P ";
 
-            var joinScript = $"RIGHT OUTER JOIN dbo.{table.DBTableName} C                   ON P.CustomFileId = C.Id " +
+            var joinScript = $"RIGHT  OUTER JOIN dbo.{table.DBTableName} C                   ON P.CustomFileId = C.Id " +
                              $"LEFT OUTER JOIN dbo.ShipmentComputedFields com ON com.Id = C.Id " +
                              $"LEFT OUTER JOIN dbo.ShipmentMasterDatas Mas    ON Mas.Id = C.MasterShipmentDataId "+
                              $"LEFT OUTER JOIN dbo.ShipmentMasterDatas ForwardingMaster    ON ForwardingMaster.Id = P.MasterShipmentDataId "+
@@ -103,8 +103,8 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
 
 
                 var createDateWithoutTime = "DATEADD(dd, DATEDIFF(dd, 0, C.CreateDateTime ), 0)";
-                string datePeriodCondition = $" {createDateWithoutTime} >= '{cargoTrackingDataBaseArgs.CargoTrackingArguments.FromDate.Value.Date}' and" +
-                                             $" {createDateWithoutTime} <= '{cargoTrackingDataBaseArgs.CargoTrackingArguments.ToDate.Value.Date}'";
+                string datePeriodCondition = $" {createDateWithoutTime} >= '{cargoTrackingDataBaseArgs.CargoTrackingArguments.FromDate.Value.Date.ToString("MM/dd/yyyy hh:mm:ss.fff tt")}' and" +
+                                             $" {createDateWithoutTime} <= '{cargoTrackingDataBaseArgs.CargoTrackingArguments.ToDate.Value.Date.ToString("MM/dd/yyyy hh:mm:ss.fff tt")}'";
                 whereConditions.Add(datePeriodCondition);
             }
 
@@ -244,8 +244,8 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
 
 
                 var createDateWithoutTime = "DATEADD(dd, DATEDIFF(dd, 0, P.CreateDateTime ), 0)";
-                string datePeriodCondition = $" {createDateWithoutTime} >= '{cargoTrackingDataBaseArgs.CargoTrackingArguments.FromDate.Value.Date}' and" +
-                                             $" {createDateWithoutTime} <= '{cargoTrackingDataBaseArgs.CargoTrackingArguments.ToDate.Value.Date}'";
+                string datePeriodCondition = $" {createDateWithoutTime} >= '{cargoTrackingDataBaseArgs.CargoTrackingArguments.FromDate.Value.Date.ToString("MM/dd/yyyy hh:mm:ss.fff tt")}' and" +
+                                             $" {createDateWithoutTime} <= '{cargoTrackingDataBaseArgs.CargoTrackingArguments.ToDate.Value.Date.ToString("MM/dd/yyyy hh:mm:ss.fff tt")}'";
                 whereConditions.Add(datePeriodCondition );
             }
 
@@ -364,8 +364,8 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
 
 
                 var createDateWithoutTime = "DATEADD(dd, DATEDIFF(dd, 0, SHO.CreateDate ), 0)";
-                string datePeriodCondition = $" {createDateWithoutTime} >= '{cargoTrackingDataBaseArgs.CargoTrackingArguments.FromDate.Value.Date}' and" +
-                                             $" {createDateWithoutTime} <= '{cargoTrackingDataBaseArgs.CargoTrackingArguments.ToDate.Value.Date}'";
+                string datePeriodCondition = $" {createDateWithoutTime} >= '{cargoTrackingDataBaseArgs.CargoTrackingArguments.FromDate.Value.Date.ToString("MM/dd/yyyy hh:mm:ss.fff tt")}' and" +
+                                             $" {createDateWithoutTime} <= '{cargoTrackingDataBaseArgs.CargoTrackingArguments.ToDate.Value.Date.ToString("MM/dd/yyyy hh:mm:ss.fff tt")}'";
                 whereConditions.Add(datePeriodCondition);
             }
 

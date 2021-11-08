@@ -5872,7 +5872,16 @@ namespace WebFreight.Web.Helpers
             string pagePath = @"/SharedLogistic/ShipmentPage.aspx";
             string pageLink;
             Tenant sharedTenant = GetCurrentTenant(sharedLinkHTMLArgs.Tenant);
-            if (sharedTenant != null && sharedTenant.SharedLogisMasterMessageLink && shipmentLevelCode == "C")
+
+            if(sharedTenant.IsCargoTrackWebAccessActivated == true)
+            {
+                var cargoURL = GetCargoTrackingSystemURL(sharedLinkHTMLArgs, myUrl);
+                pageLink = cargoURL + "cargo-tracking/shipment-link?" +
+                    "SecurityKey=" + sharedLinkHTMLArgs.Key +
+                    "&Tenant=" + sharedLinkHTMLArgs.Tenant +
+                    "&Panel=" + "DocumentsPanel";
+            }
+            else if (sharedTenant != null && sharedTenant.SharedLogisMasterMessageLink && shipmentLevelCode == "C")
             {
                 myUrl = GetSystemURL(sharedLinkHTMLArgs, myUrl);
                 pagePath = @"/SharedMasterDocumentsPage.aspx";
@@ -5905,7 +5914,16 @@ namespace WebFreight.Web.Helpers
 
             return myUrl;
         }
-
+        private static string GetCargoTrackingSystemURL(SharedLinkHTMLArgs sharedLinkHTMLArgs, string systemUrl)
+        {
+            TenantManagementQuery tenantManagementQuery = new TenantManagementQuery(sharedLinkHTMLArgs.Tenant);
+            TenantManagementPM tenantManagementPM = tenantManagementQuery.GetSinglePMByDomain(systemUrl);
+            if (tenantManagementPM != null && !string.IsNullOrEmpty(tenantManagementPM.CustomerURL))
+            {
+                return tenantManagementPM.CustomerURL + "/";
+            }
+            return null;
+        }
         private string GetEntityPropertyValue(object entity, string property)
         {
             PropertyInfo propertyInfo = entity.GetType().GetProperty(property);

@@ -483,7 +483,6 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
             contactRepository.Add(newContact);
             contactTenantRepository.Add(newContactTenant);
-            contactTenantRepository.SubmitChanges();
 
             #region admin role for signup
             if (entityPM.SignupRole)
@@ -854,6 +853,11 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         }
         private string GetUserRoles_New()
         {
+            if(this.entityPm == null || (this.entityPm!= null && this.entityPm.RolePMLists == null))
+            {
+                return null;
+            }
+
             string roles = "";
             foreach (RolePM role in this.entityPm.RolePMLists)
             {

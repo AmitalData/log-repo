@@ -5,10 +5,11 @@ Feature: AP Invoice
     Scenario: Create new AP Invoice
         Given the user logged in and navigates to Full Accounting workspace
         And an AP Invoice with the following details
-            | Vendor        | KHTest     |
-            | InvoiceNumber | Random     |
-            | InvoiceAmount | 100        |
-            | InvoiceDate   | 01/09/2021 |
+            | Vendor         | KHTest     |
+            | InvoiceNumber  | Random     |
+            | InvoiceAmount  | 100        |
+            | InvoiceDate    | 05/09/2021 |
+            | AccountingDate | 05/09/2021 |
         When create AP Invoice
         Then the AP Invoice should get successfully
 

@@ -236,6 +236,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                 this.TraceCustomsData();
                 this.TraceTerminalData();
                 this.TraceAccruals();
+                this.TraceBookingArrangement();
             }
         }
 
@@ -329,6 +330,20 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                 this.CreateTraceEvent("CCPP", entityPM.EventNote);
             }
         }
+
+        private void TraceBookingArrangement()
+        {
+            if (entityMasterData != null && entityMasterData.MainCarriageETD == null && entityPM.MainCarriageETD != null)
+            {
+                this.CreateTraceEvent("BKAR");
+            }
+
+            else if (entityMasterData != null && entityMasterData.MainCarriageETD != null && entityPM.MainCarriageETD == null)
+            {
+                this.DeleteTraceEvent("BKAR");
+            }
+        }
+
         private void TraceCustomsData()
         {
             if ((entityPoco.CustomsClearanceDate == null || entityPoco.FreightRelease == null || entityPoco.TerminalAvailable == null) && (entityPM.CustomsClearanceDate != null && entityPM.FreightRelease != null && entityPM.TerminalAvailable != null))

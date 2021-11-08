@@ -22,12 +22,12 @@ export class OceanInsightsSettingsComponent extends BaseComponent implements OnI
     public SelectedTabCode: string = SessionLocator.Tenant == 0 ? "G" : "P";
     public ShippingLinesLists: ShippingLineItem[];
     private shippingLineExtendedPMService: ShippingLineExtendedPMService;
-    public IsGeneralTabVisible: boolean = false;
+    public IsVisibleForTenantZero: boolean = false;
     constructor(private entityResourceService: EntityResourceService) {
         super();
 
         if (SessionLocator.Tenant == 0) {
-            this.IsGeneralTabVisible = true;
+            this.IsVisibleForTenantZero = true;
         }
     }
 
@@ -183,13 +183,21 @@ export class OceanInsightsSettingsComponent extends BaseComponent implements OnI
         if (AppTool.IsNullOrEmpty(this.AmitalCloudLogitudeTenantPrimaryKey)) {
             errors.push("Amital Primary Key is required");
         }
+
         this.ValidationErrorsList = errors;
 
         if (this.ValidationErrorsList.length == 0) {
             var savedList: ShippingLinePM[] = [];
             this.ShippingLinesLists.forEach((item) => {
-                if (item.entityPM_TenantZero.IsDirty) {
-                    savedList.push(item.entityPM_TenantZero);
+                if (SessionLocator.Tenant == 0) {
+                    if (item.entityPM_TenantZero.IsDirty) {
+                        savedList.push(item.entityPM_TenantZero);
+                    }
+                }
+                else {
+                    if (item.entityPM.IsDirty) {
+                        savedList.push(item.entityPM);
+                    }
                 }
             });
 
@@ -229,7 +237,7 @@ export class OceanInsightsSettingsComponent extends BaseComponent implements OnI
 }
 
 export class ShippingLineItem extends BaseComponent {
-    private entityPM: ShippingLinePM;
+    public entityPM: ShippingLinePM;
     public entityPM_TenantZero: ShippingLinePM;
     public DataContext: ShippingLineItem = this;
     constructor(zeroEntity: ShippingLinePM, currentEntity: ShippingLinePM) {
@@ -243,13 +251,12 @@ export class ShippingLineItem extends BaseComponent {
 
     private SetUIProperties() {
         if (SessionLocator.Tenant != 0) {
-            this.UIProperties.SetEnabled("IsSendingByContainer", "ShippingLine", false);
-            this.UIProperties.SetEnabled("IsSendingByBillOfLading", "ShippingLine", false);
+            //this.UIProperties.SetEnabled("IsSendingByContainer", "ShippingLine", false);
+            //this.UIProperties.SetEnabled("IsSendingByBillOfLading", "ShippingLine", false);
         }
     }
 
-    public get Code()
-    {
+    public get Code() {
         if (SessionLocator.Tenant == 0) {
             return this.entityPM_TenantZero.Code;
         }
@@ -270,28 +277,74 @@ export class ShippingLineItem extends BaseComponent {
     }
 
     public get IsSendingByContainer() {
+        if (this.entityPM) {
+            return this.entityPM.IsSendingByContainer;
+        }
+
+        else return false;
+    }
+    public set IsSendingByContainer(value: boolean) {
+        if (this.entityPM != null) {
+            this.entityPM.IsSendingByContainer = value;
+        }
+    }
+
+    public get IsSendingByBillOfLading() {
+        if (this.entityPM) {
+            return this.entityPM.IsSendingByBillOfLading;
+        }
+
+        else return false;
+    }
+    public set IsSendingByBillOfLading(value: boolean) {
+        if (this.entityPM != null) {
+            this.entityPM.IsSendingByBillOfLading = value;
+        }
+    }
+
+    public get TenantZeroIsSendingByContainer() {
         if (this.entityPM_TenantZero) {
             return this.entityPM_TenantZero.IsSendingByContainer;
         }
 
         else return false;
     }
-    public set IsSendingByContainer(value: boolean) {
+    public set TenantZeroIsSendingByContainer(value: boolean) {
         if (this.entityPM_TenantZero != null) {
             this.entityPM_TenantZero.IsSendingByContainer = value;
         }
     }
 
-    public get IsSendingByBillOfLading() {
+    public get TenantZeroIsSendingByBillOfLading() {
         if (this.entityPM_TenantZero) {
             return this.entityPM_TenantZero.IsSendingByBillOfLading;
         }
 
         else return false;
     }
-    public set IsSendingByBillOfLading(value: boolean) {
+    public set TenantZeroIsSendingByBillOfLading(value: boolean) {
         if (this.entityPM_TenantZero != null) {
             this.entityPM_TenantZero.IsSendingByBillOfLading = value;
+        }
+    }
+
+    public get IsSendingByContainerEnabled() {
+        if (this.entityPM_TenantZero != null) {
+            return this.entityPM_TenantZero.IsSendingByContainer;
+        }
+
+        else {
+            return false;
+        }
+    }
+
+    public get IsSendingByBillOfLadingEnabled() {
+        if (this.entityPM_TenantZero != null) {
+            return this.entityPM_TenantZero.IsSendingByBillOfLading;
+        }
+
+        else {
+            return false;
         }
     }
 }

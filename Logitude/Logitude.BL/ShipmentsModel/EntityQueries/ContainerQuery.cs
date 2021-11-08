@@ -6,11 +6,8 @@ using Simplog.Data.ShipmentsModel.Repositories;
 using Logitude.BL.ShipmentsModel.EntityLists;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
-using Logitude.BL.CommonDataModel.EntityPMs;
-using Logitude.BL.CommonDataModel.EntityQueries;
 using System.Data.Entity;
 using Simplog.Server.Infrastructure.DataContracts;
-using Logitude.BL.Helpers;
 
 namespace Logitude.BL.ShipmentsModel.EntityQueries
 {
@@ -232,6 +229,16 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     ShipmentDestinationAgentId = entityPoco.ShipmentDestinationAgentId,
                     ShipmentOriginAgentName = entityPoco.ShipmentOriginAgent != null ? entityPoco.ShipmentOriginAgent.EnglishName : "",
                     ShipmentDestinationAgentName = entityPoco.ShipmentDestinationAgent != null ? entityPoco.ShipmentDestinationAgent.EnglishName : "",
+                    ShipmentNumber = entityPoco.ShipmentNumber,
+                    ShipmentTypeId = entityPoco.ShipmentTypeId,
+                    ShipmentTypeName = entityPoco.ShipmentType != null ? entityPoco.ShipmentType.Name : "",
+                    OPClosed = entityPoco.OPClosed,
+                    ContainersCount = entityPoco.ContainersCount,
+                    HandlerId = entityPoco.HandlerId,
+                    HandlerName = entityPoco.Handler?.Contact?.EnglishName,
+                    CustomerId = entityPoco.CustomerId,
+                    CustomerName = entityPoco.CustomerCard?.EnglishName,
+                    ShipmentCreateDate = entityPoco.ShipmentCreateDate,
                 };
 
                 MapCustomFields(result, entityPoco);
@@ -260,7 +267,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     Include("ShipmentTransshipment3ToPort").Include("ShipmentTransshipment3FromPort").Include("ShipmentTransshipment2ToPort").Include("ShipmentTransshipment2FromPort")
                     .Include("ShipmentTransshipment1ToPort").Include("ShipmentTransshipment1FromPort").Include("ShipmentMainCarriageToPort").Include("ShipmentMainCarriageFromPort")
                     .Include("ShipmentPreCarriageToPort").Include("ShipmentPreCarriageFromPort").Include("ShipmentEntityStatus").Include("TerminalCard").Include("TerminalCardAddress")
-                    .Include("ShipmentOriginAgent").Include("ShipmentDestinationAgent")
+                    .Include("ShipmentOriginAgent").Include("ShipmentDestinationAgent").Include("ShipmentType").Include("CustomerCard").Include("Handler")
                     where a.Id == id && a.Tenant == tenant
                     select new ContainerPM()
                     {
@@ -462,6 +469,16 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         ShipmentDestinationAgentId = a.ShipmentDestinationAgentId,
                         ShipmentOriginAgentName = a.ShipmentOriginAgent != null ? a.ShipmentOriginAgent.EnglishName : "",
                         ShipmentDestinationAgentName = a.ShipmentDestinationAgent != null ? a.ShipmentDestinationAgent.EnglishName : "",
+                        ShipmentNumber = a.ShipmentNumber,
+                        ShipmentTypeId = a.ShipmentTypeId,
+                        ShipmentTypeName = a.ShipmentType != null ? a.ShipmentType.Name : "",
+                        OPClosed = a.OPClosed,
+                        ContainersCount = a.ContainersCount,
+                        HandlerId = a.HandlerId,
+                        HandlerName = a.Handler != null ? (a.Handler.Contact != null? a.Handler.Contact.EnglishName:"") : "",
+                        CustomerId = a.CustomerId,
+                        CustomerName = a.CustomerCard != null ? a.CustomerCard.EnglishName: "",
+                        ShipmentCreateDate = a.ShipmentCreateDate,
 
                     }).ToList();
         }
@@ -472,7 +489,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     Include("ShipmentTransshipment3ToPort").Include("ShipmentTransshipment3FromPort").Include("ShipmentTransshipment2ToPort").Include("ShipmentTransshipment2FromPort")
                     .Include("ShipmentTransshipment1ToPort").Include("ShipmentTransshipment1FromPort").Include("ShipmentMainCarriageToPort").Include("ShipmentMainCarriageFromPort")
                     .Include("ShipmentPreCarriageToPort").Include("ShipmentPreCarriageFromPort").Include("ShipmentPreCarriageFromPort").Include("ShipmentEntityStatus").Include("TerminalCard")
-                    .Include("ShipmentOriginAgent").Include("ShipmentDestinationAgent")
+                    .Include("ShipmentOriginAgent").Include("ShipmentDestinationAgent").Include("ShipmentType").Include("CustomerCard").Include("Handler")
                                                select new ContainerList()
                                                {
                                                    Id = entity.Id,
@@ -683,6 +700,16 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                    ShipmentDestinationAgentId = entity.ShipmentDestinationAgentId,
                                                    ShipmentOriginAgentName = entity.ShipmentOriginAgent != null ? entity.ShipmentOriginAgent.EnglishName : "",
                                                    ShipmentDestinationAgentName = entity.ShipmentDestinationAgent != null ? entity.ShipmentDestinationAgent.EnglishName : "",
+                                                   ShipmentNumber = entity.ShipmentNumber,
+                                                   ShipmentTypeId = entity.ShipmentTypeId,
+                                                   ShipmentTypeName = entity.ShipmentType != null ? entity.ShipmentType.Name : "",
+                                                   OPClosed = entity.OPClosed,
+                                                   ContainersCount = entity.ContainersCount,
+                                                   HandlerId = entity.HandlerId,
+                                                   HandlerName = entity.Handler != null ? (entity.Handler.Contact != null ? entity.Handler.Contact.EnglishName : "") : "",
+                                                   CustomerId = entity.CustomerId,
+                                                   CustomerName = entity.CustomerCard != null ? entity.CustomerCard.EnglishName : "",
+                                                   ShipmentCreateDate = entity.ShipmentCreateDate,
                                                };
             return result;
         }
@@ -891,6 +918,16 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     ShipmentDestinationAgentId = container.ShipmentDestinationAgentId,
                     ShipmentOriginAgentName = container.ShipmentOriginAgent != null ? container.ShipmentOriginAgent.EnglishName : "",
                     ShipmentDestinationAgentName = container.ShipmentDestinationAgent != null ? container.ShipmentDestinationAgent.EnglishName : "",
+                    ShipmentNumber = container.ShipmentNumber,
+                    ShipmentTypeId = container.ShipmentTypeId,
+                    ShipmentTypeName = container.ShipmentType != null ? container.ShipmentType.Name : "",
+                    OPClosed = container.OPClosed,
+                    ContainersCount = container.ContainersCount,
+                    HandlerId = container.HandlerId,
+                    HandlerName = container.Handler != null ? (container.Handler.Contact != null ? container.Handler.Contact.EnglishName : "") : "",
+                    CustomerId = container.CustomerId,
+                    CustomerName = container.CustomerCard != null ? container.CustomerCard.EnglishName : "",
+                    ShipmentCreateDate = container.ShipmentCreateDate,
                 };
                 MapCustomFields(containerPM, container);
             }
@@ -1106,6 +1143,16 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     ShipmentDestinationAgentId = entityPoco.ShipmentDestinationAgentId,
                     ShipmentOriginAgentName = entityPoco.ShipmentOriginAgent != null ? entityPoco.ShipmentOriginAgent.EnglishName : "",
                     ShipmentDestinationAgentName = entityPoco.ShipmentDestinationAgent != null ? entityPoco.ShipmentDestinationAgent.EnglishName : "",
+                    ShipmentNumber = entityPoco.ShipmentNumber,
+                    ShipmentTypeId = entityPoco.ShipmentTypeId,
+                    ShipmentTypeName = entityPoco.ShipmentType != null ? entityPoco.ShipmentType.Name : "",
+                    OPClosed = entityPoco.OPClosed,
+                    ContainersCount = entityPoco.ContainersCount,
+                    HandlerId = entityPoco.HandlerId,
+                    HandlerName = entityPoco.Handler != null ? (entityPoco.Handler.Contact != null ? entityPoco.Handler.Contact.EnglishName : "") : "",
+                    CustomerId = entityPoco.CustomerId,
+                    CustomerName = entityPoco.CustomerCard != null ? entityPoco.CustomerCard.EnglishName : "",
+                    ShipmentCreateDate = entityPoco.ShipmentCreateDate,
                 };
             }
 

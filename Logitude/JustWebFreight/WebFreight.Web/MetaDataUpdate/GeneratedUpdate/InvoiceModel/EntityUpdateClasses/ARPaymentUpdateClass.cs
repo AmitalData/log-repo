@@ -5963,6 +5963,63 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "ARPaymentBankTranfers",
+					  						ObjectTableName =  "ARPayment",
+					  						FieldsDataType =  "List",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "ARPaymentBankTranfers",
+					  						ListPropertyPath =  "ARPaymentBankTranfers",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  true,
+					  						MultiTableName =  "ARPaymentBankTranfer",
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "ARPaymentBankTranfers",
+					  						DefaultText =  "ARPaymentBankTranfers",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
@@ -6876,6 +6933,22 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
  		   TextCode ARPaymentTextCode_ARPaymentOAllPaymentsReconciliation = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPayment.O.AllPaymentsReconciliation", DefaultText = "Two Payments cannot be reconciled with each other alone",LocalDefaultText = @"לא ניתן להתאים שתי קבלות בלבד ללא חשבונית", ObjectTableId = ARPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode ARPaymentTextCode_ARPaymentOCantPerformReconciliation = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPayment.O.CantPerformReconciliation", DefaultText = "Can't Perform ARPayment Reconciliation from this screen in multiple Cheques case ",LocalDefaultText = @"לא ניתן לבצע התאמות בקבלה עם ריבוי המחאות", ObjectTableId = ARPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ARPaymentTextCode_ARPaymentOReconciliationInMultipleTransfers = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPayment.O.ReconciliationInMultipleTransfers", DefaultText = "Can't perform ARPayment Reconciliation from this screen in multiple Transfers case",LocalDefaultText = @"לא ניתן לבצע התאמות בקבלה עם מספר העברות", ObjectTableId = ARPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ARPaymentTextCode_ARPaymentMMoreThanPaymentBankTransfer = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPayment.M.MoreThanPaymentBankTransfer", DefaultText = "More than one Bank Transfer that was created for this Payment. You can view them by clicking on the Edit button",LocalDefaultText = "בקבלה זאת קיימות יותר מהעברה בנק אחת , ניתן לראות את רשימת העברות ע''י לחיצה על ערוך", ObjectTableId = ARPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ARPaymentTextCode_ARPaymentMBankTransfers = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPayment.M.BankTransfers", DefaultText = "Bank Transfers",LocalDefaultText = @"העברות בנקאיות", ObjectTableId = ARPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ARPaymentTextCode_ARPaymentFLineNumber = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPayment.F.LineNumber", DefaultText = "Line No.",LocalDefaultText = @"שורה", ObjectTableId = ARPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "F", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ARPaymentTextCode_ARPaymentFPaymentRef = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPayment.F.PaymentRef", DefaultText = "Payment Reference",LocalDefaultText = @"אסמכתא קבלה", ObjectTableId = ARPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "F", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ARPaymentTextCode_ARPaymentFBankAccount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPayment.F.BankAccount", DefaultText = "Bank Account",LocalDefaultText = @"חשבון בנק", ObjectTableId = ARPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "F", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ARPaymentTextCode_ARPaymentMSearchByTransferReference = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPayment.M.SearchByTransferReference", DefaultText = "Search by Transfer Reference",LocalDefaultText = "חיפוש ע''י אסמכתא של העברה", ObjectTableId = ARPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ARPaymentTextCode_ARPaymentMAddBankTransfersHint = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPayment.M.AddBankTransfersHint", DefaultText = "You can add multiple Bank Transfers by clicking on the Add Button",LocalDefaultText = @"אתה יכול להוסיף מספר העברות בנקאיות על ידי לחיצה על כפתור הוסף", ObjectTableId = ARPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

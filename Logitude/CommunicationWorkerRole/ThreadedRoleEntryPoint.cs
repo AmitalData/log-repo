@@ -260,7 +260,8 @@ namespace CommunicationWorkerRole
                () => (new ByteCompressorUtil()) as IByteCompressorUtil,
                new IISManager(),
                () => (new HtmlEditorHelper()) as IHtmlEditorHelper,
-               () => (new EntityUpdateReflectorService()) as IEntityUpdateReflectorService
+               () => (new EntityUpdateReflectorService()) as IEntityUpdateReflectorService,
+               () => (new EntityGetReflectorService()) as IEntityGetReflectorService
                );
 
            

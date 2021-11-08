@@ -14,6 +14,8 @@ import { CargoTrackingSearchResponse } from 'src/CargoTracking/DataContracts/Car
 
 const invalidCaptchaMessage = "Please re-enter the characters you see in the image above";
 import { MessageWindowComponent } from '../../../../Infrastructure/Components/MessageWindow/MessageWindowComponent';
+import { DateTimeFormatPipe } from '../../../../Infrastructure/Pipes/DateTimeFormatPipe';
+
 import { MatDialog } from '@angular/material/dialog';
 
 @Component({
@@ -49,7 +51,8 @@ export class SearchComponent implements AfterViewInit,OnInit, OnDestroy
         private location: Location,
         private searchService: CargoTrackingSearchService,
         public dialog: MatDialog,
-        public DatePipe: DatePipe)
+        public DatePipe: DatePipe,
+        public dateTimeFormatPipe: DateTimeFormatPipe)
     {
         this.GetSearchTextFromURI();
         this.listenToRouterEvents();
@@ -211,10 +214,10 @@ export class SearchComponent implements AfterViewInit,OnInit, OnDestroy
     Search(searchSource:any)
     {
 
-        if (this.IsShowAreaCaptcha) {
-            this.ValidateUser();
-        }
-        else {
+        //if (this.IsShowAreaCaptcha) {
+        //    this.ValidateUser();
+        //}
+        //else {
             this.CheckSearchTimes(searchSource);
             var minimumCharactersLimitForSearch = 3;
             if (this.SearchText?.length < minimumCharactersLimitForSearch && searchSource != "searchText") {
@@ -223,7 +226,7 @@ export class SearchComponent implements AfterViewInit,OnInit, OnDestroy
             else if (this.tenant != null && this.SearchText) {
             this.router.navigate(['public-tracking/search'], { queryParams: { searchKey: this.SearchText } });
             this.LoadShipments();
-        }
+       // }
     }
 
     }
@@ -255,7 +258,6 @@ export class SearchComponent implements AfterViewInit,OnInit, OnDestroy
                 this.CaptchaTextValue = "";
                 this.CaptchaImageUrl = result.CaptchaImage;
                 this.CaptchaKey = result.CaptchaKey;
-                this.IsShowAreaCaptcha = true;
             });
     }
 
@@ -422,7 +424,7 @@ export class SearchComponent implements AfterViewInit,OnInit, OnDestroy
         let status = name;
         if (shipment.FutureMilstoneDate){
             let date = shipment.FutureMilstoneDate;
-            status += "\n on " + this.DatePipe.transform(date, 'd-MMM-y, HH:mm');
+            status += "\n on " + this.dateTimeFormatPipe.transform(this.DatePipe.transform(date, 'd-MMM-y, HH:mm'));
         }
         return status;
     }
@@ -434,7 +436,7 @@ export class SearchComponent implements AfterViewInit,OnInit, OnDestroy
 
         if (shipment.CurrentMilestoneDate){
             var date = shipment.CurrentMilestoneDate;
-            status += "\n on " + this.DatePipe.transform(date, 'd-MMM-y, HH:mm')
+            status += "\n on " + this.dateTimeFormatPipe.transform(this.DatePipe.transform(date, 'd-MMM-y, HH:mm'));
         }
         return status;
     }

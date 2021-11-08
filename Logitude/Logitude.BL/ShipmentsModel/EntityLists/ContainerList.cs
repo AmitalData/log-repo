@@ -219,5 +219,16 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public string ShipmentDestinationAgentId { get; set; }
         public string ShipmentOriginAgentName { get; set; }
         public string ShipmentDestinationAgentName { get; set; }
+        public string ShipmentNumber { get; set; }
+        public int? ContainersCount { get; set; }
+        public string HandlerId { get; set; }
+        public string HandlerName { get; set; }
+        public string CustomerId { get; set; }
+        public string CustomerName { get; set; }
+        public bool OPClosed { get; set; }
+        public string ShipmentTypeId { get; set; }
+        public string ShipmentTypeName { get; set; }
+        public DateTime? ShipmentCreateDate { get; set; }
+
     }
 }
