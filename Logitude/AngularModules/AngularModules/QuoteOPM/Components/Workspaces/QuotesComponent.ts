@@ -1,30 +1,31 @@
-import {Component, Output, EventEmitter} from '@angular/core';
-import {QuoteDomainService, CRMSummary} from '../../Services/QuoteDomainService';
-import {QuoteOPList} from '../../EntityLists/QuoteOPList';
-import {QuoteOPListService} from '../../Services/StandardLists/QuoteOPListService';
-import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
-import {AppTool, DateTool} from '../../../Infrastructure/Tools';
-import {CodeNameClass} from '../../../Infrastructure/DataContracts/CodeNameClass';
-import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
-import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
-import {LastFilterClass} from '../../../Infrastructure/Utilities/LastFilterClass';
-import {DateTimeToDatePipe} from '../../../Controls/Pipes/DateTimeToDatePipe';
-import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFilters';
-import {BusinessUnitListService} from '../../../Common/Services/StandardLists/BusinessUnitListService';
-import {BusinessUnitList} from '../../../Common/EntityLists/BusinessUnitList';
-import {UserListService} from '../../../Common/Services/StandardLists/UserListService';
-import {UserList} from '../../../Common/EntityLists/UserList';
-import {EntityResourceService} from '../../../Infrastructure/Services/EntityResourceService';
-import {NewQuoteComponentArgs} from '../../Args';
-import {LogitudeWindow} from '../../../Controls/Windows/LogitudeWindow';
-import {ListComponentArgs} from '../../../Infrastructure/Args';
-import {TextCodeTranslator} from '../../../Infrastructure/Utilities/TextCodeTranslator';
+import { Component, Output, EventEmitter } from '@angular/core';
+import { QuoteDomainService, CRMSummary } from '../../Services/QuoteDomainService';
+import { QuoteOPList } from '../../EntityLists/QuoteOPList';
+import { QuoteOPListService } from '../../Services/StandardLists/QuoteOPListService';
+import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
+import { AppTool, DateTool } from '../../../Infrastructure/Tools';
+import { CodeNameClass } from '../../../Infrastructure/DataContracts/CodeNameClass';
+import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
+import { BaseComponent } from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
+import { LastFilterClass } from '../../../Infrastructure/Utilities/LastFilterClass';
+import { DateTimeToDatePipe } from '../../../Controls/Pipes/DateTimeToDatePipe';
+import { ApiQueryFilters } from '../../../Infrastructure/DataContracts/ApiQueryFilters';
+import { BusinessUnitListService } from '../../../Common/Services/StandardLists/BusinessUnitListService';
+import { BusinessUnitList } from '../../../Common/EntityLists/BusinessUnitList';
+import { UserListService } from '../../../Common/Services/StandardLists/UserListService';
+import { UserList } from '../../../Common/EntityLists/UserList';
+import { EntityResourceService } from '../../../Infrastructure/Services/EntityResourceService';
+import { NewQuoteComponentArgs } from '../../Args';
+import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
+import { ListComponentArgs } from '../../../Infrastructure/Args';
+import { TextCodeTranslator } from '../../../Infrastructure/Utilities/TextCodeTranslator';
+import { PriceCheckService } from '../price-check/price-check.service';
 
 
 declare var makeChart, FunnelClick, ResetItemFunnel;
 
 @Component({
-    
+
     templateUrl: './QuotesComponent.html',
 })
 
@@ -35,18 +36,21 @@ export class QuotesComponent extends BaseComponent {
     @Output() ReloadUserQueries = new EventEmitter();
     public QuickSearchItems: QuoteOPList[] = [];
     private CurrentSession = SessionLocator.SelectedSession;
-    constructor(private _entityResourceService: EntityResourceService) {
+    constructor(
+        private _entityResourceService: EntityResourceService,
+        private priceCheckS: PriceCheckService,
+    ) {
         super();
         this.SalesFunnelId = "SalesFunnel_" + this.CurrentSession.GetNewId("SalesFunnel");
 
         //this._entityResourceService.getEntityResourceByTableName("Quote", 0).subscribe((response: any) => {
-            this._entityResourceService.getEntityResourceByTableName("QuoteOP", 0).subscribe((response: any) => {
-                this.IsResourcesReady = true;
-                this.InitializeServices();
-                this.LoadNonFilteredQueries();
-                this.BuildTopQuotesFilters();
-                this.InitializeFilters();
-            });
+        this._entityResourceService.getEntityResourceByTableName("QuoteOP", 0).subscribe((response: any) => {
+            this.IsResourcesReady = true;
+            this.InitializeServices();
+            this.LoadNonFilteredQueries();
+            this.BuildTopQuotesFilters();
+            this.InitializeFilters();
+        });
         //});
     }
 
@@ -556,7 +560,7 @@ export class QuotesComponent extends BaseComponent {
                         var itemViewModel: TopQuoteItem = new TopQuoteItem(item, this.SelectedTopQuotesItem);
                         this.TopQuotesList.push(itemViewModel);
                     });
-                    
+
                     break;
                 }
 
@@ -566,7 +570,7 @@ export class QuotesComponent extends BaseComponent {
                         var itemViewModel: TopQuoteItem = new TopQuoteItem(item, this.SelectedTopQuotesItem);
                         this.TopQuotesList.push(itemViewModel);
                     });
-                    
+
                     break;
                 }
 
@@ -576,7 +580,7 @@ export class QuotesComponent extends BaseComponent {
                         var itemViewModel: TopQuoteItem = new TopQuoteItem(item, this.SelectedTopQuotesItem);
                         this.TopQuotesList.push(itemViewModel);
                     });
-                    
+
                     break;
                 }
 
@@ -586,7 +590,7 @@ export class QuotesComponent extends BaseComponent {
                         var itemViewModel: TopQuoteItem = new TopQuoteItem(item, this.SelectedTopQuotesItem);
                         this.TopQuotesList.push(itemViewModel);
                     });
-                    
+
                     break;
                 }
         }
@@ -601,9 +605,9 @@ export class QuotesComponent extends BaseComponent {
     public FunnelDataFilterd = [];
     LoadFunnelData() {
         this.myDomainService.GetStageFunnelData(this.OwnerId, this.BusinessUnitId, this.RecordsTypeFilterCode).subscribe((myResult: any) => {
-                this.FunnelData = myResult;
-                this.fillFunnelData();
-            });
+            this.FunnelData = myResult;
+            this.fillFunnelData();
+        });
     }
     fillFunnelData() {
         try {
@@ -625,21 +629,21 @@ export class QuotesComponent extends BaseComponent {
         }
 
         catch (e) { }
-    }    
+    }
     FunnelClick() {
-        var item=FunnelClick();
+        var item = FunnelClick();
         ResetItemFunnel();
 
         if (item != null) {
 
             var objectTableName = "QuoteOP";
             var queryCode = "Open Quotes";
-            var displayTitle = this.FunnelData[item.index].LabelProperty +" Quotes";
+            var displayTitle = this.FunnelData[item.index].LabelProperty + " Quotes";
             var backButtonTitle = TextCodeTranslator.Translate("General.MH.Quotes");
 
             var filterAgrs: ApiQueryFilters = new ApiQueryFilters();
             var listArgs = new ListComponentArgs();
-            var myOwnerId=null;
+            var myOwnerId = null;
             var myBusinessUnitId = null;
             var myFilterCode = null;
 
@@ -673,7 +677,7 @@ export class QuotesComponent extends BaseComponent {
             listArgs.ObjectTableName = objectTableName;
             listArgs.DisplayTitle = displayTitle;
             listArgs.BackButtonTitle = backButtonTitle;
-            this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe((response:any) => {
+            this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe((response: any) => {
                 SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
                     .then(cmpRef => {
                         cmpRef.instance.ComponentRef = cmpRef;
@@ -695,7 +699,7 @@ export class QuotesComponent extends BaseComponent {
                     //this.isWindowOpened = false;
                 });
             });
-    }    
+    }
     RunQuoteWizard(oldWizard: boolean = false) {
         var args = new NewQuoteComponentArgs();
         var logWindow = new LogitudeWindow();
@@ -706,9 +710,10 @@ export class QuotesComponent extends BaseComponent {
         logWindow.Title = TextCodeTranslator.Translate("Quote.S.NewQuote.CreateNewQuote");
         oldWizard ? logWindow.Show('./QuoteOPM/Components/NewEntity/NewQuoteComponentOld') : logWindow.Show('./QuoteOPM/Components/NewEntity/NewQuoteComponent');
 
-        logWindow.WindowClosed.subscribe(s => {            
+        logWindow.WindowClosed.subscribe(s => {
             if (s) {
                 this.LoadAllScreenData();
+                this.priceCheckS.open('');
             }
         });
     }
@@ -836,7 +841,7 @@ export class QuotesComponent extends BaseComponent {
 }
 export class TopQuoteItem {
     public entityList: QuoteOPList;
-    private filter: CodeNameClass;    
+    private filter: CodeNameClass;
     constructor(entityList: QuoteOPList, filter: CodeNameClass) {
         this.entityList = entityList;
         this.filter = filter;

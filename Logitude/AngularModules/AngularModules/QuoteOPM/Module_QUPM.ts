@@ -7,11 +7,13 @@ import { ToastModule } from 'primeng/toast';
 import { quoteOP } from './Components/NewEntity/quoteOP.module';
 import { ButtonModule } from 'primeng/button';
 import { AccordionModule } from 'Infrastructure/Components/accordion/accordion.module';
+import { PriceCheckModule } from './Components/price-check/price-check.module';
 
 @NgModule({
     imports: [
         InfrastructureModule,
         quoteOP,
+        PriceCheckModule,
         ToastModule,
         ButtonModule,
         AccordionModule,

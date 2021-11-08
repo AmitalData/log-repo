@@ -39,8 +39,8 @@ export class NewQuoteValidateEntityService {
   private checkPartner(): void {
     // must set shipper or consignee
 
-    const shipperForm: any = this.form.controls.shipper.value.partener;
-    const consigneeForm: any = this.form.controls.consignee.value.partener;
+    const shipperForm: any = this.form.controls.shipper.value.partner;
+    const consigneeForm: any = this.form.controls.consignee.value.partner;
 
     if (!shipperForm && !consigneeForm)
       this.errorList.push('Shipperr or Consignee is requierd.')
@@ -49,7 +49,7 @@ export class NewQuoteValidateEntityService {
   private checkProperties(): void {
     const propertiesForms: AbstractControl[] = (this.form.controls.properties as FormArray).controls.filter((propertyForm: FormGroup) => propertyForm.valid);
     propertiesForms.forEach((propertyFormGroup: FormGroup, i: number) => {
-      const propertyForm: FormGroup["controls"] = propertyFormGroup.value;
+      const propertyForm: FormGroup["controls"] = propertyFormGroup.controls;
       const propertyPosition: string = propertiesForms.length > 1 ? ' in property ' + (i + 1) : ''
 
       if (propertyForm.fromPort.invalid) {
