@@ -66,15 +66,20 @@
         v_BatchNumber         IN VARCHAR2 ,
         v_HashCode            IN VARCHAR2,
         v_WatingStatus        IN NUMBER,
+		v_TenantPriority        IN NUMBER,
         v_QueueMessageId         OUT QUEUEMESSAGES.ID%TYPE
         
         )
+		---20211108 IM TenantPriority
     AS
       v_currentdate     DATE;  
       v_nextRunDateTime DATE;
       v_CId             VARCHAR2(15);
       v_BNo             VARCHAR2(15);
     BEGIN
+	IF (v_TenantPriority=0) THEN
+	    v_TenantPriority=7
+	END IF;
       v_currentdate     := SYSDATE ;
       v_nextRunDateTime := (SYSDATE + v_DelaySeconds/86400) ;
       INSERT
@@ -87,7 +92,8 @@
           Tenant,
           NextRunDateTime,
           RetryNumber,
-          HashCode
+          HashCode,
+		  TenantPriority
         )
         VALUES
         (
@@ -98,7 +104,8 @@
           v_Tenant,
           v_nextRunDateTime,
           0,
-          v_HashCode
+          v_HashCode,
+		  v_TenantPriority
         );
       IF v_CustomerId = ' ' THEN
         v_CId        := NULL ;
@@ -125,7 +132,9 @@
           NextRunDateTime,
           RetryNumber,
           Field1,
-          Field2
+          Field2,
+          TenantPriority,
+		  
         )
         VALUES
         (
@@ -140,6 +149,7 @@
           0,
           v_CId,
           v_BNo
+		  v_TenantPriority
         );
     END;
     ]]>

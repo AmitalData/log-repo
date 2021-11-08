@@ -75,7 +75,7 @@ namespace Logitude.Server.Tools.QueueService
         {
             SendReturnId(messageValues, tenant, delayTime, CustomerId, BatchNumber, NextRunDate);
         }
-        protected int? SendReturnId(Dictionary<string, string> messageValues, int tenant, TimeSpan? delayTime = null, string CustomerId = null, string BatchNumber = null, DateTime? NextRunDate = null)
+        protected int? SendReturnId(Dictionary<string, string> messageValues, int tenant, TimeSpan? delayTime = null, string CustomerId = null, string BatchNumber = null, DateTime? NextRunDate = null,int tenantPriority = 7)
         {
             int? queueMessageId = null;
             if (LogitudeSettings.IsCostomsDeploy) //ITZIK + YARON 

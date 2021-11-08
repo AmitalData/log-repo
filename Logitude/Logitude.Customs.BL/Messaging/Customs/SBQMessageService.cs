@@ -166,6 +166,17 @@ namespace Logitude.Customs.BL.Messaging.Customs
                 return;
             }
 
+            if (!string.IsNullOrWhiteSpace(queueSendModel.InterfaceTypeCode) && queueSendModel.TenantPriority == null)
+            {
+                var interfaceTenantDefinitionQueryService = new InterfaceTenantDefinitionQueryService(queueSendModel.Tenant);
+                var pm = interfaceTenantDefinitionQueryService.GetFromCacheByTenatCode(queueSendModel.Tenant, queueSendModel.InterfaceTypeCode);
+                if (pm != null)
+                {
+                    queueSendModel.TenantPriority = pm.TenantPriority;
+                }
+
+            }
+
             using (TransactionScope scope =
                 //(LogitudeSettings.QueueServiceMode != "db") ? TransactionFactory.GetNewSerializableTransaction() :TransactionFactory.GetTransaction())
                 TransactionFactory.GetTransaction())
