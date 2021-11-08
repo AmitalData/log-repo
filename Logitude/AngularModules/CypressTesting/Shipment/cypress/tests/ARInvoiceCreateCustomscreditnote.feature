@@ -75,3 +75,10 @@ Feature: AR Invoice Create Customs Credit Note
         When approve invoice
         Then the invoice should approve successfully
         And the status value should be "Unpaid"
+
+    Scenario: Assert invoice details screen fields after approving the invoice
+        Then the details screen fields should be disabled
+
+    Scenario: Assert link of the invoice exsit
+        Given navigates receivables tab
+        Then the link of the invoice should be exsit
