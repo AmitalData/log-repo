@@ -133,9 +133,13 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
             {
                 res.ErrorMessage = ee.ToString();
                 res.MyCommStatusEnum = Def.ClosedTable.CommStatusEnum.D;
+                return res;
             }
             catch (Exception ee)
             {
+                ////res.ErrorMessage = ee.Message + "--" + ee.StackTrace;
+                //res.MyCommStatusEnum = Def.ClosedTable.CommStatusEnum.F;
+               // return res;
                 throw new Exception(ee.Message + "--" + ee.StackTrace);
             }
             return res;

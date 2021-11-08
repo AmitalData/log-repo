@@ -112,9 +112,13 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
                 catch (Exception ex )
                 {
                     log = ex.Message + ex.StackTrace;
+                    _AnalyzeResultModel = _AnalyzeResultModel ?? new AnalyzeResultModel();
+                    _AnalyzeResultModel.MyCommStatusEnum = CommStatusEnum.W;
+                    _AnalyzeResultModel.ErrorMessage = log;
+
                     success = false;
-                    UpdateAnlayzeRetry();
-                    throw;
+                    //UpdateAnlayzeRetry();
+                    throw new Exception(log);
                 }
 
 
@@ -149,7 +153,7 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
                 _AnalyzeResultModel = _AnalyzeResultModel ?? new AnalyzeResultModel()
                 {
                     ErrorMessage = ex.ToString(),
-                    MyCommStatusEnum = CommStatusEnum.F
+                    MyCommStatusEnum = CommStatusEnum.W
                 };
                 //AnalyzeFailed(ex.ToString());
                // UpdateAnlayzeDone();
@@ -283,8 +287,9 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
                 var myCommunicationLog = myCommunicationLogRepository.GetSingleCommunicationLog(_CommunicationLog.Id, _CommunicationLog.Tenant);
                 myCommunicationLog.Retries++;
                 myCommunicationLog.CommunicationStatusTypeCode = _AnalyzeResultModel.MyCommStatusEnum.ToString();
-                if (myCommunicationLog.Retries == 5) myCommunicationLog.CommunicationStatusTypeCode = "F";
-   ;                myCommunicationLog.LastStatusDate = TenantServerConfigration.GetCurrentDateTime(_AnalyzeQueue.Tenant);
+                if (myCommunicationLog.Retries == 5) 
+                    myCommunicationLog.CommunicationStatusTypeCode = "F";
+   ;            myCommunicationLog.LastStatusDate = TenantServerConfigration.GetCurrentDateTime(_AnalyzeQueue.Tenant);
                 myCommunicationLog.Logs = _AnalyzeResultModel.ErrorMessage ?? "" + Environment.NewLine + LogMessagingUtil.Instance.ToString().GetLast((8000 - 1));
                 myCommunicationLog.ExceptionMessage = _AnalyzeQueue.ErrorMessage;
                 myCommunicationLog.EntityReference = _AnalyzeResultModel.EntityReference;
