@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 {
    public class ContainerUpdateClass
    {  		
-		public const string HashString = "3868283e1c5e9d78708f14cb24556815";
+		public const string HashString = "bcad97411d5e730a80777c0ed57cc4cb";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -7620,9 +7620,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "AvailablityDate",
-					  						DefaultText =  "Availablity Date",
+					  						DefaultText =  "Availability Date",
 					  						ListFieldLable =  "AvailablityDateListLable",
-					  						ListLableDefaultText =  "Availablity Date",
+					  						ListLableDefaultText =  "Availability Date",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,

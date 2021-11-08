@@ -21,10 +21,12 @@ export class ContainerHelperComponent implements OnDestroy {
     public IsAnalyzeChampXMLButtonVisible: boolean = false;
     _entityResourceService: EntityResourceService = new EntityResourceService();
     private CurrentSession = SessionLocator.SelectedSession;
-
+    public IsSimulatorVisible: boolean = false;
     constructor(public entityArgs: EntityArgs, private cd: ChangeDetectorRef) {
         this.EntityPM = this.entityArgs.EntityPM;
+
         if (this.EntityPM) {
+            this.IsSimulatorVisible = FeatureLocator.HasFeaturePermession("Shipment", "ContainerStatusSimulator");
             this.Listen();
         }
     }
