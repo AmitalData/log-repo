@@ -261,13 +261,16 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
         this.DirectionsList = [];
         this.DirectionsList.push(new FilterClass("E", "Export"));  
 
+
          this.SetCustomOption(); 
-    } 
-     
+ 
+    }
+
     private SetCustomOption() {
-        if (SessionLocator.PrivateLableSettings.IsImportActivated && this.IsImportActivated) {
+        if (SessionLocator.PrivateLableSettings.IsImportActivated) {
             this.DirectionsList.push(new FilterClass("C", "Customs"));
-        }
+
+    } 
     }
 
     
