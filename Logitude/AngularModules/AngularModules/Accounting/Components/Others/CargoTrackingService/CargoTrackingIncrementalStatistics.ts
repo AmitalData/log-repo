@@ -255,6 +255,12 @@ export class CargoTrackingIncrementalStatistics extends BaseComponent implements
     public Parag2:string ="Records wating for incremental update: ";
     public Parag3:string ="Oldest update still waiting: ";
     public Parag4:string ="Total records updated in last 10 minutes: ";
+
+    RefreshButtonClicked() {
+        this.InitializeDate();
+        this.GetCargoTrackingIncrementalData();
+        this.BuildColumns();
+    }
 }
 
 export class CargoTrackingIncrementalArgs {
