@@ -5,6 +5,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WarehouseData.Service;
 
 namespace WarehouseData.Helper
 {
@@ -25,9 +26,10 @@ namespace WarehouseData.Helper
         public void BuildFactTable(string connectionString, TableClass table)
         {
             StringBuilder buildFactBuilderSqlString = new StringBuilder();
-            buildFactBuilderSqlString.Append(generalDataWarehouseService.CreateSqlDataWarehouseTable(table));
+            buildFactBuilderSqlString.Append(generalDataWarehouseService.CreateSqlTempDataWarehouseTable(table));
             buildFactBuilderSqlString.Append(generalDataWarehouseService.GetDataWarehouseScriptByForderAndScriptName("BuildWarehouse", table.BuildScriptName));
-            buildFactBuilderSqlString.Append(generalDataWarehouseService.GetSqlCopyDataFromTempTableToActualTable(table));
+            if (table.UseBatches) buildFactBuilderSqlString.Append(generalDataWarehouseService.GetSqlnsertDataIntoActualTableFromTemp(table));
+            else buildFactBuilderSqlString.Append(generalDataWarehouseService.GetSqlCopyDataFromTempTableToActualTable(table));
 
             string buildFactSqlString = buildFactBuilderSqlString.ToString();
             if (table.HasCustomFields)
@@ -36,11 +38,23 @@ namespace WarehouseData.Helper
                 buildFactSqlString = customFieldWarehouseService.BuildCustomFields(buildFactSqlString, table);
             }
 
+            if (table.UseBatches)
+            {
+                ExecuteScriptAsBatches(connectionString, table, buildFactSqlString);
+                return;
+            }
 
             generalDataWarehouseService.ExecuteSql(buildFactSqlString, connectionString);
+
+
         }
 
 
+        private void ExecuteScriptAsBatches(string connectionString, TableClass table, string buildFactSqlString)
+        {
+            generalDataWarehouseService.ExecuteSql(generalDataWarehouseService.CreateSqlAcualDataWarehouseTable(table), connectionString);
+            new DataWarehouseBatchService(new DataWarehouseBatchServiceArgs() { table = table, ConnectionString = connectionString, QueryString = buildFactSqlString }).ExecuteScriptAsBatches();
+        }
 
         public void UpdateFactTable(string connectionString, TableClass table)
         {
