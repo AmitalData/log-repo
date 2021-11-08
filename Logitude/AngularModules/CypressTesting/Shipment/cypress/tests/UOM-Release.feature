@@ -1,7 +1,7 @@
-@devsmoke @stable @all
+@release @all
 Feature: UOM
     The user update system defaults, creates a direct export air shipment, change shipment ratio,
-    update packages tab, add payable, change gross weight unit code.
+    update packages tab, add payables for different unit of measyrments, change gross weight unit code.
 
     Scenario: Update System Defaults
         Given the user logged in and navigates to "System Defaults" in maintenance menu
