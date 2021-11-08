@@ -82,7 +82,7 @@ export class TenantList {
 		IsDocumentsArchive: boolean;
 		CustomerId: string;
 		CustomerName: string;
-		IsCustomerTenantShare: boolean;
+		CustomerTenantShareCustomsFile: boolean;
 		CustomerTenantShareImportFile: boolean;
 		CustomerTenantShareExportFile: boolean;
 		AllowAgentInCustomersLOV: boolean;
@@ -108,6 +108,7 @@ export class TenantList {
 		AllowCustomersInAgentsLOV: boolean;
 		VatUniquePartnerTypeCode: string;
 		SharedLogisMasterMessageLink: boolean;
-		IsCargoTrackWebAccessActivated: boolean;
 		IsQuotesRequestActivatedInShared: boolean;
-}
+		IsCargoTrackWebAccessActivated: boolean;
+	
+}

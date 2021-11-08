@@ -29,7 +29,7 @@ namespace Logitude.BL.GlobalModel.EntityLists
         public string MainTabHighlightColor { get; set; }
         public string DocumentTypeHighlightColor { get; set; }
 
-        public bool IsImportActivated { get; set; }
+        public bool IsCustomsActivated { get; set; }
         public bool IsExportActivated { get; set; }
 
 

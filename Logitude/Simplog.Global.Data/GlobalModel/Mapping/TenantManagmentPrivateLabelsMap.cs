@@ -52,7 +52,7 @@ namespace Simplog.Global.Data.GlobalModel.Mapping
             this.Property(t => t.HasLogboxAccess).HasColumnName("HasLogboxAccess");
             this.Property(t => t.MainTabHighlightColor).HasColumnName("MainTabHighlightColor");
             this.Property(t => t.DocumentTypeHighlightColor).HasColumnName("DocumentTypeHighlightColor");
-            this.Property(t => t.IsImportActivated).HasColumnName("IsImportActivated");
+            this.Property(t => t.IsCustomsActivated).HasColumnName("IsCustomsActivated");
             this.Property(t => t.IsExportActivated).HasColumnName("IsExportActivated");
 
 

@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class TenantUpdateClass
    {  		
-		public const string HashString = "20b051f27a76cc7fe6d32713b5984147";
+		public const string HashString = "ad1e04a1e3bea8139893b13a5a4680c0";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -119,7 +119,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Tenant",
-			      				    Code =  "254b",
+			      				    Code =  "9898",
 			      				    Name =  "Tenant",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Common",
@@ -4931,7 +4931,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "IsCustomerTenantShare",
+					 						FieldName =  "CustomerTenantShareCustomsFile",
 					  						ObjectTableName =  "Tenant",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -4950,8 +4950,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "IsCustomerTenantShare",
-					  						ListPropertyPath =  "IsCustomerTenantShare",
+					  						PMPropertyPath =  "CustomerTenantShareCustomsFile",
+					  						ListPropertyPath =  "CustomerTenantShareCustomsFile",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
@@ -4972,10 +4972,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "IsCustomerTenantShare",
-					  						DefaultText =  "Is Customer Tenant Share",
-					  						ListFieldLable =  "IsCustomerTenantShareListLable",
-					  						ListLableDefaultText =  "Is Customer Tenant Share",
+					  						FullFieldLable =  "CustomerTenantShareCustomsFile",
+					  						DefaultText =  "Customer Tenant Share Customs File",
+					  						ListFieldLable =  "CustomerTenantShareCustomsFileListLable",
+					  						ListLableDefaultText =  "Customer Tenant Share Customs File",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -7748,6 +7748,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "IsCargoTrackWebAccessActivated",
 					  						ListPropertyPath =  "IsCargoTrackWebAccessActivated",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,

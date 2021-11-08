@@ -107,7 +107,7 @@ export class SystemDefaultsComponent extends BaseComponent{
         this.UIProperties.SetEnabled("LocalCustomsCode", "Tenant", false);
         this.UIProperties.SetEnabled("AgentId", "Tenant", false);
         this.UIProperties.SetEnabled("CustomerId", "Tenant", false);
-        this.UIProperties.SetEnabled("IsCustomerTenantShare", "Tenant", false);
+        this.UIProperties.SetEnabled("CustomerTenantShareCustomsFile", "Tenant", false);
         this.UIProperties.SetEnabled("CustomerTenantShareImportFile", "Tenant", false);
         this.UIProperties.SetEnabled("CustomerTenantShareExportFile", "Tenant", false);
 
@@ -474,10 +474,10 @@ export class SystemDefaultsComponent extends BaseComponent{
         }
     }
 
-    get IsCustomerTenantShare() { return this.TenantPm.IsCustomerTenantShare; }
-    set IsCustomerTenantShare(value: boolean) {
-        if (this.TenantPm.IsCustomerTenantShare != value) {
-            this.TenantPm.IsCustomerTenantShare = value;
+    get CustomerTenantShareCustomsFile() { return this.TenantPm.CustomerTenantShareCustomsFile; }
+    set CustomerTenantShareCustomsFile(value: boolean) {
+        if (this.TenantPm.CustomerTenantShareCustomsFile != value) {
+            this.TenantPm.CustomerTenantShareCustomsFile = value;
         }
     }
 

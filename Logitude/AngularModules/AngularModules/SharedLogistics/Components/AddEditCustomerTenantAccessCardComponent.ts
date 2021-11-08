@@ -102,7 +102,7 @@ export class AddEditCustomerTenantAccessCardComponent extends BaseComponent {
         this.viewModel.EntityPM.CustomerId = checkIfCustomerSelected.Id;
         this.viewModel.EntityPM.CustomerCode = checkIfCustomerSelected.Code;
         this.viewModel.EntityPM.CustomerName = checkIfCustomerSelected.EnglishName;
-        this.viewModel.EntityPM.IsImportActivated = checkIfCustomerSelected.IsImportActivated;
+        this.viewModel.EntityPM.IsCustomsActivated = checkIfCustomerSelected.IsImportActivated;
         this.viewModel.EntityPM.IsExportActivated = checkIfCustomerSelected.IsExportActivated;
     }
 

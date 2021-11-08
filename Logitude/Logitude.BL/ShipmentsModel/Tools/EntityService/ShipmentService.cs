@@ -1359,7 +1359,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 && IsLogBoxQueueEnabled(loggedTenant, entityPM)
                 && !loggedTenant.LogBoxTenantSetting.IsDocumentsArchive
                 && (isNewEntity == true ? !entityPM.IsCancelled : true)
-                && loggedTenant.IsCustomerTenantShare
+                && loggedTenant.CustomerTenantShareCustomsFile
                 && (entityPM.DirectionId.ToUpper() == "C"
                 || IsImportShipmentsAllowedForLogBox(loggedTenant, entityPM)
                 || IsExportShipmentsAllowedForLogBox(loggedTenant, entityPM))

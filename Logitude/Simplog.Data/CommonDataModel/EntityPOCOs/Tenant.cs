@@ -130,7 +130,7 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public bool RegulatedAgentRegimeActivated { get; set; }
         public string CustomerId { get; set; }
         public virtual Card CustomerCard { get; set; }
-        public bool IsCustomerTenantShare { get; set; }
+        public bool CustomerTenantShareCustomsFile { get; set; }
         public bool CustomerTenantShareExportFile { get; set; }
 
 

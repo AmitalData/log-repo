@@ -123,7 +123,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                 IsIncrementalBuildRunning = a.IsIncrementalBuildRunning,
                                                 CustomerId = a.CustomerId,
                                                 CustomerName = a.CustomerCard != null ? a.CustomerCard.EnglishName : null,
-                                                IsCustomerTenantShare = a.IsCustomerTenantShare,
+                                                CustomerTenantShareCustomsFile = a.CustomerTenantShareCustomsFile,
 
                                                 CustomerTenantShareExportFile = a.CustomerTenantShareExportFile,
                                                 AllowAgentInCustomersLOV = a.AllowAgentInCustomersLOV,
@@ -301,7 +301,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         
                         CustomerId = tt.CustomerId,
                         CustomerName = tt.CustomerCard != null ? tt.CustomerCard.EnglishName : null,
-                        IsCustomerTenantShare = tt.IsCustomerTenantShare,
+                        CustomerTenantShareCustomsFile = tt.CustomerTenantShareCustomsFile,
                       
                         CustomerTenantShareExportFile = tt.CustomerTenantShareExportFile,
                         AllowAgentInCustomersLOV = tt.AllowAgentInCustomersLOV,
@@ -471,7 +471,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                    
                     CustomerId = tt.CustomerId,
                     CustomerName = tt.CustomerCard != null ? tt.CustomerCard.EnglishName : null,
-                    IsCustomerTenantShare = tt.IsCustomerTenantShare,
+                    CustomerTenantShareCustomsFile = tt.CustomerTenantShareCustomsFile,
                    
                     CustomerTenantShareExportFile = tt.CustomerTenantShareExportFile,
                     AllowAgentInCustomersLOV = tt.AllowAgentInCustomersLOV,
@@ -633,7 +633,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                          
                                            CustomerId = a.CustomerId,
                                            CustomerName = a.CustomerCard != null ? a.CustomerCard.EnglishName : null,
-                                           IsCustomerTenantShare = a.IsCustomerTenantShare,
+                                           CustomerTenantShareCustomsFile = a.CustomerTenantShareCustomsFile,
                                          
                                            CustomerTenantShareExportFile = a.CustomerTenantShareExportFile,
                                            AllowAgentInCustomersLOV = a.AllowAgentInCustomersLOV,
@@ -782,7 +782,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                     
                                        CustomerId = a.CustomerId,
                                        CustomerName = a.CustomerCard != null ? a.CustomerCard.EnglishName : null,
-                                       IsCustomerTenantShare = a.IsCustomerTenantShare,
+                                       CustomerTenantShareCustomsFile = a.CustomerTenantShareCustomsFile,
                                     
                                        CustomerTenantShareExportFile = a.CustomerTenantShareExportFile,
                                        AllowAgentInCustomersLOV = a.AllowAgentInCustomersLOV,
@@ -934,7 +934,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                             
                                                CustomerId = a.CustomerId,
                                                CustomerName = a.CustomerCard != null ? a.CustomerCard.EnglishName : null,
-                                               IsCustomerTenantShare = a.IsCustomerTenantShare,
+                                               CustomerTenantShareCustomsFile = a.CustomerTenantShareCustomsFile,
                                             
                                                CustomerTenantShareExportFile = a.CustomerTenantShareExportFile,
                                                AllowAgentInCustomersLOV = a.AllowAgentInCustomersLOV,
@@ -1096,7 +1096,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                         
                                            CustomerId = a.CustomerId,
                                            CustomerName = a.CustomerCard != null ? a.CustomerCard.EnglishName : null,
-                                           IsCustomerTenantShare = a.IsCustomerTenantShare,
+                                           CustomerTenantShareCustomsFile = a.CustomerTenantShareCustomsFile,
                                          
                                            CustomerTenantShareExportFile = a.CustomerTenantShareExportFile,
                                            AllowAgentInCustomersLOV = a.AllowAgentInCustomersLOV,
@@ -1248,7 +1248,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   
                                        CustomerId = a.CustomerId,
                                        CustomerName = a.CustomerCard != null ? a.CustomerCard.EnglishName : null,
-                                       IsCustomerTenantShare = a.IsCustomerTenantShare,
+                                       CustomerTenantShareCustomsFile = a.CustomerTenantShareCustomsFile,
                                     
                                        CustomerTenantShareExportFile = a.CustomerTenantShareExportFile,
                                        AllowAgentInCustomersLOV = a.AllowAgentInCustomersLOV,
@@ -1418,7 +1418,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
                     CustomerId = myPOCO.CustomerId,
                     CustomerName = myPOCO.CustomerCard != null ? myPOCO.CustomerCard.EnglishName : null,
-                    IsCustomerTenantShare = myPOCO.IsCustomerTenantShare,
+                    CustomerTenantShareCustomsFile = myPOCO.CustomerTenantShareCustomsFile,
 
                     CustomerTenantShareExportFile = myPOCO.CustomerTenantShareExportFile,
                     AllowAgentInCustomersLOV = myPOCO.AllowAgentInCustomersLOV,
@@ -1567,7 +1567,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                     
                                                 CustomerId = a.CustomerId,
                                                 CustomerName = a.CustomerCard != null ? a.CustomerCard.EnglishName : null,
-                                                IsCustomerTenantShare = a.IsCustomerTenantShare,
+                                                CustomerTenantShareCustomsFile = a.CustomerTenantShareCustomsFile,
                                               
                                                 CustomerTenantShareExportFile = a.CustomerTenantShareExportFile,
                                                 AllowAgentInCustomersLOV = a.AllowAgentInCustomersLOV,

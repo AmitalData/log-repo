@@ -140,9 +140,9 @@ export class TenantManagmentPrivateLabelsPM {
     public set IsExportActivated(newValue: boolean) { if (this.isExportActivated != newValue) { this.isExportActivated = newValue; this.MarkAsDirty("IsExportActivated"); } }
        
 	 
-    private isImportActivated: boolean;
-    public get IsImportActivated() { return this.isImportActivated; }
-    public set IsImportActivated(newValue: boolean) { if (this.isImportActivated != newValue) { this.isImportActivated = newValue; this.MarkAsDirty("IsImportActivated"); } }
+    private isCustomsActivated: boolean;
+    public get IsCustomsActivated() { return this.isCustomsActivated; }
+    public set IsCustomsActivated(newValue: boolean) { if (this.isCustomsActivated != newValue) { this.isCustomsActivated = newValue; this.MarkAsDirty("IsCustomsActivated"); } }
        
 	 
 

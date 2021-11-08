@@ -101,7 +101,7 @@ namespace CommunicationWorkerRole
 
         private bool IsShipmentAllowedForLogBox(CustomerTenantAccessCardPM customerTenantAccessCard, TenantPM tenantPM, ShipmentPM Shipment)
         {
-            return (IsCustomShipmentsAllowedForLogBox(Shipment, customerTenantAccessCard.IsImportActivated) || IsExportShipmentsAllowedForLogBox(tenantPM, Shipment, customerTenantAccessCard.IsExportActivated));
+            return (IsCustomShipmentsAllowedForLogBox(Shipment, customerTenantAccessCard.IsCustomsActivated) || IsExportShipmentsAllowedForLogBox(tenantPM, Shipment, customerTenantAccessCard.IsExportActivated));
         }
 
         public override void Run()
@@ -282,7 +282,7 @@ namespace CommunicationWorkerRole
                                             foreach (var item in ShipmentsIds)
                                             {
                                                 var Shipment = shipmentQuery.GetSinglePMWithoutComposition(item, tenant);
-                                                if (Shipment != null && (customerTenantAccessCard.LastMappingDateTime == null || Shipment.CreateDateTime > customerTenantAccessCard.LastMappingDateTime) && tenantPM.IsCustomerTenantShare && !Shipment.IsCancelled)
+                                                if (Shipment != null && (customerTenantAccessCard.LastMappingDateTime == null || Shipment.CreateDateTime > customerTenantAccessCard.LastMappingDateTime) && tenantPM.CustomerTenantShareCustomsFile && !Shipment.IsCancelled)
                                                 {
                                                     CustomerTenantAccessInfo customerTenantAccess = customerTenantAccessQuery.GetCustomerTenantAccessInfo(tenant, Shipment.CustomerId);
 

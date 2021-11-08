@@ -125,10 +125,10 @@ export class LogBoxSettings extends BaseComponent implements OnInit, AfterViewIn
     
 
 
-    get IsCustomerTenantShare() { return this.TenantPm.IsCustomerTenantShare; }
-    set IsCustomerTenantShare(value: boolean) {
-        if (this.TenantPm.IsCustomerTenantShare != value) {
-            this.TenantPm.IsCustomerTenantShare = value;
+    get CustomerTenantShareCustomsFile() { return this.TenantPm.CustomerTenantShareCustomsFile; }
+    set CustomerTenantShareCustomsFile(value: boolean) {
+        if (this.TenantPm.CustomerTenantShareCustomsFile != value) {
+            this.TenantPm.CustomerTenantShareCustomsFile = value;
         }
     }
 

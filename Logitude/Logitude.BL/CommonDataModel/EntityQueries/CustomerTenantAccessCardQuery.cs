@@ -47,7 +47,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                                   UpdateDateTime = a.UpdateDateTime,
                                                                   StatusTypeCode = a.StatusTypeCode,
                                                                   StatusType = a.StatusType,
-                                                                  IsImportActivated = a.IsImportActivated,
+                                                                  IsCustomsActivated = a.IsCustomsActivated,
                                                                   IsExportActivated = a.IsExportActivated,
                                                               };
 
@@ -72,7 +72,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                      UpdateDateTime = a.UpdateDateTime,
                                                      StatusTypeCode = a.StatusTypeCode,
                                                      StatusType = a.StatusType != null ? a.StatusType.EnglishName : null,
-                                                     IsImportActivated = a.IsImportActivated,
+                                                     IsCustomsActivated = a.IsCustomsActivated,
                                                      IsExportActivated = a.IsExportActivated,
 
                                                  }).FirstOrDefault();
@@ -100,7 +100,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                      UpdateDateTime = a.UpdateDateTime,
                                                      StatusTypeCode = a.StatusTypeCode,
                                                      StatusType = a.StatusType != null ? a.StatusType.EnglishName : null,
-                                                     IsImportActivated = a.IsImportActivated,
+                                                     IsCustomsActivated = a.IsCustomsActivated,
                                                      IsExportActivated = a.IsExportActivated,
                                                  }).FirstOrDefault();
 
@@ -155,7 +155,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                                   UpdateDateTime = a.UpdateDateTime,
                                                                   StatusTypeCode = a.StatusTypeCode,
                                                                   StatusType = a.StatusType != null ? a.StatusType.EnglishName : null,
-                                                                  IsImportActivated = a.IsImportActivated,
+                                                                  IsCustomsActivated = a.IsCustomsActivated,
                                                                   IsExportActivated = a.IsExportActivated,
                                                               }).ToList();
             return CustomerTenantAccessCards.ToList();
@@ -180,7 +180,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                                               UpdateDateTime = a.UpdateDateTime,
                                                                               StatusTypeCode = a.StatusTypeCode,
                                                                               StatusType = a.StatusType != null ? a.StatusType.EnglishName : null,
-                                                                              IsImportActivated = a.IsImportActivated,
+                                                                              IsCustomsActivated = a.IsCustomsActivated,
                                                                               IsExportActivated = a.IsExportActivated,
                                                                           }).ToList();
             return CustomerTenantAccessCards.ToList();
@@ -204,7 +204,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                                               LastMappingDateTime = a.LastMappingDateTime,
                                                                               UpdateDateTime = a.UpdateDateTime,
                                                                               StatusTypeCode = a.StatusTypeCode,
-                                                                              IsImportActivated = a.IsImportActivated,
+                                                                              IsCustomsActivated = a.IsCustomsActivated,
                                                                               IsExportActivated = a.IsExportActivated,
                                                                           }).FirstOrDefault();
             return temp;

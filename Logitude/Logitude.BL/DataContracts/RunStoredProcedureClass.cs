@@ -168,7 +168,7 @@ namespace Logitude.BL.DataContracts
                 var entityPM = ShipmentQuery.GetSinglePMWithoutComposition(shipmentId, tenant);
                 if (entityPM != null && tenantPM != null)
                 {
-                    if (!tenantPM.IsDocumentsArchive && !entityPM.IsCancelled && tenantPM.IsCustomerTenantShare && (entityPM.DirectionId.ToUpper() == "C" || IsExportShipmentsAllowedForLogBox(tenantPM, entityPM) || IsImportShipmentsAllowedForLogBox(tenantPM, entityPM)))
+                    if (!tenantPM.IsDocumentsArchive && !entityPM.IsCancelled && tenantPM.CustomerTenantShareCustomsFile && (entityPM.DirectionId.ToUpper() == "C" || IsExportShipmentsAllowedForLogBox(tenantPM, entityPM) || IsImportShipmentsAllowedForLogBox(tenantPM, entityPM)))
                     {
                         CustomerTenantAccessQuery customerTenantAccessQuery = new CustomerTenantAccessQuery(tenant);
                         CustomerTenantAccessInfo customerTenantAccessInfo = customerTenantAccessQuery.GetCustomerTenantAccessInfo(tenant, entityPM.CustomerId);
