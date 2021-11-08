@@ -17,7 +17,6 @@
     Type="varchar"
     Size="40">
     <Constraints
-      PrimaryKey="true"
       Nullable="false" />
   </Column>
   <Column
@@ -38,8 +37,7 @@
     DefaultValue="'None'"
     Size="40">
     <Constraints
-      PrimaryKey="true"
-      Nullable="false" />
+      Nullable="true" />
   </Column>
   <Relation
     ForeignKeyColumn="Id"
