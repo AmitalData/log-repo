@@ -53,7 +53,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
     }
     private entityResourceService: EntityResourceService;
     public HasExportShipmentToggle: boolean = false;
-
+    //
 
     public IsExportActivated: boolean = false;
     public IsImportActivated: boolean = false;
