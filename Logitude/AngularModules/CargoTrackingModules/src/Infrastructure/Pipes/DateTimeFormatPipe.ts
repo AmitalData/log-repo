@@ -16,6 +16,8 @@ export class DateTimeFormatPipe implements PipeTransform {
             return dateWithoutTime;
         else
             return date.toString();
+        } else {
+            return '';
         }
     }
 }
