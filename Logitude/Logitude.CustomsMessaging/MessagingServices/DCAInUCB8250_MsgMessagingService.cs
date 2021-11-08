@@ -105,7 +105,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
             List<CustomsRequestsSheetPM> RequestInProgressList2 ;
             FeatureQuery featureQuery = new FeatureQuery();
 
-            var features = featureQuery.GetAllowedFeaturesForLoggedUser(RequestParams.LoggingUserId, RequestParams.Tenant);
+            var features = featureQuery.GetAllowedFeaturesForLoggedUser(LoggingUserId, tenant);
 
             var feature = features.Features.FirstOrDefault(x => x.Code == "StatusDeclarationOldVersion");
             if (feature != null)
