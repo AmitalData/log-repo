@@ -2362,6 +2362,9 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
     }
 
     private Send2755(params: CustomFileCreditRequestParams) {
+        if (this.AutomaticPayment == 1){
+            SessionLocator.SelectedSession.CloseCurrentWindow();
+        }
         let myShowProgressBarParams = new ShowProgressBarParams();
         myShowProgressBarParams.OnCloseCustomMessageProgressComponentMethod =
             (response: any) => {
