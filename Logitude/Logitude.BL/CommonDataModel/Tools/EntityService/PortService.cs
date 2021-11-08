@@ -148,10 +148,16 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 PortTracing.Trace(theEntityPm, Poco, isNewEntity);
             }
 
+            bool updateTimeZone = this.CheckUpdaingTenantsPortsTimeZones();
             PortMapping.MapEntity(theEntityPm, Poco, isNewEntity);
             entityRepository.Update(Poco);
             entityRepository.SubmitChanges();
             AddPortKafkaQueueMessage();
+            
+            if (updateTimeZone)
+            {
+                this.CreateUpdateTimeZoneQueueMessage();
+            }
         }
 
         private void AddPortKafkaQueueMessage()
@@ -170,6 +176,25 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             var queueMessage = new Dictionary<string, string>() {
                 { "Entity", "Port" },
                 { "EntityId", entityPM.Id },
+                { "Tenant", tenant.ToString()}};
+            queueservice.Send(queueMessage, tenant);
+        }
+
+        private bool CheckUpdaingTenantsPortsTimeZones()
+        {
+            if(entityPM.PortTimeZoneCode != Poco.PortTimeZoneCode && tenant == 0)
+            {
+                return true;
+            }
+
+            return false;
+        }
+        private void CreateUpdateTimeZoneQueueMessage()
+        {
+            IQueueService queueservice = new DbQueueService();
+            queueservice.InitializeQueue("UpdatePortTimeZone", 0);
+            var queueMessage = new Dictionary<string, string>() {
+                { "PortId", entityPM.Id },
                 { "Tenant", tenant.ToString()}};
             queueservice.Send(queueMessage, tenant);
         }

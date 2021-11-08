@@ -13,12 +13,7 @@ export class PortPMCustomCode {
     public static State: StateList; 
 
     public static ApplyEntityChanged(propertyName: string, entityPM: PortPM) {
-        this.entityPM = entityPM;
-        if (propertyName == "PortTimeZoneCode") {
-            if (SessionLocator.TenantPM.Id != 0) {
-                entityPM.UIProperties.SetEnabled("PortTimeZoneCode", this.ObjectTableName, false);
-            }
-        }
+        this.entityPM = entityPM;      
 
         if (propertyName == "CountryId" && entityPM.CountryId) {
             var countryService = new CountryListService();

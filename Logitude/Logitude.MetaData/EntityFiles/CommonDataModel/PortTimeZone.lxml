@@ -17,6 +17,7 @@
   IsNewWizard="false"
   LookUp1="&quot;Name&quot;"
   LookUp2="&quot;UTCOffset&quot;"
+  LovDisplayMemberPath="&quot;Name&quot;"
   KeyPropertyPath="&quot;Code&quot;"
   AutoCompleteSearchWindow="false"
   IsClosed="true"

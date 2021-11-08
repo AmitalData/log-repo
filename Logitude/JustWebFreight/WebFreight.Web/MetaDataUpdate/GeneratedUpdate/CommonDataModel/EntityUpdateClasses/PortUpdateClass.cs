@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class PortUpdateClass
    {  		
-		public const string HashString = "7d0b15a515b2f1b7bd0019367f004574";
+		public const string HashString = "2b5bc31143fa9efebcab0f71bdccde12";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -1753,6 +1753,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "PortTimeZoneCode",
 					  						ListPropertyPath =  "PortTimeZoneCode",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -1849,7 +1850,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 		       
 	      
 
-	         Screen PortGeneralTabScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Port.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = PortObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 6, IsReadOnly = false }, screensRepository, tenantScreens);
+	         Screen PortGeneralTabScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Port.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = PortObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 7, IsReadOnly = false }, screensRepository, tenantScreens);
       
              ScreenField PortPortGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = PortGeneralTabScreenScreen0.Id,ScreenCode = PortGeneralTabScreenScreen0.Code, ObjectFieldCode = "Port.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          
@@ -1861,15 +1862,17 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	          
              ScreenField PortPortGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ScreenId = PortGeneralTabScreenScreen0.Id,ScreenCode = PortGeneralTabScreenScreen0.Code, ObjectFieldCode = "Port.StateId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          
-             ScreenField PortPortGeneralTabScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 5, ScreenId = PortGeneralTabScreenScreen0.Id,ScreenCode = PortGeneralTabScreenScreen0.Code, ObjectFieldCode = "Port.Notes", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+             ScreenField PortPortGeneralTabScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 5, ScreenId = PortGeneralTabScreenScreen0.Id,ScreenCode = PortGeneralTabScreenScreen0.Code, ObjectFieldCode = "Port.PortTimeZoneCode", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          
-             ScreenField PortPortGeneralTabScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = PortGeneralTabScreenScreen0.Id,ScreenCode = PortGeneralTabScreenScreen0.Code, ObjectFieldCode = "Port.InActive", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+             ScreenField PortPortGeneralTabScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 6, ScreenId = PortGeneralTabScreenScreen0.Id,ScreenCode = PortGeneralTabScreenScreen0.Code, ObjectFieldCode = "Port.Notes", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          
-             ScreenField PortPortGeneralTabScreenScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ScreenId = PortGeneralTabScreenScreen0.Id,ScreenCode = PortGeneralTabScreenScreen0.Code, ObjectFieldCode = "Port.IsOcean", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+             ScreenField PortPortGeneralTabScreenScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = PortGeneralTabScreenScreen0.Id,ScreenCode = PortGeneralTabScreenScreen0.Code, ObjectFieldCode = "Port.InActive", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          
-             ScreenField PortPortGeneralTabScreenScreenField8 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 2, ScreenId = PortGeneralTabScreenScreen0.Id,ScreenCode = PortGeneralTabScreenScreen0.Code, ObjectFieldCode = "Port.IsAir", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+             ScreenField PortPortGeneralTabScreenScreenField8 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ScreenId = PortGeneralTabScreenScreen0.Id,ScreenCode = PortGeneralTabScreenScreen0.Code, ObjectFieldCode = "Port.IsOcean", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          
-             ScreenField PortPortGeneralTabScreenScreenField9 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 3, ScreenId = PortGeneralTabScreenScreen0.Id,ScreenCode = PortGeneralTabScreenScreen0.Code, ObjectFieldCode = "Port.IsInland", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+             ScreenField PortPortGeneralTabScreenScreenField9 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 2, ScreenId = PortGeneralTabScreenScreen0.Id,ScreenCode = PortGeneralTabScreenScreen0.Code, ObjectFieldCode = "Port.IsAir", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField PortPortGeneralTabScreenScreenField10 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 3, ScreenId = PortGeneralTabScreenScreen0.Id,ScreenCode = PortGeneralTabScreenScreen0.Code, ObjectFieldCode = "Port.IsInland", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	            
 	      
 

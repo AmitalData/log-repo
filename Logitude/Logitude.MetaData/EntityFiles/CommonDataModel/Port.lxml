@@ -52,7 +52,7 @@
   NoTS="false"
   NoDefaultFeatures="false"
   HasCompactSearch="true"
-  ApplyDefaultValues="false"
+  ApplyDefaultValues="true"
   HasMenuButtons="false"
   ApplyOnPropertyChangedCode="true"
   HasApiHelper="false"
@@ -3495,6 +3495,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;PortTimeZoneCode&quot;"
     ListPropertyPath="&quot;PortTimeZoneCode&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -3605,7 +3606,7 @@
     IsHeaderScreen="false"
     Code="&quot;Port.GeneralTabScreen&quot;"
     NumberOfColumns="2"
-    NumberOfRows="6">
+    NumberOfRows="7">
     <ScreenFields>
       <ScreenField
         Column="0"
@@ -3635,6 +3636,11 @@
       <ScreenField
         Column="0"
         Row="5"
+        ObjectFieldName="&quot;PortTimeZoneCode&quot;"
+        ScreenName="General Tab Screen" />
+      <ScreenField
+        Column="0"
+        Row="6"
         ObjectFieldName="&quot;Notes&quot;"
         ScreenName="General Tab Screen" />
       <ScreenField

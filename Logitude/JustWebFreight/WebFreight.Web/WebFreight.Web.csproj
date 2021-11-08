@@ -964,6 +964,7 @@
     <Content Include="App_Code\AngularJS_App_Code\DocumentTypeCopyExtendedController.cs" />
     <Content Include="App_Code\DocumentFileController.cs" />
     <Content Include="App_Code\AuthnController.cs" />
+    <Compile Include="CommonDataModel\DomainServices\CommonDataDomainService.PortTimeZone.cs" />
     <Compile Include="CommonDataModel\LogitudeGridExportToExcel\LogitudeGridExportToExcelArguments.cs" />
     <Compile Include="CommonDataModel\LogitudeGridExportToExcel\LogitudeGridExportToExcelHelper.cs" />
     <Compile Include="Controllers\AccountingModel\BankCodeController.cs" />

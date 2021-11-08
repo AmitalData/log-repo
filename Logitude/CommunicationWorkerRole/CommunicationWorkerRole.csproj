@@ -387,6 +387,7 @@
     <Compile Include="ContainerStatusesReceiverWR.cs" />
     <Compile Include="PODImageConverterWorkerRole.cs" />
     <Compile Include="ContainerUpdateWR.cs" />
+    <Compile Include="UpdatePortTimeZoneWR.cs" />
     <Compile Include="WebHookCommunicationWorkerRole.cs" />
     <Compile Include="Service References\LoginServiceReference\Reference.cs">
       <AutoGen>True</AutoGen>

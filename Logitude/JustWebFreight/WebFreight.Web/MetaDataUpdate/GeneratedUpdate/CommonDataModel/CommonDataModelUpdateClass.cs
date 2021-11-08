@@ -4582,7 +4582,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel
 					scope.Complete();
 				}
  
-				//PortTimeZoneUpdateClass.FillPortTimeZone();
+				PortTimeZoneUpdateClass.FillPortTimeZone();
 
  
 			}
