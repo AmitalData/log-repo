@@ -106687,12 +106687,22 @@
       IsCoreFeature="false"
       IsBusinessUnitEnabled="false"
       ToggleCode="&quot;CPH&quot;" />
+
     <Feature
       Code="&quot;MULTIUPDATE&quot;"
       FeatureTypeCode="&quot;ACT&quot;"
       FeatureTextCodeCode="&quot;Shipment.Features.MULTIUPDATE&quot;"
       FeatureDefaultText="&quot;Multi Update&quot;"
       IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;ContainerStatusSimulator&quot;"
+      FeatureTypeCode="&quot;ACT&quot;"
+      FeatureTextCodeCode="&quot;Shipment.Features.ContainerStatusSimulator&quot;"
+      FeatureDefaultText="&quot;Container Status Simulator&quot;"
+      IsPackagable="false"
       IsOld="false"
       IsCoreFeature="false"
       IsBusinessUnitEnabled="false" />
