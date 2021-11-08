@@ -39,7 +39,7 @@
   MaxNumberOfCustomFields="0"
   LocalDefaultText="&quot;התאמה&quot;"
   DefaultText="&quot;External Reconciliation&quot;"
-  Code="&quot;09ab&quot;"
+  Code="&quot;4cb3&quot;"
   Name="&quot;ExternalReconciliation Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Accounting&quot;"
@@ -1362,12 +1362,12 @@
     <TextCode
       Code="&quot;ExternalReconciliation.O.BTbackgroundCreationMSG&quot;"
       DefaultText="&quot;AR Payment #number has been created successfully. The external reconciliation is being created in the background&quot;"
-      LocalDefaultText="&quot;נוצרה קבלה 123 , ההתאמה תבוצע ברקע&quot;"
+      LocalDefaultText="&quot;נוצרה קבלה #number , ההתאמה תבוצע ברקע&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
       Code="&quot;ExternalReconciliation.O.BTUnsavedChanges&quot;"
-      DefaultText="&quot;This AR Payment has unsaved changes do you want to save it considering that no external Reconciliation will be done if the payment isn't approved?&quot;"
+      DefaultText="&quot;This A/R Payment has unsaved changes. By continuing, you will lose the payment and the changes done to the reconciliation screen&quot;"
       LocalDefaultText="&quot;בקבלה זאת בוצעו שינויים שטרם נשמרו , האם ברצונך לשמור זאת בהתחשב בכך שהתאמה חיצונית לא תתבצע אם הקבלה לא תאושר&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />

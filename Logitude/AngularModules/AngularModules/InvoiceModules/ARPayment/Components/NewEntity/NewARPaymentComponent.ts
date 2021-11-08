@@ -187,14 +187,18 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
         }
     }
 
+    windowArgs;
     createBankTransferFromReconcileWindow: boolean = false;
     preselectedPaymentMethodCode;
     selectedAmount;
     preSelectedCurrencyId;
     exteranlPageLinesIds;
-    presetValueDate
+    presetValueDate;
+    presetPaymentReference;
+    presetRegisterDate;
     SetWindowArgs(args: any) {
         if (args) {
+            this.windowArgs = args;
             this.invoicePm = args['ARInvoice'];
             this.customerId = args['CustomerId'];
 
@@ -206,6 +210,8 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
                 this.RegisterDate = new Date();
                 this.exteranlPageLinesIds = args.ExteranlPageLinesIds;
                 this.presetValueDate = args.ValueDate;
+                this.presetPaymentReference = args.PaymentReference;
+                this.presetRegisterDate = args.RegisterDate;
             }
 
         }
@@ -553,6 +559,11 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
             this.newARPaymentPM.PresetValueDate = this.presetValueDate;
         }
 
+        if(this.presetRegisterDate)
+            this.newARPaymentPM.RegisterDate = this.presetRegisterDate;
+
+        if(this.presetPaymentReference)
+            this.newARPaymentPM.ChequeOrPaymentRef = this.presetPaymentReference;
 
 
         if (!SessionLocator.LoggedUserPM.IsCustomerCare) {
@@ -890,7 +901,7 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
         this.newARPaymentPM.Bank = null;
         this.newARPaymentPM.BankBranch = null;
         this.newARPaymentPM.Account = null;
-        this.newARPaymentPM.ChequeOrPaymentRef = null;
+        // this.newARPaymentPM.ChequeOrPaymentRef = null;
 
         var lists: AccountingPaymentMethodList[] = this.AllMethods.filter(d => d.Id == this.AccountingPaymentMethodId);
         if (lists) {

@@ -1572,7 +1572,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
 		this.Bank = null;
 		this.BankBranch = null;
 		this.Account = null;
-		this.ChequeOrPaymentRef = null;
+		// this.ChequeOrPaymentRef = null;
 		//   this.ValueDate = null;
 		this.CreditCardTypeId = null;
 

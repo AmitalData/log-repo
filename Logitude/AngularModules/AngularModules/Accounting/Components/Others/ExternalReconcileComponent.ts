@@ -1879,9 +1879,11 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
             ExteranlPageLinesIds: this.GetSelectedPageLinesIds()
         };
 
-        const singleBankPageLineSelected = this.ExtPageSelectedLines.Length > 1;
+        const singleBankPageLineSelected = this.ExtPageSelectedLines.Length == 1;
         if (singleBankPageLineSelected) {
             logWindow.WindowArgs.ValueDate = this.ExtPageSelectedLines.Collection[0].ReferenceDate;
+            logWindow.WindowArgs.RegisterDate = this.ExtPageSelectedLines.Collection[0].ReferenceDate;
+            logWindow.WindowArgs.PaymentReference = this.ExtPageSelectedLines.Collection[0].Reference;
 
         }
     }
