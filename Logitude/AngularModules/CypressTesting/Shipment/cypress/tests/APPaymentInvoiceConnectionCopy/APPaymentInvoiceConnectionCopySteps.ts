@@ -15,6 +15,7 @@ import * as MaintenanceActions from '../../../../Maintenance/cypress/actions/Act
 import { CardDetails } from "../../../../Maintenance/cypress/models/CardDetails";
 import { MaintenanceSelectors } from "../../../../Maintenance/cypress/selectors/Selectors";
 import { GenerateCurrentDatetimeString } from "../../../../Base/cypress/actions/GenerateRandoms";
+import { BaseSelectors } from "../../../../Base/cypress/selectors/BaseSelectors";
 
 //#region variables
 let shipmentDetails: ShipmentDetails;
@@ -145,6 +146,7 @@ Then("the AP Payment should update successfully", () => {
   APPaymentActions.AssertUpdateAPPayment()
   APPaymentActions.OpenApInvoice(invoiceNumber)
   
+  
 });
 //#endregion
 Then("the status value should be {string}", (statusValue) => {
@@ -152,6 +154,7 @@ Then("the status value should be {string}", (statusValue) => {
   });
 //#region Disconnect the invoice from the AP Payment
 Given("disconnect the invoice from the AP Payment", () => {
+    cy.Click(ShipmentSelectors.Backbutton+BaseSelectors.LastElement, null)
   APPaymentActions.DisConnectAPPaymentFromInvoice(invoiceNumber)
 });
 //#endregion
