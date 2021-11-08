@@ -161,8 +161,12 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
 
             else if (activeLines.Where(d => d.InvoiceCurrencyAmount == 0).Any())
             {
-                string msg = TranslateTextsClass.Translate("APInvoice.M.InvoiceLineAmountNotZero", entityPM.Tenant);
-                throw new ApplicationException(msg);
+                if (entityPM.CreatedFromAPI && entityPM.IsGeneralInvoice) {}
+                else
+                {
+                    string msg = TranslateTextsClass.Translate("APInvoice.M.InvoiceLineAmountNotZero", entityPM.Tenant);
+                    throw new ApplicationException(msg);
+                }
             }
 
             else
