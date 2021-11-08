@@ -294,6 +294,8 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.MainService
             {
                 cargoTrackingShipmentSearchs.AddRange(CargoTrackingSearchService.GetShipmentNumberReferences(shipment.CargoTrackingShipment, entityId));
                 cargoTrackingShipmentSearchs.AddRange(CargoTrackingSearchService.GetCustomsDeclarationNumberReferences(shipment, entityId));
+                cargoTrackingShipmentSearchs.AddRange(CargoTrackingSearchService.GetOrderPONumber(shipment, entityId));
+                cargoTrackingShipmentSearchs.AddRange(CargoTrackingSearchService.GetCustomsDeclarationNumberReferences(shipment, entityId));
                 cargoTrackingShipmentSearchs.AddRange(CargoTrackingSearchService.GetForwarderShipmentNumberReferences(shipment.CargoTrackingShipment, entityId));
                 cargoTrackingShipmentSearchs.AddRange(CargoTrackingSearchService.GetShipperNameReferences(shipment.CargoTrackingShipment, entityId));
                 cargoTrackingShipmentSearchs.AddRange(CargoTrackingSearchService.GetConsigneeNameReferences(shipment.CargoTrackingShipment, entityId));

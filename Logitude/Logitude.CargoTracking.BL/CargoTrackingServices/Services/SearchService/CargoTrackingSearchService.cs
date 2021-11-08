@@ -1,5 +1,6 @@
 ﻿
 using Logitude.CargoTracking.BL.CargoTrackingServices.HelperClasses;
+using Logitude.CargoTracking.Data.EntityPOCOs;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -342,6 +343,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.SearchService
             }
         }
 
+        
 
         private static void AddNewReference(ReferencecArgs referencecArgs)
         {

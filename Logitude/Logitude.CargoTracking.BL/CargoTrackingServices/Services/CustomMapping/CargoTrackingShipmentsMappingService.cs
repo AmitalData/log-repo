@@ -24,6 +24,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CustomMapping
             SetOrderExceptionDescription(item, row);
 
             cargoTrackingShipmentContext.OrderPONumber = row.OrderPONumber;
+            cargoTrackingShipmentContext.OrderBookingConfirmationNumber = row.OrderBookingConfirmationNumber;
             cargoTrackingShipmentContext.CargoTrackingShipment = item;
             return cargoTrackingShipmentContext;
         }

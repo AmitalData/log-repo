@@ -205,7 +205,48 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.SearchService
             return list;
         }
 
+        public static IEnumerable<CargoTrackingShipmentSearch> GetOrderPONumber(CargoTrackingShipmentResources shipment, string entityId)
+        {
+            var list = new List<CargoTrackingShipmentSearch>();
+            if (string.IsNullOrEmpty(shipment.OrderPONumber))
+            {
+                return list;
+            }
+            var cargoTrackingShipmentSearch = new CargoTrackingShipmentSearch()
+            {
+                IsPublic = true,
+                ReferenceType = "PO Number",
+                ShipmentDate = shipment.CargoTrackingShipment.CreateDate,
+                ShipmentId = entityId,
+                Tenant = shipment.CargoTrackingShipment.Tenant,
+                SearchFields = shipment.OrderPONumber
+            };
+            list.Add(cargoTrackingShipmentSearch);
 
+
+            return list;
+        }
+        public static IEnumerable<CargoTrackingShipmentSearch> GetOrderBookingConfirmationNumber(CargoTrackingShipmentResources shipment, string entityId)
+        {
+            var list = new List<CargoTrackingShipmentSearch>();
+            if (string.IsNullOrEmpty(shipment.OrderBookingConfirmationNumber))
+            {
+                return list;
+            }
+            var cargoTrackingShipmentSearch = new CargoTrackingShipmentSearch()
+            {
+                IsPublic = true,
+                ReferenceType = "Booking Confirmation Number",
+                ShipmentDate = shipment.CargoTrackingShipment.CreateDate,
+                ShipmentId = entityId,
+                Tenant = shipment.CargoTrackingShipment.Tenant,
+                SearchFields = shipment.OrderBookingConfirmationNumber
+            };
+            list.Add(cargoTrackingShipmentSearch);
+
+
+            return list;
+        }
         public static List<CargoTrackingShipmentSearch> GetCustomsDeclarationNumberReferences(CargoTrackingShipmentResources shipmentContext, string entityId)
         {
             var list = new List<CargoTrackingShipmentSearch>();
