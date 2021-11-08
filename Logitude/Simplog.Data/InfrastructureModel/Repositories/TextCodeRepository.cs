@@ -53,7 +53,7 @@ namespace Simplog.Data.InfrastructureModel.Repositories
             IQueryable<TextCode> textcodes = from a in context.TextCodes.Include("ObjectTable").Include("SpellCheckedByUser")
                                              where (a.Tenant == tenant || a.Tenant == 0)
                                              select a;
-
+            var c = textcodes.ToList();
             return textcodes;
         }
 

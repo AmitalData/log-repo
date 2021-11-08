@@ -915,6 +915,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.ShipperContactId = shipment.ShipperContactId;
             shipmentPM.ShipperReference1 = shipment.ShipperReference1;
             shipmentPM.ShipperReference2 = shipment.ShipperReference2;
+            shipmentPM.ShipperReference3 = shipment.ShipperReference3;
 
             if (shipment.ShipperId != null)
             {
@@ -953,6 +954,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.ConsigneeContactId = shipment.ConsigneeContactId;
             shipmentPM.ConsigneeReference1 = shipment.ConsigneeReference1;
             shipmentPM.ConsigneeReference2 = shipment.ConsigneeReference2;
+            shipmentPM.ConsigneeReference3 = shipment.ConsigneeReference3;
+
             if (shipment.ConsigneeId != null)
             {
                 Card loadedCard = CardRepository.GetSingleCard(shipment.ConsigneeId, shipment.Tenant, true);
@@ -3487,6 +3490,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.ShipperContactId = shipment.ShipperContactId;
             shipmentPM.ShipperReference1 = shipment.ShipperReference1;
             shipmentPM.ShipperReference2 = shipment.ShipperReference2;
+            shipmentPM.ShipperReference3 = shipment.ShipperReference3;
 
             #region Consignee
             shipmentPM.ConsigneeId = shipment.ConsigneeId;
@@ -3495,6 +3499,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.ConsigneeContactId = shipment.ConsigneeContactId;
             shipmentPM.ConsigneeReference1 = shipment.ConsigneeReference1;
             shipmentPM.ConsigneeReference2 = shipment.ConsigneeReference2;
+            shipmentPM.ConsigneeReference3 = shipment.ConsigneeReference3;
+
 
             #endregion
 
@@ -4561,6 +4567,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                         ConsigneeNotImporterNote = s.ConsigneeNotImporterCard != null ? s.ConsigneeNotImporterCard.Notes : null,
                                                         ConsigneeReference1 = s.ConsigneeReference1,
                                                         ConsigneeReference2 = s.ConsigneeReference2,
+                                                        ConsigneeReference3 = s.ConsigneeReference3,
                                                         CreateDateTime = s.CreateDateTime,
                                                         CustomAgentExportAddressId = s.CustomAgentExportAddressId,
                                                         CustomAgentExportContactId = s.CustomAgentExportAddressId,
@@ -4819,6 +4826,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                         ShipperNotExporterNote = s.ShipperNotExporterCard != null ? s.ShipperNotExporterCard.Notes : null,
                                                         ShipperReference1 = s.ShipperReference1,
                                                         ShipperReference2 = s.ShipperReference2,
+                                                        ShipperReference3 = s.ShipperReference3,
                                                         UpdatedByUserId = s.UpdatedByUserId,
                                                         HandlerUserId = s.HandlerUserId,
                                                         PlannedCargoReadyDate = s.PlannedCargoReadyDate,
@@ -5235,6 +5243,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
                                                         ConsigneeReference1 = s.ConsigneeReference1,
                                                         ConsigneeReference2 = s.ConsigneeReference2,
+                                                        ConsigneeReference3 = s.ConsigneeReference3,
                                                         CreateDateTime = s.CreateDateTime,
 
 
@@ -5417,6 +5426,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
                                                         ShipperReference1 = s.ShipperReference1,
                                                         ShipperReference2 = s.ShipperReference2,
+                                                        ShipperReference3 = s.ShipperReference3,
                                                         UpdatedByUserId = s.UpdatedByUserId,
                                                         HandlerUserId = s.HandlerUserId,
                                                         PlannedCargoReadyDate = s.PlannedCargoReadyDate,
@@ -11461,6 +11471,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                 DescriptionOfGoods = a.DescriptionOfGoods,
                                                 ShipperReference1 = a.ShipperReference1,
                                                 ShipperReference2 = a.ShipperReference2,
+                                                ShipperReference3 = a.ShipperReference3,
                                                 ShipperName = a.ShipperCard != null ? a.ShipperCard.EnglishName : null,
                                                 DirectionId = a.DirectionId,
                                                 MainCarriageFromPortCode = a.ShipmentMasterData == null ? null : (a.ShipmentMasterData.MainCarriageFromPort == null ? null : a.ShipmentMasterData.MainCarriageFromPort.Code),
@@ -11759,12 +11770,14 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                          ConsigneeName = s.ConsigneeCard != null ? s.ConsigneeCard.EnglishName : null,
                                                          ConsigneeReference1 = s.ConsigneeReference1,
                                                          ConsigneeReference2 = s.ConsigneeReference2,
+                                                         ConsigneeReference3 = s.ConsigneeReference3,
                                                          CreateDateTime = s.CreateDateTime,
                                                          AWBCurrencyCode = s.AWBCurrency != null ? s.AWBCurrency.Code : null,
                                                          CustomerId = s.CustomerId,
                                                          CustomerName = s.CustomerCard != null ? s.CustomerCard.EnglishName : null,
                                                          CustomerReference1 = s.CustomerReference1,
                                                          CustomerReference2 = s.CustomerReference2,
+                                                         CustomerReference3 = s.CustomerReference3,
                                                          DepartmentId = s.DepartmentId,
                                                          ChargeableWeightUnitCode = s.ChargeableWeightUnitCode,
                                                          DirectionId = s.DirectionId,
@@ -13208,12 +13221,15 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                              ShipmentLevelCode = entity.ShipmentLevelCode,
                                              ShipperReference1 = entity.ShipperReference1,
                                              ShipperReference2 = entity.ShipperReference2,
+                                             ShipperReference3 = entity.ShipperReference3,
                                              AgentReference1 = entity.AgentReference1,
                                              AgentReference2 = entity.AgentReference2,
                                              ConsigneeReference1 = entity.ConsigneeReference1,
                                              ConsigneeReference2 = entity.ConsigneeReference2,
+                                             ConsigneeReference3 = entity.ConsigneeReference3,
                                              CustomerReference1 = entity.CustomerReference1,
                                              CustomerReference2 = entity.CustomerReference2,
+                                             CustomerReference3 = entity.CustomerReference3,
                                          }).FirstOrDefault();
 
             return shipmentList;
@@ -13328,6 +13344,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                              ShipmentNumber = a.ShipmentNumber,
                                              CustomerReference1 = a.CustomerReference1,
                                              CustomerReference2 = a.CustomerReference2,
+                                             CustomerReference3 = a.CustomerReference3,
                                              FromPortName = !string.IsNullOrEmpty(m.MainCarriageFromPort.Code) ? m.MainCarriageFromPort.Code : a.FromPort.Code,
                                              ToPortName = !string.IsNullOrEmpty(m.MainCarriageToPort.Code) ? m.MainCarriageToPort.Code : a.ToPort.Code,
                                              WarehouseLegWarehouseId = a.WarehouseLegWarehouseId,
@@ -13535,12 +13552,14 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                          ConsigneeName = s.ConsigneeCard != null ? s.ConsigneeCard.EnglishName : null,
                                                          ConsigneeReference1 = s.ConsigneeReference1,
                                                          ConsigneeReference2 = s.ConsigneeReference2,
+                                                         ConsigneeReference3 = s.ConsigneeReference3,
                                                          CreateDateTime = s.CreateDateTime,
                                                          AWBCurrencyCode = s.AWBCurrency != null ? s.AWBCurrency.Code : null,
                                                          CustomerId = s.CustomerId,
                                                          CustomerName = s.CustomerCard != null ? s.CustomerCard.EnglishName : null,
                                                          CustomerReference1 = s.CustomerReference1,
                                                          CustomerReference2 = s.CustomerReference2,
+                                                         CustomerReference3 = s.CustomerReference3,
                                                          DepartmentId = s.DepartmentId,
                                                          ChargeableWeightUnitCode = s.ChargeableWeightUnitCode,
                                                          DirectionId = s.DirectionId,

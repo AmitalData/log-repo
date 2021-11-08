@@ -24,9 +24,11 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.AgentSharedManifestRef).HasMaxLength(20).IsUnicode(false);
             this.Property(t => t.ShipperReference1).HasMaxLength(50).IsUnicode(false);
             this.Property(t => t.ShipperReference2).HasMaxLength(50).IsUnicode(false);
+            this.Property(t => t.ShipperReference3).HasMaxLength(300).IsUnicode(false);
             this.Property(t => t.CustomFileNumber).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.ConsigneeReference1).HasMaxLength(50).IsUnicode(false);
             this.Property(t => t.ConsigneeReference2).HasMaxLength(50).IsUnicode(false);
+            this.Property(t => t.ConsigneeReference3).HasMaxLength(300).IsUnicode(false);
             this.Property(t => t.House).HasMaxLength(20).IsUnicode(false);
             this.Property(t => t.CASSCode).HasMaxLength(4).IsUnicode(false);
             this.Property(t => t.BranchId).IsRequired().HasMaxLength(15).IsUnicode(false);
@@ -366,8 +368,10 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.ComputedShipmentNumber).HasColumnName("ComputedShipmentNumber");            
             this.Property(t => t.ShipperReference1).HasColumnName("ShipperReference1");
             this.Property(t => t.ShipperReference2).HasColumnName("ShipperReference2");
+            this.Property(t => t.ShipperReference3).HasColumnName("ShipperReference3");
             this.Property(t => t.ConsigneeReference1).HasColumnName("ConsigneeReference1");
             this.Property(t => t.ConsigneeReference2).HasColumnName("ConsigneeReference2");
+            this.Property(t => t.ConsigneeReference3).HasColumnName("ConsigneeReference3");
             this.Property(t => t.House).HasColumnName("House");
             this.Property(t => t.BranchId).HasColumnName("BranchId");
             this.Property(t => t.IncotermId).HasColumnName("IncotermId");
