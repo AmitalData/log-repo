@@ -2842,7 +2842,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
         private List<DocumentsFilingPM> GetDocumentFilingPMs(string entityId, int tenant)
         {
             return (from a in repository.context.DocumentsFilings.Include("DocumentType")
-                    where a.Tenant == tenant && a.EntityId == entityId && a.IsDeleted == false && a.DirectionCode == "I" && a.DocumentId != null
+                    where a.Tenant == tenant && a.EntityId == entityId && a.IsDeleted == false && a.DirectionCode == "I" && a.DocumentId != null && a.DocumentType.IsCustomerView == true
                     select new DocumentsFilingPM()
                     {
                         Id = a.Id,

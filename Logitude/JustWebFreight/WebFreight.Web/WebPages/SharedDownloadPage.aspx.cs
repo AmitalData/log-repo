@@ -182,7 +182,7 @@ namespace WebFreight.Web.WebPages
                             documents = up.GetDocumentByEntityAndTenant(downloadAllDocumentsArgs.EntityId, downloadAllDocumentsArgs.Tenant);
                             break;
                     }
-                    if (string.IsNullOrEmpty(downloadAllDocumentsArgs.Token) && downloadAllDocumentsArgs.RequestArea != "CargoTracking")
+                    if (string.IsNullOrEmpty(downloadAllDocumentsArgs.Token))
                     {
                         if (downloadAllDocumentsArgs.PartnerType == "AG")
                         {
