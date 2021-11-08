@@ -40,6 +40,8 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.MainService
 					OrderTable.CustomerId as OrderCustomerId , 
 					OrderTable.TransportModeId as OrderTransportModeId , 
 					OrderTable.Master as OrderMaster , 
+					OrderTable.PONumber as OrderPONumber , 
+					OrderTable.BookingConfirmationNumber as OrderBookingConfirmationNumber , 
 					OrderTable.House as OrderHouse , 
 					OrderTable.OrderNumber as OrderShipmentNumber , 
 					OrderTable.OriginPortId as OrderFromPortId , 

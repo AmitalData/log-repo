@@ -22,6 +22,8 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CustomMapping
             SetMilestonesDoneFields(item);
             SetCurrentMilestone(item);
             SetOrderExceptionDescription(item, row);
+
+            cargoTrackingShipmentContext.OrderPONumber = row.OrderPONumber;
             cargoTrackingShipmentContext.CargoTrackingShipment = item;
             return cargoTrackingShipmentContext;
         }

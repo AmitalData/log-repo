@@ -14,6 +14,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.HelperClasses
         public string OrderCustomerId { get; set; }
         public string OrderTransportModeId { get; set; }
         public string OrderMaster { get; set; }
+        public string OrderPONumber { get; set; }
         public string OrderHouse { get; set; }
         public string OrderShipmentNumber { get; set; }
         public string OrderFromPortId { get; set; }
