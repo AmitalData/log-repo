@@ -50,10 +50,12 @@ Feature: AP Payment Invoice Connection
             | Branch              | Main Office |
         When receive invoice
         Then the invoice should create successfully
-
+        And the status value should be "Waiting for Approval"
+       
     Scenario: Approve APInvoice
         When approve invoice
         Then the invoice should update successfully
+        And the status value should be "Approved"
 
     Scenario: Create new AP Payment
         Given navigates to Accounting workspace
@@ -70,7 +72,9 @@ Feature: AP Payment Invoice Connection
         Given connect the invoice to the AP Payment
         When updates the AP Payment
         Then the AP Payment should update successfully
+        And the status value should be "Paid"
 
     Scenario: Disconnect the invoice from the AP Payment
         Given disconnect the invoice from the AP Payment
         Then the invoice should update successfully
+        And the status value should be "Approved"
