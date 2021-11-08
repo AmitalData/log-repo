@@ -21,12 +21,14 @@ import { CustomsRequestsSheetExtendedListService } from '../../../Customs/Servic
 import { MessageWindow } from '../../../Controls/Windows/MessageWindow';
 import { CustomsRequestsSheetWebService } from '../../../Customs/Services/WebServices/CustomsRequestsSheetWebService';
 import { List } from '../../../Infrastructure/DataContracts/Dashboard/List';
+import { CustomsSettingListService } from 'Customs/Services/StandardLists/CustomsSettingListService';
+import { ServiceResponse } from 'Infrastructure/DataContracts/ServiceResponse';
 
 //////////////////////////////////////////////////////////////////
 
 
 @Component({
-    selector: 'CustomsRequestsSheetsComponent', 
+    selector: 'CustomsRequestsSheetsComponent',
 
     templateUrl: './CustomsRequestsSheetsComponent.html',
     providers: [CustomsRequestsSheetExtendedListService]
@@ -158,7 +160,6 @@ export class CustomsRequestsSheetsComponent
                 this.RefreshButtonVisibility = true;//Visibility.Visible;
             }
         } else {
-            this.StatisticsVisibility = true;
             this.FromRequestCreateDate = DateTool.AddDays(DateTool.GetCurrentDateAsUtc(), 0);
             this.RefreshButtonVisibility = true;//Visibility.Visible;
         }
@@ -184,6 +185,7 @@ export class CustomsRequestsSheetsComponent
 
                     this._entityListService = new EntityListService();
                     this.BuildColumns();
+
                     this.GetStatistics();
                     //alert(TextCodeTranslator.Translate("Customs.CustomsRequestsSheet.F.RequestDescription"));
                     this._MySearchText = TextCodeTranslator.Translate("Customs.Notification.O.Search");
@@ -229,21 +231,29 @@ export class CustomsRequestsSheetsComponent
         })
     }
 
+    private customsSettingListService: CustomsSettingListService = new CustomsSettingListService;
     customsRequestsSheetSummary = new Array<CustomsRequestsSheetSummary>();
     IsTherecustomsRequestsSheetSummary = false;
     SumRequests = 0;
     GetStatistics() {
-        var service = new CustomsRequestsSheetWebService();
-        var statistics = service.GetStatistics().subscribe((response: any) => {
-            if (response.Result != null) {
-                this.SumRequests = 0;
-                this.customsRequestsSheetSummary = response.Result;
-                for (var request of (this.customsRequestsSheetSummary as any[])) {
-                    this.SumRequests += request.count;
-                    this.IsTherecustomsRequestsSheetSummary = true;
-                }
+        this.customsSettingListService.getSingleFromCache(SessionLocator.Tenant.toString()).subscribe((response: ServiceResponse) => {
+            var customsSetting = response.Result;
+            if (!AppTool.IsNullOrEmpty(customsSetting) && customsSetting.CompanyType == "B") {
+                this.StatisticsVisibility = true;
+                var service = new CustomsRequestsSheetWebService();
+                var statistics = service.GetStatistics().subscribe((response: any) => {
+                    if (response.Result != null) {
+                        this.SumRequests = 0;
+                        this.customsRequestsSheetSummary = response.Result;
+                        for (var request of (this.customsRequestsSheetSummary as any[])) {
+                            this.SumRequests += request.count;
+                            this.IsTherecustomsRequestsSheetSummary = true;
+                        }
+                    }
+                });
             }
         });
+
     }
 
     ngAfterViewInit() {
