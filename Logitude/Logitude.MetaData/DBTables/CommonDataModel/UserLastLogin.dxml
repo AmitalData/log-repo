@@ -17,6 +17,7 @@
     Type="varchar"
     Size="40">
     <Constraints
+      PrimaryKey="true"
       Nullable="false" />
   </Column>
   <Column
@@ -34,9 +35,11 @@
   <Column
     Name="WorkEnvironment"
     Type="varchar"
+    DefaultValue="'None'"
     Size="40">
     <Constraints
-      Nullable="true" />
+      PrimaryKey="true"
+      Nullable="false" />
   </Column>
   <Relation
     ForeignKeyColumn="Id"
