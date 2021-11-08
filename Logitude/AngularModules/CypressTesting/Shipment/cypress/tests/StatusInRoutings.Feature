@@ -24,79 +24,72 @@ Feature: Status in Routings Tab
 
     Scenario: Add Expected Departure date for the pickup
         Given the user edit pick window
-        And add expected departure with '01/10/2021' as a value
+        And add expected departure with '01-10-2021' as a value
         When save pickup
         Then the status value should be "Pick Up Arranged"
 
     Scenario: Add Actual Departure date for the pickup
-        Given the user edit pickup with the following details
-            | Actual Departure | 02/10/2021 |
+        Given the user edit pick window
+        And add Actual Departure with '02-10-2021' as a value
         When save pickup
         Then the direct should update successfully
-        And The status of the shipment  equal Pick Up
+        And the status value should be "Pick Up"
 
     Scenario: Add Actual Arrival date for the pickup
-        Given the user edit pickup with the following details
-            | Actual Arrival | 03/10/2021 |
+        Given the user edit pick window
+        And add Actual Arrival with '03-10-2021' as a value
         When save pickup
         Then the direct should update successfully
-        And The status of the shipment equal On Hand(LHR)
-
-
+        And the status value should be "On Hand(LHR)"
 
     Scenario: Add Actual Entry date for the Warehouse
-        Given the user edit Warehouse with the following details
-            | Actual Entry | 04/10/2021 |
+        Given the user edit Warehouse window
+        And add Actual Entry with '04-10-2021' as a value
         When save Warehouse
         Then the direct should update successfully
-        And The status of the shipment equal Storage Entry(TestWarehouse)
+        And the status value should be "Storage Entry(TestWarehouse)"
 
     Scenario: Add Actual Release date for the Warehouse
-        Given the user edit Warehouse with the following details
-            | Actual Release | 05/10/2021 |
+        Given the user edit Warehouse window
+        And add Actual Release with '05-10-2021' as a value
         When save Warehouse
         Then the direct should update successfully
-        And The status of the shipment equal Storage Released(TestWarehouse)
-
+        And the status value should be "Storage Released(TestWarehouse)"
 
     Scenario:Edit main carriage Add ATD
-        Given the user Edit main carriage  with the following details
-            | ATD | 06/10/2021 |
+        Given the user edit main carriage window
+        And add ATD with '06-10-2021' as a value
         When  click save
         Then the direct should update successfully
-        And The status of the shipment equal Departed(MIA)
-
+        And the status value should be "Departed(MIA)"
 
     Scenario:Edit main carriage Add ATA
-        Given the user Edit main carriage  with the following details
-            | ATA | 07/10/2021 |
+        Given the user edit main carriage window
+        And add ATA with '07-10-2021' as a value
         When  click save
         Then the direct should update successfully
-        And The status of the shipment equal Departed(MIA)
-
-
+        And the status value should be "Departed(MIA)"
 
     Scenario: Add Expected Departure date for the Delivary
-        Given the user edit Delivary with the following details
-            | Expected Departure | 08/10/2021 |
+        Given the user edit Delivary window
+        And add Expected Departure with '08-10-2021' as a value
         When save Delivary
         Then the direct should update successfully
-        And The status of the shipment  equal Delivery Arranged(MIA)
+        And the status value should be "Delivery Arranged(MIA)"
 
     Scenario: Add Actual Departure date for the Delivary
-        Given the user edit Delivary with the following details
-            | Actual Departure | 10/10/2021 |
+        Given the user edit Delivary window
+        And add Actual Departure with '10-10-2021' as a value
         When save Delivary
         Then the direct should update successfully
-        And The status of the shipment  equal Delivery(MIA)
-
+        And the status value should be "Delivery(MIA)"
 
     Scenario: Add Actual Arrival date for the Delivary
-        Given the user edit Delivary with the following details
-            | Actual Arrival | 12/10/2021 |
+        Given the user edit Delivary window
+        And add Actual Arrival with '12-10-2021' as a value
         When save Delivary
         Then the direct should update successfully
-        And The status of the shipment equal Delivered
+        And the status value should be "Delivered"
 
 
 
