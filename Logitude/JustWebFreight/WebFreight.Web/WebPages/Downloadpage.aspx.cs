@@ -163,7 +163,10 @@ namespace WebFreight.Web.WebPages
                             {
                                 if (securityArray.Length > 0) securityId = securityArray[0];
                                 if (securityArray.Length > 1) filename = documentOutCopyId = securityArray[1];
-
+                                if (requestArea == "CargoTracking")
+                                {
+                                    CheckDocumentViewAccessForCargoTracking(null, securityId);
+                                }
                                 Document document = up.GetFileExtensionBySecurityIdAndCopyId(securityId, filename, (int)tenant);
                                 if (document != null)
                                 {
@@ -301,7 +304,8 @@ namespace WebFreight.Web.WebPages
                                 {
                                     filename = documentId = filestrings[1].ToString();
                                 }
-                                    documentExtension = up.GetFileExtension(documentId, (int)tenant, isTenantZero);
+                                CheckDocumentViewAccessForCargoTracking(filename, requestArea);
+                                documentExtension = up.GetFileExtension(documentId, (int)tenant, isTenantZero);
 
                                 if (!string.IsNullOrEmpty(documentExtension))
                                 {
@@ -325,12 +329,14 @@ namespace WebFreight.Web.WebPages
                                 {
                                     if (!string.IsNullOrEmpty(BMKdocumentExtension) && !string.IsNullOrEmpty(BMKFileName))
                                     {
+                                        CheckDocumentViewAccessForCargoTracking(BMKFileName, requestArea);
                                         BMKDatainByte = up.DownloadFile(BMKFileName, BMKdocumentExtension, "", (int)tenant, isTenantZero);
                                     }
                                     else isValid = false;
 
                                     if (!string.IsNullOrEmpty(INIdocumentExtension) && !string.IsNullOrEmpty(INIFileName))
                                     {
+                                        CheckDocumentViewAccessForCargoTracking(INIFileName, requestArea);
                                         INIDatainByte = up.DownloadFile(INIFileName, INIdocumentExtension, "", (int)tenant, isTenantZero);
                                     }
                                     else isValid = false;
@@ -338,6 +344,7 @@ namespace WebFreight.Web.WebPages
 
                                else if (!string.IsNullOrEmpty(documentExtension) && !string.IsNullOrEmpty(filename))
                                 {
+                                    CheckDocumentViewAccessForCargoTracking(filename, requestArea);
                                     _DatainByte = up.DownloadFile(filename, documentExtension, "", (int)tenant, isTenantZero);
                                 }
                                 else isValid = false;
@@ -556,6 +563,27 @@ ExceptionInErrorLog.ToString()
                 //AzureLog.SaveLogsInStorage(ErrorMessage, "E", 0, User.Identity.Name, User.Identity.Name);
             }
 
+        }
+
+        private void CheckDocumentViewAccessForCargoTracking(string documentId, string requestArea, string securityKey = null)
+        {
+            if (requestArea == "CargoTracking") { 
+                DocumentsFilingRepository documentRepository = new DocumentsFilingRepository((int)tenant);
+                DocumentsFiling documentFiling = null;
+
+                if (!string.IsNullOrWhiteSpace(securityKey))
+                {
+                    string securityId = System.Net.WebUtility.UrlEncode(securityKey);
+                    documentFiling = documentRepository.GetSingleDocumentFilingBySecurityId(securityId, (int)tenant);
+                } else {
+                    documentFiling = documentRepository.GetSingleDocumentFilingByDocumentId(documentId, (int)tenant);
+                }
+
+                if (documentFiling!= null && !documentFiling.DocumentType.IsCustomerView) {
+                    Response.Output.Write("Sorry you’re not authenticated to view this document.");
+                    throw new ApplicationException("Sorry you’re not authenticated to view this document.");
+                }
+            }
         }
 
         private bool CheckAuthenticationForNoUsers(string cardId, bool isValid, bool overrideSecDueIsConnectedToUniFreight, string requestArea)
