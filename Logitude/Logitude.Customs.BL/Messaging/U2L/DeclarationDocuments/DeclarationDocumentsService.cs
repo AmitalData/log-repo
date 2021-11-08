@@ -123,7 +123,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.DeclarationDocuments
                                     }
                                     customsDocumentPM = myCustomsDocumentQueryService.GetSingle(this._LogitudeDocs.COM_ID, false, false);
 
-                                    if (String.IsNullOrWhiteSpace(customsDocumentPM.CustomsDocId) && customsDocumentPM.DocumentStatusCode!="7")
+                                    if (customsDocumentPM!= null && String.IsNullOrWhiteSpace(customsDocumentPM.CustomsDocId) && customsDocumentPM.DocumentStatusCode!="7")
                                     {
                                         customsDocumentPM.IsSendToQueue = true;
                                         myCustomsDocumentUpdateService.IgnoreSendFailure = true;
@@ -263,6 +263,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.DeclarationDocuments
                         }
                         myCustomsDocumentUpdateService.Update(customsDocumentPM, true);
                     }
+                
 
                     AppendLogLine("after Update Document");
                 }
