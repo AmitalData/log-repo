@@ -894,6 +894,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
 
             return Request.CreateResponse(HttpStatusCode.OK, shipmentsAdditionalFields);
         }
+
         public HttpResponseMessage GetDigitalFiltersCounts(string CustomerId, int leastStatusWeight, int greatestStatusWeight)
         {
             string token = HttpContext.Current.Request.Headers["Token"];

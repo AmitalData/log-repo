@@ -146,6 +146,9 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string VolumeUnitCode { get; set; }
 
         public string StatusId { get; set; }
+
+        public int? StatusWeight { get; set; }
+
         public string ShipmentStatusId { get; set; }
         public string ShipmentStatusName { get; set; }
         public int? ShipmentStatusWeight { get; set; }

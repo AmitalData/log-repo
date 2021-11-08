@@ -14258,10 +14258,10 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             IQueryable<ShipmentDataView> shipmentsDataView = shipmentRepository.GetShipmentViewsByTenant(tenant);
             IQueryable<ShipmentDataView> activeShipmentsDataViewFilteredByCustomerId = shipmentsDataView.Where(shipment => shipment.CustomerId == CustomerId &&
                                                                                                shipment.IsOperationalClosed == false).AsQueryable();
-            int atOriginShipmentCount = activeShipmentsDataViewFilteredByCustomerId.Where(shipment => shipment.ShipmentStatusWeight <= leastStatusWeight).Count();
-            int inTransitShipmentCount = activeShipmentsDataViewFilteredByCustomerId.Where(shipment => shipment.ShipmentStatusWeight > leastStatusWeight &&
-                                                                                                       shipment.ShipmentStatusWeight < greatestStatusWeight).Count();
-            int atDestinationShipmentCount = activeShipmentsDataViewFilteredByCustomerId.Where(shipment => shipment.ShipmentStatusWeight >= greatestStatusWeight).Count();
+            int atOriginShipmentCount = activeShipmentsDataViewFilteredByCustomerId.Where(shipment => shipment.StatusWeight <= leastStatusWeight).Count();
+            int inTransitShipmentCount = activeShipmentsDataViewFilteredByCustomerId.Where(shipment => shipment.StatusWeight > leastStatusWeight &&
+                                                                                                       shipment.StatusWeight < greatestStatusWeight).Count();
+            int atDestinationShipmentCount = activeShipmentsDataViewFilteredByCustomerId.Where(shipment => shipment.StatusWeight >= greatestStatusWeight).Count();
 
             return Tuple.Create(atOriginShipmentCount, inTransitShipmentCount, atDestinationShipmentCount);
         }
