@@ -468,11 +468,12 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 ICustomContext customContext = CustomContext.GetContext(authToken.Tenant);
                 //var messagingService = new DCAInUCB8250_MsgMessagingService();
                 //var sts = messagingService.CreateCRS(tenant, null, CourierMasterId, testerSendOption);
-                
 
+
+                string loggingUserId = AuthenticationUtil.ResolveUserId(tenant);
 
                 var messagingService = new DCAInUCB8250_MsgMessagingService();
-                var sts = messagingService.CreateCRS(tenant, null, CourierMasterId, testerSendOption);
+                var sts = messagingService.CreateCRS(tenant, loggingUserId, CourierMasterId, testerSendOption);
 
 
                /* var declarationsText = string.Join(",", declarations);
