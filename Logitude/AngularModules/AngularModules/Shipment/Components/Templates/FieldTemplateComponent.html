@@ -38,13 +38,13 @@
 
                                 <div *ngIf="!IsHeaderScreenTemplate && FieldName == 'StatusName'" class="TemplateTrimming">
                                     <div class="TemplateTrimmingChild">
-                                        <span [ngStyle]="{color: Entity.ExactStatusName | StringToColorPipe}">{{FieldValue}}</span>
+                                        <span [attr.data-cy]="'ShipmentStatusValue'" [ngStyle]="{color: Entity.ExactStatusName | StringToColorPipe}">{{FieldValue}}</span>
                                     </div>
                                 </div>
 
                                 <div *ngIf="IsHeaderScreenTemplate && FieldName == 'StatusName'" class="TemplateTrimming">
                                     <div class="TemplateTrimmingChild">
-                                        <span [ngStyle]="{color: FieldValue | StringToColorPipe}">{{FieldValue}}</span>
+                                        <span [attr.data-cy]="'ShipmentStatusValue'" [ngStyle]="{color: FieldValue | StringToColorPipe}">{{FieldValue}}</span>
                                         <span [ngStyle]="{color: FieldValue | StringToColorPipe}" *ngIf="Entity.StatusLocation" style="margin-left: 3px;">({{Entity.StatusLocation}})</span>
                                     </div>
                                 </div>

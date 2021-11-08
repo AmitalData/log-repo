@@ -28,7 +28,8 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly ShipmentSaveCloseButton = '[id^=Shipment-SaveClose]'
   public static readonly APInvoiceStatus = "[data-cy='StatusValue']";
   public static readonly ARInvoiceStatus = "[id^='ARInvoiceHeaderStatusName']";
-
+  public static readonly RoutingStatus = "[data-cy='ShipmentStatusValue']";
+  
   //#endregion
 
   //#region Create shipment
