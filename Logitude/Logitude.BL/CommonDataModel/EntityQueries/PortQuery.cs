@@ -698,6 +698,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     StateCode = port.StateCode,
                     CountryCode = port.CountryCode,
                     CountryName = port.CountryName,
+                    PortTimeZoneCode = port.PortTimeZoneCode,
                 };
 
                 portRepository.Add(newPort);

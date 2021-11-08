@@ -644,18 +644,15 @@ export class ListComponent implements OnInit, AfterViewInit {
         if (!FeatureLocator.HasEntityPermessions(this.ObjectTableName, "NEW", false)) {
             this.IsNewEntityButtonDisabled = true;
         }
-        if (!FeatureLocator.HasEntityPermessions(this.ObjectTableName, "READ", false)) {
-            this.HasPermition = false;
+
+        if (this.ObjectTableName != "PortTimeZone") {
+            if (!FeatureLocator.HasEntityPermessions(this.ObjectTableName, "READ", false)) {
+                this.HasPermition = false;
+            }
         }
         this.Filterchangeevent = new LogEvents.EventManager();
         var subscription = this.pubSubAdvanceQueryFiltersService.Stream.subscribe(customer => this.processAdvanceQueryFilters(customer));
-      //SessionLocator.SelectedSession.pubSubAdvanceQueryFiltersService.emit(this.pubSubAdvanceQueryFiltersService)
-      //this.ObjectTableName == "Customs.Declaration" || this.ObjectTableName == "Customs.PhysicalCheck" ||
-    //   if (this.ObjectTableName.startsWith("Customs.")) {
-    //       this.IsNavigateButtonVisible = false;
-    //   }
         this.Listen();
-        //this.CD.detectChanges();
     }
 
     private ReloadAllListEvent: any = null;

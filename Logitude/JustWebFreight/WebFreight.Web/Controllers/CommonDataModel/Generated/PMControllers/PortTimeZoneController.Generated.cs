@@ -20,9 +20,9 @@ using WebFreight.Web.Security;
 
 namespace WebFreight.Web.Controllers.CommonDataModel.Generated.PMControllers
 {
-    public class PortTimeZoneController : ApiController
+    public class PortTimeZonesController : ApiController
     {
-        public HttpResponseMessage GetSingle(string id)
+        public HttpResponseMessage GetSingle(string code)
         {
             try
             {
@@ -31,9 +31,9 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.PMControllers
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
 
-                SecurityUtility.CheckContactFeature("PortTimeZone", "READ", authToken.Tenant);
+                //SecurityUtility.CheckContactFeature("PortTimeZone", "READ", authToken.Tenant);
                 PortTimeZoneQuery portTimeZoneQuery = new PortTimeZoneQuery(authToken.Tenant);
-                PortTimeZonePM portTimeZonePM = portTimeZoneQuery.GetSinglePM(id, authToken.Tenant);
+                PortTimeZonePM portTimeZonePM = portTimeZoneQuery.GetSinglePM(code, authToken.Tenant);
 
                 PerformanceLogger.AddServerExecutionTimeHeader(logKey);
 

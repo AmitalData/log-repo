@@ -22,12 +22,12 @@ namespace Simplog.Data.CommonDataModel.Mapping
 
             // Table & Column Mappings
             this.ToTable("PortTimeZones");
-            this.Property(t => t.Code).HasColumnName("Id");
-            this.Property(t => t.Name).HasColumnName("Tenant");
-            this.Property(t => t.Notes).HasColumnName("EnglishName");
-            this.Property(t => t.SearchFields).HasColumnName("LocalName");
-            this.Property(t => t.UTCOffset).HasColumnName("Notes");            
-            this.Property(t => t.UTCDSTOffset).HasColumnName("SearchFields");
+            this.Property(t => t.Code).HasColumnName("Code");
+            this.Property(t => t.Name).HasColumnName("Name");
+            this.Property(t => t.Notes).HasColumnName("Notes");
+            this.Property(t => t.SearchFields).HasColumnName("SearchFields");
+            this.Property(t => t.UTCOffset).HasColumnName("UTCOffset");            
+            this.Property(t => t.UTCDSTOffset).HasColumnName("UTCDSTOffset");
             this.Property(t => t.Inactive).HasColumnName("Inactive");
         }
     }

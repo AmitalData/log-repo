@@ -5011,18 +5011,13 @@ User/Pass",
 
                 foreach (TimeZoneExcelItem item in excelTimeZones)
                 {
-                    bool exists = portTimeZoneRepository.CheckIfTimeZoneExists(item.Name);
-
-                    if (!exists)
-                    {
-                        PortTimeZone portTimeZone = new PortTimeZone();
-                        portTimeZone.Code = item.Name;
-                        portTimeZone.Name = item.Name;
-                        portTimeZone.SearchFields = item.Name + "," + item.UTCOffset;
-                        portTimeZone.UTCOffset = item.UTCOffset;
-                        portTimeZone.UTCDSTOffset = item.UTCDSTOffset;
-                        portTimeZoneRepository.Add(portTimeZone);
-                    }
+                    PortTimeZone portTimeZone = new PortTimeZone();
+                    portTimeZone.Code = item.Name;
+                    portTimeZone.Name = item.Name;
+                    portTimeZone.SearchFields = item.Name + "," + item.UTCOffset;
+                    portTimeZone.UTCOffset = item.UTCOffset;
+                    portTimeZone.UTCDSTOffset = item.UTCDSTOffset;
+                    portTimeZoneRepository.Add(portTimeZone);
                 }
 
                 portTimeZoneRepository.SubmitChanges();
