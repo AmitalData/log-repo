@@ -83,7 +83,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
             {
                 var slaReports = new SlaReport();
                 HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.OK);
-                var item = slaReports.GetSlaReport(tenant,fromDate,toDate,integratorCode,reportType);
+                var item = slaReports.GetSlaReport(fromDate,toDate,integratorCode,reportType,tenant);
                 response.Content = new StreamContent(new MemoryStream(item));
                 response.Content.Headers.ContentType = new MediaTypeHeaderValue("application/ms-excel");
                 response.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment");

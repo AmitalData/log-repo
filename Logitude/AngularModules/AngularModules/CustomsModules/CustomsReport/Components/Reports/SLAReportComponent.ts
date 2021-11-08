@@ -103,7 +103,8 @@ export class SLAReportComponent extends BaseComponent implements OnInit {
         if (datetime) {
             var date = new Date(datetime.getTime());
             date.setHours(0, 0, 0, 0);
-            return date.toString();
+             return date.toLocaleDateString('he-IL', {timeZone:'Asia/Jerusalem'}).replace(/\D/g,'/')
+            return date.toJSON();
         }
     }
 
