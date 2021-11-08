@@ -110,7 +110,7 @@ namespace CommunicationWorkerRole
                         LastActivity = DateTime.UtcNow;
                         int tenant = 0;
                         int CustomerTenant = 0;
-                        bool IsImportActivated = false ;
+                        bool IsCustomsActivated = false ;
                         bool IsExportActivated = false;
 
 
@@ -119,7 +119,7 @@ namespace CommunicationWorkerRole
                             string Id = response.MessageValues["Id"].ToString();
                             int.TryParse(response.MessageValues["Tenant"], out tenant);
                             int.TryParse(response.MessageValues["CustomerTenant"], out CustomerTenant);
-                            bool.TryParse(response.MessageValues["IsImportActivated"], out IsImportActivated);
+                            bool.TryParse(response.MessageValues["IsCustomsActivated"], out IsCustomsActivated);
                             bool.TryParse(response.MessageValues["IsExportActivated"], out IsExportActivated);
                             string CorrelationId = response.MessageId;
                             IWebFreightContext webFreightContext = WebFreightContext.GetContext(tenant);
@@ -185,7 +185,7 @@ namespace CommunicationWorkerRole
                                         CustomerTenant = CustomerTenant,
                                         PartnerTenant = tenant,
                                         IsExportActivated = IsExportActivated,
-                                        IsImportActivated = IsImportActivated
+                                        IsCustomsActivated = IsCustomsActivated
                                     };
 
                                     UpdateCustomerTenantAccessRequests(customerTenantAccessRequest);
@@ -375,7 +375,7 @@ namespace CommunicationWorkerRole
 
             foreach (var request in customerTenantAccessRequestList)
             {
-                request.IsCustoms = customerTenantAccessRequest.IsImportActivated;
+                request.IsCustoms = customerTenantAccessRequest.IsCustomsActivated;
                 request.IsExport = customerTenantAccessRequest.IsExportActivated;
                 customerTenantAccessRequestService.Update(request);
             }

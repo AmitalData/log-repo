@@ -98,7 +98,7 @@ export class RelatedCustomerComponent extends BaseComponent{
                     this.CurrentSession.StopBusyIndicator();
                     this.CurrentSession.CloseCurrentWindowEmit("OK");  
                         if (serviceResponse.ErrorsArray?.length > 0) {
-                            this.ValidationErrorsList.push('You should select at least one option either Import of Export. ');
+                            this.ValidationErrorsList.push('You should select at least one option either Custom of Export. ');
                         } 
                 }); 
     } 
@@ -635,8 +635,8 @@ export class CardListDataViewModel {
 
     }
 
-    public get IsImportActivated() { return this.isImport; }
-    public set IsImportActivated(value: boolean) {
+    public get IsCustomsActivated() { return this.isImport; }
+    public set IsCustomsActivated(value: boolean) {
         this.isImport = value; 
 
     }

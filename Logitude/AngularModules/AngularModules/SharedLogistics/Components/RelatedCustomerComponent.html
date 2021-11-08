@@ -56,7 +56,7 @@
                                     <td style="width: 200px; min-width: 200px;max-width:200px">{{'CustomerTenantAccess.O.RelatedCustomers.CreateDate'    | TextCodeTranslationPipe}}</td>
                                     <td style="width: 200px; min-width: 200px;max-width:200px">{{'CustomerTenantAccess.O.RelatedCustomers.CreatedBy'     | TextCodeTranslationPipe}}</td>
                                     <td style="width: 200px; min-width: 200px;max-width:200px">{{'CustomerTenantAccess.O.RelatedCustomers.UpdateDateTime'| TextCodeTranslationPipe}}</td>
-                                    <td style="width: 60px; min-width: 60px;max-width:60px">{{'CustomerTenantAccess.O.RelatedCustomers.IsImportActivated'| TextCodeTranslationPipe}}</td>
+                                    <td style="width: 60px; min-width: 60px;max-width:60px">{{'CustomerTenantAccess.O.RelatedCustomers.IsCustomsActivated'| TextCodeTranslationPipe}}</td>
                                     <td style="width: 60px; min-width: 60px;max-width:60px">{{'CustomerTenantAccess.O.RelatedCustomers.IsExportActivated'| TextCodeTranslationPipe}}</td>
                                     <td class="LastChild"></td>
 
@@ -90,7 +90,7 @@
                                     <td class="GridViewCell" style="width: 60px; min-width: 60px;max-width:60px ">
 
                                         <div class="CheckBox">
-                                            <input class="CenterCenter" style="text-align:center" (click)="CheckIsImportActivated(item)" [attr.id]="'ImportCheckBox' + item.CustomerCode" type="checkbox" [(ngModel)]="item.IsImportActivated" />
+                                            <input class="CenterCenter" style="text-align:center" (click)="CheckIsImportActivated(item)" [attr.id]="'ImportCheckBox' + item.CustomerCode" type="checkbox" [(ngModel)]="item.IsCustomsActivated" />
                                             <label class="CenterCenter" [attr.for]="'ImportCheckBox' + item.CustomerCode"></label>
                                         </div>
 
