@@ -274,6 +274,7 @@ namespace Logitude.BL.QuoteModel.Tools.DataMapping
             itemPoco.HidePageNumber = itemPM.HidePageNumber;
             itemPoco.ShowRegionalTAXPackages = itemPM.ShowRegionalTAXPackages;
             itemPoco.ShowRegionalTAXContainers = itemPM.ShowRegionalTAXContainers;
+            itemPoco.XMLData = itemPM.XMLData;
         }
     }
 }

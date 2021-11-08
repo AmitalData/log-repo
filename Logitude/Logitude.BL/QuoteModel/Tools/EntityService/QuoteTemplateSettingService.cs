@@ -12,6 +12,7 @@ using Logitude.BL.CommonDataModel.Tools.TraceEvents;
 using Logitude.BL.CommonDataModel.Tools.Validating;
 using Logitude.BL.QuoteModel.EntityPMs;
 using Logitude.BL.QuoteModel.Tools.DataMapping;
+using Logitude.Server.Tools;
 
 namespace Logitude.BL.QuoteModel.Tools.EntityService
 {
@@ -43,6 +44,7 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
             this.isNewEntity = true;
             this.entityPm = entityPM;
             this.entityPm.Id = IdCounter.GetNumber("QuoteTemplateSetting", tenant).ToString();
+            this.entityPm.XMLData = LogitudeXmlSerializer.SerializeObjectToXmlString(entityPM.QuoteTemplateSettingData);
             this.Poco = new QuoteTemplateSetting();
             this.Poco.Id = this.entityPm.Id;
 
@@ -61,6 +63,7 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
         {
             this.isNewEntity = false;
             this.entityPm = entityPM;
+            this.entityPm.XMLData = LogitudeXmlSerializer.SerializeObjectToXmlString(entityPM.QuoteTemplateSettingData);
             this.Poco = entityRepository.GetSingleQuoteTemplateSetting(entityPM.Id, entityPm.Tenant);
 
             string entityName = "QuoteTemplateSetting" + entityPM.Id + entityPM.Tenant;
