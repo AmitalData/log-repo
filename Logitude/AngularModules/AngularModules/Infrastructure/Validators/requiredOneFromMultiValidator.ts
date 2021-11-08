@@ -1,18 +1,18 @@
 import { ValidatorFn, FormGroup, AbstractControl, ValidationErrors, FormControl } from "@angular/forms";
-import { filter } from "rxjs/operators";
+import { filter, pairwise, startWith } from "rxjs/operators";
 
-export function requiredOneFromMultiValidator(t: any, formGroupName: string, thisCtrlName: string, ...ctrlsName: string[]): ValidatorFn {
+export function requiredOneFromMultiValidator(classComponent: any, formGroupName: string, thisCtrlName: string, ...ctrlsName: string[]): ValidatorFn {
     (async () => {
       let fromGroupNotFound = true;
   
       while (fromGroupNotFound) {
-        fromGroupNotFound = !t[formGroupName]
+        fromGroupNotFound = !classComponent[formGroupName]
         await new Promise(resolve => setTimeout(resolve, 100));
       }
   
-      const fg = t[formGroupName] as FormGroup
+      const fg = classComponent[formGroupName] as FormGroup
       ctrlsName.forEach(ctrlName =>
-        fg.controls[ctrlName].valueChanges.pipe(filter(newVal => fg.value[ctrlName] !== newVal)).subscribe(x => fg.controls[thisCtrlName].updateValueAndValidity()))
+        fg.controls[ctrlName].valueChanges.pipe(startWith(null as string), pairwise(), filter(([prev, next]: [any, any]) => prev != next)).subscribe(x => fg.controls[thisCtrlName].updateValueAndValidity()))
     })()
   
     return (control: AbstractControl): ValidationErrors | null => {

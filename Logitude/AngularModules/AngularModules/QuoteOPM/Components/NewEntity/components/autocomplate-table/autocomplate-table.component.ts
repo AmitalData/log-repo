@@ -7,7 +7,6 @@ import { ApiQueryFilters } from 'Infrastructure/DataContracts/ApiQueryFilters';
 import { AutoComplete } from 'primeng/autocomplete';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
 import { take } from 'rxjs/operators';
-import { LogtuideTableDataService } from './logtuide-table-data.service';
 // import { Subscription } from 'rxjs';
 
 @Component({
@@ -49,7 +48,6 @@ export class AutocomplateTableComponent {
   constructor(
     @Inject(DOCUMENT) private document: any,
     private genericTableService: GenericTableService,
-    private logtuideTableDataService: LogtuideTableDataService,
   ) { }
 
   ngOnInit() {
@@ -77,6 +75,9 @@ export class AutocomplateTableComponent {
 
     if (this.selected.length && !this.columnsNames.length)
       this.columnsShow = Object.keys(this.selected[0]);
+
+    if(this.index === 0)
+      this.selected.unshift(this.columnsHeader);
   }
 
   initialData() {
@@ -112,8 +113,8 @@ export class AutocomplateTableComponent {
     // const recordSelected: any = await this.genericTableService.open(this.data, this.label, columns).onClose.toPromise()
     const recordSelected: any = await new Promise<any>(async (resolve) => {
       const dialogRef: DynamicDialogRef = !!this.getDataFunc ?
-        await this.genericTableService.openByApiOpenQuoeryFilter(this.getDataFunc, this.label, this.columnsFilter, columns) :
-        this.genericTableService.open(this.data, this.label + ' Search', columns, null, this.logTableName);
+        await this.genericTableService.openByApiOpenQuoeryFilter(this.getDataFunc, this.controlName + ' Search', this.columnsFilter, columns) :
+        this.genericTableService.open(this.data, this.controlName + ' Search', columns, null, this.logTableName);
 
       dialogRef.onClose.pipe(take(1)).subscribe(x => resolve(x));
     });

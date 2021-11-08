@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AbstractControl, FormArray, FormControl, FormGroup } from '@angular/forms';
+import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator';
 import { MessageService } from 'primeng/api';
 
 @Injectable()
@@ -20,10 +21,10 @@ export class NewQuoteValidateEntityService {
     this.form = form;
 
     this.checkPartner();
-    // this.checkProperties();
-    this.checkCloseDate();
-    this.checkAddress();
-    this.checkValidator(this.form)
+    this.checkProperties();
+    this.checkGeneral();
+    this.checkExpectedOrder();
+    // this.checkValidator(this.form)
 
     this.showErrorMessage();
 
@@ -38,45 +39,58 @@ export class NewQuoteValidateEntityService {
   private checkPartner(): void {
     // must set shipper or consignee
 
-    const shipperForm: any = this.form.controls.shipper.value;
-    const consigneeForm: any = this.form.controls.consignee.value;
+    const shipperForm: any = this.form.controls.shipper.value.partener;
+    const consigneeForm: any = this.form.controls.consignee.value.partener;
 
-    if (!(shipperForm.partner && shipperForm.contact) && !(consigneeForm.partner && consigneeForm.contact))
-      this.errorList.push('Shipperr or consignee and is contact is requierd.')
+    if (!shipperForm && !consigneeForm)
+      this.errorList.push('Shipperr or Consignee is requierd.')
   }
 
-  private checkAddress(): void {
-    this.formValue.properties.forEach((property: any) => {
-      [
-        { partner: this.formValue.shipper, address: property.pickup, addressName: 'pickup' },
-        { partner: this.formValue.consignee, address: property.delivery, addressName: 'delivery' },
-      ].forEach(x => {
-        if (!x.partner.partner && x.address.include) {
-          if (!x.address.city)
-            this.errorList.push(`city in ${x.addressName} is required`)
+  private checkProperties(): void {
+    const propertiesForms: AbstractControl[] = (this.form.controls.properties as FormArray).controls.filter((propertyForm: FormGroup) => propertyForm.valid);
+    propertiesForms.forEach((propertyFormGroup: FormGroup, i: number) => {
+      const propertyForm: FormGroup["controls"] = propertyFormGroup.value;
+      const propertyPosition: string = propertiesForms.length > 1 ? ' in property ' + (i + 1) : ''
 
-          if (!x.address.country)
-            this.errorList.push(`cuontry in ${x.addressName} is required`)
-        }
-      });
+      if (propertyForm.fromPort.invalid) {
+        const fieldName: string = TextCodeTranslator.Translate('QuoteOP.S.NewQuote.' + (this.formValue.transportMode?.Id === 'A' ? 'Gateway' : 'LoadingPort'));
+        this.errorList.push(fieldName + ' is required' + propertyPosition)
+      }
+
+      if (propertyForm.toPort.invalid) {
+        const fieldName: string = TextCodeTranslator.Translate('QuoteOP.S.NewQuote.' + (this.formValue.transportMode?.Id === 'A' ? 'Destination' : 'DischargePort'));
+        this.errorList.push(fieldName + ' is required' + propertyPosition)
+      }
+
+      ['pickup', 'delivery'].forEach((formName: string) =>
+        ['city', 'country', 'address'].filter(fieldName =>
+          (<FormGroup>propertyForm[formName]).controls[fieldName].invalid)
+          .forEach(fieldName =>
+            this.errorList.push(TextCodeTranslator.Translate('QuoteOP.S.NewQuote.' + this.capitalizeFirstLetter(fieldName)) + ' is required' + propertyPosition)
+          ));
     });
   }
 
-  private checkCloseDate() {
-    if (this.formValue.isAutomaticallyClosed) {
-      if (!this.formValue.automaticallyCloseDays)
-        this.errorList.push('Close days is requierd.')
-      if (!this.formValue.automaticallyCloseDate)
-        this.errorList.push('Close date is requierd.')
-    }
+  private checkGeneral() {
+    [
+      { name: 'startDate', label: 'Start Date' },
+      { name: 'expirationDays', label: 'Expiration Days' },
+      { name: 'expirationDate', label: 'Expiration Date' },
+    ].filter(field => this.form.controls[field.name].invalid)
+      .forEach(field => this.errorList.push(field.label + ' is required'))
   }
 
-  // checkProperties(): void {
-  //   const propertiesForms: AbstractControl[] = (this.form.controls.properties as FormArray).controls.filter((propertyForm: FormGroup) => propertyForm.valid);
-  //   propertiesForms.forEach((propertyFormGroup: FormGroup) => {
-  //     const propertyForm: FormGroup["controls"] = propertyFormGroup.controls;
-  //   });
-  // }
+  private checkExpectedOrder() {
+    const isSeaFcl: boolean = this.form.controls.transportMode?.value?.Id === 'O' && this.form.controls.shipmentType?.value?.Name === 'FCL';
+    if (isSeaFcl)
+      ['quantityType', 'quantity'].forEach(ctrlName =>
+        [1, 2, 3, 4]
+          .filter(i => this.form.controls[ctrlName + i].invalid)
+          .forEach(i => this.errorList.push(ctrlName + i + ' is required'))
+      );
+    else if (this.form.controls.packages.invalid)
+      this.errorList.push('all packages need volume or groos weight')
+  }
 
   checkValidator(formGroup: FormGroup): void {
     Object.keys(formGroup.controls).forEach((key: string) => {
@@ -92,6 +106,7 @@ export class NewQuoteValidateEntityService {
     });
   }
 
-
-
+  private capitalizeFirstLetter(str: string): string {
+    return str?.charAt(0).toUpperCase() + str?.slice(1);
+  }
 }
