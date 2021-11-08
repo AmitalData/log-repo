@@ -66,6 +66,10 @@ namespace Logitude.BL.InvoiceModel.CoreBL
 
         public void ApproveARPayment()
         {
+            if (paymentPM.AccountingPaymentMethodCode != "BT" && paymentPM.ARPaymentBankTranfers.Any())
+            {
+                throw new ApplicationException("The payment method should be bank transfer when adding multiple bank transfers");
+            }
             if (PaymentCashbook != null)
                 AddChequesOrCashToCashbook();
             if (IsBankTransferPayment)

@@ -466,7 +466,7 @@
 
                     <!-- Multiple bank transfers-->
                     
-                    <tr style="height:22px" *ngIf="EntityPM.ARPaymentBankTranfers.length > 1">
+                    <tr style="height:22px" *ngIf="EntityPM.ARPaymentBankTranfers.length > 1 && AccountingPaymentMethodCode == 'BT'">
                         <td colspan="2">
                             <table>
                                 <tr>
