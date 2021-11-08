@@ -616,14 +616,14 @@ export class ContainerPM {
     public set ActualLIFArrival(newValue: Date) { if (this.actualLIFArrival != newValue) { this.actualLIFArrival = newValue; this.MarkAsDirty("ActualLIFArrival"); } }
        
 	 
-    private estimatedLIFDeparture: Date;
-    public get EstimatedLIFDeparture() { return this.estimatedLIFDeparture; }
-    public set EstimatedLIFDeparture(newValue: Date) { if (this.estimatedLIFDeparture != newValue) { this.estimatedLIFDeparture = newValue; this.MarkAsDirty("EstimatedLIFDeparture"); } }
+    private estimatedOnCarriageDeparture: Date;
+    public get EstimatedOnCarriageDeparture() { return this.estimatedOnCarriageDeparture; }
+    public set EstimatedOnCarriageDeparture(newValue: Date) { if (this.estimatedOnCarriageDeparture != newValue) { this.estimatedOnCarriageDeparture = newValue; this.MarkAsDirty("EstimatedOnCarriageDeparture"); } }
        
 	 
-    private actualLIFDeparture: Date;
-    public get ActualLIFDeparture() { return this.actualLIFDeparture; }
-    public set ActualLIFDeparture(newValue: Date) { if (this.actualLIFDeparture != newValue) { this.actualLIFDeparture = newValue; this.MarkAsDirty("ActualLIFDeparture"); } }
+    private actualOnCarriageDeparture: Date;
+    public get ActualOnCarriageDeparture() { return this.actualOnCarriageDeparture; }
+    public set ActualOnCarriageDeparture(newValue: Date) { if (this.actualOnCarriageDeparture != newValue) { this.actualOnCarriageDeparture = newValue; this.MarkAsDirty("ActualOnCarriageDeparture"); } }
        
 	 
     private gateIn: Date;
