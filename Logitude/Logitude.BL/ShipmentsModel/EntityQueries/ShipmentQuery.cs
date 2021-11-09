@@ -14279,8 +14279,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                                                                shipment.IsOperationalClosed == false).AsQueryable();
             int atOriginShipmentCount = activeShipmentsDataViewFilteredByCustomerId.Where(shipment => shipment.StatusWeight <= leastStatusWeight).Count();
             int inTransitShipmentCount = activeShipmentsDataViewFilteredByCustomerId.Where(shipment => shipment.StatusWeight > leastStatusWeight &&
-                                                                                                       shipment.StatusWeight < greatestStatusWeight).Count();
-            int atDestinationShipmentCount = activeShipmentsDataViewFilteredByCustomerId.Where(shipment => shipment.StatusWeight >= greatestStatusWeight).Count();
+                                                                                                       shipment.StatusWeight <= greatestStatusWeight).Count();
+            int atDestinationShipmentCount = activeShipmentsDataViewFilteredByCustomerId.Where(shipment => shipment.StatusWeight > greatestStatusWeight).Count();
 
             return Tuple.Create(atOriginShipmentCount, inTransitShipmentCount, atDestinationShipmentCount);
         }
