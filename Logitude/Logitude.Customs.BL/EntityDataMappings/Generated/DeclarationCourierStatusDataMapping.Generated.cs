@@ -49,7 +49,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         TruckerId, 
 	         DistributionArea, 
 	         CrateNumber, 
-	         TerminalReleaseDate,
+	         TerminalReleaseDate, 
+	         LastMileServiceType,
 	      }
 
 
@@ -120,7 +121,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         DistributionArea, 
 	         CrateNumber, 
 	         TruckerName, 
-	         TerminalReleaseDate,
+	         TerminalReleaseDate, 
+	         LastMileServiceType,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -262,6 +264,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TerminalReleaseDate))
             {
 				entityPOCO.TerminalReleaseDate = entityPM.TerminalReleaseDate;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LastMileServiceType))
+            {
+				entityPOCO.LastMileServiceType = entityPM.LastMileServiceType;
 			}
 			}
 
@@ -408,6 +415,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.TerminalReleaseDate = entityPOCO.TerminalReleaseDate;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.LastMileServiceType))
+            {
+					entityPM.LastMileServiceType = entityPOCO.LastMileServiceType;
+            }
+
 		}
 
 		public void PMToOldPM(DeclarationCourierStatusPM entityPM, DeclarationCourierStatusPM oldEntityPM)
@@ -549,6 +561,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 oldEntityPM.TerminalReleaseDate = entityPM.TerminalReleaseDate;
             }
 			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LastMileServiceType))
+            {
+                oldEntityPM.LastMileServiceType = entityPM.LastMileServiceType;
+            }
+			
 		}
 
 	    public void EncodeBase64NVARCHARFields(DeclarationCourierStatusPM entityPM)
@@ -577,6 +594,10 @@ namespace Logitude.Customs.BL.EntityDataMappings
             if (!String.IsNullOrWhiteSpace(entityPM.DistributionArea)) //T4 find type == nText 
             {
                 entityPM.DistributionArea = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.DistributionArea));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.LastMileServiceType)) //T4 find type == nText 
+            {
+                entityPM.LastMileServiceType = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.LastMileServiceType));
             }
             entityPM.EncodeBase64NVARCHARFieldsBy=null;
 		}

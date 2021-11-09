@@ -384,6 +384,11 @@ export class DeclarationCourierStatusPM {
     public set TerminalReleaseDate(newValue: Date) { if (this.terminalReleaseDate != newValue) { this.terminalReleaseDate = newValue; this.MarkAsDirty("TerminalReleaseDate"); } }
        
 	 
+    private lastMileServiceType: string;
+    public get LastMileServiceType() { return this.lastMileServiceType; }
+    public set LastMileServiceType(newValue: string) { if (this.lastMileServiceType != newValue) { this.lastMileServiceType = newValue; this.MarkAsDirty("LastMileServiceType"); } }
+       
+	 
 
     public OldEntityPM: DeclarationCourierStatusPM;
 		
