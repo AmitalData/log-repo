@@ -21,7 +21,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.SearchService
             var cargoTrackingShipmentSearchFull = new CargoTrackingShipmentSearch()
             {
                 IsPublic = isPublic,
-                ReferenceType = "Master",
+                ReferenceType = ShipmentSearchFields.Master,
                 ShipmentDate = shipment.CreateDate,
                 ShipmentId = entityId,
                 Tenant = shipment.Tenant,
@@ -42,7 +42,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.SearchService
             var cargoTrackingShipmentSearchFull = new CargoTrackingShipmentSearch()
             {
                 IsPublic = true,
-                ReferenceType = "House",
+                ReferenceType = ShipmentSearchFields.House,
                 ShipmentDate = shipment.CreateDate,
                 ShipmentId = entityId,
                 Tenant = shipment.Tenant,
@@ -63,7 +63,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.SearchService
                 var cargoTrackingShipmentSearch = new CargoTrackingShipmentSearch()
                 {
                     IsPublic = true,
-                    ReferenceType = "House",
+                    ReferenceType = ShipmentSearchFields.House,
                     ShipmentDate = shipment.CreateDate,
                     ShipmentId = entityId,
                     Tenant = shipment.Tenant,
@@ -92,7 +92,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.SearchService
                 var cargoTrackingShipmentSearch = new CargoTrackingShipmentSearch()
                 {
                     IsPublic = isPublic,
-                    ReferenceType = "Container Numbers",
+                    ReferenceType = ShipmentSearchFields.ContainerNumbers,
                     ShipmentDate = shipment.CreateDate,
                     ShipmentId = entityId,
                     Tenant = shipment.Tenant,
@@ -125,7 +125,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.SearchService
                 var cargoTrackingShipmentSearch = new CargoTrackingShipmentSearch()
                 {
                     IsPublic = true,
-                    ReferenceType = "Customer Reference",
+                    ReferenceType = ShipmentSearchFields.CustomerReference,
                     ShipmentDate = shipment.CreateDate,
                     ShipmentId = entityId,
                     Tenant = shipment.Tenant,
@@ -150,7 +150,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.SearchService
             var cargoTrackingShipmentSearch = new CargoTrackingShipmentSearch()
             {
                 IsPublic = false,
-                ReferenceType = "Consignee Name",
+                ReferenceType = ShipmentSearchFields.ConsigneeName,
                 ShipmentDate = shipment.CreateDate,
                 ShipmentId = entityId,
                 Tenant = shipment.Tenant,
@@ -173,7 +173,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.SearchService
             var cargoTrackingShipmentSearch = new CargoTrackingShipmentSearch()
             {
                 IsPublic = false,
-                ReferenceType = "Shipper Name",
+                ReferenceType = ShipmentSearchFields.ShipperName,
                 ShipmentDate = shipment.CreateDate,
                 ShipmentId = entityId,
                 Tenant = shipment.Tenant,
@@ -195,7 +195,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.SearchService
             var cargoTrackingShipmentSearch = new CargoTrackingShipmentSearch()
             {
                 IsPublic = false,
-                ReferenceType = "Forwarding Shipment Number",
+                ReferenceType = ShipmentSearchFields.ForwardingShipmentNumber,
                 ShipmentDate = shipment.CreateDate,
                 ShipmentId = entityId,
                 Tenant = shipment.Tenant,
@@ -215,7 +215,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.SearchService
             var cargoTrackingShipmentSearch = new CargoTrackingShipmentSearch()
             {
                 IsPublic = true,
-                ReferenceType = "PO Number",
+                ReferenceType = ShipmentSearchFields.PONumber,
                 ShipmentDate = shipment.CargoTrackingShipment.CreateDate,
                 ShipmentId = entityId,
                 Tenant = shipment.CargoTrackingShipment.Tenant,
@@ -236,7 +236,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.SearchService
             var cargoTrackingShipmentSearch = new CargoTrackingShipmentSearch()
             {
                 IsPublic = true,
-                ReferenceType = "Booking Confirmation Number",
+                ReferenceType = ShipmentSearchFields.BookingConfirmationNumber,
                 ShipmentDate = shipment.CargoTrackingShipment.CreateDate,
                 ShipmentId = entityId,
                 Tenant = shipment.CargoTrackingShipment.Tenant,
@@ -257,7 +257,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.SearchService
             var cargoTrackingShipmentSearch = new CargoTrackingShipmentSearch()
             {
                 IsPublic = false,
-                ReferenceType = "Customs Declaration Number",
+                ReferenceType = ShipmentSearchFields.CustomsDeclarationNumber,
                 ShipmentDate = shipmentContext.CargoTrackingShipment.CreateDate,
                 ShipmentId = entityId,
                 Tenant = shipmentContext.CargoTrackingShipment.Tenant,
@@ -280,7 +280,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.SearchService
             var cargoTrackingShipmentSearch = new CargoTrackingShipmentSearch()
             {
                 IsPublic = true,
-                ReferenceType = "Shipment Number",
+                ReferenceType = ShipmentSearchFields.ShipmentNumber,
                 ShipmentDate = shipment.CreateDate,
                 ShipmentId = entityId,
                 Tenant = shipment.Tenant,
@@ -294,7 +294,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.SearchService
             var cargoTrackingShipmentSearch2 = new CargoTrackingShipmentSearch()
             {
                 IsPublic = true,
-                ReferenceType = "Shipment Number",
+                ReferenceType = ShipmentSearchFields.ShipmentNumber,
                 ShipmentDate = shipment.CreateDate,
                 ShipmentId = entityId,
                 Tenant = shipment.Tenant,
