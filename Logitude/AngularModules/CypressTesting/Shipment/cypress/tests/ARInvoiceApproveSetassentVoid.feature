@@ -1,7 +1,7 @@
 @smoke @smoke1 @release @stable @all
 Feature: AR Invoice Approve, Set as Sent and Void
-The user creates a Direct Export Air shipment, creates receivable, 
-creates AR Invoice, approve AR Invoice, set AR Invoice as sent and voids the AR Invoice.
+    The user creates a Direct Export Air shipment, creates receivable,
+    creates AR Invoice, approve AR Invoice, set AR Invoice as sent and voids the AR Invoice.
 
     Scenario: Update Accounting System
         Given the user logged in
@@ -84,15 +84,18 @@ creates AR Invoice, approve AR Invoice, set AR Invoice as sent and voids the AR 
             | VATType             | Zero        |
         When create invoice
         Then the invoice should create successfully
+        And the status value should be "Draft"
 
     Scenario: Approve ARInvoice
         When approve invoice
         Then the invoice should approve successfully
+        And the status value should be "Unpaid"
 
     Scenario: Set ARInvoice as sent
-        When set invoice as sent
+        When set invoice as sent with "sent invoice" as a note
         Then the invoice should set as sent successfully
 
     Scenario: Void ARInvoice
         When void invoice
         Then the invoice should void successfully
+        And the status value should be "Void"
