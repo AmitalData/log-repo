@@ -198,6 +198,7 @@
     <Compile Include="Helpers\ClosedTable\Update1308CustomsShip.cs" />
     <Compile Include="Helpers\ClosedTable\Update1416ModificationAndDiscountType.cs" />
     <Compile Include="MessagingServices\DCAInDF_NG_5118_MSG14004_ImportDeclarationCancellationReplyMsg.cs" />
+    <Compile Include="MessagingServices\DCAInUCB2715SendNow_MsgMessagingService.cs" />
     <Compile Include="MessagingServices\DCAInUCBMultiUpdate_MsgMessagingService.cs" />
     <Compile Include="MessagingServices\DCAInUCSBondedDocument_MessagingService.cs" />
     <Compile Include="MessagingServices\DCAInDE_NG_5108_DecisionMessageMessagingService.cs" />
