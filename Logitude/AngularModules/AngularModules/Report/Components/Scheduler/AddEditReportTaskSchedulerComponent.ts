@@ -404,6 +404,7 @@ export class AddEditReportTaskSchedulerComponent {
         this.DataContext.SchedulerDetails.ReportDetails.MainCustomerFieldName = reportSchedulerDetails.MainCustomerFieldName;
         this.DataContext.SchedulerDetails.ReportDetails.ReportFilterItems = reportSchedulerDetails.ReportFilterItems;
         this.DataContext.SchedulerDetails.ReportDetails.ReportTemplateId = reportSchedulerDetails.ReportTemplateId;
+        this.DataContext.SchedulerDetails.ReportDetails.ReportTemplateType = reportSchedulerDetails.ReportTemplateType;
         const recepients = reportSchedulerDetails.Recepients;
         this.DataContext.SchedulerDetails.ReportDetails.Recepients.To = recepients.To
             ? recepients.To.toString().split(',').join(';')

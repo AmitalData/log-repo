@@ -2239,25 +2239,31 @@ namespace WebFreight.Web.Helpers
         #endregion
 
         #region UpdateReport
-
+        private ReportsTemplateRepository reportsTemplateRepository;
+        private ReportsTemplatesVersionRepository reportsTemplatesVersionRepository;
+        private DocumentRepository documentRepository;
+        private List<ReportsTemplate> tenantZeroReportsTemplate;
+        private List<ReportsTemplate> myTenantReportsTemplate;
+        private List<ReportsTemplatesVersion> tenantZeroReportsTemplatesVersionLists;
+        private List<ReportsTemplatesVersion> myTenantReportsTemplatesVersion;
+        private List<Document> documentLists;
         public void UpdateReports(int tenant)
         {
 
             ReportRepository reportRepository = new ReportRepository(0);
-            ReportsTemplateRepository reportsTemplateRepository = new ReportsTemplateRepository(0);
-            ReportsTemplatesVersionRepository reportsTemplatesVersionRepository = new ReportsTemplatesVersionRepository(0);
-            DocumentRepository documentRepository = new DocumentRepository(0);
+            reportsTemplateRepository = new ReportsTemplateRepository(0);
+            reportsTemplatesVersionRepository = new ReportsTemplatesVersionRepository(0);
+            documentRepository = new DocumentRepository(0);
             ContactRepository contactRepository = new ContactRepository(0);
-
 
             List<Report> reportList = reportRepository.GetReports(0).ToList();
             string userId = contactRepository.GetConactIdByemail("system@tenant" + tenant.ToString() + ".com", tenant);
-            List<ReportsTemplate> tenantZeroReportsTemplate = reportsTemplateRepository.GetReportsTemplatesWithOutInclude(0);
-            List<ReportsTemplate> myTenantReportsTemplate = reportsTemplateRepository.GetReportsTemplatesWithOutInclude(tenant);
+            tenantZeroReportsTemplate = reportsTemplateRepository.GetReportsTemplatesWithOutInclude(0);
+            myTenantReportsTemplate = reportsTemplateRepository.GetReportsTemplatesWithOutInclude(tenant);
 
-            List<ReportsTemplatesVersion> tenantZeroReportsTemplatesVersionLists = reportsTemplatesVersionRepository.GetReportsTemplatesVersionsByReportsTemplateIds(tenantZeroReportsTemplate.Select(d => d.Id).ToList(), 0);
-            List<ReportsTemplatesVersion> myTenantReportsTemplatesVersion = reportsTemplatesVersionRepository.GetReportsTemplatesVersionsByReportsTemplateIds(myTenantReportsTemplate.Select(d => d.Id).ToList(), tenant);
-            List<Document> documentLists = documentRepository.GetDocumentsByIds(tenantZeroReportsTemplatesVersionLists.Select(d => d.ReportDocumentId).ToList());
+            tenantZeroReportsTemplatesVersionLists = reportsTemplatesVersionRepository.GetReportsTemplatesVersionsByReportsTemplateIds(tenantZeroReportsTemplate.Select(d => d.Id).ToList(), 0);
+            myTenantReportsTemplatesVersion = reportsTemplatesVersionRepository.GetReportsTemplatesVersionsByReportsTemplateIds(myTenantReportsTemplate.Select(d => d.Id).ToList(), tenant);
+            documentLists = documentRepository.GetDocumentsByIds(tenantZeroReportsTemplatesVersionLists.Select(d => d.ReportDocumentId).ToList());
             List<Report> myReports = new List<Report>();
 
             if (tenant != 0)
@@ -2285,6 +2291,7 @@ namespace WebFreight.Web.Helpers
                             FeatureUniqeCode = report.FeatureUniqeCode,
                             AvailableForScheduling = report.AvailableForScheduling,
                             DisablePreview = report.DisablePreview,
+                            DefaultExcelTemplateId = report.DefaultExcelTemplateId
 
                         };
                         reportRepository.Add(newReport);
@@ -2299,6 +2306,7 @@ namespace WebFreight.Web.Helpers
                 isChangeReport = false;
                 foreach (Report report in reportList)
                 {
+                    isChangeReport = UpdateExcelReports(tenant, userId, report, myReports)? true : isChangeReport;
                     ReportsTemplate systemReportTemplate = tenantZeroReportsTemplate.Where(d => d.ReportId == report.Id && d.Id == report.DefaultTemplateId).FirstOrDefault();
                     if (systemReportTemplate != null)
                     {
@@ -2377,6 +2385,81 @@ namespace WebFreight.Web.Helpers
 
         }
 
+        private bool UpdateExcelReports(int tenant, string userId, Report reportTenantZero,List<Report> myReports)
+        {
+            ReportsTemplate systemExcelReportTemplate = tenantZeroReportsTemplate.Where(d => d.ReportId == reportTenantZero.Id && d.Id == reportTenantZero.DefaultExcelTemplateId).FirstOrDefault();
+            if (systemExcelReportTemplate == null)
+                return false;
+
+            Report myReport = myReports.Where(d => d.Code == reportTenantZero.Code && d.Tenant == tenant).FirstOrDefault();
+            if (myReport == null)
+                return false;
+
+            ReportsTemplate myReportsTemplate = myTenantReportsTemplate.Where(d => d.ReportId == myReport.Id && d.IsSystem).FirstOrDefault();
+            if (myReportsTemplate == null)
+            {
+                myReportsTemplate = myTenantReportsTemplate.Where(d => d.ReportId == myReport.Id && d.Id == myReport.DefaultExcelTemplateId).FirstOrDefault();
+            }
+
+            // if template does not exist add it
+            if (myReportsTemplate == null)
+            {
+                return AddExcelDocument(tenant, userId, reportTenantZero, systemExcelReportTemplate, myReport);
+            }
+
+            return AddExcelDocumentVersion(tenant, userId, reportTenantZero, systemExcelReportTemplate, myReport, myReportsTemplate);
+        }
+
+        private bool AddExcelDocumentVersion(int tenant, string userId, Report reportTenantZero, ReportsTemplate systemExcelReportTemplate, Report myReport, ReportsTemplate myReportsTemplate)
+        {
+            ReportsTemplatesVersion tenantZeroReportsTemplatesVersion = tenantZeroReportsTemplatesVersionLists.Where(d => d.ReportId == reportTenantZero.Id && d.TemplateId == systemExcelReportTemplate.Id).FirstOrDefault();
+            ReportsTemplatesVersion myReportsTemplatesVersion = myTenantReportsTemplatesVersion.Where(d => d.ReportId == myReport.Id && d.TemplateId == myReportsTemplate.Id && d.Version == myReportsTemplate.CurrentVersion).FirstOrDefault();
+
+            if (tenantZeroReportsTemplatesVersion == null || myReportsTemplatesVersion == null)
+                return false;
+
+            if (tenantZeroReportsTemplatesVersion.UpdateDate <= myReportsTemplatesVersion.UpdateDate)
+                return false;
+
+            string documentId = AddDocument(documentRepository, tenantZeroReportsTemplatesVersion.ReportDocumentId, tenantZeroReportsTemplatesVersion.Tenant, tenant, documentLists);
+            ReportsTemplatesVersion reportsTemplatesVersion = new ReportsTemplatesVersion()
+            {
+                Id = IdCounter.GetNumber("ReportsTemplatesVersion", tenant).ToString(),
+                Tenant = tenant,
+                CreateDate = TenantServerConfigration.GetCurrentDateTime(tenant),
+                UpdateDate = TenantServerConfigration.GetCurrentDateTime(tenant),
+                ReportId = myReportsTemplate.ReportId,
+                CreatedByUserId = userId,
+                UpdatedByUserId = userId,
+                TemplateId = myReportsTemplate.Id,
+                Version = myReportsTemplate.CurrentVersion + 1,
+                ReportDocumentId = !string.IsNullOrEmpty(documentId) ? documentId : null,
+            };
+
+            reportsTemplatesVersionRepository.Add(reportsTemplatesVersion);
+            myReportsTemplate.CurrentVersion = reportsTemplatesVersion.Version;
+            myReportsTemplate.UpdateDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+            myReportsTemplate.UpdatedByUserId = userId;
+
+            return true;
+        }
+
+        private bool AddExcelDocument(int tenant, string userId, Report reportTenantZero, ReportsTemplate systemExcelReportTemplate, Report myReport)
+        {
+
+            ReportsTemplatesVersion tenantZeroReportsTemplatesVersion = tenantZeroReportsTemplatesVersionLists.FirstOrDefault(d => d.ReportId == reportTenantZero.Id && d.TemplateId == systemExcelReportTemplate.Id);
+
+            if (tenantZeroReportsTemplatesVersion == null || string.IsNullOrEmpty(tenantZeroReportsTemplatesVersion.ReportDocumentId))
+                return false;
+
+            string documentId = AddDocument(documentRepository, tenantZeroReportsTemplatesVersion.ReportDocumentId, reportTenantZero.Tenant, tenant, documentLists);
+            if (string.IsNullOrEmpty(documentId))
+                return false;
+
+            myReport.DefaultExcelTemplateId = AddReportTemplate(myReport.Id, systemExcelReportTemplate.Description, userId, documentId, tenant, reportsTemplateRepository, reportsTemplatesVersionRepository, null, true, "E");
+            return true;
+
+        }
         #endregion
 
         public ReportFliter BuildReportDataViewWorkerRole(ReportFliter reportFliter)
