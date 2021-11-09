@@ -1,4 +1,4 @@
-@devsmoke @release @stable @all
+@release
 Feature: AR Invoice Approve, Set as Sent and Void
     The user creates a Direct Export Air shipment, creates receivable,
     creates AR Invoice, approve AR Invoice, set AR Invoice as sent and voids the AR Invoice.
@@ -95,15 +95,40 @@ Feature: AR Invoice Approve, Set as Sent and Void
         Then the invoice should approve successfully
         And the status value should be "Unpaid"
 
+    Scenario: Assert invoice details screen fields after approving the invoice
+        Then the details screen fields should be disabled
+
     Scenario: Assert the status of menu buttons after approving the invoice
         When press on menu button
         Then assert the status of menu buttons after approving the invoice
 
+    Scenario: Assert link of the invoice exsit and delete receivable not exsit
+        Given navigates receivables tab
+        Then the link of the invoice should be exsit
+        And delete receivable button should not appear
+
+    Scenario: Receivable edit screen should be dim
+        Given navigates receivables edit screen
+        Then the receivables fields should be disabled
+
     Scenario: Set ARInvoice as sent
+        Given navigates invoice workspace
         When set invoice as sent with "sent invoice" as a note
         Then the invoice should set as sent successfully
+        And the following event should appear in events tab
+            | Event        | Notes        |
+            | Invoice Sent | sent invoice |
 
     Scenario: Void ARInvoice
         When void invoice
         Then the invoice should void successfully
         And the status value should be "Void"
+
+    Scenario: Assert link of the invoice not exsit and delete receivable exsit
+        Given navigates receivables tab
+        Then the link of the invoice should not be exsit
+        And delete receivable button should appear
+
+    Scenario: Receivable edit screen should not be dim
+        Given navigates receivables edit screen
+        Then the receivables fields should be enabled

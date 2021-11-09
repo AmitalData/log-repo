@@ -17,6 +17,8 @@ import * as Assists from "../../../../Base/cypress/assists/Assists";
 import * as MaintenanceActions from "../../../../Maintenance/cypress/actions/Actions";
 import { InvoiceSettingsDetails } from "../../../../Maintenance/cypress/models/InvoiceSettingsDetails";
 import { MaintenanceSelectors } from "../../../../Maintenance/cypress/selectors/Selectors";
+import * as BaseActions from "../../../../Base/cypress/actions/Actions"
+import { EventTypeDetails } from "../../../../Base/cypress/models/EventTypeDetails";
 
 //#region variables
 let invoiceSettingsDetails: InvoiceSettingsDetails;
@@ -24,12 +26,14 @@ let shipmentDetails: ShipmentDetails;
 let shipmentNumber: string;
 let customerCode: string;
 let AccountingSystem: string;
-
+let invoiceNumber: string;
 //#endregion
+
 //#region Update Accounting System
 Given("the user logged in", () => {
     cy.Login();
 });
+
 Given("accounting System as {string}", (accountingSystem) => {
     AccountingSystem = accountingSystem;
 });
@@ -37,10 +41,12 @@ Given("accounting System as {string}", (accountingSystem) => {
 When("change the accounting system", () => {
     AccountingActions.changeAccountingsSystem(AccountingSystem)
 });
+
 Then("the accounting system should update successfully", () => {
     BaseAssertion.AssertElementNotExist(BaseSelectors.LogitudeWindow);
 });
 //#endregion
+
 //#region enable void invoice settings
 Given("the user navigates to {string} in maintenance menu", (InvoiceSettings) => {
     MaintenanceActions.OpenMaintenanceItemFromMaintenanceMenu(InvoiceSettings, MaintenanceSelectors.InvoiceSettingsMaintenanceItem)
@@ -59,23 +65,28 @@ Then("the invoice setting should update successfully", () => {
     MaintenanceActions.AssertUpdateInvoiceSettings()
 });
 //#endregion
+
 //#region Create customer
 Given("the user navigates to customers workspace", () => {
     CommonActions.NavigatesToCustomersWorkspace();
 });
+
 Given("a customer with the following details", (dataTable) => {
     let customerDetails = Assists.CreateInstance<CustomerDetails>(dataTable, true);
     CommonActions.AddNewCustomer(customerDetails);
 });
+
 When("create customer", () => {
     CommonActions.CreateCustomer();
 });
+
 Then("the customer should create successfully", () => {
     BaseAssertion.AssertStatusCode(RequestAliases.PartnersDomainRequest, 200).then((interception) => {
         customerCode = interception.response.body.Customer.Code;
     });
 });
 //#endregion
+
 //#region Create direct export air shipment
 Given("the user navigates to shipments workspace", () => {
     Actions.NavigatesToShipmentsWorkspace()
@@ -104,48 +115,56 @@ Given("the user in the shipment's rounting tab", () => {
     Actions.OpenShipment(shipmentNumber);
     cy.Click(ShipmentSelectors.RoutingsTab, null);
 });
+
 Given("edit main carriage leg with the following details", (dataTable) => {
     let mainCarriageLeg = Assists.CreateInstance<MainCarriageLeg>(dataTable, true);
     Actions.EditMainCarriageLegs(mainCarriageLeg.Airline);
 });
 //#endregion
+
 //#region Update packages tab
 Given("the user add package with the following details", (dataTable) => {
     let packagesDetails = Assists.CreateSet<PackagesDetails>(dataTable);
     Actions.FillPackageTab(shipmentDetails.TransportMode, packagesDetails)
 });
 //#endregion
+
 //#region Add Payables
 Given("a payable with the following details", (dataTable) => {
     const PayableData = Assists.CreateInstance<PayableDetails>(dataTable, true);
     Actions.FillPayablesTab(PayableData)
 });
+
 When("add payables", () => {
     Actions.UpdateShipment(ShipmentSelectors.ShipmentSaveButton)
-
 });
+
 Then("the payables should add successfully", () => {
     BaseAssertion.AssertStatusCode(RequestAliases.ShipmentRequest, 200)
 });
 //#endregion
+
 //#region generate receivables from payables
 When("generate receivables from payables", () => {
     Actions.GenerateReceivablesFromPayables()
 });
+
 Then("the receivables should generate successfully", () => {
     BaseAssertion.AssertStatusCode(RequestAliases.ShipmentRequest, 200);
 });
 //#endregion
+
 //#region Create ARInvoice
-Given("an ARInvoice with a random invoice number and the following details",
-    (dataTable) => {
-        const ARInvoiceData = Assists.CreateInstance<ARInvoiceDetails>(dataTable, true);
-        cy.Click(AccountingSelectors.CreateARInvoiceButton, null);
-        AccountingActions.FillARInvoiceDetails(ARInvoiceData)
-    });
+Given("an ARInvoice with a random invoice number and the following details", (dataTable) => {
+    const ARInvoiceData = Assists.CreateInstance<ARInvoiceDetails>(dataTable, true);
+    cy.Click(AccountingSelectors.CreateARInvoiceButton, null);
+    AccountingActions.FillARInvoiceDetails(ARInvoiceData)
+});
+
 When("create invoice", () => {
     AccountingActions.CreateARInvoice()
 });
+
 Then("the invoice should create successfully", () => {
     BaseAssertion.AssertStatusCode(RequestAliases.ARInvoicesRequest, 200);
 });
@@ -169,8 +188,11 @@ Then("assert the status of menu buttons after approving the invoice", () => {
 When("approve invoice", () => {
     AccountingActions.ARApproveInvoice()
 });
+
 Then("the invoice should approve successfully", () => {
-    BaseAssertion.AssertStatusCode(RequestAliases.ARInvoicesRequest, 200);
+    BaseAssertion.AssertStatusCode(RequestAliases.ARInvoicesRequest, 200).then((interception) => {
+        invoiceNumber = interception.response.body.InvoiceNumber;
+    });
 });
 
 Then("the status value should be {string}", (statusValue) => {
@@ -178,7 +200,59 @@ Then("the status value should be {string}", (statusValue) => {
 });
 //#endregion
 
+//#region Assert invoice details screen fields after approving the invoice
+Given("navigates details tab", () => {
+    cy.Click(AccountingSelectors.ARInvoiceDetails, null)
+});
+
+Then("the details screen fields should be disabled", () => {
+    AccountingActions.AssertARInvoiceDetailsFieldsDisabled()
+});
+//#endregion
+
+//#region Assert link of the invoice exsit/ not exist and delete receivable not exsit/ exist
+Given("navigates receivables tab", () => {
+    cy.Click(ShipmentSelectors.Backbutton + BaseSelectors.LastElement, null)
+});
+
+Then("the link of the invoice should be exsit", () => {
+    BaseAssertion.AssertElementContain(BaseSelectors.HyperlinkButtonControl, invoiceNumber)
+});
+
+Then("delete receivable button should not appear", () => {
+    BaseAssertion.AssertElementNotVisible(BaseSelectors.DeleteButton)
+});
+
+Then("the link of the invoice should not be exsit", () => {
+    cy.contains(invoiceNumber).should(BaseSelectors.NotExist)
+});
+
+Then("delete receivable button should appear", () => {
+    BaseAssertion.AssertElementVisible(BaseSelectors.DeleteButton)
+});
+//#endregion
+
+//#region Receivable edit screen should be dim/ not dim
+Given("navigates receivables edit screen", () => {
+    cy.get(BaseSelectors.LogCellTemplate + BaseSelectors.LastElement).find(BaseSelectors.StartsWithEditButton).click()
+});
+
+Then("the receivables fields should be disabled", () => {
+    Actions.AssertReceivablesFieldsDisable()
+    cy.Click(BaseSelectors.Button, BaseSelectors.ContainsCancel)
+});
+
+Then("the receivables fields should be enabled", () => {
+    Actions.AssertReceivablesFieldsEnable()
+    cy.Click(BaseSelectors.Button, BaseSelectors.ContainsCancel)
+});
+//#endregion
+
 //#region Set ARInvoice as sent
+Given("navigates invoice workspace", () => {
+    cy.Click(BaseSelectors.HyperlinkButtonControl, invoiceNumber, true)
+});
+
 When("set invoice as sent with {string} as a note", (notes) => {
     AccountingActions.SetAsSentARInvoice(notes)
 });
@@ -186,15 +260,23 @@ When("set invoice as sent with {string} as a note", (notes) => {
 Then("the invoice should set as sent successfully", () => {
     BaseAssertion.AssertStatusCode(RequestAliases.ARInvoicesRequest, 200);
 });
+
+Then("the following event should appear in events tab", (dataTable) => {
+    let eventDetailsList = Assists.CreateSet<EventTypeDetails>(dataTable);
+    BaseActions.ValidateEventsTab(eventDetailsList, AccountingSelectors.ARInvoiceEventsTab);
+});
 //#endregion
+
 //#region Void ARInvoice
 When("void invoice", () => {
     AccountingActions.VoidARInvoice()
 });
+
 Then("the invoice should void successfully", () => {
     BaseAssertion.AssertStatusCode(RequestAliases.ARInvoicesRequest, 200);
 });
 //#endregion
+
 //#region update shipment step
 When("update shipment", () => {
     Actions.UpdateShipment(ShipmentSelectors.ShipmentSaveButton)
@@ -205,4 +287,4 @@ When("update shipment", () => {
 Then("the direct should update successfully", () => {
     BaseAssertion.AssertStatusCode(RequestAliases.ShipmentRequest, 200);
 });
-    //#endregion
+//#endregion

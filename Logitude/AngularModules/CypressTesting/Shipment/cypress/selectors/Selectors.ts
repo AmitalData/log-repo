@@ -268,6 +268,7 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly ReceivableCurrency = '#ShipmentReceivable_CurrencyId'
   public static readonly ReceivableMeasurement = '#ShipmentReceivable_MeasurementId'
   public static readonly ReceivableTotalAmount = '#ShipmentReceivable_TotalAmount';
+  public static readonly ReceivableTotalAmountLocal = '#ShipmentReceivable_TotalAmountLocal';
   public static readonly AddReceivableOkButton = '#Ok-AddReceivableBtn';
   public static readonly ShipmentReceivableRate = '#ShipmentReceivable_Rate'
   public static readonly ReceivableFromPayables = "#PAYB-Receivable"

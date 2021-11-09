@@ -719,6 +719,27 @@ export function AssertRoutingTabWorkSpaceButtonsEnable() {
     BaseAssertion.AssertElementDisabled(ShipmentSelectors.AddDelivery, BaseSelectors.NotBeDisabled)
     BaseAssertion.AssertElementDisabled(ShipmentSelectors.AddWarehouseLegPickups, BaseSelectors.NotBeDisabled)
 }
+
+export function AssertReceivablesFieldsDisable() {
+    BaseAssertion.AssertElementDisabled(ShipmentSelectors.ReceivableChargesType, BaseSelectors.BeDisabled)
+    BaseAssertion.AssertElementDisabled(ShipmentSelectors.ReceivableQuantity, BaseSelectors.BeDisabled)
+    BaseAssertion.AssertElementDisabled(ShipmentSelectors.ReceivableUnitPrice, BaseSelectors.BeDisabled)
+    BaseAssertion.AssertElementDisabled(ShipmentSelectors.ReceivableCurrency, BaseSelectors.BeDisabled)
+    BaseAssertion.AssertElementDisabled(ShipmentSelectors.ShipmentReceivableRate, BaseSelectors.BeDisabled)
+    BaseAssertion.AssertElementDisabled(ShipmentSelectors.ReceivableTotalAmount, BaseSelectors.BeDisabled)
+    BaseAssertion.AssertElementDisabled(ShipmentSelectors.ReceivableTotalAmountLocal, BaseSelectors.BeDisabled)
+    BaseAssertion.AssertElementDisabled(ShipmentSelectors.ReceivableMeasurement, BaseSelectors.BeDisabled)
+    BaseAssertion.AssertElementDisabled(ShipmentSelectors.AddReceivableOkButton, BaseSelectors.BeDisabled)
+}
+
+export function AssertReceivablesFieldsEnable() {
+    BaseAssertion.AssertElementDisabled(ShipmentSelectors.ReceivableQuantity, BaseSelectors.NotBeDisabled)
+    BaseAssertion.AssertElementDisabled(ShipmentSelectors.ReceivableUnitPrice, BaseSelectors.NotBeDisabled)
+    BaseAssertion.AssertElementDisabled(ShipmentSelectors.ReceivableCurrency, BaseSelectors.NotBeDisabled)
+    BaseAssertion.AssertElementDisabled(ShipmentSelectors.ShipmentReceivableRate, BaseSelectors.NotBeDisabled)
+    BaseAssertion.AssertElementDisabled(ShipmentSelectors.ReceivableMeasurement, BaseSelectors.NotBeDisabled)
+    BaseAssertion.AssertElementDisabled(ShipmentSelectors.AddReceivableOkButton, BaseSelectors.NotBeDisabled)
+}
 //#endregion
 
 //#region Payables Tab

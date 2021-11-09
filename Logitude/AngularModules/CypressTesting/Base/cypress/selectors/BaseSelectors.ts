@@ -117,6 +117,7 @@ export class BaseSelectors extends RegexSelectors {
     public static readonly LogitudeIconButton = ".LogitudeIconButton"
     public static readonly LoggedUser = "#LoggedUser"
     public static readonly DefaultMenuItem = ".DefaultMenuItem"
+    public static readonly LogCellTemplate = ".LogCellTemplate"
     //#endregion
 
     public static readonly FirstElementInList = 'ul > li';
