@@ -1,3 +1,4 @@
+
 <table style="height:75px;width:100%;">
     <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
         <td>
@@ -5,7 +6,9 @@
         </td>
     </tr>
     <tr>
-        <td><div style="color:#1B90CB;font-size:15px;">Filter By:</div></td>
+        <td>
+            <div style="color:#1B90CB;font-size:15px;">Filter By:</div>
+        </td>
     </tr>
     <tr>
         <td>
@@ -14,151 +17,198 @@
                     <td>
                         <table>
                             <tr>
-                                <td>
+                                <td style="width:80px;">
+                                    <div style="width:80px;">Customer:</div>
+                                </td>
+                                <td style="width:250px;">
+                                    <LogLov [NoObjectField]="true" [ObjectFieldName]="'CustomerId'"
+                                            [DataContext]="DataContext"
+                                            [SelectedValue]="CustomerId"
+                                            [LookUpTableName]="'Card'"
+                                            [DependencyFilter1Value]="'CS,PO'" [DependencyFilter1IsList]="true"
+                                            [HideAdd]="true" [HideAddLink]="true" [HideEdit]="true">
+                                    </LogLov>
+                                </td>
+
+                                <td style="width:10px;">
+                                    <div style="width:10px"></div>
+                                </td>
+
+                                <td style="width:80px;">
+                                    <div style="width:80px;">Owner:</div>
+                                </td>
+                                <td style="width:250px;">
+                                    <LogLov [NoObjectField]="true" [ObjectFieldName]="'OwnerId'"
+                                            [DataContext]="DataContext"
+                                            [SelectedValue]="OwnerId"
+                                            [LookUpTableName]="'User'"
+                                            [HideAdd]="true" [HideAddLink]="true" [HideEdit]="true">
+                                    </LogLov>
+                                </td>
+                                <td style="width:10px;">
+                                    <div style="width:10px"></div>
+                                </td>
+
+                                <td style="width:100px;">
                                     <table>
                                         <tr>
-                                            <td style="width:60px;"><div style="width:60px;">Customer:</div></td>
+                                            <td style="width:70px;">
+                                                <div style="width:70px">From Date:</div>
+                                            </td>
                                             <td style="width:130px;">
-                                                <LogLov [NoObjectField]="true" [ObjectFieldName]="'CustomerId'"
-                                                        [DataContext]="DataContext"
-                                                        [SelectedValue]="CustomerId"
-                                                        [LookUpTableName]="'Card'"
-                                                        [DependencyFilter1Value]="'CS,PO'" [DependencyFilter1IsList]="true"
-                                                        [HideAdd]="true" [HideAddLink]="true" [HideEdit]="true">
-                                                </LogLov>
+                                                <div style="width:130px;">
+                                                    <LogDatePicker [ObjectFieldName]="'FromDate'" [DataContext]="DataContext" [NoObjectField]="true"></LogDatePicker>
+                                                </div>
                                             </td>
-
-                                            <td style="width:10px;"><div style="width:10px"></div></td>
-
-                                            <td style="width:60px;"><div style="width:60px;">Owner:</div></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                                <td style="width:10px">
+                                    <div style="width:10px"></div>
+                                </td>
+                                <td style="width:100px;">
+                                    <table>
+                                        <tr>
+                                            <td style="width:55px;">
+                                                <div style="width:55px;"> To Date: </div>
+                                            </td>
                                             <td style="width:130px;">
-                                                <LogLov [NoObjectField]="true" [ObjectFieldName]="'OwnerId'"
-                                                        [DataContext]="DataContext"
-                                                        [SelectedValue]="OwnerId"
-                                                        [LookUpTableName]="'User'"
-                                                        [HideAdd]="true" [HideAddLink]="true" [HideEdit]="true">
-                                                </LogLov>
+                                                <div style="width:130px;">
+                                                    <LogDatePicker [ObjectFieldName]="'ToDate'" [DataContext]="DataContext" [NoObjectField]="true"></LogDatePicker>
+                                                </div>
                                             </td>
-                                            <td style="width:10px;"><div style="width:10px"></div></td>
-
-                                            <td style="width:100px;">
-                                                <table>
-                                                    <tr>
-                                                        <td style="width:70px;"><div style="width:70px">From Date:</div></td>
-                                                        <td style="width:130px;">
-                                                            <div style="width:130px;">
-                                                                <LogDatePicker [ObjectFieldName]="'FromDate'" [DataContext]="DataContext" [NoObjectField]="true"></LogDatePicker>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                </table>
-                                            </td>
-                                            <td style="width:10px"><div style="width:10px"></div></td>
-                                            <td style="width:100px;">
-                                                <table>
-                                                    <tr>
-                                                        <td style="width:55px;"><div style="width:55px;"> To Date: </div></td>
-                                                        <td style="width:130px;">
-                                                            <div style="width:130px;">
-                                                                <LogDatePicker [ObjectFieldName]="'ToDate'" [DataContext]="DataContext" [NoObjectField]="true"></LogDatePicker>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                </table>
-                                            </td>
-
-                                            <td style="width:10px;"><div style="width:10px"></div></td>
-
-                                            <td style="width:80px;"><div style="width:80px;">Employee:</div></td>
-                                            <td style="width:130px;">
-                                                <LogLov [NoObjectField]="true"
-                                                        [ObjectFieldName]="'EmployeeUserId'"
-                                                        [DataContext]="DataContext"
-                                                        [SelectedValue]="EmployeeUserId"
-                                                        [LookUpTableName]="'User'"
-                                                        [HideAdd]="true" [HideAddLink]="true" [HideEdit]="true">
-                                                </LogLov>
-                                            </td>
-
-                                            <td style="width:10px;"><div style="width:10px"></div></td>
-
-
-                                            <td style="width:60px;"><div style="width:60px;">Budget:</div></td>
-                                            <td style="width:130px;">
-                                                <LogLov [ObjectFieldName]="'BudgetId'"
-                                                        [DataContext]="DataContext"
-                                                        [NoObjectField]="true"
-                                                        [SelectedValue]="BudgetId"
-                                                        [LookUpTableName]="'TMBudget'" [HideAdd]="true" [HideAddLink]="true" [HideEdit]="true">
-                                                </LogLov>
-                                            </td>
-
-                                            <td style="width:10px;"><div style="width:10px"></div></td>
-
-                                            <td style="width:90px;text-align:left">
-                                                <button (click)="RunReport()" class="GreenButton" style="width:90px;height:22px;border:1px solid green;border-radius:3px;">
-                                                    <div style="color:black;  text-align:center;vertical-align:central;font-size:12px;">Run Report</div>
-                                                </button>
-                                            </td>
-                                            <td><div></div></td>
                                         </tr>
                                     </table>
                                 </td>
 
+                                <td>
+                                    <div></div>
+                                </td>
                             </tr>
                         </table>
+                    </td>
+                </tr>
+
+                <tr style="height:5px;">
+                    <td>
+                        <div></div>
+                    </td>
+
+                </tr>
+                <tr>
+                    <td>
+                        <table>
+                            <tr>
+                                <td style="width:80px;">
+                                    <div style="width:80px;">Category:</div>
+                                </td>
+                                <td style="width:250px;">
+                                    <LogLov [ObjectFieldName]="'CategoryId'"
+                                            [DataContext]="DataContext"
+                                            [NoObjectField]="true"
+                                            [SelectedValue]="CategoryId"
+                                            [LookUpTableName]="'TMProjectCategory'" [HideAdd]="true" [HideAddLink]="true" [HideEdit]="true">
+                                    </LogLov>
+                                </td>
+
+                                <td style="width:10px;">
+                                    <div style="width:10px"></div>
+                                </td>
+
+                                <td style="width:80px;">
+                                    <div style="width:80px;">Project:</div>
+                                </td>
+                                <td style="width:250px;">
+                                    <LogLov [NoObjectField]="true"
+                                            [ObjectFieldName]="'ProjectId'"
+                                            [DataContext]="DataContext"
+                                            [SelectedValue]="ProjectId"
+                                            [LookUpTableName]="'TMProject'"
+                                            [HideAdd]="true" [HideAddLink]="true" [HideEdit]="true">
+                                    </LogLov>
+                                </td>
+                                <td style="width:10px;">
+                                    <div style="width:10px"></div>
+                                </td>
+
+                                <td style="width:160px;">
+                                    <div style="width:160px;">External Project Number:</div>
+                                </td>
+                                <td style="width:250px;">
+                                    <LogTextBox [ObjectFieldName]="'ExternalProjectNumber'" [Text]="ExternalProjectNumber" [NoObjectField]="true" [DataContext]="DataContext"></LogTextBox>
+                                </td>
+
+                                <td style="width:10px;">
+                                    <div style="width:10px"></div>
+                                </td>
+                                <td class="Label" style="width:130px">Include Inner Project</td>
+                                <td style="width:15px">
+                                    <CheckBox [IsChecked]="IncludeInnerProject" (Checked)="IncludeInnerProject = $event"></CheckBox>
+                                </td>
+
+                                <td style="width:20px;">
+                                    <div style="width:20px"></div>
+                                </td>
+
+                                <td style="width:100px;text-align:left">
+                                    <button (click)="RunReport()" class="GreenButton" style="width:100px;height:22px;border:1px solid green;border-radius:3px;">
+                                        <div style="color:black;  text-align:center;vertical-align:central;font-size:12px;">Run Report</div>
+                                    </button>
+                                </td>
+
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+
+                <tr style="height:5px;">
+                    <td>
+                        <div></div>
                     </td>
                 </tr>
                 <tr>
                     <td>
                         <table>
                             <tr>
-                                <td>
-                                    <table>
-                                        <tr>
-                                            <td style="width:60px;"><div style="width:60px;">Category:</div></td>
-                                            <td style="width:130px;">
-                                                <LogLov [ObjectFieldName]="'CategoryId'"
-                                                        [DataContext]="DataContext"
-                                                        [NoObjectField]="true"
-                                                        [SelectedValue]="CategoryId"
-                                                        [LookUpTableName]="'TMProjectCategory'" [HideAdd]="true" [HideAddLink]="true" [HideEdit]="true">
-                                                </LogLov>
-                                            </td>
-
-                                            <td style="width:10px;"><div style="width:10px"></div></td>
-
-                                            <td style="width:60px;"><div style="width:60px;">Project:</div></td>
-                                            <td style="width:130px;">
-                                                <LogLov [NoObjectField]="true"
-                                                        [ObjectFieldName]="'ProjectId'"
-                                                        [DataContext]="DataContext"
-                                                        [SelectedValue]="ProjectId"
-                                                        [LookUpTableName]="'TMProject'"
-                                                        [HideAdd]="true" [HideAddLink]="true" [HideEdit]="true">
-                                                </LogLov>
-                                            </td>
-                                            <td style="width:10px;"><div style="width:10px"></div></td>
-
-                                            <td style="width:160px;"><div style="width:160px;">External Project Number:</div></td>
-                                            <td style="width:150px;">
-                                                <LogTextBox [ObjectFieldName]="'ExternalProjectNumber'" [Text]="ExternalProjectNumber" [NoObjectField]="true" [DataContext]="DataContext"></LogTextBox>
-                                            </td>
-
-                                            <td style="width:10px;"><div style="width:10px"></div></td>
-                                            <td class="Label" style="width:130px">Include Inner Project</td>
-                                            <td style="width:15px">
-                                                <CheckBox [IsChecked]="IncludeInnerProject" (Checked)="IncludeInnerProject = $event"></CheckBox>
-                                            </td>
-                                            <td><div></div></td>
-                                        </tr>
-                                    </table>
+                                <td style="width:80px;">
+                                    <div style="width:80px;">Employee:</div>
+                                </td>
+                                <td style="width:250px;">
+                                    <LogLov [NoObjectField]="true"
+                                            [ObjectFieldName]="'EmployeeUserId'"
+                                            [DataContext]="DataContext"
+                                            [SelectedValue]="EmployeeUserId"
+                                            [LookUpTableName]="'User'"
+                                            [HideAdd]="true" [HideAddLink]="true" [HideEdit]="true">
+                                    </LogLov>
                                 </td>
 
+                                <td style="width:10px;">
+                                    <div style="width:10px"></div>
+                                </td>
+                                <td style="width:80px;">
+                                    <div style="width:80px;">Budget:</div>
+                                </td>
+                                <td style="width:250px;">
+                                    <LogLov [ObjectFieldName]="'BudgetId'"
+                                            [DataContext]="DataContext"
+                                            [NoObjectField]="true"
+                                            [SelectedValue]="BudgetId"
+                                            [LookUpTableName]="'TMBudget'" [HideAdd]="true" [HideAddLink]="true" [HideEdit]="true">
+                                    </LogLov>
+                                </td>
+                                <td>
+                                    <div></div>
+                                </td>
                             </tr>
                         </table>
                     </td>
                 </tr>
+
+
             </table>
         </td>
     </tr>
