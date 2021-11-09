@@ -37,7 +37,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Declaration Courier Status&quot;"
-  Code="&quot;a1b8&quot;"
+  Code="&quot;da4c&quot;"
   Name="&quot;Customs.DeclarationCourierStatus Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
@@ -6063,6 +6063,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;LastMileServiceType&quot;"
     ListPropertyPath="&quot;LastMileServiceType&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -6173,6 +6174,48 @@
       Code="&quot;Customs.DeclarationCourierStatus.O.ReportType&quot;"
       DefaultText="&quot;Report Type&quot;"
       LocalDefaultText="&quot;סוג דוח&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.DeclarationCourierStatus.O.FromLastMile&quot;"
+      DefaultText="&quot;From Date LastMile&quot;"
+      LocalDefaultText="&quot;מתאריך הפצה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.DeclarationCourierStatus.O.ToDateLastMile&quot;"
+      DefaultText="&quot;From Date LastMile&quot;"
+      LocalDefaultText="&quot;עד תאריך הפצה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.DeclarationCourierStatus.O.ToDateHatra&quot;"
+      DefaultText="&quot;To Date Hatra&quot;"
+      LocalDefaultText="&quot; עד תאריך התרה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.DeclarationCourierStatus.O.FromDateHatra&quot;"
+      DefaultText="&quot;From Date Hatra&quot;"
+      LocalDefaultText="&quot;מתאריך התרה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.DeclarationCourierStatus.O.Trucker&quot;"
+      DefaultText="&quot;Trucker&quot;"
+      LocalDefaultText="&quot;מפיץ&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.DeclarationCourierStatus.O.Airline&quot;"
+      DefaultText="&quot;Airline&quot;"
+      LocalDefaultText="&quot;חברת תעופה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.DeclarationCourierStatus.O.CourierHawb&quot;"
+      DefaultText="&quot;CourierHawb&quot;"
+      LocalDefaultText="&quot;ש.מ.ר&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>
