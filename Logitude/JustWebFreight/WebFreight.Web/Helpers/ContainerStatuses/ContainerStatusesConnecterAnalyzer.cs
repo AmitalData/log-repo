@@ -1170,6 +1170,7 @@ namespace WebFreight.Web.Helpers.Analyzers
                 container.Transshipment2LocationPortId = this.GetPortId(containerUpdatedFields.Transshipment2Location);
                 container.Transshipment3LocationPortId = this.GetPortId(containerUpdatedFields.Transshipment3Location);
                 container.Transshipment4LocationPortId = this.GetPortId(containerUpdatedFields.Transshipment4Location);
+                container.IsAutomaticUpdates = true;
                 this.SaveContainer();
             }
         }

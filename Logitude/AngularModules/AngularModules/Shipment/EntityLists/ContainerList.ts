@@ -226,5 +226,5 @@ export class ContainerList {
 		ShipmentTypeName: string;
 		ShipmentCreateDate: Date;
 		PODReceivedOnDate: Date;
-	
-}
+		IsAutomaticUpdates: boolean;
+}
