@@ -118,7 +118,7 @@
                                             <div *ngIf="logcelltemplate.IsEditMode">
                                                     <LogLov [ObjectFieldName]="'BankAccountId'"
                                                         [ObjectTableName]="ObjectTableName"
-                                                        [DataContext]="DataContext"
+                                                        [DataContext]="item"
                                                         (SelectedItemChanged)="item.BankAccountId = $event?.Id; item.BankAccount = $event"
                                                         [LookUpTableName]="'BankAccount'"
                                                         [DisplayMemberPath]="'LocalName'"> </LogLov>
