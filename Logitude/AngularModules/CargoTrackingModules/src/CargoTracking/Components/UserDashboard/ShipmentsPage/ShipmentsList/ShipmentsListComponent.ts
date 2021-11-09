@@ -865,6 +865,9 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
         this.selectedShipmentDirectionsFilter = [];
         this.hasExceptionAdvancedFilter = false;
         this.appliedSelectedFilterMilestonesStatus= [];
+        this.FiltersInvitedCustomers.map((item, index) => {
+            item.IsSelected = false;
+        });
         // RootContext.ShipmentsScrollPosition = 0;
         // this.LoadScreenData();
     }
@@ -928,6 +931,10 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
     FiltersInvitedCustomers: any[] = [];
     OpenAdvancedFiltersSidebar(){
         this.isFiltersSideBarOpened = true;
+        this.mapFiltersInvitedCustomers();
+    }
+
+    mapFiltersInvitedCustomers() {
 
         this.FiltersSelectedInvitedCustoms = this.SelectedInvitedCustomers.map(d=>d);
 
