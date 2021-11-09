@@ -195,7 +195,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                             select new CustomerTenantAccessInfo()
                                             {
                                                 HasAccess = true,
-                                                CustomerTenant = a.CustomerTenant
+                                                CustomerTenant = a.CustomerTenant,
+                                                IsCustomsActivated =  customerTenantAccessCardPM.IsCustomsActivated,
+                                                IsExportActivated = customerTenantAccessCardPM.IsExportActivated 
 
                                             }).FirstOrDefault();
             }

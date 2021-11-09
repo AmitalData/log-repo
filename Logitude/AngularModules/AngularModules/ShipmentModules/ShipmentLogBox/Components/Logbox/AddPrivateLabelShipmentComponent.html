@@ -200,7 +200,7 @@
 												<div class="RadioButton" *ngFor="let item of DirectionsList" [attr.id]="'DirectionRadio_Div_' + SessionIndex + item.Code">
 													<input [attr.id]="'DirectionRadio_' + SessionIndex + item.Code" [attr.name]="'DirectionsRadio' + SessionIndex" type="radio" [checked]="DirectionId == item.Code" (click)="changeDirection(item.Code)" />
 													<label [attr.for]="'DirectionRadio_' + SessionIndex + item.Code" style="text-indent: 40px; font-size: 12px" [ngStyle]="{color: DirectionId == item.Code ? '#287828':'#282E30'}">
-														<img class="LeftCenter" style="margin-left: 20px;" [attr.src]="item.Code == 'C'? './Images/Directions/I.png' : './Images/Directions/' + item.Code + '.png'" />
+														<img class="LeftCenter" style="margin-left: 20px;" [attr.src]="'./Images/Directions/' + item.Code + '.png'" />
 
 														{{item.Name}}
 													</label>

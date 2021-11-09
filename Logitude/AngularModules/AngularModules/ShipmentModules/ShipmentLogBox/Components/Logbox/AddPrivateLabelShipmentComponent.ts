@@ -61,7 +61,7 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
     public FromPort: string;
     public ShowAddDocument: boolean = false;
     public ChangePageButton: string = "Next";
-    public IsImportActivated: boolean = false;
+    public IsCustomsActivated: boolean = false;
     constructor() {
         super(); 
         this.InitializeServices();
@@ -207,7 +207,7 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
     }
 
     private SetDirections(args: any) {
-        this.IsImportActivated = args.IsImportActivated;
+        this.IsCustomsActivated = args.IsCustomsActivated;
     }
 
 
@@ -265,7 +265,7 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
     } 
      
     private SetCustomOption() {
-        if (SessionLocator.PrivateLableSettings.IsImportActivated && this.IsImportActivated) {
+        if (SessionLocator.PrivateLableSettings.IsCustomsActivated && this.IsCustomsActivated) {
             this.DirectionsList.push(new FilterClass("C", "Customs"));
         }
     }
