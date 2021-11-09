@@ -496,7 +496,7 @@
                                         <table>
                                             <tr class="TabTitleRow">
                                                 <td colspan="8">{{PaymentMethodDetailsLabel}} 
-                                                    <span *ngIf="AccountingPaymentMethodCode == 'BT'">
+                                                    <span *ngIf="AccountingPaymentMethodCode == 'BT' && EntityPM.ARPaymentBankTranfers.length > 0">
                                                          ({{EntityPM.ARPaymentBankTranfers.length}})
                                                     </span></td>
                                             </tr>
