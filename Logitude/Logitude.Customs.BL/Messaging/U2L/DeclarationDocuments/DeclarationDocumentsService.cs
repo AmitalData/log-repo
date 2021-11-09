@@ -67,7 +67,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.DeclarationDocuments
             _context = CustomContext.GetContext(ResolvedTenant());
             AppendLogLine($"ResolvedTenant()={ResolvedTenant()}");
             var myQueryService = new DeclarationQueryService(_context);
-
+            CustomsDocumentPM customsDocumentPM = new CustomsDocumentPM();
             MyGenericResponseObj.Stage = "GetSingle";
             this._MyDeclarationPM = myQueryService.GetSingle(this._LogitudeDocs.Id, true, false);
             if (this._MyDeclarationPM == null)
@@ -113,13 +113,13 @@ namespace Logitude.Customs.BL.Messaging.U2L.DeclarationDocuments
                                 var myCustomsDocumentPointerPMListforDec = myCustomsDocumentPointerPMList.Where(o => o.ParentEntityCode == "Declaration" && o.ParentEntityId == _MyDeclarationPM.Id);
                                 if(myCustomsDocumentPointerPMListforDec != null && myCustomsDocumentPointerPMListforDec.Count() > 0)
                                 {
-
+                                    
                                     if (this._MyDeclarationPM.IsCourierDeclaration)
                                     {
                                         var updateDocumentStatuscodeService = new UpdateDocumentStatuscodeService();
                                         updateDocumentStatuscodeService.UpdateDocumentStatuscode(this._MyDeclarationPM, DateTime.MinValue, false);
                                     }
-                                    customsDocumentPM = myCustomsDocumentQueryService.GetSingle(this._LogitudeDocs.COM_ID, false, false);
+                                  customsDocumentPM = myCustomsDocumentQueryService.GetSingle(this._LogitudeDocs.COM_ID, false, false);
 
                                     if (customsDocumentPM!= null && String.IsNullOrWhiteSpace(customsDocumentPM.CustomsDocId) && customsDocumentPM.DocumentStatusCode!="7")
                                     {
@@ -185,8 +185,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.DeclarationDocuments
                     myCustomsDocumentPointerUpdateService.Update(customsDocumentPointerPM, true);
 
                     var myDocumentId = myCustomsDocumentQueryService.GetSingle(this._LogitudeDocs.COM_ID, true, false);
-                    CustomsDocumentPM customsDocumentPM;
-                    var myCustomsDocumentUpdateService = new CustomsDocumentUpdateService(dbContext, new Dictionary<string, IContext>(), _MyDeclarationPM.Tenant);
+                     var myCustomsDocumentUpdateService = new CustomsDocumentUpdateService(dbContext, new Dictionary<string, IContext>(), _MyDeclarationPM.Tenant);
                     
                     CustomsDocumentMetaDataValueQueryService customsDocumentMetaDataValueQuery = new CustomsDocumentMetaDataValueQueryService(_context);
 
