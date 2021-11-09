@@ -100,7 +100,7 @@ Feature: AR Invoice Approve, Set as Sent and Void
         Then assert the status of menu buttons after approving the invoice
 
     Scenario: Set ARInvoice as sent
-        When set invoice as sent
+        When set invoice as sent with "sent invoice" as a note
         Then the invoice should set as sent successfully
 
     Scenario: Void ARInvoice

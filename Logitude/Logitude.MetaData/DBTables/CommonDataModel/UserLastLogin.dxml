@@ -37,7 +37,7 @@
     DefaultValue="'None'"
     Size="40">
     <Constraints
-      Nullable="true" />
+      Nullable="false" />
   </Column>
   <Relation
     ForeignKeyColumn="Id"
