@@ -33,7 +33,7 @@ export class LastMileReportComponent extends BaseComponent implements OnInit {
             this.SlaReportSettings = new SlaReportSettings();
         });
 
-        this.UIProperties.SetVisibility("FromRequestCreateDate", this.ObjectTableName, true);
+        this.UIProperties.SetVisibility("FromLastMile", this.ObjectTableName, true);
     }
 
     _FromLastMile;
@@ -81,7 +81,6 @@ export class LastMileReportComponent extends BaseComponent implements OnInit {
     
     ngOnInit() {
         this.ExportAsExcelButtonIsEnabled = true;
-        // this.FromRequestCreateDate = DateTool.AddDays(DateTool.GetCurrentDateAsUtc(), 0);
     }
 
     ExportExcel() {

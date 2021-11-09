@@ -40,16 +40,16 @@
                 <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
             </td>
         </tr>
-        <tr *ngIf="ValidationErrorsList == null"style="height: 30px;">
+        <tr *ngIf="ValidationErrorsList == null" style="height: 30px;">
             <td>
                 <div></div>
             </td>
         </tr>
         <tr class="FormFieldRow">
             <td class="tbl1Label">
-                <LogLabel [NoObjectField]="true" [ObjectFieldName]="'FromLastMile'"
-                    [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"
-                    [TextCode]="'Customs.DeclarationCourierStatus.O.FromLastMile'"></LogLabel>
+                <LogLabel [NoObjectField]="true" [ObjectFieldName]="'FromLastMile'" [ObjectTableName]="ObjectTableName"
+                    [DataContext]="DataContext" [TextCode]="'Customs.DeclarationCourierStatus.O.FromLastMile'">
+                </LogLabel>
             </td>
             <td class="tbl1Col0"></td>
             <!--style="width: 180px; padding-right: 15px;"-->
@@ -81,9 +81,9 @@
         </tr>
         <tr class="FormFieldRow">
             <td class="tbl1Label">
-                <LogLabel [NoObjectField]="true" [ObjectFieldName]="'FromDateHatra'"
-                    [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"
-                    [TextCode]="'Customs.DeclarationCourierStatus.O.FromDateHatra'"></LogLabel>
+                <LogLabel [NoObjectField]="true" [ObjectFieldName]="'FromDateHatra'" [ObjectTableName]="ObjectTableName"
+                    [DataContext]="DataContext" [TextCode]="'Customs.DeclarationCourierStatus.O.FromDateHatra'">
+                </LogLabel>
             </td>
             <td class="tbl1Col0"></td>
             <!--style="width: 180px; padding-right: 15px;"-->
@@ -97,9 +97,9 @@
                 <div></div>
             </td>
             <td class="tbl1Label">
-                <LogLabel [NoObjectField]="true" [ObjectFieldName]="'ToDateHatra'"
-                    [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"
-                    [TextCode]="'Customs.DeclarationCourierStatus.O.ToDateHatra'"></LogLabel>
+                <LogLabel [NoObjectField]="true" [ObjectFieldName]="'ToDateHatra'" [ObjectTableName]="ObjectTableName"
+                    [DataContext]="DataContext" [TextCode]="'Customs.DeclarationCourierStatus.O.ToDateHatra'">
+                </LogLabel>
             </td>
             <td class="tbl1Col0"></td>
             <!--style="width: 180px; padding-right: 15px;"-->
@@ -115,13 +115,18 @@
         </tr>
         <tr class="FormFieldRow">
             <td class="tbl1Label">
-                
+                <LogLabel [ObjectFieldName]="'Trucker'" [ObjectTableName]="ObjectTableName"
+                    [DataContext]="DataContext"></LogLabel>
             </td>
             <td class="tbl1Col0"></td>
             <td class="tbl1Col1">
-                <ComboBox [ItemsSource]="_ReportTypes" [SelectedItem]="SelectedReportType" [Binding]="'Value'"
-                    (SelectedItemChanged)="KeywordtypeCodeClicked($event.Key)"></ComboBox>
+                <LogLov [ObjectFieldName]="'Trucker'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"
+                    [SelectedValue]="Trucker" [DisplayMemberPath]="'LocalName'" [HideAddLink]="true"
+                    [LookUpTableName]="'Card'" [DependencyFilter1Value]="'TR'"
+                    [DisplayFieldsFromList]="'Code,LocalName'" [HideColumns]="true" [RunToggleMode]="true">
+                </LogLov>
             </td>
+
         </tr>
         <tr>
             <td>
@@ -142,14 +147,16 @@
                             <div></div>
                         </td>
                         <td width="57px">
-                            <button class="Button" [disabled]="!ExportAsExcelButtonIsEnabled" (click)="ExportExcel()"><img class="CenterCenter" title="Export To Excel" src="./Images/Buttons/excelicon.png" /></button>
+                            <button class="Button" [disabled]="!ExportAsExcelButtonIsEnabled"
+                                (click)="ExportExcel()"><img class="CenterCenter" title="Export To Excel"
+                                    src="./Images/Buttons/excelicon.png" /></button>
                         </td>
                         <td style="width: 5px;">
                             <div></div>
                         </td>
                         <td width="57px">
                             <button class="Button" (click)="CancelButtonClicked()">סגור</button>
-                        </td>   
+                        </td>
                         <td style="width: 10px;">
                             <div></div>
                         </td>
