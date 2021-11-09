@@ -1116,6 +1116,11 @@ export class ContainerPM {
     public set ShipmentCreateDate(newValue: Date) { if (this.shipmentCreateDate != newValue) { this.shipmentCreateDate = newValue; this.MarkAsDirty("ShipmentCreateDate"); } }
        
 	 
+    private pODReceivedOnDate: Date;
+    public get PODReceivedOnDate() { return this.pODReceivedOnDate; }
+    public set PODReceivedOnDate(newValue: Date) { if (this.pODReceivedOnDate != newValue) { this.pODReceivedOnDate = newValue; this.MarkAsDirty("PODReceivedOnDate"); } }
+       
+	 
 
     public OldEntityPM: ContainerPM;
 		

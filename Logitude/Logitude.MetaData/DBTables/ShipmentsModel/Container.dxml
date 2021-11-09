@@ -1290,6 +1290,12 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="PODReceivedOnDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="CreatedByUserId"
     ReferencedTable="Users"

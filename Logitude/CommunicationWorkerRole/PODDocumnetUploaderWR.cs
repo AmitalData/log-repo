@@ -17,6 +17,10 @@ using Logitude.BL.ShipmentsModel.Tools.TraceEvents;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.InfrastructureModel;
+using Logitude.BL.ShipmentsModel.Tools.EntityService;
+using Simplog.Data.ShipmentsModel;
+using Logitude.BL.ShipmentsModel.EntityPMs;
+using Logitude.BL.ShipmentsModel.EntityQueries;
 
 namespace CommunicationWorkerRole
 {
@@ -37,6 +41,8 @@ namespace CommunicationWorkerRole
         ObjectTable objectTable;
         private ShipmentMasterDataRepository shipmentMasterDataRepository;
         ShipmentRepository shipmentRepository;
+        IShipmentsContext shipmentContext;
+        ContainerService containerService;
 
         public override bool OnStart()
         {
@@ -212,11 +218,42 @@ namespace CommunicationWorkerRole
             shipment = shipmentRepository.GetSingleShipment(shipmentId, tenant);
             shipment.IsPODReceived = isPODReceived;
             shipment.PODReceivedDate = podReceivedDate;
+            this.UpdateShipmentContainers(shipmentId, podReceivedDate, tenant);
             this.HandelPODShipmentEvent(isPODReceived, podReceivedDate);
             shipmentRepository.Update(shipment);
             shipmentRepository.SubmitChanges();
         }
 
+        private void UpdateShipmentContainers(string shipmentId, DateTime? podReceivedDate, int tenant)
+        {
+            shipmentContext = ShipmentsContext.GetContext(tenant);
+            containerService = new ContainerService(shipmentContext, tenant);
+            List<ContainerPM> containers = GetShipmentContainers(shipmentId, tenant);
+            foreach (ContainerPM container in containers)
+            {
+                this.UpdateContainer(container, podReceivedDate);
+            }
+        }
+        private static List<ContainerPM> GetShipmentContainers(string shipmentId, int tenant)
+        {
+            ContainerQuery containerQuery = new ContainerQuery(tenant);
+            List<ContainerPM> containerPMs = new List<ContainerPM>();
+            ShipmentQuery shipmentQuery = new ShipmentQuery(tenant);
+            var shipmentPM = shipmentQuery.GetSinglePM(shipmentId, tenant);
+            var shipmentContainers = shipmentPM?.ShipmentPackages?.Where(a => !string.IsNullOrEmpty(a.ContainerEntityId));
+            foreach (ShipmentPackagePM shipmentPackagePM in shipmentContainers)
+            {
+                containerPMs.Add(containerQuery.GetSinglePM(shipmentPackagePM.ContainerEntityId, shipmentPM.Tenant));
+            }
+            return containerPMs;
+        }
+
+        private void UpdateContainer(ContainerPM container, DateTime? podReceivedDate)
+        {
+            container.PODReceivedOnDate = podReceivedDate;
+            containerService.Update(container);
+        }
+   
         private void HandelPODShipmentEvent(bool isPODReceived, DateTime? podReceivedDate)
         {
             if (!isPODReceived && podReceivedDate == null)
@@ -227,18 +264,6 @@ namespace CommunicationWorkerRole
             {
                 this.CreateTraceEvent("PIOD");
             }
-        }
-
-        private void CreateTraceEvent(string eventTypeCode)
-        {
-            EventTracer.CreateTraceEvent(new EventTracerArgs()
-            {
-                Tenant = tenant,
-                EventTypeCode = eventTypeCode,
-                UserId = shipment?.UpdatedByUserId,
-                EntityId = shipment?.Id,
-                ObjectTableName = "Shipment"
-            });
         }
 
         private void DeleteTraceEvent(string eventTypeCode)
@@ -332,6 +357,17 @@ namespace CommunicationWorkerRole
                     }
                 }
             }
+        }
+        private void CreateTraceEvent(string eventTypeCode)
+        {
+            EventTracer.CreateTraceEvent(new EventTracerArgs()
+            {
+                Tenant = tenant,
+                EventTypeCode = eventTypeCode,
+                UserId = shipment?.UpdatedByUserId,
+                EntityId = shipment?.Id,
+                ObjectTableName = "Shipment"
+            });
         }
     }
 }
