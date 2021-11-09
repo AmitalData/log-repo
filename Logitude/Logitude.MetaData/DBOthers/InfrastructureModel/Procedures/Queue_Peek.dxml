@@ -79,7 +79,7 @@ BEGIN
      --ROWNUM<2  AND  --do not use rownum due  http://stackoverflow.com/questions/6117254/force-oracle-to-return-top-n-rows-with-skip-locked/6649586#6649586
     AND qt.Status             = v_WatingStatus
     AND QueueDefinitionCode = v_QueueDefinitionCode
-    ORDER BY qt.NextRunDateTime ASC
+    ORDER BY qt.tenantpriority ASC ,qt.NextRunDateTime ASC
     FOR UPDATE SKIP LOCKED;
 BEGIN
   OPEN c_1;

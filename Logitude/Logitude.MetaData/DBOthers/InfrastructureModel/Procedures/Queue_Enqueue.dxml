@@ -57,7 +57,8 @@
 
   <OracleScript>
     <![CDATA[
-        create or replace PROCEDURE Queue_Enqueue(
+	create or replace PROCEDURE Queue_Enqueue(
+	    ---create or replace PROCEDURE  TSTQueue_Enqueue(
         v_QueueDefinitionCode IN VARCHAR2,
         v_MessageBody         IN VARCHAR2,
         v_Tenant              IN NUMBER,
@@ -66,7 +67,7 @@
         v_BatchNumber         IN VARCHAR2 ,
         v_HashCode            IN VARCHAR2,
         v_WatingStatus        IN NUMBER,
-		v_TenantPriority        IN NUMBER,
+		p_TenantPriority        IN NUMBER,
         v_QueueMessageId         OUT QUEUEMESSAGES.ID%TYPE
         
         )
@@ -76,9 +77,12 @@
       v_nextRunDateTime DATE;
       v_CId             VARCHAR2(15);
       v_BNo             VARCHAR2(15);
+	  v_TenantPriority  NUMBER;
     BEGIN
+	  
+	v_TenantPriority :=p_TenantPriority;  
 	IF (v_TenantPriority=0) THEN
-	    v_TenantPriority=7
+	    v_TenantPriority:=7;
 	END IF;
       v_currentdate     := SYSDATE ;
       v_nextRunDateTime := (SYSDATE + v_DelaySeconds/86400) ;
@@ -133,7 +137,7 @@
           RetryNumber,
           Field1,
           Field2,
-          TenantPriority,
+          TenantPriority
 		  
         )
         VALUES
@@ -148,7 +152,7 @@
           v_nextRunDateTime,
           0,
           v_CId,
-          v_BNo
+          v_BNo,
 		  v_TenantPriority
         );
     END;
