@@ -60,6 +60,7 @@ export class ReportsPreviewComponent implements AfterViewInit {
     private CurrentSession = SessionLocator.SelectedSession;
 
     IsHaveRunReportViewWorkerRoleToggleFeature: boolean = true;
+    TemplateType: string;
     constructor(public _reportService: ReportService, private cd: ChangeDetectorRef) {
         var idIndex = this.CurrentSession.GetNewId("ReportsPreviewComponent");
         this.ComponentId = "ReportsPreview_" + idIndex;
@@ -114,10 +115,19 @@ export class ReportsPreviewComponent implements AfterViewInit {
         return reportTemplateId;
     }
 
+    GetReportTemplateType() {
+        const templateType: string = this.StimulsoftArg.StimulsoftViewerComponent.TemplateType;
+        return templateType;
+    }
+
     SetReportTemplate(reportTemplateId: string) {
         if (reportTemplateId) {
             this.DefaultReportTemplateId = reportTemplateId;
         }
+    }
+
+    SetReportTemplateType(templateType: string) {
+        this.TemplateType = templateType;
     }
 
 
@@ -214,6 +224,7 @@ export class ReportsPreviewComponent implements AfterViewInit {
                 this.StimulsoftArg.IsShowExportMicrosoftExcel = true;
                 this.StimulsoftArg.IsShowSendButton = true;
                 this.StimulsoftArg.BuildStimulReportResult = null;
+                this.StimulsoftArg.TemplateType = this.TemplateType;
 
                 if (this.DefaultReportTemplateId) {
                     this.Report.DefaultTemplateId = this.DefaultReportTemplateId;

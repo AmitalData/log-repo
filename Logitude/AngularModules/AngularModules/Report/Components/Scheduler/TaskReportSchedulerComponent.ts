@@ -113,6 +113,7 @@ export class TaskReportSchedulerComponent implements OnInit {
         var windowArgs: any = {};
         windowArgs.ReportGroupList = this.ReportGroupList;
         windowArgs.ReportList = this.ReportList;
+        windowArgs.TasksSchedulerId = DataContext.EntityPM.Id;
 
         var logWindow = new LogitudeWindow();
         DataContext.fatherComponent = this;
