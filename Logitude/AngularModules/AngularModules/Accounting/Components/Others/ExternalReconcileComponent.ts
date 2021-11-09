@@ -61,6 +61,7 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
 
     private NewARPaymentTitle = TextCodeTranslator.Translate("ARPayment.O.New");
     private BankTransferDifferenceMessage = TextCodeTranslator.Translate("ExternalReconciliation.O.BankTransferDifferenceMsg");
+    private SelectCreditLinesOnlyMessage = TextCodeTranslator.Translate("ExternalReconciliation.O.BTCreditLinesOnly");
     private OnlyBankPagesMessage = TextCodeTranslator.Translate("ExternalReconciliation.O.BTOnlyBankPages");
 
     public FireCheckBoxChecked: EventEmitter<any> = new EventEmitter();
@@ -1836,9 +1837,9 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
 
     private ValidateSelectedPageLinesTotals()
     {
-        // var externalPagesCreditTotal = this.GetSelectedExternalPageLinesCreditTotal();
-        if (this.extPageTransactionsTotal > 0) {
-            this.ValidationErrorsList.push(this.BankTransferDifferenceMessage);
+        var hasDebitLines = this.ExtPageSelectedLines.Collection.find(line=>line.PageLinePM.DebitAmount != 0);
+        if (hasDebitLines && this.extPageTransactionsTotal < 0) {
+            this.ValidationErrorsList.push(this.SelectCreditLinesOnlyMessage);
         }
     }
     private ValidateSelectedLines()

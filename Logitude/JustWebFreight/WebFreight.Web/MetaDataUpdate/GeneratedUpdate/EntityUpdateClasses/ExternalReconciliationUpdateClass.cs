@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class ExternalReconciliationUpdateClass
    {  		
-		public const string HashString = "466e4a0c905d3ba37b47c8af91bfe235";
+		public const string HashString = "5e279077f6429766eecb841252005e15";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -122,7 +122,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "התאמה",
 			      				    DefaultText =  "External Reconciliation",
-			      				    Code =  "09ab",
+			      				    Code =  "bd65",
 			      				    Name =  "ExternalReconciliation Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Accounting",
@@ -1132,11 +1132,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   TextCode ExternalReconciliationTextCode_ExternalReconciliationOBTOnlyBankPages = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ExternalReconciliation.O.BTOnlyBankPages", DefaultText = "Please select only bank pages in order to continue",LocalDefaultText = @"על מנת להפיק קבלה יש לבחור דפי בנק בלבד", ObjectTableId = ExternalReconciliationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode ExternalReconciliationTextCode_ExternalReconciliationOBTbackgroundCreationMSG = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ExternalReconciliation.O.BTbackgroundCreationMSG", DefaultText = "AR Payment #number has been created successfully. The external reconciliation is being created in the background",LocalDefaultText = @"נוצרה קבלה 123 , ההתאמה תבוצע ברקע", ObjectTableId = ExternalReconciliationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode ExternalReconciliationTextCode_ExternalReconciliationOBTbackgroundCreationMSG = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ExternalReconciliation.O.BTbackgroundCreationMSG", DefaultText = "AR Payment #number has been created successfully. The external reconciliation is being created in the background",LocalDefaultText = @"נוצרה קבלה #number , ההתאמה תבוצע ברקע", ObjectTableId = ExternalReconciliationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode ExternalReconciliationTextCode_ExternalReconciliationOBTUnsavedChanges = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ExternalReconciliation.O.BTUnsavedChanges", DefaultText = "This AR Payment has unsaved changes do you want to save it considering that no external Reconciliation will be done if the payment isn't approved?",LocalDefaultText = @"בקבלה זאת בוצעו שינויים שטרם נשמרו , האם ברצונך לשמור זאת בהתחשב בכך שהתאמה חיצונית לא תתבצע אם הקבלה לא תאושר", ObjectTableId = ExternalReconciliationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode ExternalReconciliationTextCode_ExternalReconciliationOBTUnsavedChanges = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ExternalReconciliation.O.BTUnsavedChanges", DefaultText = "This A/R Payment has unsaved changes. By continuing, you will lose the payment and the changes done to the reconciliation screen",LocalDefaultText = @"בקבלה זאת בוצעו שינויים שטרם נשמרו , האם ברצונך לשמור זאת בהתחשב בכך שהתאמה חיצונית לא תתבצע אם הקבלה לא תאושר", ObjectTableId = ExternalReconciliationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode ExternalReconciliationTextCode_ExternalReconciliationOFutureValueDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ExternalReconciliation.O.FutureValueDate", DefaultText = "Value date must be greater than or equals to today's Date",LocalDefaultText = @"תאריך ערך צריך להיות קטן מתאריך נוכחי", ObjectTableId = ExternalReconciliationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ExternalReconciliationTextCode_ExternalReconciliationOBTCreditLinesOnly = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ExternalReconciliation.O.BTCreditLinesOnly", DefaultText = "Please Check the selected lines. ARpayment Reconciliation is allowed only with Credit Bank pages lines",LocalDefaultText = @"ניתן ליצור קבלה רק על שורת זכות חיובית בצד הבנק", ObjectTableId = ExternalReconciliationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
