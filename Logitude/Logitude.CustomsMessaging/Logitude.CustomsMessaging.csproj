@@ -515,7 +515,6 @@
     <Compile Include="ResponseServices\UniCourierBatchSend2750_MsgResponseService.cs" />
     <Compile Include="ResponseServices\UniCourierBatchSend2755_MsgResponseService.cs" />
     <Compile Include="ResponseServices\UniCourierBatchSend8250_MsgResponseService.cs" />
-    <Compile Include="ResponseServices\UniCourierBatchSendUCBCMSS_MsgResponseService.cs" />
     <Compile Include="ResponseServices\UniCourierBatchSendUCBCTML_MsgResponseService.cs" />
     <Compile Include="ResponseServices\UniCourierBatchSendUCBUD2LT_MsgResponseService.cs" />
     <Compile Include="ResponseServices\UniCustomTableZip_MsgResponseService.cs" />
