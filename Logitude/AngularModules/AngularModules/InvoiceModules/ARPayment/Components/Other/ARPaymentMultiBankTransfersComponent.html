@@ -58,7 +58,7 @@
                                     <ng-template let-item>
                                         <log-cell-template #logcelltemplate>
                                             <div class="TextTrimming" style="text-align:right" *ngIf="logcelltemplate.IsDisplayMode" >
-                                                <span>{{item.ForeignAmount}}</span>
+                                                <span>{{item.ForeignAmount | NumbersPipe:'N2'}}</span>
                                             </div>
                                             <div *ngIf="logcelltemplate.IsEditMode">
                                                 <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'ForeignAmount'" [DataContext]="item" [InputType]="'decimal'"
@@ -118,7 +118,7 @@
                                             <div *ngIf="logcelltemplate.IsEditMode">
                                                     <LogLov [ObjectFieldName]="'BankAccountId'"
                                                         [ObjectTableName]="ObjectTableName"
-                                                        [DataContext]="DataContext"
+                                                        [DataContext]="item"
                                                         (SelectedItemChanged)="item.BankAccountId = $event?.Id; item.BankAccount = $event"
                                                         [LookUpTableName]="'BankAccount'"
                                                         [DisplayMemberPath]="'LocalName'"> </LogLov>
@@ -150,12 +150,16 @@
         </td>
     </tr>
 
-    <tr style="height: 32px;">
+    <tr style="height: 32px;border-top: 1px solid rgb(221, 221, 221);">
         <td colspan="7" style="vertical-align: bottom">
             <table style="height: 22px;">
                 <tr>
                     <td style="width:85px; padding-right: 15px;" colspan="6">
-                        <div class="footer-title" style="color: #3b95d5;font-size:14px" >  {{'Accounting.General.O.Totals' | TextCodeTranslationPipe}}: {{TotalAmount | NumbersPipe:'N2'}} {{paymentPM.PaymentCurrencySign}}</div>
+                        <div class="footer-title" style="color: #3b95d5;font-size:14px" >  {{'Accounting.General.O.Totals' | TextCodeTranslationPipe}}: 
+                            <span class="amount">{{paymentPM.PaymentCurrencySign}} {{TotalAmount | NumbersPipe:'N2'}} </span> 
+                            <span *ngIf="paymentPM.LocalCurrencyId != paymentPM.PaymentCurrencyId "> | 
+                            <span class="amount">{{TenantCurrencySign}} {{TotalLocalAmount | NumbersPipe:'N2'}}</span></span>
+                        </div>
                     </td>
                     <td>
                         <div></div>
