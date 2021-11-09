@@ -2422,7 +2422,7 @@ namespace WebFreight.Web.Helpers
                 return false;
 
             string documentId = AddDocument(documentRepository, tenantZeroReportsTemplatesVersion.ReportDocumentId, tenantZeroReportsTemplatesVersion.Tenant, tenant, documentLists);
-            ReportsTemplatesVersion reportsTemplatesVersion = GetReportsTemplatesVersiont(tenant, userId, myReportsTemplate, documentId);
+            ReportsTemplatesVersion reportsTemplatesVersion = GetReportsTemplatesVersion(tenant, userId, myReportsTemplate, documentId);
 
             reportsTemplatesVersionRepository.Add(reportsTemplatesVersion);
             myReportsTemplate.CurrentVersion = reportsTemplatesVersion.Version;
@@ -2432,7 +2432,7 @@ namespace WebFreight.Web.Helpers
             return true;
         }
 
-        private ReportsTemplatesVersion GetReportsTemplatesVersiont(int tenant, string userId, ReportsTemplate myReportsTemplate, string documentId)
+        private ReportsTemplatesVersion GetReportsTemplatesVersion(int tenant, string userId, ReportsTemplate myReportsTemplate, string documentId)
         {
             return new ReportsTemplatesVersion()
             {
