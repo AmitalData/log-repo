@@ -162,8 +162,8 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.LIFLocation).HasColumnName("LIFLocation");
             this.Property(t => t.EstimatedLIFArrival).HasColumnName("EstimatedLIFArrival");
             this.Property(t => t.ActualLIFArrival).HasColumnName("ActualLIFArrival");
-            this.Property(t => t.EstimatedLIFDeparture).HasColumnName("EstimatedLIFDeparture");
-            this.Property(t => t.ActualLIFDeparture).HasColumnName("ActualLIFDeparture");
+            this.Property(t => t.EstimatedOnCarriageDeparture).HasColumnName("EstimatedOnCarriageDeparture");
+            this.Property(t => t.ActualOnCarriageDeparture).HasColumnName("ActualOnCarriageDeparture");
             this.Property(t => t.GateIn).HasColumnName("GateIn");
             this.Property(t => t.GateOut).HasColumnName("GateOut");
             this.Property(t => t.EmptyReturnLocation).HasColumnName("EmptyReturnLocation");
@@ -224,7 +224,8 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.OPClosed).HasColumnName("OPClosed");
             this.Property(t => t.ShipmentTypeId).HasColumnName("ShipmentTypeId");
             this.Property(t => t.ShipmentCreateDate).HasColumnName("ShipmentCreateDate");
-
+            this.Property(t => t.PODReceivedOnDate).HasColumnName("PODReceivedOnDate");
+            
             this.HasOptional(t => t.CarrierCard).WithMany().HasForeignKey(d => d.MainCarriageCarrierId).WillCascadeOnDelete(false); 
             this.HasOptional(t => t.ShipmentPackage).WithMany().HasForeignKey(d => d.ShipmentPackagesId).WillCascadeOnDelete(false);
             this.HasOptional(t => t.VesselCard).WithMany().HasForeignKey(d => d.MainCarriageVesselId).WillCascadeOnDelete(false); 

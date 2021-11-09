@@ -79,7 +79,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 {
    public class ContainerUpdateClass
    {  		
-		public const string HashString = "245b9417ea50877ab55cbe599ade0349";
+		public const string HashString = "bcad97411d5e730a80777c0ed57cc4cb";
+
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -6921,7 +6922,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "EstimatedLIFDeparture",
+					 						FieldName =  "EstimatedOnCarriageDeparture",
 					  						ObjectTableName =  "Container",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -6940,8 +6941,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "EstimatedLIFDeparture",
-					  						ListPropertyPath =  "EstimatedLIFDeparture",
+					  						PMPropertyPath =  "EstimatedOnCarriageDeparture",
+					  						ListPropertyPath =  "EstimatedOnCarriageDeparture",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
@@ -6959,10 +6960,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayInDocumentReferences =  false,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "EstimatedLIFDeparture",
-					  						DefaultText =  "Estimated LIF Departure",
-					  						ListFieldLable =  "EstimatedLIFDepartureListLable",
-					  						ListLableDefaultText =  "Estimated LIF Departure",
+					  						FullFieldLable =  "EstimatedOnCarriageDeparture",
+					  						DefaultText =  "Estimated On Carriage Departure",
+					  						ListFieldLable =  "EstimatedOnCarriageDepartureListLable",
+					  						ListLableDefaultText =  "Estimated On Carriage Departure",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -6981,7 +6982,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "ActualLIFDeparture",
+					 						FieldName =  "ActualOnCarriageDeparture",
 					  						ObjectTableName =  "Container",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -7000,8 +7001,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "ActualLIFDeparture",
-					  						ListPropertyPath =  "ActualLIFDeparture",
+					  						PMPropertyPath =  "ActualOnCarriageDeparture",
+					  						ListPropertyPath =  "ActualOnCarriageDeparture",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
@@ -7019,10 +7020,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayInDocumentReferences =  false,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "ActualLIFDeparture",
-					  						DefaultText =  "Actual LIF Departure",
-					  						ListFieldLable =  "ActualLIFDepartureListLable",
-					  						ListLableDefaultText =  "Actual LIF Departure",
+					  						FullFieldLable =  "ActualOnCarriageDeparture",
+					  						DefaultText =  "Actual On Carriage Departure",
+					  						ListFieldLable =  "ActualOnCarriageDepartureListLable",
+					  						ListLableDefaultText =  "Actual On Carriage Departure",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -7620,9 +7621,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "AvailablityDate",
-					  						DefaultText =  "Availablity Date",
+					  						DefaultText =  "Availability Date",
 					  						ListFieldLable =  "AvailablityDateListLable",
-					  						ListLableDefaultText =  "Availablity Date",
+					  						ListLableDefaultText =  "Availability Date",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -12398,6 +12399,66 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DefaultText =  "Shipment Create Date",
 					  						ListFieldLable =  "ShipmentCreateDateListLable",
 					  						ListLableDefaultText =  "Shipment Create Date",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "PODReceivedOnDate",
+					  						ObjectTableName =  "Container",
+					  						FieldsDataType =  "DateTime",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  true,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						Operator =  "Between",
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "PODReceivedOnDate",
+					  						ListPropertyPath =  "PODReceivedOnDate",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Container",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "PODReceivedOnDate",
+					  						DefaultText =  "POD Received On Date",
+					  						ListFieldLable =  "PODReceivedOnDateListLable",
+					  						ListLableDefaultText =  "POD Received On Date",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,

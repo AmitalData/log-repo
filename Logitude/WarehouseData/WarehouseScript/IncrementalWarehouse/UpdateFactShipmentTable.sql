@@ -398,23 +398,17 @@
 	   dw_Shipments.PlannedCargoReadyDate,  dw_Shipments.ApprovedCargoReadyDate, dw_Shipments.Notify1Reference2,  HandlerUser.Id_Number, AccountingClosedByUser.Id_Number, dw_Shipments.IsStandalonePickupDelivery,
  
 
- 	1,1,1,1,
-	1,1,1,1,
-	1,1,1,1,
-	1,1,1,1,
-	1,1,1,1,
-	1,1,1,1,
-	1,1,1,1,
-    1,1,1,1,
+	 ShipperAddress.Id_Number,ShipperContact.Id_Number,ShipperNotExporterAddress.Id_Number,ShipperNotExporterContact.Id_Number,
+	 FreelancerAddress.Id_Number,FreelancerContact.Id_Number,ReleasingAgentAddress.Id_Number,ReleasingAgentContact.Id_Number,
+	 CustomerAddress.Id_Number,CustomerContact.Id_Number,ConsigneeAddress.Id_Number,ConsigneeContact.Id_Number,
+	 AgentAddress.Id_Number,AgentContact.Id_Number,CustomAgentExportAddress.Id_Number,CustomAgentExportContact.Id_Number,
+	 CustomAgentImportAddress.Id_Number,CustomAgentImportContact.Id_Number,Notify1Address.Id_Number,Notify1Contact.Id_Number,
+	 Notify2Address.Id_Number,Notify2Contact.Id_Number,FreightForwarderAddress.Id_Number,FreightForwarderContact.Id_Number,
+	 ConsigneeNotImporterAddress.Id_Number,ConsigneeNotImporterContact.Id_Number,CustomClearancePointAddress.Id_Number,CustomClearancePointContact.Id_Number,
+	 ColoaderAddress.Id_Number,ColoaderContact.Id_Number,ConsolidatorAddress.Id_Number,ConsolidatorContact.Id_Number,
+
 	DIM_ShipmentSubTypes.Id_Number
-	 --ShipperAddress.Id_Number,ShipperContact.Id_Number,ShipperNotExporterAddress.Id_Number,ShipperNotExporterContact.Id_Number,
-	 --FreelancerAddress.Id_Number,FreelancerContact.Id_Number,ReleasingAgentAddress.Id_Number,ReleasingAgentContact.Id_Number,
-	 --CustomerAddress.Id_Number,CustomerContact.Id_Number,ConsigneeAddress.Id_Number,ConsigneeContact.Id_Number,
-	 --AgentAddress.Id_Number,AgentContact.Id_Number,CustomAgentExportAddress.Id_Number,CustomAgentExportContact.Id_Number,
-	 --CustomAgentImportAddress.Id_Number,CustomAgentImportContact.Id_Number,Notify1Address.Id_Number,Notify1Contact.Id_Number,
-	 --Notify2Address.Id_Number,Notify2Contact.Id_Number,FreightForwarderAddress.Id_Number,FreightForwarderContact.Id_Number,
-	 --ConsigneeNotImporterAddress.Id_Number,ConsigneeNotImporterContact.Id_Number,CustomClearancePointAddress.Id_Number,CustomClearancePointContact.Id_Number,
-	 --ColoaderAddress.Id_Number,ColoaderContact.Id_Number,ConsolidatorAddress.Id_Number,ConsolidatorContact.Id_Number
+
 	 
 
 
@@ -510,53 +504,53 @@
    inner JOIN DIM_Users AccountingClosedByUser ON dw_ShipmentComputedFields.AccountingClosedByUserId  = AccountingClosedByUser.Id
    inner JOIN DIM_ShipmentSubTypes   ON dw_Shipments.ShipmentSubTypeId = DIM_ShipmentSubTypes.Id
 
-   --inner JOIN @DIM_AddressesTable ShipperAddress ON dw_Shipments.ShipperAddressId = ShipperAddress.Id
-   --inner JOIN @DIM_ContactsTable ShipperContact ON dw_Shipments.ShipperContactId = ShipperContact.Id   
+   inner JOIN @DIM_AddressesTable ShipperAddress ON dw_Shipments.ShipperAddressId = ShipperAddress.Id
+   inner JOIN @DIM_ContactsTable ShipperContact ON dw_Shipments.ShipperContactId = ShipperContact.Id   
 
-   --inner JOIN @DIM_AddressesTable ShipperNotExporterAddress ON dw_Shipments.ShipperNotExporterAddressId = ShipperNotExporterAddress.Id
-   --inner JOIN @DIM_ContactsTable ShipperNotExporterContact ON dw_Shipments.ShipperNotExporterContactId = ShipperNotExporterContact.Id
+   inner JOIN @DIM_AddressesTable ShipperNotExporterAddress ON dw_Shipments.ShipperNotExporterAddressId = ShipperNotExporterAddress.Id
+   inner JOIN @DIM_ContactsTable ShipperNotExporterContact ON dw_Shipments.ShipperNotExporterContactId = ShipperNotExporterContact.Id
 
-   --inner JOIN @DIM_AddressesTable FreelancerAddress ON dw_Shipments.FreelancerAddressId = FreelancerAddress.Id
-   --inner JOIN @DIM_ContactsTable FreelancerContact ON dw_Shipments.FreelancerContactId = FreelancerContact.Id
+   inner JOIN @DIM_AddressesTable FreelancerAddress ON dw_Shipments.FreelancerAddressId = FreelancerAddress.Id
+   inner JOIN @DIM_ContactsTable FreelancerContact ON dw_Shipments.FreelancerContactId = FreelancerContact.Id
 
-   --inner JOIN @DIM_AddressesTable ReleasingAgentAddress ON dw_Shipments.ReleasingAgentAddressId = ReleasingAgentAddress.Id
-   --inner JOIN @DIM_ContactsTable ReleasingAgentContact ON dw_Shipments.ReleasingAgentContactId = ReleasingAgentContact.Id
+   inner JOIN @DIM_AddressesTable ReleasingAgentAddress ON dw_Shipments.ReleasingAgentAddressId = ReleasingAgentAddress.Id
+   inner JOIN @DIM_ContactsTable ReleasingAgentContact ON dw_Shipments.ReleasingAgentContactId = ReleasingAgentContact.Id
 
-   --inner JOIN @DIM_AddressesTable CustomerAddress ON dw_Shipments.CustomerAddressId = CustomerAddress.Id
-   --inner JOIN @DIM_ContactsTable CustomerContact ON dw_Shipments.CustomerContactId = CustomerContact.Id
+   inner JOIN @DIM_AddressesTable CustomerAddress ON dw_Shipments.CustomerAddressId = CustomerAddress.Id
+   inner JOIN @DIM_ContactsTable CustomerContact ON dw_Shipments.CustomerContactId = CustomerContact.Id
 
-   --inner JOIN @DIM_AddressesTable ConsigneeAddress ON dw_Shipments.ConsigneeAddressId = ConsigneeAddress.Id
-   --inner JOIN @DIM_ContactsTable ConsigneeContact ON dw_Shipments.ConsigneeContactId = ConsigneeContact.Id
+   inner JOIN @DIM_AddressesTable ConsigneeAddress ON dw_Shipments.ConsigneeAddressId = ConsigneeAddress.Id
+   inner JOIN @DIM_ContactsTable ConsigneeContact ON dw_Shipments.ConsigneeContactId = ConsigneeContact.Id
 
-   --inner JOIN @DIM_AddressesTable AgentAddress ON dw_Shipments.AgentAddressId = AgentAddress.Id
-   --inner JOIN @DIM_ContactsTable AgentContact ON dw_Shipments.AgentContactId = AgentContact.Id
+   inner JOIN @DIM_AddressesTable AgentAddress ON dw_Shipments.AgentAddressId = AgentAddress.Id
+   inner JOIN @DIM_ContactsTable AgentContact ON dw_Shipments.AgentContactId = AgentContact.Id
 
-   --inner JOIN @DIM_AddressesTable CustomAgentExportAddress ON dw_Shipments.CustomAgentExportAddressId = CustomAgentExportAddress.Id
-   --inner JOIN @DIM_ContactsTable CustomAgentExportContact ON dw_Shipments.CustomAgentExportContactId = CustomAgentExportContact.Id
+   inner JOIN @DIM_AddressesTable CustomAgentExportAddress ON dw_Shipments.CustomAgentExportAddressId = CustomAgentExportAddress.Id
+   inner JOIN @DIM_ContactsTable CustomAgentExportContact ON dw_Shipments.CustomAgentExportContactId = CustomAgentExportContact.Id
 
-   --inner JOIN @DIM_AddressesTable CustomAgentImportAddress ON dw_Shipments.CustomAgentImportAddressId = CustomAgentImportAddress.Id
-   --inner JOIN @DIM_ContactsTable CustomAgentImportContact ON dw_Shipments.CustomAgentImportContactId = CustomAgentImportContact.Id
+   inner JOIN @DIM_AddressesTable CustomAgentImportAddress ON dw_Shipments.CustomAgentImportAddressId = CustomAgentImportAddress.Id
+   inner JOIN @DIM_ContactsTable CustomAgentImportContact ON dw_Shipments.CustomAgentImportContactId = CustomAgentImportContact.Id
 
-   --inner JOIN @DIM_AddressesTable Notify1Address ON dw_Shipments.Notify1AddressId = Notify1Address.Id
-   --inner JOIN @DIM_ContactsTable Notify1Contact ON dw_Shipments.Notify1ContactId = Notify1Contact.Id
+   inner JOIN @DIM_AddressesTable Notify1Address ON dw_Shipments.Notify1AddressId = Notify1Address.Id
+   inner JOIN @DIM_ContactsTable Notify1Contact ON dw_Shipments.Notify1ContactId = Notify1Contact.Id
 
-   --inner JOIN @DIM_AddressesTable Notify2Address ON dw_Shipments.Notify2AddressId = Notify2Address.Id
-   --inner JOIN @DIM_ContactsTable Notify2Contact ON dw_Shipments.Notify2ContactId = Notify2Contact.Id
+   inner JOIN @DIM_AddressesTable Notify2Address ON dw_Shipments.Notify2AddressId = Notify2Address.Id
+   inner JOIN @DIM_ContactsTable Notify2Contact ON dw_Shipments.Notify2ContactId = Notify2Contact.Id
 
-   --inner JOIN @DIM_AddressesTable FreightForwarderAddress ON dw_Shipments.FreightForwarderAddressId = FreightForwarderAddress.Id
-   --inner JOIN @DIM_ContactsTable FreightForwarderContact ON dw_Shipments.FreightForwarderContactId = FreightForwarderContact.Id
+   inner JOIN @DIM_AddressesTable FreightForwarderAddress ON dw_Shipments.FreightForwarderAddressId = FreightForwarderAddress.Id
+   inner JOIN @DIM_ContactsTable FreightForwarderContact ON dw_Shipments.FreightForwarderContactId = FreightForwarderContact.Id
 
-   --inner JOIN @DIM_AddressesTable ConsigneeNotImporterAddress ON dw_Shipments.ConsigneeNotImporterAddressId = ConsigneeNotImporterAddress.Id
-   --inner JOIN @DIM_ContactsTable ConsigneeNotImporterContact ON dw_Shipments.ConsigneeNotImporterContactId = ConsigneeNotImporterContact.Id
+   inner JOIN @DIM_AddressesTable ConsigneeNotImporterAddress ON dw_Shipments.ConsigneeNotImporterAddressId = ConsigneeNotImporterAddress.Id
+   inner JOIN @DIM_ContactsTable ConsigneeNotImporterContact ON dw_Shipments.ConsigneeNotImporterContactId = ConsigneeNotImporterContact.Id
 
-   --inner JOIN @DIM_AddressesTable CustomClearancePointAddress ON dw_Shipments.CustomClearancePointAddressId = CustomClearancePointAddress.Id
-   --inner JOIN @DIM_ContactsTable CustomClearancePointContact ON dw_Shipments.CustomClearancePointContactId = CustomClearancePointContact.Id
+   inner JOIN @DIM_AddressesTable CustomClearancePointAddress ON dw_Shipments.CustomClearancePointAddressId = CustomClearancePointAddress.Id
+   inner JOIN @DIM_ContactsTable CustomClearancePointContact ON dw_Shipments.CustomClearancePointContactId = CustomClearancePointContact.Id
 
-   --inner JOIN @DIM_AddressesTable ColoaderAddress ON dw_Shipments.ColoaderAddressId = ColoaderAddress.Id
-   --inner JOIN @DIM_ContactsTable ColoaderContact ON dw_Shipments.ColoaderContactId = ColoaderContact.Id
+   inner JOIN @DIM_AddressesTable ColoaderAddress ON dw_Shipments.ColoaderAddressId = ColoaderAddress.Id
+   inner JOIN @DIM_ContactsTable ColoaderContact ON dw_Shipments.ColoaderContactId = ColoaderContact.Id
 
-   --inner JOIN @DIM_AddressesTable ConsolidatorAddress ON dw_Shipments.ConsolidatorAddressId = ConsolidatorAddress.Id
-   --inner JOIN @DIM_ContactsTable ConsolidatorContact ON dw_Shipments.ConsolidatorContactId = ConsolidatorContact.Id
+   inner JOIN @DIM_AddressesTable ConsolidatorAddress ON dw_Shipments.ConsolidatorAddressId = ConsolidatorAddress.Id
+   inner JOIN @DIM_ContactsTable ConsolidatorContact ON dw_Shipments.ConsolidatorContactId = ConsolidatorContact.Id
 
 
 	where dw_Shipments.AutomaticLastUpdateDate > @LastUpdateDate and dw_Shipments.ShipmentLevelCode in ('H','D' , 'C')

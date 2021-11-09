@@ -123,8 +123,8 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public DateTime? ActualDelivery { get; set; }
         public DateTime? EstimatedLIFArrival { get; set; }
         public DateTime? ActualLIFArrival { get; set; }
-        public DateTime? EstimatedLIFDeparture { get; set; }
-        public DateTime? ActualLIFDeparture { get; set; }
+        public DateTime? EstimatedOnCarriageDeparture { get; set; }
+        public DateTime? ActualOnCarriageDeparture { get; set; }
         public DateTime? GateIn { get; set; }
         public DateTime? GateOut { get; set; }
         public DateTime? EstimatedEmptyReturn { get; set; }
@@ -300,6 +300,6 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         [ForeignKey("ShipmentTypeId")]
         public virtual ShipmentType ShipmentType { get; set; }
         public DateTime? ShipmentCreateDate { get; set; }
-
+        public DateTime? PODReceivedOnDate { get; set; }
     }
 }

@@ -29,10 +29,11 @@ export class ShipmentHelperComponent implements OnDestroy {
     public IsAnalyzeChampXMLButtonVisible: boolean = false;
     _entityResourceService: EntityResourceService = new EntityResourceService();
     private CurrentSession = SessionLocator.SelectedSession;
-
+    public IsSimulatorVisible: boolean = false;
     constructor(public entityArgs: EntityArgs, private cd: ChangeDetectorRef) {        
         this.IsFollowupsVisible = FeatureLocator.HasFeaturePermession("Shipment", "Shipment.Followups");
-      
+        this.IsSimulatorVisible = FeatureLocator.HasFeaturePermession("Shipment", "ContainerStatusSimulator");
+
         this.EntityPM = this.entityArgs.EntityPM;
 
         if (this.EntityPM) {

@@ -59,6 +59,8 @@ namespace Logitude.BL.InfrastructureModel.DataContracts
         [DataMember]
         public string ReportTemplateId { get; set; }
         [DataMember]
+        public string ReportTemplateType { get; set; }
+        [DataMember]
         public ReportSchedulerRecepients Recepients { get; set; }
         [DataMember]
         public List<QueryFilterItem> ReportFilterItems { get; set; }

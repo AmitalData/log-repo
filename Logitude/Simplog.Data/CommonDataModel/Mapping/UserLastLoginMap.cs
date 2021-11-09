@@ -9,7 +9,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
         public UserLastLoginMap()
         {
             // Primary Key
-            this.HasKey(t => new { t.Id, t.ComputerId, t.WorkEnvironment });
+            this.HasKey(t => t.Id);
 
             // Properties
             this.Property(t => t.ComputerId)

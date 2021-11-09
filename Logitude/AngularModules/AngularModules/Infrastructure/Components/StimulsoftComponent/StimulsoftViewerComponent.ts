@@ -116,7 +116,10 @@ export class StimulsoftViewerComponent implements OnInit {
         this.PreviewStimualDivId = Guid.newGuid();
         this.ViewerContentDivId = Guid.newGuid();
     }
-    ngAfterViewInit() { }
+    ngAfterViewInit() {
+        this.SetReportTypeClickText(this.StimulsoftArgData?.TemplateType);
+
+     }
     ngOnInit() {
 
         this.StimulsoftArgData.StimulsoftViewerComponent = this;
@@ -145,6 +148,13 @@ export class StimulsoftViewerComponent implements OnInit {
             this.IsEnableReportTemplateExcel = true;
         }
 
+    }
+
+    SetReportTypeClickText(templateType: string) {
+        if (AppTool.IsNullOrEmpty(templateType))
+            return;
+        this.TemplateType = templateType;
+        document.getElementById("templateType").innerHTML = templateType == "E" ? "Excel Template" : "Stimulsoft Template";
     }
 
 

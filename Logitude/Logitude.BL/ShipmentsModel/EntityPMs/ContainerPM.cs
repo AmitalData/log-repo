@@ -132,8 +132,8 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public DateTime? ActualDelivery { get; set; }
         public DateTime? EstimatedLIFArrival { get; set; }
         public DateTime? ActualLIFArrival { get; set; }
-        public DateTime? EstimatedLIFDeparture { get; set; }
-        public DateTime? ActualLIFDeparture { get; set; }
+        public DateTime? EstimatedOnCarriageDeparture { get; set; }
+        public DateTime? ActualOnCarriageDeparture { get; set; }
         public DateTime? GateIn { get; set; }
         public DateTime? GateOut { get; set; }
         public DateTime? EstimatedEmptyReturn { get; set; }
@@ -297,6 +297,8 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string ShipmentTypeName { get; set; }
         public DateTime? ShipmentCreateDate { get; set; }
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public DateTime? PODReceivedOnDate { get; set; }
 
     }
 }

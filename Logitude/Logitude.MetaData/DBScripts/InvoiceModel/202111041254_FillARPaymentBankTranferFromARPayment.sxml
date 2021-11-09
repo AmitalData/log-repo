@@ -1,5 +1,5 @@
 ﻿<Script DBType="Main" Module="Invoice" AOT="true"  TargetTableName="ARPayments">
-  <Sql Version="1">
+  <Sql Version="2">
     <![CDATA[
  
 declare @Tenant as int

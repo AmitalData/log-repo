@@ -1955,12 +1955,14 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             entityPoco.ShipperContactId = entityPM.ShipperContactId;
             entityPoco.ShipperReference1 = entityPM.ShipperReference1;
             entityPoco.ShipperReference2 = entityPM.ShipperReference2;
+            entityPoco.ShipperReference3 = entityPM.ShipperReference3;
 
             entityPoco.ConsigneeId = entityPM.ConsigneeId;
             entityPoco.ConsigneeAddressId = entityPM.ConsigneeAddressId;
             entityPoco.ConsigneeContactId = entityPM.ConsigneeContactId;
             entityPoco.ConsigneeReference1 = entityPM.ConsigneeReference1;
             entityPoco.ConsigneeReference2 = entityPM.ConsigneeReference2;
+            entityPoco.ConsigneeReference3 = entityPM.ConsigneeReference3;
 
             entityPoco.AgentId = entityPM.AgentId;
 

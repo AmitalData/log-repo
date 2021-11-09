@@ -179,9 +179,10 @@ Then("the status value should be {string}", (statusValue) => {
 //#endregion
 
 //#region Set ARInvoice as sent
-When("set invoice as sent", () => {
-    AccountingActions.SetAsSentARInvoice()
+When("set invoice as sent with {string} as a note", (notes) => {
+    AccountingActions.SetAsSentARInvoice(notes)
 });
+
 Then("the invoice should set as sent successfully", () => {
     BaseAssertion.AssertStatusCode(RequestAliases.ARInvoicesRequest, 200);
 });

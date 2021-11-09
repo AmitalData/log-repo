@@ -41,10 +41,18 @@ namespace WarehouseData.Service
                 reader.Close();
 
             }
-
             generalDataWarehouseService.ExecuteSql(CreateTABLE(table.Dw_TableName, dwObjectTable, table.ObjectFieldDBLists), destinationConnectionString);
+            if (table.UseBatches) AddRowNumberFieldsDependentOnRelatedFactTables(table, destinationConnectionString);
             table.ObjectFieldDBLists = GetCopyToDwObjectFieldLists(dwObjectTable);
 
+        }
+
+        private static void AddRowNumberFieldsDependentOnRelatedFactTables(TableClass table, string destinationConnectionString)
+        {
+            foreach (string factTableName in table.RelatedFactTables)
+            {
+                new DataWarehouseBatchService().AddRowNumberField(table, factTableName, destinationConnectionString);
+            }
         }
 
         private List<DWObjectFieldDB> GetCopyToDwObjectFieldLists(DataTable dataTable)
@@ -457,7 +465,7 @@ namespace WarehouseData.Service
                 {
                     condition += ((!isPrivateDB ? " where " : " and") + GetCustomObjectFieldCondition());
                 }
-            
+
                 string originTableName = table.TableName == "WaterMark" && isPrivateDB ? ("Private" + table.DBTableName) : table.DBTableName;
 
 
@@ -496,7 +504,7 @@ namespace WarehouseData.Service
                             }
 
                             bulkCopy.WriteToServer(reader);
-
+       
                         }
 
                         finally
@@ -571,7 +579,7 @@ namespace WarehouseData.Service
             TableClass table = buildDWArgs.table;
             string condition = !string.IsNullOrEmpty(buildDWArgs.Conition) ? buildDWArgs.Conition : GetUpdateDWDataBaseCondition(buildDWArgs);
             var columnNames =generalDataWarehouseService.GetColumnNamesAsString(table.Dw_TableName , buildDWArgs.DestinationConnectionString);
-     
+
             using (SqlConnection sourceConnection =
                        new SqlConnection(buildDWArgs.SourceConnectionString))
             {
@@ -586,8 +594,8 @@ namespace WarehouseData.Service
                 {
                     var dataTable = new DataTable();
                     dataTable.Load(reader);
-
-
+      
+                    
                     var columns = dataTable.Rows
                                      .Cast<DataRow>()
                                      .Select(r => (string)r[table.KeyName].ToString())

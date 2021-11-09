@@ -1224,7 +1224,10 @@ export class ShipmentPM {
     public get ShipperReference2() { return this.shipperReference2; }
     public set ShipperReference2(newValue: string) { if (this.shipperReference2 != newValue) { this.shipperReference2 = newValue; this.MarkAsDirty("ShipperReference2"); } }
        
-	 
+    private shipperReference3: string;
+    public get ShipperReference3() { return this.shipperReference3; }
+    public set ShipperReference3(newValue: string) { if (this.shipperReference3 != newValue) { this.shipperReference3 = newValue; this.MarkAsDirty("ShipperReference3"); } }
+
     private shipperName: string;
     public get ShipperName() { return this.shipperName; }
     public set ShipperName(newValue: string) { if (this.shipperName != newValue) { this.shipperName = newValue; this.MarkAsDirty("ShipperName"); } }
@@ -1269,7 +1272,12 @@ export class ShipmentPM {
     private consigneeReference2: string;
     public get ConsigneeReference2() { return this.consigneeReference2; }
     public set ConsigneeReference2(newValue: string) { if (this.consigneeReference2 != newValue) { this.consigneeReference2 = newValue; this.MarkAsDirty("ConsigneeReference2"); } }
-       
+
+
+    private consigneeReference3: string;
+    public get ConsigneeReference3() { return this.consigneeReference3; }
+    public set ConsigneeReference3(newValue: string) { if (this.consigneeReference3 != newValue) { this.consigneeReference3 = newValue; this.MarkAsDirty("ConsigneeReference3"); } }
+
 	 
     private consigneeName: string;
     public get ConsigneeName() { return this.consigneeName; }

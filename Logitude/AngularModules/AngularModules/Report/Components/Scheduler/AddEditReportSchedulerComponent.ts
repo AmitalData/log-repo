@@ -6,7 +6,9 @@ import { ReportGroupList } from '../../EntityLists/ReportGroupList';
 import { ReportList } from '../../EntityLists/ReportList';
 import { ReportsTemplateListExtendedService } from '../../../Common/Services/ExtendedLists/ReportsTemplateListExtendedService';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
-import { ReportSchedulerRecepients, ReportSchedulerDetails } from '../../../Infrastructure/DataContracts/SchedulerDetails';
+import { ReportSchedulerRecepients, ReportSchedulerDetails, SchedulerDetails } from '../../../Infrastructure/DataContracts/SchedulerDetails';
+import { SchedulerExtendedPMService } from 'Infrastructure/Services/ExtendedPMs/SchedulerExtendedPMService';
+import { AppTool } from 'Infrastructure/Tools';
 @Component({
     
     templateUrl: './AddEditReportSchedulerComponent.html',
@@ -23,8 +25,11 @@ export class AddEditReportSchedulerComponent implements OnInit {
     private PageChild_PRREP: any = null;
     private PageChild_OPEMA: any = null;
     private CurrentSession = SessionLocator.SelectedSession;
-
+    schedulerExtendedPMService: SchedulerExtendedPMService;
+    TemplateType: any;
+    
     constructor() {
+        this.schedulerExtendedPMService = new SchedulerExtendedPMService();
         this.CurrentSession.SessionEvent.subscribe($event => {
             if ($event == "RunReportEvent") {
                 this.IsPreviwReport = true;
@@ -59,13 +64,25 @@ export class AddEditReportSchedulerComponent implements OnInit {
     SetWindowArgs(windowArgs) {
         this.ReportGroupList = windowArgs.ReportGroupList;
         this.ReportList = windowArgs.ReportList;
-        this.LoadReportTemplate(windowArgs.ReportList);
-        this.RunComponent();
+        this.LoadReportSchedulerDetailsData(windowArgs.TasksSchedulerId);
+    }
+
+    LoadReportSchedulerDetailsData(tasksSchedulerId) {
+        this.CurrentSession.StartBusyIndicator('Loading...');
+        this.schedulerExtendedPMService
+            .GetSchedulerDetailsById(tasksSchedulerId)
+            .subscribe((myResult: ServiceResponse) => {
+                var myResponse: ServiceResponse = myResult;
+                this.LoadReportTemplate(myResponse?.Result?.ReportDetails?.ReportTemplateType);
+                this.RunComponent();
+                this.CurrentSession.StopBusyIndicator();
+            });
     }
 
     ReportTemplates: any = [];
-    LoadReportTemplate(reportList: ReportList) {
-        this.reportsTemplateListExtendedService.getReportsTemplateListsByReportId(reportList.Id, "R").subscribe((myResponse: ServiceResponse) => {
+    LoadReportTemplate(templateType) {
+        this.TemplateType = AppTool.IsNullOrEmpty(templateType) ? "R" : templateType
+        this.reportsTemplateListExtendedService.getReportsTemplateListsByReportId(this.ReportList.Id,this.TemplateType).subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
                 this.ReportTemplates = myResponse.Result;
             }
@@ -151,6 +168,7 @@ export class AddEditReportSchedulerComponent implements OnInit {
         var reportFilterItems = this.PageChild_RETASK.GetReportFilterItems();
         this.PageChild_PRREP.SetReportFilterItems(reportFilterItems);
         this.PageChild_PRREP.SetReportTemplate(reportTemplateId);
+        this.PageChild_PRREP.SetReportTemplateType(this.TemplateType);
         this.PageChild_PRREP.ReportsPreview(this.ReportGroupList, this.ReportList, this.ReportTemplates);
       //  this.RunBuildStimulsoftTimer();
     }
@@ -210,6 +228,7 @@ export class AddEditReportSchedulerComponent implements OnInit {
         const reportSchedulerDetails: ReportSchedulerDetails = {
             ReportFilterItems: this.PageChild_PRREP.GetReportFilterItems(),
             ReportTemplateId: this.PageChild_PRREP.GetReportTemplateId(),
+            ReportTemplateType: this.PageChild_PRREP.GetReportTemplateType(),
             Recepients: this.GetAllRecepients(),
             MainCustomerFieldName: this.PageChild_PRREP.GetReportFilterMainCustomerFieldName(),
             CreatedByUserId: SessionLocator.LoggedUserId

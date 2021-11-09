@@ -259,10 +259,12 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public string ShipperId { get; set; }
         public string ShipperReference1 { get; set; }
         public string ShipperReference2 { get; set; }
+        public string ShipperReference3 { get; set; }
 
         public string Consignee { get; set; }
         public string ConsigneeReference1 { get; set; }
         public string ConsigneeReference2 { get; set; }
+        public string ConsigneeReference3 { get; set; }
 
         public string FromCountryCode { get; set; }
         public string ToCountryCode { get; set; }
@@ -331,6 +333,7 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public string CustomerName { get; set; }
         public string CustomerReference1 { get; set; }
         public string CustomerReference2 { get; set; }
+        public string CustomerReference3 { get; set; }
 
         public string ConsolidatorId { get; set; }
         public string ConsolidatorName { get; set; }

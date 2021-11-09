@@ -466,7 +466,7 @@
 
                     <!-- Multiple bank transfers-->
                     
-                    <tr style="height:22px" *ngIf="EntityPM.ARPaymentBankTranfers.length > 1">
+                    <tr style="height:22px" *ngIf="EntityPM.ARPaymentBankTranfers.length > 1 && AccountingPaymentMethodCode == 'BT'">
                         <td colspan="2">
                             <table>
                                 <tr>
@@ -495,7 +495,10 @@
                                     <td>
                                         <table>
                                             <tr class="TabTitleRow">
-                                                <td colspan="8">{{PaymentMethodDetailsLabel}}</td>
+                                                <td colspan="8">{{PaymentMethodDetailsLabel}} 
+                                                    <span style="font-size:14px" *ngIf="AccountingPaymentMethodCode == 'BT' && EntityPM.ARPaymentBankTranfers.length > 0">
+                                                         ({{EntityPM.ARPaymentBankTranfers.length}})
+                                                    </span></td>
                                             </tr>
 
                                             <tr class="customtrclass">
@@ -677,9 +680,11 @@
                                                             </td>
 
                                                             <td *ngIf="isFullAccounting && AccountingPaymentMethodCode == 'BT'" style="width:50px">
+                                                                <!-- [style.float]="isRTL ? 'left' : 'right'" -->
                                                                 <div *ngIf="EntityPM.ARPaymentBankTranfers.length === 0">
-                                                                    <IconButton [Name]="'Add'" [IsSmall]="true" (click)="AddBankTransfersButtonClicked()"></IconButton>
-                                                                    <div style="margin-left: 30px">
+                                                                    <IconButton [ngStyle]="{'position': (isRTL) ? 'relative' : 'initial', 'left': (isRTL) ? '35px' : '0px'}" 
+                                                                        [Name]="'Add'" [IsSmall]="true" (click)="AddBankTransfersButtonClicked()"></IconButton>
+                                                                    <div [ngStyle]="{'margin-left': '30px', 'position': (isRTL) ? 'relative' : 'initial', 'right': (isRTL) ? '30px' : '0px'}">
                                                                         <HelpIcon [Header]="'ARPayment.M.BankTransfers' | TextCodeTranslationPipe" [Text]="'ARPayment.M.AddBankTransfersHint' | TextCodeTranslationPipe"></HelpIcon>
                                                                     </div>
                                                                 </div>

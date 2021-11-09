@@ -16,6 +16,7 @@ export class StimulsoftArg {
     EditDocumentComponent: EditDocumentComponent;
     public DocumentTypeId: string;
     public ReportsPreviewComponent: any;
+    public TemplateType: string;
     public BuildStimulReportResult: BuildStimulReportResult;
 
 

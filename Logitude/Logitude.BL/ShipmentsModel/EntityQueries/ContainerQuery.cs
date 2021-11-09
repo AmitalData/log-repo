@@ -159,8 +159,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     LIFLocation = entityPoco.LIFLocation,
                     EstimatedLIFArrival = entityPoco.EstimatedLIFArrival,
                     ActualLIFArrival = entityPoco.ActualLIFArrival,
-                    EstimatedLIFDeparture = entityPoco.EstimatedLIFDeparture,
-                    ActualLIFDeparture = entityPoco.ActualLIFDeparture,
+                    EstimatedOnCarriageDeparture = entityPoco.EstimatedOnCarriageDeparture,
+                    ActualOnCarriageDeparture = entityPoco.ActualOnCarriageDeparture,
                     GateIn = entityPoco.GateIn,
                     GateOut = entityPoco.GateOut,
                     EmptyReturnLocation = entityPoco.EmptyReturnLocation,
@@ -239,6 +239,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     CustomerId = entityPoco.CustomerId,
                     CustomerName = entityPoco.CustomerCard?.EnglishName,
                     ShipmentCreateDate = entityPoco.ShipmentCreateDate,
+                    PODReceivedOnDate = entityPoco.PODReceivedOnDate,
                 };
 
                 MapCustomFields(result, entityPoco);
@@ -399,8 +400,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         LIFLocation = a.LIFLocation,
                         EstimatedLIFArrival = a.EstimatedLIFArrival,
                         ActualLIFArrival = a.ActualLIFArrival,
-                        EstimatedLIFDeparture = a.EstimatedLIFDeparture,
-                        ActualLIFDeparture = a.ActualLIFDeparture,
+                        EstimatedOnCarriageDeparture = a.EstimatedOnCarriageDeparture,
+                        ActualOnCarriageDeparture = a.ActualOnCarriageDeparture,
                         GateIn = a.GateIn,
                         GateOut = a.GateOut,
                         EmptyReturnLocation = a.EmptyReturnLocation,
@@ -479,6 +480,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         CustomerId = a.CustomerId,
                         CustomerName = a.CustomerCard != null ? a.CustomerCard.EnglishName: "",
                         ShipmentCreateDate = a.ShipmentCreateDate,
+                        PODReceivedOnDate = a.PODReceivedOnDate,
 
                     }).ToList();
         }
@@ -620,8 +622,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                    LIFLocation = entity.LIFLocation,
                                                    EstimatedLIFArrival = entity.EstimatedLIFArrival,
                                                    ActualLIFArrival = entity.ActualLIFArrival,
-                                                   EstimatedLIFDeparture = entity.EstimatedLIFDeparture,
-                                                   ActualLIFDeparture = entity.ActualLIFDeparture,
+                                                   EstimatedOnCarriageDeparture = entity.EstimatedOnCarriageDeparture,
+                                                   ActualOnCarriageDeparture = entity.ActualOnCarriageDeparture,
                                                    GateIn = entity.GateIn,
                                                    GateOut = entity.GateOut,
                                                    EmptyReturnLocation = entity.EmptyReturnLocation,
@@ -710,6 +712,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                    CustomerId = entity.CustomerId,
                                                    CustomerName = entity.CustomerCard != null ? entity.CustomerCard.EnglishName : "",
                                                    ShipmentCreateDate = entity.ShipmentCreateDate,
+                                                   PODReceivedOnDate = entity.PODReceivedOnDate,
                                                };
             return result;
         }
@@ -848,8 +851,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     LIFLocation = container.LIFLocation,
                     EstimatedLIFArrival = container.EstimatedLIFArrival,
                     ActualLIFArrival = container.ActualLIFArrival,
-                    EstimatedLIFDeparture = container.EstimatedLIFDeparture,
-                    ActualLIFDeparture = container.ActualLIFDeparture,
+                    EstimatedOnCarriageDeparture = container.EstimatedOnCarriageDeparture,
+                    ActualOnCarriageDeparture = container.ActualOnCarriageDeparture,
                     GateIn = container.GateIn,
                     GateOut = container.GateOut,
                     EmptyReturnLocation = container.EmptyReturnLocation,
@@ -928,6 +931,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     CustomerId = container.CustomerId,
                     CustomerName = container.CustomerCard != null ? container.CustomerCard.EnglishName : "",
                     ShipmentCreateDate = container.ShipmentCreateDate,
+                    PODReceivedOnDate = container.PODReceivedOnDate,
                 };
                 MapCustomFields(containerPM, container);
             }
@@ -1073,8 +1077,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     LIFLocation = entityPoco.LIFLocation,
                     EstimatedLIFArrival = entityPoco.EstimatedLIFArrival,
                     ActualLIFArrival = entityPoco.ActualLIFArrival,
-                    EstimatedLIFDeparture = entityPoco.EstimatedLIFDeparture,
-                    ActualLIFDeparture = entityPoco.ActualLIFDeparture,
+                    EstimatedOnCarriageDeparture = entityPoco.EstimatedOnCarriageDeparture,
+                    ActualOnCarriageDeparture = entityPoco.ActualOnCarriageDeparture,
                     GateIn = entityPoco.GateIn,
                     GateOut = entityPoco.GateOut,
                     EmptyReturnLocation = entityPoco.EmptyReturnLocation,
@@ -1153,6 +1157,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     CustomerId = entityPoco.CustomerId,
                     CustomerName = entityPoco.CustomerCard != null ? entityPoco.CustomerCard.EnglishName : "",
                     ShipmentCreateDate = entityPoco.ShipmentCreateDate,
+                    PODReceivedOnDate = entityPoco.PODReceivedOnDate,
                 };
             }
 

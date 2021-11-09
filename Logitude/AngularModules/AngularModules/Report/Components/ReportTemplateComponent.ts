@@ -284,8 +284,12 @@ export class ReportTemplateComponent implements OnInit {
     }
 
     CanEditTemplate(reportsTemplate: ReportsTemplatePM): boolean {
-        if (!reportsTemplate || !this.IsEnableEditAllReportTemplate || reportsTemplate.IsSystem || !this.IsEnableEditUserReportTemplate)
+        if (!reportsTemplate || !this.IsEnableEditAllReportTemplate)
             return false;
+
+        if(reportsTemplate.IsSystem || !this.IsEnableEditUserReportTemplate){
+            return false;
+        }
         return true;
     }
 

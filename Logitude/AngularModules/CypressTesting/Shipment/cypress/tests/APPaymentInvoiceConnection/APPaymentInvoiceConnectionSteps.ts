@@ -73,26 +73,28 @@ Given("a payable with the following details", (dataTable) => {
   const PayableData = Assists.CreateInstance<PayableDetails>(dataTable, true);
   Actions.FillPayablesTab(PayableData)
 });
+
 When("add payables", () => {
   Actions.UpdateShipment(ShipmentSelectors.ShipmentSaveButton)
-
 });
+
 Then("the payables should add successfully", () => {
   BaseAssertion.AssertStatusCode(RequestAliases.ShipmentRequest, 200)
 });
 //#endregion
 
 //#region Create APInvoice
-Given("an APInvoice with a random invoice number and the following details",
-  (dataTable) => {
-    const APInvoiceData = Assists.CreateInstance<APInvoiceDetails>(dataTable, true);
-    cy.Click(AccountingSelectors.ReceiveInvoiceButton, null);
-    APInvoiceData.Vendor = CurrentDate;
-    AccountingActions.FillAPInvoiceDetails(APInvoiceData)
-  });
+Given("an APInvoice with a random invoice number and the following details", (dataTable) => {
+  const APInvoiceData = Assists.CreateInstance<APInvoiceDetails>(dataTable, true);
+  cy.Click(AccountingSelectors.ReceiveInvoiceButton, null);
+  APInvoiceData.Vendor = CurrentDate;
+  AccountingActions.FillAPInvoiceDetails(APInvoiceData)
+});
+
 When("receive invoice", () => {
   AccountingActions.ReceiveAPInvoice();
 });
+
 Then("the invoice should create successfully", () => {
   BaseAssertion.AssertStatusCode(RequestAliases.APInvoicesRequest, 200);
 });
@@ -102,6 +104,7 @@ Then("the invoice should create successfully", () => {
 When("approve invoice", () => {
   AccountingActions.APApproveInvoice()
 });
+
 Then("the invoice should update successfully", () => {
   BaseAssertion.AssertStatusCode(RequestAliases.APInvoicesRequest, 200).then((interception) => {
     invoiceNumber = interception.response.body.InvoiceNumber;
@@ -143,11 +146,16 @@ When("updates the AP Payment", () => {
 
 Then("the AP Payment should update successfully", () => {
   APPaymentActions.AssertUpdateAPPayment()
+  APPaymentActions.OpenApInvoice(invoiceNumber)
+});
+
+Then("the status value should be {string}", (statusValue) => {
+  BaseAssertion.AssertElementContain(ShipmentSelectors.APInvoiceStatus, statusValue)
 });
 //#endregion
 
 //#region Disconnect the invoice from the AP Payment
 Given("disconnect the invoice from the AP Payment", () => {
-  APPaymentActions.DisConnectAPPaymentFromInvoice(invoiceNumber)
+  APPaymentActions.DisConnectAPPaymentFromInvoice()
 });
 //#endregion
