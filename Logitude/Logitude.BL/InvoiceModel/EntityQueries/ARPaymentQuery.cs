@@ -490,6 +490,8 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                 payment.AccountingPaymentMethodName = method != null ? method.Name : null;
                 payment.AccountingPaymentMethodCode = method != null ? method.Code : null;
                 payment.ARPaymentChequeReplicas = GetARPaymentChequeReplicasByPaymentId(payment.Id, tenant);
+                payment.ARPaymentBankTranfers = GetARPaymentBankTranfersByPaymentId(payment.Id, tenant);
+
                 if (payment.BankAccountId != null)
                 {
                     payment.BankAccountNumber = GetBankAccountNumberById(payment.BankAccountId, payment.Tenant);

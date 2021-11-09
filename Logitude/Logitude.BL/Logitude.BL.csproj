@@ -559,6 +559,7 @@
     <Compile Include="InvoiceModel\APIDataContract\APInvoiceTotalVAT.Generated.cs" />
     <Compile Include="InvoiceModel\APIDataContract\APInvoiceTransferStatus.Generated.cs" />
     <Compile Include="InvoiceModel\APIDataContract\ARInvoiceAdditionalData.cs" />
+    <Compile Include="InvoiceModel\APIDataContract\ARPaymentBankTranfer.Generated.cs" />
     <Compile Include="InvoiceModel\APIDataContract\ARPaymentCheque.Generated.cs" />
     <Compile Include="InvoiceModel\APIDataContract\ARPaymentChequeStatusReplica.Generated.cs" />
     <Compile Include="InvoiceModel\APIDataContract\ARPaymentInvoice.cs" />
@@ -570,6 +571,7 @@
     <Compile Include="InvoiceModel\APIDataContract\QueryService\APInvoiceTransferStatusQueryService.Generated.cs" />
     <Compile Include="InvoiceModel\APIDataContract\QueryService\APInvoiceQueryService.cs" />
     <Compile Include="InvoiceModel\APIDataContract\QueryService\APInvoiceLineQueryService.cs" />
+    <Compile Include="InvoiceModel\APIDataContract\QueryService\ARPaymentBankTranferQueryService.Generated.cs" />
     <Compile Include="InvoiceModel\APIDataContract\QueryService\ARPaymentChequeQueryService.Generated.cs" />
     <Compile Include="InvoiceModel\APIDataContract\QueryService\ARPaymentChequeStatusReplicaQueryService.Generated.cs" />
     <Compile Include="InvoiceModel\APIDataContract\QueryService\ARPaymentInvoiceQueryService.cs" />
