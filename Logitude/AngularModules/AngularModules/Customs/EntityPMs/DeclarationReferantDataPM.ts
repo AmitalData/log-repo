@@ -219,6 +219,11 @@ export class DeclarationReferantDataPM {
     public set FclLclName(newValue: string) { if (this.fclLclName != newValue) { this.fclLclName = newValue; this.MarkAsDirty("FclLclName"); } }
        
 	 
+    private isManualPayment: boolean;
+    public get IsManualPayment() { return this.isManualPayment; }
+    public set IsManualPayment(newValue: boolean) { if (this.isManualPayment != newValue) { this.isManualPayment = newValue; this.MarkAsDirty("IsManualPayment"); } }
+       
+	 
 
     public OldEntityPM: DeclarationReferantDataPM;
 		

@@ -1,4 +1,4 @@
-import { Injectable, EventEmitter} from '@angular/core';
+import { Injectable, EventEmitter } from '@angular/core';
 import { CustomsMenuItem, RequestSheetState } from '../../DataContract/CustomsMenuItem';
 import { FeatureLocator } from '../../../Infrastructure/Utilities/FeatureLocator';
 import { AppTool } from '../../../Infrastructure/Tools';
@@ -10,37 +10,45 @@ import { CommunicationLogStepListService } from '../../../Common/Services/Extend
 import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
 //import { BaseRequestsSheetMassaging } from '../../Customs/Components/CustomsRequests/BaseRequestsSheetMassaging';
 import { BaseRequestsSheetMassaging } from '../../../CustomsModules/CustomsRequests/Components/BaseRequestsSheetMassaging';
-import {DownloadManager} from '../../../Infrastructure/Utilities/DownloadManager';
+import { DownloadManager } from '../../../Infrastructure/Utilities/DownloadManager';
 
 @Injectable()
 export class CustomsRequestMenuService {
     private _CustomsRequestMenuItems: CustomsMenuItem[];
     public get CustomsRequestMenuItems() { return this._CustomsRequestMenuItems }
     private CurrentSession = SessionLocator.SelectedSession;
-    constructor() {
+    constructor(isReports: any = false) {
         ///alert("CustomsRequestMenuService");
-        this.buildCustomsList();
+        if (isReports) {
+            this.buildReportsList();
+        } else {
+            this.buildCustomsList();
+        }
+    }
+    private buildReportsList(){
+        this._CustomsRequestMenuItems = [];
+        this._CustomsRequestMenuItems.push(new CustomsMenuItem("דוח SLA", "SLAReport", './CustomsModules/CustomsReport/Components/Reports/SLAReportComponent', 400, 300, "1111"));
     }
     private buildCustomsList() {
         this._CustomsRequestMenuItems = [];
         //TextCodeTranslator.Translate("Customs.General.O.CopyDeclaration")
         // <!> Abdullah: Fill 'CustomsMenuItem.ObjectTableName' if you want to open a query screen
- 
-       // this._CustomsRequestMenuItems.push(new CustomsMenuItem("תור חשבוניות - זמני", "InvoiceQueue", './CustomsModules/InvoiceQueue/Components/InvoiceQueueComponent', 1600, 800, "1111"));
+
+        // this._CustomsRequestMenuItems.push(new CustomsMenuItem("תור חשבוניות - זמני", "InvoiceQueue", './CustomsModules/InvoiceQueue/Components/InvoiceQueueComponent', 1600, 800, "1111"));
         this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.DeclarationRestoreQuery"), "DeclarationRestoreQuery", './CustomsModules/CustomsRequests/Components/DeclarationRestoreComponent', 850, 500, "8373"));
         this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.MorningMessageQuery"), "MorningMessage", './CustomsModules/CustomsGeneralRequests/Components/MorningMessageComponent', 800, 600, "0102"));
         this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.Declaration.O.SendRequest"), "DeclarationStatusQuery", './CustomsModules/CustomsRequests/Components/DeclarationRequests/DeclarationStatusComponent', 550, 650, "8250"));
         this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.CourierBOLQuery"), "CourierBOLQuery", './CustomsModules/CustomsGeneralRequests/Components/CourierBOLQueryComponent', 750, 500, "9022"));
         this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.GuaranteeCertificateFilterQuery"), "GuaranteeCertificateQuery", './CustomsModules/CustomsRequests/Components/TapagRequests/GuaranteeCertificateComponent', 850, 670, "8306"));
         this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.FaultQuery"), "FaultQuery", './CustomsModules/CustomsRequests/Components/TapagRequests/FaultQueryComponent', 750, 680, "8332"));
-        this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.WarehouseBlockBalance"), "WarehouseBlockBalanceQuery", './CustomsModules/CustomsRequests/Components/DeclarationRequests/WarehouseBlockBalanceComponent', 850, 690, "8328")); 
+        this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.WarehouseBlockBalance"), "WarehouseBlockBalanceQuery", './CustomsModules/CustomsRequests/Components/DeclarationRequests/WarehouseBlockBalanceComponent', 850, 690, "8328"));
         this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.MasterBOLQuery"), "MasterBOLQuery", './CustomsModules/CustomsGeneralRequests/Components/MasterBOLQueryComponent', 600, 590, "9020"));
 
-        let my8347 =new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.CurrencyExchangeRateQuery"), "ExchangeRateQuery", './CustomsModules/CustomsGeneralRequests/Components/ExchangeRatesQueryComponent', 650, 590, "8347")
+        let my8347 = new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.CurrencyExchangeRateQuery"), "ExchangeRateQuery", './CustomsModules/CustomsGeneralRequests/Components/ExchangeRatesQueryComponent', 650, 590, "8347")
         my8347.CanExportExcel = true;
         this._CustomsRequestMenuItems.push(my8347);
 
-        
+
         this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.CustomItemLegalDemandsQuery"), "CustomItemLegalDemandsQuery", './CustomsModules/CustomsGeneralRequests/Components/CustomItemLegalDemandsQueryComponent', 950, 630, "8316"));
         this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.DeclarationPrintQuery"), "DeclarationPrintQuery", './CustomsModules/CustomsRequests/Components/DeclarationRequests/PrintRequestComponent', 500, 490, "8302"));
 
@@ -67,7 +75,7 @@ export class CustomsRequestMenuService {
         this._CustomsRequestMenuItems.push(item8326);
 
         this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.BankAccountToRefundQuery"), "BankAccountToRefundQuery", './CustomsModules/CustomsPaymentOrder/Components/EditTabs/Tapag/Deposit/BankAccountToRefundComponent', 600, 420, "2018"));
-         
+
         if (FeatureLocator.HasFeaturePermession("General", "RECALLSUPPLIER")) {
             this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.RecallSuppliersFromFile"), "RecallSuppliersFromFile", '', 850, 500, ""));
         }
@@ -88,7 +96,7 @@ export class CustomsRequestMenuService {
         this._CustomsRequestMenuItems.push(my8368);
 
 
-      this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.NewPaymentOrder"), "NewPaymentOrder", './CustomsModules/CustomsPaymentOrder/Components/NewEntity/NewPaymentOrderComponent', 420, 300, "3053"));
+        this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.NewPaymentOrder"), "NewPaymentOrder", './CustomsModules/CustomsPaymentOrder/Components/NewEntity/NewPaymentOrderComponent', 420, 300, "3053"));
         var myCustomsMenuItem8305 = new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.GuaranteeFileFilterQuery"), "GuaranteeFileFilterQuery", './CustomsModules/CustomsRequests/Components/TapagRequests/GuaranteeFileFilterQueryComponent', 900, 670, "8305")
         myCustomsMenuItem8305.CanExportExcel = true;
         this._CustomsRequestMenuItems.push(myCustomsMenuItem8305);
@@ -113,7 +121,7 @@ export class CustomsRequestMenuService {
 
             this._CustomsRequestMenuItems.push(new CustomsMenuItem("עדכון סגרים", "CargoSealsQuery", './CustomsModules/CustomsRequests/Components/DeclarationRequests/CargoSealsQueryComponent', 820, 550, "6001"));
         }
-            //TextCodeTranslator.Translate("Customs.General.O.CargoSealsQuery")
+        //TextCodeTranslator.Translate("Customs.General.O.CargoSealsQuery")
         //this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.RecallSuppliersFromFile"), "RecallSuppliersFromFile", './CustomsModules/CustomsGeneralRequests/Components/RecallSuppliersFromFileComponent', 500, 400, ""));
 
 
@@ -137,7 +145,7 @@ export class CustomsRequestMenuService {
             , "RequiredDocument",
             './CustomsModules/CustomsGeneralRequests/Components/RequiredDocumentComponent',
             400, 410, "8228", null, null, null, true
-           
+
         ));
 
         this._CustomsRequestMenuItems.push(new CustomsMenuItem("סיום בדיקה פיזית"
@@ -260,7 +268,7 @@ export class CustomsRequestMenuService {
     //    }
     //    else {
     //        documentName = item.DocumentId;
-   //         DownloadManager.DownloadPage(documentName);
+    //         DownloadManager.DownloadPage(documentName);
     //    }
 
 
@@ -268,9 +276,9 @@ export class CustomsRequestMenuService {
     ViewXMLClicked(item) {
 
         var link = "";
-        var documentName: string =  item.DocumentId;
+        var documentName: string = item.DocumentId;
 
-     
+
 
         //if (AmitalGatewayUtil.Instance.AmitalBrowserInUse) {
         //    AmitalGatewayUtil.Instance.DeclarationMessaging.RaiseOpenNewBrowser(link);
@@ -305,7 +313,7 @@ export class CustomsRequestMenuService {
         myLogId = myLogId || item.DemoLogId;
         var isComponentLoaded: boolean = false;
         if (AppTool.IsNullOrEmpty(myLogId)) {
-             
+
             if (menuArg) {
                 isComponentLoaded = true;
                 logitudeWindow.ComponentLoaded.subscribe((compo) => {
@@ -332,7 +340,7 @@ export class CustomsRequestMenuService {
                             this.WindowClosed.emit(anyString);
                         });
                     }
-                     
+
                 });
             }
             if (!isComponentLoaded) {
@@ -434,7 +442,7 @@ export class CustomsRequestMenuService {
 class LongRunner20 {
     private Retries: number = 0;
     private timerToken: any;
-    
+
     constructor(
         private IsReady: () => boolean,
         private ActionMethod: () => void

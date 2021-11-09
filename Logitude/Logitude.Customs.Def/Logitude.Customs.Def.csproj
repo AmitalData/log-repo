@@ -108,6 +108,7 @@
     <Compile Include="EntityPMs\Generated\NDMessageActionCodePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\PartyRelationshipTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\PoaAuthorizationTypeLookupPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\PhysicalCheckSearchResultTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\PoaStatusTypeLookUpPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\ReferantExceptionPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\ReferantTeamPM.Generated.cs" />

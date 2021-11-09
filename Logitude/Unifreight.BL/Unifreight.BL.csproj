@@ -125,6 +125,7 @@
     <Compile Include="EntityDataMappings\ETBPORTDataMapping.cs" />
     <Compile Include="EntityDataMappings\ETBSERLVDataMapping.cs" />
     <Compile Include="EntityDataMappings\ETBVENDDataMapping.cs" />
+    <Compile Include="EntityDataMappings\GGGHDAYDataMapping.cs" />
     <Compile Include="EntityDataMappings\GGGQCDataMapping.cs" />
     <Compile Include="EntityDataMappings\GTBSERLVDataMapping.cs" />
     <Compile Include="EntityDataMappings\ITBPORTDataMapping.cs" />
@@ -272,6 +273,7 @@
     <Compile Include="EntityPMs\UGenerated\GDMENTITYPM.cs" />
     <Compile Include="EntityPMs\UGenerated\GDMFILINGPM.cs" />
     <Compile Include="EntityPMs\UGenerated\GDMREFPMcs.cs" />
+    <Compile Include="EntityPMs\UGenerated\GGGHDAYPM.cs" />
     <Compile Include="EntityPMs\UGenerated\GGGQCPM.cs" />
     <Compile Include="EntityPMs\UGenerated\GITITEMPM.cs" />
     <Compile Include="EntityPMs\UGenerated\GNDADRPM.cs" />

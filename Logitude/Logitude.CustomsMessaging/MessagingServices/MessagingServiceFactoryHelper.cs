@@ -521,6 +521,9 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 SE_6001_SealUpdateMessagingService>
                 ((new SE_6001_SealUpdateMessagingService()).MainInterfaceCode);
 
+            ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
+              SaveCH_MSG_195_SearchResultsMessagingService>
+              ((new SaveCH_MSG_195_SearchResultsMessagingService()).MainInterfaceCode);
 
 
             ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
