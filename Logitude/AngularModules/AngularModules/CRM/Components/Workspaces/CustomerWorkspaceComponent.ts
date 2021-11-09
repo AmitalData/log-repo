@@ -15,6 +15,7 @@ import {BusinessUnitList} from '../../../Common/EntityLists/BusinessUnitList';
 import {UserList} from '../../../Common/EntityLists/UserList';
 import {CustomerList} from '../../../Common/EntityLists/CustomerList';
 import {LogitudeWindow} from '../../../Controls/Windows/LogitudeWindow';
+import { FeatureLocator } from '../../../Infrastructure/Utilities/FeatureLocator';
 
 @Component({
     
@@ -32,9 +33,27 @@ export class CustomerWorkspaceComponent extends BaseComponent {
         super();
         this.SearchBoxWatermark = TextCodeTranslator.Translate("Card.F.SearchFields");
         this.InitializeServices();
+        this.SetQueriesVisibility();
         this.LoadNonFilteredQueries();
         this.BuildDecreasedShipmentsFilters();
         this.InitializeFilters();
+    }
+
+    public IsMyCustomersSalesmanQueryVisible: boolean = false;
+    public IsMyCustomersAccontManagerQueryVisible: boolean = false;
+    public IsWaitingForActivationQueryVisible: boolean = false;
+    public IsPotentialCustomersQueryVisible: boolean = false;
+    public IsActiveCustomersQueryVisible: boolean = false;
+    public IsInactiveCustomersQueryVisible: boolean = false;
+    public IsAllCustomersQueryVisible: boolean = false;
+    private SetQueriesVisibility() {
+        this.IsMyCustomersSalesmanQueryVisible = FeatureLocator.HasFeaturePermession("Customer", "Customer.Feature.MyCustomers") ? true : false;
+        this.IsMyCustomersAccontManagerQueryVisible = FeatureLocator.HasFeaturePermession("Customer", "MYCUSTOMRERSASACCMNGR") ? true : false;
+        this.IsWaitingForActivationQueryVisible = FeatureLocator.HasFeaturePermession("Customer", "Customer.Feature.ReadyCustomers") ? true : false;
+        this.IsPotentialCustomersQueryVisible = FeatureLocator.HasFeaturePermession("Customer", "Customer.Feature.PotentialCustomers") ? true : false;
+        this.IsActiveCustomersQueryVisible = FeatureLocator.HasFeaturePermession("Customer", "Customer.Feature.ActiveCustomers") ? true : false;
+        this.IsInactiveCustomersQueryVisible = FeatureLocator.HasFeaturePermession("Customer", "Customer.Feature.InactiveCustomers") ? true : false;
+        this.IsAllCustomersQueryVisible = FeatureLocator.HasFeaturePermession("Customer", "CUSTOMERS") ? true : false;
     }
 
     private filterName_RecordsType: string = "RecordsType";
