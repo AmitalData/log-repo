@@ -315,6 +315,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
             container.CustomerId = this.initializer.EntityPM?.CustomerId;
             container.OPClosed = this.initializer.EntityPM != null ? this.initializer.EntityPM.IsOperationalClosed : false;
             container.ShipmentTypeId = this.initializer.EntityPM?.ShipmentTypeId;
+            container.PODReceivedOnDate = this.initializer.EntityPM?.PODReceivedDate;
             this.MapContainerFieldsFromShipmentPickup(container);
             this.MapContainerFieldsFromShipmentDelivery(container);
         }

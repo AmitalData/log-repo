@@ -229,6 +229,6 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public string ShipmentTypeId { get; set; }
         public string ShipmentTypeName { get; set; }
         public DateTime? ShipmentCreateDate { get; set; }
-
+        public DateTime? PODReceivedOnDate { get; set; }
     }
 }

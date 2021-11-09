@@ -79,9 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 {
    public class ShipmentUpdateClass
    {  		
-
-		public const string HashString = "2fde43c5a3d60bc85009802790b8f75e";
-
+		public const string HashString = "749b566b4b8096c7bc264fb641797431";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -47988,11 +47986,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 
 		   Feature ShipmentFeature_CHILDPICKUPDELIVERY = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CHILDPICKUPDELIVERY", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.CHILDPICKUPDELIVERY", NameTextCodeDefaultText = @"Add Child Pick Up / Delivery", ToggleCode = "CPH" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ShipmentObjectTable);
 
-
 		   Feature ShipmentFeature_MULTIUPDATE = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "MULTIUPDATE", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.MULTIUPDATE", NameTextCodeDefaultText = @"Multi Update" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ShipmentObjectTable);
 
 		   Feature ShipmentFeature_ContainerStatusSimulator = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ContainerStatusSimulator", FeatureTypeCode = "ACT", Packagable = false, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.ContainerStatusSimulator", NameTextCodeDefaultText = @"Container Status Simulator" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ShipmentObjectTable);
-
 
    
 	    
