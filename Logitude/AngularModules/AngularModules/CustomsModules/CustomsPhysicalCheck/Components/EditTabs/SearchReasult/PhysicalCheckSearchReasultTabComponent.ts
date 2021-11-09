@@ -182,7 +182,7 @@ export class PhysicalCheckSearchReasultTabComponent
             params.RequestName = "מענה לבדיקה פיזית";
             params.ResponseName = "מענה לבדיקה פיזית - תשובה"
             CustomMessageProgressComponent
-                .ShowProgressBar(params.PBId,
+                .ShowProgressBar(this.CurrentSession,  params.PBId,
                     "שליחת תוצאות בדיקה", false)
                 .then((res) => {
                     this.ResponseData = res;
