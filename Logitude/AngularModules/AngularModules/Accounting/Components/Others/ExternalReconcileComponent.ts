@@ -1838,7 +1838,8 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
     private ValidateSelectedPageLinesTotals()
     {
         var hasDebitLines = this.ExtPageSelectedLines.Collection.find(line=>line.PageLinePM.DebitAmount != 0);
-        if (hasDebitLines && this.extPageTransactionsTotal < 0) {
+        var hasNegativeCreditLines = this.ExtPageSelectedLines.Collection.find(line=>line.PageLinePM.CreditAmount < 0);
+        if (hasDebitLines || hasNegativeCreditLines) {
             this.ValidationErrorsList.push(this.SelectCreditLinesOnlyMessage);
         }
     }
