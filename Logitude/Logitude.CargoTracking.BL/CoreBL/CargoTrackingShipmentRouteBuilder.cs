@@ -29,7 +29,8 @@ namespace Logitude.CargoTracking.BL.EntityQueryServices
         }
         public List<RoutingStep> BuildRoute()
         {
-            BuildShipmentRoute(shipmentPM);
+            if (shipmentPM != null)
+                BuildShipmentRoute(shipmentPM);
 
             if(shipmentOrderPM != null)
                 BuildShipmentOrderRoute(shipmentOrderPM);
@@ -154,6 +155,10 @@ namespace Logitude.CargoTracking.BL.EntityQueryServices
         private List<RoutingStep> BuildPickupRoutingSteps(ShipmentPM shipmentPM)
         {
             var steps = new List<RoutingStep>();
+
+            if (shipmentPM == null)
+                return steps;
+
             foreach (ShipmentPickUpPM pickup in shipmentPM.ShipmentPickUps)
             {
                 var pickupRoute = new RoutingStep()

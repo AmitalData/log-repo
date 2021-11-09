@@ -49,6 +49,9 @@ namespace WebFreight.Web.WebPages
                     int tenant = int.Parse(filestrings[3] + "");
                     if (!string.IsNullOrEmpty(securityId) && !string.IsNullOrEmpty(EntityId))
                         DownloadAll(securityId, EntityId, tenant, partnertype);
+                    else if (!string.IsNullOrEmpty(securityId) && string.IsNullOrEmpty(EntityId))
+                        DownloadAllBySecurityKey(securityId, tenant, partnertype);
+
                 }
                 else
                 {
@@ -323,6 +326,19 @@ namespace WebFreight.Web.WebPages
             {
 
             }
+        }
+        private void DownloadAllBySecurityKey(string SecurityKey, int tenant, string partnerType)
+        {
+            Shipment shipment = GetShipmentBySecurityKey(SecurityKey, tenant);
+
+            DownloadAll(SecurityKey, shipment?.Id, tenant, partnerType);
+        }
+
+        private static Shipment GetShipmentBySecurityKey(string SecurityKey, int tenant)
+        {
+            ShipmentRepository shipmentRepository = new ShipmentRepository(tenant);
+            Shipment shipment = shipmentRepository.getSingleShipmentBySecurityId(SecurityKey, tenant);
+            return shipment;
         }
 
         public byte[] CompressionData(string listKey, Dictionary<string, byte[]> dataBackList, bool saveetodisk = false)

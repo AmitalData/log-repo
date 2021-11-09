@@ -157,6 +157,8 @@ namespace Logitude.CargoTracking.BL.EntityQueryServices
 
         public string GetProperty(object target, string name)
         {
+            if (target == null)
+                return null;
             return (string)target.GetType().GetProperty(name)?.GetValue(target, null);
         }
 
