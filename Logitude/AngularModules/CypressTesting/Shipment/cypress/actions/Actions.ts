@@ -95,6 +95,11 @@ export function FillShipmentCustomFields(shipmentDetails: ShipmentDetails) {
     cy.FillLogTextBox(ShipmentSelectors.ShipmentDescriptionOfGoods, shipmentDetails.DescriptionOfGoods)
 }
 
+  export function SavePickUp() {
+    cy.DefineRequestWait(RestAPI.PUT, URLs.Shipment, RequestAliases.ShipmentRequest)
+    cy.Navigate(ShipmentSelectors.SaveClose,true) 
+  }
+  
 export function CreateShipment(shipmentLevel: string) {
     let createSelector = Conditions.IsMaster(shipmentLevel) ? ShipmentSelectors.CreateMasterShipmentButton : ShipmentSelectors.CreateShipmentButton;
     cy.DefineRequestWait(RestAPI.POST, URLs.Shipment, RequestAliases.ShipmentRequest)

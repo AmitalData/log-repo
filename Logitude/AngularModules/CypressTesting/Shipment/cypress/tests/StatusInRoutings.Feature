@@ -24,13 +24,14 @@ Feature: Status in Routings Tab
 
     Scenario: Add Expected Departure date for the pickup
         Given the user edit pick window
-        And add expected departure with '01-10-2021' as a value
+        And add expected departure with '01/10/2020' as a value and Notes 'expected departure equal 01/10/2020'
         When save pickup
-        Then the status value should be "Pick Up Arranged"
+        Then the direct should update successfully
+        And the status value should be "Pick Up Arranged"
 
     Scenario: Add Actual Departure date for the pickup
         Given the user edit pick window
-        And add Actual Departure with '02-10-2021' as a value
+        And add Actual Departure with '02/10/2021' as a value
         When save pickup
         Then the direct should update successfully
         And the status value should be "Pick Up"

@@ -55,8 +55,9 @@ Given("the user edit pick window",()=>{
 cy.Navigate(ShipmentSelectors.EditPickUp,true)
 })
 
-Given("add expected departure with {string} as a value",(expectedDeparture)=>{
-cy.FillLogTextBox(ShipmentSelectors.PickUpDeliveryETDDate,expectedDeparture,false)
+Given("add expected departure with {string} as a value and Notes {string}",(expectedDeparture,noteExpetedPickUp)=>{
+cy.FillDate(ShipmentSelectors.PickUpDeliveryETDDate,expectedDeparture)
+cy.FillLogTextBox(ShipmentSelectors.PickUpDeliverynote,noteExpetedPickUp,false)
 })
 
 Given("add Actual Departure with {string} as a value",(actualDeparture)=>{
@@ -105,9 +106,7 @@ Given("the user edit Delivary window",()=>{
 })
   
 When("save pickup",(()=>{
-    cy.Navigate(ShipmentSelectors.SaveClose,true) 
-    //cy.Navigate(ShipmentSelectors.CloseBtn,true) 
-    //cy.Navigate(ShipmentSelectors.ConfirmWindowYes+BaseSelectors.LastElement) 
+  Actions.SavePickUp()
 }))
 
 When("create shipment", () => {

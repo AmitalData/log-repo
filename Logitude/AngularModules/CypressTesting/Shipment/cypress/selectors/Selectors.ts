@@ -175,7 +175,7 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly PickUpDeliveryATDDate = '#date_ShipmentPickUpDelivery_ATD';
   public static readonly PickUpDeliveryETADate = '#date_ShipmentPickUpDelivery_ETA';
   public static readonly PickUpDeliveryATADate = '#date_ShipmentPickUpDelivery_ATA';
-  
+  public static readonly PickUpDeliverynote = '#ShipmentPickUpDelivery_Notes';
   public static readonly ShipmentRatio = '#Shipment_Ratio';
   public static readonly ShipmentGrossWeightUnitCode = '#Shipment_GrossWeightUnitCode';
 
