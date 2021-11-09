@@ -605,7 +605,7 @@
     <ul>
         <li ><img src="./assets/images/icons/star@1x.png" alt=""></li>
         <li (click)="ToggleSearchPanel()"><img src="./assets/images/icons/search@1x.png" alt=""></li>
-        <li (click)="isFiltersSideBarOpened = !isFiltersSideBarOpened"><img src="./assets/images/icons/filter@1x-white.png" alt=""></li>
+        <li (click)="isFiltersSideBarOpened = !isFiltersSideBarOpened; mapFiltersInvitedCustomers()"><img src="./assets/images/icons/filter@1x-white.png" alt=""></li>
         <li (click)="showMobileSortMenu = !showMobileSortMenu"><img src="./assets/images/icons/sort@1x-white.png"
             [class.FlipImgVert]="isSortDescending == SortOptions.ASC" alt=""></li>
     </ul>
