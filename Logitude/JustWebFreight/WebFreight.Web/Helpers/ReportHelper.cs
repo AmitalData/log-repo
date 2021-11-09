@@ -2422,7 +2422,19 @@ namespace WebFreight.Web.Helpers
                 return false;
 
             string documentId = AddDocument(documentRepository, tenantZeroReportsTemplatesVersion.ReportDocumentId, tenantZeroReportsTemplatesVersion.Tenant, tenant, documentLists);
-            ReportsTemplatesVersion reportsTemplatesVersion = new ReportsTemplatesVersion()
+            ReportsTemplatesVersion reportsTemplatesVersion = GeReportsTemplatesVersiont(tenant, userId, myReportsTemplate, documentId);
+
+            reportsTemplatesVersionRepository.Add(reportsTemplatesVersion);
+            myReportsTemplate.CurrentVersion = reportsTemplatesVersion.Version;
+            myReportsTemplate.UpdateDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+            myReportsTemplate.UpdatedByUserId = userId;
+
+            return true;
+        }
+
+        private ReportsTemplatesVersion GeReportsTemplatesVersiont(int tenant, string userId, ReportsTemplate myReportsTemplate, string documentId)
+        {
+            return new ReportsTemplatesVersion()
             {
                 Id = IdCounter.GetNumber("ReportsTemplatesVersion", tenant).ToString(),
                 Tenant = tenant,
@@ -2435,13 +2447,6 @@ namespace WebFreight.Web.Helpers
                 Version = myReportsTemplate.CurrentVersion + 1,
                 ReportDocumentId = !string.IsNullOrEmpty(documentId) ? documentId : null,
             };
-
-            reportsTemplatesVersionRepository.Add(reportsTemplatesVersion);
-            myReportsTemplate.CurrentVersion = reportsTemplatesVersion.Version;
-            myReportsTemplate.UpdateDate = TenantServerConfigration.GetCurrentDateTime(tenant);
-            myReportsTemplate.UpdatedByUserId = userId;
-
-            return true;
         }
 
         private bool AddExcelDocument(int tenant, string userId, Report reportTenantZero, ReportsTemplate systemExcelReportTemplate, Report myReport)

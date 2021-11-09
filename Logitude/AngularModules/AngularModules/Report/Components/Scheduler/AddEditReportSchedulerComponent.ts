@@ -81,7 +81,7 @@ export class AddEditReportSchedulerComponent implements OnInit {
 
     ReportTemplates: any = [];
     LoadReportTemplate(templateType) {
-        this.TemplateType = AppTool.IsNullOrEmpty(templateType) ? "E" : templateType
+        this.TemplateType = AppTool.IsNullOrEmpty(templateType) ? "R" : templateType
         this.reportsTemplateListExtendedService.getReportsTemplateListsByReportId(this.ReportList.Id,this.TemplateType).subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
                 this.ReportTemplates = myResponse.Result;
