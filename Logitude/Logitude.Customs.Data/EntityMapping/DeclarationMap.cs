@@ -227,6 +227,8 @@ namespace Logitude.Customs.Data.EntityMapping
 
             this.Property(t => t.DepositionStatusCode).HasColumnName("DepositionStatusCode").HasMaxLength(1).IsUnicode(false);
 
+            this.Property(t => t.CargoDescription).HasColumnName("CargoDescription").HasMaxLength(256).IsUnicode(true);
+
             this.Property(t => t.IsPaymentProtested).HasColumnName("IsPaymentProtested");
 
             this.Property(t => t.AmendmentRequestNumber).HasColumnName("AmendmentRequestNumber").HasMaxLength(9).IsUnicode(false);

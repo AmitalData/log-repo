@@ -1034,13 +1034,13 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
         });
 
         this.columnsPending.push({
-            FieldName: 'DeclarationStatusTypeName',
+            FieldName: 'CargoDescription',
             DataTypeCode: 'String',
-            Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.DeclarationStatusTypeName"),
+            Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.CargoDescription"),
             Styles: { width: '188px' },
             IsCustomTemplate: true,
             ServerSideSortable: true,
-            SortByName: 'DeclarationStatusTypeName'
+            SortByName: 'CargoDescription'
         });
 
         this.columnsPending.push({

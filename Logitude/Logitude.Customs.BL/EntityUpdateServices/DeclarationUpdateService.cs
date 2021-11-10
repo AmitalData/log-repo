@@ -375,6 +375,10 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         entityPM.CourierHAWB = consignment.ManifestNumber;
                     }
 
+
+                    entityPM.CargoDescription = consignment.CargoDescription;
+
+
                     DeliverySiteTypeQueryService deliverySiteTypeQueryService = new DeliverySiteTypeQueryService(entityPM.Tenant);
                     DeliverySiteTypePM deliverySiteType = deliverySiteTypeQueryService.GetSingle(entityPM.StorageSiteCode, false, true);
                     if (deliverySiteType != null)
