@@ -347,7 +347,7 @@ Shipment.ShipmentList.ArrivalDate |
                     <div class="description">
                         {{Shipment.ShipmentList.GrossWeight || 0 }}
                         {{Shipment.ShipmentList.GrossWeightUnitCode||''}}
-                        <span *ngIf="Shipment.ShipmentList.EntityType == 'O' && Shipment.ShipmentList.GrossWeight"> KG</span>
+                        <span *ngIf="Shipment.ShipmentList.EntityType == 'O'"> KG</span>
                     </div>
                 </div>
                 <div *ngIf="Shipment.ShipmentList.EntityType != 'O'">
@@ -407,12 +407,12 @@ Shipment.ShipmentList.ArrivalDate |
                     <div class="description">
                         {{Shipment.ShipmentList.GrossWeight }}
                         {{Shipment.ShipmentList.GrossWeightUnitCode||''}}
-                        <span *ngIf="Shipment.ShipmentList.EntityType == 'O' && Shipment.ShipmentList.GrossWeight "> KG</span>
+                        <span *ngIf="Shipment.ShipmentList.EntityType == 'O'"> KG</span>
                     </div>
                 </div>
                 <div>
                     <div class="title">volume</div>
-                    <div  style="display:inline" class="description">{{Shipment.ShipmentList.Volume }}</div><span *ngIf="Shipment.ShipmentList.Volume" style="display:inline">  CBM</span>
+                    <div  style="display:inline" class="description">{{Shipment.ShipmentList.Volume || 0 }}</div><span style="display:inline">  CBM</span>
                 </div>
                 <div *ngIf=" Shipment.ShipmentList.EntityType != 'O'">
                     <div class="title">storage site</div>
