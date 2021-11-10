@@ -938,7 +938,18 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                     }
                 }
             }
-            if (originProcedureCurrentCode != this._MyDeclarationPM.ProcedureCurrentCode) this.IsProcedureCurrentCodeChanged = true;
+            if (originProcedureCurrentCode != this._MyDeclarationPM.ProcedureCurrentCode)
+            {
+                this.IsProcedureCurrentCodeChanged = true;
+                foreach (SupplierInvoicePM invoice in this._MyDeclarationPM.SupplierInvoices)
+                {
+                    if (invoice.ChangeSetOp != ChangeSetOperation.Update && invoice.ChangeSetOp != ChangeSetOperation.Insert) invoice.ChangeSetOp = ChangeSetOperation.Update;
+                    foreach (SupplierInvoiceItemPM item in invoice.SupplierInvoiceItems)
+                    {
+                        if (item.ChangeSetOp != ChangeSetOperation.Update && item.ChangeSetOp != ChangeSetOperation.Insert) item.ChangeSetOp = ChangeSetOperation.Update;
+                    }
+                }
+            }
         }
 
         private void CalcIsAutonomy()
