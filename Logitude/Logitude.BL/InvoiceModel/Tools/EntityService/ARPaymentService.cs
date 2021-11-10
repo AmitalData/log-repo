@@ -1025,8 +1025,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 MethodHelper.AddToSearchFields(ref mySearchFields, chequesNumbers);
             }
 
-            var isFirstChequeNumberNotInSearchFields = paymentPM.ChequeOrPaymentRef != null && paymentPM.ARPaymentChequeReplicas.Count == 0;
-            if (isFirstChequeNumberNotInSearchFields)
+            else if (paymentPM.AccountingPaymentMethodCode == "CH")
             {
                 MethodHelper.AddToSearchFields(ref mySearchFields, paymentPM.ChequeOrPaymentRef);
             }
