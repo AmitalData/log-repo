@@ -257,9 +257,7 @@ export class CargoTrackingIncrementalStatistics extends BaseComponent implements
     public Parag4:string ="Total records updated in last 10 minutes: ";
 
     RefreshButtonClicked() {
-        this.InitializeDate();
         this.GetCargoTrackingIncrementalData();
-        this.BuildColumns();
     }
 }
 
