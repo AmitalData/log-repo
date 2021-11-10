@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ConfirmationService } from 'primeng/api';
 import { DynamicDialogConfig } from 'primeng/dynamicdialog';
-import { PriceCheck, QuoteProperty } from './price-check.service';
+import { PriceChekRootResponse, Offer } from './price-check.service';
 
 @Component({
   selector: 'app-price-check',
@@ -10,8 +10,8 @@ import { PriceCheck, QuoteProperty } from './price-check.service';
 })
 export class PriceCheckComponent implements OnInit {
   selectedFilter: string = ''
-  offers: QuoteProperty[] = [];
-  offersFilterd: QuoteProperty[] = [];
+  offers: Offer[] = [];
+  offersFilterd: Offer[] = [];
 
   filters: {filter: string, alias: string}[] = [
     {filter: 'DirectFlight', alias: 'Direct'},
@@ -22,7 +22,7 @@ export class PriceCheckComponent implements OnInit {
   summaryItems:{text: string, keyName:any}[] = [
     {text: 'Cost', keyName: 'TotalCost'},
     {text: 'Sale', keyName: 'TotalSale'},
-    {text: 'Estimated Profit', keyName: 'ChargeableWeightAmount'},
+    {text: 'Estimated Profit', keyName: 'EstimatedProfit'},
   ]
 
   constructor(
@@ -37,7 +37,7 @@ export class PriceCheckComponent implements OnInit {
   }
 
   private initData() {
-    this.offers = (this.config.data as PriceCheck).PriceChekRequest.QuoteProperties;
+    this.offers = (this.config.data as PriceChekRootResponse).PriceChekResponse.Offers.Offer;
     this.offersFilterd = this.offers;
   }
 
@@ -45,7 +45,7 @@ export class PriceCheckComponent implements OnInit {
     this.selectedFilter = filterType;
     console.log(filterType)
 
-    this.offersFilterd = this.offers.filter((offer: any) => offer[filterType] === 'True')  
+    this.offersFilterd = this.offers.filter((offer: Offer) => offer.Result.Summary[filterType] === 'True')  
   }
 
   sendData() {

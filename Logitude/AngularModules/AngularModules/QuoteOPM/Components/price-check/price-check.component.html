@@ -20,30 +20,30 @@
             <div class="price-wrapper">
                 <div class="header-price">
                     <div class="tags">
-                        <div class="tag">{{offer.From}} {{offer.ProductCode}} {{offer.To}}</div>
-                        <div class="tag">{{offer.Incoterms}}</div>
-                        <div class="tag">{{offer.SpecialService}}</div>
+                        <div class="tag">{{offer.QuoteProperties.From}} {{offer.QuoteProperties.ProductCode}} {{offer.QuoteProperties.To}}</div>
+                        <div class="tag">{{offer.QuoteProperties.Incoterms}}</div>
+                        <div class="tag">{{offer.QuoteProperties.SpecialService}}</div>
                     </div>
 
                     <div class="icons">
-                        <img *ngIf='offer.HasRemarks' class="icon" src="assets/icons/price-check/note.png"
-                            [pTooltip]="offer.HasRemarks">
-                        <img *ngIf='offer.IsSaleAllIn || offer.IsCostAllIn' class="icon"
+                        <img *ngIf='offer.Result.Summary.HasRemarks' class="icon" src="assets/icons/price-check/note.png"
+                            [pTooltip]="offer.Result.Summary.HasRemarks">
+                        <img *ngIf='offer.Result.Summary.IsSaleAllIn || offer.Result.Summary.IsCostAllIn' class="icon"
                             src="assets/icons/price-check/all_in.png" pTooltip="All in">
-                        <div *ngIf='offer.Frequency' class="icon-wrapper">
+                        <div *ngIf='offer.Result.Summary.Frequency' class="icon-wrapper">
                             <img class="icon" src="assets/icons/price-check/calendar.png">
-                            <div class='icon-number-in' pTooltip="Frequency">{{offer.Frequency}}</div>
+                            <div class='icon-number-in' pTooltip="Frequency">{{offer.Result.Summary.Frequency}}</div>
                         </div>
-                        <div *ngIf='offer.TransitTime' class="icon-wrapper">
+                        <div *ngIf='offer.Result.Summary.TransitTime' class="icon-wrapper">
                             <img class="icon" src="assets/icons/price-check/time.png" s>
-                            <div class='icon-number-in' pTooltip="Frequency">{{offer.TransitTime}}</div>
+                            <div class='icon-number-in' pTooltip="Frequency">{{offer.Result.Summary.TransitTime}}</div>
                         </div>
                     </div>
                 </div>
 
                 <div class="price-body">
                     <div class="company-icon">
-                        {{offer.CarrierCodes}}
+                        {{offer.QuoteProperties.CarrierCode}}
                         <!-- <img src="assets\icons\shipping-company\Swiss_International_Air_Lines-Logo 1.png"> -->
                     </div>
 
@@ -51,8 +51,8 @@
                         <div *ngFor='let x of summaryItems' class="summary-item">
                             <div class='summary-text'>{{x.text}}</div>
                             <div class="summary-item-value">
-                                {{offer[x.keyName]}}
-                                <img src='/assets/icons/price-check/{{offer.Currency}}.png' />
+                                {{offer.Result.Summary[x.keyName]}}
+                                <img src='/assets/icons/price-check/{{offer.Result.Summary.Currency}}.png' />
                             </div>
                         </div>
                     </div>

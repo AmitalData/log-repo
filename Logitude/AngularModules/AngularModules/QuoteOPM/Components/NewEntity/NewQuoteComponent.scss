@@ -152,6 +152,7 @@
     height: calc(100% - 126px);
     margin: 0px;
     margin-top: 2px;
+    display: flex;
 }
 
 .section {
@@ -214,6 +215,7 @@ hr {
     margin-bottom: 1px;
     padding-left: 0;
     padding-right: 0;
+    flex: 1;
 }
 
 .right-side {
@@ -224,6 +226,7 @@ hr {
     overflow-x: hidden;
     height: 100%;
     position: relative;
+    flex: 6;
 }
 
 .disabled {

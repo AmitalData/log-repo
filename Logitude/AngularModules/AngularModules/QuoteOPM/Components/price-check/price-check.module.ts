@@ -9,8 +9,9 @@ import {ScrollPanelModule} from 'primeng/scrollpanel';
 import { ButtonModule } from 'primeng/button';
 import {ConfirmDialogModule} from 'primeng/confirmdialog';
 import {ConfirmationService} from 'primeng/api';
-import { DraggableModule } from 'Infrastructure/Directives/draggable/draggable.module';
 import { AccordionModule } from 'Infrastructure/Components/accordion/accordion.module';
+import { DraggableModule } from 'Infrastructure/Directives/draggable/draggable.module';
+import { Xml2jsonService } from 'Infrastructure/Services/xml2json/xml2json.service';
 
 @NgModule({
   declarations: [
@@ -22,12 +23,13 @@ import { AccordionModule } from 'Infrastructure/Components/accordion/accordion.m
   providers: [
     PriceCheckService,
     ConfirmationService,
+    Xml2jsonService,
   ],
   imports: [
     CommonModule,
     DraggableModule,
-    TagModule,
     AccordionModule,
+    TagModule,
     CheckboxModule,
     TooltipModule,
     ScrollPanelModule,
