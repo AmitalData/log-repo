@@ -1024,18 +1024,27 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             MethodHelper.AddToSearchFields(ref mySearchFields, paymentPM.PaymentNo);
             MethodHelper.AddToSearchFields(ref mySearchFields, paymentPM.StatusCode);
             MethodHelper.AddToSearchFields(ref mySearchFields, paymentPM.AccountingPaymentMethodCode);
-            if (paymentPM.ARPaymentChequeReplicas.Any())
-            {
-                var chequesNumbers = String.Join(",", paymentPM.ARPaymentChequeReplicas.Select(x => x.ChequeNumber));
-                MethodHelper.AddToSearchFields(ref mySearchFields, chequesNumbers);
-            }
+            MethodHelper.AddToSearchFields(ref mySearchFields, paymentPM.PrintNotes);
             if (paymentPM.ARPaymentBankTranfers.Any())
             {
                 var bankTransfersReferences = String.Join(",", paymentPM.ARPaymentBankTranfers.Select(x => x.PaymentRef));
                 MethodHelper.AddToSearchFields(ref mySearchFields, bankTransfersReferences);
             }
+            #region Cheque
+            if (paymentPM.ARPaymentChequeReplicas.Any())
+            {
+                var chequesNumbers = String.Join(",", paymentPM.ARPaymentChequeReplicas.Select(x => x.ChequeNumber));
+                MethodHelper.AddToSearchFields(ref mySearchFields, chequesNumbers);
+            }
+        
             
-            MethodHelper.AddToSearchFields(ref mySearchFields, paymentPM.PrintNotes);
+
+            else if (paymentPM.AccountingPaymentMethodCode == "CH")
+            {
+                MethodHelper.AddToSearchFields(ref mySearchFields, paymentPM.ChequeOrPaymentRef);
+            }
+            #endregion
+
 
             #region Card
             if (!string.IsNullOrEmpty(paymentPM.BillToId))

@@ -1,6 +1,6 @@
 @smoke @smoke1 @release @stable @all
 Feature: AP Invoice Approve, Cancel Approval and Void
-    The user creates a Direct Export Air shipment, updates routings and packages, adds payable, 
+    The user creates a Direct Export Air shipment, updates routings and packages, adds payable,
     creates AP Invoice, approves the AP Invoice, cancels the AP Invoice approval and voids the AP Invoice.
 
     Scenario: Update Accounting System
@@ -85,6 +85,7 @@ Feature: AP Invoice Approve, Cancel Approval and Void
     Scenario: Approve APInvoice
         When approve invoice
         Then the invoice should approve successfully
+        And the status value should be "Approved"
 
     Scenario: Cancel the APInvoice approvement
         When cancel the invoice approvement
@@ -93,3 +94,4 @@ Feature: AP Invoice Approve, Cancel Approval and Void
     Scenario: Void APInvoice
         When void invoice
         Then the invoice should void successfully
+        And the status value should be "Void"

@@ -135,7 +135,9 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
 
     private SetShipmentsScrollPosition() {
         const shipmentCardsContainer = document.getElementById("scrollArea");
-        shipmentCardsContainer.scrollTop = RootContext.ShipmentsScrollPosition || 0;
+        if(shipmentCardsContainer) {
+            shipmentCardsContainer.scrollTop = RootContext.ShipmentsScrollPosition || 0;
+        }
     }
 
 
