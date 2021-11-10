@@ -315,7 +315,7 @@
                                     <span
                                         *ngIf="shipment.EntityType == 'C' && !shipment.ForwardingShipmentHeaderId && shipment.House">{{shipment.House}}</span>
                                     <span
-                                        *ngIf="shipment.EntityType == 'C' && !shipment.ForwardingShipmentHeaderId && shipment.Master && !shipment.House">{{shipment.Master}}</span>
+                                        >{{shipment.Master}}</span>
                                     <span *ngIf="shipment.EntityType == 'C' && shipment.ForwardingShipmentHeaderId">
                                         {{GetConsignmentNumberForCustomsForwardingShipment(shipment)}} </span>
                                     <span *ngIf="shipment.EntityType != 'C'">{{ConsignmentNumber}}</span>

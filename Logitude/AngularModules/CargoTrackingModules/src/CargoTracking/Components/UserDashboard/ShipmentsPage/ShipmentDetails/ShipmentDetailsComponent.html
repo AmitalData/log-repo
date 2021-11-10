@@ -347,7 +347,7 @@ Shipment.ShipmentList.ArrivalDate |
                     <div class="description">
                         {{Shipment.ShipmentList.GrossWeight || 0 }}
                         {{Shipment.ShipmentList.GrossWeightUnitCode||''}}
-                        <span *ngIf="Shipment.ShipmentList.EntityType == 'O'"> KG</span>
+                        <span *ngIf="!Shipment.ShipmentList.GrossWeightUnitCode"> KG</span>
                     </div>
                 </div>
                 <div *ngIf="Shipment.ShipmentList.EntityType != 'O'">
@@ -405,9 +405,9 @@ Shipment.ShipmentList.ArrivalDate |
                 <div>
                     <div class="title">weight</div>
                     <div class="description">
-                        {{Shipment.ShipmentList.GrossWeight }}
+                        {{Shipment.ShipmentList.GrossWeight  || 0}}
                         {{Shipment.ShipmentList.GrossWeightUnitCode||''}}
-                        <span *ngIf="Shipment.ShipmentList.EntityType == 'O'"> KG</span>
+                        <span *ngIf="!Shipment.ShipmentList.GrossWeightUnitCode"> KG</span>
                     </div>
                 </div>
                 <div>
