@@ -42,7 +42,10 @@ export class MainMenuComponent {
     constructor() {
         this.MainMenuItems = new Array<MainMenuItem>();
         this.MainMenuItems = this.GetMainMenuItemsFromWindow();
-        //var hasCToolToggleFeature = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "CTL")[0]
+        var hasCToolToggleFeature = SessionLocator.FeatureToggles.filter(f => f.ToggleCode === "CTL")[0];
+        if(hasCToolToggleFeature === undefined || (hasCToolToggleFeature !== undefined && hasCToolToggleFeature.Inactive)){
+            this.MainMenuItems = this.MainMenuItems.filter(m => m.TextCode !== "General.MH.TasksApp");
+        }
         // if (hasCToolToggleFeature) {
         //     var tasksAppItem = new MainMenuItem("General.MH.TasksApp", AppTool.GetMainMenuIconCode("General.MH.Depositions"));
         //     tasksAppItem.IndexOfOrder = 100;
