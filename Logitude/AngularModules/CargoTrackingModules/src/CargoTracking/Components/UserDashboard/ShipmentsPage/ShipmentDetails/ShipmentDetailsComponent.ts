@@ -321,9 +321,7 @@ export class ShipmentDetailsComponent implements OnInit,AfterViewInit
         const sliderWrapperWidth = this.SliderWrapperElement.nativeElement.offsetWidth;
 
         if (this.IsMobileView) {
-            const sliderWidth = this.SliderElement.nativeElement.offsetWidth;
             var mobileCount = Math.floor((sliderWrapperWidth - mobilePagersWidth - 20)  / this.sliderMobileCardWidth);
-
         }
         else
             var webCount = Math.floor((sliderWrapperWidth - PAGERS_WIDTH) / this.sliderCardWidth);
@@ -332,7 +330,7 @@ export class ShipmentDetailsComponent implements OnInit,AfterViewInit
         this.sliderVisibleCardsCount = mobileCount || webCount;
 
         if(this.IsMobileView){
-            this.sliderVisibleCardsWidth = this.sliderMobileCardWidth * mobileCount + 0;
+            this.sliderVisibleCardsWidth = this.sliderMobileCardWidth * mobileCount + 10;
         }else{
             this.sliderVisibleCardsWidth = this.sliderVisibleCardsCount * this.sliderCardWidth;
         }
@@ -455,8 +453,8 @@ export class ShipmentDetailsComponent implements OnInit,AfterViewInit
     SliderCards: MilestoneCard[] = [];
     sliderMarginLeft: number = 0;
     sliderMarginCardCount: number = 0;
-    sliderCardWidth: number = 200;
-    sliderMobileCardWidth: number = 165;
+    sliderCardWidth: number = 164;
+    sliderMobileCardWidth: number = 154;
     sliderVisibleCardsCount: number = 5;
     sliderVisibleCardsWidth: number = 0;
     NoMilstonesFound: boolean = false;
@@ -522,6 +520,7 @@ export class ShipmentDetailsComponent implements OnInit,AfterViewInit
 
         let margin = this.sliderMarginLeft;
         const cardWidth = this.IsMobileView ? this.sliderMobileCardWidth : this.sliderCardWidth
+
         // inc\dec
         if (dir == 'left') {
             margin -= cardWidth;
@@ -535,16 +534,8 @@ export class ShipmentDetailsComponent implements OnInit,AfterViewInit
         // limit boundary
         if (margin > 0)
             this.sliderMarginLeft = 0;
-        // else if (margin < this.sliderVisibleCardsWidth * -1){
-        //     // this.sliderMarginLeft = this.sliderVisibleCardsWidth;
-        // }
         else
             this.sliderMarginLeft = margin;
-
-        // var screenwidth = window.innerWidth;
-        // if (screenwidth < 470)
-        //     this.sliderMarginLeft - 55;
-
 
         console.log("sliderMarginCardCount:sliderMarginLeft === ",this.sliderMarginCardCount , '\t' , this.sliderMarginLeft);
 
@@ -644,7 +635,7 @@ export class ShipmentDetailsComponent implements OnInit,AfterViewInit
             panelElement.scrollIntoView();
             document.getElementsByTagName('html')[0].scrollTop -= 103;
 
-    }
+        }
 
 
     }
