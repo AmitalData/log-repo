@@ -46,12 +46,12 @@ export class MultiArchiveShipmentsComponent extends BaseComponent implements OnI
     AllRecordsCount: number = 0;
     public TransportationTypes = [new TransportationTypes("Ocean Haifa", "O", "HFA", "IL"), new TransportationTypes("Ocean Ashdod", "O", "ASH", "IL")];
     private CurrentSession = SessionLocator.SelectedSession;
-    public isLogbox = SystemEnvironmentService.IsLogBox();
+    public isLogbox = SystemEnvironmentService.IsLogBox(); 
     public IsExportActivated: boolean = false;
-    public IsImportActivated: boolean = false;
-    public HasLogBoxExportToggle: boolean = false; 
+    public IsCustomsActivated: boolean = true;
+    public HasLogBoxExportToggle: boolean = false;  
     public ShowDirectionFilters: boolean = false;
-
+     
     constructor(private _entityListService: EntityListService) {
         super();
         this.myShipmentDomainService = new ShipmentDomainService();
@@ -77,33 +77,7 @@ export class MultiArchiveShipmentsComponent extends BaseComponent implements OnI
 
     ngOnInit() {
         this.handlePrivateLable(); 
-        this.SetDirectionsFilters();
         this.LoadImporterShipments();
-    }
-
-
-    SetDirectionsFilters() {
-        if (this.IsPrivateLabel && this.HasOneDirectionFilter()) {
-            this.SetFiltersOptions();
-        }
-        else {
-            this.ShowDirectionFilters = true;
-        }
-    }
-
-    private SetFiltersOptions() {
-        this.ShowDirectionFilters = false;
-        this.SetDefaultCustomDirection();
-    }
-
-    private SetDefaultCustomDirection() {
-        if (!this.IsImportActivated && !this.IsExportActivated) {
-            this.IsImportActivated = true;
-        }
-    }
-
-    private HasOneDirectionFilter() {
-        return !(this.IsExportActivated && this.IsImportActivated)
     }
 
 
@@ -111,10 +85,8 @@ export class MultiArchiveShipmentsComponent extends BaseComponent implements OnI
         if (SessionLocator.PrivateLableSettings) {
             this.IsPrivateLabel = true;
             this.IsDSV = SessionLocator.PrivateLableSettings.PrivateLabelDomain.toLowerCase().indexOf("dsv") > -1;
-            //this.IsExportActivated = SessionLocator.PrivateLableSettings.IsExportActivated;
-            this.IsImportActivated = SessionLocator.PrivateLableSettings.IsImportActivated;
 
-           
+
         }
     }
 
@@ -184,6 +156,7 @@ export class MultiArchiveShipmentsComponent extends BaseComponent implements OnI
 
     private GetSourceEntityEvent: any = null;
     SetWindowArgs(args: any) {
+        this.SetFiltersOptions(args); 
         this.SourceEntity = {};//args.SourceEntity;
         this.HasSharedDocs = args.HasSharedDocs;
         if (this.SourceEntity) {
@@ -203,6 +176,12 @@ export class MultiArchiveShipmentsComponent extends BaseComponent implements OnI
         //        this.GetSourceEntity($event.EntityId);
         //    }
         //}); 
+    }
+
+    private SetFiltersOptions(args: any) {
+        this.IsCustomsActivated = SessionLocator.PrivateLableSettings ? args.IsCustomsActivated : this.IsCustomsActivated;
+        this.IsExportActivated = SessionLocator.PrivateLableSettings ? args.IsExportActivated : this.IsExportActivated;
+        this.ShowDirectionFilters = args.ShowDirectionFilters;
     }
 
     BuildColumns() {
@@ -421,7 +400,7 @@ export class MultiArchiveShipmentsComponent extends BaseComponent implements OnI
             this.filterAgrs.addAdditionalFilter("CreateDateTime", FilterDate, null, null, "LessThanOrEqual", false, true, false, "Date", true);
         }
 
-        this.FilterLogboxShipments();
+         this.FilterLogboxShipments();
         this.FilterPrivateLabelShipments();
         this.filterAgrs.SortBy = "StatusDate";
         this.filterAgrs.SortDirection = "Descending";
@@ -435,7 +414,9 @@ export class MultiArchiveShipmentsComponent extends BaseComponent implements OnI
     }
 
     FilterPrivateLabelShipments() {
-
+        if (!this.IsPrivateLabel) {
+            return
+        }
         if (this.ShowDirectionFilters) {
             this.filterAgrs.addAdditionalFilter("DirectionId", "I", null, null, "NotEqual", true, true, false, "String");
         } else {
@@ -444,8 +425,10 @@ export class MultiArchiveShipmentsComponent extends BaseComponent implements OnI
 
     }
 
+
+
     private SetPrivateLabelDirection() {
-        if (this.IsImportActivated) {
+        if (this.IsCustomsActivated) {
             this.filterAgrs.addAdditionalFilter("DirectionId", "C", null, null, "Equal", true, true, false, "String");
         }
         if (this.IsExportActivated) {
@@ -453,13 +436,6 @@ export class MultiArchiveShipmentsComponent extends BaseComponent implements OnI
         }
     }
 
-    SetDefaultFilters() {
-        if (!this.IsImportActivated && !this.IsExportActivated) {
-            this.IsImportActivated = true;
-            this.filterAgrs.addAdditionalFilter("DirectionId", "C", null, null, "Equal", true, true, false, "String");
-        }
-    }
-  
     private AddDirectionFilter() {
         this.filterAgrs.addAdditionalFilter("DirectionId", this.SelectedDirectionFilter, null, null, "Equals", false, true, false, "string", this.selectedDirectionFilter == "All" ? true : false);
     }

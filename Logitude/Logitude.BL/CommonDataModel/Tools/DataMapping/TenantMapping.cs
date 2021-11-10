@@ -82,7 +82,7 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             poco.RegulatedAgentNumber = entityPM.RegulatedAgentNumber;
             poco.RegulatedAgentRegimeActivated = entityPM.RegulatedAgentRegimeActivated;
             poco.CustomerId = entityPM.CustomerId;
-            poco.IsCustomerTenantShare = entityPM.IsCustomerTenantShare;
+            poco.CustomerTenantShareCustomsFile = entityPM.CustomerTenantShareCustomsFile;
   
             poco.CustomerTenantShareExportFile = entityPM.CustomerTenantShareExportFile;
             poco.AllowAgentInCustomersLOV = entityPM.AllowAgentInCustomersLOV;

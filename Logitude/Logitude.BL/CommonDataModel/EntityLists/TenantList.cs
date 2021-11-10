@@ -81,7 +81,7 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public bool IsDocumentsArchive { get; set; }
         public string CustomerId { get; set; }
         public string CustomerName { get; set; }
-        public bool IsCustomerTenantShare { get; set; }
+        public bool CustomerTenantShareCustomsFile { get; set; }
         public bool CustomerTenantShareImportFile { get; set; }
         public bool CustomerTenantShareExportFile { get; set; }
         public bool AllowAgentInCustomersLOV { get; set; }

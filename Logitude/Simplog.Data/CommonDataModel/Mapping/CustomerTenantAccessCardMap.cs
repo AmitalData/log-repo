@@ -50,7 +50,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.UpdateDateTime).HasColumnName("UpdateDateTime");
             this.Property(t => t.StatusTypeCode).HasColumnName("StatusTypeCode");
             this.Property(t => t.IsExportActivated).HasColumnName("IsExportActivated");
-            this.Property(t => t.IsImportActivated).HasColumnName("IsImportActivated");
+            this.Property(t => t.IsCustomsActivated).HasColumnName("IsCustomsActivated");
 
 
 

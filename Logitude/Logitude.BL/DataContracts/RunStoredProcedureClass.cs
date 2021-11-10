@@ -1,6 +1,7 @@
 ﻿using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.Helpers;
+using Logitude.BL.InfrastructureModel.Tools.EntityService;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.EntityQueries;
 using Logitude.Server.Tools.Helpers;
@@ -134,29 +135,7 @@ namespace Logitude.BL.DataContracts
                 return false;
             }
         }
-
-        private static bool IsExportShipmentsAllowedForLogBox(TenantPM loggedTenant, ShipmentPM entityPM)
-        {
-            if (loggedTenant.CustomerTenantShareExportFile == true) //&& FeatureToggleHelper.HasFeatureToggle("LEX", loggedTenant.Id)
-            {
-                return (entityPM.DirectionId.ToUpper() == "E" || entityPM.DirectionId.ToUpper() == "R");
-            }
-            else
-            {
-                return false;
-            }
-        }
-        private static bool IsImporterTenantHasExportFeatureForExportShipments(int ImporterTenant, ShipmentPM entityPM)
-        {
-            if ((entityPM.DirectionId.ToUpper() == "E" || entityPM.DirectionId.ToUpper() == "R") && !FeatureToggleHelper.HasFeatureToggle("LEX", ImporterTenant))
-            {
-                return false;
-            }
-            else
-            {
-                return true;
-            }
-        }
+ 
         public static void CreateShipmentQueue(string shipmentId, int tenant)
         {
             try
@@ -168,12 +147,14 @@ namespace Logitude.BL.DataContracts
                 var entityPM = ShipmentQuery.GetSinglePMWithoutComposition(shipmentId, tenant);
                 if (entityPM != null && tenantPM != null)
                 {
-                    if (!tenantPM.IsDocumentsArchive && !entityPM.IsCancelled && tenantPM.IsCustomerTenantShare && (entityPM.DirectionId.ToUpper() == "C" || IsExportShipmentsAllowedForLogBox(tenantPM, entityPM) || IsImportShipmentsAllowedForLogBox(tenantPM, entityPM)))
+                    if (!tenantPM.IsDocumentsArchive && !entityPM.IsCancelled && tenantPM.CustomerTenantShareCustomsFile)
                     {
                         CustomerTenantAccessQuery customerTenantAccessQuery = new CustomerTenantAccessQuery(tenant);
                         CustomerTenantAccessInfo customerTenantAccessInfo = customerTenantAccessQuery.GetCustomerTenantAccessInfo(tenant, entityPM.CustomerId);
+                         
+                        PrivateLabelShipmentService privateLabelShipmentService = new PrivateLabelShipmentService(tenantPM, entityPM, customerTenantAccessInfo);
 
-                        if (customerTenantAccessInfo != null && customerTenantAccessInfo.HasAccess && IsImporterTenantHasExportFeatureForExportShipments(customerTenantAccessInfo.CustomerTenant, entityPM))
+                        if (customerTenantAccessInfo != null && customerTenantAccessInfo.HasAccess && privateLabelShipmentService.IsCustomsShipmentsAllowedForLogBox() &&  IsImportShipmentsAllowedForLogBox(tenantPM, entityPM))
                         {
                             var ImporterTenant = customerTenantAccessInfo.CustomerTenant;
                             IQueueService queueservice = new DbQueueService();

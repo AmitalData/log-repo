@@ -615,7 +615,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             {
 
                 tasks[0].Parameters.Add(new Parameter { Order = 5, Value = customerTenantAccessCards.IsExportActivated.ToString() });
-                tasks[0].Parameters.Add(new Parameter { Order = 6, Value = customerTenantAccessCards.IsImportActivated.ToString() }); 
+                tasks[0].Parameters.Add(new Parameter { Order = 6, Value = customerTenantAccessCards.IsCustomsActivated.ToString() }); 
             }
         }
 

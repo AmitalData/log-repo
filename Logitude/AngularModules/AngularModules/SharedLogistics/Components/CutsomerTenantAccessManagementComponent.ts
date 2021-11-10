@@ -137,7 +137,7 @@ export class CutsomerTenantAccessManagementComponent implements OnInit {
 
     RefreshTenantScreenData() {
 
-        if (this.myTenantPM != null && !this.myTenantPM.IsCustomerTenantShare) {
+        if (this.myTenantPM != null && !this.myTenantPM.CustomerTenantShareCustomsFile) {
             this.EnableAccess = false;
         }
 

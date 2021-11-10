@@ -26,19 +26,19 @@ export class TenantAccessSettingsComponent extends BaseComponent  {
     }
 
     public get IsCustomerTenantShareEnable() {
-        return this.EntityPM != null ? this.EntityPM.IsCustomerTenantShare == true ? false : true : null;
+        return this.EntityPM != null ? this.EntityPM.CustomerTenantShareCustomsFile == true ? false : true : null;
     }
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
     }
-    public get IsCustomerTenantShare() {
-        return this.EntityPM != null ? this.EntityPM.IsCustomerTenantShare : null;
+    public get CustomerTenantShareCustomsFile() {
+        return this.EntityPM != null ? this.EntityPM.CustomerTenantShareCustomsFile : null;
     }
 
-    public set IsCustomerTenantShare(value: boolean) {
-        if (this.EntityPM.IsCustomerTenantShare != value) {
-            this.EntityPM.IsCustomerTenantShare = value;
+    public set CustomerTenantShareCustomsFile(value: boolean) {
+        if (this.EntityPM.CustomerTenantShareCustomsFile != value) {
+            this.EntityPM.CustomerTenantShareCustomsFile = value;
             this.Parent.RefreshTenantScreenData();
         }
     }
@@ -49,7 +49,7 @@ export class TenantAccessSettingsComponent extends BaseComponent  {
 
     OkButtonClicked() {
         this.ValidationErrorsList = [];
-        if (this.EntityPM.IsCustomerTenantShare && !AppTool.IsNullOrEmpty(this.EntityPM.LogBoxAdminUserId)) {
+        if (this.EntityPM.CustomerTenantShareCustomsFile && !AppTool.IsNullOrEmpty(this.EntityPM.LogBoxAdminUserId)) {
             this.CurrentSession.StartBusyIndicatorSaving();
             var service: TenantPMService = new TenantPMService();
             service.update(this.EntityPM).subscribe((res:any) => {

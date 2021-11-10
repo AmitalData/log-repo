@@ -83,8 +83,8 @@ export class RelatedCustomerComponent extends BaseComponent{
     }
 
     private SetIsImportField(item: CustomerTenantAccessCardPM) {
-        item.IsImportActivated = !item.IsImportActivated;
-        this.EntityPM.CustomerTenantAccessCards.find(a => a.CustomerCode == this.SelectedCardPM.CustomerCode).IsImportActivated = item.IsImportActivated;
+        item.IsCustomsActivated = !item.IsCustomsActivated;
+        this.EntityPM.CustomerTenantAccessCards.find(a => a.CustomerCode == this.SelectedCardPM.CustomerCode).IsCustomsActivated = item.IsCustomsActivated;
     }
 
 
@@ -98,7 +98,7 @@ export class RelatedCustomerComponent extends BaseComponent{
                     this.CurrentSession.StopBusyIndicator();
                     this.CurrentSession.CloseCurrentWindowEmit("OK");  
                         if (serviceResponse.ErrorsArray?.length > 0) {
-                            this.ValidationErrorsList.push('You should select at least one option either Import of Export. ');
+                            this.ValidationErrorsList.push(serviceResponse.ErrorsArray[0]);
                         } 
                 }); 
     } 
@@ -288,7 +288,7 @@ export class RelatedCustomerComponent extends BaseComponent{
         tenantPMService.get(this.EntityPM.Tenant).subscribe((response: any) => {   
             if (!response.HasError) {
                 var tenantPM = response.Result;  
-                if (tenantPM.IsCustomerTenantShare) {
+                if (tenantPM.CustomerTenantShareCustomsFile) {
                     if (tenantPM.CustomerTenantShareExportFile) {
                         this.CanSelectOpption = true;
                         this.IsExportActivated = true;
@@ -516,8 +516,8 @@ export class AddEditCustomerTenantAccessCardViewModel   extends BaseComponent {
     public get IsExportActivated() { return this.EntityPM.IsExportActivated; }
     public set IsExportActivated(value: boolean) { if (value != this.EntityPM.IsExportActivated) this.EntityPM.IsExportActivated = value; }
 
-    public get IsImportActivated() { return this.EntityPM.IsImportActivated; }
-    public set IsImportActivated(value: boolean) { if (value != this.EntityPM.IsImportActivated) this.EntityPM.IsImportActivated = value; }
+    public get IsCustomsActivated() { return this.EntityPM.IsCustomsActivated; }
+    public set IsCustomsActivated(value: boolean) { if (value != this.EntityPM.IsCustomsActivated) this.EntityPM.IsCustomsActivated = value; }
 
     private createByUserId: string;
     public get CreateByUserId() {
@@ -635,8 +635,8 @@ export class CardListDataViewModel {
 
     }
 
-    public get IsImportActivated() { return this.isImport; }
-    public set IsImportActivated(value: boolean) {
+    public get IsCustomsActivated() { return this.isImport; }
+    public set IsCustomsActivated(value: boolean) {
         this.isImport = value; 
 
     }

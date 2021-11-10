@@ -36,6 +36,6 @@ namespace Logitude.BL.GlobalModel.EntityPMs
 
         public bool IsExportActivated { get; set; }
 
-        public bool IsImportActivated { get; set; }
+        public bool IsCustomsActivated { get; set; }
     }
 }

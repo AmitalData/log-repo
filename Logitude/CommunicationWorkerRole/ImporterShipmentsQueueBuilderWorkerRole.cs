@@ -75,35 +75,7 @@ namespace CommunicationWorkerRole
             return base.OnStart();
         }
         string Token;
-        private bool IsCustomShipmentsAllowedForLogBox(ShipmentPM entityPM, bool isImportActivated)
-        { 
-            if (isImportActivated)
-            {
-                return (entityPM.DirectionId.ToUpper() == "C");
-            }
-            else
-            {
-                return false;
-            }
-        }
-
-        private bool IsExportShipmentsAllowedForLogBox(TenantPM loggedTenant, ShipmentPM entityPM, bool isExportActivated)
-        {
-            if (loggedTenant.CustomerTenantShareExportFile && isExportActivated )
-            {
-                return (entityPM.DirectionId.ToUpper() == "E");
-            }
-            else
-            {
-                return false;
-            }
-        }
-
-        private bool IsShipmentAllowedForLogBox(CustomerTenantAccessCardPM customerTenantAccessCard, TenantPM tenantPM, ShipmentPM Shipment)
-        {
-            return (IsCustomShipmentsAllowedForLogBox(Shipment, customerTenantAccessCard.IsImportActivated) || IsExportShipmentsAllowedForLogBox(tenantPM, Shipment, customerTenantAccessCard.IsExportActivated));
-        }
-
+      
         public override void Run()
         {
             try
@@ -282,13 +254,15 @@ namespace CommunicationWorkerRole
                                             foreach (var item in ShipmentsIds)
                                             {
                                                 var Shipment = shipmentQuery.GetSinglePMWithoutComposition(item, tenant);
-                                                if (Shipment != null && (customerTenantAccessCard.LastMappingDateTime == null || Shipment.CreateDateTime > customerTenantAccessCard.LastMappingDateTime) && tenantPM.IsCustomerTenantShare && !Shipment.IsCancelled)
+                                                if (Shipment != null && (customerTenantAccessCard.LastMappingDateTime == null || Shipment.CreateDateTime > customerTenantAccessCard.LastMappingDateTime) && tenantPM.CustomerTenantShareCustomsFile && !Shipment.IsCancelled)
                                                 {
+                                                     
                                                     CustomerTenantAccessInfo customerTenantAccess = customerTenantAccessQuery.GetCustomerTenantAccessInfo(tenant, Shipment.CustomerId);
+                                                    PrivateLabelShipmentService privateLabelShipmentService = new PrivateLabelShipmentService(tenantPM, Shipment, customerTenantAccess);
 
                                                     if (customerTenantAccess != null && customerTenantAccess.HasAccess)
                                                     {
-                                                        if (IsShipmentAllowedForLogBox(customerTenantAccessCard, tenantPM, Shipment))
+                                                        if (privateLabelShipmentService.IsShipmentsAllowedForLogBox())
                                                             IdsList.Add(item);
                                                         else if (Shipment.DirectionId == "I" && !string.IsNullOrEmpty(Shipment.CustomFileId))
                                                             ImportIdsList.Add(item);

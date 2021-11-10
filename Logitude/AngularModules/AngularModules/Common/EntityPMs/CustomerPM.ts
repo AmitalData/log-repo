@@ -1423,6 +1423,11 @@ export class CustomerPM {
     public set IsAutonomy(newValue: boolean) { if (this.isAutonomy != newValue) { this.isAutonomy = newValue; this.MarkAsDirty("IsAutonomy"); } }
        
 	 
+    private addLogboxCustomerQueue: boolean;
+    public get AddLogboxCustomerQueue() { return this.addLogboxCustomerQueue; }
+    public set AddLogboxCustomerQueue(newValue: boolean) { if (this.addLogboxCustomerQueue != newValue) { this.addLogboxCustomerQueue = newValue; this.MarkAsDirty("AddLogboxCustomerQueue"); } }
+       
+	 
 
     public OldEntityPM: CustomerPM;
 		

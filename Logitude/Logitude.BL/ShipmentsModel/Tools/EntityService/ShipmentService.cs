@@ -3,10 +3,11 @@ using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.Tools.Validating;
 using Logitude.BL.DataContracts;
-using Logitude.BL.ExternalService;
+using Logitude.BL.ExternalService; 
 using Logitude.BL.Helpers;
 using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.EntityQueries;
+using Logitude.BL.InfrastructureModel.Tools.EntityService;
 using Logitude.BL.ShipmentsModel.EntityOtherServices;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.EntityQueries;
@@ -1200,8 +1201,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     {
                         CustomerTenantAccessQuery customerTenantAccessQuery = new CustomerTenantAccessQuery(tenant);
                         CustomerTenantAccessInfo customerTenantAccessInfo = customerTenantAccessQuery.GetCustomerTenantAccessInfo(tenant, entityPM.CustomerId);
-
-                        if (customerTenantAccessInfo != null && customerTenantAccessInfo.HasAccess && customerTenantAccessInfo.CustomerTenant != 0 && IsImporterTenantHasExportFeatureForExportShipments(customerTenantAccessInfo.CustomerTenant, entityPM))
+                    
+                        PrivateLabelShipmentService privateLabelShipmentService = new PrivateLabelShipmentService(entityPM, customerTenantAccessInfo);
+                        if (customerTenantAccessInfo != null && customerTenantAccessInfo.HasAccess && customerTenantAccessInfo.CustomerTenant != 0 && privateLabelShipmentService.IsShipmentsAllowedForLogBox())
                         {
                             var ImporterTenant = customerTenantAccessInfo.CustomerTenant;
                             IQueueService queueservice = new DbQueueService();
@@ -1246,7 +1248,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                         CustomerTenantAccessQuery customerTenantAccessQuery = new CustomerTenantAccessQuery(tenant);
                         CustomerTenantAccessInfo customerTenantAccessInfo = customerTenantAccessQuery.GetCustomerTenantAccessInfo(tenant, entityPM.CustomerId);
 
-                        if (customerTenantAccessInfo != null && customerTenantAccessInfo.HasAccess && customerTenantAccessInfo.CustomerTenant != 0 && IsImporterTenantHasExportFeatureForExportShipments(customerTenantAccessInfo.CustomerTenant, entityPM))
+                        PrivateLabelShipmentService privateLabelShipmentService = new PrivateLabelShipmentService(entityPM, customerTenantAccessInfo);
+                        if (customerTenantAccessInfo != null && customerTenantAccessInfo.HasAccess && customerTenantAccessInfo.CustomerTenant != 0 && privateLabelShipmentService.IsShipmentsAllowedForLogBox())
                         {
                             var ImporterTenant = customerTenantAccessInfo.CustomerTenant;
                             IQueueService queueservice = new DbQueueService();
@@ -1358,12 +1361,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             if (!entityPM.DontAddToImportersQueue
                 && IsLogBoxQueueEnabled(loggedTenant, entityPM)
                 && !loggedTenant.LogBoxTenantSetting.IsDocumentsArchive
-                && (isNewEntity == true ? !entityPM.IsCancelled : true)
-                && loggedTenant.IsCustomerTenantShare
-                && (entityPM.DirectionId.ToUpper() == "C"
-                || IsImportShipmentsAllowedForLogBox(loggedTenant, entityPM)
-                || IsExportShipmentsAllowedForLogBox(loggedTenant, entityPM))
-                )
+                && (isNewEntity == true ? !entityPM.IsCancelled : true))
             {
                 return true;
             }
