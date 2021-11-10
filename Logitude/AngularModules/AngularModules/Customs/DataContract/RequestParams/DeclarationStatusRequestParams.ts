@@ -1,4 +1,4 @@
-﻿import {GenericRequestParams} from './GenericRequestParams';
+import {GenericRequestParams} from './GenericRequestParams';
 
 export class DeclarationStatusRequestParams extends GenericRequestParams {
 
@@ -17,4 +17,6 @@ export class DeclarationStatusRequestParams extends GenericRequestParams {
     public OldReshimonRadio: boolean;
 
     public RequestOrigin: string;
+    public DeclarationList: string;
+    public CourierMaster: string;
 }

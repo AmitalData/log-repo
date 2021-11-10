@@ -410,6 +410,8 @@ import { CustomerClassificationTypeListService } from './Services/StandardLists/
 import { PoaStatusTypeLookUpListService } from './Services/StandardLists/PoaStatusTypeLookUpListService';
 
 import { DeclarationAmendmentSharedDataService } from './Services/DataChange/DeclarationAmendmentSharedDataService';
+import { CustomsRequestsSheetWebService } from './Services/WebServices/CustomsRequestsSheetWebService';
+
 
 export class ModuleProviders {
     public static GetInstance(name: string) {
@@ -806,6 +808,8 @@ export class ModuleProviders {
             case "LoadTestService": { myResult = new LoadTestService(); break; }
             case "InvoiceQueueWebService": { myResult = new InvoiceQueueWebService(); break; }
             case "ContainerizationMessagesService": { myResult = new ContainerizationMessagesService(); break; }
+            case "CustomsRequestsSheetWebService": { myResult = new CustomsRequestsSheetWebService(); break; }
+
 
             //#endregion
 
