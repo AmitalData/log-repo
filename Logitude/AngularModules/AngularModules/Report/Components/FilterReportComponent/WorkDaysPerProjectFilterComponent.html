@@ -138,15 +138,7 @@
                                     <LogTextBox [ObjectFieldName]="'ExternalProjectNumber'" [Text]="ExternalProjectNumber" [NoObjectField]="true" [DataContext]="DataContext"></LogTextBox>
                                 </td>
 
-                                <td style="width:20px;">
-                                    <div style="width:20px"></div>
-                                </td>
-
-                                <td style="width:100px;text-align:left">
-                                    <button (click)="RunReport()" class="GreenButton" style="width:100px;height:22px;border:1px solid green;border-radius:3px;">
-                                        <div style="color:black;  text-align:center;vertical-align:central;font-size:12px;">Run Report</div>
-                                    </button>
-                                </td>
+                                
 
                                 <td>
                                     <div></div>
@@ -199,6 +191,17 @@
                                 <td style="width:15px">
                                     <CheckBox [IsChecked]="IncludeInnerProject" (Checked)="IncludeInnerProject = $event"></CheckBox>
                                 </td>
+
+                                <td style="width:220px;">
+                                    <div style="width:220px"></div>
+                                </td>
+
+                                <td style="width:100px;text-align:left">
+                                    <button (click)="RunReport()" class="GreenButton" style="width:100px;height:22px;border:1px solid green;border-radius:3px;">
+                                        <div style="color:black;  text-align:center;vertical-align:central;font-size:12px;">Run Report</div>
+                                    </button>
+                                </td>
+
                                 <td>
                                     <div></div>
                                 </td>
