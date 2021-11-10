@@ -54,6 +54,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Global
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnTenant(tenant);
 
                 DWQueryFilterQuery DWQueryFilterQuery = new DWQueryFilterQuery(tenant);
                 var result = DWQueryFilterQuery.GetDWQueryFilterPMsByTenantAndUser(tenant, loggedcontactid);
@@ -75,6 +76,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Global
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnTenant(tenant);
 
                 DWQueryFilterQuery DWQueryFilterQuery = new DWQueryFilterQuery(tenant);
                 var result = DWQueryFilterQuery.GetDWQueryFilterPMsByTenantAndUser(tenant, loggedcontactid);
@@ -101,6 +103,8 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Global
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnEntityTenant("DWQueryFilter", entityPM.Tenant, authToken.Tenant);
+
                 IWebFreightContext objectContext = WebFreightContext.GetContext(entityPM.Tenant);
                 DWQueryFilterService service = new DWQueryFilterService(objectContext, entityPM.Tenant);
                 service.Create(entityPM);
@@ -121,6 +125,8 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Global
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnEntityTenant("DWQueryFilter", entityPM.Tenant, authToken.Tenant);
+
                 IWebFreightContext objectContext = WebFreightContext.GetContext(entityPM.Tenant);
                 DWQueryFilterRepository repo = new DWQueryFilterRepository(entityPM.Tenant);
                 var temp = repo.GetSingleDWQueryFilter(entityPM.Id, entityPM.Tenant);

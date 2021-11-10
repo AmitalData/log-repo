@@ -28,6 +28,8 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnTenant(tenant);
+
                 EventTypeQuery eventTypesRepository = new EventTypeQuery(authToken.Tenant);
                 IQueryable<EventTypePM> iQueryable = eventTypesRepository.GetEventTypesByObjectTable(objectTableId, tenant);
                 return Request.CreateResponse(HttpStatusCode.OK, iQueryable);
@@ -49,6 +51,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnTenant(tenant);
 
                 EventTypeQuery eventTypesRepository = new EventTypeQuery(authToken.Tenant);
                 EventTypePM eventTypePM  = eventTypesRepository.GetSingleEventTypePMByCode(code, tenant);
@@ -81,6 +84,8 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
 
                         foreach (EventTypePM eventTypePm in eventTypePMLists)
                         {
+                            SecurityUtility.AuthenticationOnEntityTenant("EventType", eventTypePm.Tenant, authToken.Tenant);
+
                             service.Update(eventTypePm);
                         }
 

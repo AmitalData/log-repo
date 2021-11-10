@@ -22,9 +22,11 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
                     string token = HttpContext.Current.Request.Headers["Token"];
                     AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                     SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                    SecurityUtility.AuthenticationOnTenant(tenant);
+
                     SecurityUtility.CheckContactFeature("MoveType", "READ", authToken.Tenant);
                     GeneralDomainService service = new GeneralDomainService();
-                    var SingletextCode = service.GetSingleFieldTranslationForTextCodeId(id,tenant);
+                    var SingletextCode = service.GetSingleFieldTranslationForTextCodeId(id, tenant);
 
                     return Request.CreateResponse(HttpStatusCode.OK, SingletextCode);
 
@@ -43,6 +45,8 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnTenant(tenant);
+
                 SecurityUtility.CheckContactFeature("MoveType", "READ", authToken.Tenant);
                 GeneralDomainService service = new GeneralDomainService();
                 string singleTextCodeId = service.GetTextCodeIdByCode(code, tenant);
