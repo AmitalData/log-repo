@@ -536,10 +536,10 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                     }
                 }
             }
- 
             this._LOGICUSTFILE = XmlGenericUtil<LOGICUSTFILE>.DeSerializeObject(xmlLOGICUSTFILE);
             if (_LOGICUSTFILE.LogitudeCustomsFile == null || _LOGICUSTFILE.LogitudeCustomsFile.Length != 1)
             {
+                LogMessagingUtil.Instance.AppendLine("_LOGICUSTFILE.LogitudeCustomsFile is null or longer than 1 =  " + _LOGICUSTFILE.LogitudeCustomsFile.Length);
                 MyGenericResponseObj.StatusType = GenericResponseObj.StatusEnum.BusinessError;
                 MyGenericResponseObj.Message = "customFile.LogitudeCustomsFile.Length !=1 !!!";
             }
@@ -548,6 +548,7 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                 this._AmitalCustomsFile = _LOGICUSTFILE.LogitudeCustomsFile[0];
                 if (_MyDeclarationPM.IsCourierDeclaration == true)
                 {
+                    LogMessagingUtil.Instance.AppendLine(" _MyDeclarationPM.IsCourierDeclaration is not null  ");
                     UpdateNoIdUnder150();
                     CalcIsAutonomy();
                     CalcProcedureCurrentCode();
@@ -1174,7 +1175,10 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
 
                                 myCourierDeclarationUpdateService.Update(_CourierDeclarationPMPMDiferentMaster, true);
 
- 
+ if(false)
+                                {
+
+                 
                                 CustomsRequestsSheetQueryService customsRequestsSheetQueryService = new CustomsRequestsSheetQueryService(_context);
                                 List<CustomsRequestsSheetPM> customsRequestsSheetPMList = customsRequestsSheetQueryService.GetRequestInProgress(_tenant, "UCUDO", "", "", null, null, _CourierDeclarationPMPMDiferentMaster.CourierMasterId, true);
 
@@ -1198,6 +1202,7 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                                         };
 
                                         string message = messagingService.CreateCRS(_tenant, Curruser, requestParams2);
+                                    }
                                     //}
                                 }
                             }

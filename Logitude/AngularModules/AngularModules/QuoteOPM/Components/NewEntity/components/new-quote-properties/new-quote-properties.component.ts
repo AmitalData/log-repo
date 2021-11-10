@@ -30,8 +30,8 @@ export class NewQuotePropertiesComponent implements OnInit, AfterViewInit {
       fromPort: new FormControl('', Validators.required),
       toPort: new FormControl('', Validators.required),
       specialService: new FormControl(),
-      mainCarriageCarrier: new FormControl('', Validators.required),
-      incoterm: new FormControl('', Validators.required),
+      mainCarriageCarrier: new FormControl(),
+      incoterm: new FormControl(),
       // delivery: new FormGroup({}),
       // pickup: new FormGroup({}),
     })
@@ -106,11 +106,11 @@ export class NewQuotePropertiesComponent implements OnInit, AfterViewInit {
     const filters = new ApiQueryFilters();
     filters.PageIndex = 0;
     filters.PageSize = 100;
-
-    this.mainCarriageCarrierFunc = (qf: ApiQueryFilters) => this.newQuoteDataService.getCarrierses(this.directionId, this.transportModeId, qf);
-
+    
     this.carrierColumns = this.directionId === "E" ? { AIRLINE_ID: 'Code' } : { VENDOR_ID: 'Code' }
     this.carrierColumns = { ...this.carrierColumns, ...{ Name: 'Name', Prefix: 'Prefix' } }
+
+    this.mainCarriageCarrierFunc = (qf: ApiQueryFilters) => this.newQuoteDataService.getCarrierses(this.directionId, this.transportModeId, qf);
   }
 
   async getIncoterms() {

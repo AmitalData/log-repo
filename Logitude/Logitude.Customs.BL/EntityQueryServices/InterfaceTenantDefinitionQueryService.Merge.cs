@@ -5,11 +5,28 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Simplog.Server.Infrastructure.Helpers;
 
 namespace Logitude.Customs.BL.EntityQueryServices
 {
     public partial class InterfaceTenantDefinitionQueryService
     {
+        public InterfaceTenantDefinitionPM GetFromCacheByTenatCode(int tenant, string code)
+        {
+
+            string entityKeyString = $"GetInterfaceTenantDefinitionByTenatCode ({tenant},{code})";
+           
+            var pm1 = CacheManager.GetOrInsertNewObject<InterfaceTenantDefinitionPM>(entityKeyString,
+                () => 
+                {
+                    var poco = this.repository.GetSingleDefinitionByCode(code, tenant);
+                    if (poco == null) return null;
+                    var pm = this.GetEntityPM(poco);
+                    return pm;
+                });
+            return pm1;
+
+        }
         public List<InterfaceTenantDefinitionManagementPM> GetWithInterfaceManagementDefinition(int tenant, string code = null)
         {
             var interfaceManagementRepo = new InterfaceManagementRepository(context);

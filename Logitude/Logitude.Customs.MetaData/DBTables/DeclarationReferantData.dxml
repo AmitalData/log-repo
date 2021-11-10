@@ -220,6 +220,12 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="IsManualPayment"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
   <Relation
     ForeignKeyColumn="VendorId"
     ReferencedTable="CustomsVendors"

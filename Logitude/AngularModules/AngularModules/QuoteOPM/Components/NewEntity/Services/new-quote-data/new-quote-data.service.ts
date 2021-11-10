@@ -23,17 +23,17 @@ import { filter, take } from 'rxjs/operators';
 import { ShipmentTypeList } from 'Shipment/EntityLists/ShipmentTypeList';
 import { ShipmentTypeListService } from 'Shipment/Services/StandardLists/ShipmentTypeListService';
 import { PackageTypeList } from 'Common/EntityLists/PackageTypeList';
-
-declare const window: any;
+import { LogtuideTableDataService } from '../../components/autocomplate-table/logtuide-table-data.service';
 
 @Injectable()
 export class NewQuoteDataService {
-  _entityResourceService: EntityResourceService = new EntityResourceService();
+
   addressService: AddressService = new AddressService();
 
   constructor(
     private entityListService: EntityListService,
     private newQuoteOPWebService: NewQuoteOPWebService,
+    private logtuideTableDataService: LogtuideTableDataService,
   ) { }
 
   async getDirectionList(): Promise<DirectionList[]> {
@@ -49,7 +49,7 @@ export class NewQuoteDataService {
   }
 
   async getCardsTable(): Promise<CardList[]> {
-    return await this.getTable('Card') as CardList[];
+    return await this.logtuideTableDataService.getTable('Card') as CardList[];
     //   const cards: ServiceResponse = await new CardListService().getAll().toPromise() as ServiceResponse;
     //   return cards.Result as CardList[];
   }
@@ -192,21 +192,6 @@ export class NewQuoteDataService {
     })
   }
 
-  private getTable(tableName: string): Promise<any> {
-    return new Promise<ServiceResponse>((resolve, reject) => {
-      this._entityResourceService.getEntityResourceByTableName(tableName, 0)
-        .pipe(filterIsNotNull(), take(1))
-        .subscribe(async () => {
-          const LookUpTable: ObjectTablePM = window.ObjectTables.filter(d => d.Name === tableName)[0];
-          const loadPr: any = (LookUpTable?.CacheOnClient) ?
-            await this.entityListService.getAllFromCache(tableName, new ApiQueryFilters()) :
-            await this.entityListService.getAll(tableName);
-
-          const response: ServiceResponse = await (<Observable<Promise<ServiceResponse>>>loadPr).toPromise();
-          resolve(response.Result);
-        });
-    })
-  }
 
   private getDataFromService(ob: Observable<any>): Promise<any[]> {
     return new Promise<any[]>((resolve, reject) =>

@@ -209,6 +209,11 @@ export class CustomsDocumentPM {
     public set SignersList(newValue: string) { if (this.signersList != newValue) { this.signersList = newValue; this.MarkAsDirty("SignersList"); } }
        
 	 
+    private isCustomSendTime: boolean;
+    public get IsCustomSendTime() { return this.isCustomSendTime; }
+    public set IsCustomSendTime(newValue: boolean) { if (this.isCustomSendTime != newValue) { this.isCustomSendTime = newValue; this.MarkAsDirty("IsCustomSendTime"); } }
+       
+	 
 
     public OldEntityPM: CustomsDocumentPM;
 		

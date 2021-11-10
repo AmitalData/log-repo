@@ -109,6 +109,7 @@
     <None Include="DBScripts\Post\202005210125_BeforeUpdateDeleteAllMetadata.sxml" />
     <None Include="DBScripts\Post\202005270157_SetNullableForCDROPColumns_Global.sxml" />
     <None Include="DBScripts\Post\202005270158_SetNullableForCDROPColumns_Main.sxml" />
+    <None Include="DBScripts\Post\202108011330_AddPhysicalCheckSearchResultTypes.sxml" />
     <None Include="DBScripts\Post\202107071341_SetDeclarationDeclarationTypeCode.sxml" />
     <None Include="DBScripts\Post\202103251635_AddFCLLCL.sxml" />
     <None Include="DBScripts\Post\202105252040_AddAmendmentStatuses.sxml" />
@@ -124,6 +125,7 @@
     <None Include="DBScripts\Post\202104201027_AddCOURIERPENDINGREASONS903.sxml" />
     <None Include="DBScripts\Post\202107071340_SetCustomsDocumentsDefinitionDeclarationType.sxml" />
     <None Include="DBScripts\Post\202106061800_AddComputingPartners.sxml" />
+    <None Include="DBScripts\Pre\202108111402_AddONSearchResult.sxml" />
     <None Include="DBScripts\Pre\20210801_DeleteDuplicateQueryColumns .sxml" />
     <None Include="DBScripts\Pre\202005210104_DropUnneededTables_Global.sxml" />
     <None Include="DBScripts\Pre\202005210105_DropUnneededTables_Main.sxml" />
@@ -419,6 +421,7 @@
     <None Include="DBTables\PendingErrorPlace.dxml" />
     <None Include="DBTables\PhysicalCheck.dxml" />
     <None Include="DBTables\PhysicalCheckOperation.dxml" />
+    <None Include="DBTables\PhysicalCheckSearchResultType.dxml" />
     <None Include="DBTables\PhysicalCheckStatusMessage.dxml" />
     <None Include="DBTables\PoaAuthorizationTypeLookup.dxml" />
     <None Include="DBTables\PoaStatusTypeLookUp.dxml" />
@@ -513,6 +516,7 @@
     <None Include="DBTables\VendorTransactionType.dxml" />
     <None Include="DBTables\VendorType.dxml" />
     <None Include="EntityFiles\AmendmentFieldStatusType.lxml" />
+    <None Include="EntityFiles\PhysicalCheckSearchResultType.lxml" />
     <None Include="EntityFiles\AmendRequestRejectReasonType.lxml" />
     <None Include="EntityFiles\AmendmentStatus.lxml" />
     <None Include="EntityFiles\AmendmentType.lxml" />
@@ -643,11 +647,6 @@
     <None Include="EntityFiles\ClaimsRelatedEntity.lxml">
       <SubType>Designer</SubType>
     </None>
-    <Compile Include="AutoGenerators\CustomClassesGenerator.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>CustomClassesGenerator.tt</DependentUpon>
-    </Compile>
     <None Include="EntityFiles\CustomsDocumentsDefinition.lxml" />
     <None Include="EntityFiles\CustomsInsuranceCompany.lxml" />
     <None Include="EntityFiles\DeclarationCargoSplit.lxml" />
@@ -675,7 +674,6 @@
     </None>
     <None Include="AutoGenerators\CustomClassesGenerator.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>CustomClassesGenerator.cs</LastGenOutput>
     </None>
     <None Include="EntityFiles\AddressContactState.lxml" />
     <None Include="EntityFiles\AddressPurpose.lxml" />

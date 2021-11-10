@@ -1,9 +1,11 @@
-<p-table [value]="data" [columns]="columns" #table  [scrollable]='true' scrollHeight="55vh"
+<div [draggable] dragTarget=".p-dynamic-dialog" dragHandle='.p-dialog-header'></div>
+
+<p-table [value]="data" [columns]="columns" #table [scrollable]='true' scrollHeight="440px"
     [globalFilterFields]='columnsNames' [rows]='rows' [resizableColumns]="true" [virtualScroll]="lazy"
     [virtualRowHeight]="34" [lazy]="lazy" (onLazyLoad)="loadLazy($event)" (onSort)='onSort($event)'>
     <ng-template pTemplate="caption">
         <i class="pi pi-search" style="margin:4px 4px 0 0"></i>
-        <input type="text" pInputText size="50" placeholder="Global Filter"
+        <input type="text" pInputText size="50" [placeholder]="placeholder"
             (input)="filterTable($any($event.target).value)" style="width:auto">
     </ng-template>
     <ng-template pTemplate="header" let-columns>
@@ -15,9 +17,9 @@
             </th>
         </tr>
     </ng-template>
-    <ng-template pTemplate="body" let-row let-columns="columns" let-rowIndex='rowIndex'>
-        <tr style='height:34px' (click)='onSelectedRow(row)'>
-            <!-- <td>{{rowIndex}}</td> -->
+    <ng-template pTemplate="body" let-row let-columns="columns" let-i='rowIndex'>
+        <tr style='height:34px' (click)='onSelectedRow(row)' [ngClass]='{"highlight-row":(i + 1)%2}'>
+            <!-- <td>{{i}}</td> -->
             <td *ngFor='let col of columns'>{{row[col.name]}}</td>
         </tr>
     </ng-template>

@@ -443,6 +443,17 @@ namespace Logitude.Customs.BL.EntityQueryServices
             }
             return courierMasterPMList;
         }
+        public List<CourierMasterPM> AllCourierMastersWithLandingDateBetweenTwoDates(int tenant,DateTime fromDate,DateTime toDate,string integratorCode)
+        {
+            CourierMasterRepository courierMasterRepository = new CourierMasterRepository(context);
+            List<CourierMasterPM> courierMasterPMList = new List<CourierMasterPM>();
+            var OpenCourierMasters = courierMasterRepository.AllCourierMastersWithLandingDateBetweenTwoDates(tenant, fromDate,toDate, integratorCode);
+            foreach (var item in OpenCourierMasters)
+            {
+                courierMasterPMList.Add(this.GetEntityPM(item, false, null));
+            }
+            return courierMasterPMList;
+        }
 
 
     }

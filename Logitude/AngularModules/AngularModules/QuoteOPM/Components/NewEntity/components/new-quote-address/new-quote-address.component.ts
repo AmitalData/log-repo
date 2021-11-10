@@ -20,7 +20,7 @@ export class NewQuoteAddressComponent implements OnInit {
   @Input() type: 'pickup' | 'delivery';
 
   addressForm: FormGroup = new FormGroup({
-    include: new FormControl(true),
+    include: new FormControl(),
     zipCode: new FormControl(),
     city: new FormControl(),
     country: new FormControl(),
@@ -30,7 +30,7 @@ export class NewQuoteAddressComponent implements OnInit {
   countryList: CountryList[] = []
   cityListAll: CountryCityList[] = []
   cityList: CountryCityList[] = []
-  cardList: CardList[] = []
+  // cardList: CardList[] = []
   Address: AddressList = null;
   AddressList: AddressList[] = [];
 
@@ -59,7 +59,7 @@ export class NewQuoteAddressComponent implements OnInit {
   ngOnInit(): void {
     this.InitCountries();
     this.InitCity();
-    this.initCardList()
+    // this.initCardList()
     this.addForm()
     this.subscribeCtrls();
     this.initDefaultValue()
@@ -75,9 +75,9 @@ export class NewQuoteAddressComponent implements OnInit {
     this.cityList = this.cityListAll;
   }
 
-  private async initCardList() {
-    this.cardList = await this.newQuoteDataService.getCardsTable();
-  }
+  // private async initCardList() {
+  //   this.cardList = await this.newQuoteDataService.getCardsTable();
+  // }
 
   addForm() {
     this.propertyForm.addControl(this.type, this.addressForm)

@@ -6,7 +6,7 @@
         <app-autocomplate-table
           [columnsShow]="{Code: 'Code', EnglishName: 'English Name', Address1:'Address', CityName: 'City Name', CountryName: 'Country Name', PartnerTypeName: 'Partner Type Name'}"
           [data]='cardsList' [fieldShow]='"EnglishName"' [label]="'Name'" [controlName]='"partner"'
-          [formGroup]='partnerform' [searchIcon]='true'>
+          [formGroup]='partnerform' [searchIcon]='true' logTableName='Card'>
         </app-autocomplate-table>
 
         <app-btn-menu-plus [ddl]='ddl'></app-btn-menu-plus>
@@ -29,7 +29,7 @@
         <div class="p-field">
           <app-autocomplate-table [columnsShow]="['Email', 'EnglishName']" [data]='contactsList'
             [fieldShow]='"EnglishName"' [label]="'Contact'" [controlName]='"contact"' [formGroup]='partnerform'
-            (onSelect)='onSelectedContact($event)' [dropIcon]='true'>
+            (onSelect)='onSelectedContact($event)' [dropIcon]='true' logTableName='Contact'>
           </app-autocomplate-table>
 
           <i class="pi pi-plus plus-btn" (click)='addContact()'></i>

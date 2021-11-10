@@ -7858,7 +7858,37 @@ namespace Unifreight.Data.AmitalModel
 
             #endregion
 
+            #region GGGHDAY
 
+            modelBuilder.Entity<GGGHDAY>()
+                .HasKey(p => p.HOLIDAY)
+                .ToTable("GGGHDAY", "AMITESTM");
+            // Properties:
+            modelBuilder.Entity<GGGHDAY>()
+                .Property(p => p.HOLIDAY)
+                    .IsRequired()
+                    .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
+                    .HasColumnType("date");
+            modelBuilder.Entity<GGGHDAY>()
+                .Property(p => p.NAMEHEB)
+                    .HasColumnName(@"NAME_HEB")
+                    .HasMaxLength(30)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GGGHDAY>()
+                .Property(p => p.NAMEENG)
+                    .HasColumnName(@"NAME_ENG")
+                    .HasMaxLength(30)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GGGHDAY>()
+                .Property(p => p.BEGINWORK)
+                    .HasColumnName(@"BEGIN_WORK")
+                    .HasColumnType("date");
+            modelBuilder.Entity<GGGHDAY>()
+                .Property(p => p.ENDWORK)
+                    .HasColumnName(@"END_WORK")
+                    .HasColumnType("date");
+
+            #endregion
 
             #region GTBPTYPE
 
@@ -8765,5 +8795,6 @@ namespace Unifreight.Data.AmitalModel
         public virtual DbSet<ETBVEND> ETBVENDs { get; set; }
         public virtual DbSet<MTBCARR> MTBCARRs { get; set; }
         public virtual DbSet<MTBPORT> MTBPORTs { get; set; }
+        public virtual DbSet<GGGHDAY> GGGHDAYS { get; set; }
     }
 }

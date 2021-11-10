@@ -449,6 +449,9 @@ namespace Logitude.CustomsMessaging.MessagingServices
             ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
                             DCAInUCB2715_MsgMessagingService>   
                             ((new DCAInUCB2715_MsgMessagingService()).MainInterfaceCode);
+            ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
+                           DCAInUCB2715SendNow_MsgMessagingService>
+                           ((new DCAInUCB2715SendNow_MsgMessagingService()).MainInterfaceCode);
 
             ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
                             DCAInUCBStorageSite_MsgMessagingService>
@@ -518,6 +521,9 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 SE_6001_SealUpdateMessagingService>
                 ((new SE_6001_SealUpdateMessagingService()).MainInterfaceCode);
 
+            ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
+              SaveCH_MSG_195_SearchResultsMessagingService>
+              ((new SaveCH_MSG_195_SearchResultsMessagingService()).MainInterfaceCode);
 
 
             ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,

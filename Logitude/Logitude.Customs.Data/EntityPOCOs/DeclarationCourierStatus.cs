@@ -85,6 +85,8 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string DistributionArea { get; set; }
         [Column("CrateNumber")]
 	    public string CrateNumber { get; set; }
+        [Column("TerminalReleaseDate")]
+	    public DateTime? TerminalReleaseDate { get; set; }
     }
 }
 	 

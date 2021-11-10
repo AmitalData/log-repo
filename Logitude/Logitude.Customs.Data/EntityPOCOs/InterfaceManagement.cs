@@ -59,6 +59,8 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string InterfaceType { get; set; }
         [Column("UseRabbitMQ")]
 	    public bool UseRabbitMQ { get; set; }
+        [Column("SendTime")]
+	    public string SendTime { get; set; }
     }
 }
 	 

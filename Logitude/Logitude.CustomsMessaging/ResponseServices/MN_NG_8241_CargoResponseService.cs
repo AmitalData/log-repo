@@ -397,7 +397,23 @@ namespace Logitude.CustomsMessaging.ResponseServices
             return (myGDFDATAPM.DEFDATA);
         }
 
+        private void UpdateManualPayment(CargoQueryRequestParams requestParams, ICustomContext customContext, DeclarationPM declarationPM)
+        {
+            if (requestParams.LoggingEntityReference == "AutoPayment")
+            {
+                DeclarationReferantDataQueryService declarationReferantDataQueryService = new DeclarationReferantDataQueryService(declarationPM.Tenant);
+                DeclarationReferantDataUpdateService updateService = new DeclarationReferantDataUpdateService(customContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), declarationPM.Tenant);
 
+                var decRef = declarationReferantDataQueryService.GetSingle(declarationPM.Id, false, false);
+
+                if (decRef != null)
+                {
+                    decRef.ChangeSetOp = ChangeSetOperation.Update;
+                    decRef.IsManualPayment = true;
+                    updateService.Update(decRef, true);
+                }
+            }
+        }
         private void SendPayment(DeclarationPM declarationPM, ICustomContext dbContext, CargoQueryRequestParams requestParams,bool IsAvailabilityDate)
         {
             if (!IsAvailabilityDate) return;
@@ -439,6 +455,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             declarationPM.Tenant,
                            requestParams.LoggingUserId,
                             MyUnifreightEventParam);
+                        UpdateManualPayment(requestParams, dbContext, declarationPM);
+
                     }
                     else
                     {
@@ -506,6 +524,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                 declarationPM.Tenant,
                                requestParams.LoggingUserId,
                                 MyUnifreightEventParam);
+
+                            UpdateManualPayment(requestParams, dbContext, declarationPM);
+
                             throw;
                         }
                     }

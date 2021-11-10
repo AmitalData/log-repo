@@ -437,6 +437,24 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
             }
         }
 
+        public HttpResponseMessage GetSendDocumentsFromQueue(string courierMasterId, string MAWB)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+                SecurityUtility.AuthenticationOnTenant(tenant);
+                var messagingService = new DCAInUCB2715SendNow_MsgMessagingService();
+                var sts = messagingService.CreateCRS(tenant, null, courierMasterId, MAWB);
+                return Request.CreateResponse(HttpStatusCode.OK, sts);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
         public HttpResponseMessage GetSendALLDeclarationsStatusRequest(string CourierMasterId, string testerSendOption)
         {
             try
@@ -450,11 +468,12 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 ICustomContext customContext = CustomContext.GetContext(authToken.Tenant);
                 //var messagingService = new DCAInUCB8250_MsgMessagingService();
                 //var sts = messagingService.CreateCRS(tenant, null, CourierMasterId, testerSendOption);
-                
 
+
+                string loggingUserId = AuthenticationUtil.ResolveUserId(tenant);
 
                 var messagingService = new DCAInUCB8250_MsgMessagingService();
-                var sts = messagingService.CreateCRS(tenant, null, CourierMasterId, testerSendOption);
+                var sts = messagingService.CreateCRS(tenant, loggingUserId, CourierMasterId, testerSendOption);
 
 
                /* var declarationsText = string.Join(",", declarations);

@@ -119,6 +119,13 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="SendTime"
+    Type="varchar"
+    Size="100">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="DefaultSendOptionsCode"
     ReferencedTable="InterfaceSendOptions"

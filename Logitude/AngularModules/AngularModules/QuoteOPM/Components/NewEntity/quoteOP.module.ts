@@ -1,7 +1,7 @@
 import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { GenericTableModule } from "Customs/Components/generic-table/generic-table.module";
+import { GenericTableModule } from "Infrastructure/Components/generic-table/generic-table.module";
 import { NewQuoteOPWebService } from "Customs/Services/WebServices/NewQuoteOPWebService";
 import { AccordionModule } from "Infrastructure/Components/accordion/accordion.module";
 import { InfrastructureModule } from "Infrastructure/Module_INFR";
@@ -33,6 +33,7 @@ import { NewQuotePropertiesComponent } from "./components/new-quote-properties/n
 import { DialogsService } from "./Services/dialogs/dialogs.service";
 import { NewQuoteDataService } from "./Services/new-quote-data/new-quote-data.service";
 import { NewQuoteValidateEntityService } from "./Services/new-quote-validate-entity/new-quote-validate-entity.service";
+import { LogtuideTableDataService } from "./components/autocomplate-table/logtuide-table-data.service";
 
 @NgModule({
     imports: [  
@@ -73,6 +74,7 @@ import { NewQuoteValidateEntityService } from "./Services/new-quote-validate-ent
     entryComponents: [],
     providers: 
     [
+        LogtuideTableDataService,
         NewQuoteDataService,
         NewQuoteOPWebService,
         MessageService,

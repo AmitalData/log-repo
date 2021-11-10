@@ -261,6 +261,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                             using (var connection = factory.CreateConnection())
                             using (var channel = connection.CreateModel())
                             {
+
                                 channel.BasicQos(0, 5, true);
 
                                 //args.Add("x-queue-mode", "lazy");
@@ -295,7 +296,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
                     }
 
- 
+
 
                     trans.Complete();
                     return "המסר נבנה בהצלחה וישלח בתהליך רקע";

@@ -84,7 +84,7 @@ export class CustomsDocumentsComponent
     IsDocumentRequestCodeSendDigital: boolean = false;
     DocumentRequestCodeText: string = "";
     ParentEntityCode_args: string = "";
-
+    DontClear: boolean = false;
 
     public customs:string = "עמילות";
     public forwarding: string = "שילוח";
@@ -95,9 +95,10 @@ export class CustomsDocumentsComponent
         if (entityArgs.EntityParentPM != null) {
             this.ParentEntityCode_args = entityArgs.EntityParentPM;
           }
-    
+        if (entityArgs.IsFromStandAloneScreen)
+            this.DontClear = true;
         if (entityArgs.EntityPM && !entityArgs.SkipCtor) {
-            this.Start(entityArgs.EntityPM, entityArgs.ObjectTableName, entityArgs.EntityParentPM);
+            this.Start(entityArgs.EntityPM, entityArgs.ObjectTableName, entityArgs.EntityParentPM, entityArgs.IsFromStandAloneScreen);
         }
     }
     ngOnDestroy() {
@@ -107,10 +108,11 @@ export class CustomsDocumentsComponent
         this.CustomsDocumentsTicketViewModels.forEach((item) => { item.DataContext = null; })
         this.CustomsDocumentsTicketViewModels = null;
     }
-    Start(entityPM: any, objectTableName: string, _ParentEntityCode_args:string) {
+    Start(entityPM: any, objectTableName: string, _ParentEntityCode_args: string, IsFromStandAloneScreen: boolean) {
          if (_ParentEntityCode_args != null) {
             this.ParentEntityCode_args = _ParentEntityCode_args;
         }
+        if (IsFromStandAloneScreen) this.DontClear = true;
         this.EntityPM = entityPM;
 
         if (this.EntityPM.Direction == 'E') {
@@ -275,18 +277,24 @@ export class CustomsDocumentsComponent
         if (this.CustomsDocumentsTicketViewModels == null) {
             this.CustomsDocumentsTicketViewModels = [];
         }
-        if (!AppTool.IsNullOrEmpty(this.ParentEntityCode_args)) {
-            this.CustomsDocumentsTicketViewModels = [];
-            this.StaticCustomsDocumentsTicketViewModels = [];
 
+
+        if (!this.DontClear) {
+            if (!AppTool.IsNullOrEmpty(this.ParentEntityCode_args)) {
+                this.CustomsDocumentsTicketViewModels = [];
+                this.StaticCustomsDocumentsTicketViewModels = [];
+            }
+            for (var i = 0; i < tickets.length; i++) {
+                var customsDocumentsTicketViewModel: CustomsDocumentTicketViewModel = new CustomsDocumentTicketViewModel(tickets[i], this.MetadataValues, false, this.IsDisplayOnly,
+                    this.EntityPM, this.ObjectTableName, this.iCustomsDocumentsController);
+                customsDocumentsTicketViewModel.DataContext = this;
+                this.CustomsDocumentsTicketViewModels.push(customsDocumentsTicketViewModel);
+                this.StaticCustomsDocumentsTicketViewModels.push(customsDocumentsTicketViewModel);
+            }
         }
-        for (var i = 0; i < tickets.length; i++) {
-            var customsDocumentsTicketViewModel: CustomsDocumentTicketViewModel = new CustomsDocumentTicketViewModel(tickets[i], this.MetadataValues, false, this.IsDisplayOnly,
-                this.EntityPM, this.ObjectTableName, this.iCustomsDocumentsController);
-            customsDocumentsTicketViewModel.DataContext = this;
-            this.CustomsDocumentsTicketViewModels.push(customsDocumentsTicketViewModel);
-            this.StaticCustomsDocumentsTicketViewModels.push(customsDocumentsTicketViewModel);
-        }
+            this.DontClear = false;
+
+
         console.log(this.CustomsDocumentsTicketViewModels);
         this.SetFilterCounts();
         if (selectedDocId) {
@@ -445,7 +453,7 @@ export class CustomsDocumentsComponent
 
                             });
                         }
-                    
+
                             this.FillCustomsDocumentsTickets(this.CustomsDocumentsTickets, selectedDocId);
 
                         this.iCustomsDocumentsController.FillDefaultMetaData(this.CustomsDocumentsTicketViewModels);
@@ -712,7 +720,7 @@ export class CustomsDocumentsComponent
 
     SetWindowArgs(windowArgs) {
         this.IsWindowMode = true;
-         this.Start(windowArgs.EntityPM, windowArgs.ObjectTableName, windowArgs.EntityParentPM);
+        this.Start(windowArgs.EntityPM, windowArgs.ObjectTableName, windowArgs.EntityParentPM, windowArgs.IsFromStandAloneScreen);
     }
 
     CloseButtonClicked() {

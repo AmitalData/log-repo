@@ -67,7 +67,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.DeclarationDocuments
             _context = CustomContext.GetContext(ResolvedTenant());
             AppendLogLine($"ResolvedTenant()={ResolvedTenant()}");
             var myQueryService = new DeclarationQueryService(_context);
-
+            CustomsDocumentPM customsDocumentPM = new CustomsDocumentPM();
             MyGenericResponseObj.Stage = "GetSingle";
             this._MyDeclarationPM = myQueryService.GetSingle(this._LogitudeDocs.Id, true, false);
             if (this._MyDeclarationPM == null)
@@ -113,7 +113,15 @@ namespace Logitude.Customs.BL.Messaging.U2L.DeclarationDocuments
                                 var myCustomsDocumentPointerPMListforDec = myCustomsDocumentPointerPMList.Where(o => o.ParentEntityCode == "Declaration" && o.ParentEntityId == _MyDeclarationPM.Id);
                                 if(myCustomsDocumentPointerPMListforDec != null && myCustomsDocumentPointerPMListforDec.Count() > 0)
                                 {
+                                    
                                     if (this._MyDeclarationPM.IsCourierDeclaration)
+                                    {
+                                        var updateDocumentStatuscodeService = new UpdateDocumentStatuscodeService();
+                                        updateDocumentStatuscodeService.UpdateDocumentStatuscode(this._MyDeclarationPM, DateTime.MinValue, false);
+                                    }
+                                  customsDocumentPM = myCustomsDocumentQueryService.GetSingle(this._LogitudeDocs.COM_ID, false, false);
+
+                                    if (customsDocumentPM!= null && String.IsNullOrWhiteSpace(customsDocumentPM.CustomsDocId) && customsDocumentPM.DocumentStatusCode!="7")
                                     {
                                         var updateDocumentStatuscodeService = new UpdateDocumentStatuscodeService();
                                         updateDocumentStatuscodeService.UpdateDocumentStatuscode(this._MyDeclarationPM, DateTime.MinValue, false);
@@ -177,8 +185,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.DeclarationDocuments
                     myCustomsDocumentPointerUpdateService.Update(customsDocumentPointerPM, true);
 
                     var myDocumentId = myCustomsDocumentQueryService.GetSingle(this._LogitudeDocs.COM_ID, true, false);
-                    CustomsDocumentPM customsDocumentPM;
-                    var myCustomsDocumentUpdateService = new CustomsDocumentUpdateService(dbContext, new Dictionary<string, IContext>(), _MyDeclarationPM.Tenant);
+                     var myCustomsDocumentUpdateService = new CustomsDocumentUpdateService(dbContext, new Dictionary<string, IContext>(), _MyDeclarationPM.Tenant);
                     
                     CustomsDocumentMetaDataValueQueryService customsDocumentMetaDataValueQuery = new CustomsDocumentMetaDataValueQueryService(_context);
 
@@ -244,12 +251,14 @@ namespace Logitude.Customs.BL.Messaging.U2L.DeclarationDocuments
                         if (String.IsNullOrWhiteSpace(customsDocumentPM.CustomsDocId))
                         {
                             customsDocumentPM.IsSendToQueue = true;
+                            customsDocumentPM.IsCustomSendTime = true;
                             myCustomsDocumentUpdateService.IgnoreSendFailure = true;
                             AppendLogLine("myCustomsDocumentUpdateService.Update:IsSendToQueue = true");
                             if (customsDocumentPM.ChangeSetOp != ChangeSetOperation.Update) customsDocumentPM.ChangeSetOp = ChangeSetOperation.Update;
                         }
                         myCustomsDocumentUpdateService.Update(customsDocumentPM, true);
                     }
+                
 
                     AppendLogLine("after Update Document");
                 }
@@ -272,7 +281,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.DeclarationDocuments
             DeclarationUpdateService DeclarationUpdateService = new DeclarationUpdateService(dbContext, new Dictionary<string, IContext>(), ResolvedTenant());
             this._MyDeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
             this._MyDeclarationPM.MarkAsChanged = true;
-           DeclarationUpdateService.Update(this._MyDeclarationPM, true);
+            DeclarationUpdateService.Update(this._MyDeclarationPM, true);
 
             MyGenericResponseObj.Stage = "Add Ticket Done ";
             AppendLogLine("Add Ticket:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
@@ -281,7 +290,6 @@ namespace Logitude.Customs.BL.Messaging.U2L.DeclarationDocuments
             //MyGenericResponseObj.ResponseXml ;
             MyGenericResponseObj.StatusType = GenericResponseObj.StatusEnum.Success;
             MyCommunicationsParams.LoggingEntityId = MyGenericResponseObj.ApplicationId;
-            MessageOut = GetLog();
         }
 
         private void DeserilazeObject(string xmlLOGIDOCS)
@@ -436,6 +444,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.DeclarationDocuments
                 }
             }
         }
+ 
     }
 }
 
