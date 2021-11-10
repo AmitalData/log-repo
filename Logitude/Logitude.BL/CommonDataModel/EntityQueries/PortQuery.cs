@@ -984,5 +984,47 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             return PortLists;
         }
 
+        public IQueryable<PortPM> GetPortPMsByCombinedCode(string combinedCode)
+        {
+            IQueryable<PortPM> ports = (from a in repository.context.Ports
+                                        where a.CombinedCode == combinedCode
+                                        select new PortPM()
+                                        {
+                                            AddedManually = a.AddedManually,
+                                            Code = a.Code,
+                                            CountryId = a.CountryId,
+                                            EnglishName = a.EnglishName,
+                                            Field1 = a.Field1,
+                                            Field2 = a.Field2,
+                                            Field3 = a.Field3,
+                                            Field4 = a.Field4,
+                                            Field5 = a.Field5,
+                                            Field6 = a.Field6,
+                                            Field7 = a.Field7,
+                                            Field8 = a.Field8,
+                                            Field9 = a.Field9,
+                                            Field10 = a.Field10,
+                                            Id = a.Id,
+                                            InActive = a.InActive,
+                                            IsAir = a.IsAir,
+                                            IsInland = a.IsInland,
+                                            IsOcean = a.IsOcean,
+                                            Latitude = a.Latitude,
+                                            LocalName = a.LocalName,
+                                            Longtitude = a.Longtitude,
+                                            Notes = a.Notes,
+                                            Tenant = a.Tenant,
+                                            CountryName = a.CountryName,
+                                            SearchFields = a.SearchFields,
+                                            CountryCode = a.CountryCode,
+                                            CountryEC = a.Country.EC,
+                                            StateId = a.StateId,
+                                            CombinedCode = a.CombinedCode,
+                                            StateName = a.StateName,
+                                            StateCode = a.StateCode,
+                                            PortTimeZoneCode = a.PortTimeZoneCode,
+                                        });
+            return ports;
+        }
     }
 }

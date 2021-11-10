@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class PortTimeZoneUpdateClass
    {  		
-		public const string HashString = "5189d7522b1a0f8152cb601359303359";
+		public const string HashString = "4c34456e31a5c79431cca4aba5ddeabc";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -116,7 +116,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    InActive =  false,
 			      				    IsSaveButtonVisible =  true,
 			      				    IsComposition =  false,
-			      				    EnableSecurity =  true,
+			      				    EnableSecurity =  false,
 			      				    AllowCustomFields =  false,
 			      				    HasDynamicHeader =  false,
 			      				    ObjectTableTypeCode =  "MD",
@@ -661,21 +661,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-		   ObjectTable PortTimeZoneObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "PortTimeZone" && d.Tenant == 0).FirstOrDefault(); 
-
-
-		   		   //--------------> Additional Features <--------------\\
-
-		   Feature PortTimeZoneFeature_NEW = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", Packagable = false, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = PortTimeZoneObjectTable.Id, Tenant = 0, NameTextCodeCode = "PortTimeZone.Features.NEW", NameTextCodeDefaultText = @"New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,PortTimeZoneObjectTable);
-
-		   Feature PortTimeZoneFeature_READ = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", Packagable = false, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = PortTimeZoneObjectTable.Id, Tenant = 0, NameTextCodeCode = "PortTimeZone.Features.READ", NameTextCodeDefaultText = @"Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,PortTimeZoneObjectTable);
-
-		   Feature PortTimeZoneFeature_UPDATE = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", Packagable = false, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = PortTimeZoneObjectTable.Id, Tenant = 0, NameTextCodeCode = "PortTimeZone.Features.UPDATE", NameTextCodeDefaultText = @"Update" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,PortTimeZoneObjectTable);
-
-		   Feature PortTimeZoneFeature_Module = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = PortTimeZoneObjectTable.Id, Tenant = 0, NameTextCodeCode = "PortTimeZone.Features.Module", NameTextCodeDefaultText = @"Module" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,PortTimeZoneObjectTable);
-
-   
+	    {     
 	    
 		}
 

@@ -34,7 +34,7 @@
   InActive="false"
   IsSaveButtonVisible="true"
   IsComposition="false"
-  EnableSecurity="true"
+  EnableSecurity="false"
   AllowCustomFields="false"
   HasDynamicHeader="false"
   ObjectTableTypeCode="&quot;MD&quot;"
@@ -718,42 +718,5 @@
   <Records />
   <DataContracts />
   <AdditionalTextCodes />
-  <AdditionalFeatures>
-    <Feature
-      Code="&quot;NEW&quot;"
-      FeatureTypeCode="&quot;NEW&quot;"
-      FeatureTextCodeCode="&quot;PortTimeZone.Features.NEW&quot;"
-      FeatureDefaultText="&quot;New&quot;"
-      IsPackagable="false"
-      IsOld="false"
-      IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
-    <Feature
-      Code="&quot;READ&quot;"
-      FeatureTypeCode="&quot;READ&quot;"
-      FeatureTextCodeCode="&quot;PortTimeZone.Features.READ&quot;"
-      FeatureDefaultText="&quot;Read&quot;"
-      IsPackagable="false"
-      IsOld="false"
-      IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
-    <Feature
-      Code="&quot;UPDATE&quot;"
-      FeatureTypeCode="&quot;UPDT&quot;"
-      FeatureTextCodeCode="&quot;PortTimeZone.Features.UPDATE&quot;"
-      FeatureDefaultText="&quot;Update&quot;"
-      IsPackagable="false"
-      IsOld="false"
-      IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
-    <Feature
-      Code="&quot;Module&quot;"
-      FeatureTypeCode="&quot;MODL&quot;"
-      FeatureTextCodeCode="&quot;PortTimeZone.Features.Module&quot;"
-      FeatureDefaultText="&quot;Module&quot;"
-      IsPackagable="true"
-      IsOld="false"
-      IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
-  </AdditionalFeatures>
+  <AdditionalFeatures />
 </entity>

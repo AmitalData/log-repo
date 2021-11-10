@@ -1,10 +1,12 @@
 ﻿using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.Helpers;
 using Logitude.Server.Tools.QueueService;
 using Logitude.SystemLogs;
 using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -113,11 +115,13 @@ namespace CommunicationWorkerRole
                 this.UpdatePortTimeZone(port);                
             }
 
-            this.Save();            
+            this.Save();
+            this.RefreshPortsCache(similarPorts);
         }
+
         private List<Port> GetSimilarPortsFromOtherTenants()
         {
-            return (from port in commonDataContext.Ports where port.CombinedCode == tenantZeroPort.CombinedCode select port).ToList();
+            return (from port in commonDataContext.Ports where port.CombinedCode == tenantZeroPort.CombinedCode && port.Tenant != 0 select port).ToList();
         }
         private void UpdatePortTimeZone(Port port)
         {
@@ -127,6 +131,20 @@ namespace CommunicationWorkerRole
         private void Save()
         {
             portRepository.SubmitChanges();
+        }
+        private void RefreshPortsCache(List<Port> similarPorts)
+        {
+            foreach (Port port in similarPorts)
+            {
+                //string entityName = "Port" + port.Id + port.Tenant;
+
+                //if (CacheManager.CacheWrapper.Get(entityName) != null)
+                //{
+                //    CacheManager.CacheWrapper.Invalidate(entityName);
+                //}
+
+                TableLastUpdateClass.UpdateTableHistory(port.Tenant, "Port");
+            }
         }
         private void HandleException(Exception ex)
         {
