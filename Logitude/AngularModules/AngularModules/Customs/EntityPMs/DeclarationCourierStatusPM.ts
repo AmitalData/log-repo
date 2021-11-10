@@ -379,6 +379,11 @@ export class DeclarationCourierStatusPM {
     public set TruckerName(newValue: string) { if (this.truckerName != newValue) { this.truckerName = newValue; this.MarkAsDirty("TruckerName"); } }
        
 	 
+    private terminalReleaseDate: Date;
+    public get TerminalReleaseDate() { return this.terminalReleaseDate; }
+    public set TerminalReleaseDate(newValue: Date) { if (this.terminalReleaseDate != newValue) { this.terminalReleaseDate = newValue; this.MarkAsDirty("TerminalReleaseDate"); } }
+       
+	 
 
     public OldEntityPM: DeclarationCourierStatusPM;
 		

@@ -606,6 +606,12 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 //    throw new Exception("CustomsDocument must conncted to declaration "); ////task10676  yaron said it must be conncted to declaration !!
 
                 //}
+
+                //get field from interfaceManagment
+
+                var interfaceManagementQueryService = new InterfaceManagementQueryService(customContext);
+                var time = interfaceManagementQueryService.GetSingle("2715", false,true)?.SendTime;
+                var date = entityPM.IsCustomSendTime && !string.IsNullOrEmpty(time) ? DateTime.Today.Add(TimeSpan.Parse(time)) : (DateTime?)null;
                 var requestParams = new Logitude.CustomsMessaging.Common.RequestParams.D_NG_2715_MSG22002_AddAGlobalScannedAttachmentToEntityRequestParam()
                 {
                      MainInterfaceCode="2715",
@@ -618,7 +624,10 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     LoggingEntityId = declarationId,
                     LoggingObjectTableId2 = ObjectTableRepository.GetObjectTableByName("Customs.CustomsDocument"),//task10676 
                     LoggingEntityId2 = entityPM.DocumentsFilingId,
-                };
+                    FutureSendDateTime = date,
+                    RequestVIAChangeDue = date.HasValue ?string.Concat("נרשמה בקשה מתוזמנת לשעה ", date.GetValueOrDefault().ToShortTimeString()) : ""
+
+            };
                 if (String.IsNullOrWhiteSpace(declarationId) && !String.IsNullOrWhiteSpace(entityPM.ClaimId))
                 {
                     requestParams.LoggingObjectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Claim");
@@ -691,21 +700,22 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 }
 
                 var _CustomsRequestsSheetQueryService = new CustomsRequestsSheetQueryService(requestParams.Tenant);
-                 var listRequestInProgress = _CustomsRequestsSheetQueryService.GetRequestInProgress(
-                            requestParams.Tenant, requestParams.InterfaceTypeCode,
-                        ObjectTableRepository.GetObjectTableByName("Customs.Declaration"), requestParams.DeclaretionId,
-                        ObjectTableRepository.GetObjectTableByName("Customs.CustomsDocument"), requestParams.DocumentsFilingId,
-                        null);
-                if (listRequestInProgress != null && listRequestInProgress.Count > 0)
-                {
-                    Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine("2715 RequestInProgress stop create a new one !! ");
-                    return false;
-                }
+
+                //var   listRequestInProgress = _CustomsRequestsSheetQueryService.GetRequestInProgress(
+                //            requestParams.Tenant, requestParams.InterfaceTypeCode,
+                //        ObjectTabelRepository.GetObjectTableByName("Customs.Declaration"), requestParams.DeclaretionId,
+                //        ObjectTabelRepository.GetObjectTableByName("Customs.CustomsDocument"), requestParams.DocumentsFilingId, 
+                //        null);
+                //if (listRequestInProgress != null && listRequestInProgress.Count >0)
+                //{
+                //    Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine("2715 RequestInProgress stop create a new one !! ");
+                //    return;
+                //}
 
                 try
                 {
                     SBQMessageService.CreateSheetSBQMessage<Logitude.CustomsMessaging.Common.RequestParams.D_NG_2715_MSG22002_AddAGlobalScannedAttachmentToEntityRequestParam>(requestParams
-                        , false
+                        , false,requestParams.FutureSendDateTime
                         );
                     send = true;
                     Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine("send 2715 ");

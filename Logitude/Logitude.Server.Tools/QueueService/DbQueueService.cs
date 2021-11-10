@@ -75,8 +75,13 @@ namespace Logitude.Server.Tools.QueueService
         {
             SendReturnId(messageValues, tenant, delayTime, CustomerId, BatchNumber, NextRunDate);
         }
-        protected int? SendReturnId(Dictionary<string, string> messageValues, int tenant, TimeSpan? delayTime = null, string CustomerId = null, string BatchNumber = null, DateTime? NextRunDate = null)
+        protected int? SendReturnId(Dictionary<string, string> messageValues, 
+            int tenant, TimeSpan? delayTime = null, string CustomerId = null, string BatchNumber = null, DateTime? NextRunDate = null,int tenantPriority = 7)
         {
+            if (tenantPriority<1)
+            {
+                tenantPriority = 7;
+            }
             int? queueMessageId = null;
             if (LogitudeSettings.IsCostomsDeploy) //ITZIK + YARON 
             {
@@ -145,7 +150,9 @@ namespace Logitude.Server.Tools.QueueService
                     {
                         OracleCommand cmd = new OracleCommand();
                         cmd.Connection = cn;
-                        cmd.CommandText = DbContextBaseUtil.GetStoredProcedureName("Queue_Enqueue", LogitudeDBSchema.LOGITUDE_MAIN, cmd.Connection.ConnectionString);
+                        cmd.CommandText =
+                            DbContextBaseUtil.GetStoredProcedureName("Queue_Enqueue", LogitudeDBSchema.LOGITUDE_MAIN, cmd.Connection.ConnectionString);
+                        //DbContextBaseUtil.GetStoredProcedureName("TSTQueue_Enqueue", LogitudeDBSchema.LOGITUDE_MAIN, cmd.Connection.ConnectionString);
                         cmd.CommandType = CommandType.StoredProcedure;
 
 
@@ -163,6 +170,9 @@ namespace Logitude.Server.Tools.QueueService
 
                         OracleParameter watingStatusPar = new OracleParameter("v_WatingStatus", OracleDbType.Number);
                         watingStatusPar.Direction = ParameterDirection.Input;
+
+                        OracleParameter tenantPriPar = new OracleParameter("p_TenantPriority ", OracleDbType.Number);
+                        tenantPriPar.Direction = ParameterDirection.Input;
 
                         queueCodePar.Direction = ParameterDirection.Input;
                         msgBodyPar.Direction = ParameterDirection.Input;
@@ -182,7 +192,7 @@ namespace Logitude.Server.Tools.QueueService
                         watingStatusPar.Value = WorkerNameService.GetWorkerWaitingStatusForSending(tenant);
                         //NextRunDateTime.Value = NextRunDate;
                         hashCodePar.Value = bodyHashCode;
-
+                        tenantPriPar.Value = tenantPriority;
                         cmd.Parameters.Add(queueCodePar);
                         cmd.Parameters.Add(msgBodyPar);
                         cmd.Parameters.Add(tenantPar);
@@ -191,8 +201,10 @@ namespace Logitude.Server.Tools.QueueService
                         cmd.Parameters.Add(batchNumber);
                         cmd.Parameters.Add(hashCodePar);
                         cmd.Parameters.Add(watingStatusPar);
+                        cmd.Parameters.Add(tenantPriPar);
                         cmd.Parameters.Add(queueMessageIdPar);
-                       
+                        
+
 
 
                         //cmd.Parameters.Add(NextRunDateTime);

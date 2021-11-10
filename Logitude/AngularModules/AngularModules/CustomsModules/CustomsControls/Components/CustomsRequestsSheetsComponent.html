@@ -551,7 +551,7 @@
                     <tbody *ngIf="!IsTherecustomsRequestsSheetSummary">
                         <tr> <td> <div></div> </td> <td> <div></div></td></tr>
                     </tbody>
-                    <tfoot style="width: 100%; width: calc(100% - 18px); display: table;">
+                    <tfoot  [ngStyle]="{'width':this.customsRequestsSheetSummary.length > 4 ?  'calc(100% - 18px)' : '100%' }" style="display: table;">
                         <tr>
                             <td style="width:50%" class="Statistics"></td>
                             <td style="width:50% " class="Statistics">

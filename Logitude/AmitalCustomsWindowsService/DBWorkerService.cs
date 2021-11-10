@@ -238,7 +238,7 @@ namespace AmitalCustomsWindowsService
 
 
             listOfWorkerEntryPoint.Add(new SendWEBAPIMessage2MamanWR());
-            listOfWorkerEntryPoint.Add(new FTPToAnalyzeQueueWR());
+            ///listOfWorkerEntryPoint.Add(new FTPToAnalyzeQueueWR());
             listOfWorkerEntryPoint.Add(new CustomsAnalyzeQueueWR());
             listOfWorkerEntryPoint.Add(new RabbitMQReceiveWR());
 
@@ -293,11 +293,17 @@ namespace AmitalCustomsWindowsService
             //INSERT INTO "AMINET_GLOBAL"."BATCHSERVICESDEFINITIONMODS" VALUES('SingletonFTPCommunicationWorkerRoleWinService', '0', '1');
 
             ///< add key = "SingletonFTPCommunicationWorkerRoleWinService" value = "1" />
-            if (!string.IsNullOrWhiteSpace(ConfigurationManager.AppSettings.Get("SingletonFTPCommunicationWorkerRoleWinService")))/*"SingletonFTPCommunicationLogQueue"*/
+            if (!string.IsNullOrWhiteSpace(ConfigurationManager.AppSettings.Get("SingletonFTPWorker")))/*"SingletonFTPCommunicationLogQueue"*/
             {
                 listOfWorkerEntryPoint.Add(new CommunicationWorkerRole.SingletonFTPCommunicationWorkerRoleWinService());
                 var AddWorkerFromAppSettingGenericMethod = addWorkerFromAppSettingMethodInfoDB.MakeGenericMethod(new Type[] { (new SingletonFTPCommunicationWorkerRoleWinService()).GetType() });
                 AddWorkerFromAppSettingGenericMethod.Invoke(this, new object[] { (object)suppresDoOnlyCheck });
+
+                ///listOfWorkerEntryPoint.Add(new FTPToAnalyzeQueueWR());
+
+                listOfWorkerEntryPoint.Add(new FTPToAnalyzeQueueWR());
+                var AddWorkerFromAppSettingGenericMethodDown = addWorkerFromAppSettingMethodInfoDB.MakeGenericMethod(new Type[] { (new FTPToAnalyzeQueueWR()).GetType() });
+                AddWorkerFromAppSettingGenericMethodDown.Invoke(this, new object[] { (object)suppresDoOnlyCheck });
 
             }
 

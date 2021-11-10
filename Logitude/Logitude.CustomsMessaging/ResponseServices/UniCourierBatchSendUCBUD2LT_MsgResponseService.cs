@@ -92,7 +92,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             this.MyResponseData.Succeeded = (unifreightGenericService.MyGenericResponseObj.StatusType == AmitalMessaging.Infrastructure.GenericResponseObj.StatusEnum.Success);
         }
 
-
+ 
         private void RealUpdate(DCAInUCBUD2LTWithResponseContentHeader customResponse, GenericRequestParams requestParams)
         {
             var mess = new StringBuilder();

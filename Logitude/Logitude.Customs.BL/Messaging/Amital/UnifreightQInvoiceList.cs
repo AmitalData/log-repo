@@ -240,8 +240,9 @@ namespace Logitude.Customs.BL.Messaging.Amital
             public string InvoiceNumber { get; set; }
             public string ForwarderFile { get; set; }
             public string InvoiceCurrency { get; set; }
-            public string InvoiceAmount { get; set; }
-            public string BillTo { get; set; }
+            public decimal InvoiceAmount { get; set; }
+            public decimal BillTo { get; set; }
+
 
         }
         public class MessagesData

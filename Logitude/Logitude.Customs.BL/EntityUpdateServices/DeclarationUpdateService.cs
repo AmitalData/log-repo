@@ -335,20 +335,25 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 //if (setting.IsConnectedToUniFreight)
                 var eventContextTagModel = entityPM.CurrentContextTag as EventContextTagModel;
 
+                var declarationQueryService = new DeclarationQueryService(entityPM.Tenant);
 
                 if (entityPM.IsAmendment==true && eventContextTagModel != null  && eventContextTagModel.CallProccessID == EventContextTagModel.ProccessEnum.DF_NG_2470_DF_MSG16001_ReleaseGoodsMessageResponseServiceUpdate)
                 {
-                    var declarationQueryService = new DeclarationQueryService(entityPM.Tenant);
 
                     var entityPMOrg = declarationQueryService.GetSingle(entityPM.AmendmentOriginalDeclartation, true, false);
                     entityPMOrg.CurrentContextTag = eventContextTagModel;
                     entityPMOrg.HatraDate = entityPM.HatraDate;
+                  //  entityPMOrg.DeclarationNumber = entityPM.DeclarationNumber;
+
                     UpdateUnifreight(entityPMOrg);
 
 
                 }
 
-                if (entityPM.IsConnectedToUnifreight)
+
+               // var entityAmend = declarationQueryService.GetAcceptDeclarationAmendment(entityPM.Id, entityPM.Tenant);
+
+                if (entityPM.IsConnectedToUnifreight && !(!string.IsNullOrEmpty( entityPM.AmendmentMessage) && string.IsNullOrEmpty(entityPM.DeclarationNumber)))
                 {
                     UpdateUnifreight(entityPM);
                 }
@@ -356,7 +361,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
                 if(entityPM.IsDiamondDeclaration)
                 {
-                    DeclarationQueryService declarationQueryService = new DeclarationQueryService(entityPM.Tenant);
+                  //  DeclarationQueryService declarationQueryService = new DeclarationQueryService(entityPM.Tenant);
 
                     entityPM.IsValidTicketsDiamond= declarationQueryService.IsValidTickets(entityPM);
 

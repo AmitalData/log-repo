@@ -180,6 +180,7 @@
     <Compile Include="DCA\DCATester.cs" />
     <Compile Include="DCA\LastAccessFileInDCADirM.cs" />
     <Compile Include="DownloadDcaMessageSheetWR.cs" />
+    <Compile Include="RabbitMQReceiveWR.cs" />
     <Compile Include="FTPToAnalyzeQueueWR.cs" />
     <Compile Include="General.cs" />
     <Compile Include="L2U\ReceivedBMessageAction.cs" />
@@ -188,7 +189,6 @@
     <Compile Include="L2U\SendMessage2Unifreight.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Queue\BaseController.cs" />
-    <Compile Include="RabbitMQReceiveWR.cs" />
     <Compile Include="SendDataToExternalServicesWR.cs" />
     <Compile Include="SendWEBAPIMessage2MamanWR.cs" />
     <Compile Include="Service References\CustomsExchangeRateWebServiceReference\Reference.cs">

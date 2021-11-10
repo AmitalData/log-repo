@@ -62,7 +62,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             var lastweek = DateTime.Now.Date.AddDays(-7);
             IQueryable<CustomsRequestsSheetList> query = (from a in context.CustomsRequestsSheets
                                                           where a.Tenant == tenant && (a.RequestStatusCode == "5" || a.RequestStatusCode == "1" ||
-                                                          a.RequestStatusCode == "2" || a.RequestStatusCode == "21" || a.RequestStatusCode == "99")
+                                                          a.RequestStatusCode == "2" || a.RequestStatusCode == "21")
                                                           && a.RequestCreateDate >= lastweek
                                                           select new CustomsRequestsSheetList()
                                                           {

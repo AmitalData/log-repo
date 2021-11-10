@@ -185,6 +185,13 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     _MyCustomsDocumentPM.CustomsDocId = customResponse.ResponseContentHeader.ApplicationID.ToString();
                 }
             }
+
+
+            if(customResponse.ResponseContentHeader!= null && customResponse.ResponseContentHeader.Exception!= null 
+                && customResponse.ResponseContentHeader.Exception[0].ExceptionParms[0]== _MyCustomsDocumentPM.ExternalAttachmentId && !string.IsNullOrEmpty(_MyCustomsDocumentPM.CustomsDocId))
+            {
+                _MyCustomsDocumentPM.DocumentStatusCode = "1";
+            }
             
             //if there is an error - Log the error text
             if (_MyCustomsDocumentPM.DocumentStatusCode == "2")

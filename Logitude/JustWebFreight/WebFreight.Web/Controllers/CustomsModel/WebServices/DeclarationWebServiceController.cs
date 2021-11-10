@@ -43,6 +43,7 @@ using System.Xml;
 using System.IO;
 using Logitude.CustomsMessaging.ResponseServices;
 using Logitude.Customs.BL.TraceEvents;
+using Simplog.Data.InfrastructureModel.Repositories;
 
 namespace WebFreight.Web.Controllers.CustomsModel.WebServices
 {
@@ -388,6 +389,10 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
             }
         }
 
+
+ 
+
+
         public HttpResponseMessage PostNewAmendmentDeclaration(GenericRequestParams requestParams)
         {
 
@@ -412,6 +417,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                 }
                 else
                 {
+
                     DF_MSG10000_ImportDeclarationRequestService _dF_MSG10000_ImportDeclarationRequestService = new DF_MSG10000_ImportDeclarationRequestService();
                     var request = _dF_MSG10000_ImportDeclarationRequestService.GetRequest(requestParams);
                     string error = "";

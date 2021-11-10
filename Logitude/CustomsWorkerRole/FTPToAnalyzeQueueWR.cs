@@ -251,7 +251,7 @@ INSERT INTO "ANALYZEQUEUESTATUS" (CODE, NAME) VALUES ('W', 'Waiting')
 
         private void DownloadSFTPFiles(CustomsPartnerFtpPM customsPartnerFtpPM)
         {
-
+            SFTPService sftpService = null;
             try
             {
                 if (DateTime.Now.Subtract(_LastClearCacheBadFileNames) > TimeSpan.FromHours(1))
@@ -268,7 +268,7 @@ INSERT INTO "ANALYZEQUEUESTATUS" (CODE, NAME) VALUES ('W', 'Waiting')
                 var ftpDetail = customsPartnerFtpPM.MyFtpDetail;
 
                 Debug.WriteLine($"FTPService({ftpDetail.Host}, {ftpDetail.UserName}, {ftpDetail.Password})");
-                SFTPService sftpService = new SFTPService();
+                sftpService = new SFTPService();
                 sftpService.Logon(ftpDetail.Host, ftpDetail.UserName, ftpDetail.Password, "22", ftpDetail.Folder, out p_status, out p_message);
                 Debug.WriteLine($"DirectoryListSimple({ftpDetail.Folder})");
                
@@ -336,6 +336,25 @@ INSERT INTO "ANALYZEQUEUESTATUS" (CODE, NAME) VALUES ('W', 'Waiting')
             catch (Exception ex)
             {
                 ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "FTP To AnalyzeQueue WorkerRole", ex.Message, null);
+            }
+            finally
+            {
+                try
+                {
+                    string p_more1 = ""; string p_status1; string p_message1;
+                    if (!String.IsNullOrWhiteSpace(System.Configuration.ConfigurationManager.AppSettings["SFTPLogoff"]))
+                    {
+                        Debug.WriteLine("sftpService.Logoff");
+                        sftpService.Logoff(ref p_more1, out p_status1, out p_message1);
+                    }
+
+                }
+                catch //(Exception)
+                {
+
+                    ///throw;
+                }
+
             }
         }
         private void DownloadFTPFiles(CustomsPartnerFtpPM customsPartnerFtpPM)

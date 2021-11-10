@@ -92,6 +92,16 @@ namespace Logitude.Customs.Data.EntityLists
        public bool NoEscortRequired  { get; set; }
        [DataMember]
        public string VehicleChassisNumber  { get; set; }
+       [DataMember]
+       public string SearchResult  { get; set; }
+       [DataMember]
+       public string SealNumber  { get; set; }
+       [DataMember]
+       public string CheckAuthorityAttenderTypeID  { get; set; }
+       [DataMember]
+       public string CheckAuthorityAttenderTypeName  { get; set; }
+       [DataMember]
+       public int? CheckAnwserStatus  { get; set; }
    }
 
 }

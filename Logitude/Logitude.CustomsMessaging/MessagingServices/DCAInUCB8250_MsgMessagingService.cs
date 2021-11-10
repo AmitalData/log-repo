@@ -22,6 +22,7 @@ using UnifreightIIG.Common.MessageLib.PhysicalCheck;
 using UnifreightIIG.Common.SystemTableServiceReference;
 using Logitude.Customs.Data.Repsitories;
 using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.BL.CommonDataModel.EntityQueries;
 
 namespace Logitude.CustomsMessaging.MessagingServices
 {
@@ -96,12 +97,27 @@ namespace Logitude.CustomsMessaging.MessagingServices
             //List<DeclarationCourierStatus> listPoco = repo.GetByMasterIDDeclarationCourierStatus(tenant, CourierMasterId);
             //if(listPoco!= null)
             //{
-                //List<string> Ids = listPoco.Select(x => x.DeclarationId).ToList();
+            //List<string> Ids = listPoco.Select(x => x.DeclarationId).ToList();
 
-                //foreach (var item in listPoco)
-                //{
-                //var RequestInProgressList2 = customsRequestsSheetQS.GetRequestInProgressByIds(tenant, "8250", objectTableId2, Ids, false);
-            var RequestInProgressList2 = customsRequestsSheetQS.GetRequestInProgress(tenant, "8250", objectTableId, CourierMasterId, null, null, null, false);
+            //foreach (var item in listPoco)
+            //{
+            //var RequestInProgressList2 = customsRequestsSheetQS.GetRequestInProgressByIds(tenant, "8250", objectTableId2, Ids, false);
+            List<CustomsRequestsSheetPM> RequestInProgressList2 ;
+            FeatureQuery featureQuery = new FeatureQuery();
+
+            var features = featureQuery.GetAllowedFeaturesForLoggedUser(LoggingUserId, tenant);
+
+            var feature = features.Features.FirstOrDefault(x => x.Code == "StatusDeclarationOldVersion");
+            if (feature != null)
+            {
+                  RequestInProgressList2 = customsRequestsSheetQS.GetRequestInProgress(tenant, "8250", null, null, objectTableId, CourierMasterId, null, false);
+            }
+            else
+            {
+                  RequestInProgressList2 = customsRequestsSheetQS.GetRequestInProgress(tenant, "8250", objectTableId, CourierMasterId, null, null, null, false);
+
+            }
+
 
             if (RequestInProgressList2 != null && RequestInProgressList2.Count > 0)
                 {

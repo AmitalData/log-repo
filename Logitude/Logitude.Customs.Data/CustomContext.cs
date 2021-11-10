@@ -604,6 +604,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new PhysicalCheckOperationMap());
 	
+            modelBuilder.Configurations.Add(new PhysicalCheckSearchResultTypeMap());
+	
             modelBuilder.Configurations.Add(new PhysicalCheckStatusMessageMap());
 	
             modelBuilder.Configurations.Add(new PoaAuthorizationTypeLookupMap());
@@ -2952,6 +2954,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<PhysicalCheckOperation> PhysicalCheckOperations 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<PhysicalCheckSearchResultType> PhysicalCheckSearchResultTypes 
 	 {
 	      get; set;
 	 
