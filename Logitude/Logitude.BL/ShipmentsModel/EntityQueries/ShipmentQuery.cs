@@ -14041,8 +14041,9 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
                                                     ShipmentOrdersType = shipmentOrderPackages.Select(x => x.PackageTypeId).Distinct().Count() == 1 ?
                                                     (shipmentOrderPackages.Select(x => x.PackageType).FirstOrDefault() != null ?
-                                                    shipmentOrderPackages.Select(x => x.PackageType).FirstOrDefault().EnglishName : "Packages") : "Packages"
+                                                    shipmentOrderPackages.Select(x => x.PackageType).FirstOrDefault().EnglishName : "Packages") : "Packages",
 
+                                                    NumberOfOrderPackages = shipmentOrderPackages.Sum(s=>s.Quantity).ToString()
                                                 };
 
                 return shipmentsAdditionalFields.ToList();
