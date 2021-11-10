@@ -22,6 +22,11 @@
     .scrollable-table {
         height: 60%;
     }
+  
+    .has-exception-checkbox-filter {
+        width: 150px !important;
+        margin-right: 50px;
+    }
   }
 
 @media screen and (max-width: 1000px) {
@@ -30,6 +35,15 @@
     }
     .record-row div {
         font-size: 12px !important;
+    }
+
+    .multipe-select {
+        margin-right: 10px;
+    }
+
+    .has-exception-checkbox-filter {
+        width: 150px !important;
+        margin-right: 0px;
     }
 }
 
@@ -62,10 +76,13 @@
     .multipe-select, .has-exception-checkbox-filter {
         margin-right: 10px;
     }
-
-    .search-bar button {
-        width: 40px;
+    .has-exception-checkbox-filter {
+        margin-right: 140px;
     }
+
+        .search-bar button {
+            width: 40px;
+        }
     .search-text {
         /* margin: 0 20px; */
         width: calc(100% - 65px) !important;
