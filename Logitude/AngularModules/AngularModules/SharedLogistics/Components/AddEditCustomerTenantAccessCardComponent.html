@@ -42,10 +42,10 @@
                                 </td>
 
                                 <td class="GridViewCell" style="width: 55px; min-width: 55px; max-width: 55px ">
-                                    <div><CheckBox (Checked)="item.IsCustomsActivated = $event" [IsChecked]="!CanSelectOpption"></CheckBox></div>
+                                    <div><CheckBox (Checked)="item.IsCustomsActivated = $event" [IsChecked]="IsCustomsActivated && !IsExportActivated" [IsEnabled]="IsCustomsActivated || CanSelectOpption"></CheckBox></div>
                                 </td>
                                 <td class="GridViewCell" style="width: 55px; min-width: 55px; max-width: 55px ">
-                                    <div><CheckBox (Checked)="item.IsExportActivated = $event" [IsEnabled]="IsExportActivated"></CheckBox></div>
+                                    <div><CheckBox (Checked)="item.IsExportActivated = $event" [IsChecked]="IsExportActivated && !IsCustomsActivated" [IsEnabled]="IsExportActivated || CanSelectOpption"></CheckBox></div>
                                 </td>
 
                                 <td class="LastChild"></td>

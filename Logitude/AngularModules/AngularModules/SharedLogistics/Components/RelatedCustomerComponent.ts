@@ -57,7 +57,7 @@ export class RelatedCustomerComponent extends BaseComponent{
     public ValidationErrorsList: string[] = []; 
      
 
-    public IsImportActivated: boolean = false;
+    public IsCustomsActivated: boolean = false;
     public IsExportActivated: boolean = false; 
     public CanSelectOpption: boolean = false; 
 
@@ -287,20 +287,32 @@ export class RelatedCustomerComponent extends BaseComponent{
         let tenantPMService: TenantPMService = new TenantPMService();
         tenantPMService.get(this.EntityPM.Tenant).subscribe((response: any) => {   
             if (!response.HasError) {
-                var tenantPM = response.Result;  
-                if (tenantPM.CustomerTenantShareCustomsFile) {
-                    if (tenantPM.CustomerTenantShareExportFile) {
-                        this.CanSelectOpption = true;
-                        this.IsExportActivated = true;
-                    } else {
-                        this.IsExportActivated = false;
-                        this.IsImportActivated = true;
-                    }
-                }
-                else {
+                var tenantPM = response.Result;
+
+                if (tenantPM.CustomerTenantShareCustomsFile && !tenantPM.CustomerTenantShareExportFile) {
+                    this.IsCustomsActivated = true;
                     this.IsExportActivated = false;
-                    this.IsImportActivated = true;
+                    this.CanSelectOpption = true;
                 }
+                if (!tenantPM.CustomerTenantShareCustomsFile && tenantPM.CustomerTenantShareExportFile) {
+                    this.IsCustomsActivated = false;
+                    this.IsExportActivated = true;
+                    this.CanSelectOpption = true;
+                }
+                if (tenantPM.CustomerTenantShareCustomsFile && tenantPM.CustomerTenantShareExportFile) {
+                    this.IsCustomsActivated = true;
+                    this.IsExportActivated = true;
+                    this.CanSelectOpption = true;
+                }
+
+                if (!tenantPM.CustomerTenantShareCustomsFile && !tenantPM.CustomerTenantShareExportFile) {
+                    this.IsCustomsActivated = true;
+                    this.IsExportActivated = false;
+                    this.CanSelectOpption = true;
+                }
+              
+
+                 
             }
         });
     }
