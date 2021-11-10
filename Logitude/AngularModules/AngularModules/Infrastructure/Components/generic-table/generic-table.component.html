@@ -18,7 +18,8 @@
         </tr>
     </ng-template>
     <ng-template pTemplate="body" let-row let-columns="columns" let-i='rowIndex'>
-        <tr style='height:34px' (click)='onSelectedRow(row)' [ngClass]='{"highlight-row":(i + 1)%2}'>
+        <!-- [ngClass]='{"highlight-row":(i + 1)%2}' -->
+        <tr style='height:34px' (click)='onSelectedRow(row)' >
             <!-- <td>{{i}}</td> -->
             <td *ngFor='let col of columns'>{{row[col.name]}}</td>
         </tr>

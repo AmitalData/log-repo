@@ -23,12 +23,9 @@ export class DraggableDirective implements AfterViewInit, OnDestroy {
   private destroy$ = new Subject<void>();
 
   constructor(private elementRef: ElementRef, private zone: NgZone) {
-    console.log(1)
   }
 
   ngOnInit() {
-    console.log(1)
-
   }
 
   public ngAfterViewInit(): void {
