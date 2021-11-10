@@ -64,7 +64,7 @@ export class AddEditCustomerTenantAccessCardComponent extends BaseComponent {
         }
 
         if (this.ValidateCustomerTenantOptions(checkIfCustomerSelected)) {
-            this.ValidationErrorsList.push("You should select at least one option either Customs of Export.");
+            this.ValidationErrorsList.push("You can't add a new card. You have to choose either Export or Customs option.");
         }
 
         else if (checkIfCustomerSelected != null){
