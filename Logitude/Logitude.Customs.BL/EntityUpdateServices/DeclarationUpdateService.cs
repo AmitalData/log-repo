@@ -57,6 +57,8 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         private EventTracerArgs _LastTraceEventParams;
         private CourierMasterPM _CourierMasterPM;
 
+        public bool IsProcedureCurrentCodeChanged { get; set; }
+
         public bool IsFromCustomsFeedback { get; set; }
         public bool ToUpdateWithPaymentDate { get; set; }
         protected override void OnCreating(DeclarationPM entityPM, EntityPM entityParentPM)
@@ -257,6 +259,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             SupplierInvoiceUpdateService supplierInvoiceUpdateService = new SupplierInvoiceUpdateService(MainContext, new Dictionary<string, IContext>(), Tenant);
             supplierInvoiceUpdateService.Multi_LastSIWillUpdateCCU = true;
             supplierInvoiceUpdateService.UpdateFromDeclaration = IsFromCustomsFeedback;
+            supplierInvoiceUpdateService.IsProcedureCurrentCodeChanged = IsProcedureCurrentCodeChanged;
             supplierInvoiceUpdateService.UpdateMulti(entityPM.SupplierInvoices, entityPM.DeletedSupplierInvoices, entityPM, false);
 
             DeclarationTaxUpdateService declarationTaxUpdateService = new DeclarationTaxUpdateService(MainContext, new Dictionary<string, IContext>(), Tenant);

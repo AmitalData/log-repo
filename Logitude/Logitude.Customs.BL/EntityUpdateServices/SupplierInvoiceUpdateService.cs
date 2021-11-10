@@ -46,6 +46,8 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         private DeclarationPM _DeclarationPM;
         private bool openTaskForUnifreight;
         private CourierMasterPM _CourierMasterPM;
+
+        public bool IsProcedureCurrentCodeChanged { get; set; }
         public bool Multi_LastSIWillUpdateCCU { get; set; }//שינוי בלוגיקה לבניית CCU בעקבות משוב להצהרה/הגשה - פניה 303319  אבל במצב הראשון - אין צורך לשמור ולבנות CCU אחרי כל שמירה של כל חשבון ספק. מספיק לבנות את CCU פעם אחת בסיום כל השמירות.
         public bool UpdateFromDeclaration { get; set; }
         protected override void OnCreating(SupplierInvoicePM entityPM, EntityPM entityParentPM)
@@ -625,7 +627,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             bool toUpdateClassification = false;
             string defaultClassificationCode = null;
             string defaultClassificationCodeUnit = null;
-            if (entityPM.ChangeSetOp == ChangeSetOperation.Insert && declarationPM.IsCourierDeclaration && entityPM.InvoiceAmountInUSD <= 1000 && (declarationPM.ProcedureCurrentCode == "4000512" || declarationPM.ProcedureCurrentCode == "4000507"))
+            if ((entityPM.ChangeSetOp == ChangeSetOperation.Insert || (entityPM.ChangeSetOp == ChangeSetOperation.Update && IsProcedureCurrentCodeChanged)) && declarationPM.IsCourierDeclaration && entityPM.InvoiceAmountInUSD <= 1000 && (declarationPM.ProcedureCurrentCode == "4000512" || declarationPM.ProcedureCurrentCode == "4000507"))
             {
                 try
                 {

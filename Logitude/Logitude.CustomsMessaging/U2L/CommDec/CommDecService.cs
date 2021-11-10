@@ -64,6 +64,7 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
         public bool IsAutonomy = false;
         private decimal _SupplierInvoiceAmount;
         private string mode;
+        private bool IsProcedureCurrentCodeChanged = false; 
 
         public CommDecService()
             : base(
@@ -597,7 +598,7 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
             }
 
             declarationUpdateService = new DeclarationUpdateService(_context, new Dictionary<string, IContext>(), _tenant);
-
+            if (this.IsProcedureCurrentCodeChanged) declarationUpdateService.IsProcedureCurrentCodeChanged = true;
             declarationUpdateService.Update(this._MyDeclarationPM, true);
 
 
@@ -890,6 +891,7 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
 
         private void CalcProcedureCurrentCode()
         {
+            var originProcedureCurrentCode = this._MyDeclarationPM.ProcedureCurrentCode;
             if (currentDeclarationCourierStatusPM == null)
             {
                 DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(_context);
@@ -946,6 +948,7 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                     }
                 }
             }
+            if (originProcedureCurrentCode != this._MyDeclarationPM.ProcedureCurrentCode) this.IsProcedureCurrentCodeChanged = true;
         }
 
         private void CalcIsAutonomy()
