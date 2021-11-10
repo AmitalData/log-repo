@@ -920,7 +920,47 @@
                                             <tr style="height:100%;">
                                                 <td colspan="7" style="height: 100%;width:100%; padding: 5px;">
 
-                                                    <div class="GeneratedGridContainer" style="padding:5px;vertical-align:top;top:0;position:absolute">
+                                                    <div class="GeneratedGridContainer" *ngIf="SelectedPendingCodeFilter" style="padding:5px;vertical-align:top;top:0;position:absolute">
+                                                        <logitude-grid GridWidth="100%" GridHeight="100%"
+                                                                       [ObjectTable]="ObjectTableName"
+                                                                       [dataSource]="DataSource"
+                                                                       (AfterViewInitCompleted)="ViewInitCompleted($event)"
+                                                                       (rowSelectedEvent)="OnRowSelected($event)"
+                                                                       [MenuHeaderchangeevent]="MenuHeaderchangeevent"
+                                                                       [columns]="columnsPending"
+                                                                       [SelectedRow]="SelectedRow"
+                                                                       [IsCustomTemplate]="false"
+                                                                       [RowBackGroundColor]="'#DFECF7'"
+                                                                       [ChangeColorByPropName]="'IsChecked'"
+                                                                       [ChangeColorByPropValue]="true"
+                                                                       [IgnoreRowHoverVisibilityQueryName]="true"
+                                                                       [EnableRowHoverVisibility]="true"
+                                                                       [HoverTemplateIndex]="8"
+                                                                       [rowHeight]="40"
+                                                                       [rows]="RowsItems"
+                                                                       [PassAdditionalDataToTemplates]="true"
+                                                                       [MyScrollTop]="MyScrollTop">
+                                                            <!--[RowHoverColor]="'#C8C8FA'"
+            (CheckBoxChecked)="onCheckBoxChecked($event)"
+             -->
+                                                            <!--40970-->
+                                                        </logitude-grid>
+                                                        <!--
+
+            [MyScrollTop]="MyScrollTop"
+                       [MySelectedRowIndex]="MySelectedRowIndex"
+
+            [QueryChangeEvent]="onQueryChangeEvent"
+            [EnableRowToolTip]="true"
+            [ToolTipWidth]="250"
+            [ToolTipHeight]="100"
+            [ToolTipBinding]="'Description'"
+
+            [CustomBackFromEdit]="CustomBackFromEditevent"
+        -->
+                                                    </div>
+
+                                                    <div class="GeneratedGridContainer" *ngIf="!SelectedPendingCodeFilter" style="padding:5px;vertical-align:top;top:0;position:absolute">
                                                         <logitude-grid GridWidth="100%" GridHeight="100%"
                                                                        [ObjectTable]="ObjectTableName"
                                                                        [dataSource]="DataSource"
@@ -941,24 +981,25 @@
                                                                        [PassAdditionalDataToTemplates]="true"
                                                                        [MyScrollTop]="MyScrollTop">
                                                             <!--[RowHoverColor]="'#C8C8FA'"
-                                    (CheckBoxChecked)="onCheckBoxChecked($event)"
-                                     -->
+            (CheckBoxChecked)="onCheckBoxChecked($event)"
+             -->
                                                             <!--40970-->
                                                         </logitude-grid>
                                                         <!--
 
-                                    [MyScrollTop]="MyScrollTop"
-                                               [MySelectedRowIndex]="MySelectedRowIndex"
+            [MyScrollTop]="MyScrollTop"
+                       [MySelectedRowIndex]="MySelectedRowIndex"
 
-                                    [QueryChangeEvent]="onQueryChangeEvent"
-                                    [EnableRowToolTip]="true"
-                                    [ToolTipWidth]="250"
-                                    [ToolTipHeight]="100"
-                                    [ToolTipBinding]="'Description'"
+            [QueryChangeEvent]="onQueryChangeEvent"
+            [EnableRowToolTip]="true"
+            [ToolTipWidth]="250"
+            [ToolTipHeight]="100"
+            [ToolTipBinding]="'Description'"
 
-                                    [CustomBackFromEdit]="CustomBackFromEditevent"
-                                -->
+            [CustomBackFromEdit]="CustomBackFromEditevent"
+        -->
                                                     </div>
+
                                                 </td>
                                             </tr>
 
