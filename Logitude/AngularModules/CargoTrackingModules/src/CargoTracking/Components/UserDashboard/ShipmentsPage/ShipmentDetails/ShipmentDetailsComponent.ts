@@ -20,6 +20,7 @@ import { CargoTrackingBrandingDataExtendedService } from 'src/CargoTracking/Serv
 import { ServiceHelper } from 'src/CargoTracking/Utilities/ServiceHelper';
 import { ServiceResponse } from 'src/CargoTracking/DataContracts/ServiceResponse';
 
+const mobileScreenMaxWidth = 470;
 @Component({
     selector: 'ShipmentDetailsComponent',
     templateUrl: './ShipmentDetailsComponent.html',
@@ -311,23 +312,24 @@ export class ShipmentDetailsComponent implements OnInit,AfterViewInit
     InitSlider()
     {
         if(!this.SliderWrapperElement)
-        return;
-        var PAGERS_WIDTH = 200; // 100 * 2 pager
-        var mobilePagersWidth = 30; // 100 * 2 pager
-        var screenwidth = window.innerWidth;
+            return;
+
+        var PAGERS_WIDTH = 200;
+        var mobilePagersWidth = 30;
 
         var sliderWrapperWidth = this.SliderWrapperElement.nativeElement.offsetWidth;
-        const maxWidthForMobileScreen = 470;
-        if (screenwidth > maxWidthForMobileScreen)
-            var count = Math.floor((sliderWrapperWidth - PAGERS_WIDTH) / this.sliderCardWidth);
 
-        if (screenwidth <= maxWidthForMobileScreen)
+        if (this.IsMobileView)
             var mobileCount = this.CalculateVisibleSliderCardsCountForMobile(sliderWrapperWidth, mobilePagersWidth, this.sliderMobileCardWidth);
-        this.sliderVisibleCardsCount = count == undefined ? mobileCount: count;
+        else
+            var webCount = Math.floor((sliderWrapperWidth - PAGERS_WIDTH) / this.sliderCardWidth);
 
-        this.sliderVisibleCardsWidth = count * this.sliderCardWidth;
+
+        this.sliderVisibleCardsCount = webCount == undefined ? mobileCount: webCount;
+
+        this.sliderVisibleCardsWidth = this.sliderVisibleCardsCount * this.sliderCardWidth;
         this.sliderMarginCardCount = 0;
-        this.sliderMarginLeft = screenwidth < maxWidthForMobileScreen ? (this.sliderCardWidth - 60) * -1 : 0; // mobile: add
+        this.sliderMarginLeft = this.IsMobileView ? (this.sliderCardWidth - 60) * -1 : 0; // mobile: add
 
     }
 
@@ -448,17 +450,6 @@ export class ShipmentDetailsComponent implements OnInit,AfterViewInit
     NoMilstonesFound: boolean = false;
     BuildSliderCards()
     {
-        // this.Shipment.Milestones.forEach((milstone:Milestone) => {
-        //     var newCard = new MilestoneCard();
-        //     newCard.Code = milstone.Code;
-        //     newCard.Date = milstone.EstimationDate || milstone.Date;
-        //     newCard.Title = milstone.Name;
-        //     newCard.Description = milstone.Notes;
-        //     newCard.IsDimmed = milstone.IsEstimation;
-        //     newCard.IsActive = milstone.Code == this.cargoTrackingShipmentPM.CurrentMilestoneCode;
-        //     this.SliderCards.push(newCard);
-        // });
-
         if (!this.cargoTrackingShipmentPM.Milestones)
             return;
         this.SliderCards = this.cargoTrackingShipmentPM.Milestones
@@ -491,11 +482,19 @@ export class ShipmentDetailsComponent implements OnInit,AfterViewInit
                 return newCard;
             });
         this.SetNoMilstonesFound();
-        // .sort((a, b) => {
-        //     if (a.Date > b.Date) return 1;
-        //     if (a.Date < b.Date) return -1;
-        //      return 0;
-        //     });
+
+        // this.ScrollIntoLastSliderCard();
+
+
+    }
+    ScrollIntoLastSliderCard()
+    {
+        const hiddenCardsCount = this.SliderCards.length - this.sliderVisibleCardsCount;
+        const width = this.IsMobileView ? this.sliderMobileCardWidth : this.sliderCardWidth;
+
+        this.sliderMarginLeft = hiddenCardsCount * width * -1;
+        this.sliderMarginCardCount = hiddenCardsCount;
+
     }
     SetNoMilstonesFound() {
         if (this.SliderCards.length == 0) this.NoMilstonesFound = true;
@@ -533,7 +532,15 @@ export class ShipmentDetailsComponent implements OnInit,AfterViewInit
             this.sliderMarginLeft - 55;
 
 
+        console.log("sliderMarginCardCount:sliderMarginLeft === ",this.sliderMarginCardCount , '\t' , this.sliderMarginLeft);
+
+
+
     }
+
+    get IsMobileView(){ return window.innerWidth <= mobileScreenMaxWidth; }
+    get IsNotMobileView(){ return window.innerWidth > mobileScreenMaxWidth; }
+
     //#endregion
 
     //#region Routing Slider
