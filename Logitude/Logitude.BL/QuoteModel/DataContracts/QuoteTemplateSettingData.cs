@@ -22,8 +22,6 @@ namespace Logitude.BL.QuoteModel.DataContracts
         [DataMember]
         public string Code { get; set; }
         [DataMember]
-        public string DataType { get; set; }
-        [DataMember]
         public int Index { get; set; }
         [DataMember]
         public bool InUse { get; set; }

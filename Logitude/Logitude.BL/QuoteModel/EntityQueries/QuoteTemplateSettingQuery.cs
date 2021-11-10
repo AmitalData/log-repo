@@ -7,6 +7,8 @@ using System.Linq;
 using System.Web;
 using Logitude.BL.QuoteModel.EntityLists;
 using Logitude.BL.QuoteModel.EntityPMs;
+using Logitude.Server.Tools;
+using Logitude.BL.QuoteModel.DataContracts;
 
 namespace Logitude.BL.QuoteModel.EntityQueries
 {
@@ -262,7 +264,9 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                                                   HidePageNumber = a.HidePageNumber,
                                                   ShowRegionalTAXPackages = a.ShowRegionalTAXPackages,
                                                   ShowRegionalTAXContainers = a.ShowRegionalTAXContainers,
+                                                  XMLData = a.XMLData,
                                               }).FirstOrDefault();
+            entity.QuoteTemplateSettingData = LogitudeXmlSerializer.DeserializeObject<QuoteTemplateSettingData>(entity.XMLData);
 
             return entity;
          
@@ -721,8 +725,6 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                                                           };
             return result;
         }
-
-        
 
         public QuoteTemplateSetting GetFirstQuoteTemplateSettingForTenant(int tenant)
         {
