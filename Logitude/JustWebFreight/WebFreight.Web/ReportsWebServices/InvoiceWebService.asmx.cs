@@ -54,6 +54,8 @@ namespace WebFreight.Web.ReportsWebServices
     [ToolboxItem(false)]
     public class InvoiceWebService : WebService
     {
+        private ARInvoiceStockQuery aRInvoiceStockQuery;
+        private ARInvoiceStockLineRepository aRInvoiceStockLineRepository;
         private VatTypePercentageRepository vatTypePercentageRepository;
         [WebMethod]
         public byte[] GetInvoiceData(string invoiceId, string documentTypeCopyId, int tenant)
@@ -74,8 +76,10 @@ namespace WebFreight.Web.ReportsWebServices
         {
             InvoiceDataProvider dataProvider = new InvoiceDataProvider();
             NumbersConverterToWords numbersConverterToWords = new NumbersConverterToWords();
-
+          
             IInvoiceContext invoiceCotnext = InvoiceContext.GetContext(tenant);
+            aRInvoiceStockQuery = new ARInvoiceStockQuery(tenant);
+            aRInvoiceStockLineRepository = new ARInvoiceStockLineRepository(invoiceCotnext);
             ARInvoiceRepository invoiceRepository = new ARInvoiceRepository(invoiceCotnext);
             ARInvoice myInvoice = invoiceRepository.GetSingleInvoice(invoiceId);
 
@@ -164,6 +168,7 @@ namespace WebFreight.Web.ReportsWebServices
                 Contact loggedcontact = GetLoggedContact(currentInvoice.Tenant);
                 #region Start
 
+                this.FillARStockVariables(invoicedataprovider, currentInvoice);
                 string invoiceTypeCode = "";
 
                 #region ObjectTable | DocumentTypeCopy
@@ -2392,6 +2397,18 @@ namespace WebFreight.Web.ReportsWebServices
             return invoicedataprovider;
         }
 
+        private void FillARStockVariables(InvoiceDataProvider invoicedataprovider, ARInvoice invoice)
+        {
+            var arInvoiceStockLine = aRInvoiceStockLineRepository.GetSingleARInvoiceStockLine(invoice.ARInvoiceStockId, invoice.Tenant);
+            if (arInvoiceStockLine == null)
+                return;
+            var arInvoiceStock = aRInvoiceStockQuery.GetSinglePM(arInvoiceStockLine.ARInvoiceStockId, arInvoiceStockLine.Tenant);
+            invoicedataprovider.StockDescription = arInvoiceStock?.Description;
+            invoicedataprovider.StockExpirationDate = arInvoiceStock?.EndDate;
+            invoicedataprovider.StockStartNumberPrefix = arInvoiceStock?.ARInvoiceStockLines?.OrderByDescending(a=>a.Id).Select(a=>a.Number).LastOrDefault();
+            invoicedataprovider.StockEndNumberPrefix = arInvoiceStock?.ARInvoiceStockLines?.OrderByDescending(a => a.Id).Select(a => a.Number).FirstOrDefault();
+        }
+
         private double? ComputeVatAmount_MultiVat(List<VATTypesGroup> allVatGroups, List<VatType> allVatTypes, DateTime? loadingDate, double? invoiceAmount, string VATTypeId, int tenant)
         {
             double? allLineVATAmount = 0;
@@ -2910,6 +2927,7 @@ namespace WebFreight.Web.ReportsWebServices
                         invoiceDataProvider.PaymentTermLocalDescription = paymentTerm.LocalDescription != null ? paymentTerm.LocalDescription : "";
                     }
                 }
+                this.FillARStockVariables(invoiceDataProvider, entityPOCO);
                 #endregion
 
                 #region Bill To Properties
