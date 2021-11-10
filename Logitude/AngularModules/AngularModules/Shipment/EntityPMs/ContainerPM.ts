@@ -1116,6 +1116,11 @@ export class ContainerPM {
     public set ShipmentCreateDate(newValue: Date) { if (this.shipmentCreateDate != newValue) { this.shipmentCreateDate = newValue; this.MarkAsDirty("ShipmentCreateDate"); } }
        
 	 
+    private isAutomaticUpdates: boolean;
+    public get IsAutomaticUpdates() { return this.isAutomaticUpdates; }
+    public set IsAutomaticUpdates(newValue: boolean) { if (this.isAutomaticUpdates != newValue) { this.isAutomaticUpdates = newValue; this.MarkAsDirty("IsAutomaticUpdates"); } }
+       
+	 
 
     public OldEntityPM: ContainerPM;
 		

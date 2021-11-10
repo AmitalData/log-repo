@@ -1,5 +1,7 @@
 ﻿using Logitude.BL.Helpers;
 using Logitude.BL.ShipmentsModel.EntityLists;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.ShipmentsModel;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Simplog.Data.ShipmentsModel.Repositories;
@@ -133,9 +135,23 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Operational
             iDataProvider.FromDate = this.fromDate;
             iDataProvider.ToDate = this.toDate;
             iDataProvider.ShipperId = this.shipperId;
+            this.SetShipperName();
             iDataProvider.MainCarriageFinalDestinationPortId = this.mainCarriageFromPortId;
             iDataProvider.MainCarriageFromPortId = this.mainCarriageFromPortId;
             iDataProvider.Subshipper = this.subshipper;
+        }
+
+        private void SetShipperName()
+        {
+            if (string.IsNullOrEmpty(this.shipperId))
+            {
+                return;
+            }
+            Card iCard = CardRepository.GetSingleCard(this.shipperId, tenant, false);
+            if (iCard != null)
+            {
+                iDataProvider.ShipperName = iCard.EnglishName;
+            }
         }
 
         private void BuildSourceData()
