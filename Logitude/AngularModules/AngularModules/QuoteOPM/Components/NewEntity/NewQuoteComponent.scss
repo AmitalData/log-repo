@@ -34,11 +34,11 @@
     }
 
     .sub-header {
-        padding: 21px 27px 0;
+        padding: 9px 11px;
         font-size: 17px;
         font-weight: bold;
-        margin-bottom: 20px;
-        padding-bottom: 15px;
+        // margin-bottom: 20px;
+        // padding-bottom: 15px;
         border-bottom: 1px solid var(--surface-200);
     }
 
@@ -169,13 +169,14 @@
 
     .pi {
         color: black;
-        margin-right: 8px;
+        margin-left: 8px;
         align-self: end;
         font-size: 13px;
     }
 
     button {
         color: black;
+        direction: rtl;
     }
 
     .p-button-danger:hover,
@@ -221,8 +222,7 @@ hr {
 .right-side {
     padding-left: 13px;
     padding-right: 17px;
-    padding-top: 0px;
-    margin-top: 15px;
+    padding-top: 15px;
     overflow-x: hidden;
     height: 100%;
     position: relative;
