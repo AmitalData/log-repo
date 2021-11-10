@@ -122,10 +122,29 @@ namespace Logitude.Customs.BL.Messaging.U2L.DeclarationDocuments
                                         myCustomsDocumentUpdateService.IgnoreSendFailure = true;
                                         AppendLogLine("myCustomsDocumentUpdateService.Update:IsSendToQueue = true");
                                         if (customsDocumentPM.ChangeSetOp != ChangeSetOperation.Update) customsDocumentPM.ChangeSetOp = ChangeSetOperation.Update;
-                                    }
-                                    myCustomsDocumentUpdateService.Update(customsDocumentPM, true);
+                                        myCustomsDocumentUpdateService.Update(customsDocumentPM, true);
+                                        throw new BusinessErrorException("Ticket already Exist for this Document" + "-- Send To Mehes" );
 
-                                    throw new BusinessErrorException("Ticket already Exist for this Document");
+                                    }
+
+                                    string log = "";
+                                    if(customsDocumentPM== null)
+                                    {
+                                        log = "customsDocumentPM is null";
+                                    }
+                                    else
+                                    {
+                                        if(!String.IsNullOrWhiteSpace(customsDocumentPM.CustomsDocId))
+                                        log = "customsDocumentPM.CustomsDocId:" + customsDocumentPM.CustomsDocId;
+
+                                        if (!String.IsNullOrWhiteSpace(customsDocumentPM.DocumentStatusCode))
+                                            log = "customsDocumentPM.DocumentStatusCode:" + customsDocumentPM.DocumentStatusCode;
+
+
+
+                                    }
+
+                                    throw new BusinessErrorException("Ticket already Exist for this Document;" + log  );
                                 }
                             }
                         }
