@@ -148,7 +148,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 PortTracing.Trace(theEntityPm, Poco, isNewEntity);
             }
 
-            bool updateTimeZone = this.CheckUpdaingTenantsPortsTimeZones();
+            bool updateTimeZone = this.CheckUpdatingTenantsPortsTimeZones();
             PortMapping.MapEntity(theEntityPm, Poco, isNewEntity);
             entityRepository.Update(Poco);
             entityRepository.SubmitChanges();
@@ -156,7 +156,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             
             if (updateTimeZone)
             {
-                this.CreateUpdateTimeZoneQueueMessage();
+                this.CreatePortTimeZoneQueueMessage();
             }
         }
 
@@ -180,7 +180,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             queueservice.Send(queueMessage, tenant);
         }
 
-        private bool CheckUpdaingTenantsPortsTimeZones()
+        private bool CheckUpdatingTenantsPortsTimeZones()
         {
             if(entityPM.PortTimeZoneCode != Poco.PortTimeZoneCode && tenant == 0)
             {
@@ -189,7 +189,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
             return false;
         }
-        private void CreateUpdateTimeZoneQueueMessage()
+        private void CreatePortTimeZoneQueueMessage()
         {
             IQueueService queueservice = new DbQueueService();
             queueservice.InitializeQueue("UpdatePortTimeZone", 0);

@@ -136,13 +136,6 @@ namespace CommunicationWorkerRole
         {
             foreach (Port port in similarPorts)
             {
-                //string entityName = "Port" + port.Id + port.Tenant;
-
-                //if (CacheManager.CacheWrapper.Get(entityName) != null)
-                //{
-                //    CacheManager.CacheWrapper.Invalidate(entityName);
-                //}
-
                 TableLastUpdateClass.UpdateTableHistory(port.Tenant, "Port");
             }
         }
