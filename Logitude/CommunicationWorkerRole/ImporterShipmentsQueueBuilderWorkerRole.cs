@@ -256,10 +256,7 @@ namespace CommunicationWorkerRole
                                                 var Shipment = shipmentQuery.GetSinglePMWithoutComposition(item, tenant);
                                                 if (Shipment != null && (customerTenantAccessCard.LastMappingDateTime == null || Shipment.CreateDateTime > customerTenantAccessCard.LastMappingDateTime) && tenantPM.CustomerTenantShareCustomsFile && !Shipment.IsCancelled)
                                                 {
-                                                    if(Shipment.DirectionId == "C")
-                                                    {
-
-                                                    }
+                                                     
                                                     CustomerTenantAccessInfo customerTenantAccess = customerTenantAccessQuery.GetCustomerTenantAccessInfo(tenant, Shipment.CustomerId);
                                                     PrivateLabelShipmentService privateLabelShipmentService = new PrivateLabelShipmentService(tenantPM, Shipment, customerTenantAccess);
 
