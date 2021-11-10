@@ -52,6 +52,7 @@ using WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel;
 using WebFreight.Web.MetaDataUpdate.GeneratedUpdate.SystemLogsModel;
 using WebFreight.Web.Helpers.AutomationModel;
 using Microsoft.VisualStudio.Services.Common;
+using WebFreight.Web.Helpers.QuoteTemplate;
 
 namespace WebFreight.Web.MetaDataUpdate
 {
@@ -374,6 +375,13 @@ namespace WebFreight.Web.MetaDataUpdate
                             break;
                         }
 
+                    case "quotetemplatesettings":
+                        {
+                            QuoteTemplateSettingDataUpdater quoteTemplateSettingDataUpdater = new QuoteTemplateSettingDataUpdater();
+                            quoteTemplateSettingDataUpdater.UpdateAllQuoteTempolateSettings();
+
+                            break;
+                        }
                     case "encryptiondocument":
                         {
                             DocumentHelper documentHelper = new DocumentHelper();

@@ -607,6 +607,8 @@
     <Compile Include="InvoiceModel\Tools\Initializers\APInvoiceServiceInitializer.cs" />
     <Compile Include="InvoiceModel\Tools\Initializers\ARInvoiceServiceInitializer.cs" />
     <Compile Include="InvoiceModel\Tools\QuickbooksService.cs" />
+    <Compile Include="QuoteModel\DataContracts\QuoteTemplateSettingData.cs" />
+    <Compile Include="QuoteModel\Tools\EntityService\QuoteTemplateSettingDataBuilder.cs" />
     <Compile Include="ShipmentsModel\APIDataContract\PickUpDeliveryFromToType.Generated.cs" />
     <Compile Include="ShipmentsModel\APIDataContract\QueryService\PickUpDeliveryFromToTypeQueryService.Generated.cs" />
     <Compile Include="ShipmentsModel\CustomFilters\DigitalCustomFilter.cs" />

@@ -930,6 +930,16 @@ export class QuoteTemplateSettingPM {
     public set ShowRegionalTAXContainers(newValue: boolean) { if (this.showRegionalTAXContainers != newValue) { this.showRegionalTAXContainers = newValue; this.MarkAsDirty("ShowRegionalTAXContainers"); } }
        
 	 
+    private xMLData: string;
+    public get XMLData() { return this.xMLData; }
+    public set XMLData(newValue: string) { if (this.xMLData != newValue) { this.xMLData = newValue; this.MarkAsDirty("XMLData"); } }
+       
+	 
+    private quoteTemplateSettingData: any;
+    public get QuoteTemplateSettingData() { return this.quoteTemplateSettingData; }
+    public set QuoteTemplateSettingData(newValue: any) { if (this.quoteTemplateSettingData != newValue) { this.quoteTemplateSettingData = newValue; this.MarkAsDirty("QuoteTemplateSettingData"); } }
+       
+	 
 
     public OldEntityPM: QuoteTemplateSettingPM;
 		
