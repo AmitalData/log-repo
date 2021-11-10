@@ -612,10 +612,14 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             bool dirty = false;
             DeclarationQueryService declarationQueryService = new DeclarationQueryService(entityPM.Tenant);
             DeclarationPM declarationPM = declarationQueryService.GetSingle(entityPM.DeclarationId, false, false);
+            DeclarationPM defaultDeclarationPM = (DeclarationPM)entityParentPM;
+            if (defaultDeclarationPM == null) defaultDeclarationPM = declarationPM;
+            declarationQueryService.GetSingle(entityPM.DeclarationId, false, false);
             bool toUpdateClassification = false;
             string defaultClassificationCode = null;
             string defaultClassificationCodeUnit = null;
-            if ((entityPM.ChangeSetOp == ChangeSetOperation.Insert || (entityPM.ChangeSetOp == ChangeSetOperation.Update && IsProcedureCurrentCodeChanged)) && declarationPM.IsCourierDeclaration && entityPM.InvoiceAmountInUSD <= 1000 && (declarationPM.ProcedureCurrentCode == "4000512" || declarationPM.ProcedureCurrentCode == "4000507"))
+            //if ((entityPM.ChangeSetOp == ChangeSetOperation.Insert || (entityPM.ChangeSetOp == ChangeSetOperation.Update && IsProcedureCurrentCodeChanged)) && declarationPM.IsCourierDeclaration && entityPM.InvoiceAmountInUSD <= 1000 && (declarationPM.ProcedureCurrentCode == "4000512" || declarationPM.ProcedureCurrentCode == "4000507"))
+            if ((entityPM.ChangeSetOp == ChangeSetOperation.Insert || (entityPM.ChangeSetOp == ChangeSetOperation.Update && IsProcedureCurrentCodeChanged)) && defaultDeclarationPM.IsCourierDeclaration && entityPM.InvoiceAmountInUSD <= 1000 && (defaultDeclarationPM.ProcedureCurrentCode == "4000512" || defaultDeclarationPM.ProcedureCurrentCode == "4000507"))
             {
                 try
                 {
@@ -640,7 +644,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                                 myCard = repository.GetSingleCard(_CourierMasterPM.IntegratorCode, entityPM.Tenant);
                                 if (myCard != null && !String.IsNullOrWhiteSpace(myCard.Code)) IntegratorCode = myCard.Code;
                             }
-                            
+
                             if (entityPM.InvoiceAmountInUSD <= 75)
                             {
                                 if (!String.IsNullOrWhiteSpace(IntegratorCode)) defaultClassificationCode = GetAmitalDefault("ISRAEL", "CGO_LOWVAL_ITM", "NON", IntegratorCode, entityPM.Tenant);
