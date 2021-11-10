@@ -258,6 +258,7 @@ export class CargoTrackingIncrementalStatistics extends BaseComponent implements
 
     RefreshButtonClicked() {
         this.GetCargoTrackingIncrementalData();
+        this.ReloadScreen();
     }
 }
 
