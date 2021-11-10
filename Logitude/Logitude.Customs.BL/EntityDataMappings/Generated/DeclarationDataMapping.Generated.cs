@@ -124,6 +124,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         IsClose, 
 	         CourierSuspentionCode, 
 	         DepositionStatusCode, 
+	         CargoDescription, 
 	         IsPaymentProtested, 
 	         AmendmentRequestNumber, 
 	         AmendmentStatus, 
@@ -914,6 +915,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 				entityPOCO.DepositionStatusCode = entityPM.DepositionStatusCode;
 			}
 			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CargoDescription))
+            {
+				entityPOCO.CargoDescription = entityPM.CargoDescription;
+			}
+			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsPaymentProtested))
             {
 				entityPOCO.IsPaymentProtested = entityPM.IsPaymentProtested;
@@ -1655,6 +1661,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.DepositionStatusCode = entityPOCO.DepositionStatusCode;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CargoDescription))
+            {
+					entityPM.CargoDescription = entityPOCO.CargoDescription;
+            }
+
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsPaymentProtested))
             {
 					entityPM.IsPaymentProtested = entityPOCO.IsPaymentProtested;
@@ -2391,6 +2402,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 oldEntityPM.DepositionStatusCode = entityPM.DepositionStatusCode;
             }
 			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CargoDescription))
+            {
+                oldEntityPM.CargoDescription = entityPM.CargoDescription;
+            }
+			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsPaymentProtested))
             {
                 oldEntityPM.IsPaymentProtested = entityPM.IsPaymentProtested;
@@ -2696,6 +2712,10 @@ namespace Logitude.Customs.BL.EntityDataMappings
             if (!String.IsNullOrWhiteSpace(entityPM.CasualImporterContact)) //T4 find type == nText 
             {
                 entityPM.CasualImporterContact = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.CasualImporterContact));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.CargoDescription)) //T4 find type == nText 
+            {
+                entityPM.CargoDescription = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.CargoDescription));
             }
             if (!String.IsNullOrWhiteSpace(entityPM.AmendmentRemarks)) //T4 find type == nText 
             {

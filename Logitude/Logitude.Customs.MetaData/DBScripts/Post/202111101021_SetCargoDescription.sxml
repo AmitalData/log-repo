@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Script DBType="Main" Module="Customs">
+  <Sql Version="1">
+  </Sql>
+
+  <Oracle Version="1">
+    <![CDATA[
+update cargodescription set DECLARATIONDOCUMENTID =
+(select cargodescription from CONSIGNMENTS
+where declarationid= declarations.id and CONSIGNMENTS.CONSIGNMENTnumber=1
+   
+ )
+
+
+    ]]>
+  </Oracle>
+</Script>
