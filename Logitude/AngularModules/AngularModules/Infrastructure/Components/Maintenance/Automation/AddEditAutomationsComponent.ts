@@ -1813,15 +1813,7 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
 
         if (this.CurrentEntityPM.ResultCode == "FIELDSET" && this.AutomationSetValueLists && this.AutomationSetValueLists.length > 0) {
             this.AutomationSetValueLists.forEach((item) => {
-                if (AppTool.IsNullOrEmpty(item.CurrentEntityPM.Value)) {
-                    this.ValidationErrorsList.push(item.SelectedCustomField.FullNameTextCodeDefaultText + " field is required");
-                }
-
-                else if (item.SelectedCustomField.DataTypeCode == "Text" || item.SelectedCustomField.DataTypeCode == "nText") {
-                   if (item.CurrentEntityPM.Value.length > item.SelectedCustomField.MaxLength || item.CurrentEntityPM.Value.length < item.SelectedCustomField.MinLength) {
-                        this.ValidationErrorsList.push(item.SelectedCustomField.FullNameTextCodeDefaultText + " must butween " + item.SelectedCustomField.MinLength + " and " + item.SelectedCustomField.MaxLength + " characters");
-                    }
-                }
+                this.AutomationSetValueValidation(item);
             });
         }
 
@@ -1937,6 +1929,45 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
                 else this.CloseButtonClicked();
             }
         }
+    }
+ 
+    private AutomationSetValueValidation(item: AutomationSetValueViewModel) {
+        if (AppTool.IsNullOrEmpty(item.CurrentEntityPM.Value)) {
+            this.ValidationErrorsList.push(item.SelectedCustomField.FullNameTextCodeDefaultText + " field is required");
+            return;
+        }
+        if (item.SelectedCustomField.DataTypeCode != "Text" && item.SelectedCustomField.DataTypeCode != "nText")
+            return;
+        if (this.IsNotValidAutomationSetValue(item)) {
+            this.ValidationErrorsList.push(item.SelectedCustomField.FullNameTextCodeDefaultText + " must between " + item.SelectedCustomField.MinLength + " and " + item.SelectedCustomField.MaxLength + " characters");
+            return;
+        }
+        if (this.IsNotValidAutomationSetField(item)) {
+            this.ValidationErrorsList.push(item.SelectedCustomField.FullNameTextCodeDefaultText + " must between " + item.SelectedCustomField.MinLength + " and " + item.SelectedCustomField.MaxLength + " characters");
+            return;
+        }
+    }
+
+
+    private IsNotValidAutomationSetField(item: AutomationSetValueViewModel) {
+        if (item.SelectedOperator.Code != "SF")
+            return false;
+
+        if (item.AutomationHelper.ConditionMaxLength > item.SelectedCustomField.MaxLength || item.AutomationHelper.ConditionMinLength > item.SelectedCustomField.MinLength)
+            return true;
+
+
+        return false;
+    }
+
+    private IsNotValidAutomationSetValue(item: AutomationSetValueViewModel) {
+        if (item.SelectedOperator.Code != "SV")
+            return false;
+
+        if (item.CurrentEntityPM.Value.length > item.SelectedCustomField.MaxLength || item.CurrentEntityPM.Value.length < item.SelectedCustomField.MinLength)
+            return true;
+
+        return false;
     }
 
     private IsEntityConditionsChanged(isFollowUp) {

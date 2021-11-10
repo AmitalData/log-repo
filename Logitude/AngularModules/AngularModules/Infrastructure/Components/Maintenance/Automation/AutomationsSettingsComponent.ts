@@ -16,6 +16,7 @@ import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
 import {AutomationArgs} from '../../../../Infrastructure/DataContracts/AutomationArgs';
 import {EntityResourceService} from '../../../../Infrastructure/Services/EntityResourceService';
 import {ObjectFieldPMExtendedService} from '../../../../Infrastructure/Services/ExtendedPMs/ObjectFieldPMExtendedService';
+import { ServiceHelper } from 'Infrastructure/Utilities/ServiceHelper';
 
 @Component({
     
@@ -316,7 +317,7 @@ export class AutomationsSettingsComponent implements OnInit {
         var isDirty: boolean = item.EntityPM.IsDirty;
         var windowArgs: any = {};
         windowArgs.DataViewModel = this;
-        windowArgs.AutomationPM = item.EntityPM;
+        windowArgs.AutomationPM =  ServiceHelper.CloneEntityPM(item.EntityPM);
         windowArgs.Mode = "Edit";
         this.SetObjectTableInWindoWArgs(windowArgs);
 
