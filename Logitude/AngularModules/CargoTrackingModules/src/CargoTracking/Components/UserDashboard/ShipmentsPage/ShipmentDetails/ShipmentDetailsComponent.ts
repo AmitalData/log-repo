@@ -315,34 +315,34 @@ export class ShipmentDetailsComponent implements OnInit,AfterViewInit
         if(!this.SliderWrapperElement)
             return;
 
-            const PAGERS_WIDTH = 200;
-            const mobilePagersWidth = 60;
+        this.SetSliderVisibleCardsWrapperWidth();
+
+        this.sliderMarginCardCount = 0;
+        this.sliderMarginLeft = 0;
+    }
+
+    private SetSliderVisibleCardsWrapperWidth()
+    {
+        const webPagersWidth = 200;
+        const mobilePagersWidth = 60;
 
         const sliderWrapperWidth = this.SliderWrapperElement.nativeElement.offsetWidth;
 
-        if (this.IsMobileView) {
-            const sliderWidth = this.SliderElement.nativeElement.offsetWidth;
-            var mobileCount = Math.floor((sliderWrapperWidth - mobilePagersWidth - 20)  / this.sliderMobileCardWidth);
+        const extraOffset = 20;
+        if (this.IsMobileView)
+            var mobileCount = Math.floor((sliderWrapperWidth - mobilePagersWidth - extraOffset) / this.sliderMobileCardWidth);
 
-        }
         else
-            var webCount = Math.floor((sliderWrapperWidth - PAGERS_WIDTH) / this.sliderCardWidth);
-
+            var webCount = Math.floor((sliderWrapperWidth - webPagersWidth) / this.sliderCardWidth);
 
         this.sliderVisibleCardsCount = mobileCount || webCount;
 
         if(this.IsMobileView){
-            this.sliderVisibleCardsWidth = this.sliderMobileCardWidth * mobileCount + 0;
+            const extraOffset = 10;
+            this.sliderVisibleCardsWidth = this.sliderMobileCardWidth * this.sliderVisibleCardsCount + extraOffset;
         }else{
             this.sliderVisibleCardsWidth = this.sliderVisibleCardsCount * this.sliderCardWidth;
         }
-
-        // this.sliderVisibleCardsWidth = this.sliderVisibleCardsCount * ( this.IsMobileView ? this.sliderMobileCardWidth : this.sliderCardWidth);
-        this.sliderMarginCardCount = 0;
-        this.sliderMarginLeft = 0;
-        // this.sliderMarginLeft = this.IsMobileView ? (this.sliderCardWidth - 60) * -1 : 0;
-
-
     }
 
     InitRoutingSlider() {
@@ -455,8 +455,8 @@ export class ShipmentDetailsComponent implements OnInit,AfterViewInit
     SliderCards: MilestoneCard[] = [];
     sliderMarginLeft: number = 0;
     sliderMarginCardCount: number = 0;
-    sliderCardWidth: number = 200;
-    sliderMobileCardWidth: number = 165;
+    sliderCardWidth: number = 164;
+    sliderMobileCardWidth: number = 154;
     sliderVisibleCardsCount: number = 5;
     sliderVisibleCardsWidth: number = 0;
     NoMilstonesFound: boolean = false;
@@ -522,6 +522,7 @@ export class ShipmentDetailsComponent implements OnInit,AfterViewInit
 
         let margin = this.sliderMarginLeft;
         const cardWidth = this.IsMobileView ? this.sliderMobileCardWidth : this.sliderCardWidth
+
         // inc\dec
         if (dir == 'left') {
             margin -= cardWidth;
@@ -535,16 +536,8 @@ export class ShipmentDetailsComponent implements OnInit,AfterViewInit
         // limit boundary
         if (margin > 0)
             this.sliderMarginLeft = 0;
-        // else if (margin < this.sliderVisibleCardsWidth * -1){
-        //     // this.sliderMarginLeft = this.sliderVisibleCardsWidth;
-        // }
         else
             this.sliderMarginLeft = margin;
-
-        // var screenwidth = window.innerWidth;
-        // if (screenwidth < 470)
-        //     this.sliderMarginLeft - 55;
-
 
         console.log("sliderMarginCardCount:sliderMarginLeft === ",this.sliderMarginCardCount , '\t' , this.sliderMarginLeft);
 
@@ -644,7 +637,7 @@ export class ShipmentDetailsComponent implements OnInit,AfterViewInit
             panelElement.scrollIntoView();
             document.getElementsByTagName('html')[0].scrollTop -= 103;
 
-    }
+        }
 
 
     }

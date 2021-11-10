@@ -164,11 +164,12 @@ h1 {
     position: relative;
     float: left;
     width: 150px;
-    height: 130px;
+    height: 140px;
     background: white;
     color: #444444;
     border-radius: 5px;
-    margin: 0 10px;
+    margin: 0 7px;
+    box-sizing: border-box;
     padding: 15px;
     box-shadow: 0px 0px 8px 0px #00000030;
 }
@@ -354,8 +355,8 @@ h1 {
     }
 
         .slider .card {
-            width: 115px;
-            height: 90px;
+            width: 140px;
+            height: 120px;
         }
 
             .slider .card .code {
