@@ -59,13 +59,49 @@ namespace Logitude.Customs.Data.Repsitories
         public Declaration GetAcceptDeclarationAmendment(string id, int tenant)
         {
 
+
             //SELECT * FROM AMINEt_MAIN.Declarations Extent1 WHERE((Extent1.DeclarationNumber = :p__linq__0) OR ((Extent1.DeclarationNumber IS NULL) AND(:p__linq__0 IS NULL))) AND(Extent1.Tenant = :p__linq__1)
             (context as IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false; //Pasted from <http://stackoverflow.com/questions/682429/how-can-i-query-for-null-values-in-entity-framework?lq=1> 
 
-            return (from a in context.Declarations
-                    where ((a.Id == id && a.AmendmentDontDisplayInList == false && a.DeclarationNumber != null) || (a.AmendmentOriginalDeclartation == id && a.DeclarationNumber != null && a.AmendmentDontDisplayInList == false))
-                    && a.Tenant == tenant
-                    select a).FirstOrDefault();
+            var qCustomFileNo = context.Declarations
+                .Where(r => r.Id == id)
+                .Where(r => r.Tenant == tenant)
+                .Select(r => r.CustomFileNo);
+            var qAllCustomFileNo =
+                (
+            from c in qCustomFileNo
+            join d in context.Declarations
+            on c equals d.CustomFileNo
+            select d
+                );
+            
+            var qGetAcceptDeclarationAmendment =
+                (
+            from dec in qAllCustomFileNo.Where(r => r.Tenant == tenant)
+            where
+            (
+            (dec.Id == id && dec.AmendmentDontDisplayInList == false && dec.DeclarationNumber != null) ||
+            (dec.AmendmentOriginalDeclartation == id && dec.DeclarationNumber != null && dec.AmendmentDontDisplayInList == false)
+            )
+            select dec
+            );
+            bool newBL = true;
+            if (newBL)// TRING  FILENO=60255210
+            {
+                return qGetAcceptDeclarationAmendment.FirstOrDefault();
+            }
+            else
+            {
+                return (from a in context.Declarations
+                        where ((a.Id == id && a.AmendmentDontDisplayInList == false && a.DeclarationNumber != null) ||
+                        (a.AmendmentOriginalDeclartation == id && a.DeclarationNumber != null && a.AmendmentDontDisplayInList == false))
+                        && a.Tenant == tenant
+                        select a).FirstOrDefault();
+            }
+            
+
+
+            
         }
 
 
