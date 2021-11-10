@@ -40,12 +40,16 @@ export class NewQuotePartnerComponent extends BaseComponent implements OnInit, A
   isHidden: boolean = true;
 
   partnerform: FormGroup = new FormGroup({
-    partner: new FormControl(),
+    partner: new FormControl(null, Validators.required),
     contact: new FormControl(),
     notes: new FormControl(),
     reference1: new FormControl(),
     reference2: new FormControl(),
   })
+
+  get secondPartner(): string {
+    return this.type === 'shipper' ? 'consignee' : 'shipper';
+  }
 
   get partnerType(): PartnerType {
     return this.type === 'shipper' ? 'SH' : 'CO';
@@ -65,9 +69,21 @@ export class NewQuotePartnerComponent extends BaseComponent implements OnInit, A
   }
 
   ngAfterViewInit(): void {
+    this.setValidatorBySecondPrtner();
+
     if (this.EntityPM != null && this.EntityPM.Id != null) {
       this.setPartners();
     }
+  }
+
+  private setValidatorBySecondPrtner() {
+    (this.formGroup.controls[this.secondPartner] as FormGroup).controls.partner.valueChanges.subscribe((value: CardList) => {
+      const validator = value ? null : Validators.required;
+      if(this.partnerform.controls.partner.validator != validator) {
+        this.partnerform.controls.partner.setValidators(validator);
+        this.partnerform.controls.partner.updateValueAndValidity();
+      }
+    });
   }
 
   setPartners() {
@@ -125,7 +141,7 @@ export class NewQuotePartnerComponent extends BaseComponent implements OnInit, A
     this.partnerform.controls.partner.valueChanges.subscribe((partner: CardList) => {
       if (partner != null) {
         this.partnerform.controls.contact.reset();
-        this.partnerform.controls.contact.setValidators(partner ? Validators.required : null)
+        // this.partnerform.controls.contact.setValidators(partner ? Validators.required : null)
         this.partnerform.controls.contact.updateValueAndValidity()
 
         if (!!partner.Notes)

@@ -35,7 +35,7 @@
         <div [hidden]='!AddressList.length'>
             <div class="p-field">
                 <app-autocomplate-table [columnsShow]="['Description', 'Name', 'Address1']" [data]='AddressList'
-                    [fieldShow]='"Description"' [label]="'QuoteOP.S.NewQuote.Name' | TextCodeTranslationPipe"
+                    [fieldShow]='"Description"' [label]="'QuoteOP.S.NewQuote.Address' | TextCodeTranslationPipe"
                     [controlName]='"address"' [formGroup]='addressForm' [dropIcon]='true' class="address-input">
                 </app-autocomplate-table>
                 <i class="pi pi-pencil" (click)='editAddress()' [ngClass]='{"disabled":!Address}'></i>

@@ -20,7 +20,7 @@ export class NewQuoteAddressComponent implements OnInit {
   @Input() type: 'pickup' | 'delivery';
 
   addressForm: FormGroup = new FormGroup({
-    include: new FormControl(true),
+    include: new FormControl(),
     zipCode: new FormControl(),
     city: new FormControl(),
     country: new FormControl(),

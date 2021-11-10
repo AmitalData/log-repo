@@ -17,7 +17,7 @@
             <label>Package Type</label>
             <div class="p-field" *ngFor='let i of [1,2,3,4]'>
                 <app-autocomplate-table [columnsShow]="{Code:'Code',EnglishName:'English Name'}" [data]='packageTypes'
-                    [dropIcon]='true' [placeholder]='"Select"' [disabled]='!formGroup.controls.quantity1?.value'
+                    [dropIcon]='true' [placeholder]='"Select"'
                     [fieldShow]='"EnglishName"' [controlName]='"quantityType" + i' [formGroup]='formGroup'>
                 </app-autocomplate-table>
             </div>
@@ -47,7 +47,8 @@
 
     <h3 class="sub-header">
         {{'QuoteOP.S.NewQuote.ExpectedOrderDetails' | TextCodeTranslationPipe}}
-        <p-button (onClick)="addPackage()" [style]="{'float':'right', 'color': '#2196F3','background-color': 'white', 'bottom': '5px'}"
+        <p-button (onClick)="addPackage()"
+            [style]="{'float':'right', 'color': '#2196F3','background-color': 'white', 'bottom': '5px'}"
             label="add package"></p-button>
     </h3>
 
@@ -68,29 +69,31 @@
                 <div class="packages-row" [formGroup]='x'>
 
                     <div class="quantity">
-                        <p-inputNumber formControlName="quantity" [formGroup]='x' mode="decimal" [useGrouping]="false">
+                        <p-inputNumber formControlName="quantity" mode="decimal">
                         </p-inputNumber>
                     </div>
 
                     <div class="package-type">
                         <app-autocomplate-table [columnsShow]="{Code:'Code',EnglishName:'English Name'}"
                             [data]='packageTypes' [dropIcon]='true' [placeholder]='"Select"'
-                            [disabled]='!x.controls.quantity?.value' [fieldShow]='"EnglishName"'
+                            [fieldShow]='"EnglishName"'
                             controlName='packageType' [formGroup]='x'>
                         </app-autocomplate-table>
                     </div>
 
                     <div class="dimensions">
-                        <p-inputNumber placeholder="L" formControlName='Ldimension' id="volume" mode="decimal"
-                            [useGrouping]="false"></p-inputNumber>
+                        
+                        <!-- <input type="text"  formControlName='aa'> -->
+                        <p-inputNumber placeholder="L" formControlName='Ldimension' id="volume" mode="decimal">
+                        </p-inputNumber>
                     </div>
                     <div class="dimensions">
-                        <p-inputNumber placeholder="W" formControlName='Wdimension' id="volume" mode="decimal"
-                            [useGrouping]="false"></p-inputNumber>
+                        <p-inputNumber placeholder="W" formControlName='Wdimension' id="volume" mode="decimal">
+                        </p-inputNumber>
                     </div>
                     <div class="dimensions">
-                        <p-inputNumber placeholder="H" formControlName='Hdimension' id="volume" mode="decimal"
-                            [useGrouping]="false"></p-inputNumber>
+                        <p-inputNumber placeholder="H" formControlName='Hdimension' id="volume" mode="decimal">
+                        </p-inputNumber>
                     </div>
 
                     <div class="volume">
