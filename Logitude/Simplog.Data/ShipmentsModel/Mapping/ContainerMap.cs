@@ -224,6 +224,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.OPClosed).HasColumnName("OPClosed");
             this.Property(t => t.ShipmentTypeId).HasColumnName("ShipmentTypeId");
             this.Property(t => t.ShipmentCreateDate).HasColumnName("ShipmentCreateDate");
+            this.Property(t => t.IsAutomaticUpdates).HasColumnName("IsAutomaticUpdates");
 
             this.HasOptional(t => t.CarrierCard).WithMany().HasForeignKey(d => d.MainCarriageCarrierId).WillCascadeOnDelete(false); 
             this.HasOptional(t => t.ShipmentPackage).WithMany().HasForeignKey(d => d.ShipmentPackagesId).WillCascadeOnDelete(false);
