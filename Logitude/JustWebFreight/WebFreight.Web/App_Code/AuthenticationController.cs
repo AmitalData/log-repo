@@ -52,6 +52,7 @@ using System.Drawing.Imaging;
 using System.Drawing.Drawing2D;
 using WebFreight.Web.Helpers.DataProviderHelpers;
 using Logitude.BL.CommonDataModel.Tools.MixPanelTracker;
+using WebFreight.Web.Helpers.MixPanel;
 
 namespace WebFreight.Web
 {
@@ -68,7 +69,6 @@ namespace WebFreight.Web
              
         }
         private static readonly string SimplogGuid = Guid.NewGuid().ToString("N");
-        private const string ProjectToken = "99de9de5af6505a670b915020e51380e";
 
         public UserData PostLoginUsingAuthenticaionToken(LoginTokenParameter logintokenparam, string dummy)
         {
@@ -1534,7 +1534,7 @@ namespace WebFreight.Web
                 //        Thread.Sleep(sleepTime);
                 //    }
                 //}
-                CreateLoginEventForMixPanel(parameters, tenant);
+                AuthenticationMixPanelService.CreateLoginEventForMixPanel(parameters, tenant);
 
                 return user;
             }
@@ -1549,23 +1549,6 @@ namespace WebFreight.Web
             }
         }
 
-        private static void CreateLoginEventForMixPanel(LoginParameters parameters, int tenant)
-        {
-            if (!parameters.IsCargoTracking){ return; }
-            MixPanelEvent LoginEvent = BuildMixPanelLoginEvent(parameters);
-
-            MixPanelEventTracker eventTracker = new MixPanelEventTracker(ProjectToken, parameters.Email, tenant);
-            eventTracker.TrackEvent(LoginEvent);
-            
-        }
-        private static MixPanelEvent BuildMixPanelLoginEvent(LoginParameters parameters)
-        {
-            MixPanelEvent mixPanelEvent = new MixPanelEvent();
-            mixPanelEvent.Name = "login";
-            mixPanelEvent.AddProperty("email", parameters.Email);
-            mixPanelEvent.AddProperty("is_public", "False");
-            return mixPanelEvent;
-        }
         private bool CheckLoginSecurityPolicy(int tenant, UserData user, User logitudeUser, ICommonDataContext commonDataContext)
         {
             string ipAddress = AuthenticationUtil.GetIP4Address();
