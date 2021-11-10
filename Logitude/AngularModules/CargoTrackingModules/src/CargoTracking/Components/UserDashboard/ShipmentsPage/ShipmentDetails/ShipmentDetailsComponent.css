@@ -325,15 +325,15 @@ h1 {
     }
 
     .slider-wrapper {
-        /* height: 110px; */
         background: none;
-        margin-right: -15px;
+        margin-right: 0;
         margin-top: 70px;
         height: 130px;
-        position: relative;
+        display: flex;
+        justify-content: space-between;
     }
     .pager{
-        position: absolute;
+        /* position: absolute; */
         z-index: 1;
         width: 30px;
         background: #F5F6FF;
@@ -350,7 +350,7 @@ h1 {
     }
 
     .slider {
-        /* width: 100% !important; */
+        height: fit-content;
     }
 
         .slider .card {

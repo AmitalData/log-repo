@@ -31,6 +31,7 @@ export class ShipmentDetailsComponent implements OnInit,AfterViewInit
 {
 
     @ViewChild('SliderWrapper') SliderWrapperElement: ElementRef;
+    @ViewChild('slider') SliderElement: ElementRef;
     @ViewChild('RoutingSliderWrapper') RoutingSliderWrapperElement: ElementRef;
 
 
@@ -314,22 +315,33 @@ export class ShipmentDetailsComponent implements OnInit,AfterViewInit
         if(!this.SliderWrapperElement)
             return;
 
-        var PAGERS_WIDTH = 200;
-        var mobilePagersWidth = 30;
+            const PAGERS_WIDTH = 200;
+            const mobilePagersWidth = 60;
 
-        var sliderWrapperWidth = this.SliderWrapperElement.nativeElement.offsetWidth;
+        const sliderWrapperWidth = this.SliderWrapperElement.nativeElement.offsetWidth;
 
-        if (this.IsMobileView)
-            var mobileCount = this.CalculateVisibleSliderCardsCountForMobile(sliderWrapperWidth, mobilePagersWidth, this.sliderMobileCardWidth);
+        if (this.IsMobileView) {
+            const sliderWidth = this.SliderElement.nativeElement.offsetWidth;
+            var mobileCount = Math.floor((sliderWrapperWidth - mobilePagersWidth - 20)  / this.sliderMobileCardWidth);
+
+        }
         else
             var webCount = Math.floor((sliderWrapperWidth - PAGERS_WIDTH) / this.sliderCardWidth);
 
 
-        this.sliderVisibleCardsCount = webCount == undefined ? mobileCount: webCount;
+        this.sliderVisibleCardsCount = mobileCount || webCount;
 
-        this.sliderVisibleCardsWidth = this.sliderVisibleCardsCount * this.sliderCardWidth;
+        if(this.IsMobileView){
+            this.sliderVisibleCardsWidth = this.sliderMobileCardWidth * mobileCount + 0;
+        }else{
+            this.sliderVisibleCardsWidth = this.sliderVisibleCardsCount * this.sliderCardWidth;
+        }
+
+        // this.sliderVisibleCardsWidth = this.sliderVisibleCardsCount * ( this.IsMobileView ? this.sliderMobileCardWidth : this.sliderCardWidth);
         this.sliderMarginCardCount = 0;
-        this.sliderMarginLeft = this.IsMobileView ? (this.sliderCardWidth - 60) * -1 : 0; // mobile: add
+        this.sliderMarginLeft = 0;
+        // this.sliderMarginLeft = this.IsMobileView ? (this.sliderCardWidth - 60) * -1 : 0;
+
 
     }
 
@@ -444,7 +456,7 @@ export class ShipmentDetailsComponent implements OnInit,AfterViewInit
     sliderMarginLeft: number = 0;
     sliderMarginCardCount: number = 0;
     sliderCardWidth: number = 200;
-    sliderMobileCardWidth: number = 145;
+    sliderMobileCardWidth: number = 165;
     sliderVisibleCardsCount: number = 5;
     sliderVisibleCardsWidth: number = 0;
     NoMilstonesFound: boolean = false;
@@ -483,7 +495,7 @@ export class ShipmentDetailsComponent implements OnInit,AfterViewInit
             });
         this.SetNoMilstonesFound();
 
-        // this.ScrollIntoLastSliderCard();
+        this.ScrollIntoLastSliderCard();
 
 
     }
@@ -508,28 +520,30 @@ export class ShipmentDetailsComponent implements OnInit,AfterViewInit
         if (dir == 'left' && ((this.sliderMarginCardCount + this.sliderVisibleCardsCount) >= this.SliderCards.length) || (this.sliderVisibleCardsCount >= this.SliderCards.length))
             return;
 
-        var margin = this.sliderMarginLeft;
+        let margin = this.sliderMarginLeft;
+        const cardWidth = this.IsMobileView ? this.sliderMobileCardWidth : this.sliderCardWidth
         // inc\dec
         if (dir == 'left') {
-            margin -= this.sliderCardWidth;
+            margin -= cardWidth;
             this.sliderMarginCardCount++;
         }
         else {
-            margin += this.sliderCardWidth;
+            margin += cardWidth;
             this.sliderMarginCardCount--;
         }
 
         // limit boundary
         if (margin > 0)
             this.sliderMarginLeft = 0;
-        else if (margin < this.sliderVisibleCardsWidth * -1)
-            this.sliderMarginLeft = this.sliderVisibleCardsWidth;
+        // else if (margin < this.sliderVisibleCardsWidth * -1){
+        //     // this.sliderMarginLeft = this.sliderVisibleCardsWidth;
+        // }
         else
             this.sliderMarginLeft = margin;
 
-        var screenwidth = window.innerWidth;
-        if (screenwidth < 470)
-            this.sliderMarginLeft - 55;
+        // var screenwidth = window.innerWidth;
+        // if (screenwidth < 470)
+        //     this.sliderMarginLeft - 55;
 
 
         console.log("sliderMarginCardCount:sliderMarginLeft === ",this.sliderMarginCardCount , '\t' , this.sliderMarginLeft);
