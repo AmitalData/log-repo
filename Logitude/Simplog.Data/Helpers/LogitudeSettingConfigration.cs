@@ -12,9 +12,9 @@ namespace Simplog.Data.Helpers
             return IsLogBoxEnvironment() ? GetLogboxWorkEnvironment() : LogitudeSettings.WorkEnvironment;
         }
 
-        private static bool IsLogBoxEnvironment()
+        public static bool IsLogBoxEnvironment()
         {
-            return (LogitudeSettings.DeploymentStage != null && LogitudeSettings.DeploymentStage.ToLower() == "logboxwe1") || LogitudeSettings.WorkEnvironment.ToLower() == "logbox";
+            return (LogitudeSettings.DeploymentStage != null && LogitudeSettings.DeploymentStage.ToLower() == "logboxwe1") || LogitudeSettings.WorkEnvironment?.ToLower() == "logbox";
         }
 
         private static string GetLogboxWorkEnvironment()

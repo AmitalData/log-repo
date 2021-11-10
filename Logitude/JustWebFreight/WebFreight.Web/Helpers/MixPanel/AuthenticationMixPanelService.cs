@@ -3,6 +3,7 @@ using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.Tools.MixPanelTracker;
 using Logitude.BL.GlobalModel.EntityQueries;
 using Simplog.Data.Helpers;
+using Simplog.Server.Infrastructure;
 using System;
 
 namespace WebFreight.Web.Helpers.MixPanel
@@ -13,7 +14,7 @@ namespace WebFreight.Web.Helpers.MixPanel
 
         public static void CreateLoginEventForMixPanel(LoginParameters parameters, int tenant)
         {
-            if (IsLogitude())
+            if (!CanCreateLoginEvent(parameters))
                 return;
 
             MixPanelEvent LoginEvent = BuildMixPanelLoginEvent(parameters, tenant);
@@ -22,9 +23,9 @@ namespace WebFreight.Web.Helpers.MixPanel
             eventTracker.TrackEvent(LoginEvent);
         }
 
-        private static bool IsLogitude()
+        private static bool CanCreateLoginEvent(LoginParameters parameters)
         {
-            return LogitudeSettingConfigration.GetWorkEnvironment() == "logitude";
+            return LogitudeSettings.LogitudeURL != "http://localhost:9996" && (LogitudeSettingConfigration.IsLogBoxEnvironment() || parameters.IsCargoTracking);
         }
 
         private static MixPanelEvent BuildMixPanelLoginEvent(LoginParameters parameters, int tenant)
@@ -46,14 +47,13 @@ namespace WebFreight.Web.Helpers.MixPanel
                 return "cargoTracking";
             }
 
-            var logboxWorkEnvironment = LogitudeSettingConfigration.GetWorkEnvironment();
+            var workEnvironment = LogitudeSettingConfigration.GetWorkEnvironment();
 
-            if (logboxWorkEnvironment != "privatelabel")
+            if (workEnvironment != "privatelabel")
             {
-                return logboxWorkEnvironment;
+                return workEnvironment;
             }
-            
-           
+                       
             TenantManagmentPrivateLabelsQuery tenantManagmentPrivateLabelsQuery = new TenantManagmentPrivateLabelsQuery(tenant);
             TenantPM tenantPM = TenantQuery.GetSingleTenantPM(tenant, false);
 
