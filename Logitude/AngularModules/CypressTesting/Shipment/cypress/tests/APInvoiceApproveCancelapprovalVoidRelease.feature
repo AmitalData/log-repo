@@ -1,5 +1,5 @@
-@devsmoke @release @stable @all
-Feature: Copy AP Invoice Approve, Cancel Approval and Void
+@release
+Feature: AP Invoice Approve, Cancel Approval and Void
     The user creates a Direct Export Air shipment, updates routings and packages, adds payable,
     creates AP Invoice, approves the AP Invoice, cancels the AP Invoice approval and voids the AP Invoice.
 
@@ -103,11 +103,37 @@ Feature: Copy AP Invoice Approve, Cancel Approval and Void
         Given navigates payables tab
         Then the link of the invoice should be exsit
 
-# Scenario: Cancel the APInvoice approvement
-#     When cancel the invoice approvement
-#     Then the invoice should cancel successfully
+    Scenario: Payables edit screen should be dim
+        Given navigates payables edit screen
+        Then the payables fields should be disabled
 
-# Scenario: Void APInvoice
-#     When void invoice
-#     Then the invoice should void successfully
-#     And the status value should be "Void"
+    Scenario: Assert message window appear
+        When press on delete all button
+        Then "Can't delete all, some lines are connected to invoices" should appear as a message window
+
+    Scenario: Cancel the APInvoice approvement
+        Given navigates invoice workspace
+        When cancel the invoice approvement
+        Then the invoice should cancel successfully
+        And the status value should be "Waiting For Approval"
+
+    Scenario: Assert invoice details screen fields after cancelling the invoice
+        Then the details screen fields should be enabled
+
+    Scenario: Void APInvoice
+        When void invoice
+        Then the invoice should void successfully
+        And the status value should be "Void"
+
+    Scenario: Assert invoice details screen fields after voiding the invoice
+        Then the details screen fields should be disabled
+
+    Scenario: Payables edit screen should not be dim and delete payable button should appear
+        Given navigates payables tab
+        And navigates payables edit screen
+        Then the payables fields should be enabled
+        And delete payable button should appear
+
+    Scenario: Assert message window appear
+        When press on delete all button
+        Then "Please note that deleting will erase all the lines with the amounts inserted" should appear as a message for confirmation

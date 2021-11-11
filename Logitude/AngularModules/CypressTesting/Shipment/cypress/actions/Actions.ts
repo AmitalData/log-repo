@@ -763,7 +763,28 @@ export function FillPayablesTab(payableDetails: PayableDetails) {
         cy.Click(ShipmentSelectors.AddPayableOkButton, null)
     }
 }
+
+export function AssertPayablesFieldsDisable() {
+    BaseAssertion.AssertElementDisabled(ShipmentSelectors.ShipmentPayableChargesType, BaseSelectors.BeDisabled)
+    BaseAssertion.AssertElementDisabled(ShipmentSelectors.ShipmentPayableQuantity, BaseSelectors.BeDisabled)
+    BaseAssertion.AssertElementDisabled(ShipmentSelectors.ShipmentPayableUnitPrice, BaseSelectors.BeDisabled)
+    BaseAssertion.AssertElementDisabled(ShipmentSelectors.ShipmentPayableCurrency, BaseSelectors.BeDisabled)
+    BaseAssertion.AssertElementDisabled(ShipmentSelectors.ShipmentPayableRate, BaseSelectors.BeDisabled)
+    BaseAssertion.AssertElementDisabled(ShipmentSelectors.ShipmentPayableExpectedAmount, BaseSelectors.BeDisabled)
+    BaseAssertion.AssertElementDisabled(ShipmentSelectors.ShipmentPayableMeasurement, BaseSelectors.BeDisabled)
+    BaseAssertion.AssertElementDisabled(ShipmentSelectors.AddPayableOkButton, BaseSelectors.BeDisabled)
+}
+
+export function AssertPayablesFieldsEnable() {
+    BaseAssertion.AssertElementDisabled(ShipmentSelectors.ShipmentPayableQuantity, BaseSelectors.NotBeDisabled)
+    BaseAssertion.AssertElementDisabled(ShipmentSelectors.ShipmentPayableUnitPrice, BaseSelectors.NotBeDisabled)
+    BaseAssertion.AssertElementDisabled(ShipmentSelectors.ShipmentPayableCurrency, BaseSelectors.NotBeDisabled)
+    BaseAssertion.AssertElementDisabled(ShipmentSelectors.ShipmentPayableRate, BaseSelectors.NotBeDisabled)
+    BaseAssertion.AssertElementDisabled(ShipmentSelectors.ShipmentPayableMeasurement, BaseSelectors.NotBeDisabled)
+    BaseAssertion.AssertElementDisabled(ShipmentSelectors.AddPayableOkButton, BaseSelectors.NotBeDisabled)
+}
 //#endregion
+
 //#region Copy Shipment
 export function CopyShipment(shipmentLevel: string) {
     cy.Click(ShipmentSelectors.ShipmentMoreList, null, true)
