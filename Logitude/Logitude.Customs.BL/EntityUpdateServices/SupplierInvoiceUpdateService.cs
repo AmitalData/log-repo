@@ -640,7 +640,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         bool isInvoiceItemInsertNullClassification = (from a in entityPM.SupplierInvoiceItems
                                                                       where a.ChangeSetOp == ChangeSetOperation.Insert && a.ClassificationCode is null
                                                                       select a).Any();
-                        if (isInvoiceItemInsertNullClassification)
+                        if (isInvoiceItemInsertNullClassification || IsProcedureCurrentCodeChanged)
                         {
                             string IntegratorCode = null;
                             if (_CourierMasterPM == null)
