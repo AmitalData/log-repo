@@ -91,6 +91,7 @@ namespace WebFreight.Web.App_Code
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnTenant(tenant);
 
                 ContactQuery contactQuery = new ContactQuery(tenant);
                 string result = "";
@@ -123,6 +124,7 @@ namespace WebFreight.Web.App_Code
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnTenant(tenant);
 
                 string result = "";
                 PasswordCheckService passwordCheckService = new PasswordCheckService();

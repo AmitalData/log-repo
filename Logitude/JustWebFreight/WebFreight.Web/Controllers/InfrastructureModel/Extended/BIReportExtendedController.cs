@@ -57,6 +57,14 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+
+                if(authToken.Tenant!=0 && copyFromTenant != 0)
+                {
+                    throw new Exception("Sorry! you have no permission to do this operation on Tenant:" + copyFromTenant + ". Please contact your administrator.");
+                }
+
+                SecurityUtility.AuthenticationOnTenant(copyFromTenant);
+
                 SecurityUtility.CheckContactFeature("BIReport", "READ", authToken.Tenant);
 
                 //int tenant = authToken.Tenant;

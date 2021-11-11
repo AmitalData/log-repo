@@ -26,7 +26,7 @@ namespace WebFreight.Web.App_Code
     {
         public List<QuoteList> PostFilteredQuotes(int tenant, QuoteFilters filters)
         {
-            //SecurityUtility.AuthenticationOnTenant(tenant);
+            SecurityUtility.AuthenticationOnTenant(tenant);
 
             QueryOperations queryOperations = new QueryOperations();
             queryOperations.SetFilter("CustomerId", filters.CustomerId, false, "Equals", null, false);

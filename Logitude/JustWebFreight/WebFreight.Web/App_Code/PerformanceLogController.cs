@@ -1,10 +1,13 @@
-﻿using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+﻿using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Web;
 using System.Web.Http;
 using WebFreight.Web.Helpers;
 using WebFreight.Web.Security;
@@ -39,9 +42,15 @@ namespace WebFreight.Web.App_Code
 
         public bool PostPerformanceLog(int tenant, PerformanceLog performanceLog)
         {
-                
+
+            string token = HttpContext.Current.Request.Headers["Token"];
+            AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+            SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+            SecurityUtility.AuthenticationOnTenant(tenant);
+            SecurityUtility.AuthenticationOnEntityTenant("PerformanceLog", performanceLog.Tenant, authToken.Tenant);
+
+
             bool IsScceed = false;
-            // SecurityUtility.AuthenticationOnTenant(tenant);
             PerformanceLogRepository rep = new PerformanceLogRepository();
             performanceLog.LogDateTimeGMT = DateTime.UtcNow;
             rep.Add(performanceLog);

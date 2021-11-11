@@ -39,6 +39,7 @@ namespace WebFreight.Web.Controllers.ShardLogistics
             try
             {
                 Authentication();
+                SecurityUtility.AuthenticationOnTenant(tenant);
 
                 SharedLogisticsStatusStatistics dataClass = new SharedLogisticsStatusStatistics() { Id = "0001" };
 
@@ -86,6 +87,7 @@ namespace WebFreight.Web.Controllers.ShardLogistics
             try
             {
                 Authentication();
+                SecurityUtility.AuthenticationOnTenant(tenant);
 
                 ContactActivityLogRepository contactLogRep = new ContactActivityLogRepository();
                 SharedLogisticsSummary result = new SharedLogisticsSummary();
@@ -131,6 +133,7 @@ namespace WebFreight.Web.Controllers.ShardLogistics
             try
             {
                 Authentication();
+                SecurityUtility.AuthenticationOnTenant(tenant);
 
                 List<LastLoginPartners> result = new List<LastLoginPartners>();
 
@@ -219,6 +222,8 @@ namespace WebFreight.Web.Controllers.ShardLogistics
             try
             {
                 Authentication();
+                SecurityUtility.AuthenticationOnTenant(tenant);
+
                 CardRepository cardRepository = new CardRepository(tenant);
                 ContactRepository contactRepository = new ContactRepository(tenant);
 
@@ -362,6 +367,7 @@ namespace WebFreight.Web.Controllers.ShardLogistics
             try
             {
                 Authentication();
+                SecurityUtility.AuthenticationOnTenant(tenant);
 
                 List<CardLogActivityDetails> list = new List<CardLogActivityDetails>();
                 DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
@@ -422,6 +428,7 @@ namespace WebFreight.Web.Controllers.ShardLogistics
             try
             {
                 Authentication();
+                SecurityUtility.AuthenticationOnTenant(tenant);
 
                 CustomerTenantAccessRequestStatusCount dataClass = new CustomerTenantAccessRequestStatusCount() { Id = "0001" };
 
@@ -456,6 +463,8 @@ namespace WebFreight.Web.Controllers.ShardLogistics
             try
             {
                 Authentication();
+                SecurityUtility.AuthenticationOnTenant(tenant);
+
                 var customerTenantAccessQuery = new CustomerTenantAccessQuery(tenant);
                 List<CustomerTenantAccessList> list = customerTenantAccessQuery.GetLastCustomerRequests(tenant);
                 return Request.CreateResponse(HttpStatusCode.OK, list);
@@ -485,6 +494,7 @@ namespace WebFreight.Web.Controllers.ShardLogistics
                 string loggedUserEmail = authToken.Email;
 
                 SecurityUtility.AuthenticationOnTenant(tenant);
+
                 //SecurityUtility.CheckSharedContactAuthentication(tenant, filters.PartnerId);
 
                 partnerId = this.FixFilter(partnerId);
