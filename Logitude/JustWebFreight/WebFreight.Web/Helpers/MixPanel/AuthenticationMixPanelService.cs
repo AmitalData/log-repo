@@ -10,7 +10,8 @@ namespace WebFreight.Web.Helpers.MixPanel
 {
     public class AuthenticationMixPanelService
     {
-        private const string ProjectToken = "99de9de5af6505a670b915020e51380e";
+        private const string cargoTrackingProjectToken = "99de9de5af6505a670b915020e51380e";
+        private const string logBoxProjectToken = "6da04c25721c3a0269bab184d35fbc1a";
 
         public static void CreateLoginEventForMixPanel(LoginParameters parameters, int tenant)
         {
@@ -19,7 +20,9 @@ namespace WebFreight.Web.Helpers.MixPanel
 
             MixPanelEvent LoginEvent = BuildMixPanelLoginEvent(parameters, tenant);
 
-            MixPanelEventTracker eventTracker = new MixPanelEventTracker(ProjectToken, parameters.Email, tenant);
+
+            string projectToken = parameters.IsCargoTracking ? cargoTrackingProjectToken : logBoxProjectToken;
+            MixPanelEventTracker eventTracker = new MixPanelEventTracker(projectToken, parameters.Email, tenant);
             eventTracker.TrackEvent(LoginEvent);
         }
 
