@@ -20,23 +20,27 @@ export class NewQuoteLeftSideComponent implements OnInit {
   directionList: DirectionList[] = []
   shipmentTypeList: ShipmentTypeList[] = []
   shipmentTypeListFilter: ShipmentTypeList[] = []
+  iconColor = { gray: 'gray', blue: 'blue'}
 
   icons: {} = {
-    Air: 'assets/icons/airplane.png',
-    Ocean: 'assets/icons/ocean.png',
-    Inland: 'assets/icons/inland.png',
-    Export: 'assets/icons/box-up.png',
-    Domestic: 'assets/icons/house.png',
-    Import: 'assets/icons/box-down.png',
-    Drop: 'assets/icons/recycle.png',
+    grayExport: 'assets/icons/export-gray.png',
+    grayImport: 'assets/icons/import-gray.png',
+    grayDomestic: 'assets/icons/domestic-gray.png',
+    grayDrop: 'assets/icons/drop-gray.png',
+    grayAir: 'assets/icons/air-gray.png',
+    grayOcean: 'assets/icons/ocean-gray.png',
+    grayInland: 'assets/icons/inland-gray.png',    
+    blueExport: 'assets/icons/export-blue.png',
+    blueImport: 'assets/icons/import-blue.png',
+    blueDomestic: 'assets/icons/domestic-blue.png',
+    blueDrop: 'assets/icons/drop-blue.png',
+    blueAir: 'assets/icons/air-blue.png',
+    blueOcean: 'assets/icons/ocean-blue.png',
+    blueInland: 'assets/icons/inland-blue.png',    
     FTL: './Images/CellIcons/Container.png',
     FCL: './Images/CellIcons/Container.png',
     LTL: './Images/CellIcons/Package.png',
     LCL: './Images/CellIcons/Package.png',
-    // FTL: 'assets/icons/inland.png',
-    // FCL: 'assets/icons/inland.png',
-    // LTL: 'assets/icons/inland.png',
-    // LCL: 'assets/icons/inland.png',
   }
 
   constructor(

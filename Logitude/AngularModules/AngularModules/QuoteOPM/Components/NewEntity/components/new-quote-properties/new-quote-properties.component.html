@@ -36,17 +36,17 @@
               </app-autocomplate-table>
             </div>
 
-            <div class="p-field">
+            <app-new-quote-address [type]="'pickup'" [propertyForm]='x' [qouteForm]='formGroup'
+              [EntityPM]='EntityPM'></app-new-quote-address>
+            <!-- <div class="p-field">
               <div class="p-field accordion-container">
                 <h4 class="text-style simple-text">{{"QuoteOP.S.NewQuote.Pickup" | TextCodeTranslationPipe}}</h4>
-                <!-- <i [class]="'pi pi-angle-' + (pickup.hidden ? 'down': 'right')" -->
+                <i [class]="'pi pi-angle-' + (pickup.hidden ? 'down': 'right')"
                 <i class='pi pi-angle-down' (click)='pickup.hidden = !pickup.hidden'></i>
                 <div #pickup hidden class="accordion-contect">
-                  <app-new-quote-address [type]="'pickup'" [propertyForm]='x' [qouteForm]='formGroup'
-                    [EntityPM]='EntityPM'></app-new-quote-address>
                 </div>
               </div>
-            </div>
+            </div> -->
           </div>
 
           <div class="col-4 p-fluid">
@@ -64,18 +64,18 @@
               </app-autocomplate-table>
             </div>
 
-            <div class="p-field">
+            <app-new-quote-address [type]="'delivery'" [propertyForm]='x' [qouteForm]='formGroup'
+              [EntityPM]='EntityPM'></app-new-quote-address>
+            <!-- <div class="p-field">
               <div class="p-field accordion-container">
                 <h4 class="text-style simple-text">{{"QuoteOP.S.NewQuote.Delivery" | TextCodeTranslationPipe}}</h4>
                 <i class='pi pi-angle-down' (click)='delivery.hidden = !delivery.hidden'></i>
-                <!-- <i [class]="'pi pi-angle-' + (delivery.hidden ? 'down': 'right')"
-                  (click)='delivery.hidden = !delivery.hidden'></i> -->
+                <i [class]="'pi pi-angle-' + (delivery.hidden ? 'down': 'right')"
+                  (click)='delivery.hidden = !delivery.hidden'></i>
                 <div #delivery hidden class="accordion-contect">
-                  <app-new-quote-address [type]="'delivery'" [propertyForm]='x' [qouteForm]='formGroup'
-                    [EntityPM]='EntityPM'></app-new-quote-address>
                 </div>
               </div>
-            </div>
+            </div> -->
           </div>
 
           <div class="col-4 p-fluid">

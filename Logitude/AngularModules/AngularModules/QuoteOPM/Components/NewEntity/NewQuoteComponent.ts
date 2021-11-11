@@ -1,9 +1,12 @@
 import { Component, isDevMode } from "@angular/core";
 import { AbstractControl, FormArray, FormGroup } from "@angular/forms";
+import { PackageTypeList } from "Common/EntityLists/PackageTypeList";
+import { LogitudeWindow } from "Controls/Windows/LogitudeWindow";
 import { add } from "cypress/types/lodash";
 import { SessionLocator } from "Infrastructure/Utilities/SessionLocator";
 import { MessageService } from "primeng/api";
 import { QuoteOPPMInitService } from "QuoteOPM/EntityPMInitServices/QuoteOPPMInitService";
+import { QuoteOPPackagePM } from "QuoteOPM/EntityPMs/QuoteOPPackagePM";
 import { QuoteOPPM } from "QuoteOPM/EntityPMs/QuoteOPPM";
 import { QuoteOPPropertiesPM } from "QuoteOPM/EntityPMs/QuoteOPPropertiesPM";
 import { QuoteOPPMService } from "QuoteOPM/Services/StandardPMs/QuoteOPPMService";
@@ -34,21 +37,30 @@ export class NewQuoteComponent {
         //     this.test()
     }
 
-    async create() {        
+    async create() {
         this.isSubmit = true;
-        if(!this.ValidateService.validate(this.formGroup)) return;
+        if (!this.ValidateService.validate(this.formGroup)) return;
         if (this.formGroup.invalid) return;
 
-        SessionLocator.SelectedSession.CurrentWindow.StartBusyIndicator('Create new quote... ');
+        const currentWindow:LogitudeWindow = SessionLocator.SelectedSession.CurrentWindow;
 
-        this.addAutoProperties()
-        this.addProperty()
-        this.updatePropertiesTable()
+        try {
+            currentWindow.StartBusyIndicator('Create new quote... ');
 
-        this.newQuoteDataService.creatingNewQuote(this.EntityPM)
-            .then(() => SessionLocator.SelectedSession.CloseCurrentWindowEmit('OK'))
-            .catch((err: string[]) => this.msg.add({ severity: 'error', summary: 'Create new quote failed', detail: err.join(', ')}))            
+            this.addAutoProperties();
+            this.addProperty();
+            this.updatePropertiesTable();
+            this.attachPackages();
 
+            this.newQuoteDataService.creatingNewQuote(this.EntityPM)
+                .then(() => SessionLocator.SelectedSession.CloseCurrentWindowEmit('OK'))
+                .catch((err: string[]) => this.msg.add({ severity: 'error', summary: 'Create new quote failed', detail: err.join(', ') }))
+                .finally(() => currentWindow.StopBusyIndicator())
+
+        } catch(err) {
+            this.msg.add({ severity: 'error', summary: 'Create new quote failed', detail: err.join(', ') });
+            currentWindow.StopBusyIndicator()
+        }
         // console.log(this.EntityPM)
     }
 
@@ -61,7 +73,7 @@ export class NewQuoteComponent {
         QuoteOPPMInitService.InitValues(this.EntityPM, true);
     }
 
-    
+
     private addAutoProperties() {
         const entityPM: QuoteOPPM = this.EntityPM;
 
@@ -80,16 +92,20 @@ export class NewQuoteComponent {
 
     private addProperty(): void {
         const propertyForm: FormGroup["controls"] = ((this.formGroup.controls.properties as FormArray).at(0) as FormGroup).controls;
-        
-        this.EntityPM.FromAddressCity = (propertyForm.delivery as FormGroup).value.city
-        this.EntityPM.FromAddressCountryId = (propertyForm.delivery as FormGroup).value.country?.Id
-        this.EntityPM.FromAddressZipCode = (propertyForm.delivery as FormGroup).value.zipCode
-        this.EntityPM.ToAddressId = (propertyForm.delivery as FormGroup).value.address?.Id
 
-        this.EntityPM.ToAddressCity = (propertyForm.pickup as FormGroup).value.city
-        this.EntityPM.ToAddressCountryId = (propertyForm.pickup as FormGroup).value.country?.Id
-        this.EntityPM.ToAddressZipCode = (propertyForm.pickup as FormGroup).value.zipCode
-        this.EntityPM.FromAddressId= (propertyForm.pickup as FormGroup).value.address?.Id
+        if ((propertyForm.delivery as FormGroup).value.include) {
+            this.EntityPM.FromAddressCity = (propertyForm.delivery as FormGroup).value.city
+            this.EntityPM.FromAddressCountryId = (propertyForm.delivery as FormGroup).value.country?.Id
+            this.EntityPM.FromAddressZipCode = (propertyForm.delivery as FormGroup).value.zipCode
+            this.EntityPM.ToAddressId = (propertyForm.delivery as FormGroup).value.address?.Id
+        }
+
+        if ((propertyForm.pickup as FormGroup).value.include) {
+            this.EntityPM.ToAddressCity = (propertyForm.pickup as FormGroup).value.city
+            this.EntityPM.ToAddressCountryId = (propertyForm.pickup as FormGroup).value.country?.Id
+            this.EntityPM.ToAddressZipCode = (propertyForm.pickup as FormGroup).value.zipCode
+            this.EntityPM.FromAddressId = (propertyForm.pickup as FormGroup).value.address?.Id
+        }
 
         this.EntityPM.ToPortId = propertyForm.toPort.value?.Code
         this.EntityPM.FromPortId = propertyForm.fromPort.value?.Code
@@ -100,20 +116,24 @@ export class NewQuoteComponent {
 
     private updatePropertiesTable(): void {
         const propertiesForms: AbstractControl[] = (this.formGroup.controls.properties as FormArray).controls.filter((propertyForm: FormGroup) => propertyForm.valid);
-        
+
         propertiesForms.forEach((propertyFormGroup: FormGroup) => {
             const propertyForm: FormGroup["controls"] = propertyFormGroup.controls;
             const propertiesPM: QuoteOPPropertiesPM = new QuoteOPPropertiesPM(this.EntityPM);
 
-            propertiesPM.FromAddressCity = (propertyForm.delivery as FormGroup).value.city
-            propertiesPM.FromAddressCountryId = (propertyForm.delivery as FormGroup).value.country?.Id
-            propertiesPM.FromAddressZipCode = (propertyForm.delivery as FormGroup).value.zipCode
-            propertiesPM.FromAddressId= (propertyForm.delivery as FormGroup).value.address?.Id
+            if ((propertyForm.delivery as FormGroup).value.include) {
+                propertiesPM.FromAddressCity = (propertyForm.delivery as FormGroup).value.city
+                propertiesPM.FromAddressCountryId = (propertyForm.delivery as FormGroup).value.country?.Id
+                propertiesPM.FromAddressZipCode = (propertyForm.delivery as FormGroup).value.zipCode
+                propertiesPM.FromAddressId = (propertyForm.delivery as FormGroup).value.address?.Id
+            }
 
-            propertiesPM.ToAddressCity = (propertyForm.pickup as FormGroup).value.city
-            propertiesPM.ToAddressCountryId = (propertyForm.pickup as FormGroup).value.country?.Id
-            propertiesPM.ToAddressZipCode = (propertyForm.pickup as FormGroup).value.zipCode
-            propertiesPM.ToAddressId= (propertyForm.pickup as FormGroup).value.address?.Id
+            if ((propertyForm.pickup as FormGroup).value.include) {
+                propertiesPM.ToAddressCity = (propertyForm.pickup as FormGroup).value.city
+                propertiesPM.ToAddressCountryId = (propertyForm.pickup as FormGroup).value.country?.Id
+                propertiesPM.ToAddressZipCode = (propertyForm.pickup as FormGroup).value.zipCode
+                propertiesPM.ToAddressId = (propertyForm.pickup as FormGroup).value.address?.Id
+            }
 
             propertiesPM.ToPortId = propertyForm.toPort.value?.Code
             propertiesPM.FromPortId = propertyForm.fromPort.value?.Code
@@ -122,6 +142,20 @@ export class NewQuoteComponent {
             propertiesPM.SpecialServiceID = propertyForm.specialService.value?.SERVLEVEL_ID;
 
             this.EntityPM.QuoteProperties.push(propertiesPM)
+        });
+    }
+
+    attachPackages() {
+        (<FormArray>this.formGroup.controls.packages).controls.forEach((form: FormGroup) => {
+            const pack: QuoteOPPackagePM = new QuoteOPPackagePM(this.EntityPM);
+            const values: any = form.getRawValue();
+
+            pack.Quantity = values.quantity;
+            pack.Volume = values.volume;
+            pack.GrossWeight = values.grossWeight;
+            pack.PackageTypeId = (<PackageTypeList>values.packageType)?.Id;
+
+            this.EntityPM.AddQuoteOPPackage(pack)
         });
     }
 

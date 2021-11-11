@@ -1,7 +1,29 @@
 :host ::ng-deep {
     .p-radiobutton {
         vertical-align: middle;
-        margin-right: 14px;
+        margin-right: 0px;
+
+        .p-radiobutton-box {
+            width: 14px;
+            height: 14px;
+            margin-top: 0px;
+
+            .p-radiobutton-icon {
+                width: 6px;
+                height: 6px;
+                background-color: black;
+            }
+        }
+
+        .p-radiobutton-box.p-highlight {
+            background-color: white;
+            border-color: black;
+        }
+
+        .p-radiobutton-box.p-highlight:not(.p-disabled):hover {
+            border-color: black;
+            background: white;
+        }
     }
 
     .p-radiobutton-label {
@@ -9,25 +31,12 @@
         color: black;
     }
 
-    .p-radiobutton .p-radiobutton-box.p-highlight {
-        background-color: white;
-        border-color: black;
-    }
-
-    .p-radiobutton .p-radiobutton-box .p-radiobutton-icon {
-        background-color: black;
-    }
-
-    .p-radiobutton .p-radiobutton-box.p-highlight:not(.p-disabled):hover {
-        border-color: black;
-        background: white;
-    }
-
     .close-days {
         width: 143px !important;
     }
 
     .close-days-text {
+        font-size: 10px;
         margin-left: 13px;
     }
 
@@ -37,14 +46,35 @@
         border-left: none;
 
         .p-button-icon {
-            color: #2196F3;
+            color: #2196f3;
             border: none;
+        }
+    }
+
+    .p-checkbox {
+        margin-top: 5px !important;
+        margin-bottom: 0px !important;
+        margin-right: 3px !important;
+        width: auto;
+
+        .p-checkbox-box {
+            width: 13px;
+            height: 13px;
+            
+            .p-checkbox-icon {
+                font-size: 12px;
+            }
         }
     }
 }
 
 .content-in-section {
+    margin-top: 8px;
     margin: 0 8px;
+
+    > .col-12 {
+        padding-bottom: 0;
+    }
 }
 
 h5 {
@@ -57,10 +87,11 @@ h5 {
 
 .radio-row {
     display: inline-block;
+    margin-left: 0px;
 }
 
 .radio-row:last-child {
-    margin-left: 60px;
+    margin-left: 33px;
 }
 
 .col-align {

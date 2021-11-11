@@ -47,7 +47,7 @@ export class NewQuoteValidateEntityService {
   }
 
   private checkProperties(): void {
-    const propertiesForms: AbstractControl[] = (this.form.controls.properties as FormArray).controls.filter((propertyForm: FormGroup) => propertyForm.valid);
+    const propertiesForms: AbstractControl[] = (this.form.controls.properties as FormArray).controls.filter((propertyForm: FormGroup) => propertyForm.invalid);
     propertiesForms.forEach((propertyFormGroup: FormGroup, i: number) => {
       const propertyForm: FormGroup["controls"] = propertyFormGroup.controls;
       const propertyPosition: string = propertiesForms.length > 1 ? ' in property ' + (i + 1) : ''
@@ -83,10 +83,13 @@ export class NewQuoteValidateEntityService {
   private checkExpectedOrder() {
     const isSeaFcl: boolean = this.form.controls.transportMode?.value?.Id === 'O' && this.form.controls.shipmentType?.value?.Name === 'FCL';
     if (isSeaFcl)
-      ['quantityType', 'quantity'].forEach(ctrlName =>
+      [
+        {name:'quantityType', label: 'Paackage Type'}, 
+        {name:'quantity', label: 'Quantity'}
+      ].forEach(ctrl =>
         [1, 2, 3, 4]
-          .filter(i => this.form.controls[ctrlName + i].invalid)
-          .forEach(i => this.errorList.push(ctrlName + i + ' is required'))
+          .filter(i => this.form.controls[ctrl.name + i].invalid)
+          .forEach(i => this.errorList.push(ctrl.label + ' ' + i + ' is required'))
       );
     else if (this.form.controls.packages.invalid)
       this.errorList.push('all packages need volume or groos weight')
