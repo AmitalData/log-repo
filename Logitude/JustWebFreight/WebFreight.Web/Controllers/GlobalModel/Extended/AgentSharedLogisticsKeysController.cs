@@ -63,6 +63,7 @@ namespace WebFreight.Web.Controllers.GlobalModel.Extended
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnTenant(tenant);
 
                 AgentRepository agentRepository = new AgentRepository(tenant);
                 Agent agent = agentRepository.GetSingleAgent(tenant, agentId);
@@ -97,6 +98,7 @@ namespace WebFreight.Web.Controllers.GlobalModel.Extended
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnTenant(tenant);
                 AgentSharedLogisticsKeyRepository agentSharedLogisticsKeyRepository = new AgentSharedLogisticsKeyRepository();
 
                 ICommonDataContext commonContext = CommonDataContext.GetContext(tenant);
@@ -225,6 +227,7 @@ namespace WebFreight.Web.Controllers.GlobalModel.Extended
                     string token = HttpContext.Current.Request.Headers["Token"];
                     AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                     SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+
                     //SecurityUtility.CheckContactFeature("Shipment", "AgentSharedManifest", authToken.Tenant);
 
                     AgentSharedLogisticsKeyRepository agentSharedLogisticsKeyRepository = new AgentSharedLogisticsKeyRepository();

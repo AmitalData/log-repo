@@ -57,6 +57,10 @@ namespace WebFreight.Web.Controllers.GlobalModel.Extended
 
             try
             {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+           
                 PrivateLabelsBrandingDataService privateLabelsBrandingDataService = new PrivateLabelsBrandingDataService();
                 PrivateLabelsBrandingData brandingData = privateLabelsBrandingDataService.GePrivateLabelsBrandingDataByUrl(BrandingDataRequest);
                 ServiceResponse response = new ServiceResponse();
@@ -82,6 +86,7 @@ namespace WebFreight.Web.Controllers.GlobalModel.Extended
                         string token = HttpContext.Current.Request.Headers["Token"];
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                        SecurityUtility.AuthenticationOnEntityTenant("TenantManagmentPrivateLabels", entityPM.Tenant, authToken.Tenant);
 
                         IGlobalContext MyContext = GlobalContext.GetContext();
 
@@ -148,6 +153,8 @@ namespace WebFreight.Web.Controllers.GlobalModel.Extended
                         string token = HttpContext.Current.Request.Headers["Token"];
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                        SecurityUtility.AuthenticationOnEntityTenant("TenantManagmentPrivateLabels", entityPM.Tenant, authToken.Tenant);
+
                         IGlobalContext MyContext = GlobalContext.GetContext();
 
                         TenantManagmentPrivateLabelsRepository tenantManagmentPrivateLabelsRepository = new TenantManagmentPrivateLabelsRepository(MyContext);

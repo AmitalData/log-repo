@@ -24,6 +24,8 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnTenant(tenant);
+
                 ObjectFieldQuery objectFieldQuery = new ObjectFieldQuery(authToken.Tenant);
                 List<ObjectFieldPM> objectFieldPMs =!string.IsNullOrEmpty(entityAutomationIds)? objectFieldQuery.GetEntityAuomationAllowedinAutomationConditionsObjectFieldPMsByEntityTableIds(entityAutomationIds.Split(',').ToList(), authToken.Tenant):null;
                 return Request.CreateResponse(HttpStatusCode.OK, objectFieldPMs);

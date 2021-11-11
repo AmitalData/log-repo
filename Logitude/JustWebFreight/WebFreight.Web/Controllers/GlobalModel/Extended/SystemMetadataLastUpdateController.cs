@@ -1,4 +1,6 @@
-﻿using Simplog.Data.InfrastructureModel;
+﻿using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Data.InfrastructureModel;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
@@ -9,9 +11,11 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Transactions;
+using System.Web;
 using System.Web.Http;
 using WebFreight.Web.DataContracts;
 using WebFreight.Web.Helpers;
+using WebFreight.Web.Security;
 
 namespace WebFreight.Web.Controllers.GlobalModel
 {
@@ -21,6 +25,12 @@ namespace WebFreight.Web.Controllers.GlobalModel
         {
             try
             {
+
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnTenant(tenant);
+
                 string entityName = "SystemMetadataLastUpdates_" + tenant;
                 MetaDataLastUpdateDates metadatalastUpdates = null;
                 if (CacheManager.CacheWrapper != null)
@@ -57,6 +67,10 @@ namespace WebFreight.Web.Controllers.GlobalModel
 
         private MetaDataLastUpdateDates GetSystemMetadataLastUpdateFromDB(int tenant)
         {
+
+
+
+
             MetaDataLastUpdateDates metadata = new MetaDataLastUpdateDates()
             {
                 Id = 1,

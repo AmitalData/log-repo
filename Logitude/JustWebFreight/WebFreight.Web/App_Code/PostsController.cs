@@ -4,6 +4,8 @@ using Logitude.Social.BL.EntityUpdateServices;
 using Logitude.Social.Data;
 using Logitude.Social.Data.EntityPOCOs;
 using Logitude.Social.Data.Repsitories;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.DataContracts;
@@ -12,6 +14,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Web;
 using System.Web.Http;
 using WebFreight.Web.Security;
 
@@ -22,15 +25,20 @@ namespace WebFreight.Web.App_Code
 
         public List<PostPM> PostFilteredPosts(int tenant,  PostFilters filters) 
         {
+            string token = HttpContext.Current.Request.Headers["Token"];
+            AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+            SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+            SecurityUtility.AuthenticationOnTenant(tenant);
+
             //SecurityUtility.AuthenticationOnTenant(tenant);
 
-           
 
-          //  QueryOperations queryOperations = new QueryOperations();
-           // queryOperations.SetFilter("QueryName", filters.QueryName, false, "Equals", null, false);
- 
 
-           // ICRMContext crmContext = CRMContext.GetContext(tenant);
+            //  QueryOperations queryOperations = new QueryOperations();
+            // queryOperations.SetFilter("QueryName", filters.QueryName, false, "Equals", null, false);
+
+
+            // ICRMContext crmContext = CRMContext.GetContext(tenant);
             ISocialContext socialContext = SocialContext.GetContext(tenant);
 
             PostQueryService service = new PostQueryService(socialContext);
@@ -39,7 +47,10 @@ namespace WebFreight.Web.App_Code
 
         public PostPM GetSinglePostComment(string id,int tenant)
         {
-            //SecurityUtility.AuthenticationOnTenant(tenant);
+            string token = HttpContext.Current.Request.Headers["Token"];
+            AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+            SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+            SecurityUtility.AuthenticationOnTenant(tenant);
 
 
 
@@ -60,6 +71,11 @@ namespace WebFreight.Web.App_Code
 
         public PostPM GetSinglePost(string postid, int tenant)
         {
+            string token = HttpContext.Current.Request.Headers["Token"];
+            AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+            SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+            SecurityUtility.AuthenticationOnTenant(tenant);
+
             PostRepository postRepository = new PostRepository(tenant);
             ISocialContext socialContext = SocialContext.GetContext(tenant);
 
@@ -71,6 +87,11 @@ namespace WebFreight.Web.App_Code
 
         public string PostInsertPost(PostPM Postpm)
         {
+            string token = HttpContext.Current.Request.Headers["Token"];
+            AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+            SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+            SecurityUtility.AuthenticationOnEntityTenant("Post", Postpm.Tenant, authToken.Tenant);
+
 
             ISocialContext socialContext = SocialContext.GetContext(Postpm.Tenant);
             //SecurityUtility.CheckContactFeature("Post", "NEW", Postpm.Tenant);
@@ -112,6 +133,12 @@ namespace WebFreight.Web.App_Code
 
         public string DeletePostLike(string PostId, string UserId, int tenant)
         {
+
+            string token = HttpContext.Current.Request.Headers["Token"];
+            AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+            SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+            SecurityUtility.AuthenticationOnTenant(tenant);
+
             ISocialContext socialContext = SocialContext.GetContext(tenant);
             PostUpdateService service = new PostUpdateService(socialContext, new Dictionary<string, IContext>(), tenant);
             PostQueryService postQueryService = new PostQueryService(socialContext);

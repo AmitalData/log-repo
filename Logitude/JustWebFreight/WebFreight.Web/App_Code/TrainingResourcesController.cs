@@ -20,6 +20,12 @@ namespace WebFreight.Web.App_Code
     {
         public List<HelpResource> PostHelpResources(TrainingResourcesFilters filters)
         {
+
+            string token = HttpContext.Current.Request.Headers["Token"];
+            AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+            SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+
+
             HelpResourceRepository rep = new HelpResourceRepository();
             GenericFilter filter = new GenericFilter();
             QueryOperations queryOperations = new QueryOperations();
@@ -35,9 +41,6 @@ namespace WebFreight.Web.App_Code
 
             List<HelpResource> query = helpers.ToList();
             List<HelpResource> myResult = new List<HelpResource>();
-
-            string token = HttpContext.Current.Request.Headers["Token"];
-            AuthenticationToken authToken = null;
             if (!string.IsNullOrEmpty(token))
             {
                 authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
@@ -64,6 +67,11 @@ namespace WebFreight.Web.App_Code
         [WebGet(UriTemplate = "getsinglehelper/{code}")]
         public HelpResource GetSingleShipmentPM(string code)
         {
+
+            string token = HttpContext.Current.Request.Headers["Token"];
+            AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+            SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+
             HelpResourceRepository rep = new HelpResourceRepository();
             HelpResource resource = rep.GetSingleHelpResource(code, 0);
             
