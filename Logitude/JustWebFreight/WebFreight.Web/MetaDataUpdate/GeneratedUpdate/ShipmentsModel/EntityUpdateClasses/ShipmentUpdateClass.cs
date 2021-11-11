@@ -80,7 +80,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
    public class ShipmentUpdateClass
    {  		
 
-		public const string HashString = "749b566b4b8096c7bc264fb641797431";
+
+		public const string HashString = "0d23c8a40acc38370943c708bc408b03";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -38955,9 +38956,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CutoffDate",
-					  						DefaultText =  "Cut off Date",
+					  						DefaultText =  "Cut-Off Date",
 					  						ListFieldLable =  "CutoffDateListLable",
-					  						ListLableDefaultText =  "Cut off Date",
+					  						ListLableDefaultText =  "Cut-Off Date",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -38966,7 +38967,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  true,
 					  						DisplayInAutomationAsEnitity =  false,
-					  						HasTemplate =  false,
+					  						HasTemplate =  true,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
