@@ -39,4 +39,11 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="Weight"
+    OldNames="Weights"
+    Type="int">
+    <Constraints
+      Nullable="true" />
+  </Column>
 </Table>

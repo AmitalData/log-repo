@@ -49,6 +49,11 @@ export class CargoTrackingMilestonePM {
     public set Inactive(newValue: boolean) { if (this.inactive != newValue) { this.inactive = newValue; this.MarkAsDirty("Inactive"); } }
        
 	 
+    private weight: number;
+    public get Weight() { return this.weight; }
+    public set Weight(newValue: number) { if (this.weight != newValue) { this.weight = newValue; this.MarkAsDirty("Weight"); } }
+       
+	 
 
     public OldEntityPM: CargoTrackingMilestonePM;
 		
