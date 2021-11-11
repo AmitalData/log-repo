@@ -504,9 +504,10 @@ export class ShipmentDetailsComponent implements OnInit,AfterViewInit
         const hiddenCardsCount = this.SliderCards.length - this.sliderVisibleCardsCount;
         const width = this.IsMobileView ? this.sliderMobileCardWidth : this.sliderCardWidth;
 
-        this.sliderMarginLeft = hiddenCardsCount * width * -1;
-        this.sliderMarginCardCount = hiddenCardsCount;
-
+        if(hiddenCardsCount > 0){
+            this.sliderMarginLeft = hiddenCardsCount * width * -1;
+            this.sliderMarginCardCount = hiddenCardsCount;
+        }
     }
     SetNoMilstonesFound() {
         if (this.SliderCards.length == 0) this.NoMilstonesFound = true;
