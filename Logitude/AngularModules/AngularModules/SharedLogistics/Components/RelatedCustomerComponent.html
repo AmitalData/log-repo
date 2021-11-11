@@ -90,8 +90,9 @@
                                     <td class="GridViewCell" style="width: 60px; min-width: 60px;max-width:60px ">
 
                                         <div class="CheckBox">
-                                            <input class="CenterCenter" style="text-align:center" (click)="CheckIsImportActivated(item)" [attr.id]="'ImportCheckBox' + item.CustomerCode" type="checkbox" [(ngModel)]="item.IsCustomsActivated" />
+                                            <input [disabled]="!IsCustomsActivated" class="CenterCenter" style="text-align:center" (click)="CheckIsImportActivated(item)" [attr.id]="'ImportCheckBox' + item.CustomerCode" type="checkbox" [(ngModel)]="item.IsCustomsActivated" />
                                             <label class="CenterCenter" [attr.for]="'ImportCheckBox' + item.CustomerCode"></label>
+                                            <HelpIcon class="tip" *ngIf="!IsCustomsActivated" [IconSize]="14" [Header]="''" [Text]="'Customs option is not activated'"></HelpIcon>
                                         </div>
 
 

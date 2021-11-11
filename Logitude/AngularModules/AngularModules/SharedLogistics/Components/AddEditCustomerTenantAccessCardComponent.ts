@@ -39,7 +39,7 @@ export class AddEditCustomerTenantAccessCardComponent extends BaseComponent {
     public ValidationErrorsList: Array<string> = [];
     public DataLoaded: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
-    public IsImportActivated: boolean = false;
+    public IsCustomsActivated: boolean = false;
     public IsExportActivated: boolean = false;
     public CanSelectOpption: boolean = false;
 
@@ -185,27 +185,36 @@ export class AddEditCustomerTenantAccessCardComponent extends BaseComponent {
     SetWindowArgs(args: AddEditCustomerTenantAccessCardViewModel) {
         if (args != null) {
             this.viewModel = args;
-            this.IsImportActivated = args.Parent.IsImportActivated;
-            this.IsExportActivated = args.Parent.IsExportActivated;
-            this.CanSelectOpption = args.Parent.CanSelectOpption;
+            this.SetDirectionsoptions(args);
+             
             this.SetCustomerTenantAccessCardOptions();
             this.DataLoaded = true;   
         }
     }
-    SetCustomerTenantAccessCardOptions() {
-        if (this.viewModel.CardObsList != null) {
-            if (!this.CanSelectOpption)
-            this.viewModel.CardObsList.forEach(
-                card => card.IsCustomsActivated = this.IsImportActivated);
+    private SetDirectionsoptions(args: AddEditCustomerTenantAccessCardViewModel) {
+        this.IsCustomsActivated = args.Parent.IsCustomsActivated;
+        this.IsExportActivated = args.Parent.IsExportActivated;
+
+        if (this.IsCustomsActivated && this.IsExportActivated) {
+            this.SetDefaultOptions();
         }
     }
 
-    
+    private SetDefaultOptions() {
+        this.CanSelectOpption = true;
+        this.IsExportActivated = false;
+        this.IsCustomsActivated = false;
+    }
 
-
-  
-  
-
-
- 
+    SetCustomerTenantAccessCardOptions() {
+        if (this.viewModel.CardObsList != null) {
+          
+            this.viewModel.CardObsList.forEach( card => this.SetDirectionsFields(card));
+        }
+    }
+     
+    private SetDirectionsFields(card: CardListDataViewModel) {
+        card.IsCustomsActivated = this.IsCustomsActivated;
+        card.IsExportActivated = this.IsExportActivated;
+    }
 }
