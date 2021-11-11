@@ -27,7 +27,7 @@ export class NumberInputComponent implements ControlValueAccessor
 
     @Input() min: number;
     @Input() max: number;
-
+    @Input() allowNull: boolean = false;
     private _value: number;
     public get value(): number
     {
@@ -36,9 +36,7 @@ export class NumberInputComponent implements ControlValueAccessor
     public set value(newValue: number)
     {
         if ((newValue !== undefined && newValue !== this._value) || !newValue) {
-
             newValue = this.limitValueBoundaries(newValue);
-
             this.replaceOldValueWithNewValue(newValue);
 
             this.onChange(newValue);
@@ -46,10 +44,11 @@ export class NumberInputComponent implements ControlValueAccessor
         }
     }
 
-
-
     onChange: any = () => { }
     onTouch: any = () => { }
+
+    private 
+
     private replaceOldValueWithNewValue(newValue: number)
     {
         this._value = null;
@@ -61,6 +60,9 @@ export class NumberInputComponent implements ControlValueAccessor
 
     private limitValueBoundaries(v: number)
     {
+        if(this.allowNull && v == null) {
+           return v; 
+        }
         if (this.max && v > this.max)
             v = this.max;
 

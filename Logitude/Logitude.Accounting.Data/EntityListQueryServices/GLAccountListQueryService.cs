@@ -238,50 +238,50 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                    IsSecurityLevelsEnabled = fullAccountingSettings.IsSecurityLevelActivated,
                                                    Access = (!fullAccountingSettings.IsSecurityLevelActivated
                                                             || (fullAccountingSettings.IsSecurityLevelActivated && chartOfAccount.ChartOfAccountSecurityLevel == null)
-                                                            || (fullAccountingSettings.IsSecurityLevelActivated && chartOfAccount.ChartOfAccountSecurityLevel <= loggedUser.SecurityLevel)),
+                                                            || (fullAccountingSettings.IsSecurityLevelActivated && chartOfAccount.ChartOfAccountSecurityLevel <= (loggedUser.SecurityLevel ?? 0))),
                                                    //Access = glaccount.Access,
 
 
                                                    Period0 = (!fullAccountingSettings.IsSecurityLevelActivated
                                                             || (fullAccountingSettings.IsSecurityLevelActivated && chartOfAccount.ChartOfAccountSecurityLevel == null)
-                                                            || (fullAccountingSettings.IsSecurityLevelActivated && chartOfAccount.ChartOfAccountSecurityLevel <= loggedUser.SecurityLevel)) ? AgingDatas.Period0 : 0,//GetPeriodValue("0", glaccount, loggedUser.SecurityLevel),
+                                                            || (fullAccountingSettings.IsSecurityLevelActivated && chartOfAccount.ChartOfAccountSecurityLevel <= (loggedUser.SecurityLevel ?? 0))) ? AgingDatas.Period0 : 0,//GetPeriodValue("0", glaccount, loggedUser.SecurityLevel),
                                                    Period1 = (!fullAccountingSettings.IsSecurityLevelActivated
                                                             || (fullAccountingSettings.IsSecurityLevelActivated && chartOfAccount.ChartOfAccountSecurityLevel == null)
-                                                            || (fullAccountingSettings.IsSecurityLevelActivated && chartOfAccount.ChartOfAccountSecurityLevel <= loggedUser.SecurityLevel)) ? AgingDatas.Period1 : 0,
+                                                            || (fullAccountingSettings.IsSecurityLevelActivated && chartOfAccount.ChartOfAccountSecurityLevel <= (loggedUser.SecurityLevel ?? 0))) ? AgingDatas.Period1 : 0,
                                                    Period2 = (!fullAccountingSettings.IsSecurityLevelActivated
                                                             || (fullAccountingSettings.IsSecurityLevelActivated && chartOfAccount.ChartOfAccountSecurityLevel == null)
-                                                            || (fullAccountingSettings.IsSecurityLevelActivated && chartOfAccount.ChartOfAccountSecurityLevel <= loggedUser.SecurityLevel)) ? AgingDatas.Period2 : 0,
+                                                            || (fullAccountingSettings.IsSecurityLevelActivated && chartOfAccount.ChartOfAccountSecurityLevel <= (loggedUser.SecurityLevel ?? 0))) ? AgingDatas.Period2 : 0,
                                                    Period3 = (!fullAccountingSettings.IsSecurityLevelActivated
                                                             || (fullAccountingSettings.IsSecurityLevelActivated && chartOfAccount.ChartOfAccountSecurityLevel == null)
-                                                            || (fullAccountingSettings.IsSecurityLevelActivated && chartOfAccount.ChartOfAccountSecurityLevel <= loggedUser.SecurityLevel)) ? AgingDatas.Period3 : 0,
+                                                            || (fullAccountingSettings.IsSecurityLevelActivated && chartOfAccount.ChartOfAccountSecurityLevel <= (loggedUser.SecurityLevel ?? 0))) ? AgingDatas.Period3 : 0,
                                                    Period4 = (!fullAccountingSettings.IsSecurityLevelActivated
                                                             || (fullAccountingSettings.IsSecurityLevelActivated && chartOfAccount.ChartOfAccountSecurityLevel == null)
-                                                            || (fullAccountingSettings.IsSecurityLevelActivated && chartOfAccount.ChartOfAccountSecurityLevel <= loggedUser.SecurityLevel)) ? AgingDatas.Period4 : 0,
+                                                            || (fullAccountingSettings.IsSecurityLevelActivated && chartOfAccount.ChartOfAccountSecurityLevel <= (loggedUser.SecurityLevel ?? 0))) ? AgingDatas.Period4 : 0,
                                                    Period5 = (!fullAccountingSettings.IsSecurityLevelActivated
                                                             || (fullAccountingSettings.IsSecurityLevelActivated && chartOfAccount.ChartOfAccountSecurityLevel == null)
-                                                            || (fullAccountingSettings.IsSecurityLevelActivated && chartOfAccount.ChartOfAccountSecurityLevel <= loggedUser.SecurityLevel)) ? AgingDatas.Period5 : 0,
+                                                            || (fullAccountingSettings.IsSecurityLevelActivated && chartOfAccount.ChartOfAccountSecurityLevel <= (loggedUser.SecurityLevel ?? 0))) ? AgingDatas.Period5 : 0,
                                                    PeriodFuture = (!fullAccountingSettings.IsSecurityLevelActivated
                                                             || (fullAccountingSettings.IsSecurityLevelActivated && chartOfAccount.ChartOfAccountSecurityLevel == null)
-                                                            || (fullAccountingSettings.IsSecurityLevelActivated && chartOfAccount.ChartOfAccountSecurityLevel <= loggedUser.SecurityLevel)) ? AgingDatas.PeriodFuture : 0,//GetPeriodValue("Future", glaccount, loggedUser.SecurityLevel),
+                                                            || (fullAccountingSettings.IsSecurityLevelActivated && chartOfAccount.ChartOfAccountSecurityLevel <= (loggedUser.SecurityLevel ?? 0))) ? AgingDatas.PeriodFuture : 0,//GetPeriodValue("Future", glaccount, loggedUser.SecurityLevel),
                                                    PeriodPast = (!fullAccountingSettings.IsSecurityLevelActivated
                                                             || (fullAccountingSettings.IsSecurityLevelActivated && chartOfAccount.ChartOfAccountSecurityLevel == null)
-                                                            || (fullAccountingSettings.IsSecurityLevelActivated && chartOfAccount.ChartOfAccountSecurityLevel <= loggedUser.SecurityLevel)) ? AgingDatas.PeriodPast : 0,//GetPeriodValue("Past", glaccount, loggedUser.SecurityLevel),
+                                                            || (fullAccountingSettings.IsSecurityLevelActivated && chartOfAccount.ChartOfAccountSecurityLevel <= (loggedUser.SecurityLevel ?? 0))) ? AgingDatas.PeriodPast : 0,//GetPeriodValue("Past", glaccount, loggedUser.SecurityLevel),
 
                                                    BalanceInForeignCurrency = (!fullAccountingSettings.IsSecurityLevelActivated
                                                             || (fullAccountingSettings.IsSecurityLevelActivated && chartOfAccount.ChartOfAccountSecurityLevel == null)
-                                                            || (fullAccountingSettings.IsSecurityLevelActivated && chartOfAccount.ChartOfAccountSecurityLevel <= loggedUser.SecurityLevel)) ? MoreDatas.BalanceInForeignCurrency : 0,
+                                                            || (fullAccountingSettings.IsSecurityLevelActivated && chartOfAccount.ChartOfAccountSecurityLevel <= (loggedUser.SecurityLevel ?? 0))) ? MoreDatas.BalanceInForeignCurrency : 0,
                                                    BalanceInLocalCurrency = (!fullAccountingSettings.IsSecurityLevelActivated
                                                             || (fullAccountingSettings.IsSecurityLevelActivated && chartOfAccount.ChartOfAccountSecurityLevel == null)
-                                                            || (fullAccountingSettings.IsSecurityLevelActivated && chartOfAccount.ChartOfAccountSecurityLevel <= loggedUser.SecurityLevel)) ? MoreDatas.BalanceInLocalCurrency : 0,
+                                                            || (fullAccountingSettings.IsSecurityLevelActivated && chartOfAccount.ChartOfAccountSecurityLevel <= (loggedUser.SecurityLevel ?? 0))) ? MoreDatas.BalanceInLocalCurrency : 0,
                                                    ForeignBalanceInDue = (!fullAccountingSettings.IsSecurityLevelActivated
                                                             || (fullAccountingSettings.IsSecurityLevelActivated && chartOfAccount.ChartOfAccountSecurityLevel == null)
-                                                            || (fullAccountingSettings.IsSecurityLevelActivated && chartOfAccount.ChartOfAccountSecurityLevel <= loggedUser.SecurityLevel)) ? MoreDatas.ForeignBalanceInDue : 0,
+                                                            || (fullAccountingSettings.IsSecurityLevelActivated && chartOfAccount.ChartOfAccountSecurityLevel <= (loggedUser.SecurityLevel ?? 0))) ? MoreDatas.ForeignBalanceInDue : 0,
                                                    LocalBalanceInDue = (!fullAccountingSettings.IsSecurityLevelActivated
                                                             || (fullAccountingSettings.IsSecurityLevelActivated && chartOfAccount.ChartOfAccountSecurityLevel == null)
-                                                            || (fullAccountingSettings.IsSecurityLevelActivated && chartOfAccount.ChartOfAccountSecurityLevel <= loggedUser.SecurityLevel)) ? MoreDatas.LocalBalanceInDue : 0,
+                                                            || (fullAccountingSettings.IsSecurityLevelActivated && chartOfAccount.ChartOfAccountSecurityLevel <= (loggedUser.SecurityLevel ?? 0))) ? MoreDatas.LocalBalanceInDue : 0,
                                                    CalculatedAgingPeriod1 = (!fullAccountingSettings.IsSecurityLevelActivated
                                                             || (fullAccountingSettings.IsSecurityLevelActivated && chartOfAccount.ChartOfAccountSecurityLevel == null)
-                                                            || (fullAccountingSettings.IsSecurityLevelActivated && chartOfAccount.ChartOfAccountSecurityLevel <= loggedUser.SecurityLevel)) ?
+                                                            || (fullAccountingSettings.IsSecurityLevelActivated && chartOfAccount.ChartOfAccountSecurityLevel <= (loggedUser.SecurityLevel ?? 0))) ?
                                                             (fullAccountingSettings.FirstPeriodsMonths.Contains("Period0") ? AgingDatas.Period0 : 0)
                                                                             + (fullAccountingSettings.FirstPeriodsMonths.Contains("Period1") ? AgingDatas.Period1 : 0)
                                                                             + (fullAccountingSettings.FirstPeriodsMonths.Contains("Period2") ? AgingDatas.Period2 : 0)
@@ -291,7 +291,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                                             + (fullAccountingSettings.FirstPeriodsMonths.Contains("PeriodPast") ? AgingDatas.PeriodPast : 0) : 0,
                                                    CalculatedAgingPeriod2 = (!fullAccountingSettings.IsSecurityLevelActivated
                                                             || (fullAccountingSettings.IsSecurityLevelActivated && chartOfAccount.ChartOfAccountSecurityLevel == null)
-                                                            || (fullAccountingSettings.IsSecurityLevelActivated && chartOfAccount.ChartOfAccountSecurityLevel <= loggedUser.SecurityLevel)) ?
+                                                            || (fullAccountingSettings.IsSecurityLevelActivated && chartOfAccount.ChartOfAccountSecurityLevel <= (loggedUser.SecurityLevel ?? 0))) ?
                                                             (fullAccountingSettings.SecondPeriodsMonths.Contains("Period0") ? AgingDatas.Period0 : 0)
                                                                             + (fullAccountingSettings.SecondPeriodsMonths.Contains("Period1") ? AgingDatas.Period1 : 0)
                                                                             + (fullAccountingSettings.SecondPeriodsMonths.Contains("Period2") ? AgingDatas.Period2 : 0)
@@ -301,7 +301,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                                             + (fullAccountingSettings.SecondPeriodsMonths.Contains("PeriodPast") ? AgingDatas.PeriodPast : 0) : 0,
                                                    CalculatedAgingPeriod3 = (!fullAccountingSettings.IsSecurityLevelActivated
                                                             || (fullAccountingSettings.IsSecurityLevelActivated && chartOfAccount.ChartOfAccountSecurityLevel == null)
-                                                            || (fullAccountingSettings.IsSecurityLevelActivated && chartOfAccount.ChartOfAccountSecurityLevel <= loggedUser.SecurityLevel)) ?
+                                                            || (fullAccountingSettings.IsSecurityLevelActivated && chartOfAccount.ChartOfAccountSecurityLevel <= (loggedUser.SecurityLevel ?? 0))) ?
                                                             (fullAccountingSettings.ThirdsPeriodsMonths.Contains("Period0") ? AgingDatas.Period0 : 0)
                                                                             + (fullAccountingSettings.ThirdsPeriodsMonths.Contains("Period1") ? AgingDatas.Period1 : 0)
                                                                             + (fullAccountingSettings.ThirdsPeriodsMonths.Contains("Period2") ? AgingDatas.Period2 : 0)
@@ -311,10 +311,10 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                                             + (fullAccountingSettings.ThirdsPeriodsMonths.Contains("PeriodPast") ? AgingDatas.PeriodPast : 0) : 0,
                                                    TotalOpenChequesInLocalCur = (!fullAccountingSettings.IsSecurityLevelActivated
                                                             || (fullAccountingSettings.IsSecurityLevelActivated && chartOfAccount.ChartOfAccountSecurityLevel == null)
-                                                            || (fullAccountingSettings.IsSecurityLevelActivated && chartOfAccount.ChartOfAccountSecurityLevel <= loggedUser.SecurityLevel)) ? MoreDatas.TotalOpenChequesInLocalCur : 0,
+                                                            || (fullAccountingSettings.IsSecurityLevelActivated && chartOfAccount.ChartOfAccountSecurityLevel <= (loggedUser.SecurityLevel ?? 0))) ? MoreDatas.TotalOpenChequesInLocalCur : 0,
                                                    TotFutureOpenChequesInLocalCur = (!fullAccountingSettings.IsSecurityLevelActivated
                                                             || (fullAccountingSettings.IsSecurityLevelActivated && chartOfAccount.ChartOfAccountSecurityLevel == null)
-                                                            || (fullAccountingSettings.IsSecurityLevelActivated && chartOfAccount.ChartOfAccountSecurityLevel <= loggedUser.SecurityLevel)) ? MoreDatas.TotFutureOpenChequesInLocalCur : 0,
+                                                            || (fullAccountingSettings.IsSecurityLevelActivated && chartOfAccount.ChartOfAccountSecurityLevel <= (loggedUser.SecurityLevel ?? 0))) ? MoreDatas.TotFutureOpenChequesInLocalCur : 0,
 
                                                }) ;
             return query;

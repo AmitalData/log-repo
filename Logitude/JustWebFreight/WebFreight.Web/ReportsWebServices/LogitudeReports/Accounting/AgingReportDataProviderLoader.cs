@@ -129,7 +129,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
         {
             UserPM loggedUer = GetLoggerUser();
             if (!loggedUer.IsCustomerCare)
-                return resultedPeriods.Where(d => (d.ChartOfAccountSecurityLevel <= loggedUer.SecurityLevel) || d.ChartOfAccountSecurityLevel == null).ToList();
+                return resultedPeriods.Where(d => (d.ChartOfAccountSecurityLevel <= (loggedUer.SecurityLevel ?? 0)) || d.ChartOfAccountSecurityLevel == null).ToList();
             else return resultedPeriods;
         }
         private  List<PeriodMExtended> FilterPeriodsBetweenTwoValues(List<PeriodMExtended> resultedPeriods, Boolean useLocalBalanceInDue)
