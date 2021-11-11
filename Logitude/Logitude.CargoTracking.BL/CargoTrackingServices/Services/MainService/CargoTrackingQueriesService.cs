@@ -353,7 +353,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.MainService
 
 			var condishins = $@"
             
-				OrderTable.UpdateDate > '{lastUpdate}'
+				OrderTable.AutomaticLastUpdateDate > '{lastUpdate}'
 			
             ";
 			return condishins;

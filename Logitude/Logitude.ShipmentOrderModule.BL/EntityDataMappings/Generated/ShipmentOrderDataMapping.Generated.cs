@@ -74,7 +74,8 @@ namespace Logitude.ShipmentOrderModule.BL.EntityDataMappings
 	         Volume, 
 	         CustomerId, 
 	         LastExceptionDescription, 
-	         LastExceptionDate,
+	         LastExceptionDate, 
+	         AutomaticLastUpdateDate,
 	      }
 
 
@@ -152,7 +153,7 @@ namespace Logitude.ShipmentOrderModule.BL.EntityDataMappings
 	         OriginPortCode, 
 	         DestinationPortCode, 
 	         GatewayCode, 
-	         IncotermName,
+	         IncotermName, 
 	         LastExceptionDescription, 
 	         LastExceptionDate,
 	      }

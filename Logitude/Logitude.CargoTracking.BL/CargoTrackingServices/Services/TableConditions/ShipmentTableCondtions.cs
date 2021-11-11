@@ -351,7 +351,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
             {
                 LastUpdate = ServiceHelper.GetTableLastUpdate(cargoTrackingDataBaseArgs.BuildCargoArgs.Table.Main_CargoTracking_TableName, cargoTrackingDataBaseArgs.BuildCargoArgs.DestinationConnectionString);
 
-                string lastUpdateCondition = $" (SHO.UpdateDate > '{LastUpdate}')";
+                string lastUpdateCondition = $" (SHO.AutomaticLastUpdateDate > '{LastUpdate}')";
                 whereConditions.Add(lastUpdateCondition);
             }
             else
