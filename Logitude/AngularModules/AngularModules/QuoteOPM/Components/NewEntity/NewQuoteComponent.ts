@@ -1,6 +1,7 @@
 import { Component, isDevMode } from "@angular/core";
 import { AbstractControl, FormArray, FormGroup } from "@angular/forms";
 import { PackageTypeList } from "Common/EntityLists/PackageTypeList";
+import { LogitudeWindow } from "Controls/Windows/LogitudeWindow";
 import { add } from "cypress/types/lodash";
 import { SessionLocator } from "Infrastructure/Utilities/SessionLocator";
 import { MessageService } from "primeng/api";
@@ -41,8 +42,10 @@ export class NewQuoteComponent {
         if (!this.ValidateService.validate(this.formGroup)) return;
         if (this.formGroup.invalid) return;
 
+        const currentWindow:LogitudeWindow = SessionLocator.SelectedSession.CurrentWindow;
+
         try {
-            SessionLocator.SelectedSession.CurrentWindow.StartBusyIndicator('Create new quote... ');
+            currentWindow.StartBusyIndicator('Create new quote... ');
 
             this.addAutoProperties();
             this.addProperty();
@@ -52,11 +55,11 @@ export class NewQuoteComponent {
             this.newQuoteDataService.creatingNewQuote(this.EntityPM)
                 .then(() => SessionLocator.SelectedSession.CloseCurrentWindowEmit('OK'))
                 .catch((err: string[]) => this.msg.add({ severity: 'error', summary: 'Create new quote failed', detail: err.join(', ') }))
-                .finally(() => SessionLocator.SelectedSession.CurrentWindow.StopBusyIndicator())
+                .finally(() => currentWindow.StopBusyIndicator())
 
-        } catch (err: any) {
+        } catch(err) {
             this.msg.add({ severity: 'error', summary: 'Create new quote failed', detail: err.join(', ') });
-            SessionLocator.SelectedSession.CurrentWindow.StopBusyIndicator()
+            currentWindow.StopBusyIndicator()
         }
         // console.log(this.EntityPM)
     }
