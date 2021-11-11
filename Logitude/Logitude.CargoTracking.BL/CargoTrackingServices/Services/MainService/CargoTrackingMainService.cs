@@ -898,7 +898,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
         private void BuildShipments(UpdateCargoTrackingRecords updateCargoTrackingRecords)
         {
 
-            if (true)
+            if (false)
             {
                 BuildShipmentsNew(updateCargoTrackingRecords);
             }

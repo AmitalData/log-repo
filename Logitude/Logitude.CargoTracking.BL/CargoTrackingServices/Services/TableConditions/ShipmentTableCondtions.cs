@@ -337,7 +337,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
 
                 "'O' as EntityType," +
                 "CreateDate as CreateDateTime," +
-                "UpdateDate as AutomaticLastUpdateDate," +
+                "(case when AutomaticLastUpdateDate is null then UpdateDate when AutomaticLastUpdateDate is not null then AutomaticLastUpdateDate end) as AutomaticLastUpdateDate," +
                 "PickupActualDateTime as PickupDate," +
                 "PickupEstimatedDateTime as PickupEstimationDate";
 
