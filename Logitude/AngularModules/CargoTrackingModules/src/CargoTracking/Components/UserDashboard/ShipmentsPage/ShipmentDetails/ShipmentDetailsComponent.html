@@ -339,14 +339,15 @@ Shipment.ShipmentList.ArrivalDate |
     </div>-->
                 <div>
                     <div class="title">quantity</div>
-                    <div *ngIf="ShipmentOrder == null" class="description">{{ ShipmentPM?.NumberOfPackages || 0}} units</div>
-                    <div *ngIf="ShipmentOrder != null" class="description">{{ ShipmentOrder?.Quantity || 0}} units</div>
+                    <div *ngIf="ShipmentOrder == null" class="description">{{ ShipmentPM?.NumberOfPackages || 0}} Units</div>
+                    <div *ngIf="ShipmentOrder != null" class="description">{{ ShipmentOrder?.Quantity || 0}} Units</div>
                 </div>
                 <div>
                     <div class="title">weight</div>
                     <div class="description">
                         {{Shipment.ShipmentList.GrossWeight || 0 }}
                         {{Shipment.ShipmentList.GrossWeightUnitCode||''}}
+                        <span *ngIf="!Shipment.ShipmentList.GrossWeightUnitCode"> KG</span>
                     </div>
                 </div>
                 <div *ngIf="Shipment.ShipmentList.EntityType != 'O'">
@@ -398,19 +399,20 @@ Shipment.ShipmentList.ArrivalDate |
                 </div>
                 <div>
                     <div class="title">quantity</div>
-                    <div *ngIf="ShipmentOrder == null" class="description">{{ShipmentPM?.NumberOfPackages || 0}} unit</div>
-                    <div *ngIf="ShipmentOrder != null" class="description">{{ ShipmentOrder?.Quantity || 0}} units</div>
+                    <div *ngIf="ShipmentOrder == null" class="description">{{ShipmentPM?.NumberOfPackages || 0}} Units</div>
+                    <div *ngIf="ShipmentOrder != null" class="description">{{ ShipmentOrder?.Quantity || 0}} Units</div>
                 </div>
                 <div>
                     <div class="title">weight</div>
                     <div class="description">
-                        {{Shipment.ShipmentList.GrossWeight }}
+                        {{Shipment.ShipmentList.GrossWeight  || 0}}
                         {{Shipment.ShipmentList.GrossWeightUnitCode||''}}
+                        <span *ngIf="!Shipment.ShipmentList.GrossWeightUnitCode"> KG</span>
                     </div>
                 </div>
                 <div>
                     <div class="title">volume</div>
-                    <div class="description">{{Shipment.ShipmentList.Volume }}</div>
+                    <div  style="display:inline" class="description">{{Shipment.ShipmentList.Volume || 0 }}</div><span style="display:inline">  CBM</span>
                 </div>
                 <div *ngIf=" Shipment.ShipmentList.EntityType != 'O'">
                     <div class="title">storage site</div>
