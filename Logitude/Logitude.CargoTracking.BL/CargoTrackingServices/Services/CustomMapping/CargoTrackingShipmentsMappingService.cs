@@ -1,5 +1,6 @@
 ﻿using Logitude.CargoTracking.BL.CargoTrackingServices.HelperClasses;
 using Logitude.CargoTracking.BL.CloseTables;
+using Logitude.CargoTracking.Data.EntityLists;
 using Logitude.CargoTracking.Data.EntityPOCOs;
 using System;
 using System.Collections.Generic;
@@ -19,8 +20,6 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CustomMapping
             FillOrderFeilds(item, row);
             item.IsMainRecord = GetIsMainRecord(Codes.OrderType, row);
             item.ShipmentTypeCode = GetShipmentTypeCodeByTransportMode(row.OrderTransportModeId);
-            SetMilestonesDoneFields(item);
-            SetCurrentMilestone(item);
             SetOrderExceptionDescription(item, row);
             cargoTrackingShipmentContext.CargoTrackingShipment = item;
             return cargoTrackingShipmentContext;
@@ -35,8 +34,6 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CustomMapping
             FillForwardingFeilds(item, row);
             SetForwardingWarehouseFeilds(item, row);
             SetForwardingCustomerReference(item, row);
-            SetMilestonesDoneFields(item);
-            SetCurrentMilestone(item);
             item.IsMainRecord = GetIsMainRecord(Codes.ForwardingType, row);
             SetForwardingExceptionDescription(item, row);
             cargoTrackingShipmentContext.CargoTrackingShipment = item;
@@ -51,8 +48,6 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CustomMapping
             FillCustomFeilds(item, row);
             SetCustomWarehouseFeilds(item, row);
             SetCustomCustomerReference(item, row);
-            SetMilestonesDoneFields(item);
-            SetCurrentMilestone(item);
             item.IsMainRecord = GetIsMainRecord(Codes.CustomType, row);
             SetCustomExceptionDescription(item, row);
             cargoTrackingShipmentContext.CargoTrackingShipment = item;
@@ -130,29 +125,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CustomMapping
             }
             return false;
         }
-        private static void SetMilestonesDoneFields(CargoTrackingShipment item)
-        {
-            item.PickupDone = item.PickupDate.HasValue;
-            item.BookingDone = item.BookingDate.HasValue;
-            item.CreatedDone = true;/*item.CreateDate.HasValue;*/
-            item.DepartureDone = item.DepartureDate.HasValue;
-            item.ArrivalDone = item.ArrivalDate.HasValue;
-            item.FromWarehouseDone = item.FromWarehouseDate.HasValue && item.DirectionId == Codes.ExportDirection;
-            item.ToWarehouseDone = item.ToWarehouseDate.HasValue && item.DirectionId == Codes.ImportDirection;
-            item.CustomsPaymentDone = item.CustomsPaymentDate.HasValue;
-            item.ClearanceDone = item.ClearanceDate.HasValue;
-            item.DeliveredDone = item.DeliveredDate.HasValue;
-            item.DeliveryDone = item.DeliveryDate.HasValue;
-            item.AssignedTruckerDone = item.AssignedTruckerDate.HasValue;
-            item.AssignedCustomsAgentDone = item.AssignedCustomsAgentDate.HasValue;
-            item.GoodsClassificationDone = item.GoodsClassificationDate.HasValue;
-            item.DocumentInspectionDone = item.DocumentInspectionDate.HasValue;
-            item.GatepassArrivedDone = item.GatepassArrivedDate.HasValue;
-            item.PaymentReceivedDone = item.PaymentReceivedDate.HasValue;
-            item.PaymentRequiredDone = item.PaymentRequiredDate.HasValue;
-
-
-        }
+        
 
         private void FillOrderFeilds(CargoTrackingShipment item, CargoTrackingShipmentQueryResult row)
         {
@@ -413,101 +386,6 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CustomMapping
             }
         }
 
-        private static void SetCurrentMilestone(CargoTrackingShipment item)
-        {
-            if (item.DeliveredDone.HasValue && item.DeliveredDone.Value)
-            {
-                item.CurrentMilestoneCode = CargoTrackingMilestoneValues.Delivered;
-                item.CurrentMilestoneDate = item.DeliveredDate;
-            }
-            else if (item.DeliveryDone)
-            {
-                item.CurrentMilestoneCode = CargoTrackingMilestoneValues.DeliveryOut;
-                item.CurrentMilestoneDate = item.DeliveryDate;
-            }
-            else if (item.AssignedTruckerDone)
-            {
-                item.CurrentMilestoneCode = CargoTrackingMilestoneValues.AssignedToTrucker;
-                item.CurrentMilestoneDate = item.AssignedTruckerDate;
-            }
-            else if (item.GatepassArrivedDone.HasValue && item.GatepassArrivedDone.Value)
-            {
-                item.CurrentMilestoneCode = CargoTrackingMilestoneValues.GatepassArrived;
-                item.CurrentMilestoneDate = item.GatepassArrivedDate;
-            }
-            else if (item.ClearanceDone.HasValue && item.ClearanceDone.Value)
-            {
-                item.CurrentMilestoneCode = CargoTrackingMilestoneValues.Clearance;
-                item.CurrentMilestoneDate = item.ClearanceDate;
-            }
-            else if (item.CustomsPaymentDone.HasValue && item.CustomsPaymentDone.Value)
-            {
-                item.CurrentMilestoneCode = CargoTrackingMilestoneValues.CustomsPayment;
-                item.CurrentMilestoneDate = item.CustomsPaymentDate;
-            }
-            else if (item.CustomsPaymentDone.HasValue && item.CustomsPaymentDone.Value)
-            {
-                item.CurrentMilestoneCode = CargoTrackingMilestoneValues.CustomsPayment;
-                item.CurrentMilestoneDate = item.CustomsPaymentDate;
-            }
-            else if (item.PaymentReceivedDone.HasValue && item.PaymentReceivedDone.Value)
-            {
-                item.CurrentMilestoneCode = CargoTrackingMilestoneValues.PaymentReceived;
-                item.CurrentMilestoneDate = item.PaymentReceivedDate;
-            }
-            else if (item.PaymentRequiredDone.HasValue && item.PaymentRequiredDone.Value)
-            {
-                item.CurrentMilestoneCode = CargoTrackingMilestoneValues.PaymentRequested;
-                item.CurrentMilestoneDate = item.PaymentRequiredDate;
-            }
-            else if (item.DocumentInspectionDone.HasValue && item.DocumentInspectionDone.Value)
-            {
-                item.CurrentMilestoneCode = CargoTrackingMilestoneValues.DocumentInspection;
-                item.CurrentMilestoneDate = item.PaymentRequiredDate;
-            }
-            else if (item.GoodsClassificationDone.HasValue && item.GoodsClassificationDone.Value)
-            {
-                item.CurrentMilestoneCode = CargoTrackingMilestoneValues.GoodsClassification;
-                item.CurrentMilestoneDate = item.GoodsClassificationDate;
-            }
-            else if (item.AssignedCustomsAgentDone.HasValue && item.AssignedCustomsAgentDone.Value)
-            {
-                item.CurrentMilestoneCode = CargoTrackingMilestoneValues.AssignedToCustomsBroker;
-                item.CurrentMilestoneDate = item.AssignedCustomsAgentDate;
-            }
-            else if (item.ToWarehouseDone.HasValue && item.ToWarehouseDone.Value)
-            {
-                item.CurrentMilestoneCode = CargoTrackingMilestoneValues.ToWarehouse;
-                item.CurrentMilestoneDate = item.ToWarehouseDate;
-            }
-
-            else if (item.ArrivalDone.HasValue && item.ArrivalDone.Value)
-            {
-                item.CurrentMilestoneCode = CargoTrackingMilestoneValues.Arrival;
-                item.CurrentMilestoneDate = item.ArrivalDate;
-
-            }
-            else if (item.DepartureDone.HasValue && item.DepartureDone.Value)
-            {
-                item.CurrentMilestoneCode = CargoTrackingMilestoneValues.Departure;
-                item.CurrentMilestoneDate = item.DepartureDate;
-
-            }
-            else if (item.PickupDone.HasValue && item.PickupDone.Value)
-            {
-                item.CurrentMilestoneCode = CargoTrackingMilestoneValues.Pickup;
-                item.CurrentMilestoneDate = item.PickupDate;
-            }
-            else if (item.BookingDone.HasValue && item.BookingDone.Value)
-            {
-                item.CurrentMilestoneCode = CargoTrackingMilestoneValues.Booking;
-                item.CurrentMilestoneDate = item.BookingDate;
-            }
-            else if (item.CreatedDone.HasValue && item.CreatedDone.Value)
-            {
-                item.CurrentMilestoneCode = CargoTrackingMilestoneValues.Created;
-                item.CurrentMilestoneDate = item.CreateDate;
-            }
-        }
+        
     }
 }

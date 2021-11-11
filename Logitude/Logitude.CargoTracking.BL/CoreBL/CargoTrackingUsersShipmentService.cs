@@ -1,4 +1,5 @@
-﻿using Logitude.CargoTracking.Data;
+﻿using Logitude.CargoTracking.BL.EntityQueryServices;
+using Logitude.CargoTracking.Data;
 using Logitude.CargoTracking.Data.EntityListQueryServices;
 using Logitude.CargoTracking.Data.EntityLists;
 using Logitude.CargoTracking.Def.DataContracts;
@@ -21,7 +22,10 @@ namespace Logitude.CargoTracking.BL.CoreBL
         private List<CargoTrackingShipmentList> GetUserShipments(int pageIndex, int pageSize, CargoTrackingShipmentFilters shipmentFilters)
         {
             CargoTrackingShipmentSearchListQueryService shipmentSearchQuery = GetCargoTrackingShipmentSearchQuery(shipmentFilters);
-            return shipmentSearchQuery.GetFilteredShipments(pageIndex, pageSize, shipmentFilters);
+            var shipments = shipmentSearchQuery.GetFilteredShipments(pageIndex, pageSize, shipmentFilters);
+            CargoTrackingShipmentQueryService cargoTrackingShipmentQueryService = new CargoTrackingShipmentQueryService(shipmentFilters.Tenant);
+            cargoTrackingShipmentQueryService.SetFutureMilstone(shipments);
+            return shipments;
         }
         private int GetAllShipmentsCountForFirstPageOnly(int pageIndex, CargoTrackingShipmentFilters shipmentFilters)
         {

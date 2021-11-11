@@ -14,6 +14,8 @@ using Logitude.CargoTracking.Data.EntityListQueryServices;
 using Logitude.CargoTracking.Data.EntityLists;
 using Logitude.CargoTracking.Data.EntityPOCOs;
 using System.Linq;
+using Logitude.CargoTracking.BL.EntityQueryServices;
+
 
 namespace CommunicationWorkerRole
 {
@@ -21,6 +23,8 @@ namespace CommunicationWorkerRole
     {
         public ICargoTrackingContext MyContext;
         public CargoTrackingShipmentSearchListQueryService  ShipmentSearchQuery;
+        public CargoTrackingShipmentQueryService cargoTrackingShipmentQueryService;
+
         public override void Run()
         {
             while (IsRunning)
@@ -42,7 +46,7 @@ namespace CommunicationWorkerRole
         public void GetWarmShipments()
         {
             CargoTrackingShipmentSearch shipmentSearch = ShipmentSearchQuery.GetFirstShipmentSearchesForWarmCargoTracking();
-            List<CargoTrackingShipmentList> shipments = ShipmentSearchQuery.GetShipments(shipmentSearch.SearchFields, shipmentSearch.Tenant).OrderByDescending(s => s.CreateDate).ToList();
+            List<CargoTrackingShipmentList> shipments = cargoTrackingShipmentQueryService.GetShipments(shipmentSearch.SearchFields, shipmentSearch.Tenant).OrderByDescending(s => s.CreateDate).ToList();
 
         }
 
@@ -51,6 +55,7 @@ namespace CommunicationWorkerRole
         {
             MyContext = CargoTrackingContext.GetContext(0);
             ShipmentSearchQuery = new CargoTrackingShipmentSearchListQueryService(MyContext);
+            cargoTrackingShipmentQueryService = new CargoTrackingShipmentQueryService(MyContext);
             return base.OnStart();
 
         }
