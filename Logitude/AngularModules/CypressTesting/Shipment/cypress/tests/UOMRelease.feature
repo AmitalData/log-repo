@@ -50,3 +50,8 @@ Feature: UOM
         Given the user navigates to payable wizerd
         And a payable with "AFT" as a charges type
         Then the Quantity should should has "227" as a value
+
+    Scenario: Add Payable
+        Given the user navigates to payable wizerd
+        And a payable with "AW" as a charges type
+        Then the Quantity should should has "1" as a value
