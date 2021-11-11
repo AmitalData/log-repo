@@ -132,13 +132,13 @@ namespace Logitude.Server.Tools.QueueService
                     {
                         
                         
-                        queueService.Send(messageProperties, _QueueSendModel.Tenant, _QueueSendModel.Delay, _QueueSendModel.TenantPriority ?? 7);
+                        queueService.Send(messageProperties, _QueueSendModel.Tenant, _QueueSendModel.Delay, _QueueSendModel.TenantPriority ?? 89);
                         LogMessagingUtil.Instance.AppendLine("***** Delay _QueueSendModel.Delay " + _QueueSendModel.Delay.ToString());
 
                     }
                     else
                     {
-                        queueId = queueService.Send(messageProperties, _QueueSendModel.Tenant, null, _QueueSendModel.TenantPriority ?? 7);
+                        queueId = queueService.Send(messageProperties, _QueueSendModel.Tenant, null, _QueueSendModel.TenantPriority ?? 89);
                     }
                     
                     LogMessagingUtil.Instance.AppendLine("CustomDbQueueService:CreateNew:SBQueueName=" + _SBQueueName + "QMId=" + queueId);
