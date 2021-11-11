@@ -93,10 +93,10 @@ export class BaseSelectors extends RegexSelectors {
     public static readonly ContainSettings = "Settings"
     public static readonly ContainWarehouse = "Warehouse"
     public static readonly ContainVendor = "Vendor"
-
-
     //#endregion
+
     //#region general
+    public static readonly TooltipButton = '[id^=TooltipButton]'
     public static readonly ToggleButtonDisabledClass = 'ToggleButton ToggleButtonDisabled';
     public static readonly ToggleButtonClassName = 'ToggleButton';
     public static readonly ToggleButtonClass = '.ToggleButton';

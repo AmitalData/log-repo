@@ -96,11 +96,18 @@ Feature: Copy AP Invoice Approve, Cancel Approval and Void
         When press on menu button
         Then all buttons in menu should not be dim except void button
 
-    Scenario: Cancel the APInvoice approvement
-        When cancel the invoice approvement
-        Then the invoice should cancel successfully
+    Scenario: Assert invoice details screen fields after approving the invoice
+        Then the details screen fields should be disabled
 
-    Scenario: Void APInvoice
-        When void invoice
-        Then the invoice should void successfully
-        And the status value should be "Void"
+    Scenario: Assert link of the invoice exsit
+        Given navigates payables tab
+        Then the link of the invoice should be exsit
+
+# Scenario: Cancel the APInvoice approvement
+#     When cancel the invoice approvement
+#     Then the invoice should cancel successfully
+
+# Scenario: Void APInvoice
+#     When void invoice
+#     Then the invoice should void successfully
+#     And the status value should be "Void"

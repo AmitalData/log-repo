@@ -85,7 +85,6 @@ Feature: AP Invoice Approve, Cancel Approval and Void
     Scenario: Approve APInvoice
         When approve invoice
         Then the invoice should approve successfully
-        And the status value should be "Approved"
 
     Scenario: Cancel the APInvoice approvement
         When cancel the invoice approvement
@@ -94,4 +93,3 @@ Feature: AP Invoice Approve, Cancel Approval and Void
     Scenario: Void APInvoice
         When void invoice
         Then the invoice should void successfully
-        And the status value should be "Void"

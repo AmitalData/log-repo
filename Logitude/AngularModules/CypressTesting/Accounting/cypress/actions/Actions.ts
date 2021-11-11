@@ -191,6 +191,20 @@ export function AssertARInvoiceMenuButtonsEnabled() {
     BaseAssertion.AssertElementDisabled(AccountingSelectors.ARInvoiceReTransfer, BaseSelectors.BeDisabled)
     BaseAssertion.AssertElementDisabled(AccountingSelectors.ARInvoiceVoidButton, BaseSelectors.NotBeDisabled)
 }
+
+export function AssertAPInvoiceDetailsFieldsDisabled() {
+    BaseAssertion.AssertElementDisabled(AccountingSelectors.APInvoiceVendor, BaseSelectors.BeDisabled)
+    BaseAssertion.AssertElementDisabled(AccountingSelectors.APInvoicePaymentTerm, BaseSelectors.BeDisabled)
+    BaseAssertion.AssertElementDisabled(AccountingSelectors.APInvoiceDueDate, BaseSelectors.BeDisabled)
+    BaseAssertion.AssertElementDisabled(AccountingSelectors.APInvoiceAmountInInvoice, BaseSelectors.BeDisabled)
+    BaseAssertion.AssertElementDisabled(AccountingSelectors.APInvoiceInvoiceCurrency, BaseSelectors.BeDisabled)
+    BaseAssertion.AssertElementDisabled(AccountingSelectors.APInvoiceInvoiceExchangeRate, BaseSelectors.BeDisabled)
+    BaseAssertion.AssertElementDisabled(AccountingSelectors.APInvoiceInvoiceNumber, BaseSelectors.BeDisabled)
+    BaseAssertion.AssertElementDisabled(AccountingSelectors.APInvoiceVATNumber, BaseSelectors.BeDisabled)
+    BaseAssertion.AssertElementDisabled(AccountingSelectors.APInvoiceInvoiceDate, BaseSelectors.BeDisabled)
+    BaseAssertion.AssertElementDisabled(AccountingSelectors.APInvoiceVatType, BaseSelectors.BeDisabled)
+    BaseAssertion.AssertElementDisabled(AccountingSelectors.AddAPInvoiceLine, BaseSelectors.BeDisabled)
+}
 //#endregion
 
 //#region ARInvoice
