@@ -35,7 +35,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;General&quot;"
-  Code="&quot;81bb&quot;"
+  Code="&quot;46b1&quot;"
   Name="&quot;General&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Generals&quot;"
@@ -5088,6 +5088,12 @@
       LocalDefaultText="&quot;Shipment Orders&quot;"
       TextCodeTypeCode="&quot;MH&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.MH.TasksApp&quot;"
+      DefaultText="&quot;Tasks App&quot;"
+      LocalDefaultText="&quot;Tasks App&quot;"
+      TextCodeTypeCode="&quot;MH&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature
@@ -7131,6 +7137,15 @@
       FeatureTextCodeCode="&quot;General.Features.SHIPMENTORDERS&quot;"
       FeatureDefaultText="&quot;Shipment Orders&quot;"
       IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;TASKSAPP&quot;"
+      FeatureTypeCode="&quot;MENU&quot;"
+      FeatureTextCodeCode="&quot;General.Features.TASKSAPP&quot;"
+      FeatureDefaultText="&quot;Tasks App&quot;"
+      IsPackagable="false"
       IsOld="false"
       IsCoreFeature="false"
       IsBusinessUnitEnabled="false" />
