@@ -201,7 +201,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
                     case CargoTrackingMilestoneValues.FromWarehouse:
                         if (!IsFieldNullOrEmpty(tableRow, "FromWarehouseDone") && !tableRow["FromWarehouseDone"].Equals("False"))
                         {
-                            currentMilestoneArgs.date = tableRow[""];
+                            currentMilestoneArgs.date = tableRow["FromWarehouseDate"];
                             CheckMilestone(currentMilestoneArgs);
                         }
                         break;
