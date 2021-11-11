@@ -61,51 +61,66 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CustomMapping
         }
         private void SetOrderExceptionDescription(CargoTrackingShipment item, CargoTrackingShipmentQueryResult row)
         {
-            item.CurrentMilestoneExceptions = "";
+            item.CurrentMilestoneExceptions = null;
+            var exceptions = "";
             if (row.OrderLastExceptionDate.HasValue)
-                item.CurrentMilestoneExceptions = row.OrderLastExceptionDate?.ToString() + ", ";
-            item.CurrentMilestoneExceptions += row.OrderLastExceptionDescription;
-
+                exceptions = row.OrderLastExceptionDate?.ToString();
+            if (!string.IsNullOrEmpty(row.OrderLastExceptionDescription))
+            {
+                if (row.OrderLastExceptionDate.HasValue)
+                    exceptions += ",";
+                exceptions += row.OrderLastExceptionDescription;
+            }
+            if (!string.IsNullOrEmpty(exceptions))
+            {
+                item.CurrentMilestoneExceptions = exceptions;
+            }
         }
 
         private void SetForwardingExceptionDescription(CargoTrackingShipment item, CargoTrackingShipmentQueryResult row)
         {
-            item.CurrentMilestoneExceptions = "";
+            item.CurrentMilestoneExceptions = null;
             if (item.ClearanceDone.HasValue && item.ClearanceDone.Value)
             {
                 return;
             }
+            var exceptions = "";
             if (row.ForwardingExceptionDate.HasValue)
-                item.CurrentMilestoneExceptions = row.ForwardingExceptionDate?.ToString() + ", ";
-            item.CurrentMilestoneExceptions += row.ForwardingCurrentMilestoneExceptionDescription;
+                exceptions = row.ForwardingExceptionDate?.ToString();
+            if (!string.IsNullOrEmpty(row.ForwardingCurrentMilestoneExceptionDescription))
+            {
+                if (row.ForwardingExceptionDate.HasValue)
+                    exceptions += ",";
+                exceptions += row.ForwardingCurrentMilestoneExceptionDescription;
+            }
+            if (!string.IsNullOrEmpty(exceptions))
+            {
+                item.CurrentMilestoneExceptions = exceptions;
+            }
 
         }
         private void SetCustomExceptionDescription(CargoTrackingShipment item, CargoTrackingShipmentQueryResult row)
         {
-            item.CurrentMilestoneExceptions = "";
+            item.CurrentMilestoneExceptions = null;
             if (item.ClearanceDone.HasValue && item.ClearanceDone.Value)
             {
                 return;
             }
+            var exceptions = "";
             if (row.CustomExceptionDate.HasValue)
-                item.CurrentMilestoneExceptions = row.CustomExceptionDate?.ToString() + ", ";
-            item.CurrentMilestoneExceptions += row.CustomCurrentMilestoneExceptionDescription;
-        }
-
-
-
-        private string GetString(object cell)
-        {
-            if (cell != null)
+                exceptions = row.CustomExceptionDate?.ToString();
+            if (!string.IsNullOrEmpty(row.CustomCurrentMilestoneExceptionDescription))
             {
-                return cell.ToString();
+                if (row.CustomExceptionDate.HasValue)
+                    exceptions += ",";
+                exceptions += row.CustomCurrentMilestoneExceptionDescription;
             }
-            else
+            if (!string.IsNullOrEmpty(exceptions))
             {
-                return null;
+                item.CurrentMilestoneExceptions = exceptions;
             }
-        }
 
+        }
         private static string GetShipmentTypeCodeByTransportMode(object data)
         {
             var transportMode = (string)data;
