@@ -298,7 +298,7 @@ export class AutomationsSettingsComponent implements OnInit {
         this.SetObjectTableInWindoWArgs(windowArgs);
 
         windowArgs.DataViewModel = this;
-        windowArgs.AutomationPM = newEntity;
+        windowArgs.AutomationPM = ServiceHelper.CloneEntityPM(newEntity);
         windowArgs.Mode = "Add";
         windowArgs.IsNewEntity = true;
         var logWindow = new LogitudeWindow();

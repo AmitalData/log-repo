@@ -1475,7 +1475,7 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
 
     BuildAutomationSetValue() {
         this.AutomationSetValueLists = [];
-        var automationSetValueLists = this.AutomatedBackupClass.AutomationSetValueLists;
+        var automationSetValueLists =this.AutomatedBackupClass?.AutomationSetValueLists == null?null:JSON.parse(JSON.stringify(this.AutomatedBackupClass.AutomationSetValueLists));
         if (automationSetValueLists) {
             automationSetValueLists.forEach((item) => {
                 this.AutomationSetValueLists.push(new AutomationSetValueViewModel(item, this));
