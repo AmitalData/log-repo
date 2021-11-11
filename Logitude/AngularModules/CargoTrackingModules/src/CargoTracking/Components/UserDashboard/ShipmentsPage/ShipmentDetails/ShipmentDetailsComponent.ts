@@ -20,6 +20,7 @@ import { CargoTrackingBrandingDataExtendedService } from 'src/CargoTracking/Serv
 import { ServiceHelper } from 'src/CargoTracking/Utilities/ServiceHelper';
 import { ServiceResponse } from 'src/CargoTracking/DataContracts/ServiceResponse';
 
+const mobileScreenMaxWidth = 470;
 @Component({
     selector: 'ShipmentDetailsComponent',
     templateUrl: './ShipmentDetailsComponent.html',
@@ -30,6 +31,7 @@ export class ShipmentDetailsComponent implements OnInit,AfterViewInit
 {
 
     @ViewChild('SliderWrapper') SliderWrapperElement: ElementRef;
+    @ViewChild('slider') SliderElement: ElementRef;
     @ViewChild('RoutingSliderWrapper') RoutingSliderWrapperElement: ElementRef;
 
 
@@ -311,24 +313,36 @@ export class ShipmentDetailsComponent implements OnInit,AfterViewInit
     InitSlider()
     {
         if(!this.SliderWrapperElement)
-        return;
-        var PAGERS_WIDTH = 200; // 100 * 2 pager
-        var mobilePagersWidth = 30; // 100 * 2 pager
-        var screenwidth = window.innerWidth;
+            return;
 
-        var sliderWrapperWidth = this.SliderWrapperElement.nativeElement.offsetWidth;
-        const maxWidthForMobileScreen = 470;
-        if (screenwidth > maxWidthForMobileScreen)
-            var count = Math.floor((sliderWrapperWidth - PAGERS_WIDTH) / this.sliderCardWidth);
+        this.SetSliderVisibleCardsWrapperWidth();
 
-        if (screenwidth <= maxWidthForMobileScreen)
-            var mobileCount = this.CalculateVisibleSliderCardsCountForMobile(sliderWrapperWidth, mobilePagersWidth, this.sliderMobileCardWidth);
-        this.sliderVisibleCardsCount = count == undefined ? mobileCount: count;
-
-        this.sliderVisibleCardsWidth = count * this.sliderCardWidth;
         this.sliderMarginCardCount = 0;
-        this.sliderMarginLeft = screenwidth < maxWidthForMobileScreen ? (this.sliderCardWidth - 60) * -1 : 0; // mobile: add
+        this.sliderMarginLeft = 0;
+    }
 
+    private SetSliderVisibleCardsWrapperWidth()
+    {
+        const webPagersWidth = 200;
+        const mobilePagersWidth = 60;
+
+        const sliderWrapperWidth = this.SliderWrapperElement.nativeElement.offsetWidth;
+
+        const extraOffset = 20;
+        if (this.IsMobileView)
+            var mobileCount = Math.floor((sliderWrapperWidth - mobilePagersWidth - extraOffset) / this.sliderMobileCardWidth);
+
+        else
+            var webCount = Math.floor((sliderWrapperWidth - webPagersWidth) / this.sliderCardWidth);
+
+        this.sliderVisibleCardsCount = mobileCount || webCount;
+
+        if(this.IsMobileView){
+            const extraOffset = 10;
+            this.sliderVisibleCardsWidth = this.sliderMobileCardWidth * this.sliderVisibleCardsCount + extraOffset;
+        }else{
+            this.sliderVisibleCardsWidth = this.sliderVisibleCardsCount * this.sliderCardWidth;
+        }
     }
 
     InitRoutingSlider() {
@@ -441,24 +455,13 @@ export class ShipmentDetailsComponent implements OnInit,AfterViewInit
     SliderCards: MilestoneCard[] = [];
     sliderMarginLeft: number = 0;
     sliderMarginCardCount: number = 0;
-    sliderCardWidth: number = 200;
-    sliderMobileCardWidth: number = 145;
+    sliderCardWidth: number = 164;
+    sliderMobileCardWidth: number = 154;
     sliderVisibleCardsCount: number = 5;
     sliderVisibleCardsWidth: number = 0;
     NoMilstonesFound: boolean = false;
     BuildSliderCards()
     {
-        // this.Shipment.Milestones.forEach((milstone:Milestone) => {
-        //     var newCard = new MilestoneCard();
-        //     newCard.Code = milstone.Code;
-        //     newCard.Date = milstone.EstimationDate || milstone.Date;
-        //     newCard.Title = milstone.Name;
-        //     newCard.Description = milstone.Notes;
-        //     newCard.IsDimmed = milstone.IsEstimation;
-        //     newCard.IsActive = milstone.Code == this.cargoTrackingShipmentPM.CurrentMilestoneCode;
-        //     this.SliderCards.push(newCard);
-        // });
-
         if (!this.cargoTrackingShipmentPM.Milestones)
             return;
         this.SliderCards = this.cargoTrackingShipmentPM.Milestones
@@ -491,11 +494,20 @@ export class ShipmentDetailsComponent implements OnInit,AfterViewInit
                 return newCard;
             });
         this.SetNoMilstonesFound();
-        // .sort((a, b) => {
-        //     if (a.Date > b.Date) return 1;
-        //     if (a.Date < b.Date) return -1;
-        //      return 0;
-        //     });
+
+        this.ScrollIntoLastSliderCard();
+
+
+    }
+    ScrollIntoLastSliderCard()
+    {
+        const hiddenCardsCount = this.SliderCards.length - this.sliderVisibleCardsCount;
+        const width = this.IsMobileView ? this.sliderMobileCardWidth : this.sliderCardWidth;
+
+        if(hiddenCardsCount > 0){
+            this.sliderMarginLeft = hiddenCardsCount * width * -1;
+            this.sliderMarginCardCount = hiddenCardsCount;
+        }
     }
     SetNoMilstonesFound() {
         if (this.SliderCards.length == 0) this.NoMilstonesFound = true;
@@ -509,31 +521,34 @@ export class ShipmentDetailsComponent implements OnInit,AfterViewInit
         if (dir == 'left' && ((this.sliderMarginCardCount + this.sliderVisibleCardsCount) >= this.SliderCards.length) || (this.sliderVisibleCardsCount >= this.SliderCards.length))
             return;
 
-        var margin = this.sliderMarginLeft;
+        let margin = this.sliderMarginLeft;
+        const cardWidth = this.IsMobileView ? this.sliderMobileCardWidth : this.sliderCardWidth
+
         // inc\dec
         if (dir == 'left') {
-            margin -= this.sliderCardWidth;
+            margin -= cardWidth;
             this.sliderMarginCardCount++;
         }
         else {
-            margin += this.sliderCardWidth;
+            margin += cardWidth;
             this.sliderMarginCardCount--;
         }
 
         // limit boundary
         if (margin > 0)
             this.sliderMarginLeft = 0;
-        else if (margin < this.sliderVisibleCardsWidth * -1)
-            this.sliderMarginLeft = this.sliderVisibleCardsWidth;
         else
             this.sliderMarginLeft = margin;
 
-        var screenwidth = window.innerWidth;
-        if (screenwidth < 470)
-            this.sliderMarginLeft - 55;
+        console.log("sliderMarginCardCount:sliderMarginLeft === ",this.sliderMarginCardCount , '\t' , this.sliderMarginLeft);
+
 
 
     }
+
+    get IsMobileView(){ return window.innerWidth <= mobileScreenMaxWidth; }
+    get IsNotMobileView(){ return window.innerWidth > mobileScreenMaxWidth; }
+
     //#endregion
 
     //#region Routing Slider
@@ -623,7 +638,7 @@ export class ShipmentDetailsComponent implements OnInit,AfterViewInit
             panelElement.scrollIntoView();
             document.getElementsByTagName('html')[0].scrollTop -= 103;
 
-    }
+        }
 
 
     }
