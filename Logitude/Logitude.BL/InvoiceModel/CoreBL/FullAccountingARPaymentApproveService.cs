@@ -513,10 +513,34 @@ namespace Logitude.BL.InvoiceModel.CoreBL
             CreateDebitLines(counter);
             CheckAbiltiyOfCreatingAutomaticReconcileForJournal();
 
+            AutoExternalReconcileBankTransferPageLines();
 
             SubmitJournal();
             return journal;
         }
+
+        private void AutoExternalReconcileBankTransferPageLines()
+        {
+            int JournalExternalReconcileLine = 1;
+
+            if (paymentPM.ReconcileExternalPagesIds == null)
+                return;
+
+            List<JournalExternalReconcilePM> externalJournalReconciles =
+                paymentPM.ReconcileExternalPagesIds.Split(',')?.Select(lineId => new JournalExternalReconcilePM()
+                {
+                    Tenant = journal.Tenant,
+                    ChangeSetOp = ChangeSetOperation.Insert,
+                    JournalId = journal.Id,
+                    Line = JournalExternalReconcileLine++,
+                    //LedgerTransactionId = myLedgerTransactionTransferPM.Id,
+                    ReconcileExternalPageLineId = lineId,
+                    SkipAccountsValidation = true
+                }).ToList();
+
+            journal.JournalExternalReconciles = externalJournalReconciles;
+        }
+
         private void CheckAbiltiyOfCreatingAutomaticReconcileForJournal()
         {
             if ((paymentPM.ARPaymentChequeReplicas.Count() > 1 || paymentPM.ARPaymentBankTranfers.Count() > 1) && paymentPM.PaymentInvoices.Count() > 0)

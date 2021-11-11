@@ -26,7 +26,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         Line, 
 	         Tenant, 
 	         LedgerTransactionId, 
-	         ReconcileExternalPageLineId,
+	         ReconcileExternalPageLineId, 
+	         SkipAccountsValidation,
 	      }
 
 
@@ -37,7 +38,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         Line, 
 	         Tenant, 
 	         LedgerTransactionId, 
-	         ReconcileExternalPageLineId,
+	         ReconcileExternalPageLineId, 
+	         SkipAccountsValidation,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -59,6 +61,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ReconcileExternalPageLineId))
             {
 				entityPOCO.ReconcileExternalPageLineId = entityPM.ReconcileExternalPageLineId;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SkipAccountsValidation))
+            {
+				entityPOCO.SkipAccountsValidation = entityPM.SkipAccountsValidation;
 			}
 			}
 
@@ -90,6 +97,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 					entityPM.ReconcileExternalPageLineId = entityPOCO.ReconcileExternalPageLineId;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.SkipAccountsValidation))
+            {
+					entityPM.SkipAccountsValidation = entityPOCO.SkipAccountsValidation;
+            }
+
 		}
 
 		public void PMToOldPM(JournalExternalReconcilePM entityPM, JournalExternalReconcilePM oldEntityPM)
@@ -109,6 +121,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ReconcileExternalPageLineId))
             {
                 oldEntityPM.ReconcileExternalPageLineId = entityPM.ReconcileExternalPageLineId;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SkipAccountsValidation))
+            {
+                oldEntityPM.SkipAccountsValidation = entityPM.SkipAccountsValidation;
             }
 			
 		}

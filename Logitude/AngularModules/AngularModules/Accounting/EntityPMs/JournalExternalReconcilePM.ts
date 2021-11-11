@@ -52,6 +52,11 @@ export class JournalExternalReconcilePM {
     public set ReconcileExternalPageLineId(newValue: string) { if (this.reconcileExternalPageLineId != newValue) { this.reconcileExternalPageLineId = newValue; this.MarkAsDirty("ReconcileExternalPageLineId"); } }
        
 	 
+    private skipAccountsValidation: boolean;
+    public get SkipAccountsValidation() { return this.skipAccountsValidation; }
+    public set SkipAccountsValidation(newValue: boolean) { if (this.skipAccountsValidation != newValue) { this.skipAccountsValidation = newValue; this.MarkAsDirty("SkipAccountsValidation"); } }
+       
+	 
 
     public OldEntityPM: JournalExternalReconcilePM;
 	

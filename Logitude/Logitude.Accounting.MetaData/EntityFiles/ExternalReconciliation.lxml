@@ -39,7 +39,7 @@
   MaxNumberOfCustomFields="0"
   LocalDefaultText="&quot;התאמה&quot;"
   DefaultText="&quot;External Reconciliation&quot;"
-  Code="&quot;33b6&quot;"
+  Code="&quot;cf31&quot;"
   Name="&quot;ExternalReconciliation Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Accounting&quot;"
@@ -1341,6 +1341,54 @@
       LocalDefaultText="&quot;לא ניתן להתאים תנועה מכרטיס דחויים עם יותר משורה אחת מצד הבנק, נא לבחור שורה אחת בכל פעם&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ExternalReconciliation.O.CreateBankTransferInfo&quot;"
+      DefaultText="&quot;Once you select one or more bank Page lines, this option allows you to create and reconcile a new AR Payment with the selected lines&quot;"
+      LocalDefaultText="&quot;אופציה זו מאפשרת להפיק קבלה משורת דף בנק אחת או יותר&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ExternalReconciliation.O.BankTransferDifferenceMsg&quot;"
+      DefaultText="&quot;Please check the selected lines. The difference should be less than zero in order to create the payment&quot;"
+      LocalDefaultText="&quot;נא לבחור תנועות פתוחות בסכום חובה גדול מאפס&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ExternalReconciliation.O.BTOnlyBankPages&quot;"
+      DefaultText="&quot;Please select only bank pages in order to continue&quot;"
+      LocalDefaultText="&quot;על מנת להפיק קבלה יש לבחור דפי בנק בלבד&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ExternalReconciliation.O.BTbackgroundCreationMSG&quot;"
+      DefaultText="&quot;AR Payment #number has been created successfully. The external reconciliation is being created in the background&quot;"
+      LocalDefaultText="&quot;נוצרה קבלה #number , ההתאמה תבוצע ברקע&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ExternalReconciliation.O.BTUnsavedChanges&quot;"
+      DefaultText="&quot;This A/R Payment has unsaved changes. By continuing, you will lose the payment and the changes done to the reconciliation screen&quot;"
+      LocalDefaultText="&quot;בקבלה זאת בוצעו שינויים שטרם נשמרו , האם ברצונך לשמור זאת בהתחשב בכך שהתאמה חיצונית לא תתבצע אם הקבלה לא תאושר&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ExternalReconciliation.O.FutureValueDate&quot;"
+      DefaultText="&quot;Value date must be less than or equals to today's date&quot;"
+      LocalDefaultText="&quot;תאריך ערך צריך להיות קטן מתאריך נוכחי&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ExternalReconciliation.O.BTCreditLinesOnly&quot;"
+      DefaultText="&quot;Please check the selected lines. AR Payment reconciliation is allowed only with positive credit bank pages lines&quot;"
+      LocalDefaultText="&quot;ניתן ליצור קבלה רק על שורת זכות חיובית בצד הבנק&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ExternalReconciliation.O.BTCreateARPayment&quot;"
+      DefaultText="&quot;Create AR Payment&quot;"
+      LocalDefaultText="&quot;יצירת קבלה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature
@@ -1348,6 +1396,15 @@
       FeatureTypeCode="&quot;ACT&quot;"
       FeatureTextCodeCode="&quot;ExternalReconciliation.Features.ExtRecoGenerateTestRecords&quot;"
       FeatureDefaultText="&quot;Generate Test Records&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;ExtRecoCreateBankTransferPY&quot;"
+      FeatureTypeCode="&quot;ACT&quot;"
+      FeatureTextCodeCode="&quot;ExternalReconciliation.Features.ExtRecoCreateBankTransferPY&quot;"
+      FeatureDefaultText="&quot;Create Bank Transfer Payment Button&quot;"
       IsPackagable="true"
       IsOld="false"
       IsCoreFeature="false"
