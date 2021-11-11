@@ -14,9 +14,11 @@ export class MultipleSelectionComponent {
     MultipleSelection = new FormControl();
     @Input() MultipleSelectionList: any[];
     @Input() Title: string;
+    @Input() ShowSortIcon: boolean = false;
     @Output() SelectionChanged: EventEmitter<any> = new EventEmitter();
     @Output() SelectToggleFilters: string;
-
+    IsSortDescending: boolean = true;
+    @Input() UseFixedTitle: boolean = false;
     @ViewChild('select') select: MatSelect;
 
     constructor() {
@@ -25,6 +27,12 @@ export class MultipleSelectionComponent {
 
     SelectFilter(selectedFilter: any) {
         this.SelectToggleFilters = selectedFilter.Code;
+        if (selectedFilter.name == "Ascending") {
+            this.IsSortDescending = false;
+        }
+        if (selectedFilter.name == "Descending") {
+            this.IsSortDescending = true;
+        }
         this.SelectionChanged.emit(this.SelectToggleFilters);
     }
 
@@ -37,4 +45,5 @@ export class MultipleSelectionComponent {
     DeselectFilter(filterCode: string) {
         this.select.options.find(d => d.value.Code == filterCode).deselect();
     }
+
 }

@@ -686,7 +686,7 @@
                                         <ng-template let-item>
                                             <log-cell-template #logcelltemplate [IgnoreMods]="true">
                                                 <div class="CellStretched" style="width: 50px; max-width: 50px; padding-top: 2px;" title="Return Cheque">
-                                                    <IconButton [style.text-align]="isRTL ? 'right' : 'left'" [IsEnabled]="!item.IsOutOfDeposit"
+                                                    <IconButton [style.text-align]="isRTL ? 'right' : 'left'" [IsEnabled]="!item.IsOutOfDeposit &&  !EntityPM.IsCanceled"
                                                                 [Name]="'return'" [IsSmall]="true" (click)="ReturnChequeButtonClicked(item)"></IconButton>
                                                 </div>
                                             </log-cell-template>
