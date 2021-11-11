@@ -7,6 +7,10 @@ namespace WebFreight.Web.DataProviders
 {
     public class InvoiceDataProvider : BaseDataProvider
     {
+        public string StockDescription { get; set; }
+        public DateTime? StockExpirationDate { get; set; }
+        public string StockStartNumberPrefix { get; set; }
+        public string StockEndNumberPrefix { get; set; }
         public string ProjectNumber { get; set; }
         public string TenantStateCode { get; set; }
         public string BranchSignature { get; set; }

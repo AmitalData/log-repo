@@ -225,5 +225,6 @@ export class ContainerList {
 		ShipmentTypeId: string;
 		ShipmentTypeName: string;
 		ShipmentCreateDate: Date;
+		IsAutomaticUpdates: boolean;
 	
 }
