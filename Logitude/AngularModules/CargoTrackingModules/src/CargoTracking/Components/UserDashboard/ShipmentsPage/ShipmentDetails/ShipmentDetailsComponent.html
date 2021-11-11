@@ -372,14 +372,17 @@ cargoTrackingShipmentPM.ArrivalDate |
     </div>-->
                 <div>
                     <div class="title">quantity</div>
-                    <div *ngIf="cargoTrackingShipmentPM.EntityType != 'O'" class="description">{{ cargoTrackingShipmentPM.NumberOfPackages || 0}} units</div>
-                    <div *ngIf="cargoTrackingShipmentPM.EntityType == 'O'" class="description">{{ cargoTrackingShipmentPM.ShipmentOrderQuantity || 0}} units</div>
+                    <div *ngIf="cargoTrackingShipmentPM.EntityType != 'O'" class="description">{{ cargoTrackingShipmentPM.NumberOfPackages || 0}} Units</div>
+                    <div *ngIf="cargoTrackingShipmentPM.EntityType == 'O'" class="description">{{ cargoTrackingShipmentPM.ShipmentOrderQuantity || 0}} Units</div>
+
                 </div>
                 <div>
                     <div class="title">weight</div>
                     <div class="description">
+
                         {{cargoTrackingShipmentPM.GrossWeight || 0 }}
                         {{cargoTrackingShipmentPM.GrossWeightUnitCode||''}}
+                        <span *ngIf="!cargoTrackingShipmentPM.GrossWeightUnitCode"> KG</span>
                     </div>
                 </div>
                 <div *ngIf="cargoTrackingShipmentPM.EntityType != 'O'">
@@ -433,19 +436,21 @@ cargoTrackingShipmentPM.ArrivalDate |
                 </div>
                 <div>
                     <div class="title">quantity</div>
-                    <div *ngIf="cargoTrackingShipmentPM.EntityType != 'O'" class="description">{{cargoTrackingShipmentPM?.NumberOfPackages || 0}} unit</div>
-                    <div *ngIf="cargoTrackingShipmentPM.EntityType == 'O'" class="description">{{ cargoTrackingShipmentPM.ShipmentOrderQuantity || 0}} units</div>
+                    <div *ngIf="cargoTrackingShipmentPM.EntityType != 'O'" class="description">{{cargoTrackingShipmentPM?.NumberOfPackages || 0}} Units</div>
+                    <div *ngIf="cargoTrackingShipmentPM.EntityType == 'O'" class="description">{{ cargoTrackingShipmentPM.ShipmentOrderQuantity || 0}} Units</div>
+
                 </div>
                 <div>
                     <div class="title">weight</div>
                     <div class="description">
-                        {{cargoTrackingShipmentPM.GrossWeight }}
+                        {{cargoTrackingShipmentPM.GrossWeight  || 0}}
                         {{cargoTrackingShipmentPM.GrossWeightUnitCode||''}}
+                        <span *ngIf="!cargoTrackingShipmentPM.GrossWeightUnitCode"> KG</span>
                     </div>
                 </div>
                 <div>
                     <div class="title">volume</div>
-                    <div class="description">{{cargoTrackingShipmentPM.Volume }}</div>
+                    <div  style="display:inline" class="description">{{cargoTrackingShipmentPM.Volume || 0 }}</div><span style="display:inline">  CBM</span>
                 </div>
                 <div *ngIf=" cargoTrackingShipmentPM.EntityType != 'O'">
                     <div class="title">storage site</div>
