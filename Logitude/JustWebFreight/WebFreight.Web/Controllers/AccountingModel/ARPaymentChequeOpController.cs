@@ -41,7 +41,9 @@ namespace WebFreight.Web.Controllers.AccountingModel
 
 
                 string token = HttpContext.Current.Request.Headers["Token"];
-
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnTenant(tenant);
                 PostDatedChequesRedemptionBatch postDatedChequesRedemptionBatch = new PostDatedChequesRedemptionBatch();
                 postDatedChequesRedemptionBatch.RunAllPayablePostDatedARPaymentCheques(tenant);
                 string responseText = postDatedChequesRedemptionBatch.ResponseText();

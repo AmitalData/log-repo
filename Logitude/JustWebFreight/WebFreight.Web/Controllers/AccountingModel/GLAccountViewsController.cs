@@ -155,6 +155,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 //int tenant = authToken.Tenant;
                 string loggedUserEmail = authToken.Email;
 
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 SecurityUtility.AuthenticationOnTenant(tenant);
                 SecurityUtility.CheckContactFeature("GLAccount", "READ", tenant);
 

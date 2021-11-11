@@ -41,8 +41,9 @@ namespace WebFreight.Web.Controllers.AccountingModel //AccountingPeriodViewsCont
 
 
                 string token = HttpContext.Current.Request.Headers["Token"];
-                //AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                //SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnTenant(tenant);
                 //SecurityUtility.CheckContactFeature("Revaluation", "NEW", authToken.Tenant);
 
                 RevaluationBatch revaluationBatch = new RevaluationBatch();
@@ -68,8 +69,9 @@ namespace WebFreight.Web.Controllers.AccountingModel //AccountingPeriodViewsCont
 
 
                 string token = HttpContext.Current.Request.Headers["Token"];
-                //AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                //SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnTenant(tenant);
                 //SecurityUtility.CheckContactFeature("Revaluation", "NEW", authToken.Tenant);
 
                 RevaluationBatch revaluationBatch = new RevaluationBatch();
@@ -126,6 +128,7 @@ namespace WebFreight.Web.Controllers.AccountingModel //AccountingPeriodViewsCont
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnEntityTenant("Revaluation", entityPm.Tenant, authToken.Tenant);
                 SecurityUtility.CheckContactFeature("Revaluation", "NEW", authToken.Tenant);
                 var accountingContext = AccountingContext.GetContext(authToken.Tenant);
                 var qs = new LedgerTransactionListQueryService(accountingContext);
@@ -166,6 +169,7 @@ namespace WebFreight.Web.Controllers.AccountingModel //AccountingPeriodViewsCont
                     string token = HttpContext.Current.Request.Headers["Token"];
                     AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                     SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                    SecurityUtility.AuthenticationOnTenant(tenant);
                     SecurityUtility.CheckContactFeature("Revaluation", "NEW", authToken.Tenant);
                     var accountingContext = AccountingContext.GetContext(authToken.Tenant);
                     var service = new RevaluationUpdateService(accountingContext, new Dictionary<string, IContext>(), tenant);

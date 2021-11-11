@@ -10,6 +10,9 @@ using WebFreight.Web.Helpers;
 using System.Text.RegularExpressions;
 using Logitude.Accounting.Data;
 using Logitude.Accounting.BL.CoreBL.Batch;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.Repositories;
+using WebFreight.Web.Security;
 
 namespace WebFreight.Web.Controllers.AccountingModel
 {
@@ -28,8 +31,8 @@ namespace WebFreight.Web.Controllers.AccountingModel
             try
             {
                 string token = HttpContext.Current.Request.Headers["Token"];
-                //AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                //SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 //SecurityUtility.CheckContactFeature("TaxDeductionReport", "NEW", authToken.Tenant);
 
                 ReconciliationAfterConversionBatch reconciliationAfterConversionBatch = new ReconciliationAfterConversionBatch();
@@ -61,8 +64,8 @@ namespace WebFreight.Web.Controllers.AccountingModel
             try
             {
                 string token = HttpContext.Current.Request.Headers["Token"];
-                //AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                //SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 //SecurityUtility.CheckContactFeature("TaxDeductionReport", "NEW", authToken.Tenant);
 
                 ReconciliationAfterConversionBatch reconciliationAfterConversionBatch = new ReconciliationAfterConversionBatch();
@@ -92,7 +95,11 @@ namespace WebFreight.Web.Controllers.AccountingModel
         {
             try
             {
-
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnTenant(tenant);
+                //SecurityUtility.CheckContactFeature("TaxDeductionReport", "NEW", authToken.Tenant);
 
                 string _myfromExtNum = "";
                 if (String.IsNullOrWhiteSpace(fromExtNum) || fromExtNum == "undefined")
@@ -116,10 +123,7 @@ namespace WebFreight.Web.Controllers.AccountingModel
                     _mytoExtNum = Regex.Replace(toExtNum, @"\d+", n => n.Value.PadLeft(15, '0'));
                 }
 
-                string token = HttpContext.Current.Request.Headers["Token"];
-                //AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                //SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                //SecurityUtility.CheckContactFeature("TaxDeductionReport", "NEW", authToken.Tenant);
+                
                 bool batchIt = true;
                 if (batchIt)
                 {
@@ -235,6 +239,12 @@ namespace WebFreight.Web.Controllers.AccountingModel
         {
             try
             {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnTenant(tenant);
+                //SecurityUtility.CheckContactFeature("TaxDeductionReport", "NEW", authToken.Tenant);
+
                 string _myfromExtNum = "";
                 if (String.IsNullOrWhiteSpace(fromExtNum) || fromExtNum == "undefined")
                 {
@@ -255,10 +265,7 @@ namespace WebFreight.Web.Controllers.AccountingModel
                     _mytoExtNum = Regex.Replace(toExtNum, @"\d+", n => n.Value.PadLeft(15, '0'));
                 }
 
-                string token = HttpContext.Current.Request.Headers["Token"];
-                //AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                //SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                //SecurityUtility.CheckContactFeature("TaxDeductionReport", "NEW", authToken.Tenant);
+
                 bool batchIt = true;
                 if (noBatch == 1) batchIt = false;
                 if (batchIt)

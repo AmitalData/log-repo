@@ -64,6 +64,7 @@ namespace WebFreight.Web.Controllers.AccountingModel //AccountingPeriodViewsCont
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnTenant(tenant);
 
 
                 LedgerTransactionRepository repoLedgerTransaction = new LedgerTransactionRepository(tenant);
@@ -93,6 +94,7 @@ namespace WebFreight.Web.Controllers.AccountingModel //AccountingPeriodViewsCont
                     string token = HttpContext.Current.Request.Headers["Token"];
                     AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                     SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                    SecurityUtility.AuthenticationOnEntityTenant("ReconciliationPM", entityPm.Tenant, authToken.Tenant);
                     SecurityUtility.CheckContactFeature("Reconciliation", "NEW", authToken.Tenant);
 
                     CreateReconciliationService recoService = new CreateReconciliationService();
@@ -123,6 +125,7 @@ namespace WebFreight.Web.Controllers.AccountingModel //AccountingPeriodViewsCont
                     string token = HttpContext.Current.Request.Headers["Token"];
                     AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                     SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                    SecurityUtility.AuthenticationOnTenant(tenant);
                     SecurityUtility.CheckContactFeature("Reconciliation", "NEW", authToken.Tenant);
                     var accountingContext = AccountingContext.GetContext(authToken.Tenant);
                     var service = new ReconciliationUpdateService(accountingContext, new Dictionary<string, IContext>(), tenant);
@@ -166,6 +169,7 @@ namespace WebFreight.Web.Controllers.AccountingModel //AccountingPeriodViewsCont
             string token = HttpContext.Current.Request.Headers["Token"];
             AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
             SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+            SecurityUtility.AuthenticationOnTenant(tenant);
             var accountingContext = AccountingContext.GetContext(tenant);
             var qs = new LedgerTransactionListQueryService(accountingContext);
             GenericCallBack ReconciliationFilterCallBack = null;
@@ -228,6 +232,7 @@ tenant);
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnTenant(tenant);
 
 
                 var automaticReconcileService = new AutomaticReconcileService();
