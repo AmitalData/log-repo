@@ -169,11 +169,8 @@ namespace Logitude.Customs.BL.Messaging.Customs
             if (!string.IsNullOrWhiteSpace(queueSendModel.InterfaceTypeCode) && queueSendModel.TenantPriority == null)
             {
                 var interfaceTenantDefinitionQueryService = new InterfaceTenantDefinitionQueryService(queueSendModel.Tenant);
-                var pm = interfaceTenantDefinitionQueryService.GetFromCacheByTenatCode(queueSendModel.Tenant, queueSendModel.InterfaceTypeCode);
-                if (pm != null)
-                {
-                    queueSendModel.TenantPriority = pm.TenantPriority;
-                }
+                int? tenantPriority = interfaceTenantDefinitionQueryService.GetTenantPriorityFromCacheByTenatCode(queueSendModel.Tenant, queueSendModel.InterfaceTypeCode);
+                queueSendModel.TenantPriority = tenantPriority;
 
             }
 

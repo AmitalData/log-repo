@@ -125,7 +125,11 @@
     <None Include="DBScripts\Post\202104201027_AddCOURIERPENDINGREASONS903.sxml" />
     <None Include="DBScripts\Post\202107071340_SetCustomsDocumentsDefinitionDeclarationType.sxml" />
     <None Include="DBScripts\Post\202106061800_AddComputingPartners.sxml" />
+
     <None Include="DBScripts\Pre\202108111402_AddONSearchResult.sxml" />
+
+    <None Include="DBScripts\Post\202111101341_InterfaceManagementDefaultPriority89.sxml" />
+
     <None Include="DBScripts\Pre\20210801_DeleteDuplicateQueryColumns .sxml" />
     <None Include="DBScripts\Pre\202005210104_DropUnneededTables_Global.sxml" />
     <None Include="DBScripts\Pre\202005210105_DropUnneededTables_Main.sxml" />

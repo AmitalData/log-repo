@@ -232,7 +232,10 @@ export class AddEditInterfaceManagementComponent
         if (IsNew) {
             return;
         }
-        debugger;
+        this.ValidateSuperUser();
+        if (this.ValidationErrorsList.length > 0) {
+            return;
+        }
         
         this._InterfaceManagementPMExtendService.PutInterfaceManagementPM(this.entityPM)
             .subscribe((resp:any) => {
@@ -244,5 +247,15 @@ export class AddEditInterfaceManagementComponent
                 this.CancelButtonClicked();
 
             });
+    }
+
+    private ValidateSuperUser() {
+        this.ValidationErrorsList = [];
+        if (this.TenantPriority > 99) {//super user
+            this.ValidationErrorsList.push("עדיפות מוגבלת ל 99")
+        }
+        if (this.TenantPriority <1) {
+            this.ValidationErrorsList.push("עדיפות מוגבלת מ 1")
+        }
     }
 }
