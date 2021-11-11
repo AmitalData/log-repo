@@ -28,7 +28,7 @@ export class CustomsRequestMenuService {
     private buildReportsList(){
         this._CustomsRequestMenuItems = [];
         this._CustomsRequestMenuItems.push(new CustomsMenuItem("דוח SLA", "SLAReport", './CustomsModules/CustomsReport/Components/Reports/SLAReportComponent', 400, 300, "1111"));
-        this._CustomsRequestMenuItems.push(new CustomsMenuItem("דוח הפצה", "LastMileReport", './CustomsModules/CustomsReport/Components/Reports/LastMileReportComponent', 600, 300, "1112"));
+        this._CustomsRequestMenuItems.push(new CustomsMenuItem("דוח הפצה", "LastMileReport", './CustomsModules/CustomsReport/Components/Reports/LastMileReportComponent', 500, 300, "1112"));
 
     }
     private buildCustomsList() {

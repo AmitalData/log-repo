@@ -1,15 +1,15 @@
 <style>
     .tbl1Label {
-        width: 120px;
+        width: 130px;
     }
 
     .tbl1Col0 {
-        width: 30px;
+        width: 1px;
     }
 
     .tbl1Col1 {
         width: 200px;
-        padding-right: 36px;
+        padding-right: 26px;
     }
 
     .tbl1Col1Time {
@@ -115,8 +115,9 @@
         </tr>
         <tr class="FormFieldRow">
             <td class="tbl1Label">
-                <LogLabel [ObjectFieldName]="'Trucker'" [ObjectTableName]="ObjectTableName"
-                    [DataContext]="DataContext"></LogLabel>
+                <LogLabel [NoObjectField]="true" [ObjectFieldName]="'Trucker'" [ObjectTableName]="ObjectTableName"
+                    [DataContext]="DataContext" [TextCode]="'Customs.DeclarationCourierStatus.O.Trucker'">
+                </LogLabel>
             </td>
             <td class="tbl1Col0"></td>
             <td class="tbl1Col1">
@@ -128,16 +129,39 @@
             </td>
 
         </tr>
+        <tr class="FormFieldRow">
+            <td class="tbl1Label">
+                <LogLabel [NoObjectField]="true" [ObjectFieldName]="'Airline'" [ObjectTableName]="ObjectTableName"
+                    [DataContext]="DataContext" [TextCode]="'Customs.DeclarationCourierStatus.O.Airline'">
+                </LogLabel>
+            </td>
+            <td class="tbl1Col0"></td>
+            <td class="tbl1Col1">
+                <LogLov [ObjectFieldName]="'Airline'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"
+                    [HideColumns]="true" [LookUpTableName]="'Customs.CustomsAirline'">
+                    <!--[DependencyFilter1Value]="'AL'"-->
+                </LogLov>
+            </td>
+        </tr>
+        <tr class="FormFieldRow">
+            <td class="tbl1Label">
+                <LogLabel [NoObjectField]="true" [ObjectFieldName]="'CourierHawb'" [ObjectTableName]="ObjectTableName"
+                    [DataContext]="DataContext" [TextCode]="'Customs.DeclarationCourierStatus.O.CourierHawb'">
+                </LogLabel>
+            </td>
+            <td class="tbl1Col0"></td>
+            <td class="tbl1Col1">
+                <LogTextBox [ObjectFieldName]="'CourierHawb'" [InputType]="'text'" [DataContext]="DataContext"
+                    [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+            </td>
+        </tr>
         <tr>
             <td>
                 <div style="height: 50px;"></div>
             </td>
         </tr>
         <tr>
-            <td>
-                <div></div>
-            </td>
-            <td>
+            <td colspan="6">
                 <div></div>
             </td>
             <td>
@@ -157,14 +181,8 @@
                         <td width="57px">
                             <button class="Button" (click)="CancelButtonClicked()">סגור</button>
                         </td>
-                        <td style="width: 10px;">
-                            <div></div>
-                        </td>
                     </tr>
                 </table>
-            </td>
-            <td>
-                <div></div>
             </td>
         </tr>
     </table>
