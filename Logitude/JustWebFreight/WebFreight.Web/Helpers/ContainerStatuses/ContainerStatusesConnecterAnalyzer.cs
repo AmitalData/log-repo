@@ -966,9 +966,8 @@ namespace WebFreight.Web.Helpers.Analyzers
         {
             if (!string.IsNullOrEmpty(createdDate))
             {
-                return ConvertStringToDateTime_old(createdDate);
+                return AnalyzeEventDateValue(createdDate);
             }
-
             return null;
         }
         private DateTime? ComputeDepartureDate()
@@ -2306,6 +2305,24 @@ namespace WebFreight.Web.Helpers.Analyzers
             analyzeQueueRepository.Update(analyzeQueue);
             analyzeQueueRepository.SubmitChanges();
         }
+        private DateTime? AnalyzeEventDateValue(string XMLValue)
+        {
+            XMLDateParts xMLDateParts = this.GetXMLDateParts(XMLValue);
+            XMLDateParts currentTenantTimeZoneDateParts = this.GetCurrentTenantTimeZoneDateParts();
+            return ComputeDateTimeRqgardingTimeZone(xMLDateParts, currentTenantTimeZoneDateParts);
+        }
+        private XMLDateParts GetCurrentTenantTimeZoneDateParts()
+        {
+            Tenant tenant = TenantRepository.GetSingleTenant(logitudeTenant.Value, true);
+            double? currentTenantTimeZone = tenant.TimeZoneOffset;
+            XMLDateParts xMLDateParts = new XMLDateParts();
+            xMLDateParts.TimeZoneSign = currentTenantTimeZone > 0 ? "" : "-";
+            xMLDateParts.TimeZoneHoursValue = ConvertStringToInteger(currentTenantTimeZone?.ToString());
+            xMLDateParts.TimeZoneMinutsValue = 0;
+            xMLDateParts.TimeZone = new TimeSpan(xMLDateParts.TimeZoneHoursValue, xMLDateParts.TimeZoneMinutsValue, 0);
+            return xMLDateParts;
+        }
+
         private DateTime? AnalyzeXMLDateValue(string XMLValue, string timeZone)
         {
             XMLDateParts xMLDateParts = this.GetXMLDateParts(XMLValue);
@@ -2352,6 +2369,7 @@ namespace WebFreight.Web.Helpers.Analyzers
 
             return xMLDateParts;
         }
+
         private DateTime? ConvertStringToDateTime(string dateValue)
         {
             if (!string.IsNullOrEmpty(dateValue))
