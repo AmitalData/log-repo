@@ -34,6 +34,7 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
 					                          LocalName = a.LocalName,
 					
 					                          Inactive = a.Inactive,
+					                          Weight = a.Weight,
 					
 		                    	            });
             return query;
