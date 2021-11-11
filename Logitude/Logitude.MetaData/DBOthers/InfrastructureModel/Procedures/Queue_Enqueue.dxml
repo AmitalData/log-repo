@@ -81,8 +81,8 @@
     BEGIN
 	  
 	v_TenantPriority :=p_TenantPriority;  
-	IF (v_TenantPriority=0) THEN
-	    v_TenantPriority:=7;
+	IF (v_TenantPriority<1) THEN
+	    v_TenantPriority:=89;
 	END IF;
       v_currentdate     := SYSDATE ;
       v_nextRunDateTime := (SYSDATE + v_DelaySeconds/86400) ;
