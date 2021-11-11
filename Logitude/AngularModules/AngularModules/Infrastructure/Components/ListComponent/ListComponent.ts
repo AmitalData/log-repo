@@ -983,7 +983,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
         windowArgs.Title = this.Title;
 
         newWindow.WindowArgs = windowArgs;
-        newWindow.Show('./Infrastructure/Components/MultiUpdateComponent/MultiUpdateComponent');
+        newWindow.Show('./Infrastructure/Components/MultiUpdateComponent/MultiEntityUpdateBaseComponent');
         newWindow.WindowClosed.subscribe(($event: any) => {
             this.RefreshBtnClick();
         });
