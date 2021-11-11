@@ -58,8 +58,7 @@ export class RelatedCustomerComponent extends BaseComponent{
      
 
     public IsCustomsActivated: boolean = false;
-    public IsExportActivated: boolean = false; 
-    public CanSelectOpption: boolean = false; 
+    public IsExportActivated: boolean = false;  
 
     public set SelectedLogItem(value: BatchQueriesData) {
         if (this.selectedLogItem != value)
@@ -289,32 +288,25 @@ export class RelatedCustomerComponent extends BaseComponent{
             if (!response.HasError) {
                 var tenantPM = response.Result;
 
-                if (tenantPM.CustomerTenantShareCustomsFile && !tenantPM.CustomerTenantShareExportFile) {
-                    this.IsCustomsActivated = true;
-                    this.IsExportActivated = false;
-                    this.CanSelectOpption = true;
-                }
-                if (!tenantPM.CustomerTenantShareCustomsFile && tenantPM.CustomerTenantShareExportFile) {
-                    this.IsCustomsActivated = false;
-                    this.IsExportActivated = true;
-                    this.CanSelectOpption = true;
-                }
-                if (tenantPM.CustomerTenantShareCustomsFile && tenantPM.CustomerTenantShareExportFile) {
-                    this.IsCustomsActivated = true;
-                    this.IsExportActivated = true;
-                    this.CanSelectOpption = true;
-                }
-
                 if (!tenantPM.CustomerTenantShareCustomsFile && !tenantPM.CustomerTenantShareExportFile) {
-                    this.IsCustomsActivated = true;
-                    this.IsExportActivated = false;
-                    this.CanSelectOpption = true;
-                }
-              
+                    this.SetDefaultOption(); 
+                } else {
+                    this.SetDirectionOptions(tenantPM); 
+                } 
 
                  
             }
         });
+    }
+
+    private SetDirectionOptions(tenantPM: any) {
+        this.IsCustomsActivated = tenantPM.CustomerTenantShareCustomsFile;
+        this.IsExportActivated = tenantPM.CustomerTenantShareExportFile;
+    }
+
+    private SetDefaultOption() {
+        this.IsCustomsActivated = true;
+        this.IsExportActivated = false;
     }
 
     private InitializeCustomerTenantAccessCard(customerTenantAccessCardPM: CustomerTenantAccessCardPM) {

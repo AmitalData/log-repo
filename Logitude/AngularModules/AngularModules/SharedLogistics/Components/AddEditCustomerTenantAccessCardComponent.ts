@@ -185,21 +185,27 @@ export class AddEditCustomerTenantAccessCardComponent extends BaseComponent {
     SetWindowArgs(args: AddEditCustomerTenantAccessCardViewModel) {
         if (args != null) {
             this.viewModel = args;
-            this.IsCustomsActivated = args.Parent.IsCustomsActivated;
-            this.IsExportActivated = args.Parent.IsExportActivated;
-
-            if (this.IsCustomsActivated && this.IsExportActivated) {
-                this.CanSelectOpption = true;
-                this.IsExportActivated = false;
-                this.IsCustomsActivated = false;
-            }
-
-
-            //this.CanSelectOpption = args.Parent.CanSelectOpption;
+            this.SetDirectionsoptions(args);
+             
             this.SetCustomerTenantAccessCardOptions();
             this.DataLoaded = true;   
         }
     }
+    private SetDirectionsoptions(args: AddEditCustomerTenantAccessCardViewModel) {
+        this.IsCustomsActivated = args.Parent.IsCustomsActivated;
+        this.IsExportActivated = args.Parent.IsExportActivated;
+
+        if (this.IsCustomsActivated && this.IsExportActivated) {
+            this.SetDefaultOptions();
+        }
+    }
+
+    private SetDefaultOptions() {
+        this.CanSelectOpption = true;
+        this.IsExportActivated = false;
+        this.IsCustomsActivated = false;
+    }
+
     SetCustomerTenantAccessCardOptions() {
         if (this.viewModel.CardObsList != null) {
           
