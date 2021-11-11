@@ -14005,6 +14005,9 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                 join shipmentPickUpDelivery in repository.context.ShipmentPickUpDeliveries
                                                 on shipment.Id equals shipmentPickUpDelivery.ShipmentId
                                                 into shipmentPickUpDeliveries
+                                                join shipmentOrderPackage in repository.context.ShipmentOrderPackages
+                                                on shipment.Id equals shipmentOrderPackage.ShipmentId
+                                                into shipmentOrderPackages
                                                 where shipmentIdsList.Contains(shipment.Id) && shipment.Tenant == tenant
                                                 select new ShipmentAdditionalFields
                                                 {
@@ -14035,6 +14038,12 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                     LastDeliveryATA = shipmentPickUpDeliveries.Where(s => s.PickUpDeliveryTypeCode == "DELV").Any() ?
                                                     shipmentPickUpDeliveries.Where(s => s.PickUpDeliveryTypeCode == "DELV")
                                                     .OrderByDescending(s => s.PickUpDeliveryNumber).FirstOrDefault().ATA : null,
+
+                                                    ShipmentOrdersType = shipmentOrderPackages.Select(x => x.PackageTypeId).Distinct().Count() == 1 ?
+                                                    (shipmentOrderPackages.Select(x => x.PackageType).FirstOrDefault() != null ?
+                                                    shipmentOrderPackages.Select(x => x.PackageType).FirstOrDefault().EnglishName : "Packages") : "Packages",
+
+                                                    NumberOfOrderPackages = shipmentOrderPackages.Sum(s=>s.Quantity).ToString()
                                                 };
 
                 return shipmentsAdditionalFields.ToList();

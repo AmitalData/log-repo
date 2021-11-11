@@ -13,5 +13,7 @@ namespace Logitude.BL.ShipmentsModel.DigitalModels
         public DateTime? FirstPickupATA { get; set; }
         public DateTime? LastDeliveryATD { get; set; }
         public DateTime? LastDeliveryATA { get; set; }
+        public string ShipmentOrdersType { get; set; }
+        public string NumberOfOrderPackages { get; set; }
     }
 }
