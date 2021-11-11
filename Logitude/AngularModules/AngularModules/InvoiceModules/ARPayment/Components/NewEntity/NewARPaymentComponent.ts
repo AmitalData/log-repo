@@ -33,6 +33,7 @@ import {GLAccountPM} from '../../../../Accounting/EntityPMs/GLAccountPM';
 import { GLAccountList } from '../../../../Accounting/EntityLists/GLAccountList';
 import { PartnerTypeList } from 'Common/EntityLists/PartnerTypeList';
 import { EntityListService } from 'Infrastructure/Services/EntityListService';
+import { BankTransferPaymentArguments } from 'Invoice/DataContracts/BankTransferPaymentArguments';
 declare var window: any;
 @Component({
 
@@ -187,15 +188,11 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
         }
     }
 
+    bankTransferPaymentArguments: BankTransferPaymentArguments;
     windowArgs;
     createBankTransferFromReconcileWindow: boolean = false;
     preselectedPaymentMethodCode;
-    selectedAmount;
-    preSelectedCurrencyId;
     exteranlPageLinesIds;
-    presetValueDate;
-    presetPaymentReference;
-    presetRegisterDate;
     SetWindowArgs(args: any) {
         if (args) {
             this.windowArgs = args;
@@ -205,13 +202,10 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
             if(args.AccountingPaymentMethodCode){
                 this.createBankTransferFromReconcileWindow = true;
                 this.preselectedPaymentMethodCode = args.AccountingPaymentMethodCode;
-                this.selectedAmount = args.PaymentAmount;
-                this.preSelectedCurrencyId = args.Currency;
+                this.bankTransferPaymentArguments = args.BankTransferPaymentArguments;
+
                 this.RegisterDate = new Date();
                 this.exteranlPageLinesIds = args.ExteranlPageLinesIds;
-                this.presetValueDate = args.ValueDate;
-                this.presetPaymentReference = args.PaymentReference;
-                this.presetRegisterDate = args.RegisterDate;
             }
 
         }
@@ -350,10 +344,10 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
                 this.PartnerId = this.customerId;
             }
 
-            if(!this.preSelectedCurrencyId)
-                this.PaymentCurrencyId = SessionLocator.TenantPM.CurrencyId;
+            if(this.bankTransferPaymentArguments && this.bankTransferPaymentArguments.CurrencyId)
+                this.PaymentCurrencyId = this.bankTransferPaymentArguments.CurrencyId;
             else
-                this.PaymentCurrencyId = this.preSelectedCurrencyId;
+                this.PaymentCurrencyId = SessionLocator.TenantPM.CurrencyId;
 
             this.newARPaymentPM.PaymentCurrencyExchangeRate = 1;
         }
@@ -552,19 +546,27 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
         this.newARPaymentPM.UpdateDate = DateTool.GetCurrentDateAsUtc();
         this.newARPaymentPM.LocalCurrencyId = SessionLocator.TenantPM.CurrencyId;
         this.newARPaymentPM.RegisterDate = DateTool.GetCurrentDateAsUtc();
-        this.newARPaymentPM.AmountInPaymentCurrency = this.selectedAmount;
-        this.newARPaymentPM.PaymentCurrencyId = this.preSelectedCurrencyId;
-        if(this.presetValueDate){
-            this.newARPaymentPM.ValueDate = this.presetValueDate;
-            this.newARPaymentPM.PresetValueDate = this.presetValueDate;
+
+        if(this.bankTransferPaymentArguments){
+            this.newARPaymentPM.BankTransferPaymentArguments = this.bankTransferPaymentArguments;
+            this.newARPaymentPM.AccountingPaymentMethodCode = this.windowArgs.AccountingPaymentMethodCode;
+            this.newARPaymentPM.AmountInPaymentCurrency = this.bankTransferPaymentArguments.PaymentAmount;
+            this.newARPaymentPM.PaymentCurrencyId = this.bankTransferPaymentArguments.CurrencyId;
+            if(this.bankTransferPaymentArguments.ValueDate){
+                this.newARPaymentPM.ValueDate = this.bankTransferPaymentArguments.ValueDate;
+            }
+
+            if(this.bankTransferPaymentArguments.RegisterDate)
+                this.newARPaymentPM.RegisterDate = this.bankTransferPaymentArguments.RegisterDate;
+
+            if(this.bankTransferPaymentArguments.PaymentReference)
+                this.newARPaymentPM.ChequeOrPaymentRef = this.bankTransferPaymentArguments.PaymentReference;
+
+            if(this.bankTransferPaymentArguments.BankAccountId)
+                this.newARPaymentPM.BankAccountId = this.bankTransferPaymentArguments.BankAccountId;
+
+
         }
-
-        if(this.presetRegisterDate)
-            this.newARPaymentPM.RegisterDate = this.presetRegisterDate;
-
-        if(this.presetPaymentReference)
-            this.newARPaymentPM.ChequeOrPaymentRef = this.presetPaymentReference;
-
 
         if (!SessionLocator.LoggedUserPM.IsCustomerCare) {
             this.newARPaymentPM.BranchId = SessionLocator.LoggedUserPM.BranchId;
@@ -720,13 +722,15 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
             this.AccountingPaymentMethodId = null;
             this.AccountingPaymentMethodCode = null;
             this.SATPaymentMethodCode = null;
-            if(!this.preSelectedCurrencyId)
+            if(!this.bankTransferPaymentArguments || (this.bankTransferPaymentArguments && !this.bankTransferPaymentArguments.CurrencyId))
                 this.PaymentCurrencyId = SessionLocator.TenantPM.CurrencyId;
             this.newARPaymentPM.BillToPartnerTypeId = null;
         }
 
         else {
-            if (!AppTool.IsNullOrEmpty(list.InvoiceCurrencyId) && !this.preSelectedCurrencyId) {
+            if(!AppTool.IsNullOrEmpty(list.InvoiceCurrencyId) && (
+                !this.bankTransferPaymentArguments || (this.bankTransferPaymentArguments && !this.bankTransferPaymentArguments.CurrencyId)
+                )){
                 this.PaymentCurrencyId = list.InvoiceCurrencyId;
             }
             if (!AppTool.IsNullOrEmpty(list.SATPaymentMethodCode)) {
@@ -743,7 +747,7 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
                     myGLAccountPMService.get(list.GLAccountId).subscribe((myResponse: ServiceResponse) => {
                         if (!myResponse.HasError) {
                             var glaccount: GLAccountPM = myResponse.Result;
-                            if (glaccount != null && !glaccount.IsMultiCurrency && !this.preSelectedCurrencyId) {
+                            if (glaccount != null && !glaccount.IsMultiCurrency && (this.bankTransferPaymentArguments && !this.bankTransferPaymentArguments.CurrencyId)) {
                                 this.PaymentCurrencyId = glaccount.CurrencyId;
                             }
                         }
@@ -1007,6 +1011,13 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
 
               this.ValidateTipoCadenaPagoFields();
           }
+        }
+
+        if(this.bankTransferPaymentArguments){
+            this.UIProperties.SetEnabled("PaymentCurrencyId", this.ObjectTableName, false);
+            this.UIProperties.SetEnabled("AmountInPaymentCurrency", this.ObjectTableName, false);
+            this.UIProperties.SetEnabled("AccountingPaymentMethodId", this.ObjectTableName, false);
+
         }
     }
 

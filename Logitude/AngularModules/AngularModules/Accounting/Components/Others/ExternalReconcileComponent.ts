@@ -40,6 +40,7 @@ import {LedgerTransactionExtendedListService} from '../../Services/ExtendedLists
 import {ExternalReconciliationExtendedListService, ExternalAutoReconcileServiceArgs} from '../../Services/ExtendedLists/ExternalReconciliationExtendedListService';
 import { retry } from 'rxjs/operators';
 import { ExternalReconciliationOpService } from '../../Services/ExtendedPMs/ExternalReconciliationOpService';
+import { BankTransferPaymentArguments } from 'Invoice/DataContracts/BankTransferPaymentArguments';
 
 
 
@@ -59,7 +60,7 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
     public ObjectTableName: string;
     public ExtRecoTable: string = "ExternalReconciliation";
 
-    private NewARPaymentTitle = TextCodeTranslator.Translate("ARPayment.O.New");
+    private NewARPaymentTitle = TextCodeTranslator.Translate("ExternalReconciliation.O.BTCreateARPayment");
     private BankTransferDifferenceMessage = TextCodeTranslator.Translate("ExternalReconciliation.O.BankTransferDifferenceMsg");
     private SelectCreditLinesOnlyMessage = TextCodeTranslator.Translate("ExternalReconciliation.O.BTCreditLinesOnly");
     private OnlyBankPagesMessage = TextCodeTranslator.Translate("ExternalReconciliation.O.BTOnlyBankPages");
@@ -1851,6 +1852,7 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
     }
     ShowNewBankTransferARPayment()
     {
+        this.showBankTransferAlert = false;
         var logWindow = new LogitudeWindow();
         logWindow.Title = this.NewARPaymentTitle;
         logWindow.Width = NewARPaymentWindowWidth;
@@ -1867,27 +1869,30 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
 
             setTimeout(() => {
                 this.RefreshButtonClicked();
-            }, 1000);
+            }, 1500);
         });
 
     }
 
     private SetNewBankTransferWindowArguments(logWindow: LogitudeWindow)
     {
-        logWindow.WindowArgs = {
-            AccountingPaymentMethodCode: BankTransferPaymentMethodCode,
-            PaymentAmount: this.GetSelectedExternalPageLinesCreditTotal(),
-            Currency: this.GetGLAccountCurrency(),
-            ExteranlPageLinesIds: this.GetSelectedPageLinesIds()
-        };
 
+        let bankTransferPaymentArguments = new BankTransferPaymentArguments();
+        bankTransferPaymentArguments.BankAccountId = this.BankAccountPM?.Id;
+        bankTransferPaymentArguments.CurrencyId = this.GetGLAccountCurrency();
+        bankTransferPaymentArguments.PaymentAmount = this.GetSelectedExternalPageLinesCreditTotal();
         const singleBankPageLineSelected = this.ExtPageSelectedLines.Length == 1;
         if (singleBankPageLineSelected) {
-            logWindow.WindowArgs.ValueDate = this.ExtPageSelectedLines.Collection[0].ReferenceDate;
-            logWindow.WindowArgs.RegisterDate = this.ExtPageSelectedLines.Collection[0].ReferenceDate;
-            logWindow.WindowArgs.PaymentReference = this.ExtPageSelectedLines.Collection[0].Reference;
-
+            bankTransferPaymentArguments.ValueDate = this.ExtPageSelectedLines.Collection[0].ReferenceDate;
+            bankTransferPaymentArguments.RegisterDate = this.ExtPageSelectedLines.Collection[0].ReferenceDate;
+            bankTransferPaymentArguments.PaymentReference = this.ExtPageSelectedLines.Collection[0].Reference;
         }
+
+        logWindow.WindowArgs = {
+            AccountingPaymentMethodCode: BankTransferPaymentMethodCode,
+            ExteranlPageLinesIds: this.GetSelectedPageLinesIds(),
+            BankTransferPaymentArguments: bankTransferPaymentArguments
+        };
     }
 
     private GetSelectedPageLinesIds()

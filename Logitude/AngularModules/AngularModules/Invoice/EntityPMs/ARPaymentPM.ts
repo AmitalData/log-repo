@@ -23,6 +23,7 @@ import {PropertyChangedArgs} from '../../Infrastructure/EventEmitterArgs/Propert
 import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass';
 import { BankAccountPM } from 'Accounting/EntityPMs/BankAccountPM';
 import { ARPaymentBankTranferPM } from 'Invoice/EntityPMs/ARPaymentBankTranferPM';
+import { BankTransferPaymentArguments } from 'Invoice/DataContracts/BankTransferPaymentArguments';
 
 
 export class ARPaymentPM {
@@ -608,7 +609,7 @@ export class ARPaymentPM {
     }
 
 	    //public ARPaymentChequeReplicas: Array<ARPaymentChequeReplicaPMPM>= [];
-      
+
 	private aRPaymentBankTranfers: ARPaymentBankTranferPM[];
     get  ARPaymentBankTranfers() {
         if (this.aRPaymentBankTranfers == null) {
@@ -737,18 +738,18 @@ export class ARPaymentPM {
         this.presetValueDate = v;
     }
 
-       
-	 
+    BankTransferPaymentArguments: BankTransferPaymentArguments;
+
     private updateAmountAndStatuses: boolean;
     public get UpdateAmountAndStatuses() { return this.updateAmountAndStatuses; }
     public set UpdateAmountAndStatuses(newValue: boolean) { if (this.updateAmountAndStatuses != newValue) { this.updateAmountAndStatuses = newValue; this.MarkAsDirty("UpdateAmountAndStatuses"); } }
-       
-	 
+
+
 
     public OldEntityPM: ARPaymentPM;
 
     public BankAccount: BankAccountPM;
-		
+
     public IsDirty: boolean;
     public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
@@ -774,4 +775,4 @@ export class ARPaymentPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

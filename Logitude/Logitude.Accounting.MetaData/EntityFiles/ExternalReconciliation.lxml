@@ -39,7 +39,7 @@
   MaxNumberOfCustomFields="0"
   LocalDefaultText="&quot;התאמה&quot;"
   DefaultText="&quot;External Reconciliation&quot;"
-  Code="&quot;bd65&quot;"
+  Code="&quot;cf31&quot;"
   Name="&quot;ExternalReconciliation Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Accounting&quot;"
@@ -1373,14 +1373,20 @@
       IsSpellChecked="false" />
     <TextCode
       Code="&quot;ExternalReconciliation.O.FutureValueDate&quot;"
-      DefaultText="&quot;Value date must be greater than or equals to today's Date&quot;"
+      DefaultText="&quot;Value date must be less than or equals to today's date&quot;"
       LocalDefaultText="&quot;תאריך ערך צריך להיות קטן מתאריך נוכחי&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
       Code="&quot;ExternalReconciliation.O.BTCreditLinesOnly&quot;"
-      DefaultText="&quot;Please Check the selected lines. ARpayment Reconciliation is allowed only with Credit Bank pages lines&quot;"
+      DefaultText="&quot;Please check the selected lines. AR Payment reconciliation is allowed only with positive credit bank pages lines&quot;"
       LocalDefaultText="&quot;ניתן ליצור קבלה רק על שורת זכות חיובית בצד הבנק&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ExternalReconciliation.O.BTCreateARPayment&quot;"
+      DefaultText="&quot;Create AR Payment&quot;"
+      LocalDefaultText="&quot;יצירת קבלה&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>

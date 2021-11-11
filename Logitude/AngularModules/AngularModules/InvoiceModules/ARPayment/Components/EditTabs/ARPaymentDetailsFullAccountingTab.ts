@@ -713,8 +713,13 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
 			}
             if(this.EntityPM.ForceUsingBankTransferMethod)
 				this.UIProperties.SetEnabled("AccountingPaymentMethodId", this.ObjectTableName, false);
-            if(this.EntityPM.PresetValueDate)
-                this.UIProperties.SetEnabled("ValueDate", this.ObjectTableName, false);
+
+            if(this.EntityPM.BankTransferPaymentArguments){
+                if(this.EntityPM.BankTransferPaymentArguments.ValueDate)
+                    this.UIProperties.SetEnabled("ValueDate", this.ObjectTableName, false);
+                this.UIProperties.SetEnabled("BankAccountId", this.ObjectTableName, false);
+                this.UIProperties.SetEnabled("BankTransferAmount", this.ObjectTableName, false);
+            }
 
 		}
 		this.SetBankRequired();
@@ -1731,7 +1736,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
             });
         }
     }
-	
+
 
     UpdatePaymentChequeBankBranchField() {
         if (this.EntityPM.ARPaymentChequeReplicas.length > 0) {
@@ -2432,7 +2437,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
     }
 
 	CalculatePaymentTotalAmountForBankTransfers() {
-           
+
         var total = 0;
         for (let bankTransfer of this.EntityPM.ARPaymentBankTranfers) {
             if (!AppTool.IsNullOrEmpty(bankTransfer.ForeignAmount)) {
