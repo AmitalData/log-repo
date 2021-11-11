@@ -148,7 +148,8 @@ import { ChooseUserComponent } from './Components/NewViewComponent/ChooseUserCom
 
 import {DWLogSearchAddFieldsComponent} from './Components/QueryColumnsComponents/DWLogSearchAddFieldsComponent';
 import { MultiUpdateComponent } from './Components/MultiUpdateComponent/MultiUpdateComponent';
-
+import { MultiEntityUpdateBaseComponent } from './Components/MultiUpdateComponent/MultiEntityUpdateBaseComponent';
+import { MultiEntityUpdateErrorHandlerComponent } from './Components/MultiUpdateComponent/MultiEntityUpdateErrorHandlerComponent';
 
 
 // Followups
@@ -395,7 +396,9 @@ export const Components =
         AutomationConditionsDetailsComponent,
         AutomationsConditionsViewDetailsComponent,
 
-        MultiUpdateComponent
+        MultiUpdateComponent,
+        MultiEntityUpdateBaseComponent,
+        MultiEntityUpdateErrorHandlerComponent
 
         
     ];
@@ -508,6 +511,8 @@ export class ModuleDeclarations {
             case 'CreateTaskResultComponent': { myResult = CreateTaskResultComponent; break; }
 
             case 'MultiUpdateComponent': { myResult = MultiUpdateComponent; break; }
+            case 'MultiEntityUpdateBaseComponent': { myResult = MultiEntityUpdateBaseComponent; break; }
+            case 'MultiEntityUpdateErrorHandlerComponent': { myResult = MultiEntityUpdateErrorHandlerComponent; break; }
                  
                  
 
