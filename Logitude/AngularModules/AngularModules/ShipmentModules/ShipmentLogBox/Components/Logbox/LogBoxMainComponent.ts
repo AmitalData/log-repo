@@ -53,7 +53,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
     }
     private entityResourceService: EntityResourceService;
     public HasExportShipmentToggle: boolean = false;
-
+    //
 
     public IsExportActivated: boolean = false;
     public IsImportActivated: boolean = false;
@@ -512,6 +512,8 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
             DataTypeCode: 'String',
             Display: this.HasExportShipmentToggle ? 'Supplier / Consignee' : 'Supplier' ,
             Styles: { width: '150px' },
+            HtmlListComponentName: 'SupplierConsigneeListTemplate',
+            HtmlListComponentUrl: './Shipment/Components/ListTemplates/SupplierConsigneeListTemplate',
             IsCustomTemplate: true,
             ServerSideSortable: true,
             SortByName: "ShipperName"
