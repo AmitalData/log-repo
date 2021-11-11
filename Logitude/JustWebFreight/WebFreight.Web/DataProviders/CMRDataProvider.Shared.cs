@@ -135,11 +135,6 @@ namespace WebFreight.Web.DataProviders
 
     public class ContainerData
     {
-        public ContainerData()
-        {
-            this.InsidePackagesLines = new List<InsidePackageLine>();
-        }
-
         public string Weight { get; set; }
         public string Volume { get; set; }
         public int? Pieces { get; set; }
