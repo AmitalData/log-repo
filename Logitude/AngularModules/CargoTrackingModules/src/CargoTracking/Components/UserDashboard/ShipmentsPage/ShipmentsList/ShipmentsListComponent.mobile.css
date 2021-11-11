@@ -256,7 +256,9 @@
     }
 
     .input-box {
-        display: flex;
+        float: left;
+        width: 88%;
+        display: inline-block;
         justify-content: space-between;
     }
 
@@ -273,6 +275,17 @@
     .input-box > * {
         vertical-align: middle;
         font-size: 24px;
+    }
+
+    .mobile-search-button{
+        background-color: var(--MainColor);
+        color: white;
+        border: none;
+        cursor: pointer;
+        height: 40px;
+        padding: 0;
+        border-radius: 0 5px 5px 0;
+        width: 12%;
     }
 
     /*Mobile Sort Menu*/

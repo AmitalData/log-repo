@@ -322,11 +322,11 @@ export class ShipmentDetailsComponent implements AfterViewInit
 
     SetTitleOfCustomsOrForwarder() {
         if (this.Shipment.ShipmentList.EntityType == this.CustomsEntityType) {
-            this.TitleOfCustomsOrForwarder = "Customs Broker References";
+            this.TitleOfCustomsOrForwarder = "Customs Broker Ref.";
         }
 
         if (this.Shipment.ShipmentList.EntityType == this.ForwardingEntityType) {
-            this.TitleOfCustomsOrForwarder = "Forwarder Reference";
+            this.TitleOfCustomsOrForwarder = "Forwarder Ref.";
         }
         if (this.Shipment.ShipmentList.EntityType == this.OrderEntityType) {
             this.TitleOfCustomsOrForwarder = "Order References";
@@ -656,7 +656,7 @@ export class ShipmentDetailsComponent implements AfterViewInit
         var panelElement = document.getElementById(panelName) as HTMLElement;
         if (panelElement){
             panelElement.scrollIntoView();
-            document.getElementsByTagName('html')[0].scrollTop -= 103;
+            document.getElementsByTagName('html')[0].scrollTop -= 113;
 
     }
 

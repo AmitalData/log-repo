@@ -92,16 +92,19 @@
 
             <div class="input-box">
 
-                <i *ngIf="PanelSearchText" class="las la-times la-2x" style="font-size: 22px;padding-top: 4px;" (click)="PanelSearchText = ''"></i>
-
+                
+                <i class="las la-search" style="color:#AAA;transform: scaleX(-1);"></i>
                 <input #mobileSearch type="text " autocomplete="off" class="gray " [(ngModel)]="PanelSearchText" style="display: inline-block;"
                     placeholder="By shipment References" name="PanelSearchText"
                     formControlName="PanelSearchText" />
-
-                <i *ngIf="PanelSearchText" class="las la-long-arrow-alt-right la-2x" style="padding-top: 4px;" (click)="HideSearchPanel()"></i>
-                <i *ngIf="!PanelSearchText" class="las la-search" style="padding-top: 4px;"></i>
-
+                <i *ngIf="PanelSearchText" class="las la-times la-2x" style="font-size: 22px;padding-top: 4px;" (click)="PanelSearchText = ''"></i>
+                <!-- <i *ngIf="PanelSearchText" class="las la-long-arrow-alt-right la-2x" style="padding-top: 4px;" (click)="HideSearchPanel()"></i> -->
             </div>
+            
+            <button mat-button matSuffix mat-stroked-button aria-label="search" class="mobile-search-button" type="submit"
+            (click)="HideSearchPanel()">
+                <mat-icon>search</mat-icon>
+            </button>
         </form>
 
         <br>
