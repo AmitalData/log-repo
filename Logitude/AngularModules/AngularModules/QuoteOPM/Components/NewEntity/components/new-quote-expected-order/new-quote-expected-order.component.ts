@@ -217,18 +217,4 @@ export class NewQuoteExpectedOrderComponent implements OnInit, AfterViewInit {
   calcTotalVolume(prev_quantity: number, current_quantity: number) {
     this.totalVolume = this.totalVolume - prev_quantity + current_quantity;
   }
-
-  attachPackages() {
-    this.formGroup.controls.packages.value.forEach((form: FormGroup) => {
-      const pack: QuoteOPPackagePM = new QuoteOPPackagePM(this.EntityPM);
-      const values: any = form.getRawValue();
-
-      pack.Quantity = values.quantity;
-      pack.Volume = values.volume;
-      pack.GrossWeight = values.grossWeight;
-      pack.PackageTypeId = (<PackageTypeList>values.packageType).Id;
-
-      this.EntityPM.AddQuoteOPPackage(pack)
-    });
-  }
 }
