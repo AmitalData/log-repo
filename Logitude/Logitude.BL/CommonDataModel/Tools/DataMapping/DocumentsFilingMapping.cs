@@ -165,7 +165,7 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             poco.LastShareDate = entityPM.LastShareDate;
             poco.SignDueDate = entityPM.SignDueDate; 
             poco.EntityNumber = entityPM.EntityNumber;
-             
+            poco.IsTransferdToQBO = entityPM.IsTransferdToQBO;
         }
     }
 }

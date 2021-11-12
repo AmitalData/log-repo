@@ -183,6 +183,7 @@
     <None Include="DBOthers\CommonDataModel\Triggers\Trigger_AutomaticLastUpdateDateVatTypes.dxml" />
     <None Include="DBOthers\ShipmentsModel\Triggers\TriggerOnCreate_AutomaticLastUpdateDateShipmentSubTypes.dxml" />
     <None Include="DBOthers\ShipmentsModel\Triggers\Trigger_AutomaticLastUpdateDateShipmentSubTypes.dxml" />
+    <None Include="DBScripts\CommonModel\202111122000_QBODocumnetsUploaderWR.sxml" />
     <None Include="DBScripts\CommonModel\202111011306_PODDocumentWR.sxml" />
     <None Include="DBScripts\CommonModel\202111101034_UpdateUsersSecurityLevelWithNullValues.sxml" />
     <None Include="DBScripts\CommonModel\202109021051_AddDefaultValueForSecurityLevel.sxml" />
