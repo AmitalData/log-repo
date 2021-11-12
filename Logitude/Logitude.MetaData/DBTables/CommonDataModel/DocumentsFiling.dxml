@@ -369,10 +369,15 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="IsTransferdToQBO"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
   <Relation
     ForeignKeyColumn="DocumentId"
     ReferencedTable="Documents"
-    Ignore="true"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Relation
