@@ -50,7 +50,7 @@ Given("add delivery with {string} as a partner routing", (partner) => {
 
 //#endregio
 
-//edit on pickup window
+//edit on pickup window 
 Given("the user edit pick window",()=>{
 cy.Navigate(ShipmentSelectors.EditPickUp,true)
 })
@@ -60,12 +60,14 @@ cy.FillDate(ShipmentSelectors.PickUpDeliveryETDDate,expectedDeparture)
 cy.FillLogTextBox(ShipmentSelectors.PickUpDeliverynote,noteExpetedPickUp,false)
 })
 
-Given("add Actual Departure with {string} as a value",(actualDeparture)=>{
+Given("add Actual Departure with {string} as a value and Notes {string} ",(actualDeparture,noteactualDeparture)=>{
   cy.FillLogTextBox(ShipmentSelectors.PickUpDeliveryATDDate,actualDeparture,false)
+  cy.FillLogTextBox(ShipmentSelectors.PickUpDeliverynote,noteactualDeparture,false)
 }) 
 
-Given("add Actual Arrival with {string} as a value",(actualArrival)=>{
+Given("add Actual Arrival with {string} as a value and Notes {string}",(actualArrival,noteactualArrival)=>{
     cy.FillLogTextBox(ShipmentSelectors.PickUpDeliveryATADate,actualArrival,false)
+    cy.FillLogTextBox(ShipmentSelectors.PickUpDeliverynote,noteactualArrival,false)
 }) 
 
  //#endregio

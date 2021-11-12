@@ -31,14 +31,14 @@ Feature: Status in Routings Tab
 
     Scenario: Add Actual Departure date for the pickup
         Given the user edit pick window
-        And add Actual Departure with '02/10/2021' as a value
+        And add Actual Departure with '02/10/2021' as a value and Notes 'actual departure equal 02/10/2020'
         When save pickup
         Then the direct should update successfully
         And the status value should be "Pick Up"
 
     Scenario: Add Actual Arrival date for the pickup
         Given the user edit pick window
-        And add Actual Arrival with '03-10-2021' as a value
+        And add Actual Arrival with '03/10/2021' as a value and Notes 'actual arrival equal 03/10/2020'
         When save pickup
         Then the direct should update successfully
         And the status value should be "On Hand(LHR)"
@@ -73,25 +73,24 @@ Feature: Status in Routings Tab
 
     Scenario: Add Expected Departure date for the Delivary
         Given the user edit Delivary window
-        And add Expected Departure with '08-10-2021' as a value
+        And add expected departure with '08-10-2021' as a value and Notes 'expected departure equal 08/10/2020'
         When save Delivary
         Then the direct should update successfully
         And the status value should be "Delivery Arranged(MIA)"
 
     Scenario: Add Actual Departure date for the Delivary
         Given the user edit Delivary window
-        And add Actual Departure with '10-10-2021' as a value
+        And add Actual Departure with '10-10-2021' as a value and Notes 'actual departure equal 10/10/2020'
         When save Delivary
         Then the direct should update successfully
         And the status value should be "Delivery(MIA)"
 
     Scenario: Add Actual Arrival date for the Delivary
         Given the user edit Delivary window
-        And add Actual Arrival with '12-10-2021' as a value
+        And add Actual Arrival with '12-10-2021' as a value and Notes 'actual arrival equal 12/10/2020'
         When save Delivary
         Then the direct should update successfully
         And the status value should be "Delivered"
-
 
 
 
