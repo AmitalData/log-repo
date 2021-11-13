@@ -850,7 +850,7 @@ export class AppTool {
         var result: number = myArgs;
 
         if (chargeableWeightUnitCode != "MT") {
-            if (directionId == "E" && transportModeId == "A") {
+            if (directionId == "R" || (directionId == "E" && transportModeId == "A")) {
                 if (result != null) {
 
                     var toString: string = result.toString();
