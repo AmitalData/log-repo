@@ -420,5 +420,14 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly ViewAddButton = "#NewButtonViewAdd";
   public static readonly EditViewButton = "#ViewFiltersButton";
   public static readonly ViewDeleteButton = "#DeleteButton";
+  public static readonly ViewAddFilter = "#NewTabViewFilters";
+  public static readonly ViewFilterSearchField='#NewViewFiltersSearchFieldsId_0_1'
+  public static readonly CheckBoxFilter='#CheckBox_0_1475'
+  public static readonly ShipmentValue='#Shipment_TextValue'
+  public static readonly CheckBoxFilterview='.LogitudeCheckBox'
+  
+  
+  //CheckBox_0_1475
+  
   //#endregion
 }
