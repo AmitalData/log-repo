@@ -11,7 +11,7 @@
 
 <div class="TabHolder">
     <table>
-       
+
         <tr class="TabTitleRow">
             <td>{{'General.O.General' | TextCodeTranslationPipe}}</td>
         </tr>
@@ -23,9 +23,49 @@
                 </div>
             </td>
         </tr>
-        
 
-        <tr  style="height: 1px;vertical-align:top"  *ngIf="DisplaySATSettings">
+        <tr style="height: 1px;vertical-align:top" *ngIf="DisplayQBOSettings">
+            <td>
+                <table>
+                    <tr class="TabTitleRow">
+                        <td colspan="2">QBO</td>
+                    </tr>
+
+                    <tr>
+                        <td style="width: 380px;">
+                            <table>
+
+                                <tr class="FormFieldRow">
+                                    <td style="width: 140px;">
+                                        <LogLabel [ObjectFieldName]="'GlobalTaxCalculation'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                    </td>
+                                    <td>
+                                        <LogLov [ObjectFieldName]="'GlobalTaxCalculation'"
+                                                [SelectedValue]="GlobalTaxCalculation"
+                                                [ObjectTableName]="ObjectTableName"
+                                                [DataContext]="DataContext"
+                                                [LookUpTableName]="'QBOGlobalTaxCalculation'">
+                                        </LogLov>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td></td>
+                                </tr>
+
+                            </table>
+
+                        </td>
+
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+
+        <tr style="height: 1px;vertical-align:top" *ngIf="DisplaySATSettings">
             <td>
                 <table>
                     <tr class="TabTitleRow">
@@ -35,74 +75,74 @@
                     <tr>
                         <td style="width: 380px;">
 
-                          <table>
+                            <table>
 
-                            <tr class="FormFieldRow">
-                              <td style="width: 140px;">
-                                <LogLabel [ObjectFieldName]="'MetodoPagoCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                              </td>
+                                <tr class="FormFieldRow">
+                                    <td style="width: 140px;">
+                                        <LogLabel [ObjectFieldName]="'MetodoPagoCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                    </td>
 
-                              <td>
-                                <LogLov [ObjectFieldName]="'MetodoPagoCode'"
-                                        [SelectedValue]="MetodoPagoCode"
-                                        [ObjectTableName]="ObjectTableName"
-                                        [DataContext]="DataContext"
-                                        [LookUpTableName]="'MetodoPago'">
-                                </LogLov>
-                              </td>
-                            </tr>
+                                    <td>
+                                        <LogLov [ObjectFieldName]="'MetodoPagoCode'"
+                                                [SelectedValue]="MetodoPagoCode"
+                                                [ObjectTableName]="ObjectTableName"
+                                                [DataContext]="DataContext"
+                                                [LookUpTableName]="'MetodoPago'">
+                                        </LogLov>
+                                    </td>
+                                </tr>
 
-                            <!-- Code -->
-                            <tr class="FormFieldRow">
-                              <td style="width: 140px;">
-                                <LogLabel [ObjectFieldName]="'SATPaymentMethodCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                              </td>
+                                <!-- Code -->
+                                <tr class="FormFieldRow">
+                                    <td style="width: 140px;">
+                                        <LogLabel [ObjectFieldName]="'SATPaymentMethodCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                    </td>
 
-                              <td>
-                                <LogLov [ObjectFieldName]="'SATPaymentMethodCode'"
-                                        [SelectedValue]="SATPaymentMethodCode"
-                                        [ObjectTableName]="ObjectTableName"
-                                        [DataContext]="DataContext"
-                                        [LookUpTableName]="'SATPaymentMethod'">
-                                </LogLov>
-                              </td>
-                            </tr>
+                                    <td>
+                                        <LogLov [ObjectFieldName]="'SATPaymentMethodCode'"
+                                                [SelectedValue]="SATPaymentMethodCode"
+                                                [ObjectTableName]="ObjectTableName"
+                                                [DataContext]="DataContext"
+                                                [LookUpTableName]="'SATPaymentMethod'">
+                                        </LogLov>
+                                    </td>
+                                </tr>
 
-                            <tr class="FormFieldRow">
-                              <td style="width: 140px;">
-                                <LogLabel [ObjectFieldName]="'RelatedInvoice'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                              </td>
+                                <tr class="FormFieldRow">
+                                    <td style="width: 140px;">
+                                        <LogLabel [ObjectFieldName]="'RelatedInvoice'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                    </td>
 
-                              <td>
-                                <LogTextBox [ObjectFieldName]="'RelatedInvoice'" [Text]="RelatedInvoice" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
-                                <!--<LogLov [ObjectFieldName]="'SATPaymentMethodCode'"
-              [SelectedValue]="SATPaymentMethodCode"
-              [ObjectTableName]="ObjectTableName"
-              [DataContext]="DataContext"
-              [LookUpTableName]="'SATPaymentMethod'">
-      </LogLov>-->
-                              </td>
-                            </tr>
+                                    <td>
+                                        <LogTextBox [ObjectFieldName]="'RelatedInvoice'" [Text]="RelatedInvoice" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                        <!--<LogLov [ObjectFieldName]="'SATPaymentMethodCode'"
+                                            [SelectedValue]="SATPaymentMethodCode"
+                                            [ObjectTableName]="ObjectTableName"
+                                            [DataContext]="DataContext"
+                                            [LookUpTableName]="'SATPaymentMethod'">
+                                    </LogLov>-->
+                                    </td>
+                                </tr>
 
-                            <tr class="FormFieldRow">
-                              <td style="width: 140px;">
-                                <LogLabel [ObjectFieldName]="'UsoCFDICode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                              </td>
+                                <tr class="FormFieldRow">
+                                    <td style="width: 140px;">
+                                        <LogLabel [ObjectFieldName]="'UsoCFDICode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                    </td>
 
-                              <td>
-                                <LogLov [ObjectFieldName]="'UsoCFDICode'"
-                                        [SelectedValue]="UsoCFDICode"
-                                        [ObjectTableName]="ObjectTableName"
-                                        [DataContext]="DataContext"
-                                        [LookUpTableName]="'UsoCFDI'">
-                                </LogLov>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td></td>
-                            </tr>
+                                    <td>
+                                        <LogLov [ObjectFieldName]="'UsoCFDICode'"
+                                                [SelectedValue]="UsoCFDICode"
+                                                [ObjectTableName]="ObjectTableName"
+                                                [DataContext]="DataContext"
+                                                [LookUpTableName]="'UsoCFDI'">
+                                        </LogLov>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                </tr>
 
-                          </table>
+                            </table>
 
                         </td>
 
