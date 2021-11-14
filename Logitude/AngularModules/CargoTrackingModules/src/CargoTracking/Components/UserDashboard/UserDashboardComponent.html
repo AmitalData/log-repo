@@ -63,7 +63,7 @@
         <!-- <img src="./assets/images/logo/path3410@1x.png" routerLinkActive="active" routerLink="/search" alt="" /> -->
     </div>
 
-    <div *ngIf="currentRoute && currentRoute !== '/cargo-tracking/shipments' || sharedService.isAdvancedFilterOpened$ | async" class="action-buttons left-button mobile-only" (click)="BackLinkClicked()">
+    <div *ngIf="currentRoute && currentRoute !== '/cargo-tracking/shipments' || (sharedService.isAdvancedFilterOpened$ | async)" class="action-buttons left-button mobile-only" (click)="BackLinkClicked()">
         <img src="./assets/images/icons/arrow.svg" alt="" />
 
     </div>
