@@ -50,6 +50,11 @@ namespace WebFreight.Web.App_Code
         {
             try
             {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnEntityTenant("CustomerTenantAccess", entityAM.Tenant, authToken.Tenant);
+
                 CustomerTenantAccessPM entityPM = new CustomerTenantAccessPM();
                 var MapResult = MapEntityAMToEntityPM(entityAM, entityPM);
                 bool IsNewLog = false;

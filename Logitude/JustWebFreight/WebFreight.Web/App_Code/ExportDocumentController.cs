@@ -59,6 +59,7 @@ namespace WebFreight.Web.App_Code
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnTenant(tenant);
 
                 if (tenant != authToken.Tenant)
                 {
@@ -86,6 +87,7 @@ namespace WebFreight.Web.App_Code
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnTenant(tenant);
                 if (tenant != authToken.Tenant)
                 {
                     throw new Exception("Sorry you’re not authenticated");
@@ -175,11 +177,8 @@ namespace WebFreight.Web.App_Code
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnEntityTenant("ExportDocumen", filter.Tenant, authToken.Tenant);
 
-                if (filter.Tenant != authToken.Tenant)
-                {
-                    throw new Exception("Sorry you’re not authenticated");
-                }
 
                 long theT1 = new long();
                 long theT2 = new long();
@@ -861,6 +860,8 @@ namespace WebFreight.Web.App_Code
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnEntityTenant("ExportDocument", exportDocumentArgs.Tenant, authToken.Tenant);
+
                 ExportDocumentHelper exportDocumentHelper = new ExportDocumentHelper();
                 DocumentsExecutionLog documentsExecutionLog = exportDocumentHelper.GetNewInStanceFromDocumentsExecutionLog(exportDocumentArgs);
                 IQueueService queueservice = new DbQueueService();

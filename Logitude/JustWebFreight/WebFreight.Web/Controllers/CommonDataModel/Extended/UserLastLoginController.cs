@@ -36,6 +36,11 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
         {
             try
             {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnTenant(tenant);
+
                 UserLastLoginQuery userLastLoginQuery = new UserLastLoginQuery(tenant);
                 var myResult = userLastLoginQuery.GetSinglePM(userId, tenant);
                 return Request.CreateResponse(HttpStatusCode.OK, myResult);
@@ -58,6 +63,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
                         string token = HttpContext.Current.Request.Headers["Token"];
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                        SecurityUtility.AuthenticationOnEntityTenant("UserLastLogin", entityPM.Tenant, authToken.Tenant);
+
 
                         ICommonDataContext MyContext = CommonDataContext.GetContext(entityPM.Tenant);
                         UserLastLoginRepository repository = new UserLastLoginRepository(MyContext);

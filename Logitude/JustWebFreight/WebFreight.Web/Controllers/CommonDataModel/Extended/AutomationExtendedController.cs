@@ -40,6 +40,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnTenant(tenant);
                 SecurityUtility.CheckContactFeature("Automation", "READ", authToken.Tenant);
 
                 AutomationQuery automationQuery = new AutomationQuery(tenant);
@@ -62,6 +63,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnTenant(tenant);
                 SecurityUtility.CheckContactFeature("Automation", "READ", authToken.Tenant);
 
                 AutomationQuery automationQuery = new AutomationQuery(authToken.Tenant);
@@ -93,6 +95,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         SecurityUtility.CheckContactFeature("Automation", "NEW", authToken.Tenant);
+                        SecurityUtility.AuthenticationOnEntityTenant("Automation", entityPM.Tenant, authToken.Tenant);
 
                         ICommonDataContext MyContext = CommonDataContext.GetContext(entityPM.Tenant);
                         AutomationService service = new AutomationService(MyContext, entityPM.Tenant);
@@ -131,6 +134,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
                     AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                     SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                     SecurityUtility.CheckContactFeature("Automation", "UPDATE", authToken.Tenant);
+                    SecurityUtility.AuthenticationOnEntityTenant("Automation", entityPM.Tenant, authToken.Tenant);
 
                     string entityName = "Automation" + entityPM.Id + entityPM.Tenant;
                     string entityPmName = "AutomationPM" + entityPM.Id + entityPM.Tenant;
@@ -216,6 +220,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
 
                     foreach (AutomationArgs entityPM in items)
                     {
+                        SecurityUtility.AuthenticationOnEntityTenant("Automation", entityPM.Tenant, authToken.Tenant);
+
                         string entityName = "Automation" + entityPM.Id + entityPM.Tenant;
                         string entityPmName = "AutomationPM" + entityPM.Id + entityPM.Tenant;
                         if (CacheManager.CacheWrapper.Get(entityName) != null)
@@ -256,6 +262,11 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
         {
             try
             {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnTenant(eventTypeArgs.Tenant);
+
                 EventTypeRepository eventTypesRepository = new EventTypeRepository(eventTypeArgs.Tenant);
                 EventTypeQuery eventTypeQuery = new EventTypeQuery(eventTypesRepository);
                 List<EventTypeList> eventList = eventTypeQuery.GetEventTypeIdsByListEventCode(eventTypeArgs.EventTypeCodeList, eventTypeArgs.Tenant, eventTypeArgs.ObjectTableId);
@@ -339,12 +350,12 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
             }
         }
 
-        private static void Authentication()
+        private void Authentication(int tenant)
         {
             string token = HttpContext.Current.Request.Headers["Token"];
             AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
             SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-            SecurityUtility.CheckContactFeature("Automation", "READ", authToken.Tenant);
+            SecurityUtility.AuthenticationOnTenant(tenant);
         }
 
 

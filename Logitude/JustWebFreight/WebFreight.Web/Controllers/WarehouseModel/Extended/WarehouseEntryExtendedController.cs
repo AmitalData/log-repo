@@ -39,6 +39,7 @@ namespace WebFreight.Web.Controllers.WarehouseModel.Extended
                         string token = HttpContext.Current.Request.Headers["Token"];
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                        SecurityUtility.AuthenticationOnEntityTenant("WarehouseEntry", entityPM.Tenant, authToken.Tenant);
                         SecurityUtility.CheckContactFeature("WarehouseRelease", "UPDATE", authToken.Tenant);
                         WarehouseEntryQueryService warehouseEntryQueryService = new WarehouseEntryQueryService(entityPM.Tenant);
                         warehouseEntryQueryService.PutCancelWarehouseEntry(entityPM);

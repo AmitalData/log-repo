@@ -33,6 +33,7 @@ namespace WebFreight.Web.App_Code
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnEntityTenant("Automation", htmlEditorResolveArgs.Tenant, authToken.Tenant);
 
                 if (htmlEditorResolveArgs.Tenant != authToken.Tenant)
                 {
@@ -111,6 +112,7 @@ namespace WebFreight.Web.App_Code
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnTenant(tenant);
 
                 if (tenant != authToken.Tenant)
                 {
@@ -150,6 +152,7 @@ namespace WebFreight.Web.App_Code
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnEntityTenant("SendHtml", filter.Tenant, authToken.Tenant);
 
 
 
@@ -232,6 +235,7 @@ namespace WebFreight.Web.App_Code
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnEntityTenant("FroalaEditor", filter.Tenant, authToken.Tenant);
 
                 if (filter.Tenant != authToken.Tenant)
                 {

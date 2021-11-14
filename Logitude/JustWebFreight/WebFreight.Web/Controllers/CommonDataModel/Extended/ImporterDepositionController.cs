@@ -94,6 +94,9 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
             {
                 using (TransactionScope scope = TransactionFactory.GetTransaction())
                 {
+                    string token = HttpContext.Current.Request.Headers["Token"];
+                    AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                    SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                     SecurityUtility.AuthenticationOnTenant(Data.Tenant);
                     ICommonDataContext commonContext = CommonDataContext.GetContext(Data.Tenant);
                     CommunicationLogRepository communicationLogRepository = new CommunicationLogRepository(commonContext);

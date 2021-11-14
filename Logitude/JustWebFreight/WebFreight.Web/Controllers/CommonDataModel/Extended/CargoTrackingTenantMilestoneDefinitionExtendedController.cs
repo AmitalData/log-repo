@@ -66,6 +66,12 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
                     string token = HttpContext.Current.Request.Headers["Token"];
                     AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                     SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+
+                    foreach(var entityPM in cargoTenantMilestoneDefinitionPMs)
+                    {
+                        SecurityUtility.AuthenticationOnEntityTenant("CargoTenantMilestoneDefinition", entityPM.Tenant, authToken.Tenant);
+                    }
+
                     ICommonDataContext commonDataContext = CommonDataContext.GetContext(authToken.Tenant);
                     CargoTenantMilestoneDefinitionService cargoTenantMilestoneDefinitionService = new CargoTenantMilestoneDefinitionService(commonDataContext, authToken.Tenant);
                     cargoTenantMilestoneDefinitionService.UpdateCargoTenantMilestoneDefinitionsPM(cargoTenantMilestoneDefinitionPMs, authToken.Tenant);

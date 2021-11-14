@@ -27,6 +27,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnTenant(tenant);
 
                 ShippingLineQuery shippingLineQuery = new ShippingLineQuery(authToken.Tenant);
                 IQueryable<ShippingLinePM> iQueryable = shippingLineQuery.GetShippinngLinePMsByTenant(tenant);
@@ -57,6 +58,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
 
                         foreach (ShippingLinePM shippingLinePM in shippingLines)
                         {
+                            SecurityUtility.AuthenticationOnTenant(shippingLinePM.Tenant);
                             service.Update(shippingLinePM);
                         }
 

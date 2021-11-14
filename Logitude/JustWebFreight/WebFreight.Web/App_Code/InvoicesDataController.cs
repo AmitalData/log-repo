@@ -44,8 +44,11 @@ namespace WebFreight.Web.App_Code
 
         public ShipmentARInvoiceMoneyPM GetShipmentARInvoicesCharges(string shipmentId, string cardId, int tenant)
         {
+            string token = HttpContext.Current.Request.Headers["Token"];
+            AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+            SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
             SecurityUtility.AuthenticationOnTenant(tenant);
-            
+
             ShipmentRepository rep = new ShipmentRepository(tenant);
             Shipment shipment=  rep.GetSingleShipment(shipmentId, tenant);
 
@@ -132,8 +135,12 @@ namespace WebFreight.Web.App_Code
         }
 
         public List<ARInvoiceList> PostFilteredARInvoices(int tenant, InvoiceFilters filters)
-        {            
+        {
+            string token = HttpContext.Current.Request.Headers["Token"];
+            AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+            SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
             SecurityUtility.AuthenticationOnTenant(tenant);
+
             SecurityUtility.CheckSharedContactAuthentication(tenant, filters.PartnerId);
             TenantQuery tenantQuery = new TenantQuery(tenant);
             TenantPM currentTenant = tenantQuery.GetSinglePM(tenant);
@@ -317,6 +324,11 @@ namespace WebFreight.Web.App_Code
 
         public List<ARPaymentList> GetFilteredARPayments(string arInvoiceId,int tenant)
         {
+            string token = HttpContext.Current.Request.Headers["Token"];
+            AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+            SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+            SecurityUtility.AuthenticationOnTenant(tenant);
+
             List<ARPaymentList> result = new List<ARPaymentList>();
 
             ARPaymentStatusRepository statusRepository = new ARPaymentStatusRepository(tenant);
@@ -371,7 +383,11 @@ namespace WebFreight.Web.App_Code
 
         public ARInvoicePM GetSingleARInvoicePM(string invoiceId, int tenant)
         {
+            string token = HttpContext.Current.Request.Headers["Token"];
+            AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+            SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
             SecurityUtility.AuthenticationOnTenant(tenant);
+
             ARInvoiceQuery entityQuery = new ARInvoiceQuery(tenant);
             ARInvoicePM entityPM = entityQuery.GetSinglePM(invoiceId, tenant);
 
@@ -434,6 +450,10 @@ namespace WebFreight.Web.App_Code
         {
             if (tenant != 0)
             {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnTenant(tenant);
 
                 bool exists = false;
                 if (!string.IsNullOrEmpty(HttpContext.Current.User.Identity.Name))
@@ -473,6 +493,10 @@ namespace WebFreight.Web.App_Code
         {
             if (tenant != 0)
             {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnTenant(tenant);
 
                 bool exists = false;
                 if (!string.IsNullOrEmpty(HttpContext.Current.User.Identity.Name))
