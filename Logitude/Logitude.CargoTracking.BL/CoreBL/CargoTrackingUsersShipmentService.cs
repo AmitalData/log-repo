@@ -49,6 +49,7 @@ namespace Logitude.CargoTracking.BL.CoreBL
             counter.Sea = shipmentsIQuerable.Count(d => d.TransportModeId == "O");
             counter.Import = shipmentsIQuerable.Count(d => d.DirectionId == "I" || d.DirectionId == "C");
             counter.Export = shipmentsIQuerable.Count(d => d.DirectionId == "E");
+            counter.Drop = shipmentsIQuerable.Count(d => d.DirectionId == "R");
 
             return counter;
         }
@@ -72,5 +73,6 @@ namespace Logitude.CargoTracking.BL.CoreBL
         public int Air { get; set; }
         public int Land { get; set; }
         public int Sea { get; set; }
+        public int Drop { get; set; }
     }
 }

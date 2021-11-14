@@ -806,7 +806,11 @@ h1{
     }
   }
 
-
+.circulararrow{
+    position: absolute;
+    top: 37px;
+    right: 11px;
+}
 
 
 .direction-icon{
