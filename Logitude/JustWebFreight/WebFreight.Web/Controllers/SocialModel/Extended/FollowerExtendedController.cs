@@ -29,6 +29,7 @@ namespace WebFreight.Web.Controllers.SocialModel.Extended
             string token = HttpContext.Current.Request.Headers["Token"];
             AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
             SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+            SecurityUtility.AuthenticationOnTenant(tenant);
             ISocialContext socialContext = SocialContext.GetContext(authToken.Tenant);
 
 

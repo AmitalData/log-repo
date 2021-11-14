@@ -9,6 +9,8 @@ using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
 using Newtonsoft.Json;
 using Simplog.Data.CommonDataModel;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InfrastructureModel;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
@@ -62,6 +64,10 @@ namespace WebFreight.Web.App_Code
         {
             try
             {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+
                 bool IsNewLog = false;
                 string CorrelationId = HttpContext.Current.Request.Headers["CorrelationId"];
                 IWebFreightContext webFreightContext = WebFreightContext.GetContext(entityAM.CustomerTenant);

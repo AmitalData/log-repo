@@ -30,6 +30,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnTenant(tenant);
 
                 var documentTypeMetaDataQuery = new DocumentTypeMetaDataQuery(tenant);
                 IQueryable<DocumentTypeMetaDataPM> DocumentTypeMetaData = documentTypeMetaDataQuery.GetDocumentTypeMetaDataPMsByDocumentIdTenant(DocumentTypeId, tenant);
@@ -52,6 +53,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnTenant(tenant);
 
                 var documentsFilingMetaDataValueQuery = new DocumentsFilingMetaDataValueQuery(tenant);
                 IQueryable<DocumentsFilingMetaDataValuePM> DocumentMetaDataValues = documentsFilingMetaDataValueQuery.GetDocumentsFilingMetaDataValuePMsByDocumentIdTenant(DocumentId, tenant);
