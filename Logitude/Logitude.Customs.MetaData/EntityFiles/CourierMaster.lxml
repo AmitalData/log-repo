@@ -36,7 +36,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   NewWizardControlName="&quot;NewCourierComponent&quot;"
-  LocalDefaultText="&quot;בלדר ראשי&quot;"
+  LocalDefaultText="&quot; בלדר ראשי&quot;"
   DefaultText="&quot;Courier Master&quot;"
   Code="&quot;dcc9&quot;"
   Name="&quot;Customs.CourierMaster Query Group&quot;"

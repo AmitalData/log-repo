@@ -211,7 +211,6 @@ export class DeclarationList {
 	AmedmentType: string;
 	AmendmentTypeName: string;
 	IsHatraDateNull: boolean;
-
 	
 }
  

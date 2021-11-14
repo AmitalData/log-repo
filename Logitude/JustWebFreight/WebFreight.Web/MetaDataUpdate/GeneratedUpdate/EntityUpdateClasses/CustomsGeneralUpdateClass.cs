@@ -85,8 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CustomsGeneralUpdateClass
    {  		
-		public const string HashString = "43b452b6d7450ca08cc5ea1ee075f5df";
-
+		public const string HashString = "9219cd5924c618b2d3b8d010751d882e";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -126,7 +125,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "CustomsGeneral",
-
 			      				    Code =  "5b0a",
 			      				    Name =  "CustomsGeneral",
 			      				    GenerateDomainService =  false,
@@ -2043,6 +2041,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode CustomsGeneralTextCode_CustomsGeneralOExportTaxationDateTime = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.ExportTaxationDateTime", DefaultText = "Taxes date",LocalDefaultText = @"בדיקת תאריך חישוב ", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode CustomsGeneralTextCode_CustomsGeneralOExportTaxationDateTimeNT = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.ExportTaxationDateTimeNT", DefaultText = "Taxes date is different from today , continue ?",LocalDefaultText = @"תאריך חישוב שונה מהיום , האם לעדכן לתאריך של היום?", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
  		   TextCode CustomsGeneralTextCode_GeneralMHCustomsReports = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MH.CustomsReports", DefaultText = "CustomsReports",LocalDefaultText = @"דוחות", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
