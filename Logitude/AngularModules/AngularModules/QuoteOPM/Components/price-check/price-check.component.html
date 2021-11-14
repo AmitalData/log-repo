@@ -61,8 +61,8 @@
                 <app-accordion>
                     <div class="expansion">
                         <div class="expansion-item"
-                            *ngFor="let item of ['Frighte Charges','Origin Charges','Destination Charges']">
-                            <h3>{{item}}</h3>
+                            *ngFor="let chrageType of ['Frighte Charges','Origin Charges','Destination Charges']">
+                            <h3>{{chrageType | priceCheckDetails : offer : cahargesTypes }}</h3>
                             <div class="expansion-headers">
                                 <div class="expansion-headers-charges">Charge Type</div>
                                 <div class="expansion-headers-curr">Curr</div>

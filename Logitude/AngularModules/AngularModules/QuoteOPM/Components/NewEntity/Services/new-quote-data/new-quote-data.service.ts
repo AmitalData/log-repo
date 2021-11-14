@@ -37,15 +37,15 @@ export class NewQuoteDataService {
   ) { }
 
   async getDirectionList(): Promise<DirectionList[]> {
-    return this.getDataFromService(new DirectionListService().getAllFromCache());
+    return this.logtuideTableDataService.getDataFromService(new DirectionListService().getAllFromCache());
   }
 
   async getTransportModeList(): Promise<TransportModeList[]> {
-    return this.getDataFromService(new TransportModeListService().getAllFromCache())
+    return this.logtuideTableDataService.getDataFromService(new TransportModeListService().getAllFromCache())
   }
 
   async getShipmentTypeList(): Promise<ShipmentTypeList[]> {
-    return this.getDataFromService(new ShipmentTypeListService().getAll());
+    return this.logtuideTableDataService.getDataFromService(new ShipmentTypeListService().getAll());
   }
 
   async getCardsTable(): Promise<CardList[]> {
@@ -190,15 +190,6 @@ export class NewQuoteDataService {
             resolve(null);
         });
     })
-  }
-
-
-  private getDataFromService(ob: Observable<any>): Promise<any[]> {
-    return new Promise<any[]>((resolve, reject) =>
-      ob.pipe(filterIsNotNull(), take(1))
-        .subscribe((res: ServiceResponse) =>
-          resolve(res.Result)
-        ));
   }
 }
 
