@@ -53,7 +53,8 @@ using Simplog.Data.InvoiceModel;
 				   temp.ValueDate = item.ValueDate;
 				   temp.LocalAmount = item.LocalAmount;
 				   temp.ForeignAmount = item.ForeignAmount;
-				   temp.BankAccountNumber = item.BankAccountId;					
+				   temp.BankAccountNumber = item.BankAccountNumber;
+				   temp.BankAccountId = item.BankAccountId;					
 					MyList.Add(temp);
 				}
 					
@@ -152,7 +153,15 @@ using Simplog.Data.InvoiceModel;
                     
 					if(!IsUpdate)// && !string.IsNullOrEmpty(item.BankAccountNumber))
 					{							//throw new ApplicationException("BankAccountNumber Can't be update"); 
-							temp.BankAccountId = item.BankAccountNumber;
+							temp.BankAccountNumber = item.BankAccountNumber;
+
+										}  
+
+					
+                    
+					if(!IsUpdate)// && !string.IsNullOrEmpty(item.BankAccountId))
+					{							//throw new ApplicationException("BankAccountId Can't be update"); 
+							temp.BankAccountId = item.BankAccountId;
 
 										}  
 
