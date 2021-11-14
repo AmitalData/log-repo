@@ -26,7 +26,7 @@ export class GLAccountSecurityLevelService{
                     loginService.LoggedUserEmail = SessionInfo.LoggedUserEmail;
 
                     loginService.GetLoggedUser().subscribe((myResult: any) => {
-                        var loggedUserSecurityLevel = myResult?.SecurityLevel || 1;
+                        var loggedUserSecurityLevel = myResult?.SecurityLevel;
 
                         var glaccountService = new GLAccountListService();
                         glaccountService.getSingle(glaccountId).subscribe((response: any) =>
