@@ -567,8 +567,13 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                       if (currentDeclarationCourierStatusPM.ChangeSetOp != ChangeSetOperation.Update) currentDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
  	
                   }
- 	
-                  if (currentDeclarationCourierStatusPM.ChangeSetOp == ChangeSetOperation.Update)
+                    if (currentDeclarationCourierStatusPM != null && currentDeclarationCourierStatusPM.ShopId != _LogitudeCommDecFile.shopId)
+                    {
+                        currentDeclarationCourierStatusPM.ShopId = _LogitudeCommDecFile.shopId;
+                        if (currentDeclarationCourierStatusPM.ChangeSetOp != ChangeSetOperation.Update) currentDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
+                    }
+
+                    if (currentDeclarationCourierStatusPM.ChangeSetOp == ChangeSetOperation.Update)
  	
                   {
  	
