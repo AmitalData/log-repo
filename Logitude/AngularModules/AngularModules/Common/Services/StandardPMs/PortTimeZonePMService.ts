@@ -19,43 +19,42 @@ import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 import {CustomFieldClass} from '../../../Infrastructure/DataContracts/CustomFieldClass'
 import {PerformanceLogger} from '../../../Infrastructure/Utilities/PerformanceLogger';
 
-import {PortPM} from '../../EntityPMs/PortPM';
+import {PortTimeZonePM} from '../../EntityPMs/PortTimeZonePM';
 
-import {PortPMInitService} from '../../EntityPMInitServices/PortPMInitService';
-import {PortValidator} from '../../Validators/PortValidator';
+import {PortTimeZonePMInitService} from '../../EntityPMInitServices/PortTimeZonePMInitService';
 
 @Injectable()
 
-export class PortPMService {
+export class PortTimeZonePMService {
  private _http: HttpClient;
  private _apiUrl: string;
  constructor() {
         this._http = ServiceHelper.HttpClient;
-        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/ports';      
+        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/porttimezones';      
     }
 
-	get(id: string) {       
+	get(code: string) {       
 
 		var callTime = new Date();		
 
 		return defer(() => {
-			return this._http.get(this._apiUrl + '/getsingle?' + 'id=' + id, ServiceHelper.GetHttpFullHeaders())
+			return this._http.get(this._apiUrl + '/getsingle?' + 'code=' + code, ServiceHelper.GetHttpFullHeaders())
 				.pipe(
 					map((response: HttpResponse<any>) => {
 						var pm = response.body;
 				
-						var entity: PortPM;
+						var entity: PortTimeZonePM;
 						if (pm) {
 							entity = this.MapJsonToEntityPM(pm);
-                      PortPMInitService.InitValues(entity, false);
-                      PortPMInitService.ApplyUIPoperties(entity, false);
+                      PortTimeZonePMInitService.InitValues(entity, false);
+                      PortTimeZonePMInitService.ApplyUIPoperties(entity, false);
 						}
 
 						var serviceResponse: ServiceResponse = new ServiceResponse();
 						serviceResponse.Result = entity;
               
 						var servertime = response.headers.get('ServerExecutionTime');
-						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "Port", "GetSinglePM", 'id=' + id);
+						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "PortTimeZone", "GetSinglePM", 'code=' + code);
 				 
 						return serviceResponse;
 
@@ -65,7 +64,7 @@ export class PortPMService {
 		});                    
 	}
 
-	insert(entityPM: PortPM) {
+	insert(entityPM: PortTimeZonePM) {
  
 		var callTime = new Date();  
 		
@@ -73,18 +72,12 @@ export class PortPMService {
 
 			var serviceResponse: ServiceResponse = new ServiceResponse();
 			var validator: ClassLevelValidator = new ClassLevelValidator();                
-			var errorsArray = validator.Validate("Port", entityPM);
+			var errorsArray = validator.Validate("PortTimeZone", entityPM);
 
-			var customValidator :PortValidator = new PortValidator();
-			var validationErrorsArr = customValidator.Validate(entityPM);
-			if(validationErrorsArr)
-			{
-				errorsArray = errorsArray.concat(validationErrorsArr);
-			}
 
 			if (errorsArray.length == 0) {
 
-				var mappedEntity: PortPM = this.MapJsonToEntityPM(entityPM, false);
+				var mappedEntity: PortTimeZonePM = this.MapJsonToEntityPM(entityPM, false);
 				
 				return this._http.post(this._apiUrl, JSON.stringify(mappedEntity), ServiceHelper.GetHttpFullHeaders())
 					.pipe(
@@ -92,12 +85,12 @@ export class PortPMService {
 
 							var pm = response.body;
 							if (pm) {
-								var mappedResult: PortPM = this.MapJsonToEntityPM(pm, true, entityPM);
+								var mappedResult: PortTimeZonePM = this.MapJsonToEntityPM(pm, true, entityPM);
 								serviceResponse.Result = mappedResult;
 							}						
 
 							var servertime = response.headers.get('ServerExecutionTime');
-							PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "Port", "SaveChanges", "");                    
+							PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "PortTimeZone", "SaveChanges", "");                    
 												                             
 							return serviceResponse;
 						}),
@@ -113,7 +106,7 @@ export class PortPMService {
 		});
 	}
 
-	update(entityPM: PortPM) {
+	update(entityPM: PortTimeZonePM) {
 
 		var callTime = new Date();     
 		
@@ -121,18 +114,12 @@ export class PortPMService {
 
 			var serviceResponse: ServiceResponse = new ServiceResponse();
 			var validator: ClassLevelValidator = new ClassLevelValidator();               
-			var errorsArray = validator.Validate("Port", entityPM);
+			var errorsArray = validator.Validate("PortTimeZone", entityPM);
 
-			var customValidator :PortValidator = new PortValidator();
-			var validationErrorsArr = customValidator.Validate(entityPM);
-			if(validationErrorsArr)
-			{
-				errorsArray = errorsArray.concat(validationErrorsArr);
-			}
 
 			if (errorsArray.length == 0) {
 
-				var mappedEntity: PortPM = this.MapJsonToEntityPM(entityPM, false);
+				var mappedEntity: PortTimeZonePM = this.MapJsonToEntityPM(entityPM, false);
 				
 				return this._http.put(this._apiUrl, JSON.stringify(mappedEntity), ServiceHelper.GetHttpFullHeaders())
 					.pipe(
@@ -140,12 +127,12 @@ export class PortPMService {
                  
 							var pm = response.body;
 							if (pm) {
-								var mappedResult: PortPM = this.MapJsonToEntityPM(pm, true, entityPM);
+								var mappedResult: PortTimeZonePM = this.MapJsonToEntityPM(pm, true, entityPM);
 								serviceResponse.Result = mappedResult;
 							}
 							 
 							var servertime = response.headers.get('ServerExecutionTime');
-							PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "Port", "SaveChanges", "");                    
+							PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "PortTimeZone", "SaveChanges", "");                    
 					                           
 							return serviceResponse;
 						}),
@@ -163,12 +150,12 @@ export class PortPMService {
 
    
 
-	  MapJsonToEntityPM(jsonPM: any, mapParent: boolean = true, entityPM: PortPM = null) {
+	  MapJsonToEntityPM(jsonPM: any, mapParent: boolean = true, entityPM: PortTimeZonePM = null) {
 
          
         if (!entityPM) {
             
-            entityPM = new PortPM();
+            entityPM = new PortTimeZonePM();
 			entityPM.DisableMarkAsDirty = true;
         }
 
@@ -234,16 +221,6 @@ export class PortPMService {
         return entityPM;
     }
 
-	  public GetNewEntityPM() {		 
-		    var entityPM: PortPM;
-			entityPM = new PortPM();
-			entityPM.Tenant = InfraSettings.TenantPM.Id;
 
-			PortPMInitService.InitValues(entityPM, true);
-			PortPMInitService.ApplyUIPoperties(entityPM, true);
-
-			return entityPM;
-    }
-		 
 
 }

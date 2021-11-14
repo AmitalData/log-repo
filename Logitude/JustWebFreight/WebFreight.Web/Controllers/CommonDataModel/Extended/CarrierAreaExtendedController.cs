@@ -294,6 +294,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
                 Longtitude = ZeroPort.Longtitude,
                 SearchFields = ZeroPort.SearchFields,
                 Notes = ZeroPort.Notes,
+                PortTimeZoneCode = ZeroPort.PortTimeZoneCode,
             };
 
             portRepository.Add(newPort);

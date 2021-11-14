@@ -211,6 +211,11 @@ export class PortPM {
     public set CountryIsGreaterChinese(newValue: boolean) { if (this.countryIsGreaterChinese != newValue) { this.countryIsGreaterChinese = newValue; this.MarkAsDirty("CountryIsGreaterChinese"); } }
        
 	 
+    private portTimeZoneCode: string;
+    public get PortTimeZoneCode() { return this.portTimeZoneCode; }
+    public set PortTimeZoneCode(newValue: string) { if (this.portTimeZoneCode != newValue) { this.portTimeZoneCode = newValue; this.MarkAsDirty("PortTimeZoneCode"); } }
+       
+	 
 
     public OldEntityPM: PortPM;
 		

@@ -200,7 +200,7 @@ namespace WebFreight.Web.Helpers
                     CountryName = port.CountryName,
                     StateCode = port.StateCode,
                     StateName = port.StateName,
-
+                    PortTimeZoneCode = port.PortTimeZoneCode,
                 };
 
                 portRepository.Add(newPort);
