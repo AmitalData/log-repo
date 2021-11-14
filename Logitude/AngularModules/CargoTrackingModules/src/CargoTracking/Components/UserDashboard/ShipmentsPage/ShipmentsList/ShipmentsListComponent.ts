@@ -539,7 +539,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
     {
         var direction = "";
         if (this.SelectedFilters.length > 0){
-            const directionsCodes = ['IM', 'EX'];
+            const directionsCodes = ['IM', 'EX','R'];
             direction = this.SelectedFilters.filter(d => directionsCodes.includes(d.Code)).map(d => d.Code).join(',');
         }
         shipmentFilters.DirectionCodes = direction;
@@ -767,6 +767,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
         // new ToggleFilter('AL', 'ALL', ''),
         new ToggleFilter('IM', 'Import', 'shipmentDirection'),
         new ToggleFilter('EX', 'Export', 'shipmentDirection'),
+        new ToggleFilter('R', 'Drop', 'shipmentDirection'),
         new ToggleFilter('A', 'Air', 'shipmentType'),
         new ToggleFilter('I', 'Land', 'shipmentType'),
         new ToggleFilter('O', 'Sea', 'shipmentType'),
@@ -799,6 +800,9 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
         } else if(toggleFilter.Code == 'IM')
         {
             return this.ShipmentsCounter.Import;
+        } else if(toggleFilter.Code == 'R')
+        {
+            return this.ShipmentsCounter.Drop;
         } else if(toggleFilter.Code == 'EX')
         {
             return this.ShipmentsCounter.Export;
@@ -1126,6 +1130,7 @@ export class CargoTrackingShipmentsCounter{
 
     Import: number = 0;
     Export: number = 0;
+    Drop: number = 0;
     Air: number = 0;
     Land: number = 0;
     Sea: number = 0;

@@ -46,6 +46,11 @@ h1 {
     display: block;
     clear: both;
 }
+.circulararrow {
+    position: absolute;
+    top: 56%;
+    right: 10%;
+}
 
 .slider-wrapper {
     /*padding: 10px 0 10px 0;*/

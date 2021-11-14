@@ -689,7 +689,8 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
             string filterImportValue = "I";
             string filterCustomImportValue = "C";
             string filterExportValue = "E";
-            List<string> directions = new List<string>() { filterImportValue, filterCustomImportValue, filterExportValue };
+            string filterDrop = "R";
+            List<string> directions = new List<string>() { filterImportValue, filterCustomImportValue, filterExportValue, filterDrop };
 
             if (!string.IsNullOrEmpty(shipmentFilters.DirectionCodes))
             {
@@ -699,6 +700,8 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
 
                 if (shipmentFilters.DirectionCodes.Contains(toggleFilterExportValue))
                     directions.AddRange(new List<string>() { filterExportValue });
+                if (shipmentFilters.DirectionCodes.Contains(filterDrop))
+                    directions.AddRange(new List<string>() { filterDrop });
 
             }
 
