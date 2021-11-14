@@ -92,16 +92,19 @@
 
             <div class="input-box">
 
-                <i *ngIf="PanelSearchText" class="las la-times la-2x" style="font-size: 22px;padding-top: 4px;" (click)="PanelSearchText = ''"></i>
-
+                
+                <i class="las la-search" style="color:#AAA;transform: scaleX(-1);"></i>
                 <input #mobileSearch type="text " autocomplete="off" class="gray " [(ngModel)]="PanelSearchText" style="display: inline-block;"
                     placeholder="By shipment References" name="PanelSearchText"
                     formControlName="PanelSearchText" />
-
-                <i *ngIf="PanelSearchText" class="las la-long-arrow-alt-right la-2x" style="padding-top: 4px;" (click)="HideSearchPanel()"></i>
-                <i *ngIf="!PanelSearchText" class="las la-search" style="padding-top: 4px;"></i>
-
+                <i *ngIf="PanelSearchText" class="las la-times la-2x" style="font-size: 22px;padding-top: 4px;" (click)="PanelSearchText = ''"></i>
+                <!-- <i *ngIf="PanelSearchText" class="las la-long-arrow-alt-right la-2x" style="padding-top: 4px;" (click)="HideSearchPanel()"></i> -->
             </div>
+            
+            <button mat-button matSuffix mat-stroked-button aria-label="search" class="mobile-search-button" type="submit"
+            (click)="HideSearchPanel()">
+                <mat-icon>search</mat-icon>
+            </button>
         </form>
 
         <br>
@@ -455,10 +458,10 @@
     </div>
 
     <!-- Filters Sidebar -->
-    <div class="filters-sidebar" *ngIf="isFiltersSideBarOpened">
+    <div class="filters-sidebar" *ngIf="sharedService.isAdvancedFilterOpened$ | async">
         <div class="header">
             <div class="title">Advanced Filters</div>
-            <div class="close-btn hide-mobile" (click)="isFiltersSideBarOpened = false">×</div>
+            <div class="close-btn hide-mobile" (click)="sharedService.updateValue(false)">×</div>
         </div>
         <ul>
             <li [class.expanded]="isFilter2Expanded">
@@ -580,9 +583,9 @@
                       <div class="title uppercase">Sort Direction</div>
                       <ul class="sort-direction-menu">
                           <li (click)="sortBySelectionChangedHandler(SortOptions.ASC)" 
-                            [ngClass]="{'sort-item-selected': isSortDescending == SortOptions.ASC}"><span>Ascending</span> <i class="las la-arrow-up"></i></li>
+                            [ngClass]="{'sort-item-selected': isSortDescending == SortOptions.ASC}"><span>Ascending</span></li>
                           <li (click)="sortBySelectionChangedHandler(SortOptions.DESC)" 
-                            [ngClass]="{'sort-item-selected': isSortDescending == SortOptions.DESC}"><span>Descending</span> <i class="las la-arrow-down"></i></li>
+                            [ngClass]="{'sort-item-selected': isSortDescending == SortOptions.DESC}"><span>Descending</span></li>
                       </ul>
                   </div>
 
@@ -599,7 +602,7 @@
     <ul>
         <li ><img src="./assets/images/icons/star@1x.png" alt=""></li>
         <li (click)="ToggleSearchPanel()"><img src="./assets/images/icons/search@1x.png" alt=""></li>
-        <li (click)="isFiltersSideBarOpened = !isFiltersSideBarOpened; mapFiltersInvitedCustomers()"><img src="./assets/images/icons/filter@1x-white.png" alt=""></li>
+        <li (click)="sharedService.updateValue(true); mapFiltersInvitedCustomers()"><img src="./assets/images/icons/filter-sort.svg" alt=""></li>
         <li (click)="showMobileSortMenu = !showMobileSortMenu"><img src="./assets/images/icons/sort@1x-white.png"
             [class.FlipImgVert]="isSortDescending == SortOptions.ASC" alt=""></li>
     </ul>

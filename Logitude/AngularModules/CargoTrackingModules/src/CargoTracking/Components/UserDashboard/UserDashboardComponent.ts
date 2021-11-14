@@ -9,6 +9,7 @@ import { ServiceHelper } from 'src/CargoTracking/Utilities/ServiceHelper';
 import { LoginExtendedService } from 'src/Infrastructure/Services/Extended/LoginExtendedService';
 import { filter } from 'rxjs/operators';
 import { Location } from '@angular/common';
+import { SharedService } from 'src/CargoTracking/Services/Others/SharedService';
 
 
 
@@ -47,7 +48,8 @@ export class UserDashboardComponent implements AfterViewInit, OnInit
         private loginService: LoginExtendedService,
         private location: Location,
         private router: Router,
-        @Inject('BASE_URL') baseUrl: string) {
+        @Inject('BASE_URL') baseUrl: string,
+        public sharedService: SharedService) {
         this.baseURL = baseUrl;
         this.InitComponent();
     }
@@ -215,6 +217,7 @@ export class UserDashboardComponent implements AfterViewInit, OnInit
     }
     ngOnInit(): void {
         this.SubscribeRoutingEvents();
+        // this.sharedService.isAdvancedFilterOpened$.subscribe(x => console.log('isAdvancedFilterOpened$', x));
     }
     private SubscribeRoutingEvents() {
         this.router.events.pipe(
@@ -244,6 +247,7 @@ export class UserDashboardComponent implements AfterViewInit, OnInit
 
     BackLinkClicked() {
         this.router.navigate(['cargo-tracking', 'shipments']);
+        this.sharedService.updateValue(false);
     }
 
 }
