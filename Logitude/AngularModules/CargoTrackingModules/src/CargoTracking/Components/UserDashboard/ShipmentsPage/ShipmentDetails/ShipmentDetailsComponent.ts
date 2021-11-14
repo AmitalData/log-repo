@@ -51,6 +51,7 @@ export class ShipmentDetailsComponent implements AfterViewInit
     ContainersNumbers: string[] = [];
     ShowDetailsSection: boolean = false;
     TitleOfCustomsOrForwarder: string = "";
+    TitleOfCustomsOrForwarder_MB: string = "";
     ValueOfCustomsOrForwarder: string = "";
     CustomsEntityType: string = "C";
     ForwardingEntityType: string = "F";
@@ -323,13 +324,16 @@ export class ShipmentDetailsComponent implements AfterViewInit
     SetTitleOfCustomsOrForwarder() {
         if (this.Shipment.ShipmentList.EntityType == this.CustomsEntityType) {
             this.TitleOfCustomsOrForwarder = "Customs Broker References";
+            this.TitleOfCustomsOrForwarder_MB = "Customs Broker Ref.";
         }
 
         if (this.Shipment.ShipmentList.EntityType == this.ForwardingEntityType) {
             this.TitleOfCustomsOrForwarder = "Forwarder Reference";
+            this.TitleOfCustomsOrForwarder_MB = "Forwarder Ref.";
         }
         if (this.Shipment.ShipmentList.EntityType == this.OrderEntityType) {
             this.TitleOfCustomsOrForwarder = "Order References";
+            this.TitleOfCustomsOrForwarder_MB = "Order References";
         }
     }
 
@@ -656,7 +660,7 @@ export class ShipmentDetailsComponent implements AfterViewInit
         var panelElement = document.getElementById(panelName) as HTMLElement;
         if (panelElement){
             panelElement.scrollIntoView();
-            document.getElementsByTagName('html')[0].scrollTop -= 103;
+            document.getElementsByTagName('html')[0].scrollTop -= 113;
 
     }
 
