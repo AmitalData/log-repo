@@ -1256,10 +1256,11 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
 
         private string GetCardId(ShipmentAM entityAM, CodeProperties card)
         {
-            if (card == null && string.IsNullOrEmpty(card.Code) && string.IsNullOrEmpty(card.Id))
-                return null; 
-          
-                return CardCodePropertiesMapping.GetCardIdFromCardProperties(entityAM.ImporterTenant, card); 
+            if (card == null) return null;
+            if (string.IsNullOrEmpty(card.Code) && string.IsNullOrEmpty(card.Id))
+                return null;
+
+            return CardCodePropertiesMapping.GetCardIdFromCardProperties(entityAM.ImporterTenant, card); 
              
         }
     }
