@@ -88,8 +88,6 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 
                     string token = HttpContext.Current.Request.Headers["Token"];
                     AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                    if (authToken == null)
-                        SecurityExceptionsThrower.ThrowNotAuthorized();
                     SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                     int tenant = authToken.Tenant;
                     var accountingContext = AccountingContext.GetContext(tenant);

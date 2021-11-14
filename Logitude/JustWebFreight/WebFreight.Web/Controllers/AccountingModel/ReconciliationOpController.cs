@@ -197,7 +197,10 @@ tenant);
             try
             {
                 int tenant = GetAuthinticatedTenant();
-
+                foreach (var item in transactions)
+                {
+                    SecurityUtility.AuthenticationOnEntityTenant("LedgerTransaction", item.Tenant, tenant);
+                }
                 BlockEmptyTransactions(transactions);
 
                 UpdateDraftReconciliationTransactions(transactions, tenant);
