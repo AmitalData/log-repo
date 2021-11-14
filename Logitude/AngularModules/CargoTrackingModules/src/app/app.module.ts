@@ -47,6 +47,7 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CargoTrackingShipmentOrderService } from '../CargoTracking/Services/Others/CargoTrackingShipmentOrderService';
 import { IconButtonComponent } from '../Infrastructure/Components/IconButton/IconButtonComponent';
 import { DateTimeFormatPipe } from '../Infrastructure/Pipes/DateTimeFormatPipe';
+import { SharedService } from 'src/CargoTracking/Services/Others/SharedService';
 
 export function getBaseUrl() {
     return document.getElementsByTagName('base')[0].href;
@@ -116,6 +117,7 @@ export function getBaseUrl() {
         CargoTrackingShipmentOrderService,
         DatePipe,
         DateTimeFormatPipe,
+        SharedService,
         { provide: 'BASE_URL', useFactory: getBaseUrl, deps: [] },
         { provide: MAT_DIALOG_DATA, useValue: {} },
         { provide: MatDialogRef, useValue: {} }
