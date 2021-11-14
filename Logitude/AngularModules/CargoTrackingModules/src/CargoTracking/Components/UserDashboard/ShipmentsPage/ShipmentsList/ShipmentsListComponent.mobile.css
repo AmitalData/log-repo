@@ -256,7 +256,9 @@
     }
 
     .input-box {
-        display: flex;
+        float: left;
+        width: 88%;
+        display: inline-block;
         justify-content: space-between;
     }
 
@@ -273,6 +275,17 @@
     .input-box > * {
         vertical-align: middle;
         font-size: 24px;
+    }
+
+    .mobile-search-button{
+        background-color: var(--MainColor);
+        color: white;
+        border: none;
+        cursor: pointer;
+        height: 40px;
+        padding: 0;
+        border-radius: 0 5px 5px 0;
+        width: 12%;
     }
 
     /*Mobile Sort Menu*/
@@ -301,7 +314,7 @@
         padding: 12px 15px;
         font-weight: bold;
         color: var(--MainColor);
-        font-size: 14px;
+        font-size: 10px;
     }
     .show-menu {
         bottom: 0 !important;
@@ -315,9 +328,9 @@
     .mobile-sort-menu li{
         list-style: none;
         width: 100%;
-        padding: 15px 20px;
+        padding: 10px 20px;
         user-select: none;
-        font-size: 16px;
+        font-size: 15px;
         color: #000;
         border-bottom: none;
     }
@@ -327,11 +340,6 @@
     
     .mobile-sort-menu .sort-by-menu li:nth-child(3){
         border-bottom: 1px solid #cfd1d6;
-    }
-    
-    .mobile-sort-menu li i{
-        color: var(--MainColor);
-        font-size: 25px;
     }
     
     .mobile-sort-menu .sort-direction-menu li span{

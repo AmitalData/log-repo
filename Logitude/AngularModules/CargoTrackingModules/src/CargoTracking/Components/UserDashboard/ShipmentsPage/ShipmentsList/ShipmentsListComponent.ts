@@ -1,5 +1,5 @@
 
-import { Component, ViewChild, AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, ElementRef, OnInit } from '@angular/core';
+import { Component, ViewChild, AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, ElementRef, OnInit, Injectable } from '@angular/core';
 import { Router, ActivatedRoute, NavigationStart, NavigationEnd } from '@angular/router';
 import { FormBuilder } from '@angular/forms';
 import { CargoTrackingSearchService } from '../../../../Services/Others/CargoTrackingSearchService';
@@ -18,6 +18,8 @@ import { CargoTrackingMilestoneService } from 'src/CargoTracking/Services/Others
 import { MultipleSelectionComponent } from 'src/Infrastructure/Components/MultipleSelection/MultipleSelectionComponent';
 import { filter } from 'rxjs/operators';
 import { ShipmentDirections } from '../ShipmentDetails/ShipmentDetailsComponent';
+import { ReplaySubject } from 'rxjs';
+import { SharedService } from 'src/CargoTracking/Services/Others/SharedService';
 
 @Component({
     selector: 'ShipmentsListComponent',
@@ -42,7 +44,6 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
     Shipments: CargoTrackingShipmentList[] = [];
 
     isLoading: boolean = false;
-    isFiltersSideBarOpened: boolean = false;
     isFilter1Expanded: boolean = false;
     isFilter2Expanded: boolean = false;
     isMilestonesStatusFilterExpanded: boolean = false;
@@ -89,7 +90,8 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
         private cargoTrackingShipmentService: CargoTrackingShipmentService,
         public dialog: MatDialog,
         private searchService: CargoTrackingSearchService,
-        private milestonesService: CargoTrackingMilestoneService)
+        private milestonesService: CargoTrackingMilestoneService,
+        public sharedService: SharedService)
     {
         this.InitComponent();
         this.SetDefaultBackgroundColor();
@@ -878,7 +880,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
 
     ApplyFilterButtonClicked()
     {
-        this.isFiltersSideBarOpened = false;
+        this.sharedService.updateValue(false);
         this.SelectedInvitedCustomers = this.FiltersSelectedInvitedCustoms.map(d=>d);
         this.appliedSelectedFilterMilestonesStatus= this.selectedFilterMilestonesStatus.map(state => state);
         this.toggleMobileAdvancedFilters();
@@ -898,7 +900,6 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
     }
 
     ClearAdvancedFilters(){
-        // this.isFiltersSideBarOpened = false;
         this.SelectedInvitedCustomers = [];
         this.selectedFilterMilestonesStatus = [];
         this.MilestonesStatus.map((item, index) => {
@@ -973,7 +974,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
     }
     FiltersInvitedCustomers: any[] = [];
     OpenAdvancedFiltersSidebar(){
-        this.isFiltersSideBarOpened = true;
+        this.sharedService.updateValue(true);
         this.mapFiltersInvitedCustomers();
     }
 

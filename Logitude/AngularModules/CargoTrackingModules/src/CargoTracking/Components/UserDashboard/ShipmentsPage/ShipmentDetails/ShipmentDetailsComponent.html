@@ -306,7 +306,7 @@
                 </div>
 
                 <div class="mobile-only">
-                    <div class="title">{{TitleOfCustomsOrForwarder}}</div>
+                    <div class="title">{{TitleOfCustomsOrForwarder_MB}}</div>
                     <div class="description">{{ValueOfCustomsOrForwarder}}</div>
                 </div>
 
@@ -613,8 +613,9 @@ package.ShipperSeal == null ? package.CarrierSeal :
             <table class="row-hover" *ngIf="this.cargoTrackingShipmentPM.CustomsData && !NoTaxDetails">
                 <tr class="header">
                     <th style="width: 400px;">type</th>
-                    <th style="width: 200px;">calculation base</th>
-                    <th style="width: 150px;text-align: right;">tax amount</th>
+                   <th style="width: 200px;"><span class="hide-mobile">calculation base</span><span class="mobile-only">base</span></th>
+
+                    <th style="width: 150px;text-align: right;"><span class="hide-mobile">tax amount</span><span class="mobile-only">amount</span></th>
                     <!-- <th style="width: 200px;">pay amount</th>
                     <th style="width: 200px;">rejected amount</th> -->
                 </tr>
@@ -804,6 +805,7 @@ package.ShipperSeal == null ? package.CarrierSeal :
                         <th style="width: 50px;" class="hide-mobile" *ngIf="item.DocumentId">
                             <a (click)="ExternalDownloadDocument(item.SecurityId)" href="javascript:;">
                                 <svg style="width: 16px; height: 16px;" width="20px" height="19px" viewBox="0 0 20 19"
+
                                      version="1.1" xmlns="http://www.w3.org/2000/svg"
                                      xmlns:xlink="http://www.w3.org/1999/xlink">
                                     <title>25C2FAA1-F999-4511-9F5C-294D4EDB7E44</title>
