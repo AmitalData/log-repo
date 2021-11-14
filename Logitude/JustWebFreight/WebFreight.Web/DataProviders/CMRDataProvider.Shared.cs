@@ -144,5 +144,6 @@ namespace WebFreight.Web.DataProviders
         public string HsCode { get; set; }
         public string Dimensions { get; set; }
         public string PackageType { get; set; }
+        public List<InsidePackageLine> InsidePackagesLines { get; set; }
     }
 }

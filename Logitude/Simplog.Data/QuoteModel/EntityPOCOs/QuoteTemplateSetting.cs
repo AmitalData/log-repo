@@ -356,6 +356,7 @@ namespace Simplog.Data.QuoteModel.EntityPOCOs
         public bool ShowRegionalTAXPackages { get; set; }
         public bool ShowRegionalTAXContainers { get; set; }
 
+        public string XMLData { get; set; }
 
 
         [ForeignKey("TotalPerContainersAdditionalTextDesignId")]

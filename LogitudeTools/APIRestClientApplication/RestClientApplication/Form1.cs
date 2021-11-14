@@ -572,6 +572,8 @@ namespace RestClientApplication
                     client.Timeout = new TimeSpan(0, 10, 0); // 10 minutes
 
                     client.DefaultRequestHeaders.Add("Token", Token);
+                    //client.DefaultRequestHeaders.Add("WorkerRoleName", "development");
+
                     var content = new StringContent(txtRequestBody.Text, Encoding.UTF8, txtRequestContentType.Text);
                     HttpResponseMessage response = new HttpResponseMessage();
 

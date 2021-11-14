@@ -28,7 +28,7 @@ mat-option-text {
 
 ::ng-deep .mat-form-field-flex{
     border: 1px solid var(--MainColor);
-    width: 220px !important;
+    width: 170px !important;
 }
 
 ::ng-deep .mat-form-field-underline{
@@ -59,4 +59,39 @@ display: none;
 ::ng-deep .mat-select-panel {
     min-width: calc(100% + 20px) !important;
 }
+::ng-deep .fixed-title-form .mat-form-field-infix {
+    display: block;
+    position: relative;
+    flex: auto;
+    min-width: 0;
+    width: 180px;
+    bottom: 6px;
+}
+.FlipImgVert {
+    transform: rotate(180deg);
+}
 
+.FlipImgDiagonal {
+    transform: rotate(225deg) !important;
+}
+
+.sort-img {
+    color: var(--MainColor);
+    display:inline;
+    height:20px;
+    width:19px;
+}
+.flex {
+    display: flex;
+    flex-direction: row
+}
+
+
+@media screen and (min-device-width: 479px) and
+    (max-device-width: 1250px) and
+    (-webkit-min-device-pixel-ratio: 1) {
+        ::ng-deep .mat-form-field-flex {
+            border: 1px solid var(--MainColor);
+            width: 150px !important;
+        }
+}

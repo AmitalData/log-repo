@@ -239,7 +239,11 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     CustomerId = entityPoco.CustomerId,
                     CustomerName = entityPoco.CustomerCard?.EnglishName,
                     ShipmentCreateDate = entityPoco.ShipmentCreateDate,
+
                     PODReceivedOnDate = entityPoco.PODReceivedOnDate,
+
+                    IsAutomaticUpdates = entityPoco.IsAutomaticUpdates,
+
                 };
 
                 MapCustomFields(result, entityPoco);
@@ -481,6 +485,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         CustomerName = a.CustomerCard != null ? a.CustomerCard.EnglishName: "",
                         ShipmentCreateDate = a.ShipmentCreateDate,
                         PODReceivedOnDate = a.PODReceivedOnDate,
+                        IsAutomaticUpdates = a.IsAutomaticUpdates,
 
                     }).ToList();
         }
@@ -713,6 +718,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                    CustomerName = entity.CustomerCard != null ? entity.CustomerCard.EnglishName : "",
                                                    ShipmentCreateDate = entity.ShipmentCreateDate,
                                                    PODReceivedOnDate = entity.PODReceivedOnDate,
+                                                   IsAutomaticUpdates = entity.IsAutomaticUpdates,
                                                };
             return result;
         }
@@ -932,6 +938,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     CustomerName = container.CustomerCard != null ? container.CustomerCard.EnglishName : "",
                     ShipmentCreateDate = container.ShipmentCreateDate,
                     PODReceivedOnDate = container.PODReceivedOnDate,
+                    IsAutomaticUpdates = container.IsAutomaticUpdates,
                 };
                 MapCustomFields(containerPM, container);
             }
@@ -1158,6 +1165,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     CustomerName = entityPoco.CustomerCard != null ? entityPoco.CustomerCard.EnglishName : "",
                     ShipmentCreateDate = entityPoco.ShipmentCreateDate,
                     PODReceivedOnDate = entityPoco.PODReceivedOnDate,
+                    IsAutomaticUpdates = entityPoco.IsAutomaticUpdates,
                 };
             }
 

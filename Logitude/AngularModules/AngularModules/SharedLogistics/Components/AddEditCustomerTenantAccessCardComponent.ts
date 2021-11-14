@@ -39,7 +39,7 @@ export class AddEditCustomerTenantAccessCardComponent extends BaseComponent {
     public ValidationErrorsList: Array<string> = [];
     public DataLoaded: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
-    public IsImportActivated: boolean = false;
+    public IsCustomsActivated: boolean = false;
     public IsExportActivated: boolean = false;
     public CanSelectOpption: boolean = false;
 
@@ -64,7 +64,7 @@ export class AddEditCustomerTenantAccessCardComponent extends BaseComponent {
         }
 
         if (this.ValidateCustomerTenantOptions(checkIfCustomerSelected)) {
-            this.ValidationErrorsList.push("You can't add a new card. You have to choose either Export or Import option.");
+            this.ValidationErrorsList.push("You can't add a new card. You have to choose either Export or Customs option.");
         }
 
         else if (checkIfCustomerSelected != null){
@@ -102,12 +102,12 @@ export class AddEditCustomerTenantAccessCardComponent extends BaseComponent {
         this.viewModel.EntityPM.CustomerId = checkIfCustomerSelected.Id;
         this.viewModel.EntityPM.CustomerCode = checkIfCustomerSelected.Code;
         this.viewModel.EntityPM.CustomerName = checkIfCustomerSelected.EnglishName;
-        this.viewModel.EntityPM.IsImportActivated = checkIfCustomerSelected.IsImportActivated;
+        this.viewModel.EntityPM.IsCustomsActivated = checkIfCustomerSelected.IsCustomsActivated;
         this.viewModel.EntityPM.IsExportActivated = checkIfCustomerSelected.IsExportActivated;
     }
 
     private ValidateCustomerTenantOptions(checkIfCustomerSelected: CardListDataViewModel) { 
-        return checkIfCustomerSelected?.IsImportActivated == false && checkIfCustomerSelected.IsExportActivated == false;
+        return checkIfCustomerSelected?.IsCustomsActivated == false && checkIfCustomerSelected.IsExportActivated == false;
     }
 
     CompleteConfirmation(checkIfCustomerSelected: CardListDataViewModel) {
@@ -185,27 +185,36 @@ export class AddEditCustomerTenantAccessCardComponent extends BaseComponent {
     SetWindowArgs(args: AddEditCustomerTenantAccessCardViewModel) {
         if (args != null) {
             this.viewModel = args;
-            this.IsImportActivated = args.Parent.IsImportActivated;
-            this.IsExportActivated = args.Parent.IsExportActivated;
-            this.CanSelectOpption = args.Parent.CanSelectOpption;
+            this.SetDirectionsoptions(args);
+             
             this.SetCustomerTenantAccessCardOptions();
             this.DataLoaded = true;   
         }
     }
-    SetCustomerTenantAccessCardOptions() {
-        if (this.viewModel.CardObsList != null) {
-            if (!this.CanSelectOpption)
-            this.viewModel.CardObsList.forEach(
-                card => card.IsImportActivated = this.IsImportActivated);
+    private SetDirectionsoptions(args: AddEditCustomerTenantAccessCardViewModel) {
+        this.IsCustomsActivated = args.Parent.IsCustomsActivated;
+        this.IsExportActivated = args.Parent.IsExportActivated;
+
+        if (this.IsCustomsActivated && this.IsExportActivated) {
+            this.SetDefaultOptions();
         }
     }
 
-    
+    private SetDefaultOptions() {
+        this.CanSelectOpption = true;
+        this.IsExportActivated = false;
+        this.IsCustomsActivated = false;
+    }
 
-
-  
-  
-
-
- 
+    SetCustomerTenantAccessCardOptions() {
+        if (this.viewModel.CardObsList != null) {
+          
+            this.viewModel.CardObsList.forEach( card => this.SetDirectionsFields(card));
+        }
+    }
+     
+    private SetDirectionsFields(card: CardListDataViewModel) {
+        card.IsCustomsActivated = this.IsCustomsActivated;
+        card.IsExportActivated = this.IsExportActivated;
+    }
 }

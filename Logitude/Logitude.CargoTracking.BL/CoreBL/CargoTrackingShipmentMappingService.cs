@@ -41,13 +41,14 @@ namespace Logitude.CargoTracking.BL.EntityQueryServices
         }
         private void MapShipmentPMFields()
         {
-            cargoShipmentPM.CustomsBrokerReference = shipmentPM.CustomFileNumber;
-            cargoShipmentPM.ContainersNumbers = shipmentPM.ContainersNumbers;
-            cargoShipmentPM.IncotermName = shipmentOrderPM != null ? shipmentOrderPM.IncotermName : shipmentPM.IncotermName;
-            cargoShipmentPM.WarehouseLegEnglishName = shipmentPM.WarehouseLegEnglishName;
-            cargoShipmentPM.ImportManifest = shipmentPM.ImportManifest;
-            cargoShipmentPM.TotalTax = shipmentPM.TotalTax;
-            cargoShipmentPM.ShipmentTypeName = shipmentPM.ShipmentTypeName;
+
+            cargoShipmentPM.CustomsBrokerReference = shipmentPM?.CustomFileNumber;
+            cargoShipmentPM.ContainersNumbers = shipmentPM?.ContainersNumbers;
+            cargoShipmentPM.IncotermName = shipmentOrderPM != null ? shipmentOrderPM.IncotermName : shipmentPM?.IncotermName;
+            cargoShipmentPM.WarehouseLegEnglishName = shipmentPM?.WarehouseLegEnglishName;
+            cargoShipmentPM.ImportManifest = shipmentPM?.ImportManifest;
+            cargoShipmentPM.TotalTax = shipmentPM?.TotalTax;
+            cargoShipmentPM.ShipmentTypeName = shipmentPM?.ShipmentTypeName;
             cargoShipmentPM.ShipmentOrderQuantity = shipmentOrderPM?.Quantity;
             cargoShipmentPM.ShipmentOrderPONumber = shipmentOrderPM?.PONumber;
         }

@@ -46,15 +46,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         private CodeProperties GetCard(string cardId)
         {
             Card card = cardsReporistory.GetSingleCard(cardId, shipmentPM.Tenant);
-            string cardCode = "";
-            if (card != null)
-            {
-                cardCode = card.Code;
-            }
             return new CodeProperties()
             {
-                Code = cardCode
-            };
+                Code = card != null ? card.Code : "",
+             };
+             
         }
 
         private HybridPartnerPM GetHybridPartner()

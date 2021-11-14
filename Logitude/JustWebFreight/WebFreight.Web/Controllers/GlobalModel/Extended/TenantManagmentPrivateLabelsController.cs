@@ -57,6 +57,10 @@ namespace WebFreight.Web.Controllers.GlobalModel.Extended
 
             try
             {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+           
                 PrivateLabelsBrandingDataService privateLabelsBrandingDataService = new PrivateLabelsBrandingDataService();
                 PrivateLabelsBrandingData brandingData = privateLabelsBrandingDataService.GePrivateLabelsBrandingDataByUrl(BrandingDataRequest);
                 ServiceResponse response = new ServiceResponse();
@@ -82,6 +86,7 @@ namespace WebFreight.Web.Controllers.GlobalModel.Extended
                         string token = HttpContext.Current.Request.Headers["Token"];
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                        SecurityUtility.AuthenticationOnEntityTenant("TenantManagmentPrivateLabels", entityPM.Tenant, authToken.Tenant);
 
                         IGlobalContext MyContext = GlobalContext.GetContext();
 
@@ -109,7 +114,7 @@ namespace WebFreight.Web.Controllers.GlobalModel.Extended
                             DocumentTypeHighlightColor = entityPM.DocumentTypeHighlightColor,
                             MainTabHighlightColor = entityPM.MainTabHighlightColor,
                             HasLogboxAccess = entityPM.HasLogboxAccess,
-                            IsImportActivated = entityPM.IsImportActivated,
+                            IsCustomsActivated = entityPM.IsCustomsActivated,
                             IsExportActivated = entityPM.IsExportActivated,
 
                             SearchFields = entityPM.PrivateLabelName + "," + entityPM.PrivateLabelShortName + "," + entityPM.PrivateLabelUrl + "," + entityPM.ContactUsEmail + ",",
@@ -148,6 +153,8 @@ namespace WebFreight.Web.Controllers.GlobalModel.Extended
                         string token = HttpContext.Current.Request.Headers["Token"];
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                        SecurityUtility.AuthenticationOnEntityTenant("TenantManagmentPrivateLabels", entityPM.Tenant, authToken.Tenant);
+
                         IGlobalContext MyContext = GlobalContext.GetContext();
 
                         TenantManagmentPrivateLabelsRepository tenantManagmentPrivateLabelsRepository = new TenantManagmentPrivateLabelsRepository(MyContext);
@@ -172,7 +179,7 @@ namespace WebFreight.Web.Controllers.GlobalModel.Extended
                         Poco.HasLogboxAccess = entityPM.HasLogboxAccess;
                         Poco.MainTabHighlightColor = entityPM.MainTabHighlightColor;
                         Poco.DocumentTypeHighlightColor = entityPM.DocumentTypeHighlightColor;
-                        Poco.IsImportActivated = entityPM.IsImportActivated;
+                        Poco.IsCustomsActivated = entityPM.IsCustomsActivated;
                         Poco.IsExportActivated = entityPM.IsExportActivated;
                         Poco.SearchFields = entityPM.PrivateLabelName + "," + entityPM.PrivateLabelShortName + "," + entityPM.PrivateLabelUrl + "," + entityPM.ContactUsEmail + ",";
                         tenantManagmentPrivateLabelsRepository.Update(Poco);

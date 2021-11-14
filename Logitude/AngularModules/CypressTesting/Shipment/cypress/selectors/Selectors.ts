@@ -3,6 +3,7 @@ import { RegexSelectors } from '../selectors/RegexSelectors';
 export class ShipmentSelectors extends RegexSelectors {
   //#region Shared
   public static readonly CloseBtn = '#CloseBtn';
+  public static readonly DeleteAll = '#DeleteAll';
   public static readonly ShipmentMoreList = '#MenuButtons';
   public static readonly ShipmentTab = '#SHIP';
   public static readonly ContainersTab = '#CNFU';
@@ -268,6 +269,7 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly ReceivableCurrency = '#ShipmentReceivable_CurrencyId'
   public static readonly ReceivableMeasurement = '#ShipmentReceivable_MeasurementId'
   public static readonly ReceivableTotalAmount = '#ShipmentReceivable_TotalAmount';
+  public static readonly ReceivableTotalAmountLocal = '#ShipmentReceivable_TotalAmountLocal';
   public static readonly AddReceivableOkButton = '#Ok-AddReceivableBtn';
   public static readonly ShipmentReceivableRate = '#ShipmentReceivable_Rate'
   public static readonly ReceivableFromPayables = "#PAYB-Receivable"
@@ -288,6 +290,7 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly ShipmentPayableUnitPrice = '#ShipmentPayable_UnitPrice';
   public static readonly ShipmentPayableQuantity = '#ShipmentPayable_Quantity';
   public static readonly ShipmentPayableVendor = '#ShipmentPayable_VendorId';
+  public static readonly ShipmentPayableExpectedAmount = '#ShipmentPayable_ExpectedAmount';
   //#endregion
 
   //#region operations and actions

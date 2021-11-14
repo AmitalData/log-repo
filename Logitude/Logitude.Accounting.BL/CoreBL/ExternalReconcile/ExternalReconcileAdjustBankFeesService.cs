@@ -107,7 +107,8 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
         public void PrapareAndValid(int tenant, List<string> reconcileExternalPageLineIdList, string adjustGLAccountId, out List<ReconcileExternalPageLineList> listOfpageLineList, out List<ReconcileExternalPageList> listOfpageList
             ,bool CheckWhileStreaming, 
             List<string> ledgerTransactionIds,
-            out string accountingCurrencyId, out List<LedgerTransactionPM> ledgerTransactionList)
+            
+            out string accountingCurrencyId, out List<LedgerTransactionPM> ledgerTransactionList, bool skipAccountValidation = false)
         {
             
             accountingCurrencyId = null;
@@ -120,7 +121,7 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
             var bankGLAccountList = _ExternalReconcileDataProvider.GetBankAccountFromReconcileExternalPageLineId(reconcileExternalPageLineId, tenant);
             accountingCurrencyId =this._ExternalReconcileDataProvider.GetaccountingCurrencyId(tenant);
 
-            Validate(tenant, reconcileExternalPageLineIdList, adjustGLAccountId, listOfpageLineList, listOfpageList, CheckWhileStreaming, ledgerTransactionList, ledgerTransactionIds, bankGLAccountList, accountingCurrencyId);
+            Validate(tenant, reconcileExternalPageLineIdList, adjustGLAccountId, listOfpageLineList, listOfpageList, CheckWhileStreaming, ledgerTransactionList, ledgerTransactionIds, bankGLAccountList, accountingCurrencyId, skipAccountValidation);
             if (_ErrorList.Count() > 0)
             {
                 throw new Exception(string.Join(Environment.NewLine, _ErrorList.ToArray()));
@@ -577,11 +578,11 @@ new JournalLinePM()
 
         }
 
-        private void Validate(int tenant, List<string> reconcileExternalPageLineIdList, string adjustGLAccountId, List<Data.EntityLists.ReconcileExternalPageLineList> listOfpageLineList, List<Data.EntityLists.ReconcileExternalPageList> listOfpageList, bool CheckWhileStreaming, List<LedgerTransactionPM> ledgerTransactionList, List<string> ledgerTransactionIds, BankAccountPM bankAccountFromReconcileExternalPageLine, string accountingCurrencyId)
+        private void Validate(int tenant, List<string> reconcileExternalPageLineIdList, string adjustGLAccountId, List<Data.EntityLists.ReconcileExternalPageLineList> listOfpageLineList, List<Data.EntityLists.ReconcileExternalPageList> listOfpageList, bool CheckWhileStreaming, List<LedgerTransactionPM> ledgerTransactionList, List<string> ledgerTransactionIds, BankAccountPM bankAccountFromReconcileExternalPageLine, string accountingCurrencyId , bool skipAccountValidation = false)
         {
             AllLineAreExistAndSameBankAccount(tenant, reconcileExternalPageLineIdList, listOfpageLineList, listOfpageList);
             AllPageLineCheckInProgressByWhileStreaming(listOfpageLineList, CheckWhileStreaming);
-            if (adjustGLAccountId== bankAccountFromReconcileExternalPageLine.GLAccountId)
+            if (!skipAccountValidation && adjustGLAccountId == bankAccountFromReconcileExternalPageLine.GLAccountId)
             {
                 _ErrorList.Add(M_AdjustAccoutMustBeDiffFromBank);//"החשבון להפרשים חייב להיות שונה מהבנק";
             }
@@ -734,6 +735,6 @@ new JournalLinePM()
         void MustInit(IExternalReconcileDataProvider externalReconcileDataProvider);
         void PrapareAndValid(int tenant, List<string> reconcileExternalPageLineIdList, string adjustGLAccountId, out List<ReconcileExternalPageLineList> listOfpageLineList, out List<ReconcileExternalPageList> listOfpageList, bool CheckWhileStreaming,
             List<string> ledgerTransactionIds,
-            out string accountingCurrencyId, out List<LedgerTransactionPM> ledgerTransactionList);
+            out string accountingCurrencyId, out List<LedgerTransactionPM> ledgerTransactionList, bool skipAccountValidation);
     }
 }

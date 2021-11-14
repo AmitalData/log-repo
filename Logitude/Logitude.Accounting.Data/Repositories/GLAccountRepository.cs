@@ -45,7 +45,7 @@ namespace Logitude.Accounting.Data.Repositories
             {
                 return (from a in context.GLAccounts
                         join chartOfAccount in context.ChartOfAccounts on a.ChartOfAccountsId equals chartOfAccount.Id
-                        where a.Tenant == tenant && gLAccountIdQ.Any(b => a.ParentAccountId == b) && chartOfAccount.ChartOfAccountSecurityLevel >= userSecurityLevel
+                        where a.Tenant == tenant && gLAccountIdQ.Any(b => a.ParentAccountId == b) && chartOfAccount.ChartOfAccountSecurityLevel >= (userSecurityLevel ?? 0)
                         select a).ToList();
             }
             else

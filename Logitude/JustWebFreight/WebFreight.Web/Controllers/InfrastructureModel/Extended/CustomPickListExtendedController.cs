@@ -32,8 +32,9 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnTenant(tenant);
 
-               
+
                 IWebFreightContext objectContext = WebFreightContext.GetContext(tenant);
                 CustomPickListRepository customPickListsRepository = new CustomPickListRepository(objectContext);
                 CustomPickListQuery customPickListQuery = new CustomPickListQuery(customPickListsRepository);
@@ -71,6 +72,9 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
                 CustomPickListService customPickListService = new CustomPickListService(objectContext, authToken.Tenant);
                 foreach (CustomPickListPM customPickList in customPickListPMs)
                 {
+                    SecurityUtility.AuthenticationOnEntityTenant("CustomPickList", customPickList.Tenant, authToken.Tenant);
+
+
                     if (!customPickList.IsDirty)
                     {
                         //Add & Edit

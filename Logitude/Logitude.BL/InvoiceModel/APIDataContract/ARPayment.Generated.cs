@@ -78,6 +78,8 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
     public DateTime? AccountingCancelationDate { get; set; }
     
     public ARPaymentStatus Status { get; set; }
+    
+    public List<ARPaymentBankTranfer> ARPaymentBankTranfers { get; set; }
 
     public  string  ComputingPartnerCode { get; set; }
 

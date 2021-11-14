@@ -134,27 +134,11 @@
                                 <td style="width:160px;">
                                     <div style="width:160px;">External Project Number:</div>
                                 </td>
-                                <td style="width:250px;">
+                                <td style="width:200px;">
                                     <LogTextBox [ObjectFieldName]="'ExternalProjectNumber'" [Text]="ExternalProjectNumber" [NoObjectField]="true" [DataContext]="DataContext"></LogTextBox>
                                 </td>
 
-                                <td style="width:10px;">
-                                    <div style="width:10px"></div>
-                                </td>
-                                <td class="Label" style="width:130px">Include Inner Project</td>
-                                <td style="width:15px">
-                                    <CheckBox [IsChecked]="IncludeInnerProject" (Checked)="IncludeInnerProject = $event"></CheckBox>
-                                </td>
-
-                                <td style="width:20px;">
-                                    <div style="width:20px"></div>
-                                </td>
-
-                                <td style="width:100px;text-align:left">
-                                    <button (click)="RunReport()" class="GreenButton" style="width:100px;height:22px;border:1px solid green;border-radius:3px;">
-                                        <div style="color:black;  text-align:center;vertical-align:central;font-size:12px;">Run Report</div>
-                                    </button>
-                                </td>
+                                
 
                                 <td>
                                     <div></div>
@@ -200,6 +184,24 @@
                                             [LookUpTableName]="'TMBudget'" [HideAdd]="true" [HideAddLink]="true" [HideEdit]="true">
                                     </LogLov>
                                 </td>
+                                <td style="width:10px;">
+                                    <div style="width:10px"></div>
+                                </td>
+                                <td class="Label" style="width:130px">Include Inner Project</td>
+                                <td style="width:15px">
+                                    <CheckBox [IsChecked]="IncludeInnerProject" (Checked)="IncludeInnerProject = $event"></CheckBox>
+                                </td>
+
+                                <td style="width:220px;">
+                                    <div style="width:220px"></div>
+                                </td>
+
+                                <td style="width:100px;text-align:left">
+                                    <button (click)="RunReport()" class="GreenButton" style="width:100px;height:22px;border:1px solid green;border-radius:3px;">
+                                        <div style="color:black;  text-align:center;vertical-align:central;font-size:12px;">Run Report</div>
+                                    </button>
+                                </td>
+
                                 <td>
                                     <div></div>
                                 </td>

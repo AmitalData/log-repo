@@ -1024,18 +1024,27 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             MethodHelper.AddToSearchFields(ref mySearchFields, paymentPM.PaymentNo);
             MethodHelper.AddToSearchFields(ref mySearchFields, paymentPM.StatusCode);
             MethodHelper.AddToSearchFields(ref mySearchFields, paymentPM.AccountingPaymentMethodCode);
-            if (paymentPM.ARPaymentChequeReplicas.Any())
-            {
-                var chequesNumbers = String.Join(",", paymentPM.ARPaymentChequeReplicas.Select(x => x.ChequeNumber));
-                MethodHelper.AddToSearchFields(ref mySearchFields, chequesNumbers);
-            }
+            MethodHelper.AddToSearchFields(ref mySearchFields, paymentPM.PrintNotes);
             if (paymentPM.ARPaymentBankTranfers.Any())
             {
                 var bankTransfersReferences = String.Join(",", paymentPM.ARPaymentBankTranfers.Select(x => x.PaymentRef));
                 MethodHelper.AddToSearchFields(ref mySearchFields, bankTransfersReferences);
             }
+            #region Cheque
+            if (paymentPM.ARPaymentChequeReplicas.Any())
+            {
+                var chequesNumbers = String.Join(",", paymentPM.ARPaymentChequeReplicas.Select(x => x.ChequeNumber));
+                MethodHelper.AddToSearchFields(ref mySearchFields, chequesNumbers);
+            }
+        
             
-            MethodHelper.AddToSearchFields(ref mySearchFields, paymentPM.PrintNotes);
+
+            else if (paymentPM.AccountingPaymentMethodCode == "CH")
+            {
+                MethodHelper.AddToSearchFields(ref mySearchFields, paymentPM.ChequeOrPaymentRef);
+            }
+            #endregion
+
 
             #region Card
             if (!string.IsNullOrEmpty(paymentPM.BillToId))
@@ -1999,8 +2008,25 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 CheckLinesAmountToReconcileLimit(_payment);
                 CheckCreditLinesAmountToReconcile(_payment);
                 CheckLinesAmountToReconcileTotal(_payment);
+                CheckReconciliationBankTransferPaymentValueDate(_payment);
             }
 
+        }
+
+        private void CheckReconciliationBankTransferPaymentValueDate(ARPaymentPM _payment)
+        {
+            if (_payment.ForceUsingBankTransferMethod == true)
+            {
+                var now = TenantServerConfigration.GetCurrentDateTime(tenant);
+                if (_payment.ValueDate > now)
+                {
+
+                    ContactPM loggedContact = GetLoggedContactPM(_payment.Tenant);
+                    bool showLocal = loggedContact != null ? (!loggedContact.DontShowLocal) : false;
+
+                    throw new ApplicationException(TextCodesTranslator.TranslateText("ExternalReconciliation.O.FutureValueDate", _payment.Tenant, showLocal));
+                }
+            }
         }
 
         private void CheckLinesAmountToReconcileLimit(ARPaymentPM _payment)

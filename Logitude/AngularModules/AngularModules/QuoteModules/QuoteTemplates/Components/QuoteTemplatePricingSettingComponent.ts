@@ -19,6 +19,8 @@ import {LogitudeWindow} from '../../../Controls/Windows/LogitudeWindow';
 import {TextCodeTranslator} from '../../../Infrastructure/Utilities/TextCodeTranslator';
 import {QuotePM} from '../../../Quote/EntityPMs/QuotePM';
 import {FeatureLocator} from '../../../Infrastructure/Utilities/FeatureLocator';
+import { QuoteTemplateSettingData, PricesFieldSettings } from '../../../Quote/DataContracts/QuoteTemplateSettingData';
+import { List } from '../../../Infrastructure/DataContracts/Dashboard/List';
 @Component({
     selector: 'QuoteTemplatePricingSettingComponent',
     
@@ -96,6 +98,8 @@ export class QuoteTemplatePricingSettingComponent extends BaseComponent implemen
         this.QuoteTemplateSettingPM = args.QuoteTemplateSettingPM;
         this.QuotePM = args.QuotePM;
 
+        this.FillQuoteTemplateTableSettingsData();
+
         if (((this.QuotePM && this.QuotePM.IsChargesByVAT) || !this.QuotePM) && FeatureLocator.HasFeaturePermession("Quote", "VATDetAILSINQUOTATION")) {
                 this.ShowVATDetails = true;
             }
@@ -124,10 +128,168 @@ export class QuoteTemplatePricingSettingComponent extends BaseComponent implemen
         this.LoadData();
     }
 
+    CountOfUsedQuoteTemplatePricesTableSettingsData: number = 0;
+    private FillQuoteTemplateTableSettingsData() {
+        if (!this.QuoteTemplateSettingPM) return;
+        if (!this.QuoteTemplateSettingPM.QuoteTemplateSettingData) return;
+        if (this.QuoteTemplateSectionTypeName == "Packages") this.FilllQuoteTemplatePricesPackagesTableSettingsData();
+        else this.FilllQuoteTemplatePricesContainersTableSettingsData();
+        this.CountOfUsedQuoteTemplatePricesTableSettingsData = this.QuoteTemplatePricesTableSettingsData.filter(q => q.Show).length;
+    }
+
+    private FilllQuoteTemplatePricesPackagesTableSettingsData() {
+        this.QuoteTemplateSettingPM.QuoteTemplateSettingData.PricesPackagesTableSettings.forEach((item) => {
+            item.Key = Guid.newGuid();
+            item.Show = this.IsMustBeShown(item);
+            item.DisplayTextCode = this.GetItemSettingsDataDisplayTextCode(item);
+        });
+        this.QuoteTemplatePricesTableSettingsData = this.QuoteTemplateSettingPM.QuoteTemplateSettingData.PricesPackagesTableSettings;
+    }
+
+    private FilllQuoteTemplatePricesContainersTableSettingsData() {
+        this.QuoteTemplateSettingPM.QuoteTemplateSettingData.PricesContainersTableSettings.forEach((item) => {
+            item.Key = Guid.newGuid();
+            item.Show = this.IsMustBeShown(item);
+            item.DisplayTextCode = this.GetItemSettingsDataDisplayTextCode(item);
+        });
+        this.QuoteTemplatePricesTableSettingsData = this.QuoteTemplateSettingPM.QuoteTemplateSettingData.PricesContainersTableSettings;
+    }
+
+    private IsMustBeShown(item) {
+        switch (item.Code) {
+            case "VATTYPEPACKAGES":
+            case "VATTYPECONTAINERS":
+                return this.ShowVATDetails;
+                break;
+            case "VATPERCENTAGEPACKAGES":
+            case "VATPERCENTAGECONTAINERS":
+                return this.ShowVATDetails;
+                break;
+            case "ISREGIONALTAXPACKAGES":
+            case "ISREGIONALTAXCONTAINERS":
+                return this.DisplayRegoinalTax;
+                break;
+            case "UNITSPACKAGES":
+            case "FIXEDPRICECONTAINERS":
+                return (!this.IsRoutingRates && this.QuoteTemplateSectionTypeName == 'Packages') || this.QuoteTemplateSectionTypeName != 'Packages';
+                break;
+            default: return true;
+        }
+    }
+
+    private GetItemSettingsDataDisplayTextCode(item) {
+        switch (item.Code) {
+            case "HEADERPACKAGES":
+            case "HEADERCONTAINERS":
+                return "QuoteTemplate.S.ShowHeaderLabels";
+                break;
+            case "CHARGEPACKAGES":
+            case "CHARGECONTAINERS":
+                return "QuoteTemplate.S.ShowChargeName";
+                break;
+            case "CHARGECODEPACKAGES":
+            case "CHARGECODECONTAINERS":
+                return "QuoteTemplate.S.ShowChargeCode";
+                break;
+            case "MEASUREMENTPACKAGES":
+            case "MEASUREMENTCONTAINERS":
+                return "QuoteTemplate.S.ShowMeasurement";
+                break;
+            case "UNITSPACKAGES":
+            case "FIXEDPRICECONTAINERS":
+                return this.QuoteTemplateSectionTypeName == "Packages" ? "QuoteTemplate.S.ShowUnits" : "QuoteTemplate.S.ShowFixedPrice";
+                break;
+            case "UNITPRICEPACKAGES":
+            case "PRICEBYCONTAINERS":
+                return this.QuoteTemplateSectionTypeName == "Packages" ? "QuoteTemplate.S.ShowUnitPrice" : "QuoteTemplate.S.ShowPriceByContainer";
+                break;
+            case "TOTALPACKAGES":
+            case "TOTALCONTAINERS":
+                return "QuoteTemplate.S.ShowSaleCurrencyColumn";
+                break;
+            case "LOCALAMOUNTPACKAGES":
+            case "LOCALAMOUNTCONTAINERS":
+                return "QuoteTemplate.S.ShowLocalCurrencyColumn";
+                break;
+            case "CHARGEDESCRIPTIONPACKAGES":
+            case "CHARGEDESCRIPTIONCONTAINERS":
+                return "QuoteTemplate.S.ShowChargeDescription";
+                break;
+            case "CHARGENOTEPACKAGES":
+            case "CHARGENOTECONTAINERS":
+                return "QuoteTemplate.S.ShowChargeNote";
+                break;
+            case "SALEMINMAXPACKAGES":
+            case "SALEMINMAXCONTAINERS":
+                return "QuoteTemplate.S.ShowSaleMinMax";
+                break;
+            case "INCLUDEDCHARGESPACKAGES":
+            case "INCLUDEDCHARGESCONTAINERS":
+                return "QuoteTemplate.S.ShowIncludedCharges";
+                break;
+            case "ISREGIONALTAXPACKAGES":
+            case "ISREGIONALTAXCONTAINERS":
+                return "QuoteTemplate.S.ShowRegionalTax";
+                break;
+            case "VATTYPEPACKAGES":
+            case "VATTYPECONTAINERS":
+                return "QuoteTemplate.S.ShowVATType";
+                break;
+            case "VATPERCENTAGEPACKAGES":
+            case "VATPERCENTAGECONTAINERS":
+                return "QuoteTemplate.S.ShowVATPercentage";
+                break;
+        }
+
+        if (item.Code == "ShowVATType") return this.ShowVATDetails;
+        if (item.Code == "ShowVATPercentage") return this.ShowVATDetails;
+        if (item.Code == "ShowRegionalTax") return this.DisplayRegoinalTax;
+        if (item.Code == "ShowPrice1Key") return (!this.IsRoutingRates && this.QuoteTemplateSectionTypeName == 'Packages') || this.QuoteTemplateSectionTypeName != 'Packages';
+        return true;
+    }
+
+    ArrowUpButtonClicked(currentItem: PricesFieldSettings) {
+        let currentIndex: number = this.QuoteTemplatePricesTableSettingsData.indexOf(currentItem);
+        var previousItem = this.QuoteTemplatePricesTableSettingsData[currentIndex - 1];
+        if (currentIndex <= 0) return;
+        this.QuoteTemplatePricesTableSettingsData = this.QuoteTemplatePricesTableSettingsData.filter(d => d.Code != previousItem.Code);
+        let tempOrder: number = currentItem.Index;
+        currentItem.Index = previousItem.Index;
+        previousItem.Index = tempOrder;
+
+        this.QuoteTemplatePricesTableSettingsData.splice(currentIndex, 0, previousItem);
+        if (this.QuoteTemplateSectionTypeName == "Packages") this.QuoteTemplateSettingPM.QuoteTemplateSettingData.PricesPackagesTableSettings = this.QuoteTemplatePricesTableSettingsData;
+        else this.QuoteTemplateSettingPM.QuoteTemplateSettingData.PricesContainersTableSettings = this.QuoteTemplatePricesTableSettingsData;
+    }
+
+    ArrowDownButtonClicked(currentItem: PricesFieldSettings) {
+        let currentIndex: number = this.QuoteTemplatePricesTableSettingsData.indexOf(currentItem);
+        var nextItem = this.QuoteTemplatePricesTableSettingsData[currentIndex + 1];
+        if (currentIndex >= this.QuoteTemplatePricesTableSettingsData.length - 1) return;
+        this.QuoteTemplatePricesTableSettingsData = this.QuoteTemplatePricesTableSettingsData.filter(d => d.Code != nextItem.Code);
+        let tempOrder: number = currentItem.Index;
+        currentItem.Index = nextItem.Index;
+        nextItem.Index = tempOrder;
+
+        this.QuoteTemplatePricesTableSettingsData.splice(currentIndex, 0, nextItem);
+        if (this.QuoteTemplateSectionTypeName == "Packages") this.QuoteTemplateSettingPM.QuoteTemplateSettingData.PricesPackagesTableSettings = this.QuoteTemplatePricesTableSettingsData;
+        else this.QuoteTemplateSettingPM.QuoteTemplateSettingData.PricesContainersTableSettings = this.QuoteTemplatePricesTableSettingsData;
+    }
+
+    quoteTemplatePricesTableSettingsData: PricesFieldSettings[];
+    get QuoteTemplatePricesTableSettingsData() {
+        return this.quoteTemplatePricesTableSettingsData;
+    }
+    set QuoteTemplatePricesTableSettingsData(value: PricesFieldSettings[]) {
+        if (value != null) {
+            this.QuoteTemplateSettingPM.IsDirty = true;
+            this.quoteTemplatePricesTableSettingsData = value;
+        }
+    }
 
     BuildItemsSource() {
 
-
+        
         var itemsCollection: TextCodeData[] = [];
 
         this.QuoteTemplateTextCodePMList.forEach((item) => {
@@ -673,6 +835,8 @@ export class QuoteTemplatePricingSettingComponent extends BaseComponent implemen
             this.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("QuoteTemplate.M.Saving"));
 
             if (this.QuoteTemplateSettingPM.IsDirty) {
+                this.MapIsUsedFieldToCurrentDBFields();
+                    
                 this.quoteTemplateSettingPMService.update(this.QuoteTemplateSettingPM).subscribe((res:any) => {
                     this.QuoteTemplateSettingPM.IsDirty = false;
                     this.SaveOthers(textDesignPmLists, textCodeDataLists);
@@ -705,6 +869,12 @@ export class QuoteTemplatePricingSettingComponent extends BaseComponent implemen
 
     }
 
+
+    private MapIsUsedFieldToCurrentDBFields() {
+        this.QuoteTemplatePricesTableSettingsData.forEach((item) => {
+            this.QuoteTemplateSettingPM[item.Name] = item.InUse;
+        });
+    }
 
     SaveOthers(textDesignPmLists: any[], textCodeDataLists:any[]) {
 

@@ -277,7 +277,7 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public bool IsDocumentsArchive { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public bool IsCustomerTenantShare { get; set; }
+        public bool CustomerTenantShareCustomsFile { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public bool CustomerTenantShareImportFile { get; set; }

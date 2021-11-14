@@ -69,9 +69,10 @@ namespace WebFreight.Web.ExternalAPIs.V1
 
             if (ModelState.IsValid)
             {
+                string CommunicationId = "0";
                 try
                 {
-
+                    CommunicationId = APIHelper.AddCommunicationLog(oldEntity, entity, "Journal", null, "Journal API", entity.Tenant);
                     using (TransactionScope scope = TransactionFactory.GetTransaction())
                     {
                         string token = HttpContext.Current.Request.Headers["Token"];
@@ -101,7 +102,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         service.Update(entityPM, true);
 
                         entity = mappingService.JournalDataMappingAndValidatin(entityPM, entity.Tenant);
-                        APIHelper.AddCommunicationLog("D", oldEntity, entity, "Journal", entityPM.Id, "Journal API", entity.Tenant);
+                        APIHelper.UpdateCommunicationLog(CommunicationId,"D", oldEntity, entity, "Journal", entityPM.Id, "Journal API", entity.Tenant);
 
                         scope.Complete();
 
@@ -113,7 +114,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 catch (Exception ex)
                 {
                     var apiExceptionResult = ApiExceptionHandler.HandleException(ex);
-                    APIHelper.AddCommunicationLog("F", oldEntity, apiExceptionResult.Exception, "Journal", null, "Journal API");
+                    APIHelper.UpdateCommunicationLog(CommunicationId,"F", oldEntity, apiExceptionResult.Exception, "Journal", null, "Journal API");
                     return Request.CreateResponse(apiExceptionResult.StatusCode, apiExceptionResult.Exception);
                 }
             }

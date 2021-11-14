@@ -1119,8 +1119,10 @@ export class ContainerPM {
     private pODReceivedOnDate: Date;
     public get PODReceivedOnDate() { return this.pODReceivedOnDate; }
     public set PODReceivedOnDate(newValue: Date) { if (this.pODReceivedOnDate != newValue) { this.pODReceivedOnDate = newValue; this.MarkAsDirty("PODReceivedOnDate"); } }
-       
-	 
+
+    private isAutomaticUpdates: boolean;
+    public get IsAutomaticUpdates() { return this.isAutomaticUpdates; }
+    public set IsAutomaticUpdates(newValue: boolean) { if (this.isAutomaticUpdates != newValue) { this.isAutomaticUpdates = newValue; this.MarkAsDirty("IsAutomaticUpdates"); } }
 
     public OldEntityPM: ContainerPM;
 		
@@ -1149,4 +1151,4 @@ export class ContainerPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

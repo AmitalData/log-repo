@@ -123,6 +123,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Global
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnTenant(copyFromTenant);
 
                 //SecurityUtility.CheckContactFeature("DWObjectTable", "READ", authToken.Tenant);
                 DWSubQueryQuery dWSubQueryQuery = new DWSubQueryQuery(copyFromTenant);
@@ -157,6 +158,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Global
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnTenant(copyFromTenant);
 
                 //SecurityUtility.CheckContactFeature("DWObjectTable", "READ", authToken.Tenant);
                 DWSubQueryQuery dWSubQueryQuery = new DWSubQueryQuery(copyFromTenant);
@@ -190,6 +192,8 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Global
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnEntityTenant("DWSubQueryPM", QueryData.SubQueryData.Tenant, authToken.Tenant);
+
                 var ColumnsXML = LogitudeXmlSerializer.SerializeObjectToXmlString(QueryData.Columns);
                 var FiltersXML = LogitudeXmlSerializer.SerializeObjectToXmlString(QueryData.Filters);
                 //var temp = LogitudeXmlSerializer.DeserializeObject<List<DWObjectFieldsDetails>>(XML);
@@ -234,6 +238,8 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Global
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnEntityTenant("DWSubQueryPM", QueryData.SubQueryData.Tenant, authToken.Tenant);
+
                 var ColumnsXML = LogitudeXmlSerializer.SerializeObjectToXmlString(QueryData.Columns);
                 var FiltersXML = LogitudeXmlSerializer.SerializeObjectToXmlString(QueryData.Filters);
                 var entityPM = QueryData.SubQueryData;

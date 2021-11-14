@@ -543,6 +543,7 @@
     <Compile Include="InfrastructureModel\Tools\DataMapping\RuleUpdateHistoryMapping.cs" />
     <Compile Include="InfrastructureModel\Tools\DataMapping\SchedulerProcedureMapping.cs" />
     <Compile Include="InfrastructureModel\Tools\EntityService\MultiEntityUpdateLogService.cs" />
+    <Compile Include="InfrastructureModel\Tools\EntityService\PrivateLabelShipmentService.cs" />
     <Compile Include="InfrastructureModel\Tools\EntityService\WorkerRoleNameService.cs" />
     <Compile Include="InfrastructureModel\Tools\EntityService\RuleUpdateHistoryService.cs" />
     <Compile Include="InfrastructureModel\Tools\Validating\TasksSchedulerValidator.cs" />
@@ -559,6 +560,7 @@
     <Compile Include="InvoiceModel\APIDataContract\APInvoiceTotalVAT.Generated.cs" />
     <Compile Include="InvoiceModel\APIDataContract\APInvoiceTransferStatus.Generated.cs" />
     <Compile Include="InvoiceModel\APIDataContract\ARInvoiceAdditionalData.cs" />
+    <Compile Include="InvoiceModel\APIDataContract\ARPaymentBankTranfer.Generated.cs" />
     <Compile Include="InvoiceModel\APIDataContract\ARPaymentCheque.Generated.cs" />
     <Compile Include="InvoiceModel\APIDataContract\ARPaymentChequeStatusReplica.Generated.cs" />
     <Compile Include="InvoiceModel\APIDataContract\ARPaymentInvoice.cs" />
@@ -570,6 +572,7 @@
     <Compile Include="InvoiceModel\APIDataContract\QueryService\APInvoiceTransferStatusQueryService.Generated.cs" />
     <Compile Include="InvoiceModel\APIDataContract\QueryService\APInvoiceQueryService.cs" />
     <Compile Include="InvoiceModel\APIDataContract\QueryService\APInvoiceLineQueryService.cs" />
+    <Compile Include="InvoiceModel\APIDataContract\QueryService\ARPaymentBankTranferQueryService.Generated.cs" />
     <Compile Include="InvoiceModel\APIDataContract\QueryService\ARPaymentChequeQueryService.Generated.cs" />
     <Compile Include="InvoiceModel\APIDataContract\QueryService\ARPaymentChequeStatusReplicaQueryService.Generated.cs" />
     <Compile Include="InvoiceModel\APIDataContract\QueryService\ARPaymentInvoiceQueryService.cs" />
@@ -604,6 +607,8 @@
     <Compile Include="InvoiceModel\Tools\Initializers\APInvoiceServiceInitializer.cs" />
     <Compile Include="InvoiceModel\Tools\Initializers\ARInvoiceServiceInitializer.cs" />
     <Compile Include="InvoiceModel\Tools\QuickbooksService.cs" />
+    <Compile Include="QuoteModel\DataContracts\QuoteTemplateSettingData.cs" />
+    <Compile Include="QuoteModel\Tools\EntityService\QuoteTemplateSettingDataBuilder.cs" />
     <Compile Include="ShipmentsModel\APIDataContract\PickUpDeliveryFromToType.Generated.cs" />
     <Compile Include="ShipmentsModel\APIDataContract\QueryService\PickUpDeliveryFromToTypeQueryService.Generated.cs" />
     <Compile Include="ShipmentsModel\CustomFilters\DigitalCustomFilter.cs" />

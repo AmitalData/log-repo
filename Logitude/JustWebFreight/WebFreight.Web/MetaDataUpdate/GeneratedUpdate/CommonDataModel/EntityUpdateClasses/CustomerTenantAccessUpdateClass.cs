@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class CustomerTenantAccessUpdateClass
    {  		
-		public const string HashString = "2042afa31bc43eb9ea00da238b87f34c";
+		public const string HashString = "f91999ad5060344fd780f1c68c0a853e";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -1676,7 +1676,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
  		   TextCode CustomerTenantAccessTextCode_CustomerTenantAccessORelatedCustomersIsExportActivated = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomerTenantAccess.O.RelatedCustomers.IsExportActivated", DefaultText = "Export",LocalDefaultText = null, ObjectTableId = CustomerTenantAccessObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode CustomerTenantAccessTextCode_CustomerTenantAccessORelatedCustomersIsImportActivated = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomerTenantAccess.O.RelatedCustomers.IsImportActivated", DefaultText = "Import",LocalDefaultText = null, ObjectTableId = CustomerTenantAccessObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode CustomerTenantAccessTextCode_CustomerTenantAccessORelatedCustomersIsCustomsActivated = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomerTenantAccess.O.RelatedCustomers.IsCustomsActivated", DefaultText = "Customs",LocalDefaultText = null, ObjectTableId = CustomerTenantAccessObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

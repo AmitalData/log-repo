@@ -92,7 +92,12 @@
                                 </div>
 
                                 <div *ngIf="FieldName == 'CutoffDate'" class="TemplateTrimming">
-                                    <div class="TemplateTrimmingChild">{{Entity[FieldName] | DateTimePipe:'DT'}}</div>
+                                    <table>
+                                        <tr>
+                                            <td style="width: 65px;">{{Entity[FieldName] | DateTimeToDatePipe}}</td>
+                                            <td style="width: 30px; margin-left:10px;">{{Entity[FieldName] | DateTimeToTimePipe}}</td>
+                                        </tr>
+                                    </table>
                                 </div>
 
                                 <div *ngIf="FieldName == 'INTTRASIStatusDate'" class="TemplateTrimming">

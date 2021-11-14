@@ -2927,6 +2927,7 @@ namespace WebFreight.Web.ReportsWebServices
                         invoiceDataProvider.PaymentTermLocalDescription = paymentTerm.LocalDescription != null ? paymentTerm.LocalDescription : "";
                     }
                 }
+                this.FillARStockVariables(invoiceDataProvider, entityPOCO);
                 #endregion
 
                 #region Bill To Properties

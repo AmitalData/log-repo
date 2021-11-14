@@ -91,7 +91,7 @@
         public object CustomerMobile { get; set; }
         public object CustomerPhone { get; set; }
         public bool IsDocumentsArchive { get; set; }
-        public bool IsCustomerTenantShare { get; set; }
+        public bool CustomerTenantShareCustomsFile { get; set; }
         public bool CustomerTenantShareImportFile { get; set; }
         public bool CustomerTenantShareExportFile { get; set; }
         public bool AllowAgentInCustomersLOV { get; set; }

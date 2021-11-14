@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Logitude.BL.QuoteModel.DataContracts;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -288,6 +289,8 @@ namespace Logitude.BL.QuoteModel.EntityPMs
         public string PageNumberingTextDesignId { get; set; }
         public bool ShowRegionalTAXPackages { get; set; }
         public bool ShowRegionalTAXContainers { get; set; }
+        public string XMLData { get; set; }
+        public QuoteTemplateSettingData QuoteTemplateSettingData { get; set; }
 
     }
 }

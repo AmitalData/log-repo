@@ -14,7 +14,30 @@ export class DocumentDownloadService {
     private  token: string;
 
     constructor(@Inject('BASE_URL') private baseUrl: string, private  _http: HttpClient) {
-        
+
+    }
+
+    public ExternalDownloadAllDocuments(securityId: string, tenant: number)
+    {
+        var link = ServiceHelper.GetAppURL(this.baseUrl)
+            + `WebPages/CorrespondenceDownloadpage.aspx?DA=1&securitykey=${securityId}::CS:${tenant}`;
+        var win = window.open(link, '_blank');
+
+        if (win) {
+            win.focus();
+        }
+
+    }
+    public ExternalDownloadPage(securityId: string, tenant: number)
+    {
+        var link = ServiceHelper.GetAppURL(this.baseUrl)
+            + `WebPages/CorrespondenceDownloadpage.aspx?Id=${securityId}~${tenant}`;
+        var win = window.open(link, '_blank');
+
+        if (win) {
+            win.focus();
+        }
+
     }
 
     public  DownloadPage(id: string, documentName: string) {
@@ -29,7 +52,7 @@ export class DocumentDownloadService {
                 win.focus();
             }
         });
-     
+
     }
 
     DownloadAllPages(entityId: string, securityKey: string) {

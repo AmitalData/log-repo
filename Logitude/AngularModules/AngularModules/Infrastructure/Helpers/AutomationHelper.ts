@@ -9,6 +9,8 @@ export class AutomationHelper   {
     AddEditAutomationsViewModel: any;
     Type: string;
     ViewModel: any;
+    ConditionMaxLength: any;
+    ConditionMinLength: any;
     constructor(currentEntityPM: any, addEditAutomationsViewModel:any ,viewModel:any, type:string) {
 
         this.CurrentEntityPM = currentEntityPM;
@@ -25,6 +27,8 @@ export class AutomationHelper   {
 
     ObjectFieldCondationValueChange(value) {
         var newValue: string = value ? !AppTool.IsNullOrEmpty(value.FieldCode) ? value.FieldCode : "" : "";
+        this.ConditionMaxLength = value.MaxLength;
+        this.ConditionMinLength = value.MinLength;
         this.ConditionValueChange(newValue);
     }
 

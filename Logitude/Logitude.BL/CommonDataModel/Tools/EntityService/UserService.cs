@@ -68,10 +68,6 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             this.isNewEntity = true;
             this.entityPm = entityPM;
             this.entityPm.Id = IdCounter.GetNumber("User", tenant).ToString();
-            if (this.entityPm.SecurityLevel == null)
-            {
-                this.entityPm.SecurityLevel = 1;
-            }
             this.entityPm.CreateDate = TenantServerConfigration.GetCurrentDateTime(tenant);
 
             this.Poco = new User();

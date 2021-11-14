@@ -137,6 +137,29 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
+	  private bool skipAccountsValidation ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool SkipAccountsValidation  
+	   {
+	    
+	     get
+		{
+		   return skipAccountsValidation;
+		 }
+		 set
+		 {
+		   if(skipAccountsValidation != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="SkipAccountsValidation",OldValue=skipAccountsValidation,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   skipAccountsValidation=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

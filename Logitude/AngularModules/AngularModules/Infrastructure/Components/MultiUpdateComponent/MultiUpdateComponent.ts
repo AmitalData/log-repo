@@ -27,7 +27,8 @@ export class MultiUpdateComponent extends BaseComponent implements OnInit {
     QueryCode: string;
     ObjectTableName: string;
     ObjectTableId: string;
-
+    IsMultiEntityUpdatedSuccessfully: boolean = false;
+    ParentComponent: any;
     ValidationErrorsList: any[];
 
     @Output() MenuHeaderchangeevent = new EventEmitter();
@@ -133,7 +134,9 @@ export class MultiUpdateComponent extends BaseComponent implements OnInit {
         this.IsAllRecordSelected = true;
     }
 
-    SetWindowArgs(args: any) {
+    SetWindowArgs(windowArgs: any) {
+        let args: any = windowArgs.args;
+        this.ParentComponent = windowArgs.parentComponent;
         this.QueryCode = args.QueryCode;
         this.Filters = this.Clone(args.Filters);
         this.columns = this.Clone(args.Columns);
@@ -217,6 +220,9 @@ export class MultiUpdateComponent extends BaseComponent implements OnInit {
         this.AutomationSetValueLists.push(new AutomationSetValueViewModel(automationSetValue, this));
     }
 
+    NextClicked() {
+        this.ParentComponent.NextButtonClicked();
+    }
 
     UpdateClick() {
         if (!this.IsUpdateValid()) {
@@ -228,9 +234,8 @@ export class MultiUpdateComponent extends BaseComponent implements OnInit {
 
         this.CurrentSession.StartBusyIndicatorLoading();
         this.multiEntityUpdateLogPMService.insert(multiEntityUpdateLog).subscribe((myResponse: ServiceResponse) => {
-            this.CurrentSession.StopBusyIndicator();
             if (!myResponse.HasError) {
-                this.CurrentSession.CloseCurrentWindow();
+                this.ParentComponent.UpdateButtonClicked(myResponse.Result, this.multiEntityUpdateLogPMService);
             }
         });
     }
@@ -289,15 +294,7 @@ export class MultiUpdateComponent extends BaseComponent implements OnInit {
         }
 
         this.AutomationSetValueLists.forEach((item) => {
-            if (AppTool.IsNullOrEmpty(item.CurrentEntityPM.Value)) {
-                this.ValidationErrorsList.push(((item.SelectedCustomField?.FullNameTextCodeDefaultText) == undefined ? "" : item.SelectedCustomField.FullNameTextCodeDefaultText) + " field is required");
-                return;
-            }
-
-            if (this.isNotValidAutomationTextValue(item)) {
-                this.ValidationErrorsList.push(item.SelectedCustomField.FullNameTextCodeDefaultText + " must butween " + item.SelectedCustomField.MinLength + " and " + item.SelectedCustomField.MaxLength + " characters");
-                return;
-            }
+            this.AutomationSetValueValidation(item);
         });
 
         if (this.ValidationErrorsList.length != 0) {
@@ -307,8 +304,37 @@ export class MultiUpdateComponent extends BaseComponent implements OnInit {
         return true;
     }
 
-    private isNotValidAutomationTextValue(item: AutomationSetValueViewModel) {
+    private AutomationSetValueValidation(item: AutomationSetValueViewModel) {
+        if (AppTool.IsNullOrEmpty(item.CurrentEntityPM.Value)) {
+            this.ValidationErrorsList.push(item.SelectedCustomField.FullNameTextCodeDefaultText + " field is required");
+            return;
+        }
         if (item.SelectedCustomField.DataTypeCode != "Text" && item.SelectedCustomField.DataTypeCode != "nText")
+            return;
+        if (this.IsNotValidAutomationSetValue(item)) {
+            this.ValidationErrorsList.push(item.SelectedCustomField.FullNameTextCodeDefaultText + " must between " + item.SelectedCustomField.MinLength + " and " + item.SelectedCustomField.MaxLength + " characters");
+            return;
+        }
+        if (this.IsNotValidAutomationSetField(item)) {
+            this.ValidationErrorsList.push(item.SelectedCustomField.FullNameTextCodeDefaultText + " must between " + item.SelectedCustomField.MinLength + " and " + item.SelectedCustomField.MaxLength + " characters");
+            return;
+        }
+    }
+
+
+    private IsNotValidAutomationSetField(item: AutomationSetValueViewModel) {
+        if (item.SelectedOperator.Code != "SF")
+            return false;
+
+        if (item.AutomationHelper.ConditionMaxLength > item.SelectedCustomField.MaxLength || item.AutomationHelper.ConditionMinLength > item.SelectedCustomField.MinLength)
+            return true;
+
+
+        return false;
+    }
+
+    private IsNotValidAutomationSetValue(item: AutomationSetValueViewModel) {
+        if (item.SelectedOperator.Code != "SV")
             return false;
 
         if (item.CurrentEntityPM.Value.length > item.SelectedCustomField.MaxLength || item.CurrentEntityPM.Value.length < item.SelectedCustomField.MinLength)

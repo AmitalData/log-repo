@@ -163,7 +163,8 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="IsImportActivated"
+    Name="IsCustomsActivated"
+    OldNames="IsImportActivated"
     Type="bit">
     <Constraints
       Nullable="false" />

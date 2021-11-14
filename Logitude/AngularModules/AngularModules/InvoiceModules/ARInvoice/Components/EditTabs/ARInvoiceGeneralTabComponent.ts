@@ -1,8 +1,9 @@
-﻿import {Component, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
+import {Component, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
 import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {ARInvoicePM} from '../../../../Invoice/EntityPMs/ARInvoicePM';
+import { ObjectsLocator } from '../../../../Infrastructure/Locators/ObjectsLocator';
 
 @Component({
     
@@ -11,21 +12,34 @@ import {ARInvoicePM} from '../../../../Invoice/EntityPMs/ARInvoicePM';
 export class ARInvoiceGeneralTabComponent extends BaseComponent implements OnInit {
     public EntityPM: ARInvoicePM;
     public ObjectTableName: string = "ARInvoice";
-   // public TenantPM: TenantPM;
     public LabelColumnWidth: number = 100;
     public ControlColumnWidth: number = 200;
     public DataContext: ARInvoiceGeneralTabComponent = this;
     private ScreenCode: string = "ARInvoice.GeneralTabScreen";
     public DisplaySATSettings: boolean = false;
+    public DisplayQBOSettings: boolean = false;
     @ViewChild('Child', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
     constructor(public entityArgs: EntityArgs) {
         super();
         if (SessionLocator.SATInterfaceSettings.SATInterfaceCode != "NONE") {
             this.DisplaySATSettings = true;
         }
+
+        if (this.IsQBOAccountingSystem()) {
+            this.DisplayQBOSettings = true;
+        }
+
         this.EntityPM = entityArgs.EntityPM;
-        //this.TenantPM = SessionLocator.TenantPM;
         this.RunComponent();
+    }
+
+    IsQBOAccountingSystem() {
+        var isQBOAccountingSystem = false;
+        if (SessionLocator.AccountingSettingPM.AccountingSystemCode == "QBO" || SessionLocator.AccountingSettingPM.AccountingSystemCode == "QBOG") {
+            isQBOAccountingSystem = true;
+        }
+
+        return isQBOAccountingSystem;
     }
 
     ngOnInit() {
@@ -94,5 +108,11 @@ export class ARInvoiceGeneralTabComponent extends BaseComponent implements OnIni
             this.EntityPM.UsoCFDICode = newValue;
         }
     }
-     
+
+    get GlobalTaxCalculation() { return this.EntityPM.GlobalTaxCalculation; }
+    set GlobalTaxCalculation(newValue: string) {
+        if (this.EntityPM.GlobalTaxCalculation != newValue) {
+            this.EntityPM.GlobalTaxCalculation = newValue;
+        }
+    }
 }

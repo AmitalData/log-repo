@@ -367,7 +367,8 @@ namespace WebFreight.Web.Helpers
 
             };
 
-
+            QuoteTemplateSettingDataBuilder quoteTemplateSettingDataBuilder = new QuoteTemplateSettingDataBuilder(quoteTemplateSetting);
+            quoteTemplateSetting.XMLData = quoteTemplateSettingDataBuilder.SerializeNewQuoteTemplateSettingDataToXmlString();
             quoteTemplateSettingRepository.Add(quoteTemplateSetting);
             quoteTemplateSettingRepository.SubmitChanges();
 
@@ -836,6 +837,7 @@ namespace WebFreight.Web.Helpers
                     HidePageNumber = setting.HidePageNumber,
                     ShowRegionalTAXPackages = setting.ShowRegionalTAXPackages,
                     ShowRegionalTAXContainers = setting.ShowRegionalTAXContainers,
+                    XMLData = setting.XMLData,
                 };
 
                 if (string.IsNullOrEmpty(copySetting.TotalPerContainersTableDesignId))

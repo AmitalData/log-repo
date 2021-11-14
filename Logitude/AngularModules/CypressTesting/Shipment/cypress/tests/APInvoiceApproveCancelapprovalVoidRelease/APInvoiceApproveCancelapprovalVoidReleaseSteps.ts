@@ -24,6 +24,7 @@ let shipmentNumber: string;
 let customerCode: string;
 let AccountingSystem: string;
 let invoiceSettingsDetails: InvoiceSettingsDetails;
+let invoiceNumber: string;
 //#endregion
 
 //#region Update Accounting System
@@ -38,6 +39,7 @@ Given("accounting System as {string}", (accountingSystem) => {
 When("change the accounting system", () => {
   AccountingActions.changeAccountingsSystem(AccountingSystem)
 });
+
 Then("the accounting system should update successfully", () => {
   BaseAssertion.AssertElementNotExist(BaseSelectors.LogitudeWindow);
 });
@@ -66,13 +68,16 @@ Then("the invoice setting should update successfully", () => {
 Given("the user navigates to customers workspace", () => {
   CommonActions.NavigatesToCustomersWorkspace();
 });
+
 Given("a customer with the following details", (dataTable) => {
   let customerDetails = Assists.CreateInstance<CustomerDetails>(dataTable, true);
   CommonActions.AddNewCustomer(customerDetails);
 });
+
 When("create customer", () => {
   CommonActions.CreateCustomer();
 });
+
 Then("the customer should create successfully", () => {
   BaseAssertion.AssertStatusCode(RequestAliases.PartnersDomainRequest, 200).then((interception) => {
     customerCode = interception.response.body.Customer.Code;
@@ -108,6 +113,7 @@ Given("the user in the shipment's rounting tab", () => {
   Actions.OpenShipment(shipmentNumber);
   cy.Click(ShipmentSelectors.RoutingsTab, null);
 });
+
 Given("edit main carriage leg with the following details", (dataTable) => {
   let mainCarriageLeg = Assists.CreateInstance<MainCarriageLeg>(dataTable, true);
   Actions.EditMainCarriageLegs(mainCarriageLeg.Airline);
@@ -122,15 +128,15 @@ Given("the user add package with the following details", (dataTable) => {
 //#endregion
 
 //#region Add Payables
-Given("a payable with the following details",
-  (dataTable) => {
-    const PayableData = Assists.CreateInstance<PayableDetails>(dataTable, true);
-    Actions.FillPayablesTab(PayableData)
-  });
+Given("a payable with the following details", (dataTable) => {
+  const PayableData = Assists.CreateInstance<PayableDetails>(dataTable, true);
+  Actions.FillPayablesTab(PayableData)
+});
+
 When("add payables", () => {
   Actions.UpdateShipment(ShipmentSelectors.ShipmentSaveButton)
-
 });
+
 Then("the payables should add successfully", () => {
   BaseAssertion.AssertStatusCode(RequestAliases.ShipmentRequest, 200)
 });
@@ -142,9 +148,11 @@ Given("an APInvoice with a random invoice number and the following details", (da
   cy.Click(AccountingSelectors.ReceiveInvoiceButton, null);
   AccountingActions.FillAPInvoiceDetails(APInvoiceData)
 });
+
 When("receive invoice", () => {
   AccountingActions.ReceiveAPInvoice();
 });
+
 Then("the invoice should create successfully", () => {
   BaseAssertion.AssertStatusCode(RequestAliases.APInvoicesRequest, 200);
 });
@@ -168,8 +176,11 @@ Then("all buttons in menu should not be dim except void button", () => {
 When("approve invoice", () => {
   AccountingActions.APApproveInvoice()
 });
+
 Then("the invoice should approve successfully", () => {
-  BaseAssertion.AssertStatusCode(RequestAliases.APInvoicesRequest, 200);
+  BaseAssertion.AssertStatusCode(RequestAliases.APInvoicesRequest, 200).then((interception) => {
+    invoiceNumber = interception.response.body.InvoiceNumber;
+  });
 });
 
 Then("the status value should be {string}", (statusValue) => {
@@ -177,10 +188,82 @@ Then("the status value should be {string}", (statusValue) => {
 });
 //#endregion
 
+//#region Assert invoice details screen fields after do an action on the invoice
+Given("navigates details tab", () => {
+  cy.Click(AccountingSelectors.APInvoiceDetails, null)
+});
+
+Then("the details screen fields should be disabled", () => {
+  AccountingActions.AssertAPInvoiceDetailsFieldsDisabled()
+});
+
+Then("the details screen fields should be enabled", () => {
+  AccountingActions.AssertAPInvoiceDetailsFieldsEnabled()
+});
+//#endregion
+
+//#region Assert link of the invoice exsit/ not exist
+Given("navigates payables tab", () => {
+  cy.Click(ShipmentSelectors.Backbutton + BaseSelectors.LastElement, null)
+});
+
+Then("the link of the invoice should be exsit", () => {
+  cy.Click(BaseSelectors.TooltipButton + BaseSelectors.FirstElement, null)
+  BaseAssertion.AssertElementContain(BaseSelectors.HyperlinkButtonControl, invoiceNumber)
+});
+
+Then("the link of the invoice should not be exsit", () => {
+  cy.contains(invoiceNumber).should(BaseSelectors.NotExist)
+});
+//#endregion
+
+//#region Payables edit screen should be dim/ not dim and delete payable button should appear
+Given("navigates payables edit screen", () => {
+  cy.wait(1000)
+  cy.get(BaseSelectors.LogCellTemplate + BaseSelectors.LastElement).find(BaseSelectors.StartsWithEditButton).click()
+});
+
+Then("the payables fields should be disabled", () => {
+  Actions.AssertPayablesFieldsDisable()
+  cy.Click(BaseSelectors.Button, BaseSelectors.ContainsCancel)
+});
+
+Then("the payables fields should be enabled", () => {
+  Actions.AssertPayablesFieldsEnable()
+  cy.Click(BaseSelectors.Button, BaseSelectors.ContainsCancel)
+});
+
+Then("delete payable button should appear", () => {
+  BaseAssertion.AssertElementVisible(BaseSelectors.DeleteButton)
+});
+//#endregion
+
+//#region Assert message window appear
+When("press on delete all button", () => {
+  cy.Click(ShipmentSelectors.DeleteAll, null)
+});
+
+Then("{string} should appear as a message window", (message) => {
+  BaseAssertion.AssertElementContain(BaseSelectors.MessageWindow, message)
+  cy.Click(BaseSelectors.Button, BaseSelectors.ContainsOK)
+});
+
+Then("{string} should appear as a message for confirmation", (message) => {
+  BaseAssertion.AssertElementContain(BaseSelectors.ConfirmWindow, message)
+  cy.Click(BaseSelectors.Button, BaseSelectors.ContainNo)
+});
+//#endregion
+
 //#region Cancel the APInvoice approvement
+Given("navigates invoice workspace", () => {
+  cy.Click(BaseSelectors.TooltipButton + BaseSelectors.FirstElement, null)
+  cy.Click(BaseSelectors.HyperlinkButtonControl, invoiceNumber)
+});
+
 When("cancel the invoice approvement", () => {
   AccountingActions.APInvoiceCancelApproval()
 });
+
 Then("the invoice should cancel successfully", () => {
   BaseAssertion.AssertStatusCode(RequestAliases.APInvoicesRequest, 200);
 });

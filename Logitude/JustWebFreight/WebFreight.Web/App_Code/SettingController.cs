@@ -27,7 +27,9 @@ namespace WebFreight.Web.App_Code
 
         public bool PostUpdateMobileSetting(int tenant, SettingFilters filters)
         {
-          
+
+            SecurityUtility.AuthenticationOnTenant(tenant);
+
             bool IsScceed = false;
           // SecurityUtility.AuthenticationOnTenant(tenant);
            ContactPasswordRepository rep = new ContactPasswordRepository();

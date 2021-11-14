@@ -61,6 +61,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
 
             this.Poco = new MultiEntityUpdateLog();
             MultiEntityUpdateLogMapping.MapEntity(theEntityPm, Poco, isNewEntity);
+            this.entityPM.Id = Poco.Id;
             entityRepository.Add(Poco);
             entityRepository.SubmitChanges();
             BuildQueue(Poco);

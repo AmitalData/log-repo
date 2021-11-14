@@ -31,7 +31,8 @@ namespace WebFreight.Web.ReportsWebServices
     // To allow this Web Service to be called from script, using ASP.NET AJAX, uncomment the following line. 
     // [System.Web.Script.Services.ScriptService]
     public class ShipmentCMRWebService : System.Web.Services.WebService
-    { 
+    {
+        private ICommonDataContext commonContext;
         [WebMethod]
         public byte[] GetDeliveryData(string entityId, int tenant, string userId, string documentTypeCopyId)
         {
@@ -50,7 +51,7 @@ namespace WebFreight.Web.ReportsWebServices
         {
             CMRDataProvider cmrDataProvider = new CMRDataProvider();
             IShipmentsContext shipmentsContext = ShipmentsContext.GetContext(tenant);
-            ICommonDataContext commonContext = CommonDataContext.GetContext(tenant);
+            this.commonContext = CommonDataContext.GetContext(tenant);
             ShipmentRepository shipmentRepositoroy = new ShipmentRepository(shipmentsContext);
             ShipmentQuery shipmentQuery = new ShipmentQuery(shipmentRepositoroy);
             IWebFreightContext context = WebFreightContext.GetContext(tenant);
@@ -58,10 +59,10 @@ namespace WebFreight.Web.ReportsWebServices
 
             ShipmentPM shipment = null;
             shipment = shipmentQuery.GetSinglePM(entityId, tenant);
-            
+
             Tenant tenantSettings = (from a in commonContext.Tenants
-                             where a.Id == tenant
-                             select a).FirstOrDefault();
+                                     where a.Id == tenant
+                                     select a).FirstOrDefault();
 
             User currentUser = (from a in commonContext.Users
                                 where a.Id == userId
@@ -156,9 +157,9 @@ namespace WebFreight.Web.ReportsWebServices
                 {
 
                     cmrDataProvider.CompanyName = tenantSettings.Company;
-                    Address tenantAddress = addressRepository.GetSingleAddress(tenantSettings.AddressId,tenant);
+                    Address tenantAddress = addressRepository.GetSingleAddress(tenantSettings.AddressId, tenant);
 
-                  
+
 
                     if (tenantAddress != null)
                     {
@@ -171,7 +172,7 @@ namespace WebFreight.Web.ReportsWebServices
                 //************* pickup from ****************
                 cmrDataProvider.PickUpAddressAndDate = cmrDataProvider.ShipperAddress != null ? cmrDataProvider.ShipperAddress : "";//shipmentdelivery.FromAddress != null ? shipmentdelivery.FromAddress : "";
                 cmrDataProvider.Note = shipment.Notes != null ? shipment.Notes : "";
-                
+
                 //************* Delivery To ****************
                 cmrDataProvider.DeliveryToAddress = cmrDataProvider.ConsigneeAddress != null ? cmrDataProvider.ConsigneeAddress : "";
                 cmrDataProvider.ShipmentWeightUnit = shipment.GrossWeightUnitCode != null ? shipment.GrossWeightUnitCode : "";
@@ -179,9 +180,9 @@ namespace WebFreight.Web.ReportsWebServices
                 // Inland + Domestic
                 if (shipment.DirectionId == "D" && shipment.TransportModeId == "I")
                 {
-                    Address fromAddress = addressRepository.GetSingleAddress(shipment.MainCarriageFromAddressId,tenant);
-                    Address toAddress = addressRepository.GetSingleAddress(shipment.MainCarriageToAddressId,tenant);
-                
+                    Address fromAddress = addressRepository.GetSingleAddress(shipment.MainCarriageFromAddressId, tenant);
+                    Address toAddress = addressRepository.GetSingleAddress(shipment.MainCarriageToAddressId, tenant);
+
 
                     if (fromAddress != null)
                     {
@@ -229,11 +230,11 @@ namespace WebFreight.Web.ReportsWebServices
                 {
                     ContainerData containerRecord = new ContainerData();
                     counter++;
-                  
+                    
                     PackageType packtype = (from pa in commonContext.PackageTypes
                                             where pa.Id == package.PackageTypeId
                                             select pa).FirstOrDefault();
-                  
+
                     numberofpackages += package.Quantity.Value;
                     totalWeight += (package.Weight != null ? package.Weight : 0);
                     totalVolume += (package.Volume != null ? package.Volume : 0);
@@ -243,8 +244,8 @@ namespace WebFreight.Web.ReportsWebServices
                     containerRecord.HsCode = package.Harmonize != null ? "," + package.Harmonize : "";
                     containerRecord.Weight = (package.Weight != null ? package.Weight.ToString() : "0") + "  " + cmrDataProvider.ShipmentWeightUnit;
                     containerRecord.Volume = (package.Volume != null ? package.Volume.ToString() : "0") + "  " + cmrDataProvider.ShipmentVolumUnit;
-                    containerRecord.Description = package.Description!=null?package.Description:" ";
-                    containerRecord.Pieces = package.Quantity != null ? package.Quantity : 0 ;
+                    containerRecord.Description = package.Description != null ? package.Description : " ";
+                    containerRecord.Pieces = package.Quantity != null ? package.Quantity : 0;
                     containerRecord.MarksAndNumbers_Direct = package.MarksAndNumbers;
                     if (packtype != null)
                     {
@@ -266,6 +267,11 @@ namespace WebFreight.Web.ReportsWebServices
                         }
                     }
 
+                    List<InsideShipmentPackage> insidePackages = shipmentsContext.InsideShipmentPackages.Where(d => d.ShipmentPackageId == package.Id && d.Tenant == package.Tenant).ToList();
+                    if (insidePackages != null && insidePackages.Count > 0)
+                    {
+                        this.FillInsidePackagesList(insidePackages, containerRecord);
+                    }
 
                     cmrDataProvider.ContainersList.Add(containerRecord);
                 }
@@ -348,11 +354,11 @@ namespace WebFreight.Web.ReportsWebServices
 
                 //----Instructions(13)---//
                 FormCustomField instructions13Field = (from a in customfieldsList
-                                                         where a.FieldCode == "Instructions(13)" && a.EntityId == shipment.Id
-                                                         select a).FirstOrDefault();
+                                                       where a.FieldCode == "Instructions(13)" && a.EntityId == shipment.Id
+                                                       select a).FirstOrDefault();
                 DocumentTypeCustomField instructions13DocumentCustom = (from a in documentCustomfieldsList
-                                                                          where a.FieldCode == "Instructions(13)"
-                                                                          select a).FirstOrDefault();
+                                                                        where a.FieldCode == "Instructions(13)"
+                                                                        select a).FirstOrDefault();
                 if (instructions13Field != null)
                 {
                     cmrDataProvider.Instructions_13 = instructions13Field.Value;
@@ -363,7 +369,7 @@ namespace WebFreight.Web.ReportsWebServices
                 }
 
                 cmrDataProvider.SendersInstructions = cmrDataProvider.Instructions_13 != null ? cmrDataProvider.Instructions_13 : "";
-                
+
                 DocumentTypeCopy documenttypecopy = (from copy in commonContext.DocumentTypeCopies
                                                      where copy.Id == documentTypeCopyId
                                                      select copy).FirstOrDefault();
@@ -401,7 +407,45 @@ namespace WebFreight.Web.ReportsWebServices
             }
             catch { }
 
-        return cmrDataProvider;
+            return cmrDataProvider;
+        }
+
+        private void FillInsidePackagesList(List<InsideShipmentPackage> insidePackages, ContainerData containerRecord)
+        {
+            containerRecord.InsidePackagesLines = new List<InsidePackageLine>();
+            
+            foreach (InsideShipmentPackage insideItem in insidePackages)
+            {
+                InsidePackageLine insidePackage =  this.CreateInsidePackageLine(insideItem);                
+                containerRecord.InsidePackagesLines.Add(insidePackage);
+            }
+        }
+
+        private InsidePackageLine CreateInsidePackageLine(InsideShipmentPackage insideItem)
+        {
+            InsidePackageLine insidePackage = new InsidePackageLine();
+
+            PackageType insidePackageType = (from pa in commonContext.PackageTypes
+                                             where pa.Id == insideItem.PackageTypeId
+                                             select pa).FirstOrDefault();            
+
+            insidePackage.PackageType = insidePackageType == null ? "" : insidePackageType.EnglishName;
+            insidePackage.Quantity = insideItem.Quantity;
+
+            if (insideItem.Length != null && insideItem.Width != null && insideItem.Height != null)
+            {
+                insidePackage.Dimensions = insideItem.Length + "x" + insideItem.Width + "x" + insideItem.Height;
+            }
+
+            insidePackage.Volume = insideItem.Volume;
+            insidePackage.VolumetricWeight = insideItem.VolumetricWeight;
+            insidePackage.Weight = insideItem.Weight;
+            insidePackage.Description = insideItem.Description;
+            insidePackage.Reference1 = insideItem.Reference1;
+            insidePackage.Reference2 = insideItem.Reference2;
+            insidePackage.Reference3 = insideItem.Reference3;
+            insidePackage.CommodityNumber = insideItem.CommodityNumber;
+            return insidePackage;
         }
 
         private string[] GetCopyNameAndNumber(string doccopycode)

@@ -101,7 +101,7 @@ export class ContainerPMInitService {
             entityPM.UIProperties.SetEnabled("ShipmentTypeName", "Container", false);
             entityPM.UIProperties.SetEnabled("ShipmentCreateDate", "Container", false);
             entityPM.UIProperties.SetEnabled("PODReceivedOnDate", "Container", false);
-
+            entityPM.UIProperties.SetEnabled("IsAutomaticUpdates", "Container", false);
         }
     }
 }

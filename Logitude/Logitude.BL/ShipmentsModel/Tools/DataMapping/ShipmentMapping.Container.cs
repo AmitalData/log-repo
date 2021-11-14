@@ -216,6 +216,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             container.ShipmentTypeId = containerPM.ShipmentTypeId;
             container.ShipmentCreateDate = containerPM.ShipmentCreateDate;
             container.PODReceivedOnDate = containerPM.PODReceivedOnDate;
+            container.IsAutomaticUpdates = containerPM.IsAutomaticUpdates;
             BuildSearchField(containerPM, container);
         }
 

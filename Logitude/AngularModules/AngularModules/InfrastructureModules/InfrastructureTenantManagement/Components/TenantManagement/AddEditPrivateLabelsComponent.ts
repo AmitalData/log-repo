@@ -810,12 +810,12 @@ export class AddEditPrivateLabelsComponent extends BaseComponent implements OnIn
             this.EntityPM.HasLogboxAccess = value;
     }
 
-    get IsImportActivated() {
-        return this.EntityPM.IsImportActivated;
+    get IsCustomsActivated() {
+        return this.EntityPM.IsCustomsActivated;
     }
-    set IsImportActivated(value: boolean) {
-        if (value != this.EntityPM.IsImportActivated)
-            this.EntityPM.IsImportActivated = value;
+    set IsCustomsActivated(value: boolean) {
+        if (value != this.EntityPM.IsCustomsActivated)
+            this.EntityPM.IsCustomsActivated = value;
     }
     get IsExportActivated() {
         return this.EntityPM.IsExportActivated;
@@ -940,8 +940,8 @@ export class AddEditPrivateLabelsComponent extends BaseComponent implements OnIn
     private myCloner: Cloner;
 
     private ValidateDirectionsOptions(errors: string[]) {
-        if (!this.IsImportActivated && !this.IsExportActivated) {
-            errors.push("You need to fill either Is import or Is Export Activated Fields");
+        if (!this.IsCustomsActivated && !this.IsExportActivated) {
+            errors.push("You need to fill either Is Customs or Is Export Activated Fields");
         }
     }
 

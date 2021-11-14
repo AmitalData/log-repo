@@ -237,7 +237,6 @@ export class DocsInTabComponent extends BaseComponent implements OnInit {
             }
         }
         else this.DocumentsList = this.StaticDocumentsList;
-
         this.BuildItemsSource();
     }
 
@@ -631,6 +630,7 @@ export class DocsInTabComponent extends BaseComponent implements OnInit {
             if (item.DataContext.DocumentHasFile) {
                 this.HasDocuments = true;
             }
+            item.FirstTime = true;
             itemsCollection.push(item);
         })
 

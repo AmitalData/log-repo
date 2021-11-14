@@ -56,7 +56,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                              HasLogboxAccess = a.HasLogboxAccess,
                                              MainTabHighlightColor = a.MainTabHighlightColor,
                                              DocumentTypeHighlightColor = a.DocumentTypeHighlightColor,
-                                             IsImportActivated = a.IsImportActivated,
+                                             IsCustomsActivated = a.IsCustomsActivated,
                                              IsExportActivated = a.IsExportActivated,
                                          }).FirstOrDefault();
 
@@ -89,7 +89,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                                          HasLogboxAccess = a.HasLogboxAccess,
                                                          MainTabHighlightColor = a.MainTabHighlightColor,
                                                          DocumentTypeHighlightColor = a.DocumentTypeHighlightColor,
-                                                         IsImportActivated = a.IsImportActivated,
+                                                         IsCustomsActivated = a.IsCustomsActivated,
                                                          IsExportActivated = a.IsExportActivated,
                                                      }).FirstOrDefault();
 
@@ -122,7 +122,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                                            HasLogboxAccess = a.HasLogboxAccess,
                                                            MainTabHighlightColor = a.MainTabHighlightColor,
                                                            DocumentTypeHighlightColor = a.DocumentTypeHighlightColor,
-                                                           IsImportActivated = a.IsImportActivated,
+                                                           IsCustomsActivated = a.IsCustomsActivated,
                                                            IsExportActivated = a.IsExportActivated,
                                                        }).FirstOrDefault();
 
@@ -154,7 +154,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                         HasLogboxAccess = a.HasLogboxAccess,
                         MainTabHighlightColor = a.MainTabHighlightColor,
                         DocumentTypeHighlightColor = a.DocumentTypeHighlightColor,
-                        IsImportActivated = a.IsImportActivated,
+                        IsCustomsActivated = a.IsCustomsActivated,
                         IsExportActivated = a.IsExportActivated,
                     });
         }
@@ -186,7 +186,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                         HasLogboxAccess = a.HasLogboxAccess,
                         MainTabHighlightColor = a.MainTabHighlightColor,
                         DocumentTypeHighlightColor = a.DocumentTypeHighlightColor,
-                        IsImportActivated = a.IsImportActivated,
+                        IsCustomsActivated = a.IsCustomsActivated,
                         IsExportActivated = a.IsExportActivated,
                     });
         }
@@ -217,7 +217,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                         HasLogboxAccess = a.HasLogboxAccess,
                         MainTabHighlightColor = a.MainTabHighlightColor,
                         DocumentTypeHighlightColor = a.DocumentTypeHighlightColor,
-                        IsImportActivated = a.IsImportActivated,
+                        IsCustomsActivated = a.IsCustomsActivated,
                         IsExportActivated = a.IsExportActivated,
                     });
         }
@@ -249,7 +249,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                        HasLogboxAccess = a.HasLogboxAccess,
                        MainTabHighlightColor = a.MainTabHighlightColor,
                        DocumentTypeHighlightColor = a.DocumentTypeHighlightColor,
-                       IsImportActivated = a.IsImportActivated,
+                       IsCustomsActivated = a.IsCustomsActivated,
                        IsExportActivated = a.IsExportActivated,
                    };
 

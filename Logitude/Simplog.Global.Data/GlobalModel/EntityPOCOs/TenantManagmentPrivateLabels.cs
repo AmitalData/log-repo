@@ -37,7 +37,7 @@ namespace Simplog.Global.Data.GlobalModel.EntityPOCOs
         public string DocumentTypeHighlightColor { get; set; }
         public bool IsExportActivated { get; set; }
 
-        public bool IsImportActivated { get; set; }
+        public bool IsCustomsActivated { get; set; }
 
         //[ForeignKey("MainLogoId")]
         //public virtual ImageDetail ImageDetail { get; set; }

@@ -67,17 +67,7 @@ namespace CommunicationWorkerRole
             SettingQuery SettingQuery = new SettingQuery(SettingRepository);
             URI = SettingQuery.GetSinglePM().CustomerTenantsURL.TrimEnd('/') + "/api/";
         }
-        private bool IsImporterTenantHasExportFeatureForExportShipments(int ImporterTenant, ShipmentPM entityPM, int tenant)
-        {
-            if ((entityPM.DirectionId.ToUpper() == "E" || entityPM.DirectionId.ToUpper() == "R") && !FeatureToggleHelper.HasFeatureToggle("LEX", ImporterTenant,tenant))
-            {
-                return false;
-            }
-            else
-            {
-                return true;
-            }
-        }
+        
         public override bool OnStart()
         {
             ThreadId = Guid.NewGuid().ToString();
@@ -88,18 +78,7 @@ namespace CommunicationWorkerRole
             return base.OnStart();
         }
         string Token;
-        Contact User;
-        private bool IsExportShipmentsAllowedForLogBox(TenantPM loggedTenant, ShipmentPM entityPM)
-        {
-            if (loggedTenant.CustomerTenantShareExportFile == true)// && FeatureToggleHelper.HasFeatureToggle("LEX", loggedTenant.Id)
-            {
-                return (entityPM.DirectionId.ToUpper() == "E" || entityPM.DirectionId.ToUpper() == "R");
-            }
-            else
-            {
-                return false;
-            }
-        }
+        Contact User; 
         public override void Run()
         {
             try
@@ -220,16 +199,18 @@ namespace CommunicationWorkerRole
                                                 LogPM.PartnerName = customerTenantAccess.CompanyName + " ( " + customerTenantAccess.CustomerTenant + " )";
                                             }
                                         }
-                                        if (customerTenantAccessInfo != null && customerTenantAccessInfo.HasAccess && tenantPM.IsCustomerTenantShare)// && (tenantPM.CustomerTenantShareImportFile ? ForwarderShipment.DirectionId.ToUpper() == "I" || ForwarderShipment.DirectionId.ToUpper() == "C" : ForwarderShipment.DirectionId.ToUpper() == "C"))
+                                        if (customerTenantAccessInfo != null && customerTenantAccessInfo.HasAccess && tenantPM.CustomerTenantShareCustomsFile)// && (tenantPM.CustomerTenantShareImportFile ? ForwarderShipment.DirectionId.ToUpper() == "I" || ForwarderShipment.DirectionId.ToUpper() == "C" : ForwarderShipment.DirectionId.ToUpper() == "C"))
                                         {
                                             importerTenant = customerTenantAccessInfo.CustomerTenant;
                                             DocumentsFilingQuery documentsFilingQuery = new DocumentsFilingQuery(tenant);
                                             ShipmentPM ImporterShipment = null;
                                             DocumentsFilingPM DocumentFilingPM = documentsFilingQuery.GetSinglePM(DocumentFilingId, tenant);
-                                            string EntityNumber = "";
+                                            string EntityNumber = "";  
                                             if (ForwarderShipment != null)
                                             {
-                                                if (!IsImporterTenantHasExportFeatureForExportShipments(importerTenant, ForwarderShipment,tenant))
+                                                PrivateLabelShipmentService privateLabelShipmentService = new PrivateLabelShipmentService(tenantPM, ForwarderShipment, customerTenantAccessInfo);
+ 
+                                                if (!privateLabelShipmentService.IsShipmentsAllowedForLogBox())
                                                 {
                                                     queueservice.Complete();
                                                 }
@@ -262,7 +243,7 @@ namespace CommunicationWorkerRole
                                                         }
 
                                                     }
-                                                    else if (ForwarderShipment.DirectionId.ToUpper() == "C" || (IsExportShipmentsAllowedForLogBox(tenantPM, ForwarderShipment)))//&& !string.IsNullOrEmpty(ForwarderShipment.CustomFileId))
+                                                    else 
                                                     {
                                                         ImporterShipment = shipmentQuery.GetSingleShipmentPMByNumber(ForwarderShipment.CustomerShipmentNumber, importerTenant);
                                                         msg = "Getting Custom shipment number" + DateTime.Now;

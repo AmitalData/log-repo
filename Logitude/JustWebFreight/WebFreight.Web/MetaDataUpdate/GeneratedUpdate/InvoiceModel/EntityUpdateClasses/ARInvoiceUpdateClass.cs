@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 {
    public class ARInvoiceUpdateClass
    {  		
-		public const string HashString = "f0905d4f123667c990760faf528eafa8";
+		public const string HashString = "d643b0f8b4b0790e956adfd19723c74e";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -3986,7 +3986,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						MinLength =  0,
 					  						MaxLength =  20,
 					  						IsRequired =  false,
-					  						CopyToDW =  false,
+					  						CopyToDW =  true,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
@@ -4052,7 +4052,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						MinLength =  0,
 					  						MaxLength =  30,
 					  						IsRequired =  false,
-					  						CopyToDW =  false,
+					  						CopyToDW =  true,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
@@ -9300,7 +9300,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 	   		  
 	      
 
-	         Screen ARInvoiceGeneralTabScreenScreen2 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "ARInvoice.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = ARInvoiceObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 11, IsReadOnly = false }, screensRepository, tenantScreens);
+	         Screen ARInvoiceGeneralTabScreenScreen2 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "ARInvoice.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = ARInvoiceObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 10, IsReadOnly = false }, screensRepository, tenantScreens);
       
              ScreenField ARInvoiceARInvoiceGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = ARInvoiceGeneralTabScreenScreen2.Id,ScreenCode = ARInvoiceGeneralTabScreenScreen2.Code, ObjectFieldCode = "ARInvoice.UpdatedByUserId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          
@@ -9321,8 +9321,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
              ScreenField ARInvoiceARInvoiceGeneralTabScreenScreenField8 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 8, ScreenId = ARInvoiceGeneralTabScreenScreen2.Id,ScreenCode = ARInvoiceGeneralTabScreenScreen2.Code, ObjectFieldCode = "ARInvoice.BankAccountLiteId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          
              ScreenField ARInvoiceARInvoiceGeneralTabScreenScreenField9 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 9, ScreenId = ARInvoiceGeneralTabScreenScreen2.Id,ScreenCode = ARInvoiceGeneralTabScreenScreen2.Code, ObjectFieldCode = "ARInvoice.Intercompany", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-	          
-             ScreenField ARInvoiceARInvoiceGeneralTabScreenScreenField10 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 10, ScreenId = ARInvoiceGeneralTabScreenScreen2.Id,ScreenCode = ARInvoiceGeneralTabScreenScreen2.Code, ObjectFieldCode = "ARInvoice.GlobalTaxCalculation", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	            
 	      
 

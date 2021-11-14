@@ -470,9 +470,9 @@ export class TenantPM {
     public set IsDocumentsArchive(newValue: boolean) { if (this.isDocumentsArchive != newValue) { this.isDocumentsArchive = newValue; this.MarkAsDirty("IsDocumentsArchive"); } }
        
 	 
-    private isCustomerTenantShare: boolean;
-    public get IsCustomerTenantShare() { return this.isCustomerTenantShare; }
-    public set IsCustomerTenantShare(newValue: boolean) { if (this.isCustomerTenantShare != newValue) { this.isCustomerTenantShare = newValue; this.MarkAsDirty("IsCustomerTenantShare"); } }
+    private customerTenantShareCustomsFile: boolean;
+    public get CustomerTenantShareCustomsFile() { return this.customerTenantShareCustomsFile; }
+    public set CustomerTenantShareCustomsFile(newValue: boolean) { if (this.customerTenantShareCustomsFile != newValue) { this.customerTenantShareCustomsFile = newValue; this.MarkAsDirty("CustomerTenantShareCustomsFile"); } }
        
 	 
     private customerTenantShareImportFile: boolean;

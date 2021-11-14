@@ -54,7 +54,7 @@ namespace WebFreight.Web.Controllers.QuoteModel.Generated.PMControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-
+                SecurityUtility.AuthenticationOnTenant(tenant);
                 QuoteTemplateHeaderFieldQuery quoteTemplateHeaderFieldQuery = new QuoteTemplateHeaderFieldQuery(tenant);
                 List<QuoteTemplateHeaderFieldPM> quoteTemplateHeaderFieldPMLists = quoteTemplateHeaderFieldQuery.GetQuoteTemplateHeaderFieldPMsByQuotetemplateId(tenant, quoteTemplateId).ToList();
 
@@ -79,6 +79,8 @@ namespace WebFreight.Web.Controllers.QuoteModel.Generated.PMControllers
                 QuoteTemplateHeaderFieldService quoteTemplateHeaderFieldService = new QuoteTemplateHeaderFieldService(objectContext, authToken.Tenant);
                 foreach (QuoteTemplateHeaderFieldPM headerField in quoteTemplateHeaderFields)
                 {
+                    SecurityUtility.AuthenticationOnEntityTenant("QuoteTemplateHeaderField", headerField.Tenant, authToken.Tenant);
+
                     if (headerField.IsEdit)
                     {
                         quoteTemplateHeaderFieldService.Update(headerField);

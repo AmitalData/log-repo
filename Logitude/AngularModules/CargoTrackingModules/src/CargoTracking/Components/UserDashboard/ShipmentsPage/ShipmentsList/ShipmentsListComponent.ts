@@ -75,6 +75,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
     ShipmenTypeForRouting: string;
     public SortOptions= SortOptions;
     PanelSearchText;
+    MasterOrHouseLabel: string = "";
     EntityType_Customs = "C";
     get tenant(){
         return CargoTrackingBrandingData.Tenant;
@@ -135,7 +136,9 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
 
     private SetShipmentsScrollPosition() {
         const shipmentCardsContainer = document.getElementById("scrollArea");
-        shipmentCardsContainer.scrollTop = RootContext.ShipmentsScrollPosition || 0;
+        if(shipmentCardsContainer) {
+            shipmentCardsContainer.scrollTop = RootContext.ShipmentsScrollPosition || 0;
+        }
     }
 
 
@@ -623,14 +626,50 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
         this.references = reference != null ? reference.split(',') : null;
 
     }
+    SetMasterOrHouseLabel(shipment: CargoTrackingShipmentList) {
+        this.MasterOrHouseLabel = '';
+        var isShipmentDirectOrder = shipment.ShipmentLevelCode == ShipmentLevelCodes.Direct && shipment.EntityType == ShipmentEntityTypes.Order;
+        var isShipmentHouseOrder = shipment.ShipmentLevelCode == ShipmentLevelCodes.House && shipment.EntityType == ShipmentEntityTypes.Order;
+
+        if (shipment.ForwardingShipmentLevelCode == ShipmentLevelCodes.Direct || isShipmentDirectOrder)
+            this.SetMasterOrHouseLabelForDirect(shipment);
+
+       else if (shipment.ForwardingShipmentLevelCode == ShipmentLevelCodes.House || isShipmentHouseOrder)
+            this.SetMasterOrHouseLabelForHouse(shipment);
+
+        else if (shipment.EntityType == ShipmentEntityTypes.Customs && !shipment.ForwardingShipmentHeaderId)
+            this.SetMasterOrHouseLabelForCustoms(shipment);
+        return this.MasterOrHouseLabel;
+
+    }
+    private SetMasterOrHouseLabelForCustoms(shipment: CargoTrackingShipmentList) {
+        if (shipment.House)
+            this.MasterOrHouseLabel = "House";
+        else if (shipment.Master)
+            this.MasterOrHouseLabel = "Master";
+    }
+
+    private SetMasterOrHouseLabelForHouse(shipment: CargoTrackingShipmentList) {
+        if (shipment.House)
+            this.MasterOrHouseLabel = "House";
+        else if (shipment.Master)
+            this.MasterOrHouseLabel = "Master";
+    }
+
+    private SetMasterOrHouseLabelForDirect(shipment: CargoTrackingShipmentList) {
+        if (shipment.Master)
+            this.MasterOrHouseLabel = "Master";
+        else if (shipment.House != null)
+            this.MasterOrHouseLabel = "House";
+    }
 
     SetConsignmentNumber(shipment: CargoTrackingShipmentList) {
         if (shipment.ShipmentLevelCode == 'D') {
-            this.ConsignmentNumber = shipment.Master;
+            this.ConsignmentNumber = shipment.Master != null ? shipment.Master : shipment.House;
         }
 
         else if (shipment.ShipmentLevelCode == 'H') {
-            this.ConsignmentNumber = shipment.House;
+            this.ConsignmentNumber = shipment.House != null ? shipment.House : shipment.Master;;
         }
     }
 
@@ -1118,4 +1157,14 @@ export enum SortOptions {
     ATD = "ATD",
     ASC = "ASC",
     DESC = "DESC"
+}
+
+export enum ShipmentLevelCodes {
+    House = 'H',
+    Direct ='D'
+}
+
+export enum ShipmentEntityTypes {
+    Order = 'O',
+    Customs = 'C'
 }

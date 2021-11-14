@@ -2674,8 +2674,10 @@
     <Compile Include="Helpers\BaseDataProviderService.cs" />
     <Compile Include="Helpers\DocumentTypeTemplateDefultAttachmentService.cs" />
     <Compile Include="Helpers\DWObjectTableAdditionalConditionService.cs" />
+    <Compile Include="Helpers\MixPanel\AuthenticationMixPanelService.cs" />
     <Compile Include="Helpers\PrivateLabelsBrandingDataService.cs" />
     <Compile Include="Helpers\QuotesRequestService.cs" />
+    <Compile Include="Helpers\QuoteTemplate\QuoteTemplateSettingDataUpdater.cs" />
     <Compile Include="Helpers\Reports\ReportManipulationDataService.cs" />
     <Compile Include="Helpers\SharedLogisticReportService.cs" />
     <Compile Include="Helpers\ShipmentOrderModule\ShipmentOrderService.cs" />

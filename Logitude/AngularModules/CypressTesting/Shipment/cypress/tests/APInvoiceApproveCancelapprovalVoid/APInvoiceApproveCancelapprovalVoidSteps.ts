@@ -17,6 +17,7 @@ import * as Assists from "../../../../Base/cypress/assists/Assists";
 import * as MaintenanceActions from "../../../../Maintenance/cypress/actions/Actions";
 import { InvoiceSettingsDetails } from "../../../../Maintenance/cypress/models/InvoiceSettingsDetails";
 import { MaintenanceSelectors } from "../../../../Maintenance/cypress/selectors/Selectors";
+
 //#region variables
 let shipmentDetails: ShipmentDetails;
 let shipmentNumber: string;
@@ -24,10 +25,12 @@ let customerCode: string;
 let AccountingSystem: string;
 let invoiceSettingsDetails: InvoiceSettingsDetails;
 //#endregion
+
 //#region Update Accounting System
 Given("the user logged in", () => {
   cy.Login();
 });
+
 Given("accounting System as {string}", (accountingSystem) => {
   AccountingSystem = accountingSystem;
 });
@@ -35,10 +38,12 @@ Given("accounting System as {string}", (accountingSystem) => {
 When("change the accounting system", () => {
   AccountingActions.changeAccountingsSystem(AccountingSystem)
 });
+
 Then("the accounting system should update successfully", () => {
   BaseAssertion.AssertElementNotExist(BaseSelectors.LogitudeWindow);
 });
 //#endregion
+
 //#region enable void invoice settings
 Given("the user navigates to {string} in maintenance menu", (InvoiceSettings) => {
   MaintenanceActions.OpenMaintenanceItemFromMaintenanceMenu(InvoiceSettings, MaintenanceSelectors.InvoiceSettingsMaintenanceItem)
@@ -56,18 +61,22 @@ When("update invoice settings", () => {
 Then("the invoice setting should update successfully", () => {
   MaintenanceActions.AssertUpdateInvoiceSettings()
 });
-//#endregio
+//#endregion
+
 //#region Create customer
 Given("the user navigates to customers workspace", () => {
   CommonActions.NavigatesToCustomersWorkspace();
 });
+
 Given("a customer with the following details", (dataTable) => {
   let customerDetails = Assists.CreateInstance<CustomerDetails>(dataTable, true);
   CommonActions.AddNewCustomer(customerDetails);
 });
+
 When("create customer", () => {
   CommonActions.CreateCustomer();
 });
+
 Then("the customer should create successfully", () => {
   BaseAssertion.AssertStatusCode(RequestAliases.PartnersDomainRequest, 200).then((interception) => {
     customerCode = interception.response.body.Customer.Code;
@@ -103,6 +112,7 @@ Given("the user in the shipment's rounting tab", () => {
   Actions.OpenShipment(shipmentNumber);
   cy.Click(ShipmentSelectors.RoutingsTab, null);
 });
+
 Given("edit main carriage leg with the following details", (dataTable) => {
   let mainCarriageLeg = Assists.CreateInstance<MainCarriageLeg>(dataTable, true);
   Actions.EditMainCarriageLegs(mainCarriageLeg.Airline);
@@ -115,56 +125,63 @@ Given("the user add package with the following details", (dataTable) => {
   Actions.FillPackageTab(shipmentDetails.TransportMode, packagesDetails)
 });
 //#endregion
-//#region Add Payables
-Given("a payable with the following details",
-  (dataTable) => {
-    const PayableData = Assists.CreateInstance<PayableDetails>(dataTable, true);
-    Actions.FillPayablesTab(PayableData)
-  });
-When("add payables",
-  () => {
-    Actions.UpdateShipment(ShipmentSelectors.ShipmentSaveButton)
 
-  });
-Then("the payables should add successfully",
-  () => {
-    BaseAssertion.AssertStatusCode(RequestAliases.ShipmentRequest, 200)
-  });
+//#region Add Payables
+Given("a payable with the following details", (dataTable) => {
+  const PayableData = Assists.CreateInstance<PayableDetails>(dataTable, true);
+  Actions.FillPayablesTab(PayableData)
+});
+
+When("add payables", () => {
+  Actions.UpdateShipment(ShipmentSelectors.ShipmentSaveButton)
+});
+
+Then("the payables should add successfully", () => {
+  BaseAssertion.AssertStatusCode(RequestAliases.ShipmentRequest, 200)
+});
 //#endregion
+
 //#region Create APInvoice
-Given("an APInvoice with a random invoice number and the following details",
-  (dataTable) => {
-    const APInvoiceData = Assists.CreateInstance<APInvoiceDetails>(dataTable, true);
-    cy.Click(AccountingSelectors.ReceiveInvoiceButton, null);
-    AccountingActions.FillAPInvoiceDetails(APInvoiceData)
-  });
+Given("an APInvoice with a random invoice number and the following details", (dataTable) => {
+  const APInvoiceData = Assists.CreateInstance<APInvoiceDetails>(dataTable, true);
+  cy.Click(AccountingSelectors.ReceiveInvoiceButton, null);
+  AccountingActions.FillAPInvoiceDetails(APInvoiceData)
+});
+
 When("receive invoice", () => {
   AccountingActions.ReceiveAPInvoice();
 });
+
 Then("the invoice should create successfully", () => {
   BaseAssertion.AssertStatusCode(RequestAliases.APInvoicesRequest, 200);
 });
 //#endregion
+
 //#region Approve APInvoice
 When("approve invoice", () => {
   AccountingActions.APApproveInvoice()
 });
+
 Then("the invoice should approve successfully", () => {
   BaseAssertion.AssertStatusCode(RequestAliases.APInvoicesRequest, 200);
 });
 //#endregion
+
 //#region Cancel the APInvoice approvement
 When("cancel the invoice approvement", () => {
   AccountingActions.APInvoiceCancelApproval()
 });
+
 Then("the invoice should cancel successfully", () => {
   BaseAssertion.AssertStatusCode(RequestAliases.APInvoicesRequest, 200);
 });
 //#endregion
+
 //#region Void APInvoice
 When("void invoice", () => {
   AccountingActions.VoidAPInvoice()
 });
+
 Then("the invoice should void successfully", () => {
   BaseAssertion.AssertStatusCode(RequestAliases.APInvoicesRequest, 200);
 });
@@ -179,5 +196,11 @@ When("update shipment", () => {
 //#region update shipment assert step
 Then("the direct should update successfully", () => {
   BaseAssertion.AssertStatusCode(RequestAliases.ShipmentRequest, 200);
+});
+//#endregion
+
+//#region Assert Status
+Then("the status value should be {string}", (statusValue) => {
+  BaseAssertion.AssertElementContain(ShipmentSelectors.APInvoiceStatus, statusValue)
 });
 //#endregion

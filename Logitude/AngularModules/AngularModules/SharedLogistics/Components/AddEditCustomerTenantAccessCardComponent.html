@@ -16,8 +16,8 @@
                                 <td style="width: 200px; min-width: 200px;max-width:200px">Name</td>
                                 <td style="width: 200px; min-width: 200px;max-width:200px">Card Code</td>
                                 <td style="width: 180px; min-width: 180px;max-width:180px">VAT #</td>
-                                <td style="width: 50px; min-width: 50px;max-width:50px">Import</td>
-                                <td style="width: 50px; min-width: 50px;max-width:50px">Export</td>
+                                <td style="width: 55px; min-width: 55px; max-width: 55px ">Customs</td>
+                                <td style="width: 55px; min-width: 55px; max-width: 55px ">Export</td>
                                 <td class="LastChild"></td>
 
                             </tr>
@@ -41,11 +41,11 @@
                                     <span class="Value">{{item.VatNumber}}</span>
                                 </td>
 
-                                <td class="GridViewCell" style="width:50px; min-width: 50px;max-width:50px">
-                                    <div><CheckBox (Checked)="item.IsImportActivated = $event" [IsChecked]="!CanSelectOpption"></CheckBox></div>
+                                <td class="GridViewCell" style="width: 55px; min-width: 55px; max-width: 55px ">
+                                    <div><CheckBox (Checked)="item.IsCustomsActivated = $event" [IsChecked]="IsCustomsActivated && !IsExportActivated" [IsEnabled]="IsCustomsActivated || CanSelectOpption"></CheckBox></div>
                                 </td>
-                                <td class="GridViewCell" style="width:50px; min-width: 50px;max-width:50px">
-                                    <div><CheckBox (Checked)="item.IsExportActivated = $event" [IsEnabled]="IsExportActivated"></CheckBox></div>
+                                <td class="GridViewCell" style="width: 55px; min-width: 55px; max-width: 55px ">
+                                    <div><CheckBox (Checked)="item.IsExportActivated = $event" [IsChecked]="IsExportActivated && !IsCustomsActivated" [IsEnabled]="IsExportActivated || CanSelectOpption"></CheckBox></div>
                                 </td>
 
                                 <td class="LastChild"></td>

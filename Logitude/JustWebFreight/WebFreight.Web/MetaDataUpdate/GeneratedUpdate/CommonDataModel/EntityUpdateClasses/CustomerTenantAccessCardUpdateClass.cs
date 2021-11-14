@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class CustomerTenantAccessCardUpdateClass
    {  		
-		public const string HashString = "c75a227a9addb169c669dad0990fb4a5";
+		public const string HashString = "14fc41e236104ff2b5ee07b4068995d0";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -118,7 +118,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    ObjectTableTypeCode =  "BR",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Customer Tenant Access Card",
-			      				    Code =  "3af4",
+			      				    Code =  "9029",
 			      				    Name =  "CustomerTenantAccessCard",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Common",
@@ -1036,7 +1036,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "IsImportActivated",
+					 						FieldName =  "IsCustomsActivated",
 					  						ObjectTableName =  "CustomerTenantAccessCard",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -1054,8 +1054,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "IsImportActivated",
-					  						ListPropertyPath =  "IsImportActivated",
+					  						PMPropertyPath =  "IsCustomsActivated",
+					  						ListPropertyPath =  "IsCustomsActivated",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
@@ -1073,10 +1073,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInDocumentReferences =  false,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "IsImportActivated",
-					  						DefaultText =  "Is Import Activated",
-					  						ListFieldLable =  "IsImportActivatedListLable",
-					  						ListLableDefaultText =  "Import",
+					  						FullFieldLable =  "IsCustomsActivated",
+					  						DefaultText =  "Is Customs Activated",
+					  						ListFieldLable =  "IsCustomsActivatedListLable",
+					  						ListLableDefaultText =  "Customs",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,

@@ -28,10 +28,10 @@ namespace Logitude.Accounting.Data.Repositories
 
 		 
 		
-		public  ARPaymentsJournal GetSingle(int tenant, string paymentid, bool isvoided)
+		public  ARPaymentsJournal GetSingle(int tenant, string paymentid, bool isvoided, int tdenant)
         {
             return (from a in context.ARPaymentsJournals
-                    where a.Tenant == tenant && a.PaymentId == paymentid && a.IsVoided == isvoided
+                    where a.Tenant == tenant && a.PaymentId == paymentid && a.IsVoided == isvoided && a.Tenant == tenant
                     select a).FirstOrDefault();
         }
 

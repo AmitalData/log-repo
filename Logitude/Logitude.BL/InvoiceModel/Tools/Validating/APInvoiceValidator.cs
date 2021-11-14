@@ -152,7 +152,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
         private static void ValidateNormalInvoiceLines(APInvoicePM entityPM, ICommonDataContext commonContext, AccountingSetting accountingSetting, string msgRequired)
         {
             List<APInvoiceLinePM> activeLines = entityPM.InvoiceLines.Where(d => d.ChangeSetOp != Simplog.Server.Infrastructure.ChangeSetOperation.Delete).ToList();
-
+            Tenant tenantPOCO = GetTenant(entityPM.Tenant);
             if (activeLines.Count == 0)
             {
                 string msg = TranslateTextsClass.Translate("APInvoice.M.YouShouldHaveOneLineAtLeast", entityPM.Tenant);
@@ -161,8 +161,12 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
 
             else if (activeLines.Where(d => d.InvoiceCurrencyAmount == 0).Any())
             {
-                string msg = TranslateTextsClass.Translate("APInvoice.M.InvoiceLineAmountNotZero", entityPM.Tenant);
-                throw new ApplicationException(msg);
+                if (entityPM.CreatedFromAPI && entityPM.IsGeneralInvoice && tenantPOCO.AccountingActivated) {}
+                else
+                {
+                    string msg = TranslateTextsClass.Translate("APInvoice.M.InvoiceLineAmountNotZero", entityPM.Tenant);
+                    throw new ApplicationException(msg);
+                }
             }
 
             else

@@ -161,7 +161,14 @@ using Simplog.Data.InvoiceModel;
 					   					   temp.Status = ARPaymentStatusService6.GetARPaymentStatusByCode(MyEntityPM.StatusCode,Tenant,ComputingPartnerName); 
 			       
 					   				   }
-				   					
+				   
+				if(MyEntityPM.ARPaymentBankTranfers != null && MyEntityPM.ARPaymentBankTranfers.Count > 0)
+				{
+					 ARPaymentBankTranferQueryService ARPaymentBankTranferService7 = new ARPaymentBankTranferQueryService(Tenant);
+					 temp.ARPaymentBankTranfers = ARPaymentBankTranferService7.ARPaymentBankTranferDataMapping(MyEntityPM.ARPaymentBankTranfers,Tenant,ComputingPartnerName);
+				}
+
+							 					
 				   return temp;
 			}
             catch (Exception ex)
@@ -532,7 +539,23 @@ using Simplog.Data.InvoiceModel;
 
 					}
 			
-										   
+					 
+
+					if(MyEntity.ARPaymentBankTranfers != null && MyEntity.ARPaymentBankTranfers.Count > 0)
+					{
+						ARPaymentBankTranferQueryService ARPaymentBankTranferService7 = new ARPaymentBankTranferQueryService(Tenant);
+						  
+						if(!IsUpdate)
+						{								//throw new ApplicationException("ARPaymentBankTranfers Can't be update"); 
+								temp.ARPaymentBankTranfers = ARPaymentBankTranferService7.ARPaymentBankTranferDataMappingAndValidatin(MyEntity.ARPaymentBankTranfers,Tenant,ComputingPartnerName,IsUpdate);
+
+					 
+						}  
+
+						
+					}
+
+								 					   
 					return temp;
 		    }
             catch (Exception ex)
