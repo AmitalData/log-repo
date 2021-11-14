@@ -692,7 +692,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 }
             }
 
-            if (entityPM.ChangeSetOp == ChangeSetOperation.Delete || entityPM.ChangeSetOp == ChangeSetOperation.Insert)
+            if (entityPM.ChangeSetOp == ChangeSetOperation.Delete || entityPM.ChangeSetOp == ChangeSetOperation.Insert || toUpdateClassification)
             {
                 SubmitChanges();
                 //if(supplierInvoices == null || supplierInvoices.Count() < 1)
