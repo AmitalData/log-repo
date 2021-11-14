@@ -32,6 +32,7 @@ import { CourierMasterPMService } from '../../../../Customs/Services/StandardPMs
 import { ConfirmWindow } from '../../../../Controls/Windows/ConfirmWindow';
 import { ServiceHelper } from '../../../../Infrastructure/Utilities/ServiceHelper';
 import { FeatureLocator } from '../../../../Infrastructure/Utilities/FeatureLocator';
+import { SendClosePendingRequestParams } from 'Customs/DataContract/RequestParams/SendDeletePendingRequestParams';
 
 @Component({
     
@@ -583,6 +584,8 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
         this.RefreshMasterRequiredFields();
         this.RefreshList();
         this.DisplayOnlyCheck();
+        this.DisplayOnlyCheckDeletePending();
+
 
         if (this._ValidationErrors2.length > 0) {
         this._ValidationErrors2 = []
@@ -1947,6 +1950,21 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
             this.RefreshButtonClicked();
         });
     }
+    ClosePendingMethod(){
+        if (this.IsDisplayOnly) {
+            var myMessageWindow = new MessageWindow();
+            myMessageWindow.Width = 250;
+            myMessageWindow.Height = 150;
+            myMessageWindow.Show("קיים מסר זהה בתהליך");
+            return;
+        }
+        debugger;
+        var currRequestParams = new SendClosePendingRequestParams();
+        if (this._CourierWorksheetSharedDataService._SelectedItems != null && this._CourierWorksheetSharedDataService._SelectedItems.Collection.length > 0) {
+            currRequestParams.DeclarationsList = this._CourierWorksheetSharedDataService._SelectedItems.Collection;
+        }
+        currRequestParams.PendingCode=this.SelectedPendingCodeFilter.Key;
+    }
     ChangeStorageSiteMethod() {
 
         if (this.IsDisplayOnly) {
@@ -2028,6 +2046,25 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
             });
     }
 
+
+    DisplayOnlyCheckDeletePending() {
+        this.IsDisplayOnly = false;
+        this._CourierWorksheetSharedDataService.IsDisplayOnly = false;
+
+        //Check if deleting pending
+        this._CourierMasterValidator.SetEntityPM(this.entityPM);
+        this._CourierMasterValidator.CheckRequestInProgressForCourierMaster(this.entityPM.Tenant, "ClosePending", this.entityPM.Id).subscribe((response: any) => {
+            var displayOnlyCheckResult = response.Result;
+            if (displayOnlyCheckResult != null && displayOnlyCheckResult.length > 0) {
+                let customsRequestsSheetPM: CustomsRequestsSheetPM = displayOnlyCheckResult.filter(r => r.InterfaceTypeCode == "ClosePending")[0];
+                if (customsRequestsSheetPM != null) {
+                    this.IsDisplayOnly = true;
+                    this.DisplayOnlyMessage = "LAAL";
+                    this._CourierWorksheetSharedDataService.IsDisplayOnly = true;
+                }
+            }
+        });
+    }
 
     DisplayOnlyCheck() {
         this.IsDisplayOnly = false;
