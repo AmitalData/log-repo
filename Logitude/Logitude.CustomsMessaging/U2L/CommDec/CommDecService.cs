@@ -571,8 +571,7 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                   }
                     if (currentDeclarationCourierStatusPM != null && currentDeclarationCourierStatusPM.ShopId != _LogitudeCommDecFile.shopId)
                     {
-                        currentDeclarationCourierStatusPM.ShopId = _LogitudeCommDecFile.shopId;
-                        if (currentDeclarationCourierStatusPM.ChangeSetOp != ChangeSetOperation.Update) currentDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
+                        UpdateShop();
                     }
 
                     if (currentDeclarationCourierStatusPM.ChangeSetOp == ChangeSetOperation.Update)
@@ -840,6 +839,41 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
 
         }
 
+
+        private void UpdateShop()
+        {
+            if (!String.IsNullOrWhiteSpace(_LogitudeCommDecFile.shopId))
+            {
+                if (currentDeclarationCourierStatusPM == null)
+                {
+                    DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(_context);
+                    currentDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(_MyDeclarationPM.Id, true, false);
+                }
+                if (currentDeclarationCourierStatusPM != null)
+                {
+                    string shopId = null;
+                    CardRepository cardRep = new CardRepository(this._MyDeclarationPM.Tenant);
+                    Card card = cardRep.GetSingleCard(_LogitudeCommDecFile.shopId, this._MyDeclarationPM.Tenant);
+                    if (card != null)
+                    {
+                        shopId = _LogitudeCommDecFile.shopId;
+                    }
+                    else
+                    {
+                        card = cardRep.GetSingleCardByCode(_LogitudeCommDecFile.shopId, this._MyDeclarationPM.Tenant, true);
+                        if (card != null)
+                        {
+                            shopId = card.Id;
+                        }
+                    }
+                    if (!String.IsNullOrWhiteSpace(shopId) && shopId != currentDeclarationCourierStatusPM.ShopId)
+                    {
+                        if (currentDeclarationCourierStatusPM.ChangeSetOp != ChangeSetOperation.Update) currentDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
+                        currentDeclarationCourierStatusPM.ShopId = shopId;
+                    }
+                }
+            }
+        }
 
         private void UpdateDeclarationPending(string declarationPendingCode)
         {
