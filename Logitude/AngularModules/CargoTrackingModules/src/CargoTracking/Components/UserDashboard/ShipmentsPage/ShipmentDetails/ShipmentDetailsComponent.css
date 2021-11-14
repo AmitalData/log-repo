@@ -46,9 +46,9 @@ h1 {
     display: block;
     clear: both;
 }
-.circulararrow{
+.circulararrow {
     position: absolute;
-    top: 46%;
+    top: 56%;
     right: 10%;
 }
 
