@@ -1573,6 +1573,29 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private string shopId ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ShopId  
+	   {
+	    
+	     get
+		{
+		   return shopId;
+		 }
+		 set
+		 {
+		   if(shopId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ShopId",OldValue=shopId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   shopId=value;
+		   }
+			
+		 }
+	   }
    }
    
 }
