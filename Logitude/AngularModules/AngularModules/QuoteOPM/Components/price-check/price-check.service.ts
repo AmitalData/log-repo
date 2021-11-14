@@ -1,8 +1,11 @@
 import { Injectable } from '@angular/core';
+import { property } from 'cypress/types/lodash';
 import { Xml2jsonService } from 'Infrastructure/Services/xml2json/xml2json.service';
 import { AmitalGatewayUtil, UnifreightMessageM } from 'Infrastructure/Utilities/AmitalGatewayUtil';
 import { SessionLocator } from 'Infrastructure/Utilities/SessionLocator';
 import { DialogService, DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { QuoteOPPM } from 'QuoteOPM/EntityPMs/QuoteOPPM';
+import { QuoteOPPropertiesPM } from 'QuoteOPM/EntityPMs/QuoteOPPropertiesPM';
 import { Subscription } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { PriceCheckComponent } from './price-check.component';
@@ -15,25 +18,25 @@ export class PriceCheckService {
     private xml2Json: Xml2jsonService,
   ) { }
 
-  async open(quoteId: string): Promise<DynamicDialogRef> {
+  async open(quote: QuoteOPPM): Promise<DynamicDialogRef> {
     const config: DynamicDialogConfig = {}
     config.width = '800px';
     config.height = '600px';
     config.showHeader = false;
     config.styleClass = 'price-check';
-    config.data = await this.getPrices(quoteId);
+    config.data = await this.getPrices(quote);
 
     return this.dialogService.open(PriceCheckComponent, config);
   }
 
-  private async getPrices(quoteId: string): Promise<PriceChekRootResponse> {
+  private async getPrices(quote: QuoteOPPM): Promise<PriceChekRootResponse> {
     const logitudeEntity = 'QuoteOP';
     const logitudeViewModel = 'QuotesComponent';
     var unifreightMessageM = new UnifreightMessageM();
     unifreightMessageM.UnifreightEntity = 'GPRHEAD';
     unifreightMessageM.UnifreightEntityNumber = '-1';
     unifreightMessageM.LogitudeEntity = logitudeEntity;
-    unifreightMessageM.LogitudeEntityNumber = quoteId;
+    unifreightMessageM.LogitudeEntityNumber = quote.Id;
     unifreightMessageM.LogitudeViewModel = logitudeViewModel;
     unifreightMessageM.Requset = [];
     unifreightMessageM.Requset.push(["PriceCheckRequest", "<root><key>value 1111</key></root>"]);
@@ -44,7 +47,7 @@ export class PriceCheckService {
           (mess: UnifreightMessageM) => {
             const IsMatchUnifreightCallbackCommand: boolean = (
               mess.LogitudeEntity == logitudeEntity &&
-              mess.LogitudeEntityNumber == quoteId &&
+              mess.LogitudeEntityNumber == quote.Id &&
               mess.LogitudeViewModel == logitudeViewModel);
 
             if (IsMatchUnifreightCallbackCommand) {
@@ -85,6 +88,45 @@ export class PriceCheckService {
   //     resolve(prices);
   //   })
   // }
+
+  private createRequestXml(quote: QuoteOPPM): string {
+    let xml: string = '';
+    let grossWeight:number =0;
+    
+
+
+    quote.QuoteProperties.forEach((property: QuoteOPPropertiesPM, i: number) => {
+      xml +=
+        `
+    <QuoteProperties>
+      <Order>${i}</Order>
+      <Client></Client>
+      <From>${property.FromPortId}</From>
+      <To>${property.ToPortId}</To>
+      <CarrierCode>${property.MainCarriageCarrierId}LH</CarrierCode>
+      <ProductCode>0000</ProductCode>
+      <CostTariffUseCodes>0000CR,CRE,AG</CostTariffUseCodes>
+      <SaleTariffUseCodes>0000EX,EXD,AG</SaleTariffUseCodes>
+      <StartDate>${quote.StartDate.toLocaleDateString()}</StartDate>
+      <GrossWeightAmount>${quote.GrossWeight}</GrossWeightAmount>
+      <GrossWeightUOM>${quote.GrossWeightUnitCode}</GrossWeightUOM>
+      <VolumeAmount>${quote.Volume}</VolumeAmount>
+      <VolumeUOM>${quote.VolumeUnitCode}</VolumeUOM>
+      <ChargeableWeightAmount>0000100</ChargeableWeightAmount>
+      <ChargeableWeightUOM>${quote.ChargeableWeightUnitCode}</ChargeableWeightUOM>
+      <QuoteType>${quote.QuoteTypeCode}SpotRate</QuoteType>
+      <Incoterms>${property.IncotermId}</Incoterms>
+      <Currency>000000USD</Currency>
+      <SpecialService>${property.SpecialServiceID}</SpecialService>
+      <MaxOffers>3</MaxOffers>
+      <Cheapest>True</Cheapest>
+      <Fastest>True</Fastest>
+    </QuoteProperties>
+    `
+    })
+    return xml;
+
+  }
 
   private fixData(prices: PriceChekRootResponse) {
     prices.PriceChekResponse.Offers.Offer.forEach(x => {
