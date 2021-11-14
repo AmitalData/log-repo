@@ -95,6 +95,24 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
+        public HttpResponseMessage GetLastMileReport2Excel(string tenant, string hatraFromDate, string hatraToDate, string lastMileFromDate, string LastMileToDate, string airline, string trucker,string courierHawb)
+        {
+            try
+            {
+                var lastMileReport = new LastMileReport(tenant);
+                HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.OK);
+                var item = lastMileReport.GetLastMileReport(hatraFromDate, hatraToDate, lastMileFromDate, LastMileToDate, airline, trucker, courierHawb);
+                response.Content = new StreamContent(new MemoryStream(item));
+                response.Content.Headers.ContentType = new MediaTypeHeaderValue("application/ms-excel");
+                response.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment");
+                response.Content.Headers.ContentDisposition.FileName = Guid.NewGuid().ToString() + ".xls";
+                return response;
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
 
     }
 }
