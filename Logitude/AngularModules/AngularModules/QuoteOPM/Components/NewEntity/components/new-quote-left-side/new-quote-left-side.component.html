@@ -2,33 +2,45 @@
     <div class='radio-section'>
         <h4 class='label'>Direction</h4>
         <div class='radio-row' *ngFor='let x of directionList'
-            [ngClass]="{'radio-checked':formGroup.controls.direction.value?.Name === x.Name}"
+            [ngClass]="{'radio-checked':formGroup.controls.direction.value?.Name === x.Name}" #directionRow
+            (mouseenter)="directionIcon.mouseIsEnter = true" (mouseleave)="directionIcon.mouseIsEnter = false"
             (click)='formGroup.controls.direction.setValue(x)'>
-            <label class="text-style" [for]="x.Name"><img [src]="icons[x.Name]"></label>
-            <p-radioButton [inputId]="x.Name" [value]="x" formControlName="direction" [label]='x.Name' [labelStyleClass]='"simple-text"' >
+            <label class="text-style" [for]="x.Name">
+                <img #directionIcon
+                    [src]=" icons[(directionRow?.className?.includes('radio-checked') || directionIcon.mouseIsEnter ? iconColor.blue:iconColor.gray) + x.Name]">
+            </label>
+            <p-radioButton [inputId]="x.Name" [value]="x" formControlName="direction" [label]='x.Name'
+                [labelStyleClass]='"simple-text"'>
             </p-radioButton>
         </div>
     </div>
 
     <div class='radio-section' [ngClass]='{"disabled": !formGroup.controls.direction.value}'>
         <h4 class='label'>Transport</h4>
-        <div class='radio-row' *ngFor='let x of transportModeList'
-        [ngClass]="{'radio-checked':formGroup.controls.transportMode.value?.Name === x.Name}"
-        (click)='formGroup.controls.transportMode.setValue(x)'>
-        <label class="text-style" [for]="x.Name"><img [src]="icons[x.Name]"></label>
-        <p-radioButton [inputId]="x.Name" [value]="x" formControlName="transportMode" [label]='x.Name' [labelStyleClass]='"simple-text"'>
-        </p-radioButton>
+        <div class='radio-row' *ngFor='let x of transportModeList' #transportRow
+            [ngClass]="{'radio-checked':formGroup.controls.transportMode.value?.Name === x.Name}"
+            (mouseenter)="transportIcon.mouseIsEnter = true" (mouseleave)="transportIcon.mouseIsEnter = false"
+            (click)='formGroup.controls.transportMode.setValue(x)'>
+            <label class="text-style" [for]="x.Name">
+                <img #transportIcon
+                    [src]=" icons[(transportRow?.className?.includes('radio-checked') || transportIcon.mouseIsEnter ? iconColor.blue:iconColor.gray) + x.Name]">
+            </label>
+            <p-radioButton [inputId]="x.Name" [value]="x" formControlName="transportMode" [label]='x.Name'
+                [labelStyleClass]='"simple-text"'>
+            </p-radioButton>
+        </div>
     </div>
-</div>
 
-<div class='radio-section' [hidden]='formGroup.controls.transportMode.value?.Name !== "Ocean" && formGroup.controls.transportMode.value?.Name !== "Inland"'>
-    <h4 class='label'>Shipment Type</h4>
-    <div class='radio-row' *ngFor='let x of shipmentTypeListFilter'
-        [ngClass]="{'radio-checked':formGroup.controls.shipmentType.value?.Name === x.Name}"        
-        (click)='formGroup.controls.shipmentType.setValue(x)'>
-        <label class="text-style" [for]="x.Name"><img [src]="icons[x.Name]"></label>
-        <p-radioButton [inputId]="x.Name" [value]="x" formControlName="shipmentType" [label]='x.Name' [labelStyleClass]='"simple-text"'>
-        </p-radioButton>
+    <div class='radio-section'
+        [hidden]='formGroup.controls.transportMode.value?.Name !== "Ocean" && formGroup.controls.transportMode.value?.Name !== "Inland"'>
+        <h4 class='label'>Shipment Type</h4>
+        <div class='radio-row' *ngFor='let x of shipmentTypeListFilter'
+            [ngClass]="{'radio-checked':formGroup.controls.shipmentType.value?.Name === x.Name}"
+            (click)='formGroup.controls.shipmentType.setValue(x)'>
+            <label class="text-style" [for]="x.Name"><img [src]="icons[x.Name]"></label>
+            <p-radioButton [inputId]="x.Name" [value]="x" formControlName="shipmentType" [label]='x.Name'
+                [labelStyleClass]='"simple-text"'>
+            </p-radioButton>
+        </div>
     </div>
-</div>
 </div>

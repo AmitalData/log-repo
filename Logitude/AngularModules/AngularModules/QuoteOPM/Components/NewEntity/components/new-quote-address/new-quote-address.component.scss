@@ -1,11 +1,48 @@
-hr {
-    height: 1px;
-    background: #ced4da;
-    margin-bottom: 23px;
+:host ::ng-deep {
+    p-checkbox { 
+        direction: rtl;
+        display: block;
+    }
+
+    .p-checkbox {
+        margin-top: 5px !important;
+        margin-bottom: 0px !important;
+        margin-right: 7px !important;
+        width: auto;
+        position: relative;
+        right: -13px;
+
+        .p-checkbox-box {
+            width: 13px;
+            height: 13px;
+            
+            .p-checkbox-icon {
+                font-size: 12px;
+            }
+        }
+    }
+
+    .p-checkbox-label {
+        position: relative;
+        left: 4px;
+        padding-top: 3px;
+        float: left;
+    }
 }
 
+
+// hr {
+//     height: 1px;
+//     background: #ced4da;
+//     margin-bottom: 23px;
+// }
+
 .form {
-    margin: 0 13px;    
+    margin: 0px;
+    padding: 2px 13px;
+    border: 1px solid #ced4da;
+    border-radius: 7px;
+    margin-top: 19px;
 }
 
 .container {

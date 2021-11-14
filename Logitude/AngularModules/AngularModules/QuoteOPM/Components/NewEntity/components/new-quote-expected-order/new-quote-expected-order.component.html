@@ -1,10 +1,10 @@
-<div *ngIf="isSeaFcl">
+<div *ngIf="isSeaFcl" class="is-sea-fcl-section">
     <h3 class="sub-header">
         {{'QuoteOP.S.NewQuote.ExpectedOrderDetails' | TextCodeTranslationPipe}}
     </h3>
 
     <div class="grid content-in-section" [formGroup]='formGroup'>
-        <div class="col-2 p-fluid">
+        <div class="col-2 p-fluid values-col">
             <label>Quantity</label>
             <div class="p-field" *ngFor='let i of [1,2,3,4]'>
                 <p-inputNumber [formControlName]='"quantity" + i' mode="decimal" [useGrouping]="false">
@@ -13,23 +13,23 @@
         </div>
         <!--<p-dropdown [disabled]="!formGroup.controls.quantity1?.value"
                     inputId="packageType1" formControlName='quantityType1' [options]="packageTypes" placeholder="Select" optionLabel="name"></p-dropdown>-->
-        <div class="col-3 p-fluid">
+        <div class="col-3 p-fluid values-col">
             <label>Package Type</label>
             <div class="p-field" *ngFor='let i of [1,2,3,4]'>
                 <app-autocomplate-table [columnsShow]="{Code:'Code',EnglishName:'English Name'}" [data]='packageTypes'
-                    [dropIcon]='true' [placeholder]='"Select"'
-                    [fieldShow]='"EnglishName"' [controlName]='"quantityType" + i' [formGroup]='formGroup'>
+                    [dropIcon]='true' [placeholder]='"Select"' [fieldShow]='"EnglishName"'
+                    [controlName]='"quantityType" + i' [formGroup]='formGroup'>
                 </app-autocomplate-table>
             </div>
         </div>
         <div class="col-0.5 p-fluid"></div>
 
-        <div class="col-7 p-fluid">
+        <div class="col-7 p-fluid additional-data-section">
             <div class="p-field col-align">
                 <p-checkbox formControlName='isDangerous' [binary]="true"></p-checkbox>
                 <span class="checkbox-text">Dangerous Goods</span>
             </div>
-            <div class="p-field">
+            <div class="p-field description-of-goods">
                 <label for="descriptionOfGoods">Description of Goods</label>
                 <textarea formControlName='descriptionOfGoods' id="descriptionOfGoods" pInputTextarea
                     [rows]="4"></textarea>
@@ -48,8 +48,8 @@
     <h3 class="sub-header">
         {{'QuoteOP.S.NewQuote.ExpectedOrderDetails' | TextCodeTranslationPipe}}
         <p-button (onClick)="addPackage()"
-            [style]="{'float':'right', 'color': '#2196F3','background-color': 'white', 'bottom': '5px'}"
-            label="add package"></p-button>
+            [style]="{'float':'right', 'color': '#2196F3','background-color': 'white', 'bottom': '3px', 'padding': '4px 7px !important'}"
+            label="Add Package"></p-button>
     </h3>
 
     <h5 class="dimensions-header">File Dimensions</h5>
@@ -58,14 +58,14 @@
         <div class="col-12 packages-row dimensions-labels">
             <div class="quantity">Quantity</div>
             <div class="package-type">Package Type</div>
-            <div class="dimensions">Dimensions(L-W-H)</div>
+            <div class="dimensions-label">Dimensions(L-W-H)</div>
             <div class="volume">Volume</div>
             <div class="gross-weight">GrossWeight</div>
-            <div class="dimensions"></div>
+            <div class="button-label"></div>
         </div>
 
         <div class="col-12 p-fluid" formArrayName="packages">
-            <div *ngFor='let x of packages.controls; let i = index' [formGroupName]="i">
+            <div *ngFor='let x of packages.controls; let i = index' [formGroupName]="i" class="packages-row-container">
                 <div class="packages-row" [formGroup]='x'>
 
                     <div class="quantity">
@@ -75,14 +75,13 @@
 
                     <div class="package-type">
                         <app-autocomplate-table [columnsShow]="{Code:'Code',EnglishName:'English Name'}"
-                            [data]='packageTypes' [dropIcon]='true' [placeholder]='"Select"'
-                            [fieldShow]='"EnglishName"'
+                            [data]='packageTypes' [dropIcon]='true' [placeholder]='"Select"' [fieldShow]='"EnglishName"'
                             controlName='packageType' [formGroup]='x'>
                         </app-autocomplate-table>
                     </div>
 
                     <div class="dimensions">
-                        
+
                         <!-- <input type="text"  formControlName='aa'> -->
                         <p-inputNumber placeholder="L" formControlName='Ldimension' id="volume" mode="decimal">
                         </p-inputNumber>
@@ -115,8 +114,8 @@
         </div>
         <div class="col-6 p-fluid">
             <div class="grid summery">
-                <div class="col-10 p-fluid">
-                    <h4 class="summery-header">Summary</h4>
+                <div class="col-10 p-fluid summery-header">
+                    <h4>Summary</h4>
                 </div>
                 <div class="p-field col-5 p-fluid summery-item">
                     <br />
@@ -133,14 +132,14 @@
                     <h4>{{totalVolume.toFixed(3)}}</h4>
                     <label>Volume (CBM)</label>
                 </div>
-                <div class="p-field col-5 p-fluid summery-item">
+                <div class="p-field col-5 p-fluid summery-item summery-chargeable">
                     <br />
                     <h4>{{(totalGrossWeight).toFixed(2)}}</h4>
                     <label>Chargeable Weight (MT)</label>
                 </div>
             </div>
         </div>
-        <div class="col-6 p-fluid">
+        <div class="col-6 p-fluid additional-data-section">
             <p-checkbox formControlName='isDangerous' [binary]="true" label='Dangerous Goods'></p-checkbox>
 
             <div class="p-field">

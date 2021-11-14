@@ -125,11 +125,8 @@
     <None Include="DBScripts\Post\202104201027_AddCOURIERPENDINGREASONS903.sxml" />
     <None Include="DBScripts\Post\202107071340_SetCustomsDocumentsDefinitionDeclarationType.sxml" />
     <None Include="DBScripts\Post\202106061800_AddComputingPartners.sxml" />
-
     <None Include="DBScripts\Pre\202108111402_AddONSearchResult.sxml" />
-
     <None Include="DBScripts\Post\202111101341_InterfaceManagementDefaultPriority89.sxml" />
-
     <None Include="DBScripts\Pre\20210801_DeleteDuplicateQueryColumns .sxml" />
     <None Include="DBScripts\Pre\202005210104_DropUnneededTables_Global.sxml" />
     <None Include="DBScripts\Pre\202005210105_DropUnneededTables_Main.sxml" />
@@ -668,6 +665,11 @@
     <None Include="EntityFiles\ReferantException.lxml" />
     <None Include="EntityFiles\AmendCancellRequestInitiator.lxml" />
     <None Include="DBScripts\Pre\202101131441_DocumentsMetaDataTypeByCodeVER.sxml" />
+    <Compile Include="AutoGenerators\CustomClassesGenerator.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CustomClassesGenerator.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -678,6 +680,7 @@
     </None>
     <None Include="AutoGenerators\CustomClassesGenerator.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>CustomClassesGenerator.cs</LastGenOutput>
     </None>
     <None Include="EntityFiles\AddressContactState.lxml" />
     <None Include="EntityFiles\AddressPurpose.lxml" />

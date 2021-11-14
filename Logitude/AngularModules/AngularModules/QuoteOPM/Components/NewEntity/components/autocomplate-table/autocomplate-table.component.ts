@@ -112,9 +112,10 @@ export class AutocomplateTableComponent {
     const columns: GenericTableColumn[] = Object.keys(this.columnsHeader).map(columnsName => { return { name: columnsName, alias: this.columnsHeader[columnsName] } })
     // const recordSelected: any = await this.genericTableService.open(this.data, this.label, columns).onClose.toPromise()
     const recordSelected: any = await new Promise<any>(async (resolve) => {
+      const header: string = this.titleStyle(this.controlName) + ' Search'
       const dialogRef: DynamicDialogRef = !!this.getDataFunc ?
-        await this.genericTableService.openByApiOpenQuoeryFilter(this.getDataFunc, this.controlName + ' Search', this.columnsFilter, columns) :
-        this.genericTableService.open(this.data, this.controlName + ' Search', columns, null, this.logTableName);
+        await this.genericTableService.openByApiOpenQuoeryFilter(this.getDataFunc, header, this.columnsFilter, columns) :
+        this.genericTableService.open(this.data, header, columns, null, this.logTableName);
 
       dialogRef.onClose.pipe(take(1)).subscribe(x => resolve(x));
     });
@@ -167,5 +168,17 @@ export class AutocomplateTableComponent {
       this.index++;
       this.getDataFromFunc();
     }
+  }
+
+  private titleStyle(str: string) {
+    return this.capitalize(this.addSpace(str))
+  }
+
+  private capitalize(str: string):string {
+    return str.charAt(0).toUpperCase() + str.slice(1);
+  }
+
+  private addSpace(str:string) {
+    return str.replace(/[A-Z]/g, letter => ' ' + letter);
   }
 }
