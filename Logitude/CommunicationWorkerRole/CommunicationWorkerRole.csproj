@@ -392,8 +392,13 @@
     <Compile Include="QBODocumnetsUploaderWR.cs" />
     <Compile Include="PODDocumnetUploaderWR.cs" />
     <Compile Include="PODImageConverterWorkerRole.cs" />
+
     <Compile Include="MultiEntityUpdateWorkerRole.cs" />
     <Compile Include="Services\MultiEntityUpdateService.cs" />
+
+    <Compile Include="ContainerUpdateWR.cs" />
+    <Compile Include="UpdatePortTimeZoneWR.cs" />
+
     <Compile Include="WebHookCommunicationWorkerRole.cs" />
     <Compile Include="Service References\LoginServiceReference\Reference.cs">
       <AutoGen>True</AutoGen>

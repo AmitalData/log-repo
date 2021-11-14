@@ -35,7 +35,9 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;General&quot;"
-  Code="&quot;46b1&quot;"
+
+  Code="&quot;39c2&quot;"
+
   Name="&quot;General&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Generals&quot;"
@@ -7140,6 +7142,7 @@
       IsOld="false"
       IsCoreFeature="false"
       IsBusinessUnitEnabled="false" />
+
     <Feature
       Code="&quot;TASKSAPP&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
@@ -7149,5 +7152,16 @@
       IsOld="false"
       IsCoreFeature="false"
       IsBusinessUnitEnabled="false" />
+
+    <Feature
+      Code="&quot;TIMEZONES&quot;"
+      FeatureTypeCode="&quot;MENU&quot;"
+      FeatureTextCodeCode="&quot;General.Features.TIMEZONES&quot;"
+      FeatureDefaultText="&quot;Time Zones&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+
   </AdditionalFeatures>
 </entity>

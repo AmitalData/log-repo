@@ -4780,7 +4780,7 @@ User/Pass",
                                   where a.Subject == "Ocean Insights Status"
                                   select a).ToList();
 
-           
+
             foreach (var communicationLog in communications)
             {
                 DeserializeDocumentBody(communicationLog.DocumentId, communicationLog.Tenant);
@@ -4894,7 +4894,7 @@ User/Pass",
 
                 foreach (XmlNode node in xn.ChildNodes)
                 {
-                    
+
                     if (node.ChildNodes != null && node.Name == "event")
                     {
                         createdDate = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "created").FirstOrDefault()?.InnerText;
@@ -4943,8 +4943,105 @@ User/Pass",
             thread.IsBackground = true;
             thread.Start();
         }
-    }
 
+
+        private void UploadTimeZones_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Multiselect = false;
+            openFileDialog.Filter = ".csv|*.csv";
+            if (openFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                this.ReadTimeZonesExcelFile(openFileDialog);
+            }
+        }
+        private void ReadTimeZonesExcelFile(OpenFileDialog openFileDialog)
+        {
+            Stream stream = openFileDialog.OpenFile();
+            StreamReader streamReader = new StreamReader(stream);
+            this.CreateListOfExcelData(streamReader);
+        }
+        private void CreateListOfExcelData(StreamReader streamReader)
+        {
+            List<TimeZoneExcelItem> excelTimeZones = new List<TimeZoneExcelItem>();
+
+            string line = "";
+            string[] lineParts = null;
+            while ((line = streamReader.ReadLine()) != null)
+            {
+                lineParts = line.Split(',');
+
+                if (lineParts.Count() == 3)
+                {
+                    string name = this.GetText(lineParts, 0);
+                    string utcOffset = this.GetText(lineParts, 1);
+                    string utcDstOffset = this.GetText(lineParts, 2);
+
+                    if (name != null && utcOffset != null && name != "TZ database name")
+                    {
+                        string newUtcOffset = this.FixMinusSign(utcOffset);
+                        string newUtcDstOffset = this.FixMinusSign(utcDstOffset);
+
+                        TimeZoneExcelItem myDataItem = new TimeZoneExcelItem();
+                        myDataItem.Name = name;
+                        myDataItem.UTCOffset = newUtcOffset;
+                        myDataItem.UTCDSTOffset = newUtcDstOffset;
+                        excelTimeZones.Add(myDataItem);
+                    }
+                }
+            }
+
+            List<TimeZoneExcelItem> distinctItems = excelTimeZones.GroupBy(p => new { p.Name, p.UTCOffset }).Select(g => g.Last()).ToList();
+            Thread thread = new Thread(() => this.CreatePortTimeZones(distinctItems));
+            thread.IsBackground = true;
+            thread.Start();
+        }
+        private string FixMinusSign(string input)
+        {
+            string newInput = input;
+            if (input.Contains("?"))
+            {
+                newInput = input.Replace('?', '-');
+            }
+
+            return newInput;
+        }
+        private void CreatePortTimeZones(List<TimeZoneExcelItem> excelTimeZones)
+        {
+            if (excelTimeZones.Count > 0)
+            {
+                SetControlPropertyValue(UploadTimeZonesLabel, "Text", "Uploading...");
+                Stopwatch stopWatch = new Stopwatch();
+                stopWatch.Start();
+
+                ICommonDataContext commonContext = CommonDataContext.GetContext(0);
+                PortTimeZoneRepository portTimeZoneRepository = new PortTimeZoneRepository(commonContext);
+
+                foreach (TimeZoneExcelItem item in excelTimeZones)
+                {
+                    PortTimeZone portTimeZone = new PortTimeZone();
+                    portTimeZone.Code = item.Name;
+                    portTimeZone.Name = item.Name;
+                    portTimeZone.SearchFields = item.Name + "," + item.UTCOffset;
+                    portTimeZone.UTCOffset = item.UTCOffset;
+                    portTimeZone.UTCDSTOffset = item.UTCDSTOffset;
+                    portTimeZoneRepository.Add(portTimeZone);
+                }
+
+                portTimeZoneRepository.SubmitChanges();
+                stopWatch.Stop();
+                TimeSpan ts = stopWatch.Elapsed;
+                SetControlPropertyValue(UploadTimeZonesLabel, "ForeColor", Color.Green);
+                SetControlPropertyValue(UploadTimeZonesLabel, "Text", "Done in " + ts.ToString(@"hh\:mm\:ss"));
+            }
+        }
+    }
+    public class TimeZoneExcelItem
+    {
+        public string Name { get; set; }
+        public string UTCOffset { get; set; }
+        public string UTCDSTOffset { get; set; }
+    }
     public class TenantMailBox
     {
         public int Tenant { get; set; }

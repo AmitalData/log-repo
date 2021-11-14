@@ -233,6 +233,8 @@
             this.fixJournalsButton = new System.Windows.Forms.Button();
             this.button51 = new System.Windows.Forms.Button();
             this.timer2 = new System.Windows.Forms.Timer(this.components);
+            this.button55 = new System.Windows.Forms.Button();
+            this.UploadTimeZonesLabel = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
@@ -1411,6 +1413,9 @@
             // 
             this.updateReportLocalNamesBtn.Location = new System.Drawing.Point(11, 367);
             this.updateReportLocalNamesBtn.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+
+            this.updateReportLocalNamesBtn.Location = new System.Drawing.Point(9, 313);
+            this.updateReportLocalNamesBtn.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.updateReportLocalNamesBtn.Name = "updateReportLocalNamesBtn";
             this.updateReportLocalNamesBtn.Size = new System.Drawing.Size(265, 28);
             this.updateReportLocalNamesBtn.TabIndex = 74;
@@ -1766,7 +1771,10 @@
             // tabPage2
             // 
             this.tabPage2.BackColor = System.Drawing.Color.Transparent;
+
             this.tabPage2.Controls.Add(this.UpdateQuoteTemplateSettingsButton);
+            this.tabPage2.Controls.Add(this.UploadTimeZonesLabel);
+            this.tabPage2.Controls.Add(this.button55);
             this.tabPage2.Controls.Add(this.OIStatisticslabel);
             this.tabPage2.Controls.Add(this.OIStatisticsButton);
             this.tabPage2.Controls.Add(this.groupBox3);
@@ -2443,6 +2451,27 @@
             this.button51.UseVisualStyleBackColor = true;
             this.button51.Click += new System.EventHandler(this.button51_Click_1);
             // 
+            // button55
+            // 
+            this.button55.BackColor = System.Drawing.Color.IndianRed;
+            this.button55.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button55.Location = new System.Drawing.Point(9, 237);
+            this.button55.Name = "button55";
+            this.button55.Size = new System.Drawing.Size(198, 34);
+            this.button55.TabIndex = 107;
+            this.button55.Text = "Upload Time Zones";
+            this.button55.UseVisualStyleBackColor = false;
+            this.button55.Click += new System.EventHandler(this.UploadTimeZones_Click);
+            // 
+            // UploadTimeZonesLabel
+            // 
+            this.UploadTimeZonesLabel.AutoSize = true;
+            this.UploadTimeZonesLabel.Location = new System.Drawing.Point(8, 278);
+            this.UploadTimeZonesLabel.Name = "UploadTimeZonesLabel";
+            this.UploadTimeZonesLabel.Size = new System.Drawing.Size(16, 13);
+            this.UploadTimeZonesLabel.TabIndex = 108;
+            this.UploadTimeZonesLabel.Text = "...";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -2705,6 +2734,8 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Button UpdateQuoteTemplateSettingsButton;
+        private System.Windows.Forms.Label UploadTimeZonesLabel;
+        private System.Windows.Forms.Button button55;
     }
 }
 

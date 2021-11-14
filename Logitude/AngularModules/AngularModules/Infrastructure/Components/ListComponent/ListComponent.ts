@@ -648,18 +648,15 @@ export class ListComponent implements OnInit, AfterViewInit {
         if (!FeatureLocator.HasEntityPermessions(this.ObjectTableName, "NEW", false)) {
             this.IsNewEntityButtonDisabled = true;
         }
-        if (!FeatureLocator.HasEntityPermessions(this.ObjectTableName, "READ", false)) {
-            this.HasPermition = false;
+
+        if (this.ObjectTableName != "PortTimeZone") {
+            if (!FeatureLocator.HasEntityPermessions(this.ObjectTableName, "READ", false)) {
+                this.HasPermition = false;
+            }
         }
         this.Filterchangeevent = new LogEvents.EventManager();
         var subscription = this.pubSubAdvanceQueryFiltersService.Stream.subscribe(customer => this.processAdvanceQueryFilters(customer));
-      //SessionLocator.SelectedSession.pubSubAdvanceQueryFiltersService.emit(this.pubSubAdvanceQueryFiltersService)
-      //this.ObjectTableName == "Customs.Declaration" || this.ObjectTableName == "Customs.PhysicalCheck" ||
-    //   if (this.ObjectTableName.startsWith("Customs.")) {
-    //       this.IsNavigateButtonVisible = false;
-    //   }
         this.Listen();
-        //this.CD.detectChanges();
     }
 
     private ReloadAllListEvent: any = null;
@@ -1732,15 +1729,12 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
             myObjectTableName = "Contact";
         }
 
-
          if (this._ListComponentArgs.SuppressOnRowSelectedField == true) {
              this._ListComponentArgs.SuppressOnRowSelectedField = false;
              console.log("SuppressOnRowSelectedField");
              return;
          }
 
-        //this.CurrentSession.StartBusyIndicator("Loading ...");
-        //var BackGridEvent = $event.BackFromEdit;
         if ($event != null) {
             if (!this.isEditControlOpened) {
                 var entityList = $event.rowData;
@@ -1752,13 +1746,12 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                     case "Customs.CustomsHouseType":
                     case "Customs.CustomDocumentType":
                     case "Customs.UIMessage":
-                    //case "Customs.CourierPendingReason":
                     case "Customs.CurrencyType":
                     case "Customs.CustomsCountry":
                     case "Customs.ExceptionReason":
                     case "Customs.ReferantTeam":
                     case "HelpResource":
-                    //case "Customs.InternationalSite":
+                    case "PortTimeZone":
                         selectedEntityId = $event.rowData.Code;
                         break;
                     case "Customs.DeclarationReferantData":

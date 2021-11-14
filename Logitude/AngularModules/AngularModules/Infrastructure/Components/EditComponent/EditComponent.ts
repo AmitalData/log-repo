@@ -815,49 +815,57 @@ export class EditComponent implements OnDestroy {
 
             }
 
-            if (FeatureLocator.IsFeatureGrantedByUniqeCode(tab.FeatureUniqeCode)) {
+            if (this.ObjectTableName == "PortTimeZone") {
+                myTabsSorted.push(tab);
+            }
 
-                if (this.ObjectTableName == "GLAccount") {
+            else {
 
-                    switch (tab.Code) {
 
-                        case "GAAD":
-                            {
-                                if (this.EntityPM.AccountTypeCode == "2" || this.EntityPM.AccountTypeCode == "3")
+                if (FeatureLocator.IsFeatureGrantedByUniqeCode(tab.FeatureUniqeCode)) {
+
+                    if (this.ObjectTableName == "GLAccount") {
+
+                        switch (tab.Code) {
+
+                            case "GAAD":
+                                {
+                                    if (this.EntityPM.AccountTypeCode == "2" || this.EntityPM.AccountTypeCode == "3")
+                                        myTabsSorted.push(tab);
+                                    break;
+                                }
+                            case "GLTX":
+                                {
+                                    if (this.EntityPM.AccountTypeCode == "3")
+                                        myTabsSorted.push(tab);
+                                    break;
+                                }
+                            case "GAOV":
+                                {
+                                    if (this.EntityPM.AccountTypeCode == "2")  // 2- Customer GLAccount
+                                        myTabsSorted.push(tab);
+                                    break;
+                                }
+                            case "GAIT":
+                                {
+                                    if (this.EntityPM.AccountTypeCode == "2")  // 2- Customer GLAccount
+                                        myTabsSorted.push(tab);
+                                    break;
+                                }
+                            default:
+                                {
                                     myTabsSorted.push(tab);
-                                break;
-                            }
-                        case "GLTX":
-                            {
-                                if (this.EntityPM.AccountTypeCode == "3")
-                                    myTabsSorted.push(tab);
-                                break;
-                            }
-                        case "GAOV":
-                            {
-                                if (this.EntityPM.AccountTypeCode == "2")  // 2- Customer GLAccount
-                                    myTabsSorted.push(tab);
-                                break;
-                            }
-                        case "GAIT":
-                            {
-                                if (this.EntityPM.AccountTypeCode == "2")  // 2- Customer GLAccount
-                                    myTabsSorted.push(tab);
-                                break;
-                            }
-                        default:
-                            {
-                                myTabsSorted.push(tab);
-                                break;
-                            }
+                                    break;
+                                }
+                        }
                     }
+                    else
+                        myTabsSorted.push(tab);
                 }
-                else
-                    myTabsSorted.push(tab);
             }
         }
-        myTabsSorted.forEach(item => {
 
+        myTabsSorted.forEach(item => {
             var itemTab: TabItem = new TabItem(item);
             itemTab.IsDisabled = this.EditComponentController.IsDisabled(itemTab.Code)
             if (AppTool.IsNullOrEmpty(this.EntityPM.Id)) {
