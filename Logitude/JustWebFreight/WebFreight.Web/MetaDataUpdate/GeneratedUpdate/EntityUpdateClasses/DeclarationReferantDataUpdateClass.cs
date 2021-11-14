@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
  
@@ -79,9 +79,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationReferantDataUpdateClass
    {  		
- 
 		public const string HashString = "7b28ed71c42ed45953a3816c10cd6826";
- 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
+	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
             AddObjectsAndObjectFields.AddObjectTable(new ObjectTableDetails()
@@ -122,7 +121,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    NewWizardControlName =  "Logitude.Customs.NewDeclarationControlCommand",
-			      				    LocalDefaultText =  "×¨×¤×¨× ×˜",
+			      				    LocalDefaultText =  "רפרנט",
 			      				    DefaultText =  "Declaration Referant Data",
 			      				    Code =  "5277",
 			      				    Name =  " Query Group",
@@ -188,10 +187,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "DeclarationId",
 					  						DefaultText =  "Declaration ID",
-					  						FullLocalDefaultText =  "×ž×¡×¤×¨ ×ª×™×§ ×ž×›×¡",
+					  						FullLocalDefaultText =  "מספר תיק מכס",
 					  						ListFieldLable =  "DeclarationIdListLable",
 					  						ListLableDefaultText =  "Declaration ID",
-					  						ListLocalDefaultText =  "×ž×¡×¤×¨ ×ª×™×§ ×ž×›×¡",
+					  						ListLocalDefaultText =  "מספר תיק מכס",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  true,
@@ -309,10 +308,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "OrderNumber",
 					  						DefaultText =  "Order",
-					  						FullLocalDefaultText =  "×ž×¡' ×”×–×ž× ×”",
+					  						FullLocalDefaultText =  "מס' הזמנה",
 					  						ListFieldLable =  "OrderNumberListLable",
 					  						ListLableDefaultText =  "Order Number",
-					  						ListLocalDefaultText =  "×ž×¡' ×”×–×ž× ×”",
+					  						ListLocalDefaultText =  "מס' הזמנה",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -372,10 +371,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "VendorId",
 					  						DefaultText =  "Vendor ID",
-					  						FullLocalDefaultText =  "×ž×¡' ×¡×¤×§",
+					  						FullLocalDefaultText =  "מס' ספק",
 					  						ListFieldLable =  "VendorIdListLable",
 					  						ListLableDefaultText =  "Vendor ID",
-					  						ListLocalDefaultText =  "×ž×¡' ×¡×¤×§",
+					  						ListLocalDefaultText =  "מס' ספק",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -563,10 +562,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Weight",
 					  						DefaultText =  "Weight",
-					  						FullLocalDefaultText =  "×ž×©×§×œ",
+					  						FullLocalDefaultText =  "משקל",
 					  						ListFieldLable =  "WeightListLable",
 					  						ListLableDefaultText =  "Weight",
-					  						ListLocalDefaultText =  "×ž×©×§×œ",
+					  						ListLocalDefaultText =  "משקל",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -625,10 +624,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ClassificationStatus",
 					  						DefaultText =  "Classification Status",
-					  						FullLocalDefaultText =  "×¡×™×•×•×’",
+					  						FullLocalDefaultText =  "סיווג",
 					  						ListFieldLable =  "ClassificationStatusListLable",
 					  						ListLableDefaultText =  "Classification Status",
-					  						ListLocalDefaultText =  "×¡×™×•×•×’",
+					  						ListLocalDefaultText =  "סיווג",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -687,10 +686,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ControllerStatus",
 					  						DefaultText =  "Controller Status",
-					  						FullLocalDefaultText =  "×ž×‘×§×¨",
+					  						FullLocalDefaultText =  "מבקר",
 					  						ListFieldLable =  "ControllerStatusListLable",
 					  						ListLableDefaultText =  "Controller Status",
-					  						ListLocalDefaultText =  "×ž×‘×§×¨",
+					  						ListLocalDefaultText =  "מבקר",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -749,10 +748,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CollectionOfMoneyStatus",
 					  						DefaultText =  "Collection Of Money Status",
-					  						FullLocalDefaultText =  "×’×‘×™×”",
+					  						FullLocalDefaultText =  "גביה",
 					  						ListFieldLable =  "CollectionOfMoneyStatusListLable",
 					  						ListLableDefaultText =  "Collection Of Money Status",
-					  						ListLocalDefaultText =  "×’×‘×™×”",
+					  						ListLocalDefaultText =  "גביה",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -811,10 +810,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "FollowUpDate",
 					  						DefaultText =  "FollowUp Date",
-					  						FullLocalDefaultText =  "×ª×�×¨×™×š ×ž×¢×§×‘",
+					  						FullLocalDefaultText =  "תאריך מעקב",
 					  						ListFieldLable =  "FollowUpDateListLable",
 					  						ListLableDefaultText =  "FollowUp Date",
-					  						ListLocalDefaultText =  "×ª×�×¨×™×š ×ž×¢×§×‘",
+					  						ListLocalDefaultText =  "תאריך מעקב",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -872,10 +871,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "WithPaper",
 					  						DefaultText =  "With Paper",
-					  						FullLocalDefaultText =  "×ž×œ×•×•×” × ×™×™×¨×ª",
+					  						FullLocalDefaultText =  "מלווה ניירת",
 					  						ListFieldLable =  "WithPaperListLable",
 					  						ListLableDefaultText =  "With Paper",
-					  						ListLocalDefaultText =  "×ž×œ×•×•×” × ×™×™×¨×ª",
+					  						ListLocalDefaultText =  "מלווה ניירת",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -933,10 +932,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "IsClosedForFollowUp",
 					  						DefaultText =  "Is Closed For FollowUp",
-					  						FullLocalDefaultText =  "×¡×’×•×¨/×¤×ª×•×—",
+					  						FullLocalDefaultText =  "סגור/פתוח",
 					  						ListFieldLable =  "IsClosedForFollowUpListLable",
 					  						ListLableDefaultText =  "Is Closed For FollowUp",
-					  						ListLocalDefaultText =  "×¡×’×•×¨/×¤×ª×•×—",
+					  						ListLocalDefaultText =  "סגור/פתוח",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -994,10 +993,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "IsClassificationRemarks",
 					  						DefaultText =  "Is Classification Remarks",
-					  						FullLocalDefaultText =  "×”×¢×¨×•×ª ×ž×¡×•×•×’",
+					  						FullLocalDefaultText =  "הערות מסווג",
 					  						ListFieldLable =  "IsClassificationRemarksListLable",
 					  						ListLableDefaultText =  "Is Classification Remarks",
-					  						ListLocalDefaultText =  "×”×¢×¨×•×ª ×ž×¡×•×•×’",
+					  						ListLocalDefaultText =  "הערות מסווג",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -1055,10 +1054,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "IsControllerRemarks",
 					  						DefaultText =  "Is Controller Remarks",
-					  						FullLocalDefaultText =  "×”×¢×¨×•×ª ×ž×‘×§×¨",
+					  						FullLocalDefaultText =  "הערות מבקר",
 					  						ListFieldLable =  "IsControllerRemarksListLable",
 					  						ListLableDefaultText =  "Is Controller Remarks",
-					  						ListLocalDefaultText =  "×”×¢×¨×•×ª ×ž×‘×§×¨",
+					  						ListLocalDefaultText =  "הערות מבקר",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -1116,10 +1115,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "PreClassification",
 					  						DefaultText =  "Pre Classification",
-					  						FullLocalDefaultText =  "×©×™×¨×•×ª OCR",
+					  						FullLocalDefaultText =  "שירות OCR",
 					  						ListFieldLable =  "PreClassificationListLable",
 					  						ListLableDefaultText =  "Pre Classification",
-					  						ListLocalDefaultText =  "×©×™×¨×•×ª OCR",
+					  						ListLocalDefaultText =  "שירות OCR",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -1180,7 +1179,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DefaultText =  "Custom File No",
 					  						ListFieldLable =  "CustomFileNoListLable",
 					  						ListLableDefaultText =  "Custom File No",
-					  						ListLocalDefaultText =  "×ª×™×§ ×¢×ž×™×œ×•×ª",
+					  						ListLocalDefaultText =  "תיק עמילות",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -1241,7 +1240,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DefaultText =  "Customer Name",
 					  						ListFieldLable =  "CustomerNameListLable",
 					  						ListLableDefaultText =  "Customer Name",
-					  						ListLocalDefaultText =  "×©×� ×œ×§×•×—",
+					  						ListLocalDefaultText =  "שם לקוח",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -1303,7 +1302,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DefaultText =  "Transport Mode ",
 					  						ListFieldLable =  "TransportModeIdListLable",
 					  						ListLableDefaultText =  "Transport Mode ",
-					  						ListLocalDefaultText =  "×¡×•×’ ×”×•×‘×œ×”",
+					  						ListLocalDefaultText =  "סוג הובלה",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -1363,10 +1362,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "DeclarationOfficeCode",
 					  						DefaultText =  "Declaration Office",
-					  						FullLocalDefaultText =  "×‘×™×ª ×ž×›×¡",
+					  						FullLocalDefaultText =  "בית מכס",
 					  						ListFieldLable =  "DeclarationOfficeCodeListLable",
 					  						ListLableDefaultText =  "Declaration Office",
-					  						ListLocalDefaultText =  "×‘×™×ª ×ž×›×¡",
+					  						ListLocalDefaultText =  "בית מכס",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -1427,7 +1426,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DefaultText =  "Vendor Name",
 					  						ListFieldLable =  "VendorNameListLable",
 					  						ListLableDefaultText =  "Vendor Name",
-					  						ListLocalDefaultText =  "×©×� ×¡×¤×§",
+					  						ListLocalDefaultText =  "שם ספק",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -1486,10 +1485,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "DeclarationStatusTypeName",
 					  						DefaultText =  "Declaration Status Type",
-					  						FullLocalDefaultText =  "×¡×˜×˜×•×¡ ×”×¦×”×¨×”",
+					  						FullLocalDefaultText =  "סטטוס הצהרה",
 					  						ListFieldLable =  "DeclarationStatusTypeNameListLable",
 					  						ListLableDefaultText =  "Declaration Status Type Name",
-					  						ListLocalDefaultText =  "×¡×˜×˜×•×¡ ×”×¦×”×¨×”",
+					  						ListLocalDefaultText =  "סטטוס הצהרה",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -1550,7 +1549,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DefaultText =  "Declaration Office Name",
 					  						ListFieldLable =  "DeclarationOfficeNameListLable",
 					  						ListLableDefaultText =  "Declaration Office Name",
-					  						ListLocalDefaultText =  "×©×� ×ª×—× ×ª ×ž×›×¡",
+					  						ListLocalDefaultText =  "שם תחנת מכס",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -1610,10 +1609,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "DeclarationStatusTypeCode",
 					  						DefaultText =  "Declaration Status Type",
-					  						FullLocalDefaultText =  "×¡×˜×˜×•×¡ ×”×¦×”×¨×”",
+					  						FullLocalDefaultText =  "סטטוס הצהרה",
 					  						ListFieldLable =  "DeclarationStatusTypeCodeListLable",
 					  						ListLableDefaultText =  "Declaration Status Type",
-					  						ListLocalDefaultText =  "×¡×˜×˜×•×¡ ×”×¦×”×¨×”",
+					  						ListLocalDefaultText =  "סטטוס הצהרה",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -1732,12 +1731,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "SearchFields",
 					  						DefaultText =  "Search",
-					  						FullLocalDefaultText =  "×ª×™×§/×”×¦×”×¨×”/×ž×–×”×” ×ž×˜×¢×Ÿ/×œ×§×•×—",
+					  						FullLocalDefaultText =  "תיק/הצהרה/מזהה מטען/לקוח",
 					  						ListFieldLable =  "SearchFieldsListLable",
 					  						ListLableDefaultText =  "SearchField",
 					  						HelpTextCode =  "SearchFields",
 					  						HelpTextDefaultText =  "Searching by :",
-					  						HelpLocalDefaultText =  "×—×™×¤×•×© ×¢×œ ×™×“×™: ",
+					  						HelpLocalDefaultText =  "חיפוש על ידי: ",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -1798,7 +1797,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DefaultText =  "Exception Reasons List",
 					  						ListFieldLable =  "ExceptionReasonsListListLable",
 					  						ListLableDefaultText =  "Exception",
-					  						ListLocalDefaultText =  "×—×¨×™×’",
+					  						ListLocalDefaultText =  "חריג",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -1860,7 +1859,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DefaultText =  "Department ",
 					  						ListFieldLable =  "DepartmentIdListLable",
 					  						ListLableDefaultText =  "Department ",
-					  						ListLocalDefaultText =  "×ž×—×œ×§×”",
+					  						ListLocalDefaultText =  "מחלקה",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -1920,10 +1919,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ReferentUserId",
 					  						DefaultText =  "Referent User ",
-					  						FullLocalDefaultText =  "×¨×¤×¨× ×˜",
+					  						FullLocalDefaultText =  "רפרנט",
 					  						ListFieldLable =  "ReferentUserIdListLable",
 					  						ListLableDefaultText =  "Referent User ",
-					  						ListLocalDefaultText =  "×¨×¤×¨× ×˜",
+					  						ListLocalDefaultText =  "רפרנט",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -1983,7 +1982,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DefaultText =  " ",
 					  						ListFieldLable =  "ActionsListLable",
 					  						ListLableDefaultText =  "Actions",
-					  						ListLocalDefaultText =  " ×¤×¢×•×œ×•×ª",
+					  						ListLocalDefaultText =  " פעולות",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -2043,10 +2042,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "AvailabilityDate",
 					  						DefaultText =  "Availability Date",
-					  						FullLocalDefaultText =  "×ª×�×¨×™×š ×–×ž×™× ×•×ª",
+					  						FullLocalDefaultText =  "תאריך זמינות",
 					  						ListFieldLable =  "AvailabilityDateListLable",
 					  						ListLableDefaultText =  "Availability Date",
-					  						ListLocalDefaultText =  "×ª×�×¨×™×š ×–×ž×™× ×•×ª",
+					  						ListLocalDefaultText =  "תאריך זמינות",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -2105,11 +2104,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ClassifiedUserId",
-					  						DefaultText =  "×ž×¡×•×•×’",
-					  						FullLocalDefaultText =  "×ž×¡×•×•×’",
+					  						DefaultText =  "מסווג",
+					  						FullLocalDefaultText =  "מסווג",
 					  						ListFieldLable =  "ClassifiedUserIdListLable",
 					  						ListLableDefaultText =  "ClassifiedUserId",
-					  						ListLocalDefaultText =  "×ž×¡×•×•×’",
+					  						ListLocalDefaultText =  "מסווג",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -2168,11 +2167,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ControllerUserId",
-					  						DefaultText =  "×©×� ×ž×‘×§×¨",
-					  						FullLocalDefaultText =  "×©×� ×ž×‘×§×¨",
+					  						DefaultText =  "שם מבקר",
+					  						FullLocalDefaultText =  "שם מבקר",
 					  						ListFieldLable =  "ControllerUserIdListLable",
 					  						ListLableDefaultText =  "ControllerUserId",
-					  						ListLocalDefaultText =  "×©×� ×ž×‘×§×¨",
+					  						ListLocalDefaultText =  "שם מבקר",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -2231,11 +2230,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CollectorUserId",
-					  						DefaultText =  "×’×•×‘×”",
-					  						FullLocalDefaultText =  "×’×•×‘×”",
+					  						DefaultText =  "גובה",
+					  						FullLocalDefaultText =  "גובה",
 					  						ListFieldLable =  "CollectorUserIdListLable",
 					  						ListLableDefaultText =  "CollectorUserId",
-					  						ListLocalDefaultText =  "×’×•×‘×”",
+					  						ListLocalDefaultText =  "גובה",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -2293,10 +2292,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "NewFile",
 					  						DefaultText =  "New File",
-					  						FullLocalDefaultText =  "×ª×™×§ ×—×“×©",
+					  						FullLocalDefaultText =  "תיק חדש",
 					  						ListFieldLable =  "NewFileListLable",
 					  						ListLableDefaultText =  "New File",
-					  						ListLocalDefaultText =  "×ª×™×§ ×—×“×©",
+					  						ListLocalDefaultText =  "תיק חדש",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -2354,10 +2353,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Favorite",
 					  						DefaultText =  "Favorite",
-					  						FullLocalDefaultText =  "×ž×•×¢×“×£",
+					  						FullLocalDefaultText =  "מועדף",
 					  						ListFieldLable =  "FavoriteListLable",
 					  						ListLableDefaultText =  "Favorite",
-					  						ListLocalDefaultText =  "×ž×•×¢×“×£",
+					  						ListLocalDefaultText =  "מועדף",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -2475,7 +2474,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DefaultText =  "Custom Log Box Activated",
 					  						ListFieldLable =  "IsCustomerLogBoxActivatedListLable",
 					  						ListLableDefaultText =  "Custom Log Box Activated",
-					  						ListLocalDefaultText =  "×œ×§×•×— LogBox",
+					  						ListLocalDefaultText =  "לקוח LogBox",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -2533,10 +2532,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "IsCancelled",
 					  						DefaultText =  "Is Cancelled",
-					  						FullLocalDefaultText =  "×ª×™×§ ×‘×•×˜×œ",
+					  						FullLocalDefaultText =  "תיק בוטל",
 					  						ListFieldLable =  "IsCancelledListLable",
 					  						ListLableDefaultText =  "Is Cancelled",
-					  						ListLocalDefaultText =  "×ª×™×§ ×‘×•×˜×œ",
+					  						ListLocalDefaultText =  "תיק בוטל",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -2595,10 +2594,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ClassifiedUserName",
 					  						DefaultText =  "Classified User Name",
-					  						FullLocalDefaultText =  "×©×� ×ž×¡×•×•×’",
+					  						FullLocalDefaultText =  "שם מסווג",
 					  						ListFieldLable =  "ClassifiedUserNameListLable",
 					  						ListLableDefaultText =  "Classified User Name",
-					  						ListLocalDefaultText =  "×©×� ×ž×¡×•×•×’",
+					  						ListLocalDefaultText =  "שם מסווג",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -2657,10 +2656,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ControllerUserName",
 					  						DefaultText =  "Controller User Name",
-					  						FullLocalDefaultText =  "×©×� ×ž×‘×§×¨",
+					  						FullLocalDefaultText =  "שם מבקר",
 					  						ListFieldLable =  "ControllerUserNameListLable",
 					  						ListLableDefaultText =  "Controller User Name",
-					  						ListLocalDefaultText =  "×©×� ×ž×‘×§×¨",
+					  						ListLocalDefaultText =  "שם מבקר",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -2719,10 +2718,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CollectorUserName",
 					  						DefaultText =  "Collector User Name",
-					  						FullLocalDefaultText =  "×©×� ×’×•×‘×”",
+					  						FullLocalDefaultText =  "שם גובה",
 					  						ListFieldLable =  "CollectorUserNameListLable",
 					  						ListLableDefaultText =  "CollectorUserName",
-					  						ListLocalDefaultText =  "×©×� ×’×•×‘×”",
+					  						ListLocalDefaultText =  "שם גובה",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -2781,10 +2780,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "LastStatusName",
 					  						DefaultText =  "LastStatusName",
-					  						FullLocalDefaultText =  "×©×� ×¡×˜×˜×•×¡ ×�×—×¨×•×Ÿ",
+					  						FullLocalDefaultText =  "שם סטטוס אחרון",
 					  						ListFieldLable =  "LastStatusNameListLable",
 					  						ListLableDefaultText =  "LastStatusName",
-					  						ListLocalDefaultText =  " ×©×� ×¡×˜×˜×•×¡ ×�×—×¨×•×Ÿ",
+					  						ListLocalDefaultText =  " שם סטטוס אחרון",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -2843,10 +2842,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "LastStatusDate",
 					  						DefaultText =  "LastStatusDate",
-					  						FullLocalDefaultText =  "×ª×�×¨×™×š ×¡×˜×˜×•×¡ ×�×—×¨×•×Ÿ",
+					  						FullLocalDefaultText =  "תאריך סטטוס אחרון",
 					  						ListFieldLable =  "LastStatusDateListLable",
 					  						ListLableDefaultText =  "LastStatusDate",
-					  						ListLocalDefaultText =  "×ª×�×¨×™×š ×¡×˜×˜×•×¡ ×�×—×¨×•×Ÿ",
+					  						ListLocalDefaultText =  "תאריך סטטוס אחרון",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -2905,10 +2904,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "OrderMoney",
 					  						DefaultText =  "Customs Order Money",
-					  						FullLocalDefaultText =  "×”×–×ž× ×ª ×›×¡×£",
+					  						FullLocalDefaultText =  "הזמנת כסף",
 					  						ListFieldLable =  "OrderMoneyListLable",
 					  						ListLableDefaultText =  "Customs Order Money",
-					  						ListLocalDefaultText =  "×”×–×ž× ×ª ×›×¡×£",
+					  						ListLocalDefaultText =  "הזמנת כסף",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -2967,10 +2966,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Team",
 					  						DefaultText =  "Team",
-					  						FullLocalDefaultText =  "×¦×•×•×ª",
+					  						FullLocalDefaultText =  "צוות",
 					  						ListFieldLable =  "TeamListLable",
 					  						ListLableDefaultText =  "Team",
-					  						ListLocalDefaultText =  "×¦×•×•×ª",
+					  						ListLocalDefaultText =  "צוות",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -3030,10 +3029,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "StorageSiteCode",
 					  						DefaultText =  "Storage Site",
-					  						FullLocalDefaultText =  "×�×ª×¨ ×�×—×¡×•×Ÿ",
+					  						FullLocalDefaultText =  "אתר אחסון",
 					  						ListFieldLable =  "StorageSiteCodeListLable",
 					  						ListLableDefaultText =  "Storage Site Code",
-					  						ListLocalDefaultText =  "×�×ª×¨ ×�×—×¡×•×Ÿ",
+					  						ListLocalDefaultText =  "אתר אחסון",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -3093,10 +3092,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "TaxationDateTime",
 					  						DefaultText =  "Taxation Date Time",
-					  						FullLocalDefaultText =  "×ª×�×¨×™×š ×—×™×©×•×‘ ×ž×™×¡×™×�  ",
+					  						FullLocalDefaultText =  "תאריך חישוב מיסים  ",
 					  						ListFieldLable =  "TaxationDateTimeListLable",
 					  						ListLableDefaultText =  "Taxation Date Time",
-					  						ListLocalDefaultText =  "×ª×�×¨×™×š ×—×™×©×•×‘ ×ž×™×¡×™×�  ",
+					  						ListLocalDefaultText =  "תאריך חישוב מיסים  ",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -3156,10 +3155,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ProcedureCurrentCode",
 					  						DefaultText =  "Government Procedure Type",
-					  						FullLocalDefaultText =  "×¡×•×’ ×ª×”×œ×™×š ",
+					  						FullLocalDefaultText =  "סוג תהליך ",
 					  						ListFieldLable =  "ProcedureCurrentCodeListLable",
 					  						ListLableDefaultText =  "Procedure Current Name",
-					  						ListLocalDefaultText =  "×¡×•×’ ×ª×”×œ×™×š ",
+					  						ListLocalDefaultText =  "סוג תהליך ",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -3219,10 +3218,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "HatraDate",
 					  						DefaultText =  "Hatra Date",
-					  						FullLocalDefaultText =  "×ª×�×¨×™×š ×”×ª×¨×”",
+					  						FullLocalDefaultText =  "תאריך התרה",
 					  						ListFieldLable =  "HatraDateListLable",
 					  						ListLableDefaultText =  "Hatra Date",
-					  						ListLocalDefaultText =  "×ª×�×¨×™×š ×”×ª×¨×”",
+					  						ListLocalDefaultText =  "תאריך התרה",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -3282,10 +3281,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "PaymentDate",
 					  						DefaultText =  "Payment Date",
-					  						FullLocalDefaultText =  "×ª×�×¨×™×š ×ª×©×œ×•×�",
+					  						FullLocalDefaultText =  "תאריך תשלום",
 					  						ListFieldLable =  "PaymentDateListLable",
 					  						ListLableDefaultText =  "Payment Date",
-					  						ListLocalDefaultText =  "×ª×�×¨×™×š ×ª×©×œ×•×�",
+					  						ListLocalDefaultText =  "תאריך תשלום",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -3344,10 +3343,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ImporterCode",
 					  						DefaultText =  "ImporterCode",
-					  						FullLocalDefaultText =  "×ž×¡×¤×¨ ×™×‘×•×�×Ÿ",
+					  						FullLocalDefaultText =  "מספר יבואן",
 					  						ListFieldLable =  "ImporterCodeListLable",
 					  						ListLableDefaultText =  "ImporterCode",
-					  						ListLocalDefaultText =  "×ž×¡×¤×¨ ×™×‘×•×�×Ÿ",
+					  						ListLocalDefaultText =  "מספר יבואן",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -3406,10 +3405,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CustomerCode",
 					  						DefaultText =  "Customer Code",
-					  						FullLocalDefaultText =  "×ž×¡' ×œ×§×•×—",
+					  						FullLocalDefaultText =  "מס' לקוח",
 					  						ListFieldLable =  "CustomerCodeListLable",
 					  						ListLableDefaultText =  "Customer Code",
-					  						ListLocalDefaultText =  "×ž×¡' ×œ×§×•×—",
+					  						ListLocalDefaultText =  "מס' לקוח",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -3468,10 +3467,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ImporterFile",
 					  						DefaultText =  "Importer File",
-					  						FullLocalDefaultText =  "×ª×™×§ ×™×‘×•×�×Ÿ",
+					  						FullLocalDefaultText =  "תיק יבואן",
 					  						ListFieldLable =  "ImporterFileListLable",
 					  						ListLableDefaultText =  "Importer File",
-					  						ListLocalDefaultText =  "×ª×™×§ ×™×‘×•×�×Ÿ",
+					  						ListLocalDefaultText =  "תיק יבואן",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -3529,10 +3528,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "AEOImporter",
-					  						DefaultText =  "×œ×§×•×— AEO/×™×‘×•×�×Ÿ ×ž×•×¨×©×”",
+					  						DefaultText =  "לקוח AEO/יבואן מורשה",
 					  						ListFieldLable =  "AEOImporterListLable",
 					  						ListLableDefaultText =  "AEOImporter",
-					  						ListLocalDefaultText =  "×œ×§×•×— AEO/×™×‘×•×�×Ÿ ×ž×•×¨×©×”",
+					  						ListLocalDefaultText =  "לקוח AEO/יבואן מורשה",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -3592,10 +3591,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "FileOpenDate",
 					  						DefaultText =  "File Open Date",
-					  						FullLocalDefaultText =  "×ª×�×¨×™×š ×¤×ª×™×—×ª ×ª×™×§",
+					  						FullLocalDefaultText =  "תאריך פתיחת תיק",
 					  						ListFieldLable =  "FileOpenDateListLable",
 					  						ListLableDefaultText =  "File Open Date",
-					  						ListLocalDefaultText =  "×ª×�×¨×™×š ×¤×ª×™×—×ª ×ª×™×§",
+					  						ListLocalDefaultText =  "תאריך פתיחת תיק",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -3654,10 +3653,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "StorageSiteName",
 					  						DefaultText =  "Storage Site",
-					  						FullLocalDefaultText =  "×©×� ×�×ª×¨ ×�×—×¡×•×Ÿ",
+					  						FullLocalDefaultText =  "שם אתר אחסון",
 					  						ListFieldLable =  "StorageSiteNameListLable",
 					  						ListLableDefaultText =  "Storage Site Name",
-					  						ListLocalDefaultText =  "×©×� ×�×ª×¨ ×�×—×¡×•×Ÿ",
+					  						ListLocalDefaultText =  "שם אתר אחסון",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -3716,10 +3715,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ImporterName",
 					  						DefaultText =  "Importer Name",
-					  						FullLocalDefaultText =  "×©×� ×™×‘×•×�×Ÿ",
+					  						FullLocalDefaultText =  "שם יבואן",
 					  						ListFieldLable =  "ImporterNameListLable",
 					  						ListLableDefaultText =  "Importer Name",
-					  						ListLocalDefaultText =  "×©×� ×™×‘×•×�×Ÿ",
+					  						ListLocalDefaultText =  "שם יבואן",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -3778,10 +3777,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ProcedureCurrentName",
 					  						DefaultText =  "Government Procedure Type",
-					  						FullLocalDefaultText =  "×©×� ×¡×•×’ ×ª×”×œ×™×š",
+					  						FullLocalDefaultText =  "שם סוג תהליך",
 					  						ListFieldLable =  "ProcedureCurrentNameListLable",
 					  						ListLableDefaultText =  "Government Procedure Type",
-					  						ListLocalDefaultText =  "×©×� ×¡×•×’ ×ª×”×œ×™×š",
+					  						ListLocalDefaultText =  "שם סוג תהליך",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -3957,10 +3956,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "DeclarationNumber",
 					  						DefaultText =  "Declaration Number",
-					  						FullLocalDefaultText =  "×ž×¡×¤×¨ ×”×¦×”×¨×”",
+					  						FullLocalDefaultText =  "מספר הצהרה",
 					  						ListFieldLable =  "DeclarationNumberListLable",
 					  						ListLableDefaultText =  "Declaration Number",
-					  						ListLocalDefaultText =  "×ž×¡×¤×¨ ×”×¦×”×¨×”",
+					  						ListLocalDefaultText =  "מספר הצהרה",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -4078,10 +4077,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "RequestedCustomsDocId",
 					  						DefaultText =  "Requested Customs Doc Id",
-					  						FullLocalDefaultText =  "×ž×¡×ž×š × ×“×¨×©",
+					  						FullLocalDefaultText =  "מסמך נדרש",
 					  						ListFieldLable =  "RequestedCustomsDocIdListLable",
 					  						ListLableDefaultText =  "Requested Customs DocId",
-					  						ListLocalDefaultText =  "×ž×¡×ž×š × ×“×¨×©",
+					  						ListLocalDefaultText =  "מסמך נדרש",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -4140,10 +4139,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "IsClose",
 					  						DefaultText =  "Is Close",
-					  						FullLocalDefaultText =  "×”×¦×”×¨×” ×¡×’×•×¨×”",
+					  						FullLocalDefaultText =  "הצהרה סגורה",
 					  						ListFieldLable =  "IsCloseListLable",
 					  						ListLableDefaultText =  "Is Close",
-					  						ListLocalDefaultText =  "×”×¦×”×¨×” ×¡×’×•×¨×”",
+					  						ListLocalDefaultText =  "הצהרה סגורה",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -4202,10 +4201,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "PaymentDate_Date",
 					  						DefaultText =  "Payment Date",
-					  						FullLocalDefaultText =  "×ª×�×¨×™×š ×ª×©×œ×•×�",
+					  						FullLocalDefaultText =  "תאריך תשלום",
 					  						ListFieldLable =  "PaymentDate_DateListLable",
 					  						ListLableDefaultText =  "Payment Date",
-					  						ListLocalDefaultText =  "×ª×�×¨×™×š ×ª×©×œ×•×�",
+					  						ListLocalDefaultText =  "תאריך תשלום",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -4264,10 +4263,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "PaymentDate_Time",
 					  						DefaultText =  "Payment Time",
-					  						FullLocalDefaultText =  "×©×¢×ª ×ª×©×œ×•×�",
+					  						FullLocalDefaultText =  "שעת תשלום",
 					  						ListFieldLable =  "PaymentDate_TimeListLable",
 					  						ListLableDefaultText =  "Payment Time",
-					  						ListLocalDefaultText =  "×©×¢×ª ×ª×©×œ×•×�",
+					  						ListLocalDefaultText =  "שעת תשלום",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -4326,10 +4325,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "PhysicalCheck",
 					  						DefaultText =  "Physical Check",
-					  						FullLocalDefaultText =  "×‘×“×™×§×” ×¤×™×–×™×ª",
+					  						FullLocalDefaultText =  "בדיקה פיזית",
 					  						ListFieldLable =  "PhysicalCheckListLable",
 					  						ListLableDefaultText =  "Physical Check",
-					  						ListLocalDefaultText =  "×‘×“×™×§×” ×¤×™×–×™×ª",
+					  						ListLocalDefaultText =  "בדיקה פיזית",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -4451,10 +4450,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "PackageQuantity",
 					  						DefaultText =  "Package Quantity",
-					  						FullLocalDefaultText =  "×›×ž×•×ª ×�×¨×™×–×•×ª",
+					  						FullLocalDefaultText =  "כמות אריזות",
 					  						ListFieldLable =  "PackageQuantityListLable",
 					  						ListLableDefaultText =  "Package Quantity",
-					  						ListLocalDefaultText =  "×›×ž×•×ª ×�×¨×™×–×•×ª",
+					  						ListLocalDefaultText =  "כמות אריזות",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -4514,10 +4513,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ForwarderId",
 					  						DefaultText =  "Forwarder",
-					  						FullLocalDefaultText =  "×ž×©×œ×—",
+					  						FullLocalDefaultText =  "משלח",
 					  						ListFieldLable =  "ForwarderIdListLable",
 					  						ListLableDefaultText =  "Forwarder",
-					  						ListLocalDefaultText =  "×ž×©×œ×—",
+					  						ListLocalDefaultText =  "משלח",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -4576,10 +4575,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ForwarderName",
 					  						DefaultText =  "Forwarder Name",
-					  						FullLocalDefaultText =  "×©×� ×ž×©×œ×—",
+					  						FullLocalDefaultText =  "שם משלח",
 					  						ListFieldLable =  "ForwarderNameListLable",
 					  						ListLableDefaultText =  "Forwarder Name",
-					  						ListLocalDefaultText =  "×©×� ×ž×©×œ×—",
+					  						ListLocalDefaultText =  "שם משלח",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -4700,10 +4699,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "TeamName",
 					  						DefaultText =  "Team Name",
-					  						FullLocalDefaultText =  "×¦×•×•×ª",
+					  						FullLocalDefaultText =  "צוות",
 					  						ListFieldLable =  "TeamNameListLable",
 					  						ListLableDefaultText =  "Team",
-					  						ListLocalDefaultText =  "×¦×•×•×ª",
+					  						ListLocalDefaultText =  "צוות",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -4764,7 +4763,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DefaultText =  "Cancel Request Status",
 					  						ListFieldLable =  "CancelRequestStatusCodeListLable",
 					  						ListLableDefaultText =  "Cancel Request Status",
-					  						ListLocalDefaultText =  "×¡×˜×˜×•×¡ ×‘×™×˜×•×œ ×”×¦×”×¨×”",
+					  						ListLocalDefaultText =  "סטטוס ביטול הצהרה",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -4880,10 +4879,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "IsManualPayment",
 					  						DefaultText =  "Manual Payment",
-					  						FullLocalDefaultText =  "× ×“×¨×© ×ª×©×œ×•×�",
+					  						FullLocalDefaultText =  "נדרש תשלום",
 					  						ListFieldLable =  "IsManualPaymentListLable",
 					  						ListLableDefaultText =  "Manual Payment",
-					  						ListLocalDefaultText =  "× ×“×¨×© ×ª×©×œ×•×�",
+					  						ListLocalDefaultText =  "נדרש תשלום",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -4923,55 +4922,55 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
    
 
-			   TextCode DeclarationReferantDataTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DeclarationReferantData.Q.FilesInProcess", DefaultText = @"Files In Process",LocalDefaultText = "×ª×™×§×™×� ×‘×˜×™×¤×•×œ", ObjectTableId = DeclarationReferantDataObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   TextCode DeclarationReferantDataTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DeclarationReferantData.Q.FilesInProcess", DefaultText = @"Files In Process",LocalDefaultText = "תיקים בטיפול", ObjectTableId = DeclarationReferantDataObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
 			   Feature DeclarationReferantDataFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DeclarationReferantData.Q.FilesInProcess", ObjectTableId = DeclarationReferantDataObjectTable.Id, Tenant = 0, NameTextCodeCode = "DeclarationReferantDataFeatures.FilesInProcess", NameTextCodeDefaultText = "FilesInProcess", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,DeclarationReferantDataObjectTable, addedFeatures, addedTextCodes);
  
 
-			   TextCode DeclarationReferantDataTextCode_1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DeclarationReferantData.Q.TrackingCases", DefaultText = @"TrackingCases",LocalDefaultText = "×ª×™×§×™×� ×‘×ž×¢×§×‘", ObjectTableId = DeclarationReferantDataObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   TextCode DeclarationReferantDataTextCode_1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DeclarationReferantData.Q.TrackingCases", DefaultText = @"TrackingCases",LocalDefaultText = "תיקים במעקב", ObjectTableId = DeclarationReferantDataObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
 			   Feature DeclarationReferantDataFeature_1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DeclarationReferantData.Q.TrackingCases", ObjectTableId = DeclarationReferantDataObjectTable.Id, Tenant = 0, NameTextCodeCode = "DeclarationReferantDataFeatures.TrackingCases", NameTextCodeDefaultText = "TrackingCases", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,DeclarationReferantDataObjectTable, addedFeatures, addedTextCodes);
  
 
-			   TextCode DeclarationReferantDataTextCode_2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DeclarationReferantData.Q.FilesInOCR", DefaultText = @"Files In Ocr",LocalDefaultText = "×ª×™×§×™×� ×‘-OCR", ObjectTableId = DeclarationReferantDataObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   TextCode DeclarationReferantDataTextCode_2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DeclarationReferantData.Q.FilesInOCR", DefaultText = @"Files In Ocr",LocalDefaultText = "תיקים ב-OCR", ObjectTableId = DeclarationReferantDataObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
 			   Feature DeclarationReferantDataFeature_2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DeclarationReferantData.Q.FilesInOCR", ObjectTableId = DeclarationReferantDataObjectTable.Id, Tenant = 0, NameTextCodeCode = "DeclarationReferantDataFeatures.FilesInOCR", NameTextCodeDefaultText = "FilesInOCR", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,DeclarationReferantDataObjectTable, addedFeatures, addedTextCodes);
  
 
-			   TextCode DeclarationReferantDataTextCode_3 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DeclarationReferantData.Q.FilesInSivug", DefaultText = @"Files In Sivug",LocalDefaultText = "×ª×™×§×™×� ×‘×¡×™×•×•×’", ObjectTableId = DeclarationReferantDataObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   TextCode DeclarationReferantDataTextCode_3 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DeclarationReferantData.Q.FilesInSivug", DefaultText = @"Files In Sivug",LocalDefaultText = "תיקים בסיווג", ObjectTableId = DeclarationReferantDataObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
 			   Feature DeclarationReferantDataFeature_3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DeclarationReferantData.Q.FilesInSivug", ObjectTableId = DeclarationReferantDataObjectTable.Id, Tenant = 0, NameTextCodeCode = "DeclarationReferantDataFeatures.FilesInSivug", NameTextCodeDefaultText = "FilesInSivug", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,DeclarationReferantDataObjectTable, addedFeatures, addedTextCodes);
  
 
-			   TextCode DeclarationReferantDataTextCode_4 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DeclarationReferantData.Q.FilesInReview", DefaultText = @"Files In Review",LocalDefaultText = "×ª×™×§×™×� ×‘×‘×™×§×•×¨×ª", ObjectTableId = DeclarationReferantDataObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   TextCode DeclarationReferantDataTextCode_4 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DeclarationReferantData.Q.FilesInReview", DefaultText = @"Files In Review",LocalDefaultText = "תיקים בביקורת", ObjectTableId = DeclarationReferantDataObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
 			   Feature DeclarationReferantDataFeature_4 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DeclarationReferantData.Q.FilesInReview", ObjectTableId = DeclarationReferantDataObjectTable.Id, Tenant = 0, NameTextCodeCode = "DeclarationReferantDataFeatures.FilesInReview", NameTextCodeDefaultText = "FilesInReview", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,DeclarationReferantDataObjectTable, addedFeatures, addedTextCodes);
  
 
-			   TextCode DeclarationReferantDataTextCode_5 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DeclarationReferantData.Q.FilesInCreditControl", DefaultText = @"Files In Credit Control",LocalDefaultText = "×ª×™×§×™×� ×‘×‘×§×¨×ª ×�×©×¨×�×™", ObjectTableId = DeclarationReferantDataObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   TextCode DeclarationReferantDataTextCode_5 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DeclarationReferantData.Q.FilesInCreditControl", DefaultText = @"Files In Credit Control",LocalDefaultText = "תיקים בבקרת אשראי", ObjectTableId = DeclarationReferantDataObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
 			   Feature DeclarationReferantDataFeature_5 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DeclarationReferantData.Q.FilesInCreditControl", ObjectTableId = DeclarationReferantDataObjectTable.Id, Tenant = 0, NameTextCodeCode = "DeclarationReferantDataFeatures.FilesInCreditControl", NameTextCodeDefaultText = "FilesInCreditControl", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,DeclarationReferantDataObjectTable, addedFeatures, addedTextCodes);
  
 
-			   TextCode DeclarationReferantDataTextCode_6 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DeclarationReferantData.Q.FilesToPay", DefaultText = @"Files To Pay",LocalDefaultText = "×ª×™×§×™×� ×œ×ª×©×œ×•×�", ObjectTableId = DeclarationReferantDataObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   TextCode DeclarationReferantDataTextCode_6 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DeclarationReferantData.Q.FilesToPay", DefaultText = @"Files To Pay",LocalDefaultText = "תיקים לתשלום", ObjectTableId = DeclarationReferantDataObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
 			   Feature DeclarationReferantDataFeature_6 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DeclarationReferantData.Q.FilesToPay", ObjectTableId = DeclarationReferantDataObjectTable.Id, Tenant = 0, NameTextCodeCode = "DeclarationReferantDataFeatures.FilesToPay", NameTextCodeDefaultText = "FilesToPay", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,DeclarationReferantDataObjectTable, addedFeatures, addedTextCodes);
  
 
-			   TextCode DeclarationReferantDataTextCode_7 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DeclarationReferantData.Q.FilesAvailableFreeOfCharge", DefaultText = @"Files Available free of charge",LocalDefaultText = "×ª×™×§×™×� ×–×ž×™× ×™×� ×œ×œ×� ×ª×©×œ×•×�", ObjectTableId = DeclarationReferantDataObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   TextCode DeclarationReferantDataTextCode_7 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DeclarationReferantData.Q.FilesAvailableFreeOfCharge", DefaultText = @"Files Available free of charge",LocalDefaultText = "תיקים זמינים ללא תשלום", ObjectTableId = DeclarationReferantDataObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
 			   Feature DeclarationReferantDataFeature_7 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DeclarationReferantData.Q.FilesAvailableFreeOfCharge", ObjectTableId = DeclarationReferantDataObjectTable.Id, Tenant = 0, NameTextCodeCode = "DeclarationReferantDataFeatures.FilesAvailableFreeOfCharge", NameTextCodeDefaultText = "FilesAvailableFreeOfCharge", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,DeclarationReferantDataObjectTable, addedFeatures, addedTextCodes);
  
 
-			   TextCode DeclarationReferantDataTextCode_8 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DeclarationReferantData.Q.FilesWithoutRelease", DefaultText = @"Files Without Release",LocalDefaultText = "×ª×™×§×™×� ×©×”×•×’×©×• ×•×œ×� ×”×•×ª×¨×•", ObjectTableId = DeclarationReferantDataObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   TextCode DeclarationReferantDataTextCode_8 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DeclarationReferantData.Q.FilesWithoutRelease", DefaultText = @"Files Without Release",LocalDefaultText = "תיקים שהוגשו ולא הותרו", ObjectTableId = DeclarationReferantDataObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
 			   Feature DeclarationReferantDataFeature_8 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DeclarationReferantData.Q.FilesWithoutRelease", ObjectTableId = DeclarationReferantDataObjectTable.Id, Tenant = 0, NameTextCodeCode = "DeclarationReferantDataFeatures.FilesWithoutRelease", NameTextCodeDefaultText = "FilesWithoutRelease", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,DeclarationReferantDataObjectTable, addedFeatures, addedTextCodes);
  
 
-			   TextCode DeclarationReferantDataTextCode_9 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DeclarationReferantData.Q.FilesInAllInclusive", DefaultText = @"Files All Inclusive",LocalDefaultText = "×ª×™×§×™×� ×‘×›×•×œ×œ×ª ", ObjectTableId = DeclarationReferantDataObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   TextCode DeclarationReferantDataTextCode_9 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DeclarationReferantData.Q.FilesInAllInclusive", DefaultText = @"Files All Inclusive",LocalDefaultText = "תיקים בכוללת ", ObjectTableId = DeclarationReferantDataObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
 			   Feature DeclarationReferantDataFeature_9 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DeclarationReferantData.Q.FilesInAllInclusive", ObjectTableId = DeclarationReferantDataObjectTable.Id, Tenant = 0, NameTextCodeCode = "DeclarationReferantDataFeatures.FilesInAllInclusive", NameTextCodeDefaultText = "FilesInAllInclusive", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,DeclarationReferantDataObjectTable, addedFeatures, addedTextCodes);
  
 
-			   TextCode DeclarationReferantDataTextCode_10 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DeclarationReferantData.Q.FilesRejectedByController", DefaultText = @"Files Rejected By Controller",LocalDefaultText = "×ª×™×§×™×� ×©× ×“×—×• ×¢×™ ×ž×‘×§×¨", ObjectTableId = DeclarationReferantDataObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   TextCode DeclarationReferantDataTextCode_10 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DeclarationReferantData.Q.FilesRejectedByController", DefaultText = @"Files Rejected By Controller",LocalDefaultText = "תיקים שנדחו עי מבקר", ObjectTableId = DeclarationReferantDataObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
 			   Feature DeclarationReferantDataFeature_10 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DeclarationReferantData.Q.FilesRejectedByController", ObjectTableId = DeclarationReferantDataObjectTable.Id, Tenant = 0, NameTextCodeCode = "DeclarationReferantDataFeatures.FilesRejectedByController", NameTextCodeDefaultText = "FilesRejectedByController", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,DeclarationReferantDataObjectTable, addedFeatures, addedTextCodes);
  
 
-			   TextCode DeclarationReferantDataTextCode_11 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DeclarationReferantData.Q.FilesRejectedByClassification", DefaultText = @"Files Rejected By Classification",LocalDefaultText = "×ª×™×§×™×� ×©× ×“×—×• ×¢×™ ×ž×¡×•×•×’", ObjectTableId = DeclarationReferantDataObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   TextCode DeclarationReferantDataTextCode_11 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DeclarationReferantData.Q.FilesRejectedByClassification", DefaultText = @"Files Rejected By Classification",LocalDefaultText = "תיקים שנדחו עי מסווג", ObjectTableId = DeclarationReferantDataObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
 			   Feature DeclarationReferantDataFeature_11 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DeclarationReferantData.Q.FilesRejectedByClassification", ObjectTableId = DeclarationReferantDataObjectTable.Id, Tenant = 0, NameTextCodeCode = "DeclarationReferantDataFeatures.FilesRejectedByClassification", NameTextCodeDefaultText = "FilesRejectedByClassification", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,DeclarationReferantDataObjectTable, addedFeatures, addedTextCodes);
  
 
-			   TextCode DeclarationReferantDataTextCode_12 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DeclarationReferantData.Q.AllCases", DefaultText = @"AllCases",LocalDefaultText = "×›×œ ×”×ª×™×§×™×� ", ObjectTableId = DeclarationReferantDataObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   TextCode DeclarationReferantDataTextCode_12 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DeclarationReferantData.Q.AllCases", DefaultText = @"AllCases",LocalDefaultText = "כל התיקים ", ObjectTableId = DeclarationReferantDataObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
 			   Feature DeclarationReferantDataFeature_12 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DeclarationReferantData.Q.AllCases", ObjectTableId = DeclarationReferantDataObjectTable.Id, Tenant = 0, NameTextCodeCode = "DeclarationReferantDataFeatures.AllCases", NameTextCodeDefaultText = "AllCases", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,DeclarationReferantDataObjectTable, addedFeatures, addedTextCodes);
 
 	        //TextCodeRepository.SubmitChanges();
@@ -5763,33 +5762,33 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   ObjectTable DeclarationReferantDataObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.DeclarationReferantData" && d.Tenant == 0).FirstOrDefault(); 
 
- 		   TextCode DeclarationReferantDataTextCode_CustomsDeclarationReferantDataOFilesInProcess = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.DeclarationReferantData.O.FilesInProcess", DefaultText = "Files In Process",LocalDefaultText = @"×ª×™×§×™×� ×‘×˜×™×¤×•×œ", ObjectTableId = DeclarationReferantDataObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationReferantDataTextCode_CustomsDeclarationReferantDataOFilesInProcess = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.DeclarationReferantData.O.FilesInProcess", DefaultText = "Files In Process",LocalDefaultText = @"תיקים בטיפול", ObjectTableId = DeclarationReferantDataObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationReferantDataTextCode_CustomsDeclarationReferantDataOTrackingCases = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.DeclarationReferantData.O.TrackingCases", DefaultText = "TrackingCases",LocalDefaultText = @"×ª×™×§×™×� ×‘×ž×¢×§×‘", ObjectTableId = DeclarationReferantDataObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationReferantDataTextCode_CustomsDeclarationReferantDataOTrackingCases = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.DeclarationReferantData.O.TrackingCases", DefaultText = "TrackingCases",LocalDefaultText = @"תיקים במעקב", ObjectTableId = DeclarationReferantDataObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationReferantDataTextCode_CustomsDeclarationReferantDataOFilesInOCR = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.DeclarationReferantData.O.FilesInOCR", DefaultText = "FilesInOCR",LocalDefaultText = @"×ª×™×§×™×� ×‘-OCR", ObjectTableId = DeclarationReferantDataObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationReferantDataTextCode_CustomsDeclarationReferantDataOFilesInOCR = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.DeclarationReferantData.O.FilesInOCR", DefaultText = "FilesInOCR",LocalDefaultText = @"תיקים ב-OCR", ObjectTableId = DeclarationReferantDataObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationReferantDataTextCode_CustomsDeclarationReferantDataOFilesInSivug = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.DeclarationReferantData.O.FilesInSivug", DefaultText = "FilesInSivug",LocalDefaultText = @"×ª×™×§×™×� ×‘×¡×™×•×•×’", ObjectTableId = DeclarationReferantDataObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationReferantDataTextCode_CustomsDeclarationReferantDataOFilesInSivug = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.DeclarationReferantData.O.FilesInSivug", DefaultText = "FilesInSivug",LocalDefaultText = @"תיקים בסיווג", ObjectTableId = DeclarationReferantDataObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationReferantDataTextCode_CustomsDeclarationReferantDataOFilesInReview = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.DeclarationReferantData.O.FilesInReview", DefaultText = "FilesInReview",LocalDefaultText = @"×ª×™×§×™×� ×‘×‘×™×§×•×¨×ª", ObjectTableId = DeclarationReferantDataObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationReferantDataTextCode_CustomsDeclarationReferantDataOFilesInReview = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.DeclarationReferantData.O.FilesInReview", DefaultText = "FilesInReview",LocalDefaultText = @"תיקים בביקורת", ObjectTableId = DeclarationReferantDataObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationReferantDataTextCode_CustomsDeclarationReferantDataOFilesInCreditControl = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.DeclarationReferantData.O.FilesInCreditControl", DefaultText = "Files In Credit Control",LocalDefaultText = @" ×ª×™×§×™×� ×‘×‘×§×¨×ª ×�×©×¨×�×™", ObjectTableId = DeclarationReferantDataObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationReferantDataTextCode_CustomsDeclarationReferantDataOFilesInCreditControl = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.DeclarationReferantData.O.FilesInCreditControl", DefaultText = "Files In Credit Control",LocalDefaultText = @" תיקים בבקרת אשראי", ObjectTableId = DeclarationReferantDataObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationReferantDataTextCode_CustomsDeclarationReferantDataOFilesAvailableFreeOfCharge = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.DeclarationReferantData.O.FilesAvailableFreeOfCharge", DefaultText = "FilesAvailableFreeOfCharge",LocalDefaultText = @" ×ª×™×§×™×� ×–×ž×™× ×™×� ×œ×œ×� ×ª×©×œ×•×�", ObjectTableId = DeclarationReferantDataObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationReferantDataTextCode_CustomsDeclarationReferantDataOFilesAvailableFreeOfCharge = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.DeclarationReferantData.O.FilesAvailableFreeOfCharge", DefaultText = "FilesAvailableFreeOfCharge",LocalDefaultText = @" תיקים זמינים ללא תשלום", ObjectTableId = DeclarationReferantDataObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationReferantDataTextCode_CustomsDeclarationReferantDataOAllCases = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.DeclarationReferantData.O.AllCases", DefaultText = "AllCases",LocalDefaultText = @"×›×œ ×”×ª×™×§×™×�", ObjectTableId = DeclarationReferantDataObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationReferantDataTextCode_CustomsDeclarationReferantDataOAllCases = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.DeclarationReferantData.O.AllCases", DefaultText = "AllCases",LocalDefaultText = @"כל התיקים", ObjectTableId = DeclarationReferantDataObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationReferantDataTextCode_CustomsDeclarationReferantDataOFilesInAllInclusive = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.DeclarationReferantData.O.FilesInAllInclusive", DefaultText = "Files All Inclusive",LocalDefaultText = @"×ª×™×§×™×� ×‘×›×•×œ×œ×ª", ObjectTableId = DeclarationReferantDataObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationReferantDataTextCode_CustomsDeclarationReferantDataOFilesInAllInclusive = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.DeclarationReferantData.O.FilesInAllInclusive", DefaultText = "Files All Inclusive",LocalDefaultText = @"תיקים בכוללת", ObjectTableId = DeclarationReferantDataObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationReferantDataTextCode_CustomsDeclarationReferantDataOFilesRejectedByController = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.DeclarationReferantData.O.FilesRejectedByController", DefaultText = "Files Rejected By Controller",LocalDefaultText = "×ª×™×§×™×� ×©× ×“×—×• ×¢''×™ ×ž×‘×§×¨", ObjectTableId = DeclarationReferantDataObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationReferantDataTextCode_CustomsDeclarationReferantDataOFilesRejectedByController = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.DeclarationReferantData.O.FilesRejectedByController", DefaultText = "Files Rejected By Controller",LocalDefaultText = "תיקים שנדחו ע''י מבקר", ObjectTableId = DeclarationReferantDataObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationReferantDataTextCode_CustomsDeclarationReferantDataOFilesRejectedByClassification = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.DeclarationReferantData.O.FilesRejectedByClassification", DefaultText = "Files Rejected By Classification",LocalDefaultText = "×ª×™×§×™×� ×©× ×“×—×• ×¢''×™ ×ž×¡×•×•×’", ObjectTableId = DeclarationReferantDataObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationReferantDataTextCode_CustomsDeclarationReferantDataOFilesRejectedByClassification = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.DeclarationReferantData.O.FilesRejectedByClassification", DefaultText = "Files Rejected By Classification",LocalDefaultText = "תיקים שנדחו ע''י מסווג", ObjectTableId = DeclarationReferantDataObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationReferantDataTextCode_CustomsDeclarationReferantDataOFilesWithoutRelease = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.DeclarationReferantData.O.FilesWithoutRelease", DefaultText = "Files Without Release",LocalDefaultText = @" ×ª×™×§×™×� ×©×”×•×’×©×• ×•×œ×� ×”×•×ª×¨×•", ObjectTableId = DeclarationReferantDataObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationReferantDataTextCode_CustomsDeclarationReferantDataOFilesWithoutRelease = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.DeclarationReferantData.O.FilesWithoutRelease", DefaultText = "Files Without Release",LocalDefaultText = @" תיקים שהוגשו ולא הותרו", ObjectTableId = DeclarationReferantDataObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationReferantDataTextCode_CustomsDeclarationReferantDataOFilesToPay = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.DeclarationReferantData.O.FilesToPay", DefaultText = "Files To Pay",LocalDefaultText = @"×ª×™×§×™×� ×œ×ª×©×œ×•×�", ObjectTableId = DeclarationReferantDataObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationReferantDataTextCode_CustomsDeclarationReferantDataOFilesToPay = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.DeclarationReferantData.O.FilesToPay", DefaultText = "Files To Pay",LocalDefaultText = @"תיקים לתשלום", ObjectTableId = DeclarationReferantDataObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationReferantDataTextCode_CustomsDeclarationReferantDataNewButton = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.DeclarationReferantData.NewButton", DefaultText = "New Button",LocalDefaultText = @"×¤×ª×™×—×ª ×ª×™×§ ×—×“×©", ObjectTableId = DeclarationReferantDataObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationReferantDataTextCode_CustomsDeclarationReferantDataNewButton = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.DeclarationReferantData.NewButton", DefaultText = "New Button",LocalDefaultText = @"פתיחת תיק חדש", ObjectTableId = DeclarationReferantDataObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
