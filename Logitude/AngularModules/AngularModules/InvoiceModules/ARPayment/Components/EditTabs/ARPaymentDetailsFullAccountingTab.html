@@ -765,7 +765,7 @@
                                             <log-cell-template [IgnoreMods]="true">
                                                 <CheckBox [IsChecked]="item.IsChecked || item.IsReconciled || item.PaymentReconciledAmount != 0"
                                                           (Checked)="item.IsChecked = $event"
-                                                          [IsEnabled]="!item.IsReconciled && (item.PaymentReconciledAmount == 0) && !(IsGridReadOnly || IsDisplayOnly) && !isMultipleCheques">
+                                                          [IsEnabled]="!item.IsReconciled && (item.PaymentReconciledAmount == 0) && !(IsGridReadOnly || IsDisplayOnly) && !isMultipleCheques && !isMultipleBankTransfers">
                                                 </CheckBox>
                                             </log-cell-template>
                                         </ng-template>
