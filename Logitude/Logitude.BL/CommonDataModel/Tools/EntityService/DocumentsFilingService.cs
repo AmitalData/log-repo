@@ -936,7 +936,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             IQueueService queueservice = new DbQueueService();
             queueservice.InitializeQueue("QBODocumnetsUploaderQueue", documentFiling.Tenant);
             queueservice.Send(new Dictionary<string, string>() { { "EntityId", documentFiling.Id }, { "Tenant", documentFiling.Tenant.ToString() },
-                                                                 { "DocumentCode", documentFiling.Code.ToString() }, { "IsDocumentUploaded", true.ToString() },
+                                                                 { "DocumentCode", documentFiling.DocumentTypeCode.ToString() }, { "IsDocumentUploaded", true.ToString() },
                                                                  { "IsDocumentDeleted", false.ToString() } }, documentFiling.Tenant, null, null, null, null);
         }
 
