@@ -460,11 +460,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                 this.CreateTraceEvent("SCNL", entityPM.EventNote);
             }
 
-            if (!entityPoco.IsCancelled && entityPM.IsCancelled)
-            {
-                this.CreateTraceEvent("SCNL", entityPM.EventNote);
-            }
-
             this.TraceCargoReadyForPickup();
 
         }

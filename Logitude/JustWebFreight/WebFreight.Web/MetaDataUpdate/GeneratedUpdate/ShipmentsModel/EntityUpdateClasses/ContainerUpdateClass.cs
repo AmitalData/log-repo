@@ -79,9 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 {
    public class ContainerUpdateClass
    {  		
-
-		public const string HashString = "0377bbcdde3da5e764f134fbf15a59ed";
-
+		public const string HashString = "49003c4f956f95f43b17ce1f370a103e";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -93,7 +91,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			      				    DBTableName =  "Containers",
 			      				    ObjectTableSingular =  "Container",
 			      				    ObjectTablePlural =  "Containers",
-			      				    HasCustomFilter =  false,
+			      				    HasCustomFilter =  true,
 			      				    HasCustomFields =  true,
 			      				    HasHelper =  true,
 			      				    HasShortTitle =  false,
@@ -126,7 +124,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Shipment",
 			      				    NoTS =  false,
-			      				    HasMenuButtons =  false,
+			      				    HasMenuButtons =  true,
 			      				    AllowedForComputingPartners =  false,
 			      				    CustomFieldsCount =  0,
 			      				    DisableSearchBox =  false,
@@ -12499,6 +12497,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "IsAutomaticUpdates",
 					  						ListPropertyPath =  "IsAutomaticUpdates",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -12519,6 +12518,123 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DefaultText =  "Automatic Updates",
 					  						ListFieldLable =  "IsAutomaticUpdatesListLable",
 					  						ListLableDefaultText =  "Automatic Updates",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "IsClosed",
+					  						ObjectTableName =  "Container",
+					  						FieldsDataType =  "Boolean",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  true,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  true,
+					  						Operator =  "Equals",
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "IsClosed",
+					  						ListPropertyPath =  "IsClosed",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Container",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "IsClosed",
+					  						DefaultText =  "Is Closed",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "ClosedDate",
+					  						ObjectTableName =  "Container",
+					  						FieldsDataType =  "DateTime",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "ClosedDate",
+					  						ListPropertyPath =  "ClosedDate",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Container",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "ClosedDate",
+					  						DefaultText =  "Closed Date",
+					  						ListFieldLable =  "ClosedDateListLable",
+					  						ListLableDefaultText =  "Closed Date",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -12560,6 +12676,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 
 			   TextCode ContainerTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Container.Q.AllContainers", DefaultText = @"All Containers",LocalDefaultText = null, ObjectTableId = ContainerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
 			   Feature ContainerFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Container.Q.AllContainers", ObjectTableId = ContainerObjectTable.Id, Tenant = 0, NameTextCodeCode = "ContainerFeatures.AllContainers", NameTextCodeDefaultText = "All Containers", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,ContainerObjectTable, addedFeatures, addedTextCodes);
+ 
+
+			   TextCode ContainerTextCode_1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Container.Q.ClosedContainers", DefaultText = @"Closed Containers",LocalDefaultText = null, ObjectTableId = ContainerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature ContainerFeature_1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Container.Q.ClosedContainers", ObjectTableId = ContainerObjectTable.Id, Tenant = 0, NameTextCodeCode = "ContainerFeatures.ClosedContainers", NameTextCodeDefaultText = "Closed Containers", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,ContainerObjectTable, addedFeatures, addedTextCodes);
 
 	        //TextCodeRepository.SubmitChanges();
 	        //FeaturesRepository.SubmitChanges();    
@@ -12584,6 +12704,23 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			 QueryColumn AllContainersQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllContainersQuery.Id,QueryCode = AllContainersQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Container.MainCarriageATA" , ColumnWidth = 100 }, addedQueryColumns);
 
 			 QueryColumn AllContainersQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllContainersQuery.Id,QueryCode = AllContainersQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "Container.MainCarriageATD" , ColumnWidth = 100 }, addedQueryColumns);
+  
+	      
+
+			  Query ClosedContainersQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ContainerTextCode_1.Id, NameTextCodeCode = ContainerTextCode_1.Code, ObjectTableName = "Container", Code = "Closed Containers",  QueryGroupCode = "38cb", IndexOrder = 1, Tenant = 0, ObjectTableId = ContainerObjectTable.Id, QuerySection = "Container", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ContainerFeature_1.Id,FeatureUniqeCode= ContainerFeature_1.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
+	
+			 QueryColumn ClosedContainersQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedContainersQuery.Id,QueryCode = ClosedContainersQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Container.ContainerNumber" , ColumnWidth = 120 }, addedQueryColumns);
+
+			 QueryColumn ClosedContainersQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedContainersQuery.Id,QueryCode = ClosedContainersQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Container.CarrierName" , ColumnWidth = 120 }, addedQueryColumns);
+
+			 QueryColumn ClosedContainersQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedContainersQuery.Id,QueryCode = ClosedContainersQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Container.MainCarriageCarrierNumber" , ColumnWidth = 120 }, addedQueryColumns);
+
+			 QueryColumn ClosedContainersQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedContainersQuery.Id,QueryCode = ClosedContainersQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Container.Master" , ColumnWidth = 120 }, addedQueryColumns);
+
+			 QueryColumn ClosedContainersQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedContainersQuery.Id,QueryCode = ClosedContainersQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Container.VesselName" , ColumnWidth = 120 }, addedQueryColumns);
+
+             AdvancedQueryFilter ClosedContainersQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Container.IsClosed", PredefinedValue = "True",PredefinedValue2 = null, QueryId = ClosedContainersQuery.Id,QueryCode = ClosedContainersQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);
@@ -13160,10 +13297,121 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
             }, EventTypeRepository, tenantEventTypes);
 
 
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code =  "CODC",
+                EnglishName =  "Closed",
+                LocalName =  "Closed",
+                IsManualEntry =  false,
+                ShortView =  true,
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
+                ObjectTableId = ContainerObjectTable.Id,
+				 
+            }, EventTypeRepository, tenantEventTypes);
+
+
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code =  "ROCO",
+                EnglishName =  "Re-open",
+                LocalName =  "Re-open",
+                IsManualEntry =  false,
+                ShortView =  true,
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
+                ObjectTableId = ContainerObjectTable.Id,
+				 
+            }, EventTypeRepository, tenantEventTypes);
+
+
 	    }
 	
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
 	    {  
+		   //FeatureRepository featureRepository = new FeatureRepository(0); 
+		   //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList(); 
+		   ObjectTable ContainerObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Container" && d.Tenant == 0).FirstOrDefault(); 			   Feature ContainerFeature_MB00 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CloseContainer", ObjectTableId = ContainerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Container.Features.Close", NameTextCodeDefaultText = "Close", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,ContainerObjectTable);
+             			   Feature ContainerFeature_MB01 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ReopenContainer", ObjectTableId = ContainerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Container.Features.Re-open", NameTextCodeDefaultText = "Re-open", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,ContainerObjectTable);
+              
+
+		   TextCodeRepository.SubmitChanges();
+		   FeaturesRepository.SubmitChanges();
+		   MenuButtonGroup ContainerMenuButtonGroup = AddMenuButtonGroupAndMenuButtons.AddMenuButtonGroup(new MenuButtonGroupDetails()
+				{
+					MenuButtonGroupType = "ContainerEdit",
+					Name = "ContainerEditButtonsGroup",
+					ObjectTableId = ContainerObjectTable.Id,
+					Tenant = 0
+				}, menuButtonGroupRepository, tenantMenuButtonGroups);        
+   
+			   MenuButton ContainerMenuButton0 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
+					{
+						EventCode = "Actions",
+						Index = 0, 
+						IsActive = false,
+						LabelTextCodeCode = "Container.B.More",
+						LabelTextCodeDefaultText = "More",
+						Tenant = 0,
+						MenuButtonGroupId = ContainerMenuButtonGroup.Id,
+						ObjectTableId = ContainerObjectTable.Id,
+						MenuButtonType = "dropdownbutton",
+						FeatureId = null,
+						Style = null,
+						LocalDefaultText = null,
+						FeatureUniqeCode = null,
+						HtmlComponentPath = null,
+						Width = 0,
+					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
+
+			   MenuButton ContainerMenuButton00 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
+					{
+						EventCode = "CloseContainer",
+						Index = 0, 
+						IsActive = true,
+						LabelTextCodeCode = "Container.B.Close",
+						LabelTextCodeDefaultText = "Close",
+						Tenant = 0,
+						MenuButtonGroupId = ContainerMenuButtonGroup.Id,
+						ParentMenuButtonId = ContainerMenuButton0.Id,
+						ObjectTableId = ContainerObjectTable.Id,
+						MenuButtonType = "menuitem",
+						FeatureId=  ContainerFeature_MB00.Id,
+						Style = null,
+						LocalDefaultText = null,
+                        HtmlComponentPath=null,
+                        Width=0,
+						FeatureUniqeCode=  ContainerFeature_MB00.FeatureUniqeCode,
+					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
+	   
+			   MenuButton ContainerMenuButton01 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
+					{
+						EventCode = "ReopenContainer",
+						Index = 1, 
+						IsActive = true,
+						LabelTextCodeCode = "Container.B.Re-open",
+						LabelTextCodeDefaultText = "Re-open",
+						Tenant = 0,
+						MenuButtonGroupId = ContainerMenuButtonGroup.Id,
+						ParentMenuButtonId = ContainerMenuButton0.Id,
+						ObjectTableId = ContainerObjectTable.Id,
+						MenuButtonType = "menuitem",
+						FeatureId=  ContainerFeature_MB01.Id,
+						Style = null,
+						LocalDefaultText = null,
+                        HtmlComponentPath=null,
+                        Width=0,
+						FeatureUniqeCode=  ContainerFeature_MB01.FeatureUniqeCode,
+					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
+	   
 	    }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)

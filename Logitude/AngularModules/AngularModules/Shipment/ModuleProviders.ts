@@ -35,7 +35,7 @@ import { ShipmentSubTypeListService } from './Services/StandardLists/ShipmentSub
 import { ShipmentSubTypePMService } from './Services/StandardPMs/ShipmentSubTypePMService';
 import { ContainerListService } from './Services/StandardLists/ContainerListService';
 import { ContainerPMService } from './Services/StandardPMs/ContainerPMService';
-
+import { ContainerMenuButtonsHandler } from './Components/MenuButtons/ContainerMenuButtonsHandler';
 //import { ShipmentTabsService } from './MetaDataServices/TabsServices/ShipmentTabsService';
 //import { ShipmentHeaderScreenService } from './MetaDataServices/HeaderScreenServices/ShipmentHeaderScreenService';
 //import { ShipmentMenuButtonService } from './MetaDataServices/MenuButtonServices/ShipmentMenuButtonService';
@@ -90,6 +90,7 @@ export class ModuleProviders {
             // Handler
             case "MessagingStockMenuButtonsHandler": { myResult = new MessagingStockMenuButtonsHandler(); break; }
             case "ShipmentMenuButtonsHandler": { myResult = new ShipmentMenuButtonsHandler(); break; }
+            case "ContainerMenuButtonsHandler": { myResult = new ContainerMenuButtonsHandler(); break; }
             //case "ShipmentTabsService": { myResult = new ShipmentTabsService(); break; }
             //case "ShipmentHeaderScreenService": { myResult = new ShipmentHeaderScreenService(); break; }
             //case "ShipmentMenuButtonService": { myResult = new ShipmentMenuButtonService(); break; }

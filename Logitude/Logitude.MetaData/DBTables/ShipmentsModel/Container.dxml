@@ -1302,6 +1302,18 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="IsClosed"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ClosedDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="CreatedByUserId"
     ReferencedTable="Users"

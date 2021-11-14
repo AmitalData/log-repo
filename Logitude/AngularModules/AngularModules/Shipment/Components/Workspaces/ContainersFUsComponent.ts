@@ -63,7 +63,7 @@ export class ContainersFUsComponent implements OnInit {
     private SetContainersQueriesVisibility() {
         this.IsContainersToggleFeatureUp = false;
         var isOceanInsightsContainersFeatureToggleUp: FeatureToggleList = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "OIC")[0];
-        if (isOceanInsightsContainersFeatureToggleUp && this.IsQueryVisible_AllContainers) {
+        if (isOceanInsightsContainersFeatureToggleUp && (this.IsQueryVisible_AllContainers || this.IsQueryVisible_ClosedContainers)) {
             this.IsContainersToggleFeatureUp = true;
         }
     }
@@ -73,12 +73,14 @@ export class ContainersFUsComponent implements OnInit {
     public IsQueryVisible_DeliveredNotReturned: boolean = false;
     public IsQueryVisible_MyViewsGroup: boolean = false;
     public IsQueryVisible_AllContainers: boolean = false;
+    public IsQueryVisible_ClosedContainers: boolean = false;
     private SetQueriesVisibility() {
         this.IsQueryVisible_InTransit = FeatureLocator.HasFeaturePermession("ContainerFollowUp", "InTransit") ? true : false;
         this.IsQueryVisible_ArrivedNotDelivered = FeatureLocator.HasFeaturePermession("ContainerFollowUp", "ArrivedNotDelivered") ? true : false;
         this.IsQueryVisible_DeliveredNotReturned = FeatureLocator.HasFeaturePermession("ContainerFollowUp", "DeliveredNotReturned") ? true : false;
         this.IsQueryVisible_MyViewsGroup = FeatureLocator.HasFeaturePermession("General", "BUILDQUERIES") ? true : false;
         this.IsQueryVisible_AllContainers = FeatureLocator.HasFeaturePermession("Container", "Container.Q.AllContainers") ? true : false;
+        this.IsQueryVisible_ClosedContainers = FeatureLocator.HasFeaturePermession("Container", "Container.Q.ClosedContainers") ? true : false;
     }
 
     public InTransit: string;
@@ -123,6 +125,12 @@ export class ContainersFUsComponent implements OnInit {
                     objectTableName = "Container";
                     break;
                 }
+                case "Closed Containers":
+                    {
+                        ServiceLocator.SendTotangoUserActivity("Container", "Closed Containers");
+                        objectTableName = "Container";
+                        break;
+                    }
             }
 
 
