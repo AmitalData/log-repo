@@ -1331,8 +1331,6 @@ namespace WebFreight.Web.Helpers.Analyzers
             containerUpdatedFields.EstimatedOnCarriageDeparture = ComputeEstimatedOnCarriageDeparture();
             containerUpdatedFields.ActualOnCarriageDeparture = this.ComputeActualOnCarriageDeparture();
             containerUpdatedFields.EmptyReturnLocation = this.GetTranslatedPortCode(empty_return_loc_locode);
-            containerUpdatedFields.EstimatedLIFDeparture = ComputeEstimatedLIFDeparture();
-            containerUpdatedFields.ActualLIFDeparture = this.ComputeActualLIFDeparture();            
             containerUpdatedFields.EstimatedEmptyReturn = this.ComputeEstimatedEmptyReturn();
             containerUpdatedFields.ActualEmptyReturn = this.ComputeActualEmptyReturn();            
             containerUpdatedFields.CustomsReleaseDate = this.ComputeCustomsReleaseDate();            
