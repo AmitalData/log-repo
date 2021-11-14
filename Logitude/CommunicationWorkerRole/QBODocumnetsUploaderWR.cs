@@ -106,6 +106,7 @@ namespace CommunicationWorkerRole
             wrParmeters.APInvoiceRepository = new APInvoiceRepository(wrParmeters.Tenant);
             wrParmeters.Storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
             wrParmeters.DocumentsFilingRepository = new DocumentsFilingRepository(wrParmeters.Tenant);
+            wrParmeters.DocumentsFilingQuery = new DocumentsFilingQuery(wrParmeters.Tenant);
         }
 
         private void HandelAPInvoiceAPDNCNDocumnet()
@@ -114,7 +115,7 @@ namespace CommunicationWorkerRole
             {
                 return;
             }
-            DocumentsFilingPM documentsFilingPM = GetDocumentsFilingPM(wrParmeters.DocumentsFilingId, wrParmeters.Tenant);
+            DocumentsFilingPM documentsFilingPM = GetDocumentsFilingPM(wrParmeters.DocumentsFilingId);
             if (documentsFilingPM == null)
             {
                 return;
@@ -130,15 +131,14 @@ namespace CommunicationWorkerRole
             }
         }
 
-        private DocumentsFilingPM GetDocumentsFilingPM(string documentsFilingId, int tenant)
+        private DocumentsFilingPM GetDocumentsFilingPM(string documentsFilingId)
         {
             if (string.IsNullOrEmpty(documentsFilingId))
             {
                 return null;
             }
 
-            DocumentsFilingQuery documentsFilingQuery = new DocumentsFilingQuery(tenant);
-            return documentsFilingQuery?.GetSinglePM(documentsFilingId, tenant);
+            return wrParmeters.DocumentsFilingQuery?.GetSinglePM(documentsFilingId, wrParmeters.Tenant);
         }
 
         private void HandelUploadingDocument(DocumentsFilingPM documentFiling)
@@ -360,7 +360,7 @@ namespace CommunicationWorkerRole
 
     public class QBOAttachmentsUploaderParmeters {
 
-        public DbQueueService QueueService;
+        public DbQueueService QueueService = null;
         public int Tenant;
         public string DocumentsFilingId = "";
         public bool IsDocumentUploaded = false;
@@ -368,14 +368,15 @@ namespace CommunicationWorkerRole
         public string DocumentCode = "";
         public string ObjectTableName = "APInvoice";
         public string QueueName = "QBODocumnetsUploaderQueue";
-        public IWebFreightContext ObjectContext;
-        public ObjectTable ObjectTable;
-        public APInvoice APInvoice;
-        public APInvoiceRepository APInvoiceRepository;
-        public ICommonDataContext CommonContext;
-        public ObjectTableRepository ObjectTableRepository;
-        public IBlobService Storageservice;
-        public DocumentsFilingRepository DocumentsFilingRepository;
+        public IWebFreightContext ObjectContext = null;
+        public ObjectTable ObjectTable = null;
+        public APInvoice APInvoice = null;
+        public APInvoiceRepository APInvoiceRepository = null;
+        public ICommonDataContext CommonContext = null;
+        public ObjectTableRepository ObjectTableRepository = null;
+        public IBlobService Storageservice = null;
+        public DocumentsFilingRepository DocumentsFilingRepository = null;
+        public DocumentsFilingQuery DocumentsFilingQuery = null;
     }
 
 }
