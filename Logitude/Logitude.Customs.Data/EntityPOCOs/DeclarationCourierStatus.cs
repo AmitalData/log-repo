@@ -85,6 +85,11 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string DistributionArea { get; set; }
         [Column("CrateNumber")]
 	    public string CrateNumber { get; set; }
+        [ForeignKey("Card")]
+        [Column("ShopId")]
+	    public string ShopId { get; set; }
+	      
+        public virtual Card Card { get; set; }
     }
 }
 	 
