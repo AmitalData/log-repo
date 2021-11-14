@@ -1,14 +1,10 @@
 import * as Actions from "../../actions/Actions"
 import { ShipmentSelectors } from "../../selectors/Selectors"
 import { Given, When, Then } from "cypress-cucumber-preprocessor/steps";
-import { PayableDetails } from "cypress/models/PayableDetails"
 import * as BaseAssertion from "../../../../Base/cypress/actions/Assertion"
 import { ShipmentDetails } from "cypress/models/ShipmentDetails";
-import { ReceivableDetails } from "cypress/models/ReceivableDetails"
-import { PackagesDetails } from "cypress/models/PackagesDetails";
 import { RequestAliases } from "../../../../Base/cypress/constants/RequestAliases";
 import * as Assists from "../../../../Base/cypress/assists/Assists";
-import { BaseSelectors } from "../../../../Base/cypress/selectors/BaseSelectors";
 
 //#region variables
 let ShipmentData: ShipmentDetails;
@@ -40,6 +36,7 @@ Given("add a warehouse with {string} as a terminal", (warehouseLegTerminal) => {
   Actions.AddWarehouseLegPickups(warehouseLegTerminal)
 
 });
+
 Given("the user add new pickup", () => {
   Actions.FillPickupRouting()
 });
@@ -51,7 +48,7 @@ Given("add delivery with {string} as a partner routing", (partner) => {
 //#endregio
 
 //edit on pickup window 
-Given("the user edit pick window",()=>{
+Given("the user edit pickup window",()=>{
 cy.Navigate(ShipmentSelectors.EditPickUp,true)
 })
 
@@ -60,13 +57,13 @@ cy.FillDate(ShipmentSelectors.PickUpDeliveryETDDate,expectedDeparture)
 cy.FillLogTextBox(ShipmentSelectors.PickUpDeliverynote,noteExpetedPickUp,false)
 })
 
-Given("add Actual Departure with {string} as a value and Notes {string} ",(actualDeparture,noteactualDeparture)=>{
-  cy.FillLogTextBox(ShipmentSelectors.PickUpDeliveryATDDate,actualDeparture,false)
+Given("add Actual Departure with {string} as a value and Notes {string}",(actualDeparture,noteactualDeparture)=>{
+  cy.FillDate(ShipmentSelectors.PickUpDeliveryATDDate,actualDeparture)
   cy.FillLogTextBox(ShipmentSelectors.PickUpDeliverynote,noteactualDeparture,false)
 }) 
 
 Given("add Actual Arrival with {string} as a value and Notes {string}",(actualArrival,noteactualArrival)=>{
-    cy.FillLogTextBox(ShipmentSelectors.PickUpDeliveryATADate,actualArrival,false)
+    cy.FillDate(ShipmentSelectors.PickUpDeliveryATADate,actualArrival)
     cy.FillLogTextBox(ShipmentSelectors.PickUpDeliverynote,noteactualArrival,false)
 }) 
 
@@ -82,7 +79,7 @@ Given("add Actual Entry with {string} as a value",(actualEntry)=>{
 })
 
 Given("add Actual Release with {string} as a value",(actualRelease)=>{
-  cy.FillLogTextBox(ShipmentSelectors.WarehouseLegExpectedReleaseDate,actualRelease,false)
+  cy.FillLogTextBox(ShipmentSelectors.WarehouseLegActualReleaseDate,actualRelease,false)
 })
 
 //#endregio
@@ -94,12 +91,13 @@ cy.Navigate(ShipmentSelectors.EditRoutingMainCarriage,true)
 })
 
 Given("add ATD with {string} as a value",(aTD)=>{
-cy.FillLogTextBox(ShipmentSelectors.MainCarriageATDDate,aTD,false)
+cy.FillDate(ShipmentSelectors.MainCarriageATDDate,aTD)
 })
 
 Given("add ATA with {string} as a value",(aTA)=>{
-  cy.FillLogTextBox(ShipmentSelectors.MainCarriageATADate,aTA,false)
+  cy.FillDate(ShipmentSelectors.MainCarriageATADate,aTA)
 })
+
 //#endregio
 
 //edit on Delivary window 
@@ -108,7 +106,19 @@ Given("the user edit Delivary window",()=>{
 })
   
 When("save pickup",(()=>{
-  Actions.SavePickUp()
+  Actions.SavePickUpDlivery()
+}))
+
+When("save Warehouse",(()=>{
+  Actions.SaveWaerehouse()
+}))  
+
+When("save main carriage",(()=>{
+  Actions.SaveMainCarriage()
+}))   
+
+When("save Delivary",(()=>{
+  Actions.SavePickUpDlivery()
 }))
 
 When("create shipment", () => {
@@ -128,6 +138,7 @@ Then("the status value should be {string}", (statusValue) => {
 When("create shipment", () => {
   Actions.CreateShipment(ShipmentData.ShipmentLevel);
 });
+
 When("update shipment", () => {
   Actions.UpdateShipment(ShipmentSelectors.ShipmentSaveButton)
 });

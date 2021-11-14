@@ -238,7 +238,7 @@ export class BaseSelectors extends RegexSelectors {
     public static readonly WarehouseStorageFreeDays = "#Warehouse_StorageFreeDays"
     public static readonly WarehouseStorageDefaults = "Storage Defaults"
     public static readonly WarehouseSaveCloseBtn = "#Warehouse-SaveClose"
-
+    public static readonly WarehouseOKBtn_Number = '[id^=WarehouseOKBtn]'
     public static readonly RightBorderRadius = ".RightBorderRadius:last";
     public static readonly TabSummaryValue = ".LogitudeTabSummary:last .TabSummaryValue";
     //#region  colors
