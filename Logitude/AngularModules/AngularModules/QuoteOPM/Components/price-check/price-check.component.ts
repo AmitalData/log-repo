@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormArray, FormControl } from '@angular/forms';
 import { ChargesTypeList } from 'Common/EntityLists/ChargesTypeList';
 import { ConfirmationService } from 'primeng/api';
 import { DynamicDialogConfig } from 'primeng/dynamicdialog';
@@ -11,6 +12,7 @@ import { PriceChekRootResponse, Offer } from './price-check.service';
   styleUrls: ['./price-check.component.scss']
 })
 export class PriceCheckComponent implements OnInit {
+  checkBoxs: FormArray = new FormArray([])
   selectedFilter: string = ''
   offers: Offer[] = [];
   offersFilterd: Offer[] = [];
@@ -42,31 +44,35 @@ export class PriceCheckComponent implements OnInit {
   private initData() {
     this.offers = (this.config.data as PriceChekRootResponse).PriceChekResponse.Offers.Offer;
     this.offersFilterd = this.offers;
-    console.log(this.config.data)
-    console.log(this.offers)
+    this.updateCheckBoxFormArray();
+    // console.log(this.config.data)
+    // console.log(this.offers)
+  }
+
+  private updateCheckBoxFormArray() {
+    this.checkBoxs = new FormArray(Array.from({ length: this.offersFilterd.length }, (v, i) => new FormControl(false)))
   }
 
   private async initPricesDetails() {
     this.cahargesTypes = await this.priceCheckDataS.getCahargesType()
-    console.log(this.cahargesTypes)
-
   }
 
   setFilter(filterType: string) {
     this.selectedFilter = filterType;
-    console.log(filterType)
 
     this.offersFilterd = this.offers.filter((offer: Offer) => offer.Result.Summary[filterType] === 'True')
+    this.updateCheckBoxFormArray();
   }
 
   sendData() {
-    this.confirmationService.confirm({
-      message: 'No Offer has been Selected, Do you want to Continue?',
-      header: 'Confirmation',
-      icon: 'pi pi-exclamation-triangle',
-      accept: () => {
-        console.log('accept')
-      },
-    });
+    if ((this.checkBoxs.value as boolean[]).every(x => !x))
+      this.confirmationService.confirm({
+        message: 'No Offer has been Selected, Do you want to Continue?',
+        header: 'Confirmation',
+        icon: 'pi pi-exclamation-triangle',
+        accept: () => {
+          console.log('accept')
+        },
+      });
   }
 }

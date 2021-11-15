@@ -14,6 +14,7 @@ import { DraggableModule } from 'Infrastructure/Directives/draggable/draggable.m
 import { Xml2jsonService } from 'Infrastructure/Services/xml2json/xml2json.service';
 import { PriceCheckDataService } from './price-check-data/price-check-data.service';
 import { ChargesTypeListService } from 'Common/Services/StandardLists/ChargesTypeListService';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PriceCheckDetailsPipe } from './price-check-details/price-check-details.pipe';
 
 @NgModule({
@@ -33,6 +34,8 @@ import { PriceCheckDetailsPipe } from './price-check-details/price-check-details
   ],
   imports: [
     CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
     DraggableModule,
     AccordionModule,
     TagModule,

@@ -1,3 +1,4 @@
+import { StringMap } from '@angular/compiler/src/compiler_facade_interface';
 import { Injectable } from '@angular/core';
 import { property } from 'cypress/types/lodash';
 import { Xml2jsonService } from 'Infrastructure/Services/xml2json/xml2json.service';
@@ -20,8 +21,8 @@ export class PriceCheckService {
 
   async open(quote: QuoteOPPM): Promise<DynamicDialogRef> {
     const config: DynamicDialogConfig = {}
-    config.width = '800px';
-    config.height = '600px';
+    config.width = '1440px';
+    config.height = '1230px';
     config.showHeader = false;
     config.styleClass = 'price-check';
     config.data = await this.getPrices(quote);
@@ -89,36 +90,52 @@ export class PriceCheckService {
     })
   }
 
+  private calculateProducteCode(direction: string, transport: string) {
+    if (direction === 'E') {
+      if (transport === 'A')
+        return 'AE'
+      else if (transport === 'O')
+        return 'OE'
+    } else if (direction === 'I') {
+      if (transport === 'A')
+        return 'AI'
+      else if (transport === 'O')
+        return 'OI'
+    }
+  }
+
   private createRequestXml(quote: QuoteOPPM): string {
     let xml: string = '';
 
     quote.QuoteProperties.forEach((property: QuoteOPPropertiesPM, i: number) => {
       xml +=
         `
-    <QuoteProperties>
-      <Order>${i}</Order>
-      <Client></Client>
-      <From>${property.FromPortId}</From>
-      <To>${property.ToPortId}</To>
-      <CarrierCode>${property.MainCarriageCarrierId}LH</CarrierCode>
-      <ProductCode>0000</ProductCode>
-      <CostTariffUseCodes>0000CR,CRE,AG</CostTariffUseCodes>
-      <SaleTariffUseCodes>0000EX,EXD,AG</SaleTariffUseCodes>
-      <StartDate>${quote.StartDate.toLocaleDateString()}</StartDate>
-      <GrossWeightAmount>${quote.GrossWeight}</GrossWeightAmount>
-      <GrossWeightUOM>${quote.GrossWeightUnitCode}</GrossWeightUOM>
-      <VolumeAmount>${quote.Volume}</VolumeAmount>
-      <VolumeUOM>${quote.VolumeUnitCode}</VolumeUOM>
-      <ChargeableWeightAmount>0000100</ChargeableWeightAmount>
-      <ChargeableWeightUOM>${quote.ChargeableWeightUnitCode}</ChargeableWeightUOM>
-      <QuoteType>${quote.QuoteTypeCode}SpotRate</QuoteType>
-      <Incoterms>${property.IncotermId}</Incoterms>
-      <Currency>000000USD</Currency>
-      <SpecialService>${property.SpecialServiceID}</SpecialService>
-      <MaxOffers>3</MaxOffers>
-      <Cheapest>True</Cheapest>
-      <Fastest>True</Fastest>
-    </QuoteProperties>
+      <PriceChekRequest>
+        <QuoteProperties>
+          <Order>???</Order>
+          <Client>${quote.CustomerId}</Client>
+          <From>${property.FromPortId}</From>
+          <To>${property.ToPortId}</To>
+          <CarrierCode>${property.MainCarriageCarrierId}LH</CarrierCode>
+          <ProductCode>${this.calculateProducteCode(quote.DirectionId, quote.TransportModeId)}</ProductCode>
+          <CostTariffUseCodes>0000CR,CRE,AG</CostTariffUseCodes>
+          <SaleTariffUseCodes>0000EX,EXD,AG</SaleTariffUseCodes>
+          <StartDate>${quote.StartDate.toLocaleDateString()}</StartDate>
+          <GrossWeightAmount>${quote.GrossWeight}</GrossWeightAmount>
+          <GrossWeightUOM>${quote.GrossWeightUnitCode}</GrossWeightUOM>
+          <VolumeAmount>${quote.Volume}</VolumeAmount>
+          <VolumeUOM>${quote.VolumeUnitCode}</VolumeUOM>
+          <ChargeableWeightAmount>$${quote.ChargeableWeight}</ChargeableWeightAmount>
+          <ChargeableWeightUOM>${quote.ChargeableWeightUnitCode}</ChargeableWeightUOM>
+          <QuoteType>${quote.QuoteTypeCode}SpotRate</QuoteType>
+          <Incoterms>${property.IncotermId}</Incoterms>
+          <Currency>${quote.SaleCurrencyId}</Currency>
+          <SpecialService>${property.SpecialServiceID}</SpecialService>
+          <MaxOffers>3</MaxOffers>
+          <Cheapest>True</Cheapest>
+          <Fastest>True</Fastest>
+        </QuoteProperties>
+      </PriceChekRequest>
     `
     })
     return xml;
@@ -130,9 +147,9 @@ export class PriceCheckService {
       const haveMuchResult: boolean = !!(<any>offer.Result).length;
       const offers: Offer[] = [];
       if (haveMuchResult) {
-        const results:Result[] = offer.Result as any;
-        results.forEach(result=> {
-          const copyOffer:Offer = JSON.parse(JSON.stringify(offer));
+        const results: Result[] = offer.Result as any;
+        results.forEach(result => {
+          const copyOffer: Offer = JSON.parse(JSON.stringify(offer));
           copyOffer.Result = result
           offers.push(copyOffer)
         })
