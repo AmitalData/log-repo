@@ -1,0 +1,3 @@
+Warning: Missing Index In DXML File Report.dxml, The Found Index On DB Is IX_FeatureId, The Index Should Added To The DXML File
+Warning: Missing Index In DXML File VatType.dxml, The Found Index On DB Is IX_VatTypes_AutomaticLastUpdateDate, The Index Should Added To The DXML File
+Warning: Missing Index In DXML File ShipmentSubType.dxml, The Found Index On DB Is IX_ShipmentSubTypes_AutomaticLastUpdateDate, The Index Should Added To The DXML File

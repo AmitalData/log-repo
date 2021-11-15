@@ -129,7 +129,10 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 	         PaymentReceivedDone, 
 	         PaymentReceivedEstomationDate, 
 	         PaymentReceivedDate, 
-	         PaymentReceivedNotes,
+	         PaymentReceivedNotes, 
+	         PoNumber, 
+	         DescriptionOfGoods, 
+	         SupplyDateTime,
 	      }
 
 
@@ -254,7 +257,10 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 	         PaymentReceivedDone, 
 	         PaymentReceivedEstomationDate, 
 	         PaymentReceivedDate, 
-	         PaymentReceivedNotes,
+	         PaymentReceivedNotes, 
+	         PoNumber, 
+	         DescriptionOfGoods, 
+	         SupplyDateTime,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -786,6 +792,21 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PaymentReceivedNotes))
             {
 				entityPOCO.PaymentReceivedNotes = entityPM.PaymentReceivedNotes;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PoNumber))
+            {
+				entityPOCO.PoNumber = entityPM.PoNumber;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DescriptionOfGoods))
+            {
+				entityPOCO.DescriptionOfGoods = entityPM.DescriptionOfGoods;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SupplyDateTime))
+            {
+				entityPOCO.SupplyDateTime = entityPM.SupplyDateTime;
 			}
 			}
 
@@ -1322,6 +1343,21 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 					entityPM.PaymentReceivedNotes = entityPOCO.PaymentReceivedNotes;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.PoNumber))
+            {
+					entityPM.PoNumber = entityPOCO.PoNumber;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.DescriptionOfGoods))
+            {
+					entityPM.DescriptionOfGoods = entityPOCO.DescriptionOfGoods;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.SupplyDateTime))
+            {
+					entityPM.SupplyDateTime = entityPOCO.SupplyDateTime;
+            }
+
 		}
 
 		public void PMToOldPM(CargoTrackingShipmentPM entityPM, CargoTrackingShipmentPM oldEntityPM)
@@ -1853,6 +1889,21 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
                 oldEntityPM.PaymentReceivedNotes = entityPM.PaymentReceivedNotes;
             }
 			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PoNumber))
+            {
+                oldEntityPM.PoNumber = entityPM.PoNumber;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DescriptionOfGoods))
+            {
+                oldEntityPM.DescriptionOfGoods = entityPM.DescriptionOfGoods;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SupplyDateTime))
+            {
+                oldEntityPM.SupplyDateTime = entityPM.SupplyDateTime;
+            }
+			
 		}
 
 	    public void EncodeBase64NVARCHARFields(CargoTrackingShipmentPM entityPM)
@@ -1929,6 +1980,10 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
             if (!String.IsNullOrWhiteSpace(entityPM.PaymentReceivedNotes)) //T4 find type == nText 
             {
                 entityPM.PaymentReceivedNotes = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.PaymentReceivedNotes));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.DescriptionOfGoods)) //T4 find type == nText 
+            {
+                entityPM.DescriptionOfGoods = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.DescriptionOfGoods));
             }
             entityPM.EncodeBase64NVARCHARFieldsBy=null;
 		}

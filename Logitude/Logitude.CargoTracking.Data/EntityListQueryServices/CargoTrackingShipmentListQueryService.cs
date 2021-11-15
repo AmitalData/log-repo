@@ -145,6 +145,9 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
 
                                                                ShipmentTypeCode = shipment.ShipmentTypeCode,
                                                                CustomsPaymentDone = shipment.CustomsPaymentDone,
+                                                               PoNumber = shipment.PoNumber,
+                                                               SupplyDateTime = shipment.SupplyDateTime,
+                                                               DescriptionOfGoods = shipment.DescriptionOfGoods
                                                            });
             return query;
         }

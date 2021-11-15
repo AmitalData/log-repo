@@ -241,6 +241,12 @@ namespace Logitude.CargoTracking.Data.EntityPOCOs
 	    public DateTime? PaymentReceivedDate { get; set; }
         [Column("PaymentReceivedNotes")]
 	    public string PaymentReceivedNotes { get; set; }
+        [Column("PoNumber")]
+	    public string PoNumber { get; set; }
+        [Column("DescriptionOfGoods")]
+	    public string DescriptionOfGoods { get; set; }
+        [Column("SupplyDateTime")]
+	    public DateTime? SupplyDateTime { get; set; }
     }
 }
 	 

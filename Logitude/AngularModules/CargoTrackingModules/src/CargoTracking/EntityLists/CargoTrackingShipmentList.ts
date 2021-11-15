@@ -137,6 +137,9 @@ export class CargoTrackingShipmentList {
 	PaymentReceivedEstomationDate: Date;
 	PaymentReceivedDate: Date;
 	PaymentReceivedNotes: string;
+	PoNumber: string;
+	DescriptionOfGoods: string;
+	SupplyDateTime: Date;
 	
 }
  

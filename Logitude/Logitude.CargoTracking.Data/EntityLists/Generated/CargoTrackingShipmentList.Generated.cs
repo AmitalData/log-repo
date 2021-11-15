@@ -272,6 +272,12 @@ namespace Logitude.CargoTracking.Data.EntityLists
        public DateTime? PaymentReceivedDate  { get; set; }
        [DataMember]
        public string PaymentReceivedNotes  { get; set; }
+       [DataMember]
+       public string PoNumber  { get; set; }
+       [DataMember]
+       public string DescriptionOfGoods  { get; set; }
+       [DataMember]
+       public DateTime? SupplyDateTime  { get; set; }
    }
 
 }
