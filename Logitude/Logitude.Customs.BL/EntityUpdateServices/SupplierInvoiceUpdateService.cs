@@ -46,8 +46,10 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         private DeclarationPM _DeclarationPM;
         private bool openTaskForUnifreight;
         private CourierMasterPM _CourierMasterPM;
+        private DeclarationCourierStatusPM currentDeclarationCourierStatusPM;
 
         public bool IsProcedureCurrentCodeChanged { get; set; }
+
         public bool Multi_LastSIWillUpdateCCU { get; set; }//שינוי בלוגיקה לבניית CCU בעקבות משוב להצהרה/הגשה - פניה 303319  אבל במצב הראשון - אין צורך לשמור ולבנות CCU אחרי כל שמירה של כל חשבון ספק. מספיק לבנות את CCU פעם אחת בסיום כל השמירות.
         public bool UpdateFromDeclaration { get; set; }
         protected override void OnCreating(SupplierInvoicePM entityPM, EntityPM entityParentPM)
@@ -620,6 +622,16 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             SupplierInvoiceRepository invoiceRepository = new SupplierInvoiceRepository(context);
             List<SupplierInvoice> supplierInvoices = null; // invoiceRepository.GetMulti(new DeclarationKeys() { Id = entityPM.DeclarationId });
             //supplierInvoices = supplierInvoices.OrderBy(d => d.InvoiceCounterKey).ToList();
+            string shopId = null;
+            if (currentDeclarationCourierStatusPM == null)
+            {
+                DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(context);
+                currentDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(entityPM.DeclarationId, true, false);
+            }
+            if (currentDeclarationCourierStatusPM != null)
+            {
+                shopId = currentDeclarationCourierStatusPM.ShopId;
+            }
 
             bool dirty = false;
             DeclarationQueryService declarationQueryService = new DeclarationQueryService(entityPM.Tenant);
@@ -659,17 +671,20 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
                             if (entityPM.InvoiceAmountInUSD <= 75)
                             {
-                                if (!String.IsNullOrWhiteSpace(IntegratorCode)) defaultClassificationCode = GetAmitalDefault("ISRAEL", "CGO_LOWVAL_ITM", "NON", IntegratorCode, entityPM.Tenant);
+                                if (!String.IsNullOrWhiteSpace(shopId)) defaultClassificationCode = GetAmitalDefault("ISRAEL", "CGO_LOWVAL_ITM", "NON", shopId, entityPM.Tenant);
+                                if (String.IsNullOrWhiteSpace(defaultClassificationCode) && !String.IsNullOrWhiteSpace(IntegratorCode)) defaultClassificationCode = GetAmitalDefault("ISRAEL", "CGO_LOWVAL_ITM", "NON", IntegratorCode, entityPM.Tenant);
                                 if (String.IsNullOrWhiteSpace(defaultClassificationCode)) defaultClassificationCode = GetAmitalDefault("ISRAEL", "CGO_LOWVAL_ITEM", "NON", "NON", entityPM.Tenant);
                             }
                             else if (entityPM.InvoiceAmountInUSD > 75 && entityPM.InvoiceAmountInUSD <= 500)
                             {
-                                if (!String.IsNullOrWhiteSpace(IntegratorCode)) defaultClassificationCode = GetAmitalDefault("ISRAEL", "CGO_VAL2_ITM", "NON", IntegratorCode, entityPM.Tenant);
+                                if (!String.IsNullOrWhiteSpace(shopId)) defaultClassificationCode = GetAmitalDefault("ISRAEL", "CGO_VAL2_ITM", "NON", shopId, entityPM.Tenant);
+                                if (String.IsNullOrWhiteSpace(defaultClassificationCode) && !String.IsNullOrWhiteSpace(IntegratorCode)) defaultClassificationCode = GetAmitalDefault("ISRAEL", "CGO_VAL2_ITM", "NON", IntegratorCode, entityPM.Tenant);
                                 if (String.IsNullOrWhiteSpace(defaultClassificationCode)) defaultClassificationCode = GetAmitalDefault("ISRAEL", "CGO_VAL2_ITEM", "NON", "NON", entityPM.Tenant);
                             }
                             else if (entityPM.InvoiceAmountInUSD > 500 && entityPM.InvoiceAmountInUSD <= 1000)
                             {
-                                if (!String.IsNullOrWhiteSpace(IntegratorCode)) defaultClassificationCode = GetAmitalDefault("ISRAEL", "CGO_VAL3_ITM", "NON", IntegratorCode, entityPM.Tenant);
+                                if (!String.IsNullOrWhiteSpace(shopId)) defaultClassificationCode = GetAmitalDefault("ISRAEL", "CGO_VAL3_ITM", "NON", shopId, entityPM.Tenant);
+                                if (String.IsNullOrWhiteSpace(defaultClassificationCode) && !String.IsNullOrWhiteSpace(IntegratorCode)) defaultClassificationCode = GetAmitalDefault("ISRAEL", "CGO_VAL3_ITM", "NON", IntegratorCode, entityPM.Tenant);
                                 if (String.IsNullOrWhiteSpace(defaultClassificationCode)) defaultClassificationCode = GetAmitalDefault("ISRAEL", "CGO_VAL3_ITEM", "NON", "NON", entityPM.Tenant);
                             }
 
@@ -704,7 +719,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 }
             }
 
-            if (entityPM.ChangeSetOp == ChangeSetOperation.Delete || entityPM.ChangeSetOp == ChangeSetOperation.Insert)
+            if (entityPM.ChangeSetOp == ChangeSetOperation.Delete || entityPM.ChangeSetOp == ChangeSetOperation.Insert || toUpdateClassification)
             {
                 SubmitChanges();
                 //if(supplierInvoices == null || supplierInvoices.Count() < 1)

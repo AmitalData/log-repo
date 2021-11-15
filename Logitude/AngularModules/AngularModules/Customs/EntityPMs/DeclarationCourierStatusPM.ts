@@ -384,6 +384,11 @@ export class DeclarationCourierStatusPM {
     public set TerminalReleaseDate(newValue: Date) { if (this.terminalReleaseDate != newValue) { this.terminalReleaseDate = newValue; this.MarkAsDirty("TerminalReleaseDate"); } }
        
 	 
+    private shopId: string;
+    public get ShopId() { return this.shopId; }
+    public set ShopId(newValue: string) { if (this.shopId != newValue) { this.shopId = newValue; this.MarkAsDirty("ShopId"); } }
+       
+	 
 
     public OldEntityPM: DeclarationCourierStatusPM;
 		
