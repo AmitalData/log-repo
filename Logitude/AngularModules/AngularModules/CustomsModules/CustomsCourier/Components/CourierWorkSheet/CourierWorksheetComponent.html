@@ -920,7 +920,7 @@
                                             <tr style="height:100%;">
                                                 <td colspan="7" style="height: 100%;width:100%; padding: 5px;">
 
-                                                    <div class="GeneratedGridContainer" *ngIf="SelectedPendingCodeFilter" style="padding:5px;vertical-align:top;top:0;position:absolute">
+                                                    <div class="GeneratedGridContainer" *ngIf="_SelectedTabFilter.Code=='HOLD'" style="padding:5px;vertical-align:top;top:0;position:absolute">
                                                         <logitude-grid GridWidth="100%" GridHeight="100%"
                                                                        [ObjectTable]="ObjectTableName"
                                                                        [dataSource]="DataSource"
@@ -960,7 +960,7 @@
         -->
                                                     </div>
 
-                                                    <div class="GeneratedGridContainer" *ngIf="!SelectedPendingCodeFilter" style="padding:5px;vertical-align:top;top:0;position:absolute">
+                                                    <div class="GeneratedGridContainer" *ngIf="!(_SelectedTabFilter.Code=='HOLD')" style="padding:5px;vertical-align:top;top:0;position:absolute">
                                                         <logitude-grid GridWidth="100%" GridHeight="100%"
                                                                        [ObjectTable]="ObjectTableName"
                                                                        [dataSource]="DataSource"

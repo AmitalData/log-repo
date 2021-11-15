@@ -174,6 +174,8 @@ namespace Logitude.Customs.Data.EntityLists
        public DateTime? TerminalReleaseDate  { get; set; }
        [DataMember]
        public string LastMileServiceType  { get; set; }
+       [DataMember]
+       public string CargoDescription  { get; set; }
    }
 
 }

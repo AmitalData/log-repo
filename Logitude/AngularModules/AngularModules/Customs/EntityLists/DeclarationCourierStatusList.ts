@@ -88,6 +88,7 @@ export class DeclarationCourierStatusList {
 	DeclarationStorageSiteCode: string;
 	TerminalReleaseDate: Date;
 	LastMileServiceType: string;
+	CargoDescription: string;
 	
 }
  

@@ -125,6 +125,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         TerminalReleaseDate, 
 	         LastMileServiceType, 
 	         ShopId,
+	         CargoDescription,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
