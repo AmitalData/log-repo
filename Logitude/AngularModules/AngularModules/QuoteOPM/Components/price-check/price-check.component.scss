@@ -1,6 +1,9 @@
 ::ng-deep .price-check {
+    background: #e5e5e5;
+
     .p-dialog-content {
         padding: 0;
+        background: #e5e5e5;
     }
 }
 
@@ -10,13 +13,16 @@
 }
 
 .header {
-    padding: 21px;
+    padding: 21px 37px;
     background: white;
     border-radius: 0 0 14px 14px;
-    height: 84px;    
+    height: 111px;
+    display: table-cell;
+    vertical-align: middle;
+    width: 1440px;
 
     h1 {
-        font-size: 17px !important;
+        font-size: 24px !important;
         display: inline-block;
         color: black;
         font-weight: bold;
@@ -26,7 +32,7 @@
         float: right;
         display: flex;
         text-align: center;
-        top: 5px;
+        top: 9px;
         position: relative;
         font-weight: 500;
 
@@ -39,11 +45,11 @@
         }
 
         .filter {
-            width: 86px;
-            padding: 8px;
+            width: 136px;
+            padding: 15px 8px;
             border: 1px solid #e3e4e4;
             color: #1084dc;
-            font-size: 12px;
+            font-size: 16.7px !important;
             cursor: pointer;
             position: relative;
             font-weight: 500;
@@ -65,24 +71,42 @@
             position: absolute;
             top: 100%;
             left: 50%;
-            margin-left: -5px;
-            border-width: 5px;
+            margin-left: -12px;
+            border-width: 9px;
             border-style: solid;
             border-color: #1084dc transparent transparent transparent;
         }
     }
 }
 
+.no-offer {
+    text-align: center;
+    margin-top: 70px;
+
+    img {
+        width: 78%;
+    }
+
+    h3 {
+        font-size: 26px !important;
+        color: #ababab;
+        margin-bottom: 0;
+        margin-top: 42px;
+        font-weight: bold;
+    }
+}
+
 .body {
-    margin-top: 10px;
+
+    margin-top: 29px;
 
     .offer-container:first-child {
         .checkbox-wrapper {
             margin-top: 0px;
-            border-radius: 7px 5px 0px 0px;
+            border-radius: 12px 12px 0px 0px;
 
             p-checkbox {
-                margin-top: 15px !important;
+                margin-top: 28px !important;
             }
         }
 
@@ -92,12 +116,11 @@
     }
 
     .offer-container:last-child .checkbox-wrapper {
-        border-radius: 0px 0px 7px 5px;
+        border-radius: 0px 0px 12px 12px;
     }
 
     .offer-container {
-        margin-right: 10px;
-        margin-left: 7px;
+        margin-left: 13px;
         display: flex;
 
         .checkbox-wrapper,
@@ -110,7 +133,7 @@
             text-align: center;
 
             p-checkbox {
-                margin-top: 25px;
+                margin-top: 30px;
 
                 .p-checkbox {
                     margin: 0;
@@ -120,19 +143,23 @@
 
         .price-wrapper {
             flex: 28;
-            border-radius: 7px;
+            border-radius: 19px;
             width: calc(100% - 25px);
             // height: 200px;
             margin-top: 10px;
-            margin-left: 7px;
+            margin-left: 11px;
 
             .header-price {
                 width: 100%;
-                height: 50px;
+                height: 70px;
                 padding: 0 13px;
-                padding-top: 13px;
+                padding-top: 14px;
                 -webkit-box-shadow: 0 6px 5px -4px #e3e3e3;
                 box-shadow: 0 6px 5px -4px #e3e3e3;
+
+                .tags {
+                    margin-top: 3px;
+                }
 
                 .tag,
                 .icon,
@@ -144,11 +171,11 @@
                     background: #e2f0fb;
                     color: #1084dc;
                     padding: 10px;
-                    border-radius: 12px;
-                    height: 26px;
-                    line-height: 4px;
+                    border-radius: 20px;
+                    height: 37px;
+                    line-height: 14px;
                     font-weight: 500;
-                    font-size: 13px;
+                    font-size: 20px !important;
                     margin: 0 3px;
                 }
 
@@ -157,20 +184,23 @@
 
                     .icon {
                         margin: 0 8px;
-                        width: 20px;
+                        width: 32px;
                     }
 
                     .icon-wrapper {
                         position: relative;
                         display: inline-block;
+                        vertical-align: top;
 
                         .icon-number-in {
                             position: absolute;
-                            font-size: 11px;
-                            top: 5px;
-                            right: 10px;
-                            width: 16px;
+                            font-size: 15px !important;
+                            top: 9px;
+                            right: 15px;
+                            width: 19px;
                             text-align: center;
+                            font-weight: bold;
+                            overflow: hidden;
                         }
                     }
                 }
@@ -182,6 +212,7 @@
                 flex-direction: row;
                 flex-wrap: nowrap;
                 align-items: center;
+                margin: 32px 20px 17px;
 
                 .company-icon {
                     flex: 1;
@@ -197,24 +228,25 @@
                     border: 1px solid #f5f5f5;
                     align-items: center;
                     flex: 3;
-                    padding: 8px;
-                    margin: 0 12px;
+                    padding: 10px;
+                    margin: 0px;
                     border-radius: 7px;
 
                     .summary-item {
-                        height: 70px;
+                        height: 99px;
                         flex: 1;
                         background: #f5f5f5;
-                        padding: 23px 12px;
-                        border-radius: 7px;
-                        margin: 5px;
+                        padding: 23px 24px;
+                        border-radius: 19px;
+                        margin: 10px;
                         font-size: 18px;
                         font-weight: 500;
                         color: black;
                         display: flex;
+                        align-items: center;
 
                         > * {
-                            font-size: 18px !important;
+                            font-size: 24px !important;
                             font-weight: 500;
                         }
 
@@ -229,7 +261,7 @@
                             color: #1084dc;
 
                             img {
-                                height: 14px;
+                                height: 19px;
                             }
                         }
                     }
@@ -241,17 +273,37 @@
 
 :host ::ng-deep {
     .body {
+        .p-scrollpanel-content {
+            overflow-y: scroll !important;
+        }
+
         p-checkbox .p-checkbox {
             margin-right: 0;
+            width: 25px !important;
+            height: 25px !important;
+        }
+
+        p-checkbox .p-checkbox,
+        .p-checkbox-box {
+            width: 25px !important;
+            height: 25px !important;
         }
 
         .accordion-container {
             padding: 0px;
 
+            i {
+                color: #1084dc;
+                font-size: 23px !important;
+                margin-right: 18px !important;
+                margin-bottom: 18px !important;
+            }
+
             .accordion-contect {
                 background: #e5e5e5;
-                padding-top: 1px;
+                padding-top: 0px;
                 margin: 0;
+                margin-top: 18px;
 
                 .expansion {
                     width: 100%;
@@ -260,6 +312,9 @@
                     border: 1px solid #d6d6d6;
                     border-radius: 7px;
                     margin-top: 18px;
+                    position: relative;
+                    top: 18px;
+                    margin-bottom: 18px;
 
                     .expansion-item {
                         flex: 1;
@@ -269,7 +324,7 @@
 
                         h3 {
                             margin: 0;
-                            font-size: 14px !important;
+                            font-size: 18px !important;
                             font-weight: bold;
                         }
 
@@ -277,11 +332,11 @@
                         .expansion-row {
                             width: 100%;
                             display: flex;
-                            padding: 0 5px;
+                            padding: 0 10px;
 
                             > * {
-                                font-size: 6px !important;
-                                padding: 9px 1px;
+                                font-size: 12px !important;
+                                padding: 18px 1px;
                             }
                         }
 
@@ -293,11 +348,17 @@
 
                         .expansion-row {
                             background: white;
-                            border-radius: 4px;
+                            border-radius: 10px;
+                            margin-bottom: 10px;
+                            border: 1px solid #d6d6d6;
 
                             .expansion-headers-sale {
                                 color: #1084dc;
                             }
+                        }
+
+                        .expansion-row-highlight {
+                            background: red;
                         }
 
                         .expansion-headers-charges {
@@ -320,25 +381,35 @@
             }
         }
     }
+
+    span.p-button-label {
+        font-size: 16px !important;
+    }
 }
 
-.footer {
-    padding: 11px 23px;
-    text-align: right;
-
-    .p-button-primary {
-        color: black;
-        background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(237, 192, 147, 1) 100%) !important;
-        border: 1px solid #6a8299;
-        font-size: 9px;
-        padding: 6px 18px;
+:host {   
+    .footer {
+        padding: 47px 19px;
+        text-align: right;
+        height: 193px;
+        
+        .p-button-primary {
+            color: black;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(237, 192, 147, 1) 100%) !important;
+            border: 1px solid #6a8299;
+            padding: 13px 50px !important;           
+        }
     }
 }
 
 :host ::ng-deep p-confirmdialog .p-dialog {
+    .p-dialog-content {
+        background: white;
+    }
+
     .p-confirm-dialog-icon,
     .p-dialog-title {
-        font-size: 1rem;
+        font-size: 1rem !important;
     }
 
     .p-dialog-header-icon {
@@ -352,7 +423,7 @@
 
     .p-button .p-button-icon-left,
     .p-dialog-footer button {
-        font-size: 10px;
+        font-size: 10px !important;
     }
 
     .p-dialog-footer {

@@ -78,6 +78,8 @@ namespace Logitude.Customs.Data.EntityMapping
             this.Property(t => t.CrateNumber).HasColumnName("CrateNumber").HasMaxLength(30).IsUnicode(false);
 
             this.Property(t => t.TerminalReleaseDate).HasColumnName("TerminalReleaseDate");
+
+            this.Property(t => t.ShopId).HasColumnName("ShopId").HasMaxLength(15).IsUnicode(false);
         }
     }
 }

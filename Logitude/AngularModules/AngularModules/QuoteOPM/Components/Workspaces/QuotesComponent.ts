@@ -20,6 +20,7 @@ import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
 import { ListComponentArgs } from '../../../Infrastructure/Args';
 import { TextCodeTranslator } from '../../../Infrastructure/Utilities/TextCodeTranslator';
 import { PriceCheckService } from '../price-check/price-check.service';
+import { QuoteOPPM } from 'QuoteOPM/EntityPMs/QuoteOPPM';
 
 
 declare var makeChart, FunnelClick, ResetItemFunnel;
@@ -29,7 +30,7 @@ declare var makeChart, FunnelClick, ResetItemFunnel;
     templateUrl: './QuotesComponent.html',
 })
 
-export class QuotesComponent extends BaseComponent {
+export class QuotesComponent extends BaseComponent {    
     public DataContext = this;
     public SalesFunnelId: string = "SalesFunnelId_";
     public IsResourcesReady: boolean = false;
@@ -710,10 +711,10 @@ export class QuotesComponent extends BaseComponent {
         logWindow.Title = TextCodeTranslator.Translate("Quote.S.NewQuote.CreateNewQuote");
         oldWizard ? logWindow.Show('./QuoteOPM/Components/NewEntity/NewQuoteComponentOld') : logWindow.Show('./QuoteOPM/Components/NewEntity/NewQuoteComponent');
 
-        logWindow.WindowClosed.subscribe(s => {
-            if (s) {
+        logWindow.WindowClosed.subscribe((quote: QuoteOPPM)  => {
+            if (quote) {
                 this.LoadAllScreenData();
-                this.priceCheckS.open('');
+                this.priceCheckS.open(quote);
             }
         });
     }

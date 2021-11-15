@@ -87,6 +87,11 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string CrateNumber { get; set; }
         [Column("TerminalReleaseDate")]
 	    public DateTime? TerminalReleaseDate { get; set; }
+        [ForeignKey("Card")]
+        [Column("ShopId")]
+	    public string ShopId { get; set; }
+	      
+        public virtual Card Card { get; set; }
     }
 }
 	 

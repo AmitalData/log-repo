@@ -456,6 +456,12 @@ namespace Logitude.CustomsMessaging.RequestServices
                     Line = new AddressLineTextType() { Value = _DeclarationPM.ImporterAddress }
                 };
             }
+
+            if (!string.IsNullOrEmpty(declarationConsignmentConsigneeAddress.Line.Value) && declarationConsignmentConsigneeAddress.Line.Value.Length > 70)
+            {
+                declarationConsignmentConsigneeAddress.Line.Value = declarationConsignmentConsigneeAddress.Line.Value.Substring(0, 70);
+            }
+
             declarationConsignmentConsigneeAddressList.Add(declarationConsignmentConsigneeAddress);
             declarationConsignmentConsignee.Address = declarationConsignmentConsigneeAddressList.ToArray();
 
@@ -506,7 +512,14 @@ namespace Logitude.CustomsMessaging.RequestServices
                 if (!string.IsNullOrWhiteSpace(customsVendorPM.CountryCode))
                 {
                     declarationConsignmentConsignorAddress.Line.Value = declarationConsignmentConsignorAddress.Line.Value + " " + customsVendorPM.CountryCode;
+
                 }
+
+
+                  if (!string.IsNullOrEmpty( declarationConsignmentConsignorAddress.Line.Value) && declarationConsignmentConsignorAddress.Line.Value.Length>70)
+                    {
+                    declarationConsignmentConsignorAddress.Line.Value = declarationConsignmentConsignorAddress.Line.Value.Substring(0, 70);
+                    }
 
                 declarationConsignmentConsignorAddressList.Add(declarationConsignmentConsignorAddress);
                 declarationConsignmentConsignor.Address = declarationConsignmentConsignorAddressList.ToArray();
@@ -523,6 +536,12 @@ namespace Logitude.CustomsMessaging.RequestServices
                         Line = new AddressLineTextType() { Value = _DeclarationPM.CasualSupplierAddress }
                     };
                 }
+
+                if (!string.IsNullOrEmpty(declarationConsignmentConsignorAddress.Line.Value) && declarationConsignmentConsignorAddress.Line.Value.Length > 70)
+                {
+                    declarationConsignmentConsignorAddress.Line.Value = declarationConsignmentConsignorAddress.Line.Value.Substring(0, 70);
+                }
+
                 declarationConsignmentConsignorAddressList.Add(declarationConsignmentConsignorAddress);
                 declarationConsignmentConsignor.Address = declarationConsignmentConsignorAddressList.ToArray();
             }

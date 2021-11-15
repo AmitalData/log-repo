@@ -212,9 +212,11 @@ export class NewQuoteExpectedOrderComponent implements OnInit, AfterViewInit {
 
   calcTotalGrossWeight(prev_quantity: number, current_quantity: number) {
     this.totalGrossWeight = this.totalGrossWeight - prev_quantity + current_quantity;
+    this.EntityPM.GrossWeight = this.totalGrossWeight;
   }
 
   calcTotalVolume(prev_quantity: number, current_quantity: number) {
     this.totalVolume = this.totalVolume - prev_quantity + current_quantity;
+    this.EntityPM.Volume = this.totalVolume;
   }
 }
