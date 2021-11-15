@@ -9,27 +9,35 @@ import { take } from "rxjs/operators";
 import { filterIsNotNull } from "../../Services/new-quote-data/new-quote-data.service";
 declare const window: any;
 
-@Injectable()   
+@Injectable()
 export class LogtuideTableDataService {
-    private _entityResourceService: EntityResourceService = new EntityResourceService();
-    constructor(
-        private entityListService: EntityListService,
-    ){}
+  private _entityResourceService: EntityResourceService = new EntityResourceService();
+  
+  constructor(
+    private entityListService: EntityListService,
+  ) { }
 
-    getTable(tableName: string): Promise<any> {
-        return new Promise<ServiceResponse>((resolve, reject) => {
-          this._entityResourceService.getEntityResourceByTableName(tableName, 0)
-            .pipe(filterIsNotNull(), take(1))
-            .subscribe(async () => {
-              const LookUpTable: ObjectTablePM = window.ObjectTables.filter(d => d.Name === tableName)[0];
-              const loadPr: any = (LookUpTable?.CacheOnClient) ?
-                await this.entityListService.getAllFromCache(tableName, new ApiQueryFilters()) :
-                await this.entityListService.getAll(tableName);
-    
-              const response: ServiceResponse = await (<Observable<Promise<ServiceResponse>>>loadPr).toPromise();
-              resolve(response.Result);
-            });
-        })
-      }
-    
+  getTable(tableName: string): Promise<any> {
+    return new Promise<ServiceResponse>((resolve, reject) => {
+      this._entityResourceService.getEntityResourceByTableName(tableName, 0)
+        .pipe(filterIsNotNull(), take(1))
+        .subscribe(async () => {
+          const LookUpTable: ObjectTablePM = window.ObjectTables.filter(d => d.Name === tableName)[0];
+          const loadPr: any = (LookUpTable?.CacheOnClient) ?
+            await this.entityListService.getAllFromCache(tableName, new ApiQueryFilters()) :
+            await this.entityListService.getAll(tableName);
+
+          const response: ServiceResponse = await (<Observable<Promise<ServiceResponse>>>loadPr).toPromise();
+          resolve(response.Result);
+        });
+    })
+  }
+
+  getDataFromService(ob: Observable<any>): Promise<any[]> {
+    return new Promise<any[]>((resolve, reject) =>
+      ob.pipe(filterIsNotNull(), take(1))
+        .subscribe((res: ServiceResponse) =>
+          resolve(res.Result)
+        ));
+  }
 }

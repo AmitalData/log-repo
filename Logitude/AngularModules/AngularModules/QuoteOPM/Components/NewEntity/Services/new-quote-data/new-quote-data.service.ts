@@ -11,14 +11,11 @@ import { ServiceResponse } from 'Infrastructure/DataContracts/ServiceResponse';
 import { DirectionList } from 'Infrastructure/EntityLists/DirectionList';
 import { MoveTypeList } from 'Infrastructure/EntityLists/MoveTypeList';
 import { TransportModeList } from 'Infrastructure/EntityLists/TransportModeList';
-import { ObjectTablePM } from 'Infrastructure/EntityPMs/ObjectTablePM';
 import { EntityListService } from 'Infrastructure/Services/EntityListService';
-import { EntityResourceService } from 'Infrastructure/Services/EntityResourceService';
 import { DirectionListService } from 'Infrastructure/Services/StandardLists/DirectionListService';
 import { TransportModeListService } from 'Infrastructure/Services/StandardLists/TransportModeListService';
 import { QuoteOPPM } from 'QuoteOPM/EntityPMs/QuoteOPPM';
 import { QuoteOPPMService } from 'QuoteOPM/Services/StandardPMs/QuoteOPPMService';
-import { Observable } from 'rxjs';
 import { filter, take } from 'rxjs/operators';
 import { ShipmentTypeList } from 'Shipment/EntityLists/ShipmentTypeList';
 import { ShipmentTypeListService } from 'Shipment/Services/StandardLists/ShipmentTypeListService';
@@ -37,15 +34,15 @@ export class NewQuoteDataService {
   ) { }
 
   async getDirectionList(): Promise<DirectionList[]> {
-    return this.getDataFromService(new DirectionListService().getAllFromCache());
+    return this.logtuideTableDataService.getDataFromService(new DirectionListService().getAllFromCache());
   }
 
   async getTransportModeList(): Promise<TransportModeList[]> {
-    return this.getDataFromService(new TransportModeListService().getAllFromCache())
+    return this.logtuideTableDataService.getDataFromService(new TransportModeListService().getAllFromCache())
   }
 
   async getShipmentTypeList(): Promise<ShipmentTypeList[]> {
-    return this.getDataFromService(new ShipmentTypeListService().getAll());
+    return this.logtuideTableDataService.getDataFromService(new ShipmentTypeListService().getAll());
   }
 
   async getCardsTable(): Promise<CardList[]> {
@@ -102,7 +99,7 @@ export class NewQuoteDataService {
         });
     }
   async getPorts(directionId: string, transportModed: string): Promise<Port[]> {
-    const res: ServiceResponse = await this.newQuoteOPWebService.GetPortsItemsList(directionId, transportModed, '', 1000000, false).toPromise();
+    const res: ServiceResponse = await this.newQuoteOPWebService.GetPortsItemsList(directionId, transportModed, '', 100, false).toPromise();
     return res.Result as Port[];
   }
 
@@ -112,12 +109,12 @@ export class NewQuoteDataService {
   }
 
   async getSpecialServices(directionId: string, transportModed: string): Promise<SpecialService[]> {
-    const res: ServiceResponse = await this.newQuoteOPWebService.GetSpecialServiceItemsList(directionId, transportModed, '', 1000000, false).toPromise();
+    const res: ServiceResponse = await this.newQuoteOPWebService.GetSpecialServiceItemsList(directionId, transportModed, '', 100, false).toPromise();
     return res.Result as SpecialService[];
   }
 
   async getIncoterms(): Promise<Incoterm[]> {
-    const res: ServiceResponse = await this.newQuoteOPWebService.GetETBPAYTRitemList('', '', 1000000, false).toPromise();
+    const res: ServiceResponse = await this.newQuoteOPWebService.GetETBPAYTRitemList('', '', 100, false).toPromise();
     return res.Result as Incoterm[];
   }
 
@@ -190,15 +187,6 @@ export class NewQuoteDataService {
             resolve(null);
         });
     })
-  }
-
-
-  private getDataFromService(ob: Observable<any>): Promise<any[]> {
-    return new Promise<any[]>((resolve, reject) =>
-      ob.pipe(filterIsNotNull(), take(1))
-        .subscribe((res: ServiceResponse) =>
-          resolve(res.Result)
-        ));
   }
 }
 
