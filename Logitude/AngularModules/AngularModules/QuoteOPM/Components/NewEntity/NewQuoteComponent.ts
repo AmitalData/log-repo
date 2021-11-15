@@ -53,7 +53,7 @@ export class NewQuoteComponent {
             this.attachPackages();
 
             this.newQuoteDataService.creatingNewQuote(this.EntityPM)
-                .then(() => SessionLocator.SelectedSession.CloseCurrentWindowEmit('OK'))
+                .then(() => SessionLocator.SelectedSession.CloseCurrentWindowEmit(this.EntityPM))
                 .catch((err: string[]) => this.msg.add({ severity: 'error', summary: 'Create new quote failed', detail: err.join(', ') }))
                 .finally(() => currentWindow.StopBusyIndicator())
 
