@@ -282,6 +282,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
+                SecurityUtility.AuthenticationOnTenant(tenant);
                 ShipmentsDomainService shipmentDomainService = new ShipmentsDomainService();
                 var myResult = shipmentDomainService.CheckHousesOpenAmounts(masterId, tenant);
                 return Request.CreateResponse(HttpStatusCode.OK, myResult);
@@ -356,6 +357,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int myTenant = authToken.Tenant;
+                SecurityUtility.AuthenticationOnTenant(myTenant);
 
                 try
                 {
@@ -1192,9 +1194,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 SecurityUtility.AuthenticationOnTenant(tenant);
                 SecurityUtility.CheckContactFeature("Master", "READ", tenant);
 
-                ShipmentQuery shipmentQuery = new ShipmentQuery(tenant);
-                SecurityUtility.AuthenticationOnTenant(tenant);
-                SecurityUtility.CheckContactFeature("Master", "READ", tenant);
+                ShipmentQuery shipmentQuery = new ShipmentQuery(tenant);      
                 var myResult = shipmentQuery.GetShipmentPMsByMasterIdAndTenant(masterId, tenant);
                 return Request.CreateResponse(HttpStatusCode.OK, myResult);
             }
@@ -1447,6 +1447,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
+                SecurityUtility.AuthenticationOnTenant(tenant);
 
                 QueryOperations queryOperations = new QueryOperations()
                 {
@@ -1551,6 +1552,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
+                SecurityUtility.AuthenticationOnTenant(tenant);
 
                 ShipmentsDomainService service = new ShipmentsDomainService();
                 List<MessagingStockList> result = service.GetMessagingStockListForTenantManagmentTab(tenantManagementId).Where(d => d.StockType == "Champ").ToList();
@@ -1571,7 +1573,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
-
+                SecurityUtility.AuthenticationOnTenant(tenant);
                 string fileName = "aes.txt";
 
                 FlatFileHelper helper = new FlatFileHelper(tenant);
@@ -1593,6 +1595,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
+                SecurityUtility.AuthenticationOnTenant(tenant);
                 ShipmentCustomsTransmissionQuery query = new ShipmentCustomsTransmissionQuery(tenant);
                 var temp = query.GetShipmentCustomsTransmissionPMsByShipmentId(shipmentId, tenant);
                 List<ShipmentCustomsTransmissionPM> result = new List<ShipmentCustomsTransmissionPM>();
@@ -1616,6 +1619,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
+                SecurityUtility.AuthenticationOnTenant(tenant);
 
                 string xmlString1 = @"
                         <AMSResponse>
@@ -2273,6 +2277,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
+                SecurityUtility.AuthenticationOnTenant(tenant);
 
                 ShipmentRepository shipmentRepository = new ShipmentRepository(tenant);
                 Shipment houseShipment = shipmentRepository.GetSingleShipment(houseId, tenant);
@@ -2644,8 +2649,9 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int myTenant = authToken.Tenant;
-
-                if(myEntity.CustomsTransferLines.Count > 0)
+                SecurityUtility.AuthenticationOnTenant(myTenant);
+                SecurityUtility.AuthenticationOnEntityTenant("",myEntity.Tenant,myTenant);
+                if (myEntity.CustomsTransferLines.Count > 0)
                 {
                     List<string> ids = myEntity.CustomsTransferLines.Select(s => s.ShipmentId).ToList();
                     ShipmentRepository shipmentRepository = new ShipmentRepository(myTenant);
@@ -2904,6 +2910,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
+                SecurityUtility.AuthenticationOnTenant(tenant);
 
                 bool isValid = true;
                 ShipmentPickUpDeliveryRepository shipmentPickUpDeliveryRepository = new ShipmentPickUpDeliveryRepository(tenant);
@@ -3059,6 +3066,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
+                SecurityUtility.AuthenticationOnTenant(tenant);
                 ShipmentPickUpDeliveryPackageRepository shipmentPickUpDeliveryPackageRepository = new ShipmentPickUpDeliveryPackageRepository(tenant);
                 var shipmentPickUpDeliveryPackage = shipmentPickUpDeliveryPackageRepository.GetShipmentPickUpDeliveryPackagesByContainerIdAndTenant(containerId,tenant);
                 var result = shipmentPickUpDeliveryPackage.Count == 0 ? false : true;
@@ -3083,6 +3091,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         string loggedUserEmail = authToken.Email;
                         int tenant = authToken.Tenant;
+                        SecurityUtility.AuthenticationOnTenant(tenant);
 
                         ShipmentQuery shipmentQuery = new ShipmentQuery(tenant);
                         List<ShipmentList> myResult = shipmentQuery.GetShipmentsForMultipleAPInvoice(invoiceId, vendorId, tenant);                      
@@ -3111,6 +3120,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
+                SecurityUtility.AuthenticationOnTenant(tenant);
                 ShipmentQuery query = new ShipmentQuery(tenant);
                 bool result = query.IsShipmentPackagesConnectedToStandAlonePackage(shipmentId,tenant);
 
@@ -3129,6 +3139,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
+                SecurityUtility.AuthenticationOnTenant(tenant);
                 ShipmentQuery query = new ShipmentQuery(tenant);
                 var result = query.GetFilteredForwarderShipmentPackages(shipmentId, tenant, stanAloneShipmentId);
 

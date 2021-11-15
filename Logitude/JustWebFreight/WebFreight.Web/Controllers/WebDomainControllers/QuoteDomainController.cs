@@ -308,6 +308,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 int tenant = authToken.Tenant;
 
                 SecurityUtility.AuthenticationOnTenant(tenant);
+                SecurityUtility.AuthenticationOnEntityTenant("", entityPM.Tenant, tenant);
                 SecurityUtility.CheckContactFeature("Quote", "READ", tenant);
 
                 QuoteSubjectService iSubjectService = new QuoteSubjectService(entityPM);
@@ -427,6 +428,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     int tenant = authToken.Tenant;
 
                     SecurityUtility.AuthenticationOnTenant(tenant);
+                    SecurityUtility.AuthenticationOnEntityTenant("", entityPM.Tenant, tenant);
 
                     if (entityPM != null)
                     {

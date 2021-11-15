@@ -17,7 +17,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Common
     {
         public HttpResponseMessage GetAllBranchesByTenant(int tenant)
         {
-            Authentication();
+            Authentication(tenant);
             BranchRepository branchRepository = new BranchRepository(tenant);
             BranchQuery branchQuery = new BranchQuery(branchRepository);
             IQueryable<Branch> branches = branchRepository.GetBranches(tenant);
@@ -29,11 +29,12 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Common
 
 
 
-        private static void Authentication()
+        private static void Authentication(int tenant)
         {
             string token = HttpContext.Current.Request.Headers["Token"];
             AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
             SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+            SecurityUtility.AuthenticationOnTenant(tenant);
             SecurityUtility.CheckContactFeature("Branch", "READ", authToken.Tenant);
         }
 

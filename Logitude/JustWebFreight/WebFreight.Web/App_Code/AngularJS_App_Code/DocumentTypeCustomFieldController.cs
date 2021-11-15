@@ -26,6 +26,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
             {
 
                 Authentication();
+                SecurityUtility.AuthenticationOnTenant(tenant);
                 FormCustomFieldRepository formCustomFieldRepository = new FormCustomFieldRepository(tenant);
                 DocumentTypeRepository documentTypeRepository = new DocumentTypeRepository(tenant);
                 DocumentTypeCustomFieldRepository documentTypeCustomFieldRepository = new DocumentTypeCustomFieldRepository(tenant);
@@ -72,6 +73,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
             try
             {
                 Authentication();
+                SecurityUtility.AuthenticationOnTenant(tenant);
                 DocumentTypeCustomFieldQuery documentTypeCustomFieldQuery = new DocumentTypeCustomFieldQuery(tenant);
                 List<DocumentTypeCustomFieldPM> reslut = documentTypeCustomFieldQuery.GetDocumentTypeCusotmFieldPMsByDocumentTypeId(documentTypeId, tenant).ToList();
                 return Request.CreateResponse(HttpStatusCode.OK, reslut);
@@ -86,7 +88,8 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
         {
             try
             {
-                Authentication();
+                Authentication(formCustomFieldPM.Tenant);
+
                 if (formCustomFieldPM.Id != formCustomFieldPM.FieldCode)
                 {
                     ICommonDataContext objectContext = CommonDataContext.GetContext(formCustomFieldPM.Tenant);
@@ -109,9 +112,8 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
 
         public void InsertFormCustomField(FormCustomFieldPM entityPM)
         {
-            
-                Authentication();
-                ICommonDataContext objectContext = CommonDataContext.GetContext(entityPM.Tenant);
+            Authentication(entityPM.Tenant);
+            ICommonDataContext objectContext = CommonDataContext.GetContext(entityPM.Tenant);
                 if (objectContext == null)
                 {
                     objectContext = CommonDataContext.GetContext(entityPM.Tenant);
@@ -131,6 +133,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
         {
             try
             {
+                Authentication(documentTypeCustomFieldPM.Tenant);
                 ICommonDataContext objectContext = CommonDataContext.GetContext(documentTypeCustomFieldPM.Tenant);
                 DocumentTypeCustomFieldService service = new DocumentTypeCustomFieldService(objectContext, documentTypeCustomFieldPM.Tenant);
                 service.Update(documentTypeCustomFieldPM);
@@ -149,6 +152,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
         {
             try
             {
+                Authentication(documentTypeCustomFieldPM.Tenant);
                 ICommonDataContext objectContext = CommonDataContext.GetContext(documentTypeCustomFieldPM.Tenant);
                 DocumentTypeCustomFieldRepository documentTypeCustomFieldRepository = new DocumentTypeCustomFieldRepository(objectContext);
 
@@ -183,6 +187,13 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
             AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
             SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
             //SecurityUtility.CheckContactFeature("DocumentTypeCustomField", "READ", authToken.Tenant);
+        }
+        private static void Authentication(int tenant)
+        {
+            string token = HttpContext.Current.Request.Headers["Token"];
+            AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+            SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+            SecurityUtility.AuthenticationOnEntityTenant("", tenant, authToken.Tenant);
         }
     }
 }

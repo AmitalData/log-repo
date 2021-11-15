@@ -21,6 +21,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnTenant(tenant);
                 QueueMessagesWebHelper queueMessagesWebHelper = new QueueMessagesWebHelper();
 
                 queueMessagesWebHelper.BackUpForClientData(tenant);
@@ -39,6 +40,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
             string token = HttpContext.Current.Request.Headers["Token"];
             AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
             SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+            SecurityUtility.AuthenticationOnTenant(tenant);
 
             TenantRepository tenantRepository = new TenantRepository(tenant);
             return Request.CreateResponse(HttpStatusCode.OK, tenantRepository.CheckIfDatabaseBackupBuilt(tenant));

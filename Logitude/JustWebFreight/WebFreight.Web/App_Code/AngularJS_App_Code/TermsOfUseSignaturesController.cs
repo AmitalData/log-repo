@@ -28,8 +28,9 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                     string token = HttpContext.Current.Request.Headers["Token"];
                     AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                     SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                    SecurityUtility.AuthenticationOnEntityTenant("", entityPM.Tenant, authToken.Tenant);
 
-                    ICommonDataContext MyContext = CommonDataContext.GetContext(entityPM.Tenant);
+                   ICommonDataContext MyContext = CommonDataContext.GetContext(entityPM.Tenant);
                     TermsofUseSignatureService service = new TermsofUseSignatureService(MyContext, entityPM.Tenant);
                     service.Create(entityPM);
 
@@ -52,6 +53,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnTenant(tenant);
                 TermsofUseSignatureQuery termsofUseSignatureQuery = new TermsofUseSignatureQuery(tenant);
 
                 List<TermsofUseSignaturePM> TermsofUseSignaturePMLists = termsofUseSignatureQuery.GetTermsofUseSignaturesByTenant(tenant, contactId).ToList();

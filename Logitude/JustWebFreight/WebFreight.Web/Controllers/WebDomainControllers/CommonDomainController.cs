@@ -205,6 +205,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     string token = HttpContext.Current.Request.Headers["Token"];
                     AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                     int tenant = authToken.Tenant;
+                    SecurityUtility.AuthenticationOnTenant(tenant);
+                    SecurityUtility.AuthenticationOnEntityTenant( "", filter.Tenant, tenant);
                     string loggedUserEmail = authToken.Email;
                     byte[] fileData = Convert.FromBase64String(filter.FileData);
 
@@ -689,7 +691,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                     string loggedUserEmail = authToken.Email;
                     int tenant = authToken.Tenant;
-
+                    SecurityUtility.AuthenticationOnTenant(tenant);
                     CommonDataDomainService commonDomain = new CommonDataDomainService();
                     PortList myResult = commonDomain.GetPortCopyToCurrentTenant(entityId, tenant);
 
@@ -1079,6 +1081,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(tenant);
                 CommonDataDomainService commonDomain = new CommonDataDomainService();
                 DailySpotlightClass myResult = commonDomain.GetDashboardSpotlightCounts(tenant);
 
@@ -1101,6 +1104,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
+                SecurityUtility.AuthenticationOnTenant(tenant);
 
                 CommonDataDomainService commonDomain = new CommonDataDomainService();
 
@@ -1126,6 +1130,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
+                SecurityUtility.AuthenticationOnTenant(tenant);
 
                 ContactSummary summaryClass = new ContactSummary() { Id = tenant };
                 ContactDomainService service = new ContactDomainService();
@@ -1146,6 +1151,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
+                SecurityUtility.AuthenticationOnTenant(tenant);
 
                 CommonDataDomainService commonDomain = new CommonDataDomainService();
                 var result = commonDomain.GetGettingStartedData(tenant);
@@ -1171,6 +1177,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 //contact.DisplayGettingStarted = displayGettingStarted;
                 //repo.Update(contact);
                 //repo.SubmitChanges();
+                SecurityUtility.AuthenticationOnTenant(tenant);
 
                 ContactQuery query = new ContactQuery(tenant);
                 ContactPM contact = query.GetSingleContact(email, tenant);
@@ -1191,6 +1198,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         {
             try
             {
+                SecurityUtility.AuthenticationOnTenant(tenant);
+
                 var tempstate = Guid.NewGuid().ToString("N");
                 TenantAdditionalDataRepository Repo = new TenantAdditionalDataRepository(tenant);
                 var currentTenant = Repo.GetSingleTenantAdditionalData(tenant);
@@ -1249,6 +1258,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         {
             try
             {
+                SecurityUtility.AuthenticationOnTenant(tenant);
                 DropBoxActionsHelper helper = new DropBoxActionsHelper(tenant);
                 List<QueueTask> tasks = new List<QueueTask>();
                 tasks.Add(new QueueTask() { Action = "NewImporterShipment", Parameters = new List<Logitude.Server.Tools.Parameter>() { new Logitude.Server.Tools.Parameter { Name = "ImporterShipment", Value = "sssssssssssss" } } });
@@ -1266,6 +1276,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         {
             try
             {
+                SecurityUtility.AuthenticationOnTenant(tenant);
+
                 TenantAdditionalDataRepository Repo = new TenantAdditionalDataRepository(tenant);
                 var currentTenant = Repo.GetSingleTenantAdditionalData(tenant);
 
@@ -1281,6 +1293,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         {
             try
             {
+                SecurityUtility.AuthenticationOnTenant(tenant);
+
                 TenantAdditionalDataRepository Repo = new TenantAdditionalDataRepository(tenant);
                 var currentTenant = Repo.GetSingleTenantAdditionalData(tenant);
                 if (currentTenant != null)
@@ -1300,6 +1314,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         {
             try
             {
+                SecurityUtility.AuthenticationOnTenant(tenant);
+
                 DropBoxActionsHelper helper = new DropBoxActionsHelper(tenant);
                 List<string> tasks = new List<string>();
                 tasks.Add(Guid.NewGuid().ToString());
@@ -1327,6 +1343,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         {
             try
             {
+                SecurityUtility.AuthenticationOnTenant(tenant);
+
                 DropBoxActionsHelper helper = new DropBoxActionsHelper(tenant);
                 var ByteData = Encoding.ASCII.GetBytes(FullText); //LogitudeXmlSerializer.SerializeObject(FullText);
                 if (!FileName.Contains("."))
@@ -1349,6 +1367,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
+                SecurityUtility.AuthenticationOnTenant(tenant);
 
                 PartnersDomainService commonDomain = new PartnersDomainService();
                 commonDomain.UpdateCustomerActualData(entityId, tenant);
@@ -1367,6 +1386,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
+                SecurityUtility.AuthenticationOnTenant(tenant);
 
                 VATTypesGroupQuery entityQuery = new VATTypesGroupQuery(tenant);
                 List<VATTypesGroupPM> myResult = entityQuery.GetVATTypesGroups(tenant);
@@ -1386,6 +1406,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
+                SecurityUtility.AuthenticationOnTenant(tenant);
 
                 List<ContactList> myResult = new List<ContactList>();
                 List<ContactList> DisinctContactEmail = new List<ContactList>();
@@ -1442,6 +1463,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
+                SecurityUtility.AuthenticationOnTenant(tenant);
 
                 List<UserList> myResult = new List<UserList>();
                 UserQuery query = new UserQuery(tenant);
@@ -1463,6 +1485,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
+                SecurityUtility.AuthenticationOnTenant(tenant);
 
                 List<UserList> myResult = new List<UserList>();
                 UserQuery query = new UserQuery(tenant);
@@ -1488,6 +1511,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     int tenant = authToken.Tenant;
 
                     SecurityUtility.AuthenticationOnTenant(tenant);
+                    SecurityUtility.AuthenticationOnEntityTenant("", args.Tenant, tenant);
 
                     if (args != null)
                     {
@@ -1547,6 +1571,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 string loggedUserEmail = authToken.Email;
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnTenant(tenant);
                 SecurityUtility.CheckContactFeature("Airline", "READ", authToken.Tenant);
                 CommonDataDomainService service = new CommonDataDomainService();
                 DailySpotlightClass myResult = service.GetAirlineDashboardSpotlightCounts(tenant);
@@ -1566,6 +1591,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 string loggedUserEmail = authToken.Email;
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnTenant(tenant);
                 SecurityUtility.CheckContactFeature("Airline", "READ", authToken.Tenant);
                 CommonDataDomainService service = new CommonDataDomainService();
                 List<ChartingDataClass> myResult = service.GetDashBoardBookings(tenant);
@@ -1600,6 +1626,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         {
             try
             {
+                SecurityUtility.AuthenticationOnTenant(tenant);
                 CommonDataDomainService commonDomain = new CommonDataDomainService();
                 List<ComputingPartnerTranslationPM> myResult = commonDomain.GetComputingPartnerTranslationsByPartnerAndTableId(ComputingPartnerId, ObjectTableId, tenant);
                 return Request.CreateResponse(HttpStatusCode.OK, myResult);
@@ -1717,6 +1744,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
+                SecurityUtility.AuthenticationOnTenant(tenant);
                 string tenantString = tenant.ToString();
 
 
@@ -1812,6 +1840,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
+                SecurityUtility.AuthenticationOnTenant(tenant);
                 string tenantString = tenant.ToString();
 
                 ICommonDataContext myContext = CommonDataContext.GetContext(tenant);
@@ -1871,6 +1900,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
+                SecurityUtility.AuthenticationOnTenant(tenant);
                 string tenantString = tenant.ToString();
 
                 ICommonDataContext myContext = CommonDataContext.GetContext(tenant);
@@ -1900,6 +1930,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
+                SecurityUtility.AuthenticationOnTenant(tenant);
 
                 AccountingSettingPM myResult = null;
 
@@ -2067,6 +2098,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
+                SecurityUtility.AuthenticationOnTenant(tenant);
 
                 CustomsInterfaceSettingQuery query = new CustomsInterfaceSettingQuery(tenant);
                 List<CustomsInterfaceSettingList> result = new List<CustomsInterfaceSettingList>();
@@ -2447,6 +2479,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
+                SecurityUtility.AuthenticationOnTenant(tenant);
 
                 TenantRepository entityRepository = new TenantRepository(tenant);
                 TenantQuery entityQuery = new TenantQuery(entityRepository);
@@ -2498,6 +2531,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         {
             try
             {
+                SecurityUtility.AuthenticationOnTenant(tenant);
 
                 string result = "";
                 BlobFileInfo fileInfo = new BlobFileInfo()
@@ -2540,7 +2574,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         {
             try
             {
-
+                SecurityUtility.AuthenticationOnTenant(id);
                 TenantQuery tenantQuery = new TenantQuery(id);
                 TenantPM tenantPM = tenantQuery.GetTenantFromDB(id);
                 return Request.CreateResponse(HttpStatusCode.OK, tenantPM.EcommerceSupportEmail);
@@ -2723,6 +2757,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
+                SecurityUtility.AuthenticationOnTenant(tenant);
 
                 CarrierAreaQuery entityQuery = new CarrierAreaQuery(tenant);
                 List<CarrierAreaList> myResult = entityQuery.GetCarrierAreasByCarrierId(carrierId, tenant);
@@ -2744,6 +2779,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
+                SecurityUtility.AuthenticationOnTenant(tenant);
 
                 ICRMContext crmContext = CRMContext.GetContext(tenant);
                 ICommonDataContext commonContext = CommonDataContext.GetContext(tenant);
@@ -2820,6 +2856,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             {
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 ChargesTypeQuery chargesTypeQuery = new ChargesTypeQuery(authToken.Tenant);
 
                 ChargesTypeList chargesTypeList = chargesTypeQuery.GetSingleChargesTypeListByCode(code, authToken.Tenant);
@@ -2838,6 +2875,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             {
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
 
                 HTSCodeQuery hTSCodeQuery = new HTSCodeQuery(authToken.Tenant);
                 List<HTSCodePM> hTSCodePMs = hTSCodeQuery.GetHTSCodeByProductItemIdsAndCountry(productItemIds, toCountryId, authToken.Tenant);

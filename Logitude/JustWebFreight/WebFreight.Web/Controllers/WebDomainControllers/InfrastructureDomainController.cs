@@ -207,6 +207,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
+                SecurityUtility.AuthenticationOnTenant(tenant);
                 string loggedUserEmail = authToken.Email;
 
                 string loggedUserId = null;
@@ -498,6 +499,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     int tenant = authToken.Tenant;
 
                     SecurityUtility.AuthenticationOnTenant(tenant);
+                    SecurityUtility.AuthenticationOnEntityTenant("", args.Tenant, tenant);
 
                     if (args != null)
                     {
@@ -930,6 +932,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
+                SecurityUtility.AuthenticationOnTenant(tenant);
 
                 DateTime? filterByDate = null;
                 switch (dateFilterCode)
@@ -1319,6 +1322,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
+                SecurityUtility.AuthenticationOnTenant(tenant);
 
                 ShipmentRepository shipmentRepository = new ShipmentRepository(entityId);
                 QuoteRepository quoteRepository = new QuoteRepository(entityId);
@@ -1370,6 +1374,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
+                SecurityUtility.AuthenticationOnTenant(tenant);
 
                 IWebFreightContext webFreightContext = WebFreightContext.GetContext(entityId);
                 CounterRepository counterRepository = new CounterRepository(webFreightContext);
