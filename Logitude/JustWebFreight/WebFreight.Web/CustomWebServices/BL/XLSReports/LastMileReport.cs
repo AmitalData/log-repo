@@ -34,6 +34,7 @@ namespace WebFreight.Web.CustomWebServices.BL.XLSReports
             var lastMileReportDataList = new List<LastMileReportData>();
             var OpenCourierMasters = courierMasterQueryService.GetAllCourierMasterForLastmileReport(hatraFrom, hatraTo, lastMileFrom, lastMileTo, airline, trucker, courierHawb,tenant);
             var qs = new DeclarationCourierStatusQueryService(context);
+            int MawbCountr = 0;
             foreach (var item in OpenCourierMasters)
             {
                 var lastMileReportData = new LastMileReportData();
@@ -46,17 +47,21 @@ namespace WebFreight.Web.CustomWebServices.BL.XLSReports
                 lastMileReportData.HatraDate = item.GetType().GetProperty("HatraDate").GetValue(item, null);
                 lastMileReportData.EstimatedArrivalDate = item.GetType().GetProperty("EstimatedArrivalDate").GetValue(item, null);
                 lastMileReportData.LastMileStatusDate = item.GetType().GetProperty("LastMileStatusDate").GetValue(item, null);
+                if (lastMileReportDataList.Find(x => x.Mawb == item.GetType().GetProperty("Mawb").GetValue(item, null)) == null)
+                {
+                    MawbCountr++;
+                }
                 lastMileReportDataList.Add(lastMileReportData);
             }
             if (lastMileReportDataList.Count > 0)
             {
-                dt = this.ExportData(lastMileReportDataList, dt);
+                dt = this.ExportData(lastMileReportDataList, dt, MawbCountr);
             }
             var xls = new ExportToExcelHelper();
             var res = xls.ExportDataTableToExcel(dt, this.tenant, settingCol);
             return res;
         }
-        private DataTable ExportData(List<LastMileReportData> lastMileReportDataList, DataTable dt)
+        private DataTable ExportData(List<LastMileReportData> lastMileReportDataList, DataTable dt,int MawbCountr)
         {
             lastMileReportDataList.ForEach(r =>
             {
@@ -65,16 +70,19 @@ namespace WebFreight.Web.CustomWebServices.BL.XLSReports
                 newrow[1] = r.IntegratorName;
                 newrow[2] = r.Trucker;
                 newrow[3] = r.LastMileServiceType;
-                newrow[4] = r.HatraDate;
-                newrow[5] = r.TerminalReleaseDate;
-                newrow[6] = r.LastMileDate;
-                newrow[7] = r.EstimatedArrivalDate;
-                newrow[8] = r.HatraDate;
-                newrow[9] = r.TerminalReleaseDate;
+                newrow[4] = r.LastMileStatusName;
+                newrow[5] = r.LastMileStatusDate;
+                newrow[6] = r.EstimatedArrivalDate;
+                newrow[7] = r.HatraDate;
+                newrow[8] = r.TerminalReleaseDate;
 
 
                 dt.Rows.Add(newrow);
             });
+            var Lastrow = dt.NewRow();
+            Lastrow[0] = ":כמות שטרי מטען בלדר";
+            Lastrow[1] = MawbCountr;
+            dt.Rows.Add(Lastrow);
             return dt;
         }
 
@@ -91,10 +99,9 @@ namespace WebFreight.Web.CustomWebServices.BL.XLSReports
             settingCol.Columns.Add(GetColumn(4, "LastMileServiceType", "LastMileServiceType", "string", 150));
             settingCol.Columns.Add(GetColumn(5, "LastMileStatusName", "LastMileStatusName", "string", 150));
             settingCol.Columns.Add(GetColumn(6, "LastMileStatusDate", "LastMileStatusDate", "string", 150));
-            settingCol.Columns.Add(GetColumn(7, "Asmacta", "Asmacta", "string", 150));
-            settingCol.Columns.Add(GetColumn(8, "EstimatedArrivalDate", "EstimatedArrivalDate", "string", 150));
-            settingCol.Columns.Add(GetColumn(9, "HatraDate", "HatraDate", "string", 150));
-            settingCol.Columns.Add(GetColumn(10, "TerminalReleaseDate", "TerminalReleaseDate", "string", 150));
+            settingCol.Columns.Add(GetColumn(7, "EstimatedArrivalDate", "EstimatedArrivalDate", "string", 150));
+            settingCol.Columns.Add(GetColumn(8, "HatraDate", "HatraDate", "string", 150));
+            settingCol.Columns.Add(GetColumn(9, "TerminalReleaseDate", "TerminalReleaseDate", "string", 150));
 
 
             return settingCol;
@@ -108,7 +115,6 @@ namespace WebFreight.Web.CustomWebServices.BL.XLSReports
             dt.Columns.Add(GetDataColumn("סוג שירות", "LastMileServiceType", "System.String"));
             dt.Columns.Add(GetDataColumn("שם סטטוס אחרון", "LastMileStatusName", "System.String"));
             dt.Columns.Add(GetDataColumn("תאריך ושעת הסטטוס", "LastMileStatusDate", "System.String"));
-            dt.Columns.Add(GetDataColumn("אסמכתא ", "Asmacta", "System.String"));
             dt.Columns.Add(GetDataColumn("תאריך הגעה משוער", "EstimatedArrivalDate", "System.String"));
             dt.Columns.Add(GetDataColumn("תאריך התרה", "HatraDate", "System.String"));
             dt.Columns.Add(GetDataColumn("תאריך יציאה ממסוף", "TerminalReleaseDate", "System.String"));

@@ -82,19 +82,26 @@ export class LastMileReportComponent extends BaseComponent implements OnInit {
     }
 
     ExportExcel() {
-        var errors: string[] = [];
-        /*if (!this.FromLastMile) {
-            errors.push("חובה לבחור מתאריך ");
-        }
-        if (!this.ToDateLastMile) {
-            errors.push("חובה לבחור עד תאריך ");
-        }*/
-        this.ValidationErrorsList = errors;
-        debugger;
+        this.ValidationErrorsList = this.GetErrors();
         if (this.ValidationErrorsList.length == 0) {
             var url = ServiceHelper.GetLogitudeURL() + 'api/DeclarationCourierStatusWebService/GetLastMileReport2Excel?' + this.GetLastMileReportSettings();
             window.open(url);
         }
+    }
+
+    GetErrors(){
+        var errors: string[] = [];
+
+        if (!this.ToDateLastMile && this.FromLastMile || !this.ToDateHatra && this.FromDateHatra) {
+            errors.push("חובה לבחור עד תאריך ");
+        }
+        if (this.ToDateLastMile && !this.FromLastMile || this.ToDateHatra && !this.FromDateHatra) {
+            errors.push("חובה לבחור  מתאריך");
+        }
+        if (!this.FromLastMile && !this.ToDateHatra && !this.ToDateLastMile && !this.FromDateHatra) {
+            errors.push("חובה להזין לפחות תאריך אחד");
+        }
+        return errors;
     }
 
     GetLastMileReportSettings() {

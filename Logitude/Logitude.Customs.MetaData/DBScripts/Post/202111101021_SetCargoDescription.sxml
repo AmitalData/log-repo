@@ -5,12 +5,11 @@
 
   <Oracle Version="1">
     <![CDATA[
-update cargodescription set DECLARATIONDOCUMENTID =
+update declarations set cargodescription =
 (select cargodescription from CONSIGNMENTS
 where declarationid= declarations.id and CONSIGNMENTS.CONSIGNMENTnumber=1
    
  )
-
 
     ]]>
   </Oracle>
