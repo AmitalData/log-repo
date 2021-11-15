@@ -49,20 +49,19 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 MainInterfaceCode = this.MainInterfaceCode,
                 LoggingObjectTableId = objectTableId,
                 LoggingEntityId = customsResponse.CourierMasterId,
-                LoggingEntityReference = customsResponse.HAWB,
+                LoggingEntityReference = customsResponse.MAWB,
 
                 LoggingUserId = customsResponse.LoggingUserId,
                 
             };
-            /*if(customsResponse.UnLoadPortCode != null)
+            if(customsResponse.FilteredRequest)
             {
-                genericRequestParams.RequestName = $" {customsResponse.HAWB} שידור שינוי אתר פריקה לבלדר ";
-            }
-            if (customsResponse.StorageSiteCode != null)
+                genericRequestParams.RequestName = $" {customsResponse.MAWB} שידור סגירת PENDING מסוננים לבלדר  ";
+            }else
             {
-                genericRequestParams.RequestName = $" {customsResponse.HAWB} שידור שינוי אתר איחסון לבלדר ";
+                genericRequestParams.RequestName = $" {customsResponse.MAWB} שידור סגירת PENDING לבלדר ";
 
-            }*/
+            }
             if (customsResponse.ServerSplitDeclarationsList == null || (customsResponse.ServerSplitDeclarationsList != null && customsResponse.ServerSplitDeclarationsList.Count == 0))
 
             {
@@ -99,10 +98,11 @@ namespace Logitude.CustomsMessaging.MessagingServices
             {
                 CourierMasterId = mySendClosePendingRequestParams.CourierMasterId,
                 LoggingUserId = LoggingUserId,
-                HAWB = mySendClosePendingRequestParams.HAWB,
+                MAWB = mySendClosePendingRequestParams.MAWB,
                 PendingCode = mySendClosePendingRequestParams.PendingCode,
                 tenant = tenant,
                 MyMoreParams = "",
+                FilteredRequest= mySendClosePendingRequestParams.DeclarationsList != null,
                 ResponseContentHeader = new DefaultResponseContentHeader()
                 {
                     TransmitionDateTime = transmitionDateTime
@@ -173,11 +173,11 @@ namespace Logitude.CustomsMessaging.MessagingServices
             return ResponseContentHeader;
         }
         public Logitude.CustomsMessaging.Testers.Messages.DefaultResponseContentHeader ResponseContentHeader { get; set; }
-
+        public bool FilteredRequest  { get; set; }
         public int tenant { get; set; }
         public string LoggingUserId { get; set; }
         public string CourierMasterId { get; set; }
-        public string HAWB { get; set; }
+        public string MAWB { get; set; }
         public string PendingCode { get; set; }
         public string MyMoreParams { get; set; }
         public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;

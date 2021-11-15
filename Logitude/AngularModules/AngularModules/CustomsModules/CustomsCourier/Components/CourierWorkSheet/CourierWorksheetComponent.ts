@@ -32,7 +32,7 @@ import { CourierMasterPMService } from '../../../../Customs/Services/StandardPMs
 import { ConfirmWindow } from '../../../../Controls/Windows/ConfirmWindow';
 import { ServiceHelper } from '../../../../Infrastructure/Utilities/ServiceHelper';
 import { FeatureLocator } from '../../../../Infrastructure/Utilities/FeatureLocator';
-import { SendClosePendingRequestParams } from 'Customs/DataContract/RequestParams/SendDeletePendingRequestParams';
+import { SendClosePendingRequestParams } from 'Customs/DataContract/RequestParams/SendClosePendingRequestParams';
 
 @Component({
     
@@ -1958,12 +1958,25 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
             myMessageWindow.Show("קיים מסר זהה בתהליך");
             return;
         }
-        debugger;
         var currRequestParams = new SendClosePendingRequestParams();
+        currRequestParams.LoggingEnabled = true;
+        currRequestParams.LoggingUserId = SessionLocator.LoggedUserId;
+        currRequestParams.Tenant = SessionLocator.Tenant;
+        currRequestParams.CourierMasterId = this.entityPM.Id;
+        currRequestParams.MAWB = this.entityPM.MAWB;       
         if (this._CourierWorksheetSharedDataService._SelectedItems != null && this._CourierWorksheetSharedDataService._SelectedItems.Collection.length > 0) {
             currRequestParams.DeclarationsList = this._CourierWorksheetSharedDataService._SelectedItems.Collection;
         }
         currRequestParams.PendingCode=this.SelectedPendingCodeFilter.Key;
+        this._CourierMasterService.PostSendClosePending(currRequestParams)
+        .subscribe((res:any) => {
+            SessionLocator.SelectedSession.StopBusyIndicator();
+            var myMessageWindow = new MessageWindow();
+            myMessageWindow.Show(res.Result);
+            myMessageWindow.WindowClosed.subscribe(s => {
+                this.RefreshButtonClicked();
+            });
+        });
     }
     ChangeStorageSiteMethod() {
 

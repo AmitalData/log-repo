@@ -9,7 +9,7 @@ namespace Logitude.CustomsMessaging.Common.RequestParams
     public class SendClosePendingRequestParams : RequestParamsBase
     {
         public string CourierMasterId { get; set; }
-        public string HAWB { get; set; }
+        public string MAWB { get; set; }
         public string PendingCode { get; set; }
         public string[] DeclarationsList { get; set; }
     }

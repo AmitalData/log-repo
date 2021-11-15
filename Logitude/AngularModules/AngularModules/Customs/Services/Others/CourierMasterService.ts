@@ -14,6 +14,7 @@ import { GatepassRequestMessageRequestParams } from '../../DataContract/RequestP
 import { SendALLStorageSiteRequestParams } from '../../DataContract/RequestParams/SendALLStorageSiteRequestParams';
 import { SendUnCorrectDocumentsRequestParams } from '../../DataContract/RequestParams/SendUnCorrectDocumentsRequestParams';
 import { AppTool } from '../../../Infrastructure/Tools';
+import { SendClosePendingRequestParams } from 'Customs/DataContract/RequestParams/SendClosePendingRequestParams';
 
 
 @Injectable()
@@ -684,7 +685,7 @@ export class CourierMasterService {
 
     }
 
-    PostSendDeletePending(requestParams: SendALLStorageSiteRequestParams) {
+    PostSendClosePending(requestParams: SendClosePendingRequestParams) {
 
         return defer(() => {
             var authHeader = new Headers();
@@ -695,7 +696,7 @@ export class CourierMasterService {
             serviceResponse = new ServiceResponse();
 
             return this._http.post(
-                this._apiUrl + '/PostSendALLChangeStorageSiteCode/', JSON.stringify(requestParams), ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
+                this._apiUrl + '/PostSendClosePending/', JSON.stringify(requestParams), ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
                     var messString = res;
                     var serviceResponse: ServiceResponse;
                     serviceResponse = new ServiceResponse();
