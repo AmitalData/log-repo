@@ -62,6 +62,8 @@ namespace WebFreight.Web.Controllers.QuoteModel.Generated.PMControllers
                     string token = HttpContext.Current.Request.Headers["Token"];
                     AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                     SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                    SecurityUtility.AuthenticationOnTenant(entityPM.Tenant);
+                    SecurityUtility.AuthenticationOnEntityTenant("QuoteTemplate", entityPM.Tenant, authToken.Tenant);
                     SecurityUtility.CheckContactFeature("QuoteTemplate", "NEW", authToken.Tenant);
 
                     string logKey = PerformanceLogger.LogCurrentTime();
@@ -172,17 +174,18 @@ namespace WebFreight.Web.Controllers.QuoteModel.Generated.PMControllers
         {
             try
             {
-                    string token = HttpContext.Current.Request.Headers["Token"];
-                    AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                    SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                    SecurityUtility.CheckContactFeature("QuoteTemplate", "NEW", authToken.Tenant);
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnTenant(tenant);
+                SecurityUtility.CheckContactFeature("QuoteTemplate", "NEW", authToken.Tenant);
                 //using (TransactionScope scope = TransactionFactory.GetNewTransaction())
                 //{
-                    QuoteTemplateHelper quoteTemplateHelper = new QuoteTemplateHelper();
-                    QuoteTemplatePM entityPM = quoteTemplateHelper.CopyQuoteTemplate(quoteTemplateId, copyName, userid, tenant);
-                   // scope.Complete();
-                    return Request.CreateResponse(HttpStatusCode.OK, entityPM);
-               // }
+                QuoteTemplateHelper quoteTemplateHelper = new QuoteTemplateHelper();
+                QuoteTemplatePM entityPM = quoteTemplateHelper.CopyQuoteTemplate(quoteTemplateId, copyName, userid, authToken.Tenant);
+                // scope.Complete();
+                return Request.CreateResponse(HttpStatusCode.OK, entityPM);
+                // }
 
             }
             catch (Exception ex)
@@ -198,9 +201,10 @@ namespace WebFreight.Web.Controllers.QuoteModel.Generated.PMControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnTenant(tenant);
                 SecurityUtility.CheckContactFeature("QuoteTemplate", "READ", authToken.Tenant);
-                QuoteTemplateSettingQuery quoteTemplateSettingQuery = new QuoteTemplateSettingQuery(tenant);
-                QuoteTemplateSettingPM quoteTemplateSetting = quoteTemplateSettingQuery.GetSinglePM(quoteTemplateSettingId, tenant);
+                QuoteTemplateSettingQuery quoteTemplateSettingQuery = new QuoteTemplateSettingQuery(authToken.Tenant);
+                QuoteTemplateSettingPM quoteTemplateSetting = quoteTemplateSettingQuery.GetSinglePM(quoteTemplateSettingId, authToken.Tenant);
 
                 return Request.CreateResponse(HttpStatusCode.OK, quoteTemplateSetting);
 
@@ -219,9 +223,10 @@ namespace WebFreight.Web.Controllers.QuoteModel.Generated.PMControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnTenant(tenant);
                 SecurityUtility.CheckContactFeature("QuoteTemplate", "READ", authToken.Tenant);
                 QuoteTemplateQuery quoteTemplateQuery = new QuoteTemplateQuery(authToken.Tenant);
-                IQueryable<QuoteTemplatePM> quoteTemplates = quoteTemplateQuery.GetQuoteTemplatePMListsByQuotetemplatetype(quotetemplatetype, tenant);
+                IQueryable<QuoteTemplatePM> quoteTemplates = quoteTemplateQuery.GetQuoteTemplatePMListsByQuotetemplatetype(quotetemplatetype, authToken.Tenant);
     
                 return Request.CreateResponse(HttpStatusCode.OK, quoteTemplates.ToList());
             }
@@ -240,10 +245,11 @@ namespace WebFreight.Web.Controllers.QuoteModel.Generated.PMControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnTenant(tenant);
                 SecurityUtility.CheckContactFeature("QuoteTemplate", "READ", authToken.Tenant);
-                QuoteTemplateQuery quoteTemplateQuery = new QuoteTemplateQuery(tenant);
-                QuoteTemplateSectionQuery quoteTemplateSectionQuery = new QuoteTemplateSectionQuery(tenant);
-                var templateSections = quoteTemplateSectionQuery.GetQuoteTemplateSectionPMsByTemplateId(id, quoteId, tenant, defultQuoteTemplate, quotationSections);
+                QuoteTemplateQuery quoteTemplateQuery = new QuoteTemplateQuery(authToken.Tenant);
+                QuoteTemplateSectionQuery quoteTemplateSectionQuery = new QuoteTemplateSectionQuery(authToken.Tenant);
+                var templateSections = quoteTemplateSectionQuery.GetQuoteTemplateSectionPMsByTemplateId(id, quoteId, authToken.Tenant, defultQuoteTemplate, quotationSections);
 
                 return Request.CreateResponse(HttpStatusCode.OK, templateSections);
             }
@@ -285,19 +291,20 @@ namespace WebFreight.Web.Controllers.QuoteModel.Generated.PMControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnTenant(tenant);
                 SecurityUtility.CheckContactFeature("QuoteTemplate", "READ", authToken.Tenant);
-                ICommonDataContext commonContext = CommonDataContext.GetContext(tenant);
+                ICommonDataContext commonContext = CommonDataContext.GetContext(authToken.Tenant);
                 DocumentRepository documentRep = new DocumentRepository(commonContext);
-                ObjectTableRepository tableRepository = new ObjectTableRepository(tenant);
+                ObjectTableRepository tableRepository = new ObjectTableRepository(authToken.Tenant);
                 DocumentTypeRepository documentTypeRepository = new DocumentTypeRepository(commonContext);
                 DocumentOutRepository documentOutRepository = new DocumentOutRepository(commonContext);
 
-                IQuotesContext objectContext = QuotesContext.GetContext(tenant);
+                IQuotesContext objectContext = QuotesContext.GetContext(authToken.Tenant);
                 QuoteDocumentVersionRepository quoteDocumentVersionRep = new QuoteDocumentVersionRepository(objectContext);
                 QuoteRepository quoteRep = new QuoteRepository(objectContext);
                 QuoteQuery quoteQuery = new QuoteQuery(new QuoteRepository(objectContext));
-                string documentTypeId = documentTypeRepository.GetDocumentTypeIdByCode("QUOTE", tenant);
-                QuoteService quoteService = new QuoteService(objectContext, tenant);
+                string documentTypeId = documentTypeRepository.GetDocumentTypeIdByCode("QUOTE", authToken.Tenant);
+                QuoteService quoteService = new QuoteService(objectContext, authToken.Tenant);
                 byte[] pdfData = null;
                 if (!string.IsNullOrEmpty(documentTypeId))
                 {
@@ -305,12 +312,12 @@ namespace WebFreight.Web.Controllers.QuoteModel.Generated.PMControllers
                     using (TransactionScope scope = TransactionFactory.GetTransaction())
                     {
                        
-                        QuoteDocumentVersion version = quoteDocumentVersionRep.GetSingleQuoteDocumentVersion(quoteId, tenant, versionNumber);
-                        QuotePM quotePM = quoteQuery.GetSinglePM(quoteId, tenant);
-                        QuoteTemplateSectionQuery quoteTemplateSectionQuery = new QuoteTemplateSectionQuery(tenant);
+                        QuoteDocumentVersion version = quoteDocumentVersionRep.GetSingleQuoteDocumentVersion(quoteId, authToken.Tenant, versionNumber);
+                        QuotePM quotePM = quoteQuery.GetSinglePM(quoteId, authToken.Tenant);
+                        QuoteTemplateSectionQuery quoteTemplateSectionQuery = new QuoteTemplateSectionQuery(authToken.Tenant);
 
                         string defult = !isGenerate ? quotePM.QuoteTemplateId : null;
-                        List <string> templateSectionsIds = quoteTemplateSectionQuery.GetQuoteTemplateSectionIdsByQuoteTemplateId(quoteTemplateId, quoteId, tenant, defult, quotePM.QuotationSections);
+                        List <string> templateSectionsIds = quoteTemplateSectionQuery.GetQuoteTemplateSectionIdsByQuoteTemplateId(quoteTemplateId, quoteId, authToken.Tenant, defult, quotePM.QuotationSections);
                         string sectionsIds = "";
                         foreach (string sectionId in templateSectionsIds)
                         {
@@ -329,13 +336,13 @@ namespace WebFreight.Web.Controllers.QuoteModel.Generated.PMControllers
                         }
 
                         QuoteTemplateReportHelper quoteTemplateReportHelper = new QuoteTemplateReportHelper();
-                        pdfData = quoteTemplateReportHelper.BuildQuoteTemplatePdfReport(quoteId, quoteTemplateId, updatedByUserId, tenant, null,null, quotePM);
+                        pdfData = quoteTemplateReportHelper.BuildQuoteTemplatePdfReport(quoteId, quoteTemplateId, updatedByUserId, authToken.Tenant, null,null, quotePM);
 
                         //Update QuoteHTMLDocumentId;
                         quoteService.SetChangeSet(new List<QuoteChargePM>(), new List<QuoteFollowUpPM>(), new List<QuotePackagePM>(), new List<QuoteDocumentVersionPM>());
                         quoteService.Update(quotePM);
 
-                        Simplog.Data.CommonDataModel.EntityPOCOs.Document document = documentRep.GetSingleDocument(tenant, version.DocumentId);
+                        Simplog.Data.CommonDataModel.EntityPOCOs.Document document = documentRep.GetSingleDocument(authToken.Tenant, version.DocumentId);
                      
                         document.FileSize = Convert.ToInt32(pdfData.Length);
                         document.Extension = "pdf";
@@ -345,16 +352,16 @@ namespace WebFreight.Web.Controllers.QuoteModel.Generated.PMControllers
 
 
                         version.VersionType = "G";
-                        version.UpdateDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+                        version.UpdateDate = TenantServerConfigration.GetCurrentDateTime(authToken.Tenant);
                         version.UpdatedByUserId = updatedByUserId;
                         version.QuoteTemplateId = quoteTemplateId;
 
 
-                        DocumentOut documentout = documentOutRepository.GetDocumentOutByDocumentTypeAndEntity(quoteId, documentTypeId, tenant);
+                        DocumentOut documentout = documentOutRepository.GetDocumentOutByDocumentTypeAndEntity(quoteId, documentTypeId, authToken.Tenant);
                         documentout.IsBlobExist = true;
                         documentout.Issued = true;
                         documentout.DocumentsFiling.UpdatedByUserId = updatedByUserId;
-                        documentout.DocumentsFiling.UpdateDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+                        documentout.DocumentsFiling.UpdateDate = TenantServerConfigration.GetCurrentDateTime(authToken.Tenant);
                         documentOutRepository.Update(documentout);
 
 
@@ -366,14 +373,14 @@ namespace WebFreight.Web.Controllers.QuoteModel.Generated.PMControllers
 
 
                         string filename = document.Id + "." + document.Extension;
-                        string filePath = "tenant" + tenant.ToString() + "/" + StorageAcountDetails.GetBlobNameByLocation(filename.ToLower(), document.Folder);
+                        string filePath = "tenant" + authToken.Tenant.ToString() + "/" + StorageAcountDetails.GetBlobNameByLocation(filename.ToLower(), document.Folder);
                         IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
                         BlobFileInfo fileInfo = new BlobFileInfo()
                         {
                             FileName = document.Id,
                             FolderName = document.Folder,
                             Extension = document.Extension,
-                            Tenant = tenant,
+                            Tenant = authToken.Tenant,
                             FileSize = pdfData.Length,
 
                         };
@@ -412,9 +419,10 @@ namespace WebFreight.Web.Controllers.QuoteModel.Generated.PMControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnTenant(tenant);
                 SecurityUtility.CheckContactFeature("QuoteTemplate", "READ", authToken.Tenant);
-                QuoteDocumentVersionQuery quoteDocumentVersionQuery = new QuoteDocumentVersionQuery(tenant);
-                var data = quoteDocumentVersionQuery.GetQuoteDocumentVersionPMsByQuoteId(quoteId, tenant).ToList();
+                QuoteDocumentVersionQuery quoteDocumentVersionQuery = new QuoteDocumentVersionQuery(authToken.Tenant);
+                var data = quoteDocumentVersionQuery.GetQuoteDocumentVersionPMsByQuoteId(quoteId, authToken.Tenant).ToList();
 
                 return Request.CreateResponse(HttpStatusCode.OK, data);
             }
@@ -434,34 +442,35 @@ namespace WebFreight.Web.Controllers.QuoteModel.Generated.PMControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnTenant(tenant);
                 SecurityUtility.CheckContactFeature("QuoteTemplate", "READ", authToken.Tenant);
                 var fileData = Convert.FromBase64String(versionFile.FileBase64String);
 
 
-                ICommonDataContext commonContext = CommonDataContext.GetContext(tenant);
+                ICommonDataContext commonContext = CommonDataContext.GetContext(authToken.Tenant);
                 DocumentRepository documentRep = new DocumentRepository(commonContext);
-                ObjectTableRepository tableRepository = new ObjectTableRepository(tenant);
+                ObjectTableRepository tableRepository = new ObjectTableRepository(authToken.Tenant);
                 DocumentTypeRepository documentTypeRepository = new DocumentTypeRepository(commonContext);
                 DocumentOutRepository documentOutRepository = new DocumentOutRepository(commonContext);
 
-                IQuotesContext objectContext = QuotesContext.GetContext(tenant);
+                IQuotesContext objectContext = QuotesContext.GetContext(authToken.Tenant);
                 QuoteDocumentVersionRepository quoteDocumentVersionRep = new QuoteDocumentVersionRepository(objectContext);
                 QuoteRepository quoteRep = new QuoteRepository(objectContext);
-                DocumentType documentType = documentTypeRepository.GetSingleDocumentTypeByCode("QUOTE", tenant);
+                DocumentType documentType = documentTypeRepository.GetSingleDocumentTypeByCode("QUOTE", authToken.Tenant);
                 if (documentType != null)
                 {
                     using (TransactionScope scope = TransactionFactory.GetTransaction())
                     {
-                        QuoteDocumentVersion version = quoteDocumentVersionRep.GetSingleQuoteDocumentVersion(versionFile.QuoteId, tenant, versionFile.VersionNumber);
+                        QuoteDocumentVersion version = quoteDocumentVersionRep.GetSingleQuoteDocumentVersion(versionFile.QuoteId, authToken.Tenant, versionFile.VersionNumber);
 
 
-                        Quote quote = quoteRep.GetSingleQuote(versionFile.QuoteId, tenant);
+                        Quote quote = quoteRep.GetSingleQuote(versionFile.QuoteId, authToken.Tenant);
                         quote.LastVersionNumber = version.VersionNumber;
                         quote.QuoteTemplateId = version.QuoteTemplateId;
 
-                        Simplog.Data.CommonDataModel.EntityPOCOs.Document document = documentRep.GetSingleDocument(tenant, version.DocumentId);
+                        Simplog.Data.CommonDataModel.EntityPOCOs.Document document = documentRep.GetSingleDocument(authToken.Tenant, version.DocumentId);
                         version.VersionType = "U";
-                        version.UpdateDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+                        version.UpdateDate = TenantServerConfigration.GetCurrentDateTime(authToken.Tenant);
                         version.UpdatedByUserId = versionFile.UpdatedByUserId;
 
                         //string oldlocalPath = "quotetemplatesectionfiles/" + document.Id + "." + document.Extension;
@@ -475,11 +484,11 @@ namespace WebFreight.Web.Controllers.QuoteModel.Generated.PMControllers
                         document.IsEncrypted = true;
 
 
-                        DocumentOut documentout = documentOutRepository.GetDocumentOutByDocumentTypeAndEntity(versionFile.QuoteId, documentType.Id, tenant);
+                        DocumentOut documentout = documentOutRepository.GetDocumentOutByDocumentTypeAndEntity(versionFile.QuoteId, documentType.Id, authToken.Tenant);
                         documentout.IsBlobExist = true;
                         documentout.Issued = true;
                         documentout.DocumentsFiling.UpdatedByUserId = versionFile.UpdatedByUserId;
-                        documentout.DocumentsFiling.UpdateDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+                        documentout.DocumentsFiling.UpdateDate = TenantServerConfigration.GetCurrentDateTime(authToken.Tenant);
                         documentOutRepository.Update(documentout);
 
                         commonContext.SaveChanges();
@@ -488,7 +497,7 @@ namespace WebFreight.Web.Controllers.QuoteModel.Generated.PMControllers
 
 
                         string filename = document.Id + "." + document.Extension;
-                        string filePath = "tenant" + tenant.ToString() + "/" + StorageAcountDetails.GetBlobNameByLocation(filename.ToLower(), document.Folder);
+                        string filePath = "tenant" + authToken.Tenant.ToString() + "/" + StorageAcountDetails.GetBlobNameByLocation(filename.ToLower(), document.Folder);
                         IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
 
                         BlobFileInfo fileInfo = new BlobFileInfo()
@@ -496,7 +505,7 @@ namespace WebFreight.Web.Controllers.QuoteModel.Generated.PMControllers
                             FileName = document.Id,
                             FolderName = document.Folder,
                             Extension = document.Extension,
-                            Tenant = tenant,
+                            Tenant = authToken.Tenant,
                             FileSize = fileData.Length,
 
                         };

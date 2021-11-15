@@ -56,10 +56,11 @@ namespace WebFreight.Web.Controllers.QuoteModel.Generated.PMControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 QuoteTemplateTextDesignService service = new QuoteTemplateTextDesignService(QuotesContext.GetContext(authToken.Tenant), authToken.Tenant);
                 foreach (QuoteTemplateTextDesignPM item in quoteTemplateTextDesignPMs)
                 {
+                    SecurityUtility.AuthenticationOnTenant(item.Tenant);
+                    SecurityUtility.AuthenticationOnEntityTenant("QuoteTemplateTextDesign", item.Tenant, authToken.Tenant);
                     service.Update(item);
                 }
 
@@ -82,11 +83,11 @@ namespace WebFreight.Web.Controllers.QuoteModel.Generated.PMControllers
                     string token = HttpContext.Current.Request.Headers["Token"];
                     AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                     SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                    SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                    SecurityUtility.AuthenticationOnTenant(tenant);
 
                     string[] idsList = ids.Split(',');
-                    QuoteTemplateTextDesignQuery quoteTemplateTextDesignQuery = new QuoteTemplateTextDesignQuery(tenant);
-                    List<QuoteTemplateTextDesignPM> qUoteTemplateTextDesignLists = quoteTemplateTextDesignQuery.GetQuoteTemplateTextDesignPMListByIds(idsList, tenant);
+                    QuoteTemplateTextDesignQuery quoteTemplateTextDesignQuery = new QuoteTemplateTextDesignQuery(authToken.Tenant);
+                    List<QuoteTemplateTextDesignPM> qUoteTemplateTextDesignLists = quoteTemplateTextDesignQuery.GetQuoteTemplateTextDesignPMListByIds(idsList, authToken.Tenant);
 
 
                     return Request.CreateResponse(HttpStatusCode.OK, qUoteTemplateTextDesignLists);

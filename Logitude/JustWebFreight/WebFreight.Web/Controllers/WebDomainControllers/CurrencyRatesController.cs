@@ -162,6 +162,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                     if (args.TenantPM != null)
                     {
+                        SecurityUtility.AuthenticationOnTenant(args.TenantPM.Id);
+                        SecurityUtility.AuthenticationOnEntityTenant("RatesTable", args.TenantPM.Id, authToken.Tenant);
                         WebFreightDomainService webFreightDomain = new WebFreightDomainService();
                         CommonDataDomainService commonDataDomain = new CommonDataDomainService();
 
@@ -231,6 +233,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 string token = System.Web.HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnTenant(args.Tenant);
 
                 args.Tenant = authToken.Tenant;
                 SystemCurrencyChanger changeCurrencyManager = new SystemCurrencyChanger(args);

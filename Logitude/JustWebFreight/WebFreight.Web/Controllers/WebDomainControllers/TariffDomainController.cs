@@ -1918,6 +1918,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
+                SecurityUtility.AuthenticationOnTenant(tenant);
                 string loggedUserEmail = authToken.Email;
 
                 GenerateTariffsArgs args = new GenerateTariffsArgs() { LoggedUserEmail = loggedUserEmail, Tenant = tenant };
@@ -2490,6 +2491,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             string token = HttpContext.Current.Request.Headers["Token"];
             AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
             int tenant = authToken.Tenant;
+            SecurityUtility.AuthenticationOnTenant(tenant);
             string loggedUserEmail = authToken.Email;
             List<TariffSurchargesUpdatePM> logs = new List<TariffSurchargesUpdatePM>();
 
@@ -2505,7 +2507,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
             int tenant = authToken.Tenant;
             string loggedUserEmail = authToken.Email;
-
+            SecurityUtility.AuthenticationOnTenant(tenant);
             ITariffModuleContext iContext = TariffModuleContext.GetContext(tenant);
             TariffVersionQueryService iTariffVersionQueryService = new TariffVersionQueryService(iContext);          
             List<TariffVersionPM> entityPMs = iTariffVersionQueryService.GetAllVersionsWithLines(tariffId, tenant);

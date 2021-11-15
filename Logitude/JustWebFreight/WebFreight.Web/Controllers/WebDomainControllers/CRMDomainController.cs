@@ -150,7 +150,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                     string loggedUserEmail = authToken.Email;
                     int tenant = authToken.Tenant;
-
+                    SecurityUtility.AuthenticationOnTenant(tenant);
                     companyId = this.FixFilter(companyId);
                     contactId = this.FixFilter(contactId);
 
@@ -177,7 +177,9 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                     string loggedUserEmail = authToken.Email;
                     int tenant = authToken.Tenant;
-
+                    SecurityUtility.AuthenticationOnTenant(tenant);
+                    SecurityUtility.AuthenticationOnTenant(entityPM.Tenant);
+                    SecurityUtility.AuthenticationOnEntityTenant("Ticket", entityPM.Tenant, tenant);
                     CRMDomainService crmDomain = new CRMDomainService();
                     crmDomain.InsertTicket(entityPM);
 
@@ -201,7 +203,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                     string loggedUserEmail = authToken.Email;
                     int tenant = authToken.Tenant;
-
+                    SecurityUtility.AuthenticationOnTenant(tenant);
                     ownerId = this.FixFilter(ownerId);
                     employeeGroupId = this.FixFilter(employeeGroupId);
 
@@ -226,6 +228,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
+                SecurityUtility.AuthenticationOnTenant(tenant);
                 string loggedUserEmail = authToken.Email;
                 ownerId = FixFilter(ownerId);
                 employeeGroupId = FixFilter(employeeGroupId);
@@ -318,6 +321,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
                 string loggedUserEmail = authToken.Email;
+                SecurityUtility.AuthenticationOnTenant(tenant);
 
                 List<string> ids = employeeIds.Split(':').ToList();
                 UserQuery query = new UserQuery(tenant);
@@ -337,6 +341,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
+                SecurityUtility.AuthenticationOnTenant(tenant);
                 string loggedUserEmail = authToken.Email;
                 ContactQuery query = new ContactQuery(tenant);
                 var myResult = query.GetContactListsByEmailsString(emails, tenant);
@@ -355,6 +360,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
+                SecurityUtility.AuthenticationOnTenant(tenant);
                 string loggedUserEmail = authToken.Email;
                 UserQuery query = new UserQuery(tenant);
                 var myResult = query.GetUserListsByEmailsString(emails, tenant);
@@ -376,7 +382,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                     string loggedUserEmail = authToken.Email;
                     int tenant = authToken.Tenant;
-
+                    SecurityUtility.AuthenticationOnTenant(tenant);
                     CRMDomainService crmDomain = new CRMDomainService();
                     var results = crmDomain.GetTicketEscalationListsByTicketId(entityId, tenant);
 
@@ -400,7 +406,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                     string loggedUserEmail = authToken.Email;
                     int tenant = authToken.Tenant;
-
+                    SecurityUtility.AuthenticationOnTenant(tenant);
                     CRMDomainService crmDomain = new CRMDomainService();
                     var results = crmDomain.GetTicketOverViewStatisticsSummary(entityId, tenant);
 
@@ -424,7 +430,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                     string loggedUserEmail = authToken.Email;
                     int tenant = authToken.Tenant;
-
+                    SecurityUtility.AuthenticationOnTenant(tenant);
                     CRMDomainService crmDomain = new CRMDomainService();
                     var results = crmDomain.CalculatingBusinessHours(entityId, tenant);
 
@@ -448,6 +454,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                     string loggedUserEmail = authToken.Email;
                     int tenant = authToken.Tenant;
+                    SecurityUtility.AuthenticationOnTenant(tenant);
                     CRMDomainService crmDomain = new CRMDomainService();
                     var results = crmDomain.GetSingleSLAHeaderPMByTenant(tenant);
                     scope.Complete();
@@ -468,6 +475,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
+                SecurityUtility.AuthenticationOnTenant(tenant);
                 string loggedUserEmail = authToken.Email;
                 TicketUpdateService service = new TicketUpdateService(tenant);
                 service.CheckOwnerFeature(tenant, ownerId, ownerName);
@@ -524,7 +532,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 string loggedUserEmail = authToken.Email;
                 int tenant = authToken.Tenant;
-
+                SecurityUtility.AuthenticationOnTenant(tenant);
                 CRMDomainService crmDomain = new CRMDomainService();
                 crmDomain.CompleteActivity(activityId, post, summary, tenant);
                 ICRMContext crmContext = CRMContext.GetContext(tenant);
@@ -546,6 +554,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 string loggedUserEmail = authToken.Email;
                 int tenant = authToken.Tenant;
+                SecurityUtility.AuthenticationOnTenant(tenant);
                 ActivityList list = null;
                 if (args != null)
                 {
@@ -575,7 +584,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 string loggedUserEmail = authToken.Email;
                 int tenant = authToken.Tenant;
-
+                SecurityUtility.AuthenticationOnTenant(tenant);
                 CRMDomainService crmDomain = new CRMDomainService();
                 crmDomain.ReopenActivity(activityId, tenant);
                 ICRMContext crmContext = CRMContext.GetContext(tenant);
@@ -851,7 +860,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                     string loggedUserEmail = authToken.Email;
                     int tenant = authToken.Tenant;
-
+                    SecurityUtility.AuthenticationOnTenant(tenant);
                     ownerId = this.FixFilter(ownerId);
                     businessUnitId = this.FixFilter(businessUnitId);
 
@@ -1051,7 +1060,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     string loggedUserEmail = authToken.Email;
 
                     int tenant = authToken.Tenant;
-
+                    SecurityUtility.AuthenticationOnTenant(tenant);
                     QuotesDomainService crmDomain = new QuotesDomainService();
 
                     List<ChartingDataClass> myResult = crmDomain.GetQuotesGroupBySalesman(code, ownerId, businessUnitId, fieldCode, tenant, isTopTen);
@@ -1088,7 +1097,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     string loggedUserEmail = authToken.Email;
 
                     int tenant = authToken.Tenant;
-
+                    SecurityUtility.AuthenticationOnTenant(tenant);
                     DateTime? FromDateOBJ = DateHelper.GetDate(FromDate);
                     if (FromDate == null)
                     {
@@ -1136,7 +1145,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     string loggedUserEmail = authToken.Email;
 
                     int tenant = authToken.Tenant;
-
+                    SecurityUtility.AuthenticationOnTenant(tenant);
                     DateTime? FromDateOBJ = DateHelper.GetDate(FromDate);
                     if (FromDate == null)
                     {
@@ -1176,7 +1185,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     string loggedUserEmail = authToken.Email;
 
                     int tenant = authToken.Tenant;
-
+                    SecurityUtility.AuthenticationOnTenant(tenant);
                     PartnersDomainService crmDomain = new PartnersDomainService();
 
                     List<ChartingDataClass> myResult = crmDomain.GetCustomersGroupBySalesman(days, ownerId, businessUnitId, fieldCode, tenant, isTopTen);
@@ -1211,7 +1220,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     string loggedUserEmail = authToken.Email;
 
                     int tenant = authToken.Tenant;
-
+                    SecurityUtility.AuthenticationOnTenant(tenant);
                     DateTime? FromDateOBJ = DateHelper.GetDate(FromDate);
                     if (FromDate == null)
                     {
@@ -1251,7 +1260,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     string loggedUserEmail = authToken.Email;
 
                     int tenant = authToken.Tenant;
-
+                    SecurityUtility.AuthenticationOnTenant(tenant);
                     CRMDomainService crmDomain = new CRMDomainService();
 
                     List<ChartingDataClass> myResult = crmDomain.GetActivitiesGroupBySalesman(code, ownerId, businessUnitId, fieldCode, tenant, isTopTen);
@@ -1284,6 +1293,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                     string loggedUserEmail = authToken.Email;
                     int tenant = authToken.Tenant;
+                    SecurityUtility.AuthenticationOnTenant(tenant);
                     DateTime? FromDateOBJ = DateHelper.GetDate(FromDate);
                     if (FromDate == null)
                     {
@@ -1321,6 +1331,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                     string loggedUserEmail = authToken.Email;
                     int tenant = authToken.Tenant;
+                    SecurityUtility.AuthenticationOnTenant(tenant);
                     CRMDomainService crmDomain = new CRMDomainService();
                     List<ChartingDataClass> myResult = crmDomain.GetOpportunitiesGroupBySalesman(code, ownerId, businessUnitId, fieldCode, tenant, isTopTen);
                     scope.Complete();
@@ -1354,6 +1365,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     string loggedUserEmail = authToken.Email;
 
                     int tenant = authToken.Tenant;
+                    SecurityUtility.AuthenticationOnTenant(tenant);
                     DateTime? FromDateOBJ = DateHelper.GetDate(FromDate);
                     if (FromDate == null)
                     {
@@ -1396,7 +1408,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     string loggedUserEmail = authToken.Email;
 
                     int tenant = authToken.Tenant;
-
+                    SecurityUtility.AuthenticationOnTenant(tenant);
                     QuotesDomainService QuoteDomain = new QuotesDomainService();
 
                     List<ChartingDataClass> myResult = QuoteDomain.GetQuotesChartData(code, ownerId, businessUnitId, chartCode, tenant);
@@ -1433,6 +1445,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     string loggedUserEmail = authToken.Email;
 
                     int tenant = authToken.Tenant;
+                    SecurityUtility.AuthenticationOnTenant(tenant);
                     DateTime? FromDateOBJ = DateHelper.GetDate(FromDate);
                     if (FromDate == null)
                     {
@@ -1477,7 +1490,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     string loggedUserEmail = authToken.Email;
 
                     int tenant = authToken.Tenant;
-
+                    SecurityUtility.AuthenticationOnTenant(tenant);
                     CRMDomainService QuoteDomain = new CRMDomainService();
 
                     List<ChartingDataClass> myResult = QuoteDomain.GetOpportunitiesChartData(code, ownerId, businessUnitId, chartCode, tenant);
@@ -1512,6 +1525,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                     string loggedUserEmail = authToken.Email;
                     int tenant = authToken.Tenant;
+                    SecurityUtility.AuthenticationOnTenant(tenant);
                     DateTime? FromDateOBJ = DateHelper.GetDate(FromDate);
                     if (FromDate == null)
                     {
@@ -1552,6 +1566,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                     string loggedUserEmail = authToken.Email;
                     int tenant = authToken.Tenant;
+                    SecurityUtility.AuthenticationOnTenant(tenant);
                     CRMDomainService QuoteDomain = new CRMDomainService();
                     List<ChartingDataClass> myResult = QuoteDomain.GetActivitiesChartData(code, ownerId, businessUnitId, chartCode, tenant);
                     scope.Complete();
@@ -1581,7 +1596,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     string loggedUserEmail = authToken.Email;
 
                     int tenant = authToken.Tenant;
-
+                    SecurityUtility.AuthenticationOnTenant(tenant);
                     CRMDomainService QuoteDomain = new CRMDomainService();
 
                     List<ChartingDataClass> myResult = QuoteDomain.GetOpenedTicketsGroupByClassification(code, ownerId, employeeGroupId, tenant);
@@ -1611,7 +1626,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     string loggedUserEmail = authToken.Email;
 
                     int tenant = authToken.Tenant;
-
+                    SecurityUtility.AuthenticationOnTenant(tenant);
                     CRMDomainService QuoteDomain = new CRMDomainService();
 
                     List<ChartingDataClass> myResult = QuoteDomain.GetOpenedTicketsGroupBySeverity(code, ownerId, employeeGroupId, tenant);
@@ -1641,7 +1656,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     string loggedUserEmail = authToken.Email;
 
                     int tenant = authToken.Tenant;
-
+                    SecurityUtility.AuthenticationOnTenant(tenant);
                     CRMDomainService QuoteDomain = new CRMDomainService();
 
                     List<ChartingDataClass> myResult = QuoteDomain.GetOpenedTicketsGroupByOwner(code, ownerId, employeeGroupId, tenant);
@@ -1671,7 +1686,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     string loggedUserEmail = authToken.Email;
 
                     int tenant = authToken.Tenant;
-
+                    SecurityUtility.AuthenticationOnTenant(tenant);
                     CRMDomainService QuoteDomain = new CRMDomainService();
 
                     List<ChartingDataClass> myResult = QuoteDomain.GetOpenedTicketsBySLAViolation(selectedIndex, code, ownerId, employeeGroupId, tenant);
@@ -1701,7 +1716,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     string loggedUserEmail = authToken.Email;
 
                     int tenant = authToken.Tenant;
-
+                    SecurityUtility.AuthenticationOnTenant(tenant);
                     CRMDomainService QuoteDomain = new CRMDomainService();
 
                     List<ChartingDataClass> myResult = QuoteDomain.GetOpenedTicketsByOpenedStage(selectedIndex, code, ownerId, employeeGroupId, tenant);
@@ -1732,7 +1747,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     string loggedUserEmail = authToken.Email;
 
                     int tenant = authToken.Tenant;
-
+                    SecurityUtility.AuthenticationOnTenant(tenant);
                     CRMDomainService QuoteDomain = new CRMDomainService();
 
                     List<ChartingDataClass> myResult = QuoteDomain.GetClosedTicketsGroupByClassification(code, ownerId, employeeGroupId, tenant);
@@ -1762,7 +1777,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     string loggedUserEmail = authToken.Email;
 
                     int tenant = authToken.Tenant;
-
+                    SecurityUtility.AuthenticationOnTenant(tenant);
                     CRMDomainService QuoteDomain = new CRMDomainService();
 
                     List<ChartingDataClass> myResult = QuoteDomain.GetClosedTicketsGroupBySeverity(code, ownerId, employeeGroupId, tenant);
@@ -1792,7 +1807,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     string loggedUserEmail = authToken.Email;
 
                     int tenant = authToken.Tenant;
-
+                    SecurityUtility.AuthenticationOnTenant(tenant);
                     CRMDomainService QuoteDomain = new CRMDomainService();
 
                     List<ChartingDataClass> myResult = QuoteDomain.GetClosedTicketsGroupByType(code, ownerId, employeeGroupId, tenant);
@@ -1822,7 +1837,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     string loggedUserEmail = authToken.Email;
 
                     int tenant = authToken.Tenant;
-
+                    SecurityUtility.AuthenticationOnTenant(tenant);
                     CRMDomainService QuoteDomain = new CRMDomainService();
 
                     List<ChartingDataClass> myResult = QuoteDomain.GetClosedTicketsBySLAViolation(selectedIndex, code, ownerId, employeeGroupId, tenant);
@@ -1852,7 +1867,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     string loggedUserEmail = authToken.Email;
 
                     int tenant = authToken.Tenant;
-
+                    SecurityUtility.AuthenticationOnTenant(tenant);
                     CRMDomainService QuoteDomain = new CRMDomainService();
 
                     List<ChartingDataClass> myResult = QuoteDomain.GetClosedTicketsBySolvedStage(selectedIndex, code, ownerId, employeeGroupId, tenant);
@@ -1882,7 +1897,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     string loggedUserEmail = authToken.Email;
 
                     int tenant = authToken.Tenant;
-
+                    SecurityUtility.AuthenticationOnTenant(tenant);
                     CRMDomainService QuoteDomain = new CRMDomainService();
 
                     List<ChartingDataClass> myResult = QuoteDomain.GetOpenTicketsGroupByClassification(ownerId, employeeGroupId, tenant, false);
@@ -1910,6 +1925,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                     string loggedUserEmail = authToken.Email;
                     int tenant = authToken.Tenant;
+                    SecurityUtility.AuthenticationOnTenant(tenant);
                     CRMDomainService QuoteDomain = new CRMDomainService();
                     List<ChartingDataClass> myResult = QuoteDomain.GetOpenTicketsByDueTime(ownerId, employeeGroupId, tenant, true);
                     scope.Complete();
@@ -1934,6 +1950,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                     string loggedUserEmail = authToken.Email;
                     int tenant = authToken.Tenant;
+                    SecurityUtility.AuthenticationOnTenant(tenant);
                     CRMDomainService QuoteDomain = new CRMDomainService();
                     List<ChartingDataClass> myResult = QuoteDomain.GetTicketOverviewPerformance(ticketId, tenant);
                     scope.Complete();
@@ -2465,7 +2482,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     string token = HttpContext.Current.Request.Headers["Token"];
                     AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                     int tenant = authToken.Tenant;
-
+                    SecurityUtility.AuthenticationOnTenant(tenant);
                     var myResult = 0;
                     if (!string.IsNullOrEmpty(contactIds))
                     {

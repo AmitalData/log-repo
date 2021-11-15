@@ -50,6 +50,9 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
 
                         else
                         {
+                            SecurityUtility.AuthenticationOnTenant(helper.Shipment.Tenant);
+                            SecurityUtility.AuthenticationOnEntityTenant("Shipment", helper.Shipment.Tenant, tenant);
+
                             ShipmentPM oldShipmentPM = helper.Shipment;
                             ShipmentPM newShipmentPM = this.CopyShipment(oldShipmentPM);
 

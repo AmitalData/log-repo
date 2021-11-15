@@ -31,10 +31,11 @@ namespace WebFreight.Web.Controllers.WebServices
                     int mytenant = authToken.Tenant;
                     string loggedUserEmail = authToken.Email;
 
+                    SecurityUtility.AuthenticationOnTenant(mytenant);
                     SecurityUtility.AuthenticationOnTenant(tenant);
 
                     InboundEmailWebService myService = new InboundEmailWebService();
-                    myService.SendInboundEmail(recepient, subject, body, tenant, entityId);
+                    myService.SendInboundEmail(recepient, subject, body, mytenant, entityId);
                     scope.Complete();
                     return Request.CreateResponse(HttpStatusCode.OK, "");
                 }

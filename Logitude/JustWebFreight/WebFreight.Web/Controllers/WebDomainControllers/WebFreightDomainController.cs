@@ -47,6 +47,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnTenant(args.Tenant);
                 IWebFreightContext objectContext = WebFreightContext.GetContext(args.Tenant);
                 if (args.QueryColumnsPMs != null && args.QueryColumnsPMs.Count > 0)
                 {
@@ -83,6 +84,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnTenant(args.Tenant);
                 IWebFreightContext objectContext = WebFreightContext.GetContext(args.Tenant);
                 if (args.QueryColumnsPMs != null && args.QueryColumnsPMs.Count > 0)
                 {
@@ -177,7 +179,9 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         {
             try
             {
-
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 var service = new QueryToExcelExportService();
                 var result = service.ExportQueryDataToExcel(filters);
 

@@ -55,9 +55,10 @@ namespace WebFreight.Web.Controllers.QuoteModel.Generated.PMControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnTenant(tenant);
 
-                QuoteTemplateSectionQuery quoteTemplateSectionQuery = new QuoteTemplateSectionQuery(tenant);
-                List<QuoteTemplateSectionPM> quoteTemplateSectionPMLists = quoteTemplateSectionQuery.GetQuoteTemplateSectionPMsByTemplateId(quoteTemplateId, tenant);
+                QuoteTemplateSectionQuery quoteTemplateSectionQuery = new QuoteTemplateSectionQuery(authToken.Tenant);
+                List<QuoteTemplateSectionPM> quoteTemplateSectionPMLists = quoteTemplateSectionQuery.GetQuoteTemplateSectionPMsByTemplateId(quoteTemplateId, authToken.Tenant);
 
                 return Request.CreateResponse(HttpStatusCode.OK, quoteTemplateSectionPMLists);
 
@@ -80,6 +81,8 @@ namespace WebFreight.Web.Controllers.QuoteModel.Generated.PMControllers
                 QuoteTemplateSectionService quoteTemplateSectionService = new QuoteTemplateSectionService(objectContext, authToken.Tenant);
                 foreach (QuoteTemplateSectionPM section in quoteTemplateSections)
                 {
+                    SecurityUtility.AuthenticationOnTenant(textCode.Tenant);
+                    SecurityUtility.AuthenticationOnEntityTenant("QuoteTemplateSection", section.Tenant, authToken.Tenant);
                     quoteTemplateSectionService.Update(section);
 
                 }
@@ -100,12 +103,12 @@ namespace WebFreight.Web.Controllers.QuoteModel.Generated.PMControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-
+                SecurityUtility.AuthenticationOnTenant(tenant);
                 QuoteTemplateReportHelper helper = new QuoteTemplateReportHelper();
-                IQuotesContext context = QuotesContext.GetContext(tenant);
+                IQuotesContext context = QuotesContext.GetContext(authToken.Tenant);
 
                 QuoteTemplateBuildArges quoteTemplateBuildArges = new QuoteTemplateBuildArges();
-                quoteTemplateBuildArges.Tenant = tenant;
+                quoteTemplateBuildArges.Tenant = authToken.Tenant;
                 quoteTemplateBuildArges.SectionTypeCode = sectionTypeCode;
 
                 QuoteQuery quoteQuery = null;
@@ -114,29 +117,29 @@ namespace WebFreight.Web.Controllers.QuoteModel.Generated.PMControllers
                     QuoteTemplateQuery quoteTemplateQuery = new QuoteTemplateQuery(new QuoteTemplateRepository(context));
                     QuoteTemplateSettingQuery quoteTemplateSettingQuery = new QuoteTemplateSettingQuery(new QuoteTemplateSettingRepository(context));
 
-                    quoteTemplateBuildArges.QuoteTemplatePM = quoteTemplateQuery.GetSinglePM(quoteTemplateId, tenant);
-                    quoteTemplateBuildArges.QuoteTemplateSettingPM = quoteTemplateSettingQuery.GetSinglePM(quoteTemplateBuildArges.QuoteTemplatePM.QuoteTemplateSettingId, tenant);
+                    quoteTemplateBuildArges.QuoteTemplatePM = quoteTemplateQuery.GetSinglePM(quoteTemplateId, authToken.Tenant);
+                    quoteTemplateBuildArges.QuoteTemplateSettingPM = quoteTemplateSettingQuery.GetSinglePM(quoteTemplateBuildArges.QuoteTemplatePM.QuoteTemplateSettingId, authToken.Tenant);
 
                     QuoteTemplateTextDesignQuery quotetemplateTextDesignQuery = new QuoteTemplateTextDesignQuery(new QuoteTemplateTextDesignRepository(context));
-                    quoteTemplateBuildArges.QuoteTemplateTextDesignPMLists  = quotetemplateTextDesignQuery.GetQuoteTemplateTextDesignPMsByTenant(tenant).ToList();
+                    quoteTemplateBuildArges.QuoteTemplateTextDesignPMLists  = quotetemplateTextDesignQuery.GetQuoteTemplateTextDesignPMsByTenant(authToken.Tenant).ToList();
 
                     if (sectionTypeCode == "QH" || sectionTypeCode == "QD" ||  sectionTypeCode == "PP" || sectionTypeCode == "PC" || sectionTypeCode == "PH")
                     {
                         QuoteTemplateTableDesignQuery quotetemplateTableDesignQuery = new QuoteTemplateTableDesignQuery(new QuoteTemplateTableDesignRepository(context));
-                        quoteTemplateBuildArges.QuoteTemplateTableDesignsLists  = quotetemplateTableDesignQuery.GetQuoteTemplateTableDesignPMsByTenant(tenant).ToList();
+                        quoteTemplateBuildArges.QuoteTemplateTableDesignsLists  = quotetemplateTableDesignQuery.GetQuoteTemplateTableDesignPMsByTenant(authToken.Tenant).ToList();
                         if (!string.IsNullOrEmpty(quoteId))
                         {
                             
                             quoteQuery = new QuoteQuery(new QuoteRepository(context));
-                            quoteTemplateBuildArges.QuotePM = quoteQuery.GetSinglePM(quoteId, tenant);
+                            quoteTemplateBuildArges.QuotePM = quoteQuery.GetSinglePM(quoteId, authToken.Tenant);
                         }
                         if (quoteTemplateBuildArges.QuotePM == null) quoteTemplateBuildArges.QuotePM = helper.BuildingQuotePM();
                     }
 
                     if (sectionTypeCode == "QH" || sectionTypeCode == "QD" || sectionTypeCode == "PH")
                     {
-                        QuoteTemplateTextCodeQuery quoteTemplateTextCodeQuery = new QuoteTemplateTextCodeQuery(tenant);
-                        quoteTemplateBuildArges.QuoteTemplateTextCodePMLists = quoteTemplateTextCodeQuery.GetQuoteTemplateTextCodePMsByQuoteTemplateId(tenant, quoteTemplateId).ToList();
+                        QuoteTemplateTextCodeQuery quoteTemplateTextCodeQuery = new QuoteTemplateTextCodeQuery(authToken.Tenant);
+                        quoteTemplateBuildArges.QuoteTemplateTextCodePMLists = quoteTemplateTextCodeQuery.GetQuoteTemplateTextCodePMsByQuoteTemplateId(authToken.Tenant, quoteTemplateId).ToList();
 
                     }
                 }
@@ -146,7 +149,7 @@ namespace WebFreight.Web.Controllers.QuoteModel.Generated.PMControllers
                 switch (sectionTypeCode)
                 {
                     case "S":
-                        bodyData = helper.DownloadQuoteTemplateSectionDataFile(sectionDocId, tenant);
+                        bodyData = helper.DownloadQuoteTemplateSectionDataFile(sectionDocId, authToken.Tenant);
                         break;
 
                     case "PH":
@@ -173,7 +176,7 @@ namespace WebFreight.Web.Controllers.QuoteModel.Generated.PMControllers
                         break;
 
                     default:
-                        bodyData = helper.DownloadQuoteTemplateSectionDataFile(sectionDocId, tenant);
+                        bodyData = helper.DownloadQuoteTemplateSectionDataFile(sectionDocId, authToken.Tenant);
                         break;
 
 
@@ -194,7 +197,7 @@ namespace WebFreight.Web.Controllers.QuoteModel.Generated.PMControllers
                         if (quoteTemplateBuildArges.QuotePM == null)
                         {
                             quoteQuery = new QuoteQuery(new QuoteRepository(context));
-                            quoteTemplateBuildArges.QuotePM = quoteQuery.GetSinglePM(quoteId, tenant);
+                            quoteTemplateBuildArges.QuotePM = quoteQuery.GetSinglePM(quoteId, authToken.Tenant);
                         }
                
                     }
@@ -205,8 +208,8 @@ namespace WebFreight.Web.Controllers.QuoteModel.Generated.PMControllers
                     string replyTo = "";
                     string cc = "";
                     string bcc = "";
-                    ObjectTableRepository objectTabelRepository = new ObjectTableRepository(tenant);
-                    ObjectTable objectTable = objectTabelRepository.GetObjectTableByName("Quote", tenant, true);
+                    ObjectTableRepository objectTabelRepository = new ObjectTableRepository(authToken.Tenant);
+                    ObjectTable objectTable = objectTabelRepository.GetObjectTableByName("Quote", authToken.Tenant, true);
 
                     if (objectTable != null)
                     {
@@ -219,7 +222,7 @@ namespace WebFreight.Web.Controllers.QuoteModel.Generated.PMControllers
                             Bcc = bcc,
                             UserId = userId,
                             ObjectTableId = objectTable.Id,
-                            Tenant = tenant,
+                            Tenant = authToken.Tenant,
                             HtmlString = bodyHtmlString,
 
                         };
@@ -297,11 +300,12 @@ namespace WebFreight.Web.Controllers.QuoteModel.Generated.PMControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnTenant(tenant);
 
-                QuoteTemplateExcludedSectionRepository quoteTemplateExcludedSectionRepository = new QuoteTemplateExcludedSectionRepository(tenant);
+                QuoteTemplateExcludedSectionRepository quoteTemplateExcludedSectionRepository = new QuoteTemplateExcludedSectionRepository(authToken.Tenant);
 
 
-                QuoteTemplateExcludedSection quoteTemplateExcludedSection = quoteTemplateExcludedSectionRepository.GetSingelExcludedSection(quoteId, quotetemplateId, quotetemplatesectionId, tenant);
+                QuoteTemplateExcludedSection quoteTemplateExcludedSection = quoteTemplateExcludedSectionRepository.GetSingelExcludedSection(quoteId, quotetemplateId, quotetemplatesectionId, authToken.Tenant);
 
                 quoteTemplateExcludedSectionRepository.Remove(quoteTemplateExcludedSection);
                 quoteTemplateExcludedSectionRepository.SubmitChanges();
@@ -325,13 +329,13 @@ namespace WebFreight.Web.Controllers.QuoteModel.Generated.PMControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-
+                SecurityUtility.AuthenticationOnTenant(tenant);
                 //QuoteTemplateExcludedSectionRepository quoteTemplateExcludedSectionRepository = new QuoteTemplateExcludedSectionRepository(tenant);
-                IQuotesContext objectContext = QuotesContext.GetContext(tenant);
-                QuoteTemplateExcludedSectionService service = new QuoteTemplateExcludedSectionService(objectContext, tenant);
+                IQuotesContext objectContext = QuotesContext.GetContext(authToken.Tenant);
+                QuoteTemplateExcludedSectionService service = new QuoteTemplateExcludedSectionService(objectContext, authToken.Tenant);
                 QuoteTemplateExcludedSectionPM item = new QuoteTemplateExcludedSectionPM()
                 {
-                    Tenant = tenant,
+                    Tenant = authToken.Tenant,
                     QuoteId = quoteId,
                     QuoteTemplateSectionId = quotetemplatesectionId,
                     QuoteTemplateId = quotetemplateId,
