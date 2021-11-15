@@ -271,6 +271,7 @@ namespace CommunicationWorkerRole
             DataService commonServiceQBO = new DataService(serviceContext);
             Attachable attachable = new Attachable();
             attachable.AttachableRef = new AttachableRef[1];
+            attachable.AttachableRef[0] = new AttachableRef();
             attachable.AttachableRef[0].EntityRef = new ReferenceType();
             attachable.AttachableRef[0].EntityRef.type = objectNameEnumType.Invoice.ToString();
             attachable.AttachableRef[0].EntityRef.name = objectNameEnumType.Invoice.ToString();
