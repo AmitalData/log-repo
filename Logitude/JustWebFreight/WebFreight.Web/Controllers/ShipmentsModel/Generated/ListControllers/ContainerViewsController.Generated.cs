@@ -42,6 +42,8 @@ using Logitude.BL.ShipmentsModel.EntityLists;
 using Logitude.BL.ShipmentsModel.EntityQueries;
 using Logitude.BL.ShipmentsModel.Tools.EntityService;
 using Simplog.Data.ShipmentsModel.Repositories;
+using Logitude.BL.ShipmentsModel.CustomFilters;
+		  
 using WebFreight.Web.Controllers.ShipmentsModel.ApiHelpers;
 		  
 namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.ListControllers
@@ -239,7 +241,10 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.ListControllers
                 nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList();
                 QueryOperations listQueryOperation = new QueryOperations();
                 listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
-				            entityPocos = ContainerAPiHelper.ApplyFilters(entityPocos, tenant);
+				                
+				ContainerCustomFilter customfilters = new ContainerCustomFilter(tenant);
+                entityPocos = customfilters.GetFilteredQuery(queryOperations, entityPocos);
+	            entityPocos = ContainerAPiHelper.ApplyFilters(entityPocos, tenant);
 
                 entityPocos = genericFilter.GetFilteredQuery<Container>(nonListQueryOperation, entityPocos);
                 int skippedEntities = queryOperations.PageIndex;

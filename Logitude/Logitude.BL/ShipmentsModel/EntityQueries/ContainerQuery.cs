@@ -243,6 +243,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     PODReceivedOnDate = entityPoco.PODReceivedOnDate,
 
                     IsAutomaticUpdates = entityPoco.IsAutomaticUpdates,
+                    IsClosed = entityPoco.IsClosed,
+                    ClosedDate = entityPoco.ClosedDate,
 
                 };
 
@@ -486,6 +488,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         ShipmentCreateDate = a.ShipmentCreateDate,
                         PODReceivedOnDate = a.PODReceivedOnDate,
                         IsAutomaticUpdates = a.IsAutomaticUpdates,
+                        IsClosed = a.IsClosed,
+                        ClosedDate = a.ClosedDate,
 
                     }).ToList();
         }
@@ -719,6 +723,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                    ShipmentCreateDate = entity.ShipmentCreateDate,
                                                    PODReceivedOnDate = entity.PODReceivedOnDate,
                                                    IsAutomaticUpdates = entity.IsAutomaticUpdates,
+                                                   IsClosed = entity.IsClosed,
+                                                   ClosedDate = entity.ClosedDate,
                                                };
             return result;
         }
@@ -939,6 +945,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     ShipmentCreateDate = container.ShipmentCreateDate,
                     PODReceivedOnDate = container.PODReceivedOnDate,
                     IsAutomaticUpdates = container.IsAutomaticUpdates,
+                    IsClosed = container.IsClosed,
+                    ClosedDate = container.ClosedDate,
                 };
                 MapCustomFields(containerPM, container);
             }
@@ -1166,6 +1174,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     ShipmentCreateDate = entityPoco.ShipmentCreateDate,
                     PODReceivedOnDate = entityPoco.PODReceivedOnDate,
                     IsAutomaticUpdates = entityPoco.IsAutomaticUpdates,
+                    IsClosed = entityPoco.IsClosed,
+                    ClosedDate = entityPoco.ClosedDate,
                 };
             }
 
