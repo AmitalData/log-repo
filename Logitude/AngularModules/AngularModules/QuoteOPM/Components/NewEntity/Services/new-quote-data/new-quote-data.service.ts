@@ -102,7 +102,7 @@ export class NewQuoteDataService {
         });
     }
   async getPorts(directionId: string, transportModed: string): Promise<Port[]> {
-    const res: ServiceResponse = await this.newQuoteOPWebService.GetPortsItemsList(directionId, transportModed, '', 1000000, false).toPromise();
+    const res: ServiceResponse = await this.newQuoteOPWebService.GetPortsItemsList(directionId, transportModed, '', 100, false).toPromise();
     return res.Result as Port[];
   }
 
@@ -112,12 +112,12 @@ export class NewQuoteDataService {
   }
 
   async getSpecialServices(directionId: string, transportModed: string): Promise<SpecialService[]> {
-    const res: ServiceResponse = await this.newQuoteOPWebService.GetSpecialServiceItemsList(directionId, transportModed, '', 1000000, false).toPromise();
+    const res: ServiceResponse = await this.newQuoteOPWebService.GetSpecialServiceItemsList(directionId, transportModed, '', 100, false).toPromise();
     return res.Result as SpecialService[];
   }
 
   async getIncoterms(): Promise<Incoterm[]> {
-    const res: ServiceResponse = await this.newQuoteOPWebService.GetETBPAYTRitemList('', '', 1000000, false).toPromise();
+    const res: ServiceResponse = await this.newQuoteOPWebService.GetETBPAYTRitemList('', '', 100, false).toPromise();
     return res.Result as Incoterm[];
   }
 

@@ -30,65 +30,65 @@ export class PriceCheckService {
     return this.dialogService.open(PriceCheckComponent, config);
   }
 
-  // private async getPrices(quote: QuoteOPPM): Promise<PriceChekRootResponse> {
-  //   const logitudeEntity = 'QuoteOP';
-  //   const logitudeViewModel = 'QuotesComponent';
-  //   var unifreightMessageM = new UnifreightMessageM();
-  //   unifreightMessageM.UnifreightEntity = 'GPRHEAD';
-  //   unifreightMessageM.UnifreightEntityNumber = '-1';
-  //   unifreightMessageM.LogitudeEntity = logitudeEntity;
-  //   unifreightMessageM.LogitudeEntityNumber = quote.Id;
-  //   unifreightMessageM.LogitudeViewModel = logitudeViewModel;
-  //   unifreightMessageM.Requset = [];
-  //   unifreightMessageM.Requset.push(["PriceCheckRequest", this.createRequestXml(quote)]);
+  private async getPrices(quote: QuoteOPPM): Promise<PriceChekRootResponse> {
+    const logitudeEntity = 'QuoteOP';
+    const logitudeViewModel = 'QuotesComponent';
+    var unifreightMessageM = new UnifreightMessageM();
+    unifreightMessageM.UnifreightEntity = 'GPRHEAD';
+    unifreightMessageM.UnifreightEntityNumber = '-1';
+    unifreightMessageM.LogitudeEntity = logitudeEntity;
+    unifreightMessageM.LogitudeEntityNumber = quote.Id;
+    unifreightMessageM.LogitudeViewModel = logitudeViewModel;
+    unifreightMessageM.Requset = [];
+    unifreightMessageM.Requset.push(["PriceCheckRequest", this.createRequestXml(quote)]);
 
-  //   const responsePromise = new Promise<PriceChekRootResponse>((resolve, reject) => {
-  //     const sub: Subscription = AmitalGatewayUtil.Instance.UnifaceRequestArrived
-  //       .subscribe(
-  //         (mess: UnifreightMessageM) => {
-  //           const IsMatchUnifreightCallbackCommand: boolean = (
-  //             mess.LogitudeEntity == logitudeEntity &&
-  //             mess.LogitudeEntityNumber == quote.Id &&
-  //             mess.LogitudeViewModel == logitudeViewModel);
+    const responsePromise = new Promise<PriceChekRootResponse>((resolve, reject) => {
+      const sub: Subscription = AmitalGatewayUtil.Instance.UnifaceRequestArrived
+        .subscribe(
+          (mess: UnifreightMessageM) => {
+            const IsMatchUnifreightCallbackCommand: boolean = (
+              mess.LogitudeEntity == logitudeEntity &&
+              mess.LogitudeEntityNumber == quote.Id &&
+              mess.LogitudeViewModel == logitudeViewModel);
 
-  //           if (IsMatchUnifreightCallbackCommand) {
-  //             sub.unsubscribe();
-  //             SessionLocator.SelectedSession.StopBusyIndicator();
-  //             let sBool = UnifreightMessageM.GetStringValue(mess, AmitalGatewayUtil.Instance.DeclarationMessaging.UnifreightResponseStatus);
-  //             if (sBool) {
-  //               const prices: PriceChekRootResponse = this.xml2Json.decodeXmlStr2Json(mess as any);
-  //               this.fixData(prices);
-  //               resolve(prices as any)
-  //             } else
-  //               reject(mess as any);
+            if (IsMatchUnifreightCallbackCommand) {
+              sub.unsubscribe();
+              SessionLocator.SelectedSession.StopBusyIndicator();
+              let sBool = UnifreightMessageM.GetStringValue(mess, AmitalGatewayUtil.Instance.DeclarationMessaging.UnifreightResponseStatus);
+              if (sBool) {
+                const prices: PriceChekRootResponse = this.xml2Json.decodeXmlStr2Json(mess as any);
+                this.fixData(prices);
+                resolve(prices as any)
+              } else
+                reject(mess as any);
 
-  //           }
-  //         }, (err) => {
-  //           reject(err);
-  //           SessionLocator.SelectedSession.StopBusyIndicator();
-  //         }
-  //       );
-  //   });
+            }
+          }, (err) => {
+            reject(err);
+            SessionLocator.SelectedSession.StopBusyIndicator();
+          }
+        );
+    });
 
-  //   SessionLocator.SelectedSession.StartBusyIndicator("RunPriceCheckQuery...");
+    SessionLocator.SelectedSession.StartBusyIndicator("RunPriceCheckQuery...");
 
-  //   AmitalGatewayUtil.Instance.SendRequestToUnifreightAsync(
-  //     "QuotesComponent.SendRequestToUnifreightAsync",
-  //     "GPRHMAIN.LogitudeTask",
-  //     "RunPriceCheckQuery",
-  //     unifreightMessageM,
-  //     "Feature 148708: פניה ליוניפרייט לקבלת מחירים");
+    AmitalGatewayUtil.Instance.SendRequestToUnifreightAsync(
+      "QuotesComponent.SendRequestToUnifreightAsync",
+      "GPRHMAIN.LogitudeTask",
+      "RunPriceCheckQuery",
+      unifreightMessageM,
+      "Feature 148708: פניה ליוניפרייט לקבלת מחירים");
 
-  //   return responsePromise;
-  // }
-
-  private async getPrices(quote: any): Promise<PriceChekRootResponse> {
-    return await new Promise<PriceChekRootResponse>((resolve) => {
-      const prices: PriceChekRootResponse = this.xml2Json.decodeXmlStr2Json(xmlPriceString)
-      this.fixData(prices)
-      resolve(prices);
-    })
+    return responsePromise;
   }
+
+  // private async getPrices(quote: any): Promise<PriceChekRootResponse> {
+  //   return await new Promise<PriceChekRootResponse>((resolve) => {
+  //     const prices: PriceChekRootResponse = this.xml2Json.decodeXmlStr2Json(xmlPriceString)
+  //     this.fixData(prices)
+  //     resolve(prices);
+  //   })
+  // }
 
   private calculateProducteCode(direction: string, transport: string) {
     if (direction === 'E') {
@@ -156,7 +156,6 @@ export class PriceCheckService {
       }
 
       return previousValue.concat([offers]);
-      // or acc.push([cur*cur , cur*cur*cur, cur+1]); return acc;
     }, []);
 
     prices.PriceChekResponse.Offers.Offer.forEach(x => {
