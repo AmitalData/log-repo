@@ -124,7 +124,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         TruckerName, 
 	         TerminalReleaseDate, 
 	         LastMileServiceType, 
-	         ShopId,
+	         ShopId, 
 	         CargoDescription,
 	      }
 
