@@ -200,6 +200,7 @@
     <Compile Include="MessagingServices\DCAInDF_NG_5118_MSG14004_ImportDeclarationCancellationReplyMsg.cs" />
     <Compile Include="MessagingServices\DCAInUCB2715SendNow_MsgMessagingService.cs" />
     <Compile Include="MessagingServices\DCAInUCBMultiUpdate_MsgMessagingService.cs" />
+    <Compile Include="MessagingServices\DCAInUCBClosePending_MsgMessagingService.cs" />
     <Compile Include="MessagingServices\DCAInUCSBondedDocument_MessagingService.cs" />
     <Compile Include="MessagingServices\DCAInDE_NG_5108_DecisionMessageMessagingService.cs" />
     <Compile Include="Dca\DCAMoveIncomeFileToDirService.cs" />
@@ -382,6 +383,7 @@
     <Compile Include="ResponseServices\SaveDF_MSG5002_DeclarationCancellationRequestMsgResponseService.cs" />
     <Compile Include="ResponseServices\DCAInUCUW2L_OpenDeclarationsByIntegratorInterfaceResponseService.cs" />
     <Compile Include="ResponseServices\UniCourierBatchSend2715SendNow_MsgResponseService.cs" />
+    <Compile Include="ResponseServices\UniCourierBatchSendClosePending_MsgResponseService.cs" />
     <Compile Include="ResponseServices\UniCourierBatchSendUCBCMSS_MsgResponseService.cs" />
     <Compile Include="ResponseServices\SaveCH_MSG_195_SearchResultsResponseService.cs" />
     <Compile Include="ResponseServices\UniCustomBatchSend2715Bonded_MsgResponseService.cs" />
