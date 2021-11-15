@@ -196,6 +196,13 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="ShopId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="DeclarationId"
     ReferencedTable="Declarations"
@@ -214,6 +221,11 @@
   <Relation
     ForeignKeyColumn="TruckerId"
     ReferencedTable="Truckers"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="ShopId"
+    ReferencedTable="Cards"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Index
