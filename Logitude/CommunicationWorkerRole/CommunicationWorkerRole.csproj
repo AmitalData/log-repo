@@ -396,7 +396,7 @@
     <Compile Include="MultiEntityUpdateWorkerRole.cs" />
     <Compile Include="Services\MultiEntityUpdateService.cs" />
 
-    <Compile Include="ContainerUpdateWR.cs" />
+
     <Compile Include="UpdatePortTimeZoneWR.cs" />
 
     <Compile Include="WebHookCommunicationWorkerRole.cs" />
