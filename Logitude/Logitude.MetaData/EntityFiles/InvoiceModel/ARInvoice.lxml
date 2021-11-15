@@ -16707,7 +16707,7 @@
     IsHeaderScreen="false"
     Code="&quot;ARInvoice.GeneralTabScreen&quot;"
     NumberOfColumns="1"
-    NumberOfRows="11">
+    NumberOfRows="10">
     <ScreenFields>
       <ScreenField
         Column="0"
@@ -16758,11 +16758,6 @@
         Column="0"
         Row="9"
         ObjectFieldName="&quot;Intercompany&quot;"
-        ScreenName="General Tab Screen" />
-      <ScreenField
-        Column="0"
-        Row="10"
-        ObjectFieldName="&quot;GlobalTaxCalculation&quot;"
         ScreenName="General Tab Screen" />
     </ScreenFields>
   </Screen>

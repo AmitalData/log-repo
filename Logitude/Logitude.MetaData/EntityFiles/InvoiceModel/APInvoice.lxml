@@ -10548,7 +10548,7 @@
     IsHeaderScreen="false"
     Code="&quot;APInvoice.GeneralTabScreen&quot;"
     NumberOfColumns="1"
-    NumberOfRows="7">
+    NumberOfRows="6">
     <ScreenFields>
       <ScreenField
         Column="0"
@@ -10579,11 +10579,6 @@
         Column="0"
         Row="5"
         ObjectFieldName="&quot;AccountingDate&quot;"
-        ScreenName="General Tab Screen" />
-      <ScreenField
-        Column="0"
-        Row="6"
-        ObjectFieldName="&quot;GlobalTaxCalculation&quot;"
         ScreenName="General Tab Screen" />
     </ScreenFields>
   </Screen>
@@ -10693,6 +10688,7 @@
     TextCode="&quot;APInvoice.TH.General&quot;"
     IsPackagable="true"
     IndexOrder="1"
+    HtmlComponentURL="&quot;./InvoiceModules/APInvoice/Components/EditTabs/APInvoiceGeneralTabComponent&quot;"
     FeatureCode="&quot;GENERAL&quot;"
     FeatureTextCodeCode="&quot;APInvoice.Features.General&quot;"
     FeatureDefaultText="&quot;General&quot;"
