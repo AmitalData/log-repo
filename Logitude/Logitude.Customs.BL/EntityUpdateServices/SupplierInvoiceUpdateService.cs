@@ -628,9 +628,12 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(context);
                 currentDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(entityPM.DeclarationId, true, false);
             }
-            if (currentDeclarationCourierStatusPM != null)
+            if (currentDeclarationCourierStatusPM != null && !String.IsNullOrWhiteSpace(currentDeclarationCourierStatusPM.ShopId))
             {
-                shopId = currentDeclarationCourierStatusPM.ShopId;
+                Card myCard = null;
+                var repository = new CardRepository(entityPM.Tenant);
+                myCard = repository.GetSingleCard(currentDeclarationCourierStatusPM.ShopId, entityPM.Tenant);
+                if (myCard != null && !String.IsNullOrWhiteSpace(myCard.Code)) shopId = myCard.Code;
             }
 
             bool dirty = false;
