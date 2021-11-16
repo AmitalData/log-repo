@@ -511,9 +511,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
             FieldName: 'ShipperName',
             DataTypeCode: 'String',
             Display: this.HasExportShipmentToggle ? 'Supplier / Consignee' : 'Supplier' ,
-            Styles: { width: '150px' },
-            HtmlListComponentName: 'SupplierConsigneeListTemplate',
-            HtmlListComponentUrl: './Shipment/Components/ListTemplates/SupplierConsigneeListTemplate',
+            Styles: { width: '150px' }, 
             IsCustomTemplate: true,
             ServerSideSortable: true,
             SortByName: "ShipperName"

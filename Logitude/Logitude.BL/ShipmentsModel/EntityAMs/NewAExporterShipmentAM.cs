@@ -13,14 +13,14 @@ namespace Logitude.BL.ShipmentsModel.EntityAMs
         public int Tenant { get; set; }
         public int ExporterTenant { get; set; }
         public string TransportModeId { get; set; }
-        public string DirectionId { get; set; } 
-        public string CustomerShipmentNumber { get; set; } 
-        public CodeProperties Shipper { get; set; } 
-        public CodeProperties FromPort { get; set; } 
-        public CodeProperties ToPort { get; set; } 
-        public string ShipmentTypeId { get; set; } 
+        public string DirectionId { get; set; }
+        public string CustomerShipmentNumber { get; set; }
+        public CodeProperties Shipper { get; set; }
+        public CodeProperties FromPort { get; set; }
+        public CodeProperties ToPort { get; set; }
+        public string ShipmentTypeId { get; set; }
         public CodeProperties Customer { get; set; }
-        public string ConsigneeName { get; set; } 
+        public string ConsigneeName { get; set; }
         public string InvoiceReference { get; set; }
         public string CustomerReference { get; set; }
         public bool IncludePickup { get; set; }
@@ -35,10 +35,6 @@ namespace Logitude.BL.ShipmentsModel.EntityAMs
         public double? Volume { get; set; }
         public List<Packages> ShipmentPackages { get; set; }
         //public bool SendUpdatesToAgentEnabled { get; set; }
-
-        public CodeProperties Agent { get; set; }
-
-        public CodeProperties Consignee { get; set; }
 
     }
 }
