@@ -78,6 +78,25 @@ using Simplog.Data.CommonDataModel;
             }
         }
 		
+		public Port GetPortByCode(string Code,int Tenant,string ComputingPartnerName = "")
+        { 
+		    try
+            {
+
+				
+				var temp = query.GetSinglePMByCode(Code,Tenant);				
+				 if (temp == null)
+                    throw new ApplicationException("Port with Code " + Code + " doesn't exist");
+
+				return PortDataMapping(temp,Tenant,ComputingPartnerName);
+			}
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+		
 		public Port PortDataMapping(PortPM MyEntityPM,int Tenant,string ComputingPartnerName = "")
         {
 		    try
@@ -107,7 +126,8 @@ using Simplog.Data.CommonDataModel;
 					   					   temp.State = StateService1.GetStateById(MyEntityPM.StateId,Tenant,ComputingPartnerName); 
 			       
 					   				   }
-				   					
+				   
+				   temp.PortCode = MyEntityPM.Code;					
 				   return temp;
 			}
             catch (Exception ex)
@@ -146,10 +166,14 @@ using Simplog.Data.CommonDataModel;
 						
 					}
 					
-					   					   
+					   
+					if (!string.IsNullOrEmpty(MyEntity.PortCode))
+					{
+						temp = query.GetSinglePMByCode(MyEntity.PortCode, Tenant);
+					} 					   
 					if(temp == null)
 					{   
-					    throw new ApplicationException("Port with Code " + MyEntity.Code + " doesn't exist");
+					    throw new ApplicationException("Port with PortCode " + MyEntity.PortCode + " doesn't exist");
 					} 
 					
 					if(string.IsNullOrEmpty(temp.Id))
@@ -241,7 +265,21 @@ using Simplog.Data.CommonDataModel;
 
 					}
 			
-										   
+					
+					if(string.IsNullOrEmpty(temp.Code))
+					{
+					   
+						 
+						if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.PortCode))
+						{
+								//throw new ApplicationException("PortCode Can't be update"); 
+								temp.Code = MyEntity.PortCode;
+								
+						
+						}  
+
+						
+					}					   
 					return temp;
 		    }
             catch (Exception ex)

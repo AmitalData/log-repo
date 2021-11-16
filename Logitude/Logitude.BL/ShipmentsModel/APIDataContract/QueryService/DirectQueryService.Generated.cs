@@ -1502,9 +1502,9 @@ using Simplog.Data.ShipmentsModel;
 
 						 								//throw new ApplicationException("MainCarriageFromPartner Can't be update"); 
 								temp.MainCarriageFromPartnerId = myMainCarriageFromPartnerPM.Id;
+						  
 
-
-
+							
 						} 
 
 					}

@@ -3859,6 +3859,21 @@
         IsCloseField="false"
         IsCompositKey="false"
         IsUpdateAllowed="false" />
+      <DCField
+        DCFieldName="&quot;PortCode&quot;"
+        FieldName="&quot;Code&quot;"
+        IsKey="true"
+        IsManualMapping="false"
+        IsMulti="false"
+        FieldsDataType="&quot;Text&quot;"
+        IsNullable="false"
+        IsSpecialField="false"
+        IsCustomType="false"
+        IsAttribute="true"
+        IgnoreCustomTypeCheck="false"
+        IsCloseField="false"
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
     </DataContract>
   </DataContracts>
   <AdditionalTextCodes>
