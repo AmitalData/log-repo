@@ -10,6 +10,9 @@ using WebFreight.Web.Helpers;
 using System.Text.RegularExpressions;
 using Logitude.Accounting.Data;
 using Logitude.Accounting.BL.CoreBL.Batch;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using WebFreight.Web.Security;
+using Simplog.Data.CommonDataModel.Repositories;
 
 namespace WebFreight.Web.Controllers.AccountingModel
 {
@@ -26,7 +29,9 @@ namespace WebFreight.Web.Controllers.AccountingModel
             try
             {
                 string token = HttpContext.Current.Request.Headers["Token"];
-
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnTenant(tenant);
                 bool batchIt = true;
                 if (batchIt)
                 {
@@ -71,7 +76,9 @@ namespace WebFreight.Web.Controllers.AccountingModel
             try
             {
                 string token = HttpContext.Current.Request.Headers["Token"];
-
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnTenant(tenant);
                 bool batchIt = true;
                 if (noBatch == 1) batchIt = false;
                 if (batchIt)
@@ -117,7 +124,9 @@ namespace WebFreight.Web.Controllers.AccountingModel
             try
             {
                 string token = HttpContext.Current.Request.Headers["Token"];
-
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnTenant(tenant);
                 bool batchIt = true;
                 if (noBatch == 1) batchIt = false;
                 if (batchIt)
