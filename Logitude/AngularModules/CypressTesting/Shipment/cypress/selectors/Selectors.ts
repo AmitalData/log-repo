@@ -29,7 +29,8 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly ShipmentSaveCloseButton = '[id^=Shipment-SaveClose]'
   public static readonly APInvoiceStatus = "[data-cy='StatusValue']";
   public static readonly ARInvoiceStatus = "[id^='ARInvoiceHeaderStatusName']";
-
+  public static readonly RoutingStatus = "[data-cy='ShipmentStatusValue']";
+  
   //#endregion
 
   //#region Create shipment
@@ -173,7 +174,9 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly EmptyContainerReturnATADate = '#date_ShipmentPackage_EmptyContainerReturnATA';
   public static readonly PickUpDeliveryATDTime = '#time_ShipmentPickUpDelivery_ATD';
   public static readonly PickUpDeliveryATDDate = '#date_ShipmentPickUpDelivery_ATD';
-
+  public static readonly PickUpDeliveryETADate = '#date_ShipmentPickUpDelivery_ETA';
+  public static readonly PickUpDeliveryATADate = '#date_ShipmentPickUpDelivery_ATA';
+  public static readonly PickUpDeliverynote = '#ShipmentPickUpDelivery_Notes';
   public static readonly ShipmentRatio = '#Shipment_Ratio';
   public static readonly ShipmentGrossWeightUnitCode = '#Shipment_GrossWeightUnitCode';
 
