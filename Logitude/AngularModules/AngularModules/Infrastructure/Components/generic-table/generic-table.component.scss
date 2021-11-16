@@ -1,3 +1,11 @@
+::ng-deep {
+    p-dynamicdialog .generic-table {
+        .p-dialog-content {
+            padding-bottom: 21px;
+        }
+    }
+}
+
 :host ::ng-deep {
     .p-paginator-bottom {
         display: none;
@@ -24,6 +32,10 @@
     // .highlight-row {
     //     background: #efefef !important;
     // }
+
+    .p-datatable-resizable .p-datatable-tbody > tr > td {
+        white-space: nowrap !important;
+    }
 
     .p-datatable .p-datatable-thead > tr > th {
         border-right: 1px solid #1084dc47;

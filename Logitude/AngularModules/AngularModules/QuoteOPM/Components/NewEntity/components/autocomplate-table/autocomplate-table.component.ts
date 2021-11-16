@@ -6,7 +6,8 @@ import { GenericTableService } from 'Infrastructure/Components/generic-table/gen
 import { ApiQueryFilters } from 'Infrastructure/DataContracts/ApiQueryFilters';
 import { AutoComplete } from 'primeng/autocomplete';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
-import { take } from 'rxjs/operators';
+import { fromEvent } from 'rxjs';
+import { debounceTime, take } from 'rxjs/operators';
 // import { Subscription } from 'rxjs';
 
 @Component({
@@ -180,5 +181,16 @@ export class AutocomplateTableComponent {
 
   private addSpace(str:string) {
     return str.replace(/[A-Z]/g, letter => ' ' + letter);
+  }
+  
+  alignRow(e: any) {
+    fromEvent(e.element, 'scroll')
+      .pipe(debounceTime(100))
+      .subscribe((e: any) => {
+        const div = e.target as HTMLDivElement;
+        const diff: number = div.scrollTop % 26;
+        if (diff > 2 && diff < 24)
+          div.scrollBy(0, 26 - diff + 1);
+      });
   }
 }

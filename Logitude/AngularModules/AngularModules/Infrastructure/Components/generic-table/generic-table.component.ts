@@ -106,9 +106,9 @@ export class GenericTableComponent implements OnInit {
       .pipe(debounceTime(100))
       .subscribe((e: any) => {
         const div = e.target as HTMLDivElement;
-        const diff: number = div.scrollTop % 49;
-        if (diff > 4 && diff < 47)
-          div.scrollBy(0, 49 - diff);
+        const diff: number = div.scrollTop % 41;
+        if (diff > 2 && diff < 39)
+          div.scrollBy(0, 41 - diff + 1);
       });
   }
 }

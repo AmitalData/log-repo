@@ -1,6 +1,6 @@
 <div [draggable] dragTarget=".p-dynamic-dialog" dragHandle='.p-dialog-header'></div>
 
-<p-table [value]="data" [columns]="columns" #table [scrollable]='true' scrollHeight="440px"
+<p-table [value]="data" [columns]="columns" #table [scrollable]='true' scrollHeight="369px"
     [globalFilterFields]='columnsNames' [rows]='rows' [resizableColumns]="true" [virtualScroll]="lazy"
     [virtualRowHeight]="34" [lazy]="lazy" (onLazyLoad)="loadLazy($event)" (onSort)='onSort($event)'>
     <ng-template pTemplate="caption">
