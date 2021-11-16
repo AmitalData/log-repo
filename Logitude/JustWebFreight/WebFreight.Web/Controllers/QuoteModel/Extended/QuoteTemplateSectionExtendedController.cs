@@ -81,7 +81,7 @@ namespace WebFreight.Web.Controllers.QuoteModel.Generated.PMControllers
                 QuoteTemplateSectionService quoteTemplateSectionService = new QuoteTemplateSectionService(objectContext, authToken.Tenant);
                 foreach (QuoteTemplateSectionPM section in quoteTemplateSections)
                 {
-                    SecurityUtility.AuthenticationOnTenant(textCode.Tenant);
+                    SecurityUtility.AuthenticationOnTenant(section.Tenant);
                     SecurityUtility.AuthenticationOnEntityTenant("QuoteTemplateSection", section.Tenant, authToken.Tenant);
                     quoteTemplateSectionService.Update(section);
 
