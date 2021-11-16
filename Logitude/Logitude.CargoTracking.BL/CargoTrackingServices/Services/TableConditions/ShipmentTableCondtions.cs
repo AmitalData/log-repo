@@ -68,9 +68,9 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
 
 
 
-            var fromScript = $"FROM dbo.{table.DBTableName} P ";
+            var fromScript = $"FROM dbo.{table.DBTableName} C ";
 
-            var joinScript = $"left  OUTER JOIN dbo.{table.DBTableName} C                   ON P.CustomFileId = C.Id " +
+            var joinScript = $"left  OUTER JOIN dbo.{table.DBTableName} P                   ON P.CustomFileId = C.Id " +
                              $"LEFT OUTER JOIN dbo.ShipmentComputedFields com ON com.Id = C.Id " +
                              $"LEFT OUTER JOIN dbo.ShipmentMasterDatas Mas    ON Mas.Id = C.MasterShipmentDataId "+
                              $"LEFT OUTER JOIN dbo.ShipmentMasterDatas ForwardingMaster    ON ForwardingMaster.Id = P.MasterShipmentDataId "+
@@ -108,7 +108,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
                 whereConditions.Add(datePeriodCondition);
             }
 
-            var whereScript = " WHERE " + string.Join(" AND ", whereConditions);
+            var whereScript = " WHERE C.ShipmentLevelCode = 'A' AND " + string.Join(" AND ", whereConditions);
 
 
 
