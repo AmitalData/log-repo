@@ -24,5 +24,6 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public string Fax { get; set; }
         public DateTime? LastLoginDate { get; set; }
         public bool IsCargoTrackingInvitation { get; set; }
+        public string TemplateId { get; set; }
     }
 }

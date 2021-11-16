@@ -47,6 +47,22 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
         }
 
 
+        public HttpResponseMessage GetDocumentTypeTemplatesForDocumentTypeCode(string documentTypeCode, string templateType, int tenant)
+        {
+            try
+            {
+                Authentication();
+                DocumentTypeTemplateQuery documentTypeTemplateQuery = new DocumentTypeTemplateQuery(tenant);
+                List<DocumentTypeTemplatePM> DocumentTypeTemplatePMList = documentTypeTemplateQuery.GetDocumentTypeTemplatesForDocumentTypeCode(documentTypeCode, templateType, tenant).ToList();
+                return Request.CreateResponse(HttpStatusCode.OK, DocumentTypeTemplatePMList);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+
         public HttpResponseMessage GetDocumentTypeTemplateListsForDocumentType(string documentTypeId, int tenant)
         {
             try

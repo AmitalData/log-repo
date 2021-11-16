@@ -78,6 +78,10 @@ export class SharedLogisticContactPM {
     public get IsCargoTrackingInvitation() { return this.isCargoTrackingInvitation; }
     public set IsCargoTrackingInvitation(newValue: boolean) { this.isCargoTrackingInvitation = newValue; this.MarkAsDirty(); }
 
+    private templateId: string;
+    public get TemplateId() { return this.templateId; }
+    public set TemplateId(newValue: string) { this.templateId = newValue; this.MarkAsDirty(); }
+
     public OldEntityPM: SharedLogisticContactPM;
 
     public IsDirty: boolean;

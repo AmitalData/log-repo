@@ -1,0 +1,68 @@
+<table style="height:100%;vertical-align:top">
+    
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+        <td>
+            <ValidationSummary [ItemsSource]="ValidationErrorsList" [SingleLine]="false"></ValidationSummary>
+        </td>
+    </tr>
+
+    <tr style="height:10px;">
+        <td></td>
+    </tr>
+
+    <tr style="height:100%;vertical-align:top">
+        <td>
+            <table style="height:100%;vertical-align:top">
+                <tr style="height:40px;vertical-align:top">
+                    <div>
+                        <div style="width:10px;text-align:left;float: left"></div>
+                        <span style="float: left;font-size:11px;color:gray;margin-left: 10px">
+                            Please select the template that you want to send
+                        </span>
+                    </div>
+                </tr>
+
+                <tr style="vertical-align:top">
+                    <div style="vertical-align:top">
+                        <div style="width:10px;text-align:left;float: left"></div>
+                        <span style="float: left;font-size:11px;color:gray;margin-left: 10px;margin-top: 2px;">
+                            Template
+                        </span>
+
+                        <ComboBox style="width:250px;margin-left: 30px;float: left"
+                            [ItemsSource]="DocumentTypeTemplates" [Binding]="'Description'" [SelectedItem]="SelectedTemplate" (SelectedItemChanged)="SelectedTemplate = $event"></ComboBox>
+                    </div>
+                </tr>
+
+            </table>
+        </td>
+    </tr>
+
+    <tr style="height: 32px;">
+        <td style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <div>
+                            <button class="Button" (click)="CloseButtonClicked()">Cancel</button>
+                        </div>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="RedButton" id="{{'OkButton' | IdGeneratorPipe}}"
+                            (click)="SendClick()">Send</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+</table>
