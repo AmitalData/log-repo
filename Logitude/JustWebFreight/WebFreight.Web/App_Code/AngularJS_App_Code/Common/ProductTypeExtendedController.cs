@@ -18,6 +18,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Common
         public HttpResponseMessage GetProductTypeLists(int tenant)
         {
             Authentication();
+            SecurityUtility.AuthenticationOnTenant(tenant);
             ProductTypeRepository productTypeRepository = new ProductTypeRepository(tenant);
             ProductTypeQuery productTypeQuery = new ProductTypeQuery(productTypeRepository);
 

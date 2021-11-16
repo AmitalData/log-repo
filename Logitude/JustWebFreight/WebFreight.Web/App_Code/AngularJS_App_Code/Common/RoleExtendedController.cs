@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using WebFreight.Web.Security;
 
 namespace WebFreight.Web.App_Code.AngularJS_App_Code.Common
 {
@@ -15,7 +16,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Common
     public HttpResponseMessage GetRolesForUser(string userId, int tenant)
 
         {
-            //  SecurityUtility.AuthenticationOnTenant(tenant);
+            SecurityUtility.AuthenticationOnTenant(tenant);
 
             if (userId == "null")
             {

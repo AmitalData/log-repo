@@ -679,6 +679,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         int tenant = authToken.Tenant;
 
                         SecurityUtility.AuthenticationOnTenant(tenant);
+                        SecurityUtility.AuthenticationOnEntityTenant("",entityPM.Tenant,tenant);
                         SecurityUtility.CheckContactFeature("APInvoice", "UPDATE", entityPM.Tenant);
 
                         IInvoiceContext myContext = InvoiceContext.GetContext(tenant);
@@ -1194,6 +1195,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
+                SecurityUtility.AuthenticationOnTenant(tenant);
 
                 CommonDataDomainService commonDomain = new CommonDataDomainService();
                 ChargeTypeAccountingList result = commonDomain.GetSingleChargeTypeAccountingList(chargesTypeId, vatTypeId, tenant);
@@ -1212,6 +1214,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
+                SecurityUtility.AuthenticationOnTenant(tenant);
 
                 Random rnd = new Random();
                 string randomInt = String.Format("{0:yyyyMMddhhmm}", DateTime.Now) + rnd.Next(999);
@@ -1292,7 +1295,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         string loggedUserEmail = authToken.Email;
                         int tenant = authToken.Tenant;
-
+                        SecurityUtility.AuthenticationOnTenant(tenant);
 
                         ARPaymentQuery paymentQuery = new ARPaymentQuery(tenant);
                         ARPaymentPM entityPM = paymentQuery.GetSinglePM(paymentId, tenant);
@@ -1518,6 +1521,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
+                SecurityUtility.AuthenticationOnTenant(tenant);
                 ARPaymentChequeQueryService entityQuery = new ARPaymentChequeQueryService(tenant);
                 ARPaymentChequePM arpaymentCheque = entityQuery.GetSingleByPaymentId(paymentId, tenant);
                 string status = "";
@@ -1564,7 +1568,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         string loggedUserEmail = authToken.Email;
                         int tenant = authToken.Tenant;
-
+                        SecurityUtility.AuthenticationOnTenant(tenant);
 
                         ARPaymentQuery paymentQuery = new ARPaymentQuery(tenant);
                         ARPaymentRepository aRPaymentRepository = new ARPaymentRepository(tenant);
@@ -1624,7 +1628,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         string loggedUserEmail = authToken.Email;
                         int tenant = authToken.Tenant;
-
+                        SecurityUtility.AuthenticationOnTenant(tenant);
 
                         ARInvoiceQuery invoiceQuery = new ARInvoiceQuery(tenant);
                         ARInvoiceRepository arInvoiceRepository = new ARInvoiceRepository(tenant);
@@ -1667,7 +1671,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         string token = HttpContext.Current.Request.Headers["Token"];
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         string loggedUserEmail = authToken.Email;
-                        int tenant = authToken.Tenant;
+                        int tenant = authToken.Tenant; 
+                        SecurityUtility.AuthenticationOnTenant(tenant);
                         ARInvoicePaymentRepository aRInvoicePaymentRepository = new ARInvoicePaymentRepository(tenant);
 
                         List<ARPayment> aRPayments = aRInvoicePaymentRepository.GetARInvoicePaymentTransferedByInvoiceId(invoiceId, tenant).ToList();
@@ -1702,6 +1707,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         string loggedUserEmail = authToken.Email;
                         int tenant = authToken.Tenant;
+                        SecurityUtility.AuthenticationOnTenant(tenant);
                         APInvoicePaymentRepository aRInvoicePaymentRepository = new APInvoicePaymentRepository(tenant);
 
                         List<APPayment> aRPayments = aRInvoicePaymentRepository.GetAPInvoicePaymentTransferedByInvoiceId(invoiceId, tenant).ToList();
@@ -1736,6 +1742,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         string loggedUserEmail = authToken.Email;
                         int tenant = authToken.Tenant;
+                        SecurityUtility.AuthenticationOnTenant(tenant);
 
                         ARInvoiceStockQuery aRInvoiceStockQuery = new ARInvoiceStockQuery(tenant);
                         ARInvoiceStockLineQuery aRInvoiceStockLineQuery = new ARInvoiceStockLineQuery(tenant);
@@ -1852,6 +1859,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         string loggedUserEmail = authToken.Email;
                         int tenant = authToken.Tenant;
+                        SecurityUtility.AuthenticationOnTenant(tenant);
                         APInvoicePaymentRepository repository = new APInvoicePaymentRepository(tenant);
 
                         List<APInvoicePayment> connectedInvoicesList = repository.GetAPInvoicePaymentByPaymentId(paymentId, tenant).ToList();

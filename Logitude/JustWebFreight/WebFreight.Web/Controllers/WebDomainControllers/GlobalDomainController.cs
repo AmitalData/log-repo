@@ -258,6 +258,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
+                SecurityUtility.AuthenticationOnTenant(tenant);
                 IGlobalContext context = new GlobalContext();
                 GlobalDomainService globalDomainService = new GlobalDomainService(context);
                 IQueryable<HelpResource> result = globalDomainService.GetAllHelpResources(tenant);
@@ -494,6 +495,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
+                SecurityUtility.AuthenticationOnTenant(tenant);
 
                 IGlobalContext objectContext = GlobalContext.GetContext();
                 TenantManagementRepository repository = new TenantManagementRepository(objectContext);

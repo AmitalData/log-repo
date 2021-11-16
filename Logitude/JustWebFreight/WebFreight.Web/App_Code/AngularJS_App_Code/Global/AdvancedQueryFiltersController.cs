@@ -54,6 +54,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Global
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnTenant(tenant);
 
                 AdvancedQueryFilterQuery advancedQueryFilterQuery = new AdvancedQueryFilterQuery(tenant);
                 var result = advancedQueryFilterQuery.GetAdvancedQueryFilterPMsByTenantAndUser(tenant, loggedcontactid);
@@ -75,6 +76,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Global
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnTenant(tenant);
 
                 AdvancedQueryFilterQuery advancedQueryFilterQuery = new AdvancedQueryFilterQuery(tenant);
                 var result = advancedQueryFilterQuery.GetAdvancedQueryFilterPMsByTenantAndUserAndQuery(tenant, loggedcontactid, queryCode);
@@ -96,6 +98,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Global
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnTenant(tenant);
 
                 AdvancedQueryFilterQuery advancedQueryFilterQuery = new AdvancedQueryFilterQuery(tenant);
                 var result = advancedQueryFilterQuery.GetAdvancedQueryFilterPMsByTenantAndUser(tenant, loggedcontactid);
@@ -122,6 +125,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Global
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnEntityTenant("", entityPM.Tenant, authToken.Tenant);
                 IWebFreightContext objectContext = WebFreightContext.GetContext(entityPM.Tenant);
                 AdvancedQueryFilterService service = new AdvancedQueryFilterService(objectContext, entityPM.Tenant);
                 service.Create(entityPM);
@@ -142,6 +146,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Global
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnEntityTenant("", entityPM.Tenant, authToken.Tenant);
                 IWebFreightContext objectContext = WebFreightContext.GetContext(entityPM.Tenant);
                 AdvancedQueryFilterRepository repo = new AdvancedQueryFilterRepository(entityPM.Tenant);
                 var temp = repo.GetSingleAdvancedQueryfilter(entityPM.Id);

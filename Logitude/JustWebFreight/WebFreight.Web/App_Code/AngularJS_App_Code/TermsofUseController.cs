@@ -25,7 +25,8 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
         public HttpResponseMessage GetCheckIfGoToTermUseComponent(int tenant, string userId)
         {
             try
-            {  
+            {
+                SecurityUtility.AuthenticationOnTenant(tenant);
                 bool isLogbox = LogitudeSettings.DeploymentStage == "logboxwe1";
                 bool isLogboxUrl = SecurityUtility.getLoggedDomain().IndexOf("logbox") > -1;  
 
@@ -133,6 +134,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnTenant(tenant);
 
                 TermsofUseQuery termsofUseQuery = new TermsofUseQuery(tenant);
                 TermsofUsePM termsofUsePM = termsofUseQuery.GetSingleById(Id);
@@ -157,6 +159,8 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnEntityTenant("", termsofUsePM.Tenant, authToken.Tenant);
+
                 //int tenant = authToken.Tenant;
                 int tenant = termsofUsePM.Tenant;
                 if (termsofUsePM.FileData == null)
