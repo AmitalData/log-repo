@@ -45,6 +45,7 @@ export class AutocomplateTableComponent {
   index: number = 0;
   isGetAll: boolean = false;
   filterVal: string = ''
+  toHighlight: string = null as any;
 
   constructor(
     @Inject(DOCUMENT) private document: any,
@@ -97,6 +98,8 @@ export class AutocomplateTableComponent {
   }
 
   search(event: any) {
+    this.toHighlight = event.query;
+
     if (this.getDataFunc !== null) {
       this.filterVal = event.query;
       this.isGetAll = false;

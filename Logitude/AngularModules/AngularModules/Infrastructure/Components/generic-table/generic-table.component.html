@@ -26,7 +26,7 @@
         <!-- [ngClass]='{"highlight-row":(i + 1)%2}' -->
         <tr style='height:34px' (click)='onSelectedRow(row)' >
             <!-- <td>{{i}}</td> -->
-            <td *ngFor='let col of columns'>{{row[col.name]}}</td>
+            <td *ngFor='let col of columns' [innerHTML]='row[col.name] | highlight: filterVal'></td>
         </tr>
     </ng-template>
     <ng-template pTemplate="loadingbody" let-columns="columns">

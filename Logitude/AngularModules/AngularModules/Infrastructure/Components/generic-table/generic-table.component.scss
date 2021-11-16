@@ -40,6 +40,10 @@
     .p-datatable-resizable .p-datatable-tbody > tr > td {
         white-space: nowrap !important;
         text-overflow: ellipsis;
+
+        .highlight {
+            background: yellow;
+        }
     }
 
     .p-datatable .p-datatable-thead > tr > th {

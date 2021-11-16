@@ -34,6 +34,7 @@ import { DialogsService } from "./Services/dialogs/dialogs.service";
 import { NewQuoteDataService } from "./Services/new-quote-data/new-quote-data.service";
 import { NewQuoteValidateEntityService } from "./Services/new-quote-validate-entity/new-quote-validate-entity.service";
 import { LogtuideTableDataService } from "./components/autocomplate-table/logtuide-table-data.service";
+import { HighlightPipeModule } from "Infrastructure/Pipes/highlight-pipe/highlight-pipe.module";
 
 @NgModule({
     imports: [  
@@ -57,6 +58,7 @@ import { LogtuideTableDataService } from "./components/autocomplate-table/logtui
         MenuModule,
         DropdownModule,
         AccordionModule, 
+        HighlightPipeModule,
     ],
     declarations: 
     [
@@ -66,7 +68,7 @@ import { LogtuideTableDataService } from "./components/autocomplate-table/logtui
         NewQuoteGeneralComponent,
         NewQuoteExpectedOrderComponent,
         AddressTextareaComponent,
-        AutocomplateTableComponent,
+        AutocomplateTableComponent,        
         NewQuoteAddressComponent,
         BtnMenuPlusComponent,
         NewQuotePartnerComponent,

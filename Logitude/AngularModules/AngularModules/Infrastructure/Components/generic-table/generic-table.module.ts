@@ -9,6 +9,7 @@ import { ButtonModule } from 'primeng/button';
 import { PaginatorModule } from 'primeng/paginator';
 import { GenericTableDataService } from './generic-table-data.service';
 import { DraggableModule } from 'Infrastructure/Directives/draggable/draggable.module';
+import { HighlightPipeModule } from 'Infrastructure/Pipes/highlight-pipe/highlight-pipe.module';
 
 
 @NgModule({
@@ -31,6 +32,7 @@ import { DraggableModule } from 'Infrastructure/Directives/draggable/draggable.m
     ButtonModule,
     PaginatorModule,
     DraggableModule,
+    HighlightPipeModule,
   ],entryComponents: [
     GenericTableComponent    
   ]
