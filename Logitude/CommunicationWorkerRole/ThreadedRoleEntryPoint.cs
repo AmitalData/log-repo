@@ -533,8 +533,8 @@ namespace CommunicationWorkerRole
                 }
                 catch(Exception ex)
                 {
-                    EventLog eventLog = new EventLog();
-                    eventLog.WriteEntry("LogitudeBatchServices Exception : " + ex.ToString(), EventLogEntryType.Error);
+                    //EventLog eventLog = new EventLog();
+                    //eventLog.WriteEntry("LogitudeBatchServices Exception : " + ex.ToString(), EventLogEntryType.Error);
                     ExceptionHandler.HandleException(ex, DateTime.UtcNow, 0, "", "WorkerRole", "ThreadedRoleEntryPoint :  Creating Instance for service: "+ Service?.ClassName, null);
                 }
             }

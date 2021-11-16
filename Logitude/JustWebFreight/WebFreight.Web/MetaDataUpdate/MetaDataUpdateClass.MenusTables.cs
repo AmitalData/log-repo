@@ -190,13 +190,6 @@ namespace WebFreight.Web.MetaDataUpdate
 
             #region Maintenance Menus        
 
-
-
-            
-
-
-
-
             #region Partners
             AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "MTCL", Tenant = 0, MenuTypeCode = "MTC", IndexOfOrder = 0, CategoryTypeCode = "Par", TextCode = "General.MC.Partners.ShippersAndConsignees", Icon = "Customer.png", ObjectTableId = tenantObjectTables.Where(o => o.Name == "Customer").FirstOrDefault().Id, FeatureId = shipperAndConsigneeFeature.Id, FeatureUniqeCode = shipperAndConsigneeFeature.FeatureUniqeCode }, MenusTablesRepository, tenantMenusTables);
             AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "MTAG", Tenant = 0, MenuTypeCode = "MTC", IndexOfOrder = 1, CategoryTypeCode = "Par", TextCode = "General.MC.Partners.Agents", Icon = "Agent.png", ObjectTableId = tenantObjectTables.Where(o => o.Name == "Agent").FirstOrDefault().Id, FeatureId = agentsFeature.Id, FeatureUniqeCode = agentsFeature.FeatureUniqeCode }, MenusTablesRepository, tenantMenusTables);
