@@ -1,11 +1,16 @@
-﻿using Logitude.BL.ShipmentsModel.EntityPMs;
+﻿using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.EntityQueries;
 using Logitude.Server.Tools.KafkaConfigurations;
 using Logitude.Server.Tools.Messages;
 using Logitude.Server.Tools.QueueService;
 using Logitude.SystemLogs;
 using Newtonsoft.Json;
+using Simplog.Data.InfrastructureModel.Repositories;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Threading;
 
@@ -29,11 +34,10 @@ namespace CommunicationWorkerRole
 
                         if (response.MessageId != null)
                         {
-                            ShipmentPM entityPM = GetShipmentById(response);
+                            var entityPMString = GetSerializedExtendedShipmentById(response);
 
                             var ShipmentUpdateMessageProducer = new Producer();
-                            var serializedShipmentUpdateMessage = JsonConvert.SerializeObject(entityPM, Formatting.Indented);
-                            var result = ShipmentUpdateMessageProducer.Produce(KafkaTopics.ShipmentsUpdateTopic, KakaMessageTypes.ShipmentUpdate, serializedShipmentUpdateMessage);
+                            var result = ShipmentUpdateMessageProducer.Produce(KafkaTopics.ShipmentsUpdateTopic, KakaMessageTypes.ShipmentUpdate, entityPMString);
 
                             queueservice.Complete();
                         }
@@ -81,15 +85,35 @@ namespace CommunicationWorkerRole
 
 
         #region Private Methods
-        private ShipmentPM GetShipmentById(QueueResponse response)
+        private string GetSerializedExtendedShipmentById(QueueResponse response)
         {
             int Tenant = int.Parse(response.MessageValues["Tenant"].ToString());
             string ShipmentId = response.MessageValues["ShipmentId"].ToString();
 
             ShipmentQuery shipmentQuery = new ShipmentQuery(Tenant);
             ShipmentPM shipmentPM = shipmentQuery.GetSinglePM(ShipmentId, Tenant);
-            return shipmentPM;
+            var shipmentPMString = JsonConvert.SerializeObject(shipmentPM, Formatting.Indented);
+            Dictionary<string, object> shipmentPMDictionary = JsonConvert.DeserializeObject<Dictionary<string, object>>(shipmentPMString);
+
+            shipmentPMDictionary.Add("DocumentsFilingPM", GetShipmentDocumentsFilingPM(shipmentPM.ShipmentNumber, Tenant));
+            return JsonConvert.SerializeObject(shipmentPMDictionary, Formatting.Indented);
+        }
+
+        private List<DocumentsFilingPM> GetShipmentDocumentsFilingPM(string shipmentNumber, int tenant)
+        {
+            ShipmentQuery shipmentQuery = new ShipmentQuery(tenant);
+            string entityId = shipmentQuery.GetEntitiyIdByShipmentNumber(shipmentNumber, tenant);
+            DocumentsFilingQuery documentsFilingQuery = new DocumentsFilingQuery(tenant);
+            List<DocumentsFilingPM> documentsFilingPM = documentsFilingQuery.GetDocumentsFilingPMsByEntityIdAndObjectTable(entityId, "", ObjectTableRepository.GetObjectTableByName("Shipment"), "I", tenant);
+            documentsFilingPM = documentsFilingPM.Where(d => d.DocumentId != null && d.HasFile == true).ToList();
+
+            return documentsFilingPM;
         }
         #endregion
+    }
+
+    public class ExtendedShipmentPM : ShipmentPM
+    {
+        public List<DocumentsFilingPM> DocumentsFilingPM { get; set; }
     }
 }
