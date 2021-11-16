@@ -85,12 +85,12 @@ export class NewQuoteValidateEntityService {
     const isSeaFcl: boolean = this.form.controls.transportMode?.value?.Id === 'O' && this.form.controls.shipmentType?.value?.Name === 'FCL';
     if (isSeaFcl)
       [
-        {name:'quantityType', label: 'Paackage Type'}, 
+        {name:'quantityType', label: 'Package Type'}, 
         {name:'quantity', label: 'Quantity'}
       ].forEach(ctrl =>
         [1, 2, 3, 4]
           .filter(i => this.form.controls[ctrl.name + i].invalid)
-          .forEach(i => this.errorList.push(ctrl.label + ' ' + i + this.fieldrequiredMsg))
+          .forEach(i => this.errorList.push(ctrl.label + '  is missing in ' + ctrl.label + ' ' + i))
       );
     else if (this.form.controls.packages.invalid)
       this.errorList.push('Please insert data to section Expected Order Details')

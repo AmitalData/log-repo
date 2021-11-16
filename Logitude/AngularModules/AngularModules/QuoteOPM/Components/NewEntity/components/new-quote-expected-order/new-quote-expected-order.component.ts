@@ -32,9 +32,9 @@ export class NewQuoteExpectedOrderComponent implements OnInit, AfterViewInit {
       volume: new FormControl(null, requiredOneFromMultiValidator(a, 'b', 'volume', 'grossWeight')),
       grossWeight: new FormControl(null, requiredOneFromMultiValidator(a, 'b', 'grossWeight', 'volume')),
       packageType: new FormControl(),
-      Ldimension: new FormControl(),
-      Wdimension: new FormControl(),
-      Hdimension: new FormControl(),
+      Ldimension: new FormControl({value: null, disabled: true}),
+      Wdimension: new FormControl({value: null, disabled: true}),
+      Hdimension: new FormControl({value: null, disabled: true}),
       quantity: new FormControl(),
     })
     return a.b
@@ -126,10 +126,10 @@ export class NewQuoteExpectedOrderComponent implements OnInit, AfterViewInit {
     this.formGroup.controls.quantity2.valueChanges.subscribe(val => this.EntityPM.PackageType2Quantity = val);
     this.formGroup.controls.quantity3.valueChanges.subscribe(val => this.EntityPM.PackageType3Quantity = val);
     this.formGroup.controls.quantity4.valueChanges.subscribe(val => this.EntityPM.PackageType4Quantity = val);
-    this.formGroup.controls.quantityType1.valueChanges.subscribe(val => this.EntityPM.PackageType1Id = val);
-    this.formGroup.controls.quantityType2.valueChanges.subscribe(val => this.EntityPM.PackageType2Id = val);
-    this.formGroup.controls.quantityType3.valueChanges.subscribe(val => this.EntityPM.PackageType3Id = val);
-    this.formGroup.controls.quantityType4.valueChanges.subscribe(val => this.EntityPM.PackageType4Id = val);
+    this.formGroup.controls.quantityType1.valueChanges.subscribe((val:PackageTypeList) => this.EntityPM.PackageType1Id = val?.Id);
+    this.formGroup.controls.quantityType2.valueChanges.subscribe((val:PackageTypeList) => this.EntityPM.PackageType2Id = val?.Id);
+    this.formGroup.controls.quantityType3.valueChanges.subscribe((val:PackageTypeList) => this.EntityPM.PackageType3Id = val?.Id);
+    this.formGroup.controls.quantityType4.valueChanges.subscribe((val:PackageTypeList) => this.EntityPM.PackageType4Id = val?.Id);
 
     this.formGroup.controls.isDangerous.valueChanges.subscribe(val => this.EntityPM.IsDangerous = val);
     this.formGroup.controls.descriptionOfGoods.valueChanges.subscribe(val => this.EntityPM.DescriptionOfGoods = val);
@@ -139,8 +139,10 @@ export class NewQuoteExpectedOrderComponent implements OnInit, AfterViewInit {
     this.formGroup.controls.shipmentType.valueChanges.subscribe((val: ShipmentTypeList) => this.onTransportAndShipmentChange());
 
     [2, 3, 4].forEach(i => this.formGroup.controls['quantity' + i].valueChanges.subscribe(val => {
+      this.formGroup.controls['quantityType' + i].reset();
       this.formGroup.controls['quantityType' + i][val ? 'enable' : 'disable']()
       this.formGroup.controls['quantityType' + i].setValidators(val ? Validators.required : null)
+      this.formGroup.controls['quantityType' + i].updateValueAndValidity();      
     }));
   }
 
@@ -209,6 +211,8 @@ export class NewQuoteExpectedOrderComponent implements OnInit, AfterViewInit {
 
   calcTotalQuantity(prev_quantity: number, current_quantity: number) {
     this.totalQuantity = this.totalQuantity - prev_quantity + current_quantity;
+    this.EntityPM.NumberOfPackages = this.totalQuantity;
+    this.EntityPM.ChargeableWeight = this.totalQuantity;
   }
 
   calcTotalGrossWeight(prev_quantity: number, current_quantity: number) {
