@@ -31,7 +31,7 @@ export class CargoTrackingShipmentExtendedService
     {
         return this._http.get(this._apiUrl + '/GetCargoShipmentPMBySecurityKey?'
             + 'securityKey=' + securityKey
-            + '&tenant=' + tenant,this.authHeaders).pipe(
+            + '&tenant=' + tenant).pipe(
                 map((response: ServiceResponse) =>
                 {
                     var serviceResponse: ServiceResponse = new ServiceResponse();
@@ -44,7 +44,7 @@ export class CargoTrackingShipmentExtendedService
     {
         return this._http.get(this._apiUrl + '/GetMainCargoShipmentPMBySecurityKey?'
             + 'securityKey=' + securityKey
-            + '&tenant=' + tenant,this.authHeaders).pipe(
+            + '&tenant=' + tenant).pipe(
                 map((response: ServiceResponse) =>
                 {
                     var serviceResponse: ServiceResponse = new ServiceResponse();
