@@ -34,13 +34,13 @@
     <div class='radio-section'
         [hidden]='formGroup.controls.transportMode.value?.Name !== "Ocean" && formGroup.controls.transportMode.value?.Name !== "Inland"'>
         <h4 class='label'>Shipment Type</h4>
-        <div class='radio-row' *ngFor='let x of shipmentTypeListFilter'
+        <div class='radio-row' *ngFor='let x of shipmentTypeListFilter' #shipmentRow
             [ngClass]="{'radio-checked':formGroup.controls.shipmentType.value?.Name === x.Name}"
             (mouseenter)="shipmentIcon.mouseIsEnter = true" (mouseleave)="shipmentIcon.mouseIsEnter = false"
             (click)='formGroup.controls.shipmentType.setValue(x)'>
             <label class="text-style" [for]="x.Name">
                 <img #shipmentIcon
-                    [src]=" icons[(transportRow?.className?.includes('radio-checked') || shipmentIcon.mouseIsEnter ? iconColor.blue : '') + 'Shipment']">
+                    [src]=" icons[(shipmentRow?.className?.includes('radio-checked') || shipmentIcon.mouseIsEnter ? iconColor.blue : '') + 'Shipment']">
             </label>
             <p-radioButton [inputId]="x.Name" [value]="x" formControlName="shipmentType" [label]='x.Name'
                 [labelStyleClass]='"simple-text"'>

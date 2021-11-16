@@ -77,7 +77,7 @@ export class AutocomplateTableComponent {
     if (this.selected.length && !this.columnsNames.length)
       this.columnsShow = Object.keys(this.selected[0]);
 
-    if(this.index === 0)
+    if (this.index === 0)
       this.selected.unshift(this.columnsHeader);
   }
 
@@ -142,7 +142,7 @@ export class AutocomplateTableComponent {
   }
 
   private searchValueInObject(value: string, propsName: string[]): (value1: any, index: number, array: any[]) => unknown {
-    return x => propsName.some(prop => x[prop]?.toLowerCase().includes(value?.toLowerCase()));
+    return x => propsName.some(prop => ('' + x[prop])?.toLowerCase().includes(value?.toLowerCase()));
   }
 
   private arrayToObject(arr: string[]): {} {
@@ -175,14 +175,14 @@ export class AutocomplateTableComponent {
     return this.capitalize(this.addSpace(str))
   }
 
-  private capitalize(str: string):string {
+  private capitalize(str: string): string {
     return str.charAt(0).toUpperCase() + str.slice(1);
   }
 
-  private addSpace(str:string) {
+  private addSpace(str: string) {
     return str.replace(/[A-Z]/g, letter => ' ' + letter);
   }
-  
+
   alignRow(e: any) {
     fromEvent(e.element, 'scroll')
       .pipe(debounceTime(100))
