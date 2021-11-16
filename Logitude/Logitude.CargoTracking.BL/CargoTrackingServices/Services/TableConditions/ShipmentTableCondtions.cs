@@ -70,7 +70,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
 
             var fromScript = $"FROM dbo.{table.DBTableName} P ";
 
-            var joinScript = $"RIGHT  OUTER JOIN dbo.{table.DBTableName} C                   ON P.CustomFileId = C.Id " +
+            var joinScript = $"LEFT  OUTER JOIN dbo.{table.DBTableName} C                   ON P.CustomFileId = C.Id " +
                              $"LEFT OUTER JOIN dbo.ShipmentComputedFields com ON com.Id = C.Id " +
                              $"LEFT OUTER JOIN dbo.ShipmentMasterDatas Mas    ON Mas.Id = C.MasterShipmentDataId "+
                              $"LEFT OUTER JOIN dbo.ShipmentMasterDatas ForwardingMaster    ON ForwardingMaster.Id = P.MasterShipmentDataId "+
@@ -314,7 +314,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
                 "0 as PaymentReceivedDone," +
                 "0 as GatepassArrivedDone," +
                 "0 as ShipmentPickUpIndex," +
-                "0 as PackagesQuantity," +
+                "SHO.Quantity as PackagesQuantity," +
 
                 " '' as CustomFileNumber," +
                 " '' as ForwarderShipmentNumber," +
