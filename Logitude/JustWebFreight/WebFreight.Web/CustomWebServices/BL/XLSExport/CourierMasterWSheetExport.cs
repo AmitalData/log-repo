@@ -68,6 +68,10 @@ namespace WebFreight.Web.CustomWebServices.BL.XLSExport
                           group d by d.DeclarationID into PendingGroup
                           select new { declaration = PendingGroup.Key, pending = PendingGroup.Select(g => g.CourierPendingReason.LocalName) }
  ); ;
+            
+            var group3 = (from d in MyContext.Declarations 
+                          join c in q
+                          on d.Id equals c.DeclarationId )
 
             Dictionary<string, string> pendings = new Dictionary<string, string>();
 
