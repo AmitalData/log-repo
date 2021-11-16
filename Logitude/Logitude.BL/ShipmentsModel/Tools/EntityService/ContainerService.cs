@@ -4,9 +4,11 @@ using Logitude.BL.ShipmentsModel.Tools.TraceEvents;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.QueueService;
+using Simplog.Data.Helpers;
 using Simplog.Data.ShipmentsModel;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Simplog.Data.ShipmentsModel.Repositories;
+using System;
 using System.Collections.Generic;
 
 namespace Logitude.BL.ShipmentsModel.Tools.EntityService
@@ -46,12 +48,28 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             this.isNewEntity = false;
             this.containerPm = entityPM;
             this.containerPoco = entityRepository.GetSingleContainer(entityPM.Id, tenant);
+            this.MapContainerClosedDate(entityPM, containerPoco);
             ContainerTracing.Trace(entityPM, containerPoco, isNewEntity);
             ShipmentMapping.MapContainer(entityPM, containerPoco, isNewEntity);
             entityRepository.Update(containerPoco);
             entityRepository.SubmitChanges();
 
             AddShipmentUpdateKafkaQueueMessage("CToolContainerUpdate");
+        }
+
+        private void MapContainerClosedDate(ContainerPM containerPM, Container container)
+        {
+            if (containerPM.IsClosed != container.IsClosed)
+            {
+                if (containerPM.IsClosed)
+                {
+                    containerPM.ClosedDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+                }
+                else
+                {
+                    containerPM.ClosedDate = null;
+                }
+            }
         }
 
         private void AddShipmentUpdateKafkaQueueMessage(string queueName)

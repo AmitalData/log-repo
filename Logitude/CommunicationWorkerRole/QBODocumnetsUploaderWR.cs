@@ -271,11 +271,12 @@ namespace CommunicationWorkerRole
             DataService commonServiceQBO = new DataService(serviceContext);
             Attachable attachable = new Attachable();
             attachable.AttachableRef = new AttachableRef[1];
+            attachable.AttachableRef[0] = new AttachableRef();
             attachable.AttachableRef[0].EntityRef = new ReferenceType();
             attachable.AttachableRef[0].EntityRef.type = objectNameEnumType.Invoice.ToString();
             attachable.AttachableRef[0].EntityRef.name = objectNameEnumType.Invoice.ToString();
             attachable.AttachableRef[0].EntityRef.Value = wrParmeters.APInvoice.ExternalAccountingEntityId;
-            attachable.ContentType = document.Extension;
+            attachable.ContentType = GetContentType(document.Extension);
             attachable.FileName = document.FileName;
             Attachable attachableUploaded = commonServiceQBO.Upload(attachable, stream);
             if(attachableUploaded != null)
@@ -283,7 +284,7 @@ namespace CommunicationWorkerRole
                 UpdateDocument(documentFiling);
             }
 
-        }
+        }    
 
         public ServiceContext GetServiceContext()
         {
@@ -344,12 +345,23 @@ namespace CommunicationWorkerRole
             return data.AccessToken;
         }
 
+        private string GetContentType(string extension)
+        {
+            if (extension.ToLower() == "png")
+                return "image/png";
+            if (extension.ToLower() == "jpeg")
+                return "image/JPEG";
+            return string.Concat("application/", extension);
+        }
+
         private void UpdateDocument(DocumentsFiling documentFiling)
         {
             documentFiling.IsTransferdToQBO = true;
             wrParmeters.DocumentsFilingRepository.Update(documentFiling);
             wrParmeters.DocumentsFilingRepository.SubmitChanges();
         }
+
+
         private void HandelException(Exception ex)
         {
             ExceptionHandler.HandleException(ex, DateTime.Now, wrParmeters.Tenant, "", "QBO Documnet Uploader code WorkerRole Run Method", "", null);
