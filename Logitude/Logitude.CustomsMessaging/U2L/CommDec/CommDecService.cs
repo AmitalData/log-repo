@@ -1996,7 +1996,7 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
             }
             if (this._INVOICE.INCOTERM_ID != null)
             {
-                this._MySupplierInvoicePM.IncotermCode = this._INVOICE.INCOTERM_ID;
+                this._MySupplierInvoicePM.IncotermCode = TranslateTermsOfSaleType(this._INVOICE.INCOTERM_ID);
             }
             if (this._INVOICE.TRANSP_VALUE_LIST != null) // moran 7.8.17 - AMI-61197
             {
@@ -2108,6 +2108,24 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
             }
             return;
 
+        }
+
+        private string TranslateTermsOfSaleType(string amitalTermsOfSaleTypeCode)
+        {
+            if (String.IsNullOrWhiteSpace(amitalTermsOfSaleTypeCode))
+            {
+                AppendLogLine("amitalTermsOfSaleTypeCode is null");
+                return null;
+            }
+            var termsOfSaleType = new TermsOfSaleTypeRepository(ResolvedTenant());
+            var myTermsOfSaleType = termsOfSaleType.GetSingle(amitalTermsOfSaleTypeCode);
+            if (myTermsOfSaleType == null)
+            {
+                AppendLogLine("amitalTermsOfSaleTypeCode = " + amitalTermsOfSaleTypeCode + " could not translate to Logitude Id");
+                return null;
+            }
+            AppendLogLine("amitalTermsOfSaleTypeCode = " + amitalTermsOfSaleTypeCode + " Translated to " + myTermsOfSaleType.Code);
+            return myTermsOfSaleType.Code;
         }
 
         private void CalculateInsuranceAmount(decimal? insruancePercentage)
