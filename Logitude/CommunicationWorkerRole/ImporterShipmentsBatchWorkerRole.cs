@@ -613,7 +613,6 @@ namespace CommunicationWorkerRole
                                                         ShipmentCustomerTypeCode = Shipment.ShipmentCustomerTypeCode,
                                                         IsCancelled = Shipment.IsCancelled,
                                                         ShipperName = Shipment.ShipperName,
-                                                        ConsigneeName = Shipment.ConsigneeName,
                                                         CarrierTransportDocumentNumber = Shipment.CarrierTransportDocumentNumber,
                                                         //ForwarderPartnerId = Partner.Id,
                                                         FreightPrepaidCollectId = Shipment.FreightPrepaidCollectId,
@@ -814,7 +813,7 @@ namespace CommunicationWorkerRole
 
 
                                                         queueservice.InitializeQueue("ImportersShipmentsDocsQueueBuilderQueue", 0);//"ImportersShipmentsDocsScheduleQueue", 0);
-                                                        queueservice.Send(new Dictionary<string, string>() { { "ShipmentId", Shipment.Id }, { "Tenant", tenant.ToString() },  { "CustomerId", customerTenantAccessCardsBatch.CustomerId }, { "BatchNumber", customerTenantAccessCardsBatch.BatchNumber } }, tenant, null, customerTenantAccessCardsBatch.CustomerId, customerTenantAccessCardsBatch.BatchNumber);
+                                                        queueservice.Send(new Dictionary<string, string>() { { "ShipmentId", Shipment.Id }, { "Tenant", tenant.ToString() }, { "CustomerId", customerTenantAccessCardsBatch.CustomerId }, { "BatchNumber", customerTenantAccessCardsBatch.BatchNumber } }, tenant, null, customerTenantAccessCardsBatch.CustomerId, customerTenantAccessCardsBatch.BatchNumber);
                                                         queueservice.Complete();
                                                         //if (response.RetryNumber == 0)
                                                         //{
@@ -929,7 +928,7 @@ namespace CommunicationWorkerRole
                                 {
                                     if (customerTenantAccessCardsBatch != null)
                                     {
-                                        customerTenantAccessCardsBatch = customerTenantAccessCardBatchQuery.GetSinglePM(BatchNumber, tenant); 
+                                        customerTenantAccessCardsBatch = customerTenantAccessCardBatchQuery.GetSinglePM(BatchNumber, tenant);
                                         if (customerTenantAccessCardsBatch.TotalShipment == (customerTenantAccessCardsBatch.Totalsucceeded + customerTenantAccessCardsBatch.TotalFailed))
                                         {
                                             customerTenantAccessCardsBatch.Status = "Done";

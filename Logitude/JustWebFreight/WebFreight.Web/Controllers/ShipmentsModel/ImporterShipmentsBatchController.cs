@@ -410,8 +410,8 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
             if (!string.IsNullOrEmpty(entityAM.ForwardingPartnerTenant))
             {
                 int ForwardingPartnerTenant = int.Parse(entityAM.ForwardingPartnerTenant);
-               
-               HybridPartnerPM ForwardingPartner = HybridPartnerQuerey.GetSinglePMByPartnerTenant(ForwardingPartnerTenant);
+
+                HybridPartnerPM ForwardingPartner = HybridPartnerQuerey.GetSinglePMByPartnerTenant(ForwardingPartnerTenant);
                 if (ForwardingPartner != null)
                 {
                     entityPM.ForwardingPartnerId = ForwardingPartner.Id;
@@ -866,10 +866,6 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
             if (!string.IsNullOrEmpty(entityAM.ShipperName))
             {
                 entityPM.ShipperName = entityAM.ShipperName;
-            }
-            if (!string.IsNullOrEmpty(entityAM.ConsigneeName))
-            {
-                entityPM.ConsigneeName = entityAM.ConsigneeName;
             }
             if (!string.IsNullOrEmpty(entityAM.CarrierTransportDocumentNumber))
             {
