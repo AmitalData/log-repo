@@ -90,6 +90,14 @@
         .filters-sidebar li {
             width: initial;
         }
+
+    .circulararrow {
+        position: absolute;
+        top: 64%;
+        right: 10%;
+        height:12px;
+        width:12px;
+    }
 }
 
 @media screen and (max-width: 479px) {
