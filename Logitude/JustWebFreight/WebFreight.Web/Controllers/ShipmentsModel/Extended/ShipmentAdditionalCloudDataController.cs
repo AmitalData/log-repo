@@ -398,6 +398,8 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Extended
                     string token = HttpContext.Current.Request.Headers["Token"];
                     AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                     SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                    SecurityUtility.AuthenticationOnTenant(entity.Tenant);
+                    SecurityUtility.AuthenticationOnEntityTenant("ShipmentAdditionalCloudData", entity.Tenant, authToken.Tenant);
 
                     ShipmentAdditionalCloudDataRepository Repository = new ShipmentAdditionalCloudDataRepository(authToken.Tenant);
                     ShipmentRepository SHRepository = new ShipmentRepository(authToken.Tenant);
