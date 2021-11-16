@@ -7,6 +7,10 @@
 }
 
 :host ::ng-deep {
+    p-sorticon {
+        display: none !important;
+    }
+    
     .p-paginator-bottom {
         display: none;
     }
@@ -35,6 +39,7 @@
 
     .p-datatable-resizable .p-datatable-tbody > tr > td {
         white-space: nowrap !important;
+        text-overflow: ellipsis;
     }
 
     .p-datatable .p-datatable-thead > tr > th {
