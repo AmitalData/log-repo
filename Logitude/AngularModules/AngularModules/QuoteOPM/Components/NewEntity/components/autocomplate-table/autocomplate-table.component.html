@@ -8,8 +8,8 @@
         scrollHeight='208px' (onShow)='alignRow($event)'>
 
         <ng-template pTemplate="item" let-x let-i='index'>
-            <div [ngClass]='{"highlight-row":(i + 1)%2}' class="autocomplete-col" *ngFor='let col of columnsNames'>
-                {{x[col]}}</div>
+            <div [ngClass]='{"highlight-row":(i + 1)%2}' class="autocomplete-col" *ngFor='let col of columnsNames'
+                [innerHTML]='x[col] | highlight: toHighlight'></div>
         </ng-template>
 
     </p-autoComplete>
