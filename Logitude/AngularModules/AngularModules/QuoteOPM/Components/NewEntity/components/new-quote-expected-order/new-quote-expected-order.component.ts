@@ -146,7 +146,7 @@ export class NewQuoteExpectedOrderComponent implements OnInit, AfterViewInit {
 
   addPackage() {
     if (this.formArray.invalid) {
-      this.msg.add({ severity: 'error', summary: 'Add new package failed', detail: 'some packeges not have "Gross Weight" or "volume"' })
+      this.msg.add({ severity: 'error', summary: 'Add new package failed', detail: 'Please insert data to the first package' })
       return;
     }
 

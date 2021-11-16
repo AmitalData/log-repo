@@ -7,7 +7,7 @@
             (click)='formGroup.controls.direction.setValue(x)'>
             <label class="text-style" [for]="x.Name">
                 <img #directionIcon
-                    [src]=" icons[(directionRow?.className?.includes('radio-checked') || directionIcon.mouseIsEnter ? iconColor.blue:iconColor.gray) + x.Name]">
+                    [src]="icons[(directionRow?.className?.includes('radio-checked') || directionIcon.mouseIsEnter ? iconColor.blue : '') + x.Name]">
             </label>
             <p-radioButton [inputId]="x.Name" [value]="x" formControlName="direction" [label]='x.Name'
                 [labelStyleClass]='"simple-text"'>
@@ -23,7 +23,7 @@
             (click)='formGroup.controls.transportMode.setValue(x)'>
             <label class="text-style" [for]="x.Name">
                 <img #transportIcon
-                    [src]=" icons[(transportRow?.className?.includes('radio-checked') || transportIcon.mouseIsEnter ? iconColor.blue:iconColor.gray) + x.Name]">
+                    [src]=" icons[(transportRow?.className?.includes('radio-checked') || transportIcon.mouseIsEnter ? iconColor.blue : '') + x.Name]">
             </label>
             <p-radioButton [inputId]="x.Name" [value]="x" formControlName="transportMode" [label]='x.Name'
                 [labelStyleClass]='"simple-text"'>
@@ -36,8 +36,12 @@
         <h4 class='label'>Shipment Type</h4>
         <div class='radio-row' *ngFor='let x of shipmentTypeListFilter'
             [ngClass]="{'radio-checked':formGroup.controls.shipmentType.value?.Name === x.Name}"
+            (mouseenter)="shipmentIcon.mouseIsEnter = true" (mouseleave)="shipmentIcon.mouseIsEnter = false"
             (click)='formGroup.controls.shipmentType.setValue(x)'>
-            <label class="text-style" [for]="x.Name"><img [src]="icons[x.Name]"></label>
+            <label class="text-style" [for]="x.Name">
+                <img #shipmentIcon
+                    [src]=" icons[(transportRow?.className?.includes('radio-checked') || shipmentIcon.mouseIsEnter ? iconColor.blue : '') + 'Shipment']">
+            </label>
             <p-radioButton [inputId]="x.Name" [value]="x" formControlName="shipmentType" [label]='x.Name'
                 [labelStyleClass]='"simple-text"'>
             </p-radioButton>
