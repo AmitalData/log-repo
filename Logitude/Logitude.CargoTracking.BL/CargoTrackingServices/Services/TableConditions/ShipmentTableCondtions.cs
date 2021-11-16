@@ -73,10 +73,10 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
             var joinScript = $"left  OUTER JOIN dbo.{table.DBTableName} P                   ON P.CustomFileId = C.Id " +
                              $"LEFT OUTER JOIN dbo.ShipmentComputedFields com ON com.Id = C.Id " +
                              $"LEFT OUTER JOIN dbo.ShipmentMasterDatas Mas    ON Mas.Id = C.MasterShipmentDataId "+
-                             $"LEFT OUTER JOIN dbo.ShipmentMasterDatas ForwardingMaster    ON ForwardingMaster.Id = P.MasterShipmentDataId "+
-                             $"LEFT OUTER JOIN dbo.ShipmentComputedFields ForwardingComputed    ON ForwardingComputed.Id = P.Id " +
-                             $"LEFT OUTER JOIN dbo.ShipmentAdditionalCloudDatas AdditionalData    ON AdditionalData.Id = P.Id " +
-                             $"LEFT OUTER JOIN dbo.ShipmentPickUpDeliveries ShipmentDeliveries    ON ShipmentDeliveries.ShipmentId = P.Id "+
+                             $"LEFT OUTER JOIN dbo.ShipmentMasterDatas ForwardingMaster    ON ForwardingMaster.Id = C.MasterShipmentDataId " +
+                             $"LEFT OUTER JOIN dbo.ShipmentComputedFields ForwardingComputed    ON ForwardingComputed.Id = C.Id " +
+                             $"LEFT OUTER JOIN dbo.ShipmentAdditionalCloudDatas AdditionalData    ON AdditionalData.Id = C.Id " +
+                             $"LEFT OUTER JOIN dbo.ShipmentPickUpDeliveries ShipmentDeliveries    ON ShipmentDeliveries.ShipmentId = C.Id " +
                              $"LEFT OUTER JOIN dbo.Cards CarrierCard    ON CarrierCard.Id = ShipmentDeliveries.CarrierId " +
                              $"LEFT OUTER JOIN dbo.Cards ConsigneeCard    ON ConsigneeCard.Id = C.ConsigneeId " +
                              $"LEFT OUTER JOIN dbo.Cards ShipperCard    ON ShipperCard.Id = C.ShipperId";
