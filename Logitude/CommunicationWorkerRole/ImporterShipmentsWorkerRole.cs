@@ -834,6 +834,8 @@ namespace CommunicationWorkerRole
                                                             DimensionsUnitCode = Shipment.DimensionsUnitCode,
                                                             VolumeUnitCode = Shipment.VolumeUnitCode,
                                                             ForwardingPartnerTenant = Shipment.ForwardingPartnerId,
+                                                            Notes = Shipment.Notes,
+
                                                             Agent = new CodeProperties()
                                                             {
                                                                 Code = AgentCode

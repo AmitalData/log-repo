@@ -574,6 +574,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
             entityPM.DimensionsUnitCode = "Cm";
             entityPM.ChargeableWeightUnitCode = "KG";
             entityPM.VolumeUnitCode = "CBF";
+            entityPM.Notes = entityAM.Notes;
             if (!string.IsNullOrEmpty(entityAM.ForwardingPartnerTenant))
             {
                 int ForwardingPartnerTenant = int.Parse(entityAM.ForwardingPartnerTenant);
