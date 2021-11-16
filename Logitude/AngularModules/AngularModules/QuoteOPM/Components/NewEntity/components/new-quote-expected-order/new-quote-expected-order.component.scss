@@ -126,7 +126,10 @@
         margin: 0 5px;
     }
 
-    .dimensions-label,
+    .dimensions-label {
+        flex: 3.6;
+    }
+
     .quantity {
         flex: 3;
     }
@@ -135,9 +138,12 @@
         flex: 5;
     }
 
-    .button-label,
-    .dimensions {
+    .button-label {
         flex: 1;
+    }
+
+    .dimensions {
+        flex: 1.2;
     }
 
     .volume {
