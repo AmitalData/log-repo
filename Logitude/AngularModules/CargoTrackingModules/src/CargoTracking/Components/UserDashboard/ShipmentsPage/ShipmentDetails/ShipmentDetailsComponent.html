@@ -420,11 +420,10 @@ cargoTrackingShipmentPM.ArrivalDate |
                     <div *ngIf="cargoTrackingShipmentPM.EntityType != 'O'" style="width:170px">
                         <div *ngFor="let package of cargoTrackingShipmentPM.Packages.slice(0,2), let i = index" style="display:flex;flex-direction:row">
                             <div class="description TextTrimming"> {{package.PackageTypeName}}</div>
-                            <i class="las la-chevron-circle-up" style="color: var(--MainColor);margin-top:5px"
-                               *ngIf="cargoTrackingShipmentPM.Packages.length > 1 && i == 1 && ShowDetailsSection" (click)="ShowMoreLinkClicked()"></i>
 
-                            <i class="las la-chevron-circle-down" style="color: var(--MainColor);margin-top:5px"
-                               *ngIf="cargoTrackingShipmentPM.Packages.length > 1 && i == 1 && !ShowDetailsSection" (click)="ShowMoreLinkClicked()"></i>
+                            <i class="las" style="color: var(--MainColor);margin-top:5px; margin-left: 5px;"
+                                [class.la-chevron-circle-up]="ShowDetailsSection" [class.la-chevron-circle-down]="!ShowDetailsSection"
+                                *ngIf="ShipmentPackages.length > 1 && i == 1" (click)="ShowMoreLinkClicked()"></i>
                         </div>
                     </div>
                 </div>
@@ -544,7 +543,7 @@ package.ShipperSeal == null ? package.CarrierSeal :
                 </div>
                 <div>
                     <div class="title">Declaration Status</div>
-                    <div class="description TextTrimming">{{this.cargoTrackingShipmentPM.CustomsData.DeclarationStatus}}
+                    <div class="description TextTrimming">{{cargoTrackingShipmentPM.CustomsData.DeclarationStatus}}
                         <a *ngIf="this.cargoTrackingShipmentPM.CustomsData.DeclarationStatus && this.cargoTrackingShipmentPM.CustomsData.DeclarationStatus.length > 18"
                             (click)="ShowMoreWindow(this.cargoTrackingShipmentPM.CustomsData.DeclarationStatus)"
                             style="cursor: pointer;text-decoration: underline;font-size: 11px;">Show more</a>
@@ -564,7 +563,7 @@ package.ShipperSeal == null ? package.CarrierSeal :
                 </div>
                 <div>
                     <div class="title">Cargo Identifier 2</div>
-                    <div class="description TextTrimming">{{this.cargoTrackingShipmentPM.CustomsData.CargoIdentifier2 }}
+                    <div class="description TextTrimming">{{cargoTrackingShipmentPM.CustomsData.CargoIdentifier2 }}
                         <a *ngIf="this.cargoTrackingShipmentPM.CustomsData.CargoIdentifier2 && this.cargoTrackingShipmentPM.CustomsData.CargoIdentifier2.length > 18"
                             (click)="ShowMoreWindow(this.cargoTrackingShipmentPM.CustomsData.CargoIdentifier2)"
                             style="cursor: pointer;text-decoration: underline;font-size: 11px;">Show more</a>
@@ -580,7 +579,7 @@ package.ShipperSeal == null ? package.CarrierSeal :
                 </div>
                 <div>
                     <div class="title">goods description</div>
-                    <div class="description TextTrimming">{{this.cargoTrackingShipmentPM.CustomsData.GoodsDescription }}
+                    <div class="description TextTrimming">{{cargoTrackingShipmentPM.CustomsData.GoodsDescription }}
                         <a *ngIf="this.cargoTrackingShipmentPM.CustomsData.GoodsDescription && this.cargoTrackingShipmentPM.CustomsData.GoodsDescription.length > 18"
                             (click)="ShowMoreWindow(this.cargoTrackingShipmentPM.CustomsData.GoodsDescription)"
                             style="cursor: pointer;text-decoration: underline;font-size: 11px;">Show more</a>
