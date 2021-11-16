@@ -5,7 +5,7 @@
         height: 32px;
     }
     .col1Label{
-        width: 90px;
+        width: 120px;
         padding-right:10px;
     }
     .col1Text{
@@ -243,11 +243,11 @@
                                       [DataContext]="DataContext"></LogLabel>
                         </td>
                         <td class="col1Text">
-                             <LogTextBox [ObjectFieldName]="'ThirdCargoID'"
+                            <LogTextBox [ObjectFieldName]="'ThirdCargoID'"
                                         [ObjectTableName]="'Customs.DeclarationCargoSplit'"
                                         [DataContext]="DataContext"
                                         [Text]="ThirdCargoID"
-                                        [HideColumns]="true"></LogTextBox> 
+                                        [HideColumns]="true"></LogTextBox>
 
                         </td>
 
@@ -315,7 +315,7 @@
         </tr>
 
 
-        <tr>
+        <tr *ngIf="!IsExportDeclaration">
             <td colspan="5" style="padding-right: 10px; padding-left: 35px; height : 30%">
                 <div div class="GeneratedGridContainer" style="width: 100% ; height : 100%">
                     <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="CargoIdentifiersList">
@@ -325,12 +325,12 @@
                                     [header]="'Customs.DecCargoSplitCargoIdentifier.F.CargoIdentifierKey1' | TextCodeTranslationPipe"
                                     [binding]="'CargoIdentifierKey1'">
                             <ng-template let-item>
-<log-cell-template  #logcelltemplate>
-                                <div class="RightCenter">
-                                    <span>{{item.CargoIdentifierKey1 }}</span>
-                                </div>
-                            </log-cell-template>
-</ng-template>
+                                <log-cell-template #logcelltemplate>
+                                    <div class="RightCenter">
+                                        <span>{{item.CargoIdentifierKey1 }}</span>
+                                    </div>
+                                </log-cell-template>
+                            </ng-template>
                         </log-column>
 
                         <!-- CargoIdentifierKey2 -->
@@ -338,12 +338,12 @@
                                     [header]="'Customs.DecCargoSplitCargoIdentifier.F.CargoIdentifierKey2' | TextCodeTranslationPipe"
                                     [binding]="'CargoIdentifierKey2'">
                             <ng-template let-item>
-<log-cell-template  #logcelltemplate>
-                                <div class="RightCenter">
-                                    <span>{{item.CargoIdentifierKey2}}</span>
-                                </div>
-                            </log-cell-template>
-</ng-template>
+                                <log-cell-template #logcelltemplate>
+                                    <div class="RightCenter">
+                                        <span>{{item.CargoIdentifierKey2}}</span>
+                                    </div>
+                                </log-cell-template>
+                            </ng-template>
                         </log-column>
 
                         <!-- CargoIdentifierKey3 -->
@@ -351,128 +351,148 @@
                                     [header]="'Customs.DecCargoSplitCargoIdentifier.F.CargoIdentifierKey3' | TextCodeTranslationPipe"
                                     [binding]="'CargoIdentifierKey3'">
                             <ng-template let-item>
-<log-cell-template  #logcelltemplate>
-                                <div class="RightCenter">
-                                    <span>{{item.CargoIdentifierKey3}}</span>
-                                </div>
-                            </log-cell-template>
-</ng-template>
+                                <log-cell-template #logcelltemplate>
+                                    <div class="RightCenter">
+                                        <span>{{item.CargoIdentifierKey3}}</span>
+                                    </div>
+                                </log-cell-template>
+                            </ng-template>
                         </log-column>
 
                     </logitude-edit-grid>
                 </div>
             </td>
         </tr>
-
-
-        <!--<tr style=" height: 80px;padding-bottom:5px">
+        <tr *ngIf="IsExportDeclaration">
             <td colspan="2" style=" height: 100%;">
                 <div class="CellContent">
                     <logitude-edit-grid GridWidth="100%"
                                         GridHeight="100%" [ItemSource]="ItemsList" [Disabled]="IsDisplayOnly"
                                         (RowEnded)="OnRowEnded($event)" (Ondblclick)="OnFocus()"
                                         (SelectedItemChanged)="OnRowSelected($event)" [SelectedRow]="SelectedRow">
-
+                        <log-column [header]="'סוג מזהה מטען '"
+                                    [binding]="'CargoTypeCode'"
+                                    [width]="'150'" [Alignment]="'right'">
+                            <ng-template let-item>
+                                <log-cell-template #logcelltemplate>
+                                    <div style="width:100%;height:100%;text-align: right;">
+                                        <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
+                                            <span>{{item.CargoIdentifireTypeName}}</span>
+                                        </div>
+                                        <div *ngIf="logcelltemplate.IsEditMode">
+                                            <LogLov tabindex="4" [ObjectFieldName]="'CargoTypeCode'"
+                                                    [ObjectTableName]="'Customs.DecCargoSplitCargoIdentifier'"
+                                                    [DataContext]="item"
+                                                    [LookUpTableName]="'Customs.CargoIdentifireType'"
+                                                    [QueryFilterItems]="ExportCargoTypeFilterItems"
+                                                    [SelectedValue]="CargoTypeCode"
+                                                    [HideColumns]="true"
+                                                    [FocusOnMe]="'true'"
+                                                    (ValueChanged)="item.ChangeCargoIdentifireType()">
+                                            </LogLov>
+                                        </div>
+                                    </div>
+                                </log-cell-template>
+                            </ng-template>
+                        </log-column>
                         <log-column [header]="'Customs.DecCargoSplitCargoIdentifier.F.CargoIdentifierKey1' | TextCodeTranslationPipe"
                                     [binding]="'CargoIdentifierKey1'"
                                     [width]="'150'" [Alignment]="'right'">
                             <ng-template let-item>
-<log-cell-template  #logcelltemplate>
-                                <div style="width:100%;height:100%;text-align: right;">
-                                    <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
-                                        <span>{{item.CargoIdentifierKey1}}</span>
+                                <log-cell-template #logcelltemplate>
+                                    <div style="width:100%;height:100%;text-align: right;">
+                                        <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
+                                            <span>{{item.CargoIdentifierKey1}}</span>
+                                        </div>
+                                        <div *ngIf="logcelltemplate.IsEditMode">
+                                            <LogTextBox #ParentCargoConsinmentItemTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'CargoIdentifierKey1'" [DataContext]="item"
+                                                        [ObjectTableName]="'Customs.DecCargoSplitCargoIdentifier'" [HideColumns]="true">
+                                            </LogTextBox>
+                                        </div>
                                     </div>
-                                    <div *ngIf="logcelltemplate.IsEditMode">
-                                        <LogTextBox #ParentCargoConsinmentItemTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'CargoIdentifierKey1'" [DataContext]="item"
-                                                    [ObjectTableName]="'Customs.DecCargoSplitCargoIdentifier'" [HideColumns]="true">
-                                        </LogTextBox>
-                                    </div>
-                                </div>
-                            </log-cell-template>
-</ng-template>
+                                </log-cell-template>
+                            </ng-template>
                         </log-column>
 
                         <log-column [header]="'Customs.DecCargoSplitCargoIdentifier.F.CargoIdentifierKey2' | TextCodeTranslationPipe"
                                     [binding]="'CargoIdentifierKey2'"
                                     [width]="'150'" [Alignment]="'right'">
                             <ng-template let-item>
-<log-cell-template  #logcelltemplate>
+                                <log-cell-template #logcelltemplate>
 
-                                <div style="text-align: right;width:100%;height:100%;">
-                                    <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
-                                        <span>{{item.CargoIdentifierKey2}}</span>
+                                    <div style="text-align: right;width:100%;height:100%;">
+                                        <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
+                                            <span>{{item.CargoIdentifierKey2}}</span>
+                                        </div>
+                                        <div *ngIf="logcelltemplate.IsEditMode">
+                                            <LogTextBox #GrossMassMeasureTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'CargoIdentifierKey2'" [DataContext]="item"
+                                                        [ObjectTableName]="'Customs.DecCargoSplitCargoIdentifier'" [HideColumns]="true">
+                                            </LogTextBox>
+                                        </div>
                                     </div>
-                                    <div *ngIf="logcelltemplate.IsEditMode">
-                                        <LogTextBox #GrossMassMeasureTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'CargoIdentifierKey2'" [DataContext]="item"
-                                                    [ObjectTableName]="'Customs.DecCargoSplitCargoIdentifier'" [HideColumns]="true">
-                                        </LogTextBox>
-                                    </div>
-                                </div>
 
-                            </log-cell-template>
-</ng-template>
+                                </log-cell-template>
+                            </ng-template>
                         </log-column>
 
                         <log-column [header]="'Customs.DecCargoSplitCargoIdentifier.F.CargoIdentifierKey3' | TextCodeTranslationPipe"
                                     [binding]="'CargoIdentifierKey3'"
                                     [width]="'150'" [Alignment]="'right'">
                             <ng-template let-item>
-<log-cell-template  #logcelltemplate>
-                                <div style="width:100%;height:100%;text-align: right;">
-                                    <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
-                                        <span>{{item.CargoIdentifierKey3}}</span>
+                                <log-cell-template #logcelltemplate>
+                                    <div style="width:100%;height:100%;text-align: right;">
+                                        <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
+                                            <span>{{item.CargoIdentifierKey3}}</span>
+                                        </div>
+                                        <div *ngIf="logcelltemplate.IsEditMode">
+                                            <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'CargoIdentifierKey3'" [Text]="item.CargoIdentifierKey3" [DataContext]="item"
+                                                        [ObjectTableName]="'Customs.DecCargoSplitCargoIdentifier'" [HideColumns]="true"></LogTextBox>
+                                        </div>
                                     </div>
-                                    <div *ngIf="logcelltemplate.IsEditMode">
-                                        <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'CargoDescription'" [Text]="item.CargoIdentifierKey3" [DataContext]="item"
-                                                    [ObjectTableName]="'Customs.DecCargoSplitCargoIdentifier'" [HideColumns]="true"></LogTextBox>
-                                    </div>
-                                </div>
-                            </log-cell-template>
-</ng-template>
+                                </log-cell-template>
+                            </ng-template>
                         </log-column>
 
                     </logitude-edit-grid>
                 </div>
             </td>
-        </tr>-->
+        </tr>
+        <tr>
+
+        <td colspan="2">
+
+            <table>
+                <tr>
+
+                    <td>
+                        <div></div>
+                    </td>
+                    <td style="width: 57px;vertical-align: bottom;">
+                        <button class="Button" (click)="CancelButtonClicked()">{{'Customs.General.B.Cancel' |TextCodeTranslationPipe}}</button>
+                    </td>
+
+                    <td style="width: 10px;vertical-align:bottom">
+                        <div></div>
+                    </td>
+                    <!--[IsDisabled]="!OKButtonEnabled"-->
+                    <td style="width: 57px;vertical-align: bottom;">
+                        <button class="RedButton" (click)="OkButtonClicked()" [disabled]="!OKButtonEnabled">{{'General.B.Save' | TextCodeTranslationPipe}}</button>
+                    </td>
+                    <td style="width: 10px;vertical-align: bottom;">
+                        <div></div>
+                    </td>
+                    <!--[IsDisabled]="!SendButtonEnabled"-->
+                    <td style="width:110px;  vertical-align: bottom;">
+                        <custom-send-options [IsDisabled]="!SendButtonEnabled"
+                                             [AvoidDoubleClick]="true"
+                                             #MyCustomSendOptionsComponent
+                                             (SendButtonClicked)="OnCustomSendOptionsButtonClick($event)"></custom-send-options>
+                    </td>
+                </tr>
+            </table>
 
 
-
-        <tr style="height: 35px;padding-bottom:5px">
-            <td colspan="2">
-
-                <table>
-                    <tr>
-
-                        <td>
-                            <div></div>
-                        </td>
-                        <td style="width: 57px;vertical-align: bottom;">
-                            <button class="Button" (click)="CancelButtonClicked()">{{'Customs.General.B.Cancel' |TextCodeTranslationPipe}}</button>
-                        </td>
-
-                        <td style="width: 10px;vertical-align:bottom">
-                            <div></div>
-                        </td>
-                        <!--[IsDisabled]="!OKButtonEnabled"-->
-                        <td style="width: 57px;vertical-align: bottom;">
-                            <button class="RedButton" (click)="OkButtonClicked()" [disabled]="!OKButtonEnabled">{{'General.B.Save' | TextCodeTranslationPipe}}</button>
-                        </td>
-                        <td style="width: 10px;vertical-align: bottom;">
-                            <div></div>
-                        </td>
-                        <!--[IsDisabled]="!SendButtonEnabled"-->
-                        <td style="width:110px;  vertical-align: bottom;">
-                            <custom-send-options [IsDisabled]="!SendButtonEnabled"
-                                                 [AvoidDoubleClick]="true"
-                                                 #MyCustomSendOptionsComponent
-                                                 (SendButtonClicked)="OnCustomSendOptionsButtonClick($event)"></custom-send-options>
-                        </td>
-                    </tr>
-                </table>
-
-
-            </td>
+        </td>
         </tr>
 
     </table>

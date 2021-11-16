@@ -9,7 +9,7 @@ import { ServiceResponse } from '../../../../Infrastructure/DataContracts/Servic
 import { DeclarationList } from '../../../../Customs/EntityLists/DeclarationList';
 import { DeclarationMessagesService } from '../../../../Customs/Services/WebServices/DeclarationMessagesService';
 import { DeclarationStatusRequestParams } from '../../../../Customs/DataContract/RequestParams/DeclarationStatusRequestParams';
-import { DeclarationStatusResponseData, AvailabiltyLogDeclarationCargoQuantities } from '../../../../Customs/DataContract/ResponseData/DeclarationStatusResponseData';
+import { DeclarationStatusResponseData, AvailabiltyLogDeclarationCargoQuantities, MultiDeclaration } from '../../../../Customs/DataContract/ResponseData/DeclarationStatusResponseData';
 import { Validator } from '../../../../Infrastructure/Validators/Validator';
 import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import { AppTool, DateTool } from '../../../../Infrastructure/Tools';
@@ -40,10 +40,12 @@ export class DeclarationStatusComponent
     _DeclarationMessagesService: DeclarationMessagesService = new DeclarationMessagesService();
 
     public AvailabiltyQuantitiesList: Array<AvailabiltyLogDeclarationCargoQuantities>;
+    public MultiDeclaration: Array<MultiDeclaration>;
+    public IsMultiDeclaration: boolean = false;
+
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
-
         this.AvailabiltyQuantitiesList = [];
     }
 
@@ -64,7 +66,7 @@ export class DeclarationStatusComponent
         this.subscribeWrapperComponent()
     }
 
-
+    DeclarationsList: any;
     OnMassageDisplayMethod() {
         if (this.RequestParams == null) {
             this.RequestParams = new DeclarationStatusRequestParams();
@@ -79,6 +81,32 @@ export class DeclarationStatusComponent
             if (this.ResponseData.AvailabiltyQuantitiesList != null && this.ResponseData.AvailabiltyQuantitiesList.length > 0) {
                 this.IsShowAvailabiltyQuantitiesList = true;
                 this.AvailabiltyQuantitiesList = this.ResponseData.AvailabiltyQuantitiesList;
+            }
+            if (this.ResponseData.MultiDeclarations != null && this.ResponseData.MultiDeclarations.length > 0) {
+                this.DeclarationsList = [];
+                this.MultiDeclaration = this.ResponseData.MultiDeclarations;
+                for (let dec of this.MultiDeclaration) {
+                    this.DeclarationsList.push(dec.DeclarationID);
+                }
+                this.IsMultiDeclaration = true;
+            }
+        }
+    }
+
+    ParentDeclarationSelectionChanged(value) {
+        for (var item of this.MultiDeclaration) {
+            if (item.DeclarationID == value) {
+                this.DeclarationVersion = item.DeclarationVersion;
+                this.DeclarationStatusText = item.DeclarationStatusText;
+                this.LogisticStatusText = item.LogisticStatusText;
+                this.DeclarationOfficeText = item.DeclarationOfficeText;
+                this.TaxationDateTime = item.TaxationDateTime;
+                this.FinancialStatusText = item.FinancialStatusText;
+                this.ReleaseDateTime = item.ReleaseDateTime;
+                this.SubmitDateTime = item.SubmitDateTime;
+                this.HandeledWroker = item.HandeledWroker;
+                this.DeclarationStatusCode = item.DeclarationStatusCode;
+
             }
         }
     }

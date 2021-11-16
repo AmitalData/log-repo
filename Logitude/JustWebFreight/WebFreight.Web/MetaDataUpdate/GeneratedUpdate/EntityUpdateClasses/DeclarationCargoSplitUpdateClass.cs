@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationCargoSplitUpdateClass
    {  		
-		public const string HashString = "83f8d0e06f4fc64dadaa98799540c7dd";
+		public const string HashString = "3db6fc4760ff25164b087633558ec74e";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -125,7 +125,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    NewWizardControlName =  "Logitude.Customs.Views.NewDeclarationCargoSplitControlCommand",
-			      				    LocalDefaultText =  "פיצול מטען",
+			      				    LocalDefaultText =  "בקשת פיצול מטען",
 			      				    DefaultText =  "Declaration Cargo Split",
 			      				    NewButtonLocalDefaultText =  "בקשת פיצול מטען חדשה",
 			      				    NewButtonDefaultText =  "בקשת פיצול מטען חדשה",
@@ -1406,6 +1406,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "Direction",
 					  						ListPropertyPath =  "Direction",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -1468,6 +1469,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "TransportModeId",
 					  						ListPropertyPath =  "TransportModeId",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
