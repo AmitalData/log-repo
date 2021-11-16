@@ -625,7 +625,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
         {
             try
             {
-                Authentication(entity.Tenant)
+                Authentication(entity.Tenant);
                 ICommonDataContext objectContext = CommonDataContext.GetContext(entity.Tenant);
                 DocumentTypeRepository documentTypeRepository = new DocumentTypeRepository(objectContext);
                 DocumentType docType = documentTypeRepository.GetSingleDocumentTypes(entity.Id, entity.Tenant);
