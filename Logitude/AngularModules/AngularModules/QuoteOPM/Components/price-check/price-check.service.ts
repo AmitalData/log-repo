@@ -56,7 +56,8 @@ export class PriceCheckService {
               SessionLocator.SelectedSession.StopBusyIndicator();
               let sBool = UnifreightMessageM.GetStringValue(mess, AmitalGatewayUtil.Instance.DeclarationMessaging.UnifreightResponseStatus);
               if (sBool) {
-                const prices: PriceChekRootResponse = this.xml2Json.decodeXmlStr2Json(mess as any);
+                const xmlString: string = mess.Requset.find(x=> x[0] === 'Response.PriceCheckResponse')[1];
+                const prices: PriceChekRootResponse = this.xml2Json.decodeXmlStr2Json(xmlString);
                 this.fixData(prices);
                 resolve(prices as any)
               } else
@@ -120,7 +121,7 @@ export class PriceCheckService {
           <ProductCode>${this.calculateProducteCode(quote.DirectionId, quote.TransportModeId)}</ProductCode>
           <CostTariffUseCodes>0000CR,CRE,AG</CostTariffUseCodes>
           <SaleTariffUseCodes>0000EX,EXD,AG</SaleTariffUseCodes>
-          <StartDate>${quote.StartDate.toLocaleDateString()}</StartDate>
+          <StartDate>${this.fixDateFormat(quote.StartDate as any)}</StartDate>
           <GrossWeightAmount>${quote.GrossWeight}</GrossWeightAmount>
           <GrossWeightUOM>${quote.GrossWeightUnitCode}</GrossWeightUOM>
           <VolumeAmount>${quote.Volume}</VolumeAmount>
@@ -162,6 +163,10 @@ export class PriceCheckService {
       if ((<any>x.Result).length)
         x.Result = (<any>x.Result)[0];
     })
+  }
+
+  private fixDateFormat(date :string): string {
+    return new Date("2021-11-18T00:00:00Z").toJSON().slice(0,10).split('-').reverse().join('/');
   }
 }
 
