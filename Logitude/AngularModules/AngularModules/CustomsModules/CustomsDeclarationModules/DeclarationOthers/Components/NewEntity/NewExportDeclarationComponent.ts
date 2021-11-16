@@ -96,7 +96,6 @@ export class NewExportDeclarationComponent extends BaseComponent implements OnIn
           var idIndex = this.CurrentSession.GetNewId("RadioButton");
         var errors: string[] = [];
         this.ValidationErrorsList = [];
-
         if (!this.ExportFile) {
             errors.push("עליך להזין מספר תיק יצוא");
         }
@@ -107,10 +106,12 @@ export class NewExportDeclarationComponent extends BaseComponent implements OnIn
 
         if (!this.TransportMode) {
             errors.push("סוג הובלה - שדה חובה ");
-        }
+        } 
        
         if (errors.length > 0) {
             this.ValidationErrorsList = errors;
+            this.CurrentSession.StopBusyIndicator();
+            this.isOkButtonClicked=false;
             return;
         }
         this.SubmitChanges();
