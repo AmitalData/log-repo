@@ -44,25 +44,6 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
 {
     public partial class CustomsRequestsSheetViewsExtendedController : ApiController
     {
-        public HttpResponseMessage GetStatistics()
-        {
-
-            try
-            {
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                int tenant = authToken.Tenant;
-                ICustomContext context = CustomContext.GetContext(tenant);
-                CustomsRequestsSheetListQueryService customsRequestsSheetQuery = new CustomsRequestsSheetListQueryService(context);
-                var summary = customsRequestsSheetQuery.GetStatistics(tenant);
-                return Request.CreateResponse(HttpStatusCode.OK, summary);
-
-            }
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-           
-        }
+        
     }
 }
