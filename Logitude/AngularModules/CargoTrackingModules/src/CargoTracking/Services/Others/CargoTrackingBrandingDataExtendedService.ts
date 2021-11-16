@@ -35,9 +35,8 @@ export class CargoTrackingBrandingDataExtendedService {
     GetUserDashboardBrandingData(BrandingDataRequest:CargoTrackingBrandingDataRequest) {
         var url = '/PutGetCargoTrackingBrandingDataForPrivateSite';
         var callUrl = this._apiUrl.concat(url);
-        var authHeaders = ServiceHelper.GetHeadersWithToken();
 
-        return this._http.put(callUrl,BrandingDataRequest, authHeaders).pipe(
+        return this._http.put(callUrl,BrandingDataRequest, { headers: this.httpHeaders}).pipe(
             map((response: ServiceResponse) => {
                 var serviceResponse: ServiceResponse = new ServiceResponse();
                 serviceResponse = response;
@@ -46,12 +45,11 @@ export class CargoTrackingBrandingDataExtendedService {
             catchError(null));
     }
     GetTenantByDomain(domain:string) {
-        var authHeaders = ServiceHelper.GetHeadersWithToken();
 
         var url = '/GetCargoTrackingBrandingTenantByDomain?domain='+domain;
         var callUrl = this._apiUrl.concat(url);
 
-        return this._http.get(callUrl, authHeaders).pipe(
+        return this._http.get(callUrl, { headers: this.httpHeaders}).pipe(
             map((response: ServiceResponse) => {
                 var serviceResponse: ServiceResponse = new ServiceResponse();
                 serviceResponse = response;

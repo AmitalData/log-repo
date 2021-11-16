@@ -375,15 +375,13 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
             return data;
         }
 
+        // for public 
         [HttpPost]
         public async Task<HttpResponseMessage> PostSearchTrackAsync(string searchKey)
         {
             try
             {
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-
+                
                 HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, "ok");
                 return reponseMessage;
             }
@@ -400,10 +398,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
         {
             try
             {
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                SecurityUtility.AuthenticationOnTenant(tenant);
+                
 
                 ICargoTrackingContext MyContext = CargoTrackingContext.GetContext(tenant);
                 CargoTrackingShipmentListQueryService shipmentsQuery = new CargoTrackingShipmentListQueryService(MyContext);

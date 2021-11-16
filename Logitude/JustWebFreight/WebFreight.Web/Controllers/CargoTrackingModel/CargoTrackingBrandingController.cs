@@ -46,9 +46,7 @@ namespace WebFreight.Web.Controllers.CargoTrackingModel
 
             try
             {
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                
 
                 CargoTrackingHelper cargoTrackingHelper = new CargoTrackingHelper();
                 CargoTrackingBrandingData brandingData = cargoTrackingHelper.GetCargoTrackingBrandingDataByDomain(BrandingDataRequest, true);
@@ -66,9 +64,7 @@ namespace WebFreight.Web.Controllers.CargoTrackingModel
         {
             try
             {
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+               
 
                 TenantManagementQuery tenantManagementQuery = new TenantManagementQuery();
                 ServiceResponse response = new ServiceResponse();
