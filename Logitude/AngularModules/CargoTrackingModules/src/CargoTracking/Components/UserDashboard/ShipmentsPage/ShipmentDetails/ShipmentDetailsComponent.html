@@ -247,14 +247,14 @@
                     <div class="description TextTrimming">
                         <span *ngIf="ShipmentOrder && ShipmentOrder.IncotermName">
                             {{ShipmentOrder.IncotermName}}
-                            <a *ngIf="ShipmentOrder.IncotermName.length > 18" 
+                            <a *ngIf="ShipmentOrder.IncotermName.length > 18"
                                (click)="ShowMoreWindow(ShipmentOrder.IncotermName)"
                                style="cursor: pointer;text-decoration: underline;font-size: 11px;">Show more</a>
                         </span>
 
                         <span *ngIf="ShipmentPM && ShipmentPM.IncotermName">
                             {{ShipmentPM.IncotermName}}
-                            <a *ngIf="(ShipmentPM?.IncotermName.length) > 18" 
+                            <a *ngIf="(ShipmentPM?.IncotermName.length) > 18"
                                (click)="ShowMoreWindow(ShipmentPM.IncotermName)"
                                style="cursor: pointer;text-decoration: underline;font-size: 11px;">Show more</a>
                         </span>
@@ -378,17 +378,16 @@ Shipment.ShipmentList.ArrivalDate |
         <div body>
             <div class="data-cards" *ngIf="Shipment&& Shipment.ShipmentList">
                 <div  *ngIf="Shipment.ShipmentList.EntityType != 'O'" class="hide-mobile" style="width:170px">
-                  
+
                     <div class="title" *ngIf="Shipment.ShipmentList.TransportModeId == 'A'">PACKAGE TYPE</div>
                     <div class="title" *ngIf="Shipment.ShipmentList.TransportModeId != 'A'">CONTAINER TYPE</div>
                     <div *ngIf="Shipment.ShipmentList.EntityType != 'O'" style="width:170px">
                         <div *ngFor="let package of ShipmentPackages?.slice(0,2), let i = index" style="display:flex;flex-direction:row">
                             <div class="description TextTrimming"> {{package.PackageTypeName}}</div>
-                            <i class="las la-chevron-circle-up" style="color: var(--MainColor);margin-top:5px"
-                               *ngIf="ShipmentPackages.length > 1 && i == 1 && ShowDetailsSection" (click)="ShowMoreLinkClicked()"></i>
 
-                            <i class="las la-chevron-circle-down" style="color: var(--MainColor);margin-top:5px"
-                               *ngIf="ShipmentPackages.length > 1 && i == 1 && !ShowDetailsSection" (click)="ShowMoreLinkClicked()"></i>
+                            <i class="las" style="color: var(--MainColor);margin-top:5px; margin-left: 5px;"
+                                [class.la-chevron-circle-up]="ShowDetailsSection" [class.la-chevron-circle-down]="!ShowDetailsSection"
+                                *ngIf="ShipmentPackages.length > 1 && i == 1" (click)="ShowMoreLinkClicked()"></i>
                         </div>
                     </div>
                 </div>
@@ -418,7 +417,7 @@ Shipment.ShipmentList.ArrivalDate |
                     <div class="title">storage site</div>
                     <div class="description TextTrimming">
                         {{ShipmentPM?.WarehouseLegEnglishName}}
-                        <a *ngIf="ShipmentPM && ShipmentPM.WarehouseLegEnglishName && ShipmentPM.WarehouseLegEnglishName.length > 18" 
+                        <a *ngIf="ShipmentPM && ShipmentPM.WarehouseLegEnglishName && ShipmentPM.WarehouseLegEnglishName.length > 18"
                             (click)="ShowMoreWindow(ShipmentPM.WarehouseLegEnglishName)"
                             style="cursor: pointer;text-decoration: underline;font-size: 11px;">Show more</a>
                     </div>
@@ -509,7 +508,7 @@ package.ShipperSeal == null ? package.CarrierSeal :
                 <div>
                     <div class="title">Declaration Status</div>
                     <div class="description TextTrimming">{{ShipmentCustomsData.DeclarationStatus}}
-                        <a *ngIf="ShipmentCustomsData.DeclarationStatus && ShipmentCustomsData.DeclarationStatus.length > 18" 
+                        <a *ngIf="ShipmentCustomsData.DeclarationStatus && ShipmentCustomsData.DeclarationStatus.length > 18"
                             (click)="ShowMoreWindow(ShipmentCustomsData.DeclarationStatus)"
                             style="cursor: pointer;text-decoration: underline;font-size: 11px;">Show more</a>
                     </div>
@@ -521,7 +520,7 @@ package.ShipperSeal == null ? package.CarrierSeal :
                 <div>
                     <div class="title">Cargo Identifier 1</div>
                     <div class="description TextTrimming">{{ShipmentCustomsData.CargoIdentifier1 }}
-                        <a *ngIf="ShipmentCustomsData.CargoIdentifier1 && ShipmentCustomsData.CargoIdentifier1.length > 18" 
+                        <a *ngIf="ShipmentCustomsData.CargoIdentifier1 && ShipmentCustomsData.CargoIdentifier1.length > 18"
                             (click)="ShowMoreWindow(ShipmentCustomsData.CargoIdentifier1)"
                             style="cursor: pointer;text-decoration: underline;font-size: 11px;">Show more</a>
                     </div>
@@ -529,7 +528,7 @@ package.ShipperSeal == null ? package.CarrierSeal :
                 <div>
                     <div class="title">Cargo Identifier 2</div>
                     <div class="description TextTrimming">{{ShipmentCustomsData.CargoIdentifier2 }}
-                        <a *ngIf="ShipmentCustomsData.CargoIdentifier2 && ShipmentCustomsData.CargoIdentifier2.length > 18" 
+                        <a *ngIf="ShipmentCustomsData.CargoIdentifier2 && ShipmentCustomsData.CargoIdentifier2.length > 18"
                             (click)="ShowMoreWindow(ShipmentCustomsData.CargoIdentifier2)"
                             style="cursor: pointer;text-decoration: underline;font-size: 11px;">Show more</a>
                     </div>
@@ -537,7 +536,7 @@ package.ShipperSeal == null ? package.CarrierSeal :
                 <div>
                     <div class="title">Cargo Identifier 3</div>
                     <div class="description TextTrimming">{{ShipmentCustomsData.CargoIdentifier3 }}
-                        <a *ngIf="ShipmentCustomsData.CargoIdentifier3 && ShipmentCustomsData.CargoIdentifier3.length > 18" 
+                        <a *ngIf="ShipmentCustomsData.CargoIdentifier3 && ShipmentCustomsData.CargoIdentifier3.length > 18"
                             (click)="ShowMoreWindow(ShipmentCustomsData.CargoIdentifier3)"
                             style="cursor: pointer;text-decoration: underline;font-size: 11px;">Show more</a>
                     </div>
@@ -545,7 +544,7 @@ package.ShipperSeal == null ? package.CarrierSeal :
                 <div>
                     <div class="title">goods description</div>
                     <div class="description TextTrimming">{{ShipmentCustomsData.GoodsDescription }}
-                        <a *ngIf="ShipmentCustomsData.GoodsDescription && ShipmentCustomsData.GoodsDescription.length > 18" 
+                        <a *ngIf="ShipmentCustomsData.GoodsDescription && ShipmentCustomsData.GoodsDescription.length > 18"
                             (click)="ShowMoreWindow(ShipmentCustomsData.GoodsDescription)"
                             style="cursor: pointer;text-decoration: underline;font-size: 11px;">Show more</a>
                     </div>
@@ -673,7 +672,7 @@ package.ShipperSeal == null ? package.CarrierSeal :
 
 
 
-                                 
+
                             <path fill="var(--secondaryColor)" d="M217.521,132.552H148.5c-4.043,0-7.32,3.277-7.32,7.32v61.701H79.479c-4.043,0-7.32,3.277-7.32,7.32v69.021
                                      c0,4.043,3.277,7.32,7.32,7.32h138.042c4.043,0,7.32-3.277,7.32-7.32V139.873C224.842,135.829,221.564,132.552,217.521,132.552z
                                      M155.82,226.568l16.837,16.837l-16.837,16.837V226.568z M141.18,260.241l-16.837-16.837l16.837-16.837V260.241z M166.174,216.214
@@ -746,7 +745,7 @@ package.ShipperSeal == null ? package.CarrierSeal :
 
         <div body>
             <div  class="no-data-available" *ngIf="DocumentsFilings && DocumentsFilings.length == 0 " style="margin-top:10px">No Documents defined for this shipment</div>
-            <a *ngIf="DocumentsFilings?.length > 0 " href="javascript:;" style="color: var(--MainColor)" 
+            <a *ngIf="DocumentsFilings?.length > 0 " href="javascript:;" style="color: var(--MainColor)"
                 (click)="DownloadAllClick(Shipment.ShipmentList.EntityId, Shipment.ShipmentList.SecurityKey)">Download all</a>
             <div *ngIf="DocumentsFilings?.length > 0 " class="hide-mobile hide-tablet" style="min-width: 720px;width: calc(100% - 100px);">
 
@@ -808,7 +807,7 @@ package.ShipperSeal == null ? package.CarrierSeal :
                             <div class="col-50 card-title">type</div>
                             <div class="col-35 card-title">customs ref</div>
                             <div class="col-15 text-end" (click)="item.ShowDetailsMenu=!item.ShowDetailsMenu">
-                                
+
 
                                 <svg [attr.fill]="item.IsDigitallySigned?'#c13b3b':'#cecece'" id="Capa_1" enable-background="new 0 0 512 512" height="16" viewBox="0 0 512 512" width="16" xmlns="http://www.w3.org/2000/svg"><path d="m337.903 358.822 23.413-37.992 42.252-14.41 4.681-44.377 31.789-31.295-15.114-42.006 15.114-42.007-31.788-31.295-4.681-44.376-42.252-14.41-23.413-37.993-44.285 5.347-37.619-24.008-37.619 24.01-44.284-5.347-23.413 37.992-42.252 14.41-4.681 44.376-31.789 31.295 15.114 42.007-15.114 42.007 31.788 31.294 4.681 44.377 42.252 14.41 23.413 37.992 44.285-5.346 37.619 24.009 37.619-24.009zm-211.332-170.079c0-71.367 58.062-129.429 129.429-129.429s129.429 58.062 129.429 129.429-58.062 129.429-129.429 129.429-129.429-58.062-129.429-129.429z" /><path d="m256 89.333c-54.815 0-99.41 44.595-99.41 99.41s44.595 99.41 99.41 99.41 99.41-44.595 99.41-99.41-44.595-99.41-99.41-99.41z" /><path d="m211.299 384.568-52.68 6.36-27.833-45.167-9.462-3.226-40.813 127.566 73.475-4.041 57.485 45.94 33.828-105.732z" /><path d="m381.214 345.762-27.834 45.166-52.679-6.36-34 21.7 33.828 105.732 57.485-45.94 73.475 4.041-40.813-127.566z" /></svg>
                                 <a href="javascript:;" style="padding: 10px 3px 0px 5px;">
@@ -878,14 +877,14 @@ item.CreateDate | date:'d-MMM-yyyy,
                         <div class="partner-address" [innerHTML]="partnerCard.Address||'No address'">
                             <!-- {{partnerCard.Address}} -->
                         </div>
-                       
+
                         <div class="partner-mobile">{{partnerCard.PhoneNumber}}</div>
                         <!-- <div class="partner-mobile">{{partnerCard.FaxNumber}}</div> -->
                         <div class="partners-footer-buttons mobile-only">
-                            
+
                             <div class="circle-icon-x2">
-                               
-                                
+
+
                                 <a [href]="'tel:'+partnerCard.PhoneNumber">
                                     <img src="./assets/images/icons/call-white.svg" alt="">
                                 </a>
