@@ -51,7 +51,7 @@ namespace WebFreight.Web.App_Code
         {
             string token = HttpContext.Current.Request.Headers["Token"];
             AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-            SecurityUtility.AuthenticationOnTenant(authToken.Tenant);\
+            SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
 
             return Uploader.GetFileStream(id);
         }

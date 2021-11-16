@@ -80,7 +80,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 Quantity = shipmentPM.BookingNumberOfPackages,
                 Weight = shipmentPM.OrderGrossWeight,
                 Volume = shipmentPM.BookingVolume,  
-                Incoterm = shipmentPM.IncotermCode
+                Incoterm = shipmentPM.IncotermCode,
+                Notes = shipmentPM.Notes,
             };
         } 
         private static void MapExportShipmentPackages(ShipmentPM ForwarderShipment, NewAExporterShipmentAM newAExporterShipmentAM)
