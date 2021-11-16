@@ -78,6 +78,8 @@ namespace Logitude.BL.CommonDataModel.CodePropertiesMapping
                 port = portRepository.GetSinglePortByCodeCountryCode(0, Code, CountryCode, false);
             }
 
+            if (port == null) throw new Exception("Port with " + Code + " code is missing!");
+
             newPort = portRepository.GetSinglePortByCodeCountryCode(tenant, port.Code, port.Country.Code, false);
             Country country = null;
 
