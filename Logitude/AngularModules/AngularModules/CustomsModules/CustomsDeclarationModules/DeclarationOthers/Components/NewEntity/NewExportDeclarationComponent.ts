@@ -91,8 +91,10 @@ export class NewExportDeclarationComponent extends BaseComponent implements OnIn
         }
     }
 
- 
+    isOkButtonClicked: boolean = false;
     OkButtonClicked() {
+        this.CurrentSession.StartBusyIndicator("");
+        this.isOkButtonClicked = true;
           var idIndex = this.CurrentSession.GetNewId("RadioButton");
         var errors: string[] = [];
         this.ValidationErrorsList = [];
@@ -114,6 +116,7 @@ export class NewExportDeclarationComponent extends BaseComponent implements OnIn
             this.isOkButtonClicked=false;
             return;
         }
+
         this.SubmitChanges();
         
     }
@@ -123,7 +126,8 @@ export class NewExportDeclarationComponent extends BaseComponent implements OnIn
     }
 
     SubmitChanges() {
-
+        this.CurrentSession.CloseCurrentWindowEmit("ok");
+        this.CurrentSession.StopBusyIndicator();
         var Consignment  = new ConsignmentPM(this.EntityPM);
 
         Consignment.ConsignmentType = 'E';
@@ -137,8 +141,6 @@ export class NewExportDeclarationComponent extends BaseComponent implements OnIn
             var mm: ServiceResponse = myResult;
             if (!mm.HasError) {
                 var entity = mm.Result;
-                this.CurrentSession.CloseCurrentWindowEmit("ok");
-
                 SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent',
                     this.CurrentSession.SessionLocation.viewContainerRef)
                     .then(cmpRef => {
