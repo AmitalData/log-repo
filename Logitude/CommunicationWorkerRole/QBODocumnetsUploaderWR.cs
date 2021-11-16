@@ -183,7 +183,7 @@ namespace CommunicationWorkerRole
         private void SendToQBO(DocumentsFiling documentFiling)
         {
             Document document = GetDocument(documentFiling.DocumentId);
-            var attachmentFileBytes = GetFileData(document);
+            byte[] attachmentFileBytes = GetFileData(document);
             this.SendAttachmentQBO(attachmentFileBytes, document, documentFiling);
         }
 
@@ -226,7 +226,7 @@ namespace CommunicationWorkerRole
             wrParmeters.APInvoice = wrParmeters.APInvoiceRepository.GetSingleAPInvoice(invoiceId, wrParmeters.Tenant);
         }
 
-        private Stream GetFileData(Document document)
+        private byte[] GetFileData(Document document)
         {
             if (document == null)
             {
@@ -234,8 +234,21 @@ namespace CommunicationWorkerRole
             }
             BlobFileInfo fileInfo = MapBlobFileInfo(document);
             byte[] buffer = wrParmeters.Storageservice.Read(fileInfo);
-            Stream stream = new MemoryStream(buffer);
-            return stream;
+         //   FileStream stream = GetFileStreamFromBytes(buffer,string.Concat(document.FileName,'.',document.Extension));
+            return buffer;
+        }
+
+        private FileStream GetFileStreamFromBytes(byte[] dataArray, string fileName)
+        {
+            FileStream fileStream;
+            using (fileStream = new FileStream(fileName, FileMode.Create))
+            {
+                for (int i = 0; i < dataArray.Length; i++)
+                {
+                    fileStream.WriteByte(dataArray[i]);
+                }       
+            }
+            return fileStream;
         }
 
         private Document GetDocument(string documentId)
@@ -265,25 +278,33 @@ namespace CommunicationWorkerRole
         }
 
 
-        private void SendAttachmentQBO(Stream stream, Document document, DocumentsFiling documentFiling)
+        private void SendAttachmentQBO(byte[] bytesStream, Document document, DocumentsFiling documentFiling)
         {
             ServiceContext serviceContext = GetServiceContext();
             DataService commonServiceQBO = new DataService(serviceContext);
             Attachable attachable = new Attachable();
+            attachable.Lat = "25.293112341223";
+            attachable.Long = "-21.3253249834";
+            attachable.PlaceName = "Fake Place";
+            attachable.Note = "Attachable note " + Guid.NewGuid().ToString("N").Substring(0, 5);
+            attachable.Tag = "Attachable tag " + Guid.NewGuid().ToString("N").Substring(0, 5);
             attachable.AttachableRef = new AttachableRef[1];
             attachable.AttachableRef[0] = new AttachableRef();
             attachable.AttachableRef[0].EntityRef = new ReferenceType();
-            attachable.AttachableRef[0].EntityRef.type = objectNameEnumType.Invoice.ToString();
-            attachable.AttachableRef[0].EntityRef.name = objectNameEnumType.Invoice.ToString();
+            attachable.AttachableRef[0].EntityRef.type = objectNameEnumType.Bill.ToString();
+            attachable.AttachableRef[0].EntityRef.name = objectNameEnumType.Bill.ToString();
             attachable.AttachableRef[0].EntityRef.Value = wrParmeters.APInvoice.ExternalAccountingEntityId;
-            attachable.ContentType = GetContentType(document.Extension);
-            attachable.FileName = document.FileName;
-            Attachable attachableUploaded = commonServiceQBO.Upload(attachable, stream);
-            if(attachableUploaded != null)
+            using (MemoryStream stream = new MemoryStream(bytesStream))
             {
-                UpdateDocument(documentFiling);
+                attachable.ContentType = GetContentType(document.Extension);
+                attachable.FileName = document.FileName;
+                Attachable attachableUploaded = commonServiceQBO.Upload(attachable, stream);
+                if (attachableUploaded != null)
+                {
+                    UpdateDocument(documentFiling);
+                }
+                stream.Close();
             }
-
         }    
 
         public ServiceContext GetServiceContext()
@@ -350,7 +371,7 @@ namespace CommunicationWorkerRole
             if (extension.ToLower() == "png")
                 return "image/png";
             if (extension.ToLower() == "jpeg")
-                return "image/JPEG";
+                return "image/jpeg";
             return string.Concat("application/", extension);
         }
 
