@@ -13,7 +13,7 @@ import {FieldValueResolver} from '../../../../Infrastructure/Utilities/FieldValu
     
     selector: 'AutomationsConditionAreaComponent',
     templateUrl: './AutomationsConditionAreaComponent.html',
-    inputs: ['AutomationCondationLists', 'Title', 'TiggerComponent', 'CondationListType', 'IsDisabled', 'ListHeight', 'NoEntity'],
+    inputs: ['AutomationCondationLists', 'Title', 'TiggerComponent', 'CondationListType', 'IsDisabled', 'ListHeight', 'NoEntity','CanSetValueFromField'],
 
 })
 export class AutomationsConditionAreaComponent extends BaseComponent implements OnInit {
@@ -26,6 +26,8 @@ export class AutomationsConditionAreaComponent extends BaseComponent implements 
     ListHeight: string = "120px";
     TiggerComponent: any;
     NoEntity: boolean = false;
+    CanSetValueFromField: boolean = true;
+    
     constructor() {
         super();
       

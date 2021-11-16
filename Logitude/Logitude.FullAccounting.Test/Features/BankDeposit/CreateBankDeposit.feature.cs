@@ -113,23 +113,23 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-                TechTalk.SpecFlow.Table table22 = new TechTalk.SpecFlow.Table(new string[] {
+                TechTalk.SpecFlow.Table table8 = new TechTalk.SpecFlow.Table(new string[] {
                             "property",
                             "Value"});
-                table22.AddRow(new string[] {
+                table8.AddRow(new string[] {
                             "CashBook",
                             "new cash book"});
-                table22.AddRow(new string[] {
+                table8.AddRow(new string[] {
                             "DepositCurrency",
                             "NIS"});
-                table22.AddRow(new string[] {
+                table8.AddRow(new string[] {
                             "ForeignAmount",
                             "300"});
-                table22.AddRow(new string[] {
+                table8.AddRow(new string[] {
                             "LocalDepositAmount",
                             "300"});
 #line 6
- testRunner.Given("a bank deposit with the following properties", ((string)(null)), table22, "Given ");
+ testRunner.Given("a bank deposit with the following properties", ((string)(null)), table8, "Given ");
 #line hidden
 #line 12
  testRunner.When("create bank deposit", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
