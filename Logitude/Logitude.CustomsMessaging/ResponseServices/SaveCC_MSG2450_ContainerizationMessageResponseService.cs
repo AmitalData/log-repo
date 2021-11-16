@@ -58,6 +58,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 if (_ContainerizationPM.OperationMode == "3")
                 {
                     _ContainerizationPM.ContainerizationStatus = "3";
+                    _ContainerizationPM.ConnectedDeclarations = null;
                     var myDeclarationQueryService = new DeclarationQueryService(dbContext);
                     var declarationPMs = myDeclarationQueryService.GetDeclarationsByExportContainerizationId(containerizationID);
                     foreach (var item in declarationPMs)
