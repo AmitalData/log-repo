@@ -76,6 +76,9 @@ export class ShipmentOrderList {
 	CustomerName: string;
 	LastExceptionDescription: string;
 	LastExceptionDate: Date;
+	OnHandDate: Date;
+	IsOperationalClosed: boolean;
+	OnHandNumber: string;
 	
 }
  

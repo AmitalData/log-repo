@@ -1584,7 +1584,6 @@ namespace Logitude.ShipmentOrderModule.Def.EntityPMs
 			
 		 }
 	   }
-
 	  private string originPortCode ;
 	  	  
        
@@ -1677,7 +1676,6 @@ namespace Logitude.ShipmentOrderModule.Def.EntityPMs
 			
 		 }
 	   }
-
 	  private string lastExceptionDescription ;
 	  	  
        
@@ -1724,7 +1722,75 @@ namespace Logitude.ShipmentOrderModule.Def.EntityPMs
 			
 		 }
 	   }
-
+	  private DateTime? onHandDate ;
+	  	  
+       
+	   [CustomValidation(typeof(ShipmentOrderModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public DateTime? OnHandDate  
+	   {
+	    
+	     get
+		{
+		   return onHandDate;
+		 }
+		 set
+		 {
+		   if(onHandDate != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="OnHandDate",OldValue=onHandDate,NewValue=value,PropertyType="DateTime?"};
+		    NotifyPropertyChanged(values);
+		   onHandDate=value;
+		   }
+			
+		 }
+	   }
+	  private bool isOperationalClosed ;
+	  	  
+       
+	   [CustomValidation(typeof(ShipmentOrderModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsOperationalClosed  
+	   {
+	    
+	     get
+		{
+		   return isOperationalClosed;
+		 }
+		 set
+		 {
+		   if(isOperationalClosed != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsOperationalClosed",OldValue=isOperationalClosed,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isOperationalClosed=value;
+		   }
+			
+		 }
+	   }
+	  private string onHandNumber ;
+	  	  
+       
+	   [CustomValidation(typeof(ShipmentOrderModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string OnHandNumber  
+	   {
+	    
+	     get
+		{
+		   return onHandNumber;
+		 }
+		 set
+		 {
+		   if(onHandNumber != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="OnHandNumber",OldValue=onHandNumber,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   onHandNumber=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

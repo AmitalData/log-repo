@@ -213,7 +213,10 @@ using Logitude.ShipmentOrderModule.Data;
 					   				   }
 				   
 				   temp.LastExceptionDescription = MyEntityPM.LastExceptionDescription;
-				   temp.LastExceptionDate = MyEntityPM.LastExceptionDate;					
+				   temp.LastExceptionDate = MyEntityPM.LastExceptionDate;
+				   temp.OnHandDate = MyEntityPM.OnHandDate;
+				   temp.IsOperationalClosed = MyEntityPM.IsOperationalClosed;
+				   temp.OnHandNumber = MyEntityPM.OnHandNumber;					
 				   return temp;
 			}
             catch (Exception ex)
@@ -477,7 +480,10 @@ using Logitude.ShipmentOrderModule.Data;
 			
 					
 					temp.LastExceptionDescription = MyEntity.LastExceptionDescription;
-					temp.LastExceptionDate = MyEntity.LastExceptionDate;					   
+					temp.LastExceptionDate = MyEntity.LastExceptionDate;
+					temp.OnHandDate = MyEntity.OnHandDate;
+					temp.IsOperationalClosed = MyEntity.IsOperationalClosed;
+					temp.OnHandNumber = MyEntity.OnHandNumber;					   
 					   return temp;
 		    }
             catch (Exception ex)
