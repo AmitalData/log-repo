@@ -47,8 +47,16 @@ namespace Logitude.CargoTracking.BL.EntityQueryServices
             Repository = repository;
             mapping = new CargoTrackingShipmentDataMapping();
         }
+		 
+		public  CargoTrackingShipmentPM GetSingle(int id,bool getComposition, bool getFromCache)
+        {
+             EntityKeys = new CargoTrackingShipmentKeys(){ Id = id };
 
-        protected override EntityKeyFields GetKeys(CargoTrackingShipment entityPOCO)
+			 return base.GetSingle(EntityKeys, getComposition, getFromCache);
+        }
+
+       
+	    protected override EntityKeyFields GetKeys(CargoTrackingShipment entityPOCO)
         {
             CargoTrackingShipmentKeys entityKeys = new CargoTrackingShipmentKeys() { Id = entityPOCO.Id,  };
             return entityKeys;

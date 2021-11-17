@@ -263,7 +263,6 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 	         SupplyDateTime,
 	      }
 
-
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
         List<PMPropertyNames> CustomMappedPMProperties=new List<PMPropertyNames>();
     
@@ -754,7 +753,6 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
             {
 				entityPOCO.BookingExceptionReason = entityPM.BookingExceptionReason;
 			}
-
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PaymentRequiredDone))
             {
@@ -1850,7 +1848,6 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
             {
                 oldEntityPM.BookingExceptionReason = entityPM.BookingExceptionReason;
             }
-
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PaymentRequiredDone))
             {
