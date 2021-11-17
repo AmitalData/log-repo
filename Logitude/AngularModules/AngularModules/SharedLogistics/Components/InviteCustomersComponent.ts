@@ -101,9 +101,11 @@ export class InviteCustomersComponent implements OnInit {
     }
 
     sharedLogisticContact: SharedLogisticContactPM;
-    SaveChanges(item: SharedLogisticContactPM) {
+    haveInternetAccess:boolean;
+    SaveChanges(item: SharedLogisticContactPM, haveInternetAccess) {
+        this.haveInternetAccess = haveInternetAccess;
         this.sharedLogisticContact = item;
-        if (this.CanChangeTemplate) {
+        if (this.CanChangeTemplate && haveInternetAccess) {
             this.ShowTemplateTypePicker();
             return;
         }
@@ -126,6 +128,7 @@ export class InviteCustomersComponent implements OnInit {
 
 
     private SendInvitaion(templateId) {
+        this.sharedLogisticContact.InternetAccess = this.haveInternetAccess;
         this.sharedLogisticContact.IsCargoTrackingInvitation = this.IsCargoTrackingMenuClicked;
         this.sharedLogisticContact.TemplateId = templateId;
         this.CurrentSession.CurrentWindow.StartBusyIndicator("Saving...");
