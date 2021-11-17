@@ -82,6 +82,9 @@ namespace Logitude.ShipmentOrderModule.BL.EntityQueryServices
                 CustomerId = shipmentOrder.CustomerId,
                 LastExceptionDate = shipmentOrder.LastExceptionDate,
                 LastExceptionDescription = shipmentOrder.LastExceptionDescription,
+                OnHandDate = shipmentOrder.OnHandDate,
+                OnHandNumber = shipmentOrder.OnHandNumber,
+                IsOperationalClosed = shipmentOrder.IsOperationalClosed,
             };
         }
 

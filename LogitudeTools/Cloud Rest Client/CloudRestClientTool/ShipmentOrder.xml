@@ -228,4 +228,7 @@
 	<Volume>3</Volume>
 	<LastExceptionDate>2020-03-12T11:29:10.12</LastExceptionDate>
 	<LastExceptionDescription>test</LastExceptionDescription>
+	<OnHandDate>2020-03-12T11:29:10.12</OnHandDate>
+	<OnHandNumber>123</OnHandNumber>
+	<IsOperationalClosed>true</IsOperationalClosed>
 </ShipmentOrder>

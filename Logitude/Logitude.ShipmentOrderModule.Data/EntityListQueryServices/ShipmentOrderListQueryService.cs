@@ -157,6 +157,12 @@ namespace Logitude.ShipmentOrderModule.Data.EntityListQueryServices
 
                                                        LastExceptionDescription = a.LastExceptionDescription,
 
+                                                       OnHandDate = a.OnHandDate,
+
+                                                       OnHandNumber = a.OnHandNumber,
+
+                                                       IsOperationalClosed = a.IsOperationalClosed,
+
                                                    });
             return query;
         }
