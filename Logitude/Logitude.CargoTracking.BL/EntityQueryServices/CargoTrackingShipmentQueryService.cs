@@ -23,12 +23,6 @@ namespace Logitude.CargoTracking.BL.EntityQueryServices
         private const string ForwardingShipmentEntityType = "F";
         private const string ShipmentOrderEntityType = "O";
 
-        public CargoTrackingShipmentPM GetSingle(int id, bool getComposition, bool getFromCache)
-        {
-            EntityKeys = new CargoTrackingShipmentKeys() { Id = id };
-
-            return base.GetSingle(EntityKeys, getComposition, getFromCache);
-        }
 
         public CargoTrackingShipmentPM GetSinglePM(int id, int tenant)
         {

@@ -138,6 +138,8 @@ export class CargoTrackingShipmentList {
 	ShipmentOrderGateway: string;
 	ShipmentOrderPONumber: string;
 	PoNumber: string;
+	DescriptionOfGoods: string;
+	SupplyDateTime: Date;
 	
 }
  
