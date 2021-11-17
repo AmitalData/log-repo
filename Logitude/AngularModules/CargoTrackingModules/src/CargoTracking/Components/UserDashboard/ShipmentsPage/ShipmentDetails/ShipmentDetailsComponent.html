@@ -146,6 +146,9 @@
                 <li>
                     {{ShipmentOrder?.PONumber}} 
                 </li>
+                <li *ngIf="cargoTrackingShipmentPM.EntityType == 'O' && cargoTrackingShipmentPM.ShipmentOrderPONumber">
+                    {{cargoTrackingShipmentPM.ShipmentOrderPONumber}} 
+                </li>
             </ul>
             <ul *ngIf="showMoreReferences">
                 <li *ngFor="let ref of ShipmentReferences, let i = index">{{ref}}</li>
@@ -304,8 +307,8 @@
                         <span *ngFor="let item of ShipmentReferences, let i = index">
                             <span *ngIf="i == 0">{{item}} </span>
                         </span>
-                        <span *ngIf="Shipment.ShipmentList.EntityType == 'O' && Shipment.ShipmentList.PoNumber">
-                            {{Shipment.ShipmentList.PoNumber}} 
+                        <span *ngIf="cargoTrackingShipmentPM.EntityType == 'O' && cargoTrackingShipmentPM.PoNumber">
+                            {{cargoTrackingShipmentPM.PoNumber}} 
                         </span>
                         <a *ngIf="this.ShipmentReferences && this.ShipmentReferences?.length > 2"
                            (click)="OpenReferencesWindow(ShipmentReferences)"
@@ -404,11 +407,11 @@ cargoTrackingShipmentPM.ArrivalDate |
                     <div class="title">declaration status</div>
                     <div class="description"></div>
                 </div>
-                <div *ngIf="Shipment.ShipmentList.EntityType == 'O'">
+                <div *ngIf="cargoTrackingShipmentPM.EntityType == 'O'">
                     <div class="title">Supply Date Time</div>
                     <div class="description">
-                        <span *ngIf="Shipment.ShipmentList.SupplyDateTime">
-                            {{Shipment.ShipmentList.SupplyDateTime |date:'dd/MM/yyyy'}}
+                        <span *ngIf="cargoTrackingShipmentPM.SupplyDateTime">
+                            {{cargoTrackingShipmentPM.SupplyDateTime |date:'dd/MM/yyyy'}}
                         </span>
                     </div>
                 </div>
@@ -495,10 +498,10 @@ cargoTrackingShipmentPM.ArrivalDate |
                         {{cargoTrackingShipmentPM?.ImportManifest}}
                     </div>
                 </div>
-                <div *ngIf=" Shipment.ShipmentList.EntityType == 'O'">
+                <div *ngIf=" cargoTrackingShipmentPM.EntityType == 'O'">
                     <div class="title">Description Of Goods </div>
                     <div class="description">
-                        {{Shipment.ShipmentList?.DescriptionOfGoods}}
+                        {{cargoTrackingShipmentPM?.DescriptionOfGoods}}
                     </div>
                 </div>
 
