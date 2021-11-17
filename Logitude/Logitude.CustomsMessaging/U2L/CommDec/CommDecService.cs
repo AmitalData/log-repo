@@ -1243,7 +1243,7 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
 
                                 myCourierDeclarationUpdateService.Update(_CourierDeclarationPMPMDiferentMaster, true);
 
- if(false)
+ if(true)
                                 {
 
                  
