@@ -149,4 +149,12 @@ ELSE      Begin
 		  End
 
 
-		  
+		  		  --CustomFields
+IF not EXISTS(SELECT 1 FROM [dbo].[DWCategories] 
+          WHERE Code = 'InvoiceGeneralDetails')
+		  Begin  
+				INSERT INTO [dbo].[DWCategories] ([Code],[Name],[Index]) VALUES('InvoiceGeneralDetails','Invoice General Details',10)
+		  End
+ELSE      Begin 
+				UPDATE [dbo].[DWCategories] Set [dbo].[DWCategories].[Index] = 10 WHERE [dbo].[DWCategories].[Code] = 'InvoiceGeneralDetails'	  
+		  End
