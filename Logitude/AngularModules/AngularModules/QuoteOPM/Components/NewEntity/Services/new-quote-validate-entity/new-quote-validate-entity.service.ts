@@ -92,8 +92,10 @@ export class NewQuoteValidateEntityService {
           .filter(i => this.form.controls[ctrl.name + i].invalid)
           .forEach(i => this.errorList.push(ctrl.label + '  is missing in ' + ctrl.label + ' ' + i))
       );
-    else if (this.form.controls.packages.invalid)
-      this.errorList.push('Please insert data to section Expected Order Details')
+    else if (this.form.controls.packages.invalid) {
+      const msg: string = (<FormArray>this.form.controls.packages).length === 1 ? 'Please insert data to section Expected Order Details' : 'Volume or Gross Weight fields required';
+      this.errorList.push(msg)
+    }
   }
 
   checkValidator(formGroup: FormGroup): void {
