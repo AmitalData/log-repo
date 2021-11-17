@@ -92,19 +92,23 @@ export class NewQuoteComponent {
 
     private addProperty(): void {
         const propertyForm: FormGroup["controls"] = ((this.formGroup.controls.properties as FormArray).at(0) as FormGroup).controls;
+        const deliveryValue: any = (propertyForm.delivery as FormGroup).value;
+        const pickupValue: any = (propertyForm.pickup as FormGroup).value;
 
-        if ((propertyForm.delivery as FormGroup).value.include) {
-            this.EntityPM.FromAddressCity = (propertyForm.delivery as FormGroup).value.city
-            this.EntityPM.FromAddressCountryId = (propertyForm.delivery as FormGroup).value.country?.Id
-            this.EntityPM.FromAddressZipCode = (propertyForm.delivery as FormGroup).value.zipCode
-            this.EntityPM.ToAddressId = (propertyForm.delivery as FormGroup).value.address?.Id
+        if (deliveryValue.include) {
+            this.EntityPM.FromAddressCity = deliveryValue.city
+            this.EntityPM.FromAddressCountryId = deliveryValue.country?.Id
+            this.EntityPM.FromAddressZipCode = deliveryValue.zipCode
+            this.EntityPM.ToAddressId = deliveryValue.address?.Id
+            this.EntityPM.IncludeDelivery = deliveryValue.include
         }
-
-        if ((propertyForm.pickup as FormGroup).value.include) {
-            this.EntityPM.ToAddressCity = (propertyForm.pickup as FormGroup).value.city
-            this.EntityPM.ToAddressCountryId = (propertyForm.pickup as FormGroup).value.country?.Id
-            this.EntityPM.ToAddressZipCode = (propertyForm.pickup as FormGroup).value.zipCode
-            this.EntityPM.FromAddressId = (propertyForm.pickup as FormGroup).value.address?.Id
+        
+        if (pickupValue.include) {
+            this.EntityPM.ToAddressCity = pickupValue.city
+            this.EntityPM.ToAddressCountryId = pickupValue.country?.Id
+            this.EntityPM.ToAddressZipCode = pickupValue.zipCode
+            this.EntityPM.FromAddressId = pickupValue.address?.Id
+            this.EntityPM.IncludePickUp = pickupValue.include
         }
 
         this.EntityPM.ToPortId = propertyForm.toPort.value?.Code
@@ -116,23 +120,25 @@ export class NewQuoteComponent {
 
     private updatePropertiesTable(): void {
         const propertiesForms: AbstractControl[] = (this.formGroup.controls.properties as FormArray).controls.filter((propertyForm: FormGroup) => propertyForm.valid);
-
+        
         propertiesForms.forEach((propertyFormGroup: FormGroup) => {
             const propertyForm: FormGroup["controls"] = propertyFormGroup.controls;
+            const deliveryValue: any = (propertyForm.delivery as FormGroup).value;
+            const pickupValue: any = (propertyForm.pickup as FormGroup).value;
             const propertiesPM: QuoteOPPropertiesPM = new QuoteOPPropertiesPM(this.EntityPM);
 
-            if ((propertyForm.delivery as FormGroup).value.include) {
-                propertiesPM.FromAddressCity = (propertyForm.delivery as FormGroup).value.city
-                propertiesPM.FromAddressCountryId = (propertyForm.delivery as FormGroup).value.country?.Id
-                propertiesPM.FromAddressZipCode = (propertyForm.delivery as FormGroup).value.zipCode
-                propertiesPM.FromAddressId = (propertyForm.delivery as FormGroup).value.address?.Id
+            if (deliveryValue.include) {
+                propertiesPM.FromAddressCity = deliveryValue.city
+                propertiesPM.FromAddressCountryId = deliveryValue.country?.Id
+                propertiesPM.FromAddressZipCode = deliveryValue.zipCode
+                propertiesPM.FromAddressId = deliveryValue.address?.Id
             }
 
-            if ((propertyForm.pickup as FormGroup).value.include) {
-                propertiesPM.ToAddressCity = (propertyForm.pickup as FormGroup).value.city
-                propertiesPM.ToAddressCountryId = (propertyForm.pickup as FormGroup).value.country?.Id
-                propertiesPM.ToAddressZipCode = (propertyForm.pickup as FormGroup).value.zipCode
-                propertiesPM.ToAddressId = (propertyForm.pickup as FormGroup).value.address?.Id
+            if (pickupValue.include) {
+                propertiesPM.ToAddressCity = pickupValue.city
+                propertiesPM.ToAddressCountryId = pickupValue.country?.Id
+                propertiesPM.ToAddressZipCode = pickupValue.zipCode
+                propertiesPM.ToAddressId = pickupValue.address?.Id                
             }
 
             propertiesPM.ToPortId = propertyForm.toPort.value?.Code
