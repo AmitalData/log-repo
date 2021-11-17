@@ -142,6 +142,11 @@
                                                    (click)="showMoreReferences=!showMoreReferences"
                                                    style="cursor: pointer;text-decoration: underline;">{{showMoreReferences?'Show Less':'See all'}}</a>
             </div>
+            <ul>
+                <li>
+                    {{ShipmentOrder?.PONumber}} 
+                </li>
+            </ul>
             <ul *ngIf="showMoreReferences">
                 <li *ngFor="let ref of ShipmentReferences, let i = index">{{ref}}</li>
             </ul>
@@ -299,6 +304,9 @@
                         <span *ngFor="let item of ShipmentReferences, let i = index">
                             <span *ngIf="i == 0">{{item}} </span>
                         </span>
+                        <span *ngIf="Shipment.ShipmentList.EntityType == 'O' && Shipment.ShipmentList.PoNumber">
+                            {{Shipment.ShipmentList.PoNumber}} 
+                        </span>
                         <a *ngIf="this.ShipmentReferences && this.ShipmentReferences?.length > 2"
                            (click)="OpenReferencesWindow(ShipmentReferences)"
                            style="cursor: pointer;text-decoration: underline;">See all</a>
@@ -396,6 +404,14 @@ cargoTrackingShipmentPM.ArrivalDate |
                     <div class="title">declaration status</div>
                     <div class="description"></div>
                 </div>
+                <div *ngIf="Shipment.ShipmentList.EntityType == 'O'">
+                    <div class="title">Supply Date Time</div>
+                    <div class="description">
+                        <span *ngIf="Shipment.ShipmentList.SupplyDateTime">
+                            {{Shipment.ShipmentList.SupplyDateTime |date:'dd/MM/yyyy'}}
+                        </span>
+                    </div>
+                </div>
 
             </div>
         </div>
@@ -477,6 +493,12 @@ cargoTrackingShipmentPM.ArrivalDate |
                     <div class="title">Import Manifest</div>
                     <div class="description">
                         {{cargoTrackingShipmentPM?.ImportManifest}}
+                    </div>
+                </div>
+                <div *ngIf=" Shipment.ShipmentList.EntityType == 'O'">
+                    <div class="title">Description Of Goods </div>
+                    <div class="description">
+                        {{Shipment.ShipmentList?.DescriptionOfGoods}}
                     </div>
                 </div>
 

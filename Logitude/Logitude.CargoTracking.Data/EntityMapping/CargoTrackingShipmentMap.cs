@@ -240,6 +240,10 @@ namespace Logitude.CargoTracking.Data.EntityMapping
             this.Property(t => t.PaymentReceivedNotes).HasColumnName("PaymentReceivedNotes").HasMaxLength(32).IsUnicode(true);
 
             this.Property(t => t.PoNumber).HasColumnName("PoNumber").HasMaxLength(50).IsUnicode(false);
+
+            this.Property(t => t.DescriptionOfGoods).HasColumnName("DescriptionOfGoods").HasMaxLength(2000).IsUnicode(true);
+
+            this.Property(t => t.SupplyDateTime).HasColumnName("SupplyDateTime");
         }
     }
 }

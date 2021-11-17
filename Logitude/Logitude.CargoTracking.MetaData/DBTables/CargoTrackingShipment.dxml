@@ -706,6 +706,19 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="DescriptionOfGoods"
+    Type="nvarchar"
+    Size="2000">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="SupplyDateTime"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="EntityType"
     ReferencedTable="CargoTrackingHeaderEntityTypes"
