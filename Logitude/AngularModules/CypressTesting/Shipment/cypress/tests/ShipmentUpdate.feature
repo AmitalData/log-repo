@@ -23,11 +23,17 @@ Feature: Shipment Update
     Given the user add order package with the following details
       | Quantity | Length | Width | Height | GrossWeight |
       | 5        | 1      | 2     | 3      | 100         |
+      | 5        | 1      | 2     | 3      | 100         |
     When update shipment
     Then the direct should update successfully
 
   Scenario: Delete order package
     Given the user delete the first order package
+    When update shipment
+    Then the direct should update successfully
+
+  Scenario: Generate packages from order packages
+    Given the user generate packages from order packages
     When update shipment
     Then the direct should update successfully
 
@@ -55,6 +61,7 @@ Feature: Shipment Update
     And the user add new pickup
     And add delivery with "TestAgent" as a partner routing
     And add pre carriage and on carriage from port "JFK" to port "MIA"
+    And add a warehouse with "TestWarehouse" as a terminal
     When update shipment
     Then the direct should update successfully
 

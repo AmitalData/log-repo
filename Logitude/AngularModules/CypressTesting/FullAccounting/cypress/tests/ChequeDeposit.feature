@@ -1,4 +1,4 @@
-@devsmoke
+@smoke
 Feature: Cheque Deposit
     The user creates new AR Payment and creates new Cheque deposit
 
