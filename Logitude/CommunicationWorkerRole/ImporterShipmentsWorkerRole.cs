@@ -121,215 +121,113 @@ namespace CommunicationWorkerRole
                             //queueservice.InitializeQueue("ImportersShipmentQueue", Tenant);
                             //using (TransactionScope scope = TransactionFactory.GetNewReadCommittedTransaction())
                             //{
-                                var response = queueservice.Receive();
-                                LastActivity = DateTime.UtcNow;
-                                int tenant = 0;
-                                int importerTenant = 0;
+                            var response = queueservice.Receive();
+                            LastActivity = DateTime.UtcNow;
+                            int tenant = 0;
+                            int importerTenant = 0;
 
-                                if (response != null && response.MessageId != null)
+                            if (response != null && response.MessageId != null)
+                            {
+
+                                string ShipmentId = response.MessageValues["ShipmentId"].ToString();
+                                int.TryParse(response.MessageValues["Tenant"], out tenant);
+                                int.TryParse(response.MessageValues["ImporterTenant"], out importerTenant);
+                                string CorrelationId = response.MessageId;
+                                string CustomerId = response.MessageValues["CustomerId"].ToString();
+                                string CustomerChanged = response.MessageValues.ContainsKey("CustomerChanged") ? response.MessageValues["CustomerChanged"].ToString() : "false";
+                                webFreightContext = WebFreightContext.GetContext(tenant);
+                                #region APILogs
+                                var aPILogsRepository = new APILogsRepository(webFreightContext);
+                                APILogs Log = aPILogsRepository.GetSingleAPILogsByCorrelationId(CorrelationId, tenant);
+
+                                bool IsNewLog = false;
+                                if (Log == null)
                                 {
+                                    IsNewLog = true;
 
-                                    string ShipmentId = response.MessageValues["ShipmentId"].ToString();
-                                    int.TryParse(response.MessageValues["Tenant"], out tenant);
-                                    int.TryParse(response.MessageValues["ImporterTenant"], out importerTenant);
-                                    string CorrelationId = response.MessageId;
-                                    string CustomerId = response.MessageValues["CustomerId"].ToString();
-                                    string CustomerChanged = response.MessageValues.ContainsKey("CustomerChanged") ? response.MessageValues["CustomerChanged"].ToString() : "false";
-                                    webFreightContext = WebFreightContext.GetContext(tenant);
-                                    #region APILogs
-                                    var aPILogsRepository = new APILogsRepository(webFreightContext);
-                                    APILogs Log = aPILogsRepository.GetSingleAPILogsByCorrelationId(CorrelationId, tenant);
-
-                                    bool IsNewLog = false;
-                                    if (Log == null)
+                                    LogPM = new APILogsPM()
                                     {
-                                        IsNewLog = true;
+                                        Id = IdCounter.GetNumber("APILogs", tenant),
+                                        CorrelationId = CorrelationId,
+                                        CreateDate = DateTime.Now,
+                                        CreateDateUTC = DateTime.UtcNow,
+                                        Direction = "O",
+                                        LastUpdateDate = DateTime.Now,
+                                        LastUpdateDateUTC = DateTime.UtcNow,
+                                        NumberOfRetries = 1,
+                                        ExpirationDate = DateTime.Now.AddDays(90),
+                                        Status = "I",
+                                        QueueMessageMoreDetailsId = response.MessageId
+                                    };
+                                }
+                                else
+                                {
+                                    IsNewLog = false;
 
-                                        LogPM = new APILogsPM()
-                                        {
-                                            Id = IdCounter.GetNumber("APILogs", tenant),
-                                            CorrelationId = CorrelationId,
-                                            CreateDate = DateTime.Now,
-                                            CreateDateUTC = DateTime.UtcNow,
-                                            Direction = "O",
-                                            LastUpdateDate = DateTime.Now,
-                                            LastUpdateDateUTC = DateTime.UtcNow,
-                                            NumberOfRetries = 1,
-                                            ExpirationDate = DateTime.Now.AddDays(90),
-                                            Status = "I",
-                                            QueueMessageMoreDetailsId = response.MessageId
-                                        };
-                                    }
-                                    else
+                                    LogPM = new APILogsPM()
                                     {
-                                        IsNewLog = false;
+                                        Id = Log.Id,
+                                        CorrelationId = Log.CorrelationId,
+                                        CreateDate = Log.CreateDate,
+                                        CreateDateUTC = Log.CreateDateUTC,
+                                        Direction = Log.Direction,
+                                        EntityId = Log.EntityId,
+                                        LastUpdateDate = Log.LastUpdateDate,
+                                        LastUpdateDateUTC = Log.LastUpdateDateUTC,
+                                        NumberOfRetries = Log.NumberOfRetries++,
+                                        ObjectTableId = Log.ObjectTableId,
+                                        ExpirationDate = Log.ExpirationDate,
+                                        Refrence = Log.Refrence,
+                                        Status = "I",
+                                        Tenant = Log.Tenant,
+                                        QueueMessageMoreDetailsId = Log.QueueMessageMoreDetailsId
+                                    };
+                                }
+                                #endregion
+                                try
+                                {
+                                    apiLogsService = new APILogsService(webFreightContext, tenant);
+                                    ObjectTableRepository objectTabelRepository = new ObjectTableRepository(tenant);
 
-                                        LogPM = new APILogsPM()
-                                        {
-                                            Id = Log.Id,
-                                            CorrelationId = Log.CorrelationId,
-                                            CreateDate = Log.CreateDate,
-                                            CreateDateUTC = Log.CreateDateUTC,
-                                            Direction = Log.Direction,
-                                            EntityId = Log.EntityId,
-                                            LastUpdateDate = Log.LastUpdateDate,
-                                            LastUpdateDateUTC = Log.LastUpdateDateUTC,
-                                            NumberOfRetries = Log.NumberOfRetries++,
-                                            ObjectTableId = Log.ObjectTableId,
-                                            ExpirationDate = Log.ExpirationDate,
-                                            Refrence = Log.Refrence,
-                                            Status = "I",
-                                            Tenant = Log.Tenant,
-                                            QueueMessageMoreDetailsId = Log.QueueMessageMoreDetailsId
-                                        };
-                                    }
-                                    #endregion
-                                    try
+                                    if (!string.IsNullOrEmpty(ShipmentId))
                                     {
-                                        apiLogsService = new APILogsService(webFreightContext, tenant);
-                                        ObjectTableRepository objectTabelRepository = new ObjectTableRepository(tenant);
 
-                                        if (!string.IsNullOrEmpty(ShipmentId))
+                                        var Objecttable = objectTabelRepository.GetObjectTableByName("Shipment", tenant, true);
+                                        LogPM.ObjectTableId = Objecttable.Id;
+                                        LogPM.EntityId = ShipmentId;
+                                        //LogPM.Refrence = Shipment.ShipmentNumber;
+                                        LogPM.Tenant = tenant;
+
+                                        ShipmentQuery shipmentQuery = new ShipmentQuery(Tenant);
+                                        bool IsCanclled = false;
+                                        bool CancleByChangeCustomer = false;
+                                        var Shipment = shipmentQuery.GetSinglePM(ShipmentId, tenant);
+                                        var ForwarderShipment = shipmentQuery.GetSinglePMWithoutComposition(ShipmentId, tenant);
+                                        CustomerTenantAccessCardBatchQuery customerTenantAccessCardBatchQuery = new CustomerTenantAccessCardBatchQuery(tenant);
+                                        var customerTenantAccessCardsBatch = customerTenantAccessCardBatchQuery.GetOldestCustomerTenantAccessCardsBatch(Shipment.CustomerId, tenant, importerTenant);
+                                        if (Shipment != null && (customerTenantAccessCardsBatch != null ? (Shipment.CreateDateTime >= customerTenantAccessCardsBatch.FromDatetime) : true))
                                         {
-
-                                            var Objecttable = objectTabelRepository.GetObjectTableByName("Shipment", tenant, true);
-                                            LogPM.ObjectTableId = Objecttable.Id;
-                                            LogPM.EntityId = ShipmentId;
-                                            //LogPM.Refrence = Shipment.ShipmentNumber;
-                                            LogPM.Tenant = tenant;
-
-                                            ShipmentQuery shipmentQuery = new ShipmentQuery(Tenant);
-                                            bool IsCanclled = false;
-                                            bool CancleByChangeCustomer = false;
-                                            var Shipment = shipmentQuery.GetSinglePM(ShipmentId, tenant);
-                                            var ForwarderShipment = shipmentQuery.GetSinglePMWithoutComposition(ShipmentId, tenant);
-                                            CustomerTenantAccessCardBatchQuery customerTenantAccessCardBatchQuery = new CustomerTenantAccessCardBatchQuery(tenant);
-                                            var customerTenantAccessCardsBatch = customerTenantAccessCardBatchQuery.GetOldestCustomerTenantAccessCardsBatch(Shipment.CustomerId, tenant, importerTenant);
-                                            if (Shipment != null && (customerTenantAccessCardsBatch != null ? (Shipment.CreateDateTime >= customerTenantAccessCardsBatch.FromDatetime) : true))
+                                            LogPM.Refrence = Shipment.ShipmentNumber;
+                                            if (((Shipment.CustomerId != CustomerId) || CustomerChanged == "true") && !string.IsNullOrEmpty(Shipment.CustomerShipmentNumber))
                                             {
+                                                #region Change Customer Logic
+
+                                                LogPM.Subject = "Send updates Of Shipment To Importer By ImporterShipments Controller";
                                                 LogPM.Refrence = Shipment.ShipmentNumber;
-                                                if (((Shipment.CustomerId != CustomerId) || CustomerChanged == "true") && !string.IsNullOrEmpty(Shipment.CustomerShipmentNumber))
+                                                if (IsNewLog)
                                                 {
-                                                    #region Change Customer Logic
-
-                                                    LogPM.Subject = "Send updates Of Shipment To Importer By ImporterShipments Controller";
-                                                    LogPM.Refrence = Shipment.ShipmentNumber;
-                                                    if (IsNewLog)
-                                                    {
-                                                        LogPM.CustomerId = CustomerId;
-                                                        LogPM.QueueMessage = DictionaryJsonConverter.FromDictionaryToJson((Dictionary<string, string>)response.MessageValues);
-                                                        LogPM.QueueType = "Shipment";
-                                                        apiLogsService.Create(LogPM);
-                                                    }
-                                                    CustomerTenantAccessQuery customerTenantAccessQuery = new CustomerTenantAccessQuery(tenant);
-                                                    CustomerTenantAccessInfo customerTenantAccessInfo = customerTenantAccessQuery.GetCustomerTenantAccessInfo(tenant, Shipment.CustomerId);
-                                                    if (Shipment.CustomerTenantNumber != null && Shipment.CustomerTenantNumber != importerTenant && (customerTenantAccessInfo != null && customerTenantAccessInfo.HasAccess))
-                                                    {
-                                                        var msg = "Start Cancelling Shipment From Tenant " + Shipment.CustomerTenantNumber + " /" + DateTime.Now;
-                                                        APILogsUtility.UpdateAPILogStatus(LogPM.Id, tenant, "I", response.RetryNumber + 1, DateTime.Now, DateTime.UtcNow, msg, LogitudeXmlSerializer.SerializeObjectToXmlString(Shipment), null, null, "");
-
-                                                        using (var client = new HttpClient())
-                                                        {
-                                                            string ImporterShipmentsURI = URI + "ImporterShipmentsCancle";
-                                                            client.DefaultRequestHeaders.Add("Token", Token);
-                                                            client.DefaultRequestHeaders.Add("CorrelationId", CorrelationId);
-                                                            //var result = await client.DeleteAsync(String.Format("{0}/{1}", ImporterShipmentsURI, Shipment.CustomerShipmentNumber + "," + Shipment.CustomerTenantNumber));
-                                                            var shipmentAM = new ShipmentAM()
-                                                            {
-                                                                ImporterTenant = (int)Shipment.CustomerTenantNumber,
-                                                                CustomerShipmentNumber = Shipment.CustomerShipmentNumber
-                                                            };
-                                                            var serializedObject = JsonConvert.SerializeObject(shipmentAM);
-                                                            var content = new StringContent(serializedObject, Encoding.UTF8, "application/json");
-                                                            var result = client.PutAsync(ImporterShipmentsURI, content);
-                                                            result.Wait();
-                                                            if (result.Result.StatusCode == System.Net.HttpStatusCode.OK)
-                                                            {
-                                                                if (ForwarderShipment == null)
-                                                                {
-                                                                    ForwarderShipment = shipmentQuery.GetSinglePMWithoutComposition(ShipmentId, tenant);
-                                                                }
-                                                                try
-                                                                {
-                                                                    ShipmentRepository MyRepo = new ShipmentRepository(tenant);
-                                                                    var MyShipment = MyRepo.GetSingleShipment(ShipmentId, tenant);
-                                                                    MyShipment.CustomerShipmentNumber = null;
-                                                                    MyShipment.CustomerTenantNumber = null;
-                                                                    MyRepo.Update(MyShipment);
-                                                                    MyRepo.SubmitChanges();
-                                                                    ForwarderShipment.CustomerShipmentNumber = null;
-                                                                    ForwarderShipment.CustomerTenantNumber = null;
-                                                                    ForwarderShipment.DontAddToImportersQueue = true;
-                                                                    ForwarderShipment.IsHybrid = true;
-                                                                    //var objectContext = ShipmentsContext.GetContext(ForwarderShipment.Tenant);
-                                                                    //string systemEmail = "system@tenant" + ForwarderShipment.Tenant + ".com";
-                                                                    //var shipmentService = new ShipmentService(objectContext, ForwarderShipment, systemEmail);
-                                                                    ICommonDataContext CommonContext = CommonDataContext.GetContext(ForwarderShipment.Tenant);
-                                                                    //shipmentService.Update();
-                                                                    DocumentsFilingQuery documentsFilingQuery = new DocumentsFilingQuery(ForwarderShipment.Tenant);
-                                                                    var DocumentFilingPMs = documentsFilingQuery.GetDocumentsFilingPMsByEntityId(ForwarderShipment.Id, "I", ForwarderShipment.Tenant);
-                                                                    foreach (var item in DocumentFilingPMs)
-                                                                    {
-                                                                        item.DontAddToQueue = true;
-                                                                        item.CustomerDocumentId = null;
-                                                                        DocumentsFilingService documentsFilingService = new DocumentsFilingService(CommonContext, ForwarderShipment.Tenant);
-                                                                        documentsFilingService.Update(item, null);
-                                                                    }
-                                                                    var ResponseData = result.Result.Content.ReadAsStringAsync().Result;
-                                                                    var Donemsg = "Cancelling Shipment From Tenant " + Shipment.CustomerTenantNumber + " Done Successfully /" + DateTime.Now;
-                                                                    APILogsUtility.UpdateAPILogStatus(LogPM.Id, tenant, "D", response.RetryNumber + 1, DateTime.Now, DateTime.UtcNow, Donemsg, null, ResponseData, null, "");
-                                                                    //importerTenant = customerTenantAccessInfo.CustomerTenant;
-                                                                }
-                                                                catch (Exception ex)
-                                                                {
-                                                                    string errorMessage = ex.Message + Environment.NewLine;
-
-                                                                    if (ex.InnerException != null)
-                                                                    {
-
-                                                                        errorMessage = errorMessage + " (" + (ex.InnerException.InnerException != null ? ex.InnerException.InnerException.Message : ex.InnerException.Message) + ")" + Environment.NewLine;
-
-                                                                    }
-
-                                                                    errorMessage = errorMessage + ex.StackTrace + Environment.NewLine;
-                                                                    throw new Exception(ex.Message, new Exception(errorMessage));
-                                                                }
-
-                                                            }
-                                                            else //if (result.StatusCode == System.Net.HttpStatusCode.BadRequest)
-                                                            {
-                                                                APIException EXC = JsonConvert.DeserializeObject<APIException>(result.Result.Content.ReadAsStringAsync().Result);
-                                                                if (EXC != null)
-                                                                {
-                                                                    var Failmsg = EXC.ErrorType + " Fail To Send Shipment Updates To Importer Tenant " + DateTime.Now;
-                                                                    APILogsUtility.UpdateAPILogStatus(LogPM.Id, tenant, "F", response.RetryNumber + 1, DateTime.Now, DateTime.UtcNow, Failmsg, null, LogitudeXmlSerializer.SerializeObjectToXmlString(EXC), null, "");
-                                                                    throw new Exception(EXC.ErrorType, new Exception(EXC.ErrorMessage));
-                                                                }
-                                                            }
-                                                        }
-
-                                                    }
-                                                    else
-                                                    {
-                                                        CancleByChangeCustomer = true;
-                                                    }
-                                                    #endregion
+                                                    LogPM.CustomerId = CustomerId;
+                                                    LogPM.QueueMessage = DictionaryJsonConverter.FromDictionaryToJson((Dictionary<string, string>)response.MessageValues);
+                                                    LogPM.QueueType = "Shipment";
+                                                    apiLogsService.Create(LogPM);
                                                 }
-                                                if (CancleByChangeCustomer || (Shipment.IsCancelled && !string.IsNullOrEmpty(Shipment.CustomerShipmentNumber)))
+                                                CustomerTenantAccessQuery customerTenantAccessQuery = new CustomerTenantAccessQuery(tenant);
+                                                CustomerTenantAccessInfo customerTenantAccessInfo = customerTenantAccessQuery.GetCustomerTenantAccessInfo(tenant, Shipment.CustomerId);
+                                                if (Shipment.CustomerTenantNumber != null && Shipment.CustomerTenantNumber != importerTenant && (customerTenantAccessInfo != null && customerTenantAccessInfo.HasAccess))
                                                 {
-                                                    LogPM.Subject = "Send updates Of Shipment To Importer By ImporterShipments Controller";
-                                                    if (IsNewLog)
-                                                    {
-                                                        LogPM.CustomerId = CustomerId;
-                                                        LogPM.QueueMessage = DictionaryJsonConverter.FromDictionaryToJson((Dictionary<string, string>)response.MessageValues);
-                                                        LogPM.QueueType = "Shipment";
-                                                        apiLogsService.Create(LogPM);
-                                                    }
                                                     var msg = "Start Cancelling Shipment From Tenant " + Shipment.CustomerTenantNumber + " /" + DateTime.Now;
                                                     APILogsUtility.UpdateAPILogStatus(LogPM.Id, tenant, "I", response.RetryNumber + 1, DateTime.Now, DateTime.UtcNow, msg, LogitudeXmlSerializer.SerializeObjectToXmlString(Shipment), null, null, "");
 
-                                                    #region CancleShipmentLogic
-                                                    IsCanclled = true;
                                                     using (var client = new HttpClient())
                                                     {
                                                         string ImporterShipmentsURI = URI + "ImporterShipmentsCancle";
@@ -350,7 +248,6 @@ namespace CommunicationWorkerRole
                                                             if (ForwarderShipment == null)
                                                             {
                                                                 ForwarderShipment = shipmentQuery.GetSinglePMWithoutComposition(ShipmentId, tenant);
-
                                                             }
                                                             try
                                                             {
@@ -367,11 +264,21 @@ namespace CommunicationWorkerRole
                                                                 //var objectContext = ShipmentsContext.GetContext(ForwarderShipment.Tenant);
                                                                 //string systemEmail = "system@tenant" + ForwarderShipment.Tenant + ".com";
                                                                 //var shipmentService = new ShipmentService(objectContext, ForwarderShipment, systemEmail);
+                                                                ICommonDataContext CommonContext = CommonDataContext.GetContext(ForwarderShipment.Tenant);
                                                                 //shipmentService.Update();
-                                                                queueservice.Complete();
+                                                                DocumentsFilingQuery documentsFilingQuery = new DocumentsFilingQuery(ForwarderShipment.Tenant);
+                                                                var DocumentFilingPMs = documentsFilingQuery.GetDocumentsFilingPMsByEntityId(ForwarderShipment.Id, "I", ForwarderShipment.Tenant);
+                                                                foreach (var item in DocumentFilingPMs)
+                                                                {
+                                                                    item.DontAddToQueue = true;
+                                                                    item.CustomerDocumentId = null;
+                                                                    DocumentsFilingService documentsFilingService = new DocumentsFilingService(CommonContext, ForwarderShipment.Tenant);
+                                                                    documentsFilingService.Update(item, null);
+                                                                }
                                                                 var ResponseData = result.Result.Content.ReadAsStringAsync().Result;
                                                                 var Donemsg = "Cancelling Shipment From Tenant " + Shipment.CustomerTenantNumber + " Done Successfully /" + DateTime.Now;
                                                                 APILogsUtility.UpdateAPILogStatus(LogPM.Id, tenant, "D", response.RetryNumber + 1, DateTime.Now, DateTime.UtcNow, Donemsg, null, ResponseData, null, "");
+                                                                //importerTenant = customerTenantAccessInfo.CustomerTenant;
                                                             }
                                                             catch (Exception ex)
                                                             {
@@ -400,33 +307,126 @@ namespace CommunicationWorkerRole
                                                             }
                                                         }
                                                     }
-                                                    #endregion
+
                                                 }
-                                                if (!IsCanclled)
+                                                else
                                                 {
-                                                    #region RegulerAddEdit
-                                                    var GetURI = URI + "ImporterShipments/GetIfShipmentExists?importertenant=" + importerTenant + "&Tenant=" + tenant + "&shipmentnumber=" + Shipment.ShipmentNumber;
-                                                    bool IsShipmentExist = false;
-                                                    using (var client = new HttpClient())
+                                                    CancleByChangeCustomer = true;
+                                                }
+                                                #endregion
+                                            }
+                                            if (CancleByChangeCustomer || (Shipment.IsCancelled && !string.IsNullOrEmpty(Shipment.CustomerShipmentNumber)))
+                                            {
+                                                LogPM.Subject = "Send updates Of Shipment To Importer By ImporterShipments Controller";
+                                                if (IsNewLog)
+                                                {
+                                                    LogPM.CustomerId = CustomerId;
+                                                    LogPM.QueueMessage = DictionaryJsonConverter.FromDictionaryToJson((Dictionary<string, string>)response.MessageValues);
+                                                    LogPM.QueueType = "Shipment";
+                                                    apiLogsService.Create(LogPM);
+                                                }
+                                                var msg = "Start Cancelling Shipment From Tenant " + Shipment.CustomerTenantNumber + " /" + DateTime.Now;
+                                                APILogsUtility.UpdateAPILogStatus(LogPM.Id, tenant, "I", response.RetryNumber + 1, DateTime.Now, DateTime.UtcNow, msg, LogitudeXmlSerializer.SerializeObjectToXmlString(Shipment), null, null, "");
+
+                                                #region CancleShipmentLogic
+                                                IsCanclled = true;
+                                                using (var client = new HttpClient())
+                                                {
+                                                    string ImporterShipmentsURI = URI + "ImporterShipmentsCancle";
+                                                    client.DefaultRequestHeaders.Add("Token", Token);
+                                                    client.DefaultRequestHeaders.Add("CorrelationId", CorrelationId);
+                                                    //var result = await client.DeleteAsync(String.Format("{0}/{1}", ImporterShipmentsURI, Shipment.CustomerShipmentNumber + "," + Shipment.CustomerTenantNumber));
+                                                    var shipmentAM = new ShipmentAM()
                                                     {
-                                                        client.DefaultRequestHeaders.Add("Token", Token);
-                                                        using (var apiresponse = client.GetAsync(GetURI))
+                                                        ImporterTenant = (int)Shipment.CustomerTenantNumber,
+                                                        CustomerShipmentNumber = Shipment.CustomerShipmentNumber
+                                                    };
+                                                    var serializedObject = JsonConvert.SerializeObject(shipmentAM);
+                                                    var content = new StringContent(serializedObject, Encoding.UTF8, "application/json");
+                                                    var result = client.PutAsync(ImporterShipmentsURI, content);
+                                                    result.Wait();
+                                                    if (result.Result.StatusCode == System.Net.HttpStatusCode.OK)
+                                                    {
+                                                        if (ForwarderShipment == null)
                                                         {
-                                                            apiresponse.Wait();
-                                                            if (apiresponse.Result.IsSuccessStatusCode)
+                                                            ForwarderShipment = shipmentQuery.GetSinglePMWithoutComposition(ShipmentId, tenant);
+
+                                                        }
+                                                        try
+                                                        {
+                                                            ShipmentRepository MyRepo = new ShipmentRepository(tenant);
+                                                            var MyShipment = MyRepo.GetSingleShipment(ShipmentId, tenant);
+                                                            MyShipment.CustomerShipmentNumber = null;
+                                                            MyShipment.CustomerTenantNumber = null;
+                                                            MyRepo.Update(MyShipment);
+                                                            MyRepo.SubmitChanges();
+                                                            ForwarderShipment.CustomerShipmentNumber = null;
+                                                            ForwarderShipment.CustomerTenantNumber = null;
+                                                            ForwarderShipment.DontAddToImportersQueue = true;
+                                                            ForwarderShipment.IsHybrid = true;
+                                                            //var objectContext = ShipmentsContext.GetContext(ForwarderShipment.Tenant);
+                                                            //string systemEmail = "system@tenant" + ForwarderShipment.Tenant + ".com";
+                                                            //var shipmentService = new ShipmentService(objectContext, ForwarderShipment, systemEmail);
+                                                            //shipmentService.Update();
+                                                            queueservice.Complete();
+                                                            var ResponseData = result.Result.Content.ReadAsStringAsync().Result;
+                                                            var Donemsg = "Cancelling Shipment From Tenant " + Shipment.CustomerTenantNumber + " Done Successfully /" + DateTime.Now;
+                                                            APILogsUtility.UpdateAPILogStatus(LogPM.Id, tenant, "D", response.RetryNumber + 1, DateTime.Now, DateTime.UtcNow, Donemsg, null, ResponseData, null, "");
+                                                        }
+                                                        catch (Exception ex)
+                                                        {
+                                                            string errorMessage = ex.Message + Environment.NewLine;
+
+                                                            if (ex.InnerException != null)
                                                             {
 
-                                                                var IsShipmentExistJsonString = apiresponse.Result.Content.ReadAsStringAsync().Result;
-                                                                var tempResult = JsonConvert.DeserializeObject(IsShipmentExistJsonString);
-                                                                if (tempResult != null)
-                                                                {
-                                                                    IsShipmentExist = (bool)tempResult;
-                                                                }
+                                                                errorMessage = errorMessage + " (" + (ex.InnerException.InnerException != null ? ex.InnerException.InnerException.Message : ex.InnerException.Message) + ")" + Environment.NewLine;
+
+                                                            }
+
+                                                            errorMessage = errorMessage + ex.StackTrace + Environment.NewLine;
+                                                            throw new Exception(ex.Message, new Exception(errorMessage));
+                                                        }
+
+                                                    }
+                                                    else //if (result.StatusCode == System.Net.HttpStatusCode.BadRequest)
+                                                    {
+                                                        APIException EXC = JsonConvert.DeserializeObject<APIException>(result.Result.Content.ReadAsStringAsync().Result);
+                                                        if (EXC != null)
+                                                        {
+                                                            var Failmsg = EXC.ErrorType + " Fail To Send Shipment Updates To Importer Tenant " + DateTime.Now;
+                                                            APILogsUtility.UpdateAPILogStatus(LogPM.Id, tenant, "F", response.RetryNumber + 1, DateTime.Now, DateTime.UtcNow, Failmsg, null, LogitudeXmlSerializer.SerializeObjectToXmlString(EXC), null, "");
+                                                            throw new Exception(EXC.ErrorType, new Exception(EXC.ErrorMessage));
+                                                        }
+                                                    }
+                                                }
+                                                #endregion
+                                            }
+                                            if (!IsCanclled)
+                                            {
+                                                #region RegulerAddEdit
+                                                var GetURI = URI + "ImporterShipments/GetIfShipmentExists?importertenant=" + importerTenant + "&Tenant=" + tenant + "&shipmentnumber=" + Shipment.ShipmentNumber;
+                                                bool IsShipmentExist = false;
+                                                using (var client = new HttpClient())
+                                                {
+                                                    client.DefaultRequestHeaders.Add("Token", Token);
+                                                    using (var apiresponse = client.GetAsync(GetURI))
+                                                    {
+                                                        apiresponse.Wait();
+                                                        if (apiresponse.Result.IsSuccessStatusCode)
+                                                        {
+
+                                                            var IsShipmentExistJsonString = apiresponse.Result.Content.ReadAsStringAsync().Result;
+                                                            var tempResult = JsonConvert.DeserializeObject(IsShipmentExistJsonString);
+                                                            if (tempResult != null)
+                                                            {
+                                                                IsShipmentExist = (bool)tempResult;
                                                             }
                                                         }
                                                     }
+                                                }
 
-                                                    using (var client = new HttpClient())
+                                                using (var client = new HttpClient())
                                                 {
                                                     string ImporterShipmentsURI = URI + "ImporterShipments";
                                                     client.DefaultRequestHeaders.Add("Token", Token);
@@ -442,7 +442,6 @@ namespace CommunicationWorkerRole
                                                     Card Customer = cardsReporistory.GetSingleCard(Shipment.CustomerId, Shipment.Tenant);
                                                     Branch Branch = branchRepository.GetSingleBranch(Shipment.BranchId, Shipment.Tenant);
                                                     Department Department = departmentRepository.GetSingleDepartment(Shipment.DepartmentId, Shipment.Tenant);
-                                                    Card Agent = cardsReporistory.GetSingleCard(Shipment.AgentId, Shipment.Tenant);
                                                     HybridPartnerPM Partner = HybridPartnerQuerey.GetSinglePMByPartnerTenant(tenant);
                                                     TenantPM currentTenant = TenantQuery.GetSingleTenantPM(tenant, false);
                                                     EntityStatus status = EntityStatusRepository.GetSingleEntityStatus(Shipment.StatusId, Shipment.Tenant, true);
@@ -458,8 +457,6 @@ namespace CommunicationWorkerRole
                                                     string BranchCode = "";
                                                     string DepartmentCode = "";
                                                     string CustomerCode = "";
-                                                    string AgentCode = GetCardCode(Agent);
-
                                                     if (Shipper != null)
                                                     {
                                                         ShipperCode = Shipper.Code;
@@ -576,7 +573,6 @@ namespace CommunicationWorkerRole
                                                             ShipmentCustomerTypeCode = Shipment.ShipmentCustomerTypeCode,
                                                             IsCancelled = Shipment.IsCancelled,
                                                             ShipperName = Shipment.ShipperName,
-                                                            ConsigneeName = Shipment.ConsigneeName,
                                                             CarrierTransportDocumentNumber = Shipment.CarrierTransportDocumentNumber,
                                                             //ForwarderPartnerId = Partner.Id,
                                                             FreightPrepaidCollectId = Shipment.FreightPrepaidCollectId,
@@ -599,10 +595,6 @@ namespace CommunicationWorkerRole
                                                             DimensionsUnitCode = Shipment.DimensionsUnitCode,
                                                             VolumeUnitCode = Shipment.VolumeUnitCode,
                                                             ForwardingPartnerTenant = Shipment.ForwardingPartnerId,
-                                                            Agent = new CodeProperties()
-                                                            {
-                                                                Code = AgentCode
-                                                            },
                                                             Customer = new CodeProperties()
                                                             {
                                                                 Code = CustomerCode
@@ -812,7 +804,6 @@ namespace CommunicationWorkerRole
                                                             ShipmentCustomerTypeCode = Shipment.ShipmentCustomerTypeCode,
                                                             IsCancelled = Shipment.IsCancelled,
                                                             ShipperName = Shipment.ShipperName,
-                                                            ConsigneeName = Shipment.ConsigneeName,
                                                             CarrierTransportDocumentNumber = Shipment.CarrierTransportDocumentNumber,
                                                             //ForwarderPartnerId = Partner.Id,
                                                             FreightPrepaidCollectId = Shipment.FreightPrepaidCollectId,
@@ -834,12 +825,14 @@ namespace CommunicationWorkerRole
                                                             DimensionsUnitCode = Shipment.DimensionsUnitCode,
                                                             VolumeUnitCode = Shipment.VolumeUnitCode,
                                                             ForwardingPartnerTenant = Shipment.ForwardingPartnerId,
+ 
                                                             Notes = Shipment.Notes,
 
                                                             Agent = new CodeProperties()
                                                             {
                                                                 Code = AgentCode
                                                             },
+ 
                                                             Customer = new CodeProperties()
                                                             {
                                                                 Code = CustomerCode
@@ -1052,87 +1045,87 @@ namespace CommunicationWorkerRole
                                                 }
                                                 #endregion
                                             }
-                                            }
-                                            else
-                                            {
-                                                queueservice.Complete();
-                                            }
+                                        }
+                                        else
+                                        {
+                                            queueservice.Complete();
+                                        }
+                                    }
+
+                                    LogDoneItemInMemory();
+                                }
+                                catch (Exception ex)
+                                {
+                                    #region HandleException
+                                    ExceptionHandler.HandleException(ex, DateTime.Now, Tenant, "", "WorkerRole", "", null);
+                                    if (response.MessageValues.Keys.Contains("ShipmentId"))
+                                    {
+                                        //if (IsNewLog)
+                                        //{
+                                        //    apiLogsService.Create(LogPM);
+                                        //}
+                                        string errorMessage = ex.Message + Environment.NewLine;
+
+                                        if (ex.InnerException != null)
+                                        {
+
+                                            errorMessage = errorMessage + " (" + (ex.InnerException.InnerException != null ? ex.InnerException.InnerException.Message : ex.InnerException.Message) + ")" + Environment.NewLine;
+
                                         }
 
-                                        LogDoneItemInMemory();
-                                    }
-                                    catch (Exception ex)
-                                    {
-                                        #region HandleException
-                                        ExceptionHandler.HandleException(ex, DateTime.Now, Tenant, "", "WorkerRole", "", null);
-                                        if (response.MessageValues.Keys.Contains("ShipmentId"))
+                                        errorMessage = errorMessage + ex.StackTrace + Environment.NewLine;
+                                        var msg = ex.Message + DateTime.Now;
+                                        //APILogsUtility.UpdateAPILogStatus(LogPM.Id, tenant, LogPM.Status, DateTime.Now, DateTime.UtcNow, msg, null, null, errorMessage, (errorMessage.Length >= 250 ? errorMessage.Substring(0, 249):errorMessage)); 
+                                        //string ShipmentId = response.MessageValues["ShipmentId"].ToString();
+                                        if (!string.IsNullOrEmpty(ShipmentId))
                                         {
-                                            //if (IsNewLog)
-                                            //{
-                                            //    apiLogsService.Create(LogPM);
-                                            //}
-                                            string errorMessage = ex.Message + Environment.NewLine;
 
-                                            if (ex.InnerException != null)
+                                            if (response.RetryNumber <= 1)
                                             {
-
-                                                errorMessage = errorMessage + " (" + (ex.InnerException.InnerException != null ? ex.InnerException.InnerException.Message : ex.InnerException.Message) + ")" + Environment.NewLine;
-
+                                                queueservice.Delay(new TimeSpan(0, 0, 0, 5));
                                             }
 
-                                            errorMessage = errorMessage + ex.StackTrace + Environment.NewLine;
-                                            var msg = ex.Message + DateTime.Now;
-                                            //APILogsUtility.UpdateAPILogStatus(LogPM.Id, tenant, LogPM.Status, DateTime.Now, DateTime.UtcNow, msg, null, null, errorMessage, (errorMessage.Length >= 250 ? errorMessage.Substring(0, 249):errorMessage)); 
-                                            //string ShipmentId = response.MessageValues["ShipmentId"].ToString();
-                                            if (!string.IsNullOrEmpty(ShipmentId))
+                                            if (response.RetryNumber > 1 && response.RetryNumber <= 2)
                                             {
-
-                                                if (response.RetryNumber <= 1)
-                                                {
-                                                    queueservice.Delay(new TimeSpan(0, 0, 0, 5));
-                                                }
-
-                                                if (response.RetryNumber > 1 && response.RetryNumber <= 2)
-                                                {
-                                                    queueservice.Delay(new TimeSpan(0, 0, 0, 10));
-                                                }
-                                                if (response.RetryNumber >= 3)
-                                                {
-                                                    queueservice.CompleteAsFailed();
-                                                    if (IsNewLog)
-                                                    {
-                                                        LogPM.Subject = "Send New Shipment To Importer By ImporterShipmentDocuments Controller";
-                                                        LogPM.CustomerId = CustomerId;
-                                                        LogPM.QueueMessage = DictionaryJsonConverter.FromDictionaryToJson((Dictionary<string, string>)response.MessageValues);
-                                                        LogPM.QueueType = "Shipment";
-                                                        LogPM.Tenant = tenant;
-                                                        apiLogsService = new APILogsService(webFreightContext, tenant);
-                                                        apiLogsService.Create(LogPM);
-                                                    }
-                                                    APILogsUtility.UpdateAPILogStatus(LogPM.Id, tenant, "F", response.RetryNumber + 1, DateTime.Now, DateTime.UtcNow, msg, null, null, errorMessage, (errorMessage.Length >= 250 ? errorMessage.Substring(0, 249) : errorMessage));
-
-                                                }
-
+                                                queueservice.Delay(new TimeSpan(0, 0, 0, 10));
                                             }
-                                            else
+                                            if (response.RetryNumber >= 3)
                                             {
                                                 queueservice.CompleteAsFailed();
+                                                if (IsNewLog)
+                                                {
+                                                    LogPM.Subject = "Send New Shipment To Importer By ImporterShipmentDocuments Controller";
+                                                    LogPM.CustomerId = CustomerId;
+                                                    LogPM.QueueMessage = DictionaryJsonConverter.FromDictionaryToJson((Dictionary<string, string>)response.MessageValues);
+                                                    LogPM.QueueType = "Shipment";
+                                                    LogPM.Tenant = tenant;
+                                                    apiLogsService = new APILogsService(webFreightContext, tenant);
+                                                    apiLogsService.Create(LogPM);
+                                                }
+                                                APILogsUtility.UpdateAPILogStatus(LogPM.Id, tenant, "F", response.RetryNumber + 1, DateTime.Now, DateTime.UtcNow, msg, null, null, errorMessage, (errorMessage.Length >= 250 ? errorMessage.Substring(0, 249) : errorMessage));
+
                                             }
+
                                         }
                                         else
                                         {
                                             queueservice.CompleteAsFailed();
                                         }
-                                        #endregion
                                     }
+                                    else
+                                    {
+                                        queueservice.CompleteAsFailed();
+                                    }
+                                    #endregion
+                                }
 
-                                    //scope.Complete();
-                                }
-                                else
-                                {
-                                    //scope.Complete();
-                                    Thread.Sleep(10000);
-                                }
+                                //scope.Complete();
+                            }
+                            else
+                            {
+                                //scope.Complete();
+                                Thread.Sleep(10000);
+                            }
                             //}
                         }
                         catch (Exception ex)
@@ -1164,7 +1157,7 @@ namespace CommunicationWorkerRole
 
                                     ExceptionHandler.HandleException(e, DateTime.Now, 0, null, "importer shipments worker role start", null, null);
                                 }
-                               
+
                             }
                             ConnectClient();
                             ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "importer shipments worker role start", null, null);
@@ -1185,17 +1178,6 @@ namespace CommunicationWorkerRole
                 Thread.Sleep(10000);
             }
 
-        }
-
-        private static string GetCardCode(Card card)
-        {
-            string CardCode = "";
-            if (card != null)
-            {
-                CardCode = card.Code;
-            }
-
-            return CardCode;
         }
 
         private void ConnectClient()
