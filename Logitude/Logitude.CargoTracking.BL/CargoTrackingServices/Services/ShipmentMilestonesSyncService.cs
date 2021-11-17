@@ -330,6 +330,15 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
         {
             foreach (var field in forwardingMilstonesFields)
                 fieldsAssignments.Add(BuildCustomsFieldAssignmentScript(field));
+            var list = new List<string>()
+            {
+                "BookingDate",
+                "BookingDone",
+                "BookingNotes",
+                "BookingEstimationDate"
+            };
+            foreach (var field in list)
+                fieldsAssignments.Add(BuildCustomsFieldAssignmentScript(field));
         }
         private void AppendForwardingAssignmentFromForwardingWhenCustomsIsEmpty(List<string> fieldsAssignments)
         {
