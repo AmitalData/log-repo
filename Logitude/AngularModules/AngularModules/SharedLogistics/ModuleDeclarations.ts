@@ -20,6 +20,7 @@ import { SharedLogisticsMoneyPermissiosComponent } from './Components/SharedLogi
 import { SharedLogisticsPartnersPermissiosComponent } from './Components/SharedLogisticsPartnersPermissiosComponent';
 import { SharedInvoicesWorkspaceComponent } from './Components/Workspaces/SharedInvoicesWorkspaceComponent';
 import { SharedShipmentsWorkspaceComponent } from './Components/Workspaces/SharedShipmentsWorkspaceComponent';
+import { TemplateTypeComponent } from './Components/TemplateTypeComponent';
 
 export const ControlsComponents =
     [
@@ -56,6 +57,7 @@ export const Components =
         SharedLogisticsPartnersPermissiosComponent,
         SharedInvoicesWorkspaceComponent,
         SharedShipmentsWorkspaceComponent,
+        TemplateTypeComponent,
     ];
 
 export class ModuleDeclarations {
@@ -86,6 +88,7 @@ export class ModuleDeclarations {
             case "SharedLogisticsPartnersPermissiosComponent": { myResult = SharedLogisticsPartnersPermissiosComponent; break; }
             case "SharedInvoicesWorkspaceComponent": { myResult = SharedInvoicesWorkspaceComponent; break; }
             case "SharedShipmentsWorkspaceComponent": { myResult = SharedShipmentsWorkspaceComponent; break; } 
+            case "TemplateTypeComponent": { myResult = TemplateTypeComponent; break; } 
         }
 
         return myResult;
