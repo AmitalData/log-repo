@@ -66,10 +66,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
         {
             try
             {
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                SecurityUtility.AuthenticationOnTenant(tenant);
+               
 
                 CargoTrackingShipmentQueryService cargoTrackingShipmentQuery = new CargoTrackingShipmentQueryService(tenant);
                 CargoTrackingShipmentPM cargoTrackingShipmentPM = cargoTrackingShipmentQuery.GetSinglePMBySecurityKey(securityKey, tenant);
@@ -86,10 +83,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
         {
             try
             {
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                SecurityUtility.AuthenticationOnTenant(tenant);
+                
 
                 CargoTrackingShipmentQueryService cargoTrackingShipmentQuery = new CargoTrackingShipmentQueryService(tenant);
                 CargoTrackingShipmentPM cargoTrackingShipmentPM = cargoTrackingShipmentQuery.GetMainShipmentByShipmentSecurityKey(securityKey, tenant);
