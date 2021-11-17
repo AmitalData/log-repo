@@ -1,4 +1,4 @@
-@devsmoke @release @stable @all
+@smoke1 @release @stable @all
 Feature: UOM
     The user update system defaults, creates a direct export air shipment, change shipment ratio,
     update packages tab, add payable, change gross weight unit code.
