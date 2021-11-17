@@ -274,7 +274,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.MainService
 				ForwardingShipmentTable.ShipmentLevelCode != 'C' and 
 				ForwardingShipmentTable.IsCancelled != 1 and 
 				ForwardingShipmentTable.CreateDateTime >= '{fromDate.Value.Date.ToString("MM/dd/yyyy hh:mm:ss.fff tt")}' and 
-				ForwardingShipmentTable.CreateDateTime <= '{toDate.Value.Date.ToString("MM/dd/yyyy hh:mm:ss.fff tt")}'
+				ForwardingShipmentTable.CreateDateTime <= '{toDate.Value.Date.AddDays(1).ToString("MM/dd/yyyy hh:mm:ss.fff tt")}'
                 {tenantCondishin}
 			
             ";
@@ -296,7 +296,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.MainService
 				CustomShipmentTable.ShipmentLevelCode = 'A' and
 				CustomShipmentTable.IsCancelled != 1 and 
 				CustomShipmentTable.CreateDateTime >= '{fromDate.Value.Date.ToString("MM/dd/yyyy hh:mm:ss.fff tt")}' and 
-				CustomShipmentTable.CreateDateTime <= '{toDate.Value.Date.ToString("MM/dd/yyyy hh:mm:ss.fff tt")}'
+				CustomShipmentTable.CreateDateTime <= '{toDate.Value.Date.AddDays(1).ToString("MM/dd/yyyy hh:mm:ss.fff tt")}'
                 {tenantCondishin}
 			
             ";
@@ -316,7 +316,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.MainService
 			var condishins = $@"
             
 				OrderTable.CreateDate >= '{fromDate.Value.Date.ToString("MM/dd/yyyy hh:mm:ss.fff tt")}' and
-			    OrderTable.CreateDate <= '{toDate.Value.Date.ToString("MM/dd/yyyy hh:mm:ss.fff tt")}'
+			    OrderTable.CreateDate <= '{toDate.Value.Date.AddDays(1).ToString("MM/dd/yyyy hh:mm:ss.fff tt")}'
                 {tenantCondishin}
 			
             ";
