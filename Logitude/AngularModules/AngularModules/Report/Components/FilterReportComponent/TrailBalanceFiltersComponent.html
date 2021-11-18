@@ -129,6 +129,7 @@
                                                             [SelectedItem]="SelectedChartOfAccountsType" (EditedItemSource)="OnChartOfAccountsTypeItemClicked($event)"
                                                             (SelectedItemChanged)="SelectedChartOfAccountsType = $event" [Binding]="'EnglishName'"></ComboBoxWithInCheckBox>
                                                     </div>
+                                                    <div style="width: 50px;"></div>
                                                     <div style="padding: 0 5px;">{{'GLAccount.F.ChartOfAccountsId' | TextCodeTranslationPipe}}</div>
                                                     <div style="width: 150px;" *ngIf="chartOfAccounts.length > 0">
                                                         <ComboBoxWithInCheckBox [MinHeight]="150" [ItemsSource]="chartOfAccounts" [IsDisabled]="isChartOfAccountsDisabled"

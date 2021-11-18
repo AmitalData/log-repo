@@ -1478,7 +1478,7 @@
     FullLocalDefaultText="&quot;סוג קבוצת מאזן&quot;"
     ListFieldLable="&quot;ChartOfAccountsTypeCodeListLable&quot;"
     ListLableDefaultText="&quot;Chart of Accounts Type &quot;"
-    ListLocalDefaultText="&quot;סוג קבוצת מאזן&quot;"
+    ListLocalDefaultText="&quot;קבוצת מאזן&quot;"
     IsNullable="false"
     IsForeignKey="true"
     ForeignEntity="ChartOfAccountsType"

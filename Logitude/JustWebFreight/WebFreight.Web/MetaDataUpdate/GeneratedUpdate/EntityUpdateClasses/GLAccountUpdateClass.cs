@@ -1188,7 +1188,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						FullLocalDefaultText =  "סוג קבוצת מאזן",
 					  						ListFieldLable =  "ChartOfAccountsTypeCodeListLable",
 					  						ListLableDefaultText =  "Chart of Accounts Type ",
-					  						ListLocalDefaultText =  "סוג קבוצת מאזן",
+					  						ListLocalDefaultText =  "קבוצת מאזן",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
