@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CourierMasterUpdateClass
    {  		
-		public const string HashString = "dec8cc420f2ca9eb824ca62760823f22";
+		public const string HashString = "23060f874d41a5fd0212cf076f35729f";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -3982,6 +3982,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		   Feature CourierMasterFeature_SendDeclaration902 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SendDeclaration902", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = CourierMasterObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.CourierMaster.Features.SendDeclaration902", NameTextCodeDefaultText = @"Send Declaration After Deleting Pending 902" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CourierMasterObjectTable);
 
 		   Feature CourierMasterFeature_StatusDeclarationOldVersion = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "StatusDeclarationOldVersion", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = CourierMasterObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.CourierMaster.Features.StatusDeclarationOldVersion", NameTextCodeDefaultText = @"Status Declaration Old Version" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CourierMasterObjectTable);
+
+		   Feature CourierMasterFeature_ExportMasterExtended = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ExportMasterExtended", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = CourierMasterObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.CourierMaster.Features.ExportCourierMasterExtended", NameTextCodeDefaultText = @"יצא לאקסל מורכב" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CourierMasterObjectTable);
 
    
 	    
