@@ -241,11 +241,12 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
             ServiceHelper.ExecuteSql(sql, buildCargoArgs.DestinationConnectionString);
         }
 
-        private RecordUpdated UpdateCargoTrackingDatabase(CargoTrackingUpdateDataBaseArgs cargoTrackingDataBaseArgs, List<CargoTrackingMilestoneList> milestoneList,
-                                                         bool isUpadteWaterMark = false)
+        private RecordUpdated UpdateCargoTrackingDatabase(UpdateCargoTrackingRecords updateCargoTrackingRecords, bool isUpadteWaterMark = false)
         {
             RecordUpdated recordUpdated = new RecordUpdated();
             KeysForRecoredsNotValidated = new List<string>();
+            var cargoTrackingDataBaseArgs = updateCargoTrackingRecords.CargoTrackingUpdateDataBaseArgs;
+
             BulkDataPreperation bulkDataPreperation = InitializeBulkDataPreperation(cargoTrackingDataBaseArgs);
             using (SqlConnection sourceConnection =
                                   new SqlConnection(cargoTrackingDataBaseArgs.BuildCargoArgs.SourceConnectionString))
@@ -256,7 +257,8 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
                 cargoTrackingDataBaseArgs.DataTableSchema = DataTableSchema;
                 List<DataColumn> dataColumnListCols = new List<DataColumn>();
                 bulkDataPreperation.MainDataTable = new DataTable();
-                bulkDataPreperation.MilestoneList = milestoneList;
+                bulkDataPreperation.MilestoneList = updateCargoTrackingRecords.MilestoneList;
+                bulkDataPreperation.MilestonesNotPermitted = updateCargoTrackingRecords.MilestonesNotPermitted;
 
                 //CreatePreOldShipmentsTable(bulkDataPreperation);
 
@@ -703,11 +705,27 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
             {
                 if (!isFromInnerCargoTrackingTable)
                 {
-                    CargoTrackingTableLogicService.SetTableLogic(dr, bulkDataPreperation.CargoTrackingUpdateDataBaseArgs.BuildCargoArgs.Table.Main_CargoTracking_TableName, bulkDataPreperation.CargoTrackingUpdateDataBaseArgs.BuildCargoArgs.Table.CurrentCondition, bulkDataPreperation.MilestoneList);
+                    var args = new SetTableLogicArgs()
+                    {
+                        TableRow = dr,
+                        TableName = bulkDataPreperation.CargoTrackingUpdateDataBaseArgs.BuildCargoArgs.Table.Main_CargoTracking_TableName,
+                        ConditionNumber = bulkDataPreperation.CargoTrackingUpdateDataBaseArgs.BuildCargoArgs.Table.CurrentCondition,
+                        MilestoneList = bulkDataPreperation.MilestoneList,
+                        MilestonesNotPermitted = bulkDataPreperation.MilestonesNotPermitted
+                    };
+                    CargoTrackingTableLogicService.SetTableLogic(args);
                 }
                 else
                 {
-                    CargoTrackingTableLogicService.SetTableLogic(dr, bulkDataPreperation.CargoTrackingUpdateDataBaseArgs.BuildCargoArgs.Table.Main_CargoTracking_InnerTableName, bulkDataPreperation.CargoTrackingUpdateDataBaseArgs.BuildCargoArgs.Table.CurrentCondition, bulkDataPreperation.MilestoneList);
+                    var args = new SetTableLogicArgs()
+                    {
+                        TableRow = dr,
+                        TableName = bulkDataPreperation.CargoTrackingUpdateDataBaseArgs.BuildCargoArgs.Table.Main_CargoTracking_InnerTableName,
+                        ConditionNumber = bulkDataPreperation.CargoTrackingUpdateDataBaseArgs.BuildCargoArgs.Table.CurrentCondition,
+                        MilestoneList = bulkDataPreperation.MilestoneList,
+                        MilestonesNotPermitted = bulkDataPreperation.MilestonesNotPermitted
+                    };
+                    CargoTrackingTableLogicService.SetTableLogic(args);
                 }
 
 
@@ -900,7 +918,8 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
         {
             var cargoTrackingShipmentsService = new CargoTrackingShipmentsService();
             updateCargoTrackingRecords.MilestoneList = cargoTrackingShipmentsService.GetMilestones(updateCargoTrackingRecords.CargoTrackingUpdateDataBaseArgs.BuildCargoArgs.DestinationConnectionString);
-
+            updateCargoTrackingRecords.MilestonesNotPermitted = cargoTrackingShipmentsService.GetAllMilestonesNotPermitted(updateCargoTrackingRecords.CargoTrackingUpdateDataBaseArgs.BuildCargoArgs.SourceConnectionString);
+            
             if (false)
             {
                 BuildShipmentsNew(updateCargoTrackingRecords);
@@ -938,7 +957,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
         {
             updateCargoTrackingRecords.CargoTrackingUpdateDataBaseArgs.BuildCargoArgs.Table.CurrentCondition = CurrentCondition;
             updateCargoTrackingRecords.IsUpadteWaterMark = IsUpadteWaterMark;
-            updateCargoTrackingRecords.RecordUpdated = UpdateCargoTrackingDatabase(updateCargoTrackingRecords.CargoTrackingUpdateDataBaseArgs, updateCargoTrackingRecords.MilestoneList, updateCargoTrackingRecords.IsUpadteWaterMark);
+            updateCargoTrackingRecords.RecordUpdated = UpdateCargoTrackingDatabase(updateCargoTrackingRecords, updateCargoTrackingRecords.IsUpadteWaterMark);
             updateCargoTrackingRecords.NumberRecordUpdated += updateCargoTrackingRecords.RecordUpdated.NumberOfRecordUpdated;
             updateCargoTrackingRecords.NumberRecordUpdated2 += updateCargoTrackingRecords.RecordUpdated.NumberOfRecordUpdated2;
         }

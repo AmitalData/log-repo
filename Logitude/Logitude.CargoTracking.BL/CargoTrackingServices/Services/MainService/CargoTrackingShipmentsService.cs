@@ -520,7 +520,47 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.MainService
             }
         }
 
+        public Dictionary<int, Dictionary<string, string>> GetAllMilestonesNotPermitted(string connectionString)
+        {
+            var MilestonesNotAllowedToBeViewed = new List<CargoTenantMilestoneDefinitions>();
 
+            var query = "select * from CargoTenantMilestoneDefinitions where IsCustomerView = 0";
+            using (SqlConnection sourceConnection = new SqlConnection(connectionString))
+            {
+                SqlCommand commandSourceData = new SqlCommand(query, sourceConnection);
+                commandSourceData.CommandTimeout = int.MaxValue;
+                sourceConnection.Open();
+                SqlDataReader reader = commandSourceData.ExecuteReader(CommandBehavior.CloseConnection);
+                while (reader.Read())
+                {
+                    var row = SqlDataReaderConverter.ConvertToObject<CargoTenantMilestoneDefinitions>(reader);
+                    MilestonesNotAllowedToBeViewed.Add(row);
+                }
+                var DictionaryMilestonesNotPermitted = GetDictionaryMilestonesNotPermittedByTenentAndCode(MilestonesNotAllowedToBeViewed);
+                return DictionaryMilestonesNotPermitted;
+            }
+        }
+
+        private Dictionary<int, Dictionary<string, string>> GetDictionaryMilestonesNotPermittedByTenentAndCode(List<CargoTenantMilestoneDefinitions> milestonesNotAllowedToBeViewed)
+        {
+            // first key = tenant , second key = milestone code
+            var dictionaryMilestonesNotPermitted = new Dictionary<int, Dictionary<string, string>>();
+            foreach (var item in milestonesNotAllowedToBeViewed)
+            {
+                //Check tenant
+                if (!dictionaryMilestonesNotPermitted.ContainsKey(item.Tenant))
+                {
+                    dictionaryMilestonesNotPermitted.Add(item.Tenant, new Dictionary<string, string>());
+                }
+
+                var tenantMilestonesNotPermitted = dictionaryMilestonesNotPermitted[item.Tenant];
+                if (!tenantMilestonesNotPermitted.ContainsKey(item.Code))
+                {
+                    tenantMilestonesNotPermitted.Add(item.Code, item.Code);
+                }
+            }
+            return dictionaryMilestonesNotPermitted;
+        }
     }
     public class CurrentMilestone
     {
