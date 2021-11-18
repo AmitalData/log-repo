@@ -1967,7 +1967,14 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
         if (this._CourierWorksheetSharedDataService._SelectedItems != null && this._CourierWorksheetSharedDataService._SelectedItems.Collection.length > 0) {
             currRequestParams.DeclarationsList = this._CourierWorksheetSharedDataService._SelectedItems.Collection;
         }
-        currRequestParams.PendingCode=this.SelectedPendingCodeFilter.Key;
+        currRequestParams.PendingCode=new Array();
+        debugger;
+        if(this.SelectedPendingCodeFilter.Key=='A' && this._PendingCodes.length>1){
+            this._PendingCodes.forEach(x=> currRequestParams.PendingCode.push(x.Key));
+        }else{
+            currRequestParams.PendingCode.push(this.SelectedPendingCodeFilter.Key);
+        }
+        //currRequestParams.PendingCode=this.SelectedPendingCodeFilter.Key;
         this._CourierMasterService.PostSendClosePending(currRequestParams)
         .subscribe((res:any) => {
             SessionLocator.SelectedSession.StopBusyIndicator();

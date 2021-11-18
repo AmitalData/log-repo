@@ -26,6 +26,7 @@ using System.Threading.Tasks;
 using Unifreight.Data.AmitalModel.Repsitories;
 using Microsoft.Practices.Unity;
 using Logitude.CustomsMessaging.Utils;
+using Logitude.Customs.Data.Repsitories;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -92,8 +93,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 using (var scopeNewCRS = TransactionFactory.GetNewTransaction())
                 {
                     var context1 = CustomContext.GetContext(requestParams.Tenant);//context each CRS TRANS
-                    LogMessagingUtil.Instance.AppendLine("ChangeStorgeSite for declaration: " + itemPM.DeclarationId + "\n");
-                    var changeStorgeSiteService = new ChangeStorgeSiteService(context1);
+                    LogMessagingUtil.Instance.AppendLine("ClosePending for declaration: " + itemPM.DeclarationId + "\n");
+                    var closePendingService = new ClosePendingService(context1);
                   /*  if (customResponse.StorageSiteCode != null)
                     {
                         changeStorgeSiteService.ChangeSite(customResponse.StorageSiteCode, requestParams, mess, objectTableId, objectTableIdCourierMaster, lockedDeclarations, itemPM,false);
@@ -145,10 +146,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
             this.context = context;
         }
 
-        public void ChangeSite(string SiteCode, GenericRequestParams requestParams, StringBuilder mess, string objectTableId, string objectTableIdCourierMaster, List<DeclarationPM> lockedDeclarations, DeclarationCourierStatusPM itemPM, Boolean isUnLoadPort)
+        public void ClosePending(string PendingCode, GenericRequestParams requestParams, StringBuilder mess, string objectTableId, string objectTableIdCourierMaster, List<DeclarationPM> lockedDeclarations, DeclarationCourierStatusPM itemPM)
         {
 
-
+            
             var myDeclarationUpdateService = new DeclarationUpdateService(context, new Dictionary<string, IContext>(), requestParams.Tenant);
 
             try
@@ -185,43 +186,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                     if (isUpdateDeclaration)
                     {
-                        if (declarationPM.Consignments != null && declarationPM.Consignments.Count > 0)
+                        CourierPendingReasonRepository courierPendingReasonRepositoryRepository = new CourierPendingReasonRepository(declarationPM.Tenant);
+                        if(PendingCode == "") // Close ALL 
                         {
-                            LogMessagingUtil.Instance.AppendLine("DeclarationUpdateService.Update for declaration: " + declarationPM.CustomFileNo + "\n");
-                            declarationPM.ChangeSetOp = ChangeSetOperation.Update;
-                            declarationPM.Consignments.FirstOrDefault().ChangeSetOp = ChangeSetOperation.Update;
-                            if (isUnLoadPort)
-                            {
-                                declarationPM.Consignments.FirstOrDefault().UnloadPortCode = SiteCode;
-                            }
-                            else
-                            {
-                                declarationPM.Consignments.FirstOrDefault().StorageSiteCode = SiteCode;
-                            }
-                            myDeclarationUpdateService.CourierStorageSiteChanged = true;
-                            myDeclarationUpdateService.Update(declarationPM, true);
 
-                            if (itemPM.CourierManifestStatusCode == "V")
-                            {
-                                var requestParams1170 = new MANIFESTRequestRequestParams()
-                                {
-                                    Tenant = requestParams.Tenant,
-                                    LoggingEnabled = true,
-                                    LoggingObjectTableId = objectTableId,
-                                    LoggingEntityId = itemPM.DeclarationId,
-                                    LoggingObjectTableId2 = requestParams.LoggingObjectTableId,
-                                    LoggingEntityId2 = objectTableIdCourierMaster,
-                                    InterfaceTypeCode = "1170",
-                                    LoggingUserId = requestParams.LoggingUserId,
-                                    RequestVIA = SendRequestVIA.WebServiceBatch,
-                                    DeclarationId = itemPM.DeclarationId,
-                                    LoggingEntityReference = itemPM.DeclarationId,
-
-                                };
-                                SBQMessageService.CreateSheetSBQMessage<MANIFESTRequestRequestParams>(requestParams1170, false);
-                                LogMessagingUtil.Instance.AppendLine($" CreateSheetSBQMessage({itemPM.DeclarationId})");
-                                mess.AppendLine($" CreateSheetSBQMessage({itemPM.DeclarationId})");
-                            }
                         }
                     }
                     else
