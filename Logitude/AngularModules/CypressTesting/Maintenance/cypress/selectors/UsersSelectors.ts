@@ -10,7 +10,6 @@ export class UsersSelectors {
     public static readonly Notes = "#User_Notes"
     public static readonly SaveButton = "#User-Save"
     public static readonly SearchTextboxInput = "#User_Search"
-    public static readonly AdminstratorRow = "#row11"
     public static readonly InActiveCheckBox = "#User_InActive"
     public static readonly EventsTab = "#UserTHEvents"
 }

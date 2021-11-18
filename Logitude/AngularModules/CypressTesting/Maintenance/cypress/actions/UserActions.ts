@@ -22,7 +22,7 @@ export function FillUserDetails(userDetails: UserDetails) {
     cy.FillLogLov(UsersSelectors.Depatment, userDetails.Department, true);
     cy.FillLogLov(UsersSelectors.Branch, userDetails.Branch, true);
     cy.FillLogTextBox(UsersSelectors.Notes, userDetails.Notes);
-    cy.get(UsersSelectors.AdminstratorRow).find(BaseSelectors.CheckBox).click()
+    cy.get(BaseSelectors.CheckBoxLabel).eq(1).click()
 }
 
 export function CreateUser() {
@@ -66,4 +66,8 @@ export function UpdateUser() {
 
 export function AssertUpdateUser() {
     BaseAssertion.AssertStatusCode(RequestAliases.PutUser, 200);
+}
+
+export function getSearchFieldValue() {
+    return searchFieldValue
 }
