@@ -530,7 +530,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                 Tenant = tenant,
                 AccountsIds = AllBankAccounts.Select(a => a.TransferGLAcccountId).ToList(),
                 GetDueDatedTransactions = true,
-                AllowedSourceTypes = new string[] { AccountingEntityValues.APPayment, AccountingEntityValues.PaymentCheque }
+                AllowedSourceTypes = new string[] { AccountingEntityValues.APPayment, AccountingEntityValues.PaymentCheque },
+               IsReconciled = false,
             };
         }
 
