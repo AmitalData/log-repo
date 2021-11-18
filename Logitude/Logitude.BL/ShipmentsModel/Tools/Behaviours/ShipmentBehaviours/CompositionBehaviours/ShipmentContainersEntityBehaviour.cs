@@ -271,7 +271,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
             container.ShipmentPreCarriageFromId = this.initializer.EntityPM?.PreCarriageFromPortId;
             container.ShipmentPreCarriageToId = this.initializer.EntityPM?.PreCarriageToPortId;
             container.ShipmentMainCarriageFromId = this.initializer.EntityPM?.MainCarriageFromPortId;
-            container.ShipmentMainCarriageToId = this.initializer.EntityPM?.MainCarriageToPortId;
+            container.ShipmentMainCarriageToId = this.initializer.EntityPM?.MainCarriageFinalDestinationPortId;
             container.ShipmentTransshipment1FromId = this.initializer.EntityPM?.Transshipment1FromPortId;
             container.ShipmentTransshipment1ToId = this.initializer.EntityPM?.Transshipment1ToPortId;
             container.ShipmentTransshipment2FromId = this.initializer.EntityPM?.Transshipment2FromPortId;
