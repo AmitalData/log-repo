@@ -1,6 +1,7 @@
-@all @dev
+@all @devsmoke
 Feature: User Create, Search and Edit from Maintenance
     The user creates a User, searches for and edits it from the Maintenance Module.
+    and Log in with inactive user.
 
     Scenario: Create new User
         Given the user logged in and open "Users" in maintenance menu
