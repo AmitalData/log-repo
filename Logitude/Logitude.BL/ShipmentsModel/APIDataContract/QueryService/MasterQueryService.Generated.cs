@@ -410,6 +410,24 @@ using Simplog.Data.ShipmentsModel;
 					   					   temp.Notify1 = CardService27.GetCardById(MyEntityPM.Notify1Id,Tenant,ComputingPartnerName); 
 			       
 					   				   }
+				    
+
+			  
+				   if(MyEntityPM.UnassignedShipperAddressId != null)
+				   {
+					   AddressQueryService AddressService28 = new AddressQueryService(Tenant);
+					   					   temp.UnassignedShipperAddress = AddressService28.AddressCustomDataMapping(MyEntityPM.UnassignedShipperAddressId,Tenant,ComputingPartnerName); 
+			       
+					   				   }
+				    
+
+			  
+				   if(MyEntityPM.UnassignedConsigneeAddressId != null)
+				   {
+					   AddressQueryService AddressService29 = new AddressQueryService(Tenant);
+					   					   temp.UnassignedConsigneeAddress = AddressService29.AddressCustomDataMapping(MyEntityPM.UnassignedConsigneeAddressId,Tenant,ComputingPartnerName); 
+			       
+					   				   }
 				   					
 				   return temp;
 			}
@@ -825,9 +843,9 @@ using Simplog.Data.ShipmentsModel;
 
 					if(MyEntity.Deliveries != null && MyEntity.Deliveries.Count > 0)
 					{
-						DeliveryQueryService DeliveryService28 = new DeliveryQueryService(Tenant);
+						DeliveryQueryService DeliveryService30 = new DeliveryQueryService(Tenant);
 						 								//throw new ApplicationException("Deliveries Can't be update"); 
-								temp.ShipmentDeliveries = DeliveryService28.DeliveryDataMappingAndValidatin(MyEntity.Deliveries,Tenant,ComputingPartnerName,IsUpdate);
+								temp.ShipmentDeliveries = DeliveryService30.DeliveryDataMappingAndValidatin(MyEntity.Deliveries,Tenant,ComputingPartnerName,IsUpdate);
 
 					 
 
@@ -838,9 +856,9 @@ using Simplog.Data.ShipmentsModel;
 
 					if(MyEntity.PickUps != null && MyEntity.PickUps.Count > 0)
 					{
-						PickUpQueryService PickUpService28 = new PickUpQueryService(Tenant);
+						PickUpQueryService PickUpService30 = new PickUpQueryService(Tenant);
 						 								//throw new ApplicationException("PickUps Can't be update"); 
-								temp.ShipmentPickUps = PickUpService28.PickUpDataMappingAndValidatin(MyEntity.PickUps,Tenant,ComputingPartnerName,IsUpdate);
+								temp.ShipmentPickUps = PickUpService30.PickUpDataMappingAndValidatin(MyEntity.PickUps,Tenant,ComputingPartnerName,IsUpdate);
 
 					 
 
@@ -858,11 +876,11 @@ using Simplog.Data.ShipmentsModel;
 
 					if(MyEntity.Houses != null && MyEntity.Houses.Count > 0)
 					{
-						HouseQueryService HouseService28 = new HouseQueryService(Tenant);
+						HouseQueryService HouseService30 = new HouseQueryService(Tenant);
 						  
 						if(!IsUpdate)
 						{								//throw new ApplicationException("Houses Can't be update"); 
-								temp.ShipmentConsoleShipments = HouseService28.HouseCustomDataMappingAndValidatin(MyEntity,MyEntity.Houses,Tenant,ComputingPartnerName);
+								temp.ShipmentConsoleShipments = HouseService30.HouseCustomDataMappingAndValidatin(MyEntity,MyEntity.Houses,Tenant,ComputingPartnerName);
 
 					 
 						}  
@@ -920,11 +938,11 @@ using Simplog.Data.ShipmentsModel;
 
 					if(MyEntity.Receivables != null && MyEntity.Receivables.Count > 0)
 					{
-						ReceivableQueryService ReceivableService28 = new ReceivableQueryService(Tenant);
+						ReceivableQueryService ReceivableService30 = new ReceivableQueryService(Tenant);
 						  
 						if(!IsUpdate)
 						{								//throw new ApplicationException("Receivables Can't be update"); 
-								temp.ShipmentReceivables = ReceivableService28.ReceivableDataMappingAndValidatin(MyEntity.Receivables,Tenant,ComputingPartnerName,IsUpdate);
+								temp.ShipmentReceivables = ReceivableService30.ReceivableDataMappingAndValidatin(MyEntity.Receivables,Tenant,ComputingPartnerName,IsUpdate);
 
 					 
 						}  
@@ -936,11 +954,11 @@ using Simplog.Data.ShipmentsModel;
 
 					if(MyEntity.Payables != null && MyEntity.Payables.Count > 0)
 					{
-						PayableQueryService PayableService28 = new PayableQueryService(Tenant);
+						PayableQueryService PayableService30 = new PayableQueryService(Tenant);
 						  
 						if(!IsUpdate)
 						{								//throw new ApplicationException("Payables Can't be update"); 
-								temp.ShipmentPayables = PayableService28.PayableDataMappingAndValidatin(MyEntity.Payables,Tenant,ComputingPartnerName,IsUpdate);
+								temp.ShipmentPayables = PayableService30.PayableDataMappingAndValidatin(MyEntity.Payables,Tenant,ComputingPartnerName,IsUpdate);
 
 					 
 						}  
@@ -1161,9 +1179,9 @@ using Simplog.Data.ShipmentsModel;
 
 					if(MyEntity.MainCarriageLegs != null && MyEntity.MainCarriageLegs.Count > 0)
 					{
-						MainCarriageLegQueryService MainCarriageLegService28 = new MainCarriageLegQueryService(Tenant);
+						MainCarriageLegQueryService MainCarriageLegService30 = new MainCarriageLegQueryService(Tenant);
 						 								//throw new ApplicationException("MainCarriageLegs Can't be update"); 
-								temp.MainCarriageLegs = MainCarriageLegService28.MainCarriageLegDataMappingAndValidatin(MyEntity.MainCarriageLegs,Tenant,ComputingPartnerName,IsUpdate);
+								temp.MainCarriageLegs = MainCarriageLegService30.MainCarriageLegDataMappingAndValidatin(MyEntity.MainCarriageLegs,Tenant,ComputingPartnerName,IsUpdate);
 
 					 
 
@@ -1308,6 +1326,42 @@ using Simplog.Data.ShipmentsModel;
 
 						 								//throw new ApplicationException("Notify1 Can't be update"); 
 								temp.Notify1Id = myNotify1PM.Id;
+						  
+
+							
+						} 
+
+					}
+			
+					
+					AddressQueryService UnassignedShipperAddressAddressService = new AddressQueryService(Tenant);
+					if(MyEntity.UnassignedShipperAddress != null)
+					{
+						var myUnassignedShipperAddressPM = UnassignedShipperAddressAddressService.AddressCustomDataMappingAndValidatin(MyEntity.UnassignedShipperAddress,Tenant);
+						
+						if(myUnassignedShipperAddressPM != null)
+						{ 
+
+						 								//throw new ApplicationException("UnassignedShipperAddress Can't be update"); 
+								temp.UnassignedShipperAddressId = myUnassignedShipperAddressPM.Id;
+						  
+
+							
+						} 
+
+					}
+			
+					
+					AddressQueryService UnassignedConsigneeAddressAddressService = new AddressQueryService(Tenant);
+					if(MyEntity.UnassignedConsigneeAddress != null)
+					{
+						var myUnassignedConsigneeAddressPM = UnassignedConsigneeAddressAddressService.AddressCustomDataMappingAndValidatin(MyEntity.UnassignedConsigneeAddress,Tenant);
+						
+						if(myUnassignedConsigneeAddressPM != null)
+						{ 
+
+						 								//throw new ApplicationException("UnassignedConsigneeAddress Can't be update"); 
+								temp.UnassignedConsigneeAddressId = myUnassignedConsigneeAddressPM.Id;
 						  
 
 							
