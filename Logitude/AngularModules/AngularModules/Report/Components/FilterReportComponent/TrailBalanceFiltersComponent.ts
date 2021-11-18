@@ -121,32 +121,33 @@ export class TrailBalanceFiltersComponent extends BaseComponent
     }
 
     OnChartOfAccountsTypeItemClicked(){
-        console.log(this.chartOfAccountsTypes);
         this.selectedChartOfAccountsTypes = this.chartOfAccountsTypes.filter(item=>item.Checked == true);
-
         const haveSelectedItems = this.selectedChartOfAccountsTypes.length > 0;
-        this.isChartOfAccountsDisabled = haveSelectedItems;
-        this.SelectedChartOfAccounts = null;
+        this.DisableChartOfAccountField(haveSelectedItems);
         this.DisableCategoryFields(haveSelectedItems);
 
 
     }
+    private DisableChartOfAccountField(haveSelectedItems: boolean)
+    {
+        this.isChartOfAccountsDisabled = haveSelectedItems;
+        this.SelectedChartOfAccounts = null;
+    }
+
     OnChartOfAccountsItemClicked(){
-        console.log(this.chartOfAccounts);
         this.selectedChartOfAccounts = this.chartOfAccounts.filter(item=>item.Checked == true);
 
         const haveSelectedItems = this.selectedChartOfAccounts.length > 0;
-        this.isChartOfAccountsTypesDisabled = haveSelectedItems;
-
-        let chartOfAccountTypes = this.chartOfAccountsTypes.filter(t=> this.selectedChartOfAccounts.includes(o=>o.ChartOfAccountTypeCode == t.Code));
-        if(chartOfAccountTypes && chartOfAccountTypes.length > 0){
-            this.selectedChartOfAccountsTypes = null;
-            this.SelectedChartOfAccountsType = chartOfAccountTypes.join(',');
-        }
-
+        this.DisableChartOfAccountsTypesField(haveSelectedItems);
         this.DisableCategoryFields(haveSelectedItems);
 
     }
+    private DisableChartOfAccountsTypesField(haveSelectedItems: boolean)
+    {
+        this.isChartOfAccountsTypesDisabled = haveSelectedItems;
+        this.selectedChartOfAccountsTypes = null;
+    }
+
     private DisableCategoryFields(haveSelectedItems: boolean)
     {
         this.IsCategoryDisabled = haveSelectedItems;
