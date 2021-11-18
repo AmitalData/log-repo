@@ -1,0 +1,141 @@
+
+<style>
+</style>
+<div style="position: absolute; top:0px; bottom:0; left:0; right:0; margin:auto; padding: 10px; background: white;border-radius:0 5px 5px 0;">
+    <table class="noselect" *ngIf="entityPM!=null">
+
+        <tr colspan="2" style="width: 100%;height:25px;">
+            <td style="width: 200px; font-size: 12px; color: #1B90CB;">
+                {{'Customs.InterfaceManagement.O.TenantDefinitions'| TextCodeTranslationPipe}}  {{'Customs.InterfaceManagement.O.Code' | TextCodeTranslationPipe}} {{Code}}
+            </td>
+        </tr>
+
+        <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+            <td colspan="2">
+                <ValidationSummary [ItemsSource]="ValidationErrorsList" [SingleLine]="false"></ValidationSummary>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <!-- 1s Table -->
+                <fieldset>
+                    <table style="width:300px;">
+                        <!--Code-->
+                        <!--<tr class="FormFieldRow">
+                            <td class="tbl1Label">
+                                <LogLabel [ObjectFieldName]="'Code'"
+                                          [ObjectTableName]="ObjectTableName"
+                                          [DataContext]="DataContext">
+
+                                </LogLabel>
+                            </td>
+                            <td class="tbl1Col0"></td>
+
+                            <td class="tbl1Col1">
+
+                                <LogTextBox [Text]="Code"
+                                            [ObjectFieldName]="'Code'"
+                                            [InputType]="'text'"
+                                            [DataContext]="DataContext"
+                                            [ObjectTableName]="ObjectTableName"
+                                            [HideColumns]="true"></LogTextBox>
+
+
+                            </td>
+
+                            <td><div></div></td>
+
+                            <td class="tbl1LastCol"><div></div></td>
+
+                        </tr>-->
+
+
+
+
+                        <tr class="FormFieldRow">
+                            <td class="tbl1Label">
+                                <LogLabel [ObjectFieldName]="'TenantPriority'"
+                                          [ObjectTableName]="ObjectTableName"
+                                          [DataContext]="DataContext">
+
+                                </LogLabel>
+                            </td>
+                            <td class="tbl1Col0"></td>
+
+                            <td class="tbl1Col1">
+
+                                <LogTextBox [Text]="TenantPriority"
+                                            [ObjectFieldName]="'TenantPriority'"
+                                            [InputType]="'text'"
+                                            [DataContext]="DataContext"
+                                            [ObjectTableName]="ObjectTableName"
+                                            [HideColumns]="true"></LogTextBox>
+
+
+                            </td>
+
+                            <td><div></div></td>
+
+                            <td class="tbl1LastCol"><div></div></td>
+
+                        </tr>
+
+
+
+
+
+                        <!--placeholder-->
+                        <tr class="FormFieldRow"></tr>
+
+                        <!--placeholder-->
+                        <tr></tr>
+
+
+                    </table>
+                </fieldset>
+            </td>
+
+            <td></td>
+        </tr>
+
+        <!--split Zones-->
+
+
+
+
+
+
+
+        <tr class="FormFieldRow">
+            <td colspan="2"></td>
+        </tr>
+        <!-- footer -->
+        <tr class="FormFieldRow">
+            <td colspan="3">
+                <table>
+                    <tr>
+                        <td></td>
+                        <td style="width: 57px;">
+                            <button class="Button" (click)="CancelButtonClicked()">{{'Customs.General.B.Cancel' |TextCodeTranslationPipe}}</button>
+                        </td>
+
+
+
+                        <td style="width: 5px;">
+                            <div></div>
+                        </td>
+
+                        <td style="width: 57px;">
+                            <button class="RedButton" (click)="OkButtonClicked()">{{'General.B.Save' | TextCodeTranslationPipe}}</button>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+
+
+
+</div>
+

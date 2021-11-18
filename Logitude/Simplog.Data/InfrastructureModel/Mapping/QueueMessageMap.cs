@@ -45,7 +45,9 @@ namespace Simplog.Data.InfrastructureModel.Mapping
 
             this.HasRequired(t => t.QueueDefinition).WithMany().HasForeignKey(d => d.QueueDefinitionCode);
             //this.HasRequired(t => t.QueueMessageMoreDetails).WithRequiredPrincipal(d => d.QueueMessage);
- 
+
+            this.Property(t => t.TenantPriority).HasColumnName("TenantPriority");
+
         }
     }
 }

@@ -137,10 +137,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                                   //CourierPendingReasonName = a.CourierPendingReason != null ? a.CourierPendingReason.LocalName : null,
 
 
-                                                                  //CourierPendingReasonErrorPlace = errorPlaceOuterJoinNullable != null ?
-                                                                  //(
-                                                                  //  errorPlaceOuterJoinNullable.ErrorPlace == true ? "1" : null)
-                                                                  // : null,
+                                                                  CourierPendingReasonErrorPlace = errorPlaceOuterJoinNullable != null ?
+                                                                  (
+                                                                    errorPlaceOuterJoinNullable.ErrorPlace == true ? "1" : null)
+                                                                   : null,
 
                                                                   CourierPendingReasonName = errorPlaceOuterJoinNullable != null ?
                                                                   errorPlaceOuterJoinNullable.CourierPendingReason1stName
