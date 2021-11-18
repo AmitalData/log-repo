@@ -675,11 +675,6 @@ export class LogGridComponentV2 implements OnInit, AfterViewInit, OnChanges, OnD
                 filters.TextValue1 = LastYearToDate;
                 filters.MyName = "Last Year";
             }
-            else if (filters.TextValue == "Last Year") {
-                filters.TextValue = LastYearFromDate;
-                filters.TextValue1 = LastYearToDate;
-                filters.MyName = "Last Year";
-            }
             else if (filters.TextValue == "Less than Today") {
                 filters.TextValue = TodayDate;
                 filterOperator = "LessThan";
