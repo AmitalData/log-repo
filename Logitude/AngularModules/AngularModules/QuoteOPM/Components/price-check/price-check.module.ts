@@ -16,11 +16,16 @@ import { PriceCheckDataService } from './price-check-data/price-check-data.servi
 import { ChargesTypeListService } from 'Common/Services/StandardLists/ChargesTypeListService';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PriceCheckDetailsPipe } from './price-check-details/price-check-details.pipe';
+import { IconSrcPipe } from './icon-src/icon-src.pipe';
+import { IconCurrencyPipe } from './icon-currency/icon-currency.pipe';
+import { ProductTypeListService } from 'Common/Services/StandardLists/ProductTypeListService';
 
 @NgModule({
   declarations: [
     PriceCheckComponent,
     PriceCheckDetailsPipe,
+    IconSrcPipe,
+    IconCurrencyPipe,
   ],
   exports: [
     PriceCheckComponent
@@ -31,6 +36,7 @@ import { PriceCheckDetailsPipe } from './price-check-details/price-check-details
     Xml2jsonService,
     PriceCheckDataService,
     ChargesTypeListService,
+    ProductTypeListService,
   ],
   imports: [
     CommonModule,
