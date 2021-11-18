@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Logitude.CargoTracking.Data.EntityLists;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,6 +13,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.HelperClasses
         public int NumberRecordUpdated2 { get; set; }
         public bool IsUpadteWaterMark { get; set; }
         public RecordUpdated RecordUpdated { get; set; }
+        public List<CargoTrackingMilestoneList> MilestoneList { get; set; }
         public CargoTrackingUpdateDataBaseArgs CargoTrackingUpdateDataBaseArgs { get; set; }
     }
 }

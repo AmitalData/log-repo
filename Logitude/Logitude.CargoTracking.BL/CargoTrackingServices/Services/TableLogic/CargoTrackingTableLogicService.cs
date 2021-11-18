@@ -1,5 +1,6 @@
 ﻿
 using Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTrackingSetLogic;
+using Logitude.CargoTracking.Data.EntityLists;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -14,7 +15,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableLogic
     {
         const int ShipmentOrderTableCondition = 3;
 
-        public static void SetTableLogic(DataRow tableRow, string tableName,int conditionNumber)
+        public static void SetTableLogic(DataRow tableRow, string tableName, int conditionNumber, List<CargoTrackingMilestoneList> milestoneList)
         {
             switch (tableName)
             {
@@ -25,10 +26,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableLogic
                     }
                 case "CargoTrackingShipments":
                     {
-                        if(conditionNumber == ShipmentOrderTableCondition)
-                            CargoTrackingShipmentsOrderLogicService.SetTableLogic(tableRow);
-                        else
-                            CargoTrackingShipmentsLogicService.SetTableLogic(tableRow, conditionNumber);
+                        SetCargoTrackingShipmentsLogic(conditionNumber, tableRow, milestoneList);
                         break;
                     }
                 case "CargoTrackingShipmentSearches":
@@ -40,7 +38,14 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableLogic
             }
 
        }
-  
+
+        private static void SetCargoTrackingShipmentsLogic(int conditionNumber, DataRow tableRow, List<CargoTrackingMilestoneList> milestoneList)
+        {
+            if (conditionNumber == ShipmentOrderTableCondition)
+                CargoTrackingShipmentsOrderLogicService.SetTableLogic(tableRow, milestoneList);
+            else
+                CargoTrackingShipmentsLogicService.SetTableLogic(tableRow, conditionNumber, milestoneList);
+        }
     }
 
 }
