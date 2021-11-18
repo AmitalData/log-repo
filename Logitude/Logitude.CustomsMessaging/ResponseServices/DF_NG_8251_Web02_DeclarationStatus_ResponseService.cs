@@ -653,10 +653,13 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     if (customResponse.DeclarationStatusAnswer.Count() > 1
                         && requestParams.LoggingObjectTableId == ObjectTableRepository.GetObjectTableByName("Customs.CourierMaster"))
                     {
-                        requestParams.LoggingObjectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
-                        requestParams.DeclarationNumber = declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationID;
+                        string json = Newtonsoft.Json.JsonConvert.SerializeObject(requestParams);
+                        var param = Newtonsoft.Json.JsonConvert.DeserializeObject<DeclarationStatusRequestParams>(json);
+                        param.LoggingObjectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
+                        param.DeclarationNumber = declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationID;
+                        param.PBId = Guid.NewGuid().ToString();
                         var service = new DF_NG_8250_Web01_DeclarationStatus_RequestMessagingService();
-                        service.Send(requestParams);
+                        service.Send(param);
                     }
                 }
             }
