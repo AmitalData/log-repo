@@ -15,9 +15,9 @@ export function NavigateUserWizerd() {
 
 export function FillUserDetails(userDetails: UserDetails) {
     searchFieldValue = gr.GenerateCurrentDatetimeString("_")
-    cy.FillLogTextBox(UsersSelectors.Email, searchFieldValue + userDetails.Email)
-    cy.FillLogTextBox(UsersSelectors.Password, userDetails.Password);
-    cy.FillLogTextBox(UsersSelectors.ReTypePassword, userDetails.ReTypePassword);
+    cy.FillLogTextBox(UsersSelectors.UserEmail, searchFieldValue + userDetails.Email)
+    cy.FillLogTextBox(UsersSelectors.UserPassword, userDetails.Password);
+    cy.FillLogTextBox(UsersSelectors.ReTypeUserPassword, userDetails.ReTypePassword);
     cy.FillLogTextBox(UsersSelectors.Name, userDetails.Name);
     cy.FillLogLov(UsersSelectors.Depatment, userDetails.Department, true);
     cy.FillLogLov(UsersSelectors.Branch, userDetails.Branch, true);
@@ -68,6 +68,30 @@ export function AssertUpdateUser() {
     BaseAssertion.AssertStatusCode(RequestAliases.PutUser, 200);
 }
 
-export function getSearchFieldValue() {
-    return searchFieldValue
+export function Login(password) {
+    let mode = Cypress.env("Mode");
+    if (mode.toLowerCase() === "development") {
+        cy.fixture("Login.json").then(loginData => {
+            let url = loginData.url;
+            CompleteLoginProcess(url, password);
+        });
+    }
+    else {
+        let url = Cypress.env("Url");
+        CompleteLoginProcess(url, password);
+    }
+}
+
+function CompleteLoginProcess(url, password) {
+    cy.visit(url)
+    cy.FillLogTextBox(UsersSelectors.Email, searchFieldValue + "@mail.com")
+    cy.FillLogTextBox(UsersSelectors.Password, password)
+    cy.get(UsersSelectors.cmdLogin).click()
+}
+
+export function ResetPassword(oldPassword, newPassword) {
+    cy.FillLogTextBox(UsersSelectors.CurrentPassword, oldPassword)
+    cy.FillLogTextBox(UsersSelectors.Password, newPassword)
+    cy.FillLogTextBox(UsersSelectors.ConfirmNewPassword, newPassword)
+    cy.get(UsersSelectors.Submit).click()
 }
