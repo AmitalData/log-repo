@@ -31,8 +31,16 @@
         color: rgb(138, 138, 92);
     }
 
+    .StatisticsTable-td {
+        vertical-align: top;
+    }
+    
+    .StatisticsTable-td > div {
+        margin-top: 6px;
+    }
+
     .Statistics {
-        text-align: center;
+        text-align: right;
     }
 
     .StatisticsTable {
@@ -43,7 +51,7 @@
         .StatisticsTable tbody {
             overflow: auto;
             width: 100%;
-            height: 80px;
+            height: 90px;
             display: block
         }
         .StatisticsTable thead th {
@@ -533,7 +541,7 @@
                 </tr>
             </table>
         </td>
-        <td *ngIf="StatisticsVisibility">
+        <td *ngIf="StatisticsVisibility" class="StatisticsTable-td">
             <div style="width:80%">
                 <table class="StatisticsTable">
                     <thead style="width: 100%; display:table;">
