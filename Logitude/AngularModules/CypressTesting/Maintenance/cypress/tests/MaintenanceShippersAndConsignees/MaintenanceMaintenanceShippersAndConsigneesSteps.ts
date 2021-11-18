@@ -6,16 +6,34 @@ import { CardDetails } from "../../models/CardDetails";
 import { ContactDetails } from "../../models/ContactDetails";
 import { MaintenanceSelectors } from "../../selectors/Selectors";
 import { Constants } from "../../constants/Constants";
+import { BaseSelectors } from "../../../../Base/cypress/selectors/BaseSelectors";
+import * as BaseAssertion from "../../../../Base/cypress/actions/Assertion"
 
 let code = null
-//#region Create new vessel
+
+//#region Assert create Shipper-Consignee
 Given("the user logged in and open {string} in maintenance menu", (maintenanceItemName) => {
     cy.Login()
     Actions.OpenMaintenanceItemFromMaintenanceMenu(maintenanceItemName, MaintenanceSelectors.MaintenanceItemShipperAndConsignee)
 });
 
-Given("a Shipper-Consignee with the following details", (dataTable) => {
+Given("the user check add contact checkbox", () => {
     Actions.OpenNewWizard("Customer");
+    cy.wait(3000)
+    Actions.FillCheckBoxProcess(MaintenanceSelectors.CardContactCheckBox + BaseSelectors.LastElement, "Yes")
+});
+
+When("create Shipper-Consignee", () => {
+    Actions.CreateCard();
+});
+
+Then("a validation error message with {string} should appear", (validationMessage) => {
+    BaseAssertion.AssertElementContain(BaseSelectors.ValidationSummary, validationMessage)
+});
+//#endregion
+
+//#region Create new Shipper-Consignee
+Given("a Shipper-Consignee with the following details", (dataTable) => {
     let cardDetails = Assists.CreateInstance<CardDetails>(dataTable, true);
     Actions.FillCardDetails(cardDetails, null);
 });
@@ -23,10 +41,6 @@ Given("a Shipper-Consignee with the following details", (dataTable) => {
 Given("a Shipper-Consignee contact with the following details", (dataTable) => {
     let contactDetails = Assists.CreateInstance<ContactDetails>(dataTable, true);
     Actions.FillCardContactDetails(contactDetails)
-});
-
-When("create Shipper-Consignee", () => {
-    Actions.CreateCard();
 });
 
 Then("the Shipper-Consignee should create successfully", () => {

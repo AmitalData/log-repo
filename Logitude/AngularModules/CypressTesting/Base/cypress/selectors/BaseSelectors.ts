@@ -164,6 +164,7 @@ export class BaseSelectors extends RegexSelectors {
     public static readonly ul = "ul";
     public static readonly li = "li";
     public static readonly ValidationSummaryBlock = ".ValidationSummary table tr td";
+    public static readonly ValidationSummary = ".ValidationSummary";
     public static readonly DropDownListItem = ".DropDownListItem";
     public static readonly DropDownList = ".DropDownList"
     public static readonly Value = ".Value";
