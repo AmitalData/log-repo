@@ -539,6 +539,11 @@ namespace Logitude.CustomsMessaging.MessagingServices
           SaveCC_MSG2450_ContainerizationMessageMessagingService>
           ((new SaveCC_MSG2450_ContainerizationMessageMessagingService()).MainInterfaceCode);
 
+            ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
+
+        DCAInUCBClosePending_MsgMessagingService>
+        ((new DCAInUCBClosePending_MsgMessagingService()).MainInterfaceCode);
+
 
         }
         public static void InitContainer()
