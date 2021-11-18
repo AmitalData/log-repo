@@ -1,10 +1,10 @@
-import {Component, OnInit, Output, EventEmitter,AfterViewInit} from '@angular/core';
+import {Component, OnInit, Output, EventEmitter,AfterViewInit, Input} from '@angular/core';
 import {SessionLocator} from '../Infrastructure/Utilities/SessionLocator';
 import { AppTool } from '../Infrastructure/Tools';
 
 @Component({
     selector: 'ComboBoxWithInCheckBox',
-    
+
     templateUrl: './ComboBoxWithInCheckBox.html',
     inputs: ['ItemsSource', 'SelectedItem', 'Binding', 'IsDisabled', 'WaterMark', 'IsBlueBox', 'WithinImage', 'SelectionType', 'CheckBoxOnly', 'IsAreasMenu'],
 })
@@ -18,7 +18,7 @@ export class ComboBoxWithInCheckBox implements OnInit,AfterViewInit {
     public ControlId: string = null;
     public DropdownId: string = null;
     public ListControlId: string = null;
-    public MinHeight: number = 45;
+    @Input() public MinHeight: number = 45;
     public MaxHeight: number = 250;
     public IsBlueBox: boolean = false;
     public IsDisabled: boolean = false;
@@ -51,7 +51,7 @@ export class ComboBoxWithInCheckBox implements OnInit,AfterViewInit {
     
     constructor() {
         this.ItemsSource = [];
-       
+
         if (this.CurrentSession == null) {
             this.ControlId = "ComboBox_-1_-1";
             this.DropdownId = "Dropdown_-1_-1";
@@ -103,6 +103,8 @@ export class ComboBoxWithInCheckBox implements OnInit,AfterViewInit {
                 if (itemsHeight > this.MaxHeight) {
                     document.getElementById(this.DropdownId).style.height = this.MaxHeight + "px";
                  //   document.getElementById(this.ListControlId).style.height = itemsHeight + "px";
+                } else if (itemsHeight < this.MinHeight) {
+                    document.getElementById(this.DropdownId).style.height = this.MinHeight + "px";
                 }
                 else {
                     document.getElementById(this.DropdownId).style.height = itemsHeight + "px";
@@ -118,13 +120,13 @@ export class ComboBoxWithInCheckBox implements OnInit,AfterViewInit {
         var ToggleBTN = document.getElementById(this.ControlId) as HTMLDivElement;
         ToggleBTN.className = "ToggleButtonMenuTemp";
 
-    } 
+    }
     setToggleButtonMenu() {
         var ToggleBTN = document.getElementById(this.ControlId) as HTMLDivElement;
         ToggleBTN.className = "ToggleButtonMenu";
     }
     ngOnInit() {
-       
+
 
 
         if (this.SelectedItem != null) {
@@ -138,9 +140,10 @@ export class ComboBoxWithInCheckBox implements OnInit,AfterViewInit {
         if (this.selectedItem != value) {
             this.selectedItem = value;
             this.SetDisplayText();
+
         }
     }
-    
+
     clickItem(item: any, index: any) {
         if (this.CheckSource == null) {
             if (this.ItemsSource != null) {
@@ -158,7 +161,7 @@ export class ComboBoxWithInCheckBox implements OnInit,AfterViewInit {
         }
 
         item.Checked = this.CheckSource[index];
- 
+
         this.TotalPickedItems += "," + item.Name;
         this.ItemsSource[index] = item;
         this.TotalPickedItems = "";
@@ -181,7 +184,7 @@ export class ComboBoxWithInCheckBox implements OnInit,AfterViewInit {
                 }
             }
         }
-        
+
         this.EditedItemSource.emit(this.ItemsSource);
     }
 
@@ -218,11 +221,11 @@ export class ComboBoxWithInCheckBox implements OnInit,AfterViewInit {
                 item.Checked = false;
             });
         }
-        this.CheckSource = null;    
+        this.CheckSource = null;
         this.SelectedItemChanged.emit(this.SelectedItem);
 
 
-    } 
+    }
     SetDefaultTotalPickedItems() {
         if (!this.WithinImage) {
             if (this.ItemsSource.filter(i => i.Checked)[0] == null) {

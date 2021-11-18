@@ -11056,7 +11056,7 @@ namespace WebFreight.Web.ReportsWebServices
             QueryFilterItem filterItem_Category2 = queryOperations.QueryFilterItems.Where(d => d.FieldName == "Category2").FirstOrDefault();
             QueryFilterItem filterItem_Category3 = queryOperations.QueryFilterItems.Where(d => d.FieldName == "Category3").FirstOrDefault();
             QueryFilterItem filterItem_Category4 = queryOperations.QueryFilterItems.Where(d => d.FieldName == "Category4").FirstOrDefault();
-            
+
             QueryFilterItem filterItem_ChartOfAccountId = queryOperations.QueryFilterItems.Where(d => d.FieldName == "ChartOfAccountId").FirstOrDefault();
             QueryFilterItem filterItem_DontShowCardsWith0Balance = queryOperations.QueryFilterItems.Where(d => d.FieldName == "DontShowCardsWith0Balance").FirstOrDefault();
             QueryFilterItem filterItem_Category5 = queryOperations.QueryFilterItems.Where(d => d.FieldName == "Category5").FirstOrDefault();
@@ -11065,6 +11065,7 @@ namespace WebFreight.Web.ReportsWebServices
             QueryFilterItem filterItem_DetailedJobs = queryOperations.QueryFilterItems.Where(d => d.FieldName == "DetailedForJobs").FirstOrDefault();
             QueryFilterItem filterItem_DetailedFiles = queryOperations.QueryFilterItems.Where(d => d.FieldName == "DetailedForFiles").FirstOrDefault();
 
+           
             //ChartOfAccountId
             string ChartOfAccountId = null;
             if (filterItem_ChartOfAccountId != null)
@@ -11182,7 +11183,7 @@ namespace WebFreight.Web.ReportsWebServices
                 if (filterItem_DetailedCustomer.FieldValue != null)
                 {
                     customer = (bool)filterItem_DetailedCustomer.FieldValue;
-                   
+
                 }
             }
             bool vendor = false;
@@ -11213,6 +11214,8 @@ namespace WebFreight.Web.ReportsWebServices
                 }
             }
             #endregion
+
+
             string category1Name = GetCategory1Name(category1, tenant);
             string category5Name = GetCategory5Name(category5, tenant);
             totalData.CurrencyDetailed = currency;
@@ -11244,7 +11247,7 @@ namespace WebFreight.Web.ReportsWebServices
                 DoNotShowCardWithLocalCloseBalanceEqualZero = dontShowCardsWith0Balance,
                 IsRevenueExpenseReport = false,
                 //  Skip = true
-                Suppress_DoNotShowCardWithoutActivity =false,
+                Suppress_DoNotShowCardWithoutActivity = false,
 
 
             };
@@ -11305,10 +11308,10 @@ namespace WebFreight.Web.ReportsWebServices
                 }
                 finally
                 {
-                   // typeservice.Dispose();
+                    // typeservice.Dispose();
                 }
-                
-                
+
+
 
 
 
@@ -11389,8 +11392,8 @@ namespace WebFreight.Web.ReportsWebServices
                 {
                     //service.Dispose();
                 }
-                
-                
+
+
 
 
                 List<TrailReportM> ChartOfAccount5s = res.Where(d => !string.IsNullOrEmpty(d != null ? d.ChartOfAcountName5 : null)).ToList();
@@ -11432,7 +11435,7 @@ namespace WebFreight.Web.ReportsWebServices
                                 ResultList parentrecord = new ResultList()
                                 {
                                     Id = record.ParentId,
-                                    Name =   chartOfAccount.LocalName ,
+                                    Name = chartOfAccount.LocalName,
                                     Number = chartOfAccount.Code,
                                     ParentId = item.ChartOfAcount3,
                                     LocalCloseBalance = item.LocalCloseBalance != null ? item.LocalCloseBalance : 0,
@@ -11508,8 +11511,8 @@ namespace WebFreight.Web.ReportsWebServices
                                 ResultList parentrecord = new ResultList()
                                 {
                                     Id = record.ParentId,
-                                    Name =  chartOfAccount.LocalName,
-                                    Number= chartOfAccount.Code,
+                                    Name = chartOfAccount.LocalName,
+                                    Number = chartOfAccount.Code,
                                     ParentId = item.ChartOfAcount2,
                                     LocalCloseBalance = item.LocalCloseBalance != null ? item.LocalCloseBalance : 0,
                                     LocalCredit = item.LocalCredit != null ? item.LocalCredit : 0,
@@ -11593,8 +11596,8 @@ namespace WebFreight.Web.ReportsWebServices
                                 ResultList parentrecord = new ResultList()
                                 {
                                     Id = record.ParentId,
-                                    Name =  chartOfAccount.LocalName,
-                                    Number= chartOfAccount.Code,
+                                    Name = chartOfAccount.LocalName,
+                                    Number = chartOfAccount.Code,
                                     ParentId = item.ChartOfAcount1,
                                     LocalCloseBalance = item.LocalCloseBalance != null ? item.LocalCloseBalance : 0,
                                     LocalCredit = item.LocalCredit != null ? item.LocalCredit : 0,
@@ -11769,7 +11772,7 @@ namespace WebFreight.Web.ReportsWebServices
                                 ResultList parentrecord = new ResultList()
                                 {
                                     Id = record.ParentId,
-                                    Name =  chartOfAccountType.LocalName,
+                                    Name = chartOfAccountType.LocalName,
                                     Number = chartOfAccountType.Code,
                                     ParentId = null,
                                     LocalCloseBalance = item.LocalCloseBalance != null ? item.LocalCloseBalance : 0,
@@ -11818,6 +11821,9 @@ namespace WebFreight.Web.ReportsWebServices
             if (level == "GLAccount")
             {
 
+                List<string> chartOfAccountTypesCodes = GetChartOfAccountsTypesFilterValue(queryOperations);
+                List<string> chartOfAccountIds = GetChartoOfAccountsFilterValue(queryOperations);
+
                 trailReportParam.DetailedControlVendors = vendor;
                 trailReportParam.DetailedControlClients = customer;
                 trailReportParam.DetailedControlFile = files;
@@ -11830,7 +11836,10 @@ namespace WebFreight.Web.ReportsWebServices
                 trailReportParam.Category5 = category5;
                 trailReportParam.MyTrailReportLevel = ReportLevel.GLAccount;
                 trailReportParam.Suppress_DoNotShowCardWithoutActivity = false;
-                trailReportParam.DoNotShowCardWithLocalCloseBalanceEqualZero =dontShowCardsWith0Balance;
+                trailReportParam.DoNotShowCardWithLocalCloseBalanceEqualZero = dontShowCardsWith0Balance;
+                trailReportParam.ChartOfAccountsTypeCodeList = chartOfAccountTypesCodes;
+                trailReportParam.ChartOfAccountsIdList = chartOfAccountIds;
+
                 var servce = TrailReportFactory.CreateNew(trailReportParam);
 
                 List<TrailReportM> list;
@@ -11841,11 +11850,11 @@ namespace WebFreight.Web.ReportsWebServices
                 }
                 finally
                 {
-                   // servce.Dispose();
+                    // servce.Dispose();
 
                 }
-                
-                
+
+
 
                 List<CurrencyPM> currencies = GetCurrenciesByTenant(tenant);
                 List<ChartOfAccountsTypePM> chartOfAccountTypes = GetChartOfAccountTypes(tenant);
@@ -11894,19 +11903,19 @@ namespace WebFreight.Web.ReportsWebServices
                             ResultList parent = totalData.ResultList.Where(d => d.Id == record.ParentId).FirstOrDefault();
                             if (parent == null)
                             {
-                                ResultList parentrecord= CreateNotRetreivedParent(item, tenant);
+                                ResultList parentrecord = CreateNotRetreivedParent(item, tenant);
                                 totalData.ResultList.Add(parentrecord);
                             }
-                            else 
+                            else
                             {
-                              
-                                RecalculateParentTotals(record,  totalData);
-                               //ResultList resultList = totalData.ResultList.Where(d => d.Id == record.ParentId).FirstOrDefault();
+
+                                RecalculateParentTotals(record, totalData);
+                                //ResultList resultList = totalData.ResultList.Where(d => d.Id == record.ParentId).FirstOrDefault();
                             }
-                                //}
-                                //if (record.ParentId != "1-1331")
-                                //{
-                                
+                            //}
+                            //if (record.ParentId != "1-1331")
+                            //{
+
                             //}
 
 
@@ -11956,6 +11965,33 @@ namespace WebFreight.Web.ReportsWebServices
 
             return totalData;
         }
+
+        private static List<string> GetChartoOfAccountsFilterValue(QueryOperations queryOperations)
+        {
+            List<string> chartOfAccountIds = new List<string>();
+            QueryFilterItem filterItem_ChartOfAccountsIdList = queryOperations.QueryFilterItems.Where(d => d.FieldName == "ChartOfAccountsIdList").FirstOrDefault();
+            if ( filterItem_ChartOfAccountsIdList?.FieldValue != null && filterItem_ChartOfAccountsIdList?.FieldValue != "")
+            {
+                var chartOfAccountsIdList = (string)filterItem_ChartOfAccountsIdList.FieldValue;
+                chartOfAccountIds = chartOfAccountsIdList.Split(',').ToList();
+            }
+
+            return chartOfAccountIds;
+        }
+
+        private static List<string> GetChartOfAccountsTypesFilterValue(QueryOperations queryOperations)
+        {
+            List<string> chartOfAccountTypesCodes = new List<string>(); ;
+            QueryFilterItem filterItem_ChartOfAccountsTypeCodeList = queryOperations.QueryFilterItems.Where(d => d.FieldName == "ChartOfAccountsTypeCodeList").FirstOrDefault();
+            if (filterItem_ChartOfAccountsTypeCodeList?.FieldValue != null && filterItem_ChartOfAccountsTypeCodeList?.FieldValue != "")
+            {
+                var chartOfAccountsTypeCodeList = (string)filterItem_ChartOfAccountsTypeCodeList.FieldValue;
+                chartOfAccountTypesCodes = chartOfAccountsTypeCodeList.Split(',').ToList();
+            }
+
+            return chartOfAccountTypesCodes;
+        }
+
         private List<CurrencyPM> GetCurrenciesByTenant(int tenant)
         {
             CurrencyQuery currencyQuery= new CurrencyQuery(tenant);

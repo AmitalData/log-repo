@@ -1005,7 +1005,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
             }
             set
             {
-
+                _GLAccountLevel_ChartOfAccountsTypeCodeList = value;
             }
         }
         /// <summary>
