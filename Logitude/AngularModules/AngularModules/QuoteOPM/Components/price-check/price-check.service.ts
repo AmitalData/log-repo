@@ -1,6 +1,4 @@
-import { StringMap } from '@angular/compiler/src/compiler_facade_interface';
-import { Injectable } from '@angular/core';
-import { property } from 'cypress/types/lodash';
+import { Injectable, isDevMode } from '@angular/core';
 import { Xml2jsonService } from 'Infrastructure/Services/xml2json/xml2json.service';
 import { AmitalGatewayUtil, UnifreightMessageM } from 'Infrastructure/Utilities/AmitalGatewayUtil';
 import { SessionLocator } from 'Infrastructure/Utilities/SessionLocator';
@@ -8,7 +6,6 @@ import { DialogService, DynamicDialogConfig, DynamicDialogRef } from 'primeng/dy
 import { QuoteOPPM } from 'QuoteOPM/EntityPMs/QuoteOPPM';
 import { QuoteOPPropertiesPM } from 'QuoteOPM/EntityPMs/QuoteOPPropertiesPM';
 import { Subscription } from 'rxjs';
-import { take } from 'rxjs/operators';
 import { PriceCheckComponent } from './price-check.component';
 
 @Injectable()
@@ -25,7 +22,10 @@ export class PriceCheckService {
     config.height = '1230px';
     config.showHeader = false;
     config.styleClass = 'price-check';
-    config.data = await this.getPrices(quote);
+    // if (isDevMode())
+    //   config.data = await this.getPricesTest(quote);
+    // else
+      config.data = await this.getPrices(quote);
 
     return this.dialogService.open(PriceCheckComponent, config);
   }
@@ -56,7 +56,7 @@ export class PriceCheckService {
               SessionLocator.SelectedSession.StopBusyIndicator();
               let sBool = UnifreightMessageM.GetStringValue(mess, AmitalGatewayUtil.Instance.DeclarationMessaging.UnifreightResponseStatus);
               if (sBool) {
-                const xmlString: string = mess.Requset.find(x=> x[0] === 'Response.PriceCheckResponse')[1];
+                const xmlString: string = mess.Requset.find(x => x[0] === 'Response.PriceCheckResponse')[1];
                 const prices: PriceChekRootResponse = this.xml2Json.decodeXmlStr2Json(xmlString);
                 this.fixData(prices);
                 resolve(prices as any)
@@ -83,7 +83,7 @@ export class PriceCheckService {
     return responsePromise;
   }
 
-  // private async getPrices(quote: any): Promise<PriceChekRootResponse> {
+  // private async getPricesTest(quote: any): Promise<PriceChekRootResponse> {
   //   return await new Promise<PriceChekRootResponse>((resolve) => {
   //     const prices: PriceChekRootResponse = this.xml2Json.decodeXmlStr2Json(xmlPriceString)
   //     this.fixData(prices)
@@ -165,8 +165,8 @@ export class PriceCheckService {
     })
   }
 
-  private fixDateFormat(date :string): string {
-    return new Date("2021-11-18T00:00:00Z").toJSON().slice(0,10).split('-').reverse().join('/');
+  private fixDateFormat(date: string): string {
+    return new Date("2021-11-18T00:00:00Z").toJSON().slice(0, 10).split('-').reverse().join('/');
   }
 }
 

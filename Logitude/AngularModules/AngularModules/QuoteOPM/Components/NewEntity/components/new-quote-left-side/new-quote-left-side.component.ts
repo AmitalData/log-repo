@@ -6,6 +6,24 @@ import { QuoteOPPM } from 'QuoteOPM/EntityPMs/QuoteOPPM';
 import { ShipmentTypeList } from 'Shipment/EntityLists/ShipmentTypeList';
 import { NewQuoteDataService } from '../../Services/new-quote-data/new-quote-data.service';
 
+export const ICONS = {
+  Export: 'assets/icons/export.png',
+  Import: 'assets/icons/import.png',
+  Domestic: 'assets/icons/domestic.png',
+  Drop: 'assets/icons/drop.png',
+  Air: 'assets/icons/air.png',
+  Ocean: 'assets/icons/ocean.png',
+  Inland: 'assets/icons/inland.png',    
+  Shipment: 'assets/icons/shipment.png',
+  blueExport: 'assets/icons/export-blue.png',
+  blueImport: 'assets/icons/import-blue.png',
+  blueDomestic: 'assets/icons/domestic-blue.png',
+  blueDrop: 'assets/icons/drop-blue.png',
+  blueAir: 'assets/icons/air-blue.png',
+  blueOcean: 'assets/icons/ocean-blue.png',
+  blueInland: 'assets/icons/inland-blue.png',    
+  blueShipment: 'assets/icons/shipment-blue.png',
+}
 
 @Component({
   selector: 'app-new-quote-left-side',
@@ -15,31 +33,13 @@ import { NewQuoteDataService } from '../../Services/new-quote-data/new-quote-dat
 export class NewQuoteLeftSideComponent implements OnInit {
   @Input() EntityPM: QuoteOPPM = null as any;
   @Input() formGroup: FormGroup = null as any;
-
+  icons = ICONS;
   transportModeList: TransportModeList[] = []
   directionList: DirectionList[] = []
   shipmentTypeList: ShipmentTypeList[] = []
   shipmentTypeListFilter: ShipmentTypeList[] = []
   iconColor = { gray: 'gray', blue: 'blue'}
 
-  icons: {} = {
-    Export: 'assets/icons/export.png',
-    Import: 'assets/icons/import.png',
-    Domestic: 'assets/icons/domestic.png',
-    Drop: 'assets/icons/drop.png',
-    Air: 'assets/icons/air.png',
-    Ocean: 'assets/icons/ocean.png',
-    Inland: 'assets/icons/inland.png',    
-    Shipment: 'assets/icons/shipment.png',
-    blueExport: 'assets/icons/export-blue.png',
-    blueImport: 'assets/icons/import-blue.png',
-    blueDomestic: 'assets/icons/domestic-blue.png',
-    blueDrop: 'assets/icons/drop-blue.png',
-    blueAir: 'assets/icons/air-blue.png',
-    blueOcean: 'assets/icons/ocean-blue.png',
-    blueInland: 'assets/icons/inland-blue.png',    
-    blueShipment: 'assets/icons/shipment-blue.png',
-  }
 
   constructor(
     private newQuoteDataService: NewQuoteDataService,
