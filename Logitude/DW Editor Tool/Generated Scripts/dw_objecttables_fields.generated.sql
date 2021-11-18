@@ -979,7 +979,7 @@ insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,Is
 ------------------------------------------------------------------------------------
 declare @Fact_ARInvoicesNewId varchar(15)
 execute usp_GetNextTableIdValue @Fact_ARInvoicesNewId OUTPUT,'DWObjectTable' 
-insert into DWObjectTables(Id,Tenant,IndexesXml,Code,Name,TypeCode,IsClosed,DataViewName,HasPivotColumn,AdditionalFactCode,AdditionalFactForeignKey,RecordType,DisplayName,ObjectTableName,HasCustomFields,MaxNumberOfCustomFields,AdditionalFactRelationType) Values(@Fact_ARInvoicesNewId,0,'<ArrayOfIndexItem xmlns:i="http://www.w3.org/2001/XMLSchema-instance"><IndexItem> <Columns>[Source Tenant],[Create Date]</Columns></IndexItem><IndexItem> <Columns>[Parent Tenant],[Create Date]</Columns></IndexItem><IndexItem> <Columns>[Main Entity Id]</Columns></IndexItem><IndexItem> <Columns>[Id]</Columns></IndexItem></ArrayOfIndexItem>','Fact_ARInvoices','Fact_ARInvoices','Fact','false','factARInvoices','false','Fact_Shipments','[Main Entity Id]','ARInvoicesFact','ARInvoices','ARInvoice','false',0,'left')  
+insert into DWObjectTables(Id,Tenant,IndexesXml,Code,Name,TypeCode,IsClosed,DataViewName,HasPivotColumn,AdditionalFactCode,AdditionalFactForeignKey,RecordType,DisplayName,ObjectTableName,HasCustomFields,MaxNumberOfCustomFields,AdditionalFactRelationType) Values(@Fact_ARInvoicesNewId,0,'<ArrayOfIndexItem xmlns:i="http://www.w3.org/2001/XMLSchema-instance"><IndexItem> <Columns>[Source Tenant],[Create Date]</Columns></IndexItem><IndexItem> <Columns>[Parent Tenant],[Create Date]</Columns></IndexItem><IndexItem> <Columns>[Main Entity Id]</Columns></IndexItem><IndexItem> <Columns>[Id]</Columns></IndexItem></ArrayOfIndexItem>','Fact_ARInvoices','Fact_ARInvoices','Fact','false','factARInvoices','false','Fact_Shipments','[Main Entity Id]','ARInvoicesFact','ARInvoices','ARInvoice','true',10,'left')  
 --Fields --
 declare @Fact_ARInvoicesId_NumberNewId varchar(15)
 execute usp_GetNextTableIdValue @Fact_ARInvoicesId_NumberNewId OUTPUT,'DWObjectField' 
@@ -1134,6 +1134,36 @@ insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,Is
 declare @Fact_ARInvoicesInvoiceHouseNumberNewId varchar(15)
 execute usp_GetNextTableIdValue @Fact_ARInvoicesInvoiceHouseNumberNewId OUTPUT,'DWObjectField' 
 insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,OriginalObjectFieldCode,DontDisplayInView,IsMultipleSelection) Values(@Fact_ARInvoicesInvoiceHouseNumberNewId,0,'Fact_ARInvoices','[Invoice House Number]','Invoice House Number','nText','false',0,20,'false','false','true','InvoiceGeneralDetails','false','false','false','ARInvoice.HouseNumber','false','false')  
+declare @Fact_ARInvoicesField1NewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_ARInvoicesField1NewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,DontDisplayInView,IsMultipleSelection) Values(@Fact_ARInvoicesField1NewId,0,'Fact_ARInvoices','[Field1]','Field1','SqlVariant','false',0,0,'false','false','false','CustomFields','false','false','true','false','false')  
+declare @Fact_ARInvoicesField2NewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_ARInvoicesField2NewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,DontDisplayInView,IsMultipleSelection) Values(@Fact_ARInvoicesField2NewId,0,'Fact_ARInvoices','[Field2]','Field2','SqlVariant','false',0,0,'false','false','false','CustomFields','false','false','true','false','false')  
+declare @Fact_ARInvoicesField3NewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_ARInvoicesField3NewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,DontDisplayInView,IsMultipleSelection) Values(@Fact_ARInvoicesField3NewId,0,'Fact_ARInvoices','[Field3]','Field3','SqlVariant','false',0,0,'false','false','false','CustomFields','false','false','true','false','false')  
+declare @Fact_ARInvoicesField4NewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_ARInvoicesField4NewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,DontDisplayInView,IsMultipleSelection) Values(@Fact_ARInvoicesField4NewId,0,'Fact_ARInvoices','[Field4]','Field4','SqlVariant','false',0,0,'false','false','false','CustomFields','false','false','true','false','false')  
+declare @Fact_ARInvoicesField5NewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_ARInvoicesField5NewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,DontDisplayInView,IsMultipleSelection) Values(@Fact_ARInvoicesField5NewId,0,'Fact_ARInvoices','[Field5]','Field5','SqlVariant','false',0,0,'false','false','false','CustomFields','false','false','true','false','false')  
+declare @Fact_ARInvoicesField6NewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_ARInvoicesField6NewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,DontDisplayInView,IsMultipleSelection) Values(@Fact_ARInvoicesField6NewId,0,'Fact_ARInvoices','[Field6]','Field6','SqlVariant','false',0,0,'false','false','false','CustomFields','false','false','true','false','false')  
+declare @Fact_ARInvoicesField7NewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_ARInvoicesField7NewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,DontDisplayInView,IsMultipleSelection) Values(@Fact_ARInvoicesField7NewId,0,'Fact_ARInvoices','[Field7]','Field7','SqlVariant','false',0,0,'false','false','false','CustomFields','false','false','true','false','false')  
+declare @Fact_ARInvoicesField8NewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_ARInvoicesField8NewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,DontDisplayInView,IsMultipleSelection) Values(@Fact_ARInvoicesField8NewId,0,'Fact_ARInvoices','[Field8]','Field8','SqlVariant','false',0,0,'false','false','false','CustomFields','false','false','true','false','false')  
+declare @Fact_ARInvoicesField9NewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_ARInvoicesField9NewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,DontDisplayInView,IsMultipleSelection) Values(@Fact_ARInvoicesField9NewId,0,'Fact_ARInvoices','[Field9]','Field9','SqlVariant','false',0,0,'false','false','false','CustomFields','false','false','true','false','false')  
+declare @Fact_ARInvoicesField10NewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_ARInvoicesField10NewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,DontDisplayInView,IsMultipleSelection) Values(@Fact_ARInvoicesField10NewId,0,'Fact_ARInvoices','[Field10]','Field10','SqlVariant','false',0,0,'false','false','false','CustomFields','false','false','true','false','false')  
 ------------------------------------------------------------------------------------
 declare @Fact_ChargesNewId varchar(15)
 execute usp_GetNextTableIdValue @Fact_ChargesNewId OUTPUT,'DWObjectTable' 
