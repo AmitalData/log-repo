@@ -345,13 +345,13 @@ export class CustomDatePickerComponent extends BaseComponent implements OnInit {
                 case "Less than Today":
                     {
                         this.Text = "Less than Today " + this.LessThanToday;
-                        this.SelectedItemChanged.emit({ Date: this.TodayDate, Operation: "LessThan" });
+                        this.SelectedItemChanged.emit({ FromDate: null, ToDate: this.YesterdayDate, Operation: "Equals", MyName: "Less than Today" });
                         break;
                     }
                 case "Less than or equal Today":
                     {
-                        this.Text = "Less than or equal Today " + this.LessThanToday;
-                        this.SelectedItemChanged.emit({ Date: this.TommorowDate, Operation: "LessThan" });
+                        this.Text = "Less than or equal Today " + this.LessThanOrEqualToday;
+                        this.SelectedItemChanged.emit({ FromDate: null, ToDate: this.TodayDate, Operation: "Equals", MyName: "Less than or equal Today" });
                         break;
                     }
                 default: { break; }

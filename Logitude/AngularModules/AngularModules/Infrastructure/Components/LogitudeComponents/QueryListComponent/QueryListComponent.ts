@@ -239,6 +239,8 @@ export class QueryListComponent implements OnInit, AfterViewInit {
                             if (value1 == '#today') value1 = new Date(TodayDate.getFullYear(), TodayDate.getMonth(), TodayDate.getDate(), 0, 0, 0);
                             if (value2 == '#today') value2 = new Date(TodayDate.getFullYear(), TodayDate.getMonth(), TodayDate.getDate(), 23, 59, 59);
 
+                            var TommorowDate = DateTool.AddDays((new Date()), 1);
+                            TommorowDate.setUTCHours(0, 0, 0, 0);
                             var YesterdayDate = DateTool.AddDays((new Date()), -1);
                             var LastSevenDaysDate = DateTool.AddDays((new Date()), -7)
                             var LastThirtyDaysDate = DateTool.AddDays((new Date()), -30);
@@ -277,6 +279,14 @@ export class QueryListComponent implements OnInit, AfterViewInit {
                                 value1 = LastYearFromDate;
                                 value2 = LastYearToDate;
                                 filterOperator = "Between";
+                            }
+                            else if (value1 == "Less than Today") {
+                                value1 = TodayDate;
+                                filterOperator ="LessThan";
+                            }
+                            else if (value2 == "Less than or equal Today") {
+                                value1 = TommorowDate;
+                                filterOperator ="LessThan";
                             }
                         }
                        
