@@ -621,6 +621,7 @@ export class LogGridComponentV2 implements OnInit, AfterViewInit, OnChanges, OnD
 
         }
         else if (!AppTool.IsNullOrEmpty(filters.MyName)) {
+            var filterOperator = "Between";
             var TommorowDate = DateTool.AddDays((new Date()), 1);
             TommorowDate.setUTCHours(0, 0, 0, 0);
             var TodayDate = new Date();
@@ -639,6 +640,10 @@ export class LogGridComponentV2 implements OnInit, AfterViewInit, OnChanges, OnD
             LastYearFromDate.setUTCHours(0, 0, 0, 0);
             var LastYearToDate = DateTool.AddDays((new Date()), 1);
             LastYearToDate.setUTCHours(0, 0, 0, 0);
+
+            if(filters.MyName == "Less than Today" || filters.MyName == "Less than or equal Today"){
+                filterOperator = "LessThan";
+            }
 
             if (filters.TextValue == "Today") {
                 filters.TextValue = TodayDate;
@@ -664,23 +669,36 @@ export class LogGridComponentV2 implements OnInit, AfterViewInit, OnChanges, OnD
                 filters.TextValue = CurrentYearFromDate;
                 filters.TextValue1 = CurrentYearToDate;
                 filters.MyName = "Current Year";
-
             }
             else if (filters.TextValue == "Last Year") {
                 filters.TextValue = LastYearFromDate;
                 filters.TextValue1 = LastYearToDate;
                 filters.MyName = "Last Year";
-
+            }
+            else if (filters.TextValue == "Last Year") {
+                filters.TextValue = LastYearFromDate;
+                filters.TextValue1 = LastYearToDate;
+                filters.MyName = "Last Year";
+            }
+            else if (filters.TextValue == "Less than Today") {
+                filters.TextValue = TodayDate;
+                filterOperator = "LessThan";
+                filters.MyName = "Less than Today";
+            }
+            else if (filters.TextValue == "Less than or equal Today") {
+                filters.TextValue = TommorowDate;
+                filterOperator = "LessThan";
+                filters.MyName = "Less than or equal Today";
             }
             if (this.Filters.AdditionalFilters.filter(a => a.FieldName == filters.FieldName).length > 0) {
                 this.Filters.AdditionalFilters = this.Filters.AdditionalFilters.filter(a => a.FieldName != filters.FieldName);
             }
-            this.Filters.addAdditionalFilter(filters.FieldName, filters.TextValue, filters.TextValue1, null, "Between", filters.ObjectField.IsCustomFilter, filters.ObjectField.DisplayInList, filters.ObjectField.IsCustom, filters.ObjectField.DataTypeCode);
+            this.Filters.addAdditionalFilter(filters.FieldName, filters.TextValue, filters.TextValue1, null, filterOperator, filters.ObjectField.IsCustomFilter, filters.ObjectField.DisplayInList, filters.ObjectField.IsCustom, filters.ObjectField.DataTypeCode);
 
             if (this.AdvanceFilters.AdditionalFilters.filter(a => a.FieldName == filters.FieldName).length > 0) {
                 this.AdvanceFilters.AdditionalFilters = this.AdvanceFilters.AdditionalFilters.filter(a => a.FieldName != filters.FieldName);
             }
-            this.AdvanceFilters.addAdditionalFilter(filters.FieldName, filters.TextValue, filters.TextValue1, null, "Between", filters.ObjectField.IsCustomFilter, filters.ObjectField.DisplayInList, filters.ObjectField.IsCustom, filters.ObjectField.DataTypeCode);
+            this.AdvanceFilters.addAdditionalFilter(filters.FieldName, filters.TextValue, filters.TextValue1, null, filterOperator, filters.ObjectField.IsCustomFilter, filters.ObjectField.DisplayInList, filters.ObjectField.IsCustom, filters.ObjectField.DataTypeCode);
         }
         else if (filters.TextValue1) {
             if (this.Filters.AdditionalFilters.filter(a => a.FieldName == filters.FieldName).length > 0) {
