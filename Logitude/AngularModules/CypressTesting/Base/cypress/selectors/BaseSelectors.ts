@@ -177,6 +177,7 @@ export class BaseSelectors extends RegexSelectors {
     //#endregion
     public static readonly OrangeInfo = ".OrangeInfo"
     public static readonly SingleError = ".SingleError"
+    public static readonly ErrorsList = "#errorsList"
     public static readonly HeaderScreen = ".HeaderScreen"
     public static readonly HeaderScreenLable = ".HeaderScreenLable"
     public static readonly tr = "tr"
