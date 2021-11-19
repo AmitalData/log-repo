@@ -3,6 +3,7 @@ import {ArtemusWizardComponent} from './Components/ArtemusWizard/ArtemusWizardCo
 import {SentToCustomComponent} from './Components/SentToCustomComponent/SentToCustomComponent';
 import {SentToCustomLinkComponent} from './Components/SentToCustomComponent/SentToCustomLinkComponent'; 
 import { ContainersStatusesSimulatorComponent } from './Components/ShipmentContainersStatuses/ContainersStatusesSimulatorComponent';
+import { ContainerSettingsComponent } from './Components/ContainerSetting/ContainerSettingsComponent';
 
 export const Components =
     [
@@ -11,6 +12,7 @@ export const Components =
         SentToCustomLinkComponent,
         ArtemusWizardComponent,
         ContainersStatusesSimulatorComponent,
+        ContainerSettingsComponent,
     ];
 
 
@@ -25,6 +27,7 @@ export class ModuleDeclarations {
             case "SentToCustomLinkComponent": { myResult = SentToCustomLinkComponent; break; }
             case "ArtemusWizardComponent": { myResult = ArtemusWizardComponent; break; }
             case "ContainersStatusesSimulatorComponent": { myResult = ContainersStatusesSimulatorComponent; break; }
+            case "ContainerSettingsComponent": { myResult = ContainerSettingsComponent; break; }
         }
 
         return myResult;

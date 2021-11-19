@@ -758,6 +758,12 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="AutomaticallyCloseDays"
+    Type="int">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="AddressId"
     ReferencedTable="Addresses"
