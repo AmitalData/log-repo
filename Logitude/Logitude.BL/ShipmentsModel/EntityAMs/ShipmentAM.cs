@@ -84,8 +84,7 @@ namespace Logitude.BL.ShipmentsModel.EntityAMs
         public string ForwardingPartnerTenant { get; set; }
         public CodeProperties Agent { get; set; }
 
-
-        public CodeProperties Agent { get; set; }
+         
         /*
         HasException , ExceptionDate , ExceptionDescription
 ShipmentNumber
