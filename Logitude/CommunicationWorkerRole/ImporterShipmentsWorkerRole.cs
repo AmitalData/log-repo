@@ -442,6 +442,7 @@ namespace CommunicationWorkerRole
                                                     Card Customer = cardsReporistory.GetSingleCard(Shipment.CustomerId, Shipment.Tenant);
                                                     Branch Branch = branchRepository.GetSingleBranch(Shipment.BranchId, Shipment.Tenant);
                                                     Department Department = departmentRepository.GetSingleDepartment(Shipment.DepartmentId, Shipment.Tenant);
+                                                    Card Agent = cardsReporistory.GetSingleCard(Shipment.AgentId, Shipment.Tenant);
                                                     HybridPartnerPM Partner = HybridPartnerQuerey.GetSinglePMByPartnerTenant(tenant);
                                                     TenantPM currentTenant = TenantQuery.GetSingleTenantPM(tenant, false);
                                                     EntityStatus status = EntityStatusRepository.GetSingleEntityStatus(Shipment.StatusId, Shipment.Tenant, true);
@@ -457,6 +458,7 @@ namespace CommunicationWorkerRole
                                                     string BranchCode = "";
                                                     string DepartmentCode = "";
                                                     string CustomerCode = "";
+                                                    string AgentCode = GetCardCode(Agent);
                                                     if (Shipper != null)
                                                     {
                                                         ShipperCode = Shipper.Code;
@@ -573,6 +575,7 @@ namespace CommunicationWorkerRole
                                                             ShipmentCustomerTypeCode = Shipment.ShipmentCustomerTypeCode,
                                                             IsCancelled = Shipment.IsCancelled,
                                                             ShipperName = Shipment.ShipperName,
+                                                            ConsigneeName = Shipment.ConsigneeName,
                                                             CarrierTransportDocumentNumber = Shipment.CarrierTransportDocumentNumber,
                                                             //ForwarderPartnerId = Partner.Id,
                                                             FreightPrepaidCollectId = Shipment.FreightPrepaidCollectId,
@@ -595,6 +598,10 @@ namespace CommunicationWorkerRole
                                                             DimensionsUnitCode = Shipment.DimensionsUnitCode,
                                                             VolumeUnitCode = Shipment.VolumeUnitCode,
                                                             ForwardingPartnerTenant = Shipment.ForwardingPartnerId,
+                                                            Agent = new CodeProperties()
+                                                            {
+                                                                Code = AgentCode
+                                                            },
                                                             Customer = new CodeProperties()
                                                             {
                                                                 Code = CustomerCode
@@ -804,6 +811,7 @@ namespace CommunicationWorkerRole
                                                             ShipmentCustomerTypeCode = Shipment.ShipmentCustomerTypeCode,
                                                             IsCancelled = Shipment.IsCancelled,
                                                             ShipperName = Shipment.ShipperName,
+                                                            ConsigneeName = Shipment.ConsigneeName,
                                                             CarrierTransportDocumentNumber = Shipment.CarrierTransportDocumentNumber,
                                                             //ForwarderPartnerId = Partner.Id,
                                                             FreightPrepaidCollectId = Shipment.FreightPrepaidCollectId,
@@ -825,6 +833,10 @@ namespace CommunicationWorkerRole
                                                             DimensionsUnitCode = Shipment.DimensionsUnitCode,
                                                             VolumeUnitCode = Shipment.VolumeUnitCode,
                                                             ForwardingPartnerTenant = Shipment.ForwardingPartnerId,
+                                                            Agent = new CodeProperties()
+                                                            {
+                                                                Code = AgentCode
+                                                            },
                                                             Customer = new CodeProperties()
                                                             {
                                                                 Code = CustomerCode
@@ -1170,6 +1182,15 @@ namespace CommunicationWorkerRole
                 Thread.Sleep(10000);
             }
 
+        }
+        private static string GetCardCode(Card card)
+        {
+            string CardCode = "";
+            if (card != null)
+            {
+                CardCode = card.Code;
+            }
+            return CardCode;
         }
 
         private void ConnectClient()

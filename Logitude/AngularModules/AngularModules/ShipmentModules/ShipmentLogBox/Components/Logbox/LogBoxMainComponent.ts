@@ -510,7 +510,9 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
         this.columns.push({
             FieldName: 'ShipperName',
             DataTypeCode: 'String',
-            Display: this.HasExportShipmentToggle ? 'Supplier / Consignee' : 'Supplier' ,
+            Display: this.HasExportShipmentToggle ? 'Supplier / Consignee' : 'Supplier',
+            HtmlListComponentName: 'SupplierConsigneeListTemplate',
+            HtmlListComponentUrl: './Shipment/Components/ListTemplates/SupplierConsigneeListTemplate',
             Styles: { width: '150px' }, 
             IsCustomTemplate: true,
             ServerSideSortable: true,
