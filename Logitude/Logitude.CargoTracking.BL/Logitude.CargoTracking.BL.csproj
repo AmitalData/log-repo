@@ -127,6 +127,7 @@
     <Compile Include="CargoTrackingServices\Services\ServicesHelper\ServiceHelper.cs" />
     <Compile Include="CargoTrackingServices\Services\TableConditions\ShipmentTableCondtions.cs" />
     <Compile Include="CargoTrackingServices\Services\TableStructure\Helper\TableStructureHelper.cs" />
+    <Compile Include="CargoTrackingServices\ShipmentSearchFields.cs" />
     <Compile Include="CargoTrackingServices\SqlDataReaderConverter.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\CargoTrackingHeaderEntityTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\CargoTrackingMilestoneDetails.Generated.cs" />

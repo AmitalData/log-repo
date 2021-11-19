@@ -21,6 +21,9 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CustomMapping
             item.IsMainRecord = GetIsMainRecord(Codes.OrderType, row);
             item.ShipmentTypeCode = GetShipmentTypeCodeByTransportMode(row.OrderTransportModeId);
             SetOrderExceptionDescription(item, row);
+
+            cargoTrackingShipmentContext.OrderPONumber = row.OrderPONumber;
+            cargoTrackingShipmentContext.OrderBookingConfirmationNumber = row.OrderBookingConfirmationNumber;
             cargoTrackingShipmentContext.CargoTrackingShipment = item;
             return cargoTrackingShipmentContext;
         }
