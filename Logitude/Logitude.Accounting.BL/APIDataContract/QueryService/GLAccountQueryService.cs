@@ -28,6 +28,7 @@ using Logitude.Accounting.BL.APIDataContract.ApiV1;
 using Logitude.Server.Tools.Helpers;
 using Logitude.Accounting.BL.EntityQueryServiceExt;
 using Logitude.BL.CommonDataModel.EntityLists;
+using Logitude.Accounting.Data.Repositories;
 
 namespace Logitude.Accounting.BL.APIDataContract.ApiV1
 {
@@ -562,6 +563,41 @@ namespace Logitude.Accounting.BL.APIDataContract.ApiV1
 
         }
 
+        public GLAccountPM GLAccountDataMappingAndValidatinForExternalAPI(GLAccount glaccount, int tenant)
+        {
+            ValidateCustomerGLAccountId(glaccount, tenant);
+
+            return GLAccountDataMappingAndValidatin(glaccount, tenant);
+
+        }
+
+        private void ValidateCustomerGLAccountId(GLAccount glaccount, int tenant)
+        {
+            List<Data.EntityPOCOs.GLAccountCurrency> gLAccountCurrencies = GetRelatedGLAccountCurrencies(glaccount, tenant);
+            string customerGLAccountId = GetCustomerGLAccountIdByDisplayNumber(glaccount, tenant);
+
+            if (customerGLAccountId != null && glaccount.IsMultiCurrency == true && gLAccountCurrencies.Any(c => c.GLAccountId == customerGLAccountId))
+            {
+                throw new ApplicationException("The customer GLaccount you are sending is already defined as a split by currency Account");
+
+            }
+        }
+
+        private string GetCustomerGLAccountIdByDisplayNumber(GLAccount glaccount, int tenant)
+        {
+            string CustomerGLAccountNumber = glaccount.CustomerGLAccountNumber != null ? glaccount.CustomerGLAccountNumber: glaccount.CustomerGLAccount.DisplayNumber;
+            if(CustomerGLAccountNumber != null)
+                return GetGLAccountByDisplayNumber(CustomerGLAccountNumber, tenant).Id;
+
+            return null;
+        }
+
+        private List<Data.EntityPOCOs.GLAccountCurrency> GetRelatedGLAccountCurrencies(GLAccount glaccount, int tenant)
+        {
+            var gLAccountCurrencyRepository = new GLAccountCurrencyRepository(this.context);
+            var gLAccountCurrencies = gLAccountCurrencyRepository.GetRelatedCurrenciesAccountByCustomerGLAccountAll(tenant, glaccount.Id);
+            return gLAccountCurrencies;
+        }
     }
 
 
