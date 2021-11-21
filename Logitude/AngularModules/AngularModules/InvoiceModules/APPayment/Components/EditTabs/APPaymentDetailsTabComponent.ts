@@ -72,6 +72,7 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
         this.IsFullAccounting = SessionLocator.TenantPM.AccountingActivated;
         this.InitializeBillToLov()
         this.EntityPM = entityArgs.EntityPM;
+        console.log('ayed', entityArgs)
         this.ItemsSource = new ObservableCollection([]);
         this.EnableNegativeOffsetAPPayments = ObjectsLocator.AccountingSettingPM.EnableNegativeOffsetAPPayments;
         this.GetFullAccountingSettings();
@@ -407,6 +408,13 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
 
     // BuildScreenData
     private BuildScreenData() {
+        if(this.EntityPM.ReconcileInternalTransIds) {
+            this.VendorId = this.EntityPM.VendorId;
+            this.AmountInPaymentCurrency = this.EntityPM.AmountInPaymentCurrency;
+            this.UIProperties.SetEnabled("VendorId", this.ObjectTableName, false);
+            this.UIProperties.SetEnabled("VendorAddressId", this.ObjectTableName, false);
+            this.UIProperties.SetEnabled("AmountInPaymentCurrency", this.ObjectTableName, false);
+        }
         if (AppTool.IsNullOrEmpty(this.EntityPM.StatusCode) || this.EntityPM.StatusCode == "DR") {
             this.LoadCurrencyRates();
         }
@@ -725,7 +733,7 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
     }
     set VendorId(value: string) {
         if (this.EntityPM != null) {
-            if (this.EntityPM.VendorId != value) {
+            if (this.EntityPM.VendorId != value || this.EntityPM.ReconcileInternalTransIds) {
                 this.EntityPM.VendorId = value;
                 this.UIProperties.SetEnabled("PaymentCurrencyId", this.ObjectTableName, true);
                 this.PaymentCurrencyId = null;
@@ -1343,7 +1351,7 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
 
     get AmountInPaymentCurrency() { return this.EntityPM.AmountInPaymentCurrency; }
     set AmountInPaymentCurrency(value: number) {
-        if (this.EntityPM.AmountInPaymentCurrency != value) {
+        if (this.EntityPM.AmountInPaymentCurrency != value || this.EntityPM.ReconcileInternalTransIds) {
             this.EntityPM.AmountInPaymentCurrency = AppTool.Round(value, 2);
             this.ComputeLocalAmount();
             this.UpdateSummary();
@@ -1517,19 +1525,24 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
     private RequestedCommandCode: string = null;
     private RequestedCommandParam: string = null;
     ApplyRequestedCommand() {
-        if (this.RequestedCommandCode == "ViewInvoice") {
+        //if (this.RequestedCommandCode == "ViewInvoice") {
             SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                 .then(cmpRef => {
                     cmpRef.instance.ComponentRef = cmpRef;
-                    cmpRef.instance.Run({ EntityId: this.RequestedCommandParam, ObjectTableName: 'APInvoice' });
+                    cmpRef.instance.Run({ EntityId: this.RequestedCommandParam, ObjectTableName: 'APPayment' });
 
                     this.RequestedCommandParam = null;
 
                     let isEditComponentSaved = false;
 
                     cmpRef.instance.BackCompleted.subscribe(bk => {
+                        console.log('ayedback', bk)
                         if (isEditComponentSaved) {
                             this.entityArgs.EditComponent.ReloadEntityPM();
+                            if(this.EntityPM.ReconcileInternalTransIds){
+                                const paymentNo = cmpRef.instance.EntityPM.PaymentNo;
+                                this.CurrentSession.FireEvent({Name: "InternalReconcileAPPaymentCreated", PaymentNumber: paymentNo});
+                            }
                         }
                     });
 
@@ -1545,7 +1558,7 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
                         }
                     });
                 });
-        }
+        //}
 
         this.RequestedCommandCode = null;
     }

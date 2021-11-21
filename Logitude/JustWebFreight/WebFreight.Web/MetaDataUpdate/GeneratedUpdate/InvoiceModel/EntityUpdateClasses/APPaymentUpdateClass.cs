@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 {
    public class APPaymentUpdateClass
    {  		
-		public const string HashString = "11e84eeca4d36591cde8a95a9de24e69";
+		public const string HashString = "1d12b1d9085d20c916b8036e00e173b0";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -4698,6 +4698,62 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "ReconcileInternalTransIds",
+					  						ObjectTableName =  "APPayment",
+					  						FieldsDataType =  "List",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "ReconcileInternalTransIds",
+					  						ListPropertyPath =  "ReconcileInternalTransIds",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "ReconcileInternalTransIds",
+					  						DefaultText =  "ReconcileInternalTransIds",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
@@ -5503,6 +5559,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
  		   TextCode APPaymentTextCode_APPaymentONoVendorCountry = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.O.NoVendorCountry", DefaultText = "the Country of the vendor is not defined , The APPayment cannot be completed without this value",LocalDefaultText = @" “לא הוגדר מדינה בכרטיס הספק התפעולי , לא ניתן להשלים את הוראת התשלום ללא ערך זה", ObjectTableId = APPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode APPaymentTextCode_APPaymentMCheckPaymentChequesBeforeCancel = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.M.CheckPaymentChequesBeforeCancel", DefaultText = "The payment cheque that connected to the APPayment is redeemed, you should cancel the external reconciliation in order to update the status of the payment cheque",LocalDefaultText = @"לא ניתן לבטל את התשלום לספק, משום שהתשלום בוצע ע”י המחאה שנפרעה כבר, יש לבטל את ההתאמה החיצונית ע”מ לעדכן את הסטטוס של ההמחאה", ObjectTableId = APPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode APPaymentTextCode_APPaymentMNewAPPaymentInfo = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.M.NewAPPaymentInfo", DefaultText = "After selecting one or more transaction, this option will allow you to create a new APPayment and reconcile it with the selected transactions",LocalDefaultText = @"מאפשר להפיק תשלום לספק ולהתאים אותה עם תנועות פתוחות שנבחרו", ObjectTableId = APPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode APPaymentTextCode_APPaymentMInvalidSelectedTransctionsDifference = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.M.InvalidSelectedTransctionsDifference", DefaultText = "Please check the selected lines. The difference should be less than zero in order to create the Payment",LocalDefaultText = @"נא לבחור תנועות פתוחות בסכום חובה גדול מאפס", ObjectTableId = APPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode APPaymentTextCode_APPaymentMPaymentCreatedWithReconciliation = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.M.PaymentCreatedWithReconciliation", DefaultText = "payment #number has been created Successfully. The internal Reconciliation is being created in the background",LocalDefaultText = @"קבלה #number נוצרה בהצלחה, ההתאמה תתבצע ברקע", ObjectTableId = APPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode APPaymentTextCode_APPaymentMUnsavedAPPaymentAlert = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.M.UnsavedAPPaymentAlert", DefaultText = "This A/P Payment has unsaved changes do you want to save it, considering that no internal reconcile will be created?",LocalDefaultText = @"הוראת התשלום לא תישמר , יש לקחת בחשבון שגם לא תתבצע התאמה כתוצאה מכך.", ObjectTableId = APPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
