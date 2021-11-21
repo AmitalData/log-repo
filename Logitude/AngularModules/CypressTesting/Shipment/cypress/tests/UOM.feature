@@ -1,7 +1,7 @@
 @smoke1 @release @stable @all
 Feature: UOM
     The user update system defaults, creates a direct export air shipment, change shipment ratio,
-    update packages tab, add payable, change gross weight unit code.
+    update packages tab, add payable with AFT as a charges type, change gross weight unit code.
 
     Scenario: Update System Defaults
         Given the user logged in and navigates to "System Defaults" in maintenance menu
@@ -38,7 +38,7 @@ Feature: UOM
     Scenario: Add Payable
         Given the user navigates to payable wizerd
         And a payable with "AFT" as a charges type
-        Then the Quantity should should has "500" as a value
+        Then the quantity should has "500" as a value
 
     Scenario: Change Gross Weight Unit Code
         Given the user navigates to packages tab
@@ -49,4 +49,4 @@ Feature: UOM
     Scenario: Add Payable
         Given the user navigates to payable wizerd
         And a payable with "AFT" as a charges type
-        Then the Quantity should should has "227" as a value
+        Then the quantity should has "227" as a value
