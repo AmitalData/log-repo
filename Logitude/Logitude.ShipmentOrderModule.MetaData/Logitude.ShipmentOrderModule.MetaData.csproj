@@ -79,6 +79,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="DBOthers\Triggers\TriggerAutomaticLastUpdateDateShipmentOrders.dxml" />
     <None Include="DBTables\ShipmentOrder.dxml" />
     <None Include="EntityFiles\ShipmentOrder.lxml" />
     <None Include="packages.config" />

@@ -68,7 +68,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.MainService
 					OrderTable.LastExceptionDate as OrderLastExceptionDate , 
 					OrderTable.LastExceptionDescription as OrderLastExceptionDescription , 
 					OrderTable.BookingConfirmationDate as OrderBookingDate , 
-					OrderTable.UpdateDate as OrderAutomaticLastUpdateDate,
+					OrderTable.AutomaticLastUpdateDate as OrderAutomaticLastUpdateDate,
 					(case 
 						when OrderTable.DirectionId = 'E' AND OrderTable.ConsigneeId IS NOT NULL 
 							then ConsigneeCardForOrder.EnglishName 
@@ -361,7 +361,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.MainService
 
 			var condishins = $@"
             
-				OrderTable.UpdateDate > '{lastUpdate}'
+				OrderTable.AutomaticLastUpdateDate > '{lastUpdate}'
 			
             ";
 			return condishins;
