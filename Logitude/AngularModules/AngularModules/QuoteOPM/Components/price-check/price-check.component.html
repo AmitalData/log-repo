@@ -16,7 +16,7 @@
 
 <ng-template #offersDisplay>
     <div class="body">
-        <p-scrollPanel [style]="{width: '100%', height: '430px'}">
+        <p-scrollPanel [style]="{width: '100%', height: '100%'}">
 
             <div class="offer-container" *ngFor="let offer of offersFilterd; index as i">
 
@@ -29,7 +29,7 @@
                         <div class="tags">
                             <div class="tag">
                                 {{offer.QuoteProperties.From}}
-                                <img [src]="offer.QuoteProperties.ProductCode | iconSrc: productTypeList"> {{offer.QuoteProperties.ProductCode}}
+                                <img [src]="offer.QuoteProperties.ProductCode | iconSrc: productTypeList">
                                 {{offer.QuoteProperties.To}}
                             </div>
                             <div class="tag" *ngIf='offer.Result.Summary.Incoterms'>
@@ -123,6 +123,7 @@
     </div>
 
     <div class="footer">
+        <button pButton (click)='cancel()' label="Cancel" class="p-button-danger"></button>
         <button pButton (click)='sendData()' label="Next" class="p-button-primary"></button>
     </div>
 </ng-template>

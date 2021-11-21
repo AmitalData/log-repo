@@ -32,9 +32,9 @@ export class NewQuoteExpectedOrderComponent implements OnInit, AfterViewInit {
       volume: new FormControl(null, requiredOneFromMultiValidator(a, 'b', 'volume', 'grossWeight')),
       grossWeight: new FormControl(null, requiredOneFromMultiValidator(a, 'b', 'grossWeight', 'volume')),
       packageType: new FormControl(),
-      Ldimension: new FormControl({value: null, disabled: true}),
-      Wdimension: new FormControl({value: null, disabled: true}),
-      Hdimension: new FormControl({value: null, disabled: true}),
+      Ldimension: new FormControl({ value: null, disabled: true }),
+      Wdimension: new FormControl({ value: null, disabled: true }),
+      Hdimension: new FormControl({ value: null, disabled: true }),
       quantity: new FormControl(),
     })
     return a.b
@@ -52,6 +52,20 @@ export class NewQuoteExpectedOrderComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.getPackageTypes();
     this.onTransportAndShipmentChange();
+
+    this.resetForm();
+  }
+
+  resetForm() {
+    this.newQuoteDataService.$resetForm.subscribe(() => {
+      this.formArray.clear();
+      this.addPackage();
+      // this.formArray.updateValueAndValidity();
+
+      ['quantity', 'quantityType'].forEach(ctrl =>
+        [1, 2, 3, 4].forEach(i=> this.formGroup.controls[ctrl + i].reset()))
+
+    })
   }
 
   ngAfterViewInit(): void {
@@ -108,9 +122,9 @@ export class NewQuoteExpectedOrderComponent implements OnInit, AfterViewInit {
     this.formGroup.addControl('quantity3', new FormControl());
     this.formGroup.addControl('quantity4', new FormControl());
     this.formGroup.addControl('quantityType1', new FormControl());
-    this.formGroup.addControl('quantityType2', new FormControl({value: null, disabled: true}));
-    this.formGroup.addControl('quantityType3', new FormControl({value: null, disabled: true}));
-    this.formGroup.addControl('quantityType4', new FormControl({value: null, disabled: true}));
+    this.formGroup.addControl('quantityType2', new FormControl({ value: null, disabled: true }));
+    this.formGroup.addControl('quantityType3', new FormControl({ value: null, disabled: true }));
+    this.formGroup.addControl('quantityType4', new FormControl({ value: null, disabled: true }));
 
     this.formArray = new FormArray([]);
     this.addPackage()
@@ -126,10 +140,10 @@ export class NewQuoteExpectedOrderComponent implements OnInit, AfterViewInit {
     this.formGroup.controls.quantity2.valueChanges.subscribe(val => this.EntityPM.PackageType2Quantity = val);
     this.formGroup.controls.quantity3.valueChanges.subscribe(val => this.EntityPM.PackageType3Quantity = val);
     this.formGroup.controls.quantity4.valueChanges.subscribe(val => this.EntityPM.PackageType4Quantity = val);
-    this.formGroup.controls.quantityType1.valueChanges.subscribe((val:PackageTypeList) => this.EntityPM.PackageType1Id = val?.Id);
-    this.formGroup.controls.quantityType2.valueChanges.subscribe((val:PackageTypeList) => this.EntityPM.PackageType2Id = val?.Id);
-    this.formGroup.controls.quantityType3.valueChanges.subscribe((val:PackageTypeList) => this.EntityPM.PackageType3Id = val?.Id);
-    this.formGroup.controls.quantityType4.valueChanges.subscribe((val:PackageTypeList) => this.EntityPM.PackageType4Id = val?.Id);
+    this.formGroup.controls.quantityType1.valueChanges.subscribe((val: PackageTypeList) => this.EntityPM.PackageType1Id = val?.Id);
+    this.formGroup.controls.quantityType2.valueChanges.subscribe((val: PackageTypeList) => this.EntityPM.PackageType2Id = val?.Id);
+    this.formGroup.controls.quantityType3.valueChanges.subscribe((val: PackageTypeList) => this.EntityPM.PackageType3Id = val?.Id);
+    this.formGroup.controls.quantityType4.valueChanges.subscribe((val: PackageTypeList) => this.EntityPM.PackageType4Id = val?.Id);
 
     this.formGroup.controls.isDangerous.valueChanges.subscribe(val => this.EntityPM.IsDangerous = val);
     this.formGroup.controls.descriptionOfGoods.valueChanges.subscribe(val => this.EntityPM.DescriptionOfGoods = val);
@@ -142,7 +156,7 @@ export class NewQuoteExpectedOrderComponent implements OnInit, AfterViewInit {
       this.formGroup.controls['quantityType' + i].reset();
       this.formGroup.controls['quantityType' + i][val ? 'enable' : 'disable']()
       this.formGroup.controls['quantityType' + i].setValidators(val ? Validators.required : null)
-      this.formGroup.controls['quantityType' + i].updateValueAndValidity();      
+      this.formGroup.controls['quantityType' + i].updateValueAndValidity();
     }));
   }
 

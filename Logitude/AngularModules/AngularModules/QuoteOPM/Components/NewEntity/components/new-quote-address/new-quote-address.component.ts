@@ -63,7 +63,7 @@ export class NewQuoteAddressComponent implements OnInit {
     this.addForm()
     this.subscribeCtrls();
     this.initDefaultValue()
-    this.setvalidatorToCityAndCountry()
+    this.setvalidatorToCityAndCountry()   
   }
 
   private async InitCountries() {
@@ -89,6 +89,8 @@ export class NewQuoteAddressComponent implements OnInit {
     });
 
     this.addressForm.controls.address.valueChanges.subscribe((addressId: AddressList) => {
+      if (!addressId && !this.Address) return;
+
       this.Address = this.AddressList.find(x => x == addressId)
       this.cdr.detectChanges()
     });
@@ -96,7 +98,7 @@ export class NewQuoteAddressComponent implements OnInit {
     this.partnerCtrl.valueChanges.subscribe(async (partner: CardList) => {
       this.setvalidatorToCityAndCountry();
 
-      if (partner) 
+      if (partner)
         await this.initPartnerData(partner);
       else {
         this.AddressList = []
@@ -122,7 +124,7 @@ export class NewQuoteAddressComponent implements OnInit {
 
   async initDefaultValue() {
     const partner: CardList = this.partnerCtrl.value;
-    if (partner) 
+    if (partner)
       await this.initPartnerData(partner);
   }
 

@@ -31,6 +31,16 @@ export class NewQuoteGeneralComponent implements OnInit {
 
   ngOnInit(): void {
     this.getMoveTypeData()
+    this.resetForm();
+  }
+
+  resetForm() {
+    this.newQuoteDataService.$resetForm.subscribe(() => {
+      ['moveType', 'startDate', 'expirationDays', 'expirationDate', 'isAutomaticallyClosed', 'automaticallyCloseDays', 'automaticallyCloseDate'].forEach(ctrl => this.formGroup.controls[ctrl].reset())
+
+      this.formGroup.controls.startDate.setValue(this.getDateNow())
+    })
+
   }
 
   async getMoveTypeData() {
@@ -45,19 +55,24 @@ export class NewQuoteGeneralComponent implements OnInit {
   }
 
   addFormControls() {
-    const dateNow = new Date();
+    const dateNow = this.getDateNow();
     // const nextMonth = new Date(new Date().setMonth(new Date().getMonth()+1));
     // const closeDate = new Date(new Date().setDate(new Date().getDate()+45));
-    dateNow.setHours(0, 0, 0, 0);
     // nextMonth.setHours(0,0,0,0);
     // closeDate.setHours(0,0,0,0);
     this.formGroup.addControl('quoteType', new FormControl('', Validators.required));
     this.checkType(this.quoteTypes[0].code);
 
-    if (this.EntityPM && !this.EntityPM.Id) 
-      this.initDefaultValue(dateNow);          
-    else 
+    if (this.EntityPM && !this.EntityPM.Id)
+      this.initDefaultValue(dateNow);
+    else
       this.initValueFromEntity();
+  }
+
+  private getDateNow() {
+    const dateNow = new Date();
+    dateNow.setHours(0, 0, 0, 0);
+    return dateNow;
   }
 
   private initValueFromEntity() {
@@ -74,8 +89,8 @@ export class NewQuoteGeneralComponent implements OnInit {
     this.formGroup.addControl('automaticallyCloseDate', new FormControl(entityDateCloseDate));
     this.formGroup.controls.quoteType.setValue(this.EntityPM.QuoteTypeCode);
 
-    new MoveTypePMService().get(this.EntityPM.MoveTypeId).pipe(filter(x=> x.Result)).subscribe((res: any) =>       
-        this.formGroup.controls.moveType.setValue(res.Result));
+    new MoveTypePMService().get(this.EntityPM.MoveTypeId).pipe(filter(x => x.Result)).subscribe((res: any) =>
+      this.formGroup.controls.moveType.setValue(res.Result));
   }
 
   private initDefaultValue(dateNow: Date) {
@@ -105,6 +120,8 @@ export class NewQuoteGeneralComponent implements OnInit {
 
   expirationDateChange(date: Date) {
     this.EntityPM.ExpirationDate = date;
+
+    if (!date) return;
     const expirationDays: number = this.differenceBetweenDates(date, this.formGroup.value.startDate) - 1
     this.formGroup.controls.expirationDays.setValue(expirationDays, { emitEvent: false });
   }
@@ -132,6 +149,7 @@ export class NewQuoteGeneralComponent implements OnInit {
   }
 
   addDaysToDate(num: number, date: Date): Date {
+    if (!date) return;
     const d = new Date(date.getTime());
     d.setDate(d.getDate() + num)
     return d;

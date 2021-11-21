@@ -3,7 +3,7 @@ import { FormArray, FormControl } from '@angular/forms';
 import { ChargesTypeList } from 'Common/EntityLists/ChargesTypeList';
 import { ProductTypeList } from 'Common/EntityLists/ProductTypeList';
 import { ConfirmationService } from 'primeng/api';
-import { DynamicDialogConfig } from 'primeng/dynamicdialog';
+import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { PriceCheckDataService } from './price-check-data/price-check-data.service';
 import { PriceChekRootResponse, Offer } from './price-check.service';
 
@@ -36,6 +36,7 @@ export class PriceCheckComponent implements OnInit {
     private config: DynamicDialogConfig,
     private confirmationService: ConfirmationService,
     private priceCheckDataS: PriceCheckDataService,
+    private ref: DynamicDialogRef,
   ) { }
 
   async ngOnInit(): Promise<void> {
@@ -80,5 +81,9 @@ export class PriceCheckComponent implements OnInit {
           console.log('accept')
         },
       });
+  }
+
+  cancel() {
+    this.ref.close();
   }
 }
