@@ -148,6 +148,8 @@
 
         private string shopIdField;
 
+        private string lastMileServiceTypeField;
+
         /// <remarks/>
         public string CustomFileNo
         {
@@ -759,6 +761,19 @@
             set
             {
                 this.shopIdField = value;
+            }
+        }
+
+        /// <remarks/>
+        public string LastMileServiceType
+        {
+            get
+            {
+                return this.lastMileServiceTypeField;
+            }
+            set
+            {
+                this.lastMileServiceTypeField = value;
             }
         }
     }
