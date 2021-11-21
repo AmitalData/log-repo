@@ -604,11 +604,11 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                     {
                         UpdateShop();
                     }
-                    if (currentDeclarationCourierStatusPM != null && currentDeclarationCourierStatusPM.LastMileServiceType != _LogitudeCommDecFile.LastMileServiceType)
-                    {
-                        currentDeclarationCourierStatusPM.LastMileServiceType = _LogitudeCommDecFile.LastMileServiceType;
-                        if (currentDeclarationCourierStatusPM.ChangeSetOp != ChangeSetOperation.Update) currentDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
-                    }
+                    //if (currentDeclarationCourierStatusPM != null && currentDeclarationCourierStatusPM.LastMileServiceType != _LogitudeCommDecFile.LastMileServiceType)
+                    //{
+                    //    currentDeclarationCourierStatusPM.LastMileServiceType = _LogitudeCommDecFile.LastMileServiceType;
+                    //    if (currentDeclarationCourierStatusPM.ChangeSetOp != ChangeSetOperation.Update) currentDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
+                    //}
                     if (currentDeclarationCourierStatusPM.ChangeSetOp == ChangeSetOperation.Update)
                     {
                         DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(_context, new Dictionary<string, IContext>(), _MyDeclarationPM.Tenant);
