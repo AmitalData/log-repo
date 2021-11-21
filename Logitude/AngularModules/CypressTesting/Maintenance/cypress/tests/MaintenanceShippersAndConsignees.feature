@@ -7,9 +7,9 @@ Feature: Shipper-Consignee Create, Search and Edit from Maintenance
         And the user check add contact checkbox
         When create Shipper-Consignee
         Then a validation error message with "Name Field is Required" should appear
-        Then a validation error message with "City Field is Required" should appear
-        Then a validation error message with "Country Field is Required" should appear
-        Then a validation error message with "English Name Field is Required" should appear
+        And a validation error message with "City Field is Required" should appear
+        And a validation error message with "Country Field is Required" should appear
+        And a validation error message with "English Name Field is Required" should appear
 
     Scenario: Create new Shipper-Consignee
         And a Shipper-Consignee with the following details
