@@ -980,7 +980,21 @@
                                                                             <div></div>
                                                                         </td>
                                                                         <td>
-                                                                            <div *ngIf="true" style="width: 130px;">
+                                                                            <div *ngIf="this._CourierWorksheetSharedDataService._SelectedItems.Collection.length > 0" style="width: 130px;">
+                                                                                <split-button
+                                                                                    (DefaultSplitButtonClicked)="ClosePendingMethod()"
+                                                                                    [IsDisabled]="IsDisplayOnly"
+                                                                                    [ButtonText]="' שידור סגירת PENDING מסוננים לבלדר'"
+                                                                                    [AsRegularButton]="'true'"
+                                                                                    [MENUDivExtraTop]="24"
+                                                                                    [MENUDivExtraLeft]="110">
+                                                                                    <div
+                                                                                        class="class-MENUSplitButton-content">
+                                                                                        <div></div>
+                                                                                    </div>
+                                                                                </split-button>
+                                                                            </div>
+                                                                            <div *ngIf="! (this._CourierWorksheetSharedDataService._SelectedItems.Collection.length > 0)" style="width: 130px;">
                                                                                 <split-button
                                                                                     (DefaultSplitButtonClicked)="ClosePendingMethod()"
                                                                                     [IsDisabled]="IsDisplayOnly"
