@@ -23,9 +23,8 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
         public static void SetTableLogic(SetTableLogicArgs args)
         {
 
-            SetCreateDate(args.TableRow);
             SetCustomerReference(args.TableRow);
-            SetMilestonesFields(args.TableRow);
+            SetMilestonesFields(args);
             if (args.ConditionNumber == ShipmentTable_GetAllCustomsShipmentsThatContainForwardingShipments)
                 SetForwardingShipmentHeaderId(args.TableRow);
             else if (args.ConditionNumber == ShipmentTable_GetAllNonCustomShipmentsThatContainForwardingShipments)
@@ -46,106 +45,245 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
         }
 
 
-        private static void SetCreateDate(DataRow tableRow)
+        
+        private static void SetMilestonesFields(SetTableLogicArgs args)
         {
-            tableRow.SetField("CreateDate", tableRow["CreateDateTime"]);
+            SetCreatedMilstones(args);
+            SetPickupMilestones(args);
+            SetFromWarehouseMilestones(args);
+            SetToWarehouseMilestones(args);
+            SetDepartureMilestones(args);
+            SetArrivalMilestones(args);
+            SetCustomsPaymentMilestones(args);
+            SetClearanceMilestones(args);
+            SetDeliveredMilestones(args);
+            SetDeliveryMilestones(args);
+            SetTruckerMilestoneFields(args);
+            SetCustomAgentFields(args);
+            SetGoodsClassificationMilestone(args);
+            SetDocumentInspectionMilestone(args);
+            SetPaymentRequestedMilestone(args);
+            SetPaymentReceivedMilestone(args);
+            SetGatepassDocumentsReadyMilestone(args);
         }
-        private static void SetMilestonesFields(DataRow tableRow)
+        private static void SetCreatedMilstones(SetTableLogicArgs args)
         {
-            SetCreatedMilstones(tableRow);
-            SetPickupMilestones(tableRow);
-            SetFromWarehouseMilestones(tableRow);
-            SetToWarehouseMilestones(tableRow);
-            SetDepartureMilestones(tableRow);
-            SetArrivalMilestones(tableRow);
-            SetCustomsPaymentMilestones(tableRow);
-            SetClearanceMilestones(tableRow);
-            SetDeliveredMilestones(tableRow);
-            SetDeliveryMilestones(tableRow);
-            SetTruckerMilestoneFields(tableRow);
-            SetCustomAgentFields(tableRow);
+            var tableRow = args.TableRow;
+            var tenant = (int)tableRow["Tenant"];
+            if (IsMilestoneAllowToView(args.MilestonesNotPermitted, CargoTrackingMilestoneValues.Created, tenant))
+            {
+                tableRow.SetField("CreateDate", tableRow["CreateDateTime"]);
+                tableRow.SetField("CreatedDone", !IsFieldNullOrEmpty(tableRow, "CreateDate"));
+            }
+            else
+            {
+                tableRow.SetField("CreateDate", (DBNull)null);
+                tableRow.SetField("CreatedDone", false);
+            }
 
-            SetGoodsClassificationMilestone(tableRow);
-            SetDocumentInspectionMilestone(tableRow);
-
-            SetPaymentRequestedMilestone(tableRow);
-            SetPaymentReceivedMilestone(tableRow);
-
-            SetGatepassDocumentsReadyMilestone(tableRow);
-        }
-        private static void SetCreatedMilstones(DataRow tableRow)
-        {
-            tableRow.SetField("CreateDate", tableRow["CreateDate"]);
-            tableRow.SetField("CreatedDone", !IsFieldNullOrEmpty(tableRow, "CreateDate"));
-        }
-        private static void SetCustomAgentFields(DataRow tableRow)
-        {
-            tableRow.SetField("AssignedCustomsAgentDate", tableRow["AssginedToCustomsAgentDate"]);
-            tableRow.SetField("AssignedCustomsAgentDone", !IsFieldNullOrEmpty(tableRow, "AssignedCustomsAgentDate"));
-        }
-        private static void SetDeliveredMilestones(DataRow tableRow)
-        {
-            tableRow.SetField("DeliveredEstimationDate", tableRow["FinalDeliveryETA"]);
-            tableRow.SetField("DeliveredDate", tableRow["FinalDeliveryATA"]);
-            SetDeliveredDone(tableRow);
 
         }
-        private static void SetTruckerMilestoneFields(DataRow tableRow)
+        private static void SetCustomAgentFields(SetTableLogicArgs args)
         {
-            tableRow.SetField("AssignedTruckerDate", tableRow["AssignedToTruckerDate"]);
-            tableRow.SetField("AssignedTruckerDone", !IsFieldNullOrEmpty(tableRow, "AssignedToTruckerDate"));
-            //tableRow.SetField("AssignedTruckerEstimationDate", tableRow["AssignedTruckerEstimationDate"]);
-            //tableRow.SetField("AssignedTruckerNotes", tableRow["AssignedTruckerNotes"]);
+            var tableRow = args.TableRow;
+            var tenant = (int)tableRow["Tenant"];
+            if (IsMilestoneAllowToView(args.MilestonesNotPermitted, CargoTrackingMilestoneValues.AssignedToCustomsBroker, tenant))
+            {
+                tableRow.SetField("AssignedCustomsAgentDate", tableRow["AssginedToCustomsAgentDate"]);
+                tableRow.SetField("AssignedCustomsAgentDone", !IsFieldNullOrEmpty(tableRow, "AssignedCustomsAgentDate"));
+            }
+            else
+            {
+                tableRow.SetField("AssignedCustomsAgentDate", (DBNull)null);
+                tableRow.SetField("AssignedCustomsAgentDone", false);
+            }
         }
-        private static void SetDeliveryMilestones(DataRow tableRow)
+
+        private static void SetDeliveredMilestones(SetTableLogicArgs args)
         {
-            tableRow.SetField("DeliveryEstimationDate", tableRow["FinalDeliveryETD"]);
-            tableRow.SetField("DeliveryDate", tableRow["FinalDeliveryATD"]);
-            SetDeliveryDone(tableRow);
-            SetDeliveryNotes(tableRow);
+            var tableRow = args.TableRow;
+            var tenant = (int)tableRow["Tenant"];
+            if (IsMilestoneAllowToView(args.MilestonesNotPermitted, CargoTrackingMilestoneValues.Delivered, tenant))
+            {
+                tableRow.SetField("DeliveredEstimationDate", tableRow["FinalDeliveryETA"]);
+                tableRow.SetField("DeliveredDate", tableRow["FinalDeliveryATA"]);
+                SetDeliveredDone(tableRow);
+            }
+            else
+            {
+                tableRow.SetField("DeliveredEstimationDate", (DBNull)null);
+                tableRow.SetField("DeliveredDate", (DBNull)null);
+                tableRow.SetField("DeliveredDone", false);
+            }
+
 
         }
-        private static void SetClearanceMilestones(DataRow tableRow)
+        private static void SetTruckerMilestoneFields(SetTableLogicArgs args)
         {
-            tableRow.SetField("ClearanceDate", tableRow["CustomsClearanceDate"]);
-            SetClearanceDone(tableRow);
+            var tableRow = args.TableRow;
+            var tenant = (int)tableRow["Tenant"];
+            if (IsMilestoneAllowToView(args.MilestonesNotPermitted, CargoTrackingMilestoneValues.AssignedToTrucker, tenant))
+            {
+                tableRow.SetField("AssignedTruckerDate", tableRow["AssignedToTruckerDate"]);
+                tableRow.SetField("AssignedTruckerDone", !IsFieldNullOrEmpty(tableRow, "AssignedToTruckerDate"));
+            }
+            else
+            {
+                tableRow.SetField("AssignedTruckerDate", (DBNull)null);
+                tableRow.SetField("AssignedTruckerDone", false);
+            }
+
+
         }
-        private static void SetCustomsPaymentMilestones(DataRow tableRow)
+        private static void SetDeliveryMilestones(SetTableLogicArgs args)
         {
-            tableRow.SetField("CustomsPaymentDate", tableRow["DeclarationDate"]);
-            SetCustomsPaymentDone(tableRow);
+            var tableRow = args.TableRow;
+            var tenant = (int)tableRow["Tenant"];
+            if (IsMilestoneAllowToView(args.MilestonesNotPermitted, CargoTrackingMilestoneValues.DeliveryOut, tenant))
+            {
+                tableRow.SetField("DeliveryEstimationDate", tableRow["FinalDeliveryETD"]);
+                tableRow.SetField("DeliveryDate", tableRow["FinalDeliveryATD"]);
+                SetDeliveryDone(tableRow);
+                SetDeliveryNotes(tableRow);
+            }
+            else
+            {
+                tableRow.SetField("DeliveryEstimationDate", (DBNull)null);
+                tableRow.SetField("DeliveryDate", (DBNull)null);
+                tableRow.SetField("DeliveryDone", false);
+                tableRow.SetField("DeliveryNotes", (DBNull)null);
+
+            }
+
+
         }
-        private static void SetArrivalMilestones(DataRow tableRow)
+        private static void SetClearanceMilestones(SetTableLogicArgs args)
         {
-            tableRow.SetField("ArrivalEstimationDate", tableRow["MainCarriageETA"]);
-            tableRow.SetField("ArrivalDate", tableRow["MainCarriageATA"]);
-            SetArrivalDone(tableRow);
+            var tableRow = args.TableRow;
+            var tenant = (int)tableRow["Tenant"];
+            if (IsMilestoneAllowToView(args.MilestonesNotPermitted, CargoTrackingMilestoneValues.Clearance, tenant))
+            {
+                tableRow.SetField("ClearanceDate", tableRow["CustomsClearanceDate"]);
+                SetClearanceDone(tableRow);
+            }
+            else
+            {
+                tableRow.SetField("ClearanceDate", (DBNull)null);
+                tableRow.SetField("ClearanceDone", false);
+            }
         }
-        private static void SetDepartureMilestones(DataRow tableRow)
+        private static void SetCustomsPaymentMilestones(SetTableLogicArgs args)
         {
-            tableRow.SetField("DepartureEstimationDate", tableRow["MainCarriageETD"]);
-            tableRow.SetField("DepartureDate", tableRow["MainCarriageATD"]);
-            SetDepartureDone(tableRow);
+            var tableRow = args.TableRow;
+            var tenant = (int)tableRow["Tenant"];
+            if (IsMilestoneAllowToView(args.MilestonesNotPermitted, CargoTrackingMilestoneValues.CustomsPayment, tenant))
+            {
+                tableRow.SetField("CustomsPaymentDate", tableRow["DeclarationDate"]);
+                SetCustomsPaymentDone(tableRow);
+            }
+            else
+            {
+                tableRow.SetField("CustomsPaymentDate", (DBNull)null);
+                tableRow.SetField("CustomsPaymentDone", false);
+            }
+
         }
-        private static void SetToWarehouseMilestones(DataRow tableRow)
+        private static void SetArrivalMilestones(SetTableLogicArgs args)
         {
-            SetToWarehouseDate(tableRow);
-            SetToWarehouseDone(tableRow);
-            SetToWarehouseEstimationDate(tableRow);
-            SetToWarehouseNotes(tableRow);
+            var tableRow = args.TableRow;
+            var tenant = (int)tableRow["Tenant"];
+            if (IsMilestoneAllowToView(args.MilestonesNotPermitted, CargoTrackingMilestoneValues.Arrival, tenant))
+            {
+                tableRow.SetField("ArrivalEstimationDate", tableRow["MainCarriageETA"]);
+                tableRow.SetField("ArrivalDate", tableRow["MainCarriageATA"]);
+                SetArrivalDone(tableRow);
+            }
+            else
+            {
+                tableRow.SetField("ArrivalEstimationDate", (DBNull)null);
+                tableRow.SetField("ArrivalDate", (DBNull)null);
+                tableRow.SetField("ArrivalDone", false);
+            }
+
         }
-        private static void SetFromWarehouseMilestones(DataRow tableRow)
+        private static void SetDepartureMilestones(SetTableLogicArgs args)
         {
-            SetFromWarehouseDoneField(tableRow);
-            SetFromWarehouseDate(tableRow);
-            SetFromWarehouseEstimationDate(tableRow);
-            SetFromWarehouseNotes(tableRow);
+            var tableRow = args.TableRow;
+            var tenant = (int)tableRow["Tenant"];
+            if (IsMilestoneAllowToView(args.MilestonesNotPermitted, CargoTrackingMilestoneValues.Departure, tenant))
+            {
+                tableRow.SetField("DepartureEstimationDate", tableRow["MainCarriageETD"]);
+                tableRow.SetField("DepartureDate", tableRow["MainCarriageATD"]);
+                SetDepartureDone(tableRow);
+            }
+            else
+            {
+                tableRow.SetField("DepartureEstimationDate", (DBNull)null);
+                tableRow.SetField("DepartureDate", (DBNull)null);
+                tableRow.SetField("DepartureDone", false);
+            }
+
         }
-        private static void SetPickupMilestones(DataRow tableRow)
+        private static void SetToWarehouseMilestones(SetTableLogicArgs args)
         {
-            tableRow.SetField("PickupEstimationDate", tableRow["FirstPickupETD"]);
-            tableRow.SetField("PickupDate", tableRow["FirstPickupATD"]);
+            var tableRow = args.TableRow;
+            var tenant = (int)tableRow["Tenant"];
+            if (IsMilestoneAllowToView(args.MilestonesNotPermitted, CargoTrackingMilestoneValues.ToWarehouse, tenant))
+            {
+                SetToWarehouseDate(tableRow);
+                SetToWarehouseNotes(tableRow);
+                SetToWarehouseEstimationDate(tableRow);
+                SetToWarehouseDone(tableRow);
+            }
+            else
+            {
+                tableRow.SetField("ToWarehouseDate", (DBNull)null);
+                tableRow.SetField("ToWarehouseNotes", (DBNull)null);
+                tableRow.SetField("ToWarehouseEstimationDate", (DBNull)null);
+                tableRow.SetField("ToWarehouseDone", false);
+            }
+
+
+
+        }
+        private static void SetFromWarehouseMilestones(SetTableLogicArgs args)
+        {
+            var tableRow = args.TableRow;
+            var tenant = (int)tableRow["Tenant"];
+            if (IsMilestoneAllowToView(args.MilestonesNotPermitted, CargoTrackingMilestoneValues.FromWarehouse, tenant))
+            {
+                SetFromWarehouseDate(tableRow);
+                SetFromWarehouseEstimationDate(tableRow);
+                SetFromWarehouseNotes(tableRow);
+                SetFromWarehouseDoneField(tableRow);
+            }
+            else
+            {
+                tableRow.SetField("FromWarehouseDate", (DBNull)null);
+                tableRow.SetField("FromWarehouseEstimationDate", (DBNull)null);
+                tableRow.SetField("FromWarehouseNotes", (DBNull)null);
+                tableRow.SetField("FromWarehouseDone", false);
+            }
+
+
+        }
+        private static void SetPickupMilestones(SetTableLogicArgs args)
+        {
+            var tableRow = args.TableRow;
+            var tenant = (int)tableRow["Tenant"];
+            if (IsMilestoneAllowToView(args.MilestonesNotPermitted, CargoTrackingMilestoneValues.Pickup, tenant))
+            {
+                tableRow.SetField("PickupEstimationDate", tableRow["FirstPickupETD"]);
+                tableRow.SetField("PickupDate", tableRow["FirstPickupATD"]);
+            }
+            else
+            {
+                tableRow.SetField("PickupEstimationDate", (DBNull)null);
+                tableRow.SetField("PickupDate", tableRow["FirstPickupATD"]);
+            }
+
             SetPickupDoneField(tableRow);
+
         }
 
         private static void SetCustomerReference(DataRow tableRow)
@@ -176,9 +314,6 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
             foreach (var milestone in args.MilestoneList)
             {
                 currentMilestoneArgs.milestone = milestone;
-                var tenant = (int)tableRow["Tenant"];
-                if (!IsMilestoneAllowToView(args.MilestonesNotPermitted, milestone, tenant))
-                    continue;
 
                 switch (milestone.Code)
                 {
@@ -315,11 +450,11 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
             }
         }
 
-        
+
 
         private static void SetForwardingShipmentHeaderId(DataRow tableRow)
         {
-         
+
             tableRow.SetField("ForwardingShipmentHeaderId", tableRow["ForwardingIdForCustom"]);
         }
 
@@ -612,32 +747,88 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
             if (string.IsNullOrWhiteSpace(consigneeId))
                 tableRow.SetField("ConsigneeId", defaultConsigneeId);
         }
-        private static void SetGoodsClassificationMilestone(DataRow tableRow)
+        private static void SetGoodsClassificationMilestone(SetTableLogicArgs args)
         {
-            tableRow.SetField("GoodsClassificationDate", tableRow["GoodsClassification"]);
-            tableRow.SetField("GoodsClassificationDone", !IsFieldNullOrEmpty(tableRow, "GoodsClassification"));
+            var tableRow = args.TableRow;
+            var tenant = (int)tableRow["Tenant"];
+            if (IsMilestoneAllowToView(args.MilestonesNotPermitted, CargoTrackingMilestoneValues.GoodsClassification, tenant))
+            {
+                tableRow.SetField("GoodsClassificationDate", tableRow["GoodsClassification"]);
+                tableRow.SetField("GoodsClassificationDone", !IsFieldNullOrEmpty(tableRow, "GoodsClassification"));
+            }
+            else
+            {
+                tableRow.SetField("GoodsClassificationDate", (DBNull)null);
+                tableRow.SetField("GoodsClassificationDone", false);
+            }
+
         }
-        private static void SetDocumentInspectionMilestone(DataRow tableRow)
+        private static void SetDocumentInspectionMilestone(SetTableLogicArgs args)
         {
-            tableRow.SetField("DocumentInspectionDate", tableRow["DocumentInspection"]);
-            tableRow.SetField("DocumentInspectionDone", !IsFieldNullOrEmpty(tableRow, "DocumentInspection"));
+            var tableRow = args.TableRow;
+            var tenant = (int)tableRow["Tenant"];
+            if (IsMilestoneAllowToView(args.MilestonesNotPermitted, CargoTrackingMilestoneValues.DocumentInspection, tenant))
+            {
+                tableRow.SetField("DocumentInspectionDate", tableRow["DocumentInspection"]);
+                tableRow.SetField("DocumentInspectionDone", !IsFieldNullOrEmpty(tableRow, "DocumentInspection"));
+            }
+            else
+            {
+                tableRow.SetField("DocumentInspectionDate", (DBNull)null);
+                tableRow.SetField("DocumentInspectionDone", false);
+            }
+
         }
-        private static void SetPaymentRequestedMilestone(DataRow tableRow)
+        private static void SetPaymentRequestedMilestone(SetTableLogicArgs args)
         {
-            var isPaymentRequiredDateFilled = IsFieldNullOrEmpty(tableRow, "PaymentDateTime") && tableRow["IsPaymentRequired"].Equals(true);
-            tableRow.SetField("PaymentRequiredDate", isPaymentRequiredDateFilled ? tableRow["PaymentRequestDateTime"]: null);
-            tableRow.SetField("PaymentRequiredDone", isPaymentRequiredDateFilled ? !IsFieldNullOrEmpty(tableRow, "PaymentRequestDateTime") : false);
+            var tableRow = args.TableRow;
+            var tenant = (int)tableRow["Tenant"];
+            if (IsMilestoneAllowToView(args.MilestonesNotPermitted, CargoTrackingMilestoneValues.PaymentRequested, tenant))
+            {
+                var isPaymentRequiredDateFilled = IsFieldNullOrEmpty(tableRow, "PaymentDateTime") && tableRow["IsPaymentRequired"].Equals(true);
+                tableRow.SetField("PaymentRequiredDate", isPaymentRequiredDateFilled ? tableRow["PaymentRequestDateTime"] : null);
+                tableRow.SetField("PaymentRequiredDone", isPaymentRequiredDateFilled ? !IsFieldNullOrEmpty(tableRow, "PaymentRequestDateTime") : false);
+
+            }
+            else
+            {
+                tableRow.SetField("PaymentRequiredDate", (DBNull)null);
+                tableRow.SetField("PaymentRequiredDone", false);
+
+            }
         }
 
-        private static void SetPaymentReceivedMilestone(DataRow tableRow)
+        private static void SetPaymentReceivedMilestone(SetTableLogicArgs args)
         {
-            tableRow.SetField("PaymentReceivedDate", tableRow["PaymentDateTime"]);
-            tableRow.SetField("PaymentReceivedDone", !IsFieldNullOrEmpty(tableRow, "PaymentDateTime"));
+            var tableRow = args.TableRow;
+            var tenant = (int)tableRow["Tenant"];
+            if (IsMilestoneAllowToView(args.MilestonesNotPermitted, CargoTrackingMilestoneValues.PaymentReceived, tenant))
+            {
+                tableRow.SetField("PaymentReceivedDate", tableRow["PaymentDateTime"]);
+                tableRow.SetField("PaymentReceivedDone", !IsFieldNullOrEmpty(tableRow, "PaymentDateTime"));
+            }
+            else
+            {
+                tableRow.SetField("PaymentReceivedDate", (DBNull)null);
+                tableRow.SetField("PaymentReceivedDone", false);
+            }
+
         }
-        private static void SetGatepassDocumentsReadyMilestone(DataRow tableRow)
+        private static void SetGatepassDocumentsReadyMilestone(SetTableLogicArgs args)
         {
-            tableRow.SetField("GatepassArrivedDate", tableRow["GatepassDocumentsReady"]);
-            tableRow.SetField("GatepassArrivedDone", !IsFieldNullOrEmpty(tableRow, "GatepassDocumentsReady"));
+            var tableRow = args.TableRow;
+            var tenant = (int)tableRow["Tenant"];
+            if (IsMilestoneAllowToView(args.MilestonesNotPermitted, CargoTrackingMilestoneValues.GatepassArrived, tenant))
+            {
+                tableRow.SetField("GatepassArrivedDate", tableRow["GatepassDocumentsReady"]);
+                tableRow.SetField("GatepassArrivedDone", !IsFieldNullOrEmpty(tableRow, "GatepassDocumentsReady"));
+            }
+            else
+            {
+                tableRow.SetField("GatepassArrivedDate", (DBNull)null);
+                tableRow.SetField("GatepassArrivedDone", false);
+            }
+
         }
 
     }

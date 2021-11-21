@@ -18,11 +18,24 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
         private const string OceanShipmentType = "FCLD";
         private const string AirShipmentType = "AIR";
         private const string ShipmentOrderEntityType = "O";
+        private const string CreateDate = "CreateDate";
+        private const string PickupActualDateTime = "PickupActualDateTime";
+        private const string BookingConfirmationDate = "BookingConfirmationDate";
+        private const string PickupEstimatedDateTime = "PickupEstimatedDateTime";
+        private const string DepartureEstimationDate = "ETD";
+        private const string DepartureDate = "ATD";
+        private const string ArrivalEstimationDate = "ETA";
+        private const string ArrivalDate = "ATA";
+
+
+
+
+
         public static List<FieldMap> fieldsMap = new List<FieldMap>()
         {
             new FieldMap("Tenant", "Tenant"),
             new FieldMap("EntityId", "Id"),
-            new FieldMap("ForwardingShipmentHeaderId", "ShipmentId"), 
+            new FieldMap("ForwardingShipmentHeaderId", "ShipmentId"),
             new FieldMap("CustomerId", "CustomerId"),
             new FieldMap("TransportModeId", "TransportModeId"),
             new FieldMap("Master", "Master"),
@@ -32,19 +45,19 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
             new FieldMap("ToPortId", "DestinationPortId"),
             new FieldMap("ShipperId", "ShipperId"),
             new FieldMap("ConsigneeId", "ConsigneeId"),
-            new FieldMap("CreateDate", "CreateDate"),
+            new FieldMap("CreateDate", CreateDate),
             new FieldMap("SecurityKey", "SecurityKey"),
             new FieldMap("ShipperName", "CasualImporterName"),
             new FieldMap("CustomerReference", "CustomerReferences"),
             new FieldMap("DirectionId", "DirectionId"),
             new FieldMap("ShipmentLevelCode", "ShipmentLevelCode"),
-            new FieldMap("PickupDate", "PickupActualDateTime"),
-            new FieldMap("BookingDate", "BookingConfirmationDate"),
-            new FieldMap("PickupEstimationDate", "PickupEstimatedDateTime"),
-            new FieldMap("DepartureEstimationDate", "ETD"),
-            new FieldMap("DepartureDate", "ATD"),
-            new FieldMap("ArrivalEstimationDate", "ETA"),
-            new FieldMap("ArrivalDate", "ATA"),
+            new FieldMap("PickupDate", PickupActualDateTime),
+            new FieldMap("BookingDate", BookingConfirmationDate),
+            new FieldMap("PickupEstimationDate", PickupEstimatedDateTime),
+            new FieldMap("DepartureEstimationDate", DepartureEstimationDate),
+            new FieldMap("DepartureDate", DepartureDate),
+            new FieldMap("ArrivalEstimationDate", ArrivalEstimationDate),
+            new FieldMap("ArrivalDate", ArrivalDate),
             new FieldMap("PoNumber", "PoNumber"),
 
 
@@ -54,7 +67,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
         public static void SetTableLogic(SetTableLogicArgs args)
         {
             SetFixedValueFields(args.TableRow);
-            MapTableFields(args.TableRow);
+            MapTableFields(args);
             SetMilestonesDoneFields(args.TableRow);
             SetShipmentTypeCode(args.TableRow);
             SetMainEntity(args.TableRow);
@@ -89,9 +102,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
             foreach (var milestone in args.MilestoneList)
             {
                 currentMilestoneArgs.milestone = milestone;
-                var tenant = (int)tableRow["Tenant"];
-                if (!IsMilestoneAllowToView(args.MilestonesNotPermitted, milestone, tenant))
-                    continue;
+
 
                 switch (milestone.Code)
                 {
@@ -147,13 +158,13 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
         }
         private static void SetExceptionDescription(DataRow tableRow)
         {
-            var exceptionDate = !IsFieldNullOrEmpty(tableRow, "LastExceptionDate") ? tableRow["LastExceptionDate"]?.ToString(): null;
+            var exceptionDate = !IsFieldNullOrEmpty(tableRow, "LastExceptionDate") ? tableRow["LastExceptionDate"]?.ToString() : null;
             var exceptionDescription = !IsFieldNullOrEmpty(tableRow, "LastExceptionDescription") ? "," + tableRow["LastExceptionDescription"] : null;
-            tableRow.SetField("CurrentMilestoneExceptions", string.IsNullOrWhiteSpace(exceptionDate) ? exceptionDescription : exceptionDate +"," + tableRow["LastExceptionDescription"]);
+            tableRow.SetField("CurrentMilestoneExceptions", string.IsNullOrWhiteSpace(exceptionDate) ? exceptionDescription : exceptionDate + "," + tableRow["LastExceptionDescription"]);
         }
         private static void SetPreviousForwardingShipmentHeader(DataRow tableRow)
         {
-            if(!IsFieldNullOrEmpty(tableRow, "ForwardingShipmentHeaderId"))
+            if (!IsFieldNullOrEmpty(tableRow, "ForwardingShipmentHeaderId"))
                 tableRow.SetField("PrevForwardingShipmentId", tableRow["ForwardingShipmentHeaderId"]);
         }
         private static void SetShipmentTypeCode(DataRow tableRow)
@@ -173,12 +184,78 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
             return null;
         }
 
-        private static void MapTableFields(DataRow tableRow)
+        private static void MapTableFields(SetTableLogicArgs args)
         {
+            var tableRow = args.TableRow;
             foreach (var field in fieldsMap)
             {
-                tableRow.SetField(field.CargoTrackingFieldName, tableRow[field.OriginalFieldName]);
+                switch (field.OriginalFieldName)
+                {
+                    case CreateDate:
+                        SetCreateDate(field, tableRow, args);
+                        break;
+
+                    case PickupActualDateTime:
+                    case PickupEstimatedDateTime:
+                        SetPickupDates(field, tableRow, args);
+                        break;
+
+                    case BookingConfirmationDate:
+                        SetBookingConfirmationDate(field, tableRow, args);
+                        break;
+
+                    case DepartureDate:
+                    case DepartureEstimationDate:
+                        SetDepartureDates(field, tableRow, args);
+                        break;
+
+                    case ArrivalDate:
+                    case ArrivalEstimationDate:
+                        SetArrivalDates(field, tableRow, args);
+                        break;
+
+
+                    default:
+                        tableRow.SetField(field.CargoTrackingFieldName, tableRow[field.OriginalFieldName]);
+                        break;
+                }
+
             }
+        }
+
+        private static void SetArrivalDates(FieldMap field, DataRow tableRow, SetTableLogicArgs args)
+        {
+            var tenant = (int)tableRow["Tenant"];
+            if (IsMilestoneAllowToView(args.MilestonesNotPermitted, CargoTrackingMilestoneValues.Arrival, tenant))
+                tableRow.SetField(field.CargoTrackingFieldName, tableRow[field.OriginalFieldName]);
+        }
+
+        private static void SetDepartureDates(FieldMap field, DataRow tableRow, SetTableLogicArgs args)
+        {
+            var tenant = (int)tableRow["Tenant"];
+            if (IsMilestoneAllowToView(args.MilestonesNotPermitted, CargoTrackingMilestoneValues.Departure, tenant))
+                tableRow.SetField(field.CargoTrackingFieldName, tableRow[field.OriginalFieldName]);
+        }
+
+        private static void SetBookingConfirmationDate(FieldMap field, DataRow tableRow, SetTableLogicArgs args)
+        {
+            var tenant = (int)tableRow["Tenant"];
+            if (IsMilestoneAllowToView(args.MilestonesNotPermitted, CargoTrackingMilestoneValues.Booking, tenant))
+                tableRow.SetField(field.CargoTrackingFieldName, tableRow[field.OriginalFieldName]);
+        }
+
+        private static void SetPickupDates(FieldMap field, DataRow tableRow, SetTableLogicArgs args)
+        {
+            var tenant = (int)tableRow["Tenant"];
+            if (IsMilestoneAllowToView(args.MilestonesNotPermitted, CargoTrackingMilestoneValues.Pickup, tenant))
+                tableRow.SetField(field.CargoTrackingFieldName, tableRow[field.OriginalFieldName]);
+        }
+
+        private static void SetCreateDate(FieldMap field, DataRow tableRow, SetTableLogicArgs args)
+        {
+            var tenant = (int)tableRow["Tenant"];
+            if (IsMilestoneAllowToView(args.MilestonesNotPermitted, CargoTrackingMilestoneValues.Created, tenant))
+                tableRow.SetField(field.CargoTrackingFieldName, tableRow[field.OriginalFieldName]);
         }
 
         private void AddFullFields()
