@@ -1,4 +1,16 @@
+::ng-deep {
+    p-dynamicdialog .generic-table {
+        .p-dialog-content {
+            padding-bottom: 21px;
+        }
+    }
+}
+
 :host ::ng-deep {
+    p-sorticon {
+        display: none !important;
+    }
+    
     .p-paginator-bottom {
         display: none;
     }
@@ -24,6 +36,15 @@
     // .highlight-row {
     //     background: #efefef !important;
     // }
+
+    .p-datatable-resizable .p-datatable-tbody > tr > td {
+        white-space: nowrap !important;
+        text-overflow: ellipsis;
+
+        .highlight {
+            background: yellow;
+        }
+    }
 
     .p-datatable .p-datatable-thead > tr > th {
         border-right: 1px solid #1084dc47;

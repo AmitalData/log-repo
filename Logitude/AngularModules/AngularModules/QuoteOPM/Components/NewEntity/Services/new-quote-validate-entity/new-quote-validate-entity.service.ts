@@ -7,6 +7,7 @@ import { MessageService } from 'primeng/api';
 export class NewQuoteValidateEntityService {
   errorList: string[] = [];
   form: FormGroup = null as any;
+  fieldrequiredMsg: string = ' field is required'
 
   get formValue(): any {
     return this.form.value;
@@ -54,19 +55,19 @@ export class NewQuoteValidateEntityService {
 
       if (propertyForm.fromPort.invalid) {
         const fieldName: string = TextCodeTranslator.Translate('QuoteOP.S.NewQuote.' + (this.formValue.transportMode?.Id === 'A' ? 'Gateway' : 'LoadingPort'));
-        this.errorList.push(fieldName + ' is required' + propertyPosition)
+        this.errorList.push(fieldName + this.fieldrequiredMsg + propertyPosition)
       }
 
       if (propertyForm.toPort.invalid) {
         const fieldName: string = TextCodeTranslator.Translate('QuoteOP.S.NewQuote.' + (this.formValue.transportMode?.Id === 'A' ? 'Destination' : 'DischargePort'));
-        this.errorList.push(fieldName + ' is required' + propertyPosition)
+        this.errorList.push(fieldName + this.fieldrequiredMsg + propertyPosition)
       }
 
       ['pickup', 'delivery'].forEach((formName: string) =>
         ['city', 'country', 'address'].filter(fieldName =>
           (<FormGroup>propertyForm[formName]).controls[fieldName].invalid)
           .forEach(fieldName =>
-            this.errorList.push(TextCodeTranslator.Translate('QuoteOP.S.NewQuote.' + this.capitalizeFirstLetter(fieldName)) + ' is required' + propertyPosition)
+            this.errorList.push(TextCodeTranslator.Translate('QuoteOP.S.NewQuote.' + this.capitalizeFirstLetter(fieldName)) + this.fieldrequiredMsg + propertyPosition)
           ));
     });
   }
@@ -77,22 +78,24 @@ export class NewQuoteValidateEntityService {
       { name: 'expirationDays', label: 'Expiration Days' },
       { name: 'expirationDate', label: 'Expiration Date' },
     ].filter(field => this.form.controls[field.name].invalid)
-      .forEach(field => this.errorList.push(field.label + ' is required'))
+      .forEach(field => this.errorList.push(field.label + this.fieldrequiredMsg))
   }
 
   private checkExpectedOrder() {
     const isSeaFcl: boolean = this.form.controls.transportMode?.value?.Id === 'O' && this.form.controls.shipmentType?.value?.Name === 'FCL';
     if (isSeaFcl)
       [
-        {name:'quantityType', label: 'Paackage Type'}, 
+        {name:'quantityType', label: 'Package Type'}, 
         {name:'quantity', label: 'Quantity'}
       ].forEach(ctrl =>
         [1, 2, 3, 4]
           .filter(i => this.form.controls[ctrl.name + i].invalid)
-          .forEach(i => this.errorList.push(ctrl.label + ' ' + i + ' is required'))
+          .forEach(i => this.errorList.push(ctrl.label + '  is missing in ' + ctrl.label + ' ' + i))
       );
-    else if (this.form.controls.packages.invalid)
-      this.errorList.push('all packages need volume or groos weight')
+    else if (this.form.controls.packages.invalid) {
+      const msg: string = (<FormArray>this.form.controls.packages).length === 1 ? 'Please insert data to section Expected Order Details' : 'Volume or Gross Weight fields required';
+      this.errorList.push(msg)
+    }
   }
 
   checkValidator(formGroup: FormGroup): void {

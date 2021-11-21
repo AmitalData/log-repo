@@ -6,7 +6,8 @@ import { GenericTableService } from 'Infrastructure/Components/generic-table/gen
 import { ApiQueryFilters } from 'Infrastructure/DataContracts/ApiQueryFilters';
 import { AutoComplete } from 'primeng/autocomplete';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
-import { take } from 'rxjs/operators';
+import { fromEvent } from 'rxjs';
+import { debounceTime, take } from 'rxjs/operators';
 // import { Subscription } from 'rxjs';
 
 @Component({
@@ -44,6 +45,7 @@ export class AutocomplateTableComponent {
   index: number = 0;
   isGetAll: boolean = false;
   filterVal: string = ''
+  toHighlight: string = null as any;
 
   constructor(
     @Inject(DOCUMENT) private document: any,
@@ -76,7 +78,7 @@ export class AutocomplateTableComponent {
     if (this.selected.length && !this.columnsNames.length)
       this.columnsShow = Object.keys(this.selected[0]);
 
-    if(this.index === 0)
+    if (this.index === 0)
       this.selected.unshift(this.columnsHeader);
   }
 
@@ -96,6 +98,8 @@ export class AutocomplateTableComponent {
   }
 
   search(event: any) {
+    this.toHighlight = event.query;
+
     if (this.getDataFunc !== null) {
       this.filterVal = event.query;
       this.isGetAll = false;
@@ -141,7 +145,7 @@ export class AutocomplateTableComponent {
   }
 
   private searchValueInObject(value: string, propsName: string[]): (value1: any, index: number, array: any[]) => unknown {
-    return x => propsName.some(prop => x[prop]?.toLowerCase().includes(value?.toLowerCase()));
+    return x => propsName.some(prop => ('' + x[prop])?.toLowerCase().includes(value?.toLowerCase()));
   }
 
   private arrayToObject(arr: string[]): {} {
@@ -174,11 +178,22 @@ export class AutocomplateTableComponent {
     return this.capitalize(this.addSpace(str))
   }
 
-  private capitalize(str: string):string {
+  private capitalize(str: string): string {
     return str.charAt(0).toUpperCase() + str.slice(1);
   }
 
-  private addSpace(str:string) {
+  private addSpace(str: string) {
     return str.replace(/[A-Z]/g, letter => ' ' + letter);
+  }
+
+  alignRow(e: any) {
+    fromEvent(e.element, 'scroll')
+      .pipe(debounceTime(100))
+      .subscribe((e: any) => {
+        const div = e.target as HTMLDivElement;
+        const diff: number = div.scrollTop % 26;
+        if (diff > 2 && diff < 24)
+          div.scrollBy(0, 26 - diff + 1);
+      });
   }
 }

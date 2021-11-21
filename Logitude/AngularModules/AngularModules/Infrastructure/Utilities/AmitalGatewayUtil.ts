@@ -282,6 +282,7 @@ export class AmitalGatewayUtil {
 
         if (AppTool.IsNullOrEmpty(window.parent._JavascriptGateway)) {
             alert("_JavascriptGateway not exist !!!");
+            SessionLocator.SelectedSession.StopBusyIndicator();
             return;
 
         } else {

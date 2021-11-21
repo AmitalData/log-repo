@@ -1,8 +1,10 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator';
 import { LazyLoadEvent, SortEvent } from 'primeng/api';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Table } from 'primeng/table';
+import { fromEvent } from 'rxjs';
+import { debounceTime } from 'rxjs/operators';
 import { GenericTableService } from './generic-table.service';
 
 @Component({
@@ -25,6 +27,7 @@ export class GenericTableComponent implements OnInit {
   allRowGet: boolean = false;
 
   constructor(
+    private elem: ElementRef,
     private config: DynamicDialogConfig,
     private tableService: GenericTableService,
     private dialogRef: DynamicDialogRef,
@@ -34,6 +37,10 @@ export class GenericTableComponent implements OnInit {
     this.insertData(this.config.data);
     this.lazy = !!this.config.data.getData
     this.creasteSearchText();
+  }
+
+  ngAfterViewInit() {
+    this.alignRow();
   }
 
   creasteSearchText() {
@@ -90,6 +97,19 @@ export class GenericTableComponent implements OnInit {
 
   onSelectedRow(e: any) {
     this.dialogRef.close(e)
+  }
+
+  private alignRow() {
+    let elements = this.elem.nativeElement.querySelectorAll('.p-datatable-scrollable-body')[0];
+
+    fromEvent(elements, 'scroll')
+      .pipe(debounceTime(100))
+      .subscribe((e: any) => {
+        const div = e.target as HTMLDivElement;
+        const diff: number = div.scrollTop % 41;
+        if (diff > 2 && diff < 39)
+          div.scrollBy(0, 41 - diff + 1);
+      });
   }
 }
 

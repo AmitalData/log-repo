@@ -18889,6 +18889,13 @@
         IsPredefined="true"
         Operator="&quot;Equal&quot;"
         IndexOrder="0" />
+      <QueryFilter
+        QueryCode="&quot;OpenCourierMaster&quot;"
+        PredefinedValue="&quot;true&quot;"
+        ObjectFieldName="&quot;IsCancelled&quot;"
+        IsPredefined="true"
+        Operator="&quot;NotEqual&quot;"
+        IndexOrder="0" />
     </QueryFilters>
   </Query>
   <Query
@@ -18979,6 +18986,13 @@
         IsPredefined="true"
         Operator="&quot;Equal&quot;"
         IndexOrder="0" />
+      <QueryFilter
+        QueryCode="&quot;UnReleasedFastProcess&quot;"
+        PredefinedValue="&quot;true&quot;"
+        ObjectFieldName="&quot;IsCancelled&quot;"
+        IsPredefined="true"
+        Operator="&quot;NotEqual&quot;"
+        IndexOrder="0" />
     </QueryFilters>
   </Query>
   <Query
@@ -19053,6 +19067,13 @@
         ObjectFieldName="&quot;IsCourierDeclaration&quot;"
         IsPredefined="true"
         Operator="&quot;Equal&quot;"
+        IndexOrder="0" />
+      <QueryFilter
+        QueryCode="&quot;CourierMasterOpenIndividual&quot;"
+        PredefinedValue="&quot;true&quot;"
+        ObjectFieldName="&quot;IsCancelled&quot;"
+        IsPredefined="true"
+        Operator="&quot;NotEqual&quot;"
         IndexOrder="0" />
     </QueryFilters>
   </Query>
@@ -19144,6 +19165,13 @@
         IsPredefined="true"
         Operator="&quot;Equal&quot;"
         IndexOrder="0" />
+      <QueryFilter
+        QueryCode="&quot;UnReleasedIndividual&quot;"
+        PredefinedValue="&quot;true&quot;"
+        ObjectFieldName="&quot;IsCancelled&quot;"
+        IsPredefined="true"
+        Operator="&quot;NotEqual&quot;"
+        IndexOrder="0" />
     </QueryFilters>
   </Query>
   <Query
@@ -19219,6 +19247,13 @@
         IsPredefined="true"
         Operator="&quot;Equal&quot;"
         IndexOrder="0" />
+      <QueryFilter
+        QueryCode="&quot;WithoutId&quot;"
+        PredefinedValue="&quot;true&quot;"
+        ObjectFieldName="&quot;IsCancelled&quot;"
+        IsPredefined="true"
+        Operator="&quot;NotEqual&quot;"
+        IndexOrder="0" />
     </QueryFilters>
   </Query>
   <Query
@@ -19292,6 +19327,13 @@
         IsPredefined="true"
         Operator="&quot;Equal&quot;"
         IndexOrder="0" />
+      <QueryFilter
+        QueryCode="&quot;WithoutClassification&quot;"
+        PredefinedValue="&quot;true&quot;"
+        ObjectFieldName="&quot;IsCancelled&quot;"
+        IsPredefined="true"
+        Operator="&quot;NotEqual&quot;"
+        IndexOrder="0" />
     </QueryFilters>
   </Query>
   <Query
@@ -19359,6 +19401,13 @@
         ObjectFieldName="&quot;IsCourierDeclaration&quot;"
         IsPredefined="true"
         Operator="&quot;Equal&quot;"
+        IndexOrder="0" />
+      <QueryFilter
+        QueryCode="&quot;PendingPayment&quot;"
+        PredefinedValue="&quot;true&quot;"
+        ObjectFieldName="&quot;IsCancelled&quot;"
+        IsPredefined="true"
+        Operator="&quot;NotEqual&quot;"
         IndexOrder="0" />
     </QueryFilters>
   </Query>
@@ -19445,6 +19494,13 @@
         IsPredefined="true"
         Operator="&quot;Equal&quot;"
         IndexOrder="0" />
+      <QueryFilter
+        QueryCode="&quot;PendingCustoms&quot;"
+        PredefinedValue="&quot;true&quot;"
+        ObjectFieldName="&quot;IsCancelled&quot;"
+        IsPredefined="true"
+        Operator="&quot;NotEqual&quot;"
+        IndexOrder="0" />
     </QueryFilters>
   </Query>
   <Query
@@ -19525,6 +19581,13 @@
         IsPredefined="true"
         Operator="&quot;Equal&quot;"
         IndexOrder="0" />
+      <QueryFilter
+        QueryCode="&quot;Pending&quot;"
+        PredefinedValue="&quot;true&quot;"
+        ObjectFieldName="&quot;IsCancelled&quot;"
+        IsPredefined="true"
+        Operator="&quot;NotEqual&quot;"
+        IndexOrder="0" />
     </QueryFilters>
   </Query>
   <Query
@@ -19581,9 +19644,10 @@
     <QueryFilters>
       <QueryFilter
         QueryCode="&quot;DeclarationWithoutRelease&quot;"
-        PredefinedValue="&quot;false&quot;"
+        PredefinedValue="&quot;true&quot;"
         ObjectFieldName="&quot;IsCancelled&quot;"
         IsPredefined="true"
+        Operator="&quot;NotEqual&quot;"
         IndexOrder="0" />
       <QueryFilter
         QueryCode="&quot;DeclarationWithoutRelease&quot;"
@@ -19661,9 +19725,10 @@
     <QueryFilters>
       <QueryFilter
         QueryCode="&quot;DeclarationInConstraint&quot;"
-        PredefinedValue="&quot;false&quot;"
+        PredefinedValue="&quot;true&quot;"
         ObjectFieldName="&quot;IsCancelled&quot;"
         IsPredefined="true"
+        Operator="&quot;NotEqual&quot;"
         IndexOrder="0" />
       <QueryFilter
         QueryCode="&quot;DeclarationInConstraint&quot;"
@@ -19740,9 +19805,10 @@
     <QueryFilters>
       <QueryFilter
         QueryCode="&quot;PaidDeclaration&quot;"
-        PredefinedValue="&quot;false&quot;"
+        PredefinedValue="&quot;true&quot;"
         ObjectFieldName="&quot;IsCancelled&quot;"
         IsPredefined="true"
+        Operator="&quot;NotEqual&quot;"
         IndexOrder="0" />
       <QueryFilter
         QueryCode="&quot;PaidDeclaration&quot;"
@@ -19849,6 +19915,13 @@
         IsPredefined="true"
         Operator="&quot;NotEqual&quot;"
         IndexOrder="0" />
+      <QueryFilter
+        QueryCode="&quot;DeclarationAmendments&quot;"
+        PredefinedValue="&quot;true&quot;"
+        ObjectFieldName="&quot;IsCancelled&quot;"
+        IsPredefined="true"
+        Operator="&quot;NotEqual&quot;"
+        IndexOrder="0" />
     </QueryFilters>
   </Query>
   <Query
@@ -19905,9 +19978,10 @@
     <QueryFilters>
       <QueryFilter
         QueryCode="&quot;Declarations&quot;"
-        PredefinedValue="&quot;false&quot;"
+        PredefinedValue="&quot;true&quot;"
         ObjectFieldName="&quot;IsCancelled&quot;"
         IsPredefined="true"
+        Operator="&quot;NotEqual&quot;"
         IndexOrder="0" />
       <QueryFilter
         QueryCode="&quot;Declarations&quot;"
@@ -20015,7 +20089,7 @@
         IsPredefined="true"
         Operator="&quot;Equal&quot;"
         IndexOrder="0" />
-    </QueryFilters>
+
   </Query>
   <Query
     Code="&quot;AllCourierDeclarations&quot;"
@@ -20425,6 +20499,13 @@
         ObjectFieldName="&quot;Direction&quot;"
         IsPredefined="true"
         Operator="&quot;Equal&quot;"
+        IndexOrder="0" />
+      <QueryFilter
+        QueryCode="&quot;AllCourierDeclarations&quot;"
+        PredefinedValue="&quot;true&quot;"
+        ObjectFieldName="&quot;IsCancelled&quot;"
+        IsPredefined="true"
+        Operator="&quot;NotEqual&quot;"
         IndexOrder="0" />
     </QueryFilters>
   </Query>

@@ -26,13 +26,14 @@
         display: inline-block;
         color: black;
         font-weight: bold;
+        margin-top: 13px;
     }
 
     .filter-wrapper {
         float: right;
         display: flex;
         text-align: center;
-        top: 9px;
+        top: 4px;
         position: relative;
         font-weight: 500;
 
@@ -46,7 +47,7 @@
 
         .filter {
             width: 136px;
-            padding: 15px 8px;
+            padding: 12px 8px;
             border: 1px solid #e3e4e4;
             color: #1084dc;
             font-size: 16.7px !important;
@@ -97,7 +98,6 @@
 }
 
 .body {
-
     margin-top: 29px;
 
     .offer-container:first-child {
@@ -170,20 +170,25 @@
                 .tag {
                     background: #e2f0fb;
                     color: #1084dc;
-                    padding: 10px;
+                    padding: 8px 15px;
                     border-radius: 20px;
                     height: 37px;
-                    line-height: 14px;
-                    font-weight: 500;
+                    line-height: 23px;
+                    font-weight: 600;
                     font-size: 20px !important;
-                    margin: 0 3px;
+                    margin: 0 4px;
+
+                    img {
+                        height: 16px;
+                        vertical-align: baseline;
+                    }
                 }
 
                 .icons {
                     float: right;
 
                     .icon {
-                        margin: 0 8px;
+                        margin: 0 12px;
                         width: 32px;
                     }
 
@@ -196,11 +201,15 @@
                             position: absolute;
                             font-size: 15px !important;
                             top: 9px;
-                            right: 15px;
-                            width: 19px;
+                            width: fit-content;
+                            width: -moz-fit-content;
+                            max-width: 19px;
                             text-align: center;
                             font-weight: bold;
                             overflow: hidden;
+                            left: 0;
+                            right: 0;
+                            margin: auto;
                         }
                     }
                 }
@@ -212,10 +221,13 @@
                 flex-direction: row;
                 flex-wrap: nowrap;
                 align-items: center;
-                margin: 32px 20px 17px;
+                margin: 32px 20px 5px;
 
                 .company-icon {
                     flex: 1;
+                    font-size: 24px !important;
+                    font-weight: 500;
+                    text-align: center;
 
                     img {
                         width: 100%;
@@ -231,6 +243,7 @@
                     padding: 10px;
                     margin: 0px;
                     border-radius: 7px;
+                    padding-bottom: 2px;
 
                     .summary-item {
                         height: 99px;
@@ -259,6 +272,8 @@
                             flex: 1;
                             text-align: right;
                             color: #1084dc;
+                            font-weight: 600;
+                            font-size: 26px !important;
 
                             img {
                                 height: 19px;
@@ -272,6 +287,10 @@
 }
 
 :host ::ng-deep {
+    * {
+        font-family: "Poppins", sans-serif !important;
+    }
+
     .body {
         .p-scrollpanel-content {
             overflow-y: scroll !important;
@@ -296,7 +315,8 @@
                 color: #1084dc;
                 font-size: 23px !important;
                 margin-right: 18px !important;
-                margin-bottom: 18px !important;
+                margin-bottom: 8px !important;
+                font-family: "primeicons" !important;
             }
 
             .accordion-contect {
@@ -326,6 +346,8 @@
                             margin: 0;
                             font-size: 18px !important;
                             font-weight: bold;
+                            font-weight: 600;
+                            color: #393737;
                         }
 
                         .expansion-headers,
@@ -342,7 +364,8 @@
 
                         .expansion-headers {
                             > * {
-                                font-weight: bold;
+                                font-weight: 600 !important;
+                                color: #393737;
                             }
                         }
 
@@ -351,6 +374,11 @@
                             border-radius: 10px;
                             margin-bottom: 10px;
                             border: 1px solid #d6d6d6;
+
+                            > * {
+                                color: #25213b;
+                                font-weight: 400;
+                            }
 
                             .expansion-headers-sale {
                                 color: #1084dc;
@@ -384,20 +412,22 @@
 
     span.p-button-label {
         font-size: 16px !important;
+        font-weight: 500;
+        color: #45494a;
     }
 }
 
-:host {   
+:host {
     .footer {
         padding: 47px 19px;
         text-align: right;
         height: 193px;
-        
+
         .p-button-primary {
             color: black;
             background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(237, 192, 147, 1) 100%) !important;
             border: 1px solid #6a8299;
-            padding: 13px 50px !important;           
+            padding: 12px 49px !important;
         }
     }
 }

@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class QuoteOPPackageUpdateClass
    {  		
-		public const string HashString = "9a2e355fcbb9023831e6af860f028714";
+		public const string HashString = "750a2f38630186f9f0a83aa829e91f68";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -124,7 +124,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "BR",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "QuoteOPPackage",
-			      				    Code =  "7092",
+			      				    Code =  "f66b",
 			      				    Name =  "QuoteopPackage",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "QuoteOPM",

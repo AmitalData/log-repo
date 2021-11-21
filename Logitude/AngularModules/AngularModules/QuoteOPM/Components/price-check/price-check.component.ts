@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormControl } from '@angular/forms';
 import { ChargesTypeList } from 'Common/EntityLists/ChargesTypeList';
+import { ProductTypeList } from 'Common/EntityLists/ProductTypeList';
 import { ConfirmationService } from 'primeng/api';
 import { DynamicDialogConfig } from 'primeng/dynamicdialog';
 import { PriceCheckDataService } from './price-check-data/price-check-data.service';
@@ -17,11 +18,12 @@ export class PriceCheckComponent implements OnInit {
   offers: Offer[] = [];
   offersFilterd: Offer[] = [];
   cahargesTypes: ChargesTypeList[] = [];
+  productTypeList: ProductTypeList[] = [];
 
   filters: { filter: string, alias: string }[] = [
-    { filter: 'DirectFlight', alias: 'Direct' },
     { filter: 'Fastest', alias: 'Quickest' },
     { filter: 'Cheapest', alias: 'Cheapest' },
+    { filter: 'DirectFlight', alias: 'Direct' },
   ]
 
   summaryItems: { text: string, keyName: any }[] = [
@@ -37,8 +39,8 @@ export class PriceCheckComponent implements OnInit {
   ) { }
 
   async ngOnInit(): Promise<void> {
+    Promise.all([this.initPricesDetails(), this.initProductType()])
     this.initData();
-    await this.initPricesDetails()
   }
 
   private initData() {
@@ -55,6 +57,10 @@ export class PriceCheckComponent implements OnInit {
 
   private async initPricesDetails() {
     this.cahargesTypes = await this.priceCheckDataS.getCahargesType()
+  }
+
+  private async initProductType() {
+    this.productTypeList = await this.priceCheckDataS.getProducteType()
   }
 
   setFilter(filterType: string) {
