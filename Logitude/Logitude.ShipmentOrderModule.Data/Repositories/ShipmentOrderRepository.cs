@@ -25,6 +25,19 @@ namespace Logitude.ShipmentOrderModule.Data.Repositories
             return (from a in context.ShipmentOrders where a.OrderNumber == orderNumber && a.Tenant == tenant select a.Id).FirstOrDefault();
         }
 
+        public List<string> GetShipmentOrdersIdsByTenant(int tenant, int skip, int take)
+        {
+            List<string> Orders = (from a in context.ShipmentOrders
+                                          where a.Tenant == tenant
+                                          select a.Id).OrderBy(d => d).Skip(skip).Take(take).ToList();
+            return Orders;
+        }
+        public void UpdateLastUpdateDate(string OrderIds)
+        {
+            var query = $"update ShipmentOrders set UpdateDate = GETDATE() where id in ({OrderIds}) ";
+            context.GetActiveDbContext().Database.ExecuteSqlCommand(query);
+        }
+
     }
 
 }

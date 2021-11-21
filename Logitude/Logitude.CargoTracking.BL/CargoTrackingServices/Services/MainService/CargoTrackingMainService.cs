@@ -271,6 +271,8 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
             }
             recordUpdated.NumberOfRecordUpdated = bulkDataPreperation.NumberOfMainCoulmnsUpdated;
             recordUpdated.NumberOfRecordUpdated2 = bulkDataPreperation.NumberOfInnerCoulmnsUpdated;
+            if (bulkDataPreperation.AutomaticLastUpdateDate > cargoTrackingDataBaseArgs.MaxDate || cargoTrackingDataBaseArgs.MaxDate == null)
+                cargoTrackingDataBaseArgs.MaxDate = bulkDataPreperation.AutomaticLastUpdateDate;
             return recordUpdated;
         }
 
@@ -372,6 +374,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
                 NumberOfMainCoulmnsUpdated = 0,
                 NumberOfInnerCoulmnsUpdated = 0,
                 NumberRecoredTake = 0,
+                AutomaticLastUpdateDate = cargoTrackingDataBaseArgs.MaxDate
             };
 
             return bulkDataPreperation;
@@ -388,7 +391,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
                 bulkDataPreperation.NumberOfInnerCoulmnsUpdated += columns.Count;
 
             bulkDataPreperation.CargoTrackingTable = PrepareTableParameters(bulkDataPreperation, columns, isInnerCargoTracking);
-            bulkDataPreperation.AutomaticLastUpdateDate = BulkUpdateValues(bulkDataPreperation, isInnerCargoTracking);
+            BulkUpdateValues(bulkDataPreperation, isInnerCargoTracking);
 
             return bulkDataPreperation;
         }
@@ -595,9 +598,11 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
 
         private void SetAutomaticLastUpdateDateAfterWriteData(BulkDataPreperation bulkDataPreperation)
         {
-
-            bulkDataPreperation.AutomaticLastUpdateDate = ServiceHelper.GetAutomaticLastUpdateDate(bulkDataPreperation.SelectedDataTable, bulkDataPreperation.CargoTrackingTable.IsClosedTable);
-
+            var maxDate = ServiceHelper.GetAutomaticLastUpdateDate(bulkDataPreperation.SelectedDataTable, bulkDataPreperation.CargoTrackingTable.IsClosedTable);
+            if (bulkDataPreperation.AutomaticLastUpdateDate == null)
+                bulkDataPreperation.AutomaticLastUpdateDate = maxDate;
+            else if (maxDate > bulkDataPreperation.AutomaticLastUpdateDate)
+                bulkDataPreperation.AutomaticLastUpdateDate = maxDate;
         }
 
 
@@ -919,7 +924,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
             var cargoTrackingShipmentsService = new CargoTrackingShipmentsService();
             updateCargoTrackingRecords.MilestoneList = cargoTrackingShipmentsService.GetMilestones(updateCargoTrackingRecords.CargoTrackingUpdateDataBaseArgs.BuildCargoArgs.DestinationConnectionString);
             updateCargoTrackingRecords.MilestonesNotPermitted = cargoTrackingShipmentsService.GetAllMilestonesNotPermitted(updateCargoTrackingRecords.CargoTrackingUpdateDataBaseArgs.BuildCargoArgs.SourceConnectionString);
-            
+
             if (false)
             {
                 BuildShipmentsNew(updateCargoTrackingRecords);

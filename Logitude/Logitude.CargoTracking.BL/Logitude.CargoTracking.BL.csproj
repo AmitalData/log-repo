@@ -134,9 +134,11 @@
     <Compile Include="CloseTables\DetailsClassesGenerated\CargoTrackingMilestoneDetails.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\CargoTrackingHeaderEntityTypeStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\CargoTrackingMilestoneStruct.Generated.cs" />
+    <Compile Include="CoreBL\Batch\BatchUpdateShipmentsForCargoIncremental.cs" />
     <Compile Include="CoreBL\Batch\BuildCargoTrackingShipments.cs" />
     <Compile Include="CoreBL\CargoTrackingMilestoneBuilder.cs" />
     <Compile Include="CoreBL\CargoTrackingUsersShipmentService.cs" />
+    <Compile Include="CoreBL\UpdateShipmetsBatchArgs.cs" />
     <Compile Include="DataContracts\MixPanelTrackingEvent.cs" />
     <Compile Include="EntityDataMappings\CargoTrackingCardDataMapping.cs" />
     <Compile Include="EntityDataMappings\CargoTrackingCountryDataMapping.cs" />

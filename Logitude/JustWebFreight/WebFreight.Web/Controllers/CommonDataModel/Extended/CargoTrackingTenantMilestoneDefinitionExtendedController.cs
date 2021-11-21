@@ -7,6 +7,9 @@ using Logitude.BL.DataContracts;
 using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.BL.ShipmentsModel.EntityQueries;
+using Logitude.Infrastructure.BL.EntityPMs;
+using Logitude.Infrastructure.BL.EntityUpdateServices;
+using Logitude.Infrastructure.Data;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
@@ -19,6 +22,7 @@ using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
+using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
@@ -28,6 +32,7 @@ using System.Net.Http;
 using System.Transactions;
 using System.Web;
 using System.Web.Http;
+using System.Xml.Serialization;
 using WebFreight.Web.DataContracts;
 using WebFreight.Web.Helpers;
 using WebFreight.Web.InfrastructureModel;
@@ -75,6 +80,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
                     ICommonDataContext commonDataContext = CommonDataContext.GetContext(authToken.Tenant);
                     CargoTenantMilestoneDefinitionService cargoTenantMilestoneDefinitionService = new CargoTenantMilestoneDefinitionService(commonDataContext, authToken.Tenant);
                     cargoTenantMilestoneDefinitionService.UpdateCargoTenantMilestoneDefinitionsPM(cargoTenantMilestoneDefinitionPMs, authToken.Tenant);
+                    UpdateShipmentsInTenantForIncrementalCargo(authToken.Tenant);
 
                     scope.Complete();
                     PerformanceLogger.AddServerExecutionTimeHeader(logKey);
@@ -86,5 +92,38 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
+        private void UpdateShipmentsInTenantForIncrementalCargo(int tenant)
+        {
+            UpdateShipmetsBatchArgs args = new UpdateShipmetsBatchArgs() { Tenant = tenant };
+            var stringwriter = new System.IO.StringWriter();
+            var serializer = new XmlSerializer(typeof(UpdateShipmetsBatchArgs));
+            serializer.Serialize(stringwriter, args);
+            string xmlParameters = stringwriter.ToString();
+
+            var updateLastUpdateDateForShipmentsInTenantTask = new BatchTaskExecutionPM()
+            {
+                Subject = $"Update all shipments and orders in the tenant {tenant} for Cargo Incremental service",
+                Tenant = tenant,
+                ChangeSetOp = ChangeSetOperation.Insert,
+                ClassName = "Logitude.CargoTracking.BL.CoreBL.Batch.BatchUpdateShipmentsForCargoIncremental,Logitude.CargoTracking.BL",
+                CreateDate = DateTime.Now,
+                PrametersXml = xmlParameters,
+                StatusCode = "C"
+            };
+
+            IInfrastructureContext MyContext = InfrastructureContext.GetContext(tenant);
+            BatchTaskExecutionUpdateService bteUpdateService = new BatchTaskExecutionUpdateService(MyContext, new Dictionary<string, IContext>(), tenant);
+            bteUpdateService.Update(updateLastUpdateDateForShipmentsInTenantTask, true);
+            
+            // 2- Send to queue
+            IQueueService queueservice = new DbQueueService();
+            queueservice.InitializeQueue("batchtaskexecutionqueue", 0);
+            queueservice.Send(new Dictionary<string, string>()
+                {
+                    { "BatchTaskExecutionId", updateLastUpdateDateForShipmentsInTenantTask.Id },
+                    { "Tenant", tenant.ToString() }
+                }, tenant);
+        }
+
     }
 }
