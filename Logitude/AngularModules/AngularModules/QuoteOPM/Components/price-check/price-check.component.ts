@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormArray, FormControl } from '@angular/forms';
 import { ChargesTypeList } from 'Common/EntityLists/ChargesTypeList';
 import { ProductTypeList } from 'Common/EntityLists/ProductTypeList';
 import { ConfirmationService } from 'primeng/api';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { ScrollPanel } from 'primeng/scrollpanel';
 import { PriceCheckDataService } from './price-check-data/price-check-data.service';
 import { PriceChekRootResponse, Offer } from './price-check.service';
 
@@ -37,6 +38,7 @@ export class PriceCheckComponent implements OnInit {
     private confirmationService: ConfirmationService,
     private priceCheckDataS: PriceCheckDataService,
     private ref: DynamicDialogRef,
+    private cdr: ChangeDetectorRef,
   ) { }
 
   async ngOnInit(): Promise<void> {
@@ -75,7 +77,7 @@ export class PriceCheckComponent implements OnInit {
     if ((this.checkBoxs.value as boolean[]).every(x => !x))
       this.confirmationService.confirm({
         message: 'No Offer has been Selected, Do you want to Continue?',
-        header: 'Confirmation',
+        header: 'Price Check',
         icon: 'pi pi-exclamation-triangle',
         accept: () => {
           console.log('accept')
@@ -85,5 +87,13 @@ export class PriceCheckComponent implements OnInit {
 
   cancel() {
     this.ref.close();
+  }
+
+  scrollExtend(isHidden: boolean, s: ScrollPanel) {
+    if(isHidden) return;
+    s.refresh();
+    this.cdr.detectChanges()
+    s.scrollTop(s.contentViewChild.nativeElement.scrollTop + 250)
+    console.log(s.contentViewChild.nativeElement.scrollTop, s.contentViewChild.nativeElement.scrollHeight, s)
   }
 }

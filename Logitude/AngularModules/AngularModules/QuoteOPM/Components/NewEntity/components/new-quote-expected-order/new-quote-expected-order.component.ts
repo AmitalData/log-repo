@@ -152,7 +152,7 @@ export class NewQuoteExpectedOrderComponent implements OnInit, AfterViewInit {
     this.formGroup.controls.transportMode.valueChanges.subscribe((val: TransportModeList) => this.onTransportAndShipmentChange());
     this.formGroup.controls.shipmentType.valueChanges.subscribe((val: ShipmentTypeList) => this.onTransportAndShipmentChange());
 
-    [2, 3, 4].forEach(i => this.formGroup.controls['quantity' + i].valueChanges.subscribe(val => {
+    [1, 2, 3, 4].forEach(i => this.formGroup.controls['quantity' + i].valueChanges.subscribe(val => {
       this.formGroup.controls['quantityType' + i].reset();
       this.formGroup.controls['quantityType' + i][val ? 'enable' : 'disable']()
       this.formGroup.controls['quantityType' + i].setValidators(val ? Validators.required : null)

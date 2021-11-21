@@ -59,12 +59,14 @@
             font-weight: 500;
         }
 
+
+        .filter.active,
         .filter:hover {
             border-color: #1084dc;
+            box-shadow: rgb(0 0 0 / 35%) 0px 5px 15px;
         }
 
-        .filter.active {
-            border-color: #1084dc;
+        .filter.active {        
             background: #1084dc;
             color: white;
         }
@@ -393,8 +395,8 @@
                             }
                         }
 
-                        .expansion-row-highlight {
-                            background: red;
+                        .expansion-row-highlight  > * {
+                            color: red;
                         }
 
                         .expansion-headers-charges {
