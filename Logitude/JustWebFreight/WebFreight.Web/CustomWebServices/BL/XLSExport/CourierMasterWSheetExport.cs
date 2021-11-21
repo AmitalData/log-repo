@@ -428,15 +428,15 @@ namespace WebFreight.Web.CustomWebServices.BL.XLSExport
                           join c in q on d.DeclarationID equals c.DeclarationId
                           where d.Status != "S"
                           group d by d.DeclarationID into PendingGroup
-                          select new { declaration = PendingGroup.Key, pending = PendingGroup.Select(g => g.CourierPendingReason.LocalName) }
+                          select new { declaration = PendingGroup.Key, pending = PendingGroup.Select(g => g.CourierPendingReason.LocalName),pendingRemark=PendingGroup.Select(g=>g.PendingRemarks) }
  ); ;
 
-            Dictionary<string, string> pendings = new Dictionary<string, string>();
+            Dictionary<string, PendingReport> pendings = new Dictionary<string, PendingReport>();
 
 
             foreach (var item in group2)
             {
-                pendings.Add(item.declaration, string.Join(",", item.pending));
+                pendings.Add(item.declaration, new PendingReport(string.Join(",", item.pending), string.Join(",", item.pendingRemark)) );
             }
 
 
@@ -478,6 +478,9 @@ namespace WebFreight.Web.CustomWebServices.BL.XLSExport
             settingCol.Columns.Add(new Column() { Index = 5, Code = "CourierPendingReasonNameList", Name = "CourierPendingReasonNameList", DataTypeCode = "String", Width = 200, });
             dt.Columns.Add(new DataColumn() { Caption = TextCodesTranslator.TranslateText("Customs.DeclarationCourierStatus.F.CourierPendingReasonNameList", tenant, true), ColumnName = "CourierPendingReasonNameList", DataType = "".GetType() });
 
+            settingCol.Columns.Add(new Column() { Index = 6, Code = "CourierPendingRemark", Name = "CourierPendingRemark", DataTypeCode = "String", Width = 200, });
+            dt.Columns.Add(new DataColumn() { Caption = "הערות", ColumnName = "CourierPendingRemark", DataType = "".GetType() });
+
             var l = q.ToList();
             l.ForEach(r =>
             {
@@ -486,7 +489,9 @@ namespace WebFreight.Web.CustomWebServices.BL.XLSExport
                 newrow[1] = r.ImporterName;
                 newrow[2] = r.ImporterCode;
                 newrow[3] = r.TotalInvoiceAmountInUSD;
-                newrow[4] = pendings.FirstOrDefault(x => x.Key == r.DeclarationId).Value;
+                newrow[4] = pendings.FirstOrDefault(x=>x.Key==r.DeclarationId).Value.pendings;
+                newrow[5] = pendings.FirstOrDefault(x => x.Key == r.DeclarationId).Value?.pendingRemark + ";" ;
+
                 dt.Rows.Add(newrow);
             });
             var xls = new ExportToExcelHelper();
@@ -503,5 +508,16 @@ namespace WebFreight.Web.CustomWebServices.BL.XLSExport
         public string InvoiceQuantity { get; set; }
         public string InvoiceCurrencyTypeCode { get; set; }
 
+
+    }
+    public class PendingReport
+    {
+        public PendingReport(string pendings,string pendingRemark)
+        {
+            this.pendings = pendings;
+            this.pendingRemark = pendingRemark;
+        }
+        public string pendings;
+        public string pendingRemark;
     }
 }
