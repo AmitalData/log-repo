@@ -624,7 +624,6 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
                 //    Console.WriteLine(colName + ": (" + value+ ") ,Type: " + value.GetType().Name);
                 //    if (value.Equals("") && value.GetType().Name == "DateTime")
                 //        value = DateTime.MinValue;
-                //        //Console.WriteLine("what the fuck!!");
                 //}
                 //foreach (DataRow row in bulkDataPreperation.SelectedDataTable.Rows)
                 //{
@@ -635,7 +634,6 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
                 //        //if (value.Equals("") && colName.Contains("Date"))
                 //        //{
                 //        //    row[colName] = DateTime.Now;
-                //        //    //Console.WriteLine("what the fuck!!");
                 //        //}
                 //    }
                 //}
