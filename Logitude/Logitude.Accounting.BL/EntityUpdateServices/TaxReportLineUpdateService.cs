@@ -73,7 +73,9 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             {
                 entityPM.UpdatedByUserId = GetLoggedContact(entityPM.Tenant).Id;
             }
-            
+                
+            CheckSmallCashAPinvoiceFromThePreviousMonth(entityPM);
+
             base.OnUpdating(entityPM, entityPOCO);
         }
         private static void RecalculateReportTotals(TaxReportLinePM taxReportLinePM)
@@ -250,8 +252,6 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
                 }
                 CheckVATAmountInTheRecordIsHigherThanThePercentageOfVATAllowed(entityPM);
-                CheckSmallCashAPinvoiceFromThePreviousMonth(entityPM);
-
             }
 
             //for input line
@@ -322,7 +322,6 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 }
 
                 CheckVATAmountInTheRecordIsHigherThanThePercentageOfVATAllowed(entityPM);
-                CheckSmallCashAPinvoiceFromThePreviousMonth(entityPM);
 
             }
 
