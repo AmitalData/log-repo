@@ -20,22 +20,22 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
         const string importDirection = "I";
         const string customsDirection = "C";
 
-        public static void SetTableLogic(DataRow tableRow, int conditionNumber, List<CargoTrackingMilestoneList> milestoneList)
+        public static void SetTableLogic(SetTableLogicArgs args)
         {
 
-            SetCreateDate(tableRow);
-            SetCustomerReference(tableRow);
-            SetMilestonesFields(tableRow);
-            if (conditionNumber == ShipmentTable_GetAllCustomsShipmentsThatContainForwardingShipments)
-                SetForwardingShipmentHeaderId(tableRow);
-            else if (conditionNumber == ShipmentTable_GetAllNonCustomShipmentsThatContainForwardingShipments)
-                SetFieldsForCustomShipment(tableRow);
-            SetFieldsForForwardingShipment(tableRow);
-            SetFieldsForCustomShipment(tableRow);
-            SetGrossWeightUnit(tableRow);
-            SetCurrentMilestone(tableRow, milestoneList);
-            SetShipmentTypeCode(tableRow);
-            SetExceptionDescription(tableRow);
+            SetCreateDate(args.TableRow);
+            SetCustomerReference(args.TableRow);
+            SetMilestonesFields(args.TableRow);
+            if (args.ConditionNumber == ShipmentTable_GetAllCustomsShipmentsThatContainForwardingShipments)
+                SetForwardingShipmentHeaderId(args.TableRow);
+            else if (args.ConditionNumber == ShipmentTable_GetAllNonCustomShipmentsThatContainForwardingShipments)
+                SetFieldsForCustomShipment(args.TableRow);
+            SetFieldsForForwardingShipment(args.TableRow);
+            SetFieldsForCustomShipment(args.TableRow);
+            SetGrossWeightUnit(args.TableRow);
+            SetCurrentMilestone(args);
+            SetShipmentTypeCode(args.TableRow);
+            SetExceptionDescription(args.TableRow);
 
         }
 
@@ -169,12 +169,17 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
 
             tableRow.SetField("GrossWeightUnitCode", tableRow["GrossWeightUnitCode"]);
         }
-        private static void SetCurrentMilestone(DataRow tableRow, List<Data.EntityLists.CargoTrackingMilestoneList> milestoneList)
+        private static void SetCurrentMilestone(SetTableLogicArgs args)
         {
+            var tableRow = args.TableRow;
             var currentMilestoneArgs = new CheckCurrentMilestoneArgs(tableRow);
-            foreach (var milestone in milestoneList)
+            foreach (var milestone in args.MilestoneList)
             {
                 currentMilestoneArgs.milestone = milestone;
+                var tenant = (int)tableRow["Tenant"];
+                if (!IsMilestoneAllowToView(args.MilestonesNotPermitted, milestone, tenant))
+                    continue;
+
                 switch (milestone.Code)
                 {
                     case CargoTrackingMilestoneValues.Created:
@@ -309,6 +314,9 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
                 }
             }
         }
+
+        
+
         private static void SetForwardingShipmentHeaderId(DataRow tableRow)
         {
          

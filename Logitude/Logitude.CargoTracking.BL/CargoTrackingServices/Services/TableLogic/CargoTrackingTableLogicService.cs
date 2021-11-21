@@ -43,9 +43,9 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableLogic
         private static void SetCargoTrackingShipmentsLogic(SetTableLogicArgs args)
         {
             if (args.ConditionNumber == ShipmentOrderTableCondition)
-                CargoTrackingShipmentsOrderLogicService.SetTableLogic(args.TableRow, args.MilestoneList, args.MilestonesNotPermitted);
+                CargoTrackingShipmentsOrderLogicService.SetTableLogic(args);
             else
-                CargoTrackingShipmentsLogicService.SetTableLogic(args.TableRow, args.ConditionNumber, args.MilestoneList);
+                CargoTrackingShipmentsLogicService.SetTableLogic(args);
         }
     }
 

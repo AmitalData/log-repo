@@ -51,16 +51,16 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
         };
 
 
-        public static void SetTableLogic(DataRow tableRow, List<Data.EntityLists.CargoTrackingMilestoneList> milestoneList)
+        public static void SetTableLogic(SetTableLogicArgs args)
         {
-            SetFixedValueFields(tableRow);
-            MapTableFields(tableRow);
-            SetMilestonesDoneFields(tableRow);
-            SetShipmentTypeCode(tableRow);
-            SetMainEntity(tableRow);
-            SetPreviousForwardingShipmentHeader(tableRow);
-            SetCurrentMilestone(tableRow, milestoneList);
-            SetExceptionDescription(tableRow);
+            SetFixedValueFields(args.TableRow);
+            MapTableFields(args.TableRow);
+            SetMilestonesDoneFields(args.TableRow);
+            SetShipmentTypeCode(args.TableRow);
+            SetMainEntity(args.TableRow);
+            SetPreviousForwardingShipmentHeader(args.TableRow);
+            SetCurrentMilestone(args);
+            SetExceptionDescription(args.TableRow);
         }
 
         private static void SetFixedValueFields(DataRow tableRow)
@@ -82,12 +82,17 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
         {
             tableRow.SetField("IsMainRecord", IsFieldNullOrEmpty(tableRow, "ForwardingShipmentHeaderId"));
         }
-        private static void SetCurrentMilestone(DataRow tableRow, List<Data.EntityLists.CargoTrackingMilestoneList> milestoneList)
+        private static void SetCurrentMilestone(SetTableLogicArgs args)
         {
+            var tableRow = args.TableRow;
             var currentMilestoneArgs = new CheckCurrentMilestoneArgs(tableRow);
-            foreach (var milestone in milestoneList)
+            foreach (var milestone in args.MilestoneList)
             {
                 currentMilestoneArgs.milestone = milestone;
+                var tenant = (int)tableRow["Tenant"];
+                if (!IsMilestoneAllowToView(args.MilestonesNotPermitted, milestone, tenant))
+                    continue;
+
                 switch (milestone.Code)
                 {
                     case CargoTrackingMilestoneValues.Created:
