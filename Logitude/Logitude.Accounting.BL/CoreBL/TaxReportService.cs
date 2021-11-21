@@ -66,6 +66,7 @@ namespace Logitude.Accounting.BL.CoreBL
         const string StatusCode_VATAmountInTheRecordIsHigherThanThePercentageOfVATAllowed = "9";
         const int maxAllowedLinesCount = 3000;
         const string CreatedStatusCode = "C";
+        const string LineType_SmallCashbookAPInvoice = "K";
 
         public static List<TaxReportLinePM> CreateTaxReportLines(TaxReportPM taxReport, int tenant)
         {
@@ -394,9 +395,17 @@ namespace Logitude.Accounting.BL.CoreBL
             bool isTotalInvoiceAmountAndVatAmountHaveOppositeSigns = (reportLinePM.TotalInvoiceAmount > 0 && reportLinePM.VatAmount < 0) || (reportLinePM.TotalInvoiceAmount < 0 && reportLinePM.VatAmount > 0);
             if (isTotalInvoiceAmountAndVatAmountHaveOppositeSigns)
                 reportLinePM.StatusCode = StatusCode_VATAmountInTheRecordIsHigherThanThePercentageOfVATAllowed;
+
+            CheckSmallCashAPinvoiceFromThePreviousMonth(reportLinePM);
         }
 
-   
+        private static void CheckSmallCashAPinvoiceFromThePreviousMonth(TaxReportLinePM entityPM)
+        {
+            if (entityPM.LineTypeCode == LineType_SmallCashbookAPInvoice && entityPM.ReferenceDate.Value.Month < entityPM.TaxReportDate.Value.Month)
+            {
+                entityPM.StatusCode = TaxReportLineStatusValues.SmallCashAPinvoiceFromThePreviousMonth;
+            }
+        }
 
         private static bool CheckIfAPInvoiceTaxMonthTransactionIsVoided(TaxReportPM taxReport, List<APInvoicePM> voidedAPInvoices, TaxReportData transaction)
         {
