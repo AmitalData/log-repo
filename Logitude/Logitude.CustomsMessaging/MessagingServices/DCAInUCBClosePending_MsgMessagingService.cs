@@ -102,7 +102,8 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 PendingCode = mySendClosePendingRequestParams.PendingCode,
                 tenant = tenant,
                 MyMoreParams = "",
-                FilteredRequest= mySendClosePendingRequestParams.DeclarationsList != null,
+                declarationList = mySendClosePendingRequestParams.DeclarationsList,
+                FilteredRequest = mySendClosePendingRequestParams.DeclarationsList != null,
                 ResponseContentHeader = new DefaultResponseContentHeader()
                 {
                     TransmitionDateTime = transmitionDateTime
@@ -179,6 +180,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
         public string LoggingUserId { get; set; }
         public string CourierMasterId { get; set; }
         public string MAWB { get; set; }
+        public string[] declarationList { get; set; }
         public string[] PendingCode { get; set; }
         public string MyMoreParams { get; set; }
         public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;

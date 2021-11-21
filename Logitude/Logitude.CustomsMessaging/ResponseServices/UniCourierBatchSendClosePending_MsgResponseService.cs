@@ -49,15 +49,19 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
             var qs = new DeclarationCourierStatusQueryService(context);
             List<DeclarationPM> lockedDeclarations = new List<DeclarationPM>();
-            List<DeclarationCourierStatusPM> listPM = new List<DeclarationCourierStatusPM>();
-            //listPM = qs.GetByMasterIDDeclarationCourierStatus(requestParams.Tenant, requestParams.AppicationId);
             if (customResponse.ServerSplitDeclarationsList == null || (customResponse.ServerSplitDeclarationsList != null && customResponse.ServerSplitDeclarationsList.Count == 0))
             {
                 LogMessagingUtil.Instance.AppendLine("Splitter to 50 - Create new CRS");
                 mess.AppendLine($"Splitter to 50 - Create new CRS master {requestParams.AppicationId} ");
-
-
-                var DeclarationIdList = qs.GetByMasterID_DeclarationIdList(requestParams.Tenant, requestParams.AppicationId);
+                List<string> DeclarationIdList=new List<string>();
+                if (customResponse.declarationList != null && customResponse.declarationList.Length > 0)
+                {
+                    DeclarationIdList = customResponse.declarationList.ToList();
+                }
+                else
+                {
+                    DeclarationIdList = qs.GetByMasterID_DeclarationIdList(requestParams.Tenant, requestParams.AppicationId);
+                }
                 DeclarationIdList.ChunkBy(50).ForEach(list50 =>
                 {
                     //CreateCRS(customResponse, requestParams,list50);
@@ -78,35 +82,17 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
             LogMessagingUtil.Instance.AppendLine("Handle 50 DeclarationIdList");
 
-            listPM = qs.GetByDeclarationIdList(requestParams.Tenant, customResponse.ServerSplitDeclarationsList);
-
-            if (listPM.Count == 0)
+            foreach (string decId in customResponse.ServerSplitDeclarationsList)
             {
-                mess.AppendLine($"There ARE  NOT any Declarations 'R'eady to (Manifest) send for master {requestParams.AppicationId} ");
-            }
-
-
-
-            foreach (DeclarationCourierStatusPM itemPM in listPM)
-            {
-
                 using (var scopeNewCRS = TransactionFactory.GetNewTransaction())
                 {
                     var context1 = CustomContext.GetContext(requestParams.Tenant);//context each CRS TRANS
-                    LogMessagingUtil.Instance.AppendLine("ClosePending for declaration: " + itemPM.DeclarationId + "\n");
                     var closePendingService = new ClosePendingService(context1);
-                  /*  if (customResponse.StorageSiteCode != null)
+                    var courierStatusPM = qs.GetSingle(decId, true, false);
+                    if (courierStatusPM != null && courierStatusPM.DeclarationPendings.Find(d => d.Status == "A") != null)
                     {
-                        changeStorgeSiteService.ChangeSite(customResponse.StorageSiteCode, requestParams, mess, objectTableId, objectTableIdCourierMaster, lockedDeclarations, itemPM,false);
+                        closePendingService.ClosePending(customResponse.PendingCode, requestParams, mess, objectTableId, objectTableIdCourierMaster, lockedDeclarations, courierStatusPM);
                     }
-                    else
-                    {
-                        if(customResponse.UnLoadPortCode != null)
-                        {
-                            changeStorgeSiteService.ChangeSite(customResponse.UnLoadPortCode, requestParams, mess, objectTableId, objectTableIdCourierMaster, lockedDeclarations, itemPM,true);
-                        }
-                    }*/
-
                     scopeNewCRS.Complete();
                 }
 
@@ -117,11 +103,11 @@ namespace Logitude.CustomsMessaging.ResponseServices
             if (lockedDeclarations != null && lockedDeclarations.Count() > 0)
             {
                 List<string> declarationsList = new List<string>();
-               /* string message = string.Concat("אתר אחסון בטיסה השתנה ל ", customResponse.StorageSiteCode, ", אך ההצהרה לא ניתנת לעידכון. נא לעדכן ידנית");
-                if (customResponse.UnLoadPortCode != null)
-                {
-                     message = string.Concat("אתר פריקה בטיסה השתנה ל ", customResponse.UnLoadPortCode, ", אך ההצהרה לא ניתנת לעידכון. נא לעדכן ידנית");
-                }*/
+                /* string message = string.Concat("אתר אחסון בטיסה השתנה ל ", customResponse.StorageSiteCode, ", אך ההצהרה לא ניתנת לעידכון. נא לעדכן ידנית");
+                 if (customResponse.UnLoadPortCode != null)
+                 {
+                      message = string.Concat("אתר פריקה בטיסה השתנה ל ", customResponse.UnLoadPortCode, ", אך ההצהרה לא ניתנת לעידכון. נא לעדכן ידנית");
+                 }*/
                 mess.AppendLine("\n" + "Locked Declarations: " + "\n");
                 foreach (DeclarationPM itemDeclaration in lockedDeclarations)
                 {
@@ -146,10 +132,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
             this.context = context;
         }
 
-        public void ClosePending(string PendingCode, GenericRequestParams requestParams, StringBuilder mess, string objectTableId, string objectTableIdCourierMaster, List<DeclarationPM> lockedDeclarations, DeclarationCourierStatusPM itemPM)
+        public void ClosePending(string[] PendingCode, GenericRequestParams requestParams, StringBuilder mess, string objectTableId, string objectTableIdCourierMaster, List<DeclarationPM> lockedDeclarations, DeclarationCourierStatusPM itemPM)
         {
 
-            
+
             var myDeclarationUpdateService = new DeclarationUpdateService(context, new Dictionary<string, IContext>(), requestParams.Tenant);
 
             try
@@ -186,11 +172,24 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                     if (isUpdateDeclaration)
                     {
-                        CourierPendingReasonRepository courierPendingReasonRepositoryRepository = new CourierPendingReasonRepository(declarationPM.Tenant);
-                        if(PendingCode == "") // Close ALL 
-                        {
+                        CourierPendingReasonRepository courierPendingReasonRepository = new CourierPendingReasonRepository(declarationPM.Tenant);
 
+                        foreach (var pendingCode in PendingCode)
+                        {
+                            var declarationPendingPM = itemPM.DeclarationPendings.Where(r => r.DeclarationID == declarationPM.Id && r.CourierPendingReasonCode == pendingCode).FirstOrDefault();
+                            if (declarationPendingPM != null && declarationPendingPM.Status == "A")
+                            {
+                                //UPDATE to solve
+                                declarationPendingPM.Status = "S";
+                                declarationPendingPM.ChangeSetOp = ChangeSetOperation.Update;
+                                if (itemPM.ChangeSetOp == ChangeSetOperation.None)
+                                {
+                                    itemPM.ChangeSetOp = ChangeSetOperation.Update;
+                                }
+                            }
                         }
+                        DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(context, new Dictionary<string, IContext>(), declarationPM.Tenant);
+                        declarationCourierStatusUpdateService.Update(itemPM, true);
                     }
                     else
                     {
