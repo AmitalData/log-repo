@@ -15,3 +15,7 @@ Feature: AP Payment
     Scenario: Approve the AP Payment
         When approve the AP Payment
         Then the AP Payment should approve successfully
+
+    Scenario: Void AP Payment
+        When void AP Payment
+        Then the AP Payment should void successfully
