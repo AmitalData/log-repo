@@ -55,7 +55,7 @@ export function VoidARPayment() {
     cy.DefineRequestWait(RestAPI.PUT, URLs.ARPayments, RequestAliases.ARPayments)
     cy.Click(BaseSelectors.MenuButtons, null)
     cy.Click(ARPaymentSelectors.VoidButton, null)
-    cy.FillLogTextBox(ARPaymentSelectors.CancelationNotes, "Cancel")
+    cy.FillLogTextBox(ARPaymentSelectors.CancelationNotes, BaseSelectors.ContainsCancel)
     cy.Click(BaseSelectors.RedButton + BaseSelectors.LastElement, null)
     cy.Click(BaseSelectors.RedButton + BaseSelectors.LastElement, null)
 }
