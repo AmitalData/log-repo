@@ -228,6 +228,8 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
             var tenant = (int)tableRow["Tenant"];
             if (IsMilestoneAllowToView(args.MilestonesNotPermitted, CargoTrackingMilestoneValues.Arrival, tenant))
                 tableRow.SetField(field.CargoTrackingFieldName, tableRow[field.OriginalFieldName]);
+            else
+                tableRow.SetField(field.CargoTrackingFieldName, (DBNull)null);
         }
 
         private static void SetDepartureDates(FieldMap field, DataRow tableRow, SetTableLogicArgs args)
@@ -235,6 +237,8 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
             var tenant = (int)tableRow["Tenant"];
             if (IsMilestoneAllowToView(args.MilestonesNotPermitted, CargoTrackingMilestoneValues.Departure, tenant))
                 tableRow.SetField(field.CargoTrackingFieldName, tableRow[field.OriginalFieldName]);
+            else
+                tableRow.SetField(field.CargoTrackingFieldName, (DBNull)null);
         }
 
         private static void SetBookingConfirmationDate(FieldMap field, DataRow tableRow, SetTableLogicArgs args)
@@ -242,6 +246,8 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
             var tenant = (int)tableRow["Tenant"];
             if (IsMilestoneAllowToView(args.MilestonesNotPermitted, CargoTrackingMilestoneValues.Booking, tenant))
                 tableRow.SetField(field.CargoTrackingFieldName, tableRow[field.OriginalFieldName]);
+            else
+                tableRow.SetField(field.CargoTrackingFieldName, (DBNull)null);
         }
 
         private static void SetPickupDates(FieldMap field, DataRow tableRow, SetTableLogicArgs args)
@@ -249,6 +255,8 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
             var tenant = (int)tableRow["Tenant"];
             if (IsMilestoneAllowToView(args.MilestonesNotPermitted, CargoTrackingMilestoneValues.Pickup, tenant))
                 tableRow.SetField(field.CargoTrackingFieldName, tableRow[field.OriginalFieldName]);
+            else
+                tableRow.SetField(field.CargoTrackingFieldName, (DBNull)null);
         }
 
         private static void SetCreateDate(FieldMap field, DataRow tableRow, SetTableLogicArgs args)
@@ -256,6 +264,9 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
             var tenant = (int)tableRow["Tenant"];
             if (IsMilestoneAllowToView(args.MilestonesNotPermitted, CargoTrackingMilestoneValues.Created, tenant))
                 tableRow.SetField(field.CargoTrackingFieldName, tableRow[field.OriginalFieldName]);
+            else
+                tableRow.SetField(field.CargoTrackingFieldName, (DBNull)null);
+
         }
 
         private void AddFullFields()

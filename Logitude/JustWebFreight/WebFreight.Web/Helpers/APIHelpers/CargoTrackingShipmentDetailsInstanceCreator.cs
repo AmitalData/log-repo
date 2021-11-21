@@ -189,8 +189,8 @@ namespace WebFreight.Web.Helpers.APIHelpers
                 EnglishName = "Created",
                 LocalName = "נוצר",
                 Code = "OPN",
-                Date = cargoTrackingShipment.CreateDate.ToString("dd/MM/yyyy"),
-                Time = cargoTrackingShipment.CreateDate.ToString("HH:mm"),
+                Date = cargoTrackingShipment.CreateDate?.ToString("dd/MM/yyyy"),
+                Time = cargoTrackingShipment.CreateDate?.ToString("HH:mm"),
             };
         }
         private List<CargoTrackingMilestoneList> GetCargoTrackingMilestoneList()

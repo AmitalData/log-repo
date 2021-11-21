@@ -348,7 +348,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.MainService
         {
             var cargoTrackingShipmentSearchs = new List<CargoTrackingShipmentSearch>();
 
-            if (CargoTrackingSearchService.IsShipmentValidToCreateRefrences(shipment.CargoTrackingShipment))
+            if (CargoTrackingSearchService.IsShipmentValidToCreateRefrences(shipment))
             {
                 cargoTrackingShipmentSearchs.AddRange(CargoTrackingSearchService.GetShipmentNumberReferences(shipment.CargoTrackingShipment, entityId));
                 cargoTrackingShipmentSearchs.AddRange(CargoTrackingSearchService.GetCustomsDeclarationNumberReferences(shipment, entityId));

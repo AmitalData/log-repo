@@ -70,7 +70,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.DBTablesCopy.Generated
 "    <Constraints Nullable='true' />"+
 "  </Column>"+
 "  <Column Name='CreateDate' Type='datetime'>"+
-"    <Constraints Nullable='false' />"+
+"    <Constraints Nullable='true' />"+
 "  </Column>"+
 "  <Column Name='SecurityKey' Type='varchar' Size='40'>"+
 "    <Constraints Nullable='true' />"+

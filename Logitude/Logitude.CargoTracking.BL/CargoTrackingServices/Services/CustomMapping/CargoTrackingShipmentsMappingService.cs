@@ -22,6 +22,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CustomMapping
             item.ShipmentTypeCode = GetShipmentTypeCodeByTransportMode(row.OrderTransportModeId);
             SetOrderExceptionDescription(item, row);
             cargoTrackingShipmentContext.CargoTrackingShipment = item;
+            cargoTrackingShipmentContext.ShipmentCreateDate = row.OrderCreateDate;
             return cargoTrackingShipmentContext;
         }
 
@@ -37,6 +38,8 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CustomMapping
             item.IsMainRecord = GetIsMainRecord(Codes.ForwardingType, row);
             SetForwardingExceptionDescription(item, row);
             cargoTrackingShipmentContext.CargoTrackingShipment = item;
+            cargoTrackingShipmentContext.ShipmentCreateDate = row.ForwardingCreateDate;
+
             return cargoTrackingShipmentContext;
         }
 
@@ -52,6 +55,8 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CustomMapping
             SetCustomExceptionDescription(item, row);
             cargoTrackingShipmentContext.CargoTrackingShipment = item;
             cargoTrackingShipmentContext.CustomsDeclarationNumber = row.CustomsDeclarationNumber;
+            cargoTrackingShipmentContext.ShipmentCreateDate = row.CustomCreateDate;
+
             return cargoTrackingShipmentContext;
         }
         private void SetOrderExceptionDescription(CargoTrackingShipment item, CargoTrackingShipmentQueryResult row)

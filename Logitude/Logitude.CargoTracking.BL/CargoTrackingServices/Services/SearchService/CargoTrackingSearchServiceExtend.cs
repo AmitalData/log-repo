@@ -283,9 +283,9 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.SearchService
             List<string> PrivateShipmentTypes = new List<string> { "LCLD", "MYGO", "MYGI" };
             return !PrivateShipmentTypes.Contains(shipment.ShipmentTypeCode?.ToUpper());
         }
-        public static bool IsShipmentValidToCreateRefrences(CargoTrackingShipment shipment)
+        public static bool IsShipmentValidToCreateRefrences(CargoTrackingShipmentResources shipment)
         {
-            var deference = DateTime.Now - shipment.CreateDate;
+            var deference = DateTime.Now - shipment.ShipmentCreateDate;
             return deference.TotalDays / 30 <= 6;
         }
     }
