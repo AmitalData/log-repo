@@ -554,6 +554,22 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         responseDec.SubmitDateTime = MyResponseData.SubmitDateTime;
                         MyResponseData.MultiDeclarations.Add(responseDec);
                     }
+                    if(customResponse.DeclarationStatusAnswer.Length > 1)
+                    {
+                        var responseDec = new MultiDeclaration();
+                        responseDec.DeclarationID = declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationID;
+                        responseDec.DeclarationVersion = declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationVersion;
+                        responseDec.DeclarationStatusCode = declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationStatusCode;
+                        responseDec.DeclarationStatusText = declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationStatusText;
+                        responseDec.LogisticStatusCode = declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.LogisticStatusCode;
+                        responseDec.LogisticStatusText = declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.LogisticStatusText;
+                        responseDec.DeclarationOfficeID = declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationOfficeID;
+                        responseDec.DeclarationOfficeText = declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationOfficeText;
+                        responseDec.FinancialStatusCode = declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.FinancialStatusCode;
+                        responseDec.FinancialStatusText = declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.FinancialStatusText;
+                        responseDec.SubmitDateTime = MyResponseData.SubmitDateTime;
+                        MyResponseData.MultiDeclarations.Add(responseDec);
+                    }
 
                         if (declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationAvailabilityLog != null
                                 && declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationAvailabilityLog.AvailabiltyLogDeclarationCargoQuantities != null
