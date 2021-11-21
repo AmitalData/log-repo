@@ -2,6 +2,7 @@
 using Logitude.BL.ShipmentsModel.Tools.DataMapping;
 using Logitude.BL.ShipmentsModel.Tools.TraceEvents;
 using Logitude.Server.Tools.Counters;
+using Logitude.Server.Tools.EntityChanges;
 using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.QueueService;
 using Simplog.Data.Helpers;
@@ -35,16 +36,21 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             this.containerPm = entityPM;
             this.containerPm.Id = IdCounter.GetNumber("Container", tenant).ToString();
             this.containerPoco = new Container { Id = this.containerPm.Id, Tenant = this.containerPm.Tenant };
+            RunAutomation("OnCreate", entityPM);
             ContainerTracing.Trace(entityPM, containerPoco, isNewEntity);
             ShipmentMapping.MapContainer(entityPM, containerPoco, isNewEntity);
             entityRepository.Add(containerPoco);
             entityRepository.SubmitChanges();
-
             AddShipmentUpdateKafkaQueueMessage("CToolContainerCreate");
         }
 
         public void Update(ContainerPM entityPM)
         {
+            if (!entityPM.IsUpdateByAutomation)
+            {
+                RunAutomation("OnUpdate", entityPM);
+            }
+
             this.isNewEntity = false;
             this.containerPm = entityPM;
             this.containerPoco = entityRepository.GetSingleContainer(entityPM.Id, tenant);
@@ -53,7 +59,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             ShipmentMapping.MapContainer(entityPM, containerPoco, isNewEntity);
             entityRepository.Update(containerPoco);
             entityRepository.SubmitChanges();
-
             AddShipmentUpdateKafkaQueueMessage("CToolContainerUpdate");
         }
 
@@ -99,6 +104,12 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             ContainerTracing.Trace(entityPM, containerPoco, isNewEntity);
             entityRepository.Remove(containerPoco);
             entityRepository.SubmitChanges();
+        }
+
+        private void RunAutomation(string processType, ContainerPM entityPM)
+        {
+            var mainEntityChangeService = new MainEntityChangeService(new EntityChangeArgs() { EntityPM = entityPM, ProcessType = processType, ObjectTableName = "Container", EntityId = entityPM.Id, Tenant = entityPM.Tenant, StartDate = DateTime.Now });
+            mainEntityChangeService.AddEntityChange();
         }
     }
 }
