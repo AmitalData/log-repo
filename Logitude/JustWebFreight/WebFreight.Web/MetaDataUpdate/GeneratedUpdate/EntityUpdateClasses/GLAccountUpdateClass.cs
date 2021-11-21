@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class GLAccountUpdateClass
    {  		
-		public const string HashString = "3632e83b54bf2c76c09134088c9639a9";
+		public const string HashString = "f8503324f1928bb8cf9db085679d26ad";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -12593,7 +12593,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   TextCode GLAccountTextCode_GLAccountsORecoCurrencyErr = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.RecoCurrencyErr", DefaultText = "The reconcile method for an accounting currency account must be local currency",LocalDefaultText = @"שיטת ההתאמה עבור כרטיסים שקליים היא במטבע מקומי בלבד", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode GLAccountTextCode_GLAccountsOCustomerGLaccountDefinedSplit = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.CustomerGLaccountDefinedSplit", DefaultText = "The customer GLaccount is already defined as a split by currency Account",LocalDefaultText = @"The customer GLaccount is already defined as a split by currency Account", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode GLAccountTextCode_GLAccountsOCustomerGLaccountDefinedSplit = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.CustomerGLaccountDefinedSplit", DefaultText = "The customer GLaccount is already defined as a split by currency Account",LocalDefaultText = @"לא ניתן להוסיף את כרטיס פיצול זה מכיוון שהוא מוגדר ככרטיס ראש", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
