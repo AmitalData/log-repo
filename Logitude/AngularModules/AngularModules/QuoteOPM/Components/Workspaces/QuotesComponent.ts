@@ -31,9 +31,9 @@ declare var makeChart, FunnelClick, ResetItemFunnel;
 })
 
 export class QuotesComponent extends BaseComponent {
-    // ngOnInit() {
-    //     this.priceCheckS.open(new QuoteOPPM());
-    // }
+    ngOnInit() {
+        this.priceCheckS.open(new QuoteOPPM());
+    }
 
     public DataContext = this;
     public SalesFunnelId: string = "SalesFunnelId_";
