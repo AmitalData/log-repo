@@ -66,12 +66,7 @@ namespace Logitude.BL.Helpers
 
         private bool ContainRecordType(DWObjectFieldPM additionalFactField)
         {
-            //if(additionalFactField.Code == "[Shipment Sub Type]")
-            //{
-
-            //}
-            string[] recordTypes = additionalFactField.RecordType.Split(',');
-            
+            string[] recordTypes = additionalFactField.RecordType.Split(','); 
 
             foreach (var recordType in recordTypes)
             {
