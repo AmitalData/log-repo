@@ -74,7 +74,8 @@ export class CargoSplitGeneralTabComponent
 
     FIELD_IS_REQUIERD: string;
     RequestVIA: SendRequestVIA;
-    ItemsList: ObservableCollection;
+    //public ItemsList: ObservableCollection;
+    public decCargoSplitCargoIdentifierModel: DecCargoSplitCargoIdentifierModel;
     @Output() MenuHeaderchangeevent = new EventEmitter();
     IsDelete: boolean = false;
     SendButtonEnabled: boolean = true;
@@ -112,7 +113,7 @@ export class CargoSplitGeneralTabComponent
     constructor(private EntityResourceService: EntityResourceService) {
         super();
         this.EntityPM = new DeclarationCargoSplitPM();
-        this.ItemsList = new ObservableCollection([]);
+        //this.ItemsList = new ObservableCollection([]);
         this.FIELD_IS_REQUIERD = TextCodeTranslator.Translate("General.M.FieldIsRequired");
         //this.entityArgs.ObjectTableName = "Customs.DeclarationCargoSplit";
         this.EntityResourceService.getEntityResourceByTableName("Customs.DeclarationCargoSplit").subscribe((response:any) => {
@@ -165,8 +166,10 @@ export class CargoSplitGeneralTabComponent
                 if (AppTool.IsNullOrEmpty(this._LastFetchDeclarationList)) {
                     this.NoConnectedConsignmentEnableField();
                 } else {
-                    if (this._LastFetchDeclarationList.Direction == "E") 
+                    if (this._LastFetchDeclarationList.Direction == "E") {
                         this.IsExportDeclaration = true;
+                        this.AddItem();
+                    }
                     this.CurrentSession.StartBusyIndicator("")
                     this._DeclarationExtendedListService.GetConsignmentListPMByCustomFileNo(this.CustomFileNo)
                         .subscribe((myResponse: ServiceResponse) => {
@@ -373,7 +376,8 @@ export class CargoSplitGeneralTabComponent
         if (!AppTool.IsNullOrEmpty(this.EntityPM.DecCargoSplitCargoIdentifiers)) {
             for (let conItem of this.EntityPM.DecCargoSplitCargoIdentifiers) {
                 var item = new DecCargoSplitCargoIdentifierModel(conItem);
-                this.ItemsList.Insert(item);
+                this.decCargoSplitCargoIdentifierModel = item;
+                //this.ItemsList.Insert(item);
             }
         }
         //this.EntityPM = winArg.declarationPM;
@@ -384,12 +388,12 @@ export class CargoSplitGeneralTabComponent
             var counter: number = 0;
             if (this.EntityPM.DecCargoSplitCargoIdentifiers.length > 0) {
 
-                var items = this.EntityPM.DecCargoSplitCargoIdentifiers.sort((a, b) => { return (a.LineNumber === b.LineNumber) ? 0 : (a.LineNumber < b.LineNumber) ? -1 : 1 });
-                if (items.length == 0) counter = 0;
-                else {
-                    counter = items[this.EntityPM.DecCargoSplitCargoIdentifiers.length - 1].LineNumber;
-                }
-
+                //var items = this.EntityPM.DecCargoSplitCargoIdentifiers.sort((a, b) => { return (a.LineNumber === b.LineNumber) ? 0 : (a.LineNumber < b.LineNumber) ? -1 : 1 });
+                //if (items.length == 0) counter = 0;
+                //else {
+                //    counter = items[this.EntityPM.DecCargoSplitCargoIdentifiers.length - 1].LineNumber;
+                //}
+                return;
             }
 
             counter += 1;
@@ -403,60 +407,61 @@ export class CargoSplitGeneralTabComponent
             if (!this.EntityPM.DecCargoSplitCargoIdentifiers.includes(item)) {
                 this.EntityPM.AddDecCargoSplitCargoIdentifier(item);
                 var line = new DecCargoSplitCargoIdentifierModel(item);
-                this.ItemsList.Insert(line);
+                this.decCargoSplitCargoIdentifierModel = line;
+                //this.ItemsList.Insert(line);
             }
 
         }
 
     }
 
-    OnRowEnded($event) {
-        console.log("this.ItemsList.Length : " + this.ItemsList.Length);
-        if (($event) == this.ItemsList.Length) {
-            this.AddItem();
-        }
-    }
+    //OnRowEnded($event) {
+    //    console.log("this.ItemsList.Length : " + this.ItemsList.Length);
+    //    if (($event) == this.ItemsList.Length) {
+    //        this.AddItem();
+    //    }
+    //}
 
-    public SelectedRow: any = null;
-    OnRowSelected(itemComponent: any) {
-        this.SelectedRow = itemComponent;
-        if (this.ItemsList.Length == 0) {
-            this.AddItem();
-        }
-    }
+    //public SelectedRow: any = null;
+    //OnRowSelected(itemComponent: any) {
+    //    this.SelectedRow = itemComponent;
+    //    if (this.ItemsList.Length == 0) {
+    //        this.AddItem();
+    //    }
+    //}
 
-    OnFocus() {
-        if (this.ItemsList.Length == 0) {
-            this.AddItem();
-        }
-    }
+    //OnFocus() {
+    //    if (this.ItemsList.Length == 0) {
+    //        this.AddItem();
+    //    }
+    //}
 
-    DeleteButtonClicked(item: any) {
+    //DeleteButtonClicked(item: any) {
 
-        let confirmWindow = new ConfirmWindow();
-        confirmWindow.Width = 300;
-        confirmWindow.Title = TextCodeTranslator.Translate("General.O.Confirm");
+    //    let confirmWindow = new ConfirmWindow();
+    //    confirmWindow.Width = 300;
+    //    confirmWindow.Title = TextCodeTranslator.Translate("General.O.Confirm");
 
-        confirmWindow.Show(TextCodeTranslator.Translate("Customs.Declaration.O.DeletePackage"));
-        confirmWindow.Title = TextCodeTranslator.Translate("General.O.Confirm");
-        confirmWindow.WindowClosed.subscribe((event: any) => {
-            if (confirmWindow.Yes) {
-                this.DeleteSelected(item);
-            }
-            else if (confirmWindow.No) {
+    //    confirmWindow.Show(TextCodeTranslator.Translate("Customs.Declaration.O.DeletePackage"));
+    //    confirmWindow.Title = TextCodeTranslator.Translate("General.O.Confirm");
+    //    confirmWindow.WindowClosed.subscribe((event: any) => {
+    //        if (confirmWindow.Yes) {
+    //            this.DeleteSelected(item);
+    //        }
+    //        else if (confirmWindow.No) {
 
-            }
-        });
-    }
+    //        }
+    //    });
+    //}
 
-    lastDeletedItem: DecCargoSplitCargoIdentifierPM;
-    DeleteSelected(item: any) {
-        this.lastDeletedItem = item.EntityPM;
+    //lastDeletedItem: DecCargoSplitCargoIdentifierPM;
+    //DeleteSelected(item: any) {
+    //    this.lastDeletedItem = item.EntityPM;
 
-        this.ItemsList.Remove(item);
-        this.EntityPM.RemoveDecCargoSplitCargoIdentifier(item.EntityPM);
+    //    this.ItemsList.Remove(item);
+    //    this.EntityPM.RemoveDecCargoSplitCargoIdentifier(item.EntityPM);
 
-    }
+    //}
 
 
 
@@ -646,6 +651,7 @@ export class CargoSplitGeneralTabComponent
                                 this.CurrentSession.StopBusyIndicator();
                                 if (this._LastFetchDeclarationList.Direction == "E") {
                                     this.IsExportDeclaration = true;
+                                    this.AddItem();
                                 } else {
                                     this.IsExportDeclaration = false;
                                 }
@@ -735,7 +741,9 @@ export class CargoSplitGeneralTabComponent
     set ActionTypeName(value: string) { this.EntityPM.ActionTypeName = value; }
     //public get CargoTypeCode() { return this.EntityPM.CargoTypeCode; }
     get CargoTypeCode() { return this.EntityPM != null ? this.EntityPM.CargoTypeCode : null; }
-    set CargoTypeCode(value: string) { this.EntityPM.CargoTypeCode = value; }
+    set CargoTypeCode(value: string) {
+        this.EntityPM.CargoTypeCode = value;
+    }
     //public get CargoTypeName() { return this.EntityPM.CargoTypeName; }
     get CargoTypeName() { return this.EntityPM != null ? this.EntityPM.CargoTypeName : null; }
     set CargoTypeName(value: string) { this.EntityPM.CargoTypeName = value; }
@@ -1008,7 +1016,7 @@ export class CargoSplitGeneralTabComponent
             if (AppTool.IsNullOrEmpty(this.EntityPM.DecCargoSplitCargoIdentifiers[0].CargoIdentifierKey1)) {
                 errors.push("מזהה מטען מפוצל- חובה להזין מזהה מטען ראשון");
             }
-            errors.push.apply(errors,this.ItemsList.Collection[0].CheckRequired());
+            errors.push.apply(errors, this.decCargoSplitCargoIdentifierModel.CheckRequired());
 
         }
 
@@ -1321,6 +1329,7 @@ export class DecCargoSplitCargoIdentifierModel extends BaseComponent
     }
 
     setRequired() {
+       
         this.UIProperties.SetRequired("CargoIdentifierKey1", "Customs.DecCargoSplitCargoIdentifier", true);
         if (this.CargoIdentifierKey1 != null) {
             this.UIProperties.SetRequired("CargoIdentifierKey1", "Customs.DecCargoSplitCargoIdentifier", false);
@@ -1347,26 +1356,32 @@ export class DecCargoSplitCargoIdentifierModel extends BaseComponent
 
     CheckRequired() {
         var errors = [];
-        if (this.cargoIdentifireType.IsKey2Mandatory) {
-            if (this.CargoIdentifierKey2 == null) {
-                errors.push("מזהה מטען מפוצל- חובה להזין מזהה מטען שני");
+        if (this.cargoIdentifireType != null) {
+            if (this.cargoIdentifireType.IsKey2Mandatory) {
+                if (this.CargoIdentifierKey2 == null) {
+                    errors.push("מזהה מטען מפוצל- חובה להזין מזהה מטען שני");
+                }
             }
-        }
-        if (this.cargoIdentifireType.IsKey3Mandatory) {
-            if (this.CargoIdentifierKey3 == null) {
-                errors.push("מזהה מטען מפוצל- חובה להזין מזהה מטען שלישי");
+            if (this.cargoIdentifireType.IsKey3Mandatory) {
+                if (this.CargoIdentifierKey3 == null) {
+                    errors.push("מזהה מטען מפוצל- חובה להזין מזהה מטען שלישי");
+                }
             }
         }
         return errors;
     }
 
+    public SecondCargoIDPlaceholder: string = " ";
+    public ManifestNumberPlaceholder: string = " ";
+    public ThirdCargoIdPlaceholder: string = " ";
+
     ChangeCargoIdentifireType() {
         var service = new CargoIdentifireTypeListService();
         service.getSingleFromCache(this.CargoTypeCode).subscribe((response: any) => {
             if (response != null) {
-             //   this.ManifestNumberPlaceholder = response.Result.CargoIdentifierKey1Name;
-              //  this.SecondCargoIDPlaceholder = response.Result.CargoIdentifierKey2Name ?? '';
-              //  this.ThirdCargoIdPlaceholder = response.Result.CargoIdentifierKey3Name ?? '';
+                this.ManifestNumberPlaceholder = response.Result.CargoIdentifierKey1Name;
+                this.SecondCargoIDPlaceholder = response.Result.CargoIdentifierKey2Name ?? '';
+                this.ThirdCargoIdPlaceholder = response.Result.CargoIdentifierKey3Name ?? '';
                 this.CargoIdentifireType = response.Result;
                 this.setRequired();
             }
@@ -1378,13 +1393,23 @@ export class DecCargoSplitCargoIdentifierModel extends BaseComponent
     public set CargoTypeCode(newValue: string) { this.EntityPM.CargoTypeCode = newValue; }
      
     public get CargoIdentifierKey1() { return this.EntityPM.CargoIdentifierKey1; }
-    public set CargoIdentifierKey1(newValue: string) { this.EntityPM.CargoIdentifierKey1 = newValue; }
+    public set CargoIdentifierKey1(newValue: string)
+    {
+        this.EntityPM.CargoIdentifierKey1 = newValue;
+        this.setRequired();
+    }
 
     public get CargoIdentifierKey2() { return this.EntityPM.CargoIdentifierKey2; }
-    public set CargoIdentifierKey2(newValue: string) { this.EntityPM.CargoIdentifierKey2 = newValue; }
+    public set CargoIdentifierKey2(newValue: string) {
+        this.EntityPM.CargoIdentifierKey2 = newValue;
+        this.setRequired();
+    }
 
     public get CargoIdentifierKey3() { return this.EntityPM.CargoIdentifierKey3; }
-    public set CargoIdentifierKey3(newValue: string) { this.EntityPM.CargoIdentifierKey3 = newValue; }
+    public set CargoIdentifierKey3(newValue: string) {
+        this.EntityPM.CargoIdentifierKey3 = newValue;
+        this.setRequired();
+    }
 
     cargoIdentifireType: CargoIdentifireTypePM;
     public get CargoIdentifireType() { return this.cargoIdentifireType; }
