@@ -1153,6 +1153,10 @@ namespace WebFreight.Web
         [WebGet(UriTemplate = "getsinglepmbykey/{securitykey}/{id}/{tenant}")]
         public ShipmentPM GetSingleShipmentPMByKey(string securitykey, string id, int tenant)
         {
+
+            SecurityUtility.AuthenticationOnTenant(tenant);
+
+
             ShipmentQuery shipmentQuery = new ShipmentQuery(tenant); 
 
             ShipmentPM pm = shipmentQuery.GetSinglePMBySecurityKey(securitykey, id, tenant);
@@ -1166,6 +1170,9 @@ namespace WebFreight.Web
         [WebGet(UriTemplate = "getsinglepmbykeyandtenant/{securitykey}/{tenant}")]
         public ShipmentPM GetSingleShipmentPMByKeyAndTenant(string securitykey, int tenant)
         {
+
+            SecurityUtility.AuthenticationOnTenant(tenant);
+
             ShipmentQuery shipmentQuery = new ShipmentQuery(tenant);
 
             ShipmentPM pm = shipmentQuery.GetSinglePMBySecurityKeyAndTenant(securitykey, tenant);

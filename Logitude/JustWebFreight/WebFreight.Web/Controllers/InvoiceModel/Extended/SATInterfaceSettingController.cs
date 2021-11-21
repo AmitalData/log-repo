@@ -54,6 +54,7 @@ namespace WebFreight.Web.Controllers.InvoiceModel.Extended
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnTenant(tenant);
                 SATInterfaceSettingQuery sATInterfaceSettingQuery = new SATInterfaceSettingQuery(authToken.Tenant);
                 SATInterfaceSettingPM SATInterfaceSettingPM = sATInterfaceSettingQuery.GetSATInterfaceSettingPMByTenant(authToken.Tenant);
 

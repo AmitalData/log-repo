@@ -1,11 +1,11 @@
 {
-    "numTestsKeptInMemory":1,	
-    "watchForFileChanges":false,
+    "numTestsKeptInMemory": 1,
+    "watchForFileChanges": false,
     "viewportWidth": 1200,
     "viewportHeight": 800,
     "integrationFolder": "cypress/tests",
     "screenshotsFolder": "cypress/Reports/html/screenshots",
-    "projectId":"k5gju5",
+    "projectId": "k5gju5",
     "ignoreTestFiles": "*.ts",
     "env": {
         "Mode": "Development"
@@ -28,8 +28,8 @@
             "json": true
         }
     },
-    "retries": { 
-        "runMode": 0,
+    "retries": {
+        "runMode": 1,
         "openMode": 0
-      }
+    }
 }

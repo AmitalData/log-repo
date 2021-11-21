@@ -3,6 +3,7 @@ import { BaseSelectors } from '../../../Base/cypress/selectors/BaseSelectors';
 import * as BaseAssertion from '../../../Base/cypress/actions/Assertion';
 import { URLs } from '../constants/URLs';
 import { RestAPI } from '../../../Base/cypress/constants/RestAPI';
+import { ShipmentConstants } from '../constants/constants';
 import { RequestAliases } from '../../../Base/cypress/constants/RequestAliases';
 
 export function NavigateToShipmentViewWizerd() {
@@ -35,6 +36,10 @@ export function EditShipmentView() {
     cy.Click(ShipmentSelectors.EditViewButton, null, true)
     cy.get(ShipmentSelectors.ListBoxItem).eq(0).click();
     cy.Click(ShipmentSelectors.ViewAddButton, null)
+    cy.Click(ShipmentSelectors.ViewAddFilter, null)
+    cy.FillLogTextBox(ShipmentSelectors.ViewFilterSearchField, "Shipment Type")
+    cy.get(ShipmentSelectors.LogitudeCheckBox).eq(2).click();
+    cy.FillLogLov(ShipmentSelectors.ViewShipmentTypeValue, ShipmentConstants.Air, true)
 }
 
 export function UpdateShipmentView() {

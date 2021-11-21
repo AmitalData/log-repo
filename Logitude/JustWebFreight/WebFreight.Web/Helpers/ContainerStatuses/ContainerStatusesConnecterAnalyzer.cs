@@ -59,6 +59,7 @@ namespace WebFreight.Web.Helpers.Analyzers
         private string objectTableName = "Container";
         private ShipmentPM shipmentPM;
         private PortRepository portRepository;
+        private PortTimeZoneRepository portTimeZoneRepository;
         private ComputingPartnerTranslationHelper computingPartnerTranslator;
         private string oceanInsightsId;
         private string container_number;
@@ -83,22 +84,26 @@ namespace WebFreight.Web.Helpers.Analyzers
         private string emptyPickup_initial;
         private string emptyPickup_actual;
         private string emptyPickupLocation;
+        private string emptyPickupTimeZone;
         private string gateInDate_last;
         private string gateInDate_initial;
         private string gateInDate_actual;
         private string departureLocation;
         private string destinationLocation;
         private string origin_loc_locode;
-        string origin_pickup_planned_initial = null;
-        string origin_pickup_planned_last = null;
-        string origin_pickup_actual = null;
-        string pol_loc_locode = null;
-        string pol_loaded_planned_initial = null;
-        string pol_loaded_planned_last = null;
-        string pol_loaded_actual = null;
-        string ts_count = null;
-        string tsp1_loc_locode = null;
-        string tsp1_vslarrival_planned_initial = null;
+        private string origin_loc_timezone;
+        private string origin_pickup_planned_initial = null;
+        private string origin_pickup_planned_last = null;
+        private string origin_pickup_actual = null;
+        private string pol_loc_locode = null;
+        private string pol_loc_timezone = null;
+        private string pol_loaded_planned_initial = null;
+        private string pol_loaded_planned_last = null;
+        private string pol_loaded_actual = null;
+        private string ts_count = null;
+        private string tsp1_loc_locode = null;
+        private string tsp1_loc_timezone = null;
+        private string tsp1_vslarrival_planned_initial = null;
         string tsp1_vslarrival_planned_last = null;
         string tsp1_vslarrival_actual = null;
         string tsp1_vslarrival_detected = null;
@@ -113,6 +118,7 @@ namespace WebFreight.Web.Helpers.Analyzers
         string tsp1_vsldeparture_detected = null ; 
         string tsp1_discharge_planned_initial = null;
         string tsp2_loc_locode = null;
+        string tsp2_loc_timezone = null;
         string tsp2_vslarrival_planned_initial = null;
         string tsp2_vslarrival_planned_last = null;
         string tsp2_vslarrival_actual = null;
@@ -128,6 +134,7 @@ namespace WebFreight.Web.Helpers.Analyzers
         string tsp2_vsldeparture_actual = null;
         string tsp2_vsldeparture_detected = null;
         string tsp3_loc_locode = null;
+        string tsp3_loc_timezone = null;
         string tsp3_vslarrival_planned_initial = null;
         string tsp3_vslarrival_planned_last = null;
         string tsp3_vslarrival_actual = null;
@@ -143,6 +150,7 @@ namespace WebFreight.Web.Helpers.Analyzers
         string tsp3_vsldeparture_actual = null;
         string tsp3_vsldeparture_detected = null;
         string tsp4_loc_locode = null;
+        string tsp4_loc_timezone = null;
         string tsp4_vslarrival_planned_initial = null;
         string tsp4_vslarrival_planned_last = null;
         string tsp4_vslarrival_actual = null;
@@ -168,6 +176,7 @@ namespace WebFreight.Web.Helpers.Analyzers
         string leg5_vessel_name = null;
         string leg5_voyage = null;
         string pod_loc_locode = null;
+        string pod_loc_timezone = null;
         string pod_discharge_planned_initial = null;
         string pod_discharge_planned_last = null;
         string pod_discharge_actual = null;
@@ -175,10 +184,12 @@ namespace WebFreight.Web.Helpers.Analyzers
         string pod_departure_planned_last = null;
         string pod_departure_actual = null;
         string dlv_loc_locode = null;
+        string dlv_loc_timezone = null;
         string dlv_delivery_planned_initial = null;
         string dlv_delivery_planned_last = null;
         string dlv_delivery_actual = null;
         string lif_loc_locode = null;
+        string lif_loc_timezone = null;
         string lif_arrival_planned_initial = null;
         string lif_arrival_planned_last = null;
         string lif_arrival_actual = null;
@@ -186,6 +197,7 @@ namespace WebFreight.Web.Helpers.Analyzers
         string lif_departure_planned_last = null;
         string lif_departure_actual = null;
         string empty_return_loc_locode = null;
+        string empty_return_loc_timezone = null;
         string empty_return_planned_initial = null;
         string empty_return_planned_last = null;
         string empty_return_actual = null;
@@ -194,7 +206,8 @@ namespace WebFreight.Web.Helpers.Analyzers
         string customs_release_state = null;
         string carrier_release_state = null;
         string availability_date = null;
-        string availability_loc =  null;
+        string availability_locode =  null;
+        string availability_timezone = null;
         string POLShipmentUpdateIndicator = null;
         string PODShipmentUpdateIndicator = null;
         string computingPartnerCode;
@@ -395,6 +408,7 @@ namespace WebFreight.Web.Helpers.Analyzers
             if (emptyPickupLocationElement != null)
             {
                 emptyPickupLocation = emptyPickupLocationElement.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "locode").FirstOrDefault()?.InnerText;
+                emptyPickupTimeZone = emptyPickupLocationElement.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "timezone").FirstOrDefault()?.InnerText;
             }
         }
         private void GetDepartureLocationElement(XmlNode node)
@@ -404,6 +418,7 @@ namespace WebFreight.Web.Helpers.Analyzers
             {
                 departureLocation = departureLocationElement.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "name").FirstOrDefault()?.InnerText;
                 pol_loc_locode = departureLocationElement.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "locode").FirstOrDefault()?.InnerText;
+                pol_loc_timezone = departureLocationElement.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "timezone").FirstOrDefault()?.InnerText;
             }
         }
         private void GetDestinationLocationElement(XmlNode node)
@@ -413,6 +428,7 @@ namespace WebFreight.Web.Helpers.Analyzers
             {
                 destinationLocation = destinationLocationElement.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "name").FirstOrDefault()?.InnerText;
                 pod_loc_locode = destinationLocationElement.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "locode").FirstOrDefault()?.InnerText;
+                pod_loc_timezone = destinationLocationElement.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "timezone").FirstOrDefault()?.InnerText;
 
             }
         }
@@ -422,6 +438,7 @@ namespace WebFreight.Web.Helpers.Analyzers
             if (origin_locElement != null)
             {
                 origin_loc_locode = origin_locElement.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "locode").FirstOrDefault()?.InnerText;
+                origin_loc_timezone = origin_locElement.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "timezone").FirstOrDefault()?.InnerText;
             }
         }
         private void GetTransshipment1Leg(XmlNode node)
@@ -430,7 +447,9 @@ namespace WebFreight.Web.Helpers.Analyzers
             if (tsp1_locElement != null)
             {
                 tsp1_loc_locode = tsp1_locElement.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "locode").FirstOrDefault()?.InnerText;
+                tsp1_loc_timezone = tsp1_locElement.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "timezone").FirstOrDefault()?.InnerText;
             }
+
             tsp1_vslarrival_planned_initial = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp1_vslarrival_planned_initial").FirstOrDefault()?.InnerText;
             tsp1_vslarrival_planned_last = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp1_vslarrival_planned_last").FirstOrDefault()?.InnerText;
             tsp1_vslarrival_actual = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp1_vslarrival_actual").FirstOrDefault()?.InnerText;
@@ -452,7 +471,9 @@ namespace WebFreight.Web.Helpers.Analyzers
             if (tsp2_locElement != null)
             {
                 tsp2_loc_locode = tsp2_locElement.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "locode").FirstOrDefault()?.InnerText;
+                tsp2_loc_timezone = tsp2_locElement.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "timezone").FirstOrDefault()?.InnerText;
             }
+
             tsp2_vslarrival_planned_initial = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp2_vslarrival_planned_initial").FirstOrDefault()?.InnerText;
             tsp2_vslarrival_planned_last = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp2_vslarrival_planned_last").FirstOrDefault()?.InnerText;
             tsp2_vslarrival_actual = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp2_vslarrival_actual").FirstOrDefault()?.InnerText;
@@ -474,7 +495,9 @@ namespace WebFreight.Web.Helpers.Analyzers
             if (tsp3_locElement != null)
             {
                 tsp3_loc_locode = tsp3_locElement.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "locode").FirstOrDefault()?.InnerText;
+                tsp3_loc_timezone = tsp3_locElement.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "timezone").FirstOrDefault()?.InnerText;
             }
+
             tsp3_vslarrival_planned_initial = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp3_vslarrival_planned_initial").FirstOrDefault()?.InnerText;
             tsp3_vslarrival_planned_last = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp3_vslarrival_planned_last").FirstOrDefault()?.InnerText;
             tsp3_vslarrival_actual = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp3_vslarrival_actual").FirstOrDefault()?.InnerText;
@@ -496,7 +519,9 @@ namespace WebFreight.Web.Helpers.Analyzers
             if (tsp4_locElement != null)
             {
                 tsp4_loc_locode = tsp4_locElement.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "locode").FirstOrDefault()?.InnerText;
+                tsp4_loc_timezone = tsp4_locElement.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "timezone").FirstOrDefault()?.InnerText;
             }
+
             tsp4_vslarrival_planned_initial = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp4_vslarrival_planned_initial").FirstOrDefault()?.InnerText;
             tsp4_vslarrival_planned_last = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp4_vslarrival_planned_last").FirstOrDefault()?.InnerText;
             tsp4_vslarrival_actual = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp4_vslarrival_actual").FirstOrDefault()?.InnerText;
@@ -563,7 +588,9 @@ namespace WebFreight.Web.Helpers.Analyzers
             if (dlv_locElement != null)
             {
                 dlv_loc_locode = dlv_locElement.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "locode").FirstOrDefault()?.InnerText;
+                dlv_loc_timezone = dlv_locElement.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "timezone").FirstOrDefault()?.InnerText;
             }
+
             dlv_delivery_planned_initial = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "dlv_delivery_planned_initial").FirstOrDefault()?.InnerText;
             dlv_delivery_planned_last = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "dlv_delivery_planned_last").FirstOrDefault()?.InnerText;
             dlv_delivery_actual = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "dlv_delivery_actual").FirstOrDefault()?.InnerText;
@@ -574,7 +601,9 @@ namespace WebFreight.Web.Helpers.Analyzers
             if (lif_locElement != null)
             {
                 lif_loc_locode = lif_locElement.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "locode").FirstOrDefault()?.InnerText;
+                lif_loc_timezone = lif_locElement.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "timezone").FirstOrDefault()?.InnerText;
             }
+
             lif_arrival_planned_last = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "lif_arrival_planned_last").FirstOrDefault()?.InnerText;
             lif_arrival_planned_initial = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "lif_arrival_planned_initial").FirstOrDefault()?.InnerText;
             lif_arrival_actual = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "lif_arrival_actual").FirstOrDefault()?.InnerText;
@@ -588,7 +617,9 @@ namespace WebFreight.Web.Helpers.Analyzers
             if (empty_return_locElement != null)
             {
                 empty_return_loc_locode = empty_return_locElement.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "locode").FirstOrDefault()?.InnerText;
+                empty_return_loc_timezone = empty_return_locElement.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "timezone").FirstOrDefault()?.InnerText;
             }
+
             empty_return_planned_initial = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "empty_return_planned_initial").FirstOrDefault()?.InnerText;
             empty_return_planned_last = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "empty_return_planned_last").FirstOrDefault()?.InnerText;
             empty_return_actual = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "empty_return_actual").FirstOrDefault()?.InnerText;
@@ -603,7 +634,8 @@ namespace WebFreight.Web.Helpers.Analyzers
             XmlElement availabilityemptyPickupLocationElement = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "availability_loc").FirstOrDefault();
             if (availabilityemptyPickupLocationElement != null)
             {
-                availability_loc = availabilityemptyPickupLocationElement.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "locode").FirstOrDefault()?.InnerText;
+                availability_locode = availabilityemptyPickupLocationElement.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "locode").FirstOrDefault()?.InnerText;
+                availability_timezone = availabilityemptyPickupLocationElement.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "timezone").FirstOrDefault()?.InnerText;
             }
         }
 
@@ -675,6 +707,7 @@ namespace WebFreight.Web.Helpers.Analyzers
             this.shipmentRepository = new ShipmentRepository(shipmentContext);
             this.shipmentQuery = new ShipmentQuery(shipmentRepository);
             this.portRepository = new PortRepository(logitudeTenant.Value);
+            this.portTimeZoneRepository = new PortTimeZoneRepository(logitudeTenant.Value);
             this.computingPartnerTranslator = new ComputingPartnerTranslationHelper(logitudeTenant.Value);
         }
         private bool IsUpdatingShipmentAndContainer()
@@ -934,31 +967,30 @@ namespace WebFreight.Web.Helpers.Analyzers
         {
             if (!string.IsNullOrEmpty(createdDate))
             {
-                return ConvertStringToDateTime(createdDate);
+                return AnalyzeEventDateValue(createdDate);
             }
-
             return null;
         }
         private DateTime? ComputeDepartureDate()
         {
             if (!string.IsNullOrEmpty(ATD_detected))
             {
-                return ConvertStringToDateTime(ATD_detected);
+                return ConvertStringToDateTime_old(ATD_detected);
             }
 
             else if (!string.IsNullOrEmpty(ATD_actual))
             {
-                return ConvertStringToDateTime(ATD_actual);
+                return ConvertStringToDateTime_old(ATD_actual);
             }
 
             else if (!string.IsNullOrEmpty(ETD_last))
             {
-                return ConvertStringToDateTime(ETD_last);
+                return ConvertStringToDateTime_old(ETD_last);
             }
 
             else if (!string.IsNullOrEmpty(ETD_initial))
             {
-                return ConvertStringToDateTime(ETD_initial);
+                return ConvertStringToDateTime_old(ETD_initial);
             }
 
             return null;
@@ -967,27 +999,27 @@ namespace WebFreight.Web.Helpers.Analyzers
         {
             if (!string.IsNullOrEmpty(ATA_detected))
             {
-                return ConvertStringToDateTime(ATA_detected);
+                return ConvertStringToDateTime_old(ATA_detected);
             }
 
             else if (!string.IsNullOrEmpty(ATA_actual))
             {
-                return ConvertStringToDateTime(ATA_actual);
+                return ConvertStringToDateTime_old(ATA_actual);
             }
 
             else if (!string.IsNullOrEmpty(ETA_last))
             {
-                return ConvertStringToDateTime(ETA_last);
+                return ConvertStringToDateTime_old(ETA_last);
             }
 
             else if (!string.IsNullOrEmpty(ETA_initial))
             {
-                return ConvertStringToDateTime(ETA_initial);
+                return ConvertStringToDateTime_old(ETA_initial);
             }
 
             else if (!string.IsNullOrEmpty(ETA_predection))
             {
-                return ConvertStringToDateTime(ETA_predection);
+                return ConvertStringToDateTime_old(ETA_predection);
             }
 
             return null;
@@ -1209,65 +1241,23 @@ namespace WebFreight.Web.Helpers.Analyzers
         private ContainerUpdatedFields BuildContainerUpdatedFields()
         {
             ContainerUpdatedFields containerUpdatedFields = new ContainerUpdatedFields();
-            containerUpdatedFields.MainCarriageETD = this.ComputeMainCarriageETD();
-            containerUpdatedFields.MainCarriageETA = this.ComputeMainCarriageETA();
-            containerUpdatedFields.MainCarriageATD = this.ComputeMainCarriageATD();
-            containerUpdatedFields.MainCarriageATA = this.ComputeMainCarriageATA();
-            containerUpdatedFields.EstimatedEmptyPickupDate = this.ComputeEstimatedEmptyPickupDate();
-            containerUpdatedFields.ActualEmptyPickupDate = this.ComputeActualEmptyPickupDate();
-            containerUpdatedFields.EstimatedPOLArrival = this.ComputeEstimatedGateInDate();
-            containerUpdatedFields.ActualPOLArrival = this.ComputeActualGateInDate();
-            containerUpdatedFields.EmptyPickupLocation = this.GetTranslatedPortCode(emptyPickupLocation);            
-            containerUpdatedFields.DepartureLocation = this.departureLocation;
-            containerUpdatedFields.DestinationLocation = this.destinationLocation;
             containerUpdatedFields.CurrentStatusDate = this.GetEventDate();
             containerUpdatedFields.CurrentStatus = this.GetContainerStatusName();
             containerUpdatedFields.CurrentLocation = this.ComputeCurrentStatusLocation();
+            containerUpdatedFields.EmptyPickupLocation = this.GetTranslatedPortCode(emptyPickupLocation);
+            containerUpdatedFields.DepartureLocation = this.departureLocation;
+            containerUpdatedFields.DestinationLocation = this.destinationLocation;           
             containerUpdatedFields.OriginLocation = this.GetTranslatedPortCode(origin_loc_locode);
-            containerUpdatedFields.EstimatedOriginPickup = this.ComputeEstimatedOriginPickup();
-            containerUpdatedFields.ActualOriginPickup = this.ComputeActualOriginPickup();
             containerUpdatedFields.POLLocation = this.GetTranslatedPortCode(pol_loc_locode);
-            containerUpdatedFields.EstimatedPOLLoaded = this.ComputeEstimatedPOLLoaded();
-            containerUpdatedFields.ActualPOLLoaded = this.ComputeActualPOLLoaded();
-            containerUpdatedFields.EstimatedPOLVesselDeparture = this.ComputeEstimatedPOLVesselDeparture();
-            containerUpdatedFields.ActualPOLVesselDeparture = ComputeActualPOLVesselDeparture();
-            containerUpdatedFields.TransshipmentCount = ts_count;
             containerUpdatedFields.Transshipment1Location = this.GetTranslatedPortCode(tsp1_loc_locode);
-            containerUpdatedFields.EstimatedTrans1VesselArrival = this.ComputeEstimatedTrans1VesselArrival();
-            containerUpdatedFields.ActualTransshipment1VesselArrival = this.ComputeActualTransshipment1VesselArrival();
-            containerUpdatedFields.EstimatedTransshipment1Discharge = this.ComputeEstimatedTransshipment1Discharge();
-            containerUpdatedFields.ActualTransshipment1Discharge = ComputeActualTransshipment1Discharge();
-            containerUpdatedFields.EstimatedTransshipment1Loaded = this.ComputeEstimatedTransshipment1Loaded();
-            containerUpdatedFields.ActualTransshipment1Loaded = ComputeActualTransshipment1Loaded();
-            containerUpdatedFields.EstimatedTrans1VesselDeparture = this.ComputeEstimatedTransshipment1VesselDeparture();
-            containerUpdatedFields.ActualTrans1VesselDeparture = ComputeActualTransshipment1VesselDeparture();
             containerUpdatedFields.Transshipment2Location = this.GetTranslatedPortCode(tsp2_loc_locode);
-            containerUpdatedFields.EstimatedTrans2VesselArrival = this.ComputeEstimatedTrans2VesselArrival();
-            containerUpdatedFields.ActualTransshipment2VesselArrival = this.ComputeActualTransshipment2VesselArrival();
-            containerUpdatedFields.EstimatedTransshipment2Discharge = this.ComputeEstimatedTransshipment2Discharge();
-            containerUpdatedFields.ActualTransshipment2Discharge = ComputeActualTransshipment2Discharge();
-            containerUpdatedFields.EstimatedTransshipment2Loaded = this.ComputeEstimatedTransshipment2Loaded();
-            containerUpdatedFields.ActualTransshipment2Loaded = ComputeActualTransshipment2Loaded();
-            containerUpdatedFields.EstimatedTrans2VesselDeparture = this.ComputeEstimatedTransshipment2VesselDeparture();
-            containerUpdatedFields.ActualTrans2VesselDeparture = ComputeActualTransshipment2VesselDeparture();
             containerUpdatedFields.Transshipment3Location = this.GetTranslatedPortCode(tsp3_loc_locode);
-            containerUpdatedFields.EstimatedTrans3VesselArrival = this.ComputeEstimatedTrans3VesselArrival();
-            containerUpdatedFields.ActualTransshipment3VesselArrival = this.ComputeActualTransshipment3VesselArrival();
-            containerUpdatedFields.EstimatedTransshipment3Discharge = this.ComputeEstimatedTransshipment3Discharge();
-            containerUpdatedFields.ActualTransshipment3Discharge = ComputeActualTransshipment3Discharge();
-            containerUpdatedFields.EstimatedTransshipment3Loaded = this.ComputeEstimatedTransshipment3Loaded();
-            containerUpdatedFields.ActualTransshipment3Loaded = ComputeActualTransshipment3Loaded();
-            containerUpdatedFields.EstimatedTrans3VesselDeparture = this.ComputeEstimatedTransshipment3VesselDeparture();
-            containerUpdatedFields.ActualTrans3VesselDeparture = ComputeActualTransshipment3VesselDeparture();
             containerUpdatedFields.Transshipment4Location = this.GetTranslatedPortCode(tsp4_loc_locode);
-            containerUpdatedFields.EstimatedTrans4VesselArrival = this.ComputeEstimatedTrans4VesselArrival();
-            containerUpdatedFields.ActualTransshipment4VesselArrival = this.ComputeActualTransshipment4VesselArrival();
-            containerUpdatedFields.EstimatedTransshipment4Discharge = this.ComputeEstimatedTransshipment4Discharge();
-            containerUpdatedFields.ActualTransshipment4Discharge = ComputeActualTransshipment4Discharge();
-            containerUpdatedFields.EstimatedTransshipment4Loaded = this.ComputeEstimatedTransshipment4Loaded();
-            containerUpdatedFields.ActualTransshipment4Loaded = ComputeActualTransshipment4Loaded();
-            containerUpdatedFields.EstimatedTrans4VesselDeparture = this.ComputeEstimatedTransshipment4VesselDeparture();
-            containerUpdatedFields.ActualTrans4VesselDeparture = ComputeActualTransshipment4VesselDeparture();
+            containerUpdatedFields.PODLocation = this.GetTranslatedPortCode(pod_loc_locode);
+            containerUpdatedFields.DeliveryLocation = this.GetTranslatedPortCode(dlv_loc_locode);
+            containerUpdatedFields.LIFLocation = this.GetTranslatedPortCode(lif_loc_locode);
+            containerUpdatedFields.EmptyReturnLocation = this.GetTranslatedPortCode(empty_return_loc_locode);
+            containerUpdatedFields.AvailabilityLocation = this.GetTranslatedPortCode(availability_locode);
             containerUpdatedFields.Leg1Vessel = leg1_vessel_name;
             containerUpdatedFields.Leg1Voyage = leg1_voyage;
             containerUpdatedFields.Leg2Vessel = leg2_vessel_name;
@@ -1278,30 +1268,74 @@ namespace WebFreight.Web.Helpers.Analyzers
             containerUpdatedFields.Leg4Voyage = leg4_voyage;
             containerUpdatedFields.Leg5Vessel = leg5_vessel_name;
             containerUpdatedFields.Leg5Voyage = leg5_voyage;
-            containerUpdatedFields.PODLocation = this.GetTranslatedPortCode(pod_loc_locode);
+            containerUpdatedFields.CustomsReleaseState = customs_release_state;
+            containerUpdatedFields.CarrierReleaseState = carrier_release_state;
+            containerUpdatedFields.TransshipmentCount = ts_count;
+
+            containerUpdatedFields.MainCarriageETD = this.ComputeMainCarriageETD();
+            containerUpdatedFields.MainCarriageETA = this.ComputeMainCarriageETA();
+            containerUpdatedFields.MainCarriageATD = this.ComputeMainCarriageATD();
+            containerUpdatedFields.MainCarriageATA = this.ComputeMainCarriageATA();
+            containerUpdatedFields.EstimatedEmptyPickupDate = this.ComputeEstimatedEmptyPickupDate();
+            containerUpdatedFields.ActualEmptyPickupDate = this.ComputeActualEmptyPickupDate();
+            containerUpdatedFields.EstimatedPOLArrival = this.ComputeEstimatedGateInDate();
+            containerUpdatedFields.ActualPOLArrival = this.ComputeActualGateInDate();
+            containerUpdatedFields.EstimatedOriginPickup = this.ComputeEstimatedOriginPickup();
+            containerUpdatedFields.ActualOriginPickup = this.ComputeActualOriginPickup();            
+            containerUpdatedFields.EstimatedPOLLoaded = this.ComputeEstimatedPOLLoaded();
+            containerUpdatedFields.ActualPOLLoaded = this.ComputeActualPOLLoaded();
+            containerUpdatedFields.EstimatedPOLVesselDeparture = this.ComputeEstimatedPOLVesselDeparture();
+            containerUpdatedFields.ActualPOLVesselDeparture = ComputeActualPOLVesselDeparture();
+            containerUpdatedFields.EstimatedTrans1VesselArrival = this.ComputeEstimatedTrans1VesselArrival();
+            containerUpdatedFields.ActualTransshipment1VesselArrival = this.ComputeActualTransshipment1VesselArrival();
+            containerUpdatedFields.EstimatedTransshipment1Discharge = this.ComputeEstimatedTransshipment1Discharge();
+            containerUpdatedFields.ActualTransshipment1Discharge = ComputeActualTransshipment1Discharge();
+            containerUpdatedFields.EstimatedTransshipment1Loaded = this.ComputeEstimatedTransshipment1Loaded();
+            containerUpdatedFields.ActualTransshipment1Loaded = ComputeActualTransshipment1Loaded();
+            containerUpdatedFields.EstimatedTrans1VesselDeparture = this.ComputeEstimatedTransshipment1VesselDeparture();
+            containerUpdatedFields.ActualTrans1VesselDeparture = ComputeActualTransshipment1VesselDeparture();            
+            containerUpdatedFields.EstimatedTrans2VesselArrival = this.ComputeEstimatedTrans2VesselArrival();
+            containerUpdatedFields.ActualTransshipment2VesselArrival = this.ComputeActualTransshipment2VesselArrival();
+            containerUpdatedFields.EstimatedTransshipment2Discharge = this.ComputeEstimatedTransshipment2Discharge();
+            containerUpdatedFields.ActualTransshipment2Discharge = ComputeActualTransshipment2Discharge();
+            containerUpdatedFields.EstimatedTransshipment2Loaded = this.ComputeEstimatedTransshipment2Loaded();
+            containerUpdatedFields.ActualTransshipment2Loaded = ComputeActualTransshipment2Loaded();
+            containerUpdatedFields.EstimatedTrans2VesselDeparture = this.ComputeEstimatedTransshipment2VesselDeparture();
+            containerUpdatedFields.ActualTrans2VesselDeparture = ComputeActualTransshipment2VesselDeparture();
+            containerUpdatedFields.EstimatedTrans3VesselArrival = this.ComputeEstimatedTrans3VesselArrival();
+            containerUpdatedFields.ActualTransshipment3VesselArrival = this.ComputeActualTransshipment3VesselArrival();
+            containerUpdatedFields.EstimatedTransshipment3Discharge = this.ComputeEstimatedTransshipment3Discharge();
+            containerUpdatedFields.ActualTransshipment3Discharge = ComputeActualTransshipment3Discharge();
+            containerUpdatedFields.EstimatedTransshipment3Loaded = this.ComputeEstimatedTransshipment3Loaded();
+            containerUpdatedFields.ActualTransshipment3Loaded = ComputeActualTransshipment3Loaded();
+            containerUpdatedFields.EstimatedTrans3VesselDeparture = this.ComputeEstimatedTransshipment3VesselDeparture();
+            containerUpdatedFields.ActualTrans3VesselDeparture = ComputeActualTransshipment3VesselDeparture();
+            containerUpdatedFields.EstimatedTrans4VesselArrival = this.ComputeEstimatedTrans4VesselArrival();
+            containerUpdatedFields.ActualTransshipment4VesselArrival = this.ComputeActualTransshipment4VesselArrival();
+            containerUpdatedFields.EstimatedTransshipment4Discharge = this.ComputeEstimatedTransshipment4Discharge();
+            containerUpdatedFields.ActualTransshipment4Discharge = ComputeActualTransshipment4Discharge();
+            containerUpdatedFields.EstimatedTransshipment4Loaded = this.ComputeEstimatedTransshipment4Loaded();
+            containerUpdatedFields.ActualTransshipment4Loaded = ComputeActualTransshipment4Loaded();
+            containerUpdatedFields.EstimatedTrans4VesselDeparture = this.ComputeEstimatedTransshipment4VesselDeparture();
+            containerUpdatedFields.ActualTrans4VesselDeparture = ComputeActualTransshipment4VesselDeparture();            
             containerUpdatedFields.EstimatedPODVesselArrival = ComputeEstimatedPODVesselArrival();
             containerUpdatedFields.ActualPODVesselArrival = ComputeActualPODVesselArrival();
             containerUpdatedFields.EstimatedPODDischarge = ComputeEstimatedPODDischarge();
             containerUpdatedFields.ActualPODDischarge = ComputeActualPODDischarge();
             containerUpdatedFields.EstimatedPODDeparture = ComputeEstimatedPODDeparture();
-            containerUpdatedFields.ActualPODDeparture = ComputeActualPODDeparture();
-            containerUpdatedFields.DeliveryLocation = this.GetTranslatedPortCode(dlv_loc_locode);
+            containerUpdatedFields.ActualPODDeparture = ComputeActualPODDeparture();            
             containerUpdatedFields.EstimatedDelivery = ComputeEstimatedDelivery();
-            containerUpdatedFields.ActualDelivery = ComputeActualDelivery();
-            containerUpdatedFields.LIFLocation = this.GetTranslatedPortCode(lif_loc_locode);
+            containerUpdatedFields.ActualDelivery = ComputeActualDelivery();            
             containerUpdatedFields.EstimatedLIFArrival = ComputeEstimatedLIFArrival();
             containerUpdatedFields.ActualLIFArrival = ComputeActualLIFArrival();
             containerUpdatedFields.EstimatedOnCarriageDeparture = ComputeEstimatedOnCarriageDeparture();
             containerUpdatedFields.ActualOnCarriageDeparture = this.ComputeActualOnCarriageDeparture();
             containerUpdatedFields.EmptyReturnLocation = this.GetTranslatedPortCode(empty_return_loc_locode);
             containerUpdatedFields.EstimatedEmptyReturn = this.ComputeEstimatedEmptyReturn();
-            containerUpdatedFields.ActualEmptyReturn = this.ComputeActualEmptyReturn();
-            containerUpdatedFields.CustomsReleaseState = customs_release_state;
-            containerUpdatedFields.CustomsReleaseDate = this.ComputeCustomsReleaseDate();
-            containerUpdatedFields.CarrierReleaseState = carrier_release_state;
+            containerUpdatedFields.ActualEmptyReturn = this.ComputeActualEmptyReturn();            
+            containerUpdatedFields.CustomsReleaseDate = this.ComputeCustomsReleaseDate();            
             containerUpdatedFields.CarrierReleaseDate = this.ComputeCarrierReleaseDate();
-            containerUpdatedFields.AvailablityDate = this.ComputeAvailablityDate();
-            containerUpdatedFields.AvailabilityLocation = this.GetTranslatedPortCode(availability_loc);
+            containerUpdatedFields.AvailablityDate = this.ComputeAvailablityDate();            
 
             return containerUpdatedFields;
         }
@@ -1309,12 +1343,12 @@ namespace WebFreight.Web.Helpers.Analyzers
         {
             if (!string.IsNullOrEmpty(ETD_last))
             {
-                return ConvertStringToDateTime(ETD_last);
+                return AnalyzeXMLDateValue(ETD_last, pol_loc_timezone);
             }
 
             else if (!string.IsNullOrEmpty(ETD_initial))
             {
-                return ConvertStringToDateTime(ETD_initial);
+                return AnalyzeXMLDateValue(ETD_initial, pol_loc_timezone);
             }
 
             return null;
@@ -1323,17 +1357,17 @@ namespace WebFreight.Web.Helpers.Analyzers
         {
             if (!string.IsNullOrEmpty(ETA_last))
             {
-                return ConvertStringToDateTime(ETA_last);
+                return ConvertStringToDateTime_old(ETA_last);
             }
 
             else if (!string.IsNullOrEmpty(ETA_initial))
             {
-                return ConvertStringToDateTime(ETA_initial);
+                return ConvertStringToDateTime_old(ETA_initial);
             }
 
             else if (!string.IsNullOrEmpty(ETA_predection))
             {
-                return ConvertStringToDateTime(ETA_predection);
+                return ConvertStringToDateTime_old(ETA_predection);
             }
 
             return null;
@@ -1342,12 +1376,12 @@ namespace WebFreight.Web.Helpers.Analyzers
         {
             if (!string.IsNullOrEmpty(ATD_detected))
             {
-                return ConvertStringToDateTime(ATD_detected);
+                return ConvertStringToDateTime_old(ATD_detected);
             }
 
             else if (!string.IsNullOrEmpty(ATD_actual))
             {
-                return ConvertStringToDateTime(ATD_actual);
+                return ConvertStringToDateTime_old(ATD_actual);
             }
 
             return null;
@@ -1356,12 +1390,12 @@ namespace WebFreight.Web.Helpers.Analyzers
         {
             if (!string.IsNullOrEmpty(ATA_detected))
             {
-                return ConvertStringToDateTime(ATA_detected);
+                return ConvertStringToDateTime_old(ATA_detected);
             }
 
             else if (!string.IsNullOrEmpty(ATA_actual))
             {
-                return ConvertStringToDateTime(ATA_actual);
+                return ConvertStringToDateTime_old(ATA_actual);
             }
 
             return null;
@@ -1370,12 +1404,12 @@ namespace WebFreight.Web.Helpers.Analyzers
         {
             if (!string.IsNullOrEmpty(emptyPickup_last))
             {
-                return ConvertStringToDateTime(emptyPickup_last);
+                return AnalyzeXMLDateValue(emptyPickup_last, emptyPickupTimeZone);
             }
 
             else if (!string.IsNullOrEmpty(emptyPickup_initial))
             {
-                return ConvertStringToDateTime(emptyPickup_initial);
+                return AnalyzeXMLDateValue(emptyPickup_initial, emptyPickupTimeZone);
             }
 
             return null;
@@ -1384,7 +1418,7 @@ namespace WebFreight.Web.Helpers.Analyzers
         {
             if (!string.IsNullOrEmpty(emptyPickup_actual))
             {
-                return ConvertStringToDateTime(emptyPickup_actual);
+                return AnalyzeXMLDateValue(emptyPickup_actual, emptyPickupTimeZone);
             }
 
             return null;
@@ -1393,12 +1427,12 @@ namespace WebFreight.Web.Helpers.Analyzers
         {
             if (!string.IsNullOrEmpty(gateInDate_last))
             {
-                return ConvertStringToDateTime(gateInDate_last);
+                return AnalyzeXMLDateValue(gateInDate_last, pol_loc_timezone);
             }
 
             else if (!string.IsNullOrEmpty(gateInDate_initial))
             {
-                return ConvertStringToDateTime(gateInDate_initial);
+                return AnalyzeXMLDateValue(gateInDate_initial, pol_loc_timezone);
             }
 
             return null;
@@ -1407,7 +1441,7 @@ namespace WebFreight.Web.Helpers.Analyzers
         {
             if (!string.IsNullOrEmpty(gateInDate_actual))
             {
-                return ConvertStringToDateTime(gateInDate_actual);
+                return AnalyzeXMLDateValue(gateInDate_actual, pol_loc_timezone);
             }
 
             return null;
@@ -1437,12 +1471,12 @@ namespace WebFreight.Web.Helpers.Analyzers
         {
             if (!string.IsNullOrEmpty(origin_pickup_planned_last))
             {
-                return ConvertStringToDateTime(origin_pickup_planned_last);
+                return AnalyzeXMLDateValue(origin_pickup_planned_last, origin_loc_timezone);
             }
 
             else if (!string.IsNullOrEmpty(origin_pickup_planned_initial))
             {
-                return ConvertStringToDateTime(origin_pickup_planned_initial);
+                return AnalyzeXMLDateValue(origin_pickup_planned_initial, origin_loc_timezone);
             }
 
             return null;
@@ -1451,12 +1485,12 @@ namespace WebFreight.Web.Helpers.Analyzers
         {
             if (!string.IsNullOrEmpty(pol_loaded_planned_last))
             {
-                return ConvertStringToDateTime(pol_loaded_planned_last);
+                return AnalyzeXMLDateValue(pol_loaded_planned_last, pol_loc_timezone);
             }
 
             else if (!string.IsNullOrEmpty(pol_loaded_planned_initial))
             {
-                return ConvertStringToDateTime(pol_loaded_planned_initial);
+                return AnalyzeXMLDateValue(pol_loaded_planned_initial, pol_loc_timezone);
             }
 
             return null;
@@ -1465,7 +1499,7 @@ namespace WebFreight.Web.Helpers.Analyzers
         {
             if (!string.IsNullOrEmpty(origin_pickup_actual))
             {
-                return ConvertStringToDateTime(origin_pickup_actual);
+                return AnalyzeXMLDateValue(origin_pickup_actual, origin_loc_timezone);
             }
             return null;
         }
@@ -1473,7 +1507,7 @@ namespace WebFreight.Web.Helpers.Analyzers
         {
             if (!string.IsNullOrEmpty(pol_loaded_actual))
             {
-                return ConvertStringToDateTime(pol_loaded_actual);
+                return AnalyzeXMLDateValue(pol_loaded_actual, pol_loc_timezone);
             }
             return null;
         }
@@ -1481,12 +1515,12 @@ namespace WebFreight.Web.Helpers.Analyzers
         {
             if (!string.IsNullOrEmpty(ETD_last))
             {
-                return ConvertStringToDateTime(ETD_last);
+                return AnalyzeXMLDateValue(ETD_last, pol_loc_timezone);
             }
 
             else if (!string.IsNullOrEmpty(ETD_initial))
             {
-                return ConvertStringToDateTime(ETD_initial);
+                return AnalyzeXMLDateValue(ETD_initial, pol_loc_timezone);
             }
 
             return null;
@@ -1495,11 +1529,11 @@ namespace WebFreight.Web.Helpers.Analyzers
         {
             if (!string.IsNullOrEmpty(ATD_actual))
             {
-                return ConvertStringToDateTime(ATD_actual);
+                return AnalyzeXMLDateValue(ATD_actual, pol_loc_timezone);
             }
             else if (!string.IsNullOrEmpty(ATD_detected))
             {
-                return ConvertStringToDateTime(ATD_detected);
+                return AnalyzeXMLDateValue(ATD_detected, pol_loc_timezone);
 
             }
             return null;
@@ -1508,12 +1542,12 @@ namespace WebFreight.Web.Helpers.Analyzers
         {
             if (!string.IsNullOrEmpty(tsp1_vslarrival_planned_last))
             {
-                return ConvertStringToDateTime(tsp1_vslarrival_planned_last);
+                return AnalyzeXMLDateValue(tsp1_vslarrival_planned_last, tsp1_loc_timezone);
             }
 
             else if (!string.IsNullOrEmpty(tsp1_vslarrival_planned_initial))
             {
-                return ConvertStringToDateTime(tsp1_vslarrival_planned_initial);
+                return AnalyzeXMLDateValue(tsp1_vslarrival_planned_initial, tsp1_loc_timezone);
             }
             return null;
         }
@@ -1521,11 +1555,11 @@ namespace WebFreight.Web.Helpers.Analyzers
         {
             if (!string.IsNullOrEmpty(tsp1_vslarrival_actual))
             {
-                return ConvertStringToDateTime(tsp1_vslarrival_actual);
+                return AnalyzeXMLDateValue(tsp1_vslarrival_actual, tsp1_loc_timezone);
             } 
             else if (!string.IsNullOrEmpty(tsp1_vslarrival_detected))
             {
-                return ConvertStringToDateTime(tsp1_vslarrival_detected);
+                return AnalyzeXMLDateValue(tsp1_vslarrival_detected, tsp1_loc_timezone);
             }
 
             return null;
@@ -1534,11 +1568,11 @@ namespace WebFreight.Web.Helpers.Analyzers
         {
             if (!string.IsNullOrEmpty(tsp1_discharge_planned_last))
             {
-                return ConvertStringToDateTime(tsp1_discharge_planned_last);
+                return AnalyzeXMLDateValue(tsp1_discharge_planned_last, tsp1_loc_timezone);
             }
             else if (!string.IsNullOrEmpty(tsp1_discharge_planned_initial))
             {
-                return ConvertStringToDateTime(tsp1_discharge_planned_initial);
+                return AnalyzeXMLDateValue(tsp1_discharge_planned_initial, tsp1_loc_timezone);
             }
             return null;
         }
@@ -1546,7 +1580,7 @@ namespace WebFreight.Web.Helpers.Analyzers
         {
             if (!string.IsNullOrEmpty(tsp1_discharge_actual))
             {
-                return ConvertStringToDateTime(tsp1_discharge_actual);
+                return AnalyzeXMLDateValue(tsp1_discharge_actual, tsp1_loc_timezone);
             }
 
             return null;
@@ -1555,11 +1589,11 @@ namespace WebFreight.Web.Helpers.Analyzers
         {
             if (!string.IsNullOrEmpty(tsp1_loaded_planned_last))
             {
-                return ConvertStringToDateTime(tsp1_loaded_planned_last);
+                return AnalyzeXMLDateValue(tsp1_loaded_planned_last, tsp1_loc_timezone);
             }
             else if (!string.IsNullOrEmpty(tsp1_loaded_planned_initial))
             {
-                return ConvertStringToDateTime(tsp1_loaded_planned_initial);
+                return AnalyzeXMLDateValue(tsp1_loaded_planned_initial, tsp1_loc_timezone);
             }
             return null;
         }
@@ -1567,7 +1601,7 @@ namespace WebFreight.Web.Helpers.Analyzers
         {
             if (!string.IsNullOrEmpty(tsp1_loaded_actual))
             {
-                return ConvertStringToDateTime(tsp1_loaded_actual);
+                return AnalyzeXMLDateValue(tsp1_loaded_actual, tsp1_loc_timezone);
             }
 
             return null;
@@ -1576,11 +1610,11 @@ namespace WebFreight.Web.Helpers.Analyzers
         {
             if (!string.IsNullOrEmpty(tsp1_vsldeparture_planned_last))
             {
-                return ConvertStringToDateTime(tsp1_vsldeparture_planned_last);
+                return AnalyzeXMLDateValue(tsp1_vsldeparture_planned_last, tsp1_loc_timezone);
             }
             else if (!string.IsNullOrEmpty(tsp1_vsldeparture_planned_initial))
             {
-                return ConvertStringToDateTime(tsp1_vsldeparture_planned_initial);
+                return AnalyzeXMLDateValue(tsp1_vsldeparture_planned_initial, tsp1_loc_timezone);
             }
             return null;
         }
@@ -1588,11 +1622,11 @@ namespace WebFreight.Web.Helpers.Analyzers
         {
             if (!string.IsNullOrEmpty(tsp1_vsldeparture_actual))
             {
-                return ConvertStringToDateTime(tsp1_vsldeparture_actual);
+                return AnalyzeXMLDateValue(tsp1_vsldeparture_actual, tsp1_loc_timezone);
             }
             else if (!string.IsNullOrEmpty(tsp1_vsldeparture_detected))
             {
-                return ConvertStringToDateTime(tsp1_vsldeparture_detected);
+                return AnalyzeXMLDateValue(tsp1_vsldeparture_detected, tsp1_loc_timezone);
             }
 
             return null;
@@ -1601,12 +1635,12 @@ namespace WebFreight.Web.Helpers.Analyzers
         {
             if (!string.IsNullOrEmpty(tsp2_vslarrival_planned_last))
             {
-                return ConvertStringToDateTime(tsp2_vslarrival_planned_last);
+                return AnalyzeXMLDateValue(tsp2_vslarrival_planned_last, tsp2_loc_timezone);
             }
 
             else if (!string.IsNullOrEmpty(tsp2_vslarrival_planned_initial))
             {
-                return ConvertStringToDateTime(tsp2_vslarrival_planned_initial);
+                return AnalyzeXMLDateValue(tsp2_vslarrival_planned_initial, tsp2_loc_timezone);
             }
             return null;
         }
@@ -1614,11 +1648,11 @@ namespace WebFreight.Web.Helpers.Analyzers
         {
             if (!string.IsNullOrEmpty(tsp2_vslarrival_actual))
             {
-                return ConvertStringToDateTime(tsp2_vslarrival_actual);
+                return AnalyzeXMLDateValue(tsp2_vslarrival_actual, tsp2_loc_timezone);
             }
             else if (!string.IsNullOrEmpty(tsp2_vslarrival_detected))
             {
-                return ConvertStringToDateTime(tsp2_vslarrival_detected);
+                return AnalyzeXMLDateValue(tsp2_vslarrival_detected, tsp2_loc_timezone);
             }
 
             return null;
@@ -1627,11 +1661,11 @@ namespace WebFreight.Web.Helpers.Analyzers
         {
             if (!string.IsNullOrEmpty(tsp2_discharge_planned_last))
             {
-                return ConvertStringToDateTime(tsp2_discharge_planned_last);
+                return AnalyzeXMLDateValue(tsp2_discharge_planned_last, tsp2_loc_timezone);
             }
             else if (!string.IsNullOrEmpty(tsp2_discharge_planned_initial))
             {
-                return ConvertStringToDateTime(tsp2_discharge_planned_initial);
+                return AnalyzeXMLDateValue(tsp2_discharge_planned_initial, tsp2_loc_timezone);
             }
             return null;
         }
@@ -1639,7 +1673,7 @@ namespace WebFreight.Web.Helpers.Analyzers
         {
             if (!string.IsNullOrEmpty(tsp2_discharge_actual))
             {
-                return ConvertStringToDateTime(tsp2_discharge_actual);
+                return AnalyzeXMLDateValue(tsp2_discharge_actual, tsp2_loc_timezone);
             }
 
             return null;
@@ -1648,11 +1682,11 @@ namespace WebFreight.Web.Helpers.Analyzers
         {
             if (!string.IsNullOrEmpty(tsp2_loaded_planned_last))
             {
-                return ConvertStringToDateTime(tsp2_loaded_planned_last);
+                return AnalyzeXMLDateValue(tsp2_loaded_planned_last, tsp2_loc_timezone);
             }
             else if (!string.IsNullOrEmpty(tsp2_loaded_planned_initial))
             {
-                return ConvertStringToDateTime(tsp2_loaded_planned_initial);
+                return AnalyzeXMLDateValue(tsp2_loaded_planned_initial, tsp2_loc_timezone);
             }
             return null;
         }
@@ -1660,7 +1694,7 @@ namespace WebFreight.Web.Helpers.Analyzers
         {
             if (!string.IsNullOrEmpty(tsp2_loaded_actual))
             {
-                return ConvertStringToDateTime(tsp2_loaded_actual);
+                return AnalyzeXMLDateValue(tsp2_loaded_actual, tsp2_loc_timezone);
             }
 
             return null;
@@ -1669,11 +1703,11 @@ namespace WebFreight.Web.Helpers.Analyzers
         {
             if (!string.IsNullOrEmpty(tsp2_vsldeparture_planned_last))
             {
-                return ConvertStringToDateTime(tsp2_vsldeparture_planned_last);
+                return AnalyzeXMLDateValue(tsp2_vsldeparture_planned_last, tsp2_loc_timezone);
             }
             else if (!string.IsNullOrEmpty(tsp2_vsldeparture_planned_initial))
             {
-                return ConvertStringToDateTime(tsp2_vsldeparture_planned_initial);
+                return AnalyzeXMLDateValue(tsp2_vsldeparture_planned_initial, tsp2_loc_timezone);
             }
             return null;
         }
@@ -1681,11 +1715,11 @@ namespace WebFreight.Web.Helpers.Analyzers
         {
             if (!string.IsNullOrEmpty(tsp2_vsldeparture_actual))
             {
-                return ConvertStringToDateTime(tsp2_vsldeparture_actual);
+                return AnalyzeXMLDateValue(tsp2_vsldeparture_actual, tsp2_loc_timezone);
             }
             else if (!string.IsNullOrEmpty(tsp2_vsldeparture_detected))
             {
-                return ConvertStringToDateTime(tsp2_vsldeparture_detected);
+                return AnalyzeXMLDateValue(tsp2_vsldeparture_detected, tsp2_loc_timezone);
             }
 
             return null;
@@ -1694,12 +1728,12 @@ namespace WebFreight.Web.Helpers.Analyzers
         {
             if (!string.IsNullOrEmpty(tsp3_vslarrival_planned_last))
             {
-                return ConvertStringToDateTime(tsp3_vslarrival_planned_last);
+                return AnalyzeXMLDateValue(tsp3_vslarrival_planned_last, tsp3_loc_timezone);
             }
 
             else if (!string.IsNullOrEmpty(tsp3_vslarrival_planned_initial))
             {
-                return ConvertStringToDateTime(tsp3_vslarrival_planned_initial);
+                return AnalyzeXMLDateValue(tsp3_vslarrival_planned_initial, tsp3_loc_timezone);
             }
             return null;
         }
@@ -1707,11 +1741,11 @@ namespace WebFreight.Web.Helpers.Analyzers
         {
             if (!string.IsNullOrEmpty(tsp3_vslarrival_actual))
             {
-                return ConvertStringToDateTime(tsp3_vslarrival_actual);
+                return AnalyzeXMLDateValue(tsp3_vslarrival_actual, tsp3_loc_timezone);
             }
             else if (!string.IsNullOrEmpty(tsp3_vslarrival_detected))
             {
-                return ConvertStringToDateTime(tsp3_vslarrival_detected);
+                return AnalyzeXMLDateValue(tsp3_vslarrival_detected, tsp3_loc_timezone);
             }
 
             return null;
@@ -1720,11 +1754,11 @@ namespace WebFreight.Web.Helpers.Analyzers
         {
             if (!string.IsNullOrEmpty(tsp3_discharge_planned_last))
             {
-                return ConvertStringToDateTime(tsp3_discharge_planned_last);
+                return AnalyzeXMLDateValue(tsp3_discharge_planned_last, tsp3_loc_timezone);
             }
             else if (!string.IsNullOrEmpty(tsp3_discharge_planned_initial))
             {
-                return ConvertStringToDateTime(tsp3_discharge_planned_initial);
+                return AnalyzeXMLDateValue(tsp3_discharge_planned_initial, tsp3_loc_timezone);
             }
             return null;
         }
@@ -1732,7 +1766,7 @@ namespace WebFreight.Web.Helpers.Analyzers
         {
             if (!string.IsNullOrEmpty(tsp3_discharge_actual))
             {
-                return ConvertStringToDateTime(tsp3_discharge_actual);
+                return AnalyzeXMLDateValue(tsp3_discharge_actual, tsp3_loc_timezone);
             }
 
             return null;
@@ -1741,11 +1775,11 @@ namespace WebFreight.Web.Helpers.Analyzers
         {
             if (!string.IsNullOrEmpty(tsp3_loaded_planned_last))
             {
-                return ConvertStringToDateTime(tsp3_loaded_planned_last);
+                return AnalyzeXMLDateValue(tsp3_loaded_planned_last, tsp3_loc_timezone);
             }
             else if (!string.IsNullOrEmpty(tsp3_loaded_planned_initial))
             {
-                return ConvertStringToDateTime(tsp3_loaded_planned_initial);
+                return AnalyzeXMLDateValue(tsp3_loaded_planned_initial, tsp3_loc_timezone);
             }
             return null;
         }
@@ -1753,7 +1787,7 @@ namespace WebFreight.Web.Helpers.Analyzers
         {
             if (!string.IsNullOrEmpty(tsp3_loaded_actual))
             {
-                return ConvertStringToDateTime(tsp3_loaded_actual);
+                return AnalyzeXMLDateValue(tsp3_loaded_actual, tsp3_loc_timezone);
             }
 
             return null;
@@ -1762,11 +1796,11 @@ namespace WebFreight.Web.Helpers.Analyzers
         {
             if (!string.IsNullOrEmpty(tsp3_vsldeparture_planned_last))
             {
-                return ConvertStringToDateTime(tsp3_vsldeparture_planned_last);
+                return AnalyzeXMLDateValue(tsp3_vsldeparture_planned_last, tsp3_loc_timezone);
             }
             else if (!string.IsNullOrEmpty(tsp3_vsldeparture_planned_initial))
             {
-                return ConvertStringToDateTime(tsp3_vsldeparture_planned_initial);
+                return AnalyzeXMLDateValue(tsp3_vsldeparture_planned_initial, tsp3_loc_timezone);
             }
             return null;
         }
@@ -1774,11 +1808,11 @@ namespace WebFreight.Web.Helpers.Analyzers
         {
             if (!string.IsNullOrEmpty(tsp3_vsldeparture_actual))
             {
-                return ConvertStringToDateTime(tsp3_vsldeparture_actual);
+                return AnalyzeXMLDateValue(tsp3_vsldeparture_actual, tsp3_loc_timezone);
             }
             else if (!string.IsNullOrEmpty(tsp3_vsldeparture_detected))
             {
-                return ConvertStringToDateTime(tsp3_vsldeparture_detected);
+                return AnalyzeXMLDateValue(tsp3_vsldeparture_detected, tsp3_loc_timezone);
             }
 
             return null;
@@ -1787,12 +1821,12 @@ namespace WebFreight.Web.Helpers.Analyzers
         {
             if (!string.IsNullOrEmpty(tsp4_vslarrival_planned_last))
             {
-                return ConvertStringToDateTime(tsp4_vslarrival_planned_last);
+                return AnalyzeXMLDateValue(tsp4_vslarrival_planned_last, tsp4_loc_timezone);
             }
 
             else if (!string.IsNullOrEmpty(tsp4_vslarrival_planned_initial))
             {
-                return ConvertStringToDateTime(tsp4_vslarrival_planned_initial);
+                return AnalyzeXMLDateValue(tsp4_vslarrival_planned_initial, tsp4_loc_timezone);
             }
             return null;
         }
@@ -1800,11 +1834,11 @@ namespace WebFreight.Web.Helpers.Analyzers
         {
             if (!string.IsNullOrEmpty(tsp4_vslarrival_actual))
             {
-                return ConvertStringToDateTime(tsp4_vslarrival_actual);
+                return AnalyzeXMLDateValue(tsp4_vslarrival_actual, tsp4_loc_timezone);
             }
             else if (!string.IsNullOrEmpty(tsp4_vslarrival_detected))
             {
-                return ConvertStringToDateTime(tsp4_vslarrival_detected);
+                return AnalyzeXMLDateValue(tsp4_vslarrival_detected, tsp4_loc_timezone);
             }
 
             return null;
@@ -1813,11 +1847,11 @@ namespace WebFreight.Web.Helpers.Analyzers
         {
             if (!string.IsNullOrEmpty(tsp4_discharge_planned_last))
             {
-                return ConvertStringToDateTime(tsp4_discharge_planned_last);
+                return AnalyzeXMLDateValue(tsp4_discharge_planned_last, tsp4_loc_timezone);
             }
             else if (!string.IsNullOrEmpty(tsp4_discharge_planned_initial))
             {
-                return ConvertStringToDateTime(tsp4_discharge_planned_initial);
+                return AnalyzeXMLDateValue(tsp4_discharge_planned_initial, tsp4_loc_timezone);
             }
             return null;
         }
@@ -1825,7 +1859,7 @@ namespace WebFreight.Web.Helpers.Analyzers
         {
             if (!string.IsNullOrEmpty(tsp4_discharge_actual))
             {
-                return ConvertStringToDateTime(tsp4_discharge_actual);
+                return AnalyzeXMLDateValue(tsp4_discharge_actual, tsp4_loc_timezone);
             }
 
             return null;
@@ -1834,11 +1868,11 @@ namespace WebFreight.Web.Helpers.Analyzers
         {
             if (!string.IsNullOrEmpty(tsp4_loaded_planned_last))
             {
-                return ConvertStringToDateTime(tsp4_loaded_planned_last);
+                return AnalyzeXMLDateValue(tsp4_loaded_planned_last, tsp4_loc_timezone);
             }
             else if (!string.IsNullOrEmpty(tsp4_loaded_planned_initial))
             {
-                return ConvertStringToDateTime(tsp4_loaded_planned_initial);
+                return AnalyzeXMLDateValue(tsp4_loaded_planned_initial, tsp4_loc_timezone);
             }
             return null;
         }
@@ -1846,7 +1880,7 @@ namespace WebFreight.Web.Helpers.Analyzers
         {
             if (!string.IsNullOrEmpty(tsp4_loaded_actual))
             {
-                return ConvertStringToDateTime(tsp4_loaded_actual);
+                return AnalyzeXMLDateValue(tsp4_loaded_actual, tsp4_loc_timezone);
             }
 
             return null;
@@ -1855,11 +1889,11 @@ namespace WebFreight.Web.Helpers.Analyzers
         {
             if (!string.IsNullOrEmpty(tsp4_vsldeparture_planned_last))
             {
-                return ConvertStringToDateTime(tsp4_vsldeparture_planned_last);
+                return AnalyzeXMLDateValue(tsp4_vsldeparture_planned_last, tsp4_loc_timezone);
             }
             else if (!string.IsNullOrEmpty(tsp4_vsldeparture_planned_initial))
             {
-                return ConvertStringToDateTime(tsp4_vsldeparture_planned_initial);
+                return AnalyzeXMLDateValue(tsp4_vsldeparture_planned_initial, tsp4_loc_timezone);
             }
             return null;
         }
@@ -1867,11 +1901,11 @@ namespace WebFreight.Web.Helpers.Analyzers
         {
             if (!string.IsNullOrEmpty(tsp4_vsldeparture_actual))
             {
-                return ConvertStringToDateTime(tsp4_vsldeparture_actual);
+                return AnalyzeXMLDateValue(tsp4_vsldeparture_actual, tsp4_loc_timezone);
             }
             else if (!string.IsNullOrEmpty(tsp4_vsldeparture_detected))
             {
-                return ConvertStringToDateTime(tsp4_vsldeparture_detected);
+                return AnalyzeXMLDateValue(tsp4_vsldeparture_detected, tsp4_loc_timezone);
             }
 
             return null;
@@ -1880,12 +1914,12 @@ namespace WebFreight.Web.Helpers.Analyzers
         {
             if (!string.IsNullOrEmpty(ETA_last))
             {
-                return ConvertStringToDateTime(ETA_last);
+                return AnalyzeXMLDateValue(ETA_last, pod_loc_timezone);
             }
 
             else if (!string.IsNullOrEmpty(ETA_initial))
             {
-                return ConvertStringToDateTime(ETA_initial);
+                return AnalyzeXMLDateValue(ETA_initial, pod_loc_timezone);
             }
 
             return null;
@@ -1894,11 +1928,11 @@ namespace WebFreight.Web.Helpers.Analyzers
         {
             if (!string.IsNullOrEmpty(ATA_actual))
             {
-                return ConvertStringToDateTime(ATA_actual);
+                return AnalyzeXMLDateValue(ATA_actual, pod_loc_timezone);
             }
             else if (!string.IsNullOrEmpty(ATA_detected))
             {
-                return ConvertStringToDateTime(ATA_detected);
+                return AnalyzeXMLDateValue(ATA_detected, pod_loc_timezone);
             }
 
             return null;
@@ -1907,12 +1941,12 @@ namespace WebFreight.Web.Helpers.Analyzers
         {
             if (!string.IsNullOrEmpty(pod_discharge_planned_last))
             {
-                return ConvertStringToDateTime(pod_discharge_planned_last);
+                return AnalyzeXMLDateValue(pod_discharge_planned_last, pod_loc_timezone);
             }
 
             else if (!string.IsNullOrEmpty(pod_discharge_planned_initial))
             {
-                return ConvertStringToDateTime(pod_discharge_planned_initial);
+                return AnalyzeXMLDateValue(pod_discharge_planned_initial, pod_loc_timezone);
             }
             return null;
         }
@@ -1920,7 +1954,7 @@ namespace WebFreight.Web.Helpers.Analyzers
         {
             if (!string.IsNullOrEmpty(pod_discharge_actual))
             {
-                return ConvertStringToDateTime(pod_discharge_actual);
+                return AnalyzeXMLDateValue(pod_discharge_actual, pod_loc_timezone);
             }
             return null;
         }
@@ -1928,12 +1962,12 @@ namespace WebFreight.Web.Helpers.Analyzers
         {
             if (!string.IsNullOrEmpty(pod_departure_planned_last))
             {
-                return ConvertStringToDateTime(pod_departure_planned_last);
+                return AnalyzeXMLDateValue(pod_departure_planned_last, pod_loc_timezone);
             }
 
             else if (!string.IsNullOrEmpty(pod_departure_planned_initial))
             {
-                return ConvertStringToDateTime(pod_departure_planned_initial);
+                return AnalyzeXMLDateValue(pod_departure_planned_initial, pod_loc_timezone);
             }
             return null;
         }
@@ -1941,7 +1975,7 @@ namespace WebFreight.Web.Helpers.Analyzers
         {
             if (!string.IsNullOrEmpty(pod_departure_actual))
             {
-                return ConvertStringToDateTime(pod_departure_actual);
+                return AnalyzeXMLDateValue(pod_departure_actual, pod_loc_timezone);
             }
             return null;
         }
@@ -1949,12 +1983,12 @@ namespace WebFreight.Web.Helpers.Analyzers
         {
             if (!string.IsNullOrEmpty(dlv_delivery_planned_last))
             {
-                return ConvertStringToDateTime(dlv_delivery_planned_last);
+                return AnalyzeXMLDateValue(dlv_delivery_planned_last, dlv_loc_timezone);
             }
 
             else if (!string.IsNullOrEmpty(dlv_delivery_planned_initial))
             {
-                return ConvertStringToDateTime(dlv_delivery_planned_initial);
+                return AnalyzeXMLDateValue(dlv_delivery_planned_initial, dlv_loc_timezone);
             }
             return null;
         }
@@ -1962,7 +1996,7 @@ namespace WebFreight.Web.Helpers.Analyzers
         {
             if (!string.IsNullOrEmpty(dlv_delivery_actual))
             {
-                return ConvertStringToDateTime(dlv_delivery_actual);
+                return AnalyzeXMLDateValue(dlv_delivery_actual, dlv_loc_timezone);
             }
             return null;
         }
@@ -1970,12 +2004,12 @@ namespace WebFreight.Web.Helpers.Analyzers
         {
             if (!string.IsNullOrEmpty(lif_arrival_planned_last))
             {
-                return ConvertStringToDateTime(lif_arrival_planned_last);
+                return AnalyzeXMLDateValue(lif_arrival_planned_last, lif_loc_timezone);
             }
 
             else if (!string.IsNullOrEmpty(lif_arrival_planned_initial))
             {
-                return ConvertStringToDateTime(lif_arrival_planned_initial);
+                return AnalyzeXMLDateValue(lif_arrival_planned_initial, lif_loc_timezone);
             }
             return null;
         }
@@ -1983,7 +2017,7 @@ namespace WebFreight.Web.Helpers.Analyzers
         {
             if (!string.IsNullOrEmpty(lif_arrival_actual))
             {
-                return ConvertStringToDateTime(lif_arrival_actual);
+                return AnalyzeXMLDateValue(lif_arrival_actual, lif_loc_timezone);
             }
             return null;
         }
@@ -1991,12 +2025,12 @@ namespace WebFreight.Web.Helpers.Analyzers
         {
             if (!string.IsNullOrEmpty(lif_departure_planned_last))
             {
-                return ConvertStringToDateTime(lif_departure_planned_last);
+                return AnalyzeXMLDateValue(lif_departure_planned_last, lif_loc_timezone);
             }
 
             else if (!string.IsNullOrEmpty(lif_departure_planned_initial))
             {
-                return ConvertStringToDateTime(lif_departure_planned_initial);
+                return AnalyzeXMLDateValue(lif_departure_planned_initial, lif_loc_timezone);
             }
             return null;
         }
@@ -2004,7 +2038,7 @@ namespace WebFreight.Web.Helpers.Analyzers
         {
             if (!string.IsNullOrEmpty(lif_departure_actual))
             {
-                return ConvertStringToDateTime(lif_departure_actual);
+                return AnalyzeXMLDateValue(lif_departure_actual, lif_loc_timezone);
             }
             return null;
         }
@@ -2012,12 +2046,12 @@ namespace WebFreight.Web.Helpers.Analyzers
         {
             if (!string.IsNullOrEmpty(empty_return_planned_last))
             {
-                return ConvertStringToDateTime(empty_return_planned_last);
+                return AnalyzeXMLDateValue(empty_return_planned_last, empty_return_loc_timezone);
             }
 
             else if (!string.IsNullOrEmpty(empty_return_planned_initial))
             {
-                return ConvertStringToDateTime(empty_return_planned_initial);
+                return AnalyzeXMLDateValue(empty_return_planned_initial, empty_return_loc_timezone);
             }
             return null;
         }
@@ -2025,7 +2059,7 @@ namespace WebFreight.Web.Helpers.Analyzers
         {
             if (!string.IsNullOrEmpty(empty_return_actual))
             {
-                return ConvertStringToDateTime(empty_return_actual);
+                return AnalyzeXMLDateValue(empty_return_actual, empty_return_loc_timezone);
             }
 
             return null;
@@ -2034,7 +2068,7 @@ namespace WebFreight.Web.Helpers.Analyzers
         {
             if (!string.IsNullOrEmpty(customs_release_date))
             {
-                return ConvertStringToDateTime(customs_release_date);
+                return AnalyzeXMLDateValue(customs_release_date, availability_timezone);
             }
 
             return null;
@@ -2043,7 +2077,7 @@ namespace WebFreight.Web.Helpers.Analyzers
         {
             if (!string.IsNullOrEmpty(carrier_release_date))
             {
-                return ConvertStringToDateTime(carrier_release_date);
+                return AnalyzeXMLDateValue(carrier_release_date, availability_timezone);
             }
 
             return null;
@@ -2052,12 +2086,11 @@ namespace WebFreight.Web.Helpers.Analyzers
         {
             if (!string.IsNullOrEmpty(availability_date))
             {
-                return ConvertStringToDateTime(availability_date);
+                return AnalyzeXMLDateValue(availability_date, availability_timezone);
             }
 
             return null;
-        }
-
+        }        
         private void UpdateShipment()
         {
             if (FeatureToggleHelper.HasFeatureToggle("OIU", this.logitudeTenant.Value))
@@ -2296,7 +2329,140 @@ namespace WebFreight.Web.Helpers.Analyzers
             analyzeQueueRepository.Update(analyzeQueue);
             analyzeQueueRepository.SubmitChanges();
         }
-        public DateTime? ConvertStringToDateTime(string XMLValue)
+        private DateTime? AnalyzeEventDateValue(string XMLValue)
+        {
+            XMLDateParts xMLDateParts = this.GetXMLDateParts(XMLValue);
+            XMLDateParts currentTenantTimeZoneDateParts = this.GetCurrentTenantTimeZoneDateParts();
+            return ComputeDateTimeRqgardingTimeZone(xMLDateParts, currentTenantTimeZoneDateParts);
+        }
+        private XMLDateParts GetCurrentTenantTimeZoneDateParts()
+        {
+            Tenant tenant = TenantRepository.GetSingleTenant(logitudeTenant.Value, true);
+            double? currentTenantTimeZone = tenant.TimeZoneOffset;
+            XMLDateParts xMLDateParts = new XMLDateParts();
+            xMLDateParts.TimeZoneSign = currentTenantTimeZone > 0 ? "" : "-";
+            xMLDateParts.TimeZoneHoursValue = ConvertStringToInteger(currentTenantTimeZone?.ToString());
+            xMLDateParts.TimeZoneMinutsValue = 0;
+            xMLDateParts.TimeZone = new TimeSpan(xMLDateParts.TimeZoneHoursValue, xMLDateParts.TimeZoneMinutsValue, 0);
+            return xMLDateParts;
+        }
+
+        private DateTime? AnalyzeXMLDateValue(string XMLValue, string timeZone)
+        {
+            XMLDateParts xMLDateParts = this.GetXMLDateParts(XMLValue);
+            XMLDateParts portTimeZoneDateParts = this.GetPortTimeZoneDateParts(timeZone);
+            return ComputeDateTimeRqgardingTimeZone(xMLDateParts, portTimeZoneDateParts);
+        }
+        private XMLDateParts GetXMLDateParts(string XMLValue)
+        {
+            XMLDateParts xMLDateParts = new XMLDateParts();
+
+            if (string.IsNullOrEmpty(XMLValue))
+            {
+                return null;
+            }
+
+            if (XMLValue.Length > 16)
+            {
+                xMLDateParts.DateTimeValue = ConvertStringToDateTime(XMLValue.Substring(0, 16));
+                xMLDateParts.TimeZoneSign = XMLValue.Substring(16, 1);                
+                xMLDateParts.TimeZoneHoursValue = ConvertStringToInteger(XMLValue.Substring(17, 2));
+                xMLDateParts.TimeZoneMinutsValue = ConvertStringToInteger(XMLValue.Substring(19, 2));
+                xMLDateParts.TimeZone = new TimeSpan(xMLDateParts.TimeZoneHoursValue, xMLDateParts.TimeZoneMinutsValue, 0);
+            }
+
+            else
+            {
+                xMLDateParts.DateTimeValue = ConvertStringToDateTime(XMLValue);
+            }
+
+            return xMLDateParts;
+        }
+        private XMLDateParts GetPortTimeZoneDateParts(string timeZone)
+        {
+            XMLDateParts xMLDateParts = new XMLDateParts();
+            PortTimeZone portTimeZone = portTimeZoneRepository.GetSinglePortTimeZone(timeZone);
+            
+            if(portTimeZone != null && !string.IsNullOrEmpty(portTimeZone.UTCOffset))
+            {
+                xMLDateParts.TimeZoneSign = portTimeZone.UTCOffset.Substring(0, 1);
+                xMLDateParts.TimeZoneHoursValue = ConvertStringToInteger(portTimeZone.UTCOffset.Substring(1, 2));
+                xMLDateParts.TimeZoneMinutsValue = ConvertStringToInteger(portTimeZone.UTCOffset.Substring(4, 2));
+                xMLDateParts.TimeZone = new TimeSpan(xMLDateParts.TimeZoneHoursValue, xMLDateParts.TimeZoneMinutsValue, 0);
+            }
+
+            return xMLDateParts;
+        }
+
+        private DateTime? ConvertStringToDateTime(string dateValue)
+        {
+            if (!string.IsNullOrEmpty(dateValue))
+            {
+                return Convert.ToDateTime(dateValue);
+            }
+
+            else
+            {
+                return null;
+            }
+        }        
+        private int ConvertStringToInteger(string stringValue)
+        {
+            if (!string.IsNullOrEmpty(stringValue))
+            {
+                return Convert.ToInt32(stringValue);
+            }
+
+            else
+            {
+                return 0;
+            }
+        }
+        private DateTime? ComputeDateTimeRqgardingTimeZone(XMLDateParts xMLDateParts, XMLDateParts portTimeZoneDateParts)
+        {
+            if(xMLDateParts == null && portTimeZoneDateParts == null)
+            {
+                return null;
+            }
+
+            DateTime computesDateTime = xMLDateParts.DateTimeValue.Value;
+            computesDateTime = this.ProcessPortTimeZoneCalculations(computesDateTime, portTimeZoneDateParts);
+            computesDateTime = this.ProcessXMLTimeZoneCalculations(computesDateTime, xMLDateParts);
+            return computesDateTime;
+        }
+        private DateTime ProcessPortTimeZoneCalculations(DateTime computesDateTime, XMLDateParts portTimeZoneDateParts)
+        {
+            DateTime calculatedDate = computesDateTime;
+            if (portTimeZoneDateParts.TimeZoneSign == "-")
+            {
+                calculatedDate = computesDateTime.Subtract(portTimeZoneDateParts.TimeZone);
+            }
+
+            else
+            {
+                calculatedDate = computesDateTime.Add(portTimeZoneDateParts.TimeZone);
+            }
+
+            return calculatedDate;
+        }
+        private DateTime ProcessXMLTimeZoneCalculations(DateTime computesDateTime, XMLDateParts xMLDateParts)
+        {
+            DateTime calculatedDate = computesDateTime;
+            if (xMLDateParts.TimeZoneSign == "-")
+            {
+                calculatedDate = computesDateTime.Add(xMLDateParts.TimeZone);
+            }
+
+            else
+            {
+                calculatedDate = computesDateTime.Subtract(xMLDateParts.TimeZone);
+            }
+
+            return calculatedDate;
+        }
+
+        // to be deleted when deleting unwanted fields from container
+        public DateTime? ConvertStringToDateTime_old(string XMLValue)
         {
             string dateTimeString = this.GetCorrectDateTimeString(XMLValue);
 
@@ -2459,5 +2625,22 @@ namespace WebFreight.Web.Helpers.Analyzers
         public DateTime? MainCarriageATD { get; set; }
         public DateTime? MainCarriageATA { get; set; }
         public List<Container> GroupList { get; set; }
+    }
+    public class XMLDateParts
+    {
+        public XMLDateParts()
+        {
+            DateTimeValue = null;
+            TimeZoneHoursValue = 0;
+            TimeZoneMinutsValue = 0;
+            TimeZoneSign = "";
+            TimeZone = new TimeSpan(0, 0, 0);
+        }
+
+        public DateTime? DateTimeValue { get; set; }
+        public int TimeZoneHoursValue { get; set; }
+        public int TimeZoneMinutsValue { get; set; }
+        public string TimeZoneSign { get; set; }
+        public TimeSpan TimeZone { get; set; }
     }
 }

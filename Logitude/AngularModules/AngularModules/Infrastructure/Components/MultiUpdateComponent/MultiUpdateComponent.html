@@ -33,7 +33,7 @@
 
                         <AutomationsConditionAreaComponent [AutomationCondationLists]="AutomationSetValueLists"
                             [Title]="'Update Fields Values'" [TiggerComponent]="DataContext" [CondationListType]="'Set'"
-                            [NoEntity]="true"></AutomationsConditionAreaComponent>
+                            [NoEntity]="true" [CanSetValueFromField]="false"></AutomationsConditionAreaComponent>
 
                     </td>
 
@@ -115,10 +115,18 @@
         <td>
             <div style="height:30px;float:right;">
 
-                <button class="RedButton" (click)="UpdateClick()"
-                    style="width:80px;float: right;margin: 4px;">Update</button>
+                <button *ngIf="!IsMultiEntityUpdatedSuccessfully" class="RedButton" (click)="UpdateClick()"
+                        style="width:80px;float: right;margin: 4px;">
+                    Update
+                </button>
+                <button *ngIf="IsMultiEntityUpdatedSuccessfully" class="RedButton" (click)="NextClicked()"
+                        style="width:80px;float: right;margin: 4px;">
+                    Next
+                </button>
                 <button class="Button" (click)="CloseButtonClicked()"
-                    style="width:80px;float: right;margin:4px;">Close</button>
+                        style="width:80px;float: right;margin:4px;">
+                    Close
+                </button>
             </div>
         </td>
     </tr>

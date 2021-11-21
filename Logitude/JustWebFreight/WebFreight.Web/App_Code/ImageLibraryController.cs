@@ -75,6 +75,7 @@ namespace WebFreight.Web.App_Code
                 string token = System.Web.HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnTenant(tenant);
 
 
                 if (tenant != authToken.Tenant)
@@ -134,12 +135,8 @@ namespace WebFreight.Web.App_Code
                 string token = System.Web.HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnEntityTenant("ImageParameter", filter.Tenant, authToken.Tenant);
 
-
-                if (filter.Tenant != authToken.Tenant)
-                {
-                    throw new Exception("Sorry you’re not authenticated to upload file");
-                }
                 ImageLibraryControllerHelper imageLibraryControllerHelper = new ImageLibraryControllerHelper();
                 if (filter.UploadMode == "AttachmentUploader" || filter.UploadMode == "Chunk")
                 {
@@ -167,6 +164,8 @@ namespace WebFreight.Web.App_Code
             string token = System.Web.HttpContext.Current.Request.Headers["Token"];
             AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
             SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+            SecurityUtility.AuthenticationOnEntityTenant("ImageParameter", ImageParameter.Tenant, authToken.Tenant);
+
             ImageLibraryControllerHelper imageLibraryControllerHelper = new ImageLibraryControllerHelper();
             ImageParameter.FileData = Convert.FromBase64String(ImageParameter.Base64String);
             ImageParameter.Base64String = "";
@@ -184,6 +183,8 @@ namespace WebFreight.Web.App_Code
                 string token = System.Web.HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnEntityTenant("ImageParameter", filter.Tenant, authToken.Tenant);
+
                 ImageLibraryControllerHelper imageLibraryControllerHelper = new ImageLibraryControllerHelper();
 
                 if (filter.Tenant != authToken.Tenant)
@@ -309,6 +310,7 @@ namespace WebFreight.Web.App_Code
             string token = System.Web.HttpContext.Current.Request.Headers["Token"];
             AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
             SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+            SecurityUtility.AuthenticationOnTenant(tenant);
 
             Uploader uploaderService = new Uploader();
             uploaderService.CancelUpload(documentId, "", tenant);
@@ -327,6 +329,7 @@ namespace WebFreight.Web.App_Code
                 string token = System.Web.HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnTenant(tenant);
                 if (tenant != authToken.Tenant)
                 {
                     throw new Exception("Sorry you’re not authenticated to remove file");
@@ -362,15 +365,14 @@ namespace WebFreight.Web.App_Code
                 string token = System.Web.HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnEntityTenant("ImageParameter", filter.Tenant, authToken.Tenant);
+
                 ShipmentQuery shipmentQuery = new ShipmentQuery(authToken.Tenant);
                 DocumentsFilingPM entityPM = new DocumentsFilingPM();
                 string entityId = shipmentQuery.GetEntitiyIdByShipmentNumber(filter.ShipmentNumber, authToken.Tenant);
                 string shipmentObjectTableId = ObjectTableRepository.GetObjectTableByName("Shipment");
-                
-                if (filter.Tenant != authToken.Tenant)
-                {
-                    throw new Exception("Sorry you’re not authenticated to upload file");
-                }
+
+
                 if (filter.SentSize == 0)
                 {
                    

@@ -168,6 +168,15 @@ namespace Logitude.ShipmentOrderModule.BL.ShipmentOrderServices.DBTablesCopy.Gen
 "  <Column Name='LastExceptionDate' Type='datetime'>"+
 "    <Constraints Nullable='true' />"+
 "  </Column>"+
+"  <Column Name='OnHandDate' Type='datetime'>"+
+"    <Constraints Nullable='true' />"+
+"  </Column>"+
+"  <Column Name='IsOperationalClosed' Type='bit'>"+
+"    <Constraints Nullable='false' />"+
+"  </Column>"+
+"  <Column Name='OnHandNumber' Type='varchar' Size='15'>"+
+"    <Constraints Nullable='true' />"+
+"  </Column>"+
 "  <Column Name='AutomaticLastUpdateDate' Type='datetime'>"+
 "    <Constraints Nullable='true' />"+
 "  </Column>"+

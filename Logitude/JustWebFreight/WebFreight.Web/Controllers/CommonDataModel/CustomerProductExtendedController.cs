@@ -20,7 +20,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated
 
             try
             {
-                Authentication();
+                Authentication(tenant);
                 CustomerProductQuery query = new CustomerProductQuery(tenant);
                 return Request.CreateResponse(HttpStatusCode.OK, query.GetCustomerProductPMsByCustomerId(customerId, tenant));
             }
@@ -32,12 +32,12 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated
         }
 
 
-        private static void Authentication()
+        private void Authentication(int tenant)
         {
             string token = HttpContext.Current.Request.Headers["Token"];
             AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
             SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-
+            SecurityUtility.AuthenticationOnTenant(tenant);
         }
     }
 }

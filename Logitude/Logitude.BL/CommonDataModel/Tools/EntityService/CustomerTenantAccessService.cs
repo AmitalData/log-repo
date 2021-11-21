@@ -165,7 +165,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             var InValidCustomerTenantAccessCards = paramentityPM.CustomerTenantAccessCards.Find(a => a.IsCustomsActivated == false && a.IsExportActivated == false);
             if (InValidCustomerTenantAccessCards != null)
             {
-                throw new Exception("You can't add a new card. You have to choose either Export or Customs option.");
+                throw new Exception("You have to choose either Export or Customs option.");
             }
         }
 

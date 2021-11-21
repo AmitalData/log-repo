@@ -36,8 +36,25 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
             try
             {
                 Authentication();
+                SecurityUtility.AuthenticationOnTenant(tenant);
                 DocumentTypeTemplateQuery documentTypeTemplateQuery = new DocumentTypeTemplateQuery(tenant);
                 List<DocumentTypeTemplatePM> DocumentTypeTemplatePMList = documentTypeTemplateQuery.GetDocumentTypeTemplatesByDocumentTypeId(documentTypeId, tenant).ToList();
+                return Request.CreateResponse(HttpStatusCode.OK, DocumentTypeTemplatePMList);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+
+        public HttpResponseMessage GetDocumentTypeTemplatesForDocumentTypeCode(string documentTypeCode, string templateType, int tenant)
+        {
+            try
+            {
+                Authentication();
+                DocumentTypeTemplateQuery documentTypeTemplateQuery = new DocumentTypeTemplateQuery(tenant);
+                List<DocumentTypeTemplatePM> DocumentTypeTemplatePMList = documentTypeTemplateQuery.GetDocumentTypeTemplatesForDocumentTypeCode(documentTypeCode, templateType, tenant).ToList();
                 return Request.CreateResponse(HttpStatusCode.OK, DocumentTypeTemplatePMList);
             }
             catch (Exception ex)
@@ -52,6 +69,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
             try
             {
                 Authentication();
+                SecurityUtility.AuthenticationOnTenant(tenant);
                 DocumentTypeTemplateQuery documentTypeTemplateQuery = new DocumentTypeTemplateQuery(tenant);
                 List<DocumentTypeTemplateList> documentTypeTemplateLists = documentTypeTemplateQuery.GetDocumentTypeTemplateListsByDocumentTypeId(documentTypeId, tenant);
                 return Request.CreateResponse(HttpStatusCode.OK, documentTypeTemplateLists);
@@ -71,7 +89,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-
+                SecurityUtility.AuthenticationOnEntityTenant("", filter.Tenant, authToken.Tenant);
 
                 System.Text.UTF8Encoding enc = new System.Text.UTF8Encoding();
                 EncodedHtmlHelper encodedHtmlHelper = new EncodedHtmlHelper();
@@ -180,6 +198,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
             {
 
                 Authentication();
+                SecurityUtility.AuthenticationOnTenant(tenant);
                 string result = "";
                 byte[] data = null;
                 if (pagetype == "Signature")
@@ -446,7 +465,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
             try
             {
                 Authentication();
-
+                SecurityUtility.AuthenticationOnTenant(tenant);
                 DocumentTypeTemplateQuery documentTypeTemplateQuery = new DocumentTypeTemplateQuery(tenant);
                 List<DocumentTypeTemplateList> documentTypeTemplateLists = documentTypeTemplateQuery.GetDocumentTypeTemplateFromLibraryByTenant(tenant, documentTypeId, mytenant, isfilter);
 
@@ -466,6 +485,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
             try
             {
                 Authentication();
+                SecurityUtility.AuthenticationOnTenant(tenant);
                 DocumentTypeTemplateQuery documentTypeTemplateQuery = new DocumentTypeTemplateQuery(tenant);
                 List<DocumentTypeTemplateList> documentTypeTemplateLists = documentTypeTemplateQuery.GetDocumentTypeTemplatesByObjectTableId(objecttableid, tenant, transportModeId, shipmentLevelCode, isfilter);
            
@@ -482,6 +502,8 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
         {
             try
             {
+                Authentication();
+                SecurityUtility.AuthenticationOnTenant(tenant);
                 DocumentTypePM documentType = null;
                 string CopyDocumentTypeCode = "";
                 DocumentTypeCopyRepository theDocumentTypeCopyRepository = new DocumentTypeCopyRepository(tenant);
@@ -654,6 +676,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
             try
             {
                 Authentication();
+                SecurityUtility.AuthenticationOnTenant(tenant);
                 DocumentTypeTemplateQuery documentTypeTemplateQuery = new DocumentTypeTemplateQuery(tenant);
                 DocumentTypeTemplatePM documentTypeTemplateLists = documentTypeTemplateQuery.GetSinglePM(id, tenant);
                 return Request.CreateResponse(HttpStatusCode.OK, documentTypeTemplateLists);
@@ -672,6 +695,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
             try
             {
                 Authentication();
+                SecurityUtility.AuthenticationOnTenant(tenant);
                 DocumentTypeTemplateQuery documentTypeTemplateQuery = new DocumentTypeTemplateQuery(tenant);
                 List<DocumentTypeTemplatePM> result = documentTypeTemplateQuery.GetDocumentTypeTemplatesByDocumentTypeIdForAutomation(documentTypeId, editorToolCode, tenant);
                 return Request.CreateResponse(HttpStatusCode.OK, result);
@@ -701,6 +725,8 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
 
         public HttpResponseMessage GetTemplateBodyByDocumentTemplateId(string documentTypetemplateId, int tenant)
         {
+            Authentication();
+            SecurityUtility.AuthenticationOnTenant(tenant);
             DocumentTypeTemplateQuery documentTypeTemplateQuery = new DocumentTypeTemplateQuery(tenant);
 
             byte[] data = documentTypeTemplateQuery.GetTemplateBodyByDocumentTypeTemplateId(documentTypetemplateId, tenant);
@@ -734,6 +760,8 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
 
         public HttpResponseMessage GetTemplateBodyByDocumentTemplateId2(string documentTypetemplateId, int tenant)
         {
+            Authentication();
+            SecurityUtility.AuthenticationOnTenant(tenant);
             DocumentTypeTemplateQuery documentTypeTemplateQuery = new DocumentTypeTemplateQuery(tenant);
 
             byte[] data = documentTypeTemplateQuery.GetTemplateBodyByDocumentTypeTemplateId(documentTypetemplateId, tenant);

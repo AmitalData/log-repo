@@ -115,5 +115,11 @@ namespace Logitude.ShipmentOrderModule.BL.APIDataContract.ApiV1
     public string LastExceptionDescription { get; set; }
     
     public DateTime? LastExceptionDate { get; set; }
+    
+    public DateTime? OnHandDate { get; set; }
+    
+    public bool IsOperationalClosed { get; set; }
+    
+    public string OnHandNumber { get; set; }
     }
 } 

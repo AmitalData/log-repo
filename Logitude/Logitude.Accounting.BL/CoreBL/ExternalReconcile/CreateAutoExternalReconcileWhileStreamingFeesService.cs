@@ -53,10 +53,12 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
             bool CheckWhileStreaming = true;
             List<string> ledgerTransactionIds= _JournalPM.JournalExternalReconciles.Where(r => !String.IsNullOrWhiteSpace(r.LedgerTransactionId)).Select(r => r.LedgerTransactionId).ToList();
 
+            var skipValidation = _JournalPM.JournalExternalReconciles.Any(r => r.SkipAccountsValidation == true);
+
             myExternalReconcileAdjustBankFeesService.PrapareAndValid(_JournalPM.Tenant, reconcileExternalPageLineIdList, adjustGLAccountId, out listOfpageLineList, out listOfpageList, CheckWhileStreaming,
                  
                 ledgerTransactionIds,
-                out string accountingCurrencyId, out List<LedgerTransactionPM> ledgerTransactionList
+                out string accountingCurrencyId, out List<LedgerTransactionPM> ledgerTransactionList, skipValidation
                 );
 
             if (listOfpageLineList.Any(r => !r.InProgressExternalReconcile))

@@ -45,6 +45,7 @@ export class CargoTrackingBrandingDataExtendedService {
             catchError(null));
     }
     GetTenantByDomain(domain:string) {
+
         var url = '/GetCargoTrackingBrandingTenantByDomain?domain='+domain;
         var callUrl = this._apiUrl.concat(url);
 

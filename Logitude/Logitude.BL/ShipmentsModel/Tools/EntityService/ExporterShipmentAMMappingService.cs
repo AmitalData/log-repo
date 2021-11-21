@@ -1,22 +1,22 @@
 ﻿using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.ShipmentsModel.EntityAMs;
-using Logitude.BL.ShipmentsModel.EntityPMs; 
+using Logitude.BL.ShipmentsModel.EntityPMs;
 using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using System;
-using System.Collections.Generic; 
+using System.Collections.Generic;
 
 namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 {
-     
+
     public class ExporterShipmentAMMappingService
     {
         private ShipmentPM shipmentPM;
         private HybridPartnerRepository hybridPartnerRepository;
-        private CardRepository cardsReporistory; 
+        private CardRepository cardsReporistory;
         public ExporterShipmentAMMappingService(ShipmentPM shipment)
         {
             this.shipmentPM = shipment;
@@ -46,15 +46,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         private CodeProperties GetCard(string cardId)
         {
             Card card = cardsReporistory.GetSingleCard(cardId, shipmentPM.Tenant);
-            string cardCode = "";
-            if (card != null)
-            {
-                cardCode = card.Code;
-            }
             return new CodeProperties()
             {
-                Code = cardCode
+                Code = card != null ? card.Code : "",
             };
+
         }
 
         private HybridPartnerPM GetHybridPartner()
@@ -62,7 +58,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             HybridPartnerQuery HybridPartnerQuerey = new HybridPartnerQuery(hybridPartnerRepository);
             HybridPartnerPM Partner = HybridPartnerQuerey.GetSinglePM(shipmentPM.ForwarderPartnerId);
             return Partner;
-        } 
+        }
         private NewAExporterShipmentAM GetNewExportShipmentAM(int tenant, HybridPartnerPM Partner)
         {
             return new NewAExporterShipmentAM()
@@ -83,10 +79,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 ReqFlightDate = shipmentPM.RequestedFlightDate,
                 Quantity = shipmentPM.BookingNumberOfPackages,
                 Weight = shipmentPM.OrderGrossWeight,
-                Volume = shipmentPM.BookingVolume,  
-                Incoterm = shipmentPM.IncotermCode
+                Volume = shipmentPM.BookingVolume,
+                Incoterm = shipmentPM.IncotermCode,
+                Notes = shipmentPM.Notes,
             };
-        } 
+        }
         private static void MapExportShipmentPackages(ShipmentPM ForwarderShipment, NewAExporterShipmentAM newAExporterShipmentAM)
         {
             newAExporterShipmentAM.ShipmentPackages = new List<Packages>();
@@ -100,7 +97,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 Package.Height = item.Height;
                 newAExporterShipmentAM.ShipmentPackages.Add(Package);
             }
-        } 
+        }
         private static void MapShipmentPorts(ShipmentPM ForwarderShipment, NewAExporterShipmentAM newAExporterShipmentAM)
         {
             newAExporterShipmentAM.FromPort = new CodeProperties()
@@ -115,7 +112,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             };
         }
         private void MapShipmentCustomer(NewAExporterShipmentAM newAExporterShipmentAM)
-        { 
+        {
             Card Customer = cardsReporistory.GetSingleCard(shipmentPM.CustomerId, shipmentPM.Tenant);
             string CustomerCode = "";
             if (Customer != null)
@@ -128,9 +125,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             };
         }
         private void MapShipmentShipper(NewAExporterShipmentAM newAExporterShipmentAM)
-        { 
-            Card Shipper = cardsReporistory.GetSingleCard(shipmentPM.ShipperId, shipmentPM.Tenant); 
-            string ShipperCode = ""; 
+        {
+            Card Shipper = cardsReporistory.GetSingleCard(shipmentPM.ShipperId, shipmentPM.Tenant);
+            string ShipperCode = "";
 
             if (Shipper != null)
             {

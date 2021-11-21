@@ -36,6 +36,8 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
     public decimal ForeignAmount { get; set; }
     
     public string BankAccountNumber { get; set; }
+    
+    public string BankAccountId { get; set; }
 
     public  string  ComputingPartnerCode { get; set; }
 

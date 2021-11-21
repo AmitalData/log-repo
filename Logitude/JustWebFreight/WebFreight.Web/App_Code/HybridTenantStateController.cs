@@ -5,7 +5,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Web;
 using System.Web.Http;
+using WebFreight.Web.Security;
 
 namespace WebFreight.Web.App_Code
 {
@@ -35,6 +37,10 @@ namespace WebFreight.Web.App_Code
 
         public void Post(string id, int tenant, int failedQueue, int waitingQueue)
         {
+            string token = HttpContext.Current.Request.Headers["Token"];
+            AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+            SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+            SecurityUtility.AuthenticationOnTenant(tenant);
 
             HybridTenantStateRepository hybridTenantStateRepository = new HybridTenantStateRepository(tenant);
             HybridTenantState entity = new HybridTenantState() {Tenant = tenant, FailedQueue = failedQueue , WaitingQueue = waitingQueue , LastUpdateDateTime = DateTime.UtcNow};

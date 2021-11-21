@@ -26,6 +26,7 @@ namespace WebFreight.Web.Controllers.AccountingModel
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnEntityTenant("TaxDeductionReport", entityPM.Tenant, authToken.Tenant);
                 SecurityUtility.CheckContactFeature("TaxDeductionReport", "NEW", authToken.Tenant);
                 int tenant = authToken.Tenant;
 

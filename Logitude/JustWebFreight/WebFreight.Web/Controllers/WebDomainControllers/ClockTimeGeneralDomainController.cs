@@ -33,6 +33,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     int tenant = authToken.Tenant;
 
                     SecurityUtility.AuthenticationOnTenant(tenant);
+                    SecurityUtility.AuthenticationOnTenant(parameter.Tenant);
 
                     ExcelExportService excelExportService = new ExcelExportService();
                     excelExportService.ImportClockTime(Convert.FromBase64String(parameter.Base64String), tenant);

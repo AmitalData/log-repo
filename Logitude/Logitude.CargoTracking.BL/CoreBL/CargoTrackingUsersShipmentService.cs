@@ -1,4 +1,5 @@
-﻿using Logitude.CargoTracking.Data;
+﻿using Logitude.CargoTracking.BL.EntityQueryServices;
+using Logitude.CargoTracking.Data;
 using Logitude.CargoTracking.Data.EntityListQueryServices;
 using Logitude.CargoTracking.Data.EntityLists;
 using Logitude.CargoTracking.Def.DataContracts;
@@ -21,7 +22,10 @@ namespace Logitude.CargoTracking.BL.CoreBL
         private List<CargoTrackingShipmentList> GetUserShipments(int pageIndex, int pageSize, CargoTrackingShipmentFilters shipmentFilters)
         {
             CargoTrackingShipmentSearchListQueryService shipmentSearchQuery = GetCargoTrackingShipmentSearchQuery(shipmentFilters);
-            return shipmentSearchQuery.GetFilteredShipments(pageIndex, pageSize, shipmentFilters);
+            var shipments = shipmentSearchQuery.GetFilteredShipments(pageIndex, pageSize, shipmentFilters);
+            CargoTrackingShipmentQueryService cargoTrackingShipmentQueryService = new CargoTrackingShipmentQueryService(shipmentFilters.Tenant);
+            cargoTrackingShipmentQueryService.SetFutureMilstone(shipments);
+            return shipments;
         }
         private int GetAllShipmentsCountForFirstPageOnly(int pageIndex, CargoTrackingShipmentFilters shipmentFilters)
         {
@@ -49,6 +53,7 @@ namespace Logitude.CargoTracking.BL.CoreBL
             counter.Sea = shipmentsIQuerable.Count(d => d.TransportModeId == "O");
             counter.Import = shipmentsIQuerable.Count(d => d.DirectionId == "I" || d.DirectionId == "C");
             counter.Export = shipmentsIQuerable.Count(d => d.DirectionId == "E");
+            counter.Drop = shipmentsIQuerable.Count(d => d.DirectionId == "R");
 
             return counter;
         }
@@ -72,5 +77,6 @@ namespace Logitude.CargoTracking.BL.CoreBL
         public int Air { get; set; }
         public int Land { get; set; }
         public int Sea { get; set; }
+        public int Drop { get; set; }
     }
 }

@@ -141,7 +141,10 @@ namespace WebFreight.Web.MetaDataUpdate
             Feature DailyCurrenciesRatesFeature = tenantFeatures.Where(d => d.Code == "DailyCurrenciesRates" && d.FeatureTypeCode == "MENU").FirstOrDefault();
             Feature ReportExecutionLogFeature = tenantFeatures.Where(d => d.Code == "REPORTEXECUTIONLOGS" && d.FeatureTypeCode == "MENU").FirstOrDefault();
             Feature shipmentOrderFeature = tenantFeatures.Where(d => d.Code == "SHIPMENTORDERS" && d.FeatureTypeCode == "MENU").FirstOrDefault();
+
             Feature tasksAppFeature = tenantFeatures.Where(d => d.Code == "TASKSAPP" && d.FeatureTypeCode == "MENU").FirstOrDefault();
+
+            Feature timeZonesFeature = tenantFeatures.Where(d => d.Code == "TIMEZONES" && d.FeatureTypeCode == "MENU").FirstOrDefault();
 
             #endregion
 
@@ -185,9 +188,7 @@ namespace WebFreight.Web.MetaDataUpdate
 
             #endregion
 
-            #region Maintenance Menus
-
-
+            #region Maintenance Menus        
 
             #region Partners
             AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "MTCL", Tenant = 0, MenuTypeCode = "MTC", IndexOfOrder = 0, CategoryTypeCode = "Par", TextCode = "General.MC.Partners.ShippersAndConsignees", Icon = "Customer.png", ObjectTableId = tenantObjectTables.Where(o => o.Name == "Customer").FirstOrDefault().Id, FeatureId = shipperAndConsigneeFeature.Id, FeatureUniqeCode = shipperAndConsigneeFeature.FeatureUniqeCode }, MenusTablesRepository, tenantMenusTables);
@@ -230,6 +231,7 @@ namespace WebFreight.Web.MetaDataUpdate
             AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "MTST", Tenant = 0, MenuTypeCode = "MTC", IndexOfOrder = 4, CategoryTypeCode = "Loc", TextCode = "General.MC.Others.States", Icon = "Country.png", ObjectTableId = tenantObjectTables.Where(o => o.Name == "State").FirstOrDefault().Id, FeatureId = statesFeature.Id, FeatureUniqeCode = statesFeature.FeatureUniqeCode }, MenusTablesRepository, tenantMenusTables);
             AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "MTCY", Tenant = 0, MenuTypeCode = "MTC", IndexOfOrder = 5, CategoryTypeCode = "Loc", TextCode = "General.MC.Others.Cities", Icon = "Country.png", ObjectTableId = tenantObjectTables.Where(o => o.Name == "CountryCity").FirstOrDefault().Id, FeatureId = CountryCityFeature.Id, FeatureUniqeCode = CountryCityFeature.FeatureUniqeCode }, MenusTablesRepository, tenantMenusTables);
             AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "MTRG", Tenant = 0, MenuTypeCode = "MTC", IndexOfOrder = 6, CategoryTypeCode = "Loc", TextCode = "General.MC.Others.Regions", Icon = "Country.png", ObjectTableId = tenantObjectTables.Where(o => o.Name == "Region").FirstOrDefault().Id, FeatureId = regionFeature.Id, FeatureUniqeCode = regionFeature.FeatureUniqeCode }, MenusTablesRepository, tenantMenusTables);
+            AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "MTTZ", Tenant = 0, MenuTypeCode = "MTC", IndexOfOrder = 7, CategoryTypeCode = "Loc", TextCode = "General.MC.Others.TimeZones", Icon = "GlobalZones.png", ObjectTableId = tenantObjectTables.Where(o => o.Name == "PortTimeZone").FirstOrDefault().Id, FeatureId = timeZonesFeature.Id, FeatureUniqeCode = timeZonesFeature.FeatureUniqeCode }, MenusTablesRepository, tenantMenusTables);
             #endregion
 
             #region Others

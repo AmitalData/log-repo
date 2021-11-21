@@ -66,6 +66,8 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
         {
             try
             {
+               
+
                 CargoTrackingShipmentQueryService cargoTrackingShipmentQuery = new CargoTrackingShipmentQueryService(tenant);
                 CargoTrackingShipmentPM cargoTrackingShipmentPM = cargoTrackingShipmentQuery.GetSinglePMBySecurityKey(securityKey, tenant);
 
@@ -81,6 +83,8 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
         {
             try
             {
+                
+
                 CargoTrackingShipmentQueryService cargoTrackingShipmentQuery = new CargoTrackingShipmentQueryService(tenant);
                 CargoTrackingShipmentPM cargoTrackingShipmentPM = cargoTrackingShipmentQuery.GetMainShipmentByShipmentSecurityKey(securityKey, tenant);
 

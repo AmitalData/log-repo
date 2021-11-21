@@ -14,6 +14,7 @@ using System.Web;
 using System.Web.Http;
 using WebFreight.Web.CommonDataModel.DomainServices;
 using WebFreight.Web.Helpers;
+using WebFreight.Web.Security;
 using WebFreight.Web.WebServices;
 
 namespace WebFreight.Web.Controllers.WebDomainControllers
@@ -26,7 +27,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             {
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnTenant(tenant);
                 PartnersDomainService service = new PartnersDomainService();
               IQueryable<ParticipantList>  myResult = service.GetParticipantLists(tenant);
                   return Request.CreateResponse(HttpStatusCode.OK, myResult);
@@ -45,7 +47,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             {
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnTenant(tenant);
                 CommonDataDomainService service = new CommonDataDomainService();
                 IQueryable<BusinessUnitList> myResult = service.GetBusinessUnitLists(tenant);
                 return Request.CreateResponse(HttpStatusCode.OK, myResult);
@@ -63,7 +66,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             {
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnTenant(tenant);
                 CommonDataDomainService service = new CommonDataDomainService();
                 IQueryable<AdditionalServicePM> myResult = service.GetAdditionalServicesByTenant(tenant);
                 return Request.CreateResponse(HttpStatusCode.OK, myResult);
@@ -81,7 +85,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             {
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnTenant(tenant);
                 CommonDataDomainService service = new CommonDataDomainService();
                 IQueryable<ProductTypeList> myResult = service.GetProductTypeLists(tenant);
                 return Request.CreateResponse(HttpStatusCode.OK, myResult);
@@ -99,7 +104,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             {
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnTenant(tenant);
                 CommonDataDomainService service = new CommonDataDomainService();
                 IQueryable<LeadSourceList> myResult = service.GetLeadSourceLists(tenant);
                 return Request.CreateResponse(HttpStatusCode.OK, myResult);
@@ -117,6 +123,9 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             {
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnTenant(fileUploadParamerter.Tenant);
+
                 string documentId = "";
                 if (fileUploadParamerter!=null && !string.IsNullOrEmpty(fileUploadParamerter.Base64String))
                 {

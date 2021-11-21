@@ -36,9 +36,11 @@ namespace Logitude.BL.ShipmentsModel.EntityAMs
         public List<Packages> ShipmentPackages { get; set; }
         //public bool SendUpdatesToAgentEnabled { get; set; }
 
+        public string Notes { get; set; }
         public CodeProperties Agent { get; set; }
 
         public CodeProperties Consignee { get; set; }
+
 
     }
 }

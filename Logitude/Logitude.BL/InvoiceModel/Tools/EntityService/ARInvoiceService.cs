@@ -53,6 +53,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
     public class ARInvoiceService
     {
         private const string InvoiceAutoCreditStatus = "AC";
+        private const string InvoiceAlreadyReconciledMessage = "One or more invoices ledger transactions have been already reconciled";
         private int tenant;
         private bool isNewEntity;
         private bool isUpdateTotalVats;
@@ -3807,7 +3808,19 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         private void AutoReconcileAutoCreditInvoiceWithAutoCreditedInvoice(JournalPM journal)
         {
             List<LedgerTransactionPM> autoCreditedInvoiceTransactions = GetAutoCreditedInvoiceTransactions(entityPM.Tenant, entityPM.AutoCreditByARInvoiceNumber);
+
+            BlockReconciledTransactoins(autoCreditedInvoiceTransactions);
+
             CreateJounalReconcileForEachTransaction(journal, autoCreditedInvoiceTransactions);
+        }
+
+        private static void BlockReconciledTransactoins(List<LedgerTransactionPM> autoCreditedInvoiceTransactions)
+        {
+            bool hasReconciledLedgers = autoCreditedInvoiceTransactions.Any(transaction => transaction.IsReconciled);
+            if (hasReconciledLedgers)
+            {
+                throw new ApplicationException(InvoiceAlreadyReconciledMessage);
+            }
         }
 
         private static void CreateJounalReconcileForEachTransaction(JournalPM journal, List<LedgerTransactionPM> originalInvoiceTransactions)

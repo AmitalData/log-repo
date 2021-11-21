@@ -880,7 +880,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             entityRepository.SubmitChanges();
 
             this.OpenPODDocumentUploderQueue(theEntityPm);
-
+            this.OpenSendingQBODocumentsQueue(theEntityPm);
 
             RunDocumentPopulateAutomaticDatesService(theEntityPm);
             
@@ -924,6 +924,20 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             queueservice.Send(new Dictionary<string, string>() { { "EntityId", documentFiling.Id }, { "Tenant", documentFiling.Tenant.ToString() },
                                                                  { "IsPODDocumentUploaded", true.ToString() }, { "IsPODDocumentDeleted", false.ToString() }, { "PODRecived", documentFiling.ReceivedDate.ToString() } },
                                                                   documentFiling.Tenant, null, null, null, null);
+        }
+
+        private void OpenSendingQBODocumentsQueue(DocumentsFilingPM documentFiling)
+        {
+            if (!IsAPDNCNDocumentUploaded(documentFiling))
+            {
+               return;
+            }
+
+            IQueueService queueservice = new DbQueueService();
+            queueservice.InitializeQueue("QBODocumnetsUploaderQueue", documentFiling.Tenant);
+            queueservice.Send(new Dictionary<string, string>() { { "EntityId", documentFiling.Id }, { "Tenant", documentFiling.Tenant.ToString() },
+                                                                 { "DocumentCode", documentFiling.DocumentTypeCode.ToString() }, { "IsDocumentUploaded", true.ToString() },
+                                                                 { "IsDocumentDeleted", false.ToString() } }, documentFiling.Tenant, null, null, null, null);
         }
 
         private void RunDocumentPopulateAutomaticDatesService(DocumentsFilingPM theEntityPm)
@@ -1521,6 +1535,31 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             return MyDocumentMetaDataValues;
         }
 
+        private bool IsAPDNCNDocumentUploaded(DocumentsFilingPM documentFiling)
+        {
+            var objectTable = ObjectTableRepository.GetSingleObjectTable(documentFiling.ObjectTableId, tenant, false);
+            if (objectTable == null)
+            {
+                return false;
+            }
+            if (!(objectTable.Name == "APInvoice"))
+            {
+                return false;
+            }
+            if (!(documentFiling.DocumentTypeCode == "APDNCN"))
+            {
+                return false;
+            }
+            if (!(documentFiling.HasFile))
+            {
+                return false;
+            }
+            if (!(documentFiling.Received))
+            {
+                return false;
+            }
+            return true;
+        }
     }
     public class UniFileVerM
     {

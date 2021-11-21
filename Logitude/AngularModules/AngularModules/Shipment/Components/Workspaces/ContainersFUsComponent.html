@@ -58,6 +58,8 @@
                                         <div>Containers Views</div>
                                         <div>
                                             <p attr.data-cy="{{'ContainersView' | IdGeneratorPipe}}" class="QueryLink" (click)="ViewQuery('All Containers')" *ngIf="IsQueryVisible_AllContainers">{{'Container.Q.AllContainers' | TextCodeTranslationPipe}}</p>
+                                            <p attr.data-cy="{{'ClosedContainersView' | IdGeneratorPipe}}" class="QueryLink" (click)="ViewQuery('Closed Containers')" *ngIf="IsQueryVisible_ClosedContainers">{{'Container.Q.ClosedContainers' | TextCodeTranslationPipe}}</p>
+
                                         </div>
                                     </div>
 

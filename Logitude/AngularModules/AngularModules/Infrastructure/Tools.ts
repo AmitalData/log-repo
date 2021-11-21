@@ -254,6 +254,7 @@ export class AppTool {
 
         if (location.href.indexOf('localhost') > -1) {
             logitude_url = 'http://localhost:9996/';//test.logitudeworld.com/test/';//
+            
 
         }
 
@@ -850,7 +851,7 @@ export class AppTool {
         var result: number = myArgs;
 
         if (chargeableWeightUnitCode != "MT") {
-            if (directionId == "E" && transportModeId == "A") {
+            if (directionId == "R" || (directionId == "E" && transportModeId == "A")) {
                 if (result != null) {
 
                     var toString: string = result.toString();

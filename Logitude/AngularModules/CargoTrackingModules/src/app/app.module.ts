@@ -48,6 +48,7 @@ import { CargoTrackingShipmentOrderService } from '../CargoTracking/Services/Oth
 import { IconButtonComponent } from '../Infrastructure/Components/IconButton/IconButtonComponent';
 import { DateTimeFormatPipe } from '../Infrastructure/Pipes/DateTimeFormatPipe';
 import { CargoTrackingShipmentExtendedService } from 'src/CargoTracking/Services/Others/CargoTrackingShipmentExtendedService';
+import { SharedService } from 'src/CargoTracking/Services/Others/SharedService';
 
 export function getBaseUrl() {
     return document.getElementsByTagName('base')[0].href;
@@ -118,6 +119,7 @@ export function getBaseUrl() {
         CargoTrackingShipmentExtendedService,
         DatePipe,
         DateTimeFormatPipe,
+        SharedService,
         { provide: 'BASE_URL', useFactory: getBaseUrl, deps: [] },
         { provide: MAT_DIALOG_DATA, useValue: {} },
         { provide: MatDialogRef, useValue: {} }

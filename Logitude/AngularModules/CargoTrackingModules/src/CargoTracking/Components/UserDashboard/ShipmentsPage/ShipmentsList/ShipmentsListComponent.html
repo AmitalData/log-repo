@@ -40,10 +40,10 @@
         </div>-->
         <div class="hide-mobile shipments-filters" style="margin-left: 20px;">
             <multiple-selection #shipmentTypeMultipleSelection class="multipe-select"
-                [MultipleSelectionList]="ToggleFilters.slice(0, 0).concat(ToggleFilters.slice(2,ToggleFilters.length))"
+                [MultipleSelectionList]="ToggleFilters.slice(0, 0).concat(ToggleFilters.slice(3,ToggleFilters.length))"
                 [Title]="'Shipment Type'" (SelectionChanged)="SelectionChangedHandler($event)"> </multiple-selection>
             <multiple-selection #shipmentDirectionMultipleSelection class="multipe-select"
-                [MultipleSelectionList]="ToggleFilters.slice(0,2)" [Title]="'Shipment Direction'"
+                [MultipleSelectionList]="ToggleFilters.slice(0,3)" [Title]="'Shipment Direction'"
                 (SelectionChanged)="SelectionChangedHandler($event)"> </multiple-selection>
 
             <div class="has-exception-checkbox-filter">
@@ -92,16 +92,19 @@
 
             <div class="input-box">
 
-                <i *ngIf="PanelSearchText" class="las la-times la-2x" style="font-size: 22px;padding-top: 4px;" (click)="PanelSearchText = ''"></i>
-
+                
+                <i class="las la-search" style="color:#AAA;transform: scaleX(-1);"></i>
                 <input #mobileSearch type="text " autocomplete="off" class="gray " [(ngModel)]="PanelSearchText" style="display: inline-block;"
                     placeholder="By shipment References" name="PanelSearchText"
                     formControlName="PanelSearchText" />
-
-                <i *ngIf="PanelSearchText" class="las la-long-arrow-alt-right la-2x" style="padding-top: 4px;" (click)="HideSearchPanel()"></i>
-                <i *ngIf="!PanelSearchText" class="las la-search" style="padding-top: 4px;"></i>
-
+                <i *ngIf="PanelSearchText" class="las la-times la-2x" style="font-size: 22px;padding-top: 4px;" (click)="PanelSearchText = ''"></i>
+                <!-- <i *ngIf="PanelSearchText" class="las la-long-arrow-alt-right la-2x" style="padding-top: 4px;" (click)="HideSearchPanel()"></i> -->
             </div>
+            
+            <button mat-button matSuffix mat-stroked-button aria-label="search" class="mobile-search-button" type="submit"
+            (click)="HideSearchPanel()">
+                <mat-icon>search</mat-icon>
+            </button>
         </form>
 
         <br>
@@ -252,7 +255,7 @@
                                     <span *ngIf="shipment.EntityType==='O'" class="order-icon">Order</span>
                                 </div>
 
-                                <svg [class.FlipImgDiagonal]="shipment.DirectionId=='E'" width="14" height="14"
+                                <svg *ngIf="shipment.DirectionId !='R'" [class.FlipImgDiagonal]="shipment.DirectionId=='E'" width="14" height="14"
                                     version="1.1" viewBox="0 0 512.17 512.17" xml:space="preserve"
                                     xmlns="http://www.w3.org/2000/svg" class="direction-icon">
                                     <g xmlns="http://www.w3.org/2000/svg">
@@ -260,6 +263,13 @@
                                             d="m479.05 283.92c-1.664-3.989-5.547-6.592-9.856-6.592h-116.88v-266.67c0-5.888-4.779-10.667-10.667-10.667h-170.67c-5.888 0-10.667 4.779-10.667 10.667v266.67h-117.33c-4.309 0-8.192 2.603-9.856 6.571-1.643 3.989-0.747 8.576 2.304 11.627l212.8 213.5c2.005 2.005 4.715 3.136 7.552 3.136s5.547-1.131 7.552-3.115l213.42-213.5c3.051-3.052 3.968-7.638 2.304-11.628z"
                                             fill="var(--secondaryColor)" data-original="#000000" />
 
+                                    </g>
+                                </svg>
+                               
+                               
+                                <svg class="circulararrow" *ngIf="shipment.DirectionId =='R'" width="16" height="16" viewBox="0 0 512.000000 512.000000" preserveAspectRatio="xMidYMid meet">
+                                    <g transform="translate(0.000000,512.000000) scale(0.100000,-0.100000)" fill="#000000" stroke="none">
+                                    <path fill="var(--secondaryColor)" data-original="#000000" d="M4074 4690 c-276 -276 -267 -270 -365 -204 -366 247 -717 368 -1139 394 -957 56 -1846 -527 -2176 -1428 -92 -252 -128 -461 -128 -752 -1 -285 18 -401 111 -705 83 -270 206 -493 401 -725 297 -355 736 -619 1195 -720 624 -138 1280 9 1802 403 130 98 320 296 439 456 117 158 124 180 79 223 -16 15 -176 135 -357 267 -360 264 -367 268 -418 214 -14 -16 -57 -71 -97 -124 -179 -243 -409 -398 -694 -471 -109 -27 -139 -31 -277 -31 -172 -2 -260 13 -410 65 -171 60 -278 129 -417 270 -262 266 -376 532 -376 878 0 334 118 617 353 850 165 164 343 264 570 320 125 31 347 38 477 15 149 -27 346 -97 395 -142 42 -38 29 -56 -212 -298 -231 -232 -248 -255 -202 -269 18 -5 139 -22 607 -86 165 -22 345 -47 400 -55 55 -8 235 -33 400 -55 165 -22 362 -50 438 -60 144 -21 170 -18 181 18 3 10 -8 108 -24 217 -17 110 -42 272 -55 360 -125 819 -216 1398 -220 1406 -4 5 -14 9 -23 9 -9 0 -125 -108 -258 -240z"/>
                                     </g>
                                 </svg>
                             </div>
@@ -455,10 +465,10 @@
     </div>
 
     <!-- Filters Sidebar -->
-    <div class="filters-sidebar" *ngIf="isFiltersSideBarOpened">
+    <div class="filters-sidebar" *ngIf="sharedService.isAdvancedFilterOpened$ | async">
         <div class="header">
             <div class="title">Advanced Filters</div>
-            <div class="close-btn hide-mobile" (click)="isFiltersSideBarOpened = false">×</div>
+            <div class="close-btn hide-mobile" (click)="sharedService.updateValue(false)">×</div>
         </div>
         <ul>
             <li [class.expanded]="isFilter2Expanded">
@@ -508,7 +518,7 @@
 
 
                     <div class="checkbox-filteritem"
-                        *ngFor="let item of ToggleFilters.slice(0, 0).concat(ToggleFilters.slice(2,ToggleFilters.length))">
+                        *ngFor="let item of ToggleFilters.slice(0, 0).concat(ToggleFilters.slice(3,ToggleFilters.length))">
                         <CheckBox [Value]="selectedShipmentTypesFilter.includes(item)" [Text]="item.Name"
                             (ValueChanged)="OnShipmentTypeFilterChanged($event, item)"></CheckBox>
                     </div>
@@ -528,7 +538,7 @@
                 <div class="expanded-list" [class.show]="isShipmentDirectionFilterExpanded">
 
 
-                    <div class="checkbox-filteritem" *ngFor="let item of ToggleFilters.slice(0,2)">
+                    <div class="checkbox-filteritem" *ngFor="let item of ToggleFilters.slice(0,3)">
                         <CheckBox [Value]="selectedShipmentDirectionsFilter.includes(item)" [Text]="item.Name"
                             (ValueChanged)="OnShipmentDirectionFilterChanged($event, item)"></CheckBox>
                     </div>
@@ -580,9 +590,9 @@
                       <div class="title uppercase">Sort Direction</div>
                       <ul class="sort-direction-menu">
                           <li (click)="sortBySelectionChangedHandler(SortOptions.ASC)" 
-                            [ngClass]="{'sort-item-selected': isSortDescending == SortOptions.ASC}"><span>Ascending</span> <i class="las la-arrow-up"></i></li>
+                            [ngClass]="{'sort-item-selected': isSortDescending == SortOptions.ASC}"><span>Ascending</span></li>
                           <li (click)="sortBySelectionChangedHandler(SortOptions.DESC)" 
-                            [ngClass]="{'sort-item-selected': isSortDescending == SortOptions.DESC}"><span>Descending</span> <i class="las la-arrow-down"></i></li>
+                            [ngClass]="{'sort-item-selected': isSortDescending == SortOptions.DESC}"><span>Descending</span></li>
                       </ul>
                   </div>
 
@@ -599,7 +609,7 @@
     <ul>
         <li ><img src="./assets/images/icons/star@1x.png" alt=""></li>
         <li (click)="ToggleSearchPanel()"><img src="./assets/images/icons/search@1x.png" alt=""></li>
-        <li (click)="isFiltersSideBarOpened = !isFiltersSideBarOpened; mapFiltersInvitedCustomers()"><img src="./assets/images/icons/filter@1x-white.png" alt=""></li>
+        <li (click)="sharedService.updateValue(true); mapFiltersInvitedCustomers()"><img src="./assets/images/icons/filter-sort.svg" alt=""></li>
         <li (click)="showMobileSortMenu = !showMobileSortMenu"><img src="./assets/images/icons/sort@1x-white.png"
             [class.FlipImgVert]="isSortDescending == SortOptions.ASC" alt=""></li>
     </ul>

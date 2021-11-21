@@ -253,9 +253,9 @@ namespace CommunicationWorkerRole
 
                                             if (ForwarderShipment.DirectionId.ToUpper() == "E")
                                             {
-                                                ExporterShipmentAMMappingService exporterShipmentMappingServie = new ExporterShipmentAMMappingService(ForwarderShipment); 
+                                                ExporterShipmentAMMappingService exporterShipmentMappingServie = new ExporterShipmentAMMappingService(ForwarderShipment);
                                                 NewAExporterShipmentAM newAExporterShipmentAM = exporterShipmentMappingServie.GetMappedExportShipmentAM(tenant);
-                                                 
+
                                                 LogPM.Subject = LogSubject;
                                                 if (IsNewLog)
                                                 {
@@ -291,7 +291,7 @@ namespace CommunicationWorkerRole
 
                                             }
                                             else
-                                            { 
+                                            {
 
                                                 ShipmentAM shipmentAM = new ShipmentAM()
                                                 {
@@ -301,7 +301,7 @@ namespace CommunicationWorkerRole
                                                     MainCarriageATA = ForwarderShipment.MainCarriageATA,
                                                     MainCarriageETA = ForwarderShipment.MainCarriageETA,
                                                     MainCarriageATD = ForwarderShipment.MainCarriageATD,
-                                                    MainCarriageETD = ForwarderShipment.MainCarriageETD, 
+                                                    MainCarriageETD = ForwarderShipment.MainCarriageETD,
                                                     OnCarriageATA = ForwarderShipment.OnCarriageATA,
                                                     OnCarriageATD = ForwarderShipment.OnCarriageATD,
                                                     PreCarriageATA = ForwarderShipment.PreCarriageATA,
@@ -394,24 +394,24 @@ namespace CommunicationWorkerRole
                                                     MyPackage.PackageTypeCode = item.PackageTypeCode;
                                                     shipmentAM.ShipmentPackagesAM.Add(MyPackage);
                                                 }
-                                            
 
-                                            LogPM.Subject = "Send Shipment To Forwarder By ForwarderShipments Controller";
-                                            if (IsNewLog)
-                                            {
-                                                //LogPM.CustomerId = CustomerId;
-                                                LogPM.QueueMessage = DictionaryJsonConverter.FromDictionaryToJson((Dictionary<string, string>)response.MessageValues);
-                                                LogPM.QueueType = "Shipment";
-                                                apiLogsService.Create(LogPM);
-                                            }
-                                            var msg = "Start Sending Shipment To Forwarder " + DateTime.Now;
-                                            APILogsUtility.UpdateAPILogStatus(LogPM.Id, tenant, "I", response.RetryNumber + 1, DateTime.Now, DateTime.UtcNow, msg, LogitudeXmlSerializer.SerializeObjectToXmlString(shipmentAM), null, null, "");
 
-                                            var serializedObject = JsonConvert.SerializeObject(shipmentAM);
-                                            var content = new StringContent(serializedObject, Encoding.UTF8, "application/json");
+                                                LogPM.Subject = "Send Shipment To Forwarder By ForwarderShipments Controller";
+                                                if (IsNewLog)
+                                                {
+                                                    //LogPM.CustomerId = CustomerId;
+                                                    LogPM.QueueMessage = DictionaryJsonConverter.FromDictionaryToJson((Dictionary<string, string>)response.MessageValues);
+                                                    LogPM.QueueType = "Shipment";
+                                                    apiLogsService.Create(LogPM);
+                                                }
+                                                var msg = "Start Sending Shipment To Forwarder " + DateTime.Now;
+                                                APILogsUtility.UpdateAPILogStatus(LogPM.Id, tenant, "I", response.RetryNumber + 1, DateTime.Now, DateTime.UtcNow, msg, LogitudeXmlSerializer.SerializeObjectToXmlString(shipmentAM), null, null, "");
 
-                                            var result = client.PostAsync(ImporterShipmentsURI, content);
-                                            result.Wait();
+                                                var serializedObject = JsonConvert.SerializeObject(shipmentAM);
+                                                var content = new StringContent(serializedObject, Encoding.UTF8, "application/json");
+
+                                                var result = client.PostAsync(ImporterShipmentsURI, content);
+                                                result.Wait();
                                                 if (result.Result.StatusCode == System.Net.HttpStatusCode.OK)
                                                 {
                                                     var temp1 = result.Result.Content.ReadAsStringAsync().Result;
@@ -542,7 +542,7 @@ namespace CommunicationWorkerRole
             LogPM.QueueType = "Shipment";
             apiLogsService.Create(LogPM);
         }
-  
+
         private void ConnectClient()
         {
             try

@@ -574,6 +574,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
             entityPM.DimensionsUnitCode = "Cm";
             entityPM.ChargeableWeightUnitCode = "KG";
             entityPM.VolumeUnitCode = "CBF";
+            entityPM.Notes = entityAM.Notes;
             if (!string.IsNullOrEmpty(entityAM.ForwardingPartnerTenant))
             {
                 int ForwardingPartnerTenant = int.Parse(entityAM.ForwardingPartnerTenant);
@@ -1256,16 +1257,14 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
 
         private string GetCardId(ShipmentAM entityAM, CodeProperties card)
         {
-            if (!string.IsNullOrEmpty(card.Code) || !string.IsNullOrEmpty(card.Id))
+            if (card == null) return null;
+            if (string.IsNullOrEmpty(card.Code) && string.IsNullOrEmpty(card.Id)) return null;
+            var cardId = CardCodePropertiesMapping.GetCardIdFromCardProperties(entityAM.ImporterTenant, card);
+            if (string.IsNullOrEmpty(cardId))
             {
-                var cardId = CardCodePropertiesMapping.GetCardIdFromCardProperties(entityAM.ImporterTenant, card);
-                if (!string.IsNullOrEmpty(cardId))
-                {
-                    return cardId;
-                }
-            }
-
-            return null;
+                return null;
+            }  
+            return cardId;
         }
     }
 }

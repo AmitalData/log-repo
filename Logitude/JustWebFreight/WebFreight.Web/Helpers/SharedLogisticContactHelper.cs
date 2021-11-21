@@ -141,7 +141,7 @@ namespace WebFreight.Web.Helpers
                         {
                             string password = newPassword + "  (you will need to change the password on your first login)";
 
-                            emailMessage = GetEmailMessageForShardLogistics(contact, logedContact, tenantCompany, password, ref messageArgs, sharedLogisticsContact.IsCargoTrackingInvitation);
+                            emailMessage = GetEmailMessageForShardLogistics(contact, logedContact, tenantCompany, password, ref messageArgs, sharedLogisticsContact);
                             ActivityDescription = "Web Access Activated";
                         }
 
@@ -150,13 +150,13 @@ namespace WebFreight.Web.Helpers
 
                             if (LogitudeSettings.WorkEnvironment == "cloud")
                             {
-                                emailMessage = GetEmailMessageForCloud(contact, tenantCompany, newPassword, currentUsername, ref messageArgs, sharedLogisticsContact.IsCargoTrackingInvitation);
+                                emailMessage = GetEmailMessageForCloud(contact, tenantCompany, newPassword, currentUsername, ref messageArgs, sharedLogisticsContact);
                             }
 
                             else
                             {
                                 string password = newPassword + "  (you will need to change the password on your first login)";
-                                emailMessage = GetEmailMessageFroMobile(contact, logedContact, tenantCompany, password, ref messageArgs, sharedLogisticsContact.IsCargoTrackingInvitation);
+                                emailMessage = GetEmailMessageFroMobile(contact, logedContact, tenantCompany, password, ref messageArgs, sharedLogisticsContact);
                             }
                             ActivityDescription = "Mobile Activated";
                         }
@@ -166,14 +166,14 @@ namespace WebFreight.Web.Helpers
                             ActivityDescription = "Mobile And Shared Logistics Activated";
                             if (LogitudeSettings.WorkEnvironment == "cloud")
                             {
-                                emailMessage = GetEmailMessageForCloud(contact, tenantCompany, newPassword, currentUsername, ref messageArgs, sharedLogisticsContact.IsCargoTrackingInvitation);
+                                emailMessage = GetEmailMessageForCloud(contact, tenantCompany, newPassword, currentUsername, ref messageArgs, sharedLogisticsContact);
                             }
 
                             else
                             {
 
                                 string password = newPassword + "  (you will need to change the password on your first login)";
-                                emailMessage = GetEmailMessageFroShardLogisticsAndMobile(contact, logedContact, tenantCompany, password, ref messageArgs, sharedLogisticsContact.IsCargoTrackingInvitation);
+                                emailMessage = GetEmailMessageFroShardLogisticsAndMobile(contact, logedContact, tenantCompany, password, ref messageArgs, sharedLogisticsContact);
                             }
                         }
 
@@ -218,7 +218,7 @@ namespace WebFreight.Web.Helpers
                         if ((tenantCompany.IsWebAccessActivated || tenantCompany.IsCargoTrackWebAccessActivated) && !tenantCompany.IsMobileActivated)
                         {
 
-                            emailMessage = emailMessage = GetEmailMessageForShardLogistics(contact, logedContact, tenantCompany, passwordString, ref messageArgs, sharedLogisticsContact.IsCargoTrackingInvitation);
+                            emailMessage = emailMessage = GetEmailMessageForShardLogistics(contact, logedContact, tenantCompany, passwordString, ref messageArgs, sharedLogisticsContact);
                             ActivityDescription = "Web Access Activated";
                         }
 
@@ -227,12 +227,12 @@ namespace WebFreight.Web.Helpers
                         {
                             if (LogitudeSettings.WorkEnvironment == "cloud")
                             {
-                                emailMessage = GetEmailMessageForCloud(contact, tenantCompany, passwordString, currentUsername, ref messageArgs, sharedLogisticsContact.IsCargoTrackingInvitation);
+                                emailMessage = GetEmailMessageForCloud(contact, tenantCompany, passwordString, currentUsername, ref messageArgs, sharedLogisticsContact);
                             }
                             else
                             {
 
-                                emailMessage = GetEmailMessageFroMobile(contact, logedContact, tenantCompany, passwordString, ref messageArgs, sharedLogisticsContact.IsCargoTrackingInvitation);
+                                emailMessage = GetEmailMessageFroMobile(contact, logedContact, tenantCompany, passwordString, ref messageArgs, sharedLogisticsContact);
                             }
 
 
@@ -244,12 +244,12 @@ namespace WebFreight.Web.Helpers
 
                             if (LogitudeSettings.WorkEnvironment == "cloud")
                             {
-                                emailMessage = GetEmailMessageForCloud(contact, tenantCompany, passwordString, currentUsername, ref messageArgs, sharedLogisticsContact.IsCargoTrackingInvitation);
+                                emailMessage = GetEmailMessageForCloud(contact, tenantCompany, passwordString, currentUsername, ref messageArgs, sharedLogisticsContact);
                             }
                             else
                             {
 
-                                emailMessage = GetEmailMessageFroShardLogisticsAndMobile(contact, logedContact, tenantCompany, passwordString, ref messageArgs, sharedLogisticsContact.IsCargoTrackingInvitation);
+                                emailMessage = GetEmailMessageFroShardLogisticsAndMobile(contact, logedContact, tenantCompany, passwordString, ref messageArgs, sharedLogisticsContact);
                             }
 
 
@@ -414,11 +414,11 @@ namespace WebFreight.Web.Helpers
         }
 
 
-        private static string GetEmailMessageFroShardLogisticsAndMobile(Contact contact, Contact logedContact, Tenant tenantCompany, string password, ref MessageArgs messageArgs, bool isCargoTrackingInvitation)
+        private static string GetEmailMessageFroShardLogisticsAndMobile(Contact contact, Contact logedContact, Tenant tenantCompany, string password, ref MessageArgs messageArgs, SharedLogisticContactPM sharedLogisticContact)
         {
             using (TransactionScope scope = new TransactionScope(TransactionScopeOption.RequiresNew))
             {
-                var documenttype = GetDocumentTypeForInvitation(tenantCompany.Id, isCargoTrackingInvitation);
+                var documenttype = GetDocumentTypeForInvitation(tenantCompany.Id, sharedLogisticContact);
                 if (documenttype != null)
                 {
                     messageArgs = HtmlEditorHelper.GetHtmlFromTemplate(documenttype.DocumentTypeDefaultHTMLTemplateId, documenttype.ObjectTableId, documenttype.Tenant);
@@ -468,11 +468,11 @@ namespace WebFreight.Web.Helpers
             }
         }
 
-        private static string GetEmailMessageFroMobile(Contact contact, Contact logedContact, Tenant tenantCompany, string password, ref MessageArgs messageArgs, bool isCargoTrackingInvitation)
+        private static string GetEmailMessageFroMobile(Contact contact, Contact logedContact, Tenant tenantCompany, string password, ref MessageArgs messageArgs, SharedLogisticContactPM sharedLogisticContact)
         {
             using (TransactionScope scope = new TransactionScope(TransactionScopeOption.RequiresNew))
             {
-                var documenttype = GetDocumentTypeForInvitation(tenantCompany.Id, isCargoTrackingInvitation);
+                var documenttype = GetDocumentTypeForInvitation(tenantCompany.Id, sharedLogisticContact);
                 if (documenttype != null)
                 {
                     messageArgs = HtmlEditorHelper.GetHtmlFromTemplate(documenttype.DocumentTypeDefaultHTMLTemplateId, documenttype.ObjectTableId, documenttype.Tenant);
@@ -524,11 +524,11 @@ namespace WebFreight.Web.Helpers
 
         }
 
-        private static string GetEmailMessageForShardLogistics(Contact contact, Contact logedContact, Tenant tenantCompany, string password, ref MessageArgs messageArgs, bool isCargoTrackingInvitation)
+        private static string GetEmailMessageForShardLogistics(Contact contact, Contact logedContact, Tenant tenantCompany, string password, ref MessageArgs messageArgs, SharedLogisticContactPM sharedLogisticContact)
         {
             using (TransactionScope scope = new TransactionScope(TransactionScopeOption.RequiresNew))
             {
-                var documenttype = GetDocumentTypeForInvitation(tenantCompany.Id, isCargoTrackingInvitation);
+                var documenttype = GetDocumentTypeForInvitation(tenantCompany.Id, sharedLogisticContact);
                 if (documenttype != null)
                 {
                     messageArgs = HtmlEditorHelper.GetHtmlFromTemplate(documenttype.DocumentTypeDefaultHTMLTemplateId, documenttype.ObjectTableId, documenttype.Tenant);
@@ -577,11 +577,11 @@ namespace WebFreight.Web.Helpers
             }
         }
 
-        private static string GetEmailMessageForCloud(Contact contact, Tenant tenantCompany, string password, string currentUsername, ref MessageArgs messageArgs, bool isCargoTrackingInvitation)
+        private static string GetEmailMessageForCloud(Contact contact, Tenant tenantCompany, string password, string currentUsername, ref MessageArgs messageArgs, SharedLogisticContactPM sharedLogisticContact)
         {
             using (TransactionScope scope = new TransactionScope(TransactionScopeOption.RequiresNew))
             {
-                var documenttype = GetDocumentTypeForInvitation(tenantCompany.Id, isCargoTrackingInvitation);
+                var documenttype = GetDocumentTypeForInvitation(tenantCompany.Id, sharedLogisticContact);
                 if (documenttype != null)
                 {
                     messageArgs = HtmlEditorHelper.GetHtmlFromTemplate(documenttype.DocumentTypeDefaultHTMLTemplateId, documenttype.ObjectTableId, documenttype.Tenant);
@@ -742,20 +742,18 @@ namespace WebFreight.Web.Helpers
 
 
 
-        private static DocumentType GetDocumentTypeForInvitation(int tenant, bool isCargoTrackingInvitation)
+        private static DocumentType GetDocumentTypeForInvitation(int tenant, SharedLogisticContactPM sharedLogisticContact)
         {
             DocumentType documentType = null;
             using (TransactionScope scope = new TransactionScope(TransactionScopeOption.RequiresNew))
             {
                 DocumentTypeRepository documentTypeRepository = new DocumentTypeRepository(tenant);
-                if (isCargoTrackingInvitation)
+                if (sharedLogisticContact.IsCargoTrackingInvitation)
                 {
                     documentType = documentTypeRepository.GetDocumentTypeByCode("CTIM", tenant);
                 }
-                if (documentType == null)
-                {
-                    documentType = documentTypeRepository.GetDocumentTypeByCode("SLCIN", tenant);
-                }
+
+                documentType = GetCargoTrackingTemplateType(tenant, sharedLogisticContact, documentTypeRepository);
                 scope.Complete();
 
             }
@@ -764,10 +762,15 @@ namespace WebFreight.Web.Helpers
 
         }
 
+        private static DocumentType GetCargoTrackingTemplateType(int tenant, SharedLogisticContactPM sharedLogisticContact, DocumentTypeRepository documentTypeRepository)
+        {
+            DocumentType documentType = documentTypeRepository.GetDocumentTypeByCode("SLCIN", tenant);
+            if (sharedLogisticContact.TemplateId != null)
+            {
+                documentType.DocumentTypeDefaultHTMLTemplateId = sharedLogisticContact.TemplateId;
+            }
 
-
-
-
-
+            return documentType;
+        }
     }
 }

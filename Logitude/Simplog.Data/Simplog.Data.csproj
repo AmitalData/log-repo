@@ -186,6 +186,7 @@
     <Compile Include="CommonDataModel\EntityPOCOs\DWHEnvironmentSetting.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\Horse.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\HTSCode.cs" />
+    <Compile Include="CommonDataModel\EntityPOCOs\PortTimeZone.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\ProductItem.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\CargoTenantMilestoneDefinition.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\TariffCarrierTranslation.cs" />
@@ -456,6 +457,7 @@
     <Compile Include="CommonDataModel\Mapping\PackageConnectedPackageMap.cs" />
     <Compile Include="CommonDataModel\Mapping\ParticipantMap.cs" />
     <Compile Include="CommonDataModel\Mapping\PaymentTermDateTypeMap.cs" />
+    <Compile Include="CommonDataModel\Mapping\PortTimeZoneMap.cs" />
     <Compile Include="CommonDataModel\Mapping\RegistryDateTypeMap.cs" />
     <Compile Include="CommonDataModel\Mapping\ReportExecutionLogMap.cs" />
     <Compile Include="CommonDataModel\Mapping\ReportsTemplateMap.cs" />
@@ -516,6 +518,7 @@
     <Compile Include="CommonDataModel\Repositories\CustomerOpenFilesAmountRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\HorseRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\HTSCodeRepository.cs" />
+    <Compile Include="CommonDataModel\Repositories\PortTimeZoneRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\ProductItemRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\TariffCarrierTranslationRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\UserLastSettingsRepository.cs" />

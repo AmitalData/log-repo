@@ -109,6 +109,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnEntityTenant("ReportsTemplate", reportsTemplatePM.Tenant, authToken.Tenant);
+
                 int tenant = authToken.Tenant;
                 SecurityUtility.CheckContactFeature("ReportsTemplate", "NEW", authToken.Tenant);
                 if (reportsTemplatePM.TemplateData == null)
@@ -199,6 +201,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnEntityTenant("ReportsTemplate", reportsTemplatePM.Tenant, authToken.Tenant);
+
                 int tenant = authToken.Tenant;
                 SecurityUtility.CheckContactFeature("ReportsTemplate", "UPDATE", authToken.Tenant);
                 if (reportsTemplatePM.TemplateData != null)

@@ -303,14 +303,6 @@ namespace Logitude.Infrastructure.BL
 			 
             all.Add(new ToggleDetails()
             {    
-                Code = "BQF", 
-                Name = "Quotes DWH", 
-                SearchFields = "BQF,Quotes DWH,Allow Tenants to Show Quotes Fact on the BI Report Screen", 
-                Description = "Allow Tenants to Show Quotes Fact on the BI Report Screen", 
-			});
-			 
-            all.Add(new ToggleDetails()
-            {    
                 Code = "CPT", 
                 Name = "Carta Porte", 
                 Description = "Carta Porte", 
@@ -372,7 +364,6 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "IDS,InlandDomesticShipments DWH", 
                 Description = "Allow Tenants to Show InlandDomesticShipments  Fact on the BI Report Screen", 
 			});
-
 			 
             all.Add(new ToggleDetails()
             {    

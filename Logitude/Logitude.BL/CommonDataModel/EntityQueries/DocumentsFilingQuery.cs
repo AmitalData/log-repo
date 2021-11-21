@@ -124,6 +124,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                               SignDueDate = a.SignDueDate,
                                               IsDigitalSignRequired = a.IsDigitalSignRequired,
                                               BackedupExternally = a.BackedupExternally,
+                                              IsTransferdToQBO =  a.IsTransferdToQBO,
                                           }).FirstOrDefault();
 
 
@@ -222,6 +223,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                               SignDueDate = a.SignDueDate,
                                               IsDigitalSignRequired = a.IsDigitalSignRequired,
                                               BackedupExternally = a.BackedupExternally,
+                                              IsTransferdToQBO = a.IsTransferdToQBO,
                                           }).FirstOrDefault();
 
             if (extDocPm != null)
@@ -320,6 +322,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                               IsDigitalSignRequired = a.IsDigitalSignRequired,
                                               BackedupExternally = a.BackedupExternally,
                                               SecurityId = a.SecurityId,
+                                              IsTransferdToQBO = a.IsTransferdToQBO,
                                           }).FirstOrDefault();
 
             if (extDocPm != null)
@@ -421,6 +424,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                               SignDueDate = a.SignDueDate,
                                               IsDigitalSignRequired = a.IsDigitalSignRequired,
                                               BackedupExternally = a.BackedupExternally,
+                                              IsTransferdToQBO = a.IsTransferdToQBO,
                                           }).FirstOrDefault();
 
             if (extDocPm != null)
@@ -517,6 +521,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                               IsSharedOut = a.IsSharedOut,
                                               SignDueDate = a.SignDueDate,
                                               IsDigitalSignRequired = a.IsDigitalSignRequired,
+                                              IsTransferdToQBO = a.IsTransferdToQBO,
                                               BackedupExternally = a.BackedupExternally,
                                           }).FirstOrDefault();
 
@@ -615,6 +620,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                               SignDueDate = a.SignDueDate,
                                               IsDigitalSignRequired = a.IsDigitalSignRequired,
                                               BackedupExternally = a.BackedupExternally,
+                                              IsTransferdToQBO = a.IsTransferdToQBO,
                                           }).FirstOrDefault();
 
             if (extDocPm != null)
@@ -712,6 +718,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                               SignDueDate = a.SignDueDate,
                                               IsDigitalSignRequired = a.IsDigitalSignRequired,
                                               BackedupExternally = a.BackedupExternally,
+                                              IsTransferdToQBO = a.IsTransferdToQBO,
                                           }).FirstOrDefault();
 
             if (extDocPm != null)
@@ -807,6 +814,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                                SignDueDate = a.SignDueDate,
                                                                IsDigitalSignRequired = a.IsDigitalSignRequired,
                                                                BackedupExternally = a.BackedupExternally,
+                                                               IsTransferdToQBO = a.IsTransferdToQBO,
                                                            }).ToList();
 
             ICustomsDocumentQueryServiceExt customsDocumentQueryService = ContainerAccessor.Container.Resolve(typeof(ICustomsDocumentQueryServiceExt), "CustomsDocumentQueryServiceExt", new ParameterOverride("", 1)) as ICustomsDocumentQueryServiceExt;
@@ -921,6 +929,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                                SignDueDate = a.SignDueDate,
                                                                IsDigitalSignRequired = a.IsDigitalSignRequired,
                                                                BackedupExternally = a.BackedupExternally,
+                                                               IsTransferdToQBO = a.IsTransferdToQBO,
                                                            }).ToList();
 
             ICustomsDocumentQueryServiceExt customsDocumentQueryService = ContainerAccessor.Container.Resolve(typeof(ICustomsDocumentQueryServiceExt), "CustomsDocumentQueryServiceExt", new ParameterOverride("", 1)) as ICustomsDocumentQueryServiceExt;

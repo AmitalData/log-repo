@@ -36,6 +36,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         int tenant = authToken.Tenant;
 
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                        SecurityUtility.AuthenticationOnTenant(entityPM.Tenant);
                         SecurityUtility.AuthenticationOnEntityTenant("ARInvoice", entityPM.Tenant, authToken.Tenant);
 
                         if (entityPM.Id == null)

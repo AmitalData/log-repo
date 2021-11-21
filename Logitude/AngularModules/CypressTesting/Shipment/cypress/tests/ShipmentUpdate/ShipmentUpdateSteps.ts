@@ -45,6 +45,12 @@ Given("the user delete the first order package", () => {
 });
 //#endregion
 
+//#region Generate packages from order packages
+Given("the user generate packages from order packages", () => {
+    Actions.GenerateFromOrderPackage()
+});
+//#endregion
+
 //#region Update packages tab given step
 Given("the user add package with the following details", (dataTable) => {
     packagesDetails = Assists.CreateSet<PackagesDetails>(dataTable);
@@ -79,6 +85,10 @@ Given("add delivery with {string} as a partner routing", (partner) => {
 Given("add pre carriage and on carriage from port {string} to port {string}", (fromPort, toPort) => {
     Actions.FillPreCarriageRouting(shipmentDetails.TransportMode, fromPort, toPort)
     Actions.FillOnCarriageRouting(shipmentDetails.TransportMode, fromPort, toPort)
+});
+
+Given("add a warehouse with {string} as a terminal", (warehouseLegTerminal) => {
+    Actions.AddWarehouseLegPickups(warehouseLegTerminal)
 });
 //#endregion
 

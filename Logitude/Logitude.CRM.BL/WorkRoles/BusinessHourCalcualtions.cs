@@ -93,6 +93,8 @@ namespace Logitude.CRM.BL.WorkRoles
                 }
 
                 var endOfDay = getEndOfDay(startDate.Value);
+                if (endDate == null)
+                    endDate = DateTime.Today;
                 var startOfDay = getStartOfDay(endDate.Value);
                 var usedMinutesinEndDate = endDate.Value.Subtract(startOfDay).TotalMinutes;
                 var usedMinutesinStartDate = endOfDay.Subtract(startDate.Value).TotalMinutes;

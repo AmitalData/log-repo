@@ -27,7 +27,8 @@ export class MultiUpdateComponent extends BaseComponent implements OnInit {
     QueryCode: string;
     ObjectTableName: string;
     ObjectTableId: string;
-
+    IsMultiEntityUpdatedSuccessfully: boolean = false;
+    ParentComponent: any;
     ValidationErrorsList: any[];
 
     @Output() MenuHeaderchangeevent = new EventEmitter();
@@ -133,7 +134,9 @@ export class MultiUpdateComponent extends BaseComponent implements OnInit {
         this.IsAllRecordSelected = true;
     }
 
-    SetWindowArgs(args: any) {
+    SetWindowArgs(windowArgs: any) {
+        let args: any = windowArgs.args;
+        this.ParentComponent = windowArgs.parentComponent;
         this.QueryCode = args.QueryCode;
         this.Filters = this.Clone(args.Filters);
         this.columns = this.Clone(args.Columns);
@@ -217,6 +220,9 @@ export class MultiUpdateComponent extends BaseComponent implements OnInit {
         this.AutomationSetValueLists.push(new AutomationSetValueViewModel(automationSetValue, this));
     }
 
+    NextClicked() {
+        this.ParentComponent.NextButtonClicked();
+    }
 
     UpdateClick() {
         if (!this.IsUpdateValid()) {
@@ -228,9 +234,8 @@ export class MultiUpdateComponent extends BaseComponent implements OnInit {
 
         this.CurrentSession.StartBusyIndicatorLoading();
         this.multiEntityUpdateLogPMService.insert(multiEntityUpdateLog).subscribe((myResponse: ServiceResponse) => {
-            this.CurrentSession.StopBusyIndicator();
             if (!myResponse.HasError) {
-                this.CurrentSession.CloseCurrentWindow();
+                this.ParentComponent.UpdateButtonClicked(myResponse.Result, this.multiEntityUpdateLogPMService);
             }
         });
     }

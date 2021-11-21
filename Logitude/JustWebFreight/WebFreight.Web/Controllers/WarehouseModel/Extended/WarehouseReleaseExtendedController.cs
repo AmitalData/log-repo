@@ -161,6 +161,7 @@ namespace WebFreight.Web.Controllers.WarehouseModel.Extended
                         string token = HttpContext.Current.Request.Headers["Token"];
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                        SecurityUtility.AuthenticationOnEntityTenant("WarehouseRelease", entityPM.Tenant, authToken.Tenant);
                         SecurityUtility.CheckContactFeature("WarehouseRelease", "NEW", authToken.Tenant);
 
                         WarehouseEntryPackageRepository warehouseEntryPackageRepository = new WarehouseEntryPackageRepository(entityPM.Tenant);
@@ -250,6 +251,7 @@ namespace WebFreight.Web.Controllers.WarehouseModel.Extended
                         string token = HttpContext.Current.Request.Headers["Token"];
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                        SecurityUtility.AuthenticationOnTenant(tenant);
 
                         WarehouseReleaseQueryService warehouseReleaseQueryService = new WarehouseReleaseQueryService(tenant);
                         List<WarehouseReleaseList> warehouseReleaseLists = warehouseReleaseQueryService.GetWarehouseReleaseListsByshipmentId(shipmentId, tenant);
@@ -281,6 +283,7 @@ namespace WebFreight.Web.Controllers.WarehouseModel.Extended
                         string token = HttpContext.Current.Request.Headers["Token"];
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                        SecurityUtility.AuthenticationOnTenant(tenant);
 
                         WarehouseReleaseQueryService warehouseReleaseQueryService = new WarehouseReleaseQueryService(tenant);
                         List<WarehouseReleaseList> warehouseReleaseLists = warehouseReleaseQueryService.GetActiveWarehouseReleaseListsByshipmentId(shipmentId, tenant);
@@ -313,6 +316,7 @@ namespace WebFreight.Web.Controllers.WarehouseModel.Extended
                         string token = HttpContext.Current.Request.Headers["Token"];
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                        SecurityUtility.AuthenticationOnEntityTenant("WarehouseRelease", entityPM.Tenant, authToken.Tenant);
                         SecurityUtility.CheckContactFeature("WarehouseRelease", "UPDATE", authToken.Tenant);
                         WarehouseEntryPackagesReleaseRepository warehouseEntryPackagesReleaseRepository = null;
                         WarehouseEntryPackageRepository warehouseEntryPackageRepository = null;

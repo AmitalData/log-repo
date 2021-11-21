@@ -302,5 +302,7 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public DateTime? ShipmentCreateDate { get; set; }
         public DateTime? PODReceivedOnDate { get; set; }
         public bool IsAutomaticUpdates { get; set; }
+        public bool IsClosed { get; set; }
+        public DateTime? ClosedDate { get; set; }
     }
 }

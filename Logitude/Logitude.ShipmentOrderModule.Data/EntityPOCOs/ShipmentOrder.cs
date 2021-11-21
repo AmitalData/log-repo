@@ -185,6 +185,12 @@ namespace Logitude.ShipmentOrderModule.Data.EntityPOCOs
 	    public string LastExceptionDescription { get; set; }
         [Column("LastExceptionDate")]
 	    public DateTime? LastExceptionDate { get; set; }
+        [Column("OnHandDate")]
+	    public DateTime? OnHandDate { get; set; }
+        [Column("IsOperationalClosed")]
+	    public bool IsOperationalClosed { get; set; }
+        [Column("OnHandNumber")]
+	    public string OnHandNumber { get; set; }
         [Column("AutomaticLastUpdateDate")]
 	    public DateTime? AutomaticLastUpdateDate { get; set; }
     }

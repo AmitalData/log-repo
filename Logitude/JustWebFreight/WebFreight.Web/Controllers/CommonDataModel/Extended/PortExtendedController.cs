@@ -48,6 +48,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.PMControllers
 			    string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnTenant(tenant);
 				
                 SecurityUtility.CheckContactFeature("Port", "READ", authToken.Tenant);
                 PortQuery portQuery = new PortQuery(authToken.Tenant);

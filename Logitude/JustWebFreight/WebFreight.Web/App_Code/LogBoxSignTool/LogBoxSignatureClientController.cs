@@ -33,6 +33,7 @@ namespace WebFreight.Web.App_Code.LogBoxSignTool
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnEntityTenant("DocumentsFiling", entityPM.Tenant, authToken.Tenant);
                 if (entityPM.CancellSignRequest == true)
                 {
                     ICommonDataContext MyContext = CommonDataContext.GetContext(entityPM.Tenant);
@@ -213,6 +214,7 @@ namespace WebFreight.Web.App_Code.LogBoxSignTool
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int Tenant = authToken.Tenant;
                 SecurityUtility.AuthenticationOnTenant(Tenant);
+                SecurityUtility.AuthenticationOnTenant(myTenant);
 
                 SecurityUtility.CheckContactFeature("DocumentsFiling", "READ", Tenant);
                 DocumentsFilingQuery documentsFilingQuery = new DocumentsFilingQuery(Tenant);
@@ -270,6 +272,7 @@ namespace WebFreight.Web.App_Code.LogBoxSignTool
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int Tenant = authToken.Tenant;
                 SecurityUtility.AuthenticationOnTenant(Tenant);
+                SecurityUtility.AuthenticationOnEntityTenant("FileInformation", FileInfo.Tenant, authToken.Tenant);
                 DocumentFileUploadHelper documentFileUploadHelper = new DocumentFileUploadHelper();
                 bool isDigitallySigned = false;
                 string signersList = "";
@@ -372,6 +375,7 @@ namespace WebFreight.Web.App_Code.LogBoxSignTool
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int Tenant = authToken.Tenant;
                 SecurityUtility.AuthenticationOnTenant(Tenant);
+                SecurityUtility.AuthenticationOnEntityTenant("StatusData", statusData.Tenant, authToken.Tenant);
                 var serializedObj = JsonConvert.SerializeObject(statusData);
                 LogitudeCacheManager.ServerCache.AddToCache("ClientAppStatus_" + authToken.Email, serializedObj);
                 //HttpContext.Current.Cache["ClientAppStatus_" + authToken.Email] = statusData;
@@ -397,6 +401,7 @@ namespace WebFreight.Web.App_Code.LogBoxSignTool
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int Tenant = authToken.Tenant;
                 SecurityUtility.AuthenticationOnTenant(Tenant);
+                SecurityUtility.AuthenticationOnTenant(myTenant);
 
                 SecurityUtility.CheckContactFeature("DocumentsFiling", "READ", Tenant);
                 DocumentsFilingQuery documentsFilingQuery = new DocumentsFilingQuery(Tenant);

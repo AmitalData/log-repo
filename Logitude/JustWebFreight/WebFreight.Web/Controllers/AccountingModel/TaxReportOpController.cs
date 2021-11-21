@@ -68,6 +68,7 @@ namespace WebFreight.Web.Controllers.AccountingModel
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnEntityTenant("TaxReport", entityPM.Tenant,authToken.Tenant);
                 SecurityUtility.CheckContactFeature("TaxReport", "NEW", authToken.Tenant);
                 int tenant = authToken.Tenant;               
                TaxReportHelper.CheckWithoutTransmitLines(authToken,entityPM);
@@ -90,6 +91,7 @@ namespace WebFreight.Web.Controllers.AccountingModel
             try
             {
                 int tenant = GetAuthinticatedTenant();
+                SecurityUtility.AuthenticationOnEntityTenant("TaxReport", entityPM.Tenant, tenant);
 
                 BatchTaskExecutionPM batchTaskPM = TaxReportService.CancelTaxReportInBatch(entityPM.Id, tenant);
 
@@ -342,6 +344,8 @@ namespace WebFreight.Web.Controllers.AccountingModel
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnEntityTenant("TaxReport", entityPM.Tenant, authToken.Tenant);
+
                 SecurityUtility.CheckContactFeature("TaxReport", "UPDATE", authToken.Tenant);
                 int tenant = authToken.Tenant;             
             //    entityPM = TaxReportService.CreatetTaxReportLine(entityPM);
@@ -364,6 +368,8 @@ namespace WebFreight.Web.Controllers.AccountingModel
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnEntityTenant("TaxReport", entityPM.Tenant, authToken.Tenant);
+
                 SecurityUtility.CheckContactFeature("TaxReport", "NEW", authToken.Tenant);
                 int tenant = authToken.Tenant;
 
@@ -410,6 +416,8 @@ namespace WebFreight.Web.Controllers.AccountingModel
             {
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnEntityTenant("ImageParameter", fileUploadParamerter.Tenant, authToken.Tenant);
 
                 if (fileUploadParamerter != null && !string.IsNullOrEmpty(fileUploadParamerter.Base64String))
                 {

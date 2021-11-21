@@ -1,5 +1,6 @@
 ﻿using Logitude.BL.ShipmentsModel.EntityLists;
 using Logitude.Server.Tools;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InfrastructureModel;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
@@ -232,6 +233,10 @@ namespace WebFreight.Web.App_Code
         [WebGet(UriTemplate = "getmakenotificationread/{email}/{isAll}/{notificationId}/{type}")]
         public bool GetMakeNotificationRead(string email, bool isAll, string notificationId, string type)
         {
+            string token = HttpContext.Current.Request.Headers["Token"];
+            AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+            SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+
             bool IsScuss = false;
             string dbConnectionInfo = ConfigurationManager.ConnectionStrings["Globalstr"].ConnectionString;
             DbConnection connection = DatabaseInitializer.GetConnection(dbConnectionInfo);

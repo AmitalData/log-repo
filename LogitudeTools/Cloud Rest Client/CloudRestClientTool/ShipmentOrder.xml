@@ -164,7 +164,7 @@
 		<Name>Export</Name>
 	</Direction>
 	<SupplyDateTime>2021-08-15T11:29:10.12</SupplyDateTime>
-	<OriginPort Code="ILASH">
+	<OriginPort Code="ILASH" PortCode="ASH">
 		<LocalName>Ashdod</LocalName>
 		<EnglishName>Ashdod</EnglishName>
 		<Country Code="IL">
@@ -172,7 +172,7 @@
 			<LocalName>Israel</LocalName>
 		</Country>
 	</OriginPort>
-	<DestinationPort Code="ILASH">
+	<DestinationPort Code="ILASH" PortCode="ASH">
 		<LocalName>Ashdod</LocalName>
 		<EnglishName>Ashdod</EnglishName>
 		<Country Code="IL">
@@ -180,7 +180,7 @@
 			<LocalName>Israel</LocalName>
 		</Country>
 	</DestinationPort>
-	<Gateway Code="ILASH">
+	<Gateway Code="ILASH" PortCode="ASH">
 		<LocalName>Ashdod</LocalName>
 		<EnglishName>Ashdod</EnglishName>
 		<Country Code="IL">
@@ -228,4 +228,7 @@
 	<Volume>3</Volume>
 	<LastExceptionDate>2020-03-12T11:29:10.12</LastExceptionDate>
 	<LastExceptionDescription>test</LastExceptionDescription>
+	<OnHandDate>2020-03-12T11:29:10.12</OnHandDate>
+	<OnHandNumber>123</OnHandNumber>
+	<IsOperationalClosed>true</IsOperationalClosed>
 </ShipmentOrder>

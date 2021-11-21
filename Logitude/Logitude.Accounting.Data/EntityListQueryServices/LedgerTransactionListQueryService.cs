@@ -314,7 +314,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
         private List<string> GetTaxReportLinesJournalIds(TaxReportList taxReport, string inputOrOutput)
         {
           return  (from a in context.TaxReportLines
-             where a.TaxReportId == taxReport.Id && a.Tenant == taxReport.Tenant && a.OutputOrInput == inputOrOutput
+             where a.TaxReportId == taxReport.Id && a.Tenant == taxReport.Tenant && a.OutputOrInput == inputOrOutput && a.TransmitStatusCode !="3"
                    select a.JournalId).ToList();
         }
         private TaxReportList GetTaxReport(string Id, int tenant)
@@ -1537,6 +1537,8 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 
             if (filter.AccountsIds != null && filter.AccountsIds.Count() > 0)
                 tenantTransactions.Where(transaction => filter.AccountsIds.Contains(transaction.AccountId));
+            if (!filter.IsReconciled)
+                tenantTransactions = tenantTransactions.Where(transaction =>!transaction.IsReconciled);
 
             return tenantTransactions;
         }
@@ -1919,6 +1921,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
         public List<string> AccountsIds { get; set; }
         public bool GetFullAmountTransactions { get; set; }
         public bool GetDueDatedTransactions { get; set; }
+        public bool IsReconciled { get; set; }
     }
 
 }

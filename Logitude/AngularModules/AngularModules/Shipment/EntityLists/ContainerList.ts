@@ -227,4 +227,7 @@ export class ContainerList {
 		ShipmentCreateDate: Date;
 		PODReceivedOnDate: Date;
 		IsAutomaticUpdates: boolean;
-}
+		IsClosed: boolean;
+		ClosedDate: Date;
+	
+}

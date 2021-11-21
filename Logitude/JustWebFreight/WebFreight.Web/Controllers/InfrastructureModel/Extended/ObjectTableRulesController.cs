@@ -54,6 +54,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
                         string token = HttpContext.Current.Request.Headers["Token"];
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                        SecurityUtility.AuthenticationOnEntityTenant("ObjectTableRule", entityPM.Tenant, authToken.Tenant);
 
                         IWebFreightContext MyContext = WebFreightContext.GetContext(entityPM.Tenant);
                         ObjectTableRuleService service = new ObjectTableRuleService(MyContext, authToken.Tenant);
@@ -90,7 +91,8 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
 
-                    
+                        SecurityUtility.AuthenticationOnEntityTenant("ObjectTableRule", entityPM.Tenant, authToken.Tenant);
+
 
                         IWebFreightContext MyContext = WebFreightContext.GetContext(entityPM.Tenant);
                         ObjectTableRuleService service = new ObjectTableRuleService(MyContext, authToken.Tenant);

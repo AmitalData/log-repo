@@ -179,6 +179,26 @@
                         </tr>
                     </table>
                 </li>
+                <li class="ComboBoxItem TextTrimming" (click)="ItemClicked('Less than Today')" style="border:none;" [class.Selected]="'Less than Today' === SelectedItem">
+                    <table>
+                        <tr>
+                            <td style="width:90px;cursor:default;">Less than Today</td>
+                            <td style="float:left;cursor:default;margin-left: 70px;">
+                                <span tabindex="0" (mousedown)="ItemClicked('Less than Today')">{{LessThanToday}}</span>
+                            </td>
+                        </tr>
+                    </table>
+                </li>
+                <li class="ComboBoxItem TextTrimming" (click)="ItemClicked('Less than or equal Today')" style="border:none;" [class.Selected]="'Less than or equal Today' === SelectedItem">
+                    <table>
+                        <tr>
+                            <td style="width:90px;cursor:default;">Less than or equal Today</td>
+                            <td style="float:left;cursor:default;margin-left: 10px;">
+                                <span tabindex="0" (mousedown)="ItemClicked('Less than Today')">{{LessThanOrEqualToday}}</span>
+                            </td>
+                        </tr>
+                    </table>
+                </li>
                 <li class="ComboBoxItem TextTrimming" (click)="ItemClicked('Last 7 Days')" style="border:none;" [class.Selected]="'Last 7 Days' === SelectedItem">
                     <table>
                         <tr>

@@ -115,6 +115,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
                 string token = System.Web.HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnTenant(filter.Tenant);
 
                 byte[] fileData = Convert.FromBase64String(filter.FileData);
 
@@ -294,6 +295,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
                 Longtitude = ZeroPort.Longtitude,
                 SearchFields = ZeroPort.SearchFields,
                 Notes = ZeroPort.Notes,
+                PortTimeZoneCode = ZeroPort.PortTimeZoneCode,
             };
 
             portRepository.Add(newPort);

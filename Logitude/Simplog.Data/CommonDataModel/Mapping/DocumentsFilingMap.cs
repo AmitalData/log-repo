@@ -235,6 +235,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.IsDigitalSignRequired).HasColumnName("IsDigitalSignRequired");
             this.Property(t => t.BackedupExternally).HasColumnName("BackedupExternally");
             this.Property(t => t.LastBackupDate).HasColumnName("LastBackupDate");
+            this.Property(t => t.IsTransferdToQBO).HasColumnName("IsTransferdToQBO");
 
             this.HasOptional(t => t.Document)
                 .WithMany()

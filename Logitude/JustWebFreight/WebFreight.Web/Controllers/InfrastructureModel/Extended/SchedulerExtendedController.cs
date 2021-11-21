@@ -85,6 +85,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
                         string token = HttpContext.Current.Request.Headers["Token"];
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                        SecurityUtility.AuthenticationOnEntityTenant("TasksScheduler", entityPM.Tenant, authToken.Tenant);
 
                         SecurityUtility.CheckContactFeature("TasksScheduler", "NEW", authToken.Tenant);
                         IWebFreightContext MyContext = WebFreightContext.GetContext(entityPM.Tenant);
@@ -145,6 +146,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
                     string token = HttpContext.Current.Request.Headers["Token"];
                     AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                     SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                    SecurityUtility.AuthenticationOnEntityTenant("TasksScheduler", entityPM.Tenant, authToken.Tenant);
                     SecurityUtility.CheckContactFeature("TasksScheduler", "UPDATE", authToken.Tenant);
 
 
@@ -195,10 +197,12 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnTenant(tenant);
+
                 IWebFreightContext MyContext = WebFreightContext.GetContext(tenant);
 
                 SecurityUtility.CheckContactFeature("TasksScheduler", "READ", authToken.Tenant);
-                TasksSchedulerService service = new TasksSchedulerService(MyContext, tenant);
+                TasksSchedulerService service = new TasksSchedulerService(MyContext,tenant);
                 TasksSchedulerQuery tasksSchedulerQuery = new TasksSchedulerQuery(tenant);
 
                 bool isExceedsScheduledTasksLimitPerReport = service.isExceedsScheduledTasksLimitPerReport(tenant, entityId);

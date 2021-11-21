@@ -34,7 +34,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-
+                SecurityUtility.AuthenticationOnTenant(tenant);
 
                 List<ReportList> result = new List<ReportList>();
                 ReportRepository reportRepository = new ReportRepository(tenant);
@@ -107,6 +107,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnTenant(tenant);
+
 
                 string extension = "";
                 MemoryStream memoryStream = new MemoryStream();
@@ -200,6 +202,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnTenant(tenant);
 
                 ReportExecutionLogRepository reportExecutionLogRepository = new ReportExecutionLogRepository(tenant);
                 ReportExecutionLog reportExecutionLog = reportExecutionLogRepository.GetReportExecutionLog(reportKey, tenant);

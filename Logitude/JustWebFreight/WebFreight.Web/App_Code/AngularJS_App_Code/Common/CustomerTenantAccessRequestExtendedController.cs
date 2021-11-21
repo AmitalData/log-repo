@@ -76,6 +76,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Common
                     string token = HttpContext.Current.Request.Headers["Token"];
                     AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                     SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                    SecurityUtility.AuthenticationOnEntityTenant("", entityPM.Tenant, authToken.Tenant);
                     SecurityUtility.CheckContactFeature("CustomerTenantAccessRequest", "NEW", authToken.Tenant);
 
                     ICommonDataContext MyContext = CommonDataContext.GetContext(entityPM.Tenant);
@@ -106,6 +107,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Common
                     string token = HttpContext.Current.Request.Headers["Token"];
                     AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                     SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                    SecurityUtility.AuthenticationOnEntityTenant("", authToken.Tenant, entityPM.Tenant);
                     SecurityUtility.CheckContactFeature("CustomerTenantAccessRequest", "UPDATE", authToken.Tenant);
 
                     string entityName = "CustomerTenantAccessRequest" + entityPM.Id + entityPM.Tenant;
@@ -136,7 +138,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Common
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-
+                SecurityUtility.AuthenticationOnTenant(tenant);
                 SecurityUtility.CheckContactFeature("CustomerTenantAccessRequest", "READ", authToken.Tenant);
                 CustomerTenantAccessRequestQuery CustomerTenantAccessRequestQuery = new CustomerTenantAccessRequestQuery(authToken.Tenant);
                 CustomerTenantAccessRequestPM CustomerTenantAccessRequestPM = CustomerTenantAccessRequestQuery.GetByTenantAndForwarderId(tenant, forwarderId);

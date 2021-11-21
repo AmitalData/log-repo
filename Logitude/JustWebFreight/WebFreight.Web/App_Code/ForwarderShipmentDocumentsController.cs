@@ -50,8 +50,12 @@ namespace WebFreight.Web.App_Code
         {
             try
             {
-                SecurityUtility.AuthenticationOnTenant(EntityPM.Tenant);
-                //SecurityUtility.CheckContactFeature("DocumentsFiling", "NEW", EntityPM.Tenant);
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnEntityTenant("DocumentsFiling", EntityPM.Tenant, authToken.Tenant);
+
+
                 bool IsNewLog = false;
                 APIException Result = null;
                 string CorrelationId = HttpContext.Current.Request.Headers["CorrelationId"];
@@ -290,8 +294,11 @@ namespace WebFreight.Web.App_Code
         {
             try
             {
-                SecurityUtility.AuthenticationOnTenant(EntityPM.Tenant);
-                //SecurityUtility.CheckContactFeature("DocumentsFiling", "UPDATE", EntityPM.Tenant);
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnEntityTenant("DocumentsFiling", EntityPM.Tenant, authToken.Tenant);
+
                 bool IsNewLog = false;
                 DocumentsFilingQuery documentsFilingQuery = new DocumentsFilingQuery(EntityPM.Tenant);
                 DocumentsFilingPM DocumentFilingPM = documentsFilingQuery.GetSinglePMByCustomerId(EntityPM.CustomerDocumentId, EntityPM.Tenant);

@@ -54,6 +54,9 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
             {
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+
+
                 string tenantWhere = ".[Parent Tenant] = ";
                 var DWSettings = new DWHSettingRepository(authToken.Tenant);
                 var temp = DWSettings.GetSingleDWHSetting(authToken.Tenant);
@@ -124,6 +127,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
             {
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 DWObjectTableQuery dWObjectTableQuery = new DWObjectTableQuery(authToken.Tenant);
                 DWObjectTablePM dWObjectTablePM = dWObjectTableQuery.GetSinglePM(Tabel, authToken.Tenant);
                 bool IsClosed = dWObjectTablePM.IsClosed;
@@ -185,6 +189,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 SecurityUtility.CheckContactFeature("Shipment", "READ", authToken.Tenant);
+
                 int tenant = authToken.Tenant;
                 var Tabel = filters.Filter1Name;
                 var Field = filters.Filter2Name;

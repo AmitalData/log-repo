@@ -1,5 +1,5 @@
 
-import { Component, ViewChild, AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, ElementRef, OnInit } from '@angular/core';
+import { Component, ViewChild, AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, ElementRef, OnInit, Injectable } from '@angular/core';
 import { Router, ActivatedRoute, NavigationStart, NavigationEnd } from '@angular/router';
 import { FormBuilder } from '@angular/forms';
 import { CargoTrackingSearchService } from '../../../../Services/Others/CargoTrackingSearchService';
@@ -18,6 +18,8 @@ import { CargoTrackingMilestoneService } from 'src/CargoTracking/Services/Others
 import { MultipleSelectionComponent } from 'src/Infrastructure/Components/MultipleSelection/MultipleSelectionComponent';
 import { filter } from 'rxjs/operators';
 import { ShipmentDirections } from '../ShipmentDetails/ShipmentDetailsComponent';
+import { ReplaySubject } from 'rxjs';
+import { SharedService } from 'src/CargoTracking/Services/Others/SharedService';
 
 @Component({
     selector: 'ShipmentsListComponent',
@@ -42,7 +44,6 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
     Shipments: CargoTrackingShipmentList[] = [];
 
     isLoading: boolean = false;
-    isFiltersSideBarOpened: boolean = false;
     isFilter1Expanded: boolean = false;
     isFilter2Expanded: boolean = false;
     isMilestonesStatusFilterExpanded: boolean = false;
@@ -89,7 +90,8 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
         private cargoTrackingShipmentService: CargoTrackingShipmentService,
         public dialog: MatDialog,
         private searchService: CargoTrackingSearchService,
-        private milestonesService: CargoTrackingMilestoneService)
+        private milestonesService: CargoTrackingMilestoneService,
+        public sharedService: SharedService)
     {
         this.InitComponent();
         this.SetDefaultBackgroundColor();
@@ -352,9 +354,6 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
     private GetMilstones(){
         this.milestonesService.getAll(this.tenant)
             .subscribe((milestones:any) => {
-                milestones.sort(function (a, b) {
-                    return Number(a.Code) - Number(b.Code);
-                  });
                 this.MilestonesStatus  = milestones.map(s => ({ IsSelected: false, ...s}));
             });
     }
@@ -539,7 +538,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
     {
         var direction = "";
         if (this.SelectedFilters.length > 0){
-            const directionsCodes = ['IM', 'EX'];
+            const directionsCodes = ['IM', 'EX','R'];
             direction = this.SelectedFilters.filter(d => directionsCodes.includes(d.Code)).map(d => d.Code).join(',');
         }
         shipmentFilters.DirectionCodes = direction;
@@ -767,6 +766,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
         // new ToggleFilter('AL', 'ALL', ''),
         new ToggleFilter('IM', 'Import', 'shipmentDirection'),
         new ToggleFilter('EX', 'Export', 'shipmentDirection'),
+        new ToggleFilter('R', 'Drop', 'shipmentDirection'),
         new ToggleFilter('A', 'Air', 'shipmentType'),
         new ToggleFilter('I', 'Land', 'shipmentType'),
         new ToggleFilter('O', 'Sea', 'shipmentType'),
@@ -799,6 +799,9 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
         } else if(toggleFilter.Code == 'IM')
         {
             return this.ShipmentsCounter.Import;
+        } else if(toggleFilter.Code == 'R')
+        {
+            return this.ShipmentsCounter.Drop;
         } else if(toggleFilter.Code == 'EX')
         {
             return this.ShipmentsCounter.Export;
@@ -874,7 +877,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
 
     ApplyFilterButtonClicked()
     {
-        this.isFiltersSideBarOpened = false;
+        this.sharedService.updateValue(false);
         this.SelectedInvitedCustomers = this.FiltersSelectedInvitedCustoms.map(d=>d);
         this.appliedSelectedFilterMilestonesStatus= this.selectedFilterMilestonesStatus.map(state => state);
         this.toggleMobileAdvancedFilters();
@@ -894,7 +897,6 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
     }
 
     ClearAdvancedFilters(){
-        // this.isFiltersSideBarOpened = false;
         this.SelectedInvitedCustomers = [];
         this.selectedFilterMilestonesStatus = [];
         this.MilestonesStatus.map((item, index) => {
@@ -969,7 +971,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
     }
     FiltersInvitedCustomers: any[] = [];
     OpenAdvancedFiltersSidebar(){
-        this.isFiltersSideBarOpened = true;
+        this.sharedService.updateValue(true);
         this.mapFiltersInvitedCustomers();
     }
 
@@ -1126,6 +1128,7 @@ export class CargoTrackingShipmentsCounter{
 
     Import: number = 0;
     Export: number = 0;
+    Drop: number = 0;
     Air: number = 0;
     Land: number = 0;
     Sea: number = 0;

@@ -43,6 +43,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
             try
             {
                 Authentication();
+                SecurityUtility.AuthenticationOnTenant(tenant);
                 DocumentOutQuery documentOutQuery = new DocumentOutQuery(tenant);
                 List<DocumentOutPM> result = documentOutQuery.GetDocumentOutPMsByTenant(tenant);
                 return Request.CreateResponse(HttpStatusCode.OK, result);
@@ -58,6 +59,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
             try
             {
                 Authentication();
+                SecurityUtility.AuthenticationOnTenant(tenant);
                 DocumentOutQuery documentOutQuery = new DocumentOutQuery(tenant);
                 List<DocumentOutPM> result = documentOutQuery.GetDocumentOutPMsByEntityId(entityId, tenant);
 
@@ -74,6 +76,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
             try
             {
                 Authentication();
+                SecurityUtility.AuthenticationOnTenant(tenant);
                 DocumentOutQuery documentOutQuery = new DocumentOutQuery(tenant);
                 List<DocumentOutPM> result = documentOutQuery.GetDocumentOutPMsByTenant(tenant).Where(d => d.DocumentTypeCode == docType && d.Tenant == tenant).ToList();
                 return Request.CreateResponse(HttpStatusCode.OK, result);
@@ -89,6 +92,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
             try
             {
                 Authentication();
+                SecurityUtility.AuthenticationOnTenant(tenant);
                 DocumentOutQuery documentOutQuery = new DocumentOutQuery(tenant);
                 DocumentOutPM documentOutPM = documentOutQuery.GetSinglePM(id, tenant);
                 return Request.CreateResponse(HttpStatusCode.OK, documentOutPM);
@@ -107,6 +111,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                 if (objectTableId == "null" || objectTableId == "undefined") objectTableId = null;
                 if (entityId == "null" || entityId == "undefined") entityId = null;
                 Authentication();
+                SecurityUtility.AuthenticationOnTenant(tenant);
                 DocumentOutQuery documentOutQuery = new DocumentOutQuery(tenant);
                 List<DocumentOutPM> result = documentOutQuery.GetDocumentOutPMsByEntityIdAndObjectTableAndChildEntityId(entityId, childEntityId, objectTableId, tenant);
                 return Request.CreateResponse(HttpStatusCode.OK, result);
@@ -124,7 +129,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
             try
             {
                 if (childEntityId == "null" || childEntityId == "undefined") childEntityId = null;
-
+                SecurityUtility.AuthenticationOnTenant(tenant);
                 DocumentOutQuery documentOutQuery = new DocumentOutQuery(tenant);
                 DocumentOutPM documentOutPM = documentOutQuery.GetDocumentOutByDocumentTypeEntityAndChild(entityId, childEntityId, documentTypeId, tenant);
                 return Request.CreateResponse(HttpStatusCode.OK, documentOutPM);
@@ -146,6 +151,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                 if (childentityreference == "null" || childentityreference == "undefined") childentityreference = null;
 
                 Authentication();
+                SecurityUtility.AuthenticationOnTenant(tenant);
                 DocumentOutQuery documentOutQuery = new DocumentOutQuery(tenant);
                 DocumentOutPM documentout = documentOutQuery.GetDocumentOutByDocumentTypeEntityAndChild(entityId, childEntityId, documentTypeId, tenant);
                 if (documentout == null)
@@ -168,7 +174,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
 
             try
             {
-                Authentication();
+                Authentication(currentEntity.Tenant);
                 ICommonDataContext objectContext = CommonDataContext.GetContext(currentEntity.Tenant);
 
                 //DocumentOutCopyRepository documentOutCopyRepository = new DocumentOutCopyRepository(currentEntity.Tenant);
@@ -214,7 +220,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
         }
 
         public void DeleteDocumentOut(DocumentOut entity)
-        {
+        {     
             ICommonDataContext objectContext = CommonDataContext.GetContext(entity.Tenant);
             DocumentOutRepository documentOutRepository = new DocumentOutRepository(objectContext);
             DocumentOut doc = documentOutRepository.GetSingleDocumentOut(entity.Id, entity.Tenant);
@@ -240,6 +246,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                 if (childReference == "null" || childReference == "undefined") childReference = null;
 
                 Authentication();
+                SecurityUtility.AuthenticationOnTenant(tenant);
                 DocumentOutQuery documentOutQuery = new DocumentOutQuery(tenant);
                 DocumentOutPM documentOutPM = documentOutQuery.GetDocumentOutByDocumentTypeEntityAndChild(entityId, childEntityId, documentTypeId, tenant);
                 if (documentOutPM == null)
@@ -265,7 +272,8 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                 if (createDocumentOutArgs.ChildEntityId == "null" || createDocumentOutArgs.ChildEntityId == "undefined") createDocumentOutArgs.ChildEntityId = null;
                 if (createDocumentOutArgs.ChildReference == "null" || createDocumentOutArgs.ChildReference == "undefined") createDocumentOutArgs.ChildReference = null;
 
-                Authentication();
+                Authentication(createDocumentOutArgs.Tenant);
+
                 DocumentOutQuery documentOutQuery = new DocumentOutQuery(createDocumentOutArgs.Tenant);
                 DocumentOutPM documentOutPM = documentOutQuery.GetDocumentOutByDocumentTypeEntityAndChild(createDocumentOutArgs.EntityId, createDocumentOutArgs.ChildEntityId, createDocumentOutArgs.DocumentTypeId, createDocumentOutArgs.Tenant);
                 if (documentOutPM == null)
@@ -736,7 +744,13 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
 
         }
 
-
+        private static void Authentication(int tenant)
+        {
+            string token = HttpContext.Current.Request.Headers["Token"];
+            AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+            SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+            SecurityUtility.AuthenticationOnEntityTenant("", tenant, authToken.Tenant);
+        }
 
 
 

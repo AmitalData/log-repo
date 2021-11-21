@@ -28,6 +28,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
                     string token = HttpContext.Current.Request.Headers["Token"];
                     AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                     SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                    SecurityUtility.AuthenticationOnEntityTenant("DepositionRequest", depositionRequestAM.Tenant, authToken.Tenant);
 
                     DepositionRequestHelper depositionRequestHelper = new DepositionRequestHelper();
                     string logId = depositionRequestHelper.AddAPILogs(depositionRequestAM, depositionRequestAM.CustomerTenant);

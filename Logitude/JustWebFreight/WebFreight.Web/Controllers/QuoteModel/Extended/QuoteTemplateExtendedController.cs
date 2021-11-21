@@ -63,7 +63,7 @@ namespace WebFreight.Web.Controllers.QuoteModel.Generated.PMControllers
                     AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                     SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                     SecurityUtility.CheckContactFeature("QuoteTemplate", "NEW", authToken.Tenant);
-
+                    SecurityUtility.AuthenticationOnEntityTenant("QuoteTemplate", entityPM.Tenant, authToken.Tenant);
                     string logKey = PerformanceLogger.LogCurrentTime();
                     using (TransactionScope scope = TransactionFactory.GetTransaction())
                     {
@@ -175,7 +175,9 @@ namespace WebFreight.Web.Controllers.QuoteModel.Generated.PMControllers
                     string token = HttpContext.Current.Request.Headers["Token"];
                     AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                     SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                    SecurityUtility.CheckContactFeature("QuoteTemplate", "NEW", authToken.Tenant);
+                    SecurityUtility.AuthenticationOnTenant(tenant);
+
+                SecurityUtility.CheckContactFeature("QuoteTemplate", "NEW", authToken.Tenant);
                 //using (TransactionScope scope = TransactionFactory.GetNewTransaction())
                 //{
                     QuoteTemplateHelper quoteTemplateHelper = new QuoteTemplateHelper();
@@ -198,6 +200,8 @@ namespace WebFreight.Web.Controllers.QuoteModel.Generated.PMControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnTenant(tenant);
+
                 SecurityUtility.CheckContactFeature("QuoteTemplate", "READ", authToken.Tenant);
                 QuoteTemplateSettingQuery quoteTemplateSettingQuery = new QuoteTemplateSettingQuery(tenant);
                 QuoteTemplateSettingPM quoteTemplateSetting = quoteTemplateSettingQuery.GetSinglePM(quoteTemplateSettingId, tenant);
@@ -219,6 +223,8 @@ namespace WebFreight.Web.Controllers.QuoteModel.Generated.PMControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnTenant(tenant);
+
                 SecurityUtility.CheckContactFeature("QuoteTemplate", "READ", authToken.Tenant);
                 QuoteTemplateQuery quoteTemplateQuery = new QuoteTemplateQuery(authToken.Tenant);
                 IQueryable<QuoteTemplatePM> quoteTemplates = quoteTemplateQuery.GetQuoteTemplatePMListsByQuotetemplatetype(quotetemplatetype, tenant);
@@ -240,6 +246,7 @@ namespace WebFreight.Web.Controllers.QuoteModel.Generated.PMControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnTenant(tenant);
                 SecurityUtility.CheckContactFeature("QuoteTemplate", "READ", authToken.Tenant);
                 QuoteTemplateQuery quoteTemplateQuery = new QuoteTemplateQuery(tenant);
                 QuoteTemplateSectionQuery quoteTemplateSectionQuery = new QuoteTemplateSectionQuery(tenant);
@@ -285,6 +292,8 @@ namespace WebFreight.Web.Controllers.QuoteModel.Generated.PMControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnTenant(tenant);
+
                 SecurityUtility.CheckContactFeature("QuoteTemplate", "READ", authToken.Tenant);
                 ICommonDataContext commonContext = CommonDataContext.GetContext(tenant);
                 DocumentRepository documentRep = new DocumentRepository(commonContext);
@@ -412,6 +421,8 @@ namespace WebFreight.Web.Controllers.QuoteModel.Generated.PMControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnTenant(tenant);
+
                 SecurityUtility.CheckContactFeature("QuoteTemplate", "READ", authToken.Tenant);
                 QuoteDocumentVersionQuery quoteDocumentVersionQuery = new QuoteDocumentVersionQuery(tenant);
                 var data = quoteDocumentVersionQuery.GetQuoteDocumentVersionPMsByQuoteId(quoteId, tenant).ToList();
@@ -434,10 +445,10 @@ namespace WebFreight.Web.Controllers.QuoteModel.Generated.PMControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnTenant(tenant);
                 SecurityUtility.CheckContactFeature("QuoteTemplate", "READ", authToken.Tenant);
                 var fileData = Convert.FromBase64String(versionFile.FileBase64String);
-
-
+          
                 ICommonDataContext commonContext = CommonDataContext.GetContext(tenant);
                 DocumentRepository documentRep = new DocumentRepository(commonContext);
                 ObjectTableRepository tableRepository = new ObjectTableRepository(tenant);

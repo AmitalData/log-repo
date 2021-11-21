@@ -75,7 +75,10 @@ namespace Logitude.ShipmentOrderModule.BL.EntityDataMappings
 	         CustomerId, 
 	         LastExceptionDescription, 
 	         LastExceptionDate, 
-	         AutomaticLastUpdateDate,
+	         OnHandDate, 
+	         IsOperationalClosed, 
+	         OnHandNumber,
+	         AutomaticLastUpdateDate
 	      }
 
 
@@ -155,7 +158,10 @@ namespace Logitude.ShipmentOrderModule.BL.EntityDataMappings
 	         GatewayCode, 
 	         IncotermName, 
 	         LastExceptionDescription, 
-	         LastExceptionDate,
+	         LastExceptionDate, 
+	         OnHandDate, 
+	         IsOperationalClosed, 
+	         OnHandNumber,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -422,6 +428,21 @@ namespace Logitude.ShipmentOrderModule.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LastExceptionDate))
             {
 				entityPOCO.LastExceptionDate = entityPM.LastExceptionDate;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.OnHandDate))
+            {
+				entityPOCO.OnHandDate = entityPM.OnHandDate;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsOperationalClosed))
+            {
+				entityPOCO.IsOperationalClosed = entityPM.IsOperationalClosed;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.OnHandNumber))
+            {
+				entityPOCO.OnHandNumber = entityPM.OnHandNumber;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -695,6 +716,21 @@ namespace Logitude.ShipmentOrderModule.BL.EntityDataMappings
 					entityPM.LastExceptionDate = entityPOCO.LastExceptionDate;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.OnHandDate))
+            {
+					entityPM.OnHandDate = entityPOCO.OnHandDate;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsOperationalClosed))
+            {
+					entityPM.IsOperationalClosed = entityPOCO.IsOperationalClosed;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.OnHandNumber))
+            {
+					entityPM.OnHandNumber = entityPOCO.OnHandNumber;
+            }
+
 		}
 
 		public void PMToOldPM(ShipmentOrderPM entityPM, ShipmentOrderPM oldEntityPM)
@@ -959,6 +995,21 @@ namespace Logitude.ShipmentOrderModule.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LastExceptionDate))
             {
                 oldEntityPM.LastExceptionDate = entityPM.LastExceptionDate;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.OnHandDate))
+            {
+                oldEntityPM.OnHandDate = entityPM.OnHandDate;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsOperationalClosed))
+            {
+                oldEntityPM.IsOperationalClosed = entityPM.IsOperationalClosed;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.OnHandNumber))
+            {
+                oldEntityPM.OnHandNumber = entityPM.OnHandNumber;
             }
 			
 		}

@@ -54,6 +54,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     string loggedUserEmail = authToken.Email;
 
                     SecurityUtility.AuthenticationOnTenant(tenant);
+                    SecurityUtility.AuthenticationOnTenant(args.Tenant);
 
                     if (args != null)
                     {

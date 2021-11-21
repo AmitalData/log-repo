@@ -43,6 +43,8 @@ namespace WebFreight.Web.Controllers.SystemLogsModel
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnTenant(entity.Tenant);
+                SecurityUtility.AuthenticationOnEntityTenant("ErrorLog", entity.Tenant, authToken.Tenant);
                 //SecurityUtility.CheckContactFeature("ErrorLog", "NEW", authToken.Tenant);
 
                 using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -133,7 +135,10 @@ namespace WebFreight.Web.Controllers.SystemLogsModel
 						{
 							foreach (var entity in logsList)
 							{
-								entity.UserIP = ip;
+                                SecurityUtility.AuthenticationOnTenant(entity.Tenant);
+                                SecurityUtility.AuthenticationOnEntityTenant("PerformanceLog", entity.Tenant, authToken.Tenant);
+
+                                entity.UserIP = ip;
 
 								entity.LogDateTimeGMT = DateTime.UtcNow;
 

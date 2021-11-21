@@ -61,6 +61,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
                 //int tenant = authToken.Tenant;
                 string loggedUserEmail = authToken.Email;
 
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 SecurityUtility.AuthenticationOnTenant(tenant);
                 //SecurityUtility.CheckContactFeature("Airline", "READ", tenant);
 
@@ -84,7 +85,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 //int tenant = authToken.Tenant;
                 string loggedUserEmail = authToken.Email;
-
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 SecurityUtility.AuthenticationOnTenant(tenant);
                 //SecurityUtility.CheckContactFeature("Airline", "READ", tenant);
 

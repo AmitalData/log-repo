@@ -33,6 +33,7 @@ import {GLAccountPM} from '../../../../Accounting/EntityPMs/GLAccountPM';
 import { GLAccountList } from '../../../../Accounting/EntityLists/GLAccountList';
 import { PartnerTypeList } from 'Common/EntityLists/PartnerTypeList';
 import { EntityListService } from 'Infrastructure/Services/EntityListService';
+import { BankTransferPaymentArguments } from 'Invoice/DataContracts/BankTransferPaymentArguments';
 declare var window: any;
 @Component({
 
@@ -82,7 +83,7 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
         if (this.invoicePm == null) {
             this.invoicePm = new ARInvoicePM();
         }
-        
+
 
         if(SessionLocator.TenantPM.AccountingActivated)
             this.invoicePm.IsFullAccounting = true;
@@ -90,9 +91,9 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
         if (SessionLocator.SATInterfaceSettings.SATInterfaceCode != "NONE") {
             this.DisplaySATSettings = true;
 
-           
+
                 this.DisplayFechaPago = true;
-          
+
         }
 
         if (FeatureLocator.HasFeaturePermession("General", "General.Features.SystemCurrencies")) {
@@ -187,10 +188,26 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
         }
     }
 
+    bankTransferPaymentArguments: BankTransferPaymentArguments;
+    windowArgs;
+    createBankTransferFromReconcileWindow: boolean = false;
+    preselectedPaymentMethodCode;
+    exteranlPageLinesIds;
     SetWindowArgs(args: any) {
         if (args) {
+            this.windowArgs = args;
             this.invoicePm = args['ARInvoice'];
             this.customerId = args['CustomerId'];
+
+            if(args.AccountingPaymentMethodCode){
+                this.createBankTransferFromReconcileWindow = true;
+                this.preselectedPaymentMethodCode = args.AccountingPaymentMethodCode;
+                this.bankTransferPaymentArguments = args.BankTransferPaymentArguments;
+
+                this.RegisterDate = new Date();
+                this.exteranlPageLinesIds = args.ExteranlPageLinesIds;
+            }
+
         }
 
         if (this.invoicePm != null) {
@@ -288,6 +305,12 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
         myService1.getAll().subscribe((response: ServiceResponse) => {
             if (response != null) {
                 this.AllMethods = response.Result;
+                if(this.preselectedPaymentMethodCode){
+                    var preselectedMethod = this.AllMethods.find(m=>m.Code == this.preselectedPaymentMethodCode);
+                    this.AccountingPaymentMethodId = preselectedMethod.Id;
+                    this.UIProperties.SetEnabled("AccountingPaymentMethodId", this.ObjectTableName, false);
+
+                }
             }
         });
     }
@@ -321,13 +344,20 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
                 this.PartnerId = this.customerId;
             }
 
-            this.PaymentCurrencyId = SessionLocator.TenantPM.CurrencyId;
+            if(this.bankTransferPaymentArguments && this.bankTransferPaymentArguments.CurrencyId)
+                this.PaymentCurrencyId = this.bankTransferPaymentArguments.CurrencyId;
+            else
+                this.PaymentCurrencyId = SessionLocator.TenantPM.CurrencyId;
+
             this.newARPaymentPM.PaymentCurrencyExchangeRate = 1;
         }
 
 
         if(SessionLocator.TenantPM.AccountingActivated)
             this.newARPaymentPM.IsFullAccounting = true;
+
+        if(this.preselectedPaymentMethodCode)
+            this.newARPaymentPM.ForceUsingBankTransferMethod = true;
 
         this.LoadData();
         this.SetUIProperties();
@@ -517,11 +547,39 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
         this.newARPaymentPM.LocalCurrencyId = SessionLocator.TenantPM.CurrencyId;
         this.newARPaymentPM.RegisterDate = DateTool.GetCurrentDateAsUtc();
 
+        if(this.bankTransferPaymentArguments){
+            this.newARPaymentPM.BankTransferPaymentArguments = this.bankTransferPaymentArguments;
+            this.newARPaymentPM.AccountingPaymentMethodCode = this.windowArgs.AccountingPaymentMethodCode;
+            this.newARPaymentPM.AmountInPaymentCurrency = this.bankTransferPaymentArguments.PaymentAmount;
+            this.newARPaymentPM.PaymentCurrencyId = this.bankTransferPaymentArguments.CurrencyId;
+            if(this.bankTransferPaymentArguments.ValueDate){
+                this.newARPaymentPM.ValueDate = this.bankTransferPaymentArguments.ValueDate;
+            }
+
+            if(this.bankTransferPaymentArguments.RegisterDate)
+                this.newARPaymentPM.RegisterDate = this.bankTransferPaymentArguments.RegisterDate;
+
+            if(this.bankTransferPaymentArguments.PaymentReference)
+                this.newARPaymentPM.ChequeOrPaymentRef = this.bankTransferPaymentArguments.PaymentReference;
+
+            if(this.bankTransferPaymentArguments.BankAccountId)
+                this.newARPaymentPM.BankAccountId = this.bankTransferPaymentArguments.BankAccountId;
+
+
+        }
+
         if (!SessionLocator.LoggedUserPM.IsCustomerCare) {
             this.newARPaymentPM.BranchId = SessionLocator.LoggedUserPM.BranchId;
         }
 
         this.EntityPM = this.newARPaymentPM;
+
+        if(this.createBankTransferFromReconcileWindow){
+            this.ComputeTotals();
+            this.newARPaymentPM.ReconcileExternalPagesIds = this.exteranlPageLinesIds;
+        }
+
+
     }
 
     get RegisterDate() { return this.newARPaymentPM.RegisterDate; }
@@ -664,12 +722,15 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
             this.AccountingPaymentMethodId = null;
             this.AccountingPaymentMethodCode = null;
             this.SATPaymentMethodCode = null;
-            this.PaymentCurrencyId = SessionLocator.TenantPM.CurrencyId;
+            if(!this.bankTransferPaymentArguments || (this.bankTransferPaymentArguments && !this.bankTransferPaymentArguments.CurrencyId))
+                this.PaymentCurrencyId = SessionLocator.TenantPM.CurrencyId;
             this.newARPaymentPM.BillToPartnerTypeId = null;
         }
 
         else {
-            if (!AppTool.IsNullOrEmpty(list.InvoiceCurrencyId)) {
+            if(!AppTool.IsNullOrEmpty(list.InvoiceCurrencyId) && (
+                !this.bankTransferPaymentArguments || (this.bankTransferPaymentArguments && !this.bankTransferPaymentArguments.CurrencyId)
+                )){
                 this.PaymentCurrencyId = list.InvoiceCurrencyId;
             }
             if (!AppTool.IsNullOrEmpty(list.SATPaymentMethodCode)) {
@@ -686,7 +747,7 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
                     myGLAccountPMService.get(list.GLAccountId).subscribe((myResponse: ServiceResponse) => {
                         if (!myResponse.HasError) {
                             var glaccount: GLAccountPM = myResponse.Result;
-                            if (glaccount != null && !glaccount.IsMultiCurrency) {
+                            if (glaccount != null && !glaccount.IsMultiCurrency && (this.bankTransferPaymentArguments && !this.bankTransferPaymentArguments.CurrencyId)) {
                                 this.PaymentCurrencyId = glaccount.CurrencyId;
                             }
                         }
@@ -844,8 +905,7 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
         this.newARPaymentPM.Bank = null;
         this.newARPaymentPM.BankBranch = null;
         this.newARPaymentPM.Account = null;
-        this.newARPaymentPM.ChequeOrPaymentRef = null;
-        this.newARPaymentPM.ValueDate = null;
+        // this.newARPaymentPM.ChequeOrPaymentRef = null;
 
         var lists: AccountingPaymentMethodList[] = this.AllMethods.filter(d => d.Id == this.AccountingPaymentMethodId);
         if (lists) {
@@ -951,6 +1011,13 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
 
               this.ValidateTipoCadenaPagoFields();
           }
+        }
+
+        if(this.bankTransferPaymentArguments){
+            this.UIProperties.SetEnabled("PaymentCurrencyId", this.ObjectTableName, false);
+            this.UIProperties.SetEnabled("AmountInPaymentCurrency", this.ObjectTableName, false);
+            this.UIProperties.SetEnabled("AccountingPaymentMethodId", this.ObjectTableName, false);
+
         }
     }
 
@@ -1161,6 +1228,10 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
                     cmpRef.instance.BackCompleted.subscribe(bk => {
                         if (isEditComponentSaved) {
                             this.CurrentSession.FireEvent("NewARPaymentInvoiceTabCreated");
+                            if(this.EntityPM.ForceUsingBankTransferMethod){
+                                const paymentNo = cmpRef.instance.EntityPM.PaymentNo;
+                                this.CurrentSession.FireEvent({Name: "BankTransferARPaymentCreated", PaymentNumber: paymentNo});
+                            }
                         }
                     });
 

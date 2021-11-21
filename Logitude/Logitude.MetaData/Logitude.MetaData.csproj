@@ -151,8 +151,8 @@
     </Content>
     <Content Include="AutoGenerators\InvoiceClassesGenerator.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>InvoiceClassesGenerator.cs</LastGenOutput>
       <LastOutputs>.\InvoiceClassesGenerator.cs</LastOutputs>
+      <LastGenOutput>InvoiceClassesGenerator.cs</LastGenOutput>
     </Content>
     <Content Include="AutoGenerators\LogitudeClassesGenerator.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -183,13 +183,18 @@
     <None Include="DBOthers\CommonDataModel\Triggers\Trigger_AutomaticLastUpdateDateVatTypes.dxml" />
     <None Include="DBOthers\ShipmentsModel\Triggers\TriggerOnCreate_AutomaticLastUpdateDateShipmentSubTypes.dxml" />
     <None Include="DBOthers\ShipmentsModel\Triggers\Trigger_AutomaticLastUpdateDateShipmentSubTypes.dxml" />
+    <None Include="DBScripts\CommonModel\202111122000_QBODocumnetsUploaderWR.sxml" />
     <None Include="DBScripts\CommonModel\202111011306_PODDocumentWR.sxml" />
     <None Include="DBScripts\CommonModel\202111101034_UpdateUsersSecurityLevelWithNullValues.sxml" />
     <None Include="DBScripts\CommonModel\202109021051_AddDefaultValueForSecurityLevel.sxml" />
     <None Include="DBScripts\CommonModel\202109021049_UpdateUsersSecurityLevel.sxml" />
+
     <None Include="DBScripts\GlobalModel\202110271507_AddMultiEntityUpdateWR.sxml" />
     <None Include="DBScripts\GlobalModel\AddCollaborationToolContainerWRsBatchService.sxml" />
     <None Include="DBScripts\CommonModel\UpdateAutomaticLastUpdateDateOnVatType.sxml" />
+
+    <None Include="DBScripts\GlobalModel\AddUpdatePortTimeZoneWRBatchService.sxml" />
+
     <None Include="DBScripts\GlobalModel\PODImageConverterServiceBatchService.sxml" />
     <None Include="DBScripts\GlobalModel\AddCollaborationToolContainerWRsBatchService.sxml" />
     <None Include="DBScripts\InfrastructureModel\202111081530_FillEntityStatusTypes.sxml" />
@@ -1093,6 +1098,7 @@
     <None Include="EntityFiles\CommonDataModel\Horse.lxml" />
     <None Include="EntityFiles\CommonDataModel\HTSCode.lxml" />
     <None Include="EntityFiles\CommonDataModel\HybridTenantState.lxml" />
+    <None Include="EntityFiles\CommonDataModel\PortTimeZone.lxml" />
     <None Include="EntityFiles\CommonDataModel\ProductItem.lxml" />
     <None Include="EntityFiles\CommonDataModel\ReportExecutionLog.lxml" />
     <None Include="EntityFiles\CommonDataModel\TariffCarrierTranslation.lxml">

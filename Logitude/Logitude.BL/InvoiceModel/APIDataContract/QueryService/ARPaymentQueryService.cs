@@ -72,10 +72,16 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
             {
                 throw new ApplicationException("Payment currency field  is required");
             }
+            
             if(entity.BankAccountNumber != null)
             {
               entity.BankAccountId=  GetBankAccountIdByNumber(entity.BankAccountNumber, entity.Tenant);
             }
+             if( entity.AccountingPaymentMethodCode =="BT" && entity.ARPaymentBankTranfers.Count > 0)
+            {
+                entity.BankAccountId = entity.ARPaymentBankTranfers.Where(d=> d.LineNumber ==1).Select(d => d.BankAccountId).First();
+            }
+
 
                 return entity;
 

@@ -15,6 +15,7 @@ import {APInvoiceDetailsTabGeneral} from './Components/EditTabs/APInvoiceDetails
 import {AddEditAPGeneralInvoiceLineComponent } from './Components/EditTabs/AddEditAPGeneralInvoiceLineComponent';
 import {APInvoiceTotalVATOnlyComponent} from './Components/Others/APInvoiceTotalVATOnlyComponent';
 import {APInvoiceAuditTabComponent} from './Components/EditTabs/APInvoiceAuditTabComponent';
+import { APInvoiceGeneralTabComponent } from './Components/EditTabs/APInvoiceGeneralTabComponent';
 
 export const Components =
     [
@@ -35,6 +36,7 @@ export const Components =
         AddEditAPGeneralInvoiceLineComponent,
         APInvoiceTotalVATOnlyComponent,
         APInvoiceAuditTabComponent,
+        APInvoiceGeneralTabComponent,
     ];
 
 export class ModuleDeclarations {
@@ -59,7 +61,8 @@ export class ModuleDeclarations {
             case "APInvoiceDetailsTabGeneral": { myResult = APInvoiceDetailsTabGeneral; break; }
             case "AddEditAPGeneralInvoiceLineComponent": { myResult = AddEditAPGeneralInvoiceLineComponent; break; }
             case "APInvoiceTotalVATOnlyComponent": { myResult = APInvoiceTotalVATOnlyComponent; break; }
-            case "APInvoiceAuditTabComponent": { myResult = APInvoiceAuditTabComponent; break; }               
+            case "APInvoiceAuditTabComponent": { myResult = APInvoiceAuditTabComponent; break; }
+            case "APInvoiceGeneralTabComponent": { myResult = APInvoiceGeneralTabComponent; break; } 
         }
 
         return myResult;

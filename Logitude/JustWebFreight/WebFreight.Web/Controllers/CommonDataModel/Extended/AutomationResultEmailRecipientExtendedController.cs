@@ -28,11 +28,11 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
         {
             try
             {
-                Authentication();
+                Authentication(tenant);
 
 
-            AutomationResultEmailRecipientQuery automationResultEmailRecipientQuery = new AutomationResultEmailRecipientQuery(tenant);
-            List<AutomationResultEmailRecipientPM> myResult = automationResultEmailRecipientQuery.GetAutomationResultEmailRecipientPMsByAutomationId(automationId, tenant);
+                AutomationResultEmailRecipientQuery automationResultEmailRecipientQuery = new AutomationResultEmailRecipientQuery(tenant);
+                List<AutomationResultEmailRecipientPM> myResult = automationResultEmailRecipientQuery.GetAutomationResultEmailRecipientPMsByAutomationId(automationId, tenant);
 
                 return Request.CreateResponse(HttpStatusCode.OK, myResult);
             }
@@ -60,22 +60,24 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         SecurityUtility.CheckContactFeature("AutomationResultEmailRecipient", "UPDATE", authToken.Tenant);
-                      
+
                         ICommonDataContext MyContext = CommonDataContext.GetContext(authToken.Tenant);
                         AutomationResultEmailRecipientRepository entityRepository = new AutomationResultEmailRecipientRepository(MyContext);
                         AutomationResultEmailRecipientService service = new AutomationResultEmailRecipientService(MyContext, authToken.Tenant);
                         AutomationResultEmailRecipient Poco = null;
-    
+
                         foreach (AutomationArgs item in items)
                         {
+                            SecurityUtility.AuthenticationOnTenant(item.Tenant);
+
                             Poco = new AutomationResultEmailRecipient();
                             if (string.IsNullOrEmpty(item.Id))
                             {
-                                item.Id = item.Id =  IdCounter.GetNumber("AutomationResultEmailRecipient", item.Tenant).ToString();
+                                item.Id = item.Id = IdCounter.GetNumber("AutomationResultEmailRecipient", item.Tenant).ToString();
                                 MapEntity(item, Poco, true);
                                 entityRepository.Add(Poco);
                                 TableLastUpdateClass.UpdateTableHistory(item.Tenant, "AutomationResultEmailRecipient");
-                               
+
                             }
                             else
                             {
@@ -104,30 +106,31 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
         }
 
 
-  
-            public static void MapEntity(AutomationArgs entityPM, AutomationResultEmailRecipient entityPOCO, bool isNewState)
+
+        public static void MapEntity(AutomationArgs entityPM, AutomationResultEmailRecipient entityPOCO, bool isNewState)
+        {
+            if (isNewState)
             {
-                if (isNewState)
-                {
-                    entityPOCO.Id = entityPM.Id;
-                    entityPOCO.Tenant = entityPM.Tenant;
-                }
-
-
-                entityPOCO.AutomationsId = entityPM.AutomationsId;
-                entityPOCO.RecipientType = entityPM.RecipientType;
-                entityPOCO.RecipientValue = entityPM.RecipientValue;
-
-
-
+                entityPOCO.Id = entityPM.Id;
+                entityPOCO.Tenant = entityPM.Tenant;
             }
-        
 
-        private static void Authentication()
+
+            entityPOCO.AutomationsId = entityPM.AutomationsId;
+            entityPOCO.RecipientType = entityPM.RecipientType;
+            entityPOCO.RecipientValue = entityPM.RecipientValue;
+
+
+
+        }
+
+
+        private static void Authentication(int tenant)
         {
             string token = HttpContext.Current.Request.Headers["Token"];
             AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
             SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+            SecurityUtility.AuthenticationOnTenant(tenant);
             SecurityUtility.CheckContactFeature("AutomationResultEmailRecipient", "READ", authToken.Tenant);
         }
 

@@ -25,7 +25,7 @@ namespace WebFreight.Web.Controllers.AccountingModel
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-               
+                SecurityUtility.AuthenticationOnEntityTenant("AccountingIntegrityCheck", entityPM.Tenant, authToken.Tenant);
                 int tenant = authToken.Tenant;
                 AccountingIntegrityService accountingIntegrityService = new AccountingIntegrityService();
                 BatchTaskExecutionPM btePM = accountingIntegrityService.FixEntegrityCheckErrorInBatch(entityPM.Id, tenant);

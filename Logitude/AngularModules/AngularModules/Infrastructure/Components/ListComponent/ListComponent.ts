@@ -278,6 +278,14 @@ export class ListComponent implements OnInit, AfterViewInit {
                         value1 = "NoDate";
                         filterOperator = "NoDate";
                     }
+                    else if (value1 == "Less than Today") {
+                        value1 = TodayDate;
+                        filterOperator = "LessThan";
+                    }
+                    else if (value1 == "Less than or equal Today") {
+                        value1 = TommorowDate;
+                        filterOperator = "LessThan";
+                    }
                 }
               var field = window.ObjectFields.filter(a => a.FieldCode == filter.ObjectFieldCode)[0];
                 if (field) {
@@ -542,6 +550,8 @@ export class ListComponent implements OnInit, AfterViewInit {
 
         }
         else if (!AppTool.IsNullOrEmpty(filters.MyName)) {
+            var filterOperator = "Between";
+
             var TommorowDate = DateTool.AddDays((new Date()), 1);
             TommorowDate.setUTCHours(0, 0, 0, 0);
             //TommorowDate.setHours(0, 0, 0, 0);
@@ -592,18 +602,26 @@ export class ListComponent implements OnInit, AfterViewInit {
                 filters.TextValue = CurrentYearFromDate;
                 filters.TextValue1 = CurrentYearToDate;
                 filters.MyName = "Current Year";
-
             }
             else if (filters.TextValue == "Last Year") {
                 filters.TextValue = LastYearFromDate;
                 filters.TextValue1 = LastYearToDate;
                 filters.MyName = "Last Year";
-
+            }
+            else if (filters.TextValue == "Less than Today") {
+                filters.TextValue = TodayDate;
+                filters.MyName = "Less than Today";
+                filterOperator ="LessThan";
+            }
+            else if (filters.TextValue == "Less than or equal Today") {
+                filters.TextValue = TommorowDate;
+                filters.MyName = "Less than or equal Today";
+                filterOperator ="LessThan";
             }
             if (this.AdvanceFilters.AdditionalFilters.filter(a => a.FieldName == filters.FieldName).length > 0) {
                 this.AdvanceFilters.AdditionalFilters = this.AdvanceFilters.AdditionalFilters.filter(a => a.FieldName != filters.FieldName);
             }
-            this.AdvanceFilters.addAdditionalFilter(filters.FieldName, filters.TextValue, filters.TextValue1, null, "Between", filters.ObjectField.IsCustomFilter, filters.ObjectField.DisplayInList, filters.ObjectField.IsCustom, filters.ObjectField.DataTypeCode);
+            this.AdvanceFilters.addAdditionalFilter(filters.FieldName, filters.TextValue, filters.TextValue1, null, filterOperator, filters.ObjectField.IsCustomFilter, filters.ObjectField.DisplayInList, filters.ObjectField.IsCustom, filters.ObjectField.DataTypeCode);
 
         }
         else if (filters.TextValue1) {
@@ -648,18 +666,15 @@ export class ListComponent implements OnInit, AfterViewInit {
         if (!FeatureLocator.HasEntityPermessions(this.ObjectTableName, "NEW", false)) {
             this.IsNewEntityButtonDisabled = true;
         }
-        if (!FeatureLocator.HasEntityPermessions(this.ObjectTableName, "READ", false)) {
-            this.HasPermition = false;
+
+        if (this.ObjectTableName != "PortTimeZone") {
+            if (!FeatureLocator.HasEntityPermessions(this.ObjectTableName, "READ", false)) {
+                this.HasPermition = false;
+            }
         }
         this.Filterchangeevent = new LogEvents.EventManager();
         var subscription = this.pubSubAdvanceQueryFiltersService.Stream.subscribe(customer => this.processAdvanceQueryFilters(customer));
-      //SessionLocator.SelectedSession.pubSubAdvanceQueryFiltersService.emit(this.pubSubAdvanceQueryFiltersService)
-      //this.ObjectTableName == "Customs.Declaration" || this.ObjectTableName == "Customs.PhysicalCheck" ||
-    //   if (this.ObjectTableName.startsWith("Customs.")) {
-    //       this.IsNavigateButtonVisible = false;
-    //   }
         this.Listen();
-        //this.CD.detectChanges();
     }
 
     private ReloadAllListEvent: any = null;
@@ -983,7 +998,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
         windowArgs.Title = this.Title;
 
         newWindow.WindowArgs = windowArgs;
-        newWindow.Show('./Infrastructure/Components/MultiUpdateComponent/MultiUpdateComponent');
+        newWindow.Show('./Infrastructure/Components/MultiUpdateComponent/MultiEntityUpdateBaseComponent');
         newWindow.WindowClosed.subscribe(($event: any) => {
             this.RefreshBtnClick();
         });
@@ -1377,6 +1392,14 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                             value1 = "NoDate";
                             filterOperator = "NoDate";
                         }
+                        else if (value1 == "Less than Today") {
+                            value1 = TodayDate;
+                            filterOperator ="LessThan";
+                        }
+                        else if (value1 == "Less than or equal Today") {
+                            value1 = TommorowDate;
+                            filterOperator ="LessThan";
+                        }
                     }
                     var field = window.ObjectFields.filter(a => a.FieldCode == filter.ObjectFieldCode)[0];
                     if (field) {
@@ -1611,6 +1634,14 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                             value1 = "NoDate";
                             filterOperator = "NoDate";
                         }
+                        else if (value1 == "Less than Today") {
+                            value1 = TodayDate;
+                            filterOperator ="LessThan";
+                        }
+                        else if (value1 == "Less than or equal Today") {
+                            value1 = TommorowDate;
+                            filterOperator ="LessThan";
+                        }
                     }
                     var field = window.ObjectFields.filter(a => a.FieldCode == filter.ObjectFieldCode)[0];
                     if (field) {
@@ -1732,15 +1763,12 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
             myObjectTableName = "Contact";
         }
 
-
          if (this._ListComponentArgs.SuppressOnRowSelectedField == true) {
              this._ListComponentArgs.SuppressOnRowSelectedField = false;
              console.log("SuppressOnRowSelectedField");
              return;
          }
 
-        //this.CurrentSession.StartBusyIndicator("Loading ...");
-        //var BackGridEvent = $event.BackFromEdit;
         if ($event != null) {
             if (!this.isEditControlOpened) {
                 var entityList = $event.rowData;
@@ -1752,13 +1780,12 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                     case "Customs.CustomsHouseType":
                     case "Customs.CustomDocumentType":
                     case "Customs.UIMessage":
-                    //case "Customs.CourierPendingReason":
                     case "Customs.CurrencyType":
                     case "Customs.CustomsCountry":
                     case "Customs.ExceptionReason":
                     case "Customs.ReferantTeam":
                     case "HelpResource":
-                    //case "Customs.InternationalSite":
+                    case "PortTimeZone":
                         selectedEntityId = $event.rowData.Code;
                         break;
                     case "Customs.DeclarationReferantData":
@@ -3390,6 +3417,14 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                                 value1 = LastYearFromDate;
                                 value2 = LastYearToDate;
                                 filterOperator = "Between";
+                            }
+                            else if (value1 == "Less than Today") {
+                                value1 = TodayDate;
+                                filterOperator ="LessThan";
+                            }
+                            else if (value1 == "Less than or equal Today") {
+                                value1 = TommorowDate;
+                                filterOperator ="LessThan";
                             }
                         }
                         var field = window.ObjectFields.filter(a => a.FieldCode == filter.ObjectFieldCode)[0];

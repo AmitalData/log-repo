@@ -150,6 +150,12 @@ namespace Logitude.ShipmentOrderModule.Data.EntityLists
        public string LastExceptionDescription  { get; set; }
        [DataMember]
        public DateTime? LastExceptionDate  { get; set; }
+       [DataMember]
+       public DateTime? OnHandDate  { get; set; }
+       [DataMember]
+       public bool IsOperationalClosed  { get; set; }
+       [DataMember]
+       public string OnHandNumber  { get; set; }
    }
 
 }

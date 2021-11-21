@@ -14120,7 +14120,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                     (shipmentOrderPackages.Select(x => x.PackageType).FirstOrDefault() != null ?
                                                     shipmentOrderPackages.Select(x => x.PackageType).FirstOrDefault().EnglishName : "Packages") : "Packages",
 
-                                                    NumberOfOrderPackages = shipmentOrderPackages.Sum(s=>s.Quantity).ToString()
+                                                    NumberOfOrderPackages = shipment.BookingNumberOfPackages.ToString()
                                                 };
 
                 return shipmentsAdditionalFields.ToList();

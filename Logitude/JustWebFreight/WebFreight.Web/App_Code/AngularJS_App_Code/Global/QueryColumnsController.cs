@@ -56,6 +56,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Global
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnEntityTenant("", entityPM.Tenant, authToken.Tenant);
                 IWebFreightContext objectContext = WebFreightContext.GetContext(entityPM.Tenant);
                 QueryColumnService service = new QueryColumnService(objectContext, entityPM.Tenant);
                 service.Create(entityPM);
@@ -76,6 +77,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Global
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnEntityTenant("", entityPM.Tenant, authToken.Tenant);
                 IWebFreightContext objectContext = WebFreightContext.GetContext(entityPM.Tenant);
                 QueryColumnService service = new QueryColumnService(objectContext, entityPM.Tenant);
                 QueryColumnRepository Repo = new QueryColumnRepository(entityPM.Tenant);
@@ -104,7 +106,8 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Global
             {
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant); 
+                SecurityUtility.AuthenticationOnTenant(tenant);
                 IWebFreightContext objectContext = WebFreightContext.GetContext(authToken.Tenant);
                 QueryColumnRepository repo = new QueryColumnRepository(authToken.Tenant);
                 var temp = repo.GetSingleQueryColumn(id, tenant);
@@ -126,7 +129,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Global
         [WebGet(UriTemplate = "getquerycolumnpms/{tenant}/{queryCode}/{objecttableid}/{userid}")]
         public List<QueryColumnPM> GetQueryColumnPMs(int tenant, string queryCode, string objecttableid, string userid)
         {
-            //SecurityUtility.AuthenticationOnTenant(tenant);
+            SecurityUtility.AuthenticationOnTenant(tenant);
             QueryColumnRepository queryColumnRepository = new QueryColumnRepository(tenant);
             QueryColumnQuery queryColumnQuery = new QueryColumnQuery(queryColumnRepository);
             var querycolumns = queryColumnQuery.GetQueryColumnsByQueryCodeAndUserAngular(tenant, userid, queryCode);//.ToList();

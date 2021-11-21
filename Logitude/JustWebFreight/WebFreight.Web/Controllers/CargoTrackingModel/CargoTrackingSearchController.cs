@@ -168,9 +168,13 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                 CargoTrackingShipmentList shipment = shipmentsQuery.GetShipment(SecurityKey, tenant);
                 if (shipment == null)
                     return Request.CreateResponse(HttpStatusCode.OK);
-                
-                List<Milestone> shipmentMilestones = shipmentsQuery.BuildShipmentMilstones(shipment);
-                shipmentsQuery.SetMilestonesStatus(shipment, shipmentMilestones);
+
+                CargoTrackingShipmentQueryService cargoTrackingShipmentQueryService = new CargoTrackingShipmentQueryService(MyContext);
+                var milestone = cargoTrackingShipmentQueryService.GetMilestonesDictionaryByCode();
+                var cargoTrackingMilestoneBuilder = new CargoTrackingMilestoneBuilder();
+                List<Milestone> shipmentMilestones = cargoTrackingMilestoneBuilder.BuildShipmentMilstones(shipment, milestone);
+                cargoTrackingShipmentQueryService.SetMilestonesStatus(shipment, shipmentMilestones);
+
 
                 CargoTrackingShipmentWithMilestones cargoTrackingShipmentWithMilestones = new CargoTrackingShipmentWithMilestones()
                 {
@@ -375,6 +379,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
             return data;
         }
 
+        // for public 
         [HttpPost]
         public async Task<HttpResponseMessage> PostSearchTrackAsync(string searchKey)
         {
@@ -397,7 +402,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
         {
             try
             {
-
+                
 
                 ICargoTrackingContext MyContext = CargoTrackingContext.GetContext(tenant);
                 CargoTrackingShipmentListQueryService shipmentsQuery = new CargoTrackingShipmentListQueryService(MyContext);

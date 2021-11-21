@@ -1,22 +1,25 @@
-import {Component, OnInit}  from '@angular/core';
-import {FeatureLocator} from '../../Infrastructure/Utilities/FeatureLocator';
-import {SessionLocator} from '../../Infrastructure/Utilities/SessionLocator';
-import {Guid} from '../../Infrastructure/Utilities/Guid';
-import {SharedLogisticContactService} from '../Services/ExtendedPMs/SharedLogisticContactService';
-import {CustomerList} from '../../Common/EntityLists/CustomerList';
-import {ServiceResponse} from '../../Infrastructure/DataContracts/ServiceResponse';
-import {SessionInfo} from '../../Infrastructure/Utilities/SessionInfo';
-import {SharedLogisticContactPM} from '../../Common/EntityPMs/SharedLogisticContactPM'
-import {CustomerLineViewModel} from './ViewModel/CustomerLineViewModel';
-import {ContactInputTemplateArgs} from '../../CommonModules/CommonPartners/Components/Templates/ContactInputTemplate';
-import {LogitudeWindow} from '../../Controls/Windows/LogitudeWindow';
-import {ContactItemClass} from '../../CommonModules/CommonPartners/Components/EditTabs/ContactsTabComponent';
-import {MessageWindow} from '../../Controls/Windows/MessageWindow';
-import {ContactPM} from '../../Common/EntityPMs/ContactPM';
+import { Component, OnInit } from '@angular/core';
+import { FeatureLocator } from '../../Infrastructure/Utilities/FeatureLocator';
+import { SessionLocator } from '../../Infrastructure/Utilities/SessionLocator';
+import { Guid } from '../../Infrastructure/Utilities/Guid';
+import { SharedLogisticContactService } from '../Services/ExtendedPMs/SharedLogisticContactService';
+import { CustomerList } from '../../Common/EntityLists/CustomerList';
+import { ServiceResponse } from '../../Infrastructure/DataContracts/ServiceResponse';
+import { SessionInfo } from '../../Infrastructure/Utilities/SessionInfo';
+import { SharedLogisticContactPM } from '../../Common/EntityPMs/SharedLogisticContactPM'
+import { CustomerLineViewModel } from './ViewModel/CustomerLineViewModel';
+import { ContactInputTemplateArgs } from '../../CommonModules/CommonPartners/Components/Templates/ContactInputTemplate';
+import { LogitudeWindow } from '../../Controls/Windows/LogitudeWindow';
+import { ContactItemClass } from '../../CommonModules/CommonPartners/Components/EditTabs/ContactsTabComponent';
+import { MessageWindow } from '../../Controls/Windows/MessageWindow';
+import { ContactPM } from '../../Common/EntityPMs/ContactPM';
 
-import {EntityResourceService} from '../../Infrastructure/Services/EntityResourceService';
+import { EntityResourceService } from '../../Infrastructure/Services/EntityResourceService';
+import { DocumentTypeTemplatePMExtendedService } from 'Common/Services/ExtendedPMs/DocumentTypeTemplatePMExtendedService';
+import { DocumentTypeTemplatePM } from 'Common/EntityPMs/DocumentTypeTemplatePM';
+import { DataProviderFieldsNestedList } from 'Report/Components/DataProviderFieldsNestedList';
 @Component({
-    
+
     selector: 'InviteCustomersComponent',
     templateUrl: './InviteCustomersComponent.html',
     //inputs: ['PartnerTypeId', , 'DateParameter', 'DataContext', 'OnCloseWindowEvent'],
@@ -33,15 +36,19 @@ export class InviteCustomersComponent implements OnInit {
     CustomerCode: string;
     InvitationStatus: string;
 
+    DocumentTypeTemplates: DocumentTypeTemplatePM[];
+    CanChangeTemplate: boolean = false;
+
     private _entityResourceService: EntityResourceService = new EntityResourceService();
+    public documentTypeTemplatePMExtendedService: DocumentTypeTemplatePMExtendedService;
+
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(public _sharedLogisticContactService: SharedLogisticContactService) {
+        this.documentTypeTemplatePMExtendedService = new DocumentTypeTemplatePMExtendedService();
         this.CurrentSession.StartBusyIndicatorLoading();
     }
 
-    ngOnInit(
-
-    ) {
+    ngOnInit() {
 
     }
 
@@ -55,23 +62,75 @@ export class InviteCustomersComponent implements OnInit {
 
             if (!pmResponse.HasError) {
                 var result = pmResponse.Result;
-                 result.forEach((item) => {
-                    this.SharedLogisticCustomerLineList.push(new CustomerLineViewModel(item,this));
-       
+                result.forEach((item) => {
+                    this.SharedLogisticCustomerLineList.push(new CustomerLineViewModel(item, this));
+
                 });
 
 
-                 if (this.SharedLogisticCustomerLineList.length == 0) this.NoContactsVisibility = true;
-                 else this.NoContactsVisibility = false;
+                if (this.SharedLogisticCustomerLineList.length == 0) this.NoContactsVisibility = true;
+                else this.NoContactsVisibility = false;
             }
         });
+
+        if (!this.IsCargoTrackingMenuClicked) {
+            this.GetDocumentTemplates();
+        }
+    }
+
+    GetDocumentTemplates() {
+        this.DocumentTypeTemplates = [];
+        this.CurrentSession.StartBusyIndicatorLoading();
+        this.documentTypeTemplatePMExtendedService.GetDocumentTypeTemplatesForDocumentTypeCode("SLCIN", "M", this.CurrentEntity.Tenant).subscribe((res: any) => {
+            var pmResponse: ServiceResponse = res;
+            this.CurrentSession.StopBusyIndicator();
+            if (pmResponse.HasError) {
+                return;
+            }
+            if (!pmResponse.Result) {
+                return;
+            }
+            this.SetDocumentTypeTemplates(pmResponse.Result);
+        });
+
+    }
+
+    private SetDocumentTypeTemplates(result) {
+        this.DocumentTypeTemplates = result;
+        this.CanChangeTemplate = this.DocumentTypeTemplates.length > 1;
+    }
+
+    sharedLogisticContact: SharedLogisticContactPM;
+    haveInternetAccess:boolean;
+    SaveChanges(item: SharedLogisticContactPM, haveInternetAccess) {
+        this.haveInternetAccess = haveInternetAccess;
+        this.sharedLogisticContact = item;
+        if (this.CanChangeTemplate && haveInternetAccess) {
+            this.ShowTemplateTypePicker();
+            return;
+        }
+        this.SendInvitaion(null);
+    }
+
+    ShowTemplateTypePicker() {
+        var windowArgs: any = {};
+        windowArgs.DataViewModel = this;
+        windowArgs.DocumentTypeTemplates = this.DocumentTypeTemplates;
+
+        var logWindow = new LogitudeWindow();
+        logWindow.Width = 500;
+        logWindow.Height = 200;
+        logWindow.Title = "Invitation Message Template";
+
+        logWindow.WindowArgs = windowArgs;
+        logWindow.Show("./SharedLogistics/Components/TemplateTypeComponent");
     }
 
 
-    sharedLogisticContact: SharedLogisticContactPM;
-    SaveChanges(item: SharedLogisticContactPM) {
-        this.sharedLogisticContact = item;
+    private SendInvitaion(templateId) {
+        this.sharedLogisticContact.InternetAccess = this.haveInternetAccess;
         this.sharedLogisticContact.IsCargoTrackingInvitation = this.IsCargoTrackingMenuClicked;
+        this.sharedLogisticContact.TemplateId = templateId;
         this.CurrentSession.CurrentWindow.StartBusyIndicator("Saving...");
         this._sharedLogisticContactService.ContactInternetAccessInvitation(this.sharedLogisticContact).subscribe((res: any) => {
             var pmResponse: ServiceResponse = res;
@@ -79,25 +138,18 @@ export class InviteCustomersComponent implements OnInit {
             if (!pmResponse.HasError) {
                 var result = pmResponse.Result;
                 if (result) {
-
-                    //// this.currentAssemlyLocator.ListControl.GetSingleList(entityPM.Id);
-                    // this.ReloadCustomer();
                     if (this.sharedLogisticContact.InternetAccess) {
                         this.ShowMessageWindow("Invitation email sent to " + "\" " + this.sharedLogisticContact.EnglishName + " \"" + " with temporary password.", "Send Invitation", "gray", 150, true);
                     }
-
                 }
             }
-
             else {
                 if (pmResponse.ErrorsArray && pmResponse.ErrorsArray.length > 0) {
                     this.ShowMessage(pmResponse.ErrorsArray[0], "Logitude Message");
                 }
             }
-
         });
     }
-
 
     public ShowMessage(message: string, title: string = "") {
         var messageWindow: MessageWindow = new MessageWindow();
@@ -109,12 +161,11 @@ export class InviteCustomersComponent implements OnInit {
     }
 
     CloseButtonClicked() {
-
         this.CurrentSession.CloseCurrentWindow();
     }
 
 
-    ShowMessageWindow(message: string, title: string, textColor: string,windowheight: number, isShowOkButton: boolean = false) {
+    ShowMessageWindow(message: string, title: string, textColor: string, windowheight: number, isShowOkButton: boolean = false) {
 
         var windowArgs: any = {};
 
@@ -127,7 +178,7 @@ export class InviteCustomersComponent implements OnInit {
         logWindow.IsShowCloseButton = !isShowOkButton;
         logWindow.WindowArgs = windowArgs;
         logWindow.Title = title;
-     
+
         logWindow.Show("./SharedLogistics/Components/SharedMessageComponent");
     }
 
@@ -135,23 +186,23 @@ export class InviteCustomersComponent implements OnInit {
 
 
     NewContactButtonClick() {
-    
-            var item = new ContactPM();
-            item.Tenant = this.CurrentEntity.Tenant;
-            item.CardId = this.CurrentEntity.Id;
 
-            var itemComponent = new ContactItemClass(item, null, true);
-        
-            this.ShowAddEditContactWindow(itemComponent, "Add Contact");
+        var item = new ContactPM();
+        item.Tenant = this.CurrentEntity.Tenant;
+        item.CardId = this.CurrentEntity.Id;
 
-        
-        
-      
+        var itemComponent = new ContactItemClass(item, null, true);
+
+        this.ShowAddEditContactWindow(itemComponent, "Add Contact");
+
+
+
+
     }
 
 
     EditUserButtoClick(item: CustomerLineViewModel) {
-    
+
         var itemComponent = new ContactItemClass(item.contactPM, null, false);
         this.ShowAddEditContactWindow(itemComponent, "Edit Contact");
 
@@ -161,7 +212,7 @@ export class InviteCustomersComponent implements OnInit {
 
 
     ShowAddEditContactWindow(itemComponent: ContactItemClass, title: string) {
-        this._entityResourceService.getEntityResourceByTableName("Contact").subscribe((response:any) => {
+        this._entityResourceService.getEntityResourceByTableName("Contact").subscribe((response: any) => {
             var logWindow = new LogitudeWindow();
             logWindow.Width = 960;
             logWindow.Height = 570;
@@ -183,6 +234,6 @@ export class InviteCustomersComponent implements OnInit {
         this.LoadData();
     }
 
- 
+
 
 }
