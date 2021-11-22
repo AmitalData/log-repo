@@ -1,10 +1,10 @@
-@devsmoke @stable @all
+@release
 
 Feature: unexpected payable case
     The user creates a direct export air shipment, add unexpected payable.
 
 Scenario: Create direct export air shipment
-        Given the user navigates to shipments workspace
+        Given the user logged in and navigates to shipments workspace
         And a direct shipment with the following details
             | ShipmentLevel        | Direct      |
             | Direction            | Export      |
@@ -16,16 +16,18 @@ Scenario: Create direct export air shipment
         Then the direct should create successfully
 
     Scenario: Add AP invoice
-        Given the user navigates to payable wizerd
-        And the user creates an AP invoice
-            | Vendor               | TestVendor  |
-            | Invoice Number       | 1           |
-            | Invoice Amount       | 100         |
-            | invoice Currency     | EUR         |
-            | Exchange Rate        | 4           |
-            | Invoice Date         | .           |
-            | Payment Terms        | Cash        |
-            | Due Dates            | .           |
+        Given open the shipment and navigates to payable wizard
+        And creates APInvoice with a random invoice number and the following details
+            | Vendor              | TestVendor  |
+            | InvoiceAmount       | 50          |
+            | InvoiceCurrency     | EUR         |
+            | InvoiceExchangeRate | 4           |
+            | InvoiceDate         | Today       |
+            | PaymentTerms        | Cash        |
+            | DueDate             | Today       |
+            | VATType             | Zero        |
+            | VatNo               | 5           |
+            | Branch              | Main Office |
         When create invoice  
         Then the invoice should create successfully
 
@@ -39,8 +41,3 @@ Scenario: Add invoice line
         When save the invoice 
         Then the invoice is saved
         And a Payable line is created in the payable wizard 
-
-
- 
-
-

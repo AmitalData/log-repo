@@ -24,7 +24,6 @@ export function NavigatesToAccountingMenu() {
 export function NavigatesToAccountingSettings() {
     NavigatesToAccountingMenu();
     cy.Click(AccountingSelectors.AccountingSettings, null);
-
 }
 export function NavigatesToAccountingTransfer() {
     NavigatesToAccountingMenu();
@@ -127,6 +126,33 @@ export function ReceiveAPInvoice() {
             ClickOnSaveOnConfirmWindow()
         }
     })
+}
+export function FillunexpectedAPInvoiceDetails(aPInvoiceDetails: APInvoiceDetails, multiple = false, havePayableVendor?: string) {
+    var generatedInvoiceNumber = "AP" + gr.GenerateRandomNumber(10000, 99999).toString();
+    cy.FillLogLov(AccountingSelectors.APInvoiceVendor, aPInvoiceDetails.Vendor, false);
+    cy.FillLogTextBox(AccountingSelectors.APInvoiceInvoiceNumber, generatedInvoiceNumber)
+    cy.FillLogTextBox(AccountingSelectors.APInvoiceAmountInInvoice, aPInvoiceDetails.InvoiceAmount.toString());
+    cy.FillLogLov(AccountingSelectors.APInvoiceInvoiceCurrency, aPInvoiceDetails.InvoiceCurrency, true);
+    cy.FillLogTextBox(AccountingSelectors.APInvoiceInvoiceExchangeRate, aPInvoiceDetails.InvoiceExchangeRate.toString());
+    cy.FillDate(AccountingSelectors.APInvoiceInvoiceDate, aPInvoiceDetails.InvoiceDate)
+    cy.FillLogLov(AccountingSelectors.APInvoicePaymentTerm, aPInvoiceDetails.PaymentTerms, true)
+    cy.FillDate(AccountingSelectors.APInvoiceDueDate, aPInvoiceDetails.DueDate)
+    cy.FillLogTextBox(AccountingSelectors.APInvoiceVATNumber, aPInvoiceDetails.VatNo.toString())
+    cy.FillLogLov(AccountingSelectors.APInvoiceBranch, aPInvoiceDetails.Branch, true)
+}
+export function ReceiveunexpectedAPInvoice() {
+cy.Click(AccountingSelectors.OkCreateAPInvoiceButton, null);
+cy.DefineRequestWait(RestAPI.POST, AccountingURLs.APInvoices, RequestAliases.APInvoicesRequest)
+cy.DefineRequestWait(RestAPI.POST, AccountingURLs.InvoiceDomain, RequestAliases.InvoiceDomain)
+BaseAssertion.AssertStatusCode(RequestAliases.InvoiceDomain, 200).then((interception) => {
+    if (interception.response.body) {
+        ClickOnSaveOnConfirmWindow()
+    }
+    })
+}
+
+export function FillAPInvoiceLine (){
+
 }
 export function AssertSaveMultipleAPInvoice() {
     BaseAssertion.AssertStatusCode(RequestAliases.InvoiceDomain, 200).then((interception) => {
@@ -530,3 +556,4 @@ export function AssertAutoCreditByInvoiceNumber(invoiceNumber: string) {
         expect(text.replace(/\s/g, "")).to.equals("ByInvoice" + invoiceNumber);
     });
 }
+

@@ -2,7 +2,6 @@ import * as Actions from "../../actions/Actions";
 import { Given, When, Then, And } from "cypress-cucumber-preprocessor/steps";
 import { ShipmentDetails } from "../../models/ShipmentDetails";
 import { ShipmentSelectors } from "../../selectors/Selectors";
-import { PayableDetails } from "cypress/models/PayableDetails"
 import * as BaseAssertion from "../../../../Base/cypress/actions/Assertion"
 import { RequestAliases } from "../../../../Base/cypress/constants/RequestAliases";
 import { PackagesDetails } from 'cypress/models/PackagesDetails';
@@ -85,7 +84,7 @@ Given("the user add a package with the following details", (dataTable) => {
 //#endregion
 
 //#region Add Payables
-Given("the user navigates to payable wizerd", () => {
+Given("the user navigates to payable wizard", () => {
   cy.Click(ShipmentSelectors.PayablesTab, null)
   cy.Click(ShipmentSelectors.AddNewPayableLine, null)
 });
@@ -94,14 +93,19 @@ Given("a payable with {string} as a charges type", (chargesType) => {
   cy.FillLogLov(ShipmentSelectors.ShipmentPayableChargesType, chargesType, true);
 });
 
-Then("the Quantity should should has {string} as a value", (quantityValue) => {
+Given("a {string} as a UOM", (UnitOfMeasurment) => {
+  cy.SelectDropDownListItem2(ShipmentSelectors.ShipmentPayableMeasurement, UnitOfMeasurment)
+});
+
+Then("the quantity should has {string} as a value", (quantityValue) => {
   BaseAssertion.AssertElementHaveValue(ShipmentSelectors.ShipmentPayableQuantity, quantityValue)
+  cy.Click(BaseSelectors.Button, BaseSelectors.ContainsCancel)
 });
 //#endregion
 
 //#region Change Gross Weight Unit Code
 Given("the user navigates to packages tab", () => {
-  cy.Click(BaseSelectors.Button + BaseSelectors.LastElement, BaseSelectors.ContainsCancel)
+ // cy.Click(BaseSelectors.Button + BaseSelectors.LastElement, BaseSelectors.ContainsCancel)
   cy.Click(ShipmentSelectors.PackagesTab, null)
 });
 
@@ -121,4 +125,3 @@ Then("the direct should update successfully", () => {
   BaseAssertion.AssertStatusCode(RequestAliases.ShipmentRequest, 200);
 });
 //#endregion
-
