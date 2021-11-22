@@ -129,13 +129,13 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                 }
 
                 //int pageSize = 100; int curPageZeroBase = 0;
-                if (_Param.DateTypeCode != "4")
+                if (_Param.DateTypeCode != TaxReportFilterDateTypeCode)
                 {
                      list = Translate2ListMode(qOrderAccDateAndIdByAccIdBetweenAccDateMaxCreateLimit_AndCurrencyId, isFromExcelGenerater);                             
                }
                 
                 LogIt("Translate2ListMode");
-                if (!this.Response.OmitAllBalance && _Param.DateTypeCode != "4")
+                if (!this.Response.OmitAllBalance && _Param.DateTypeCode != TaxReportFilterDateTypeCode)
                 {
 
 
@@ -495,7 +495,7 @@ AccountBalanceM endAccountBalanceService)
         private void CheckSumLocalEqualDiffEndStart(AccountBalanceM startAccountBalanceService, AccountBalanceM endAccountBalanceService, decimal periodSumLocalAmount, decimal periodSumForeignAmount)
         {
             var periodSumLocal = this.Response.EndBalanceLocal - this.Response.StartBalanceLocal;
-            if (_Param.DateTypeCode != "4") { 
+            if (_Param.DateTypeCode != TaxReportFilterDateTypeCode) { 
          
             if (periodSumLocal != periodSumLocalAmount)
             {
