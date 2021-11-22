@@ -2346,6 +2346,40 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             }
         }
 
+        public IQueryable<CustomerList> GetIQueryableEntityList(IQueryable<Customer> iQueryable)
+        {
+            IQueryable<CustomerList> result = (from customer in iQueryable
+                                               select new CustomerList()
+                                               {
+                                                   RankCode = customer.Rank.Code,
+                                                   Code = customer.Card.Code,
+                                                   EnglishName = customer.Card.EnglishName,
+                                                   CityName = customer.Card.CityName,
+                                                   SalesmanUserEnglishName = customer.SalesmanUser.Contact.EnglishName,
+                                                   StartWorkingDate = customer.StartWorkingDate,
+                                                   LastShipmentDate = customer.LastShipmentDate,
+                                                   Id = customer.Id,
+                                                   LocalName = customer.Card.LocalName,
+                                                   SalesmanUserId = customer.SalesmanUserId,
+                                                   CreateDate = customer.Card.CreateDate,
+                                                   UpdateDate = customer.Card.UpdateDate,
+                                                   Tenant = customer.Tenant,
+                                                   VatNumber = customer.Card.VatNumber,
+                                                   SearchFields = customer.Card.SearchFields,
+                                                   StartWorkingManuallySet = customer.StartWorkingManuallySet,
+                                                   VatTypeId = customer.Card.VatTypeId,
+                                                   IsCustomer = customer.IsCustomer,
+                                                   CountryId = customer.Card.CountryId,
+                                                   CountryCode = customer.Card.CountryCode,
+                                                   CountryName = customer.Card.CountryName,
+                                                   RankId = customer.RankId,
+                                                   CityNameDataTemplate = customer.Card.CityName,
+                                                   CodeDataTemplate= customer.Card.Code,
+                                               });
+            return result;
+        }
+
+
         public IQueryable<CustomerList> GetIQueryableEntityList(IQueryable<CustomersDataView> iQueryable)
         {
             IQueryable<CustomerList> result = (from customer in iQueryable
