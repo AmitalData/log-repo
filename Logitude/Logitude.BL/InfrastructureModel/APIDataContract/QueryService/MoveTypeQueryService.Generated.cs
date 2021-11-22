@@ -40,21 +40,21 @@ using Simplog.Data.InfrastructureModel;
         }
 
 		
-		public MoveType GetMoveTypeById(string Id,int Tenant,string ComputingPartnerName = "")
+		public MoveType GetMoveTypeById(string Id,int Tenant,  string ComputingPartnerName = "")
         { 
 		    try
             {
-
+				 
 				
-				var temp = query.GetSinglePM(Id,Tenant);				
+				var temp = query.GetSinglePM(Id, Tenant);				
 				 if (temp == null)
                     throw new ApplicationException("MoveType with Id " + Id + " doesn't exist");
 
 				return MoveTypeDataMapping(temp,Tenant,ComputingPartnerName);
 			}
+
             catch (Exception ex)
             {
-
                 throw ex;
             }
         }

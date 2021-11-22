@@ -40,40 +40,38 @@ using Simplog.Data.ShipmentsModel;
         }
 
 		
-		public Customs GetCustomsById(string Id,int Tenant,string ComputingPartnerName = "")
+		public Customs GetCustomsById(string Id,int Tenant, string include, string ComputingPartnerName = "")
         { 
 		    try
             {
-
-				
-				var temp = query.GetSinglePM(Id,Tenant);				
+								
+				var temp = query.GetSinglePM(Id, Tenant, include);
 				 if (temp == null)
                     throw new ApplicationException("Shipment with Id " + Id + " doesn't exist");
 
 				return CustomsDataMapping(temp,Tenant,ComputingPartnerName);
 			}
+
             catch (Exception ex)
             {
-
                 throw ex;
             }
         }
 		
-		public Customs GetCustomsByShipmentNumber(string ShipmentNumber,int Tenant,string ComputingPartnerName = "")
+		public Customs GetCustomsByShipmentNumber(string ShipmentNumber,int Tenant, string include, string ComputingPartnerName = "")
         { 
 		    try
             {
-
-				
-				var temp = query.GetSinglePMByShipmentNumber(ShipmentNumber,Tenant);				
+								
+				var temp = query.GetSinglePMByShipmentNumber(ShipmentNumber, Tenant, include);
 				 if (temp == null)
                     throw new ApplicationException("Shipment with ShipmentNumber " + ShipmentNumber + " doesn't exist");
 
 				return CustomsDataMapping(temp,Tenant,ComputingPartnerName);
 			}
+
             catch (Exception ex)
             {
-
                 throw ex;
             }
         }

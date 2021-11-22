@@ -31,7 +31,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
 {
     public class DirectController : ApiController
     {
-        public HttpResponseMessage GetSingleDirect(string id)
+        public HttpResponseMessage GetSingleDirect(string id, string include)
         {
             try
             {
@@ -41,7 +41,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 SecurityUtility.AuthenticateAPICall(authToken.Tenant);
                 DirectQueryService Service = new DirectQueryService(tenant);
                 ServiceResponse response = new ServiceResponse();
-                Direct Result = Service.GetDirectById(id, tenant);
+                Direct Result = Service.GetDirectById(id, tenant, include);
                 string xmlstring = LogitudeXmlSerializer.SerializeObjectToXmlString(Result);
                 return Request.CreateResponse(HttpStatusCode.OK, Result);
             }
@@ -53,7 +53,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
             }
         }
 
-        public HttpResponseMessage GetSingleDirectByNumber(string number)
+        public HttpResponseMessage GetSingleDirectByNumber(string number, string include)
         {
             try
             {
@@ -63,7 +63,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 SecurityUtility.AuthenticateAPICall(authToken.Tenant);
                 DirectQueryService Service = new DirectQueryService(tenant);
                 ServiceResponse response = new ServiceResponse();
-                Direct Result = Service.GetDirectByShipmentNumber(number, tenant);                
+                Direct Result = Service.GetDirectByShipmentNumber(number, tenant, include);                
                 return Request.CreateResponse(HttpStatusCode.OK, Result);
             }
             catch (Exception ex)
@@ -199,7 +199,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         ShipmentService service = new ShipmentService(MyContext, entityPM, SecurityUtility.GetAuthenticatedUser());
                         service.Create();
 
-                        var result = mappingService.GetDirectById(entityPM.Id, authToken.Tenant);
+                        var result = mappingService.GetDirectById(entityPM.Id, authToken.Tenant, null);
                         APIHelper.AddCommunicationLog("D", entity, result, "Shipment", entityPM.Id, "Direct API", authToken.Tenant);
                         scope.Complete();
                         return Request.CreateResponse(HttpStatusCode.OK, result);
@@ -282,7 +282,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
 
                         MyContext = ShipmentsContext.GetContext(authToken.Tenant);
                         mappingService = new DirectQueryService(authToken.Tenant);
-                        var result = mappingService.GetDirectById(directPM.Id, authToken.Tenant);
+                        var result = mappingService.GetDirectById(directPM.Id, authToken.Tenant, null);
                         APIHelper.AddCommunicationLog("D", entity, result, "Shipment", directPM.Id, "Direct API", authToken.Tenant);
                         return Request.CreateResponse(HttpStatusCode.OK, result);
                     }

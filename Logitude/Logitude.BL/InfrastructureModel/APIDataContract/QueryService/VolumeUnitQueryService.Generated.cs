@@ -36,21 +36,21 @@ using Simplog.Data.InfrastructureModel;
         }
 
 		
-		public VolumeUnit GetVolumeUnitByCode(string Code,int Tenant,string ComputingPartnerName = "")
+		public VolumeUnit GetVolumeUnitByCode(string Code,int Tenant,  string ComputingPartnerName = "")
         { 
 		    try
             {
-
+				 
 				
-				var temp = query.GetSinglePM(Code,Tenant);				
+				var temp = query.GetSinglePM(Code, Tenant);				
 				 if (temp == null)
                     throw new ApplicationException("VolumeUnit with Code " + Code + " doesn't exist");
 
 				return VolumeUnitDataMapping(temp,Tenant,ComputingPartnerName);
 			}
+
             catch (Exception ex)
             {
-
                 throw ex;
             }
         }

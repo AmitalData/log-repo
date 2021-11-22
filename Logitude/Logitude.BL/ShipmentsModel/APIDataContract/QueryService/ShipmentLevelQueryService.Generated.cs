@@ -36,21 +36,21 @@ using Simplog.Data.ShipmentsModel;
         }
 
 		
-		public ShipmentLevel GetShipmentLevelByCode(string Code,int Tenant,string ComputingPartnerName = "")
+		public ShipmentLevel GetShipmentLevelByCode(string Code,int Tenant,  string ComputingPartnerName = "")
         { 
 		    try
             {
-
+				 
 				
-				var temp = query.GetSinglePM(Code,Tenant);				
+				var temp = query.GetSinglePM(Code, Tenant);				
 				 if (temp == null)
                     throw new ApplicationException("ShipmentLevel with Code " + Code + " doesn't exist");
 
 				return ShipmentLevelDataMapping(temp,Tenant,ComputingPartnerName);
 			}
+
             catch (Exception ex)
             {
-
                 throw ex;
             }
         }

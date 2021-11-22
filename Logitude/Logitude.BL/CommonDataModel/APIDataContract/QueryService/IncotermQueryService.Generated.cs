@@ -40,40 +40,40 @@ using Simplog.Data.CommonDataModel;
         }
 
 		
-		public Incoterm GetIncotermById(string Id,int Tenant,string ComputingPartnerName = "")
+		public Incoterm GetIncotermById(string Id,int Tenant,  string ComputingPartnerName = "")
         { 
 		    try
             {
-
+				 
 				
-				var temp = query.GetSinglePM(Id,Tenant);				
+				var temp = query.GetSinglePM(Id, Tenant);				
 				 if (temp == null)
                     throw new ApplicationException("Incoterm with Id " + Id + " doesn't exist");
 
 				return IncotermDataMapping(temp,Tenant,ComputingPartnerName);
 			}
+
             catch (Exception ex)
             {
-
                 throw ex;
             }
         }
 		
-		public Incoterm GetIncotermByCode(string Code,int Tenant,string ComputingPartnerName = "")
+		public Incoterm GetIncotermByCode(string Code,int Tenant,  string ComputingPartnerName = "")
         { 
 		    try
             {
-
+				 
 				
-				var temp = query.GetSinglePMByCode(Code,Tenant);				
+				var temp = query.GetSinglePMByCode(Code, Tenant);				
 				 if (temp == null)
                     throw new ApplicationException("Incoterm with Code " + Code + " doesn't exist");
 
 				return IncotermDataMapping(temp,Tenant,ComputingPartnerName);
 			}
+
             catch (Exception ex)
             {
-
                 throw ex;
             }
         }

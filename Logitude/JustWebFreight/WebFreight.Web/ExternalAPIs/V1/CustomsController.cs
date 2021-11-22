@@ -36,7 +36,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
 				SecurityUtility.AuthenticateAPICall(authToken.Tenant);
 				CustomsQueryService Service = new CustomsQueryService(tenant);
                 ServiceResponse response = new ServiceResponse();
-                var Result = Service.GetCustomsById(id, tenant);
+                var Result = Service.GetCustomsById(id, tenant, null);
                 string xmlstring = LogitudeXmlSerializer.SerializeObjectToXmlString(Result);
                 return Request.CreateResponse(HttpStatusCode.OK, Result);
             }
@@ -57,8 +57,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
 				SecurityUtility.AuthenticateAPICall(authToken.Tenant);
 				CustomsQueryService Service = new CustomsQueryService(tenant);
                 ServiceResponse response = new ServiceResponse();
-                var Result = Service.GetCustomsByShipmentNumber(number, tenant);
-                //string xmlstring = LogitudeXmlSerializer.SerializeObjectToXmlString(Result);
+                var Result = Service.GetCustomsByShipmentNumber(number, tenant, null);
                 return Request.CreateResponse(HttpStatusCode.OK, Result);
             }
             catch (Exception ex)
@@ -181,7 +180,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
 
 
                     }
-                    var result = mappingService.GetCustomsById(entityPM.Id, authToken.Tenant);
+                    var result = mappingService.GetCustomsById(entityPM.Id, authToken.Tenant, null);
                     APIHelper.AddCommunicationLog("D", entity, result, "Shipment", entityPM.Id, "Customs API", authToken.Tenant);
                     return Request.CreateResponse(HttpStatusCode.OK, result);
 
@@ -294,7 +293,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         scope.Complete();
                     }
 
-                    var result = mappingService.GetCustomsById(entityPM.Id, authToken.Tenant);
+                    var result = mappingService.GetCustomsById(entityPM.Id, authToken.Tenant, null);
 
                     APIHelper.AddCommunicationLog("D", entity, result, "Shipment", entityPM.Id, "Customs API", authToken.Tenant);
 

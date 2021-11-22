@@ -36,21 +36,21 @@ using Simplog.Data.ShipmentsModel;
         }
 
 		
-		public PickUpDeliveryFromToType GetPickUpDeliveryFromToTypeByCode(string Code,int Tenant,string ComputingPartnerName = "")
+		public PickUpDeliveryFromToType GetPickUpDeliveryFromToTypeByCode(string Code,int Tenant,  string ComputingPartnerName = "")
         { 
 		    try
             {
-
+				 
 				
-				var temp = query.GetSinglePM(Code,Tenant);				
+				var temp = query.GetSinglePM(Code, Tenant);				
 				 if (temp == null)
                     throw new ApplicationException("PickUpDeliveryFromToType with Code " + Code + " doesn't exist");
 
 				return PickUpDeliveryFromToTypeDataMapping(temp,Tenant,ComputingPartnerName);
 			}
+
             catch (Exception ex)
             {
-
                 throw ex;
             }
         }

@@ -36,21 +36,21 @@ using Simplog.Data.InvoiceModel;
         }
 
 		
-		public APInvoiceTransferStatus GetAPInvoiceTransferStatusByCode(string Code,int Tenant,string ComputingPartnerName = "")
+		public APInvoiceTransferStatus GetAPInvoiceTransferStatusByCode(string Code,int Tenant,  string ComputingPartnerName = "")
         { 
 		    try
             {
-
+				 
 				
-				var temp = query.GetSinglePM(Code,Tenant);				
+				var temp = query.GetSinglePM(Code, Tenant);				
 				 if (temp == null)
                     throw new ApplicationException("APInvoiceTransferStatus with Code " + Code + " doesn't exist");
 
 				return APInvoiceTransferStatusDataMapping(temp,Tenant,ComputingPartnerName);
 			}
+
             catch (Exception ex)
             {
-
                 throw ex;
             }
         }

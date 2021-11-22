@@ -40,40 +40,40 @@ using Simplog.Data.CommonDataModel;
         }
 
 		
-		public Card GetCardById(string Id,int Tenant,string ComputingPartnerName = "")
+		public Card GetCardById(string Id,int Tenant,  string ComputingPartnerName = "")
         { 
 		    try
             {
-
+				 
 				
-				var temp = query.GetSinglePM(Id,Tenant);				
+				var temp = query.GetSinglePM(Id, Tenant);				
 				 if (temp == null)
                     throw new ApplicationException("Card with Id " + Id + " doesn't exist");
 
 				return CardDataMapping(temp,Tenant,ComputingPartnerName);
 			}
+
             catch (Exception ex)
             {
-
                 throw ex;
             }
         }
 		
-		public Card GetCardByCode(string Code,int Tenant,string ComputingPartnerName = "")
+		public Card GetCardByCode(string Code,int Tenant,  string ComputingPartnerName = "")
         { 
 		    try
             {
-
+				 
 				
-				var temp = query.GetSinglePMByCode(Code,Tenant);				
+				var temp = query.GetSinglePMByCode(Code, Tenant);				
 				 if (temp == null)
                     throw new ApplicationException("Card with Code " + Code + " doesn't exist");
 
 				return CardDataMapping(temp,Tenant,ComputingPartnerName);
 			}
+
             catch (Exception ex)
             {
-
                 throw ex;
             }
         }

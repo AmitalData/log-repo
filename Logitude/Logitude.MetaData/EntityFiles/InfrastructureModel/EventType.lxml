@@ -2886,6 +2886,86 @@
         IsCompositKey="false"
         IsUpdateAllowed="false" />
     </DataContract>
+    <DataContract
+      Name="&quot;EventType&quot;"
+      Version="&quot;ApiV1&quot;">
+      <DCField
+        DCFieldName="&quot;Id&quot;"
+        FieldName="&quot;Id&quot;"
+        IsKey="true"
+        IsManualMapping="false"
+        IsMulti="false"
+        FieldsDataType="&quot;Text&quot;"
+        IsNullable="false"
+        IsSpecialField="false"
+        IsCustomType="false"
+        IsAttribute="false"
+        IgnoreCustomTypeCheck="false"
+        IsCloseField="false"
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
+      <DCField
+        DCFieldName="&quot;Code&quot;"
+        FieldName="&quot;Code&quot;"
+        IsKey="false"
+        IsManualMapping="false"
+        IsMulti="false"
+        FieldsDataType="&quot;Text&quot;"
+        IsNullable="false"
+        IsSpecialField="false"
+        IsCustomType="false"
+        IsAttribute="true"
+        IgnoreCustomTypeCheck="false"
+        IsCloseField="false"
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
+      <DCField
+        DCFieldName="&quot;EnglishName&quot;"
+        FieldName="&quot;EnglishName&quot;"
+        IsKey="false"
+        IsManualMapping="false"
+        IsMulti="false"
+        FieldsDataType="&quot;Text&quot;"
+        IsNullable="false"
+        IsSpecialField="false"
+        IsCustomType="false"
+        IsAttribute="false"
+        IgnoreCustomTypeCheck="false"
+        IsCloseField="false"
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
+      <DCField
+        DCFieldName="&quot;EntityStatus&quot;"
+        DCVersion="&quot;ApiV1&quot;"
+        FieldName="&quot;EntityStatusId&quot;"
+        IsKey="false"
+        IsManualMapping="false"
+        IsMulti="false"
+        FieldsDataType="&quot;EntityStatus&quot;"
+        IsNullable="false"
+        IsSpecialField="false"
+        IsCustomType="true"
+        IsAttribute="false"
+        IgnoreCustomTypeCheck="false"
+        IsCloseField="false"
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
+      <DCField
+        DCFieldName="&quot;IsManualEntry&quot;"
+        FieldName="&quot;IsManualEntry&quot;"
+        IsKey="false"
+        IsManualMapping="false"
+        IsMulti="false"
+        FieldsDataType="&quot;Boolean&quot;"
+        IsNullable="false"
+        IsSpecialField="false"
+        IsCustomType="false"
+        IsAttribute="false"
+        IgnoreCustomTypeCheck="false"
+        IsCloseField="false"
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
+    </DataContract>
   </DataContracts>
   <AdditionalTextCodes />
   <AdditionalFeatures />

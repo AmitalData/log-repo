@@ -24,7 +24,7 @@ using Simplog.Data.InfrastructureModel;
 
  namespace Logitude.BL.InfrastructureModel.APIDataContract.ApiV1
 { 
-   public partial class EventTypeDetailsQueryService
+   public partial class EventTypeQueryService
    {
    
 		IWebFreightContext  context;
@@ -32,7 +32,7 @@ using Simplog.Data.InfrastructureModel;
 		
 		EventTypeQuery query; 
 
-        public EventTypeDetailsQueryService(int tenant)
+        public EventTypeQueryService(int tenant)
         {
 				    context = WebFreightContext.GetContext(tenant); 
 			//service = new EventTypeService(context, tenant); 
@@ -40,7 +40,7 @@ using Simplog.Data.InfrastructureModel;
         }
 
 		
-		public EventTypeDetails GetEventTypeDetailsById(string Id,int Tenant,  string ComputingPartnerName = "")
+		public EventType GetEventTypeById(string Id,int Tenant,  string ComputingPartnerName = "")
         { 
 		    try
             {
@@ -50,7 +50,7 @@ using Simplog.Data.InfrastructureModel;
 				 if (temp == null)
                     throw new ApplicationException("EventType with Id " + Id + " doesn't exist");
 
-				return EventTypeDetailsDataMapping(temp,Tenant,ComputingPartnerName);
+				return EventTypeDataMapping(temp,Tenant,ComputingPartnerName);
 			}
 
             catch (Exception ex)
@@ -59,26 +59,25 @@ using Simplog.Data.InfrastructureModel;
             }
         }
 		
-		public EventTypeDetails EventTypeDetailsDataMapping(EventTypePM MyEntityPM,int Tenant,string ComputingPartnerName = "")
+		public EventType EventTypeDataMapping(EventTypePM MyEntityPM,int Tenant,string ComputingPartnerName = "")
         {
 		    try
             {
 				   
-				   var temp = new EventTypeDetails(); 
+				   var temp = new EventType(); 
 				   temp.Id = MyEntityPM.Id;
-				   temp.EventTypeCode = MyEntityPM.Code;
-				   temp.EventTypeName = MyEntityPM.EnglishName; 
+				   temp.Code = MyEntityPM.Code;
+				   temp.EnglishName = MyEntityPM.EnglishName; 
 
 			  
 				   if(MyEntityPM.EntityStatusId != null)
 				   {
 					   EntityStatusQueryService EntityStatusService0 = new EntityStatusQueryService(Tenant);
-					   					   temp.EventTypeStatusEntity = EntityStatusService0.GetEntityStatusById(MyEntityPM.EntityStatusId,Tenant,ComputingPartnerName); 
+					   					   temp.EntityStatus = EntityStatusService0.GetEntityStatusById(MyEntityPM.EntityStatusId,Tenant,ComputingPartnerName); 
 			       
 					   				   }
 				   
-				   temp.EventTypeCustomerView = MyEntityPM.IsCustomerView;
-				   temp.EventTypeAgentView = MyEntityPM.IsAgentView;					
+				   temp.IsManualEntry = MyEntityPM.IsManualEntry;					
 				   return temp;
 			}
             catch (Exception ex)
@@ -88,7 +87,7 @@ using Simplog.Data.InfrastructureModel;
             }
         } 
 
-		public EventTypePM EventTypeDetailsDataMappingAndValidatin(EventTypeDetails MyEntity,int Tenant,string ComputingPartnerName = "",bool IsUpdate = false)
+		public EventTypePM EventTypeDataMappingAndValidatin(EventType MyEntity,int Tenant,string ComputingPartnerName = "",bool IsUpdate = false)
         {
 		    try
             {
@@ -123,10 +122,10 @@ using Simplog.Data.InfrastructureModel;
 					{
 					   
 						 
-						if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.EventTypeCode))
+						if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.Code))
 						{
-								//throw new ApplicationException("EventTypeCode Can't be update"); 
-								temp.Code = MyEntity.EventTypeCode;
+								//throw new ApplicationException("Code Can't be update"); 
+								temp.Code = MyEntity.Code;
 								
 						
 						}  
@@ -134,25 +133,25 @@ using Simplog.Data.InfrastructureModel;
 						
 					}
                     
-					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.EventTypeName))
-					{							//throw new ApplicationException("EventTypeName Can't be update"); 
-							temp.EnglishName = MyEntity.EventTypeName;
+					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.EnglishName))
+					{							//throw new ApplicationException("EnglishName Can't be update"); 
+							temp.EnglishName = MyEntity.EnglishName;
 
 										}  
 
 					
-					EntityStatusQueryService EventTypeStatusEntityEntityStatusService = new EntityStatusQueryService(Tenant);
-					if(MyEntity.EventTypeStatusEntity != null)
+					EntityStatusQueryService EntityStatusEntityStatusService = new EntityStatusQueryService(Tenant);
+					if(MyEntity.EntityStatus != null)
 					{
-						var myEventTypeStatusEntityPM = EventTypeStatusEntityEntityStatusService.EntityStatusDataMappingAndValidatin(MyEntity.EventTypeStatusEntity,Tenant,ComputingPartnerName,IsUpdate);
+						var myEntityStatusPM = EntityStatusEntityStatusService.EntityStatusDataMappingAndValidatin(MyEntity.EntityStatus,Tenant,ComputingPartnerName,IsUpdate);
 						
-						if(myEventTypeStatusEntityPM != null)
+						if(myEntityStatusPM != null)
 						{ 
 
 						 
 							if(!IsUpdate)
-							{								//throw new ApplicationException("EventTypeStatusEntity Can't be update"); 
-								temp.EntityStatusId = myEventTypeStatusEntityPM.Id;
+							{								//throw new ApplicationException("EntityStatus Can't be update"); 
+								temp.EntityStatusId = myEntityStatusPM.Id;
 						  
 							}  
 
@@ -163,17 +162,9 @@ using Simplog.Data.InfrastructureModel;
 			
 					
                     
-					if(!IsUpdate)// && (MyEntity.EventTypeCustomerView != temp.IsCustomerView))
-					{							//throw new ApplicationException("EventTypeCustomerView Can't be update"); 
-							temp.IsCustomerView = MyEntity.EventTypeCustomerView;
-
-										}  
-
-					
-                    
-					if(!IsUpdate)// && (MyEntity.EventTypeAgentView != temp.IsAgentView))
-					{							//throw new ApplicationException("EventTypeAgentView Can't be update"); 
-							temp.IsAgentView = MyEntity.EventTypeAgentView;
+					if(!IsUpdate)// && (MyEntity.IsManualEntry != temp.IsManualEntry))
+					{							//throw new ApplicationException("IsManualEntry Can't be update"); 
+							temp.IsManualEntry = MyEntity.IsManualEntry;
 
 										}  
 

@@ -40,21 +40,21 @@ using Simplog.Data.InfrastructureModel;
         }
 
 		
-		public EntityStatus GetEntityStatusById(string Id,int Tenant,string ComputingPartnerName = "")
+		public EntityStatus GetEntityStatusById(string Id,int Tenant,  string ComputingPartnerName = "")
         { 
 		    try
             {
-
+				 
 				
-				var temp = query.GetSinglePM(Id,Tenant);				
+				var temp = query.GetSinglePM(Id, Tenant);				
 				 if (temp == null)
                     throw new ApplicationException("EntityStatus with Id " + Id + " doesn't exist");
 
 				return EntityStatusDataMapping(temp,Tenant,ComputingPartnerName);
 			}
+
             catch (Exception ex)
             {
-
                 throw ex;
             }
         }

@@ -40,40 +40,40 @@ using Simplog.Data.CommonDataModel;
         }
 
 		
-		public Vessel GetVesselById(string Id,int Tenant,string ComputingPartnerName = "")
+		public Vessel GetVesselById(string Id,int Tenant,  string ComputingPartnerName = "")
         { 
 		    try
             {
-
+				 
 				
-				var temp = query.GetSinglePM(Id,Tenant);				
+				var temp = query.GetSinglePM(Id, Tenant);				
 				 if (temp == null)
                     throw new ApplicationException("Vessel with Id " + Id + " doesn't exist");
 
 				return VesselDataMapping(temp,Tenant,ComputingPartnerName);
 			}
+
             catch (Exception ex)
             {
-
                 throw ex;
             }
         }
 		
-		public Vessel GetVesselByCode(string Code,int Tenant,string ComputingPartnerName = "")
+		public Vessel GetVesselByCode(string Code,int Tenant,  string ComputingPartnerName = "")
         { 
 		    try
             {
-
+				 
 				
-				var temp = query.GetSinglePMByCode(Code,Tenant);				
+				var temp = query.GetSinglePMByCode(Code, Tenant);				
 				 if (temp == null)
                     throw new ApplicationException("Vessel with Code " + Code + " doesn't exist");
 
 				return VesselDataMapping(temp,Tenant,ComputingPartnerName);
 			}
+
             catch (Exception ex)
             {
-
                 throw ex;
             }
         }

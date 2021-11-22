@@ -40,21 +40,21 @@ using Simplog.Data.QuoteModel;
         }
 
 		
-		public QuoteStage GetQuoteStageById(string Id,int Tenant,string ComputingPartnerName = "")
+		public QuoteStage GetQuoteStageById(string Id,int Tenant,  string ComputingPartnerName = "")
         { 
 		    try
             {
-
+				 
 				
-				var temp = query.GetSinglePM(Id,Tenant);				
+				var temp = query.GetSinglePM(Id, Tenant);				
 				 if (temp == null)
                     throw new ApplicationException("QuoteStage with Id " + Id + " doesn't exist");
 
 				return QuoteStageDataMapping(temp,Tenant,ComputingPartnerName);
 			}
+
             catch (Exception ex)
             {
-
                 throw ex;
             }
         }

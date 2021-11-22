@@ -4,6 +4,7 @@ using Logitude.BL.CommonDataModel.Tools.MixPanelTracker;
 using Logitude.BL.DataContracts;
 using Logitude.BL.Helpers;
 using Logitude.BL.InfrastructureModel.EntityPMs;
+using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.BL.ShipmentsModel.EntityLists;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BookingLib.Data.EntityPOCOs;
@@ -51,11 +52,33 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             this.repository = repository;
         }
 
+        public ShipmentPM GetSinglePMByShipmentNumber(string shipmentNumber, int tenant, string include)
+        {
+            ShipmentPM shipmentPM = this.GetSinglePMByShipmentNumber(shipmentNumber, tenant);
+
+            if (include == "eventlist")
+            {
+                this.MapEventsListForAPI(shipmentPM);
+            }
+
+            return shipmentPM;
+        }
+        public ShipmentPM GetSinglePM(string shipmentId, int tenant, string include)
+        {
+            ShipmentPM shipmentPM = this.GetSinglePM(shipmentId, tenant);
+
+            if (include == "eventlist")
+            {
+                this.MapEventsListForAPI(shipmentPM);
+            }
+
+            return shipmentPM;
+        }
+
         public ShipmentPM GetSinglePMByShipmentNumber(string shipmentNumber, int tenant, bool withComposition = true)
         {
             if (!string.IsNullOrEmpty(shipmentNumber))
             {
-
                 Shipment shipment = (from a in repository.context.Shipments.Include("EntityStatus").Include("ComputedEntityStatus").Include("ShipmentType").Include("Incoterm").Include("ShipmentReceivableStatus").Include("ShipmentPayableStatus").Include("ShipmentLevel").Include("NextLeg").Include("ShipmentType").Include("ShipmentMasterData").Include("SpecialServicesType").Include("MoveType")
                                      where a.ShipmentNumber == shipmentNumber && a.Tenant == tenant
                                      select a).FirstOrDefault();
@@ -66,10 +89,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                      select a).FirstOrDefault();
 
                     ShipmentPM shipmentPM = new ShipmentPM();
-
                     shipmentPM = MapShipmentToShipmentPM(shipmentPM, shipment, null, masterData, withComposition);
-                    //shipmentPM.ToCountryCode = !string.IsNullOrEmpty(shipmentPM.MainCarriageFinalDestinationPortCountryCode) ? shipmentPM.MainCarriageFinalDestinationPortCountryCode : shipmentPM.ToPortCountryCode,
-                    //shipmentPM.FromCountryCode = f.ShipmentLevelCode == "H" && string.IsNullOrEmpty(f.MasterShipmentDataId) ? f.FromPortCountryCode : f.MainCarriageFromPortCountryCode,
                     ShipmentPM securedPM = new ShipmentPM();
                     securedPM = SecuredMapping.GetMappedPM(shipmentPM, securedPM, "Shipment", tenant);
 
@@ -2676,7 +2696,18 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 });
             }
         }
-
+        private void MapEventsListForAPI(ShipmentPM shipmentPM)
+        {
+            shipmentPM.EventList = this.GetShipmentTraceEvents(shipmentPM);
+        }
+        private List<TraceEventPM> GetShipmentTraceEvents(ShipmentPM shipmentPM)
+        {
+            ObjectTableRepository objectTableRepository = new ObjectTableRepository(0);
+            TraceEventQuery traceEventQuery = new TraceEventQuery(shipmentPM.Tenant);
+            ObjectTable shipmentObjectTable = objectTableRepository.GetObjectTableByName("Shipment", 0, false);
+            return traceEventQuery.GetTraceEventPMsByEntityIdsAndObjectTableId(new List<string> { shipmentPM.Id }, shipmentObjectTable.Id, shipmentPM.Tenant)
+                .Where(d => d.EventTypeCode != "USHI").ToList();
+        }
         private void ComputeHousesNumbersField(ShipmentPM shipmentPM)
         {
             var myHousesNumbers = "";
