@@ -34,7 +34,7 @@ namespace Logitude.ShipmentOrderModule.Data.Repositories
         }
         public void UpdateLastUpdateDate(string OrderIds)
         {
-            var query = $"update ShipmentOrders set UpdateDate = GETDATE() where id in ({OrderIds}) ";
+            var query = $"update ShipmentOrders set AutomaticLastUpdateDate = GETDATE() where id in ({OrderIds}) ";
             context.GetActiveDbContext().Database.ExecuteSqlCommand(query);
         }
 

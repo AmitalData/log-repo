@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 
@@ -36,7 +37,7 @@ namespace Logitude.CargoTracking.BL.CoreBL.Batch
             while (shipmentOrderIds.Count > 0)
             {
                 shipmentOrderRepository.UpdateLastUpdateDate(GetIdsAsString(shipmentOrderIds));
-                Task.Delay(1 * 60 * 1000);// 1 minute 
+                Thread.Sleep(1 * 60 * 1000);// 1 minute 
                 count += ShipmentsPerTime;
                 shipmentOrderIds = shipmentOrderRepository.GetShipmentOrdersIdsByTenant(parameterArgs.Tenant, count, ShipmentsPerTime);
 
@@ -52,7 +53,7 @@ namespace Logitude.CargoTracking.BL.CoreBL.Batch
             while (shipments.Count > 0)
             {
                 shipmentRepository.UpdateLastUpdateDate(GetIdsAsString(shipments));
-                Task.Delay(1 * 60 * 1000);// 1 minute 
+                Thread.Sleep(1 * 60 * 1000);// 1 minute 
                 count += ShipmentsPerTime;
                 shipments = shipmentRepository.GetShipmentIdsByTenant(parameterArgs.Tenant, count, ShipmentsPerTime);
 
