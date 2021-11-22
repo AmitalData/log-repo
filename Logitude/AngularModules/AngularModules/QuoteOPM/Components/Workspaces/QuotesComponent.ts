@@ -31,11 +31,11 @@ declare var makeChart, FunnelClick, ResetItemFunnel;
 })
 
 export class QuotesComponent extends BaseComponent {
-    // ngOnInit() {
-    //     if(isDevMode()){
-    //         this.priceCheckS.open(new QuoteOPPM());
-    //     }
-    // }
+    ngOnInit() {
+        // if(isDevMode()){
+        //     this.priceCheckS.open(new QuoteOPPM());
+        // }
+    }
 
     public DataContext = this;
     public SalesFunnelId: string = "SalesFunnelId_";

@@ -28,6 +28,7 @@
             <!-- <td>{{i}}</td> -->
             <td *ngFor='let col of columns' [innerHTML]='row[col.name] | highlight: filterVal'></td>
         </tr>
+        <tr></tr>
     </ng-template>
     <ng-template pTemplate="loadingbody" let-columns="columns">
         <tr style="height:34px">
