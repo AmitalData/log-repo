@@ -79,5 +79,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                 };
             return result;
         }
-    
+
+    }
 }
