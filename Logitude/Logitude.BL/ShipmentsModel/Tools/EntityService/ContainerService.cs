@@ -46,16 +46,15 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
         public void Update(ContainerPM entityPM)
         {
-            if (!entityPM.IsUpdateByAutomation)
-            {
-                RunAutomation("OnUpdate", entityPM);
-            }
-
             this.isNewEntity = false;
             this.containerPm = entityPM;
             this.containerPoco = entityRepository.GetSingleContainer(entityPM.Id, tenant);
             this.MapContainerClosedDate(entityPM, containerPoco);
             ContainerTracing.Trace(entityPM, containerPoco, isNewEntity);
+            if (!entityPM.IsUpdateByAutomation)
+            {
+                RunAutomation("OnUpdate", entityPM);
+            }
             ShipmentMapping.MapContainer(entityPM, containerPoco, isNewEntity);
             entityRepository.Update(containerPoco);
             entityRepository.SubmitChanges();

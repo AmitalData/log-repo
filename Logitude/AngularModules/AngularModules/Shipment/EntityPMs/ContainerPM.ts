@@ -1146,6 +1146,36 @@ export class ContainerPM {
     public set MasterEntityId(newValue: string) { if (this.masterEntityId != newValue) { this.masterEntityId = newValue; this.MarkAsDirty("MasterEntityId"); } }
        
 	 
+    private customerContactId: string;
+    public get CustomerContactId() { return this.customerContactId; }
+    public set CustomerContactId(newValue: string) { if (this.customerContactId != newValue) { this.customerContactId = newValue; this.MarkAsDirty("CustomerContactId"); } }
+       
+	 
+    private handlerContactId: string;
+    public get HandlerContactId() { return this.handlerContactId; }
+    public set HandlerContactId(newValue: string) { if (this.handlerContactId != newValue) { this.handlerContactId = newValue; this.MarkAsDirty("HandlerContactId"); } }
+       
+	 
+    private consigneeContactId: string;
+    public get ConsigneeContactId() { return this.consigneeContactId; }
+    public set ConsigneeContactId(newValue: string) { if (this.consigneeContactId != newValue) { this.consigneeContactId = newValue; this.MarkAsDirty("ConsigneeContactId"); } }
+       
+	 
+    private shipperContactId: string;
+    public get ShipperContactId() { return this.shipperContactId; }
+    public set ShipperContactId(newValue: string) { if (this.shipperContactId != newValue) { this.shipperContactId = newValue; this.MarkAsDirty("ShipperContactId"); } }
+       
+	 
+    private shipperNotExporterContactId: string;
+    public get ShipperNotExporterContactId() { return this.shipperNotExporterContactId; }
+    public set ShipperNotExporterContactId(newValue: string) { if (this.shipperNotExporterContactId != newValue) { this.shipperNotExporterContactId = newValue; this.MarkAsDirty("ShipperNotExporterContactId"); } }
+       
+	 
+    private freightForwarderContactId: string;
+    public get FreightForwarderContactId() { return this.freightForwarderContactId; }
+    public set FreightForwarderContactId(newValue: string) { if (this.freightForwarderContactId != newValue) { this.freightForwarderContactId = newValue; this.MarkAsDirty("FreightForwarderContactId"); } }
+       
+	 
 
     public OldEntityPM: ContainerPM;
 		

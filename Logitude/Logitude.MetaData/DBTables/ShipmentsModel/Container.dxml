@@ -1330,6 +1330,12 @@
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Relation
+    ForeignKeyColumn="ShipmentId"
+    ReferencedTable="Shipments"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo"
+    Ignore="true" />
+  <Relation
     ForeignKeyColumn="ShipmentPreCarriageFromId"
     ReferencedTable="Ports"
     ReferencedColumn="Id"
