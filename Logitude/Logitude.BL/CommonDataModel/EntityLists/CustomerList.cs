@@ -61,6 +61,8 @@ namespace Logitude.BL.CommonDataModel.EntityLists
 
         [DataMember]
         public string Code { get; set; }
+        [DataMember]
+        public string CodeDataTemplate { get; set; }
 
         [DataMember]
         public string EnglishName { get; set; }
@@ -127,6 +129,8 @@ namespace Logitude.BL.CommonDataModel.EntityLists
 
         [DataMember]
         public string CityName { get; set; }
+        [DataMember]
+        public string CityNameDataTemplate { get; set; }
 
         [DataMember]
         public string CountryId { get; set; }

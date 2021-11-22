@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class CustomerUpdateClass
    {  		
-		public const string HashString = "fcd6e8888b3363e589e4743d7d9a685d";
+		public const string HashString = "56fcc7be68d8c4c1657d3b7ec51ead03";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -9593,6 +9593,128 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "CodeDataTemplate",
+					  						ObjectTableName =  "Customer",
+					  						FieldsDataType =  "Text",
+					  						MinLength =  0,
+					  						MaxLength =  15,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  true,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  true,
+					  						DataTemplateName =  "CustomerEnglishNameDataTemplate",
+					  						IsCustomFilter =  false,
+					  						Operator =  "StartsWith",
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "CodeDataTemplate",
+					  						ListPropertyPath =  "CodeDataTemplate",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Customer",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "CodeDataTemplate",
+					  						DefaultText =  "Code",
+					  						ListFieldLable =  "CodeDataTemplateListLable",
+					  						ListLableDefaultText =  "Code",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  true,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "CityNameDataTemplate",
+					  						ObjectTableName =  "Customer",
+					  						FieldsDataType =  "Text",
+					  						MinLength =  0,
+					  						MaxLength =  25,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  true,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  true,
+					  						DataTemplateName =  "CustomerEnglishNameDataTemplate",
+					  						IsCustomFilter =  false,
+					  						Operator =  "StartsWith",
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "CityNameDataTemplate",
+					  						ListPropertyPath =  "CityNameDataTemplate",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Customer",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "CityNameDataTemplate",
+					  						DefaultText =  "City",
+					  						ListFieldLable =  "CityNameDataTemplateListLable",
+					  						ListLableDefaultText =  "City",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  true,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
@@ -9667,15 +9789,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 			  Query AllCustomersQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CustomerTextCode_0.Id, NameTextCodeCode = CustomerTextCode_0.Code, ObjectTableName = "Customer", Code = "AllCustomers",  QueryGroupCode = "CLNT", IndexOrder = 0, Tenant = 0, ObjectTableId = CustomerObjectTable.Id, QuerySection = "Customer", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = CustomerFeature_0.Id,FeatureUniqeCode= CustomerFeature_0.FeatureUniqeCode, DefaultSortName = "Id", DefaultSortDirection = "Desending", Perspective = "customers" }, addedQueries);
 	
-			 QueryColumn AllCustomersQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCustomersQuery.Id,QueryCode = AllCustomersQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customer.RankCode" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn AllCustomersQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCustomersQuery.Id,QueryCode = AllCustomersQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customer.CodeDataTemplate" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn AllCustomersQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCustomersQuery.Id,QueryCode = AllCustomersQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customer.Code" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn AllCustomersQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCustomersQuery.Id,QueryCode = AllCustomersQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customer.EnglishName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn AllCustomersQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCustomersQuery.Id,QueryCode = AllCustomersQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customer.EnglishName" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn AllCustomersQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCustomersQuery.Id,QueryCode = AllCustomersQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customer.CityNameDataTemplate" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn AllCustomersQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCustomersQuery.Id,QueryCode = AllCustomersQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customer.CityName" , ColumnWidth = 100 }, addedQueryColumns);
-
-			 QueryColumn AllCustomersQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCustomersQuery.Id,QueryCode = AllCustomersQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Customer.StartWorkingDate" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn AllCustomersQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCustomersQuery.Id,QueryCode = AllCustomersQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customer.StartWorkingDate" , ColumnWidth = 100 }, addedQueryColumns);
   
 	      
 

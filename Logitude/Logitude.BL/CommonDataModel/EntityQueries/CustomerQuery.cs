@@ -2373,6 +2373,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                    CountryCode = customer.Card.CountryCode,
                                                    CountryName = customer.Card.CountryName,
                                                    RankId = customer.RankId,
+                                                   CityNameDataTemplate = customer.Card.CityName,
+                                                   CodeDataTemplate= customer.Card.Code,
                                                });
             return result;
         }
