@@ -58,24 +58,19 @@ namespace Logitude.BL.Helpers
 
             DWObjectFieldPMs = DWObjectFieldPMs.Concat(factDWObjectFieldPMs).ToList();
         }
-        // ContainTableRecordType
-        private bool ContainTableRecordType(DWObjectFieldPM additionalFactField)
+    
+        private bool ContainTableRecordType(DWObjectFieldPM additionalFactField) 
         {
-            return string.IsNullOrEmpty(additionalFactField.RecordType) || ContainRecordType(additionalFactField);
-        }
-
-        private bool ContainRecordType(DWObjectFieldPM additionalFactField)
-        {
-            string[] recordTypes = additionalFactField.RecordType.Split(','); 
+            if (string.IsNullOrEmpty(additionalFactField.RecordType)) return true;
+            string[] recordTypes = additionalFactField.RecordType.Split(',');
 
             foreach (var recordType in recordTypes)
             {
                 if (recordType.Trim() == DwObjectTable.RecordType) return true;
-            }
-
-            return false;
+            } 
+            return false; 
         }
-    }
+    } 
 
     public class DWObjectFieldAdditionalFactArgs
     {
