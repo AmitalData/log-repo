@@ -57,16 +57,16 @@ namespace Unifreight.BL.EntityQueryServices
                 switch (item.FieldName)
                 {
                     case "Name":
-                        ETBVENDquery = ETBVENDquery.Where(o => o.NAMEENG.Contains(item.FieldValue.ToString()));
+                        ETBVENDquery = ETBVENDquery.Where(o => o.NAMEENG.ToLower().Contains(item.FieldValue.ToString().ToLower()));
                         break;
                     case "VENDOR_ID":
-                        ETBVENDquery = ETBVENDquery.Where(o => o.VENDORID.Contains(item.FieldValue.ToString()));
+                        ETBVENDquery = ETBVENDquery.Where(o => o.VENDORID.ToLower().Contains(item.FieldValue.ToString().ToLower()));
                         break;
                     case "Prefix":
-                        ETBVENDquery = ETBVENDquery.Where(o => o.VENDORPREFIX.Contains(item.FieldValue.ToString()));
+                        ETBVENDquery = ETBVENDquery.Where(o => o.VENDORPREFIX.ToLower().Contains(item.FieldValue.ToString().ToLower()));
                         break;
                     case "SearchFields":
-                        ETBVENDquery = ETBVENDquery.Where(o => o.SEARCHENG.Contains(item.FieldValue.ToString()));
+                        ETBVENDquery = ETBVENDquery.Where(o => o.SEARCHENG.ToLower().Contains(item.FieldValue.ToString().ToLower()));
                         break;
                 }
             }

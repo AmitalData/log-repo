@@ -7,6 +7,8 @@
         <div class="filter" *ngFor='let x of filters' [class.active]="selectedFilter === x.filter"
             (click)="setFilter(x.filter)">{{x.alias}}</div>
     </div>
+
+    <button (click)='cancel()' pButton pRipple type="button" icon="pi pi-times" class="p-button-rounded p-button-secondary p-button-text"></button>
 </div>
 
 <div class="no-offer" *ngIf='offersFilterd.length === 0; else offersDisplay'>

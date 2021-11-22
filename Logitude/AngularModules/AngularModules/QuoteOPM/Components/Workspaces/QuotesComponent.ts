@@ -1,4 +1,4 @@
-import { Component, Output, EventEmitter } from '@angular/core';
+import { Component, Output, EventEmitter, isDevMode } from '@angular/core';
 import { QuoteDomainService, CRMSummary } from '../../Services/QuoteDomainService';
 import { QuoteOPList } from '../../EntityLists/QuoteOPList';
 import { QuoteOPListService } from '../../Services/StandardLists/QuoteOPListService';
@@ -31,9 +31,11 @@ declare var makeChart, FunnelClick, ResetItemFunnel;
 })
 
 export class QuotesComponent extends BaseComponent {
-    // ngOnInit() {
-    //     this.priceCheckS.open(new QuoteOPPM());
-    // }
+    ngOnInit() {
+        // if(isDevMode()){
+        //     this.priceCheckS.open(new QuoteOPPM());
+        // }
+    }
 
     public DataContext = this;
     public SalesFunnelId: string = "SalesFunnelId_";

@@ -59,16 +59,16 @@ namespace Unifreight.BL.EntityQueryServices
                 switch (item.FieldName)
                 {
                     case "Name":
-                        ETBAIRLINEquery = ETBAIRLINEquery.Where(o => o.NAMEENG.Contains(item.FieldValue.ToString()));
+                        ETBAIRLINEquery = ETBAIRLINEquery.Where(o => o.NAMEENG.ToLower().Contains(item.FieldValue.ToString().ToLower()));
                         break;
                     case "AIRLINE_ID":
-                        ETBAIRLINEquery = ETBAIRLINEquery.Where(o => o.AIRLINEID.Contains(item.FieldValue.ToString()));
+                        ETBAIRLINEquery = ETBAIRLINEquery.Where(o => o.AIRLINEID.ToLower().Contains(item.FieldValue.ToString().ToLower()));
                         break;
                     case "Prefix":
-                        ETBAIRLINEquery = ETBAIRLINEquery.Where(o => o.AIRLINENUM.Contains(item.FieldValue.ToString()));
+                        ETBAIRLINEquery = ETBAIRLINEquery.Where(o => o.AIRLINENUM.ToLower().Contains(item.FieldValue.ToString().ToLower()));
                         break;
                     case "SearchFields":
-                        ETBAIRLINEquery = ETBAIRLINEquery.Where(o => o.SEARCHENG.Contains(item.FieldValue.ToString()));
+                        ETBAIRLINEquery = ETBAIRLINEquery.Where(o => o.SEARCHENG.ToLower().Contains(item.FieldValue.ToString().ToLower()));
                         break;
                 }
             }
