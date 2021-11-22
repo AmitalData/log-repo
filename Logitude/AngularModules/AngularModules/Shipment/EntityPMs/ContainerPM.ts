@@ -1136,6 +1136,16 @@ export class ContainerPM {
     public set ClosedDate(newValue: Date) { if (this.closedDate != newValue) { this.closedDate = newValue; this.MarkAsDirty("ClosedDate"); } }
        
 	 
+    private isUpdateByAutomation: boolean;
+    public get IsUpdateByAutomation() { return this.isUpdateByAutomation; }
+    public set IsUpdateByAutomation(newValue: boolean) { if (this.isUpdateByAutomation != newValue) { this.isUpdateByAutomation = newValue; this.MarkAsDirty("IsUpdateByAutomation"); } }
+       
+	 
+    private masterEntityId: string;
+    public get MasterEntityId() { return this.masterEntityId; }
+    public set MasterEntityId(newValue: string) { if (this.masterEntityId != newValue) { this.masterEntityId = newValue; this.MarkAsDirty("MasterEntityId"); } }
+       
+	 
 
     public OldEntityPM: ContainerPM;
 		

@@ -246,6 +246,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     IsClosed = entityPoco.IsClosed,
                     ClosedDate = entityPoco.ClosedDate,
 
+                    MasterEntityId = entityPoco.ShipmentId,
+
                 };
 
                 MapCustomFields(result, entityPoco);
@@ -490,6 +492,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         IsAutomaticUpdates = a.IsAutomaticUpdates,
                         IsClosed = a.IsClosed,
                         ClosedDate = a.ClosedDate,
+                        MasterEntityId = a.ShipmentId,
 
                     }).ToList();
         }
@@ -1176,6 +1179,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     IsAutomaticUpdates = entityPoco.IsAutomaticUpdates,
                     IsClosed = entityPoco.IsClosed,
                     ClosedDate = entityPoco.ClosedDate,
+                    MasterEntityId = entityPoco.ShipmentId,
                 };
             }
 
