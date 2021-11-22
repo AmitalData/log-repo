@@ -2600,8 +2600,8 @@ namespace WebFreight.Web.Helpers.Analyzers
         public DateTime? ActualLIFArrival { get; set; }
         public DateTime? EstimatedOnCarriageDeparture { get; set; }
         public DateTime? ActualOnCarriageDeparture { get; set; }
-        public string GateIn { get; set; }
-        public string GateOut { get; set; }
+        public DateTime? GateIn { get; set; }
+        public DateTime? GateOut { get; set; }
         public string EmptyReturnLocation { get; set; }
         public DateTime? EstimatedEmptyReturn { get; set; }
         public DateTime? ActualEmptyReturn { get; set; }
