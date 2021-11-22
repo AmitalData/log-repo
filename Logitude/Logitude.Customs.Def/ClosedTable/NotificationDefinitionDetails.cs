@@ -201,8 +201,8 @@ namespace Logitude.Customs.Def.ClosedTable
             all.Add(new NotificationDefinitionDetails() 
             {
                 Code = "5119A",
-                EnglishName = "נדרש תיקון להצהרת יבוא",
-                LocalName = "נדרש תיקון להצהרת יבוא",
+                EnglishName = "נדרש תיקון להצהרה",
+                LocalName = "נדרש תיקון להצהרה",
                 AssigneeNotificationTypeCode = "I",
             });
 
