@@ -181,7 +181,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
                         string systemEmail = "system@tenant" + ImporterShipment.Tenant + ".com";
                         ShipmentService shipmentService = new ShipmentService(objectContext, ImporterShipment, systemEmail);
                         ImporterShipment.DontAddToImportersQueue = true;
-                        shipmentService.SetChangeSet(ImporterShipment.ShipmentPackages, new List<ShipmentOrderPackagePM>(), new List<ShipmentPickUpPM>(), new List<ShipmentDeliveryPM>(), new List<ShipmentReceivablePM>(), new List<ShipmentPayablePM>(), new List<ShipmentFollowUpPM>(), new List<ShipmentAWBPrintOnlyPM>(), new List<ConsoleShipmentPM>(), new List<ShipmentCarrierStatusPM>(), new List<AWBOCIPM>(), new List<ShipmentCommodityPM>(), new List<ShipmentAssemblyPM>(), new List<ShipmentStoragePricingPM>(), new List<ShipmentProductItemPM>());
+                        shipmentService.SetChangeSet(ImporterShipment.ShipmentPackages, new List<ShipmentOrderPackagePM>(), new List<ShipmentPickUpPM>(), new List<ShipmentDeliveryPM>(), new List<ShipmentReceivablePM>(), new List<ShipmentPayablePM>(), new List<ShipmentFollowUpPM>(), new List<ShipmentAWBPrintOnlyPM>(), new List<ConsoleShipmentPM>(), new List<ShipmentCarrierStatusPM>(), new List<AWBOCIPM>(), new List<ShipmentCommodityPM>(), new List<ShipmentAssemblyPM>(), new List<ShipmentStoragePricingPM>(), new List<ShipmentProductItemPM>(), new List<ShipmentUnassignedFieldPM>());
                         shipmentService.Create();
                         var ResponseData = JsonConvert.SerializeObject(ImporterShipment.Id);
                         var Donemsg = "Shipment Added To Importer Tenant Successfully " + DateTime.Now;
@@ -339,7 +339,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
                         string systemEmail = "system@tenant" + Shipment.ImporterTenant + ".com";
                         ShipmentService shipmentService = new ShipmentService(objectContext, ImporterShipment, systemEmail);
                         ImporterShipment.DontAddToImportersQueue = true;
-                        shipmentService.SetChangeSet(ImporterShipment.ShipmentPackages, new List<ShipmentOrderPackagePM>(), new List<ShipmentPickUpPM>(), new List<ShipmentDeliveryPM>(), new List<ShipmentReceivablePM>(), new List<ShipmentPayablePM>(), new List<ShipmentFollowUpPM>(), new List<ShipmentAWBPrintOnlyPM>(), new List<ConsoleShipmentPM>(), new List<ShipmentCarrierStatusPM>(), new List<AWBOCIPM>(), new List<ShipmentCommodityPM>(), new List<ShipmentAssemblyPM>(), new List<ShipmentStoragePricingPM>(), new List<ShipmentProductItemPM>());
+                        shipmentService.SetChangeSet(ImporterShipment.ShipmentPackages, new List<ShipmentOrderPackagePM>(), new List<ShipmentPickUpPM>(), new List<ShipmentDeliveryPM>(), new List<ShipmentReceivablePM>(), new List<ShipmentPayablePM>(), new List<ShipmentFollowUpPM>(), new List<ShipmentAWBPrintOnlyPM>(), new List<ConsoleShipmentPM>(), new List<ShipmentCarrierStatusPM>(), new List<AWBOCIPM>(), new List<ShipmentCommodityPM>(), new List<ShipmentAssemblyPM>(), new List<ShipmentStoragePricingPM>(), new List<ShipmentProductItemPM>(),new List<ShipmentUnassignedFieldPM>());
                         shipmentService.Update();
                         var Donemsg = "Shipment Updated Successfully " + DateTime.Now;
                         APILogsUtility.UpdateAPILogStatus(LogPM.Id, LogPM.Tenant, "D", 1, DateTime.Now, DateTime.UtcNow, Donemsg, null, ImporterShipment.Id, null, "");

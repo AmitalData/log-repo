@@ -190,6 +190,7 @@
     <Compile Include="CommonDataModel\EntityPOCOs\ProductItem.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\CargoTenantMilestoneDefinition.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\TariffCarrierTranslation.cs" />
+    <Compile Include="CommonDataModel\EntityPOCOs\UnassignedEntity.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\UserLastSettings.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\CustomerAdditional.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\CustomerDeposition.cs" />
@@ -485,6 +486,7 @@
     <Compile Include="CommonDataModel\Mapping\NumberFormatMap.cs" />
     <Compile Include="CommonDataModel\Mapping\AccountingPartnerMap.cs" />
     <Compile Include="CommonDataModel\Mapping\VatUniquePartnerTypeMap.cs" />
+    <Compile Include="CommonDataModel\Mapping\UnassignedEntityMap.cs" />
     <Compile Include="CommonDataModel\Mapping\WarehouseStoragePricingMap.cs" />
     <Compile Include="CommonDataModel\Mapping\WarehouseTypeMap.cs" />
     <Compile Include="CommonDataModel\Mapping\PaymentGatewayPartnerMap.cs" />
@@ -521,6 +523,7 @@
     <Compile Include="CommonDataModel\Repositories\PortTimeZoneRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\ProductItemRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\TariffCarrierTranslationRepository.cs" />
+    <Compile Include="CommonDataModel\Repositories\UnassignedEntityrRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\UserLastSettingsRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\DocumentsExecutionLogRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\CreateSharedLogisticsContactLastLoginRepository.cs" />
@@ -706,6 +709,7 @@
     <Compile Include="ShipmentsModel\EntityPOCOs\ShipmentProductItem.cs" />
     <Compile Include="ShipmentsModel\EntityPOCOs\ShipmentStoragePricing.cs" />
     <Compile Include="ShipmentsModel\EntityPOCOs\ShipmentSubType.cs" />
+    <Compile Include="ShipmentsModel\EntityPOCOs\ShipmentUnassignedField.cs" />
     <Compile Include="ShipmentsModel\Mapping\ContainerMap.cs" />
     <Compile Include="ShipmentsModel\Mapping\ContainerStatusMap.cs" />
     <Compile Include="ShipmentsModel\Mapping\ContainerStatusSourceMap.cs" />
@@ -729,6 +733,7 @@
     <Compile Include="ShipmentsModel\Mapping\ShipmentCustomsMessageTypeMap.cs" />
     <Compile Include="ShipmentsModel\Mapping\ShipmentCustomsTransmissionMap.cs" />
     <Compile Include="ShipmentsModel\Mapping\ShipmentPackageHarmonizeMap.cs" />
+    <Compile Include="ShipmentsModel\Mapping\ShipmentUnassignedFieldMap.cs" />
     <Compile Include="ShipmentsModel\Mapping\ShipmentProductItemMap.cs" />
     <Compile Include="ShipmentsModel\Mapping\ShipmentStoragePricingMap.cs" />
     <Compile Include="ShipmentsModel\Mapping\ShipmentSubTypeMap.cs" />
@@ -1158,6 +1163,7 @@
     <Compile Include="ShipmentsModel\Repositories\ShipmentProductItemRepository.cs" />
     <Compile Include="ShipmentsModel\Repositories\ShipmentStoragePricingRepository.cs" />
     <Compile Include="ShipmentsModel\Repositories\ShipmentSubTypeRepository.cs" />
+    <Compile Include="ShipmentsModel\Repositories\ShipmentUnassignedFieldRepository.cs" />
     <Compile Include="ShipmentsModel\Repositories\SpecialServicesTypeRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\StateRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\TarrifChargeRepository.cs" />

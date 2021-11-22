@@ -1,86 +1,59 @@
 ﻿using System;
 using System.Linq;
-using System.Web;
 using System.Collections.Generic;
-using Logitude.BL.Helpers;
 using Logitude.BL.CommonDataModel.EntityPMs;
-using Logitude.BL.CommonDataModel.EntityLists;
-using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
 
 namespace Logitude.BL.CommonDataModel.EntityQueries
 {
-    public class WeightUnitQuery
+    public class UnassignedEntityQuery
     {
-        WeightUnitRepository repository;
+        UnassignedEntityRepository repository;
 
-        public WeightUnitQuery()
+        public UnassignedEntityQuery()
         {
-            repository = new WeightUnitRepository(); 
+            repository = new UnassignedEntityRepository(); 
         }
 
-        public WeightUnitQuery(int tenant)
+        public UnassignedEntityQuery(int tenant)
         {
-            repository = new WeightUnitRepository(tenant);
+            repository = new UnassignedEntityRepository(tenant);
         }
 
-        public WeightUnitQuery(WeightUnitRepository repository)
+        public UnassignedEntityQuery(UnassignedEntityRepository repository)
         {
             this.repository = repository;
         }
 
-        public WeightUnitPM GetSinglePM(string code, int tenant = 0)
+        public UnassignedEntityPM GetSinglePM(string id, int tenant)
         {
-            return (from a in repository.context.WeightUnits
-                    where a.Code == code
-                    select new WeightUnitPM()
+            return (from a in repository.context.UnassignedEntitys.Include("ObjectTable")
+                    where a.Id == id
+                    select new UnassignedEntityPM()
                     {
-                        Code = a.Code,
-                        Name = a.Name,
-                        PrintAs = a.PrintAs,
-                        SearchFields = a.SearchFields,
+                        Id = a.Id,
+                        Tenant =a.Tenant,
+                        ObjectTableId = a.ObjectTableId,
+                        UnassignedCode = a.UnassignedCode
                     }).FirstOrDefault();
         }
-
-        public WeightUnitPM GetSingleWeightUnitPM(string code)
+      
+        public List<UnassignedEntityPM> GetWeightUnitPMs()
         {
-            var wUnit = (from a in repository.context.WeightUnits
-                         where a.Code == code
-                         select new WeightUnitPM()
-                         {
-                             Code = a.Code,
-                             Name = a.Name,
-                             PrintAs = a.PrintAs,
-                             SearchFields = a.SearchFields,
-                         }).FirstOrDefault();
-            return wUnit;
-        }
-
-        public IQueryable<WeightUnitPM> GetWeightUnitPMs()
-        {
-            return (from a in repository.context.WeightUnits
-                    select new WeightUnitPM()
+            List<UnassignedEntityPM> unassignedEntitys
+                 = ( from a in repository.context.UnassignedEntitys.Include("ObjectTable")
+                    select new UnassignedEntityPM()
                     {
-                        Code = a.Code,
-                        Name = a.Name,
-                        PrintAs = a.PrintAs,
-                        SearchFields = a.SearchFields,
-                    });
+                        Id = a.Id,
+                        Tenant = a.Tenant,
+                        ObjectTableId = a.ObjectTableId,
+                        UnassignedCode = a.UnassignedCode
+                    }).ToList(); 
+
+            return unassignedEntitys;
         }
 
-        public IQueryable<WeightUnitList> GetIQueryableEntityList(IQueryable<WeightUnit> iQueryable)
-        {
-            IQueryable<WeightUnitList> result = from entity in iQueryable
-                                                select new WeightUnitList()
-                                                {
-                                                    Name = entity.Name,
-                                                    Code = entity.Code,
-                                                    PrintAs = entity.PrintAs,
-                                                    SearchFields = entity.SearchFields,
-                                                };
-            return result;
-        }
+      
     }
 }

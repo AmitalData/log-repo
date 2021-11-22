@@ -81,6 +81,7 @@ namespace Simplog.Data.ShipmentsModel
         IDbSet<ShipmentStoragePricing> ShipmentStoragePricings { get; set; }
         IDbSet<ShipmentProductItem> ShipmentProductItems { get; set; }
         IDbSet<Container> Containers { get; set; }
+        IDbSet<ShipmentUnassignedField> ShipmentUnassignedFields { get; set; }
         IDbSet<ContainerStatus> ContainerStatuses { get; }
         IDbSet<ContainerStatusSource> ContainerStatusSources { get; }
         IQueryable<TOutput> FunctionTableValue<TOutput>(string functionName, SqlParameter[] parameters);

@@ -1,0 +1,28 @@
+﻿using System;
+using System.Web;
+using System.Linq;
+using System.Collections.Generic;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.Server.Tools.Helpers;
+using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.Security;
+
+namespace Logitude.BL.CommonDataModel.Tools.DataMapping
+{
+    public class UnassignedEntityMapping
+    {
+        public static void MapEntity(UnassignedEntityPM entityPM, UnassignedEntity poco, bool isNewEntity)
+        {
+            if (isNewEntity)
+            {
+                poco.Id = entityPM.Id;
+                poco.Tenant = entityPM.Tenant;
+            }
+
+            poco.ObjectTableId = entityPM.ObjectTableId;
+            poco.UnassignedCode = entityPM.UnassignedCode;
+
+        }
+    }
+}

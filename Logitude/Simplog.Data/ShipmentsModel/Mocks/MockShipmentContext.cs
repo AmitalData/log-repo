@@ -920,7 +920,7 @@ namespace Simplog.Data.ShipmentsModel.Mocks
         public IDbSet<Container> Containers { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public IDbSet<ContainerStatus> ContainerStatuses { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public IDbSet<ContainerStatusSource> ContainerStatusSources { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-
+        public IDbSet<ShipmentUnassignedField> ShipmentUnassignedFields { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
     }
 }

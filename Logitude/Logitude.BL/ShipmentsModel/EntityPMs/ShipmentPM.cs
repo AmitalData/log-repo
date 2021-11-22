@@ -2689,6 +2689,30 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
             }
         }
 
+        private List<ShipmentUnassignedFieldPM> shipmentUnassignedFields;
+        [Include]
+        [Association("ShipmentUnassignedFields", "Id", "ShipmentId")]
+        [Composition]
+        public virtual List<ShipmentUnassignedFieldPM> ShipmentUnassignedFields
+        {
+            get
+            {
+
+                if (this.shipmentUnassignedFields == null)
+                {
+                    shipmentUnassignedFields = new List<ShipmentUnassignedFieldPM>();
+                }
+                return this.shipmentUnassignedFields;
+            }
+            set
+            {
+                if (value != null)
+                {
+                    shipmentUnassignedFields = value;
+                }
+            }
+        }
+
         // Standalone shipment
         public bool IsStandalonePickupDelivery { get; set; }
         public string StandalonePickupDeliveryId { get; set; }
@@ -2756,6 +2780,7 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public DateTime? PODReceivedDate { get; set; }
         public string UnassignedShipperAddressId { get; set; }
         public string UnassignedConsigneeAddressId { get; set; }
+        public bool HasUnassignedData { get; set; }
     }
 
     public class TransshipmentLeg

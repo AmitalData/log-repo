@@ -1767,6 +1767,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.WeightRoundingCode = shipment.WeightRoundingCode;
             shipmentPM.IsCFSWarehouse = shipment.IsCFSWarehouse;
             shipmentPM.IsCFSWarehouseChanged = shipment.IsCFSWarehouseChanged;
+            shipmentPM.HasUnassignedData = shipment.HasUnassignedData;
 
             if (!string.IsNullOrEmpty(shipment.WarehouseLegWarehouseId))
             {
@@ -3726,6 +3727,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             }
 
             shipmentPM.IsHTSMissing = shipment.IsHTSMissing;
+            shipmentPM.HasUnassignedData = shipment.HasUnassignedData;
             shipmentPM.IsStandalonePickupDelivery = shipment.IsStandalonePickupDelivery;
             shipmentPM.StandalonePickupDeliveryId = shipment.StandalonePickupDeliveryId;
             shipmentPM.ForwarderStandaloneShipmentId = shipment.ForwarderStandaloneShipmentId;
@@ -3871,6 +3873,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.PODReceivedDate = shipment.PODReceivedDate;
             shipmentPM.IsPODReceived = shipment.IsPODReceived;
             shipmentPM.IsHTSMissing = shipment.IsHTSMissing;
+            shipmentPM.HasUnassignedData = shipment.HasUnassignedData;
             shipmentPM.IsStandalonePickupDelivery = shipment.IsStandalonePickupDelivery;
             shipmentPM.ParentShipmentDirectionId = shipment.ParentShipmentDirectionId;
             shipmentPM.ParentShipmentNumber = shipment.ParentShipmentNumber;
@@ -11964,6 +11967,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                          ParentShipmentNumber = s.ParentShipmentNumber,
                                                          ParentShipmentType = s.ParentShipmentType,
                                                          IsHTSMissing = s.IsHTSMissing,
+                                                         HasUnassignedData = s.HasUnassignedData,
                                                      };
 
             return shipmentsList;

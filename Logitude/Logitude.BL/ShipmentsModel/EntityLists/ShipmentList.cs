@@ -579,6 +579,7 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public string CustomerContactName { get; set; }
         public string CustomerContactEmail { get; set; }
         public DateTime? PODReceivedDate { get; set; }
+        public bool HasUnassignedData { get; set; }
 
     }
 }

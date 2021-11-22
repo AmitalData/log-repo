@@ -100,6 +100,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         private ShipmentAssemblyRepository shipmentAssemblyRepository;
         private ShipmentStoragePricingRepository shipmentStoragePricingRepository;
         private ShipmentProductItemRepository shipmentProductItemRepository;
+        private ShipmentUnassignedFieldRepository shipmentUnassignedFieldRepository;
 
         List<ShipmentPM> housesList = new List<ShipmentPM>();
         private ShipmentBehaviourFacade shipmentBehaviourFacade;
@@ -147,7 +148,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             this.shipmentAssemblyRepository = new ShipmentAssemblyRepository(objectContext);
             this.shipmentStoragePricingRepository = new ShipmentStoragePricingRepository(objectContext);
             this.shipmentProductItemRepository = new ShipmentProductItemRepository(objectContext);
-
+            this.shipmentUnassignedFieldRepository = new ShipmentUnassignedFieldRepository(objectContext);
             this.SetHybridPartner(this.tenant);
         }
 
@@ -158,7 +159,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         }
 
 
-        public void SetChangeSet(List<ShipmentPackagePM> shipmentPackagesChangeSet, List<ShipmentOrderPackagePM> shipmentOrderPackagesChangeSet, List<ShipmentPickUpPM> shipmentPickUpsChangeSet, List<ShipmentDeliveryPM> shipmentDeliveriesChangeSet, List<ShipmentReceivablePM> shipmentReceivablesChangeSet, List<ShipmentPayablePM> shipmentPayablesChangeSet, List<ShipmentFollowUpPM> shipmentFollowUpsChangeSet, List<ShipmentAWBPrintOnlyPM> shipmentAWBPrintOnliesChangeSet, List<ConsoleShipmentPM> shipmentConsoleShipmentsChangeSet, List<ShipmentCarrierStatusPM> shipmentCarrierStatusesChangeSet, List<AWBOCIPM> aWBOCIPMChangeSet, List<ShipmentCommodityPM> shipmentCommoditiesChangeSet, List<ShipmentAssemblyPM> shipmentAssembliesChangeSet, List<ShipmentStoragePricingPM> shipmentStoragePricingsChangeSet, List<ShipmentProductItemPM> shipmentProductItemsChangeSet)
+        public void SetChangeSet(List<ShipmentPackagePM> shipmentPackagesChangeSet, List<ShipmentOrderPackagePM> shipmentOrderPackagesChangeSet, List<ShipmentPickUpPM> shipmentPickUpsChangeSet, List<ShipmentDeliveryPM> shipmentDeliveriesChangeSet, List<ShipmentReceivablePM> shipmentReceivablesChangeSet, List<ShipmentPayablePM> shipmentPayablesChangeSet, List<ShipmentFollowUpPM> shipmentFollowUpsChangeSet, List<ShipmentAWBPrintOnlyPM> shipmentAWBPrintOnliesChangeSet, List<ConsoleShipmentPM> shipmentConsoleShipmentsChangeSet, List<ShipmentCarrierStatusPM> shipmentCarrierStatusesChangeSet, List<AWBOCIPM> aWBOCIPMChangeSet, List<ShipmentCommodityPM> shipmentCommoditiesChangeSet, List<ShipmentAssemblyPM> shipmentAssembliesChangeSet, List<ShipmentStoragePricingPM> shipmentStoragePricingsChangeSet, List<ShipmentProductItemPM> shipmentProductItemsChangeSet, List<ShipmentUnassignedFieldPM> shipmentUnassignedFieldChangeSet)
         {
             // this was for the old silverlight system
             this.initializer.ShipmentPackagesChangeSet = shipmentPackagesChangeSet;
@@ -176,6 +177,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             this.initializer.ShipmentAssembliesChangeSet = shipmentAssembliesChangeSet;
             this.initializer.ShipmentStoragePricingsChangeSet = shipmentStoragePricingsChangeSet;
             this.initializer.ShipmentProductItemsChangeSet = shipmentProductItemsChangeSet;
+            this.initializer.ShipmentUnassignedFieldChangeSet = shipmentUnassignedFieldChangeSet;
         }
 
         public void Create()
@@ -276,6 +278,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 foreach (ShipmentProductItemPM itemPM in entityPM.ShipmentProductItems)
                 {
                     this.CreateShipmentProductItem(itemPM);
+                }
+                foreach (ShipmentUnassignedFieldPM itemPM in entityPM.ShipmentUnassignedFields)
+                {
+                    this.CreateShipmentUnassignedField(itemPM);
                 }
 
                 this.initializer.HandleComposition();
@@ -420,7 +426,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     this.UpdateShipmentCommoditiesCollection();
                     this.UpdateShipmentAssembliesCollection();
                     this.UpdateShipmentStoragePricingsCollection();
-                    this.UpdateShipmentProductItemsCollection();                    
+                    this.UpdateShipmentProductItemsCollection();
+                    this.UpdateShipmentUnassignedFieldsCollection();
                     this.initializer.HandleComposition();
                     this.initializer.HandleStandalone();
                     this.InitializeBookingData();
@@ -1025,6 +1032,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             foreach (ShipmentProductItemPM pm in entityPM.ShipmentProductItems)
             {
                 this.DeleteShipmentProductItem(pm);
+            }
+
+            foreach (ShipmentUnassignedFieldPM pm in entityPM.ShipmentUnassignedFields)
+            {
+                this.DeleteShipmentUnassignedField(pm);
             }
 
             entityRepository.Remove(this.entityPoco);
@@ -2077,6 +2089,38 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 }
             }
         }
+        private void UpdateShipmentUnassignedFieldsCollection()
+        {
+            if (initializer.ShipmentUnassignedFieldChangeSet != null)
+            {
+                foreach (ShipmentUnassignedFieldPM itemPM in initializer.ShipmentUnassignedFieldChangeSet)
+                {
+                    switch (itemPM.ChangeSetOp)
+                    {
+                        case ChangeSetOperation.Insert:
+                            {
+                                this.CreateShipmentUnassignedField(itemPM);
+                                break;
+                            }
+
+                        case ChangeSetOperation.Update:
+                            {
+                                this.UpdateShipmentUnassignedField(itemPM);
+                                break;
+                            }
+
+                        case ChangeSetOperation.Delete:
+                            {
+                                this.DeleteShipmentUnassignedField(itemPM);
+                                break;
+                            }
+
+                        default: { break; }
+                    }
+                }
+            }
+        }
+
         private void BuildShipmentExternalUpdate()
         {
             if (!string.IsNullOrEmpty(entityPM.AgentSharedManifestRef))
@@ -6381,6 +6425,39 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 shipmentProductItemRepository.Remove(itemPoco);
             }
         }
+
+        private void CreateShipmentUnassignedField(ShipmentUnassignedFieldPM itemPM)
+        {
+            itemPM.Id = IdCounter.GetNumber("ShipmentUnassignedField", tenant).ToString();
+            itemPM.ShipmentId = entityPM.Id;
+            itemPM.Tenant = tenant;
+
+            ShipmentUnassignedField itemPoco = new ShipmentUnassignedField()
+            {
+                Id = itemPM.Id,
+            };
+
+            ShipmentMapping.MapShipmentUnassignedField(itemPM, itemPoco, true);
+            shipmentUnassignedFieldRepository.Add(itemPoco);
+        }
+        private void UpdateShipmentUnassignedField(ShipmentUnassignedFieldPM itemPM)
+        {
+            ShipmentUnassignedField itemPoco = shipmentUnassignedFieldRepository.GetSingleShipmentUnassignedField(itemPM.Id, itemPM.Tenant);
+            if (itemPoco != null)
+            {
+                ShipmentMapping.MapShipmentUnassignedField(itemPM, itemPoco, false);
+                shipmentUnassignedFieldRepository.Update(itemPoco);
+            }
+        }
+        private void DeleteShipmentUnassignedField(ShipmentUnassignedFieldPM itemPM)
+        {
+            ShipmentUnassignedField itemPoco = shipmentUnassignedFieldRepository.GetSingleShipmentUnassignedField(itemPM.Id, itemPM.Tenant);
+            if (itemPoco != null)
+            {
+                shipmentUnassignedFieldRepository.Remove(itemPoco);
+            }
+        }
+
         private void ComputeShipmentStatus()
         {
             if (isNewEntity)
