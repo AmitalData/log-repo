@@ -79,8 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 {
    public class ContainerUpdateClass
    {  		
-
-		public const string HashString = "1b81eae0693b140a9b6bc864c7e0a00b";
+		public const string HashString = "847c27a4d761488ea0337d5d75646ec5";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -13299,8 +13298,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
                 Code =  "ROCO",
-                EnglishName =  "Re-open",
-                LocalName =  "Re-open",
+                EnglishName =  "Re-opened",
+                LocalName =  "Re-opened",
                 IsManualEntry =  false,
                 ShortView =  true,
                 IsAgentView =  false,

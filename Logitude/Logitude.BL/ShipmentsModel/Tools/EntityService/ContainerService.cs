@@ -47,6 +47,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         {
             this.isNewEntity = false;
             this.containerPm = entityPM;
+            containerPm.UpdateDate = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
             this.containerPoco = entityRepository.GetSingleContainer(entityPM.Id, tenant);
             this.MapContainerClosedDate(entityPM, containerPoco);
             ContainerTracing.Trace(entityPM, containerPoco, isNewEntity);

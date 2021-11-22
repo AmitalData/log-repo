@@ -417,6 +417,7 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public bool IsCargoTrackWebAccessActivated { get; set; }
 
+        public int? AutomaticallyCloseDays { get; set; }
 
     }
 }

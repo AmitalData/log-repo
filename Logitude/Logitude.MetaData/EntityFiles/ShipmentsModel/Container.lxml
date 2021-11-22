@@ -16849,8 +16849,8 @@
     <EventType
       Code="&quot;ROCO&quot;"
       ObjectTableName="&quot;Container&quot;"
-      EnglishName="&quot;Re-open&quot;"
-      LocalName="&quot;Re-open&quot;"
+      EnglishName="&quot;Re-opened&quot;"
+      LocalName="&quot;Re-opened&quot;"
       IsManualEntry="false"
       ShortView="true"
       IsAgentView="false"

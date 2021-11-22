@@ -1,0 +1,87 @@
+
+<table *ngIf="IsVisible">
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+        <td>
+            <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <div class="MediaFill">
+                <table>
+                    <tr style="height: 140px;">
+                        <td>
+                            <div class="MediaFill">
+                                <SectionBox>
+                                    <SectionHead>
+                                        <table>
+                                            <tr>
+                                                <td style="width: 1px; color: #45494A; font-size: 14px;">General Settings</td>
+                                            </tr>
+                                        </table>
+                                    </SectionHead>
+                                    <SectionBody>
+                                        <table>
+
+                                            <tr class="FormFieldRow">
+                                                <td style="width: 170px;">
+                                                    <LogLabel [ObjectFieldName]="'AutomaticallyCloseDays'" [NoObjectField]="true" [Text]="'Automatically Close Days'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td style="width: 200px;">
+                                                    <LogTextBox [InputType]="'unsinteger'" [ObjectFieldName]="'AutomaticallyCloseDays'" [Text]="AutomaticallyCloseDays" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                                                </td>
+
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+                                                <td colspan="2">
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+
+                                        </table>
+                                    </SectionBody>
+                                </SectionBox>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </td>
+    </tr>
+
+    <tr style="height: 32px;">
+        <td style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="Button" (click)="CancelButtonClicked()">{{'General.B.Cancel' | TextCodeTranslationPipe}}</button>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="RedButton" (click)="OkButtonClicked()">{{'General.B.Ok' | TextCodeTranslationPipe}}</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
