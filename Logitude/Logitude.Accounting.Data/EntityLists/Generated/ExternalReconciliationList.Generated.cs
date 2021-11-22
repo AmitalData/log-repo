@@ -40,6 +40,8 @@ namespace Logitude.Accounting.Data.EntityLists
        public bool IsCancelled  { get; set; }
        [DataMember]
        public string AccountLocalName  { get; set; }
+       [DataMember]
+       public bool CrossYearReconcile  { get; set; }
    }
 
 }
