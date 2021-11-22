@@ -278,6 +278,10 @@ namespace Logitude.CargoTracking.Data.EntityLists
        public string DescriptionOfGoods  { get; set; }
        [DataMember]
        public DateTime? SupplyDateTime  { get; set; }
+       [DataMember]
+       public DateTime? ATAETASortingField  { get; set; }
+       [DataMember]
+       public DateTime? ATDETDSortingField  { get; set; }
    }
 
 }
