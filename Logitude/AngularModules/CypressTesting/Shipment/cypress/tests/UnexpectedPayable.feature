@@ -1,9 +1,8 @@
 @release
-
-Feature: unexpected payable case
+Feature: Unexpected Payable Case
     The user creates a direct export air shipment, add unexpected payable.
 
-Scenario: Create direct export air shipment
+    Scenario: Create direct export air shipment
         Given the user logged in and navigates to shipments workspace
         And a direct shipment with the following details
             | ShipmentLevel        | Direct      |
@@ -17,9 +16,9 @@ Scenario: Create direct export air shipment
 
     Scenario: Add AP invoice
         Given open the shipment and navigates to payable wizard
-        And creates APInvoice with a random invoice number and the following details
+        Then creates APInvoice with a random invoice number and the following details
             | Vendor              | TestVendor  |
-            | InvoiceAmount       | 50          |
+            | InvoiceAmount       | 100         |
             | InvoiceCurrency     | EUR         |
             | InvoiceExchangeRate | 4           |
             | InvoiceDate         | Today       |
@@ -28,16 +27,15 @@ Scenario: Create direct export air shipment
             | VATType             | Zero        |
             | VatNo               | 5           |
             | Branch              | Main Office |
-        When create invoice  
-        Then the invoice should create successfully
 
-Scenario: Add invoice line 
-        Given the user creates an AP invoice line
-            | Charges Type   | AFT        |
-            | VAT Type       | EXMPT      |
-            | VAT Percentage | 0          |
-            | Vendor         | TestVendor |
-            | Amount         | 100        |
-        When save the invoice 
-        Then the invoice is saved
-        And a Payable line is created in the payable wizard 
+    Scenario: Add invoice line
+        Given the user fills AP invoice line with the following details
+            | ChargesType | AFT   |
+            | VatType     | EXMPT |
+            | Amount      | 100   |
+        When create invoice line
+        Then the Invoice Line should be added successfully
+
+     Scenario: Add invoice line
+         Given the user saves the invoice
+         Then a payable line is created in the payable wizard

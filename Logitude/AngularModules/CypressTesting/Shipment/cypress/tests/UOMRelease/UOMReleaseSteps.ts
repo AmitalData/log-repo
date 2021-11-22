@@ -93,8 +93,8 @@ Given("a payable with {string} as a charges type", (chargesType) => {
   cy.FillLogLov(ShipmentSelectors.ShipmentPayableChargesType, chargesType, true);
 });
 
-Given("a {string} as a UOM", (UnitOfMeasurment) => {
-  cy.SelectDropDownListItem2(ShipmentSelectors.ShipmentPayableMeasurement, UnitOfMeasurment)
+Given("a {string} as a UOM", (unitOfMeasurmentType) => {
+  cy.SelectDropDownListItem2(ShipmentSelectors.ShipmentPayableMeasurement, unitOfMeasurmentType)
 });
 
 Then("the quantity should has {string} as a value", (quantityValue) => {
@@ -105,7 +105,6 @@ Then("the quantity should has {string} as a value", (quantityValue) => {
 
 //#region Change Gross Weight Unit Code
 Given("the user navigates to packages tab", () => {
- // cy.Click(BaseSelectors.Button + BaseSelectors.LastElement, BaseSelectors.ContainsCancel)
   cy.Click(ShipmentSelectors.PackagesTab, null)
 });
 

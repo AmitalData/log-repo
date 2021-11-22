@@ -36,7 +36,7 @@ export class AccountingSelectors extends RegexSelectors {
     public static readonly APInvoiceVATNumber = '#APInvoice_VATNumber'
     public static readonly OkCreateAPInvoiceButton = '#Ok-CreateAPInvoice';
     public static readonly APInvoiceLineCheckBox = '#CheckBox_0_0_LBL';
-    public static readonly APInvoiceVatType = '#APInvoice_VatTypeId';
+    public static readonly APInvoiceVatType = '#APInvoice_VatTypeId'; 
     public static readonly APInvoiceSaveButton = '#APInvoiceBSave';
     public static readonly APInvoiceApproveButton = '#APInvoiceBApprove';
     public static readonly APInvoiceCancelApprovalButton = '#APInvoiceBCancelApproval';
@@ -46,7 +46,6 @@ export class AccountingSelectors extends RegexSelectors {
     public static readonly APInvoiceAmountInInvoiceCurrency = '#APInvoice_AmountInInvoiceCurrency';
     public static readonly APInvoiceReTransferButton = '#APInvoiceBReTransfer';
     public static readonly APInvoiceCopyButton = '#APInvoiceBCopyInvoice';
-
     //#endregion
     //#region Receivable tab
     public static readonly ReceivableAccounting = '#RECEIVABLEAccounting';
