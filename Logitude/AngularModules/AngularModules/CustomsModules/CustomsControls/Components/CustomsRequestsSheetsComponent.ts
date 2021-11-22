@@ -191,7 +191,8 @@ export class CustomsRequestsSheetsComponent
                     this._entityListService = new EntityListService();
                     this.BuildColumns();
 
-                    this.GetStatistics();
+                    interval(1000 * 3).pipe(takeUntil(this.ngUnsubscribe)).subscribe(() => this.GetStatistics());
+
                     //alert(TextCodeTranslator.Translate("Customs.CustomsRequestsSheet.F.RequestDescription"));
                     this._MySearchText = TextCodeTranslator.Translate("Customs.Notification.O.Search");
 
@@ -240,26 +241,26 @@ export class CustomsRequestsSheetsComponent
     customsRequestsSheetSummary = new Array<CustomsRequestsSheetSummary>();
     IsTherecustomsRequestsSheetSummary = false;
     SumRequests = 0;
+    
     GetStatistics() {
-        interval(1000 * 60 * 3).pipe(takeUntil(this.ngUnsubscribe)).subscribe(() => {
-            this.customsSettingListService.getSingleFromCache(SessionLocator.Tenant.toString()).subscribe((response: ServiceResponse) => {
-                var customsSetting = response.Result;
-                if (!AppTool.IsNullOrEmpty(customsSetting) && customsSetting.CompanyType == "B") {
-                    this.StatisticsVisibility = !this.CurrentSession?.CurrentEditComponent?.EntityPM;;
-                    var service = new CustomsRequestsSheetWebService();
-                    var statistics = service.GetStatistics().subscribe((response: any) => {
-                        if (response.Result != null) {
-                            this.SumRequests = 0;
-                            this.customsRequestsSheetSummary = response.Result;
-                            for (var request of (this.customsRequestsSheetSummary as any[])) {
-                                this.SumRequests += request.count;
-                                this.IsTherecustomsRequestsSheetSummary = true;
-                            }
+        this.customsSettingListService.getSingleFromCache(SessionLocator.Tenant.toString()).subscribe((response: ServiceResponse) => {
+            var customsSetting = response.Result;
+            if (!AppTool.IsNullOrEmpty(customsSetting) && customsSetting.CompanyType == "B") {
+                this.StatisticsVisibility = !this.CurrentSession?.CurrentEditComponent?.EntityPM;;
+                var service = new CustomsRequestsSheetWebService();
+                var statistics = service.GetStatistics().subscribe((response: any) => {
+                    if (response.Result != null) {
+                        this.SumRequests = 0;
+                        this.customsRequestsSheetSummary = response.Result;
+                        for (var request of (this.customsRequestsSheetSummary as any[])) {
+                            this.SumRequests += request.count;
+                            this.IsTherecustomsRequestsSheetSummary = true;
                         }
-                    });
-                }
-            });
-        })
+                    }
+                });
+            }
+        });
+
     }
 
     ngAfterViewInit() {
