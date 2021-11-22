@@ -149,6 +149,7 @@ export function APApproveInvoice() {
         }
     })
 }
+
 export function APInvoiceCancelApproval() {
     cy.Click(BaseSelectors.MoreList, null, true)
     cy.DefineRequestWait(RestAPI.PUT, AccountingURLs.APInvoices, RequestAliases.APInvoicesRequest)
@@ -193,6 +194,12 @@ export function AssertARInvoiceMenuButtonsEnabled() {
 }
 
 export function AssertAPInvoiceDetailsFieldsDisabled() {
+    AssertAPInvoiceMultipleShipmentsDetailsFieldsDisabled()
+    BaseAssertion.AssertElementDisabled(AccountingSelectors.APInvoiceVatType, BaseSelectors.BeDisabled)
+    BaseAssertion.AssertElementDisabled(AccountingSelectors.AddAPInvoiceLine, BaseSelectors.BeDisabled)
+}
+
+export function AssertAPInvoiceMultipleShipmentsDetailsFieldsDisabled() {
     BaseAssertion.AssertElementDisabled(AccountingSelectors.APInvoiceVendor, BaseSelectors.BeDisabled)
     BaseAssertion.AssertElementDisabled(AccountingSelectors.APInvoicePaymentTerm, BaseSelectors.BeDisabled)
     BaseAssertion.AssertElementDisabled(AccountingSelectors.APInvoiceDueDate, BaseSelectors.BeDisabled)
@@ -202,8 +209,6 @@ export function AssertAPInvoiceDetailsFieldsDisabled() {
     BaseAssertion.AssertElementDisabled(AccountingSelectors.APInvoiceInvoiceNumber, BaseSelectors.BeDisabled)
     BaseAssertion.AssertElementDisabled(AccountingSelectors.APInvoiceVATNumber, BaseSelectors.BeDisabled)
     BaseAssertion.AssertElementDisabled(AccountingSelectors.APInvoiceInvoiceDate, BaseSelectors.BeDisabled)
-    BaseAssertion.AssertElementDisabled(AccountingSelectors.APInvoiceVatType, BaseSelectors.BeDisabled)
-    BaseAssertion.AssertElementDisabled(AccountingSelectors.AddAPInvoiceLine, BaseSelectors.BeDisabled)
 }
 
 export function AssertAPInvoiceDetailsFieldsEnabled() {
@@ -218,6 +223,19 @@ export function AssertAPInvoiceDetailsFieldsEnabled() {
     BaseAssertion.AssertElementDisabled(AccountingSelectors.APInvoiceInvoiceDate, BaseSelectors.NotBeDisabled)
     BaseAssertion.AssertElementDisabled(AccountingSelectors.APInvoiceVatType, BaseSelectors.NotBeDisabled)
     BaseAssertion.AssertElementDisabled(AccountingSelectors.AddAPInvoiceLine, BaseSelectors.NotBeDisabled)
+}
+
+export function MultipleShipmentAPInvoiceCancelApproval() {
+    cy.Click(BaseSelectors.MenuButtons, null, true)
+    cy.DefineRequestWait(RestAPI.PUT, AccountingURLs.APInvoices, RequestAliases.APInvoicesRequest)
+    cy.Click(AccountingSelectors.APInvoiceCancelApprovalButton, null)
+}
+
+export function VoidMultipleShipmentAPInvoice() {
+    cy.Click(BaseSelectors.MenuButtons, null, true)
+    cy.Click(AccountingSelectors.APInvoiceVoidButton, null)
+    cy.DefineRequestWait(RestAPI.PUT, AccountingURLs.APInvoices, RequestAliases.APInvoicesRequest)
+    cy.Click(ShipmentSelectors.ConfirmWindowYes, null);
 }
 //#endregion
 
