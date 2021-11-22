@@ -134,6 +134,8 @@ namespace Logitude.ShipmentOrderModule.Data.EntityMapping
             this.Property(t => t.IsOperationalClosed).HasColumnName("IsOperationalClosed");
 
             this.Property(t => t.OnHandNumber).HasColumnName("OnHandNumber").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.AutomaticLastUpdateDate).HasColumnName("AutomaticLastUpdateDate");
         }
     }
 }

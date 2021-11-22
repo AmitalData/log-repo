@@ -10,6 +10,7 @@ using Simplog.Data.CommonDataModel.Mocks;
 using System.Data.Entity;
 using Simplog.Server.Infrastructure.Helpers;
 using System.Data.Common;
+using Simplog.Data.InvoiceModel.EntityPOCOs;
 
 namespace Simplog.Data.ShipmentsModel.Mocks
 {
@@ -921,6 +922,7 @@ namespace Simplog.Data.ShipmentsModel.Mocks
         public IDbSet<ContainerStatus> ContainerStatuses { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public IDbSet<ContainerStatusSource> ContainerStatusSources { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
+        public IDbSet<ARInvoice> ARInvoicesForReports { get; }
 
     }
 }

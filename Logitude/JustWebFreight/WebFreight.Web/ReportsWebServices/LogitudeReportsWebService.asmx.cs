@@ -8544,8 +8544,8 @@ namespace WebFreight.Web.ReportsWebServices
 
             IQueryable<ARInvoiceList> iQueryable_Invoices = arInvoiceQuery.GetInvoiceListByTenant(tenant);
             iQueryable_Invoices = iQueryable_Invoices.Where(d => !d.IsConstituentInvoice);
-            List<string> shipmentIds = iQueryable_Invoices.Select(s => s.MainEntityId).ToList();
-            IQueryable<Shipment> iQueryable_Shipments = shipmentRepository.GetShipmentsForUnpaidInvoicesReport(shipmentIds);
+            List<string> shipmentIds = iQueryable_Invoices.Select(s => s.MainEntityId).ToList(); 
+            IQueryable<Shipment> iQueryable_Shipments = shipmentRepository.GetShipmentsForUnpaidInvoicesReportWithInnerSelect(tenant);
             List<VatType> tenantVatTypes = vatTypeRepository.GetVatTypes(tenant).ToList();
 
             #region Report Filters

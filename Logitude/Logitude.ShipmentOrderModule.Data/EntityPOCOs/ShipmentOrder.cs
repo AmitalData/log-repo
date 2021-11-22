@@ -191,6 +191,8 @@ namespace Logitude.ShipmentOrderModule.Data.EntityPOCOs
 	    public bool IsOperationalClosed { get; set; }
         [Column("OnHandNumber")]
 	    public string OnHandNumber { get; set; }
+        [Column("AutomaticLastUpdateDate")]
+	    public DateTime? AutomaticLastUpdateDate { get; set; }
     }
 }
 	 

@@ -40,7 +40,7 @@ Then("the AR Payment should approve successfully", () => {
 });
 //#endregion
 
-//#region Edit print notes and Approve the AR Payment
+//#region Void AR Payment
 When("void AR Payment", () => {
     ARPaymentActions.VoidARPayment()
 });

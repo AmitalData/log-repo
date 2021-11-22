@@ -613,6 +613,7 @@ namespace CommunicationWorkerRole
                                                         ShipmentCustomerTypeCode = Shipment.ShipmentCustomerTypeCode,
                                                         IsCancelled = Shipment.IsCancelled,
                                                         ShipperName = Shipment.ShipperName,
+                                                        ConsigneeName = Shipment.ConsigneeName,
                                                         CarrierTransportDocumentNumber = Shipment.CarrierTransportDocumentNumber,
                                                         //ForwarderPartnerId = Partner.Id,
                                                         FreightPrepaidCollectId = Shipment.FreightPrepaidCollectId,

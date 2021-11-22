@@ -25,6 +25,7 @@ export class PrivateLabelPackageComponent {
     public ValidationErrorsList: string[] = [];
     public IsResourcesReady: boolean = false;
     public IsPackageTypeVisible: boolean = false;
+    public IsRquiredDimensions: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(private entityResourceService: EntityResourceService) {
 
@@ -248,7 +249,37 @@ export class PrivateLabelPackageComponent {
         this.CurrentSession.CloseCurrentWindow();
     }
     OkButtonClicked() {
+        this.ValidateRequiredFields();
+        if (this.ValidationErrorsList.length > 0) {
+            return;
+        }
         this.CurrentSession.CloseCurrentWindowEmit("OK");
+    }
+
+    ValidateRequiredFields() {
+
+        this.ValidationErrorsList = [];
+        this.IsRquiredDimensions = false;
+        this.ValidateShipmentOrderPackages();
+
+    }
+
+    private ValidateShipmentOrderPackages() {
+        this.EntityPM.ShipmentOrderPackages.forEach(item => {
+            this.ValidateDimensionsFields(item);
+        });
+    }
+
+    private ValidateDimensionsFields(item: ShipmentOrderPackagePM) {
+        if (AppTool.IsNullOrZero(item.Quantity)) return;
+        if (this.HasDimensionsValues(item)) return;
+         
+        this.ValidationErrorsList.push("Dimensions (L-W-H) fields are required.");
+        this.IsRquiredDimensions = true; 
+    }
+
+    private HasDimensionsValues(item: ShipmentOrderPackagePM) {
+        return !AppTool.IsNullOrZero(item.Height) && !AppTool.IsNullOrZero(item.Width) && !AppTool.IsNullOrZero(item.Length);
     }
 }
 export class WizardDimensionItem extends BaseComponent {
@@ -304,8 +335,8 @@ export class WizardDimensionItem extends BaseComponent {
         if (this.IsPackageTypeVisible) {
             this.UIProperties.SetRequired("PackageTypeId", this.ObjectTableName, AppTool.IsNullOrEmpty(this.PackageTypeId) ? true : false);
             this.UIProperties.SetRequired("GrossWeight", this.ObjectTableName, AppTool.IsNullOrZero(this.GrossWeight) ? true : false);
+            }
         }
-    }
 
     private hasValue: boolean;
     public HasValue(hasValue: boolean) {

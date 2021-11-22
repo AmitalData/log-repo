@@ -12,4 +12,6 @@ export class APPaymentSelectors {
     public static readonly PayableAccountingTab = '#PAYABLEAccounting';
     public static readonly QueryLink = '.QueryLink';
     public static readonly EditShipmentLine = 'button[id^="Edit_"]';
+    public static readonly VoidButton = '#APPaymentBVoid';
+    public static readonly CancelationNotes = '#APPayment_CancelationNotes';
 }

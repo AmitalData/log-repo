@@ -5,29 +5,18 @@ import { Urls } from "../constants/Urls";
 import { RestAPI } from "../../../Base/cypress/constants/RestAPI";
 import { RequestAliases } from "../../../Base/cypress/constants/RequestAliases";
 import * as BaseAssertion from "../../../Base/cypress/actions/Assertion";
-import * as gr from '../../../Base/cypress/actions/GenerateRandoms';
 import { BankAccountDetails } from '../models/BankAccountDetails'
-import { GenerateCurrentDatetimeString } from '../../../Base/cypress/actions/GenerateRandoms';
+import { GenerateRandomNumberAndString } from '../../../Base/cypress/actions/GenerateRandoms';
 import * as GeneralActions from './BaseActions'
 
-let BankAccountEnglishName = null;
-let inActiveBankAccount = false;
-
-function GenerateRandomNumber(numberLength: number) {
-    let NewRandomCode = gr.GenerateRandomNumberAndString(numberLength)
-    return NewRandomCode;
-}
+let searchFieldValue = GenerateRandomNumberAndString(BankAccountSelectors.CodeDigitCount)
 
 export function FillBankAccountDetails(bankAccountDetails: BankAccountDetails) {
-
-    let RandomBankAccountCode = GenerateRandomNumber(BankAccountSelectors.CodeDigitCount);
-    let CurrentDateName = GenerateCurrentDatetimeString("_")
-
     cy.FillLogTextBox(BankAccountSelectors.BankAccountAccountNumber, bankAccountDetails.AccountNumber)
-    cy.FillLogTextBox(BankAccountSelectors.BankAccountBankCode, RandomBankAccountCode)
+    cy.FillLogTextBox(BankAccountSelectors.BankAccountBankCode, searchFieldValue)
     cy.FillLogTextBox(BankAccountSelectors.BankAccountBranchNumber, bankAccountDetails.BranchNumber)
     cy.FillLogLov(BankAccountSelectors.BankAccountCurrency, bankAccountDetails.Currency, true)
-    cy.FillLogTextBox(BankAccountSelectors.BankAccountName, CurrentDateName)
+    cy.FillLogTextBox(BankAccountSelectors.BankAccountName, searchFieldValue)
     cy.FillLogTextBox(BankAccountSelectors.BankAccountLocalName, bankAccountDetails.LocalName)
 }
 
@@ -43,21 +32,16 @@ function DefinePostBankAccountRequest() {
 export function AssertCreateBankAccount() {
     let intercept = cy.wait("@" + RequestAliases.PostBankAccount);
     intercept.then((interception) => {
-        AssertPostBankAccount(interception.response.statusCode, 200, interception.response.body.EnglishName)
+        assert.equal(interception.response.statusCode, 200)
     })
 }
 
-export function AssertPostBankAccount(responseStatusCode: number, expectedStatusCode: number, bankAccountEnglishName: string) {
-    assert.equal(responseStatusCode, expectedStatusCode)
-    BankAccountEnglishName = bankAccountEnglishName
-}
-
 export function SearchBankAccount() {
-    GeneralActions.Search(BankAccountEnglishName)
+    GeneralActions.Search(searchFieldValue)
 }
 
 export function AssertSearchBankAccount() {
-    GeneralActions.AssertSearch(BankAccountEnglishName)
+    GeneralActions.AssertSearch(searchFieldValue)
 }
 
 export function OpenBankAccount() {
@@ -107,4 +91,3 @@ export function AssertCloseSaveBankAccount() {
 function DefineBankAccountiewGetSingleRequest() {
     cy.DefineRequestWait(RestAPI.GET, Urls.BankAccountsviewGetSingle, RequestAliases.GetSignle);
 }
-
