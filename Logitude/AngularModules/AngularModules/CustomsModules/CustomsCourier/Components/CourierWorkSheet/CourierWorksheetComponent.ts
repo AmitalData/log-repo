@@ -2195,11 +2195,13 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
         });
     }
     ClosePendingMethod(){
+        SessionLocator.SelectedSession.StartBusyIndicatorLoading();
         if (this.IsDisplayOnly) {
             var myMessageWindow = new MessageWindow();
             myMessageWindow.Width = 250;
             myMessageWindow.Height = 150;
             myMessageWindow.Show("קיים מסר זהה בתהליך");
+            SessionLocator.SelectedSession.StopBusyIndicator();
             return;
         }
         var currRequestParams = new SendClosePendingRequestParams();
@@ -2211,7 +2213,13 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
         if (this._CourierWorksheetSharedDataService._SelectedItems != null && this._CourierWorksheetSharedDataService._SelectedItems.Collection.length > 0) {
             currRequestParams.DeclarationsList = this._CourierWorksheetSharedDataService._SelectedItems.Collection;
         }
-        currRequestParams.PendingCode=this.SelectedPendingCodeFilter.Key;
+        currRequestParams.PendingCode=new Array();
+        if(this.SelectedPendingCodeFilter.Key=='A' && this._PendingCodes.length>1){
+            this._PendingCodes.forEach(x=> currRequestParams.PendingCode.push(x.Key));
+        }else{
+            currRequestParams.PendingCode.push(this.SelectedPendingCodeFilter.Key);
+        }
+        //currRequestParams.PendingCode=this.SelectedPendingCodeFilter.Key;
         this._CourierMasterService.PostSendClosePending(currRequestParams)
         .subscribe((res:any) => {
             SessionLocator.SelectedSession.StopBusyIndicator();
@@ -2316,7 +2324,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
                 let customsRequestsSheetPM: CustomsRequestsSheetPM = displayOnlyCheckResult.filter(r => r.InterfaceTypeCode == "ClosePending")[0];
                 if (customsRequestsSheetPM != null) {
                     this.IsDisplayOnly = true;
-                    this.DisplayOnlyMessage = "LAAL";
+                    this.DisplayOnlyMessage =  "לתצוגה בלבד - קיימת בקשה לסגירת PENDING ברקע ";
                     this._CourierWorksheetSharedDataService.IsDisplayOnly = true;
                 }
             }

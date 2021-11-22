@@ -237,8 +237,6 @@ namespace Logitude.Customs.BL.EntityQueryServices
 
         }
 
-
-
         public IQueryable<DeclarationCourierStatus> GetBy(int tenant, string CourierMasterId)
         {
             var repoCourierDeclaration = new CourierDeclarationRepository(this.context);

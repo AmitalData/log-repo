@@ -5,6 +5,6 @@ export class SendClosePendingRequestParams extends GenericRequestParams {
 
     public CourierMasterId: string;
     public MAWB: string;
-    public PendingCode: string;
+    public PendingCode: string[];
     public DeclarationsList:string[];
 }
