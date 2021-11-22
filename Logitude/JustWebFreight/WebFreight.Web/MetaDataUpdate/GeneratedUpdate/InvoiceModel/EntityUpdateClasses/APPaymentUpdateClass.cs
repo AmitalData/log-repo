@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 {
    public class APPaymentUpdateClass
    {  		
-		public const string HashString = "1d12b1d9085d20c916b8036e00e173b0";
+		public const string HashString = "fcd978693006d6f6f5399039b731a70c";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -5567,6 +5567,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
  		   TextCode APPaymentTextCode_APPaymentMPaymentCreatedWithReconciliation = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.M.PaymentCreatedWithReconciliation", DefaultText = "payment #number has been created Successfully. The internal Reconciliation is being created in the background",LocalDefaultText = @"קבלה #number נוצרה בהצלחה, ההתאמה תתבצע ברקע", ObjectTableId = APPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode APPaymentTextCode_APPaymentMUnsavedAPPaymentAlert = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.M.UnsavedAPPaymentAlert", DefaultText = "This A/P Payment has unsaved changes do you want to save it, considering that no internal reconcile will be created?",LocalDefaultText = @"הוראת התשלום לא תישמר , יש לקחת בחשבון שגם לא תתבצע התאמה כתוצאה מכך.", ObjectTableId = APPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode APPaymentTextCode_APPAymentONewAPPaymentTitle = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPAyment.O.NewAPPaymentTitle", DefaultText = "New APPayment",LocalDefaultText = @"יצירת תשלום לספקים", ObjectTableId = APPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
