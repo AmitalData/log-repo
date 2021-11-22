@@ -7533,6 +7533,7 @@
     <TypeScriptCompile Include="Shipment\EntityLists\ShipmentCustomsTransmissionList.ts" />
     <TypeScriptCompile Include="Shipment\EntityLists\ShipmentSubTypeList.ts" />
     <TypeScriptCompile Include="Shipment\EntityPMCustomCode\ContainerPMCustomCode.ts" />
+    <TypeScriptCompile Include="Shipment\EntityPMInitServices\ContainerPMInitService.ts" />
     <TypeScriptCompile Include="Shipment\EntityPMInitServices\ShipmentSubTypePMInitService.ts" />
     <TypeScriptCompile Include="Shipment\EntityPMs\ContainerFollowUpPM.ts" />
     <TypeScriptCompile Include="Shipment\EntityPMs\ContainerPM.ts" />
