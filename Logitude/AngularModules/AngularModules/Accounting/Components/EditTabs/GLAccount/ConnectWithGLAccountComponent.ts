@@ -132,10 +132,6 @@ export class ConnectWithGLAccountComponent extends BaseComponent {
         if (ExistGLAccountSplited && ExistGLAccountSplited.length > 0) {
             errors.push(TextCodeTranslator.Translate("GLAccountCurrency.O.AlreadySplit") + " " + this.selectedGLAccount.CurrencyCode);
         }
-
-        if (this.entityPM.IsMultiCurrency == true && this.selectedGLAccount.Id == this.entityPM.CustomerGLAccountId) {
-            errors.push(TextCodeTranslator.Translate("GLAccounts.O.CustomerGLaccountDefinedSplit"));
-        }
     }
 
 private CreateNewGLAccountCurrency(){
@@ -146,8 +142,7 @@ private CreateNewGLAccountCurrency(){
         if (response) {
             if (!response.HasError)
             {
-                  this.CurrentSession.StopBusyIndicator();
-             
+                this.GetSelectedGLAccountPM();   
             }
             else {
                   this.CurrentSession.StopBusyIndicator();
@@ -173,7 +168,6 @@ private MappingAndGetCurrencyGlAccount():GLAccountCurrencyPM{
        this.ValidateGLAccountCurrency();
        if (this.ValidationErrorsList.length == 0) {
            this.CreateNewGLAccountCurrency();
-           this.GetSelectedGLAccountPM();   
        }
     }
     GetSelectedGLAccountPM() {

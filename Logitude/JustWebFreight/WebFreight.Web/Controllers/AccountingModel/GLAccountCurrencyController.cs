@@ -60,9 +60,9 @@ namespace WebFreight.Web.Controllers.AccountingModel
                         IAccountingContext MyContext = AccountingContext.GetContext(entityPM.Tenant);
                         GLAccountCurrencyUpdateService service = new GLAccountCurrencyUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);
                         entityPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert;
-                        service.Update(entityPM, true);
-
                        
+                        service.ValidateSplitGLAccount(entityPM);
+                        service.Update(entityPM, true);
 
                         scope.Complete();
                         PerformanceLogger.AddServerExecutionTimeHeader(logKey);
@@ -70,7 +70,7 @@ namespace WebFreight.Web.Controllers.AccountingModel
                         return Request.CreateResponse(HttpStatusCode.OK, entityPM);
                     }
                 }
-
+              
                 catch (Exception ex)
                 {
                     return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));

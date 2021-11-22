@@ -565,13 +565,13 @@ namespace Logitude.Accounting.BL.APIDataContract.ApiV1
 
         public GLAccountPM GLAccountDataMappingAndValidatinForExternalAPI(GLAccount glaccount, int tenant)
         {
-            ValidateCustomerGLAccountId(glaccount, tenant);
+            CheckIfTheCustomerGLaccountIsSplitGLAccount(glaccount, tenant);
 
             return GLAccountDataMappingAndValidatin(glaccount, tenant);
 
         }
 
-        private void ValidateCustomerGLAccountId(GLAccount glaccount, int tenant)
+        private void CheckIfTheCustomerGLaccountIsSplitGLAccount(GLAccount glaccount, int tenant)
         {
             List<Data.EntityPOCOs.GLAccountCurrency> gLAccountCurrencies = GetRelatedGLAccountCurrencies(glaccount, tenant);
             string customerGLAccountId = GetCustomerGLAccountIdByDisplayNumber(glaccount, tenant);
