@@ -79,7 +79,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 {
    public class ContainerUpdateClass
    {  		
-		public const string HashString = "06f4d1439a448082ebf9a2dae4f05568";
+
+		public const string HashString = "1b81eae0693b140a9b6bc864c7e0a00b";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -6660,9 +6661,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "EstimatedDelivery",
-					  						DefaultText =  "Estimated Delivery",
+					  						DefaultText =  "Delivery Appointment Date",
 					  						ListFieldLable =  "EstimatedDeliveryListLable",
-					  						ListLableDefaultText =  "Estimated Delivery",
+					  						ListLableDefaultText =  "Delivery Appointment Date",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -6720,9 +6721,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ActualDelivery",
-					  						DefaultText =  "Actual Delivery",
+					  						DefaultText =  "Actual Delivery Date",
 					  						ListFieldLable =  "ActualDeliveryListLable",
-					  						ListLableDefaultText =  "Actual Delivery",
+					  						ListLableDefaultText =  "Actual Delivery Date",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
