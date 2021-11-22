@@ -150,7 +150,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
             CustomsDocumentQueryService customsDocumentQueryService = new CustomsDocumentQueryService(documentsFilingPM.Tenant);
             var customDoc = customsDocumentQueryService.GetSingle(documentsFilingPM.Id, false, false);
 
-            if(!string.IsNullOrEmpty( customDoc.CustomsDocId))
+            if(customDoc != null && !string.IsNullOrEmpty( customDoc.CustomsDocId))
             {
                 LogMessagingUtil.Instance.AppendLine("קיים סימוכין מכס");
                 return "קיים סימוכין מכס";
