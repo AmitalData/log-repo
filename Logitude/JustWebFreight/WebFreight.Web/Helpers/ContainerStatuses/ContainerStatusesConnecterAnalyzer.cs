@@ -869,7 +869,7 @@ namespace WebFreight.Web.Helpers.Analyzers
                 {
                     logitudeOceanInsightsResponse = new LogitudeOceanInsightsResponse()
                     {
-                        Id = IdCounter.GetNumber("LogitudeOceanInsightsResponse", tenant_Zero),
+                        Id = IdCounter.GetNumber("LogitudeOceanInsightsResponse", logitudeTenant.Value),
                         FirstResponseDate = TenantServerConfigration.GetCurrentDateTime(logitudeTenant.Value),
                         LastResponseDate = TenantServerConfigration.GetCurrentDateTime(logitudeTenant.Value),
                         ContainerNumber = container_number,
@@ -892,8 +892,8 @@ namespace WebFreight.Web.Helpers.Analyzers
         private string GetCarrierName()
         {
             string carrierName = "";
-            CardRepository cardRepository = new CardRepository(tenant_Zero);
-            Card shippingLine = cardRepository.GetSingleCard(container.MainCarriageCarrierId, tenant_Zero);
+            CardRepository cardRepository = new CardRepository(logitudeTenant.Value);
+            Card shippingLine = cardRepository.GetSingleCard(container.MainCarriageCarrierId, logitudeTenant.Value);
             carrierName = shippingLine?.EnglishName;
             return carrierName;
         }
