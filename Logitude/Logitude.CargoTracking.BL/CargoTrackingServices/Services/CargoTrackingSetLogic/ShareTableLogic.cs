@@ -20,7 +20,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
                 CurrentMilestoneArgs.tableRow.SetField("CurrentMilestoneCode", CurrentMilestoneArgs.milestone.Code);
             }
         }
-        public static bool IsMilestoneAllowToView(Dictionary<int, Dictionary<string, string>> milestonesNotPermitted, string milestoneCode, int tenant)
+        public static bool CheckIfUserHasAccessToMilestone(Dictionary<int, Dictionary<string, string>> milestonesNotPermitted, string milestoneCode, int tenant)
         {
             if (!milestonesNotPermitted.ContainsKey(tenant))
                 return true;

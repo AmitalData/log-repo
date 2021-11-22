@@ -15,7 +15,8 @@ namespace Logitude.CargoTracking.BL.CoreBL.Batch
 {
     public class BatchUpdateShipmentsForCargoIncremental : BatchTaskExecutionsService
     {
-        const int ShipmentsPerTime = 1000;
+        const int ShipmentBulkSize = 1000;
+        const int OffsetTimeToSeperateIncrementalExcutionOfShipments = 1 * 60 * 1000;
         public BatchUpdateShipmentsForCargoIncremental(BatchTaskExecutionPM batchTaskExecution) : base(batchTaskExecution)
         {
         }
@@ -23,39 +24,39 @@ namespace Logitude.CargoTracking.BL.CoreBL.Batch
         {
             var parameterArgs = DeserilaizeParameters();
 
-            UpdateOrders(parameterArgs);
-            UpdateShipments(parameterArgs);
+            UpdateOrdersBulkByBulk(parameterArgs);
+            UpdateShipmentsBulkByBulk(parameterArgs);
 
         }
 
-        private void UpdateOrders(UpdateShipmetsBatchArgs parameterArgs)
+        private void UpdateOrdersBulkByBulk(UpdateShipmetsBatchArgs parameterArgs)
         {
             ShipmentOrderRepository shipmentOrderRepository = new ShipmentOrderRepository(parameterArgs.Tenant);
 
-            var count = 0;
-            var shipmentOrderIds = shipmentOrderRepository.GetShipmentOrdersIdsByTenant(parameterArgs.Tenant, 0, ShipmentsPerTime);
+            var doneShipmentOrders = 0;
+            var shipmentOrderIds = shipmentOrderRepository.GetShipmentOrdersIdsByTenant(parameterArgs.Tenant, doneShipmentOrders, ShipmentBulkSize);
             while (shipmentOrderIds.Count > 0)
             {
                 shipmentOrderRepository.UpdateLastUpdateDate(GetIdsAsString(shipmentOrderIds));
-                Thread.Sleep(1 * 60 * 1000);// 1 minute 
-                count += ShipmentsPerTime;
-                shipmentOrderIds = shipmentOrderRepository.GetShipmentOrdersIdsByTenant(parameterArgs.Tenant, count, ShipmentsPerTime);
+                Thread.Sleep(OffsetTimeToSeperateIncrementalExcutionOfShipments);
+                doneShipmentOrders += shipmentOrderIds.Count;
+                shipmentOrderIds = shipmentOrderRepository.GetShipmentOrdersIdsByTenant(parameterArgs.Tenant, doneShipmentOrders, ShipmentBulkSize);
 
             }
         }
 
-        private void UpdateShipments(UpdateShipmetsBatchArgs parameterArgs)
+        private void UpdateShipmentsBulkByBulk(UpdateShipmetsBatchArgs parameterArgs)
         {
             ShipmentRepository shipmentRepository = new ShipmentRepository(parameterArgs.Tenant);
 
-            var count = 0;
-            var shipments = shipmentRepository.GetShipmentIdsByTenant(parameterArgs.Tenant, 0, ShipmentsPerTime);
+            var doneShipments = 0;
+            var shipments = shipmentRepository.GetShipmentIdsByTenant(parameterArgs.Tenant, doneShipments, ShipmentBulkSize);
             while (shipments.Count > 0)
             {
                 shipmentRepository.UpdateLastUpdateDate(GetIdsAsString(shipments));
-                Thread.Sleep(1 * 60 * 1000);// 1 minute 
-                count += ShipmentsPerTime;
-                shipments = shipmentRepository.GetShipmentIdsByTenant(parameterArgs.Tenant, count, ShipmentsPerTime);
+                Thread.Sleep(OffsetTimeToSeperateIncrementalExcutionOfShipments);
+                doneShipments += shipments.Count;
+                shipments = shipmentRepository.GetShipmentIdsByTenant(parameterArgs.Tenant, doneShipments, ShipmentBulkSize);
 
             }
 

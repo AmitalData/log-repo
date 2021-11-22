@@ -713,8 +713,8 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
                         TableRow = dr,
                         TableName = bulkDataPreperation.CargoTrackingUpdateDataBaseArgs.BuildCargoArgs.Table.Main_CargoTracking_TableName,
                         ConditionNumber = bulkDataPreperation.CargoTrackingUpdateDataBaseArgs.BuildCargoArgs.Table.CurrentCondition,
-                        MilestoneList = bulkDataPreperation.MilestoneList,
-                        MilestonesNotPermitted = bulkDataPreperation.MilestonesNotPermitted
+                        Milestones = bulkDataPreperation.MilestoneList,
+                        NotPermittedMilestones = bulkDataPreperation.MilestonesNotPermitted
                     };
                     CargoTrackingTableLogicService.SetTableLogic(args);
                 }
@@ -725,8 +725,8 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
                         TableRow = dr,
                         TableName = bulkDataPreperation.CargoTrackingUpdateDataBaseArgs.BuildCargoArgs.Table.Main_CargoTracking_InnerTableName,
                         ConditionNumber = bulkDataPreperation.CargoTrackingUpdateDataBaseArgs.BuildCargoArgs.Table.CurrentCondition,
-                        MilestoneList = bulkDataPreperation.MilestoneList,
-                        MilestonesNotPermitted = bulkDataPreperation.MilestonesNotPermitted
+                        Milestones = bulkDataPreperation.MilestoneList,
+                        NotPermittedMilestones = bulkDataPreperation.MilestonesNotPermitted
                     };
                     CargoTrackingTableLogicService.SetTableLogic(args);
                 }
@@ -921,7 +921,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
         {
             var cargoTrackingShipmentsService = new CargoTrackingShipmentsService();
             updateCargoTrackingRecords.MilestoneList = cargoTrackingShipmentsService.GetMilestones(updateCargoTrackingRecords.CargoTrackingUpdateDataBaseArgs.BuildCargoArgs.DestinationConnectionString);
-            updateCargoTrackingRecords.MilestonesNotPermitted = cargoTrackingShipmentsService.GetAllMilestonesNotPermitted(updateCargoTrackingRecords.CargoTrackingUpdateDataBaseArgs.BuildCargoArgs.SourceConnectionString);
+            updateCargoTrackingRecords.MilestonesNotPermitted = cargoTrackingShipmentsService.GetAllNotPermittedMilestones(updateCargoTrackingRecords.CargoTrackingUpdateDataBaseArgs.BuildCargoArgs.SourceConnectionString);
 
             if (false)
             {

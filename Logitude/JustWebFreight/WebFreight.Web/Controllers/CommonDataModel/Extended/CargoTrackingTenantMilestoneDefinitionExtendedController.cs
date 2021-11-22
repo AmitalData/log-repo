@@ -42,6 +42,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
 {
     public class CargoTrackingTenantMilestoneDefinitionExtendedController : ApiController
     {
+        const string CreatedStatusCode = "C";
+
         public HttpResponseMessage GetAll()
         {
             try
@@ -72,7 +74,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
                     AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                     SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
 
-                    foreach(var entityPM in cargoTenantMilestoneDefinitionPMs)
+                    foreach (var entityPM in cargoTenantMilestoneDefinitionPMs)
                     {
                         SecurityUtility.AuthenticationOnEntityTenant("CargoTenantMilestoneDefinition", entityPM.Tenant, authToken.Tenant);
                     }
@@ -80,7 +82,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
                     ICommonDataContext commonDataContext = CommonDataContext.GetContext(authToken.Tenant);
                     CargoTenantMilestoneDefinitionService cargoTenantMilestoneDefinitionService = new CargoTenantMilestoneDefinitionService(commonDataContext, authToken.Tenant);
                     cargoTenantMilestoneDefinitionService.UpdateCargoTenantMilestoneDefinitionsPM(cargoTenantMilestoneDefinitionPMs, authToken.Tenant);
-                    UpdateShipmentsInTenantForIncrementalCargo(authToken.Tenant);
+                    CreateUpdateShipmentsBatchTask(authToken.Tenant);
 
                     scope.Complete();
                     PerformanceLogger.AddServerExecutionTimeHeader(logKey);
@@ -92,38 +94,52 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-        private void UpdateShipmentsInTenantForIncrementalCargo(int tenant)
+        private void CreateUpdateShipmentsBatchTask(int tenant)
         {
             UpdateShipmetsBatchArgs args = new UpdateShipmetsBatchArgs() { Tenant = tenant };
-            var stringwriter = new System.IO.StringWriter();
-            var serializer = new XmlSerializer(typeof(UpdateShipmetsBatchArgs));
-            serializer.Serialize(stringwriter, args);
-            string xmlParameters = stringwriter.ToString();
+            
+            string xmlParameters = SerializeParamers(args);
 
-            var updateLastUpdateDateForShipmentsInTenantTask = new BatchTaskExecutionPM()
-            {
-                Subject = $"Update all shipments and orders in the tenant {tenant} for Cargo Incremental service",
-                Tenant = tenant,
-                ChangeSetOp = ChangeSetOperation.Insert,
-                ClassName = "Logitude.CargoTracking.BL.CoreBL.Batch.BatchUpdateShipmentsForCargoIncremental,Logitude.CargoTracking.BL",
-                CreateDate = DateTime.Now,
-                PrametersXml = xmlParameters,
-                StatusCode = "C"
-            };
+            var updateLastUpdateDateForShipmentsInTenantTask = CreateBatchTaskInstance(args, xmlParameters);
 
             IInfrastructureContext MyContext = InfrastructureContext.GetContext(tenant);
             BatchTaskExecutionUpdateService bteUpdateService = new BatchTaskExecutionUpdateService(MyContext, new Dictionary<string, IContext>(), tenant);
             bteUpdateService.Update(updateLastUpdateDateForShipmentsInTenantTask, true);
+            SendTaskToQueue(tenant, updateLastUpdateDateForShipmentsInTenantTask.Id);
             
-            // 2- Send to queue
+        }
+
+        private void SendTaskToQueue(int tenant, string id)
+        {
             IQueueService queueservice = new DbQueueService();
             queueservice.InitializeQueue("batchtaskexecutionqueue", 0);
             queueservice.Send(new Dictionary<string, string>()
                 {
-                    { "BatchTaskExecutionId", updateLastUpdateDateForShipmentsInTenantTask.Id },
+                    { "BatchTaskExecutionId", id },
                     { "Tenant", tenant.ToString() }
                 }, tenant);
         }
 
+        private BatchTaskExecutionPM CreateBatchTaskInstance(UpdateShipmetsBatchArgs args, string xmlParameters)
+        {
+            return new BatchTaskExecutionPM()
+            {
+                Subject = $"Update all shipments and orders in the tenant {args.Tenant} for Cargo Incremental service",
+                Tenant = args.Tenant,
+                ChangeSetOp = ChangeSetOperation.Insert,
+                ClassName = "Logitude.CargoTracking.BL.CoreBL.Batch.BatchUpdateShipmentsForCargoIncremental,Logitude.CargoTracking.BL",
+                CreateDate = DateTime.Now,
+                PrametersXml = xmlParameters,
+                StatusCode = CreatedStatusCode
+            };
+        }
+
+        private string SerializeParamers(UpdateShipmetsBatchArgs args)
+        {
+            var stringwriter = new System.IO.StringWriter();
+            var serializer = new XmlSerializer(typeof(UpdateShipmetsBatchArgs));
+            serializer.Serialize(stringwriter, args);
+            return stringwriter.ToString();
+        }
     }
 }

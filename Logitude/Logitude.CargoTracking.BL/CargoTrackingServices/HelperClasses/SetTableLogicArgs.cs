@@ -13,7 +13,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.HelperClasses
         public DataRow TableRow { get; set; }
         public string TableName { get; set; }
         public int ConditionNumber { get; set; }
-        public List<CargoTrackingMilestoneList> MilestoneList { get; set; }
-        public Dictionary<int, Dictionary<string, string>> MilestonesNotPermitted { get; internal set; }
+        public List<CargoTrackingMilestoneList> Milestones { get; set; }
+        public Dictionary<int, Dictionary<string, string>> NotPermittedMilestones { get; internal set; }
     }
 }

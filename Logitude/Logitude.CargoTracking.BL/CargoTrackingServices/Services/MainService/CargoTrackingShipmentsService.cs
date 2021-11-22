@@ -522,34 +522,37 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.MainService
             }
         }
 
-        public Dictionary<int, Dictionary<string, string>> GetAllMilestonesNotPermitted(string connectionString)
+        public Dictionary<int, Dictionary<string, string>> GetAllNotPermittedMilestones(string connectionString)
         {
-            var MilestonesNotAllowedToBeViewed = new List<CargoTenantMilestoneDefinitions>();
-
             var query = "select * from CargoTenantMilestoneDefinitions where IsCustomerView = 0";
             using (SqlConnection sourceConnection = new SqlConnection(connectionString))
             {
-                SqlCommand commandSourceData = new SqlCommand(query, sourceConnection);
-                commandSourceData.CommandTimeout = int.MaxValue;
-                sourceConnection.Open();
-                SqlDataReader reader = commandSourceData.ExecuteReader(CommandBehavior.CloseConnection);
-                while (reader.Read())
-                {
-                    var row = SqlDataReaderConverter.ConvertToObject<CargoTenantMilestoneDefinitions>(reader);
-                    MilestonesNotAllowedToBeViewed.Add(row);
-                }
-                var DictionaryMilestonesNotPermitted = GetDictionaryMilestonesNotPermittedByTenentAndCode(MilestonesNotAllowedToBeViewed);
+                var notPermittedMilestones = GetNotPermittedMilestonesList(query, sourceConnection);
+                var DictionaryMilestonesNotPermitted = GetDictionaryMilestonesNotPermittedByTenentAndCode(notPermittedMilestones);
                 return DictionaryMilestonesNotPermitted;
             }
         }
 
+        private List<CargoTenantMilestoneDefinitions> GetNotPermittedMilestonesList(string query, SqlConnection sourceConnection)
+        {
+            var notPermittedMilestones = new List<CargoTenantMilestoneDefinitions>();
+            SqlCommand commandSourceData = new SqlCommand(query, sourceConnection);
+            commandSourceData.CommandTimeout = int.MaxValue;
+            sourceConnection.Open();
+            SqlDataReader reader = commandSourceData.ExecuteReader(CommandBehavior.CloseConnection);
+            while (reader.Read())
+            {
+                var row = SqlDataReaderConverter.ConvertToObject<CargoTenantMilestoneDefinitions>(reader);
+                notPermittedMilestones.Add(row);
+            }
+            return notPermittedMilestones;
+        }
+
         private Dictionary<int, Dictionary<string, string>> GetDictionaryMilestonesNotPermittedByTenentAndCode(List<CargoTenantMilestoneDefinitions> milestonesNotAllowedToBeViewed)
         {
-            // first key = tenant , second key = milestone code
             var dictionaryMilestonesNotPermitted = new Dictionary<int, Dictionary<string, string>>();
             foreach (var item in milestonesNotAllowedToBeViewed)
             {
-                //Check tenant
                 if (!dictionaryMilestonesNotPermitted.ContainsKey(item.Tenant))
                 {
                     dictionaryMilestonesNotPermitted.Add(item.Tenant, new Dictionary<string, string>());
