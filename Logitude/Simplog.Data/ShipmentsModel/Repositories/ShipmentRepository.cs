@@ -10,6 +10,8 @@ using System;
 using Simplog.Data.Helpers;
 using System.Data.SqlClient;
 using System.Text;
+using Simplog.Data.InvoiceModel.Repositories;
+using Simplog.Data.InvoiceModel.EntityPOCOs;
 
 namespace Simplog.Data.ShipmentsModel.Repositories
 {
@@ -709,6 +711,15 @@ namespace Simplog.Data.ShipmentsModel.Repositories
                                              select a;
             return shipments;
         }
+        public IQueryable<Shipment> GetShipmentsForUnpaidInvoicesReportWithInnerSelect(int tenant)
+        { 
+            IQueryable<Shipment> shipments = from a in context.Shipments.Include("ShipperCard").Include("ShipmentMasterData").Include("ToPort")
+                                             where (from entity in context.ARInvoicesForReports
+                                                    where entity.Tenant == tenant && entity.StatusCode != "LL" && !entity.IsConstituentInvoice
+                                                    select entity.MainEntityId).Contains(a.Id)
+                                             select a;
+            return shipments;
+        }
 
 
         public IQueryable<Shipment> GetShipmentsForCrossDock(List<string> shipmentIds , int tenant)
@@ -745,6 +756,11 @@ namespace Simplog.Data.ShipmentsModel.Repositories
         public List<Shipment> All()
         {
             return context.Shipments.ToList();
+        }
+
+        public IQueryable<Shipment> AllQ()
+        {
+            return context.Shipments.AsQueryable();
         }
 
         public IShipmentsContext context

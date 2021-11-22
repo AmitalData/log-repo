@@ -333,8 +333,10 @@ export class Milestone
 {
 
     public Id: number;
+    public Weight: number;
     public Code: string;
     public Name: string;
+    public LocalName: string;
     public Notes: string;
     public Date: Date;
     public EstimationDate: Date;

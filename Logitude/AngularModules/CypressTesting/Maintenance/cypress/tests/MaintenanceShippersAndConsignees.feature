@@ -1,9 +1,17 @@
-@release @all @dev
+@release @all @devsmoke
 Feature: Shipper-Consignee Create, Search and Edit from Maintenance
     The user creates a Shipper-Consignee, searches for and edits it from the Maintenance Module.
 
-    Scenario: Create new Shipper-Consignee
+    Scenario: Assert create Shipper-Consignee
         Given the user logged in and open "Shippers and Consignees" in maintenance menu
+        And the user check add contact checkbox
+        When create Shipper-Consignee
+        Then a validation error message with "Name Field is Required" should appear
+        And a validation error message with "City Field is Required" should appear
+        And a validation error message with "Country Field is Required" should appear
+        And a validation error message with "English Name Field is Required" should appear
+
+    Scenario: Create new Shipper-Consignee
         And a Shipper-Consignee with the following details
             | CompanyName | Testing Shipper-Consignee Scenario |
             | LocalName   | Testing Shipper-Consignee Scenario |

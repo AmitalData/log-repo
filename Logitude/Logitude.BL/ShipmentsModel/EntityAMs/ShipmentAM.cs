@@ -62,6 +62,7 @@ namespace Logitude.BL.ShipmentsModel.EntityAMs
         public string ExceptionDescription { get; set; }
 
         public string DeclarationXMLData { get; set; }
+  
         public bool IsImporterApprovalRequired { get; set; }
         public string VersionApproved { get; set; }
         public DateTime? ApproveDateTime { get; set; }
@@ -83,7 +84,7 @@ namespace Logitude.BL.ShipmentsModel.EntityAMs
         public string ForwardingPartnerTenant { get; set; }
         public CodeProperties Agent { get; set; }
 
-
+         
         /*
         HasException , ExceptionDate , ExceptionDescription
 ShipmentNumber

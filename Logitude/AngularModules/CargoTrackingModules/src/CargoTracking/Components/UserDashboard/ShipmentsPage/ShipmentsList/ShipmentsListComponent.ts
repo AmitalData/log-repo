@@ -354,9 +354,6 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
     private GetMilstones(){
         this.milestonesService.getAll(this.tenant)
             .subscribe((milestones:any) => {
-                milestones.sort(function (a, b) {
-                    return Number(a.Code) - Number(b.Code);
-                  });
                 this.MilestonesStatus  = milestones.map(s => ({ IsSelected: false, ...s}));
             });
     }

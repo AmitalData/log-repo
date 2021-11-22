@@ -1,4 +1,4 @@
-﻿<Script DBType="Main" Module="Common" AOT="true" TargetTableName="Users">
+﻿<Script DBType="Main" Module="Common" AOT="false" TargetTableName="Users">
   <Sql Version="1">
     <![CDATA[
 

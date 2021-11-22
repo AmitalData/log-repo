@@ -241,7 +241,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
             ServiceHelper.ExecuteSql(sql, buildCargoArgs.DestinationConnectionString);
         }
 
-        private RecordUpdated UpdateCargoTrackingDatabase(CargoTrackingUpdateDataBaseArgs cargoTrackingDataBaseArgs,
+        private RecordUpdated UpdateCargoTrackingDatabase(CargoTrackingUpdateDataBaseArgs cargoTrackingDataBaseArgs, List<CargoTrackingMilestoneList> milestoneList,
                                                          bool isUpadteWaterMark = false)
         {
             RecordUpdated recordUpdated = new RecordUpdated();
@@ -256,6 +256,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
                 cargoTrackingDataBaseArgs.DataTableSchema = DataTableSchema;
                 List<DataColumn> dataColumnListCols = new List<DataColumn>();
                 bulkDataPreperation.MainDataTable = new DataTable();
+                bulkDataPreperation.MilestoneList = milestoneList;
 
                 //CreatePreOldShipmentsTable(bulkDataPreperation);
 
@@ -624,7 +625,6 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
                 //    Console.WriteLine(colName + ": (" + value+ ") ,Type: " + value.GetType().Name);
                 //    if (value.Equals("") && value.GetType().Name == "DateTime")
                 //        value = DateTime.MinValue;
-                //        //Console.WriteLine("what the fuck!!");
                 //}
                 //foreach (DataRow row in bulkDataPreperation.SelectedDataTable.Rows)
                 //{
@@ -635,7 +635,6 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
                 //        //if (value.Equals("") && colName.Contains("Date"))
                 //        //{
                 //        //    row[colName] = DateTime.Now;
-                //        //    //Console.WriteLine("what the fuck!!");
                 //        //}
                 //    }
                 //}
@@ -702,11 +701,11 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
             {
                 if (!isFromInnerCargoTrackingTable)
                 {
-                    CargoTrackingTableLogicService.SetTableLogic(dr, bulkDataPreperation.CargoTrackingUpdateDataBaseArgs.BuildCargoArgs.Table.Main_CargoTracking_TableName, bulkDataPreperation.CargoTrackingUpdateDataBaseArgs.BuildCargoArgs.Table.CurrentCondition);
+                    CargoTrackingTableLogicService.SetTableLogic(dr, bulkDataPreperation.CargoTrackingUpdateDataBaseArgs.BuildCargoArgs.Table.Main_CargoTracking_TableName, bulkDataPreperation.CargoTrackingUpdateDataBaseArgs.BuildCargoArgs.Table.CurrentCondition, bulkDataPreperation.MilestoneList);
                 }
                 else
                 {
-                    CargoTrackingTableLogicService.SetTableLogic(dr, bulkDataPreperation.CargoTrackingUpdateDataBaseArgs.BuildCargoArgs.Table.Main_CargoTracking_InnerTableName, bulkDataPreperation.CargoTrackingUpdateDataBaseArgs.BuildCargoArgs.Table.CurrentCondition);
+                    CargoTrackingTableLogicService.SetTableLogic(dr, bulkDataPreperation.CargoTrackingUpdateDataBaseArgs.BuildCargoArgs.Table.Main_CargoTracking_InnerTableName, bulkDataPreperation.CargoTrackingUpdateDataBaseArgs.BuildCargoArgs.Table.CurrentCondition, bulkDataPreperation.MilestoneList);
                 }
 
 
@@ -897,6 +896,8 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
         }
         private void BuildShipments(UpdateCargoTrackingRecords updateCargoTrackingRecords)
         {
+            var cargoTrackingShipmentsService = new CargoTrackingShipmentsService();
+            updateCargoTrackingRecords.MilestoneList = cargoTrackingShipmentsService.GetMilestones(updateCargoTrackingRecords.CargoTrackingUpdateDataBaseArgs.BuildCargoArgs.DestinationConnectionString);
 
             if (false)
             {
@@ -935,7 +936,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
         {
             updateCargoTrackingRecords.CargoTrackingUpdateDataBaseArgs.BuildCargoArgs.Table.CurrentCondition = CurrentCondition;
             updateCargoTrackingRecords.IsUpadteWaterMark = IsUpadteWaterMark;
-            updateCargoTrackingRecords.RecordUpdated = UpdateCargoTrackingDatabase(updateCargoTrackingRecords.CargoTrackingUpdateDataBaseArgs, updateCargoTrackingRecords.IsUpadteWaterMark);
+            updateCargoTrackingRecords.RecordUpdated = UpdateCargoTrackingDatabase(updateCargoTrackingRecords.CargoTrackingUpdateDataBaseArgs, updateCargoTrackingRecords.MilestoneList, updateCargoTrackingRecords.IsUpadteWaterMark);
             updateCargoTrackingRecords.NumberRecordUpdated += updateCargoTrackingRecords.RecordUpdated.NumberOfRecordUpdated;
             updateCargoTrackingRecords.NumberRecordUpdated2 += updateCargoTrackingRecords.RecordUpdated.NumberOfRecordUpdated2;
         }

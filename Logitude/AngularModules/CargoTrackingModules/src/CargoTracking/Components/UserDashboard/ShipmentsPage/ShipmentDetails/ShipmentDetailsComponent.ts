@@ -478,8 +478,8 @@ export class ShipmentDetailsComponent implements OnInit,AfterViewInit
             })
             .sort((a, b) =>
             {
-                if (a.Id > b.Id) return 1;
-                if (a.Id < b.Id) return -1;
+                if (a.Weight > b.Weight) return 1;
+                if (a.Weight < b.Weight) return -1;
                 return 0;
             })
             .map((milstone: Milestone) =>
@@ -487,11 +487,11 @@ export class ShipmentDetailsComponent implements OnInit,AfterViewInit
                 var newCard = new MilestoneCard();
                 var CurrentMilestoneExceptions= this.cargoTrackingShipmentPM.CurrentMilestoneExceptions;
                 newCard.Date = milstone.Done ? milstone.Date : (milstone.EstimationDate || milstone.Date);
-                newCard.Code = 'No. ' + milstone.Id;
+                newCard.Code = 'No. ' + milstone.Code;
                 newCard.Title = milstone.Name;
                 newCard.Description = milstone.Notes;
                 newCard.IsDimmed = milstone.IsEstimation && !milstone.Done;
-                newCard.IsActive = milstone.Id + '' == this.cargoTrackingShipmentPM.CurrentMilestoneCode;
+                newCard.IsActive = milstone.Code + '' == this.cargoTrackingShipmentPM.CurrentMilestoneCode;
                 newCard.HasWarning = milstone.IsCurrent && CurrentMilestoneExceptions != null;
                 newCard.WarningMessage = newCard.HasWarning ? CurrentMilestoneExceptions.substring(CurrentMilestoneExceptions.indexOf(',')+1,) : null;
                 newCard.WarningDate = newCard.HasWarning ? this.datePipe.transform(CurrentMilestoneExceptions?.split(',')[0], 'dd/MM/yyyy, HH:mm'): null;

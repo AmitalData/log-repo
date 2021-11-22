@@ -22,6 +22,7 @@ using System.Linq;
 using System.Data.Entity.ModelConfiguration.Conventions;
 using System.Collections.Generic;
 using System.Data.Entity.Infrastructure;
+using Simplog.Data.InvoiceModel.EntityPOCOs;
 
 namespace Simplog.Data.ShipmentsModel
 {
@@ -462,6 +463,10 @@ namespace Simplog.Data.ShipmentsModel
         {
             get;
             set;
+        }
+        public IDbSet<ARInvoice> ARInvoicesForReports
+        {
+            get; set;
         }
 
         public void SetAsModified(object entity)

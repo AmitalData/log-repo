@@ -1,17 +1,27 @@
 
-<table>
-	<tr style="height:1px;" *ngIf="ValidationErrorsList && ValidationErrorsList.length > 0">
-		<td>
-			<ValidationSummary [ItemsSource]="ValidationErrorsList" [SingleLine]="true"></ValidationSummary>
-		</td>
-	</tr>
+<style>
+    .RedPoint {
+        width: 7px;
+        height: 7px;
+        background: #E45A26;
+        -webkit-border-radius: 25px;
+        -moz-border-radius: 25px;
+        border-radius: 25px;
+        position: relative;
+        top: 12px; 
+        position: absolute;
+        top: 35%;
+    }
+
+</style>
+<table> 
 
 	<tr style="height: 1px;">
 		<td>
 			<table>
 				<tr>
-					<td>
-						<div></div>
+					<td style="height:1px;">
+						<div *ngIf="ValidationErrorsList && ValidationErrorsList.length > 0"><ValidationSummary [ItemsSource]="ValidationErrorsList" [SingleLine]="true"></ValidationSummary></div>
 					</td>
 
 					<td style="width: 1px;">
@@ -39,7 +49,7 @@
 								</td>
 								<td style="width: 95px; min-width: 95px; max-width: 95px;">{{'ShipmentOrderPackage.F.Quantity' | TextCodeTranslationPipe}}</td>
 								<td style="width: 150px; min-width: 150px; max-width: 150px;" *ngIf="IsPackageTypeVisible">{{'ShipmentOrderPackage.F.PackageTypeId' | TextCodeTranslationPipe}}</td>
-								<td style="width: 230px; min-width: 230px; max-width: 230px;">Dimensions (L-W-H)</td>
+								<td style="width: 230px; min-width: 230px; max-width: 230px;"><div *ngIf="IsRquiredDimensions" class="RedPoint"></div><div style="margin-left: 6px; margin-right: 6px;">Dimensions (L-W-H)</div></td>
 								<td style="width: 95px; min-width: 95px; max-width: 95px;">Volume</td>
 								<td style="width: 120px; min-width: 120px; max-width: 120px;">Volumetric Weight</td>
 								<td style="width: 95px; min-width: 95px; max-width: 95px;">Gross Weight</td>
