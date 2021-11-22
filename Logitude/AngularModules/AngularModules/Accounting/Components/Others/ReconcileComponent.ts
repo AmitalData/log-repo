@@ -403,6 +403,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
                 this.createdPaymentNumber = s.PaymentNumber;
                 this.showInternalReconcileAPPaymentAlert = true;
                 this.onQueryChangeEvent.emit({ Filters: new ApiQueryFilters() });
+                this.isAllSelected= false;
             }
         });
     }

@@ -208,7 +208,7 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
             });
 
             this.BackCompletedEvent = this.entityArgs.EditComponent.BackCompleted.subscribe((isBackCompleted: boolean) => {
-                if (isBackCompleted && isSaveCompleted) {
+                if (isBackCompleted && isSaveCompleted && this.entityArgs.EditComponent.EntityPM.StatusCode == "AD") {
                     if(this.ReconcileInternalTransIds){
                         const paymentNo = this.entityArgs.EditComponent.EntityPM.PaymentNo;
                         this.CurrentSession.FireEvent({Name: "InternalReconcileAPPaymentCreated", PaymentNumber: paymentNo});
