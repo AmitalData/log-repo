@@ -20,7 +20,7 @@ export class MultiEntityUpdateBaseComponent implements OnInit {
     private PageChild_MTUP: any = null;
     private PageChild_MTHE: any = null;
     MultiEntityUpdatedLogPM: MultiEntityUpdateLogPM;
-    private MultiUpdateComponent:any;
+
     WindowArgs: any;
 
     constructor() {
@@ -94,8 +94,7 @@ export class MultiEntityUpdateBaseComponent implements OnInit {
         this.SelectedTabCode = "MTHE";
     }
 
-    UpdateButtonClicked(multiEntityUpdateLogPM, multiEntityUpdateLogPMService,multiUpdateComponent) {
-        this.MultiUpdateComponent = multiUpdateComponent;
+    UpdateButtonClicked(multiEntityUpdateLogPM, multiEntityUpdateLogPMService) {
         this.StartCheckMultiEntityUpdateViaWorkerRoleTimer(multiEntityUpdateLogPM, multiEntityUpdateLogPMService);
     }
 
@@ -153,7 +152,7 @@ export class MultiEntityUpdateBaseComponent implements OnInit {
         this.CurrentSession.StopBusyIndicator();
         this.PageChild_MTUP.IsMultiEntityUpdatedSuccessfully = true;
         this.MultiEntityUpdatedLogPM = pmResponse;
-        this.MultiUpdateComponent.OnUpdateFinish(pmResponse.MultiEntityUpdateData.Entities);
+        this.PageChild_MTUP.OnUpdateFinish(pmResponse.MultiEntityUpdateData.Entities);
     }
 
     private HandleGetMultiEntityUpdateLogPMError(serviceResponse: any) {

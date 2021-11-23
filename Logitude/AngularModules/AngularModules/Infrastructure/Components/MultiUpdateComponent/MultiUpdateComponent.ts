@@ -259,7 +259,7 @@ export class MultiUpdateComponent extends BaseComponent implements OnInit {
         this.CurrentSession.StartBusyIndicatorLoading();
         this.multiEntityUpdateLogPMService.insert(multiEntityUpdateLog).subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
-                this.ParentComponent.UpdateButtonClicked(myResponse.Result, this.multiEntityUpdateLogPMService, this);
+                this.ParentComponent.UpdateButtonClicked(myResponse.Result, this.multiEntityUpdateLogPMService);
             }
         });
     }
