@@ -45,8 +45,7 @@ using Unifreight.Data.AmitalModel;
 using Unifreight.Data.AmitalModel.Repsitories;
 using Simplog.Data.Helpers;
 using Logitude.Customs.BL.BL;
-using Unifreight.BL.EntityQueryServices;
-using Unifreight.BL.EntityPMs;
+
 
 namespace Logitude.CustomsMessaging.RequestServices
 {
@@ -1319,8 +1318,8 @@ namespace Logitude.CustomsMessaging.RequestServices
                 //}
             }
 
-            var itemCrQueryService = new GITITEMCRQueryService(_AmitalContext);
-            List<GITITEMCRPM> itemCrList = itemCrQueryService.GetMulti(supplierInvoiceItemPM.ItemCode,true);
+            var itemCrQueryService = new Unifreight.BL.EntityQueryServices.GITITEMCRQueryService(_AmitalContext);
+            List<Unifreight.BL.EntityPMs.GITITEMCRPM> itemCrList = itemCrQueryService.GetMulti(supplierInvoiceItemPM.ItemCode,true);
             //Get supplier Item Certificate - From SupplierInvioceItemsCertificates Table
             foreach (var CertificateItem in supplierInvoiceItemPM.SupplierInvioceItemCertificats.OrderBy(x=>x.SequenceNumeric))
             {
