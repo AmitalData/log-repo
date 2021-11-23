@@ -35,6 +35,8 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         const string LineType_RegularTransactionTransactions = "S";
         const string LineType_UnidentifiedCustomerTransactions = "L";
         const string LineType_SelfInvoiceTransactions = "M";
+        const string LineType_SmallCashbookAPInvoice = "K";
+
         const string StatusCode_VATAmountInTheRecordIsHigherThanThePercentageOfVATAllowed = "9";
         const string TaxReportLineInputType = "I";
         const string ReferenceGroupDefaultValue = "0000";
@@ -71,7 +73,9 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             {
                 entityPM.UpdatedByUserId = GetLoggedContact(entityPM.Tenant).Id;
             }
-            
+                
+            CheckSmallCashAPinvoiceFromThePreviousMonth(entityPM);
+
             base.OnUpdating(entityPM, entityPOCO);
         }
         private static void RecalculateReportTotals(TaxReportLinePM taxReportLinePM)
@@ -197,9 +201,9 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     }
                     else
                     {
-                        if ( entityPM.VatNumber == "000000000")
+                        if (entityPM.VatNumber == "000000000")
                         {
-                            entityPM.StatusCode  =entityPM.LineTypeCode =="K"? "6" :"2";
+                            entityPM.StatusCode = entityPM.LineTypeCode == LineType_SmallCashbookAPInvoice ? "6" : "2";
                             return;
                         }
                         else
@@ -219,7 +223,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                                 entityPM.StatusCode = "2";
                             }
 
-                           
+
 
                         }
 
@@ -248,8 +252,6 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
                 }
                 CheckVATAmountInTheRecordIsHigherThanThePercentageOfVATAllowed(entityPM);
-
-
             }
 
             //for input line
@@ -272,7 +274,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     {
                         if(entityPM.VatNumber == "000000000")
                         {
-                            entityPM.StatusCode = entityPM.LineTypeCode == "K" ? "6" : "2";
+                            entityPM.StatusCode = entityPM.LineTypeCode == LineType_SmallCashbookAPInvoice ? "6" : "2";
                             return;
                         }
                        
@@ -321,13 +323,12 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
                 CheckVATAmountInTheRecordIsHigherThanThePercentageOfVATAllowed(entityPM);
 
-
             }
 
 
-            }
+        }
 
-
+  
         private void CheckVATAmountInTheRecordIsHigherThanThePercentageOfVATAllowed(TaxReportLinePM entityPM)
         {
             if (entityPM.LineTypeCode == LineTypeCode_RegularTransactions ||
@@ -349,6 +350,14 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             bool isTotalInvoiceAmountAndVatAmountHaveOppositeSigns = (entityPM.TotalInvoiceAmount > 0 && entityPM.VatAmount < 0) || (entityPM.TotalInvoiceAmount < 0 && entityPM.VatAmount > 0);
             if (isTotalInvoiceAmountAndVatAmountHaveOppositeSigns)
                 entityPM.StatusCode = StatusCode_VATAmountInTheRecordIsHigherThanThePercentageOfVATAllowed;
+        }
+
+        private static void CheckSmallCashAPinvoiceFromThePreviousMonth(TaxReportLinePM entityPM)
+        {
+            if (entityPM.LineTypeCode == LineType_SmallCashbookAPInvoice && entityPM.ReferenceDate.Value.Month < entityPM.TaxReportDate.Value.Month)
+            {
+                entityPM.StatusCode = TaxReportLineStatusValues.SmallCashAPinvoiceFromThePreviousMonth;
+            }
         }
         private void UpdateStatusByTransmitStatusCode(TaxReportLinePM taxReportLinePM, TaxReportLine taxReportLine )
         {

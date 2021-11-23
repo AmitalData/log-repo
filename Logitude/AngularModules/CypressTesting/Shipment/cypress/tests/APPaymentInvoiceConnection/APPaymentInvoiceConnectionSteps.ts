@@ -150,7 +150,6 @@ Then("the AP Payment should update successfully", () => {
 });
 
 Then("the status value should be {string}", (statusValue) => {
-  cy.wait(1000)
   BaseAssertion.AssertElementContain(ShipmentSelectors.APInvoiceStatus, statusValue)
 });
 //#endregion

@@ -101,7 +101,8 @@ namespace Logitude.BL.Validators
                     && documentType.ObjectTableName != "OpenFormatReport"
                     && documentType.ObjectTableName != "Occasion"
                     && documentType.ObjectTableName != "InterestReport"
-                    && documentType.ObjectTableName != "ShipmentOrder")
+                    && documentType.ObjectTableName != "ShipmentOrder"
+                    && documentType.ObjectTableName != "Container")
 
                 {
 

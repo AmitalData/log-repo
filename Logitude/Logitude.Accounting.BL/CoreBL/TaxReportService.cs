@@ -297,7 +297,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 }
 
                 reportLinesList.Add(inputReportLine);
-           //     UpdateJournalAdditionalDataRecord(inputReportLine, transaction);
+                //     UpdateJournalAdditionalDataRecord(inputReportLine, transaction);
 
             }
 
@@ -394,9 +394,9 @@ namespace Logitude.Accounting.BL.CoreBL
             bool isTotalInvoiceAmountAndVatAmountHaveOppositeSigns = (reportLinePM.TotalInvoiceAmount > 0 && reportLinePM.VatAmount < 0) || (reportLinePM.TotalInvoiceAmount < 0 && reportLinePM.VatAmount > 0);
             if (isTotalInvoiceAmountAndVatAmountHaveOppositeSigns)
                 reportLinePM.StatusCode = StatusCode_VATAmountInTheRecordIsHigherThanThePercentageOfVATAllowed;
+
         }
 
-   
 
         private static bool CheckIfAPInvoiceTaxMonthTransactionIsVoided(TaxReportPM taxReport, List<APInvoicePM> voidedAPInvoices, TaxReportData transaction)
         {

@@ -18,6 +18,7 @@ using Simplog.Server.Infrastructure.Helpers;
 
 using Logitude.Accounting.Data.DataContract;
 using Logitude.Accounting.Data.EntityLists;
+using Logitude.Accounting.Data.EntityListQueryServices;
 
 namespace Logitude.Accounting.Data.Repositories
 {
@@ -1390,27 +1391,29 @@ on record.JournalId equals j.Id
 
 
         }
-        public IQueryable<LedgerTransaction> GetLedgerTransactionsByTaxReportJournalIds(DateTime? taxReportMonth, int tenant, List<string> journalIds, string accountId)
+        public IQueryable<LedgerTransaction> GetLedgerTransactionsByTaxReportJournalIds(DateTime? taxReportMonth, LedgerTransactionBalanceFilter ledgerTransactionBalanceFilter, List<string> journalIds)
         {
 
             int days = DateTime.DaysInMonth(taxReportMonth.Value.Year, taxReportMonth.Value.Month);
             DateTime endOfTaxReportDate = new DateTime(taxReportMonth.Value.Year, taxReportMonth.Value.Month, days, 23, 59, 59);
 
-            FullAccountingSettingRepository fullAccountingSettingRepository = new FullAccountingSettingRepository(tenant);
-            FullAccountingSetting setting = fullAccountingSettingRepository.GetSingleFullAccountingSetting(tenant);
+            FullAccountingSettingRepository fullAccountingSettingRepository = new FullAccountingSettingRepository(ledgerTransactionBalanceFilter.Tenant);
+            FullAccountingSetting setting = fullAccountingSettingRepository.GetSingleFullAccountingSetting(ledgerTransactionBalanceFilter.Tenant);
 
             return (from a in context.LedgerTransactions
                     join j in context.Journals on a.JournalId equals j.Id
                     join m in context.JournalAdditionalDatas on new { a.JournalId, a.JournalLineNumber } equals new { m.JournalId, m.JournalLineNumber }
 
                     where (m.TaxReportId != null )
-                            && a.DocumentDate <= endOfTaxReportDate && j.StatusCode != JournalStatuses.Voided && j.OriginalJournalId == null
+                            && a.DocumentDate <= endOfTaxReportDate && (j.StatusCode != JournalStatuses.Voided || (j.StatusCode == JournalStatuses.Voided && a.DocumentDate.Month != taxReportMonth.Value.Month ) ) 
+                            && (j.OriginalJournalId == null || (j.OriginalJournalId != null && a.DocumentDate.Month != taxReportMonth.Value.Month))
 
-                            && a.Tenant == tenant
+                            && a.Tenant == ledgerTransactionBalanceFilter.Tenant
                             && a.LocalAmountDebit != 0
-                           && a.AccountId== accountId
+                           && a.AccountId== ledgerTransactionBalanceFilter.GLAccountId
                             && journalIds.Contains(a.JournalId)
-                   select a
+                         
+                    select a
                     );
 
 
@@ -1428,7 +1431,7 @@ on record.JournalId equals j.Id
 
 
         }
-             public IQueryable<LedgerTransaction> GetLedgerTransactionsInputsNotIncludedInTaxReports(int tenant, FullAccountingSettingList setting)
+             public IQueryable<LedgerTransaction> GetLedgerTransactionsInputsNotIncludedInTaxReports(LedgerTransactionBalanceFilter ledgerTransactionBalanceFilter, FullAccountingSettingList setting)
         {
            
             IQueryable<LedgerTransaction> inputLines = (from ledger in context.LedgerTransactions
@@ -1438,10 +1441,12 @@ on record.JournalId equals j.Id
                                                         into transactiosjoin
                                                         from taxreport in transactiosjoin.DefaultIfEmpty()
                                                         where (ledger.OppositeAccountId != setting.VATOutputGLAccountId || ledger.OppositeAccountId == null)
-                                                       && ledger.Tenant == tenant
+                                                       && ledger.Tenant == ledgerTransactionBalanceFilter.Tenant
                                                       && ledger.LocalAmountDebit != 0
-                                                      && ledger.AccountId == setting.VATInputsGLAccountId && journal.StatusCode != JournalStatuses.Voided && journal.OriginalJournalId == null
+                                                      && ledger.AccountId == setting.VATInputsGLAccountId &&journal.StatusCode != JournalStatuses.Voided 
+                                                      && journal.OriginalJournalId == null
                                                       && (taxreport.StatusCode != VatReportStatuses.Transmitted || additional.TaxReportId == null)
+                                                      
                                                         select ledger).Distinct();
             List<LedgerTransaction> list2 = inputLines.ToList();
 

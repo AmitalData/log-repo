@@ -50,7 +50,7 @@ Feature: AP Payment Invoice Connection
             | Branch              | Main Office |
         When receive invoice
         Then the invoice should create successfully
-        And the status value should be "Waiting for Approval"
+        And the status value should be "Waiting For Approval"
        
     Scenario: Approve APInvoice
         When approve invoice

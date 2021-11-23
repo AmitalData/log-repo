@@ -735,6 +735,11 @@ export class TenantPM {
     public set IsCargoTrackWebAccessActivated(newValue: boolean) { if (this.isCargoTrackWebAccessActivated != newValue) { this.isCargoTrackWebAccessActivated = newValue; this.MarkAsDirty("IsCargoTrackWebAccessActivated"); } }
        
 	 
+    private automaticallyCloseDays: number;
+    public get AutomaticallyCloseDays() { return this.automaticallyCloseDays; }
+    public set AutomaticallyCloseDays(newValue: number) { if (this.automaticallyCloseDays != newValue) { this.automaticallyCloseDays = newValue; this.MarkAsDirty("AutomaticallyCloseDays"); } }
+       
+	 
 
     public OldEntityPM: TenantPM;
 		

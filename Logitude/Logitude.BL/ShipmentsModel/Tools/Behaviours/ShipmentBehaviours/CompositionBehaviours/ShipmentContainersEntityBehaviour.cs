@@ -257,11 +257,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
                 container.Tenant = this.initializer.Tenant;
                 container.CreateDate = TenantServerConfigration.GetCurrentDateTime(this.initializer.Tenant);
                 container.CreatedByUserId = this.initializer.LoggedContactId;
-                container.UpdateDate = TenantServerConfigration.GetCurrentDateTime(this.initializer.Tenant);
-                container.UpdatedByUserId = this.initializer.LoggedContactId;
                 container.ShipmentPackagesId = shipmentPackage.Id;
                 container.ShipmentCreateDate = this.initializer.EntityPM?.CreateDateTime;
             }
+            container.UpdateDate = TenantServerConfigration.GetCurrentDateTime(this.initializer.Tenant);
+            container.UpdatedByUserId = this.initializer.LoggedContactId;
             container.MainCarriageCarrierId = this.initializer.EntityPM.MainCarriageCarrierId;
             container.MainCarriageCarrierNumber = this.initializer.EntityPM.MainCarriageCarrierNumber;
             container.MainCarriageVesselId = this.initializer.EntityPM.MainCarriageVesselId;

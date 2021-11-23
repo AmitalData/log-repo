@@ -14,6 +14,8 @@ using Logitude.Server.Tools.Helpers;
 using Logitude.Accounting.Data.Repositories;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.Resolvers;
+using System.ComponentModel.DataAnnotations;
+using Logitude.Accounting.BL.EntityQueryServices;
 
 namespace Logitude.Accounting.BL.EntityUpdateServices
 {
@@ -48,6 +50,17 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             return loggedcontact;
         }
 
+        public void ValidateSplitGLAccount(GLAccountCurrencyPM entityPM)
+        {
+            GLAccountQueryService query = new GLAccountQueryService(entityPM.Tenant);
+            GLAccountPM parentPM = query.GetSingle(entityPM.MainGLAccountId, false, false);
+            CheckIfTheSplitGLAccountIsACustomerGLAccount(entityPM.GLAccountId, parentPM);
+        }
+        private void CheckIfTheSplitGLAccountIsACustomerGLAccount(string glaccountId, GLAccountPM parentPM)
+        {
+            if (parentPM.IsMultiCurrency == true && glaccountId == parentPM.CustomerGLAccountId)
+                throw new ApplicationException(new ValidationResult(TextCodesTranslator.TranslateText("GLAccounts.O.CustomerGLaccountDefinedSplit", parentPM.Tenant)).ErrorMessage);
+        }
         private void CreateGLAccountCurrencyEvents(GLAccountCurrencyPM entityPM)
         {
             if (entityPM.ChangeSetOp == ChangeSetOperation.Insert  || entityPM.ChangeSetOp == ChangeSetOperation.Delete)
