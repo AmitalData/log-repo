@@ -46,6 +46,7 @@ namespace Logitude.CustomsMessaging.RequestServices
             this.MyRequestSheetParam.ObjectTableId1 = ObjectTableRepository.GetObjectTableByName("Customs.DeclarationCargoSplit");
             this.MyRequestSheetParam.EntityId1 = cargoSplitID;
             this.MyRequestSheetParam.RequestDescription = "בקשת פיצול מטען";
+            bool isExport = false;
             if (!string.IsNullOrEmpty(_DeclarationCargoSplitPM.DeclarationId))
             {
                 this.MyRequestSheetParam.ObjectTableId2 = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
@@ -54,6 +55,8 @@ namespace Logitude.CustomsMessaging.RequestServices
                 DeclarationPM declaration = new DeclarationPM();
                 var declarationQueryService = new DeclarationQueryService(_DeclarationCargoSplitPM.Tenant);
                 declaration = declarationQueryService.GetSingle(_DeclarationCargoSplitPM.DeclarationId, false, true);
+                isExport = declaration?.Direction == "E";
+
                 if (declaration != null && !string.IsNullOrWhiteSpace(declaration.CustomFileNo))
                 {
                     this.MyRequestSheetParam.RequestDescription = "בקשת פיצול מטען תיק " + declaration.CustomFileNo;
@@ -66,14 +69,11 @@ namespace Logitude.CustomsMessaging.RequestServices
                 }
             }
             
-
-            if(_DeclarationCargoSplitPM != null)
-            {
-                myMN_MSG8370_CargoSplitRequest_Message.RequestContentHeader = new RequestContentHeader() { Convertor = "1", RecieverID = new int[] { 1 } };
-                myMN_MSG8370_CargoSplitRequest_Message.CargoSplitRequestGeneral = GetCargoSplitRequestGeneral();
-                myMN_MSG8370_CargoSplitRequest_Message.Consignment = GetConsignment();
-                myMN_MSG8370_CargoSplitRequest_Message.SourceCargoIdentifier = GetSourceCargoIdentifier();
-            }
+            myMN_MSG8370_CargoSplitRequest_Message.RequestContentHeader = new RequestContentHeader() { Convertor = "1", RecieverID = new int[] { 1 } };
+            myMN_MSG8370_CargoSplitRequest_Message.CargoSplitRequestGeneral = GetCargoSplitRequestGeneral();
+            myMN_MSG8370_CargoSplitRequest_Message.Consignment = GetConsignment(isExport);
+            myMN_MSG8370_CargoSplitRequest_Message.SourceCargoIdentifier = GetSourceCargoIdentifier();
+            
 
             return myMN_MSG8370_CargoSplitRequest_Message;
 
@@ -94,7 +94,7 @@ namespace Logitude.CustomsMessaging.RequestServices
             return myCargoIdentifier;
         }
 
-        private MN_MSG8370_CargoSplitRequest_MessageConsignment[] GetConsignment()
+        private MN_MSG8370_CargoSplitRequest_MessageConsignment[] GetConsignment(bool isExport = false)
         {
             var CargoSplitRequest_MessageConsignmentList = new List<MN_MSG8370_CargoSplitRequest_MessageConsignment>();
             foreach (var Consignment in _DeclarationCargoSplitPM.DecCargoSplitCons)
@@ -104,6 +104,23 @@ namespace Logitude.CustomsMessaging.RequestServices
                 CargoSplitRequest_MessageConsignment.GovernmentProcedureCurrentCode = Consignment.ProcedureCurrentCode;
                 CargoSplitRequest_MessageConsignment.ImporterNumber = Consignment.ImporterCode;
                 CargoSplitRequest_MessageConsignment.ConsignmentItem = GetConsignmentItem(Consignment);
+                if (isExport)
+                {
+                    var cargoIdentifier = _DeclarationCargoSplitPM.DecCargoSplitCargoIdentifiers.FirstOrDefault();
+                    if (cargoIdentifier != null)
+                    {
+                        var myCargoIdentifier = new cargoIdentifier();
+                        myCargoIdentifier.cargoIdentifierKey1 = cargoIdentifier.CargoIdentifierKey1;
+                        myCargoIdentifier.cargoIdentifierKey2 = cargoIdentifier.CargoIdentifierKey2;
+                        myCargoIdentifier.cargoIdentifierKey3 = cargoIdentifier.CargoIdentifierKey3;
+                        if (!string.IsNullOrWhiteSpace(cargoIdentifier.CargoTypeCode))
+                        {
+                            int.TryParse(cargoIdentifier.CargoTypeCode, out int cargoIdentifierType);
+                            myCargoIdentifier.cargoIdentifierType = cargoIdentifierType;
+                        }
+                        CargoSplitRequest_MessageConsignment.SplitCargoIdentifier = myCargoIdentifier;
+                    }
+                }
                 CargoSplitRequest_MessageConsignmentList.Add(CargoSplitRequest_MessageConsignment);
             }
             return CargoSplitRequest_MessageConsignmentList.ToArray();
