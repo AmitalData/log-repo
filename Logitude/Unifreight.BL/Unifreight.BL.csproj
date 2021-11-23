@@ -120,6 +120,7 @@
     <Compile Include="EntityDataMappings\CFIMSVLINEDataMapping.cs" />
     <Compile Include="EntityDataMappings\CFIMSVPAGEDataMapping.cs" />
     <Compile Include="EntityDataMappings\CFIMSVREMDataMapping.cs" />
+    <Compile Include="EntityDataMappings\GITITEMCRDataMapping.cs" />
     <Compile Include="EntityDataMappings\ETBAIRLINEDataMapping.cs" />
     <Compile Include="EntityDataMappings\ETBPAYTRDataMapping.cs" />
     <Compile Include="EntityDataMappings\ETBPORTDataMapping.cs" />
@@ -133,6 +134,7 @@
     <Compile Include="EntityDataMappings\MTBPORTDataMapping.cs" />
     <Compile Include="EntityDataMappings\RTBPORTDataMapping.cs" />
     <Compile Include="EntityDataMappings\YTBTABLEDataMapping.cs" />
+    <Compile Include="EntityPMs\GITITEMPM.cs" />
     <Compile Include="EntityPMs\GGGQPM.cs" />
     <Compile Include="EntityPMs\UGenerated\CFIMSVFLINEPM.cs" />
     <Compile Include="EntityPMs\UGenerated\CFIMSVREMPM.cs" />
@@ -274,6 +276,7 @@
     <Compile Include="EntityPMs\UGenerated\GDMFILINGPM.cs" />
     <Compile Include="EntityPMs\UGenerated\GDMREFPMcs.cs" />
     <Compile Include="EntityPMs\UGenerated\GGGHDAYPM.cs" />
+    <Compile Include="EntityPMs\UGenerated\GITITEMCRPM.cs" />
     <Compile Include="EntityPMs\UGenerated\GGGQCPM.cs" />
     <Compile Include="EntityPMs\UGenerated\GITITEMPM.cs" />
     <Compile Include="EntityPMs\UGenerated\GNDADRPM.cs" />
@@ -359,6 +362,7 @@
     <Compile Include="EntityQueryServices\GDMFILEVERQueryService.cs" />
     <Compile Include="EntityQueryServices\GDMFILINGQueryService.cs" />
     <Compile Include="EntityQueryServices\GDMREFQueryService.cs" />
+    <Compile Include="EntityQueryServices\GITITEMCRQueryService.cs" />
     <Compile Include="EntityQueryServices\GGGQCQueryService.cs" />
     <Compile Include="EntityQueryServices\GITITEMQueryService.cs" />
     <Compile Include="EntityQueryServices\GNDADRQueryService.cs" />

@@ -45,6 +45,8 @@ using Unifreight.Data.AmitalModel;
 using Unifreight.Data.AmitalModel.Repsitories;
 using Simplog.Data.Helpers;
 using Logitude.Customs.BL.BL;
+using Unifreight.BL.EntityQueryServices;
+using Unifreight.BL.EntityPMs;
 
 namespace Logitude.CustomsMessaging.RequestServices
 {
@@ -1317,10 +1319,13 @@ namespace Logitude.CustomsMessaging.RequestServices
                 //}
             }
 
+            var itemCrQueryService = new GITITEMCRQueryService(_AmitalContext);
+            List<GITITEMCRPM> itemCrList = itemCrQueryService.GetMulti(supplierInvoiceItemPM.ItemCode,true);
             //Get supplier Item Certificate - From SupplierInvioceItemsCertificates Table
             foreach (var CertificateItem in supplierInvoiceItemPM.SupplierInvioceItemCertificats.OrderBy(x=>x.SequenceNumeric))
             {
-                if (!(string.IsNullOrWhiteSpace(CertificateItem.ResConfirmationTypeCode) && string.IsNullOrWhiteSpace(CertificateItem.CertificateNumber) && string.IsNullOrWhiteSpace(CertificateItem.CertificateExemptionTypeCode) && string.IsNullOrWhiteSpace(CertificateItem.AttachmentTypeCode) && string.IsNullOrWhiteSpace(CertificateItem.CustomsAttachmentID)))
+                var itemCert = itemCrList.Where(r => r.REQCERT.TrimStart('0') == CertificateItem.ReqConfirmationTypeCode).FirstOrDefault();
+                if (!(string.IsNullOrWhiteSpace(CertificateItem.ResConfirmationTypeCode) && string.IsNullOrWhiteSpace(CertificateItem.CertificateNumber) && string.IsNullOrWhiteSpace(CertificateItem.CertificateExemptionTypeCode) && string.IsNullOrWhiteSpace(CertificateItem.AttachmentTypeCode) && string.IsNullOrWhiteSpace(CertificateItem.CustomsAttachmentID)) || (itemCert != null && !string.IsNullOrWhiteSpace(itemCert.REQCERT)))
                 { // moran 26.9.16 - Task 22961 - enter into 'if' fields are empty
                     var declarationGoodsShipmentAdditionalDocument = new DeclarationGoodsShipmentGovernmentAgencyGoodsItemAdditionalDocument();
                     if (CertificateItem.CertificateNumber != null)

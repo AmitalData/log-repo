@@ -1591,6 +1591,7 @@
     <TypeScriptCompile Include="Customs\EntityPMs\ExporterRoleTypePM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\ExportReferencePM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\ExportStorgePM.ts" />
+    <TypeScriptCompile Include="Customs\EntityPMs\Extended\GITITEMCR.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\Extended\InvoiceQueue.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\Extended\DeclarationRemarks.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\FclLclCodePM.ts" />
