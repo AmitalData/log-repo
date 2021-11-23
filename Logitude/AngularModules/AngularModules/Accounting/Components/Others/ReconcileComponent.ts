@@ -1708,12 +1708,12 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
     }
 
     public get EnableCreateAPPaymentButton() : boolean {
-        return this.TotalsDeference > 0 && this.SelectedLines.Length > 0;
+        return this.TotalsDeference >= 0 && this.SelectedLines.Length > 0;
     }
 
     CreatePaymentButtonClicked(){
         this.ValidationErrorsList = [];
-        if(this.OriginalDifference > 0){
+        if(this.OriginalDifference >= 0){
             this.ValidationErrorsList.push(TextCodeTranslator.Translate("APPayment.M.InvalidSelectedTransctionsDifference"));
         }
 
