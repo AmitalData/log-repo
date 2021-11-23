@@ -506,8 +506,8 @@ export class LogGridComponentV2 implements OnInit, AfterViewInit, OnChanges, OnD
         d.style.width = width + 'px';
         d.style.display = "block";
     }
-
-    onFirstRowSelected(row: any, rowIndex: any) {
+    
+    set onFirstRowSelected(row: any) {
         let elem: HTMLDivElement = <HTMLDivElement>document.getElementById(this.LogGridRowsId);
         let firstRowAppear = Math.floor(elem.scrollTop / this.rowHeight);
 
