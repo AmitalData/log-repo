@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 {
    public class ContainerUpdateClass
    {  		
-		public const string HashString = "1b81eae0693b140a9b6bc864c7e0a00b";
+		public const string HashString = "06f4d1439a448082ebf9a2dae4f05568";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -2940,9 +2940,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "POLLocation",
-					  						DefaultText =  "POL Location",
+					  						DefaultText =  "POL",
 					  						ListFieldLable =  "POLLocationListLable",
-					  						ListLableDefaultText =  "POL Location",
+					  						ListLableDefaultText =  "POL",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -3180,9 +3180,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ActualPOLLoaded",
-					  						DefaultText =  "Actual POL Loaded",
+					  						DefaultText =  "Vessel Loading Date",
 					  						ListFieldLable =  "ActualPOLLoadedListLable",
-					  						ListLableDefaultText =  "Actual POL Loaded",
+					  						ListLableDefaultText =  "Vessel Loading Date",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -3300,9 +3300,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ActualPOLVesselDeparture",
-					  						DefaultText =  "Actual POL Vessel Departure",
+					  						DefaultText =  "Actual Departure Date",
 					  						ListFieldLable =  "ActualPOLVesselDepartureListLable",
-					  						ListLableDefaultText =  "Actual POL Vessel Departure",
+					  						ListLableDefaultText =  "Actual Departure Date",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -7080,9 +7080,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "GateIn",
-					  						DefaultText =  "Gate In",
+					  						DefaultText =  "POL Gate In",
 					  						ListFieldLable =  "GateInListLable",
-					  						ListLableDefaultText =  "Gate In",
+					  						ListLableDefaultText =  "POL Gate In",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -7140,9 +7140,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "GateOut",
-					  						DefaultText =  "Gate Out",
+					  						DefaultText =  "POD Gate Out",
 					  						ListFieldLable =  "GateOutListLable",
-					  						ListLableDefaultText =  "Gate Out",
+					  						ListLableDefaultText =  "POD Gate Out",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
