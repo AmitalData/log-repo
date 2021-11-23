@@ -913,13 +913,6 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
             .reduce((sum, colWidth) => (sum + colWidth.Width), 0);
     }
 
-    private CalculateDropdownPanelWidthFromCustomColumnsWidths()
-    {
-        this.DropDownWidth = this.ColumnsWidths
-            .filter(colWidth => this.headerColumns.map(col => col.Field).includes(colWidth.ColumnName))
-            .reduce((sum, colWidth) => (sum + colWidth.Width), 0);
-    }
-
     private AssignLookup1AndLookup2() {
         this.LookUp1 = this.LookUpTable.LookUp1;
         this.LookUp2 = this.LookUpTable.LookUp2;
