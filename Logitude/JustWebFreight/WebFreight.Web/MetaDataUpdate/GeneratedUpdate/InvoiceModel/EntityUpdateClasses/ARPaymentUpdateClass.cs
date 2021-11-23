@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 {
    public class ARPaymentUpdateClass
    {  		
-		public const string HashString = "0cb186d15cd35faa7bf34551987e4a75";
+		public const string HashString = "a9237c9fda53caa0fca0280bd30f4c18";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -5912,7 +5912,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "ReconcileExternalPageLines",
+					 						FieldName =  "ReconcileExternalPagesIds",
 					  						ObjectTableName =  "ARPayment",
 					  						FieldsDataType =  "List",
 					  						MinLength =  0,
@@ -5930,8 +5930,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "ReconcileExternalPageLines",
-					  						ListPropertyPath =  "ReconcileExternalPageLines",
+					  						PMPropertyPath =  "ReconcileExternalPagesIds",
+					  						ListPropertyPath =  "ReconcileExternalPagesIds",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -5947,8 +5948,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						DisplayInDocumentReferences =  false,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "ReconcileExternalPageLines",
-					  						DefaultText =  "ReconcileExternalPageLines",
+					  						FullFieldLable =  "ReconcileExternalPagesIds",
+					  						DefaultText =  "ReconcileExternalPagesIds",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,

@@ -1164,6 +1164,12 @@ insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,Is
 declare @Fact_ARInvoicesField10NewId varchar(15)
 execute usp_GetNextTableIdValue @Fact_ARInvoicesField10NewId OUTPUT,'DWObjectField' 
 insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,DontDisplayInView,IsMultipleSelection) Values(@Fact_ARInvoicesField10NewId,0,'Fact_ARInvoices','[Field10]','Field10','SqlVariant','false',0,0,'false','false','false','CustomFields','false','false','true','false','false')  
+declare @Fact_ARInvoicesConsolidationInvoiceNumberNewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_ARInvoicesConsolidationInvoiceNumberNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,DontDisplayInView,IsMultipleSelection) Values(@Fact_ARInvoicesConsolidationInvoiceNumberNewId,0,'Fact_ARInvoices','[Consolidation Invoice Number]','Consolidation Invoice Number','Text','false',0,25,'false','false','true','InvoiceGeneralDetails','false','false','false','false','false')  
+declare @Fact_ARInvoicesConsolidatedInvoiceDateNewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_ARInvoicesConsolidatedInvoiceDateNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,DimensionTableCode,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,DontDisplayInView,IsMultipleSelection) Values(@Fact_ARInvoicesConsolidatedInvoiceDateNewId,0,'Fact_ARInvoices','[Consolidated Invoice Date]','Consolidated Invoice Date','Dimension','false',0,0,'DIM_Dates','false','false','true','Dates','false','false','false','false','false')  
 ------------------------------------------------------------------------------------
 declare @Fact_ChargesNewId varchar(15)
 execute usp_GetNextTableIdValue @Fact_ChargesNewId OUTPUT,'DWObjectTable' 
