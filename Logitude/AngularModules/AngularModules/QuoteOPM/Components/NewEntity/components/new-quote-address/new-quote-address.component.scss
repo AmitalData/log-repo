@@ -5,8 +5,8 @@
     }
 
     .p-checkbox {
-        margin-top: 5px !important;
-        margin-bottom: 0px !important;
+        margin-top: 6px !important;
+        margin-bottom: -1px !important;
         margin-right: 7px !important;
         width: auto;
         position: relative;
@@ -25,9 +25,30 @@
     .p-checkbox-label {
         position: relative;
         left: 4px;
-        padding-top: 3px;
+        padding-top: 5.7px;
         float: left;
         font-size: 13px;
+    }
+
+    app-address-textarea {
+        margin-top: 33px;
+        display: block;
+        width: 187px;
+        margin-bottom: 9px;
+
+        label{            
+            margin-bottom: 0px;
+        } 
+
+        img {
+            bottom: 2px;
+            right: 4px;
+        }
+
+        .goolge-map {
+            right: 4px;
+            bottom: 36px;
+        }
     }
 }
 
@@ -49,8 +70,25 @@
 .container {
     border: 1px solid #ced4da;
     border-radius: 3px;
-    padding: 0 18px;
-    margin-top: 21px;
+    padding: 0 10px;
+    margin-bottom: 8px;
+    margin-top: 14px;
+
+    > .p-fluid {
+        position: relative;
+        top: -17px;
+        height: 129px;
+
+        .p-field {
+            margin-bottom: 0px !important;
+            height: 47px;
+            display: block;
+        }
+
+        .zip-code-wrapper {
+            height: 43px;
+        }
+    }
 }
 
 h5 {
@@ -68,9 +106,9 @@ h5 {
     color: #1084dc;
     border-radius: 5px;
     padding: 5px;
-    margin-left: 10px;
+    // margin-left: 10px;
     cursor: pointer;
-    float: right;
+    // float: right;
     margin-top: 21px;
 }
 
@@ -79,9 +117,18 @@ app-autocomplate-table.address-input {
     width: calc(100% - 70px);
 }
 
+.address-top {
+    margin-top: 3px;
+}
+
 .disabled {
     background-color: #cccccca3;
     color: #1084dc70;
     cursor: not-allowed;
     pointer-events: none;
+}
+
+.pi-pencil{
+    margin-left: 12px;
+    margin-right: 2px;
 }

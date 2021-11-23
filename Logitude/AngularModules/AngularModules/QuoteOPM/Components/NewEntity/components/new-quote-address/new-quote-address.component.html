@@ -8,7 +8,7 @@
         <div [hidden]='AddressList.length' class='container'>
             <h5 class="text-style">{{"QuoteOP.S.NewQuote." + capitalizeType + "Address" | TextCodeTranslationPipe}}</h5>
             <div class="p-fluid">
-                <div class="p-field">
+                <div class="p-field zip-code-wrapper">
                     <label [for]="type + 'ZipCode'">{{"QuoteOP.S.NewQuote.ZipCode" | TextCodeTranslationPipe}}</label>
                     <p-inputNumber formControlName='zipCode' [id]="type + 'ZipCode'" mode="decimal"
                         [useGrouping]="false">
@@ -34,7 +34,7 @@
         </div>
 
         <div [hidden]='!AddressList.length'>
-            <div class="p-field">
+            <div class="p-field address-top">
                 <app-autocomplate-table [columnsShow]="['Description', 'Name', 'Address1']" [data]='AddressList'
                     [fieldShow]='"Description"' [label]="'QuoteOP.S.NewQuote.Address' | TextCodeTranslationPipe | titlecase"
                     [controlName]='"address"' [formGroup]='addressForm' [dropIcon]='true' class="address-input">

@@ -61,8 +61,17 @@ export class NewQuotePropertiesComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.getIncoterms()
-    let a = this.formArray[1]
+    this.resetForm();
   }
+
+  resetForm() {
+    this.newQuoteDataService.$resetForm.subscribe(()=>{
+      this.formArray.clear() 
+      this.formArray. push(this.propForm);
+      this.index = 0
+    })
+  }
+
 
   ngOnChanges(changes: SimpleChanges) {
     if (!this.formGroup.contains('properties')) {

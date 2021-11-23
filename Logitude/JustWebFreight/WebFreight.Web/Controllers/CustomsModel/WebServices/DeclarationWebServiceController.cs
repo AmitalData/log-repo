@@ -43,6 +43,8 @@ using System.Xml;
 using System.IO;
 using Logitude.CustomsMessaging.ResponseServices;
 using Logitude.Customs.BL.TraceEvents;
+using Unifreight.BL.EntityPMs;
+using SupplierInvoicePM = Logitude.Customs.Def.EntityPMs.SupplierInvoicePM;
 using Simplog.Data.InfrastructureModel.Repositories;
 
 namespace WebFreight.Web.Controllers.CustomsModel.WebServices
@@ -993,7 +995,9 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                             SearchFields = rec.SEARCHENG,
                             OriginCountryCode = rec.ORIGINCOUNTRY,
                             InvoiceQuantityType = rec.UNITID,
+                            TariffID = rec.TARIFFID,
                         })
+
                     select new { itm };
                     if (!string.IsNullOrWhiteSpace(customerCode))
                     {
@@ -1021,7 +1025,40 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                     q = q.Take(top);
 
                     var aynList = q.ToList();
+                   
+                    var itemCrRepo = new GITITEMCRRepository(GetAmitalContext(tenant));
+                    foreach (var item in aynList)
+                    {
+                        var crkeys = new Unifreight.Data.AmitalModel.EntityKeys.GITITEMKeys() { COUNTER = item.itm.Id };
+                        /*
+                        var aq =
+                    from itmcr in itemCrRepo
+                        .GetMulti(crkeys)
+                        .Select(rec => new GITITEMCR()
+                        {
+                            COUNTER = rec.COUNTER,
+                            REMARKS = rec.REMARKS,
+                            REQCERT = rec.REQCERT,
+                            
+                        })
+                    select new { itmcr };
+                        */
+                        var list = itemCrRepo.GetMulti(crkeys);
+                       item.itm.GITITEMCRs = list;
+
+                    }
+
+                    /*
+                    var aq =
+                    from itmcr in itemCrRepo
+                        .GetMulti(aynList.Select(r => r.itm.Id)
+                        );
+                        
+                    select new { itmcr };
+                    */
                     var l = aynList.Select(rec => GetCustomsPartnersItemList(rec.itm, cardDetails, tenant)).ToList();
+
+                    
 
                     #endregion
 
@@ -2161,4 +2198,14 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
 
     }
 
+    internal class CustomsPartnersItemCRList
+    {
+        public CustomsPartnersItemCRList()
+        {
+        }
+
+        public string Id { get; set; }
+        public string REMARKS { get; set; }
+        public string REQCERT { get; set; }
+    }
 }

@@ -83,13 +83,13 @@ export class PriceCheckService {
     return responsePromise;
   }
 
-  // private async getPricesTest(quote: any): Promise<PriceChekRootResponse> {
-  //   return await new Promise<PriceChekRootResponse>((resolve) => {
-  //     const prices: PriceChekRootResponse = this.xml2Json.decodeXmlStr2Json(xmlPriceString)
-  //     this.fixData(prices)
-  //     resolve(prices);
-  //   })
-  // }
+  private async getPricesTest(quote: any): Promise<PriceChekRootResponse> {
+    return await new Promise<PriceChekRootResponse>((resolve) => {
+      const prices: PriceChekRootResponse = this.xml2Json.decodeXmlStr2Json(xmlPriceString)
+      this.fixData(prices)
+      resolve(prices);
+    })
+  }
 
   private calculateProducteCode(direction: string, transport: string) {
     if (direction === 'E') {

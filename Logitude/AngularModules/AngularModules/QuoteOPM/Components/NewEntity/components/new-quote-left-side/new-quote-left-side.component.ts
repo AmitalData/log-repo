@@ -95,12 +95,17 @@ export class NewQuoteLeftSideComponent implements OnInit {
   }
 
   subscribeCtrls() {
-    this.formGroup.controls.direction.valueChanges.subscribe((val: DirectionList) => this.EntityPM.DirectionId = val.Id);
-    this.formGroup.controls.shipmentType.valueChanges.subscribe((val: ShipmentTypeList) => this.EntityPM.ShipmentTypeId = val.Id);
+    this.formGroup.controls.direction.valueChanges.subscribe((val: DirectionList) => {this.EntityPM.DirectionId = val.Id; this.restForm()});
+    this.formGroup.controls.shipmentType.valueChanges.subscribe((val: ShipmentTypeList) => { this.EntityPM.ShipmentTypeId = val.Id; this.restForm()});
     this.formGroup.controls.transportMode.valueChanges.subscribe((val: TransportModeList) => {
       this.getShipmentTypeListFilter(val.Name);
       this.EntityPM.TransportModeId = val.Id;
+      this.restForm();
     });
+  }
+
+  restForm() {
+    this.newQuoteDataService.$resetForm.next()   
   }
 
   private changePositionInArr(arr, fromIndex, toIndex) {

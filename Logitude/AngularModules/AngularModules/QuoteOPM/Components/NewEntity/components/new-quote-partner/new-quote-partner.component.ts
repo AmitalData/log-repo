@@ -63,7 +63,7 @@ export class NewQuotePartnerComponent extends BaseComponent implements OnInit, A
     private newQuoteDataService: NewQuoteDataService,
     private dialogsService: DialogsService,
     public entityArgs: EntityArgs,
-    private CD: ChangeDetectorRef,
+    private cdr: ChangeDetectorRef,
   ) {
     super();
   }
@@ -119,7 +119,20 @@ export class NewQuotePartnerComponent extends BaseComponent implements OnInit, A
     this.initCards();
     this.partnerform.controls.notes.disable();
     this.initDdl();
+    this.resetForm()
   }
+
+  resetForm() {
+    this.newQuoteDataService.$resetForm.subscribe(()=>{
+      // ['notes', 'reference1', 'reference2', 'partner'].forEach(ctrl => this.formGroup.controls[ctrl]?.setValue(null))
+      this.partnerform.reset()
+      this.setAddress(null as any);
+      this.onSelectedName(null as any);
+      // this.partnerform.updateValueAndValidity()
+      // this.cdr.detectChanges()
+    })
+  }
+
 
   ngOnChanges(changes: SimpleChanges) {
     if (!this.formGroup.contains(this.type)) {
@@ -160,7 +173,7 @@ export class NewQuotePartnerComponent extends BaseComponent implements OnInit, A
     this.partnerform.controls.reference1.valueChanges.subscribe(newVal => this.EntityPM[this.capitalizeType + 'Reference1'] = newVal);
     this.partnerform.controls.reference2.valueChanges.subscribe(newVal => this.EntityPM[this.capitalizeType + 'Reference2'] = newVal);
     this.formGroup.controls.direction.valueChanges.subscribe((val: DirectionList) =>
-      this.isHidden = !((val.Name === 'Import' && this.type === 'consignee') || (val.Name === 'Export' && this.type === 'shipper')));
+      this.isHidden = !((val?.Name === 'Import' && this.type === 'consignee') || (val?.Name === 'Export' && this.type === 'shipper')));
   }
 
   private async setAddress(partner: CardList): Promise<void> {

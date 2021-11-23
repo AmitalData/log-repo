@@ -8,11 +8,11 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 export class AccordionComponent implements OnInit {
   @Input() label: string = '';
   @Input() isHidden:boolean = true;
-  @Output() isHiddenChange = new EventEmitter<boolean>();
+  @Output() toogle = new EventEmitter<boolean>();
 
   toggleHidden() {
     this.isHidden = !this.isHidden;
-    this.isHiddenChange.emit(this.isHidden)
+    this.toogle.emit(this.isHidden)
   }
 
   constructor() { }
