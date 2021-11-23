@@ -739,7 +739,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
 
                     index += 1;
-                    if (item.SequenceNumeric == index) continue;
+                    if (item.SequenceNumeric == index && !toUpdateClassification) continue;
                     dirty = true;
                     item.SequenceNumeric = index;
                     if (my.GetFullKey() == item.DeclarationId + '_' + item.InvoiceCounterKey)
