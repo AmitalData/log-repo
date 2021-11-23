@@ -27,6 +27,7 @@ using Logitude.BL.Helpers;
 using Logitude.BL.CommonDataModel.EntityLists;
 using Simplog.Data.QuoteModel.Repositories;
 using Simplog.Data.QuoteModel.EntityPOCOs;
+using Logitude.BL.Resolvers;
 
 namespace WebFreight.Web.ReportsWebServices
 {
@@ -107,7 +108,7 @@ namespace WebFreight.Web.ReportsWebServices
                 IncotermQuery incotermQuery = new IncotermQuery(tenant);
                 WebServiceHelper myServiceHelper = new WebServiceHelper(tenant);
                 CustomerQuery customerQuery = new CustomerQuery(tenant);
-
+                manifestDataProvider.PrintedByUserName = GetLoggedContactName();
                 manifestDataProvider.ShipmentType = master.ShipmentTypeName != null ? master.ShipmentTypeName : "";
                 manifestDataProvider.MasterNumber = master.ShipmentNumber;
                 manifestDataProvider.Notes = master.Notes;
@@ -1378,6 +1379,34 @@ namespace WebFreight.Web.ReportsWebServices
 
             return manifestDataProvider;
             #endregion
+        }
+        private string GetLoggedContactName()
+        {
+            ContactPM loggedContact;
+            if (Logitude.Server.Tools.Helpers.AuthenticationUtil.AuthenticatedUserEmail != null)
+            {
+                loggedContact = GetContactByEmail(Logitude.Server.Tools.Helpers.AuthenticationUtil.AuthenticatedUserEmail);
+            }
+            else
+            {
+                loggedContact = GetLoggedContact();
+            }
+
+            return GetContactName(loggedContact);
+        }
+        private ContactPM GetContactByEmail(string email)
+        {
+            ContactQuery contactQuery = new ContactQuery(tenant);
+            return contactQuery.GetContactByNameAndTenant(email, tenant, true);
+        }
+        private ContactPM GetLoggedContact()
+        {
+            return LoggedContactResolver.GetLoggedContact(tenant);
+
+        }
+        private string GetContactName(ContactPM loggedContact)
+        {
+            return loggedContact.DontShowLocal ? loggedContact.EnglishName : loggedContact.LocalName;
         }
 
         private void ComputePortOfDischargeNameAndDate(ManifestDataProvider manifestDataProvider)

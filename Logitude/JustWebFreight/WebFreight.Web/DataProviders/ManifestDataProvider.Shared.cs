@@ -173,7 +173,7 @@ namespace WebFreight.Web.DataProviders
         public string Transshipment2ToPortName { get; set; }
         public string Transshipment3ToPortName { get; set; }
         public DateTime? ArrivalDate { get; set; }
-
+        public string PrintedByUserName { get; set; }
         public List<ManifestDetailsClass> ManifestDetails { get; set; }
         public List<NewManifestDetailsClass> NewManifestDetails { get; set; }
         public List<GroupedContainersClass> GroupedManifestDetailsList { get; set; }
