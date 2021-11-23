@@ -42,7 +42,7 @@ namespace Simplog.Data.ShipmentsModel.Repositories
                     Include("ShipmentTransshipment3ToPort").Include("ShipmentTransshipment3FromPort").Include("ShipmentTransshipment2ToPort").Include("ShipmentTransshipment2FromPort")
                     .Include("ShipmentTransshipment1ToPort").Include("ShipmentTransshipment1FromPort").Include("ShipmentMainCarriageToPort").Include("ShipmentMainCarriageFromPort")
                     .Include("ShipmentPreCarriageToPort").Include("ShipmentPreCarriageFromPort").Include("ShipmentEntityStatus").Include("TerminalCard").Include("TerminalCardAddress")
-                     .Include("ShipmentOriginAgent").Include("ShipmentDestinationAgent")
+                     .Include("ShipmentOriginAgent").Include("ShipmentDestinationAgent").Include("CustomerCard").Include("Handler").Include("Handler.Contact").Include("Shipment")
                     where container.Id == id && container.Tenant == tenant
                     select container).FirstOrDefault();
         }

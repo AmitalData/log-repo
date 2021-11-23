@@ -307,7 +307,13 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public bool IsClosed { get; set; }
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public DateTime? ClosedDate { get; set; }
-
-
+        public bool IsUpdateByAutomation { get; set; }
+        public string MasterEntityId { get; set; }
+        public string CustomerContactId { get; set; }
+        public string HandlerContactId { get; set; }
+        public string ConsigneeContactId { get; set; }
+        public string ShipperContactId { get; set; }
+        public string ShipperNotExporterContactId { get; set; }
+        public string FreightForwarderContactId { get; set; }
     }
 }
