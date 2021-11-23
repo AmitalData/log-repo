@@ -157,5 +157,7 @@ export class TenantManagementList {
 		ScheduledTasksLimitPerReport: number;
 		IsHybrid: boolean;
 		WhatsAppMessagingPhoneNumber: string;
+		ActivatedforDeclarationApprove: boolean;
+		DeclarationMessage: string;
 	
 }

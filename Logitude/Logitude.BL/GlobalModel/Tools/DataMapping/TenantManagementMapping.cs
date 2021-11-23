@@ -119,6 +119,8 @@ namespace Logitude.BL.GlobalModel.Tools.DataMapping
             entityPOCO.EnableBranding = entityPM.EnableBranding;
             entityPOCO.ContactEmail = entityPM.ContactEmail;
             entityPOCO.CustomerURL = entityPM.CustomerURL;
+            entityPOCO.ActivatedforDeclarationApprove = entityPM.ActivatedforDeclarationApprove;
+            entityPOCO.DeclarationMessage = entityPM.DeclarationMessage;
             entityPOCO.HideSharedlogistics = entityPM.HideSharedlogistics;
             entityPOCO.SilverlightEndDate = entityPM.SilverlightEndDate;
             entityPOCO.IsParentTenant = entityPM.IsParentTenant;

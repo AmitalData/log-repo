@@ -256,6 +256,26 @@ export class CargoTrackingBrandingComponent extends BaseComponent implements Aft
         }
     }
 
+    get ActivatedforDeclarationApprove() {
+        return this.EntityPM.ActivatedforDeclarationApprove;
+    }
+    set ActivatedforDeclarationApprove(value: boolean) {
+        if (this.EntityPM.ActivatedforDeclarationApprove != value) {
+            this.EntityPM.ActivatedforDeclarationApprove = value;
+
+        }
+    }
+
+    get DeclarationMessage() {
+        return this.EntityPM.DeclarationMessage;
+    }
+    set DeclarationMessage(value: string) {
+        if (this.EntityPM.DeclarationMessage != value) {
+            this.EntityPM.DeclarationMessage = value;
+
+        }
+    }
+
     public get EnableBranding()
     {
         return this.EntityPM.EnableBranding;
@@ -333,6 +353,10 @@ export class CargoTrackingBrandingComponent extends BaseComponent implements Aft
         this.EnableBranding = value;
         this.SetUIPropertiesEnabled(value);
 
+    }
+
+    ActivatedforDeclarationApproveChange(value: any) {
+        this.EntityPM.ActivatedforDeclarationApprove = value;
     }
 
     SetUIPropertiesEnabled(value: boolean)

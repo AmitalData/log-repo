@@ -963,6 +963,19 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="ActivatedforDeclarationApprove"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="DeclarationMessage"
+    Type="nvarchar"
+    Size="4000">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="Id"
     ReferencedTable="GlobalTenants"

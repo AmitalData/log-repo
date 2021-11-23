@@ -118,6 +118,8 @@ namespace Simplog.Global.Data.GlobalModel.EntityPOCOs
         public string RegisteredAirlines { get; set; }
         public string PendingAirlines { get; set; }
         public bool EnableBranding { get; set; }
+        public bool ActivatedforDeclarationApprove { get; set; }
+        public string DeclarationMessage { get; set; }
         public string CustomerURL { get; set; }
         public bool HideSharedlogistics { get; set; }
         public string ContactEmail { get; set; }        
