@@ -31,10 +31,10 @@
     }
 
     app-address-textarea {
-        margin-top: 6px;
+        margin-top: 33px;
         display: block;
         width: 187px;
-        margin-bottom: 6px;
+        margin-bottom: 9px;
 
         label{            
             margin-bottom: 0px;
@@ -76,17 +76,17 @@
 
     > .p-fluid {
         position: relative;
-        top: -15px;
+        top: -17px;
         height: 129px;
 
         .p-field {
             margin-bottom: 0px !important;
-            height: 45px;
+            height: 47px;
             display: block;
         }
 
         .zip-code-wrapper {
-            height: 41px;
+            height: 43px;
         }
     }
 }
@@ -115,6 +115,10 @@ h5 {
 app-autocomplate-table.address-input {
     display: inline-block;
     width: calc(100% - 70px);
+}
+
+.address-top {
+    margin-top: 3px;
 }
 
 .disabled {
