@@ -408,7 +408,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             notificationDefinitionCode = null;
                             break;
                         case 8:
-                        case 9:
+                        //case 9:
                         case 16:
                             this._MyDeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
                             this._MyDeclarationPM.CourierCustomStatusCode = "2";

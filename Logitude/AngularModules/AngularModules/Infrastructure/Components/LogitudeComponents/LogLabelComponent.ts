@@ -23,7 +23,8 @@ import { EntityResourceService } from '../../Services/EntityResourceService';
         "NoValidation",
         "IsSmallLabel",
         "Replace",
-        "ReplaceWith",
+            "ReplaceWith",
+        "LayoutDirection"
     ],
 
     template:
@@ -75,11 +76,11 @@ export class LogLabelComponent implements OnInit {
     objectfield: any;
     uiProperty: UIProperty;   
     @Input() NoObjectField: boolean = false; 
-    LayoutDirection: string = 'ltr';
+    LayoutDirection: string;// = 'ltr';
 
     constructor(private _entityResourceService: EntityResourceService) {
-        this.LayoutDirection = ObjectsLocator.GlobalSetting == undefined ? "ltr" : ObjectsLocator.GlobalSetting.LayoutDirection;
-        this._entityResourceService.getEntityResourceByTableName("User", 0).subscribe((response: any) => {
+        if (AppTool.IsNullOrEmpty(this.LayoutDirection)) this.LayoutDirection = ObjectsLocator.GlobalSetting == undefined ? "ltr" : ObjectsLocator.GlobalSetting.LayoutDirection;
+         this._entityResourceService.getEntityResourceByTableName("User", 0).subscribe((response: any) => {
         
             });
     }

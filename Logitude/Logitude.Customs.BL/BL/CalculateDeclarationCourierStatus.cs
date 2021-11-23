@@ -378,6 +378,10 @@ namespace Logitude.Customs.BL.BL
                     {
                         return true;
                     }
+                    if (string.IsNullOrWhiteSpace(customsDocumentsTicketPM.CustomsDocId))// is missing or  not sent yet  !!
+                    {
+                        return true;
+                    }
                 }
             }
 

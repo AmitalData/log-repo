@@ -176,6 +176,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
 "8326", // שאילתא לתצהיר יבואן
 "UCTZIP", // Unifreight Table Custom ZIP
 "UCB2750", // שידור הצהרות בלדר
+"DCAMU", // multi update 
 
             };
 
@@ -312,10 +313,12 @@ namespace Logitude.Customs.BL.EntityQueryServices
 ///"8302" //בקשה לטופס הצהרה
 
 "UCB2715", // שידור מסמכים שגויים ראשי - מפצל
+"UCB2715SendNow", // שידור מסמכים שגויים ראשי - מפצל
 "UCBCTML", // שידור הגשה בלדר
 "UCBCMSS", //שינוי אתר איחסון לבלדר
 "UCB9999", // ניתוח מחדש
 "8326", // שאילתא לתצהיר יבואן
+"DCAMU" // multi update 
 
 
             };
@@ -438,14 +441,24 @@ namespace Logitude.Customs.BL.EntityQueryServices
 "UCB9999",
 "2751",
 "2757",
-
+"DCAMU" // multi update 
 //"8302" //בקשה לטופס הצהרה
 };
 
 
             return intrefaceTypeListDisplayOnly;
         }
+        public List<CustomsRequestsSheetPM> GetRequestByInterfaceTypeCodeAndStatus(int Tenant, string InterfaceTypeCode, string ObjectTableId1, List<string> EntityId1, string RequestStatusCode)
+        {
+            //List<CustomsRequestsSheet> requests = repository.GetCustomsRequestsSheetByCustomFileNumber(customFileNumber, tenant);
+            var q = //context.CustomsRequestsSheets
+                this.repository.GetAll(Tenant)
+                .Where(rec => rec.Tenant == Tenant && rec.InterfaceTypeCode == InterfaceTypeCode && 
+                              rec.RequestStatusCode == RequestStatusCode && EntityId1.Contains(rec.EntityId1) && rec.ObjectTableId1 == ObjectTableId1);
 
+            var pmList = q.ToList().Select(rec => this.GetEntityPM(rec)).ToList();
+            return pmList;
+        }
 
         public List<CustomsRequestsSheetPM> GetRequestByInterfaceTypeCode(
             int Tenant,

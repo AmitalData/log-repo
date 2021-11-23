@@ -4,6 +4,7 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" maxOccurs="unbounded" ref="LogitudeMasterCourier" />
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="WAYBILLS" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -49,4 +50,12 @@
   <xs:element name="TruckerId" type="xs:string" />
   <xs:element name="PackageQuantityInMAWB" type="xs:string" />
   <xs:element name="UnifreightLeadingFile" type="xs:string" />
+  <xs:element name="WAYBILLS">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="wb" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="wb" type="xs:string" />
 </xs:schema>

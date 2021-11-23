@@ -1,12 +1,16 @@
 ﻿using Logitude.Customs.BL.EntityQueryServiceExt;
 using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Customs.Def.EntityQueryServicesExt;
+using Logitude.CustomsMessaging.MessagingServices;
+using Logitude.CustomsMessaging.ResponseServices;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.Utils;
 using Logitude.SystemLogs;
 using Microsoft.Practices.Unity;
 using Microsoft.WindowsAzure.ServiceRuntime;
+using RabbitMQ.Client;
+using RabbitMQ.Client.Events;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Server.Infrastructure;
@@ -15,10 +19,12 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 using WebFreight.Web;
 
 namespace CustomsWorkerRole
@@ -85,6 +91,10 @@ namespace CustomsWorkerRole
 
             foreach (WorkerEntryPoint worker in workers)
                 worker.OnStart();
+
+        
+
+     
 
             return base.OnStart();
 

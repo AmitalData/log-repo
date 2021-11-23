@@ -36,7 +36,7 @@ import { Validator } from '../../../../../Infrastructure/Validators/Validator';
 import { QuantityTypeMessageService } from '../../../../../Customs/Services/WebServices/QuantityTypeMessageService';
 import { GITITEMCacheService } from '../../../../../Customs/Services/Others/GITITEMCacheService';
 import { DeclarationExtendedListService } from '../../../../../Customs/Services/ExtendedLists/DeclarationExtendedListService';
-
+import { GITITEMCR } from '../../../../../Customs/EntityPMs/Extended/GITITEMCR';
 
 @Component({
     selector: 'SInvoiceClassificationTabContent',
@@ -554,6 +554,8 @@ export class SInvoiceItemClassificationLine extends BaseComponent {
     public closedManullay: boolean = false;
 
     private CurrentSession = SessionLocator.SelectedSession;
+    public GITITEMCRPMs: GITITEMCR[];
+    
     constructor(EntityPM: SupplierInvoiceItemPM, parent: SInvoiceClassificationTabComponent) {
         super();
         this.entityPM = EntityPM;
@@ -664,6 +666,8 @@ export class SInvoiceItemClassificationLine extends BaseComponent {
 
     public get ItemDescription() { return this.entityPM.ItemDescription; }
     //public set ItemDescription(newValue: string) { this.entityPM.ItemDescription = newValue; }
+
+    public get TariffID() { return this.entityPM.TradeAgreementCode; }
 
     public get NotForAccumaltion() { return this.entityPM.NotForAccumaltion; }
     public set NotForAccumaltion(value: boolean) {
@@ -886,7 +890,7 @@ export class SInvoiceItemClassificationLine extends BaseComponent {
                   GITITEMCacheService.Instance.AddItemCodeComponent(/*ItemCode_LocalCache.push(*/
                     new ItemCodeComponent(
                       this.ItemCode, this.ClassificationCode, this.ItemDescription, this.Parent.vendorNumber, originCountryCode, originCountryName, true, null,
-                      this.Parent.declarationPM.CustomerCode));
+                        this.Parent.declarationPM.CustomerCode, this.TariffID, this.GITITEMCRPMs));
                   
                 }
                 else {

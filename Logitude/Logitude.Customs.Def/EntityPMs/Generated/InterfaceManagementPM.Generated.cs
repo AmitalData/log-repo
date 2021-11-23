@@ -572,6 +572,52 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private bool useRabbitMQ ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool UseRabbitMQ  
+	   {
+	    
+	     get
+		{
+		   return useRabbitMQ;
+		 }
+		 set
+		 {
+		   if(useRabbitMQ != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="UseRabbitMQ",OldValue=useRabbitMQ,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   useRabbitMQ=value;
+		   }
+			
+		 }
+	   }
+	  private string sendTime ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string SendTime  
+	   {
+	    
+	     get
+		{
+		   return sendTime;
+		 }
+		 set
+		 {
+		   if(sendTime != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="SendTime",OldValue=sendTime,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   sendTime=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

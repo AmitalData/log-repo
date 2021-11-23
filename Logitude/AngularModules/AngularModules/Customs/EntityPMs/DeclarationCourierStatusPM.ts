@@ -379,6 +379,16 @@ export class DeclarationCourierStatusPM {
     public set TruckerName(newValue: string) { if (this.truckerName != newValue) { this.truckerName = newValue; this.MarkAsDirty("TruckerName"); } }
        
 	 
+    private terminalReleaseDate: Date;
+    public get TerminalReleaseDate() { return this.terminalReleaseDate; }
+    public set TerminalReleaseDate(newValue: Date) { if (this.terminalReleaseDate != newValue) { this.terminalReleaseDate = newValue; this.MarkAsDirty("TerminalReleaseDate"); } }
+       
+	 
+    private shopId: string;
+    public get ShopId() { return this.shopId; }
+    public set ShopId(newValue: string) { if (this.shopId != newValue) { this.shopId = newValue; this.MarkAsDirty("ShopId"); } }
+       
+	 
 
     public OldEntityPM: DeclarationCourierStatusPM;
 		

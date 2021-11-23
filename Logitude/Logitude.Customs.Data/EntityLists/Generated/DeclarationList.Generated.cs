@@ -418,6 +418,8 @@ namespace Logitude.Customs.Data.EntityLists
        public string AmedmentType  { get; set; }
        [DataMember]
        public string AmendmentTypeName  { get; set; }
+       [DataMember]
+       public bool? IsHatraDateNull  { get; set; }
    }
 
 }

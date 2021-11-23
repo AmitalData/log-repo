@@ -72,12 +72,13 @@ export class AddressTemplate {
     set Address(value: AddressList) {
         if (this.address != value) {
             this.address = value;
-            this.GetCityLineText();            
+            this.GetCityLineText();
         }
     }
 
     public CityLineText: string = null;
     GetCityLineText() {
+        console.log(this.Address)
         var myResult = "";
 
         if (this.Address != null) {

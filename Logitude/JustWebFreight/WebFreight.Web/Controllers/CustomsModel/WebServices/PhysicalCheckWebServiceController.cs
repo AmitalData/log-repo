@@ -1,9 +1,15 @@
-﻿using Logitude.Customs.BL.EntityQueryServices;
+﻿using Logitude.BL.Security;
+using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Customs.BL.EntityUpdateServices;
 using Logitude.Customs.BL.Models;
 using Logitude.Customs.Data;
 using Logitude.Customs.Data.EntityLists;
 using Logitude.Customs.Def.EntityPMs;
+using Logitude.CustomsMessaging.Common.RequestParams;
+using Logitude.CustomsMessaging.Common.ResponseData;
+using Logitude.CustomsMessaging.MessagingServices;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
@@ -66,5 +72,47 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
+
+
+
+
+ 
+
+
+
+        public HttpResponseMessage SendSearchResults(GenericRequestParams requestParams)
+        {
+            try
+            {
+                //requestParams
+                /*GenericRequestParams ContainerizationRequest = new GenericRequestParams()
+                {
+                    LoggingEnabled = true,
+                    Tenant = requestParams.Tenant,
+                    RequestName = "המכלה",
+                    ResponseName = "המכלה תשובה",
+                    LoggingEntityId = requestParams.LoggingEntityId,
+                    LoggingObjectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Containerization"),
+                    MainInterfaceCode = "2450",
+                    InterfaceTypeCode ="2450" , 
+                    LoggingEntityReference = requestParams.AppicationId,
+                    LoggingUserId = requestParams.LoggingUserId,
+                    RequestVIA=requestParams.RequestVIA,
+                    ForcePersonalSign=requestParams.ForcePersonalSign,
+                };*/
+                requestParams.MainInterfaceCode = "195";
+                requestParams.InterfaceTypeCode = "195";
+                 var service = new SaveCH_MSG_195_SearchResultsMessagingService();
+                var responseData = service.Send(requestParams);
+                return Request.CreateResponse(HttpStatusCode.OK, responseData);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
+        }
+
+
     }
 }

@@ -89,6 +89,12 @@ namespace Simplog.Data.CommonDataModel.Repositories
         {
             throw new NotImplementedException();
         }
+        public ProductTypeModification GetSingle(string productTypeCode)
+        {
+            return (from a in context.ProductTypeModifications
+                    where a.ProductTypeCode == productTypeCode
+                    select a).FirstOrDefault() ;
+        }
     }
 }
 

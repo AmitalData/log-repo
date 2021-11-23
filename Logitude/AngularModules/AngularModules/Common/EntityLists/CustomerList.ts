@@ -25,7 +25,9 @@ export class CustomerList {
 		PaymentTermEnglishName: string;
 		Website: string;
 		Code: string;
+		CodeDataTemplate: string;
 		EnglishName: string;
+		EnglishNameDataTemplate: string;
 		VatNumber: string;
 		LocalName: string;
 		InActive: boolean;
@@ -44,9 +46,11 @@ export class CustomerList {
 		InvoiceCurrencyId: string;
 		InvoiceCurrencyCode: string;
 		StartWorkingDate: Date;
+		StartWorkingDataTemplate: Date;
 		StartWorkingManuallySet: boolean;
 		InvoicesDue: number;
 		CityName: string;
+		CityNameDataTemplate: string;
 		CountryId: string;
 		CountryCode: string;
 		CountryName: string;

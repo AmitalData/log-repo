@@ -248,6 +248,8 @@ import { CargoTypeListService } from './Services/StandardLists/CargoTypeListServ
 
 import { ContainerizationListService } from './Services/StandardLists/ContainerizationListService';
 import { ContainerizationStatusCodeListService } from './Services/StandardLists/ContainerizationStatusCodeListService';
+import { ContainerizationHataraStatusListService } from './Services/StandardLists/ContainerizationHataraStatusListService';
+import { PhysicalCheckSearchResultTypeListService } from './Services/StandardLists/PhysicalCheckSearchResultTypeListService';
 
 //#endregion
 
@@ -360,6 +362,8 @@ import { SupplierInvioceItemCertificatsService } from './Services/WebServices/Su
 import { LoadTestService } from './Services/WebServices/LoadTestService';
 import { InvoiceQueueWebService } from './Services/WebServices/InvoiceQueueWebService';
 import { ContainerizationMessagesService } from './Services/WebServices/ContainerizationMessagesService';
+import { NewQuoteOPWebService } from './Services/WebServices/NewQuoteOPWebService';
+
 
 //#endregion
 
@@ -380,6 +384,8 @@ import { ClaimMenuButtonsHandler } from './Components/MenuButtons/ClaimMenuButto
 import { PhysicalCheckMenuButtonsHandler } from './Components/MenuButtons/PhysicalCheckMenuButtonsHandler';
 import { DeclarationEditComponentController } from './Controller/DeclarationEditComponentController'
 import { VehicleEditComponentController } from './Controller/VehicleEditComponentController'
+import { PhysicalCheckEditComponentController } from './Controller/PhysicalCheckEditComponentController'
+
 import { VendorCommissionService } from './Services/WebServices/VendorCommissionService'
 import { ApprovedProfessionListService } from './Services/StandardLists/ApprovedProfessionListService'
 import { RequestTypeListService } from './Services/StandardLists/RequestTypeListService'
@@ -418,6 +424,8 @@ import { PoaAuthorizationTypeLookupListService } from './Services/StandardLists/
 import { ClientsPoaListService } from './Services/StandardLists/ClientsPoaListService';
 import { BuyerRoleTypeListService } from './Services/StandardLists/BuyerRoleTypeListService';
 import { AmedmentTypeListService } from './Services/StandardLists/AmedmentTypeListService';
+import { CustomsRequestsSheetWebService } from './Services/WebServices/CustomsRequestsSheetWebService';
+
 
 export class ModuleProviders {
     public static GetInstance(name: string) {
@@ -702,10 +710,12 @@ export class ModuleProviders {
             case "CancelRequestRejectReasonTypeListService": { myResult = new CancelRequestRejectReasonTypeListService(); break; }
             case "ContainerizationListService": { myResult = new ContainerizationListService(); break; }
             case "ContainerizationStatusCodeListService": { myResult = new ContainerizationStatusCodeListService(); break; }
+            case "ContainerizationHataraStatusListService": { myResult = new ContainerizationHataraStatusListService(); break; }
             case "CustomerIndicationTypeListService": { myResult = new CustomerIndicationTypeListService(); break; }
             case "PoaAuthorizationTypeLookupListService": { myResult = new PoaAuthorizationTypeLookupListService(); break; }
             case "ClientsPoaListService": { myResult = new ClientsPoaListService(); break; }
             case "BuyerRoleTypeListService": { myResult = new BuyerRoleTypeListService(); break; }
+            case "PhysicalCheckSearchResultTypeListService": { myResult = new PhysicalCheckSearchResultTypeListService(); break; }
 
                 
              //#endregion                
@@ -824,6 +834,9 @@ export class ModuleProviders {
             case "LoadTestService": { myResult = new LoadTestService(); break; }
             case "InvoiceQueueWebService": { myResult = new InvoiceQueueWebService(); break; }
             case "ContainerizationMessagesService": { myResult = new ContainerizationMessagesService(); break; }
+            case "NewQuoteOPWebService": { myResult = new NewQuoteOPWebService(); break; }
+            case "CustomsRequestsSheetWebService": { myResult = new CustomsRequestsSheetWebService(); break; }
+
 
             //#endregion
 
@@ -846,6 +859,7 @@ export class ModuleProviders {
             case "PhysicalCheckMenuButtonsHandler": { myResult = new PhysicalCheckMenuButtonsHandler(); break; }
             case "VendorCommissionService": { myResult = new VendorCommissionService(); break; }
             case "DeclarationAmendmentSharedDataService": { myResult = new DeclarationAmendmentSharedDataService(); break; }
+            case "PhysicalCheckEditComponentController": { myResult = new PhysicalCheckEditComponentController(); break; }
 
                 
 

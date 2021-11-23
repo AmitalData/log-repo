@@ -23,6 +23,67 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
 {
     public class QuantityTypeController : ApiController
     {
+        public HttpResponseMessage GetQuantityTypeForSivug(string classificationCode, int tenant)
+        {
+            try
+            {
+                ICustomContext customContext = CustomContext.GetContext(tenant);
+
+                PropertiesDetailsHistoryPM propertiesDetailsHistory = null;
+                MeasurmentUnitPM measurmentUnit = null;
+                string QuantityTypeCode = null;
+
+                if (!String.IsNullOrWhiteSpace(classificationCode))
+                {
+                    var key = "GetQuantityType," + classificationCode;
+                    if (CacheManager.CacheWrapper.Get(key) == null)
+                    {
+                        CustomsItemQueryService customsItemQueryService = new CustomsItemQueryService(tenant);
+                        //CustomsItemPM customsItem = customsItemQueryService.GetCustomsItemByClassificationCode(classificationCode);
+
+
+                        //PropertiesDetailsHistoryQueryService propertiesDetailsHistoryQueryService = new PropertiesDetailsHistoryQueryService(tenant);
+                        //if (customsItem != null)
+                        //{
+                        //    propertiesDetailsHistory = propertiesDetailsHistoryQueryService.GetPropertiesDetailsHistoryByCustomsItemId(customsItem.ID);
+
+                        //}
+                        //MeasurmentUnitQueryService measurmentUnitQueryService = new MeasurmentUnitQueryService(tenant);
+
+                        //if (propertiesDetailsHistory != null && propertiesDetailsHistory.MeasurementUnitID.HasValue)
+                        //{
+
+                        //    measurmentUnit = measurmentUnitQueryService.GetMeasurmentUnitByMalamId(propertiesDetailsHistory.MeasurementUnitID.Value);
+
+                        //}
+
+                        //if (measurmentUnit != null)
+                        //{
+                        //    QuantityTypeCode = measurmentUnit.Code;
+                        //}
+
+                        QuantityTypeCode = customsItemQueryService.GetQuantityTypeByClassificationCode(classificationCode, tenant);
+                        if (QuantityTypeCode != null)
+                        {
+
+                            CacheManager.CacheWrapper.Insert(key, QuantityTypeCode, null, DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
+                        }
+                    }
+                    else
+                    {
+                        QuantityTypeCode = (string)CacheManager.CacheWrapper.Get(key);
+                    }
+
+                }
+                return Request.CreateResponse(HttpStatusCode.OK, QuantityTypeCode);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
 
         public HttpResponseMessage GetQuantityType(string classificationCode)
         {

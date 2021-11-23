@@ -23,26 +23,23 @@ namespace Logitude.BL.CommonDataModel
 		    var all = new List<QuoteGroupSectionDetails>();  
             all.Add(new QuoteGroupSectionDetails()
             {    
-                Id = "1", 
-                Tenant = 1, 
                 Code = "O", 
                 Name = "Origin Charges", 
+                Searchfields = "l,origin charges", 
 			});
 			 
             all.Add(new QuoteGroupSectionDetails()
             {    
-                Id = "2", 
-                Tenant = 1, 
                 Code = "F", 
                 Name = "Freight Charges", 
+                Searchfields = "l,freight charges", 
 			});
 			 
             all.Add(new QuoteGroupSectionDetails()
             {    
-                Id = "3", 
-                Tenant = 1, 
                 Code = "D", 
                 Name = "Destination Charges", 
+                Searchfields = "l,destination charges", 
 			});
 			
             return all;
@@ -50,15 +47,14 @@ namespace Logitude.BL.CommonDataModel
 
 	    public void MapPoco(QuoteGroupSection newPoco)
         {   
-		    newPoco.Id = this.Id;  
-		    newPoco.Tenant = this.Tenant;  
 		    newPoco.Code = this.Code;  
-		    newPoco.Name = this.Name;   
+		    newPoco.Name = this.Name;  
+		    newPoco.Searchfields = this.Searchfields;   
         }
 
 		public string GetSearchFields(QuoteGroupSection rec)
         {   
-           return String.Concat(rec.Id,",",rec.Tenant,",",rec.Code,",",rec.Name,",");
+           return String.Concat(rec.Code,",",rec.Name,",",rec.Searchfields,",");
         }
    }
 }

@@ -16,6 +16,7 @@ import { CustomsDocumentsDefinitionComponent } from './Components/CustomsDocumen
 import { AddEditCustomsAirlineComponent } from './Components/AddEditCustomsAirlineComponent';
 import { CustomsPartnerFtpListComponent } from './Components/CustomsPartnerFtpListComponent';
 import { DeclarationRemarksComponent } from './Components/DeclarationRemarksComponent'
+import { InterfaceTenantPriorityComponent } from './Components/InterfaceTenantPriorityComponent';
 //import { CustomsPartnerFtpEditComponent } from './Components/CustomsPartnerFtpEditComponent';
  
 
@@ -28,6 +29,7 @@ export const Components =
         RequiredFieldsComponent,
         InterfaceManagementComponent,
         AddEditInterfaceManagementComponent,
+        InterfaceTenantPriorityComponent,
         LoadTestComponent,
         SignStationsComponent,
         CourierSendStatusComponent,
@@ -53,6 +55,8 @@ export class ModuleDeclarations {
             case "RequiredFieldsComponent": { myResult = RequiredFieldsComponent; break; }
             case "InterfaceManagementComponent": { myResult = InterfaceManagementComponent; break; }
             case "AddEditInterfaceManagementComponent": { myResult = AddEditInterfaceManagementComponent; break; }
+            case "InterfaceTenantPriorityComponent": { myResult = InterfaceTenantPriorityComponent; break; }
+                
             case "LoadTestComponent": { myResult = LoadTestComponent; break; }
             case "SignStationsComponent": { myResult = SignStationsComponent; break; }
             case "CourierSendStatusComponent": { myResult = CourierSendStatusComponent; break; }

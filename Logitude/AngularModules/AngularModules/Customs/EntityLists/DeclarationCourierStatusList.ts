@@ -85,6 +85,8 @@ export class DeclarationCourierStatusList {
 	TruckerName: string;
 	CourierPendingReasonNameList: string;
 	IsAmendment: boolean;
+	DeclarationStorageSiteCode: string;
+	TerminalReleaseDate: Date;
 	
 }
  

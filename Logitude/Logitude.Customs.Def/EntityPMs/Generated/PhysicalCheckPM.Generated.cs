@@ -1032,6 +1032,121 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private string searchResult ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string SearchResult  
+	   {
+	    
+	     get
+		{
+		   return searchResult;
+		 }
+		 set
+		 {
+		   if(searchResult != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="SearchResult",OldValue=searchResult,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   searchResult=value;
+		   }
+			
+		 }
+	   }
+	  private string sealNumber ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string SealNumber  
+	   {
+	    
+	     get
+		{
+		   return sealNumber;
+		 }
+		 set
+		 {
+		   if(sealNumber != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="SealNumber",OldValue=sealNumber,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   sealNumber=value;
+		   }
+			
+		 }
+	   }
+	  private string checkAuthorityAttenderTypeID ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CheckAuthorityAttenderTypeID  
+	   {
+	    
+	     get
+		{
+		   return checkAuthorityAttenderTypeID;
+		 }
+		 set
+		 {
+		   if(checkAuthorityAttenderTypeID != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CheckAuthorityAttenderTypeID",OldValue=checkAuthorityAttenderTypeID,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   checkAuthorityAttenderTypeID=value;
+		   }
+			
+		 }
+	   }
+	  private string checkAuthorityAttenderTypeName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CheckAuthorityAttenderTypeName  
+	   {
+	    
+	     get
+		{
+		   return checkAuthorityAttenderTypeName;
+		 }
+		 set
+		 {
+		   if(checkAuthorityAttenderTypeName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CheckAuthorityAttenderTypeName",OldValue=checkAuthorityAttenderTypeName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   checkAuthorityAttenderTypeName=value;
+		   }
+			
+		 }
+	   }
+	  private int? checkAnwserStatus ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int? CheckAnwserStatus  
+	   {
+	    
+	     get
+		{
+		   return checkAnwserStatus;
+		 }
+		 set
+		 {
+		   if(checkAnwserStatus != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CheckAnwserStatus",OldValue=checkAnwserStatus,NewValue=value,PropertyType="int?"};
+		    NotifyPropertyChanged(values);
+		   checkAnwserStatus=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

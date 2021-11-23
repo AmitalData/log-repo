@@ -1,3 +1,87 @@
+<style>
+    .SectionTitle {
+        height: 20px;
+        line-height: 20px;
+        font-size: 14px;
+        color: #1B90CB;
+        user-select: text;
+        -webkit-user-select: text;
+    }
+
+    .DeleteButton {
+        display: none;
+    }
+
+    .ListBoxItem:hover .DeleteButton {
+        display: block;
+    }
+
+    .ListBoxEditItem:hover .DeleteButtonDisabled {
+        cursor: pointer;
+        background: -moz-linear-gradient(50% 0% -90deg,rgba(255, 255, 255, 1) 0%,rgba(221, 232, 245, 1) 100%);
+        background: -webkit-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(221, 232, 245, 1) 100%);
+        background: -webkit-gradient(linear,50% 0%,50% 100%,color-stop(0,rgba(255, 255, 255, 1) ),color-stop(1,rgba(221, 232, 245, 1) ));
+        background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(221, 232, 245, 1) 100%);
+        display: block;
+    }
+
+    .ListBoxEditItem:hover .DeleteButton {
+        cursor: pointer;
+        background: -moz-linear-gradient(50% 0% -90deg,rgba(255, 255, 255, 1) 0%,rgba(221, 232, 245, 1) 100%);
+        background: -webkit-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(221, 232, 245, 1) 100%);
+        background: -webkit-gradient(linear,50% 0%,50% 100%,color-stop(0,rgba(255, 255, 255, 1) ),color-stop(1,rgba(221, 232, 245, 1) ));
+        background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(221, 232, 245, 1) 100%);
+        display: block;
+    }
+
+    .ListBoxEditItem:hover {
+        cursor: pointer;
+        background: -moz-linear-gradient(50% 0% -90deg,rgba(255, 255, 255, 1) 0%,rgba(221, 232, 245, 1) 100%);
+        background: -webkit-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(221, 232, 245, 1) 100%);
+        background: -webkit-gradient(linear,50% 0%,50% 100%,color-stop(0,rgba(255, 255, 255, 1) ),color-stop(1,rgba(221, 232, 245, 1) ));
+        background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(221, 232, 245, 1) 100%);
+    }
+
+    .ListBoxItem:hover .DeleteButtonDisabled {
+        display: block;
+    }
+
+    .ToggleButton.ToggleButtonMenu .DeleteButton RightCenter:hover {
+        cursor: pointer;
+    }
+
+    .IconButton img {
+        position: absolute;
+        top: 15px;
+        left: 1px;
+        bottom: 0;
+        right: 0;
+        margin: auto;
+    }
+
+    #deleteimgHoverd:hover {
+        background-image: url(../../../../../Images/RedX2.png);
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+
+    #deleteimgHoverd {
+        background-image: url( ../../../../../Images/Tab.X.Gray.png);
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+
+    .SplittedText {
+        position: absolute;
+        top: 8px;
+        left: 6px;
+        color: #45494A;
+        font-size: 11px;
+        opacity: 0.5;
+    }
+
+
+</style>
 <div class="TabHolder">
     <table>
         <tr class="TabTitleRow">
@@ -12,15 +96,12 @@
             </td>
         </tr>
 
-        <tr style="height: 1px;" >
+        <tr style="height: 1px;">
             <td>
                 <table>
-                
                     <tr>
                         <td style="width: 395px;">
-
                             <table>
-
                                 <tr class="FormFieldRow">
                                     <td style="width: 165px;">
                                         <LogLabel [ObjectFieldName]="'Code'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
@@ -33,7 +114,7 @@
 
 
                                 <tr class="FormFieldRow">
-                                    <td >
+                                    <td>
                                         <LogLabel [ObjectFieldName]="'Name'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                     </td>
 
@@ -65,7 +146,16 @@
                                         <LogLabel [Text]="'Spot Rate Template'" [ObjectFieldName]="'QuotationDefaultTemplateId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                     </td>
 
-                                    <td>
+                                    <td *ngIf="IsQuoteOPMaintence">
+                                        <LogLov [ObjectFieldName]="'QuotationDefaultTemplateId'"
+                                                [SelectedValue]="QuotationDefaultTemplateId"
+                                                [ObjectTableName]="ObjectTableName"
+                                                [DataContext]="DataContext"
+                                                [DependencyFilter1Value]="'A'"
+                                                [LookUpTableName]="'QuoteOPTemplate'">
+                                        </LogLov>
+                                    </td>
+                                    <td *ngIf="!IsQuoteOPMaintence">
                                         <LogLov [ObjectFieldName]="'QuotationDefaultTemplateId'"
                                                 [SelectedValue]="QuotationDefaultTemplateId"
                                                 [ObjectTableName]="ObjectTableName"
@@ -81,7 +171,17 @@
                                         <LogLabel [Text]="'Routing Rates Template'" [ObjectFieldName]="'RoutingRQuoteDefaultTemplateId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext">Routing Rates Template</LogLabel>
                                     </td>
                                     <!--[attr.title]="'Routing Rates Template'"-->
-                                    <td>
+                                    <td *ngIf="IsQuoteOPMaintence">
+                                        <LogLov [ObjectFieldName]="'RoutingRQuoteDefaultTemplateId'"
+                                                [SelectedValue]="RoutingRQuoteDefaultTemplateId"
+                                                [ObjectTableName]="ObjectTableName"
+                                                [DataContext]="DataContext"
+                                                [DependencyFilter1Value]="'P'"
+                                                [DependencyFilter1IsList]
+                                                [LookUpTableName]="'QuoteOPTemplate'">
+                                        </LogLov>
+                                    </td>
+                                    <td *ngIf="!IsQuoteOPMaintence">
                                         <LogLov [ObjectFieldName]="'RoutingRQuoteDefaultTemplateId'"
                                                 [SelectedValue]="RoutingRQuoteDefaultTemplateId"
                                                 [ObjectTableName]="ObjectTableName"
@@ -93,14 +193,234 @@
                                     </td>
                                 </tr>
 
-                                <tr>
-                                    <td></td>
+                                <tr *ngIf="IsQuoteOPMaintence" class="TabTitleRow">
+                                    <td colspan="2">Tariff Types</td>
                                 </tr>
+                                <tr  *ngIf="IsQuoteOPMaintence" style="height:1px">
+                                    <td colspan="2">
+                                        <table>
+                                            <tr style="height:30px">
+                                                <td style="width:5px;min-width:5px"></td>
+                                                <td>
+                                                    <table>
+                                                        <tr class="SectionHeader">
+                                                            <td>
+                                                                <table>
+                                                                    <tr>
+                                                                        <td>
+                                                                            <label style="width:100px">Cost Tariff Use</label>
+                                                                        </td>
+                                                                        <td></td>
+                                                                        <td style="width:90px">
+                                                                            <div class="dropdown" style="float:right;">
+                                                                                <div tabindex="1" class="ToggleButton" style="margin: auto; width: 90px !important; float:right;padding-right:5px">
+                                                                                    <label>Add/Remove</label>
+                                                                                    <img src="./Images/ToggleIcon.png" />
+                                                                                    <div style="float:right;z-index:3;right:-131px" [attr.id]="SearchTextCostTariffDropButtonProductType" class="ToggleButtonMenu">
+                                                                                        <input type="text" [attr.id]="SearchCostTariffProductType" placeholder="Search" (focus)="ClearPlaceHolderCostTariff();" (blur)="FillPlaceHolderCostTariff();" [(ngModel)]="CostSearchText" style="background: url(Images/Search.png) no-repeat scroll;background-position: right center;padding-right:30px;margin: 7px;width:200px;">
 
+                                                                                        <img *ngIf="CostSearchText" class="DeleteButton RightCenter" style="right:4px;position: relative;display:inline-block;margin-left: -25px;top: 7px;" src="Images/RedX.png" (click)="OnDeleteValueCostTariff()" />
+                                                                                        <div style="overflow-x: hidden;overflow-y: auto;height: 208px;">
+                                                                                            <div style="float:left;width:95%;margin-top:5px;margin-left:5px">
+                                                                                                <table style="width:100%">
+
+                                                                                                    <tr style="width:100%;margin-top:5px;margin-left:5px;height:22px;min-height:22px" *ngFor="let item of CostTariffToggleButtonList; let i = index">
+                                                                                                        <td style="width:22px">
+                                                                                                            <div style="width:22px">
+
+                                                                                                                <!--<input type="checkbox" [disabled]="!item.IsCheckBoxEnabled" [(ngModel)]="item.IsChecked" (click)="ProductsToggleButtonClicked(item,i)" (focus)="setToggleButtonMenuTemp();" (blur)="setToggleButtonMenu();" />-->
+                                                                                                                <CheckBox [IsChecked]="item.IsChecked" (Checked)="item.IsChecked = $event;CostTariffToggleButtonClicked(item,i)"></CheckBox>
+
+                                                                                                            </div>
+                                                                                                        </td>
+                                                                                                        <td style="width:5px"></td>
+                                                                                                        <td style="width:100%">
+
+
+                                                                                                            <div style="margin-left:5px;margin-top:0px">
+                                                                                                                <label style="font-size:xx-small" (focus)="setToggleButtonMenuCostTariffTemp();" (blur)="setToggleButtonMenuCostTariff();" *ngIf="!item.IsChecked">{{item.Name}}</label>
+                                                                                                                <label style="font-size:xx-small;color:lightgray" (focus)="setToggleButtonMenuCostTariffTemp();" (blur)="setToggleButtonMenuCostTariff();" *ngIf="item.IsChecked">{{item.Name}}</label>
+                                                                                                            </div>
+                                                                                                        </td>
+                                                                                                        <td style="width:100%">
+                                                                                                            <div style="width:100%"></div>
+                                                                                                        </td>
+                                                                                                    </tr>
+                                                                                                </table>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </td>
+                                                                        <td style="width:5px"></td>
+                                                                    </tr>
+                                                                </table>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                                <td style="width:5px;min-width:5px"></td>
+                                            </tr>
+                                            <tr class="FormFieldRow" *ngFor="let Item of CostTariffObslist" style="margin-top:3px;height:1px;vertical-align:top;">
+                                                <td colspan="3">
+                                                    <table>
+                                                        <tr>
+                                                            <td colspan="3" style="height:3px"></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="width:15px;min-width:15px"></td>
+                                                            <td style="height:20px;vertical-align:top;border:solid;border-color:lightgray;border-width:1px;border-radius:25px;   border-radius: 25px; -moz-border-radius: 25px;-webkit-border-radius: 25px;padding: 2px;" class="ListBoxItem">
+                                                                <table>
+                                                                    <tr>
+                                                                        <td style="width:100%">
+                                                                            <div style="margin-left:10px;margin-top:1px">
+                                                                                <label style="font-size:smaller;color:black">{{Item.Name}}</label>
+                                                                            </div>
+                                                                        </td>
+                                                                        <td></td>
+                                                                        <td style="width: auto;">
+                                                                            <div class="DeleteButton" style="width:30px;float:right">
+                                                                                <IconButton [Name]="'Delete'" [IsSmall]="true" (click)="deleteItemCostTariffTypesObsList(Item.Entity)" style="display: block; float: right;padding-right:5px"></IconButton>
+                                                                            </div>
+                                                                        </td>
+                                                                        <td></td>
+                                                                    </tr>
+                                                                </table>
+                                                            </td>
+                                                            <td style="width:15px;min-width:15px"></td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+
+                                            <tr style="height:50px" *ngIf="NoCostTariffVisibility">
+                                                <td colspan="3" style="vertical-align:middle;text-align:center;color:gray">
+                                                    No Tariffs
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr *ngIf="IsQuoteOPMaintence" style="height:10px;">
+                                    <td colspan="2"><div></div></td>
+                                </tr>
+                                <tr *ngIf="IsQuoteOPMaintence" style="height:1px">
+                                    <td colspan="2">
+                                        <table>
+                                            <tr style="height:30px">
+                                                <td style="width:5px;min-width:5px"></td>
+                                                <td>
+                                                    <table>
+                                                        <tr class="SectionHeader">
+                                                            <td>
+                                                                <table>
+                                                                    <tr>
+                                                                        <td>
+                                                                            <label style="width:100px">Sale Tariff Use</label>
+                                                                        </td>
+                                                                        <td></td>
+                                                                        <td style="width:90px">
+                                                                            <div class="dropdown" style="float:right;">
+                                                                                <div tabindex="1" class="ToggleButton" style="margin: auto; width: 90px !important; float:right;padding-right:5px">
+                                                                                    <label>Add/Remove</label>
+                                                                                    <img src="./Images/ToggleIcon.png" />
+                                                                                    <div style="float:right;z-index:3;right:-131px" [attr.id]="SearchTextSaleTariffDropButtonProductType" class="ToggleButtonMenu">
+                                                                                        <input type="text" [attr.id]="SearchSaleTariffProductType" placeholder="Search" (focus)="ClearPlaceHolderSaleTariff();" (blur)="FillPlaceHolderSaleTariff();" [(ngModel)]="SaleSearchText" style="background: url(Images/Search.png) no-repeat scroll;background-position: right center;padding-right:30px;margin: 7px;width:200px;">
+
+                                                                                        <img *ngIf="SaleSearchText" class="DeleteButton RightCenter" style="right:4px;position: relative;display:inline-block;margin-left: -25px;top: 7px;" src="Images/RedX.png" (click)="OnDeleteValueSaleTariff()" />
+                                                                                        <div style="overflow-x: hidden;overflow-y: auto;height: 208px;">
+                                                                                            <div style="float:left;width:95%;margin-top:5px;margin-left:5px">
+                                                                                                <table style="width:100%">
+
+                                                                                                    <tr style="width:100%;margin-top:5px;margin-left:5px;height:22px;min-height:22px" *ngFor="let item of SaleTariffToggleButtonList; let i = index">
+                                                                                                        <td style="width:22px">
+                                                                                                            <div style="width:22px">
+
+                                                                                                                <!--<input type="checkbox" [disabled]="!item.IsCheckBoxEnabled" [(ngModel)]="item.IsChecked" (click)="ProductsToggleButtonClicked(item,i)" (focus)="setToggleButtonMenuTemp();" (blur)="setToggleButtonMenu();" />-->
+                                                                                                                <CheckBox [IsChecked]="item.IsChecked" (Checked)="item.IsChecked = $event;SaleTariffToggleButtonClicked(item,i)"></CheckBox>
+
+                                                                                                            </div>
+                                                                                                        </td>
+                                                                                                        <td style="width:5px"></td>
+                                                                                                        <td style="width:100%">
+
+
+                                                                                                            <div style="margin-left:5px;margin-top:0px">
+                                                                                                                <label style="font-size:xx-small" (focus)="setToggleButtonMenuSaleTariffTemp();" (blur)="setToggleButtonMenuSaleTariff();" *ngIf="!item.IsChecked">{{item.Name}}</label>
+                                                                                                                <label style="font-size:xx-small;color:lightgray" (focus)="setToggleButtonMenuSaleTariffTemp();" (blur)="setToggleButtonMenuSaleTariff();" *ngIf="item.IsChecked">{{item.Name}}</label>
+                                                                                                            </div>
+                                                                                                        </td>
+                                                                                                        <td style="width:100%">
+                                                                                                            <div style="width:100%"></div>
+                                                                                                        </td>
+                                                                                                    </tr>
+                                                                                                </table>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </td>
+                                                                        <td style="width:5px"></td>
+                                                                    </tr>
+                                                                </table>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                                <td style="width:5px;min-width:5px"></td>
+                                            </tr>
+                                            <tr class="FormFieldRow" *ngFor="let Item of SaleTariffObslist" style="margin-top:3px;height:1px;vertical-align:top;">
+                                                <td colspan="3">
+                                                    <table>
+                                                        <tr>
+                                                            <td colspan="3" style="height:3px"></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="width:15px;min-width:15px"></td>
+                                                            <td style="height:20px;vertical-align:top;border:solid;border-color:lightgray;border-width:1px;border-radius:25px;   border-radius: 25px; -moz-border-radius: 25px;-webkit-border-radius: 25px;padding: 2px;" class="ListBoxItem">
+                                                                <table>
+                                                                    <tr>
+                                                                        <td style="width:100%">
+                                                                            <div style="margin-left:10px;margin-top:1px">
+                                                                                <label style="font-size:smaller;color:black">{{Item.Name}}</label>
+                                                                            </div>
+                                                                        </td>
+                                                                        <td></td>
+                                                                        <td style="width: auto;">
+                                                                            <div class="DeleteButton" style="width:30px;float:right">
+                                                                                <IconButton [Name]="'Delete'" [IsSmall]="true" (click)="deleteItemSaleTariffTypesObsList(Item.Entity)" style="display: block; float: right;padding-right:5px"></IconButton>
+                                                                            </div>
+                                                                        </td>
+                                                                        <td></td>
+                                                                    </tr>
+                                                                </table>
+                                                            </td>
+                                                            <td style="width:15px;min-width:15px"></td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+
+                                            <tr style="height:50px" *ngIf="NoSaleTariffVisibility">
+                                                <td colspan="3" style="vertical-align:middle;text-align:center;color:gray">
+                                                    No Tariffs
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
                             </table>
-
                         </td>
-
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div></div>
+                        </td>
                         <td>
                             <div></div>
                         </td>
@@ -108,8 +428,6 @@
                 </table>
             </td>
         </tr>
-      
-
         <tr>
             <td>
                 <div></div>

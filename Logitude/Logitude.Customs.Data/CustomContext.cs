@@ -230,6 +230,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new ContainerizationMap());
 	
+            modelBuilder.Configurations.Add(new ContainerizationHataraStatusMap());
+	
             modelBuilder.Configurations.Add(new ContainerizationStatusCodeMap());
 	
             modelBuilder.Configurations.Add(new ContainerTypeMap());
@@ -601,6 +603,8 @@ namespace Logitude.Customs.Data
             modelBuilder.Configurations.Add(new PhysicalCheckMap());
 	
             modelBuilder.Configurations.Add(new PhysicalCheckOperationMap());
+	
+            modelBuilder.Configurations.Add(new PhysicalCheckSearchResultTypeMap());
 	
             modelBuilder.Configurations.Add(new PhysicalCheckStatusMessageMap());
 	
@@ -1833,6 +1837,12 @@ namespace Logitude.Customs.Data
 	 
 	 }
 	
+	 public IDbSet<ContainerizationHataraStatus> ContainerizationHataraStatuses 
+	 {
+	      get; set;
+	 
+	 }
+	
 	 public IDbSet<ContainerizationStatusCode> ContainerizationStatusCodes 
 	 {
 	      get; set;
@@ -2944,6 +2954,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<PhysicalCheckOperation> PhysicalCheckOperations 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<PhysicalCheckSearchResultType> PhysicalCheckSearchResultTypes 
 	 {
 	      get; set;
 	 

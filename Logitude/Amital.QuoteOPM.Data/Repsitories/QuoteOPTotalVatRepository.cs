@@ -17,8 +17,15 @@ namespace Amital.QuoteOPM.Data.Repsitories
         
 		public List<QuoteOPTotalVAT> GetMulti(EntityKeyFields entityKeys)
         {
-            
-			throw new NotImplementedException();
+
+
+            var key = entityKeys as QuoteOPKeys;
+
+
+            return (from a in context.QuoteOPTotalVATs
+                    where a.QuoteOPId == key.Id
+                    select a)
+                    .ToList();
         }
         public IQueryable<QuoteOPTotalVAT> GetTotalVATs(string quoteId, int tenant)
         {

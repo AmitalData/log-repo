@@ -88,6 +88,9 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="Unifreight.Data">
+      <HintPath>..\JustWebFreight\WebFreight.Web\bin\Unifreight.Data.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CustomContext.SharedTables.cs" />
@@ -99,6 +102,7 @@
     <Compile Include="CustomContext.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="DataContracts\CustomsRequestsSheetSummary.cs" />
     <Compile Include="DataContracts\DeclarationCourierStatusSummary.cs" />
     <Compile Include="DataContracts\DeclarationReferantDataSummary.cs" />
     <Compile Include="EntityKeys\AcceptanceStatusKeys.cs" />
@@ -130,6 +134,7 @@
     <Compile Include="EntityKeys\ClientDrivingLicenseTypeKeys.cs" />
     <Compile Include="EntityKeys\ClientsPoaKeys.cs" />
     <Compile Include="EntityKeys\ConsignmentPackDangerKeys.cs" />
+    <Compile Include="EntityKeys\ContainerizationHataraStatusKeys.cs" />
     <Compile Include="EntityKeys\ContainerizationKeys.cs" />
     <Compile Include="EntityKeys\ContainerizationStatusCodeKeys.cs" />
     <Compile Include="EntityKeys\ContainerTypeKeys.cs" />
@@ -198,6 +203,7 @@
     <Compile Include="EntityKeys\PendingByKeywordKeys.cs" />
     <Compile Include="EntityKeys\PendingErrorPlaceKeys.cs" />
     <Compile Include="EntityKeys\PoaAuthorizationTypeLookupKeys.cs" />
+    <Compile Include="EntityKeys\PhysicalCheckSearchResultTypeKeys.cs" />
     <Compile Include="EntityKeys\PoaStatusTypeLookUpKeys.cs" />
     <Compile Include="EntityKeys\PointerLevelKeys.cs" />
     <Compile Include="EntityKeys\ReferantExceptionKeys.cs" />
@@ -257,6 +263,7 @@
     <Compile Include="EntityListQueryServices\ClientDrivingLicenseTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\ClientsPoaListQueryService.cs" />
     <Compile Include="EntityListQueryServices\ConsignmentPackDangerListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\ContainerizationHataraStatusListQueryService.cs" />
     <Compile Include="EntityListQueryServices\ContainerizationListQueryService.cs" />
     <Compile Include="EntityListQueryServices\ContainerizationStatusCodeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\ContainerTypeListQueryService.cs" />
@@ -339,6 +346,7 @@
     <Compile Include="EntityListQueryServices\Generated\ClientDrivingLicenseTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\ClientsPoaListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\ConsignmentPackDangerListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\ContainerizationHataraStatusListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\ContainerizationListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\ContainerizationStatusCodeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\ContainerTypeListQueryService.Generated.cs" />
@@ -407,6 +415,7 @@
     <Compile Include="EntityListQueryServices\Generated\PendingByKeywordListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\PendingErrorPlaceListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\PoaAuthorizationTypeLookupListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\PhysicalCheckSearchResultTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\PoaStatusTypeLookUpListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\PointerLevelListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\ReferantExceptionListQueryService.Generated.cs" />
@@ -452,6 +461,7 @@
     <Compile Include="EntityListQueryServices\PendingByKeywordListQueryService.cs" />
     <Compile Include="EntityListQueryServices\PendingErrorPlaceListQueryService.cs" />
     <Compile Include="EntityListQueryServices\PoaAuthorizationTypeLookupListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\PhysicalCheckSearchResultTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\PoaStatusTypeLookUpListQueryService.cs" />
     <Compile Include="EntityListQueryServices\PointerLevelListQueryService.cs" />
     <Compile Include="EntityListQueryServices\ReferantExceptionListQueryService.cs" />
@@ -482,6 +492,7 @@
     <Compile Include="EntityListQueryServices\UIMessageAdditionalListQueryService.cs" />
     <Compile Include="EntityListQueryServices\UIMessageListQueryService.cs" />
     <Compile Include="EntityListQueryServices\UpdateCodeListQueryService.cs" />
+    <Compile Include="EntityLists\CustomsPartnersItemList.cs" />
     <Compile Include="EntityLists\Generated\AcceptanceStatusList.Generated.cs" />
     <Compile Include="EntityLists\Generated\ActionCodeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\AgentTalkBackTypeList.Generated.cs" />
@@ -511,6 +522,7 @@
     <Compile Include="EntityLists\Generated\ClientDrivingLicenseTypeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\ClientsPoaList.Generated.cs" />
     <Compile Include="EntityLists\Generated\ConsignmentPackDangerList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\ContainerizationHataraStatusList.Generated.cs" />
     <Compile Include="EntityLists\Generated\ContainerizationList.Generated.cs" />
     <Compile Include="EntityLists\Generated\ContainerizationStatusCodeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\ContainerTypeList.Generated.cs" />
@@ -579,6 +591,7 @@
     <Compile Include="EntityLists\Generated\PendingByKeywordList.Generated.cs" />
     <Compile Include="EntityLists\Generated\PendingErrorPlaceList.Generated.cs" />
     <Compile Include="EntityLists\Generated\PoaAuthorizationTypeLookupList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\PhysicalCheckSearchResultTypeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\PoaStatusTypeLookUpList.Generated.cs" />
     <Compile Include="EntityLists\Generated\PointerLevelList.Generated.cs" />
     <Compile Include="EntityLists\Generated\ProceduralFaultList.Generated.cs" />
@@ -639,6 +652,7 @@
     <Compile Include="EntityMapping\ClientDrivingLicenseTypeMap.cs" />
     <Compile Include="EntityMapping\ClientsPoaMap.cs" />
     <Compile Include="EntityMapping\ConsignmentPackDangerMap.cs" />
+    <Compile Include="EntityMapping\ContainerizationHataraStatusMap.cs" />
     <Compile Include="EntityMapping\ContainerizationMap.cs" />
     <Compile Include="EntityMapping\ContainerizationStatusCodeMap.cs" />
     <Compile Include="EntityMapping\ContainerTypeMap.cs" />
@@ -707,6 +721,7 @@
     <Compile Include="EntityMapping\PendingByKeywordMap.cs" />
     <Compile Include="EntityMapping\PendingErrorPlaceMap.cs" />
     <Compile Include="EntityMapping\PoaAuthorizationTypeLookupMap.cs" />
+    <Compile Include="EntityMapping\PhysicalCheckSearchResultTypeMap.cs" />
     <Compile Include="EntityMapping\PoaStatusTypeLookUpMap.cs" />
     <Compile Include="EntityMapping\PointerLevelMap.cs" />
     <Compile Include="EntityMapping\ReferantExceptionMap.cs" />
@@ -767,6 +782,7 @@
     <Compile Include="EntityPOCOs\ClientsPoa.cs" />
     <Compile Include="EntityPOCOs\ConsignmentPackDanger.cs" />
     <Compile Include="EntityPOCOs\Containerization.cs" />
+    <Compile Include="EntityPOCOs\ContainerizationHataraStatus.cs" />
     <Compile Include="EntityPOCOs\ContainerizationStatusCode.cs" />
     <Compile Include="EntityPOCOs\ContainerType.cs" />
     <Compile Include="EntityPOCOs\ContinuousRequestType.cs" />
@@ -834,6 +850,7 @@
     <Compile Include="EntityPOCOs\PendingByKeyword.cs" />
     <Compile Include="EntityPOCOs\PendingErrorPlace.cs" />
     <Compile Include="EntityPOCOs\PoaAuthorizationTypeLookup.cs" />
+    <Compile Include="EntityPOCOs\PhysicalCheckSearchResultType.cs" />
     <Compile Include="EntityPOCOs\PoaStatusTypeLookUp.cs" />
     <Compile Include="EntityPOCOs\PointerLevel.cs" />
     <Compile Include="EntityPOCOs\ProceduralFault.cs" />
@@ -894,6 +911,7 @@
     <Compile Include="Repsitories\ClientDrivingLicenseTypeRepository.cs" />
     <Compile Include="Repsitories\ClientsPoaRepository.cs" />
     <Compile Include="Repsitories\ConsignmentPackDangerRepository.cs" />
+    <Compile Include="Repsitories\ContainerizationHataraStatusRepository.cs" />
     <Compile Include="Repsitories\ContainerizationRepository.cs" />
     <Compile Include="Repsitories\ContainerizationStatusCodeRepository.cs" />
     <Compile Include="Repsitories\ContainerTypeRepository.cs" />
@@ -976,6 +994,7 @@
     <Compile Include="Repsitories\Generated\ClientDrivingLicenseTypeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\ClientsPoaRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\ConsignmentPackDangerRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\ContainerizationHataraStatusRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\ContainerizationRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\ContainerizationStatusCodeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\ContainerTypeRepository.Generated.cs" />
@@ -1044,6 +1063,7 @@
     <Compile Include="Repsitories\Generated\PendingByKeywordRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\PendingErrorPlaceRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\PoaAuthorizationTypeLookupRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\PhysicalCheckSearchResultTypeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\PoaStatusTypeLookUpRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\PointerLevelRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\ReferantExceptionRepository.Generated.cs" />
@@ -1089,6 +1109,7 @@
     <Compile Include="Repsitories\PendingByKeywordRepository.cs" />
     <Compile Include="Repsitories\PendingErrorPlaceRepository.cs" />
     <Compile Include="Repsitories\PoaAuthorizationTypeLookupRepository.cs" />
+    <Compile Include="Repsitories\PhysicalCheckSearchResultTypeRepository.cs" />
     <Compile Include="Repsitories\PoaStatusTypeLookUpRepository.cs" />
     <Compile Include="Repsitories\PointerLevelRepository.cs" />
     <Compile Include="Repsitories\ReferantExceptionRepository.cs" />

@@ -1303,11 +1303,6 @@
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Relation
-    ForeignKeyColumn="MainCarriageCarrierId"
-    ReferencedTable="Cards"
-    ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
-  <Relation
     ForeignKeyColumn="DirectionId"
     ReferencedTable="Directions"
     ReferencedColumn="Id"
@@ -1360,21 +1355,6 @@
   <Relation
     ForeignKeyColumn="ConsigneeContactId"
     ReferencedTable="Contacts"
-    ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
-  <Relation
-    ForeignKeyColumn="FromPortId"
-    ReferencedTable="Ports"
-    ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
-  <Relation
-    ForeignKeyColumn="ToPortId"
-    ReferencedTable="Ports"
-    ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
-  <Relation
-    ForeignKeyColumn="IncotermId"
-    ReferencedTable="Incoterms"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Relation
@@ -1537,11 +1517,6 @@
   <Relation
     ForeignKeyColumn="RegionalTaxId"
     ReferencedTable="VatTypes"
-    ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
-  <Relation
-    ForeignKeyColumn="SpecialServiceId"
-    ReferencedTable="OPSpecialServicesTypes"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
 </Table>

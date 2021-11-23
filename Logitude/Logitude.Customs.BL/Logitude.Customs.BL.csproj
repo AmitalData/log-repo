@@ -140,6 +140,7 @@
     <Compile Include="BL\CalculateDeclarationCourierStatus.cs" />
     <Compile Include="CloseTables\CustomsCargoSealStatus.cs" />
     <Compile Include="CloseTables\CustomsAutonomyKeywordDetails.cs" />
+    <Compile Include="CloseTables\CustomRabbitMQQueue.cs" />
     <Compile Include="CloseTables\CustomsPartnerFtpDetails.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\AmedmentTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\AmendCancellRequestInitiatorDetails.Generated.cs" />
@@ -153,6 +154,7 @@
     <Compile Include="CloseTables\DetailsClassesGenerated\CargoTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\ClaimReasonTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\ClassificationTypeDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\ContainerizationHataraStatusDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\ContainerizationStatusCodeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\ContainerTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\CoolingReportingMethodDetails.Generated.cs" />
@@ -172,6 +174,7 @@
     <Compile Include="CloseTables\DetailsClassesGenerated\NDMessageActionCodeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\PartyRelationshipTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\PoaAuthorizationTypeLookupDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\PhysicalCheckSearchResultTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\PoaStatusTypeLookUpDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\ReleaseMessageTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\SecurityClearenceTypeCodeDetails.Generated.cs" />
@@ -385,6 +388,7 @@
     <Compile Include="EntityDataMappings\ConstraintTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\ContactRoleTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\ContainerizationDataMapping.cs" />
+    <Compile Include="EntityDataMappings\ContainerizationHataraStatusDataMapping.cs" />
     <Compile Include="EntityDataMappings\ContainerizationStatusCodeDataMapping.cs" />
     <Compile Include="EntityDataMappings\ContainerTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\ContinuousMessagesTypeCodeDataMapping.cs" />
@@ -590,6 +594,7 @@
     <Compile Include="EntityDataMappings\Generated\ConstraintTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\ContactRoleTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\ContainerizationDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\ContainerizationHataraStatusDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\ContainerizationStatusCodeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\ContainerTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\ContinuousMessagesTypeCodeDataMapping.Generated.cs" />
@@ -777,6 +782,7 @@
     <Compile Include="EntityDataMappings\Generated\PendingErrorPlaceDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\PhysicalCheckDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\PhysicalCheckOperationDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\PhysicalCheckSearchResultTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\PhysicalCheckStatusMessageDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\PoaAuthorizationTypeLookupDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\PoaStatusTypeLookUpDataMapping.Generated.cs" />
@@ -944,6 +950,7 @@
     <Compile Include="EntityDataMappings\PendingErrorPlaceDataMapping.cs" />
     <Compile Include="EntityDataMappings\PhysicalCheckDataMapping.cs" />
     <Compile Include="EntityDataMappings\PhysicalCheckOperationDataMapping.cs" />
+    <Compile Include="EntityDataMappings\PhysicalCheckSearchResultTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\PhysicalCheckStatusMessageDataMapping.cs" />
     <Compile Include="EntityDataMappings\PoaAuthorizationTypeLookupDataMapping.cs" />
     <Compile Include="EntityDataMappings\PoaStatusTypeLookUpDataMapping.cs" />
@@ -1061,6 +1068,7 @@
     <Compile Include="EntityQueryServices\Generated\CancellationRequestStatusQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\CargoTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\ClientsPoaQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\ContainerizationHataraStatusQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\ContainerizationQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\ContainerizationStatusCodeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\ContainerTypeQueryService.Generated.cs" />
@@ -1083,6 +1091,7 @@
     <Compile Include="EntityQueryServices\Generated\LogisticsReferenceTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\NDMessageActionCodeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\PoaAuthorizationTypeLookupQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\PhysicalCheckSearchResultTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\PoaStatusTypeLookUpQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\ReferantTeamQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\ReferenceInputTypeQueryService.Generated.cs" />
@@ -1601,6 +1610,7 @@
     <Compile Include="EntityUpdateServices\Generated\ClaimReasonTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\ClassificationTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\ClientsPoaUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\ContainerizationHataraStatusUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\ContainerizationStatusCodeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\ContainerizationUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\ContainerTypeUpdateService.Generated.cs" />
@@ -1626,6 +1636,7 @@
     <Compile Include="EntityUpdateServices\Generated\NDMessageActionCodeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\PartyRelationshipTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\PoaAuthorizationTypeLookupUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\PhysicalCheckSearchResultTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\PoaStatusTypeLookUpUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\ReferantTeamUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\ReferenceInputTypeUpdateService.Generated.cs" />
@@ -2079,6 +2090,7 @@
     <Compile Include="Messaging\CustomsAnalyzeQueue\MamanStatusAvailabilitySplitterQService.cs" />
     <Compile Include="Messaging\CustomsAnalyzeQueue\CourierOVSHAWBQService.cs" />
     <Compile Include="Messaging\CustomsAnalyzeQueue\CourierOVSSpecialActionQService.cs" />
+    <Compile Include="Messaging\CustomsAnalyzeQueue\RabbitMQ\UCBUD2LT_ConnectDocToTicketQService.cs" />
     <Compile Include="Messaging\CustomsAnalyzeQueue\SetInAnalyzeQResponseService.cs" />
     <Compile Include="Messaging\Customs\ClientProgressBarIndicatorService.cs" />
     <Compile Include="Messaging\Customs\CustomsRequestsSheetDomainModelUtil.cs" />

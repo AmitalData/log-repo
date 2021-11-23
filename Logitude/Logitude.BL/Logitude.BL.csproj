@@ -379,10 +379,12 @@
     <Compile Include="CommonDataModel\EntityLists\ProductItemList.cs" />
     <Compile Include="CommonDataModel\EntityLists\ReportExecutionLogList.cs" />
     <Compile Include="CommonDataModel\EntityPMs\AddressTypePM.cs" />
+    <Compile Include="CommonDataModel\EntityPMs\ProductTypeModificationPM.cs" />
     <Compile Include="CommonDataModel\EntityPMs\QuoteGroupSectionPM.cs" />
     <Compile Include="CommonDataModel\EntityPMs\ReportExecutionLogPM.cs" />
     <Compile Include="CommonDataModel\EntityPMs\HTSCodePM.cs" />
     <Compile Include="CommonDataModel\EntityPMs\ProductItemPM.cs" />
+    <Compile Include="CommonDataModel\EntityQueries\ProductTypeModificationQuery.cs" />
     <Compile Include="CommonDataModel\EntityQueries\QuoteGroupSectionQuery.cs" />
     <Compile Include="CommonDataModel\EntityQueries\HTSCodeQuery.cs" />
     <Compile Include="CommonDataModel\EntityQueries\ProductItemQuery.cs" />
@@ -466,6 +468,7 @@
     <Compile Include="CommonDataModel\Tools\EntityService\NumberOfUsersService.cs" />
     <Compile Include="CommonDataModel\Tools\EntityService\HTSCodeService.cs" />
     <Compile Include="CommonDataModel\Tools\EntityService\ProductItemService.cs" />
+    <Compile Include="CommonDataModel\Tools\EntityService\ProductTypeModificationService.cs" />
     <Compile Include="CommonDataModel\Tools\EntityService\TariffCarrierTranslationService.cs" />
     <Compile Include="CommonDataModel\Tools\EntityService\TenantAdditionalDataService.cs" />
     <Compile Include="CommonDataModel\Tools\EntityService\AccountingPartnerService.cs" />

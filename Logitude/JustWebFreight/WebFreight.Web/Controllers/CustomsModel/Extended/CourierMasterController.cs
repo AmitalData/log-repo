@@ -33,6 +33,8 @@ using WebFreight.Web.CustomWebServices.BL.XLSExport;
 using System.IO;
 using System.Net.Http.Headers;
 using Logitude.Customs.BL.Messaging.ILSWS;
+using Logitude.CustomsMessaging.Common.ResponseData;
+using Logitude.Customs.Data.EntityPOCOs;
 
 namespace WebFreight.Web.Controllers.CustomsModel.Extended
 {
@@ -435,6 +437,24 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
             }
         }
 
+        public HttpResponseMessage GetSendDocumentsFromQueue(string courierMasterId, string MAWB)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+                SecurityUtility.AuthenticationOnTenant(tenant);
+                var messagingService = new DCAInUCB2715SendNow_MsgMessagingService();
+                var sts = messagingService.CreateCRS(tenant, null, courierMasterId, MAWB);
+                return Request.CreateResponse(HttpStatusCode.OK, sts);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
         public HttpResponseMessage GetSendALLDeclarationsStatusRequest(string CourierMasterId, string testerSendOption)
         {
             try
@@ -446,8 +466,37 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 SecurityUtility.AuthenticationOnTenant(tenant);
 
                 ICustomContext customContext = CustomContext.GetContext(authToken.Tenant);
+                //var messagingService = new DCAInUCB8250_MsgMessagingService();
+                //var sts = messagingService.CreateCRS(tenant, null, CourierMasterId, testerSendOption);
+
+
+                string loggingUserId = AuthenticationUtil.ResolveUserId(tenant);
+
                 var messagingService = new DCAInUCB8250_MsgMessagingService();
-                var sts = messagingService.CreateCRS(tenant, null, CourierMasterId, testerSendOption);
+                var sts = messagingService.CreateCRS(tenant, loggingUserId, CourierMasterId, testerSendOption);
+
+
+               /* var declarationsText = string.Join(",", declarations);
+                var objectTableIdCourierMaster = ObjectTableRepository.GetObjectTableByName("Customs.CourierMaster");
+                string loggingUserId = AuthenticationUtil.ResolveUserId(tenant);
+                var service = new DF_NG_8250_Web01_DeclarationStatus_RequestMessagingService();
+                var requestParams8250 = new DeclarationStatusRequestParams()
+                {
+                    Tenant = tenant,
+                    LoggingEnabled = true,
+                    LoggingObjectTableId = objectTableIdCourierMaster,
+                    LoggingEntityId = CourierMasterId,
+                    DeclarationList = declarationsText,
+                    InterfaceTypeCode = "8250",
+                    LoggingUserId = loggingUserId,
+                    RequestVIA = SendRequestVIA.WebServiceBatch,
+                    DeclarationRadio = true,
+                    TesterSendOption = testerSendOption,
+                    CourierMaster = HAWB
+                };
+                var res = service.Send(requestParams8250);
+                if (res.HasException)
+                    return Request.CreateResponse(HttpStatusCode.OK, res.UserMessage);*/
 
                 return Request.CreateResponse(HttpStatusCode.OK, sts);
             }

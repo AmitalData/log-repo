@@ -57,6 +57,8 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         private EventTracerArgs _LastTraceEventParams;
         private CourierMasterPM _CourierMasterPM;
 
+        public bool IsProcedureCurrentCodeChanged { get; set; }
+
         public bool IsFromCustomsFeedback { get; set; }
         public bool ToUpdateWithPaymentDate { get; set; }
         protected override void OnCreating(DeclarationPM entityPM, EntityPM entityParentPM)
@@ -257,6 +259,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             SupplierInvoiceUpdateService supplierInvoiceUpdateService = new SupplierInvoiceUpdateService(MainContext, new Dictionary<string, IContext>(), Tenant);
             supplierInvoiceUpdateService.Multi_LastSIWillUpdateCCU = true;
             supplierInvoiceUpdateService.UpdateFromDeclaration = IsFromCustomsFeedback;
+            supplierInvoiceUpdateService.IsProcedureCurrentCodeChanged = IsProcedureCurrentCodeChanged;
             supplierInvoiceUpdateService.UpdateMulti(entityPM.SupplierInvoices, entityPM.DeletedSupplierInvoices, entityPM, false);
 
             DeclarationTaxUpdateService declarationTaxUpdateService = new DeclarationTaxUpdateService(MainContext, new Dictionary<string, IContext>(), Tenant);
@@ -335,20 +338,25 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 //if (setting.IsConnectedToUniFreight)
                 var eventContextTagModel = entityPM.CurrentContextTag as EventContextTagModel;
 
+                var declarationQueryService = new DeclarationQueryService(entityPM.Tenant);
 
                 if (entityPM.IsAmendment==true && eventContextTagModel != null  && eventContextTagModel.CallProccessID == EventContextTagModel.ProccessEnum.DF_NG_2470_DF_MSG16001_ReleaseGoodsMessageResponseServiceUpdate)
                 {
-                    var declarationQueryService = new DeclarationQueryService(entityPM.Tenant);
 
                     var entityPMOrg = declarationQueryService.GetSingle(entityPM.AmendmentOriginalDeclartation, true, false);
                     entityPMOrg.CurrentContextTag = eventContextTagModel;
                     entityPMOrg.HatraDate = entityPM.HatraDate;
+                  //  entityPMOrg.DeclarationNumber = entityPM.DeclarationNumber;
+
                     UpdateUnifreight(entityPMOrg);
 
 
                 }
 
-                if (entityPM.IsConnectedToUnifreight)
+
+               // var entityAmend = declarationQueryService.GetAcceptDeclarationAmendment(entityPM.Id, entityPM.Tenant);
+
+                if (entityPM.IsConnectedToUnifreight && !(!string.IsNullOrEmpty( entityPM.AmendmentMessage) && string.IsNullOrEmpty(entityPM.DeclarationNumber)))
                 {
                     UpdateUnifreight(entityPM);
                 }
@@ -356,7 +364,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
                 if(entityPM.IsDiamondDeclaration)
                 {
-                    DeclarationQueryService declarationQueryService = new DeclarationQueryService(entityPM.Tenant);
+                  //  DeclarationQueryService declarationQueryService = new DeclarationQueryService(entityPM.Tenant);
 
                     entityPM.IsValidTicketsDiamond= declarationQueryService.IsValidTickets(entityPM);
 
@@ -521,7 +529,6 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 //entityPM.TransportModeId = houseType.TransportModeId;
 
                 UpdateNotification(entityPM); // moran 2.9.14 - Task 7086
-
                 if (entityPM.ResetDeclarationNumber)//לא לאפשר איפוס הצהרה  במקרה וישנה בקשה לש הגשת תשלום בגליון בקשות (Call# 310088) CALL#310416
                 {
                     var crsQS = new CustomsRequestsSheetQueryService(entityPM.Tenant);
@@ -723,6 +730,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             //mohammad insurance if taxation changed
             
             ReCalculateDueTaxationDateChange(entityPM, entityPOCO);
+            UpdateContainerizationDueHatraDateChange(entityPM, entityPOCO);
             if (this.SuppressNewConcurrencyGUID)
             {
                 LogMessagingUtil.Instance.AppendLine("SuppressNewConcurrencyGUID");
@@ -2953,6 +2961,27 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             entityPM.MarkAsChanged = true;
         }
 
+        public void UpdateContainerizationDueHatraDateChange(DeclarationPM entityPM, Declaration entityPOCO)
+        {
+            if (entityPM.Direction == "E" && !string.IsNullOrEmpty(entityPM.ExportContainerizationID))
+            {
+                if (entityPM.HatraDate.HasValue && entityPM.HatraDate != entityPOCO.HatraDate)
+                {
+                    ICustomContext context = MainContext as CustomContext;
+                    DeclarationQueryService declarationQueryService = new DeclarationQueryService(context);
+                    var list = declarationQueryService.GetDeclarationsByExportContainerizationId(entityPM.ExportContainerizationID);
+                    if (list.All(x => x.HatraDate.HasValue))
+                    {
+                        ContainerizationQueryService containerizationQueryService = new ContainerizationQueryService(context);
+                        var containerization = containerizationQueryService.GetSingle(entityPM.ExportContainerizationID, false, true);
+                        containerization.HataraStatus = "1";
+                        containerization.ChangeSetOp = ChangeSetOperation.Update;
+                        ContainerizationUpdateService containerizationUpdateService = new ContainerizationUpdateService(MainContext, new Dictionary<string, IContext>(), entityPM.Tenant);
+                        containerizationUpdateService.Update(containerization, true);
+                    }
+                }
+            }
+        }
         public void ReCalculateDueTaxationDateChange(DeclarationPM entityPM,Declaration entityPOCO)
         {
             if(entityPOCO.TaxationDateTime!= entityPM.TaxationDateTime)

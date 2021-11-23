@@ -1527,6 +1527,52 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private DateTime? terminalReleaseDate ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public DateTime? TerminalReleaseDate  
+	   {
+	    
+	     get
+		{
+		   return terminalReleaseDate;
+		 }
+		 set
+		 {
+		   if(terminalReleaseDate != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TerminalReleaseDate",OldValue=terminalReleaseDate,NewValue=value,PropertyType="DateTime?"};
+		    NotifyPropertyChanged(values);
+		   terminalReleaseDate=value;
+		   }
+			
+		 }
+	   }
+	  private string shopId ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ShopId  
+	   {
+	    
+	     get
+		{
+		   return shopId;
+		 }
+		 set
+		 {
+		   if(shopId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ShopId",OldValue=shopId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   shopId=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

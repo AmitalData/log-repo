@@ -135,6 +135,7 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
                                 StatusCode = "OMN",
                                 EventDateTime = mySTBMessage.StatusDate
                             });
+                            this.UpadteTerminalReleaseDate(mySTBMessage, theDecId);
                         }
                         break;
                     default:
@@ -161,6 +162,18 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
             }
             return res;
         }
+
+        private void UpadteTerminalReleaseDate(CourierHawbStatus mySTBMessage, string theDecId)
+        {
+            var customContext = CustomContext.GetContext(_CommunicationLog.Tenant);
+            var declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(_CommunicationLog.Tenant);
+            var currentDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(theDecId, true, false);
+            var declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(customContext, new Dictionary<string, IContext>(), _CommunicationLog.Tenant);
+            currentDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
+            currentDeclarationCourierStatusPM.TerminalReleaseDate = mySTBMessage.StatusDate;
+            declarationCourierStatusUpdateService.Update(currentDeclarationCourierStatusPM, true);
+        }
+
         void UpdateAVA(string theDecId, int EventQty)
         {
             string AcceptanceStatusCode = "";

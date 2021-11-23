@@ -50,6 +50,7 @@ export class DeclarationSupplierInvoiceTabComponent extends BaseComponent implem
     public InvoiceItems: ObservableCollection;
     public itemsList: SupplierInvoiceItemPM[];
     public IsVisible = false;
+    public MultiUpdate = false;
     private _entityListService: EntityListService;
     public IsDisplayOnly: boolean = false;
     public ShowStorageStatusMessage: boolean = false;
@@ -77,6 +78,7 @@ export class DeclarationSupplierInvoiceTabComponent extends BaseComponent implem
         //});
     }
 
+
     ngOnInit() {
         this.entityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe((response:any) => {
         this.entityResourceService.getEntityResourceByTableName("Customs.SupplierInvoice").subscribe((response:any) => {
@@ -89,7 +91,11 @@ export class DeclarationSupplierInvoiceTabComponent extends BaseComponent implem
             this.entityResourceService.getEntityResourceByTableName("Customs.SupplierInvoiceItemsProdIdent").subscribe((response:any) => {
             this.entityResourceService.getEntityResourceByTableName("Customs.SupplierInvoiceItemsLevy").subscribe((response:any) => {
                 this.entityResourceService.getEntityResourceByTableName("Customs.SupplierInvioceItemCertificat").subscribe((response:any) => {
-                    this.entityResourceService.getEntityResourceByTableName("Customs.CustomsCollateral").subscribe((response:any) => {
+                    this.entityResourceService.getEntityResourceByTableName("Customs.CustomsCollateral").subscribe((response: any) => {
+                        var multiUpdateFeature = FeatureLocator.HasFeaturePermession("Customs.Declaration", "MultiUpdate");
+                        if (multiUpdateFeature) {
+                            this.MultiUpdate = true;
+                        }
      
 
                     
@@ -583,8 +589,24 @@ export class DeclarationSupplierInvoiceTabComponent extends BaseComponent implem
        
 
     }
+    OpenMultiUpdateWindow() {
+        var args: any = {
+            Declaration: this.EntityPM,
+        };
+        var logWindow = new LogitudeWindow();
+        logWindow.Width = 500;
+        logWindow.Height = 320;
+        logWindow.Title = TextCodeTranslator.Translate("Customs.Declaration.TH.MultiUpdate");
+        logWindow.WindowArgs = args;
+        logWindow.ShowCloseButton = true;
+        logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationSupplierInvoice/Components/SupplierInvoices/MultiUpdateComponent');
+        logWindow.WindowClosed.subscribe(($event: any) => {
+            this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+        });
+    }
 
     Add() {
+        debugger;
         if (this.IsDisplayOnly) return;
 
         var errors = [];

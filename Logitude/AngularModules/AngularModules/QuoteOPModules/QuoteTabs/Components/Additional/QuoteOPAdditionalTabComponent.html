@@ -1,0 +1,220 @@
+<style>
+
+</style>
+<div *ngIf="isReady" class="TabHolder">
+    <table>
+        <tr class="TabTitleRow">
+            <td>{{'QuoteOP.TH.Additional' | TextCodeTranslationPipe}}</td>
+        </tr>
+        <tr>
+            <td>
+                <div>
+                    <SectionBox>
+                        <SectionHead>Quote Additional Details</SectionHead>
+                        <SectionBody>
+                            <table>
+                                <tr class="FormFieldRow">
+                                    <td class="TextTrimming" style="width:150px;">
+                                        <LogLabel [ObjectFieldName]="'SalesmanUserId'"
+                                            [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                    </td>
+                                    <td style="width: 165px;">
+                                        <LogLov [ObjectFieldName]="'SalesmanUserId'"
+                                            [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"
+                                            [LookUpTableName]="'User'" [HideColumns]="true"></LogLov>
+                                    </td>
+                                    <td>
+                                        <div></div>
+                                    </td>
+                                </tr>
+                                <tr class="FormFieldRow">
+                                    <td class="TextTrimming">
+                                        <LogLabel [ObjectFieldName]="'CreatedByUserId'"
+                                            [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                    </td>
+
+                                    <td>
+                                        <LogLov [ObjectFieldName]="'CreatedByUserId'" 
+                                            [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"
+                                            [LookUpTableName]="'User'" [HideColumns]="true"></LogLov>
+                                    </td>
+
+                                    <td>
+                                        <div></div>
+                                    </td>
+                                </tr>
+
+                                <tr class="FormFieldRow">
+                                    <td class="TextTrimming">
+                                        <LogLabel [ObjectFieldName]="'DepartmentId'" [ObjectTableName]="ObjectTableName"
+                                            [DataContext]="DataContext"></LogLabel>
+                                    </td>
+
+                                    <td>
+                                        <LogLov [ObjectFieldName]="'DepartmentId'" 
+                                            [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"
+                                            [LookUpTableName]="'Department'" [HideColumns]="true">
+                                        </LogLov>
+                                    </td>
+
+                                    <td>
+                                        <div></div>
+                                    </td>
+                                </tr>
+                                <tr class="FormFieldRow">
+                                    <td class="TextTrimming">
+                                        <LogLabel [ObjectFieldName]="'BranchId'" [ObjectTableName]="ObjectTableName"
+                                            [DataContext]="DataContext"></LogLabel>
+                                    </td>
+
+                                    <td>
+                                        <LogLov [ObjectFieldName]="'BranchId'" 
+                                            [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"
+                                            [LookUpTableName]="'Branch'" [HideColumns]="true">
+                                        </LogLov>
+
+                                    </td>
+
+                                    <td>
+                                        <div></div>
+                                    </td>
+                                </tr>
+                                <tr class="FormFieldRow">
+                                    <td class="TextTrimming">
+                                        <LogLabel [ObjectFieldName]="'ValueOfGoods'" [ObjectTableName]="ObjectTableName"
+                                            [DataContext]="DataContext"></LogLabel>
+                                    </td>
+
+                                    <td>
+                                        <LogTextBox [ObjectFieldName]="'ValueOfGoods'"
+                                            [DataContext]="DataContext" [ObjectTableName]="ObjectTableName"
+                                            [HideColumns]="true">
+                                        </LogTextBox>
+
+                                    </td>
+                                    <td>
+                                        <div></div>
+                                    </td>
+                                </tr>
+                                <tr class="FormFieldRow">
+                                    <td class="TextTrimming">
+                                        <LogLabel [ObjectFieldName]="'ValueOfGoodsCurrencyId'"
+                                            [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                    </td>
+
+                                    <td>
+                                        <LogLov [ObjectFieldName]="'ValueOfGoodsCurrencyId'"
+                                             [ObjectTableName]="ObjectTableName"
+                                            [DataContext]="DataContext" [LookUpTableName]="'Currency'"
+                                            [HideColumns]="true">
+                                        </LogLov>
+                                    </td>
+                                    <td>
+                                        <div></div>
+                                    </td>
+                                </tr>
+                                <tr class="FormFieldRow">
+                                    <td class="TextTrimming">
+                                        <LogLabel [ObjectFieldName]="'TransitTime'" [ObjectTableName]="ObjectTableName"
+                                            [DataContext]="DataContext"></LogLabel>
+                                    </td>
+
+                                    <td>
+                                        <LogTextBox [ObjectFieldName]="'TransitTime'" 
+                                            [DataContext]="DataContext" [ObjectTableName]="ObjectTableName"
+                                            [HideColumns]="true"
+                                            [Placeholder]="'Enter Date'">
+                                        </LogTextBox>
+
+                                    </td>
+                                    <td>
+                                        <div></div>
+                                    </td>
+                                </tr>
+                                <tr class="FormFieldRow">
+                                    <td class="TextTrimming">
+                                        <LogLabel [ObjectFieldName]="'DepartureFrequency'"
+                                            [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                    </td>
+
+                                    <td>
+                                        <LogTextBox [ObjectFieldName]="'DepartureFrequency'"
+                                            [DataContext]="DataContext" [ObjectTableName]="ObjectTableName"
+                                            [HideColumns]="true"
+                                            [Placeholder]="'Enter Date'">
+                                        </LogTextBox>
+
+                                    </td>
+                                    <td>
+                                        <div></div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div></div>
+                                    </td>
+                                    <td>
+                                        <div></div>
+                                    </td>
+                                    <td>
+                                        <div></div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </SectionBody>
+                    </SectionBox>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div>
+                    <SectionBox>
+                        <SectionHead>Routings</SectionHead>
+                        <SectionBody>
+                            <table>
+                                <tr class="FormFieldRow">
+                                    <td class="TextTrimming" style="width:150px;">
+                                        <LogLabel [ObjectFieldName]="'ETD'" [ObjectTableName]="ObjectTableName"
+                                            [DataContext]="DataContext"></LogLabel>
+                                    </td>
+
+                                    <td style="width: 165px;">
+                                        <LogDatePicker [ObjectFieldName]="'ETD'" [ObjectTableName]="ObjectTableName"
+                                            [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
+                                    </td>
+
+                                    <td>
+                                        <div></div>
+                                    </td>
+                                </tr>
+
+                                <tr class="FormFieldRow">
+                                    <td class="TextTrimming">
+                                        <LogLabel [ObjectFieldName]="'ETA'" [ObjectTableName]="ObjectTableName"
+                                            [DataContext]="DataContext"></LogLabel>
+                                    </td>
+
+                                    <td>
+                                        <LogDatePicker [ObjectFieldName]="'ETA'" [ObjectTableName]="ObjectTableName"
+                                            [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
+                                    </td>
+
+                                    <td>
+                                        <div></div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </SectionBody>
+                    </SectionBox>
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>

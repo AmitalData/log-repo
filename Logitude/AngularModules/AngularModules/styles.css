@@ -19,7 +19,7 @@
 @import url("_Resources/Froala/css/codemirror.min.css");
 @import "~ag-grid-community/dist/styles/ag-grid.css";
 @import "~ag-grid-community/dist/styles/ag-theme-balham.css";
-
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
 
 @import url("_Resources/css/PrimeWebComponent.css");
 
@@ -30,3 +30,13 @@
 @import "node_modules/primeicons/primeicons.css";
 @import "node_modules/quill/dist/quill.snow.css"; */
 
+
+.p-field {
+    margin-bottom: 1rem;
+    white-space: initial !important;
+}
+
+html body .p-toast-message-text .p-toast-detail {
+    white-space: pre-line;
+    width: auto !important;
+}

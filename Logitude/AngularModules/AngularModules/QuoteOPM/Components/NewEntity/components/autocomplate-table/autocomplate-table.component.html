@@ -1,0 +1,19 @@
+<div [formGroup]='formGroup' [ngClass]="{'p-input-icon-right': !dropIcon && searchIcon, 'have-drop-icon': dropIcon}">
+
+    <label *ngIf="label" [for]="label">{{label}}</label>
+
+    <p-autoComplete #autoComplete [formControlName]="controlName" [id]="label" [suggestions]="selected"
+        [dropdown]="dropIcon" [disabled]="disabled" [placeholder]='placeholder' (completeMethod)="search($event)"
+        (onBlur)='onBlur()' [field]='fieldShow' (onSelect)='onSelected($event)' [(ngModel)]="selectedChoice"
+        scrollHeight='208px' (onShow)='alignRow($event)'>
+
+        <ng-template pTemplate="item" let-x let-i='index'>
+            <div [ngClass]='{"highlight-row":(i + 1)%2}' class="autocomplete-col" *ngFor='let col of columnsNames'
+                [innerHTML]='x[col] | highlight: toHighlight'></div>
+        </ng-template>
+
+    </p-autoComplete>
+
+    <i *ngIf='searchIcon && !dropIcon' class='pi pi-search' (click)='openSearchDialog()'></i>
+
+</div>

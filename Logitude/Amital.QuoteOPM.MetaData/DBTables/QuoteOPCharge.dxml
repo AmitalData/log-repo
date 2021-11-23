@@ -440,6 +440,34 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="TariffCostNo"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="TariffSaleNo"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="TariffCostXML"
+    Type="nvarchar"
+    Size="5000">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="TariffSaleXML"
+    Type="nvarchar"
+    Size="5000">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="QuoteOPId"
     ReferencedTable="QuoteOPs"

@@ -1,0 +1,52 @@
+:host ::ng-deep {
+    .p-radiobutton {
+        display: none;
+    }
+
+    .radio-row:hover .simple-text,
+    .radio-checked .simple-text {
+        color: #1084dc !important;
+    }
+}
+
+.label {
+    padding: 8px 25px;
+    font-weight: bolder;
+}
+
+p-radiobutton {
+    vertical-align: middle;
+    margin-left: 10px;
+}
+
+.radio-section {
+    margin-bottom: 20px;
+}
+
+.radio-row:hover,
+.radio-checked {
+    background-color: #e2f0fb;
+}
+
+.radio-checked {
+    border: 1px solid #1084dc;
+}
+
+.radio-row {
+    font-size: 12px;
+    color: gray;
+    // display: flex;
+    padding: 5px 27px;
+    width: 143px;
+
+    label img {
+        width: 20px;
+        height: 20px;
+        display: inline-block;
+    }
+}
+
+.disabled {
+    opacity: 0.5;
+    pointer-events: none;
+}

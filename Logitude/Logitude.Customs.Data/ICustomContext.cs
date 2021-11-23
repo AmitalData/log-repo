@@ -98,6 +98,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<ConstraintType> ConstraintTypes { get; }
 		 IDbSet<ContactRoleType> ContactRoleTypes { get; }
 		 IDbSet<Containerization> Containerizations { get; }
+		 IDbSet<ContainerizationHataraStatus> ContainerizationHataraStatuses { get; }
 		 IDbSet<ContainerizationStatusCode> ContainerizationStatusCodes { get; }
 		 IDbSet<ContainerType> ContainerTypes { get; }
 		 IDbSet<ContinuousMessagesTypeCode> ContinuousMessagesTypeCodes { get; }
@@ -284,6 +285,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<PendingErrorPlace> PendingErrorPlaces { get; }
 		 IDbSet<PhysicalCheck> PhysicalChecks { get; }
 		 IDbSet<PhysicalCheckOperation> PhysicalCheckOperations { get; }
+		 IDbSet<PhysicalCheckSearchResultType> PhysicalCheckSearchResultTypes { get; }
 		 IDbSet<PhysicalCheckStatusMessage> PhysicalCheckStatusMessages { get; }
 		 IDbSet<PoaAuthorizationTypeLookup> PoaAuthorizationTypeLookups { get; }
 		 IDbSet<PoaStatusTypeLookUp> PoaStatusTypeLookUps { get; }

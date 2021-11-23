@@ -214,6 +214,7 @@ export class ContainerizationMenuButtonsHandler implements OnDestroy {
                     {
                         this.DeclarationsStatusRequestMethod();
                         break;
+
                     }
 
                 case "CancelContainerization":
@@ -241,10 +242,10 @@ export class ContainerizationMenuButtonsHandler implements OnDestroy {
         currRequestParams.LoggingUserId = SessionLocator.LoggedUserId;
         currRequestParams.LoggingObjectTableId = window.ObjectTables.filter(d => d.Name === 'Customs.Containerization')[0].Id;
         currRequestParams.LoggingEntityId = this.EntityPM.Id;
-        currRequestParams.LoggingEntityId2 = this.EntityPM.ConnectedDeclarations;
+        currRequestParams.DeclarationList = this.EntityPM.ConnectedDeclarations;
         currRequestParams.RequestVIA = SendRequestVIA.WebServiceInteractive;
         currRequestParams.Tenant = SessionLocator.Tenant;
-        //currRequestParams.RequestOrigin = "DeclarationStatusRequestViewModel";
+       currRequestParams.RequestOrigin = "DeclarationStatusRequestViewModel";
         var _DeclarationMessagesService = new DeclarationMessagesService();
         this.CurrentSession.StartBusyIndicator("Sending...");
 
@@ -310,7 +311,7 @@ export class ContainerizationMenuButtonsHandler implements OnDestroy {
                 messageWindow.Width = 300;
                 messageWindow.Height = 180;
                 messageWindow.Title = "שליחת המכלה";
-                messageWindow.Show("המכלה לא קיימת במכס");
+                messageWindow.Show("המכלה לם קיימת במכס");
             }
             else
             {
@@ -318,9 +319,12 @@ export class ContainerizationMenuButtonsHandler implements OnDestroy {
                 messageWindow.Width = 300;
                 messageWindow.Height = 180;
                 messageWindow.Title = "שליחת המכלה";
+                messageWindow.YesButtonText = "םישור";
+                messageWindow.ShowCancelButton = true;
+                messageWindow.ShowNoButton = false;
             //messageWindow.RTL = true;
                 messageWindow.ShowErorImage = true;
-                messageWindow.Show("המכלה לא קיימת במכס, האם לשחרר תיקים?");
+                messageWindow.Show("המכלה לם קיימת במכס, הםם לשחרר תיקים?");
                 messageWindow.WindowClosed.subscribe((event: any) => {
                     if (messageWindow.Yes) {
                         this.EntityPM.NotConnectedDeclarations = this.EntityPM.ConnectedDeclarations;
@@ -337,7 +341,7 @@ export class ContainerizationMenuButtonsHandler implements OnDestroy {
         {
             var confirmWindow = new ConfirmWindow();
             confirmWindow.Width = 300;
-            confirmWindow.Show("האם ברצונך לבטל את ההמכלה ?");
+            confirmWindow.Show("הםם ברצונך לבטל םת ההמכלה ?");
             confirmWindow.WindowClosed.subscribe((event: any) => {
                 if (confirmWindow.Yes) {
                     this.EntityPM.OperationMode = "3";

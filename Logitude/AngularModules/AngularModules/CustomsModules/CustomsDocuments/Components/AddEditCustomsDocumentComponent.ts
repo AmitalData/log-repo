@@ -751,7 +751,7 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
         }
         else {
             this.CurrentSession.CloseCurrentWindowEmit("cancel");
-        }
+        } 
     }
 
     InsertNewTicket() {
@@ -765,7 +765,7 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
     }
 
     FillConnectedToItems() {
-         this.ConnectedToItems = this.iCustomsDocumentsController.FillConnectedToItems();
+        this.ConnectedToItems = this.iCustomsDocumentsController.FillConnectedToItems();
         //if (entityCode.toLowerCase() == "declaration") {
         //    var connectedItem1 = new ConnectedToItem();
         //    connectedItem1.Id = 0;
@@ -797,6 +797,14 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
         let connectedDocumentPointer: any = this.iCustomsDocumentsController.FillConnectedDocumentPointer(this.CustomsDocumentsTicket.CustomsDocumentPointers[0]);
         if (connectedDocumentPointer != null) {
             this.SelectedIndex = connectedDocumentPointer.SelectedIndex;
+            if (this.EntityPM.Direction == 'E') {
+                if (this.DocumentTypeCode == "IL_140") {
+                    this.SelectedIndex = 1;
+                    if (this.EntityPM.SupplierInvoices[0] != null) {
+                        this.CustomsDocumentsTicket.ConnectedInvoicesSequences = this.EntityPM.SupplierInvoices[0].SequenceNumeric;
+                    }
+                }
+            }
             this.DisplayConnectedEntityNumber = connectedDocumentPointer.DisplayConnectedEntityNumber;
             if (this.ParentEntityCode == "Declaration" && connectedDocumentPointer.SupplierInvoiceItemNumber != null) {
                 this.SupplierInvoiceItemNumber = connectedDocumentPointer.SupplierInvoiceItemNumber;

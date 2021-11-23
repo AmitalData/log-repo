@@ -12,6 +12,7 @@ import { CustomsRequestsSheetPM } from '../../Customs/EntityPMs/CustomsRequestsS
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
 import { defer, of } from 'rxjs';
+declare var window: any;
 
 export class DeclarationDisplayOnlyChecks {
 
@@ -117,6 +118,24 @@ export class DeclarationDisplayOnlyChecks {
                 }
             });
         }
+
+        // check if multiupdating supplierinvocieitem
+        this.CheckIfRequestInProgressByDecID(this.entityPM.Tenant, "DCAMU", this.entityPM.Id).subscribe((response: any) => {
+            var displayOnlyCheckResult = response.Result;
+            if (displayOnlyCheckResult != null && displayOnlyCheckResult.length > 0) {
+                let customsRequestsSheetPM: CustomsRequestsSheetPM = displayOnlyCheckResult.filter(r => r.InterfaceTypeCode == "DCAMU")[0];
+                if (customsRequestsSheetPM != null) {
+
+                    var errorMessage: string = "קיימת בקשה לעדכון קוד תהליך/הנחה פטור ";
+                    SessionLocator.SelectedSession.CurrentEditComponent.IsSaveBtnDisable = true;
+                    SessionLocator.SelectedSession.CurrentEditComponent.EditComponentController.MustRefresh = true;
+                    editComponentNeedsRefresh = SessionLocator.SelectedSession.CurrentEditComponent.EditComponentController.MustRefresh;
+                    SessionLocator.SelectedSession.CurrentEditComponent.EditComponentController.MustRefreshMessage = errorMessage;
+                    serviceResponse.Result = new DisplayOnlyCheckResult(true, errorMessage);
+                    return serviceResponse;
+                }
+            }
+        });
 
 
         if (this.entityPM.AmendmentMessage != null && this.entityPM.AmendmentMessage != "") {
@@ -286,6 +305,20 @@ export class DeclarationDisplayOnlyChecks {
                     serviceResponse.Result = requestSheets;
                     return serviceResponse;
                 }),catchError(ServiceHelper.HandleServiceError));
+        });
+    }
+
+    CheckIfRequestInProgressByDecID(tenant: number, interfaceTypeCode: string, decId: string, displayOnlyMode: boolean = true) {
+
+        var objecttable = window.ObjectTables.filter(x => x.Name === "Customs.Declaration")[0];
+        return defer(() => {
+            return ServiceHelper.HttpClient.get(this.apiUrl + '/GetRequestInProgress/?' + 'tenant=' + tenant + '&interfaceTypeCode=' + interfaceTypeCode + '&objectTableId1=' + objecttable + '&entityId1=' + decId + '&objectTableId2=' + "" + '&entityId2=' + "" + '&customFileNo=' + "" + '&displayOnlyMode=' + displayOnlyMode, ServiceHelper.GetHttpHeaders())
+                .pipe(map(response => {
+                    var serviceResponse: ServiceResponse = new ServiceResponse();
+                    var requestSheets = response;
+                    serviceResponse.Result = requestSheets;
+                    return serviceResponse;
+                }), catchError(ServiceHelper.HandleServiceError)); 
         });
     }
 }

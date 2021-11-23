@@ -202,6 +202,40 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="SearchResult"
+    Type="varchar"
+    Size="3">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="SealNumber"
+    Type="varchar"
+    Size="20">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="CheckAuthorityAttenderTypeID"
+    Type="varchar"
+    Size="3">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="CheckAuthorityAttenderTypeName"
+    Type="varchar"
+    Size="255">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="CheckAnwserStatus"
+    Type="int">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="DeclarationId"
     ReferencedTable="Declarations"
@@ -257,4 +291,14 @@
     ReferencedTable="Cards"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="SearchResult"
+    ReferencedTable="PhysicalCheckSearchResultTypes"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="CheckAuthorityAttenderTypeID"
+    ReferencedTable="Authorities"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
 </Table>

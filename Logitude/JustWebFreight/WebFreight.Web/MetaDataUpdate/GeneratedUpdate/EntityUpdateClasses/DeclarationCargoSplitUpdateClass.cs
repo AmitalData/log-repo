@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationCargoSplitUpdateClass
    {  		
-		public const string HashString = "ec54cf0bf7dc6d42061e5de7e8e69250";
+		public const string HashString = "3db6fc4760ff25164b087633558ec74e";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -127,8 +127,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    NewWizardControlName =  "Logitude.Customs.Views.NewDeclarationCargoSplitControlCommand",
 			      				    LocalDefaultText =  "בקשת פיצול מטען",
 			      				    DefaultText =  "Declaration Cargo Split",
-			      				    NewButtonLocalDefaultText =  "בקשת פיצול מטען חדשה",
-			      				    NewButtonDefaultText =  "בקשת פיצול מטען חדשה",
+			      				    NewButtonLocalDefaultText =  "בקשת פיצול מטען",
+			      				    NewButtonDefaultText =  "בקשת פיצול מטען",
 			      				    Code =  "DECS",
 			      				    Name =  "Customs.DeclarationCargoSplit",
 			      				    GenerateDomainService =  true,
@@ -193,10 +193,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "RequestDate",
 					  						DefaultText =  "Request Date",
-					  						FullLocalDefaultText =  "תאריך בקשת פיצול",
+					  						FullLocalDefaultText =  "תםריך בקשת פיצול",
 					  						ListFieldLable =  "RequestDateListLable",
 					  						ListLableDefaultText =  "Request Date",
-					  						ListLocalDefaultText =  "תאריך בקשת פיצול",
+					  						ListLocalDefaultText =  "תםריך בקשת פיצול",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  true,
@@ -813,10 +813,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ManifestNumber",
 					  						DefaultText =  "Manifest Number",
-					  						FullLocalDefaultText =  "מזהה מטען ראשון",
+					  						FullLocalDefaultText =  "מזהה מטען רםשון",
 					  						ListFieldLable =  "ManifestNumberListLable",
 					  						ListLableDefaultText =  "Manifest Number",
-					  						ListLocalDefaultText =  "מזהה מטען ראשון",
+					  						ListLocalDefaultText =  "מזהה מטען רםשון",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -1249,10 +1249,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CustomFileNo",
 					  						DefaultText =  "Custom File No",
-					  						FullLocalDefaultText =  "תיק עמילות",
+					  						FullLocalDefaultText =  "תיק עמילות/מכס",
 					  						ListFieldLable =  "CustomFileNoListLable",
 					  						ListLableDefaultText =  "Custom File No",
-					  						ListLocalDefaultText =  "תיק עמילות",
+					  						ListLocalDefaultText =  "תיק עמילות/מכס",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
