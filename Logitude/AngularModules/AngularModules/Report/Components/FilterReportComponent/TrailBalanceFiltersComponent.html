@@ -126,15 +126,15 @@
                                                     <div style="padding: 0 5px;">{{'GLAccount.F.ChartOfAccountsTypeCode' | TextCodeTranslationPipe}}</div>
                                                     <div style="width: 150px;" *ngIf="chartOfAccountsTypes.length > 0">
                                                         <ComboBoxWithInCheckBox [MinHeight]="150" [ItemsSource]="chartOfAccountsTypes" [IsDisabled]="isChartOfAccountsTypesDisabled"
-                                                            [SelectedItem]="SelectedChartOfAccountsType" (EditedItemSource)="OnChartOfAccountsTypeItemClicked($event)"
-                                                            (SelectedItemChanged)="SelectedChartOfAccountsType = $event" [Binding]="'EnglishName'"></ComboBoxWithInCheckBox>
+                                                            [SelectedItem]="ChartOfAccountsTypeComboboxValue" (EditedItemSource)="OnChartOfAccountsTypeItemClicked($event)"
+                                                            (SelectedItemChanged)="ChartOfAccountsTypeComboboxValue = $event" [Binding]="'EnglishName'"></ComboBoxWithInCheckBox>
                                                     </div>
                                                     <div style="width: 50px;"></div>
                                                     <div style="padding: 0 5px;">{{'GLAccount.F.ChartOfAccountsId' | TextCodeTranslationPipe}}</div>
                                                     <div style="width: 150px;" *ngIf="chartOfAccounts.length > 0">
                                                         <ComboBoxWithInCheckBox [MinHeight]="150" [ItemsSource]="chartOfAccounts" [IsDisabled]="isChartOfAccountsDisabled"
-                                                            [SelectedItem]="SelectedChartOfAccounts" (EditedItemSource)="OnChartOfAccountsItemClicked($event)"
-                                                            (SelectedItemChanged)="SelectedChartOfAccounts = $event" [Binding]="'EnglishName'"></ComboBoxWithInCheckBox>
+                                                            [SelectedItem]="ChartOfAccountsComboBoxValue" (EditedItemSource)="OnChartOfAccountsItemClicked($event)"
+                                                            (SelectedItemChanged)="ChartOfAccountsComboBoxValue = $event" [Binding]="'EnglishName'"></ComboBoxWithInCheckBox>
                                                     </div>
                                                 </div>
                                             </td>

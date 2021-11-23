@@ -17,6 +17,7 @@ import { CodeNameClass } from '../../../Infrastructure/DataContracts/CodeNameCla
 import { ChartOfAccountListService } from 'Accounting/Services/StandardLists/ChartOfAccountListService';
 import { ChartOfAccountsTypeListService } from 'Accounting/Services/StandardLists/ChartOfAccountsTypeListService';
 import { ApiQueryFilters } from 'Infrastructure/DataContracts/ApiQueryFilters';
+import { EntityResourceService } from 'Infrastructure/Services/EntityResourceService';
 
 @Component({
 
@@ -50,6 +51,7 @@ export class TrailBalanceFiltersComponent extends BaseComponent
 
     chartOfAccountListService: ChartOfAccountListService = new ChartOfAccountListService();
     chartOfAccountsTypeListService: ChartOfAccountsTypeListService = new ChartOfAccountsTypeListService();
+    entityResourceService: EntityResourceService = new EntityResourceService();
 
     chartOfAccounts: any[] = [];
     chartOfAccountsTypes: any[] = [];
@@ -89,8 +91,16 @@ export class TrailBalanceFiltersComponent extends BaseComponent
         this.CustomerDetailedControlFilter = this.CustomerDetailedControlList[1];
 
         this.GetDropDownItemsData();
+
+        this.LoadResources();
+
     }
 
+
+    private LoadResources()
+    {
+        this.entityResourceService.getEntityResourceByTableName("ExternalReconciliation").subscribe((response: any) => { });
+    }
 
     GetDropDownItemsData(){
         this.getChartOfAccounts();
@@ -120,7 +130,7 @@ export class TrailBalanceFiltersComponent extends BaseComponent
             });
     }
 
-    OnChartOfAccountsTypeItemClicked(){
+    OnChartOfAccountsTypeItemClicked(items){
         this.selectedChartOfAccountsTypes = this.chartOfAccountsTypes.filter(item=>item.Checked == true);
         const haveSelectedItems = this.selectedChartOfAccountsTypes.length > 0;
         this.DisableChartOfAccountField(haveSelectedItems);
@@ -131,16 +141,28 @@ export class TrailBalanceFiltersComponent extends BaseComponent
     private DisableChartOfAccountField(haveSelectedItems: boolean)
     {
         this.isChartOfAccountsDisabled = haveSelectedItems;
-        this.SelectedChartOfAccounts = null;
+        this.chartOfAccountsComboBoxValue = null;
     }
 
-    OnChartOfAccountsItemClicked(){
+    OnChartOfAccountsItemClicked(items){
         this.selectedChartOfAccounts = this.chartOfAccounts.filter(item=>item.Checked == true);
 
         const haveSelectedItems = this.selectedChartOfAccounts.length > 0;
         this.DisableChartOfAccountsTypesField(haveSelectedItems);
         this.DisableCategoryFields(haveSelectedItems);
 
+    }
+    SetChartOfAccountsFilterProperties(){
+
+        this.selectedChartOfAccountsTypes = this.chartOfAccountsTypes.filter(item=>item.Checked == true);
+        let haveSelectedItems = this.selectedChartOfAccountsTypes.length > 0;
+        this.DisableChartOfAccountField(haveSelectedItems);
+        this.DisableCategoryFields(haveSelectedItems);
+
+        this.selectedChartOfAccounts = this.chartOfAccounts.filter(item=>item.Checked == true);
+        haveSelectedItems = this.selectedChartOfAccounts.length > 0;
+        this.DisableChartOfAccountsTypesField(haveSelectedItems);
+        this.DisableCategoryFields(haveSelectedItems);
     }
     private DisableChartOfAccountsTypesField(haveSelectedItems: boolean)
     {
@@ -163,26 +185,28 @@ export class TrailBalanceFiltersComponent extends BaseComponent
 
 
 
-    private _SelectedChartOfAccountsType: string;
+    private chartOfAccountsTypeComboboxValue: string;
 
 
-    public get SelectedChartOfAccountsType(): string
+    public get ChartOfAccountsTypeComboboxValue(): string
     {
-        return this._SelectedChartOfAccountsType;
+        return this.chartOfAccountsTypeComboboxValue;
     }
-    public set SelectedChartOfAccountsType(v: string)
+    public set ChartOfAccountsTypeComboboxValue(v: string)
     {
-        this._SelectedChartOfAccountsType = v;
+        this.chartOfAccountsTypeComboboxValue = v;
+        this.SetChartOfAccountsFilterProperties();
     }
 
-    private _SelectedChartOfAccounts: string;
-    public get SelectedChartOfAccounts(): string
+    private chartOfAccountsComboBoxValue: string;
+    public get ChartOfAccountsComboBoxValue(): string
     {
-        return this._SelectedChartOfAccounts;
+        return this.chartOfAccountsComboBoxValue;
     }
-    public set SelectedChartOfAccounts(v: string)
+    public set ChartOfAccountsComboBoxValue(v: string)
     {
-        this._SelectedChartOfAccounts = v;
+        this.chartOfAccountsComboBoxValue = v;
+        this.SetChartOfAccountsFilterProperties();
     }
 
 
@@ -439,8 +463,8 @@ export class TrailBalanceFiltersComponent extends BaseComponent
     private isDetailedCheckBoxEnabled: boolean = false;
     private ResetChartOfAccountsFilters()
     {
-        this.SelectedChartOfAccounts = null;
-        this.SelectedChartOfAccountsType = null;
+        this.ChartOfAccountsComboBoxValue = null;
+        this.ChartOfAccountsTypeComboboxValue = null;
         this.selectedChartOfAccounts = [];
         this.selectedChartOfAccountsTypes = [];
     }
@@ -535,8 +559,11 @@ export class TrailBalanceFiltersComponent extends BaseComponent
 
             this.queryFilterItems.push(new QueryFilterItem("DontShowCardsWith0Balance", this.DontShowCardsWith0Balance, "boolean"));
             this.queryFilterItems.push(new QueryFilterItem("ChartOfAccountId", this.ChartOfAccountId, "String"));
-            this.queryFilterItems.push(new QueryFilterItem("ChartOfAccountsTypeCodeList", this.selectedChartOfAccountsTypes.map(item=>item.Code).join(','), "String"));
-            this.queryFilterItems.push(new QueryFilterItem("ChartOfAccountsIdList", this.selectedChartOfAccounts.map(item=>item.Id).join(','), "String"));
+
+            if(this.selectedChartOfAccountsTypes)
+                this.queryFilterItems.push(new QueryFilterItem("ChartOfAccountsTypeCodeList",  this.selectedChartOfAccountsTypes.map(item=>item.Code).join(','), "String"));
+            if(this.selectedChartOfAccounts)
+                this.queryFilterItems.push(new QueryFilterItem("ChartOfAccountsIdList", this.selectedChartOfAccounts.map(item=>item.Id).join(','), "String"));
 
 
 
