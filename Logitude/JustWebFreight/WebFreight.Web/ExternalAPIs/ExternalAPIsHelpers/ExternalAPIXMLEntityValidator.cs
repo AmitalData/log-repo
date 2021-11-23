@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using Simplog.Data.InfrastructureModel.Repositories;
 
 namespace WebFreight.Web.ExternalAPIs.ExternalAPIsHelpers
 {
@@ -23,6 +24,7 @@ namespace WebFreight.Web.ExternalAPIs.ExternalAPIsHelpers
         private List<Receivable> receivables;
         private List<Payable> payables;
         private List<OceanOrInlandPackage> oceanOrInlandPackages;
+        private List<Event> events;
         public ExternalAPIXMLEntityValidator(int tenant)
         {
             this.tenant = tenant;
@@ -42,6 +44,7 @@ namespace WebFreight.Web.ExternalAPIs.ExternalAPIsHelpers
             this.ValidateReceivables();
             this.ValidatePayables();
             this.ValidatePorts();
+            this.ValidateEvents();
         }
 
         public void ValidateHouseEntity(House houseEntity, IShipmentsContext context)
@@ -56,7 +59,8 @@ namespace WebFreight.Web.ExternalAPIs.ExternalAPIsHelpers
             }
 
             this.ValidateReceivables();
-            this.ValidatePayables();  
+            this.ValidatePayables();
+            this.ValidateEvents();
         }
 
         public void ValidateMasterEntity(Master masterEntity)
@@ -72,6 +76,7 @@ namespace WebFreight.Web.ExternalAPIs.ExternalAPIsHelpers
             this.ValidateReceivables();
             this.ValidatePayables();
             this.ValidatePorts();
+            this.ValidateEvents();
         }
 
         private void SetCommonDataFromDirectEntity(Direct directEntity)
@@ -85,6 +90,7 @@ namespace WebFreight.Web.ExternalAPIs.ExternalAPIsHelpers
             this.receivables = directEntity.Receivables;
             this.payables = directEntity.Payables;
             this.oceanOrInlandPackages = directEntity.OceanOrInlandPackages;
+            this.events = directEntity.EventList;
         }
         private void SetCommonDataFromHouseEntity(House houseEntity)
         {
@@ -96,6 +102,7 @@ namespace WebFreight.Web.ExternalAPIs.ExternalAPIsHelpers
             this.receivables = houseEntity.Receivables;
             this.payables = houseEntity.Payables;
             this.oceanOrInlandPackages = houseEntity.OceanOrInlandPackages;
+            this.events = houseEntity.EventList;
         }
         private void SetCommonDataFromMasterEntity(Master masterEntity)
         {
@@ -107,6 +114,7 @@ namespace WebFreight.Web.ExternalAPIs.ExternalAPIsHelpers
             this.mainCarriageLegs = masterEntity.MainCarriageLegs;
             this.receivables = masterEntity.Receivables;
             this.payables = masterEntity.Payables;
+            this.events = masterEntity.EventList;
         }
         private void ValidateShipmentPackagesDueToShipmentType()
         {
@@ -207,7 +215,6 @@ namespace WebFreight.Web.ExternalAPIs.ExternalAPIsHelpers
                         throw new ApplicationException("Payable Charges Type is required");
                     }
 
-
                     if (item.Currency == null)
                     {
                         string currencyId = null;
@@ -241,6 +248,44 @@ namespace WebFreight.Web.ExternalAPIs.ExternalAPIsHelpers
                 }
             }
         }
+        private void ValidateEvents()
+        {
+            if (IsShipmentHasEvents())
+            {
+                EventTypeRepository eventTypeRepository = new EventTypeRepository(tenant);
+
+                foreach (Event item in events)
+                {
+                    if (item.EventType == null)
+                    {
+                        throw new ApplicationException("Event Type is required");
+                    }
+
+                    if (item.EventDateTime == null)
+                    {
+                        throw new ApplicationException("Event Date is required");
+                    }
+
+                    this.ValidateEventType(item.EventType, eventTypeRepository);
+                }
+            }
+        }
+        private void ValidateEventType(EventType eventType, EventTypeRepository eventTypeRepository)
+        {
+            var shipmentTableId = ObjectTableRepository.GetObjectTableByName("Shipment");
+            var eventTypePOCO = eventTypeRepository.GetSingleEventTypeByCodeAndObjectTableId(eventType.Code, shipmentTableId, tenant);
+
+            if(eventTypePOCO == null)
+            {
+                throw new ApplicationException("Event Type is not found for shipment");
+            }
+
+            if (!eventTypePOCO.IsManualEntry)
+            {
+                throw new ApplicationException("Event Type is not allowed for manual entry");
+            }
+        }
+
         private string GetChargesTypeCurrency(string chargeTypeCode, string indicator)
         {
             string currency = null;
@@ -359,6 +404,10 @@ namespace WebFreight.Web.ExternalAPIs.ExternalAPIsHelpers
         private bool IsShipmentHasPackages()
         {
             return this.oceanOrInlandPackages != null && this.oceanOrInlandPackages.Count > 0;
+        }
+        private bool IsShipmentHasEvents()
+        {
+            return this.events != null && this.events.Count > 0;
         }
     }
 }

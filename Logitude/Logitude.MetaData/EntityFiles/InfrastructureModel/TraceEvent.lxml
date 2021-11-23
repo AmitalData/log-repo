@@ -35,7 +35,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Trace Event&quot;"
-  Code="&quot;e198&quot;"
+  Code="&quot;3c28&quot;"
   Name="&quot;TraceEvent&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Infrastructure&quot;"
@@ -2116,8 +2116,8 @@
         IsCompositKey="false"
         IsUpdateAllowed="false" />
       <DCField
-        DCFieldName="&quot;IsManualEntry&quot;"
-        FieldName="&quot;IsManualEntry&quot;"
+        DCFieldName="&quot;IsAddedManually&quot;"
+        FieldName="&quot;IsAddedManually&quot;"
         IsKey="false"
         IsManualMapping="false"
         IsMulti="false"

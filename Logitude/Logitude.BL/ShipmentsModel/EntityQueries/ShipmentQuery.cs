@@ -2702,10 +2702,9 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
         }
         private List<TraceEventPM> GetShipmentTraceEvents(ShipmentPM shipmentPM)
         {
-            ObjectTableRepository objectTableRepository = new ObjectTableRepository(0);
             TraceEventQuery traceEventQuery = new TraceEventQuery(shipmentPM.Tenant);
-            ObjectTable shipmentObjectTable = objectTableRepository.GetObjectTableByName("Shipment", 0, false);
-            return traceEventQuery.GetTraceEventPMsByEntityIdsAndObjectTableId(new List<string> { shipmentPM.Id }, shipmentObjectTable.Id, shipmentPM.Tenant)
+            string shipmentObjectTableId = ObjectTableRepository.GetObjectTableByName("Shipment");
+            return traceEventQuery.GetTraceEventPMsByTenantByEntityId(shipmentPM.Tenant, shipmentPM.Id, shipmentObjectTableId)
                 .Where(d => d.EventTypeCode != "USHI").ToList();
         }
         private void ComputeHousesNumbersField(ShipmentPM shipmentPM)

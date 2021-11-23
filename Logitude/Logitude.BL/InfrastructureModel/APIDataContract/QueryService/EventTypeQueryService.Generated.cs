@@ -77,7 +77,9 @@ using Simplog.Data.InfrastructureModel;
 			       
 					   				   }
 				   
-				   temp.IsManualEntry = MyEntityPM.IsManualEntry;					
+				   temp.IsManualEntry = MyEntityPM.IsManualEntry;
+				   ComputingPartnerTranslationHelper helper = new ComputingPartnerTranslationHelper(Tenant); 
+				   temp.PartnerCode = helper.GetComputingPartnerCodeTranslation(MyEntityPM.Code,ComputingPartnerName,"EventType");  					
 				   return temp;
 			}
             catch (Exception ex)
@@ -96,7 +98,23 @@ using Simplog.Data.InfrastructureModel;
 					{
 						temp = query.GetSinglePM(MyEntity.Id, Tenant);
 					} 
-										   
+					
+					if (!string.IsNullOrEmpty(MyEntity.PartnerCode))
+					{
+                        if(string.IsNullOrEmpty(ComputingPartnerName))
+                            throw new ApplicationException("ComputingPartnerCode is required");
+						ComputingPartnerTranslationHelper helper = new ComputingPartnerTranslationHelper(Tenant);
+						var MyCode = helper.GetLogitudeCodeTranslation(MyEntity.PartnerCode,ComputingPartnerName,"EventType");
+					    if(string.IsNullOrEmpty(MyCode))
+						{
+						  throw new ApplicationException("EventType with Partner Code " + MyEntity.PartnerCode + " doesn't match any record");
+						}
+						temp = query.GetSinglePMByCode(MyCode, Tenant);
+						
+						
+					}
+					
+					   					   
 					if(temp == null)
 					{   
 					    throw new ApplicationException("EventType with Id " + MyEntity.Id + " doesn't exist");
@@ -168,7 +186,21 @@ using Simplog.Data.InfrastructureModel;
 
 										}  
 
-										   
+					
+					if(string.IsNullOrEmpty(temp.Code))
+					{
+					   
+						 
+						if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.PartnerCode))
+						{
+								//throw new ApplicationException("PartnerCode Can't be update"); 
+								temp.Code = MyEntity.PartnerCode;
+								
+						
+						}  
+
+						
+					}					   
 					return temp;
 		    }
             catch (Exception ex)

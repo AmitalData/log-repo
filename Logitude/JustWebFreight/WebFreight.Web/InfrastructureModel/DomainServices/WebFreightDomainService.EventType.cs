@@ -52,7 +52,7 @@ namespace WebFreight.Web.InfrastructureModel.DomainServices
 
             eventTypesRepository = new EventTypeRepository(tenant);
             eventTypeQuery = new EventTypeQuery(eventTypesRepository);
-            return eventTypeQuery.GetSingleEventTypePMByCode(code, tenant);
+            return eventTypeQuery.GetSinglePMByCode(code, tenant);
         }
 
 

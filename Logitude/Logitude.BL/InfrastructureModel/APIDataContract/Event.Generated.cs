@@ -33,7 +33,7 @@ namespace Logitude.BL.InfrastructureModel.APIDataContract.ApiV1
     
     public User CreatedBy { get; set; }
     
-    public bool IsManualEntry { get; set; }
+    public bool IsAddedManually { get; set; }
 
     public  string  ComputingPartnerCode { get; set; }
 

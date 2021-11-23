@@ -273,7 +273,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
             return null;
         }
 
-        public EventTypePM GetSingleEventTypePMByCode(string code, int tenant)
+        public EventTypePM GetSinglePMByCode(string code, int tenant)
         {
             if (!string.IsNullOrEmpty(code))
             {

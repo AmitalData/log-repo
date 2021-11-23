@@ -2344,7 +2344,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         private void AddEventSharedFromAgent(string agentName, string objectTableId)
         {
             EventTypeQuery eventTypeQuery = new EventTypeQuery(tenant);
-            EventTypePM eventType = eventTypeQuery.GetSingleEventTypePMByCode("CFSM", tenant);
+            EventTypePM eventType = eventTypeQuery.GetSinglePMByCode("CFSM", tenant);
 
             if (eventType != null)
             {

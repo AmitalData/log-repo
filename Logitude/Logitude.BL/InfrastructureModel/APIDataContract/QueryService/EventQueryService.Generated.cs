@@ -87,7 +87,7 @@ using Simplog.Data.InfrastructureModel;
 			       
 					   				   }
 				   
-				   temp.IsManualEntry = MyEntityPM.IsManualEntry;					
+				   temp.IsAddedManually = MyEntityPM.IsAddedManually;					
 				   return temp;
 			}
             catch (Exception ex)
@@ -195,9 +195,9 @@ using Simplog.Data.InfrastructureModel;
 			
 					
                     
-					if(!IsUpdate)// && (MyEntity.IsManualEntry != temp.IsManualEntry))
-					{							//throw new ApplicationException("IsManualEntry Can't be update"); 
-							temp.IsManualEntry = MyEntity.IsManualEntry;
+					if(!IsUpdate)// && (MyEntity.IsAddedManually != temp.IsAddedManually))
+					{							//throw new ApplicationException("IsAddedManually Can't be update"); 
+							temp.IsAddedManually = MyEntity.IsAddedManually;
 
 										}  
 

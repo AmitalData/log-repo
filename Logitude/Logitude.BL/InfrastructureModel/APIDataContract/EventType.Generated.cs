@@ -31,6 +31,9 @@ namespace Logitude.BL.InfrastructureModel.APIDataContract.ApiV1
     public EntityStatus EntityStatus { get; set; }
     
     public bool IsManualEntry { get; set; }
+    
+	[XmlAttribute]
+    public string PartnerCode { get; set; }
 
     public  string  ComputingPartnerCode { get; set; }
 
