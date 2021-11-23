@@ -28,6 +28,7 @@ export class APPaymentMenuButtonsHandler {
     public EntityPM: APPaymentPM;
     public entityArgs: EntityArgs
     public customValidator: APPaymentValidator = new APPaymentValidator();
+    ReconcileInternalTransIds:string;
     private isApproval: boolean;
     private isCancelApproval: boolean;
     private isVoided: boolean;
@@ -61,6 +62,9 @@ export class APPaymentMenuButtonsHandler {
             this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                 if (isSaveSuccess) {
                     this.EntityPM = this.entityArgs.EditComponent.EntityPM;
+                    if(this.EntityPM.ReconcileInternalTransIds) {
+                        this.ReconcileInternalTransIds = this.EntityPM.ReconcileInternalTransIds;
+                    }
                     if (this.isApproval) {
                         this.isApproval = false;
 
@@ -519,8 +523,9 @@ export class APPaymentMenuButtonsHandler {
     }
 
     ContinueSaving(event: string) {
-
-
+        if(this.ReconcileInternalTransIds) {
+            this.EntityPM.ReconcileInternalTransIds = this.ReconcileInternalTransIds;
+        }
         if (event && event != "Cancel") {
             var splittedstring = event.split(",");
             this.EntityPM.PaymentChequeCreationPayToName = splittedstring[0];
