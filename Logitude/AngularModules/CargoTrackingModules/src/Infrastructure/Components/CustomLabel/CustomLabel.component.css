@@ -1,0 +1,14 @@
+.icon-margin{
+    margin: 0px 4px 1px 4px;
+}
+.inline-flex{
+    display: inline-flex;
+}
+.nowrap{
+    white-space: nowrap;
+}
+.icon-display{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}

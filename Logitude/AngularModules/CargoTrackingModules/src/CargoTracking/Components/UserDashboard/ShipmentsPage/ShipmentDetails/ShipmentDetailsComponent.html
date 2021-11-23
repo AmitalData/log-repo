@@ -144,17 +144,21 @@
             </div>
             <ul>
                 <li>
-                    {{ShipmentOrder?.PONumber}} 
+                    <custom-label>{{ShipmentOrder?.PONumber}} </custom-label>
                 </li>
                 <li *ngIf="cargoTrackingShipmentPM.EntityType == 'O' && cargoTrackingShipmentPM.ShipmentOrderPONumber">
-                    {{cargoTrackingShipmentPM.ShipmentOrderPONumber}} 
+                    <custom-label>{{cargoTrackingShipmentPM.ShipmentOrderPONumber}} </custom-label>
                 </li>
             </ul>
             <ul *ngIf="showMoreReferences">
-                <li *ngFor="let ref of ShipmentReferences, let i = index">{{ref}}</li>
+                <li *ngFor="let ref of ShipmentReferences, let i = index">
+                    <custom-label>{{ref}}</custom-label>
+                </li>
             </ul>
             <ul *ngIf="!showMoreReferences">
-                <li *ngFor="let ref of ShipmentReferences?.slice(0,2), let i = index">{{ref}}</li>
+                <li *ngFor="let ref of ShipmentReferences?.slice(0,2), let i = index">
+                    <custom-label>{{ref}}</custom-label>
+                </li>
             </ul>
         </div>
 
@@ -304,12 +308,12 @@
                 <div class="mobile-only">
                     <div class="title">Customer Ref.</div>
                     <div class="description">
-                        <span *ngFor="let item of ShipmentReferences, let i = index">
-                            <span *ngIf="i == 0">{{item}} </span>
-                        </span>
-                        <span *ngIf="cargoTrackingShipmentPM.EntityType == 'O' && cargoTrackingShipmentPM.PoNumber">
+                        <div *ngFor="let item of ShipmentReferences, let i = index">
+                            <custom-label *ngIf="i == 0">{{item}} </custom-label>
+                        </div>
+                        <custom-label *ngIf="cargoTrackingShipmentPM.EntityType == 'O' && cargoTrackingShipmentPM.PoNumber">
                             {{cargoTrackingShipmentPM.PoNumber}} 
-                        </span>
+                        </custom-label>
                         <a *ngIf="this.ShipmentReferences && this.ShipmentReferences?.length > 2"
                            (click)="OpenReferencesWindow(ShipmentReferences)"
                            style="cursor: pointer;text-decoration: underline;">See all</a>
@@ -819,7 +823,7 @@ package.ShipperSeal == null ? package.CarrierSeal :
                         <td style="width: 450px;">
                             <img width="16" src="./assets/images/icons/info.png"
                                  style="top: 2px; position: relative;padding-right: 7px;" alt="">
-                            {{item.DocumentTypeName}}
+                            <custom-label style="width: 434px;">{{item.DocumentTypeName}}</custom-label>
                         </td>
                         <td style="width: 450px;">{{item.CreateDate | date:'d-MMM-yyyy, H:mm'}}</td>
                         <td style="width: 450px;">{{item.CustomReference}}</td>
@@ -876,7 +880,7 @@ package.ShipperSeal == null ? package.CarrierSeal :
                         </div>
                         <div class="row">
                             <div class="col-50">
-                                {{item.DocumentTypeName}}
+                                <custom-label >{{item.DocumentTypeName}}</custom-label>
                                 <br>
                                 <span style="color: gray;font-size: 13px;">
                                     {{ item.CreateDate | date:'d-MMM-yyyy, H:mm' }}
@@ -921,7 +925,9 @@ package.ShipperSeal == null ? package.CarrierSeal :
                         </div>
                         <div>
                             <div class="partner-type-label">{{partnerCard.Type}}</div>
-                            <div class="partner-name">{{partnerCard.Name}}</div>
+                            <div class="partner-name">
+                                <custom-label>{{partnerCard.Name}}</custom-label>
+                            </div>
                         </div>
                         <div class="mobile-only" (click)="partnerCard.ShowDetails = !partnerCard.ShowDetails"
                              style="padding: 10px;">
