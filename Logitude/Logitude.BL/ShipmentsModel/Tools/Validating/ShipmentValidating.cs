@@ -91,14 +91,14 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
         {
             if (FeatureToggleHelper.HasFeatureToggle("OIC", entityPM.Tenant))
             {
-                if (IsOceanInsightsShippingLineValid(entityPM)) 
+                if (IsOceanInsightsShippingLineNotValid(entityPM)) 
                 {
                     throw new ApplicationException("You cannot fill the OBL without a Shipping Line. Please select a Shipping Line");
                 }
             }
         }
 
-        private static bool IsOceanInsightsShippingLineValid(ShipmentPM entityPM)
+        private static bool IsOceanInsightsShippingLineNotValid(ShipmentPM entityPM)
         {
             if (entityPM.ShipmentTypeId != "FCL" && entityPM.ShipmentTypeId != "FCLD")
             {
