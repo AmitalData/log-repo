@@ -17,6 +17,9 @@ import { RestAPI } from '../../../Base/cypress/constants/RestAPI'
 import * as BaseActions from '../../../Base/cypress/actions/Actions';
 import { intersection } from 'cypress/types/lodash';
 import { InvoiceSettingsDetails } from "../../../Maintenance/cypress/models/InvoiceSettingsDetails";
+import { InvoiceLineDetails } from "../../../FullAccounting/cypress/models/InvoiceLineDetails"
+import { APInvoiceSelectors } from "../../../FullAccounting/cypress/selectors/APInvoiceSelectors"
+
 
 export function NavigatesToAccountingMenu() {
     cy.Click(BaseSelectors.AccountingMenu, null)
@@ -24,7 +27,6 @@ export function NavigatesToAccountingMenu() {
 export function NavigatesToAccountingSettings() {
     NavigatesToAccountingMenu();
     cy.Click(AccountingSelectors.AccountingSettings, null);
-
 }
 export function NavigatesToAccountingTransfer() {
     NavigatesToAccountingMenu();
@@ -97,7 +99,7 @@ export function NavigatesToAccountsReceivableWorkspace() {
     cy.Click(AccountingSelectors.ReceivableAccounting, null)
 }
 //#region APInvoice
-export function FillAPInvoiceDetails(aPInvoiceDetails: APInvoiceDetails, multiple = false, havePayableVendor?: string) {
+export function FillAPInvoiceDetails(aPInvoiceDetails: APInvoiceDetails, multiple = false, isUnexpectedPayable = false, havePayableVendor?: string) {
     var generatedInvoiceNumber = "AP" + gr.GenerateRandomNumber(10000, 99999).toString();
     cy.FillLogLov(AccountingSelectors.APInvoiceVendor, aPInvoiceDetails.Vendor, false);
     cy.FillLogTextBox(AccountingSelectors.APInvoiceInvoiceNumber, generatedInvoiceNumber)
@@ -110,14 +112,23 @@ export function FillAPInvoiceDetails(aPInvoiceDetails: APInvoiceDetails, multipl
     cy.FillLogTextBox(AccountingSelectors.APInvoiceVATNumber, aPInvoiceDetails.VatNo.toString())
     cy.FillLogLov(AccountingSelectors.APInvoiceBranch, aPInvoiceDetails.Branch, true)
     cy.Click(AccountingSelectors.OkCreateAPInvoiceButton, null);
-    if (!multiple) {
-        if (!havePayableVendor) {
-            cy.Click(BaseSelectors.CheckBoxLine, null)
+    if (!isUnexpectedPayable) {
+        if (!multiple) {
+            if (!havePayableVendor) {
+                cy.Click(BaseSelectors.CheckBoxLine, null)
+            }
+            cy.FillLogLov(AccountingSelectors.APInvoiceVatType, aPInvoiceDetails.VATType, true)
+            cy.Click(AccountingSelectors.VatTypeApplyToAll, null)
         }
-        cy.FillLogLov(AccountingSelectors.APInvoiceVatType, aPInvoiceDetails.VATType, true)
-        cy.Click(AccountingSelectors.VatTypeApplyToAll, null)
     }
 }
+export function FillAPInvoiceLine(invoiceLineDetails: InvoiceLineDetails) {
+    cy.Click(APInvoiceSelectors.AddInvoiceLine, null)
+    cy.FillLogLov(APInvoiceSelectors.APInvoiceLineChargesType, invoiceLineDetails.ChargesType, true);
+    cy.FillLogLov(APInvoiceSelectors.APInvoiceLineVatType, invoiceLineDetails.VatType, true);
+    cy.FillLogTextBox(APInvoiceSelectors.APInvoiceLineAmount, invoiceLineDetails.Amount)
+}
+
 export function ReceiveAPInvoice() {
     cy.DefineRequestWait(RestAPI.POST, AccountingURLs.APInvoices, RequestAliases.APInvoicesRequest)
     cy.DefineRequestWait(RestAPI.POST, AccountingURLs.InvoiceDomain, RequestAliases.InvoiceDomain)
@@ -238,7 +249,6 @@ export function VoidMultipleShipmentAPInvoice() {
     cy.Click(ShipmentSelectors.ConfirmWindowYes, null);
 }
 //#endregion
-
 //#region ARInvoice
 export function FillARInvoiceDetails(aRInvoiceDetails: ARInvoiceDetails) {
     if (aRInvoiceDetails.Partner) {
@@ -591,3 +601,4 @@ export function AssertAutoCreditByInvoiceNumber(invoiceNumber: string) {
         expect(text.replace(/\s/g, "")).to.equals("ByInvoice" + invoiceNumber);
     });
 }
+
