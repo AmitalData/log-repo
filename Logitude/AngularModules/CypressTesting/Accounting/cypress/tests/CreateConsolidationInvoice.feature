@@ -136,6 +136,7 @@ Feature: Create Consolidation Invoice
     Scenario: Approve Consolidation Invoice
         When approve consolidation invoice
         Then the consolidation invoice should approve successfully
+        And the status value should be "Unpaid"
 
     Scenario: Pay consolidation invoice
         Given a payment with the following details
@@ -148,7 +149,9 @@ Feature: Create Consolidation Invoice
             | PaymentAmount   | 50                |
         When pay the consolidation invoice
         Then the consolidation invoice should pay successfully
+        And the status of AR Payment value should be "Draft"
 
     Scenario: Approve payment
         When approve the payment
         Then the payment should approve successfully
+        And the status of AR Payment value should be "Closed"
