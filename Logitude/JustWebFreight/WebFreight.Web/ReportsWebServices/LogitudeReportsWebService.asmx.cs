@@ -11287,6 +11287,7 @@ namespace WebFreight.Web.ReportsWebServices
 
             if (level == "GLAccount" || level == "ChartOfAccount" || level == "ChartOfAccountType")
             {
+
                 trailReportParam.DetailedControlVendors = false;
                 trailReportParam.DetailedControlClients = false;
                 trailReportParam.DetailedControlJob = false;
@@ -11369,6 +11370,8 @@ namespace WebFreight.Web.ReportsWebServices
 
             if (level == "GLAccount" || level == "ChartOfAccount")
             {
+
+
                 trailReportParam.DetailedControlVendors = false;
                 trailReportParam.DetailedControlClients = false;
                 trailReportParam.DetailedControlJob = false;
@@ -11823,6 +11826,8 @@ namespace WebFreight.Web.ReportsWebServices
 
                 List<string> chartOfAccountTypesCodes = GetChartOfAccountsTypesFilterValue(queryOperations);
                 List<string> chartOfAccountIds = GetChartoOfAccountsFilterValue(queryOperations);
+                trailReportParam.ChartOfAccountsTypeCodeList = chartOfAccountTypesCodes;
+                trailReportParam.ChartOfAccountsIdList = chartOfAccountIds;
 
                 trailReportParam.DetailedControlVendors = vendor;
                 trailReportParam.DetailedControlClients = customer;
@@ -11837,8 +11842,6 @@ namespace WebFreight.Web.ReportsWebServices
                 trailReportParam.MyTrailReportLevel = ReportLevel.GLAccount;
                 trailReportParam.Suppress_DoNotShowCardWithoutActivity = false;
                 trailReportParam.DoNotShowCardWithLocalCloseBalanceEqualZero = dontShowCardsWith0Balance;
-                trailReportParam.ChartOfAccountsTypeCodeList = chartOfAccountTypesCodes;
-                trailReportParam.ChartOfAccountsIdList = chartOfAccountIds;
 
                 var servce = TrailReportFactory.CreateNew(trailReportParam);
 
