@@ -95,7 +95,7 @@ set @APInvoicesAutomaticLastUpdateDate = (select MAX(AutomaticLastUpdateDate) Au
 
 	--inner JOIN dw_CustomObjectFields  ON dw_ARInvoices.Tenant = dw_CustomObjectFields.Tenant and dw_CustomObjectFields.ObjectTableName = 'ARInvoice'
 
-	where dw_ARInvoices.AutomaticLastUpdateDate > @ARInvoicesLastUpdateDate and dw_ARInvoices.StatusCode <> 'VD' and dw_ARInvoices.StatusCode <> 'LL'
+	where dw_ARInvoices.AutomaticLastUpdateDate > @ARInvoicesLastUpdateDate and dw_ARInvoices.StatusCode <> 'VD' and dw_ARInvoices.StatusCode <> 'LL' and dw_ARInvoices.Id != '-1'
 
 	UNION ALL
 
