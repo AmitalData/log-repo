@@ -24,7 +24,6 @@ export class ListHeaderTemplateComponent implements OnInit {
     public noComponent: boolean;
 
     ngOnInit() {
-
         if (this.colDef.ColumnHeaderTemplateName) {
             this.noComponent = false;
             
@@ -55,7 +54,18 @@ export class ListHeaderTemplateComponent implements OnInit {
             if (this.colDef.ColumnHeaderTemplateName === "BlackTransportModeListHeaderTemplate") {
                 SessionLocator.DynamicLoader.Load("./CustomsModules/CustomsListTemplates/Components/ListHeaderTemplates/BlackTransportModeListHeaderTemplate", this._ViewContainerRef);
             }
-
+            if (this.colDef.ColumnHeaderTemplateName === "StartWorkingListHeaderTemplate") {
+                SessionLocator.DynamicLoader.Load("./Common/Components/Templates/ListHeaderTemplates/StartWorkingListHeaderTemplate", this._ViewContainerRef);
+            }
+            if (this.colDef.ColumnHeaderTemplateName === "EnglishNameListHeaderTemplate") {
+                SessionLocator.DynamicLoader.Load("./Common/Components/Templates/ListHeaderTemplates/EnglishNameListHeaderTemplate", this._ViewContainerRef);
+            } 
+            if (this.colDef.ColumnHeaderTemplateName === "CityNameListHeaderTemplate") {
+                SessionLocator.DynamicLoader.Load("./Common/Components/Templates/ListHeaderTemplates/CityNameListHeaderTemplate", this._ViewContainerRef);
+            } 
+            if (this.colDef.ColumnHeaderTemplateName === "CodeListHeaderTemplate") {
+                SessionLocator.DynamicLoader.Load("./Common/Components/Templates/ListHeaderTemplates/CodeListHeaderTemplate", this._ViewContainerRef);
+            }
             if (this.htmlListHeaderUrl) {
                 SessionLocator.DynamicLoader.Load(this.htmlListHeaderUrl, this._ViewContainerRef)
                     .then((res) => {
