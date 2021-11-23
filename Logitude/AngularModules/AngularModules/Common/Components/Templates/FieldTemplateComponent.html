@@ -81,6 +81,14 @@
                     <span>{{FieldValue}}</span>
                 </div>
 
+                <div *ngIf="ObjectTableName == 'Customer' && FieldName == 'StartWorkingDataTemplate'">
+                    <span>{{StartWorkingDateValue}}</span>
+                </div>
+
+                <div *ngIf="ObjectTableName == 'Customer' && FieldName == 'EnglishNameDataTemplate'">
+                    <span>{{FieldValue}}</span>
+                </div>
+
                 <div *ngIf="ObjectTableName == 'Customer' && FieldName == 'CustomerStatusCode'">
                     <span [ngStyle]="{color: Entity['CustomerStatusCode'] | StringToColorPipe:'InActive'}">{{FieldValue}}</span>
                 </div>

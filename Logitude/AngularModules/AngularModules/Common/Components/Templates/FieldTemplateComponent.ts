@@ -42,7 +42,7 @@ export class FieldTemplateComponent {
                     this.SetLastShipmentDateTemplate();
                 }
 
-                else if (this.FieldName == "StartWorkingDate") {
+                else if (this.FieldName == "StartWorkingDate" || this.FieldName == "StartWorkingDataTemplate") {
                     this.SetStartWorkingDateTemplate();
                 }
                 else if (this.FieldName == "SharedLogisticsInvitationStatusName") {

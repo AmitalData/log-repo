@@ -2375,6 +2375,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                    RankId = customer.RankId,
                                                    CityNameDataTemplate = customer.Card.CityName,
                                                    CodeDataTemplate= customer.Card.Code,
+                                                   EnglishNameDataTemplate= customer.Card.EnglishName,
+                                                   StartWorkingDataTemplate = customer.StartWorkingDate,
                                                });
             return result;
         }
