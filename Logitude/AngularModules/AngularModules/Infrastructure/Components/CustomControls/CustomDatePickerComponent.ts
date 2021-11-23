@@ -55,6 +55,7 @@ export class CustomDatePickerComponent extends BaseComponent implements OnInit {
     public IsDisabled: boolean = false;
     @Output() SelectedItemChanged: EventEmitter<any> = new EventEmitter();
     private CurrentSession = SessionLocator.SelectedSession;
+    public HasAdvancedFiltersOptionsToggle: boolean = false;
     constructor(fb: FormBuilder) {
         super();
         this.myForm = fb.group({});
@@ -78,7 +79,7 @@ export class CustomDatePickerComponent extends BaseComponent implements OnInit {
     }
 
     ngOnInit() {
-
+        this.checkAdvancedFiltersOptionsToggle();
         this.TommorowDate = DateTool.AddDays((new Date()), 1);
         this.TommorowDate.setHours(0, 0, 0, 0);
         this.TodayDate = new Date();
@@ -160,6 +161,13 @@ export class CustomDatePickerComponent extends BaseComponent implements OnInit {
         }
     }
 
+    private checkAdvancedFiltersOptionsToggle() {
+        let advancedFiltersOptionsToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "AFO")[0];
+        if (advancedFiltersOptionsToggle) {
+            this.HasAdvancedFiltersOptionsToggle = true;
+        }
+    }
+
     mousedown() {
         console.log("mousedown" + this.CloseMenu);
         if (this.mouseOver == false) {
@@ -175,11 +183,9 @@ export class CustomDatePickerComponent extends BaseComponent implements OnInit {
                 this.SetControlPosition();
                 document.getElementById(this.DropdownId).style.width = item.offsetWidth + 50 + "px";
 
-
-                var itemsHeight = ((12 * 23) + 3);
-                if (this.ObjectField.IsRequiered == true) {
-                    itemsHeight = ((11 * 23) + 3);
-                }
+                var itemsCount = this.GetItemsCount();
+                var itemsHeight = ((itemsCount * 23) + 3);
+  
                 if (itemsHeight > this.MaxHeight) {
                     document.getElementById(this.DropdownId).style.height = this.MaxHeight + "px";
                     document.getElementById(this.ListControlId).style.height = itemsHeight + "px";
@@ -198,6 +204,17 @@ export class CustomDatePickerComponent extends BaseComponent implements OnInit {
 
     }
     private timerToken: any;
+    private GetItemsCount() {
+        var itemsCount = 9;
+        if (this.HasAdvancedFiltersOptionsToggle) {
+            itemsCount = itemsCount + 2;
+        }
+        if (this.ObjectField.IsRequiered == true) {
+            itemsCount = itemsCount + 1;
+        }
+        return itemsCount;
+    }
+
     private StopPositionTimer() {
         if (this.timerToken) {
             clearTimeout(this.timerToken);
