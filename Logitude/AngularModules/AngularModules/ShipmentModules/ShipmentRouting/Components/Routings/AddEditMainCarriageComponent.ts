@@ -1693,7 +1693,7 @@ export class AddEditMainCarriageComponent extends BaseComponent {
         var msg = TextCodeTranslator.Translate("General.M.FieldIsRequired");
 
         if (this.IsContainersToggleFeatureUp && this.FatherComponent.IsFCLEntity && !AppTool.IsNullOrEmpty(this.Master) && AppTool.IsNullOrEmpty(this.MainCarriageCarrierId)) {
-            errors.push("You cannot fill the OBL without a Shipping Line. Please select a Shipping Line");
+            errors.push("You cannot fill the OBL without a Shipping Line. Please select a Shipping Line.");
         }
 
         if (AppTool.IsNullOrEmpty(this.MainCarriageFromPortId)) {

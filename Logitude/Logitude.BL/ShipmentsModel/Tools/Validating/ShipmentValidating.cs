@@ -93,7 +93,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
             {
                 if (IsOceanInsightsShippingLineNotValid(entityPM)) 
                 {
-                    throw new ApplicationException("You cannot fill the OBL without a Shipping Line. Please select a Shipping Line");
+                    throw new ApplicationException("You cannot fill the OBL without a Shipping Line. Please select a Shipping Line.");
                 }
             }
         }
