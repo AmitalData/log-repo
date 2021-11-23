@@ -22,9 +22,9 @@ export class PriceCheckService {
     config.height = '1230px';
     config.showHeader = false;
     config.styleClass = 'price-check';
-    if (isDevMode())
-      config.data = await this.getPricesTest(quote);
-    else
+    // if (isDevMode())
+    //   config.data = await this.getPricesTest(quote);
+    // else
       config.data = await this.getPrices(quote);
 
     return this.dialogService.open(PriceCheckComponent, config);

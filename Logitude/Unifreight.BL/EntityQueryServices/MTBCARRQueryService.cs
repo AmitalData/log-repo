@@ -57,13 +57,13 @@ namespace Unifreight.BL.EntityQueryServices
                 switch (item.FieldName)
                 {
                     case "Name":
-                        MTBCARRquery = MTBCARRquery.Where(o => o.NAMEENG.Contains(item.FieldValue.ToString()));
+                        MTBCARRquery = MTBCARRquery.Where(o => o.NAMEENG.ToLower().Contains(item.FieldValue.ToString().ToLower()));
                         break;
                     case "AIRLINE_ID":
-                        MTBCARRquery = MTBCARRquery.Where(o => o.AIRLINEID.Contains(item.FieldValue.ToString()));
+                        MTBCARRquery = MTBCARRquery.Where(o => o.AIRLINEID.ToLower().Contains(item.FieldValue.ToString().ToLower()));
                         break;
                     case "SearchFields":
-                        MTBCARRquery = MTBCARRquery.Where(o => o.SEARCHENG.Contains(item.FieldValue.ToString()));
+                        MTBCARRquery = MTBCARRquery.Where(o => o.SEARCHENG.ToLower().Contains(item.FieldValue.ToString().ToLower()));
                         break;
 
                 }
