@@ -40,7 +40,7 @@ import { GLAccountSecurityLevelService } from 'Accounting/Utilities/GLAccountSec
 
 @Component({
     selector: 'LogLov',
-    
+
     templateUrl: './LogLovV2Component.html',
     providers: [EntityListService, ServiceArgs, EntityResourceService],
     inputs: ['ObjectFieldName', 'ObjectTableName', 'DataContext', 'LookUpTableName', 'DisplayMemberPath', 'SelectedValuePath','IsDisabled',
@@ -304,6 +304,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
     PartnersPopupLeft: string;
     _KeyDownSubscribe: any;
     @Output() KeyDownEvent: EventEmitter<any> = new EventEmitter();
+    @Input() ColumnsWidths: ColumnsWidths[] = [];
 
     ngAfterViewInit() {
         this.RunComponent();
@@ -401,7 +402,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
     ngOnInit() {
          this.LookUpTable = window.ObjectTables.filter(d => d.Name === this.LookUpTableName)[0];
         this._entityResourceService.getEntityResourceByTableName(this.LookUpTableName, 0).subscribe((res: any) => {
- 
+
             if (this.LookUpTable.CacheOnClient) {
                 var filters: ApiQueryFilters;
                 filters = new ApiQueryFilters();
@@ -414,7 +415,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                 });
             }
             else {
- 
+
                 var filters: ApiQueryFilters;
                 filters = new ApiQueryFilters();
                 //filters.PageSize = 50;
@@ -517,13 +518,13 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
         this.SetControlIds();
 
         this.InsideEditableGridCopyCellInitialization();
-    
+
         this.AssignLookupAndObjectTable();
-        
+
         this.ShowSearchOrToggleButton();
 
         this.AssignLookup1AndLookup2();
-        
+
         this.SetDropDownWidthAccordingToTable();
 
         this.UseCompactSearchForSomeTables();
@@ -543,7 +544,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
         this.StartLoadingEntityRescourcesAndContinueInitialization();
 
         this.InitializeActionButtonsState();
-        
+
     }
 
     private InitializeLovVariables() {
@@ -576,6 +577,8 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                             this.InitializeLanguageFilter();
 
                             this.DrawColumns();
+
+                            this.SetDropDownWidthAccordingToTable();
 
                             this.InitializeDisplayMemberPath();
 
@@ -880,7 +883,11 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
     }
 
     private SetDropDownWidthAccordingToTable() {
-        if (!this.CustomizedWidth) {
+        const hasCustomColumnWidths = this.ColumnsWidths.length > 0;
+        if(hasCustomColumnWidths){
+            this.CalculateDropdownPanelWidthFromCustomColumnsWidths();
+        }
+        else if (!this.CustomizedWidth) {
             if (this.LookUpTableName == 'Card') {
                 this.DropDownWidth = 450;
             }
@@ -897,6 +904,20 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
         else{
             this.DropDownWidth = this.CustomizedWidth;
         }
+    }
+
+    private CalculateDropdownPanelWidthFromCustomColumnsWidths()
+    {
+        this.DropDownWidth = this.ColumnsWidths
+            .filter(colWidth => this.headerColumns.map(col => col.Field).includes(colWidth.ColumnName))
+            .reduce((sum, colWidth) => (sum + colWidth.Width), 0);
+    }
+
+    private CalculateDropdownPanelWidthFromCustomColumnsWidths()
+    {
+        this.DropDownWidth = this.ColumnsWidths
+            .filter(colWidth => this.headerColumns.map(col => col.Field).includes(colWidth.ColumnName))
+            .reduce((sum, colWidth) => (sum + colWidth.Width), 0);
     }
 
     private AssignLookup1AndLookup2() {
@@ -945,17 +966,17 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
             lookupFields = this.DrawCustomColumns(lookupFields);
         }
         else {
-            
+
             lookupFields = this.DrawDefaultColumns(lookupFields);
         }
-       
+
 
         for (var i = 0; i < lookupFields.length; i++) {
-            
+
             this.MinWidths.push(TextCodeTranslator.Translate(lookupFields[i].ListTextCodeCode).length * 8 + 6);
         }
-        
-        
+
+
         var additionalCols = lookupFields.filter(d => d.DisplayInLookUpIndex > 1);
         if (lookupFields.length == 1) {
             this.DisplayHeader = false;
@@ -1052,10 +1073,10 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
     OrderLookupFieldsByCustomFieldsArray(lookupFields:ObjectFieldPM[],orderedFields:string[]){
         lookupFields = lookupFields.sort((a,b)=>{
             var A = a['FieldName'], B = b['FieldName'];
-    
+
             if (orderedFields.indexOf(A) > orderedFields.indexOf(B)) {
                  return 1;
-            } 
+            }
             else {
                 return -1;
             }
@@ -1309,7 +1330,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
     }
 
     NavigateListItems(isDown: boolean) {
- 
+
         if (isDown) {
             var isSelected = false;
             var active = document.getElementsByClassName("highlighted");
@@ -1491,7 +1512,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
         var input = document.getElementById(dropDownListId);
         var selectedItemFound: boolean = false;
         if (input) {
-            var lis = input.getElementsByTagName("li");        
+            var lis = input.getElementsByTagName("li");
             for (var i = 0; i < lis.length; i++) {
 
                 if (lis[i].className.search("liItemSelected") > -1) {
@@ -1769,7 +1790,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                         this.CalculateWidths(resp.Result);
                         this.ZeroItemsSourceCount = resp.Result.length;
                         this.ZeroItemsSource = resp.Result;
-                        
+
                     }
                     else {
                         this.CalculateWidths(resp);
@@ -1784,7 +1805,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
         }
 
     }
-    
+
     ShowOrHideAllDataNoresultMessage(){
         if (this.IsAllDataVisible) {
             if (this.ZeroItemsSourceCount == 0) {
@@ -2311,55 +2332,75 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
 
     CalculateWidths(items: any[]) {
         if (items.length > 0) {
-            this.Widths = [];
-            //var lookup = window.ObjectTables.filter(d => d.Name === this.LookUpTableName)[0];
-            var lookupFields: any[];
-            if (this.DisplayFieldsFromList != null && this.DisplayFieldsFromList != undefined) {
-                var fields: string[] = this.DisplayFieldsFromList.split(',');
-                lookupFields = window.ObjectFields.filter(d => d.ObjectTableId == this.LookUpTable.Id && fields.lastIndexOf(d.FieldName) > -1);
-            }
-            else {
-                //if(!SessionInfo.LoggedUserPM.ShowLocalNameInLOV){
-                if (this.LanguageFilterValue == 'E') {
-                    lookupFields = window.ObjectFields.filter(d => d.DisplayOnLookUp && d.ObjectTableId == this.LookUpTable.Id);
+
+            const hasCustomColumnsWidths = this.ColumnsWidths.length > 0;
+            if(hasCustomColumnsWidths){
+                this.SetCustomColumnsWidths();
+            } else {
+
+
+                this.Widths = [];
+                //var lookup = window.ObjectTables.filter(d => d.Name === this.LookUpTableName)[0];
+                var lookupFields: any[];
+                if (this.DisplayFieldsFromList != null && this.DisplayFieldsFromList != undefined) {
+                    var fields: string[] = this.DisplayFieldsFromList.split(',');
+                    lookupFields = window.ObjectFields.filter(d => d.ObjectTableId == this.LookUpTable.Id && fields.lastIndexOf(d.FieldName) > -1);
                 }
                 else {
-                    lookupFields = window.ObjectFields.filter(d => d.DisplayOnLookUpLocal && d.ObjectTableId == this.LookUpTable.Id);
-                    if (lookupFields.length == 0) {
-                        console.warn("There is no Fields defined as display in lookup local");
-                        this.ShowLanguageFilter = false;
+                    //if(!SessionInfo.LoggedUserPM.ShowLocalNameInLOV){
+                    if (this.LanguageFilterValue == 'E') {
                         lookupFields = window.ObjectFields.filter(d => d.DisplayOnLookUp && d.ObjectTableId == this.LookUpTable.Id);
                     }
+                    else {
+                        lookupFields = window.ObjectFields.filter(d => d.DisplayOnLookUpLocal && d.ObjectTableId == this.LookUpTable.Id);
+                        if (lookupFields.length == 0) {
+                            console.warn("There is no Fields defined as display in lookup local");
+                            this.ShowLanguageFilter = false;
+                            lookupFields = window.ObjectFields.filter(d => d.DisplayOnLookUp && d.ObjectTableId == this.LookUpTable.Id);
+                        }
+                    }
                 }
-            }
-            if (!this.DisplayFieldsFromList) {
-                lookupFields = lookupFields.sort((a, b) => { return a.DisplayInLookUpIndex - b.DisplayInLookUpIndex });
+                if (!this.DisplayFieldsFromList) {
+                    lookupFields = lookupFields.sort((a, b) => { return a.DisplayInLookUpIndex - b.DisplayInLookUpIndex });
+                }
+
+                for (var i = 0; i < lookupFields.length; i++) {
+                    var words: string[] = [];
+                    for (var j = 0; j < items.length; j++) {
+                        words.push(items[j][lookupFields[i].FieldName]);
+                    }
+                    var value = this.GetTheLongestWord(words);
+                    var maxLength = value.length;
+                    if (maxLength > 22) {
+                        maxLength = 22;
+                    }
+                    var width = (maxLength * 7) + 8;
+                    if (i > 1 && width > 85) {
+                        width = 85;
+                    }
+                    this.Widths.push(width);
+
+                }
+                var sum = 0;
+                for (var i = 0; i < this.Widths.length; i++) {
+                    if (i != 1) {
+                        sum += (this.Widths[i] > this.MinWidths[i] ? this.Widths[i] : this.MinWidths[i]);
+                    }
+                }
+                this.Widths[1] = this.DropDownWidth - sum;
             }
 
-            for (var i = 0; i < lookupFields.length; i++) {
-                var words: string[] = [];
-                for (var j = 0; j < items.length; j++) {
-                    words.push(items[j][lookupFields[i].FieldName]);
-                }
-                var value = this.GetTheLongestWord(words);
-                var maxLength = value.length;
-                if (maxLength > 22) {
-                    maxLength = 22;
-                }
-                var width = (maxLength * 7) + 8;
-                if (i > 1 && width > 85) {
-                    width = 85;
-                }
-                this.Widths.push(width);
+        }
+    }
 
-            }
-            var sum = 0;
-            for (var i = 0; i < this.Widths.length; i++) {
-                if (i != 1) {
-                    sum += (this.Widths[i] > this.MinWidths[i] ? this.Widths[i] : this.MinWidths[i]);
-                }
-            }
-            this.Widths[1] = this.DropDownWidth - sum;
+    private SetCustomColumnsWidths()
+    {
+        this.Widths = [];
+        const defaultColumnWidth = 85;
+
+        for (const column of this.headerColumns) {
+            const colWidth = this.ColumnsWidths.find(colWidth => colWidth.ColumnName == column.Field);
+            this.Widths.push(colWidth.Width || defaultColumnWidth);
         }
     }
 
@@ -2382,7 +2423,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
             messageWindow.Show("You have no permission to edit an entity of this type.");
             return;
         }
-        
+
         if (!FeatureLocator.HasFeaturePermession(this.LookUpTableName, "Module") && this.LookUpTable.EnableSecurity) {
             var messageWindow: MessageWindow = new MessageWindow();
             messageWindow.Show("Your package doesn't include this module..");
@@ -2410,7 +2451,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                     GLAccountSecurityLevelService.CheckLevel(currentEntity.Id)
                     .then(hasAccess=> {
                         if(hasAccess){
-                            this.configureEditWindow(objectTableName, currentEntity); 
+                            this.configureEditWindow(objectTableName, currentEntity);
                         }
                         else
                         {
@@ -2585,10 +2626,10 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
             logWindow.Height = 570;
 
             switch (this.LookUpTableName) {
-                case "Customs.Client": 
+                case "Customs.Client":
                 case "Customs.CourierPendingReason":
                     {
-                        
+
                     logWindow.Width = 800;
                     logWindow.Height = 600;
                     logWindow.IsShowCloseButton = true;
@@ -2911,10 +2952,10 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                         }
                     }
                 }
-                
+
                 filterParams.FieldName=this.LookUp1;
                 filterParams.ForceEnableAdd=forceEnableAdd;
-                
+
                // filters.addAdditionalFilter(this.LookUp1, searchText, null, null, "StartsWith", false, false, false, null, false, this.LookUpTable.CacheOnClient, forceEnableAdd);
                 this.currentFilter = this.LookUp1;
             }
@@ -2929,8 +2970,8 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                         }
                     }
                 }
-                if (this.LookUpTable.DependencyFilter1 != this.LookUp1 
-                    && this.LookUpTable.DependencyFilter2 != this.LookUp1 
+                if (this.LookUpTable.DependencyFilter1 != this.LookUp1
+                    && this.LookUpTable.DependencyFilter2 != this.LookUp1
                     && this.LookUpTable.DependencyFilter3 != this.LookUp1) {
                     filters.removeAdditionalFilter(this.LookUp1);
                 }
@@ -2959,7 +3000,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                 filterParams.FieldName="SearchFields";
                 filterParams.ForceEnableAdd=forceEnableAdd;
                 filterParams.Operator="Contains";
-                
+
                 //filters.addAdditionalFilter("SearchFields", searchText, null, null, "Contains", false, false, false, null, false, this.LookUpTable.CacheOnClient, forceEnableAdd);
                 this.currentFilter = null;
             }
@@ -3072,7 +3113,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                     else {
                         this.LovMessage = null;
                     }
-                    
+
                     this.ItemsSourceStatic = this.ItemsSource;
                     this.HighlightSelectedValue();
                     this.isLoading = false;
@@ -3084,7 +3125,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
     }
 
     CallDataFromServer(searchText: string, filters: ApiQueryFilters) {
-        
+
         if (!this.LookUpTable.AutoCompleteSearchWindow) {
             filters.PageSize = 50;
         }
@@ -3132,7 +3173,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
             if (this.currentFilter == null || this.currentFilter == undefined) {
                 this.callCount = 1;
                 filterParams.FieldName=this.LookUp1;
-                
+
                 //filters.addAdditionalFilter(this.LookUp1, searchText, null, null, "StartsWith", false, false, false, null);
                 this.currentFilter = this.LookUp1;
             }
@@ -3158,11 +3199,11 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                 //filters.addAdditionalFilter("SearchFields", searchText, null, null, "Contains", false, false, false, null);
                 this.currentFilter = null;
             }
-            filters.pushAdditionalFilter(filterParams);            
+            filters.pushAdditionalFilter(filterParams);
 
 
         }
- 
+
         loadPromise.then((res: any) => {
             res.subscribe((resp:any) => {
                 if (resp.Result) {
@@ -3219,7 +3260,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                     else {
                         this.LovMessage = null;
                     }
-                    
+
                     this.ItemsSourceStatic = this.ItemsSource;
                     this.HighlightSelectedValue();
 
@@ -3238,7 +3279,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
     }
 
     ApplyManipulateData(bufferData: any[]) {
- 
+
         var objectTableName = this.LookUpTableName;
         if (this.LookUpTableName.indexOf('Customs.') > -1) {
             objectTableName = objectTableName.split('.')[1];
@@ -3259,7 +3300,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                 else {
                     this.LovMessage = null;
                 }
-               
+
                 this.ItemsSourceStatic = this.ItemsSource;
                 this.HighlightSelectedValue();
                 this.isLoading = false;
@@ -3341,6 +3382,13 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
     SwitchBetweenLocalAndEng(lang: string) {
         this.LanguageFilterValue = lang;
         this.DrawColumns();
+
+        const hasCustomColumnsWidths = this.ColumnsWidths.length > 0;
+        if (hasCustomColumnsWidths) {
+            this.SetCustomColumnsWidths();
+            this.CalculateDropdownPanelWidthFromCustomColumnsWidths();
+        }
+
         this.SetDisplayMemberPath();
     }
 }
@@ -3352,4 +3400,9 @@ export class EntityArgs {
 export class AddEntityArgs {
     public EntityPM: any;
     public ObjectTableName: string;
+}
+
+export class ColumnsWidths {
+    ColumnName: string;
+    Width: number;
 }
