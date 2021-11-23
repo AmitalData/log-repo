@@ -15,6 +15,7 @@ import { ServiceResponse } from 'Infrastructure/DataContracts/ServiceResponse';
 import { MultiEntityUpdateLogPM } from 'Infrastructure/EntityPMs/MultiEntityUpdateLogPM';
 import { MultiEntityUpdateData } from 'Infrastructure/DataContracts/MultiEntityUpdateData';
 import { MultiEntityUpdateDataEntity } from 'Infrastructure/DataContracts/MultiEntityUpdateDataEntity';
+import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator';
 
 @Component({
     selector: 'MultiUpdateComponent',
@@ -51,12 +52,13 @@ export class MultiUpdateComponent extends BaseComponent implements OnInit {
     AutomationSetValuebjectFieldLists: ObjectFieldPM[] = [];
     ObjectFieldsLists: ObjectFieldPM[] = [];
     public ObjectTable: ObjectTablePM;
-    private isInit = true;
 
 
     public BusyIndicatorText: string = null;
     public ShowBusyIndicator: boolean = false;
     multiEntityUpdateLogPMService: MultiEntityUpdateLogPMService;
+
+    @Output() SearchFieldchangeevent = new EventEmitter();
 
     public StartBusyIndicator(myText: string) {
         this.BusyIndicatorText = myText;
@@ -77,6 +79,7 @@ export class MultiUpdateComponent extends BaseComponent implements OnInit {
     constructor(private _entityListService: EntityListService) {
         super();
         this.multiEntityUpdateLogPMService = new MultiEntityUpdateLogPMService();
+        window.AllRecords = [];
 
     }
 
@@ -155,12 +158,33 @@ export class MultiUpdateComponent extends BaseComponent implements OnInit {
         var checkBoxColumn = {
             FieldName: "Checked",
             DataTypeCode: 'Boolean',
-            Display: 'Checked',
+            Display: '',
             IsCustomTemplate: true,
             Styles: { width: '35px' },
             IsCheckBox: true,
         };
+
+        var updateSuccess = {
+            FieldName: 'UpdateSuccess',
+            DataTypeCode: 'Boolean',
+            Display: 'Status',
+            Styles: { width: '60px' },
+            IsCustomTemplate: true,
+            HtmlListComponentName: 'MultiUpdateCheckTemplate',
+            HtmlListComponentUrl: './Infrastructure/Components/MultiUpdateComponent/MultiUpdateCheckTemplate',
+        };
         this.columns.splice(0, 0, checkBoxColumn);
+        this.columns.splice(1, 0, updateSuccess);
+    }
+
+    OnUpdateFinish(entities) {
+        this.AllRecords.forEach(function (record) {
+            var entity = entities.find(item => item.EntityId == record.Id);
+            record.UpdateSuccess = !entity.HasException;
+        });
+        window.AllRecords = this.AllRecords;
+        this.SearchFieldchangeevent.emit("");
+
     }
 
     Clone(list: any): any {
@@ -235,7 +259,7 @@ export class MultiUpdateComponent extends BaseComponent implements OnInit {
         this.CurrentSession.StartBusyIndicatorLoading();
         this.multiEntityUpdateLogPMService.insert(multiEntityUpdateLog).subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
-                this.ParentComponent.UpdateButtonClicked(myResponse.Result, this.multiEntityUpdateLogPMService);
+                this.ParentComponent.UpdateButtonClicked(myResponse.Result, this.multiEntityUpdateLogPMService, this);
             }
         });
     }

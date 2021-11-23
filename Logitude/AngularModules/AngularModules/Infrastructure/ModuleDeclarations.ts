@@ -150,6 +150,7 @@ import {DWLogSearchAddFieldsComponent} from './Components/QueryColumnsComponents
 import { MultiUpdateComponent } from './Components/MultiUpdateComponent/MultiUpdateComponent';
 import { MultiEntityUpdateBaseComponent } from './Components/MultiUpdateComponent/MultiEntityUpdateBaseComponent';
 import { MultiEntityUpdateErrorHandlerComponent } from './Components/MultiUpdateComponent/MultiEntityUpdateErrorHandlerComponent';
+import { MultiUpdateCheckTemplate } from './Components/MultiUpdateComponent/MultiUpdateCheckTemplate';
 
 
 // Followups
@@ -398,7 +399,8 @@ export const Components =
 
         MultiUpdateComponent,
         MultiEntityUpdateBaseComponent,
-        MultiEntityUpdateErrorHandlerComponent
+        MultiEntityUpdateErrorHandlerComponent,
+        MultiUpdateCheckTemplate
 
         
     ];
@@ -513,6 +515,7 @@ export class ModuleDeclarations {
             case 'MultiUpdateComponent': { myResult = MultiUpdateComponent; break; }
             case 'MultiEntityUpdateBaseComponent': { myResult = MultiEntityUpdateBaseComponent; break; }
             case 'MultiEntityUpdateErrorHandlerComponent': { myResult = MultiEntityUpdateErrorHandlerComponent; break; }
+            case 'MultiUpdateCheckTemplate': { myResult = MultiUpdateCheckTemplate; break; }
                  
                  
 
