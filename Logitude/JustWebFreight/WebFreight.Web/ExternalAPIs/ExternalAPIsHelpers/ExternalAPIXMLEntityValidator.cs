@@ -252,22 +252,26 @@ namespace WebFreight.Web.ExternalAPIs.ExternalAPIsHelpers
         {
             if (IsShipmentHasEvents())
             {
-                EventTypeRepository eventTypeRepository = new EventTypeRepository(tenant);
-
-                foreach (Event item in events)
+                this.ValidateEventsRequiredFields();
+                this.ValidateDuplicateEvents();
+            }
+        }
+        private void ValidateEventsRequiredFields()
+        {
+            EventTypeRepository eventTypeRepository = new EventTypeRepository(tenant);
+            foreach (Event item in events)
+            {
+                if (item.EventType == null)
                 {
-                    if (item.EventType == null)
-                    {
-                        throw new ApplicationException("Event Type is required");
-                    }
-
-                    if (item.EventDateTime == null)
-                    {
-                        throw new ApplicationException("Event Date is required");
-                    }
-
-                    this.ValidateEventType(item.EventType, eventTypeRepository);
+                    throw new ApplicationException("Event Type is required");
                 }
+
+                if (item.EventDateTime == null)
+                {
+                    throw new ApplicationException("Event Date is required");
+                }
+
+                this.ValidateEventType(item.EventType, eventTypeRepository);
             }
         }
         private void ValidateEventType(EventType eventType, EventTypeRepository eventTypeRepository)
@@ -275,7 +279,7 @@ namespace WebFreight.Web.ExternalAPIs.ExternalAPIsHelpers
             var shipmentTableId = ObjectTableRepository.GetObjectTableByName("Shipment");
             var eventTypePOCO = eventTypeRepository.GetSingleEventTypeByCodeAndObjectTableId(eventType.Code, shipmentTableId, tenant);
 
-            if(eventTypePOCO == null)
+            if (eventTypePOCO == null)
             {
                 throw new ApplicationException("Event Type is not found for shipment");
             }
@@ -285,7 +289,18 @@ namespace WebFreight.Web.ExternalAPIs.ExternalAPIsHelpers
                 throw new ApplicationException("Event Type is not allowed for manual entry");
             }
         }
+        private void ValidateDuplicateEvents()
+        {
+            var query = events.GroupBy(x => new { x.EventDateTime, x.EventType.Code })
+              .Where(g => g.Count() > 1)
+              .Select(y => y.Key)
+              .ToList();
 
+            if(query.Count > 0)
+            {
+                throw new ApplicationException("Duplicated Events");
+            }
+        }       
         private string GetChargesTypeCurrency(string chargeTypeCode, string indicator)
         {
             string currency = null;

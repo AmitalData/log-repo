@@ -62,13 +62,11 @@ namespace Logitude.BL.InfrastructureModel.APIDataContract.ApiV1
         {
             try
             {
-                List<TraceEventPM> MyList = new List<TraceEventPM>();
-                return MyList;
+                return null;
             }
 
             catch (Exception ex)
             {
-
                 throw ex;
             }
         }
@@ -76,14 +74,11 @@ namespace Logitude.BL.InfrastructureModel.APIDataContract.ApiV1
         {
             try
             {
-                List<TraceEventPM> MyList = new List<TraceEventPM>();
-
-                return MyList;
+                return null;
             }
 
             catch (Exception ex)
             {
-
                 throw ex;
             }
         }
@@ -91,15 +86,11 @@ namespace Logitude.BL.InfrastructureModel.APIDataContract.ApiV1
         {
             try
             {
-                List<TraceEventPM> MyList = new List<TraceEventPM>();
-
-
-                return MyList;
+                return null;
             }
 
             catch (Exception ex)
             {
-
                 throw ex;
             }
         }
