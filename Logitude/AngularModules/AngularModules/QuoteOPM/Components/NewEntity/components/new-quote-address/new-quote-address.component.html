@@ -34,7 +34,7 @@
         </div>
 
         <div [hidden]='!AddressList.length'>
-            <div class="p-field">
+            <div class="p-field address-top">
                 <app-autocomplate-table [columnsShow]="['Description', 'Name', 'Address1']" [data]='AddressList'
                     [fieldShow]='"Description"' [label]="'QuoteOP.S.NewQuote.Address' | TextCodeTranslationPipe | titlecase"
                     [controlName]='"address"' [formGroup]='addressForm' [dropIcon]='true' class="address-input">

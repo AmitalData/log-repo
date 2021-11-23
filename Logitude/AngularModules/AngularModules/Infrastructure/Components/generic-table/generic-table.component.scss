@@ -15,14 +15,14 @@
         display: none;
     }
 
-    .p-datatable .p-datatable-scrollable-header {
-        background: #e2f0fb !important;
-        margin-bottom: 3px;
-    }
-
     .p-datatable-scrollable-view {
         border: 1px solid lightgray;
         padding: 3px;
+    }
+    
+    .p-datatable .p-datatable-scrollable-header {
+        background: #e2f0fb !important;
+        margin-bottom: 3px;
     }
 
     .p-datatable-scrollable-body {
@@ -51,6 +51,7 @@
         border-left: 1px solid hsl(227deg 100% 74% / 53%);
         color: #1084dc !important;
         background: #e2f0fb !important;
+        padding: 8px 1rem;
 
         i {
             color: #1084dc !important;
