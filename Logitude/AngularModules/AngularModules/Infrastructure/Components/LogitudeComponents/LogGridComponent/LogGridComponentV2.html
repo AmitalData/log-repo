@@ -215,8 +215,8 @@
                 <div [ngStyle]="headerStyle" *ngIf="HasPermition == true">
                     <div *cdkVirtualFor="let row of controller;let rowIndex = index;" [style.height.px]="row && row.ShowDetails && IsSpotLight ? (rowHeight + SpotLightHeight) : rowHeight">
                         <div *ngIf="row" class="Row ag-row tooltip" [style.height.px]="row.ShowDetails && IsSpotLight ? (rowHeight + SpotLightHeight) : rowHeight"
-                             [style.background]="(ChangeColorByPropName && ChangeColorByPropValue && row.rowData[ChangeColorByPropName] == ChangeColorByPropValue) ? RowBackGroundColor : ((SelectedRow == row.rowData)? '#DFECF7':'transparent')"
-                             [attr.SIndex]="row.rowIndex" [class.Selected]="SelectedRow == row.rowData"
+                             [style.background]="(ChangeColorByPropName && ChangeColorByPropValue && row.rowData[ChangeColorByPropName] == ChangeColorByPropValue) ? RowBackGroundColor : (((row.FirstRowSelected && !SelectedRow) || (SelectedRow == row.rowData))? '#DFECF7':'transparent')"
+                             [attr.SIndex]="row.rowIndex" [class.Selected]="(SelectFirstRow && FirstRowIndex == rowIndex && SelectedRow != row.rowData && onFirstRowSelected(row, rowIndex)) || (SelectedRow == row.rowData)"
                              (ondblclick)="onRowSelected(1, 1, row.rowData, row.rowIndex)"
                              (mouseout)="onRowMouseOut('rowtemplate'+rowIndex,rowIndex,row)" (mouseover)="onRowMouseOver('rowtemplate'+rowIndex,rowIndex,row)"
                              (click)="onRowSelected(1, 1, row.rowData, row.rowIndex)" [class.SelectedGradiant]="IsGradiantSelectedColor && (SelectedRow==row.rowData || row.rowData.IsSelected == true)"

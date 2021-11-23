@@ -507,6 +507,21 @@ export class LogGridComponentV2 implements OnInit, AfterViewInit, OnChanges, OnD
         d.style.display = "block";
     }
 
+    onFirstRowSelected(row: any, rowIndex: any) {
+        let elem: HTMLDivElement = <HTMLDivElement>document.getElementById(this.LogGridRowsId);
+        let firstRowAppear = Math.floor(elem.scrollTop / this.rowHeight);
+
+        if (!this.selectedRow)
+            this.onRowSelected(1, 1, row.rowData, row.rowIndex);
+        else if (this.selectedRow.$id < firstRowAppear || this.selectedRow.$id > firstRowAppear + this.viewportSize)
+            this.onRowSelected(1, 1, row.rowData, row.rowIndex);
+    }
+
+    get FirstRowIndex() {
+        let elem: HTMLDivElement = <HTMLDivElement>document.getElementById(this.LogGridRowsId);
+        let firstRowAppear = Math.floor(elem.scrollTop / this.rowHeight);
+        return firstRowAppear == 0 ? 0 : firstRowAppear + 1;
+    }
 
     SpotLightCLicked: boolean = false;
     BackFromEditSub: any;
