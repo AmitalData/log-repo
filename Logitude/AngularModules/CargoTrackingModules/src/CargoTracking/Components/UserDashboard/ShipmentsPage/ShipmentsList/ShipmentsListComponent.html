@@ -340,7 +340,9 @@
                         <div class="column col-md-2 sender" style="width: 12%;">
                             <div [attr.src]="SetTitileAndValueForSupplierOrClient(shipment)">
                                 <div class="subtitle">{{SupplierOrClientTitle}}</div>
-                                <div class="value truncateText">{{SupplierOrClientValue}}</div>
+                                <div class="value truncateText">
+                                    <custom-label>{{SupplierOrClientValue}}</custom-label> 
+                                </div>
 
 
 
