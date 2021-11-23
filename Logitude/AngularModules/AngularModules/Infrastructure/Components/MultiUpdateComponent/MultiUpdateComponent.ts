@@ -167,8 +167,8 @@ export class MultiUpdateComponent extends BaseComponent implements OnInit {
         var updateSuccess = {
             FieldName: 'UpdateSuccess',
             DataTypeCode: 'Boolean',
-            Display: 'Status',
-            Styles: { width: '60px' },
+            Display: 'Update Status',
+            Styles: { width: '100px' },
             IsCustomTemplate: true,
             HtmlListComponentName: 'MultiUpdateCheckTemplate',
             HtmlListComponentUrl: './Infrastructure/Components/MultiUpdateComponent/MultiUpdateCheckTemplate',
@@ -180,7 +180,7 @@ export class MultiUpdateComponent extends BaseComponent implements OnInit {
     OnUpdateFinish(entities) {
         this.AllRecords.forEach(function (record) {
             var entity = entities.find(item => item.EntityId == record.Id);
-            record.UpdateSuccess = !entity.HasException;
+            record.UpdateSuccess = entity ? !entity.HasException : undefined;
         });
         window.AllRecords = this.AllRecords;
         this.SearchFieldchangeevent.emit("");
