@@ -73,6 +73,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
                 ValidateMainCarriageCarrierDueToTransportMode(entityPM);
                 ValidatePartnerTypes(entityPM);
                 ValidateShipmentSubType(entityPM);
+                ValidateOceanInsightsShippingLine(entityPM);
             }
 
             //List<IEntityValidator> validators = new List<IEntityValidator>();
@@ -84,6 +85,31 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
             //}
 
             //ShipmentReceivableValidator.Validate(entityPM.ShipmentReceivables);
+        }
+
+        private static void ValidateOceanInsightsShippingLine(ShipmentPM entityPM)
+        {
+            if (FeatureToggleHelper.HasFeatureToggle("OIC", entityPM.Tenant))
+            {
+                if (IsOceanInsightsShippingLineNotValid(entityPM)) 
+                {
+                    throw new ApplicationException("You cannot fill the OBL without a Shipping Line. Please select a Shipping Line.");
+                }
+            }
+        }
+
+        private static bool IsOceanInsightsShippingLineNotValid(ShipmentPM entityPM)
+        {
+            if (entityPM.ShipmentTypeId != "FCL" && entityPM.ShipmentTypeId != "FCLD")
+            {
+                return false;
+            }
+            if (!string.IsNullOrEmpty(entityPM.Master) && string.IsNullOrEmpty(entityPM.MainCarriageCarrierId))
+            {
+                return true;
+            }
+
+            return false;
         }
 
         public static string GetCustomerCreditLimitDetails(string customerId, string quoteId, bool isBuildFromQuote, int tenant)
