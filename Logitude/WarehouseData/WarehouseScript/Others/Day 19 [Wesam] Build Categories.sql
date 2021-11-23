@@ -37,6 +37,16 @@ IF not EXISTS(SELECT 1 FROM [dbo].[DWCategories]
 ELSE      Begin 
 				UPDATE [dbo].[DWCategories] Set [dbo].[DWCategories].[Index] = 40 WHERE [dbo].[DWCategories].[Code] = 'Partners'	  
 		  End
+		   	  --InvoicePartners
+IF not EXISTS(SELECT 1 FROM [dbo].[DWCategories] 
+          WHERE Code = 'InvoicePartners')
+		  Begin  
+				INSERT INTO [dbo].[DWCategories] ([Code],[Name],[Index]) VALUES('InvoicePartners','Invoice Partners',130)
+		  End
+ELSE      Begin 
+				UPDATE [dbo].[DWCategories] Set [dbo].[DWCategories].[Index] = 130, [dbo].[DWCategories].[Name] = 'Invoice Partners' WHERE [dbo].[DWCategories].[Code] = 'InvoicePartners'	  
+		  End
+
 
 --Packages
 IF not EXISTS(SELECT 1 FROM [dbo].[DWCategories] 
@@ -147,7 +157,8 @@ IF not EXISTS(SELECT 1 FROM [dbo].[DWCategories]
 ELSE      Begin 
 				UPDATE [dbo].[DWCategories] Set [dbo].[DWCategories].[Index] = 130, [dbo].[DWCategories].[Name] = 'Shipment Partner Contacts' WHERE [dbo].[DWCategories].[Code] = 'PartnerContacts'	  
 		  End
-
+		   
+ 
 
 		  		  --CustomFields
 IF not EXISTS(SELECT 1 FROM [dbo].[DWCategories] 
