@@ -53,7 +53,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         public void ValidateSplitGLAccount(GLAccountCurrencyPM entityPM)
         {
             GLAccountQueryService query = new GLAccountQueryService(entityPM.Tenant);
-            GLAccountPM parentPM = query.GetSingle(entityPM.MainGLAccountId, false, true);
+            GLAccountPM parentPM = query.GetSingle(entityPM.MainGLAccountId, false, false);
             CheckIfTheSplitGLAccountIsACustomerGLAccount(entityPM.GLAccountId, parentPM);
         }
         private void CheckIfTheSplitGLAccountIsACustomerGLAccount(string glaccountId, GLAccountPM parentPM)
