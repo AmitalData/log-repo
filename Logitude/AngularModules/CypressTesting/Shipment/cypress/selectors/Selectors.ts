@@ -28,7 +28,7 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly ShipmentSaveCloseButton = '[id^=Shipment-SaveClose]'
   public static readonly APInvoiceStatus = "[data-cy='StatusValue']";
   public static readonly ARInvoiceStatus = "[id^='ARInvoiceHeaderStatusName']";
-
+  public static readonly UnexpectedPackageGreyImage = "img[src='./Images/CellIcons/Package_gray.png'"
   //#endregion
 
   //#region Create shipment

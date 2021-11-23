@@ -10,7 +10,6 @@ import { AccountingSelectors } from "../../../../Accounting/cypress/selectors/Se
 import { APInvoiceDetails } from "../../../../Accounting/cypress/models/APInvoiceDetails"
 import { InvoiceLineDetails } from "../../../../FullAccounting/cypress/models/InvoiceLineDetails"
 import { BaseSelectors } from "../../../../Base/cypress/selectors/BaseSelectors";
-import { APInvoiceSelectors } from "../../../../FullAccounting/cypress/selectors/APInvoiceSelectors";
 
 //#region variables
 let shipmentDetails: ShipmentDetails;
@@ -65,7 +64,7 @@ When("create invoice line", () => {
 });
 
 Then("the Invoice Line should be added successfully", () => {
-  cy.get('#row0').contains("AFT").should("exist")
+  cy.get(BaseSelectors.Row0).contains("AFT").should("exist")
 });
 
 Given("the user saves the invoice", () => {
@@ -74,7 +73,7 @@ Given("the user saves the invoice", () => {
 
 Then("a payable line is created in the payable wizard", () => { 
  cy.Click(ShipmentSelectors.Backbutton_1,null) 
-  BaseAssertion.AssertElementExist("img[src='./Images/CellIcons/Package_gray.png'")
+  BaseAssertion.AssertElementExist(ShipmentSelectors.UnexpectedPackageGreyImage)
 });
 
 
