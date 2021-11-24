@@ -287,3 +287,6 @@ h3 {
     outline: transparent;
     background-color: white;
 }
+.word-break-all{
+    word-break: break-all;
+}
