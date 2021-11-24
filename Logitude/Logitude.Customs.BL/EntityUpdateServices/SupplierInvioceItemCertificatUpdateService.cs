@@ -874,11 +874,11 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     string resetOther = "";
                     if (!LogChangesService.IsLogEnable(SIICerExemptionHD379305))
                     {
-                        resetOther= "SIIC.CertificateNumber = '', SIIC.CustomsAttachmentID = '' ";
+                        resetOther= " , SIIC.CertificateNumber = '', SIIC.CustomsAttachmentID = '' ";
                     }
                     
                    string cmd = @"Update SupplierInvioceItemCertificats SIIC 
-                                  set SIIC.AttachmentTypeCode = '4', SIIC.CertificateExemptionTypeCode = '92' ,
+                                  set SIIC.AttachmentTypeCode = '4', SIIC.CertificateExemptionTypeCode = '92' 
                                   " + resetOther + @"    
                                   where SIIC.DeclarationId ='" + declarationId + "' and SIIC.InvoiceCounterKey || ' ' || SIIC.LineNumber || ' ' || SIIC.ItemCertificateCounterKey  in (" + whereInCertificateKeys + ") ";
 
