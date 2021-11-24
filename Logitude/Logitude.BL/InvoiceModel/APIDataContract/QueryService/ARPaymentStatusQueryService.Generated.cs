@@ -36,21 +36,21 @@ using Simplog.Data.InvoiceModel;
         }
 
 		
-		public ARPaymentStatus GetARPaymentStatusByCode(string Code,int Tenant,string ComputingPartnerName = "")
+		public ARPaymentStatus GetARPaymentStatusByCode(string Code,int Tenant,  string ComputingPartnerName = "")
         { 
 		    try
             {
-
+				 
 				
-				var temp = query.GetSinglePM(Code,Tenant);				
+				var temp = query.GetSinglePM(Code, Tenant);				
 				 if (temp == null)
                     throw new ApplicationException("ARPaymentStatus with Code " + Code + " doesn't exist");
 
 				return ARPaymentStatusDataMapping(temp,Tenant,ComputingPartnerName);
 			}
+
             catch (Exception ex)
             {
-
                 throw ex;
             }
         }

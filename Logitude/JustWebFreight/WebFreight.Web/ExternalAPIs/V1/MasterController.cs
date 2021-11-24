@@ -40,12 +40,13 @@ using Logitude.Infrastructure.Data;
 using Logitude.Infrastructure.Data.Repsitories;
 using Logitude.Infrastructure.Data.EntityPOCOs;
 using WebFreight.Web.ExternalAPIs.ExternalAPIsHelpers;
+using Logitude.BL.InfrastructureModel.APIDataContract.ApiV1;
 
 namespace WebFreight.Web.ExternalAPIs.V1
 {
     public class MasterController : ApiController
     {
-        public HttpResponseMessage GetSingleMaster(string id)
+        public HttpResponseMessage GetSingleMaster(string id, string include)
         {
             try
             {
@@ -55,7 +56,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
 				SecurityUtility.AuthenticateAPICall(authToken.Tenant);
 				MasterQueryService Service = new MasterQueryService(tenant);
                 ServiceResponse response = new ServiceResponse();
-                var Result = Service.GetMasterById(id, tenant);
+                var Result = Service.GetMasterById(id, tenant, include);
                 return Request.CreateResponse(HttpStatusCode.OK, Result);
             }
 
@@ -66,7 +67,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
             }
         }
 
-        public HttpResponseMessage GetSingleMasterByNumber(string number)
+        public HttpResponseMessage GetSingleMasterByNumber(string number, string include)
         {
             try
             {
@@ -76,7 +77,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 SecurityUtility.AuthenticateAPICall(authToken.Tenant);
                 MasterQueryService Service = new MasterQueryService(tenant);
                 ServiceResponse response = new ServiceResponse();
-                var Result = Service.GetMasterByShipmentNumber(number, tenant);
+                var Result = Service.GetMasterByShipmentNumber(number, tenant, include);
                 return Request.CreateResponse(HttpStatusCode.OK, Result);
             }
 
@@ -174,6 +175,12 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         ShipmentService service = new ShipmentService(MyContext, entityPM, SecurityUtility.GetAuthenticatedUser());
                         service.Create();
 
+                        if (entity.AddManualEvents != null && entity.AddManualEvents.Count > 0)
+                        {
+                            EventQueryService eventQueryService = new EventQueryService(authToken.Tenant);
+                            eventQueryService.CreateShipmentTraceEvents(entityPM, entity.AddManualEvents, true, computingPartnerCode);
+                        }
+
                         ShipmentRepository entityRepository = new ShipmentRepository(MyContext);
                         List<Shipment> allHouses = entityRepository.GetHouseShipmentsForMaster(entityPM.Id, authToken.Tenant);
 
@@ -220,7 +227,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         scope.Complete();
                     }
 
-                    var result = mappingService.GetMasterById(entityPM.Id, authToken.Tenant);
+                    var result = mappingService.GetMasterById(entityPM.Id, authToken.Tenant, null);
                     APIHelper.AddCommunicationLog("D", entity, result, "Shipment", entityPM.Id, "Master API", authToken.Tenant);
                     return Request.CreateResponse(HttpStatusCode.OK, result);
                 }
@@ -289,11 +296,17 @@ namespace WebFreight.Web.ExternalAPIs.V1
 
                             ShipmentService service = new ShipmentService(MyContext, MasterPM, SecurityUtility.GetAuthenticatedUser());
                             service.Update(true);
+
+                            if (entity.AddManualEvents != null && entity.AddManualEvents.Count > 0)
+                            {
+                                EventQueryService eventQueryService = new EventQueryService(authToken.Tenant);
+                                eventQueryService.CreateShipmentTraceEvents(MasterPM, entity.AddManualEvents, true, "");
+                            }
                         }
 
                         MyContext = ShipmentsContext.GetContext(authToken.Tenant);
                         mappingService = new MasterQueryService(authToken.Tenant);
-                        var result = mappingService.GetMasterById(MasterPM.Id, authToken.Tenant);
+                        var result = mappingService.GetMasterById(MasterPM.Id, authToken.Tenant, null);
                         APIHelper.AddCommunicationLog("D", entity, result, "Shipment", MasterPM.Id, "Master API", authToken.Tenant);
                         return Request.CreateResponse(HttpStatusCode.OK, result);
                     }

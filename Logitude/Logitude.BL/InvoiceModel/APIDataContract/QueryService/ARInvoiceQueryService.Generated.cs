@@ -40,21 +40,21 @@ using Simplog.Data.InvoiceModel;
         }
 
 		
-		public ARInvoice GetARInvoiceById(string Id,int Tenant,string ComputingPartnerName = "")
+		public ARInvoice GetARInvoiceById(string Id,int Tenant,  string ComputingPartnerName = "")
         { 
 		    try
             {
-
+				 
 				
-				var temp = query.GetSinglePM(Id,Tenant);				
+				var temp = query.GetSinglePM(Id, Tenant);				
 				 if (temp == null)
                     throw new ApplicationException("ARInvoice with Id " + Id + " doesn't exist");
 
 				return ARInvoiceDataMapping(temp,Tenant,ComputingPartnerName);
 			}
+
             catch (Exception ex)
             {
-
                 throw ex;
             }
         }

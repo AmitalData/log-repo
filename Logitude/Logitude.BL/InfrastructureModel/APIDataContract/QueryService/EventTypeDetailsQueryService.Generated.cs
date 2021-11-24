@@ -40,21 +40,20 @@ using Simplog.Data.InfrastructureModel;
         }
 
 		
-		public EventTypeDetails GetEventTypeDetailsById(string Id,int Tenant,string ComputingPartnerName = "")
+		public EventTypeDetails GetEventTypeDetailsById(string Id,int Tenant,  string ComputingPartnerName = "")
         { 
 		    try
             {
-
-				
-				var temp = query.GetSinglePM(Id,Tenant);				
+								
+				var temp = query.GetSinglePM(Id, Tenant);
 				 if (temp == null)
                     throw new ApplicationException("EventType with Id " + Id + " doesn't exist");
 
 				return EventTypeDetailsDataMapping(temp,Tenant,ComputingPartnerName);
 			}
+
             catch (Exception ex)
             {
-
                 throw ex;
             }
         }

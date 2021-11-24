@@ -36,21 +36,21 @@ using Simplog.Data.QuoteModel;
         }
 
 		
-		public QuoteCustomerType GetQuoteCustomerTypeByCode(string Code,int Tenant,string ComputingPartnerName = "")
+		public QuoteCustomerType GetQuoteCustomerTypeByCode(string Code,int Tenant,  string ComputingPartnerName = "")
         { 
 		    try
             {
-
+				 
 				
-				var temp = query.GetSinglePM(Code,Tenant);				
+				var temp = query.GetSinglePM(Code, Tenant);				
 				 if (temp == null)
                     throw new ApplicationException("QuoteCustomerType with Code " + Code + " doesn't exist");
 
 				return QuoteCustomerTypeDataMapping(temp,Tenant,ComputingPartnerName);
 			}
+
             catch (Exception ex)
             {
-
                 throw ex;
             }
         }

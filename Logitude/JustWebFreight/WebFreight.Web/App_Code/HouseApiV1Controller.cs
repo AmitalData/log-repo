@@ -34,7 +34,7 @@ namespace WebFreight.Web.App_Code
 
                 HouseQueryService Service = new HouseQueryService(authToken.Tenant);
                 ServiceResponse response = new ServiceResponse();
-                var Result = Service.GetHouseById(id, authToken.Tenant);
+                var Result = Service.GetHouseById(id, authToken.Tenant, null);
                 string xmlstring = LogitudeXmlSerializer.SerializeObjectToXmlString(Result);
                 string json = LogitudeXmlSerializer.SerializeObjectToJosnString(Result);
                 return Request.CreateResponse(HttpStatusCode.OK, Result);

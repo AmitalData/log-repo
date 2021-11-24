@@ -64,13 +64,6 @@
             this.lblParameter = new System.Windows.Forms.Label();
             this.txtParameter2 = new System.Windows.Forms.TextBox();
             this.lblParameter2 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.label10 = new System.Windows.Forms.Label();
-            this.label11 = new System.Windows.Forms.Label();
-            this.textBox3 = new System.Windows.Forms.TextBox();
-            this.label12 = new System.Windows.Forms.Label();
-            this.textBox4 = new System.Windows.Forms.TextBox();
             this.CopyResponse = new System.Windows.Forms.Button();
             this.Post1000ARInvoice = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
@@ -80,17 +73,15 @@
             this.postCountTxt = new System.Windows.Forms.TextBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.button4 = new System.Windows.Forms.Button();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.label14 = new System.Windows.Forms.Label();
-            this.textBox6 = new System.Windows.Forms.TextBox();
-            this.textBox5 = new System.Windows.Forms.TextBox();
-            this.label13 = new System.Windows.Forms.Label();
-            this.label16 = new System.Windows.Forms.Label();
-            this.textBox7 = new System.Windows.Forms.TextBox();
+            this.txtParameter4 = new System.Windows.Forms.TextBox();
+            this.lblParameter4 = new System.Windows.Forms.Label();
+            this.lblParameter3 = new System.Windows.Forms.Label();
+            this.txtParameter3 = new System.Windows.Forms.TextBox();
+            this.IncludeEventsCheckBox = new System.Windows.Forms.CheckBox();
+            this.Includelabel = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
-            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // txtRequestBody
@@ -110,7 +101,7 @@
             this.groupBox1.Controls.Add(this.rdbJson);
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Font = new System.Drawing.Font("Arial", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox1.Location = new System.Drawing.Point(362, 204);
+            this.groupBox1.Location = new System.Drawing.Point(360, 52);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(261, 79);
             this.groupBox1.TabIndex = 3;
@@ -253,7 +244,7 @@
             this.groupBox2.Controls.Add(this.label9);
             this.groupBox2.Controls.Add(this.txtCredentialsPrimary);
             this.groupBox2.Font = new System.Drawing.Font("Arial", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox2.Location = new System.Drawing.Point(18, 204);
+            this.groupBox2.Location = new System.Drawing.Point(12, 53);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(330, 79);
             this.groupBox2.TabIndex = 23;
@@ -318,7 +309,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold);
-            this.label1.Location = new System.Drawing.Point(15, 47);
+            this.label1.Location = new System.Drawing.Point(18, 144);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(32, 17);
             this.label1.TabIndex = 30;
@@ -328,7 +319,7 @@
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold);
-            this.label4.Location = new System.Drawing.Point(10, 70);
+            this.label4.Location = new System.Drawing.Point(12, 172);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(80, 17);
             this.label4.TabIndex = 31;
@@ -337,7 +328,7 @@
             // apiCombo
             // 
             this.apiCombo.FormattingEnabled = true;
-            this.apiCombo.Location = new System.Drawing.Point(134, 43);
+            this.apiCombo.Location = new System.Drawing.Point(134, 144);
             this.apiCombo.Name = "apiCombo";
             this.apiCombo.Size = new System.Drawing.Size(136, 21);
             this.apiCombo.TabIndex = 38;
@@ -346,7 +337,7 @@
             // operationCombo
             // 
             this.operationCombo.FormattingEnabled = true;
-            this.operationCombo.Location = new System.Drawing.Point(134, 70);
+            this.operationCombo.Location = new System.Drawing.Point(134, 171);
             this.operationCombo.Name = "operationCombo";
             this.operationCombo.Size = new System.Drawing.Size(136, 21);
             this.operationCombo.TabIndex = 39;
@@ -356,7 +347,7 @@
             // 
             this.label8.AutoSize = true;
             this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
-            this.label8.Location = new System.Drawing.Point(279, 47);
+            this.label8.Location = new System.Drawing.Point(286, 148);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(392, 13);
             this.label8.TabIndex = 40;
@@ -367,7 +358,7 @@
             // 
             this.ActionLabel.AutoSize = true;
             this.ActionLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ActionLabel.Location = new System.Drawing.Point(12, 107);
+            this.ActionLabel.Location = new System.Drawing.Point(15, 205);
             this.ActionLabel.Name = "ActionLabel";
             this.ActionLabel.Size = new System.Drawing.Size(53, 17);
             this.ActionLabel.TabIndex = 41;
@@ -377,7 +368,7 @@
             // actionCombo
             // 
             this.actionCombo.FormattingEnabled = true;
-            this.actionCombo.Location = new System.Drawing.Point(134, 105);
+            this.actionCombo.Location = new System.Drawing.Point(134, 201);
             this.actionCombo.Name = "actionCombo";
             this.actionCombo.Size = new System.Drawing.Size(136, 21);
             this.actionCombo.TabIndex = 42;
@@ -391,9 +382,9 @@
             // 
             // txtParameter
             // 
-            this.txtParameter.Location = new System.Drawing.Point(134, 140);
+            this.txtParameter.Location = new System.Drawing.Point(134, 234);
             this.txtParameter.Name = "txtParameter";
-            this.txtParameter.Size = new System.Drawing.Size(159, 20);
+            this.txtParameter.Size = new System.Drawing.Size(136, 20);
             this.txtParameter.TabIndex = 45;
             this.txtParameter.Visible = false;
             // 
@@ -401,16 +392,16 @@
             // 
             this.lblParameter.AutoSize = true;
             this.lblParameter.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblParameter.Location = new System.Drawing.Point(15, 141);
+            this.lblParameter.Location = new System.Drawing.Point(15, 237);
             this.lblParameter.Name = "lblParameter";
-            this.lblParameter.Size = new System.Drawing.Size(88, 17);
+            this.lblParameter.Size = new System.Drawing.Size(102, 17);
             this.lblParameter.TabIndex = 44;
-            this.lblParameter.Text = "Parameter:";
+            this.lblParameter.Text = "Parameter 1:";
             this.lblParameter.Visible = false;
             // 
             // txtParameter2
             // 
-            this.txtParameter2.Location = new System.Drawing.Point(472, 142);
+            this.txtParameter2.Location = new System.Drawing.Point(394, 236);
             this.txtParameter2.Name = "txtParameter2";
             this.txtParameter2.Size = new System.Drawing.Size(142, 20);
             this.txtParameter2.TabIndex = 47;
@@ -420,78 +411,12 @@
             // 
             this.lblParameter2.AutoSize = true;
             this.lblParameter2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblParameter2.Location = new System.Drawing.Point(371, 143);
+            this.lblParameter2.Location = new System.Drawing.Point(286, 237);
             this.lblParameter2.Name = "lblParameter2";
-            this.lblParameter2.Size = new System.Drawing.Size(88, 17);
+            this.lblParameter2.Size = new System.Drawing.Size(102, 17);
             this.lblParameter2.TabIndex = 46;
-            this.lblParameter2.Text = "Parameter:";
+            this.lblParameter2.Text = "Parameter 2:";
             this.lblParameter2.Visible = false;
-            // 
-            // textBox1
-            // 
-            this.textBox1.Location = new System.Drawing.Point(134, 164);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(117, 20);
-            this.textBox1.TabIndex = 48;
-            this.textBox1.Visible = false;
-            // 
-            // textBox2
-            // 
-            this.textBox2.Location = new System.Drawing.Point(406, 164);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(102, 20);
-            this.textBox2.TabIndex = 49;
-            this.textBox2.Visible = false;
-            this.textBox2.TextChanged += new System.EventHandler(this.textBox2_TextChanged);
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label10.Location = new System.Drawing.Point(18, 167);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(26, 17);
-            this.label10.TabIndex = 50;
-            this.label10.Text = "Id:";
-            this.label10.Visible = false;
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label11.Location = new System.Drawing.Point(258, 2);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(127, 17);
-            this.label11.TabIndex = 51;
-            this.label11.Text = "Display Number:";
-            this.label11.Visible = false;
-            // 
-            // textBox3
-            // 
-            this.textBox3.Location = new System.Drawing.Point(655, 164);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(110, 20);
-            this.textBox3.TabIndex = 52;
-            this.textBox3.Visible = false;
-            // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label12.Location = new System.Drawing.Point(522, 165);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(129, 17);
-            this.label12.TabIndex = 53;
-            this.label12.Text = "Internal Number:";
-            this.label12.Visible = false;
-            // 
-            // textBox4
-            // 
-            this.textBox4.Location = new System.Drawing.Point(134, 141);
-            this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(159, 20);
-            this.textBox4.TabIndex = 54;
-            this.textBox4.Visible = false;
             // 
             // CopyResponse
             // 
@@ -571,14 +496,13 @@
             this.groupBox3.Controls.Add(this.CopyResponse);
             this.groupBox3.Controls.Add(this.postCountTxt);
             this.groupBox3.Controls.Add(this.count1000);
-            this.groupBox3.Location = new System.Drawing.Point(710, 191);
+            this.groupBox3.Location = new System.Drawing.Point(644, 20);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(200, 112);
             this.groupBox3.TabIndex = 58;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Multi Post";
             this.groupBox3.Visible = false;
-            this.groupBox3.Enter += new System.EventHandler(this.groupBox3_Enter);
             // 
             // button4
             // 
@@ -591,87 +515,77 @@
             this.button4.UseVisualStyleBackColor = true;
             this.button4.Click += new System.EventHandler(this.GetARInvoiceBtn_Click);
             // 
-            // panel1
+            // txtParameter4
             // 
-            this.panel1.Controls.Add(this.label14);
-            this.panel1.Controls.Add(this.textBox6);
-            this.panel1.Controls.Add(this.textBox5);
-            this.panel1.Controls.Add(this.label11);
-            this.panel1.Controls.Add(this.label13);
-            this.panel1.Location = new System.Drawing.Point(21, 165);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(596, 39);
-            this.panel1.TabIndex = 59;
-            this.panel1.Visible = false;
+            this.txtParameter4.Location = new System.Drawing.Point(134, 264);
+            this.txtParameter4.Name = "txtParameter4";
+            this.txtParameter4.Size = new System.Drawing.Size(136, 20);
+            this.txtParameter4.TabIndex = 52;
+            this.txtParameter4.Visible = false;
             // 
-            // label14
+            // lblParameter4
             // 
-            this.label14.AutoSize = true;
-            this.label14.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label14.Location = new System.Drawing.Point(-3, 14);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(97, 17);
-            this.label14.TabIndex = 56;
-            this.label14.Text = "External No:";
+            this.lblParameter4.AutoSize = true;
+            this.lblParameter4.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblParameter4.Location = new System.Drawing.Point(15, 263);
+            this.lblParameter4.Name = "lblParameter4";
+            this.lblParameter4.Size = new System.Drawing.Size(102, 17);
+            this.lblParameter4.TabIndex = 53;
+            this.lblParameter4.Text = "Parameter 4:";
+            this.lblParameter4.Visible = false;
             // 
-            // textBox6
+            // lblParameter3
             // 
-            this.textBox6.Location = new System.Drawing.Point(113, 12);
-            this.textBox6.Name = "textBox6";
-            this.textBox6.Size = new System.Drawing.Size(159, 20);
-            this.textBox6.TabIndex = 55;
+            this.lblParameter3.AutoSize = true;
+            this.lblParameter3.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblParameter3.Location = new System.Drawing.Point(286, 264);
+            this.lblParameter3.Name = "lblParameter3";
+            this.lblParameter3.Size = new System.Drawing.Size(102, 17);
+            this.lblParameter3.TabIndex = 61;
+            this.lblParameter3.Text = "Parameter 3:";
+            this.lblParameter3.Visible = false;
             // 
-            // textBox5
+            // txtParameter3
             // 
-            this.textBox5.Location = new System.Drawing.Point(451, 13);
-            this.textBox5.Name = "textBox5";
-            this.textBox5.Size = new System.Drawing.Size(142, 20);
-            this.textBox5.TabIndex = 52;
+            this.txtParameter3.Location = new System.Drawing.Point(394, 264);
+            this.txtParameter3.Name = "txtParameter3";
+            this.txtParameter3.Size = new System.Drawing.Size(142, 20);
+            this.txtParameter3.TabIndex = 62;
+            this.txtParameter3.Visible = false;
             // 
-            // label13
+            // IncludeEventsCheckBox
             // 
-            this.label13.AutoSize = true;
-            this.label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label13.Location = new System.Drawing.Point(309, 13);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(129, 17);
-            this.label13.TabIndex = 53;
-            this.label13.Text = "External System:";
+            this.IncludeEventsCheckBox.AutoSize = true;
+            this.IncludeEventsCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.IncludeEventsCheckBox.Location = new System.Drawing.Point(357, 174);
+            this.IncludeEventsCheckBox.Name = "IncludeEventsCheckBox";
+            this.IncludeEventsCheckBox.Size = new System.Drawing.Size(89, 17);
+            this.IncludeEventsCheckBox.TabIndex = 63;
+            this.IncludeEventsCheckBox.Text = "Events List";
+            this.IncludeEventsCheckBox.UseVisualStyleBackColor = true;
             // 
-            // label16
+            // Includelabel
             // 
-            this.label16.AutoSize = true;
-            this.label16.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label16.Location = new System.Drawing.Point(642, 142);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(88, 17);
-            this.label16.TabIndex = 61;
-            this.label16.Text = "Parameter:";
-            this.label16.Visible = false;
-            // 
-            // textBox7
-            // 
-            this.textBox7.Location = new System.Drawing.Point(734, 140);
-            this.textBox7.Name = "textBox7";
-            this.textBox7.Size = new System.Drawing.Size(142, 20);
-            this.textBox7.TabIndex = 62;
-            this.textBox7.Visible = false;
+            this.Includelabel.AutoSize = true;
+            this.Includelabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Includelabel.Location = new System.Drawing.Point(286, 173);
+            this.Includelabel.Name = "Includelabel";
+            this.Includelabel.Size = new System.Drawing.Size(65, 17);
+            this.Includelabel.TabIndex = 64;
+            this.Includelabel.Text = "Include:";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(925, 742);
-            this.Controls.Add(this.textBox7);
-            this.Controls.Add(this.label16);
-            this.Controls.Add(this.panel1);
+            this.Controls.Add(this.Includelabel);
+            this.Controls.Add(this.IncludeEventsCheckBox);
+            this.Controls.Add(this.txtParameter4);
+            this.Controls.Add(this.lblParameter4);
+            this.Controls.Add(this.txtParameter3);
             this.Controls.Add(this.groupBox3);
-            this.Controls.Add(this.textBox4);
-            this.Controls.Add(this.label12);
-            this.Controls.Add(this.textBox3);
-            this.Controls.Add(this.label10);
-            this.Controls.Add(this.textBox2);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.lblParameter3);
             this.Controls.Add(this.txtParameter2);
             this.Controls.Add(this.lblParameter2);
             this.Controls.Add(this.txtParameter);
@@ -710,8 +624,6 @@
             this.groupBox2.PerformLayout();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -753,13 +665,6 @@
         private System.Windows.Forms.Label lblParameter;
 		private System.Windows.Forms.TextBox txtParameter2;
 		private System.Windows.Forms.Label lblParameter2;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.TextBox textBox3;
-        private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.TextBox textBox4;
         private System.Windows.Forms.Button CopyResponse;
         private System.Windows.Forms.Button Post1000ARInvoice;
         private System.Windows.Forms.Button button1;
@@ -769,13 +674,12 @@
         private System.Windows.Forms.TextBox postCountTxt;
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.Button button4;
-        private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.Label label14;
-        private System.Windows.Forms.TextBox textBox6;
-        private System.Windows.Forms.TextBox textBox5;
-        private System.Windows.Forms.Label label13;
-        private System.Windows.Forms.Label label16;
-        private System.Windows.Forms.TextBox textBox7;
+        private System.Windows.Forms.TextBox txtParameter4;
+        private System.Windows.Forms.Label lblParameter4;
+        private System.Windows.Forms.Label lblParameter3;
+        private System.Windows.Forms.TextBox txtParameter3;
+        private System.Windows.Forms.CheckBox IncludeEventsCheckBox;
+        private System.Windows.Forms.Label Includelabel;
     }
 }
 

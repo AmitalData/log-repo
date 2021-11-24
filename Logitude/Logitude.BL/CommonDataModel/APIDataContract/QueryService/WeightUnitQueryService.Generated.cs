@@ -36,21 +36,21 @@ using Simplog.Data.CommonDataModel;
         }
 
 		
-		public WeightUnit GetWeightUnitByCode(string Code,int Tenant,string ComputingPartnerName = "")
+		public WeightUnit GetWeightUnitByCode(string Code,int Tenant,  string ComputingPartnerName = "")
         { 
 		    try
             {
-
+				 
 				
-				var temp = query.GetSinglePM(Code,Tenant);				
+				var temp = query.GetSinglePM(Code, Tenant);				
 				 if (temp == null)
                     throw new ApplicationException("WeightUnit with Code " + Code + " doesn't exist");
 
 				return WeightUnitDataMapping(temp,Tenant,ComputingPartnerName);
 			}
+
             catch (Exception ex)
             {
-
                 throw ex;
             }
         }

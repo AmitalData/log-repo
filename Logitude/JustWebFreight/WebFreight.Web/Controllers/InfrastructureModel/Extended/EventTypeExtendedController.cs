@@ -54,7 +54,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
                 SecurityUtility.AuthenticationOnTenant(tenant);
 
                 EventTypeQuery eventTypesRepository = new EventTypeQuery(authToken.Tenant);
-                EventTypePM eventTypePM  = eventTypesRepository.GetSingleEventTypePMByCode(code, tenant);
+                EventTypePM eventTypePM  = eventTypesRepository.GetSinglePMByCode(code, tenant);
                 return Request.CreateResponse(HttpStatusCode.OK, eventTypePM);
 
             }
