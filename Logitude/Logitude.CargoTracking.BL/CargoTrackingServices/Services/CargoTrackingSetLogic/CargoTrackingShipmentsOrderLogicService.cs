@@ -112,7 +112,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
         private static void CheckCurrentMilestone(CheckCurrentMilestoneArgs currentMilestoneArgs, SetTableLogicArgs args)
         {
             var tenant = (int)currentMilestoneArgs.tableRow["Tenant"];
-            if (!CheckIfUserHasAccessToMilestone(args.NotPermittedMilestones, CargoTrackingMilestoneValues.Created, tenant))
+            if (!CheckIfUserHasAccessToMilestone(args.NotPermittedMilestones, currentMilestoneArgs.milestone.Code, tenant))
                 return;
 
             switch (currentMilestoneArgs.milestone.Code)
