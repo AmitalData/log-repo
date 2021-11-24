@@ -224,6 +224,70 @@ export class BatchInvoicesComponent extends BaseComponent implements AfterViewIn
   this.MarkIsChecked.emit({ SelectedLines:selectedLines,AllSelected: this.AllSelected , ExcludedLines:this.ExcludedItems });
 
     }
+
+    //#region Category fields
+    IsCategoryDisabled: boolean = false;
+    CategoriesList: string[] = [
+        'Category 1',
+        'Category 2',
+        'Category 3',
+        'Category 4',
+        'Category 5'
+    ];
+    SelectedCategory: string;
+    SelectedItemChanged(item) {
+        this.SelectedCategory = item;
+    }
+
+    private category1: string;
+    public get Category1() { return this.category1; }
+    public set Category1(value: string) {
+        if (this.category1 != value) {
+            this.category1 = value;
+            this.ReloadData();
+        }
+    }
+
+
+    private category2: string;
+    public get Category2() { return this.category2; }
+    public set Category2(value: string) {
+        if (this.category2 != value) {
+            this.category2 = value;
+            this.ReloadData();
+        }
+    }
+
+    private category3: string;
+    public get Category3() { return this.category3; }
+    public set Category3(value: string) {
+        if (this.category3 != value) {
+            this.category3 = value;
+            this.ReloadData();
+        }
+    }
+
+    private category4: string;
+    public get Category4() { return this.category4; }
+    public set Category4(value: string) {
+        if (this.category4 != value) {
+            this.category4 = value;
+            this.ReloadData();
+        }
+    }
+
+    //row 4
+    private category5: string;
+    public get Category5() { return this.category5; }
+    public set Category5(value: string) {
+        if (this.category5 != value) {
+            this.category5 = value;
+            this.ReloadData();
+        }
+    }
+
+    //#endregion
+
      today: Date = new Date();
      lastmonth:any = this.today.setDate(this.today.getDay() - 30);
   
@@ -319,8 +383,19 @@ export class BatchInvoicesComponent extends BaseComponent implements AfterViewIn
     if (this.ShowInProgressReports) {
       filters.addAdditionalFilter("InterestReportStatusCode", "1,9,8", null, null, "InList", false, false, false, "string"); 
     }
-    else filters.addAdditionalFilter("InterestReportStatusCode", "1,9", null, null, "InList", false, false, false, "string"); 
-    
+      else filters.addAdditionalFilter("InterestReportStatusCode", "1,9", null, null, "InList", false, false, false, "string");
+      // Selecting category
+      var categoryValue = null;
+      var categoryIndex = null;
+      if (this.SelectedCategory) {
+          categoryIndex = this.SelectedCategory.replace(' ', ''); // remove space from selected category
+
+          if (categoryIndex)
+              categoryValue = this.DataContext[categoryIndex]; // select the value from the context
+      }
+
+      filters.addAdditionalFilter("Category1LocalName", categoryValue.LocalName, null, null, "Equals", false, false, false, "string"); 
+
     filters.SortBy = sortingCol;
     filters.SortDirection = sortingDir;
 

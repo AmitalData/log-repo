@@ -112,7 +112,7 @@ OpenBatchInvoice(){
         windowArgs.IsNew = true;
         var windowTitle = TextCodeTranslator.Translate("InterestReport.O.BatchInvoice");
         var logWindow = new LogitudeWindow();
-        logWindow.Width = 1000;
+        logWindow.Width = 1200;
         logWindow.Height = 1000;
         logWindow.WindowArgs = windowArgs;
         logWindow.Title = windowTitle;
