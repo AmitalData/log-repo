@@ -233,8 +233,6 @@ Then("the consolidation invoice should approve successfully", () => {
   BaseAssertion.AssertStatusCode(RequestAliases.ARInvoicesRequest, 200).then((interception) => {
     consolidationInvoiceNumber = interception.response.body.InvoiceNumber;
   })
-  //cy.BackButton("Draft Invoices")
-  //cy.BackButton(BaseSelectors.ContainsAccounting)
 });
 
 Then("the status value should be {string}", (statusValue) => {
