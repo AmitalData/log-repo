@@ -152,8 +152,8 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 ForeignAmount = (decimal)entityPM.ForeignAmount,
                 ExchangeRate = entityPM.ExchangeRate,
                 ChangeSetOp = ChangeSetOperation.Insert,
-                Reference1 = paymentPM != null ? paymentPM.PaymentNo : null,
-                Reference2 = entityPM.ChequeNumber,
+                Reference1 = entityPM.ChequeNumber,
+                Reference2 = null,
                 Notes = entityPM.PaymentChequeLines.First().Notes
 
             };
@@ -169,8 +169,8 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 ForeignAmount = (decimal)entityPM.ForeignAmount,
                 ExchangeRate = entityPM.ExchangeRate,
                 ChangeSetOp = ChangeSetOperation.Insert,
-                Reference1 = paymentPM != null ? paymentPM.PaymentNo : null,
-                Reference2 = entityPM.ChequeNumber,
+                Reference1 = entityPM.ChequeNumber,
+                Reference2 = null,
                 Notes = entityPM.PaymentChequeLines.First().Notes
 
 
