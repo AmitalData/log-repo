@@ -110,7 +110,27 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             {
                 using (OracleConnection cn = new OracleConnection(strConnString))
                 {
-                    updateCmd = "Update SupplierInvioceItemCertificats set " + GetReset92(attachmentTypeCode) + " AttachmentTypeCode='" + attachmentTypeCode + "',CertificateNumber= " + (string.IsNullOrEmpty(certificateNumber) ? "NULL" : certificateNumber) + " ,ReqConfirmationTypeCode= " + (string.IsNullOrEmpty(reqConfirmationTypeCode) ? "NULL" : reqConfirmationTypeCode) + ",ResConfirmationTypeCode= " + (string.IsNullOrEmpty(resConfirmationTypeCode) ? "NULL" : resConfirmationTypeCode) + ",CertificateExemptionTypeCode= " + (string.IsNullOrEmpty(certificateExemptionTypeCode) ? "NULL" : certificateExemptionTypeCode) + " where ";
+
+                    if (!String.IsNullOrWhiteSpace(certificateExemptionTypeCode))
+                    {
+                        if (attachmentTypeCode != "4")
+                        {
+                            certificateExemptionTypeCode = null;
+
+                            var stringBuilder1 = new StringBuilder();
+                            stringBuilder1
+                                .AppendLine($"UpdateCertificateConnectedItems(declarationId:{declarationId},certificateExemptionTypeCode:{certificateExemptionTypeCode})")
+                                .AppendLine($"CertificateExemptionTypeCode:cmd.Contains(92)={cmd.Contains("92")}")
+                                .AppendLine(updateCmd1)
+                                .AppendLine(cmd);
+                            var logChangesService1 = new LogChangesService();
+                            logChangesService1.SBLog(
+                                SIICerExemptionHD379305,
+                                stringBuilder1);
+                        }
+                    }
+                    
+                    updateCmd = "Update SupplierInvioceItemCertificats set  AttachmentTypeCode='" + attachmentTypeCode + "',CertificateNumber= " + (string.IsNullOrEmpty(certificateNumber) ? "NULL" : certificateNumber) + " ,ReqConfirmationTypeCode= " + (string.IsNullOrEmpty(reqConfirmationTypeCode) ? "NULL" : reqConfirmationTypeCode) + ",ResConfirmationTypeCode= " + (string.IsNullOrEmpty(resConfirmationTypeCode) ? "NULL" : resConfirmationTypeCode) + ",CertificateExemptionTypeCode= " + (string.IsNullOrEmpty(certificateExemptionTypeCode) ? "NULL" : certificateExemptionTypeCode) + " where ";
                     
 
                     int count = 0;
