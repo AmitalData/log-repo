@@ -212,7 +212,7 @@ namespace WebFreight.Web.App_Code
 
 
                     DocumentPopulateAutomaticDateUpdateService documentPopulateAutomaticDateUpdateService = new DocumentPopulateAutomaticDateUpdateService();
-                    documentPopulateAutomaticDateUpdateService.Update(new DocumentPopulateAutomaticDateArgs() { EntityId = filter.EntityId, ObjectTableName = filter.ObjectTableName, DocumentTypeCode = filter.DocumentTypeCode, ProcessType = "Send", Tenant = filter.Tenant });
+                    documentPopulateAutomaticDateUpdateService.Update(new DocumentPopulateAutomaticDateArgs() { EntityId = filter.EntityId, ObjectTableName = filter.ObjectTableName, ChildObjectTableId = filter.ChildObjectTableId, ChildEntityId = filter.ChildEntityId, DocumentTypeCode = filter.DocumentTypeCode, ProcessType = "Send", Tenant = filter.Tenant });
 
 
                 }
