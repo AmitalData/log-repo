@@ -10,16 +10,19 @@
   </div>
 
   <div class="col-3 p-field">
+    <div class="error-msg" [ngClass]='{"invalid": formGroup.controls["startDate"].invalid}'>Start Date field is required</div>
     <label for="StartDate_Date">Start Date</label>
     <p-calendar formControlName='startDate' id="StartDate_Date" showTime="true" showIcon='true'></p-calendar>
   </div>
 
   <div class="col-3 p-field">
+    <div class="error-msg" [ngClass]='{"invalid": formGroup.controls["expirationDate"].invalid}'>Expiration Date field is required</div>
     <label for="expirationDate_Date">Expiration Date</label>
     <p-calendar formControlName='expirationDate' id="expirationDate_Date" showTime="true" showIcon='true'></p-calendar>
   </div>
 
   <div class="col-6 p-field">
+    <div class="error-msg" [ngClass]='{"invalid": formGroup.controls["expirationDays"].invalid}'>Expiration Days field is required</div>
     <label for="expirationDays">Expiration Days</label>
     <p-inputNumber formControlName="expirationDays" mode="decimal" inputId="expirationDays" [useGrouping]="false">
     </p-inputNumber>

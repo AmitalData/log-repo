@@ -1,5 +1,5 @@
 :host ::ng-deep {
-    p-checkbox { 
+    p-checkbox {
         direction: rtl;
         display: block;
     }
@@ -15,9 +15,9 @@
         .p-checkbox-box {
             width: 13px;
             height: 13px;
-            
+
             .p-checkbox-icon {
-                font-size: 12px;
+                font-size: 9px;
             }
         }
     }
@@ -31,14 +31,16 @@
     }
 
     app-address-textarea {
-        margin-top: 33px;
+        margin: auto;
+        margin-top: 12px;
         display: block;
-        width: 187px;
-        margin-bottom: 9px;
+        width: 164px;
+        margin-bottom: 6px;
+        text-align: left;
 
-        label{            
+        label {
             margin-bottom: 0px;
-        } 
+        }
 
         img {
             bottom: 2px;
@@ -50,8 +52,25 @@
             bottom: 36px;
         }
     }
-}
 
+    .p-field {
+        app-autocomplate-table label,
+        label {
+            position: absolute;
+            top: -8px;
+        }
+
+        app-autocomplate-table {
+            label[for='Address'] {
+                top: -12px;
+            }
+
+            .pi-search {
+                top: 7px;
+            }
+        }
+    }
+}
 
 // hr {
 //     height: 1px;
@@ -65,6 +84,10 @@
     border: 1px solid #ced4da;
     border-radius: 7px;
     margin-top: 19px;
+
+    > div {
+        height: 155px;
+    }
 }
 
 .container {
@@ -73,22 +96,27 @@
     padding: 0 10px;
     margin-bottom: 8px;
     margin-top: 14px;
-
+    
     > .p-fluid {
         position: relative;
-        top: -17px;
-        height: 129px;
-
+        // top: -17px;
+        // height: 129px;
+        
         .p-field {
-            margin-bottom: 0px !important;
-            height: 47px;
+            margin-bottom: 12px !important;
+            // height: 47px;
             display: block;
         }
-
+        
         .zip-code-wrapper {
-            height: 43px;
+            margin-top: 3px;
+            
         }
     }
+}
+
+.address-container {
+    text-align: center;    
 }
 
 h5 {
@@ -128,7 +156,14 @@ app-autocomplate-table.address-input {
     pointer-events: none;
 }
 
-.pi-pencil{
+.pi-pencil {
     margin-left: 12px;
     margin-right: 2px;
+}
+
+.error-msg {
+    position: absolute;
+    top: 28px;
+    z-index: 2;
+    font-size: 9px;
 }

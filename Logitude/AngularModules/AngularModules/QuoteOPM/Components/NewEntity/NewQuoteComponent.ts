@@ -2,7 +2,6 @@ import { Component, isDevMode } from "@angular/core";
 import { AbstractControl, FormArray, FormGroup } from "@angular/forms";
 import { PackageTypeList } from "Common/EntityLists/PackageTypeList";
 import { LogitudeWindow } from "Controls/Windows/LogitudeWindow";
-import { add } from "cypress/types/lodash";
 import { SessionLocator } from "Infrastructure/Utilities/SessionLocator";
 import { MessageService } from "primeng/api";
 import { QuoteOPPMInitService } from "QuoteOPM/EntityPMInitServices/QuoteOPPMInitService";
@@ -10,7 +9,6 @@ import { QuoteOPPackagePM } from "QuoteOPM/EntityPMs/QuoteOPPackagePM";
 import { QuoteOPPM } from "QuoteOPM/EntityPMs/QuoteOPPM";
 import { QuoteOPPropertiesPM } from "QuoteOPM/EntityPMs/QuoteOPPropertiesPM";
 import { QuoteOPPMService } from "QuoteOPM/Services/StandardPMs/QuoteOPPMService";
-import { filter } from "rxjs/operators";
 import { NewQuoteDataService } from "./Services/new-quote-data/new-quote-data.service";
 import { NewQuoteValidateEntityService } from "./Services/new-quote-validate-entity/new-quote-validate-entity.service";
 
@@ -39,7 +37,7 @@ export class NewQuoteComponent {
 
     async create() {
         this.isSubmit = true;
-        if (!this.ValidateService.validate(this.formGroup)) return;
+        // if (!this.ValidateService.validate(this.formGroup)) return;
         if (this.formGroup.invalid) return;
 
         const currentWindow:LogitudeWindow = SessionLocator.SelectedSession.CurrentWindow;
