@@ -17,48 +17,48 @@ using Logitude.Customs.Data;
 using Simplog.Server.Infrastructure;
 namespace Logitude.Customs.BL.EntityQueryServices
 { 
-   public partial class ExportReferenceQueryService: EntityQueryService<ExportReference,ExportReferenceKeys,ExportReferencePM>
+   public partial class ExportStorageQueryService: EntityQueryService<ExportStorage,ExportStorageKeys,ExportStoragePM,object,ExportStorageKeys>
    {
    
-        ExportReferenceRepository repository;
+        ExportStorageRepository repository;
 		ICustomContext  context;
-        public ExportReferenceQueryService(int tenant)
+        public ExportStorageQueryService(int tenant)
         {
 		    context = CustomContext.GetContext(tenant);
             MainContext = context;
-            repository = new ExportReferenceRepository(context);
+            repository = new ExportStorageRepository(context);
             Repository = repository;
-            mapping = new ExportReferenceDataMapping();
+            mapping = new ExportStorageDataMapping();
         }
 
-        public ExportReferenceQueryService(ExportReferenceRepository repository)
+        public ExportStorageQueryService(ExportStorageRepository repository)
         {
             this.repository = repository;
             Repository = repository;
-            mapping = new ExportReferenceDataMapping();
+            mapping = new ExportStorageDataMapping();
         }
 
-        public ExportReferenceQueryService(ICustomContext context)
+        public ExportStorageQueryService(ICustomContext context)
         {
-            this.repository = new ExportReferenceRepository(context);
+            this.repository = new ExportStorageRepository(context);
             this.context = context;
 
             MainContext = context;
             Repository = repository;
-            mapping = new ExportReferenceDataMapping();
+            mapping = new ExportStorageDataMapping();
         }
 		 
-		public  ExportReferencePM GetSingle(string id,bool getComposition, bool getFromCache)
+		public  ExportStoragePM GetSingle(string id,bool getComposition, bool getFromCache)
         {
-             EntityKeys = new ExportReferenceKeys(){ Id = id };
+             EntityKeys = new ExportStorageKeys(){ Id = id };
 
 			 return base.GetSingle(EntityKeys, getComposition, getFromCache);
         }
 
        
-	    protected override EntityKeyFields GetKeys(ExportReference entityPOCO)
+	    protected override EntityKeyFields GetKeys(ExportStorage entityPOCO)
         {
-            ExportReferenceKeys entityKeys = new ExportReferenceKeys() { Id = entityPOCO.Id,  };
+            ExportStorageKeys entityKeys = new ExportStorageKeys() { Id = entityPOCO.Id,  };
             return entityKeys;
         }
      
