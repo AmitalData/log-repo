@@ -19,5 +19,7 @@ export class CustomRouteReuseStrategy extends BaseRouteReuseStrategy {
   retrieve(route: ActivatedRouteSnapshot): DetachedRouteHandle|null  {
     return this.storedRoutes.get(route.routeConfig!.path!) as DetachedRouteHandle;
   }
-
+  clear(){
+    this.storedRoutes.clear();
+  }
 }
