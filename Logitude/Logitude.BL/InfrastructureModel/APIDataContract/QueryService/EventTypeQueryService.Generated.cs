@@ -44,11 +44,28 @@ using Simplog.Data.InfrastructureModel;
         { 
 		    try
             {
-				 
-				
-				var temp = query.GetSinglePM(Id, Tenant);				
+								
+				var temp = query.GetSinglePM(Id, Tenant);
 				 if (temp == null)
                     throw new ApplicationException("EventType with Id " + Id + " doesn't exist");
+
+				return EventTypeDataMapping(temp,Tenant,ComputingPartnerName);
+			}
+
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+		
+		public EventType GetEventTypeByCode(string Code,int Tenant,  string ComputingPartnerName = "")
+        { 
+		    try
+            {
+								
+				var temp = query.GetSinglePMByCode(Code, Tenant, true);
+				 if (temp == null)
+                    throw new ApplicationException("EventType with Code " + Code + " doesn't exist");
 
 				return EventTypeDataMapping(temp,Tenant,ComputingPartnerName);
 			}
@@ -99,6 +116,10 @@ using Simplog.Data.InfrastructureModel;
 						temp = query.GetSinglePM(MyEntity.Id, Tenant);
 					} 
 					
+					if (!string.IsNullOrEmpty(MyEntity.Code))
+					{
+						temp = query.GetSinglePMByCode(MyEntity.Code, Tenant, true  );
+					} 
 					if (!string.IsNullOrEmpty(MyEntity.PartnerCode))
 					{
                         if(string.IsNullOrEmpty(ComputingPartnerName))
@@ -109,7 +130,7 @@ using Simplog.Data.InfrastructureModel;
 						{
 						  throw new ApplicationException("EventType with Partner Code " + MyEntity.PartnerCode + " doesn't match any record");
 						}
-						temp = query.GetSinglePMByCode(MyCode, Tenant);
+						temp = query.GetSinglePMByCode(MyCode, Tenant, true );
 						
 						
 					}
@@ -117,7 +138,7 @@ using Simplog.Data.InfrastructureModel;
 					   					   
 					if(temp == null)
 					{   
-					    throw new ApplicationException("EventType with Id " + MyEntity.Id + " doesn't exist");
+					    throw new ApplicationException("EventType with Code " + MyEntity.Code + " doesn't exist");
 					} 
 					
 					if(string.IsNullOrEmpty(temp.Id))

@@ -90,7 +90,7 @@ namespace WebFreight.Web.ExternalAPIs.ExternalAPIsHelpers
             this.receivables = directEntity.Receivables;
             this.payables = directEntity.Payables;
             this.oceanOrInlandPackages = directEntity.OceanOrInlandPackages;
-            this.events = directEntity.EventList;
+            this.events = directEntity.AddManualEvents;
         }
         private void SetCommonDataFromHouseEntity(House houseEntity)
         {
@@ -102,7 +102,7 @@ namespace WebFreight.Web.ExternalAPIs.ExternalAPIsHelpers
             this.receivables = houseEntity.Receivables;
             this.payables = houseEntity.Payables;
             this.oceanOrInlandPackages = houseEntity.OceanOrInlandPackages;
-            this.events = houseEntity.EventList;
+            this.events = houseEntity.AddManualEvents;
         }
         private void SetCommonDataFromMasterEntity(Master masterEntity)
         {
@@ -114,7 +114,7 @@ namespace WebFreight.Web.ExternalAPIs.ExternalAPIsHelpers
             this.mainCarriageLegs = masterEntity.MainCarriageLegs;
             this.receivables = masterEntity.Receivables;
             this.payables = masterEntity.Payables;
-            this.events = masterEntity.EventList;
+            this.events = masterEntity.AddManualEvents;
         }
         private void ValidateShipmentPackagesDueToShipmentType()
         {
@@ -258,7 +258,6 @@ namespace WebFreight.Web.ExternalAPIs.ExternalAPIsHelpers
         }
         private void ValidateEventsRequiredFields()
         {
-            EventTypeRepository eventTypeRepository = new EventTypeRepository(tenant);
             foreach (Event item in events)
             {
                 if (item.EventType == null)
@@ -270,25 +269,8 @@ namespace WebFreight.Web.ExternalAPIs.ExternalAPIsHelpers
                 {
                     throw new ApplicationException("Event Date is required");
                 }
-
-                this.ValidateEventType(item.EventType, eventTypeRepository);
             }
-        }
-        private void ValidateEventType(EventType eventType, EventTypeRepository eventTypeRepository)
-        {
-            var shipmentTableId = ObjectTableRepository.GetObjectTableByName("Shipment");
-            var eventTypePOCO = eventTypeRepository.GetSingleEventTypeByCodeAndObjectTableId(eventType.Code, shipmentTableId, tenant);
-
-            if (eventTypePOCO == null)
-            {
-                throw new ApplicationException("Event Type is not found for shipment");
-            }
-
-            if (!eventTypePOCO.IsManualEntry)
-            {
-                throw new ApplicationException("Event Type is not allowed for manual entry");
-            }
-        }
+        }        
         private void ValidateDuplicateEvents()
         {
             var query = events.GroupBy(x => new { x.EventDateTime, x.EventType.Code })

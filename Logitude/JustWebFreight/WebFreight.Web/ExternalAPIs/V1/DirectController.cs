@@ -26,6 +26,8 @@ using Logitude.Infrastructure.Data.Repsitories;
 using Logitude.Infrastructure.Data.EntityPOCOs;
 using WebFreight.Web.ExternalAPIs.ExternalAPIsHelpers;
 using Simplog.Data.Helpers;
+using Logitude.BL.InfrastructureModel.APIDataContract.ApiV1;
+using Logitude.BL.ShipmentsModel.EntityQueries;
 
 namespace WebFreight.Web.ExternalAPIs.V1
 {
@@ -199,6 +201,12 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         ShipmentService service = new ShipmentService(MyContext, entityPM, SecurityUtility.GetAuthenticatedUser());
                         service.Create();
 
+                        if (entity.AddManualEvents != null && entity.AddManualEvents.Count > 0)
+                        {
+                            EventQueryService eventQueryService = new EventQueryService(authToken.Tenant);                            
+                            eventQueryService.CreateShipmentTraceEvents(entityPM, entity.AddManualEvents, true, computingPartnerCode);
+                        }
+
                         var result = mappingService.GetDirectById(entityPM.Id, authToken.Tenant, null);
                         APIHelper.AddCommunicationLog("D", entity, result, "Shipment", entityPM.Id, "Direct API", authToken.Tenant);
                         scope.Complete();
@@ -278,6 +286,12 @@ namespace WebFreight.Web.ExternalAPIs.V1
                             ComputeHelper.ComputeTotals(directPM);
                             ShipmentService service = new ShipmentService(MyContext, directPM, SecurityUtility.GetAuthenticatedUser());
                             service.Update(true);
+
+                            if (entity.AddManualEvents != null && entity.AddManualEvents.Count > 0)
+                            {
+                                EventQueryService eventQueryService = new EventQueryService(authToken.Tenant);
+                                eventQueryService.CreateShipmentTraceEvents(directPM, entity.AddManualEvents, true, "");
+                            }
                         }
 
                         MyContext = ShipmentsContext.GetContext(authToken.Tenant);

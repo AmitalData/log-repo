@@ -862,7 +862,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                 Notes = notes,
             });
         }
-        private void CreateTraceEvent(EventStatusTracerArgs args)
+        public void CreateTraceEvent(EventStatusTracerArgs args)
         {
             if (!string.IsNullOrEmpty(args.EventTypeCode))
             {
@@ -892,29 +892,37 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                     else
                     {
                         #region User
-                        if (myUserId == null)
+                        if (args.IsFromShipmentAPI)
                         {
-                            if (!string.IsNullOrEmpty(args.UserId))
+                            myUserId = args.UserId;
+                        }
+
+                        else
+                        {
+                            if (myUserId == null)
                             {
-                                myUserId = args.UserId;
-
-                                if (tenant != 0)
+                                if (!string.IsNullOrEmpty(args.UserId))
                                 {
-                                    UserRepository userRepository = new UserRepository(0);
-                                    User user = userRepository.GetSingleUser(myUserId, 0, true);
-                                    if (user != null)
-                                    {
-                                        User systemUser = userRepository.GetSingleUserByEmail("system@tenant" + tenant + ".com", tenant, true);
-                                        if (systemUser != null)
-                                        {
-                                            myUserId = systemUser.Id;
-                                        }
+                                    myUserId = args.UserId;
 
-                                        myCustomerCareUserEmail = user.Contact.Email;
+                                    if (tenant != 0)
+                                    {
+                                        UserRepository userRepository = new UserRepository(0);
+                                        User user = userRepository.GetSingleUser(myUserId, 0, true);
+                                        if (user != null)
+                                        {
+                                            User systemUser = userRepository.GetSingleUserByEmail("system@tenant" + tenant + ".com", tenant, true);
+                                            if (systemUser != null)
+                                            {
+                                                myUserId = systemUser.Id;
+                                            }
+
+                                            myCustomerCareUserEmail = user.Contact.Email;
+                                        }
                                     }
                                 }
                             }
-                        }
+                        }                        
                         #endregion
 
                         #region Dates
@@ -1921,6 +1929,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
         public string OldStatusId { get; set; }
         public ShipmentPickUpPM PickUp { get; set; }
         public ShipmentDeliveryPM Delivery { get; set; }
+        public bool IsFromShipmentAPI { get; set; }
     }
 
     public class RoutingDate

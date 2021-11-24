@@ -280,7 +280,7 @@ using Simplog.Data.ShipmentsModel;
 					
 					if (!string.IsNullOrEmpty(MyEntity.ShipmentNumber))
 					{
-						temp = query.GetSinglePMByShipmentNumber(MyEntity.ShipmentNumber, Tenant);
+						temp = query.GetSinglePMByShipmentNumber(MyEntity.ShipmentNumber, Tenant  );
 					} 					   
 					if(temp == null)
 					{   

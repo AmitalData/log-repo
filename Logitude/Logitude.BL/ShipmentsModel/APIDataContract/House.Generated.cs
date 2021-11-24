@@ -177,6 +177,8 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
     public Card Notify1 { get; set; }
     
     public List<Event> EventList { get; set; }
+    
+    public List<Event> AddManualEvents { get; set; }
 
     public  string  ComputingPartnerCode { get; set; }
 

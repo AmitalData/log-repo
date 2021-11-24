@@ -1,6 +1,7 @@
 ﻿using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.DataContracts;
+using Logitude.BL.InfrastructureModel.APIDataContract.ApiV1;
 using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.BL.ShipmentsModel.APIDataContract.ApiV1;
 using Logitude.BL.ShipmentsModel.EntityPMs;
@@ -205,6 +206,12 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         ShipmentService service = new ShipmentService(MyContext, entityPM, SecurityUtility.GetAuthenticatedUser());
                         service.Create();
 
+                        if (entity.AddManualEvents != null && entity.AddManualEvents.Count > 0)
+                        {
+                            EventQueryService eventQueryService = new EventQueryService(authToken.Tenant);
+                            eventQueryService.CreateShipmentTraceEvents(entityPM, entity.AddManualEvents, true, computingPartnerCode);
+                        }
+
                         scope.Complete();
                     }
                     
@@ -404,6 +411,12 @@ namespace WebFreight.Web.ExternalAPIs.V1
 
                             ShipmentService service = new ShipmentService(MyContext, HousePM, SecurityUtility.GetAuthenticatedUser());
                             service.Update(true);
+
+                            if (entity.AddManualEvents != null && entity.AddManualEvents.Count > 0)
+                            {
+                                EventQueryService eventQueryService = new EventQueryService(authToken.Tenant);
+                                eventQueryService.CreateShipmentTraceEvents(HousePM, entity.AddManualEvents, true, "");
+                            }
                         }
 
                         MyContext = ShipmentsContext.GetContext(authToken.Tenant);

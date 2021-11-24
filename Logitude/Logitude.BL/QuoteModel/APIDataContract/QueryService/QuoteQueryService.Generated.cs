@@ -515,7 +515,7 @@ using Simplog.Data.QuoteModel;
 					
 					if (!string.IsNullOrEmpty(MyEntity.QuoteNumber))
 					{
-						temp = query.GetSinglePMByQuoteNumber(MyEntity.QuoteNumber, Tenant);
+						temp = query.GetSinglePMByQuoteNumber(MyEntity.QuoteNumber, Tenant  );
 					} 					   
 					if(temp == null)
 					{   

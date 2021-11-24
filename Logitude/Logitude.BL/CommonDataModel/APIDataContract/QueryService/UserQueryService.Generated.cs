@@ -131,11 +131,11 @@ using Simplog.Data.CommonDataModel;
 					
 					if (!string.IsNullOrEmpty(MyEntity.ExternalCode))
 					{
-						temp = query.GetSinglePMByCode(MyEntity.ExternalCode, Tenant);
+						temp = query.GetSinglePMByCode(MyEntity.ExternalCode, Tenant  );
 					} 
 					if (!string.IsNullOrEmpty(MyEntity.Code))
 					{
-						temp = query.GetSinglePMByEmail(MyEntity.Code, Tenant);
+						temp = query.GetSinglePMByEmail(MyEntity.Code, Tenant  );
 					} 
 					if (!string.IsNullOrEmpty(MyEntity.PartnerCode))
 					{
@@ -147,7 +147,7 @@ using Simplog.Data.CommonDataModel;
 						{
 						  throw new ApplicationException("User with Partner Code " + MyEntity.PartnerCode + " doesn't match any record");
 						}
-						temp = query.GetSinglePMByEmail(MyCode, Tenant);
+						temp = query.GetSinglePMByEmail(MyCode, Tenant );
 						
 						
 					}

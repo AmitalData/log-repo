@@ -2756,6 +2756,7 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public bool IsPODReceived { get; set; }
         public DateTime? PODReceivedDate { get; set; }
         public List<TraceEventPM> EventList { get; set; }
+        public List<TraceEventPM> AddManualEvents { get; set; }
     }
 
     public class TransshipmentLeg

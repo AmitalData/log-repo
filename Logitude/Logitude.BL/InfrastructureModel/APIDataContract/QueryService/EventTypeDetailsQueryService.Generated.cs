@@ -44,9 +44,8 @@ using Simplog.Data.InfrastructureModel;
         { 
 		    try
             {
-				 
-				
-				var temp = query.GetSinglePM(Id, Tenant);				
+								
+				var temp = query.GetSinglePM(Id, Tenant);
 				 if (temp == null)
                     throw new ApplicationException("EventType with Id " + Id + " doesn't exist");
 

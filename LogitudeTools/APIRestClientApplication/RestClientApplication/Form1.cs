@@ -254,7 +254,6 @@ namespace RestClientApplication
                 #region Direct
                 case "Direct":
                     {
-
                         if (operationCombo.SelectedIndex == 2)
                         {
                             lblParameter.Text = "Number";
@@ -268,7 +267,6 @@ namespace RestClientApplication
                         }
 
                         apiName = "direct";
-
                         requestText = responseParameters.XMLRequestText["PostDirect"];
                         break;
                     }
@@ -403,6 +401,18 @@ namespace RestClientApplication
                 #region Master
                 case "Master":
                     {
+                        if (operationCombo.SelectedIndex == 2)
+                        {
+                            lblParameter.Text = "Number";
+                            lblParameter2.Text = "Id";
+
+                            txtParameter.Visible = true;
+                            lblParameter.Visible = true;
+
+                            txtParameter2.Visible = true;
+                            lblParameter2.Visible = true;
+                        }
+
                         apiName = "master";
                         requestText = responseParameters.XMLRequestText["PostMaster"];
                         break;

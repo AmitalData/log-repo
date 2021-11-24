@@ -2698,7 +2698,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
         }
         private void MapEventsListForAPI(ShipmentPM shipmentPM)
         {
-            shipmentPM.EventList = this.GetShipmentTraceEvents(shipmentPM);
+            shipmentPM.EventList = this.GetShipmentTraceEvents(shipmentPM).OrderBy(d => d.LogDateTime).ToList();
         }
         private List<TraceEventPM> GetShipmentTraceEvents(ShipmentPM shipmentPM)
         {

@@ -85,7 +85,7 @@ using Simplog.Data.CommonDataModel;
 				   					var temp = new CustomerOpenFilesAmountPM();
 					if (!string.IsNullOrEmpty(MyEntity.CustomerId))
 					{
-						temp = query.GetSinglePMByCustomerId(MyEntity.CustomerId, Tenant);
+						temp = query.GetSinglePMByCustomerId(MyEntity.CustomerId, Tenant  );
 					} 					   
 					if(temp == null)
 					{   

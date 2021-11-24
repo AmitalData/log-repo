@@ -149,7 +149,7 @@ using Simplog.Data.CommonDataModel;
 					
 					if (!string.IsNullOrEmpty(MyEntity.Code))
 					{
-						temp = query.GetSinglePMByCombinedCode(MyEntity.Code, Tenant);
+						temp = query.GetSinglePMByCombinedCode(MyEntity.Code, Tenant  );
 					} 
 					if (!string.IsNullOrEmpty(MyEntity.PartnerCode))
 					{
@@ -161,7 +161,7 @@ using Simplog.Data.CommonDataModel;
 						{
 						  throw new ApplicationException("Port with Partner Code " + MyEntity.PartnerCode + " doesn't match any record");
 						}
-						temp = query.GetSinglePMByCombinedCode(MyCode, Tenant);
+						temp = query.GetSinglePMByCombinedCode(MyCode, Tenant );
 						
 						
 					}
@@ -169,7 +169,7 @@ using Simplog.Data.CommonDataModel;
 					   
 					if (!string.IsNullOrEmpty(MyEntity.PortCode))
 					{
-						temp = query.GetSinglePMByCode(MyEntity.PortCode, Tenant);
+						temp = query.GetSinglePMByCode(MyEntity.PortCode, Tenant  );
 					} 					   
 					if(temp == null)
 					{   
