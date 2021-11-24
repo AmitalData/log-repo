@@ -35,7 +35,7 @@ namespace WebFreight.Web.Helpers.Analyzers
         private AnalyzeQueue analyzeQueue;
         private AnalyzeQueueRepository analyzeQueueRepository;
         private CommunicationLogRepository communicationLogRepository;
-        private int tenant;
+        private int tenant_Zero;
         private ArrayOfQueueTask externalTasksQueues;
         private LogitudeOceanInsightsRequestRepository logitudeOceanInsightsRequestRepository;
         private int? logitudeTenant = null;
@@ -216,10 +216,10 @@ namespace WebFreight.Web.Helpers.Analyzers
         {
             if (analyzeQueue != null)
             {
-                this.tenant = analyzeQueue.Tenant;
+                this.tenant_Zero = analyzeQueue.Tenant;
                 this.analyzeQueue = analyzeQueue;
                 this.analyzeQueueRepository = analyzeQueueRepository;
-                this.logitudeOceanInsightsRequestRepository = new LogitudeOceanInsightsRequestRepository(this.tenant);                
+                this.logitudeOceanInsightsRequestRepository = new LogitudeOceanInsightsRequestRepository(this.tenant_Zero);                
                 this.computingPartnerCode = "G-OCI";
             }
         }
@@ -863,18 +863,18 @@ namespace WebFreight.Web.Helpers.Analyzers
         {
             if (container != null)
             {
-                LogitudeOceanInsightsResponseRepository logitudeOceanInsightsResponseRepository = new LogitudeOceanInsightsResponseRepository(tenant);
-                LogitudeOceanInsightsResponse logitudeOceanInsightsResponse = logitudeOceanInsightsResponseRepository.GetLogitudeOceanInsightsResponseByContainerNumberAndScac(container_number, carrier_scac, tenant);
+                LogitudeOceanInsightsResponseRepository logitudeOceanInsightsResponseRepository = new LogitudeOceanInsightsResponseRepository(logitudeTenant.Value);
+                LogitudeOceanInsightsResponse logitudeOceanInsightsResponse = logitudeOceanInsightsResponseRepository.GetLogitudeOceanInsightsResponseByContainerNumberAndScac(container_number, carrier_scac, logitudeTenant.Value);
                 if (logitudeOceanInsightsResponse == null)
                 {
                     logitudeOceanInsightsResponse = new LogitudeOceanInsightsResponse()
                     {
-                        Id = IdCounter.GetNumber("LogitudeOceanInsightsResponse", tenant),
+                        Id = IdCounter.GetNumber("LogitudeOceanInsightsResponse", logitudeTenant.Value),
                         FirstResponseDate = TenantServerConfigration.GetCurrentDateTime(logitudeTenant.Value),
                         LastResponseDate = TenantServerConfigration.GetCurrentDateTime(logitudeTenant.Value),
                         ContainerNumber = container_number,
                         SCACCode = carrier_scac,
-                        Tenant = logitudeTenant != null ? logitudeTenant.Value: tenant,
+                        Tenant = logitudeTenant != null ? logitudeTenant.Value: tenant_Zero,
                         CarrierName = GetCarrierName()
                     };
                     logitudeOceanInsightsResponseRepository.Add(logitudeOceanInsightsResponse);
@@ -892,8 +892,8 @@ namespace WebFreight.Web.Helpers.Analyzers
         private string GetCarrierName()
         {
             string carrierName = "";
-            CardRepository cardRepository = new CardRepository(tenant);
-            Card shippingLine = cardRepository.GetSingleCard(container.MainCarriageCarrierId, tenant);
+            CardRepository cardRepository = new CardRepository(logitudeTenant.Value);
+            Card shippingLine = cardRepository.GetSingleCard(container.MainCarriageCarrierId, logitudeTenant.Value);
             carrierName = shippingLine?.EnglishName;
             return carrierName;
         }
@@ -912,7 +912,7 @@ namespace WebFreight.Web.Helpers.Analyzers
 
             ShipmentContainerStatus containerStatus = new ShipmentContainerStatus()
             {
-                Id = IdCounter.GetNumber("ShipmentContainerStatus", this.tenant),
+                Id = IdCounter.GetNumber("ShipmentContainerStatus", this.tenant_Zero),
                 Tenant = this.logitudeTenant.Value,
                 ShipmentId = oceanInsight.ShipmentId,
                 StatusSource = "OIN",
@@ -1078,7 +1078,7 @@ namespace WebFreight.Web.Helpers.Analyzers
         }
         private string GetHashedData(string shipmentId)
         {
-            string information = shipmentId + tenant.ToString() + this.container_number;
+            string information = shipmentId + tenant_Zero.ToString() + this.container_number;
             byte[] byteRepresentation = UnicodeEncoding.UTF8.GetBytes(information);
             byte[] hashedTextInBytes = null;
             MD5CryptoServiceProvider myMd5 = new MD5CryptoServiceProvider();
@@ -2279,8 +2279,8 @@ namespace WebFreight.Web.Helpers.Analyzers
             {
                 if (analyzeQueue.ConnectedToTenant && analyzeQueue.CommunicationLogId != null)
                 {
-                    this.communicationLogRepository = new CommunicationLogRepository(this.tenant);
-                    CommunicationLog commLog = communicationLogRepository.GetSingleCommunicationLog(analyzeQueue.CommunicationLogId, tenant);
+                    this.communicationLogRepository = new CommunicationLogRepository(this.tenant_Zero);
+                    CommunicationLog commLog = communicationLogRepository.GetSingleCommunicationLog(analyzeQueue.CommunicationLogId, tenant_Zero);
                     if (commLog != null)
                     {
                         commLog.CommunicationStatusTypeCode = "F";
