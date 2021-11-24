@@ -1351,7 +1351,7 @@ on record.JournalId equals j.Id
                     select a).Count();
         }
 
-       public List<TaxReportData> GetLedgerTransactionsForTaxReport(DateTime? taxReportMonth, int tenant)
+       public List<CustomTaxReportData> GetLedgerTransactionsForTaxReport(DateTime? taxReportMonth, int tenant)
         {
 
             int days = DateTime.DaysInMonth(taxReportMonth.Value.Year, taxReportMonth.Value.Month);
@@ -1364,14 +1364,14 @@ on record.JournalId equals j.Id
                     join j in context.Journals on a.JournalId equals j.Id
                     join m in context.JournalAdditionalDatas on new { a.JournalId, a.JournalLineNumber } equals new { m.JournalId, m.JournalLineNumber }
 
-                    where (m.TaxReportId == null || m.TaxReportTransmitStatusCode == "2" || m.TaxReportTransmitStatusCode==null) 
+                    where (m.TaxReportId == null || m.TaxReportTransmitStatusCode == "2" || m.TaxReportTransmitStatusCode==null || j.IsVoided == true) 
                             && a.DocumentDate <= endOfTaxReportDate
                             && a.AccountId == setting.VATInputsGLAccountId 
                             && a.Tenant == tenant 
                             && a.LocalAmountDebit != 0
                             && a.OppositeAccountId != setting.VATOutputGLAccountId 
 
-                    select new TaxReportData()
+                    select new CustomTaxReportData()
                     {
                         Id = Guid.NewGuid().ToString(),
                         AccountingEntity = j.AccountingEntityCode,
@@ -1384,6 +1384,10 @@ on record.JournalId equals j.Id
                         AccountingEntityId= j.AccountingEntityId,
                         JournalLineNumber = a.JournalLineNumber,
                         AccountId = a.AccountId,
+                        TransmitStatusCode = m.TaxReportTransmitStatusCode,
+                        IsVoided = j.IsVoided,
+                        TaxReportId = m.TaxReportId,
+                        OriginalJournalId = j.OriginalJournalId
                     }
                     
                     ).ToList();
