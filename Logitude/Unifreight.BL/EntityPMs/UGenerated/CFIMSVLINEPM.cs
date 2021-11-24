@@ -67,5 +67,8 @@ namespace Unifreight.BL.EntityPMs
 
         public int? LINECOUNTER { get; set; }
 
+        public string PROTESTREMARK { get; set; }
+
+        public string MAKATREMARK { get; set; }
     }
 }

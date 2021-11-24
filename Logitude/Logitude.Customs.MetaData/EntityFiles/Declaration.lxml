@@ -20089,8 +20089,8 @@
         IsPredefined="true"
         Operator="&quot;Equal&quot;"
         IndexOrder="0" />
-
-  </Query>
+	</QueryFilters>
+</Query>
   <Query
     Code="&quot;AllCourierDeclarations&quot;"
     TextCode="&quot;All Courier Declarations&quot;"

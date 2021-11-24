@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class ExportReferenceUpdateClass
    {  		
-		public const string HashString = "0e8e32265978c76802629fe81240698b";
+		public const string HashString = "0b117ddc5eb5f92ef4a3a37995a745b4";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -128,7 +128,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "אסמכתאות לאחסנה",
 			      				    DefaultText =  "Export Reference",
-			      				    Code =  "4dc5",
+			      				    Code =  "98fd",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",

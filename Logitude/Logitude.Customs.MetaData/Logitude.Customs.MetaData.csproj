@@ -349,7 +349,7 @@
     <None Include="DBTables\ExportDeliveryDocumentMessage.dxml" />
     <None Include="DBTables\ExporterRoleType.dxml" />
     <None Include="DBTables\ExportReference.dxml" />
-    <None Include="DBTables\ExportStorge.dxml" />
+    <None Include="DBTables\ExportStorage.dxml" />
     <None Include="DBTables\FacilitationType.dxml" />
     <None Include="DBTables\FaultInspectionType.dxml" />
     <None Include="DBTables\FclLclCode.dxml" />
@@ -517,6 +517,7 @@
     <None Include="DBTables\VendorTransactionType.dxml" />
     <None Include="DBTables\VendorType.dxml" />
     <None Include="EntityFiles\AmendmentFieldStatusType.lxml" />
+    <None Include="EntityFiles\ExportStorage.lxml" />
     <None Include="EntityFiles\PhysicalCheckSearchResultType.lxml" />
     <None Include="EntityFiles\AmendRequestRejectReasonType.lxml" />
     <None Include="EntityFiles\AmendmentStatus.lxml" />
@@ -535,7 +536,6 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="EntityFiles\ExportReference.lxml" />
-    <None Include="EntityFiles\ExportStorge.lxml" />
     <None Include="EntityFiles\StuffingSiteType.lxml" />
     <None Include="EntityFiles\HandingCode.lxml" />
     <None Include="EntityFiles\NDMessageActionCode.lxml" />

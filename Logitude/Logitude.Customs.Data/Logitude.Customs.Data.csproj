@@ -182,7 +182,7 @@
     <Compile Include="EntityKeys\ExportDeliveryDocumentMessageKeys.cs" />
     <Compile Include="EntityKeys\ExporterRoleTypeKeys.cs" />
     <Compile Include="EntityKeys\ExportReferenceKeys.cs" />
-    <Compile Include="EntityKeys\ExportStorgeKeys.cs" />
+    <Compile Include="EntityKeys\ExportStorageKeys.cs" />
     <Compile Include="EntityKeys\FclLclCodeKeys.cs" />
     <Compile Include="EntityKeys\FreightPaymentMethodKeys.cs" />
     <Compile Include="EntityKeys\FullnessCodeKeys.cs" />
@@ -311,7 +311,7 @@
     <Compile Include="EntityListQueryServices\ExportDeliveryDocumentMessageListQueryService.cs" />
     <Compile Include="EntityListQueryServices\ExporterRoleTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\ExportReferenceListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\ExportStorgeListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\ExportStorageListQueryService.cs" />
     <Compile Include="EntityListQueryServices\FclLclCodeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\FreightPaymentMethodListQueryService.cs" />
     <Compile Include="EntityListQueryServices\FullnessCodeListQueryService.cs" />
@@ -394,7 +394,7 @@
     <Compile Include="EntityListQueryServices\Generated\ExportDeliveryDocumentMessageListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\ExporterRoleTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\ExportReferenceListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\ExportStorgeListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\ExportStorageListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\FclLclCodeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\FreightPaymentMethodListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\FullnessCodeListQueryService.Generated.cs" />
@@ -570,7 +570,7 @@
     <Compile Include="EntityLists\Generated\ExportDeliveryDocumentMessageList.Generated.cs" />
     <Compile Include="EntityLists\Generated\ExporterRoleTypeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\ExportReferenceList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\ExportStorgeList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\ExportStorageList.Generated.cs" />
     <Compile Include="EntityLists\Generated\FclLclCodeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\FreightPaymentMethodList.Generated.cs" />
     <Compile Include="EntityLists\Generated\FullnessCodeList.Generated.cs" />
@@ -700,7 +700,7 @@
     <Compile Include="EntityMapping\ExportDeliveryDocumentMessageMap.cs" />
     <Compile Include="EntityMapping\ExporterRoleTypeMap.cs" />
     <Compile Include="EntityMapping\ExportReferenceMap.cs" />
-    <Compile Include="EntityMapping\ExportStorgeMap.cs" />
+    <Compile Include="EntityMapping\ExportStorageMap.cs" />
     <Compile Include="EntityMapping\FclLclCodeMap.cs" />
     <Compile Include="EntityMapping\FreightPaymentMethodMap.cs" />
     <Compile Include="EntityMapping\FullnessCodeMap.cs" />
@@ -829,7 +829,7 @@
     <Compile Include="EntityPOCOs\ExportDeliveryDocumentMessage.cs" />
     <Compile Include="EntityPOCOs\ExporterRoleType.cs" />
     <Compile Include="EntityPOCOs\ExportReference.cs" />
-    <Compile Include="EntityPOCOs\ExportStorge.cs" />
+    <Compile Include="EntityPOCOs\ExportStorage.cs" />
     <Compile Include="EntityPOCOs\FclLclCode.cs" />
     <Compile Include="EntityPOCOs\FreightPaymentMethod.cs" />
     <Compile Include="EntityPOCOs\FullnessCode.cs" />
@@ -959,7 +959,7 @@
     <Compile Include="Repsitories\ExportDeliveryDocumentMessageRepository.cs" />
     <Compile Include="Repsitories\ExporterRoleTypeRepository.cs" />
     <Compile Include="Repsitories\ExportReferenceRepository.cs" />
-    <Compile Include="Repsitories\ExportStorgeRepository.cs" />
+    <Compile Include="Repsitories\ExportStorageRepository.cs" />
     <Compile Include="Repsitories\FclLclCodeRepository.cs" />
     <Compile Include="Repsitories\FreightPaymentMethodRepository.cs" />
     <Compile Include="Repsitories\FullnessCodeRepository.cs" />
@@ -1042,7 +1042,7 @@
     <Compile Include="Repsitories\Generated\ExportDeliveryDocumentMessageRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\ExporterRoleTypeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\ExportReferenceRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\ExportStorgeRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\ExportStorageRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\FclLclCodeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\FreightPaymentMethodRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\FullnessCodeRepository.Generated.cs" />
