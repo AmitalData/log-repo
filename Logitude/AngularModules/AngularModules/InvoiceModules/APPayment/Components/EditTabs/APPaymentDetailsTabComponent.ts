@@ -207,7 +207,16 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
                 }
             });
 
-            this.fireAPPaymentCreatedEventAfterApproval(isSaveCompleted);
+            this.BackCompletedEvent = this.entityArgs.EditComponent.BackCompleted.subscribe((isBackCompleted: boolean) => {
+                if (isBackCompleted && isSaveCompleted && this.entityArgs.EditComponent.EntityPM.StatusCode == "AD") {
+                    if(this.ReconcileInternalTransIds){
+                        const paymentNo = this.entityArgs.EditComponent.EntityPM.PaymentNo;
+                        this.CurrentSession.FireEvent({Name: "InternalReconcileAPPaymentCreated", PaymentNumber: paymentNo});
+                    }
+                }
+            });
+            
+            
 
             this.LoadCompletedEvent = this.entityArgs.EditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                 if (isLoadSuccess) {
@@ -217,18 +226,6 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
             });
         }
     }
-
-    private fireAPPaymentCreatedEventAfterApproval(isSaveCompleted){
-        this.BackCompletedEvent = this.entityArgs.EditComponent.BackCompleted.subscribe((isBackCompleted: boolean) => {
-            if (isBackCompleted && isSaveCompleted && this.entityArgs.EditComponent.EntityPM.StatusCode == "AD") {
-                if(this.ReconcileInternalTransIds){
-                    const paymentNo = this.entityArgs.EditComponent.EntityPM.PaymentNo;
-                    this.CurrentSession.FireEvent({Name: "InternalReconcileAPPaymentCreated", PaymentNumber: paymentNo});
-                }
-            }
-        });
-    }
-
     ngOnInit() {
         this.LoadPaymentMethods();
         this.LoadCurrencies();

@@ -1289,25 +1289,28 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
         private void AutoInternalReconcileAPPaymentLines(APPaymentPM theEntityPm, JournalPM journal)
         {
-            int JournalExternalReconcileLine = 1;
+            
 
             if (theEntityPm.ReconcileInternalTransIds == null)
                 return;
             var ledgerTransactions = GetReconcileTransactions(theEntityPm);
-            List<JournalReconcilePM> externalJournalReconciles =
-                ledgerTransactions.Select(transaction => new JournalReconcilePM()
-                {
-                    Tenant = journal.Tenant,
-                    ChangeSetOp = ChangeSetOperation.Insert,
-                    JournalId = journal.Id,
-                    Line = JournalExternalReconcileLine++,
-                    LedgerTransactionId = transaction.Id,
-                    CurrencyId = transaction.OpenAmountCurrencyId,
-                    ReconciliationAmount = transaction.OpenAmount,
-                    IsPartial = false
-                }).ToList();
 
-            journal.JournalReconciles = externalJournalReconciles;
+            journal.JournalReconciles = GetInternalJournalReconciles(ledgerTransactions, journal);
+        }
+
+        private static List<JournalReconcilePM> GetInternalJournalReconciles(List<LedgerTransactionPM> ledgerTransactions, JournalPM journal) {
+            int JournalInternalReconcileLine = 1;
+            return ledgerTransactions.Select(transaction => new JournalReconcilePM()
+            {
+                Tenant = journal.Tenant,
+                ChangeSetOp = ChangeSetOperation.Insert,
+                JournalId = journal.Id,
+                Line = JournalInternalReconcileLine++,
+                LedgerTransactionId = transaction.Id,
+                CurrencyId = transaction.OpenAmountCurrencyId,
+                ReconciliationAmount = transaction.OpenAmount,
+                IsPartial = false
+            }).ToList();
         }
 
         private static List<LedgerTransactionPM> GetReconcileTransactions(APPaymentPM theEntityPm)
