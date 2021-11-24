@@ -21,6 +21,8 @@ namespace WebFreight.Web.Helpers
         public string UserId { get; set; }
         public string EntityId { get; set; }
         public string ObjectTableId { get; set; }
+        public string ChildObjectTableId { get; set; }
+        public string ChildEntityId { get; set; }
         public string Attachments { get; set; }
         public string EntityReference { get; set; }
         public bool ExportQuotationsToIntegratedSystem { get; set; }
