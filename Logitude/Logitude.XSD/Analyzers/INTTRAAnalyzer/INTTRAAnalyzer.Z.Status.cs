@@ -1,4 +1,5 @@
-﻿using Logitude.BL.ShipmentsModel.EntityPMs;
+﻿using Logitude.BL.DataContracts;
+using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.EntityQueries;
 using Logitude.BL.ShipmentsModel.Tools.EntityService;
 using Logitude.Server.Tools.Counters;
@@ -1045,6 +1046,8 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
 
                 iPortRepository.Add(newPort);
                 iPortRepository.SubmitChanges();
+                RunStoredProcedureClass.UpdatePortSearcsFields(newPort.Id, newPort.Tenant);
+
             }
 
             return newPort;

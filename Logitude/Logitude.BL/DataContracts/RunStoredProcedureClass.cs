@@ -434,5 +434,27 @@ namespace Logitude.BL.DataContracts
                 scope.Complete();
             }
         }
+
+
+
+        public static void UpdatePortSearcsFields(string portId, int tenant)
+        {
+            string strConnString = GetConnection(tenant);
+            using (SqlConnection cn = new SqlConnection(strConnString))
+            {
+                SqlCommand cmd = new SqlCommand("usp_UpdatePortSearchFieldsFunction", cn);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                SqlParameter param1 = new SqlParameter("@PortId", SqlDbType.VarChar);
+                param1.Direction = ParameterDirection.Input;
+                param1.Value = portId;
+                cmd.Parameters.Add(param1);
+
+                cn.Open();
+                cmd.ExecuteNonQuery();
+                cn.Close();
+            }
+        }
+
     }
 }

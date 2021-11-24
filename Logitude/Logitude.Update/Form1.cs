@@ -2408,8 +2408,9 @@ User/Pass",
                             myPort.IsOcean = item.IsOcean;
                             myPort.IsInland = item.IsInland;
                             myPort.CountryId = myCountry.Id;
-                            myPort.SearchFields = BuildPortSearchFields(myPort, myCountry);
                             myPort.Tenant = 0;
+                            UpdatePortSearchFieldService.Update(myPort);
+
                             portRepository.Update(myPort);
                         }
 
@@ -2429,7 +2430,7 @@ User/Pass",
                                 Tenant = 0,
                             };
 
-                            myPort.SearchFields = BuildPortSearchFields(myPort, myCountry);
+                            UpdatePortSearchFieldService.Update(myPort);
                             portRepository.Add(myPort);
                         }
                     }
