@@ -22,11 +22,13 @@ using System.Transactions;
 using Logitude.Customs.Data.EntityKeys;
 using Logitude.Customs.Def.EntityPMs;
 using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.Server.Tools.Utils;
 
 namespace Logitude.Customs.BL.EntityUpdateServices
 {
     public partial class SupplierInvioceItemCertificatUpdateService
     {
+        const string SIICerExemptionHD379305 = "SIICerExemptionHD379305.LogUntilDateyyyyMMdd";//Bug 149964: CALL #379305 פטור 92 מאותחל באישור עם מענה
         int? maxCounter;
         protected override void OnCreating(SupplierInvioceItemCertificatPM entityPM, SupplierInvoiceItemPM entityParentPM)
         {
@@ -97,7 +99,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
             string updateCmd;
             string cmd = null;
-            string updateCmd1;
+            string updateCmd1="";
             string statusCode;
             string strConnString = GetConnection(tenant);
             List<CertificateConnectedItems> validItems = new List<CertificateConnectedItems>();
@@ -192,6 +194,18 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     cn.Open();
                     command.ExecuteNonQuery();
                     cn.Close();
+
+                    var stringBuilder = new StringBuilder();
+                    stringBuilder
+                        .AppendLine($"UpdateCertificateConnectedItems(declarationId:{declarationId},certificateExemptionTypeCode:{certificateExemptionTypeCode})")
+                        .AppendLine($"CertificateExemptionTypeCode:cmd.Contains(92)={cmd.Contains("92")}")
+                        .AppendLine(updateCmd1)
+                        .AppendLine(cmd);
+
+                    var logChangesService = new LogChangesService();
+                    logChangesService.SBLog(
+                        SIICerExemptionHD379305,
+                        stringBuilder);
                 }
             }
 
@@ -410,6 +424,17 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     cn.Open();
                     command.ExecuteNonQuery();
                     cn.Close();
+
+                    var stringBuilder = new StringBuilder();
+                    stringBuilder
+                        .AppendLine($"UpdateCertificateConnectedItems(declarationId:{declarationId},certificateExemptionTypeCode:{certificateExemptionTypeCode})")
+                        .AppendLine($"CertificateExemptionTypeCode:cmd.Contains(92)={cmd.Contains("92")}")
+                        .AppendLine(cmd);
+                    var logChangesService = new LogChangesService();
+                    logChangesService.SBLog(
+                        SIICerExemptionHD379305,
+                        stringBuilder);
+
                 }
             }
 
@@ -540,6 +565,16 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                             cn.Open();
                             sqlCommand.ExecuteNonQuery();
                             cn.Close();
+
+                            var stringBuilder = new StringBuilder();
+                            stringBuilder
+                                .AppendLine($"UpdateCertificateConnectedItems(declarationId:{declarationId},certificateExemptionTypeCode:{certificateExemptionTypeCode})")
+                                .AppendLine($"CertificateExemptionTypeCode:cmd.Contains(92)={cmd.Contains("92")}")
+                                .AppendLine(updateCmd);
+                            var logChangesService = new LogChangesService();
+                            logChangesService.SBLog(
+                                SIICerExemptionHD379305,
+                                stringBuilder);
                         }
                     }
 
@@ -597,6 +632,16 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                             cn.Open();
                             sqlCommand.ExecuteNonQuery();
                             cn.Close();
+
+                            var stringBuilder = new StringBuilder();
+                            stringBuilder
+                                .AppendLine($"UpdateCertificateConnectedItems(declarationId:{declarationId},certificateExemptionTypeCode:{certificateExemptionTypeCode})")
+                                .AppendLine($"CertificateExemptionTypeCode:cmd.Contains(92)={cmd.Contains("92")}")
+                                .AppendLine(updateCmd);
+                            var logChangesService = new LogChangesService();
+                            logChangesService.SBLog(
+                                SIICerExemptionHD379305,
+                                stringBuilder);
                         }
                     }
                     else
@@ -820,6 +865,18 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     count = sqlCommand.ExecuteNonQuery();
                     sqlCommand1.ExecuteNonQuery();
                     con.Close();
+
+                    var stringBuilder = new StringBuilder();
+                    stringBuilder
+                        .AppendLine($"UpdateAllCertificateWithoutResponse(declarationId:{declarationId}")
+                        .AppendLine($"CertificateExemptionTypeCode:cmd.Contains(92)={cmd.Contains("92")}")
+                        .AppendLine(cmd)
+                        .AppendLine($"CertificateExemptionTypeCode:cmd1.Contains(92)={cmd1.Contains("92")}")
+                    .AppendLine(cmd1);
+                    var logChangesService = new LogChangesService();
+                    logChangesService.SBLog(
+                        SIICerExemptionHD379305,
+                        stringBuilder);
                 }
             }
             else
@@ -841,6 +898,22 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             }
             return count;
         }
+
+
+
+        protected override void OnUpdating(SupplierInvioceItemCertificatPM entityPM, SupplierInvioceItemCertificat entityPOCO)
+        {
+            if (entityPM?.CertificateExemptionTypeCode != entityPOCO?.CertificateExemptionTypeCode &&
+                entityPM?.CertificateExemptionTypeCode == "92"
+                )
+            {
+                var logChangesService = new LogChangesService();
+                logChangesService.LogIt<SupplierInvioceItemCertificatPM, SupplierInvioceItemCertificat>(
+                    SIICerExemptionHD379305,
+                    entityPM, entityPOCO);
+            }
+        }
+
 
     }
 }
