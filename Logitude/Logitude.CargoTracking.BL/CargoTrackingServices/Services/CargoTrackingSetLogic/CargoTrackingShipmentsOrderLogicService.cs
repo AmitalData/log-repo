@@ -83,11 +83,11 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
 
         private static void SetMilestonesDoneFields(DataRow tableRow)
         {
-            tableRow.SetField("PickupDone", !IsFieldNullOrEmpty(tableRow, "PickupActualDateTime"));
-            tableRow.SetField("BookingDone", !IsFieldNullOrEmpty(tableRow, "BookingConfirmationDate"));
+            tableRow.SetField("PickupDone", !IsFieldNullOrEmpty(tableRow, "PickupDate"));
+            tableRow.SetField("BookingDone", !IsFieldNullOrEmpty(tableRow, "BookingDate"));
             tableRow.SetField("CreateDone", !IsFieldNullOrEmpty(tableRow, "CreateDate"));
-            tableRow.SetField("DepartureDone", !IsFieldNullOrEmpty(tableRow, "ATD"));
-            tableRow.SetField("ArrivalDone", !IsFieldNullOrEmpty(tableRow, "ATA"));
+            tableRow.SetField("DepartureDone", !IsFieldNullOrEmpty(tableRow, "DepartureDate"));
+            tableRow.SetField("ArrivalDone", !IsFieldNullOrEmpty(tableRow, "ArrivalDate"));
 
 
         }
@@ -118,7 +118,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
             switch (currentMilestoneArgs.milestone.Code)
             {
                 case CargoTrackingMilestoneValues.Created:
-                    if (!IsFieldNullOrEmpty(currentMilestoneArgs.tableRow, "CreatedDone") && !currentMilestoneArgs.tableRow["CreatedDone"].Equals("False"))
+                    if (!IsFieldNullOrEmpty(currentMilestoneArgs.tableRow, "CreateDone") && !currentMilestoneArgs.tableRow["CreatedDone"].Equals("False"))
                     {
                         currentMilestoneArgs.date = currentMilestoneArgs.tableRow["CreateDate"];
                         CheckMilestone(currentMilestoneArgs);
