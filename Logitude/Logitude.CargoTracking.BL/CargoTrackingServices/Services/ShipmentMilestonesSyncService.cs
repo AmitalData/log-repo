@@ -159,8 +159,10 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
             var lastForwardingMilstoneOrderNumber = 5;
             var sql = string.Concat(
                 "update  ForwardingShipment    "
-                , "set		ForwardingShipment.CurrentMilestoneCode = iif(cast(ForwardingShipment.CurrentMilestoneCode as int) > cast(OrderShipment.CurrentMilestoneCode as int), ForwardingShipment.CurrentMilestoneCode ,OrderShipment.CurrentMilestoneCode),  ForwardingShipment.CurrentMilestoneDate = iif(cast(ForwardingShipment.CurrentMilestoneCode as int) > cast(OrderShipment.CurrentMilestoneCode as int), ForwardingShipment.CurrentMilestoneDate ,OrderShipment.CurrentMilestoneDate)    "
+                , "set		ForwardingShipment.CurrentMilestoneCode = iif(cast(ForwardingMilestones.Weight as int) > cast(OrderMilestones.Weight as int), ForwardingShipment.CurrentMilestoneCode ,OrderShipment.CurrentMilestoneCode),  ForwardingShipment.CurrentMilestoneDate = iif(cast(ForwardingMilestones.Weight as int) > cast(OrderMilestones.Weight as int), ForwardingShipment.CurrentMilestoneDate ,OrderShipment.CurrentMilestoneDate)    "
                 , "from	CargoTrackingShipments ForwardingShipment join CargoTrackingShipments OrderShipment on ForwardingShipment.ForwardingShipmentHeaderId = OrderShipment.EntityId  "
+                , "	left join CargoTrackingMilestones ForwardingMilestones on ForwardingShipment.CurrentMilestoneCode = ForwardingMilestones.Code "
+                , "left join CargoTrackingMilestones OrderMilestones on OrderShipment.CurrentMilestoneCode = OrderMilestones.Code  "
                 , "where	ForwardingShipment.CurrentMilestoneCode is not null and OrderShipment.CurrentMilestoneCode is not null and OrderShipment.EntityType='O'  "
                 , Environment.NewLine
                 , " update  OrderShipment   "
