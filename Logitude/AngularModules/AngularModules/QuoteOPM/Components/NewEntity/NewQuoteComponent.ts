@@ -37,7 +37,7 @@ export class NewQuoteComponent {
 
     async create() {
         this.isSubmit = true;
-        if (!this.ValidateService.validate(this.formGroup)) return;
+        // if (!this.ValidateService.validate(this.formGroup)) return;
         if (this.formGroup.invalid) return;
 
         const currentWindow:LogitudeWindow = SessionLocator.SelectedSession.CurrentWindow;
