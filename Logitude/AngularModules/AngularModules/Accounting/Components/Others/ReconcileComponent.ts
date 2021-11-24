@@ -1740,17 +1740,19 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
         newApPaymentPM.LocalCurrencyId = this.TenantPM.CurrencyId;
         newApPaymentPM.ValueDate = DateTool.GetCurrentDateAsUtc();
         newApPaymentPM.RegisterDate = DateTool.GetCurrentDateAsUtc();
+        this.showAPPaymentEditcomponent(newApPaymentPM);
+    }
 
+    private showAPPaymentEditcomponent(newApPaymentPM: any){
         SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
-            .then(cmpRef => {
-                cmpRef.instance.ComponentRef = cmpRef;
-                cmpRef.instance.Run({ EntityId: newApPaymentPM.Id, EntityPM: newApPaymentPM, ObjectTableName: 'APPayment' });
-                cmpRef.instance.BackCompleted.subscribe(($event1: any) => {
-                    // this.LoadAllScreenData();
-                });
-
+        .then(cmpRef => {
+            cmpRef.instance.ComponentRef = cmpRef;
+            cmpRef.instance.Run({ EntityId: newApPaymentPM.Id, EntityPM: newApPaymentPM, ObjectTableName: 'APPayment' });
+            cmpRef.instance.BackCompleted.subscribe(($event1: any) => {
+                // this.LoadAllScreenData();
             });
 
+        });
     }
 
     private GetSelectedPageLinesIds()
