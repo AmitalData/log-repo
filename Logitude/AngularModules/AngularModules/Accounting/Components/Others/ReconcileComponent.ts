@@ -32,6 +32,7 @@ import {ObjectsLocator} from '../../../Infrastructure/Locators/ObjectsLocator';
 import { RecoCallback } from '../../DataContracts/RecoCallback';
 import { LogitudeGridExportToExcelComponent } from 'Common/Components/LogitudeGridExportToExcel/LogitudeGridExportToExcelComponent';
 import { QueryColumnPM } from 'Infrastructure/EntityPMs/QueryColumnPM';
+import { APPaymentPM } from 'Invoice/EntityPMs/APPaymentPM';
 
 
 export class LineModel extends BaseComponent {
@@ -242,7 +243,9 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
     public _ReconciliationExtendedPMService: ReconciliationExtendedPMService = new ReconciliationExtendedPMService();
     public fullAccountingSettingPMService: FullAccountingSettingPMService = new FullAccountingSettingPMService();
     public entityListService: EntityListService= new EntityListService();
-
+    SessionEvent;
+    showInternalReconcileAPPaymentAlert = false;
+    createdPaymentNumber;
 
     constructor(public CD: ChangeDetectorRef) {
         super();
@@ -390,7 +393,19 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
 
     ngOnInit() {
         this.BuildColumns();
+        this.Listen();
         //this.ColumnsReady.emit("");
+    }
+
+    Listen(){
+        this.SessionEvent = this.CurrentSession.SessionEvent.subscribe(s => {
+            if (s && s.Name == "InternalReconcileAPPaymentCreated") {
+                this.createdPaymentNumber = s.PaymentNumber;
+                this.showInternalReconcileAPPaymentAlert = true;
+                this.onQueryChangeEvent.emit({ Filters: new ApiQueryFilters() });
+                this.isAllSelected= false;
+            }
+        });
     }
 
     SetDefaultReconcileMethodFromAccountingSettings(){
@@ -1217,6 +1232,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
     TotalCredit: number = 0;
     TotalDebit: number = 0;
     TotalsDeference: number = 0;
+    OriginalDifference: number = 0;
     CalculateTotals() {
         this.TotalCredit = 0;
         this.TotalDebit = 0;
@@ -1234,6 +1250,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
 
         }
         var def = (this.TotalCredit - this.TotalDebit)
+        this.OriginalDifference = def * -1;
         this.TotalsDeference = def < 0 ? def * -1 : def
     }
     //#endregion
@@ -1453,6 +1470,10 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
     }
     CloseAlert() {
         this.showAlert = false;
+    }
+
+    CloseGetInternalReconcileAPPaymentAlert() {
+        this.showInternalReconcileAPPaymentAlert = false;
     }
 
     openAmountCurrency: string = "";
@@ -1686,7 +1707,62 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
         this.ReloadScreen();
     }
 
-    
+    public get EnableCreateAPPaymentButton() : boolean {
+        return this.TotalsDeference >= 0 && this.SelectedLines.Length > 0;
+    }
+
+    CreatePaymentButtonClicked(){
+        this.ValidationErrorsList = [];
+        if(this.OriginalDifference >= 0){
+            this.ValidationErrorsList.push(TextCodeTranslator.Translate("APPayment.M.InvalidSelectedTransctionsDifference"));
+        }
+
+        if(this.ValidationErrorsList.length == 0){
+            this.NewAPPaymentMethod();
+        }
+    }
+
+    NewAPPaymentMethod() {
+        var newApPaymentPM: APPaymentPM = new APPaymentPM();
+        newApPaymentPM.ReconcileInternalTransIds = this.GetSelectedPageLinesIds();
+        newApPaymentPM.StatusCode = "DR";
+        newApPaymentPM.StatusName = "Draft";
+        console.log('this.GLAccountPM', this.GLAccountPM);
+        newApPaymentPM.VendorId = this.GLAccountPM.CardId;
+        newApPaymentPM.AmountInPaymentCurrency = this.TotalsDeference;
+        newApPaymentPM.Tenant = this.TenantPM.Id;
+        newApPaymentPM.IsClosed = false;
+        newApPaymentPM.CreatedByUserId = SessionLocator.LoggedUserId;
+        newApPaymentPM.UpdatedByUserId = SessionLocator.LoggedUserId;
+        newApPaymentPM.CreateDate = DateTool.GetCurrentDateAsUtc();
+        newApPaymentPM.UpdateDate = DateTool.GetCurrentDateAsUtc();
+
+        newApPaymentPM.LocalCurrencyId = this.TenantPM.CurrencyId;
+        newApPaymentPM.ValueDate = DateTool.GetCurrentDateAsUtc();
+        newApPaymentPM.RegisterDate = DateTool.GetCurrentDateAsUtc();
+        this.showAPPaymentEditcomponent(newApPaymentPM);
+    }
+
+    private showAPPaymentEditcomponent(newApPaymentPM: any){
+        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
+        .then(cmpRef => {
+            cmpRef.instance.ComponentRef = cmpRef;
+            cmpRef.instance.Run({ EntityId: newApPaymentPM.Id, EntityPM: newApPaymentPM, ObjectTableName: 'APPayment' });
+            cmpRef.instance.BackCompleted.subscribe(($event1: any) => {
+                // this.LoadAllScreenData();
+            });
+
+        });
+    }
+
+    private GetSelectedPageLinesIds()
+    {
+        return this.SelectedLines.Collection.map(line => line.Id).join(',');
+    }
+
+    public GetInternalReconcileAPPaymentAlertMessage(){
+        return TextCodeTranslator.Translate('APPayment.M.PaymentCreatedWithReconciliation').replace('#number',this.createdPaymentNumber);
+    }
 }
 
 export class DatesHelper

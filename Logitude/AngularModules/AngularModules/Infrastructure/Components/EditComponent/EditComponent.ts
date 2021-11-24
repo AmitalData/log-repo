@@ -1276,12 +1276,18 @@ export class EditComponent implements OnDestroy {
         var isNeedingConfirmation = this.NeedCloseConfirmation();
         const showBankTransferConfirmation = (this.EntityPM.IsDirty && this.ObjectTableName == "ARPayment" && this.EntityPM.ForceUsingBankTransferMethod && SessionLocator.TenantPM.AccountingActivated);
 
+        const showAPPAymentConfirmation = (this.EntityPM.IsDirty && this.ObjectTableName == "APPayment" && this.EntityPM.ReconcileInternalTransIds && SessionLocator.TenantPM.AccountingActivated);
+
         if(showBankTransferConfirmation){
             this.ShowBankTransferConfirmationMessage();
         }
 
         else if (IsARInvoiceNeedsConfirmation) {
             this.ShowConfirmationMessageForARInvoice();
+        }
+
+        else if (showAPPAymentConfirmation) {
+            this.ShowAPPaymentConfirmationMessage();
         }
 
         else if (isNeedingConfirmation) {
@@ -1403,6 +1409,21 @@ export class EditComponent implements OnDestroy {
         confirmWindow.YesButtonText = TextCodeTranslator.Translate("General.B.Ok");
         confirmWindow.Show(TextCodeTranslator.Translate("ExternalReconciliation.O.BTUnsavedChanges"));
 
+        confirmWindow.WindowClosed.subscribe((event: any) => {
+            if (confirmWindow.Yes)
+                this.Close();
+        });
+    }
+
+    ShowAPPaymentConfirmationMessage() {
+        var confirmWindow = new ConfirmWindow();
+        confirmWindow.Width = 450;
+        confirmWindow.Height = 190;
+        confirmWindow.ShowCancelButton = true;
+        confirmWindow.ShowNoButton = false;
+        confirmWindow.Title = TextCodeTranslator.Translate("General.O.UnSavedChanges");
+        confirmWindow.YesButtonText = TextCodeTranslator.Translate("General.B.Ok");
+        confirmWindow.Show(TextCodeTranslator.Translate("APPayment.M.UnsavedAPPaymentAlert"));
         confirmWindow.WindowClosed.subscribe((event: any) => {
             if (confirmWindow.Yes)
                 this.Close();

@@ -33,6 +33,7 @@ using Logitude.Accounting.Data.Repositories;
 using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.BL.InvoiceModel.EntityOtherServices;
 using Logitude.BL.InvoiceModel.EntityQueries;
+using Logitude.Accounting.BL.EntityQueryServices;
 
 namespace Logitude.BL.InvoiceModel.Tools.EntityService
 {
@@ -1286,6 +1287,40 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             }
         }
 
+        private void AutoInternalReconcileAPPaymentLines(APPaymentPM theEntityPm, JournalPM journal)
+        {
+            
+
+            if (theEntityPm.ReconcileInternalTransIds == null)
+                return;
+            var ledgerTransactions = GetReconcileTransactions(theEntityPm);
+
+            journal.JournalReconciles = GetInternalJournalReconciles(ledgerTransactions, journal);
+        }
+
+        private static List<JournalReconcilePM> GetInternalJournalReconciles(List<LedgerTransactionPM> ledgerTransactions, JournalPM journal) {
+            int JournalInternalReconcileLine = 1;
+            return ledgerTransactions.Select(transaction => new JournalReconcilePM()
+            {
+                Tenant = journal.Tenant,
+                ChangeSetOp = ChangeSetOperation.Insert,
+                JournalId = journal.Id,
+                Line = JournalInternalReconcileLine++,
+                LedgerTransactionId = transaction.Id,
+                CurrencyId = transaction.OpenAmountCurrencyId,
+                ReconciliationAmount = transaction.OpenAmount,
+                IsPartial = false
+            }).ToList();
+        }
+
+        private static List<LedgerTransactionPM> GetReconcileTransactions(APPaymentPM theEntityPm)
+        {
+            List<string> transactionsIds = theEntityPm.ReconcileInternalTransIds.Split(',').ToList();
+            LedgerTransactionQueryService transactionQueryService = new LedgerTransactionQueryService(theEntityPm.Tenant);
+            List<LedgerTransactionPM> recoTransactions = transactionQueryService.GetLedgerTransactionPMsByIdList(transactionsIds, theEntityPm.Tenant);
+            return recoTransactions;
+        }
+
         private void CreateAPPaymentJournal(APPaymentPM paymentPM, Tenant tenantPOCO)
         {
             // Refactored by Abdullah
@@ -1295,7 +1330,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             AddCreditJournalLineForBankGLAccount(paymentPM, journal);
 
             AddDebitJournalLineForVendorGLAccount(paymentPM, journal);
-
+            AutoInternalReconcileAPPaymentLines(paymentPM, journal);
             if (paymentPM.TaxDeductionLocalAmount != 0 || paymentPM.VendorAddressId == tenantPOCO.AddressId)
                 AddCreditJournalLineForTaxGLAccount(paymentPM, paymentPM.Tenant, tenantPOCO, journal);
 
