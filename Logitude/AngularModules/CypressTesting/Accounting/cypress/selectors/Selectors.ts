@@ -77,6 +77,8 @@ export class AccountingSelectors extends RegexSelectors {
     public static readonly ARPaymentSave = '#ARPayment-Save';
     public static readonly ARPaymentBApprove = '#ARPaymentBApprove';
     public static readonly ARPaymentCurrency = '#ARPayment_PaymentCurrencyId';
+    
+    
 
     //#endregion
     //#region ARInvoice
