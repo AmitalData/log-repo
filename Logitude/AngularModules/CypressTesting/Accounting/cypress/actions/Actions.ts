@@ -350,6 +350,24 @@ export function AssertARInvoiceDetailsFieldsDisabled() {
     BaseAssertion.AssertElementDisabled(AccountingSelectors.ARInvoiceVatType, BaseSelectors.BeDisabled)
 }
 //#endregion
+export function AssertARInvoiceDetailsFieldsNotBeDisabled() {
+    BaseAssertion.AssertElementDisabled(AccountingSelectors.ARInvoicePartner, BaseSelectors.NotBeDisabled)
+    BaseAssertion.AssertElementDisabled(AccountingSelectors.ARInvoiceBillTo, BaseSelectors.BeDisabled)
+    BaseAssertion.AssertElementDisabled(AccountingSelectors.ARInvoiceBillToAddress, BaseSelectors.NotBeDisabled)
+    BaseAssertion.AssertElementDisabled(AccountingSelectors.ARInvoicePaymentTerm, BaseSelectors.NotBeDisabled)
+    BaseAssertion.AssertElementDisabled(AccountingSelectors.ARInvoiceDueDate, BaseSelectors.NotBeDisabled)
+    BaseAssertion.AssertElementDisabled(AccountingSelectors.ARInvoiceRegionalTax, BaseSelectors.NotBeDisabled)
+    BaseAssertion.AssertElementDisabled(AccountingSelectors.ARInvoiceInvoiceCurrency, BaseSelectors.NotBeDisabled)
+    BaseAssertion.AssertElementDisabled(AccountingSelectors.ARInvoiceExchangeRate, BaseSelectors.NotBeDisabled)
+    BaseAssertion.AssertElementDisabled(AccountingSelectors.ARInvoiceInvoiceNumber, BaseSelectors.BeDisabled)
+    BaseAssertion.AssertElementDisabled(AccountingSelectors.ARInvoiceVatNumber, BaseSelectors.NotBeDisabled)
+    BaseAssertion.AssertElementDisabled(AccountingSelectors.ARInvoiceInvoiceDate, BaseSelectors.NotBeDisabled)
+    BaseAssertion.AssertElementDisabled(AccountingSelectors.ARInvoiceVatType, BaseSelectors.NotBeDisabled)
+}
+//#endregion
+
+
+
 
 //#region Add Two Shipment Lines And Edit Amount
 export function AddShipmentLines(shipmentNumbers: string[]) {
