@@ -225,6 +225,9 @@ namespace Logitude.Accounting.BL.APIDataContract.ApiV1
                         temp.CustomerGLAccount.Id = myCustomerGLAccountPM.Id;
                         temp.CustomerGLAccount.LocalName = myCustomerGLAccountPM.LocalName;
                         temp.CustomerGLAccount.EnglishName = myCustomerGLAccountPM.EnglishName;
+                        temp.CustomerGLAccount.Tenant = myCustomerGLAccountPM.Tenant;
+                        temp.CustomerGLAccount.InternalNumber = myCustomerGLAccountPM.InternalNumber;
+                        temp.CustomerGLAccount.DisplayNumber = myCustomerGLAccountPM.DisplayNumber;
                     }
 
                 }
