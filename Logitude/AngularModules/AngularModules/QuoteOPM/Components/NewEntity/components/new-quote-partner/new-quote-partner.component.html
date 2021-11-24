@@ -1,12 +1,13 @@
 <app-accordion [(isHidden)]='isHidden' class="partner" [label]='"QuoteOP.F." + capitalizeType | TextCodeTranslationPipe'>
 
-  <div class="grid content-in-section" [formGroup]='partnerform'>
+  <div class="grid content-in-section" [formGroup]='partnerform' >
     <div class="col-6 p-fluid">
       <div class="p-field">
+        <div class="error-msg" [ngClass]='{"invalid": partnerform.controls["partner"].invalid}'>{{capitalizeType}} field is required</div>
         <app-autocomplate-table
           [columnsShow]="{Code: 'Code', EnglishName: 'English Name', Address1:'Address', CityName: 'City Name', CountryName: 'Country Name', PartnerTypeName: 'Type'}"
           [data]='cardsList' [fieldShow]='"EnglishName"' [label]="'Name'" [controlName]='"partner"'
-          [formGroup]='partnerform' [searchIcon]='true' logTableName='Card'>
+          [formGroup]='partnerform' [searchIcon]='true' logTableName='Card' #partner>
         </app-autocomplate-table>
 
         <app-btn-menu-plus [ddl]='ddl'></app-btn-menu-plus>

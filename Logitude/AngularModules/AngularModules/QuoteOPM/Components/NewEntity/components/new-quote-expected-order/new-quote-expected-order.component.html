@@ -7,6 +7,9 @@
         <div class="col-2 p-fluid values-col">
             <label>Quantity</label>
             <div class="p-field" *ngFor='let i of [1,2,3,4]'>
+                <div class="error-msg" [ngClass]='{"invalid": formGroup.controls["quantity" + i].invalid}'>
+                    Quantity {{i}} is required
+                </div>
                 <p-inputNumber [formControlName]='"quantity" + i' mode="decimal" [useGrouping]="false">
                 </p-inputNumber>
             </div>
@@ -16,6 +19,9 @@
         <div class="col-3 p-fluid values-col">
             <label>Package Type</label>
             <div class="p-field" *ngFor='let i of [1,2,3,4]'>
+                <div class="error-msg" [ngClass]='{"invalid": formGroup.controls["quantityType" + i].invalid}'>
+                    Quantity Type {{i}} is required
+                </div>
                 <app-autocomplate-table [columnsShow]="{Code:'Code',EnglishName:'English Name'}" [data]='packageTypes'
                     [dropIcon]='true' [placeholder]='"Select"' [fieldShow]='"EnglishName"'
                     [controlName]='"quantityType" + i' [formGroup]='formGroup'>
@@ -43,7 +49,7 @@
     </div>
 </div>
 
-<div *ngIf="!isSeaFcl">
+<div *ngIf="!isSeaFcl" class="not-sea-fcl-section">
 
     <h3 class="sub-header">
         {{'QuoteOP.S.NewQuote.ExpectedOrderDetails' | TextCodeTranslationPipe}}
@@ -94,6 +100,8 @@
                     </div>
 
                     <div class="volume">
+                        <div class="error-msg" [ngClass]='{"invalid": x.controls["volume"].invalid}'>
+                            Volume or Gross Weight fields required</div>
                         <p-inputNumber formControlName='volume' id="volume" mode="decimal" [useGrouping]="false"
                             [minFractionDigits]="2" [maxFractionDigits]="2">
                         </p-inputNumber>
@@ -140,13 +148,13 @@
         <div class="col-6 p-fluid additional-data-section">
             <p-checkbox formControlName='isDangerous' [binary]="true" label='Dangerous Goods'></p-checkbox>
 
-            <div class="p-field">
+            <div class="p-field description-wrapper">
                 <label for="descriptionOfGoods">Description of Goods</label>
                 <textarea formControlName='descriptionOfGoods' id="descriptionOfGoods" pInputTextarea
                     [rows]="4"></textarea>
             </div>
 
-            <div class="p-field">
+            <div class="p-field notes-wrapper">
                 <label for="notes">Notes</label>
                 <textarea formControlName='notes' id="notes" pInputTextarea [rows]="4"></textarea>
             </div>
