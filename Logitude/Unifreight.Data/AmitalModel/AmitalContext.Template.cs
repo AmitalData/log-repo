@@ -24,12 +24,12 @@ namespace Unifreight.Data.AmitalModel
             get { return Simplog.Server.Infrastructure.LogitudeDBSchema.AMITAL_DB; }
         }
 
-        
+
         public static DbModelBuilder GetBuilder()//protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             DbModelBuilder modelBuilder = new DbModelBuilder(DbModelBuilderVersion.V4_1);
 
-            
+
 
 
             #region YCULPROCESS
@@ -4767,6 +4767,16 @@ namespace Unifreight.Data.AmitalModel
                 .Property(p => p.LINECOUNTER)
                     .HasColumnName(@"LINE_COUNTER")
                     .HasColumnType("int");
+            modelBuilder.Entity<CFIMSVLINE>()
+.Property(p => p.PROTESTREMARK)
+.HasColumnName(@"PROTEST_REMARK")
+.HasMaxLength(255)
+.HasColumnType("varchar2");
+            modelBuilder.Entity<CFIMSVLINE>()
+            .Property(p => p.MAKATREMARK)
+            .HasColumnName(@"MAKAT_REMARK")
+            .HasMaxLength(255)
+            .HasColumnType("varchar2");
             #endregion
 
             #region CFIMSVDOC
@@ -7570,9 +7580,9 @@ namespace Unifreight.Data.AmitalModel
                 .Property(p => p.REMARKS)
                     .HasColumnType("clob");
 
-#endregion
+            #endregion
 
-#region GDMLOCK
+            #region GDMLOCK
 
             modelBuilder.Entity<GDMLOCK>()
                 .HasKey(p => p.COMID)
@@ -8673,7 +8683,7 @@ namespace Unifreight.Data.AmitalModel
                     .HasColumnType("varchar2");
 
             #endregion
-       
+
             #region Disabled conventions
 
 

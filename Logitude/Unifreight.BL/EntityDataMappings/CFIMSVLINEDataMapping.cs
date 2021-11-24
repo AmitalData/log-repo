@@ -46,7 +46,9 @@ namespace Unifreight.BL.EntityDataMappings
             entityPOCO.OCRQUANTITY = entityPM.OCRQUANTITY;
             entityPOCO.OCRQUANTITYTYPE = entityPM.OCRQUANTITYTYPE;
             entityPOCO.LINECOUNTER = entityPM.LINECOUNTER;
-    }
+            entityPOCO.PROTESTREMARK = entityPM.PROTESTREMARK;
+            entityPOCO.MAKATREMARK = entityPM.MAKATREMARK;
+        }
 
         public void POCOToPM(CFIMSVLINEPM entityPM, CFIMSVLINE entityPOCO)
         {
@@ -79,6 +81,8 @@ namespace Unifreight.BL.EntityDataMappings
             entityPM.OCRQUANTITY = entityPOCO.OCRQUANTITY;
             entityPM.OCRQUANTITYTYPE = entityPOCO.OCRQUANTITYTYPE;
             entityPM.LINECOUNTER = entityPOCO.LINECOUNTER;
+            entityPM.PROTESTREMARK = entityPOCO.PROTESTREMARK;
+            entityPM.MAKATREMARK = entityPOCO.MAKATREMARK;
         }
 
         public void CustomPMToPOCO(CFIMSVLINEPM entityPM, CFIMSVLINE entityPOCO)
