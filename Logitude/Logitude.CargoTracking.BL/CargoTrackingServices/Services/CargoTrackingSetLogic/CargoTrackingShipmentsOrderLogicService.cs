@@ -102,60 +102,69 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
             foreach (var milestone in args.Milestones)
             {
                 currentMilestoneArgs.milestone = milestone;
-
-
-                switch (milestone.Code)
-                {
-                    case CargoTrackingMilestoneValues.Created:
-                        if (!IsFieldNullOrEmpty(tableRow, "CreatedDone") && !tableRow["CreatedDone"].Equals("False"))
-                        {
-                            currentMilestoneArgs.date = tableRow["CreateDate"];
-                            CheckMilestone(currentMilestoneArgs);
-                        }
-                        break;
-                    case CargoTrackingMilestoneValues.Booking:
-                        if (!IsFieldNullOrEmpty(tableRow, "BookingDone") && !tableRow["BookingDone"].Equals("False"))
-                        {
-                            currentMilestoneArgs.date = tableRow["BookingDate"];
-                            CheckMilestone(currentMilestoneArgs);
-                        }
-                        break;
-                    case CargoTrackingMilestoneValues.Pickup:
-                        if (!IsFieldNullOrEmpty(tableRow, "PickupDone") && !tableRow["PickupDone"].Equals("False"))
-                        {
-                            currentMilestoneArgs.date = tableRow["PickupDate"];
-                            CheckMilestone(currentMilestoneArgs);
-                        }
-                        break;
-                    //case CargoTrackingMilestoneValues.FromWarehouse:
-                    //    if (!IsFieldNullOrEmpty(tableRow, "FromWarehouseDone") && !tableRow["FromWarehouseDone"].Equals("False"))
-                    //    {
-                    //        currentMilestoneArgs.date = tableRow[""];
-                    //        CheckMilestone(currentMilestoneArgs);
-                    //    }
-                    //    break;
-                    case CargoTrackingMilestoneValues.Departure:
-                        if (!IsFieldNullOrEmpty(tableRow, "DepartureDone") && !tableRow["DepartureDone"].Equals("False"))
-                        {
-                            currentMilestoneArgs.date = tableRow["DepartureDate"];
-                            CheckMilestone(currentMilestoneArgs);
-                        }
-                        break;
-                    case CargoTrackingMilestoneValues.Arrival:
-                        if (!IsFieldNullOrEmpty(tableRow, "ArrivalDone") && !tableRow["ArrivalDone"].Equals("False"))
-                        {
-                            currentMilestoneArgs.date = tableRow["ArrivalDate"];
-                            CheckMilestone(currentMilestoneArgs);
-                        }
-                        break;
-
-                    default:
-                        break;
-                }
+                CheckCurrentMilestone(currentMilestoneArgs, args);
+                
             }
 
 
         }
+
+        private static void CheckCurrentMilestone(CheckCurrentMilestoneArgs currentMilestoneArgs, SetTableLogicArgs args)
+        {
+            var tenant = (int)currentMilestoneArgs.tableRow["Tenant"];
+            if (!CheckIfUserHasAccessToMilestone(args.NotPermittedMilestones, CargoTrackingMilestoneValues.Created, tenant))
+                return;
+
+            switch (currentMilestoneArgs.milestone.Code)
+            {
+                case CargoTrackingMilestoneValues.Created:
+                    if (!IsFieldNullOrEmpty(currentMilestoneArgs.tableRow, "CreatedDone") && !currentMilestoneArgs.tableRow["CreatedDone"].Equals("False"))
+                    {
+                        currentMilestoneArgs.date = currentMilestoneArgs.tableRow["CreateDate"];
+                        CheckMilestone(currentMilestoneArgs);
+                    }
+                    break;
+                case CargoTrackingMilestoneValues.Booking:
+                    if (!IsFieldNullOrEmpty(currentMilestoneArgs.tableRow, "BookingDone") && !currentMilestoneArgs.tableRow["BookingDone"].Equals("False"))
+                    {
+                        currentMilestoneArgs.date = currentMilestoneArgs.tableRow["BookingDate"];
+                        CheckMilestone(currentMilestoneArgs);
+                    }
+                    break;
+                case CargoTrackingMilestoneValues.Pickup:
+                    if (!IsFieldNullOrEmpty(currentMilestoneArgs.tableRow, "PickupDone") && !currentMilestoneArgs.tableRow["PickupDone"].Equals("False"))
+                    {
+                        currentMilestoneArgs.date = currentMilestoneArgs.tableRow["PickupDate"];
+                        CheckMilestone(currentMilestoneArgs);
+                    }
+                    break;
+                //case CargoTrackingMilestoneValues.FromWarehouse:
+                //    if (!IsFieldNullOrEmpty(tableRow, "FromWarehouseDone") && !tableRow["FromWarehouseDone"].Equals("False"))
+                //    {
+                //        currentMilestoneArgs.date = tableRow[""];
+                //        CheckMilestone(currentMilestoneArgs);
+                //    }
+                //    break;
+                case CargoTrackingMilestoneValues.Departure:
+                    if (!IsFieldNullOrEmpty(currentMilestoneArgs.tableRow, "DepartureDone") && !currentMilestoneArgs.tableRow["DepartureDone"].Equals("False"))
+                    {
+                        currentMilestoneArgs.date = currentMilestoneArgs.tableRow["DepartureDate"];
+                        CheckMilestone(currentMilestoneArgs);
+                    }
+                    break;
+                case CargoTrackingMilestoneValues.Arrival:
+                    if (!IsFieldNullOrEmpty(currentMilestoneArgs.tableRow, "ArrivalDone") && !currentMilestoneArgs.tableRow["ArrivalDone"].Equals("False"))
+                    {
+                        currentMilestoneArgs.date = currentMilestoneArgs.tableRow["ArrivalDate"];
+                        CheckMilestone(currentMilestoneArgs);
+                    }
+                    break;
+
+                default:
+                    break;
+            }
+        }
+
         private static void SetExceptionDescription(DataRow tableRow)
         {
             var exceptionDate = !IsFieldNullOrEmpty(tableRow, "LastExceptionDate") ? tableRow["LastExceptionDate"]?.ToString() : null;
@@ -190,7 +199,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
             foreach (var field in fieldsMap)
             {
                 SetField(field, tableRow, args);
-                
+
 
             }
         }
