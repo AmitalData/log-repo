@@ -38,10 +38,11 @@ namespace Logitude.CargoTracking.BL.CoreBL.Batch
             while (shipmentOrderIds.Count > 0)
             {
                 shipmentOrderRepository.UpdateLastUpdateDate(GetIdsAsString(shipmentOrderIds));
-                Thread.Sleep(OffsetTimeToSeperateIncrementalExcutionOfShipments);
+
                 doneShipmentOrders += shipmentOrderIds.Count;
                 shipmentOrderIds = shipmentOrderRepository.GetShipmentOrdersIdsByTenant(parameterArgs.Tenant, doneShipmentOrders, ShipmentBulkSize);
-
+                if (shipmentOrderIds.Count > 0)
+                    Thread.Sleep(OffsetTimeToSeperateIncrementalExcutionOfShipments);
             }
         }
 
@@ -54,9 +55,10 @@ namespace Logitude.CargoTracking.BL.CoreBL.Batch
             while (shipments.Count > 0)
             {
                 shipmentRepository.UpdateLastUpdateDate(GetIdsAsString(shipments));
-                Thread.Sleep(OffsetTimeToSeperateIncrementalExcutionOfShipments);
                 doneShipments += shipments.Count;
                 shipments = shipmentRepository.GetShipmentIdsByTenant(parameterArgs.Tenant, doneShipments, ShipmentBulkSize);
+                if (shipments.Count > 0)
+                    Thread.Sleep(OffsetTimeToSeperateIncrementalExcutionOfShipments);
 
             }
 

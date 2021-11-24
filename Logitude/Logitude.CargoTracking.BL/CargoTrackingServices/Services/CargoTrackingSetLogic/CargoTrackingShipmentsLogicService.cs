@@ -246,7 +246,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
             if (!CheckIfUserHasAccessToMilestone(args.NotPermittedMilestones, CargoTrackingMilestoneValues.Pickup, tenant))
             {
                 tableRow.SetField("PickupEstimationDate", (DBNull)null);
-                tableRow.SetField("PickupDate", tableRow["FirstPickupATD"]);
+                tableRow.SetField("PickupDate", (DBNull)null);
                 SetPickupDoneField(tableRow);
                 return;
             }
