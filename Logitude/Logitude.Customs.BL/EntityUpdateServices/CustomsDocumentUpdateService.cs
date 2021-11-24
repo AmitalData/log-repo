@@ -54,8 +54,12 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         //לאחר ממשק UD2LT - קישור מסמך לטיקט, אם התיק הינו תיק בלדרות יש לבצע העלאה של המסמך למכס - מסר קלוט צרופה
         public void AddPerfectCustomsDocumentMetaDataValues(CustomsDocumentPM entityPM)
         {
+            LogitudeSettings.HandleLogMe("start  MetaData:" + entityPM.ExternalAttachmentId, false, "MetaData", stopLogAt);
+
             if (entityPM.CustomsDocumentMetaDataValues.Count == 0)
             {
+                LogitudeSettings.HandleLogMe("if (entityPM.CustomsDocumentMetaDataValues.Count == 0)" + entityPM.ExternalAttachmentId, false, "MetaData", stopLogAt);
+
                 var customContext = CustomContext.GetContext(entityPM.Tenant);
                 var customDocumentTypeMetaDataQuery = new CustomDocumentTypeMetaDataQueryService(customContext);
                 var CustomDocumentTypeMetaData = customDocumentTypeMetaDataQuery.GetCustomDocumentTypeMetaDataByType(entityPM.DocumentTypeCode);
@@ -68,7 +72,10 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     MetaDataValue = null,
                 }).ToList();
 
+                LogitudeSettings.HandleLogMe("before AutoSetOriginalDocumentTrue" + entityPM.ExternalAttachmentId, false, "MetaData", stopLogAt);
                 AutoSetOriginalDocumentTrue(entityPM);
+                LogitudeSettings.HandleLogMe("after AutoSetOriginalDocumentTrue" + entityPM.ExternalAttachmentId, false, "MetaData", stopLogAt);
+
                 this._AddPerfectCustomsDocumentMetaDataValues_IsMetaDataReady = true;
             }
 
@@ -84,6 +91,10 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
         private void AutoSetOriginalDocumentTrue(CustomsDocumentPM entityPM)
         {
+            DateTime stopLogAt = new DateTime(2021, 12, 29);
+
+            LogitudeSettings.HandleLogMe("start AutoSetOriginalDocumentTrue" + entityPM.ExternalAttachmentId, false, "MetaData", stopLogAt);
+
             ICustomContext context = MainContext as CustomContext;
             CustomDocumentTypeQueryService docTypeQuery = new CustomDocumentTypeQueryService(context);
             CustomDocumentTypePM docType = docTypeQuery.GetSingle(entityPM.DocumentTypeCode, false, false);
@@ -91,22 +102,30 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             ICommonDataContext commonContext = CommonDataContext.GetContext(entityPM.Tenant);
             var myDocumentsFilingService = new DocumentsFilingService(commonContext, entityPM.Tenant);
 
-            DateTime stopLogAt = new DateTime(2020, 05, 05);
             Debug.WriteLine("AutoSetMetaDataValue");
             string logData = "";
 
             foreach (CustomsDocumentMetaDataValuePM val in entityPM.CustomsDocumentMetaDataValues)
             {
+                LogitudeSettings.HandleLogMe(" loop " + entityPM.ExternalAttachmentId, false, "MetaData", stopLogAt);
+
                 if (docType != null && docType.AutoSetOriginalDocumentTrue && val.MetaDataTypeCode == "87" && val.ChangeSetOp == ChangeSetOperation.Insert)
                 {
+                    LogitudeSettings.HandleLogMe(" if (docType != null && docType.AutoSetOriginalDocumentTrue && val.MetaDataTypeCode == '87' && val.ChangeSetOp == ChangeSetOperation.Insert) " + entityPM.ExternalAttachmentId, false, "MetaData", stopLogAt);
+
                     val.MetaDataValue = "True";
                 }
 
                 if (string.IsNullOrWhiteSpace(val.MetaDataValue))
                 {
+                    LogitudeSettings.HandleLogMe("if (string.IsNullOrWhiteSpace(val.MetaDataValue))" + entityPM.ExternalAttachmentId, false, "MetaData", stopLogAt);
+
+
                     MyDocumentMetaDataValues = myDocumentsFilingService.GetDocumentsFilingMetaDataValueByFilingIdAndCode(entityPM.DocumentsFilingId, val.MetaDataTypeCode);
                     if (MyDocumentMetaDataValues != null && !string.IsNullOrWhiteSpace(MyDocumentMetaDataValues.MetaDataValue))
                     {
+                        LogitudeSettings.HandleLogMe("if (MyDocumentMetaDataValues != null && !string.IsNullOrWhiteSpace(MyDocumentMetaDataValues.MetaDataValue))" + entityPM.ExternalAttachmentId, false, "MetaData", stopLogAt);
+
                         val.MetaDataValue = MyDocumentMetaDataValues.MetaDataValue;
                         if (val.ChangeSetOp != ChangeSetOperation.Insert) val.ChangeSetOp = ChangeSetOperation.Update;
                     }
@@ -118,6 +137,8 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 }
 
             }
+            LogitudeSettings.HandleLogMe( "log- " + logData + entityPM.ExternalAttachmentId, false, "MetaData", stopLogAt);
+
             LogitudeSettings.HandleLogMe("AutoSetMetaDataValue" + logData, false, "AutoSetMetaDataValue", stopLogAt);
         }
 
