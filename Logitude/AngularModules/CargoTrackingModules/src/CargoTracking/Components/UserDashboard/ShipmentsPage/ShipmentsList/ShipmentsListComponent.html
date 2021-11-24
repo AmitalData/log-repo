@@ -284,9 +284,9 @@
                                     </span>
                                 </div>
 
-                                <span class="mobile-only-inline-block">
+                                <custom-label [width]="110" class="mobile-only-inline-block">
                                     {{ shipment.ShipmentNumber }}
-                                </span>
+                                </custom-label>
                                 <div class="truncateText mobile-inline-block"
                                     *ngFor="let item of references; let i = index">
                                     <custom-label [ngClass]="{'hide-mobile': i >= 0}" *ngIf="i < 3">

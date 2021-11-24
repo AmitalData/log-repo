@@ -322,7 +322,9 @@
 
                 <div class="mobile-only">
                     <div class="title">{{TitleOfCustomsOrForwarder_MB}}</div>
-                    <div class="description">{{ValueOfCustomsOrForwarder}}</div>
+                    <div class="description">
+                        <custom-label>{{ValueOfCustomsOrForwarder}}</custom-label>
+                    </div>
                 </div>
 
                 <!-- ETD/ATD -->
@@ -825,7 +827,7 @@ package.ShipperSeal == null ? package.CarrierSeal :
                         <td style="width: 450px;">
                             <img width="16" src="./assets/images/icons/info.png"
                                  style="top: 2px; position: relative;padding-right: 7px;" alt="">
-                            <custom-label style="width: 434px;">{{item.DocumentTypeName}}</custom-label>
+                            <custom-label [width]="430">{{item.DocumentTypeName}}</custom-label>
                         </td>
                         <td style="width: 450px;">{{item.CreateDate | date:'d-MMM-yyyy, H:mm'}}</td>
                         <td style="width: 450px;">{{item.CustomReference}}</td>
@@ -928,7 +930,7 @@ package.ShipperSeal == null ? package.CarrierSeal :
                         <div>
                             <div class="partner-type-label">{{partnerCard.Type}}</div>
                             <div class="partner-name">
-                                <custom-label>{{partnerCard.Name}}</custom-label>
+                                <custom-label [width]="195">{{partnerCard.Name}}</custom-label>
                             </div>
                         </div>
                         <div class="mobile-only" (click)="partnerCard.ShowDetails = !partnerCard.ShowDetails"

@@ -10,10 +10,10 @@ import { MessageWindowComponent } from '../MessageWindow/MessageWindowComponent'
 export class CustomLabelComponent implements OnInit {
     @ViewChild('container', { static: true }) container: ElementRef;
     @ViewChild('content', { static: true }) content: ElementRef;
-    @Input('width') width:number;
+    @Input('width') width: number;
     isHasMore: boolean = false;
     originText: string;
-    availableWidth:number;
+    availableWidth: number;
     iconSize = 10;
     iconMargin = 4;
     constructor(public dialog: MatDialog) { }
@@ -22,7 +22,8 @@ export class CustomLabelComponent implements OnInit {
 
     }
     ngAfterContentInit(): void {
-        this.originText = this.content.nativeElement.innerText;
+        if (!this.originText)
+            this.originText = this.content.nativeElement.innerText;
         this.checkText();
     }
 
@@ -34,7 +35,7 @@ export class CustomLabelComponent implements OnInit {
         this.content.nativeElement.innerHTML = this.getSliceFromText();
     }
     getAvailableWidth(): number {
-        if(this.width)
+        if (this.width)
             return this.width;
         return this.container.nativeElement.parentElement.parentElement.offsetWidth;
     }
@@ -44,14 +45,14 @@ export class CustomLabelComponent implements OnInit {
     }
     getFitSize(text: string): number {
         var textWidth = this.content.nativeElement.offsetWidth;
-        var newWidth = this.availableWidth - this.iconSize - this.iconMargin - this.iconMargin ;
+        var newWidth = this.availableWidth - this.iconSize - this.iconMargin - this.iconMargin;
         return (text.length * newWidth) / textWidth;
     }
 
     checkOverflow() {
         if (this.content.nativeElement.offsetWidth <= 0)
             return false;
-        return  this.availableWidth < this.container.nativeElement.parentElement.offsetWidth;
+        return this.availableWidth < this.container.nativeElement.parentElement.offsetWidth;
     }
 
     showPopup(event) {
@@ -62,5 +63,8 @@ export class CustomLabelComponent implements OnInit {
                 description: this.originText,
             }
         });
+    }
+    stopPropagation(event){
+        event.stopPropagation();
     }
 }

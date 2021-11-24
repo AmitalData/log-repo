@@ -21,7 +21,7 @@
 
         <app-tooltip class="hide-mobile" *ngIf="isHasMore">
             <div tooltip-trigger>
-                <svg class="icon-margin" [style.width.px]="iconSize" [style.height.px]="iconSize" x="0px" y="0px"
+                <svg (click)="stopPropagation($event)" class="icon-margin" [style.width.px]="iconSize" [style.height.px]="iconSize" x="0px" y="0px"
                     viewBox="0 0 1000 1000" enable-background="new 0 0 1000 1000" xml:space="preserve">
                     <g>
                         <path
