@@ -25,11 +25,6 @@ export class CustomLabelComponent implements OnInit {
         this.originText = this.content.nativeElement.innerText;
         this.checkText();
     }
-    @HostListener('window:resize', ['$event'])
-    onResize(event) {
-        this.checkText();
-    }
-    
 
     checkText() {
         this.availableWidth = this.getAvailableWidth();

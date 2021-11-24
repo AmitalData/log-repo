@@ -373,7 +373,9 @@ cargoTrackingShipmentPM.ArrivalDate |
 
                 <div>
                     <div class="title">{{SetTitleForSupplierOrClient(cargoTrackingShipmentPM)}}</div>
-                    <div class="description">{{SetSupplierOrCleintValueByDirection(cargoTrackingShipmentPM)}}</div>
+                    <div class="description">
+                        <custom-label [width]="139">{{SetSupplierOrCleintValueByDirection(cargoTrackingShipmentPM)}}</custom-label>
+                    </div>
                 </div>
                 <!-- <div>
                     <div class="title">shipper</div>
