@@ -194,7 +194,7 @@
 	 
 	 @SubTotalInLocalCurrency, @SubTotalInInvoiceCurrency, @AmountInLocalCurrency, @AmountInProfitCurrency, @AmountDueInLocalCurrency, @AmountDueInProfitCurrency, @Description, @LocalDescription, @UnitPrice, @Quantity,  @VatType,
 	 @VatPercentage, @LocalCurrencyAmount,@ForiegnCurrencyAmount,@InvoiceCurrencyAmount,@ForiegnCurrencyId, @ForiegnExchangeRate, @ProfitCurrencyAmount,@Notes,@InvoiceCurrencyExchangeRate,@IsExpens,@IsRegionalTax,
-	 @Branch,@IsCancelled,@MainEntityId, @OriginalInvoiceNumber , @InvoiceMasterNumber , @InvoiceHouseNumber,[CustomFieldValuesVariable],@ConsolidationInvoiceNumber, @ConsolidationInvoiceDate, @Partner)
+	 @Branch,@IsCancelled,@MainEntityId, @OriginalInvoiceNumber , @InvoiceMasterNumber , @InvoiceHouseNumber,[CustomFieldValuesVariable],@ConsolidationInvoiceNumber,  dbo.GetDateFormateAsNumber(@ConsolidationInvoiceDate), @Partner)
 
 
 
