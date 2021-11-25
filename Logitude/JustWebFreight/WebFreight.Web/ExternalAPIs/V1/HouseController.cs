@@ -1,4 +1,5 @@
-﻿using Logitude.BL.CommonDataModel.EntityPMs;
+﻿using Logitude.BL.CommonDataModel.APIDataContract.QueryService;
+using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.DataContracts;
 using Logitude.BL.InfrastructureModel.EntityQueries;
@@ -106,6 +107,9 @@ namespace WebFreight.Web.ExternalAPIs.V1
                     externalAPIXMLEntityValidator.ValidateHouseEntity(entity, MyContext);
                     this.InitOceanOrInlandPackages(entity);
 
+                    UnassignedDataQueryService unassignedDataQueryService = new UnassignedDataQueryService(authToken.Tenant, computingPartnerCode);
+                    entity = unassignedDataQueryService.HandleUnassignedHouseShipmentData(entity);
+
                     HouseQueryService mappingService = new HouseQueryService(authToken.Tenant);
                     ShipmentPM entityPM = mappingService.HouseCustomDataMappingAndValidatin(entity, authToken.Tenant, computingPartnerCode);
                     entityPM.IsExternalAPI = true;
@@ -209,6 +213,8 @@ namespace WebFreight.Web.ExternalAPIs.V1
                     }
                     
                     var result = mappingService.GetHouseById(entityPM.Id, authToken.Tenant);
+                    //unassignedDataQueryService.a
+
                     APIHelper.AddCommunicationLog("D", entity, result, "Shipment", entityPM.Id, "House API", authToken.Tenant);
                     return Request.CreateResponse(HttpStatusCode.OK, result);
                 }

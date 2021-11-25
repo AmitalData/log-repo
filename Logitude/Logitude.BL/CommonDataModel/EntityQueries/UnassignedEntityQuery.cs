@@ -29,7 +29,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
         public UnassignedEntityPM GetSinglePM(string id, int tenant)
         {
             return (from a in repository.context.UnassignedEntitys.Include("ObjectTable")
-                    where a.Id == id
+                    where a.Id == id && a.Tenant == tenant
                     select new UnassignedEntityPM()
                     {
                         Id = a.Id,
@@ -52,6 +52,19 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     }).ToList();
 
             return unassignedEntitys;
+        }
+
+        public UnassignedEntityPM GetSinglePMByObjectTableId(string objectTableId, int tenant)
+        {
+            return (from a in repository.context.UnassignedEntitys
+                    where a.ObjectTableId == objectTableId && a.Tenant ==tenant
+                    select new UnassignedEntityPM()
+                    {
+                        Id = a.Id,
+                        Tenant = a.Tenant,
+                        ObjectTableId = a.ObjectTableId,
+                        UnassignedCode = a.UnassignedCode
+                    }).FirstOrDefault();
         }
 
 

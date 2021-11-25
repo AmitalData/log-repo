@@ -208,5 +208,6 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         [DataMember]
         public string BillToId { get; set; }
         public string ICAO { get; set; }
+        public bool AllowUnassignedEntry { get; set; }
     }
 }
