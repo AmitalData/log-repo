@@ -16,6 +16,9 @@ namespace WebFreight.Web.App_Code
         {
             try
             {
+                resetPasswordParameters.TemplateName = "ahmed test";
+                resetPasswordParameters.BrandingTenant = "1";
+
                 ResetPasswordHelper resetPasswordHelper = new ResetPasswordHelper();
                 UserData userData = resetPasswordHelper.ForgetPassword(resetPasswordParameters , true);
                 return userData;
