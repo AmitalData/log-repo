@@ -764,6 +764,8 @@ namespace WebFreight.Web.ExternalAPIs.V1
                             aPITransshipmentHelper.ValidateTransshipments();
                             aPITransshipmentHelper.MapTransshipments();
 
+                            this.UpdatePartners(MyContext, MasterPM);
+
                             ShipmentService service = new ShipmentService(MyContext, MasterPM, SecurityUtility.GetAuthenticatedUser());
                             service.Update(true);
                         }
@@ -911,6 +913,32 @@ namespace WebFreight.Web.ExternalAPIs.V1
             if (validate)
             {
                 throw new ApplicationException("Main Carriage Carrier is required when sending MAWB");
+            }
+        }
+
+        private void UpdatePartners(IShipmentsContext shipmentsContext, ShipmentPM shipmentPM)
+        {
+            Shipment shipmentPOCO = shipmentsContext.Shipments.Where(d => d.Id == shipmentPM.Id && d.Tenant == shipmentPM.Tenant).FirstOrDefault();
+            if (shipmentPOCO != null)
+            {
+                this.UpdateNotify1Partner(shipmentPOCO, shipmentPM);
+            }
+        }
+        private void UpdateNotify1Partner(Shipment shipmentPOCO, ShipmentPM shipmentPM)
+        {
+            if (shipmentPOCO.Notify1Id != shipmentPM.Notify1Id)
+            {
+                Card card = CardRepository.GetSingleCard(shipmentPM.Notify1Id, shipmentPM.Tenant, false);
+                this.MapNotify1Fields(shipmentPM, card);
+            }
+        }
+        private void MapNotify1Fields(ShipmentPM shipmentPM, Card card)
+        {
+            if (card != null)
+            {
+                AddressRepository addressRepository = new AddressRepository(shipmentPM.Tenant);
+                shipmentPM.Notify1AddressId = addressRepository.GetMainAddressId(card.Id, shipmentPM.Tenant);
+                shipmentPM.Notify1ContactId = card.PrimaryContactId;
             }
         }
     }
