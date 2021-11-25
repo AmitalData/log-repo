@@ -17557,6 +17557,12 @@
       LocalDefaultText="&quot;שיטת ההתאמה עבור כרטיסים שקליים היא במטבע מקומי בלבד&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;GLAccounts.O.CustomerGLaccountDefinedSplit&quot;"
+      DefaultText="&quot;The customer GLaccount is already defined as a split by currency Account&quot;"
+      LocalDefaultText="&quot;לא ניתן להוסיף את כרטיס פיצול זה מכיוון שהוא מוגדר ככרטיס ראש&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature
