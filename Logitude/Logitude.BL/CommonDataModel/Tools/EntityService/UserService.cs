@@ -479,7 +479,6 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
             contactRepository.Add(newContact);
             contactTenantRepository.Add(newContactTenant);
-            contactTenantRepository.SubmitChanges();
 
             #region admin role for signup
             if (entityPM.SignupRole)
