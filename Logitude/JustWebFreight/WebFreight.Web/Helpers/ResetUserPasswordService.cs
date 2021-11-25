@@ -158,9 +158,6 @@ namespace WebFreight.Web.Helpers
             globalContext.PasswordResetRequests.Add(resetRequest);
             globalContext.SaveChanges();
 
-            resetPasswordParameters.BrandingTenant = "1";
-            resetPasswordParameters.TemplateName = "ahmed test";
-
             MessageArgs result = new MessageArgs();
             StringBuilder HtmlTemplate = new StringBuilder();
             if (!resetPasswordParameters.IsMobile)
