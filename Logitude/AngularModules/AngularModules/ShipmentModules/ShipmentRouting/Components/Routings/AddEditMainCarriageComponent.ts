@@ -27,7 +27,6 @@ import {PartnersDomainService} from '../../../../Common/Services/PartnersDomainS
 import {ShipmentDomainService} from '../../../../Shipment/Services/ShipmentDomainService';
 import {AWBStackDomainService} from '../../../../Common/Services/AWBStackDomainService';
 import {MAWBStackPM} from '../../../../Common/EntityPMs/MAWBStackPM';
-import { FeatureToggleList } from '../../../../Infrastructure/EntityLists/FeatureToggleList';
 
 @Component({
     
@@ -43,7 +42,6 @@ export class AddEditMainCarriageComponent extends BaseComponent {
     public LabelWidth: number = 100;
     private CurrentSession = SessionLocator.SelectedSession;
     private oldCountryId: string = null;
-    private IsContainersToggleFeatureUp: boolean = false;
 
     constructor() {
         super();
@@ -83,7 +81,6 @@ export class AddEditMainCarriageComponent extends BaseComponent {
         this.InitializeComponent();
         this.SetUIProperties();
         this.Clone();
-        this.CheckContainersToggleFeatureUp();
     }
 
     public DirectionId: string = null;
@@ -1692,10 +1689,6 @@ export class AddEditMainCarriageComponent extends BaseComponent {
         var errors: string[] = [];
         var msg = TextCodeTranslator.Translate("General.M.FieldIsRequired");
 
-        if (this.IsContainersToggleFeatureUp && this.FatherComponent.IsFCLEntity && !AppTool.IsNullOrEmpty(this.Master) && AppTool.IsNullOrEmpty(this.MainCarriageCarrierId)) {
-            errors.push("You cannot fill the OBL without a Shipping Line. Please select a Shipping Line.");
-        }
-
         if (AppTool.IsNullOrEmpty(this.MainCarriageFromPortId)) {
             errors.push(msg.replace("%FieldName", this.FromTextCodeLabel));
         }
@@ -2034,11 +2027,4 @@ export class AddEditMainCarriageComponent extends BaseComponent {
         this.myCloner.RejectChanges();
     }
 
-    private CheckContainersToggleFeatureUp() {
-        this.IsContainersToggleFeatureUp = false;
-        var isOceanInsightsContainersFeatureToggleUp: FeatureToggleList = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "OIC")[0];
-        if (isOceanInsightsContainersFeatureToggleUp) {
-            this.IsContainersToggleFeatureUp = true;
-        }
-    }
 }
