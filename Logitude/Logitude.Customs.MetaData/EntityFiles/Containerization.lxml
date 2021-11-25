@@ -1521,6 +1521,7 @@
     DisplayLongName="false"
     FullFieldLable="&quot;IsMultiCustomers&quot;"
     DefaultText="&quot;Is Multi Customers&quot;"
+    FullLocalDefaultText="&quot;לקוח&quot;"
     IsNullable="true"
     IsForeignKey="false"
     DontBuildRelationOnDB="false"

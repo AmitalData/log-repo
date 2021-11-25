@@ -98,12 +98,13 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 var containerizationImporters = containerizationRepository.GetContainerizationImporters(entityPM.Tenant, entityPM.ConnectedDeclarations);
                 if (containerizationImporters.Count > 1)
                 {
-                    entityPOCO.IsMultiCustomers = "List";
+                    entityPM.IsMultiCustomers = "List";
                 }
                 else
                 {
-                    entityPOCO.IsMultiCustomers = containerizationImporters[0].LocalName;
+                    entityPM.IsMultiCustomers = containerizationImporters[0].LocalName;
                 }
+                entityPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
             }
 
             base.OnUpdating(entityPM, entityPOCO);
