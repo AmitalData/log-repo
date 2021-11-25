@@ -127,13 +127,20 @@ namespace CommunicationWorkerRole
 
         private void ConvertPODImageService()
         {
-            documentsFilingId = queueResponse.MessageValues.Keys.Contains("DocumentsFilingId") ? queueResponse.MessageValues["DocumentsFilingId"].ToString() : "";
-            tenant = queueResponse.MessageValues.Keys.Contains("Tenant") && !string.IsNullOrEmpty(queueResponse.MessageValues["Tenant"].ToString()) ? (int?)int.Parse(queueResponse.MessageValues["Tenant"].ToString()) : null;
-            if (string.IsNullOrEmpty(documentsFilingId) || tenant == null)
-            {
-                return;
-            }
-            new PODImageConverterService(documentsFilingId, (int)tenant).Convert(new PODImagePdfConverter());
+
+            PODMobileDocumentsFilingArgs pODMobileDocumentsFilingArgs = new PODMobileDocumentsFilingArgs();
+            pODMobileDocumentsFilingArgs.ContactId = queueResponse.MessageValues.Keys.Contains("ContactId") ? queueResponse.MessageValues["ContactId"].ToString() : "";
+            pODMobileDocumentsFilingArgs.ShipmentNumber = queueResponse.MessageValues.Keys.Contains("ShipmentNumber") ? queueResponse.MessageValues["ShipmentNumber"].ToString() : "";
+            pODMobileDocumentsFilingArgs.ShipmentId = queueResponse.MessageValues.Keys.Contains("ShipmentId") ? queueResponse.MessageValues["ShipmentId"].ToString() : "";
+            pODMobileDocumentsFilingArgs.DocumentTypeName = queueResponse.MessageValues.Keys.Contains("DocumentTypeName") ? queueResponse.MessageValues["DocumentTypeName"].ToString() : "";
+            pODMobileDocumentsFilingArgs.DocumentTypeId = queueResponse.MessageValues.Keys.Contains("DocumentTypeId") ? queueResponse.MessageValues["DocumentTypeId"].ToString() : "";
+            pODMobileDocumentsFilingArgs.DocumentId = queueResponse.MessageValues.Keys.Contains("DocumentId") ? queueResponse.MessageValues["DocumentId"].ToString() : "";
+            pODMobileDocumentsFilingArgs.Note = queueResponse.MessageValues.Keys.Contains("Note") ? queueResponse.MessageValues["Note"].ToString() : "";
+            pODMobileDocumentsFilingArgs.Tenant = queueResponse.MessageValues.Keys.Contains("Tenant") && !string.IsNullOrEmpty(queueResponse.MessageValues["Tenant"].ToString()) ? int.Parse(queueResponse.MessageValues["Tenant"].ToString()) : 0;
+
+            if (string.IsNullOrEmpty(pODMobileDocumentsFilingArgs.DocumentId)) return;
+  
+            new PODImageConverterService(pODMobileDocumentsFilingArgs).Convert(new PODImagePdfConverter());
         }
 
         private void ConnectClient()

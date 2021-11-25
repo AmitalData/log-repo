@@ -2678,6 +2678,7 @@
     <Compile Include="Helpers\DocumentTypeTemplateDefultAttachmentService.cs" />
     <Compile Include="Helpers\DWObjectTableAdditionalConditionService.cs" />
     <Compile Include="Helpers\MixPanel\AuthenticationMixPanelService.cs" />
+    <Compile Include="Helpers\PODMobileDocumentsFilingService.cs" />
     <Compile Include="Helpers\PrivateLabelsBrandingDataService.cs" />
     <Compile Include="Helpers\QuotesRequestService.cs" />
     <Compile Include="Helpers\QuoteTemplate\QuoteTemplateSettingDataUpdater.cs" />
