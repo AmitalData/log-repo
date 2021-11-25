@@ -160,19 +160,23 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
             var sql = string.Concat(
                 "update  ForwardingShipment    "
                 , "set		ForwardingShipment.CurrentMilestoneCode = iif(cast(ForwardingMilestones.Weight as int) > cast(OrderMilestones.Weight as int), ForwardingShipment.CurrentMilestoneCode ,OrderShipment.CurrentMilestoneCode),  ForwardingShipment.CurrentMilestoneDate = iif(cast(ForwardingMilestones.Weight as int) > cast(OrderMilestones.Weight as int), ForwardingShipment.CurrentMilestoneDate ,OrderShipment.CurrentMilestoneDate)    "
-                , "from	CargoTrackingShipments ForwardingShipment join CargoTrackingShipments OrderShipment on ForwardingShipment.ForwardingShipmentHeaderId = OrderShipment.EntityId  "
+                , "from	CargoTrackingShipments ForwardingShipment join CargoTrackingShipments OrderShipment on ForwardingShipment.EntityId = OrderShipment.ForwardingShipmentHeaderId  "
                 , "	left join CargoTrackingMilestones ForwardingMilestones on ForwardingShipment.CurrentMilestoneCode = ForwardingMilestones.Code "
                 , "left join CargoTrackingMilestones OrderMilestones on OrderShipment.CurrentMilestoneCode = OrderMilestones.Code  "
                 , "where	ForwardingShipment.CurrentMilestoneCode is not null and OrderShipment.CurrentMilestoneCode is not null and OrderShipment.EntityType='O'  "
                 , Environment.NewLine
                 , " update  OrderShipment   "
-                , " set OrderShipment.CurrentMilestoneCode = iif(cast(ForwardingShipment.CurrentMilestoneCode as int) > cast(OrderShipment.CurrentMilestoneCode as int), ForwardingShipment.CurrentMilestoneCode, OrderShipment.CurrentMilestoneCode), OrderShipment.CurrentMilestoneDate = iif(cast(ForwardingShipment.CurrentMilestoneCode as int) > cast(OrderShipment.CurrentMilestoneCode as int), ForwardingShipment.CurrentMilestoneDate, OrderShipment.CurrentMilestoneDate)    "
+                , " set OrderShipment.CurrentMilestoneCode = iif(cast(ForwardingMilestones.Weight as int) > cast(OrderMilestones.Weight as int), ForwardingShipment.CurrentMilestoneCode, OrderShipment.CurrentMilestoneCode), OrderShipment.CurrentMilestoneDate = iif(cast(ForwardingMilestones.Weight as int) > cast(OrderMilestones.Weight as int), ForwardingShipment.CurrentMilestoneDate, OrderShipment.CurrentMilestoneDate)    "
                 , " from	CargoTrackingShipments OrderShipment  join CargoTrackingShipments ForwardingShipment on OrderShipment.ForwardingShipmentHeaderId = ForwardingShipment.EntityId "
+                , "	left join CargoTrackingMilestones ForwardingMilestones on ForwardingShipment.CurrentMilestoneCode = ForwardingMilestones.Code "
+                , "left join CargoTrackingMilestones OrderMilestones on OrderShipment.CurrentMilestoneCode = OrderMilestones.Code  "
                 , " where	OrderShipment.EntityType='O' and (ForwardingShipment.CurrentMilestoneCode is not null and OrderShipment.CurrentMilestoneCode is not null)  "
                 , Environment.NewLine
                 ,"update  ForwardingShipment    "
-                , "set		ForwardingShipment.CurrentMilestoneCode = iif(cast(ForwardingShipment.CurrentMilestoneCode as int) > cast(CustomShipment.CurrentMilestoneCode as int), ForwardingShipment.CurrentMilestoneCode ,CustomShipment.CurrentMilestoneCode),  ForwardingShipment.CurrentMilestoneDate = iif(cast(ForwardingShipment.CurrentMilestoneCode as int) > cast(CustomShipment.CurrentMilestoneCode as int), ForwardingShipment.CurrentMilestoneDate ,CustomShipment.CurrentMilestoneDate)    "
+                , "set		ForwardingShipment.CurrentMilestoneCode = iif(cast(ForwardingMilestones.Weight as int) > cast(CustomMilestones.Weight as int), ForwardingShipment.CurrentMilestoneCode ,CustomShipment.CurrentMilestoneCode),  ForwardingShipment.CurrentMilestoneDate = iif(cast(ForwardingMilestones.Weight as int) > cast(CustomMilestones.Weight as int), ForwardingShipment.CurrentMilestoneDate ,CustomShipment.CurrentMilestoneDate)    "
                 , "from	CargoTrackingShipments ForwardingShipment join CargoTrackingShipments CustomShipment on ForwardingShipment.CustomsShipmentHeaderId = CustomShipment.EntityId  "
+                , "left join CargoTrackingMilestones ForwardingMilestones on ForwardingShipment.CurrentMilestoneCode = ForwardingMilestones.Code "
+                , "left join CargoTrackingMilestones CustomMilestones on CustomShipment.CurrentMilestoneCode = CustomMilestones.Code  "
                 , "where	ForwardingShipment.CurrentMilestoneCode is not null and CustomShipment.CurrentMilestoneCode is not null  "
                 , Environment.NewLine
                 , " update  CustomShipment   "
