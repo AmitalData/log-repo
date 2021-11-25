@@ -253,12 +253,14 @@ Then("the consolidation invoice should approve successfully", () => {
 
 Then ("status value as {string}", (statusValue) => {
   BaseAssertion.AssertElementContain(ShipmentSelectors.ARInvoiceStatus, statusValue)
-  cy.BackButton("Draft Invoices")
-  cy.BackButton(BaseSelectors.ContainsAccounting)
 });
 //#endregion
 
 //#region Connect to Payment
+Given("the user in accounting workspace",() => {
+  cy.BackButton("Draft Invoices")
+  cy.BackButton(BaseSelectors.ContainsAccounting)
+});
 Given("a payment with the following details", (dataTable) => {
   const arPaymentDetails = Assists.CreateInstance<ARPaymentDetails>(dataTable, true);
   arPaymentDetails.Partner = customerCode;

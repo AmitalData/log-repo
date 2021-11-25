@@ -143,7 +143,8 @@ Feature: Create Consolidation Invoice
         And status value as "Unpaid"
 
     Scenario: Pay consolidation invoice
-        Given a payment with the following details
+        Given the user in accounting workspace 
+        And a payment with the following details
             | PartnerType     | Customer          |
             | Partner         | TestShipperExport |
             | BillToAddress   | Main Address      |
