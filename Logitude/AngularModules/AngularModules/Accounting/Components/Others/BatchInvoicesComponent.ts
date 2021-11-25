@@ -234,55 +234,53 @@ export class BatchInvoicesComponent extends BaseComponent implements AfterViewIn
         'Category 4',
         'Category 5'
     ];
+
     SelectedCategory: string;
-    SelectedItemChanged(item) {
-        this.SelectedCategory = item;
-    }
-
-    private category1: string;
-    public get Category1() { return this.category1; }
-    public set Category1(value: string) {
-        if (this.category1 != value) {
-            this.category1 = value;
-            this.ReloadData();
+  
+    private category1Id: string;
+    public get Category1Id() { return this.category1Id; }
+    public set Category1Id(value: string) {
+        if (this.category1Id != value) {
+            this.category1Id = value;
+            this.ValidateDate(null);
         }
     }
 
 
-    private category2: string;
-    public get Category2() { return this.category2; }
-    public set Category2(value: string) {
-        if (this.category2 != value) {
-            this.category2 = value;
-            this.ReloadData();
+    private category2Id: string;
+    public get Category2Id() { return this.category2Id; }
+    public set Category2Id(value: string) {
+        if (this.category2Id != value) {
+            this.category2Id = value;
+            this.ValidateDate(null);
         }
     }
 
-    private category3: string;
-    public get Category3() { return this.category3; }
-    public set Category3(value: string) {
-        if (this.category3 != value) {
-            this.category3 = value;
-            this.ReloadData();
+    private category3Id: string;
+    public get Category3Id() { return this.category3Id; }
+    public set Category3Id(value: string) {
+        if (this.category3Id != value) {
+            this.category3Id = value;
+            this.ValidateDate(null);
         }
     }
 
-    private category4: string;
-    public get Category4() { return this.category4; }
-    public set Category4(value: string) {
-        if (this.category4 != value) {
-            this.category4 = value;
-            this.ReloadData();
+    private category4Id: string;
+    public get Category4Id() { return this.category4Id; }
+    public set Category4Id(value: string) {
+        if (this.category4Id != value) {
+            this.category4Id = value;
+            this.ValidateDate(null);
         }
     }
 
     //row 4
-    private category5: string;
-    public get Category5() { return this.category5; }
-    public set Category5(value: string) {
-        if (this.category5 != value) {
-            this.category5 = value;
-            this.ReloadData();
+    private category5Id: string;
+    public get Category5Id() { return this.category5Id; }
+    public set Category5Id(value: string) {
+        if (this.category5Id != value) {
+            this.category5Id = value;
+            this.ValidateDate(null);
         }
     }
 
@@ -383,19 +381,19 @@ export class BatchInvoicesComponent extends BaseComponent implements AfterViewIn
     if (this.ShowInProgressReports) {
       filters.addAdditionalFilter("InterestReportStatusCode", "1,9,8", null, null, "InList", false, false, false, "string"); 
     }
-      else filters.addAdditionalFilter("InterestReportStatusCode", "1,9", null, null, "InList", false, false, false, "string");
-      // Selecting category
-      var categoryValue = null;
-      var categoryIndex = null;
-      if (this.SelectedCategory) {
-          categoryIndex = this.SelectedCategory.replace(' ', ''); // remove space from selected category
+    else filters.addAdditionalFilter("InterestReportStatusCode", "1,9", null, null, "InList", false, false, false, "string");
 
-          if (categoryIndex)
-              categoryValue = this.DataContext[categoryIndex]; // select the value from the context
-      }
+    var categoryValue = null;
+    var categoryIndex = null;
+    if (this.SelectedCategory) {
+        categoryIndex = this.SelectedCategory.replace(' ', '') + "Id"; // remove space from selected category
 
-      filters.addAdditionalFilter("Category1LocalName", categoryValue.LocalName, null, null, "Equals", false, false, false, "string"); 
+        if (categoryIndex)
+            categoryValue = this.DataContext[categoryIndex]; // select the value from the context
+    }
 
+    filters.addAdditionalFilter(categoryIndex, categoryValue, null, null, "Equals", false, false, false, "string");
+  
     filters.SortBy = sortingCol;
     filters.SortDirection = sortingDir;
 
