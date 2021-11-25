@@ -1483,7 +1483,7 @@
     IsChecked="true"
     IsDeleted="false"
     ObjectTableName="&quot;Customs.Containerization&quot;"
-    FieldsDataType="&quot;Boolean&quot;"
+    FieldsDataType="&quot;nText&quot;"
     MinLength="0"
     MaxLength="100"
     IsRequired="false"
@@ -1526,7 +1526,7 @@
     DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
-    HasPMField="false"
+    HasPMField="true"
     IsComposition="false"
     IsMaxLength="false"
     NoMetaDataField="false"
@@ -1589,7 +1589,7 @@
     InActive="false"
     DisplayLongName="false"
     FullFieldLable="&quot;IsMultiExportFiles&quot;"
-    DefaultText="&quot;Is Multi Customers&quot;"
+    DefaultText="&quot;Is Multi Export Files&quot;"
     IsNullable="true"
     IsForeignKey="false"
     DontBuildRelationOnDB="false"
@@ -1874,7 +1874,7 @@
       <ScreenField
         Column="0"
         Row="1"
-        ObjectFieldName="&quot;ImporterName&quot;"
+        ObjectFieldName="&quot;IsMultiCustomers&quot;"
         ScreenName="Customs.ContainerizationHeaderScreen" />
       <ScreenField
         Column="1"

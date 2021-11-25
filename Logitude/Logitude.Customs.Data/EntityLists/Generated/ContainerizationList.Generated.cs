@@ -47,7 +47,7 @@ namespace Logitude.Customs.Data.EntityLists
        [DataMember]
        public bool OpenContainerization  { get; set; }
        [DataMember]
-       public bool? IsMultiCustomers  { get; set; }
+       public string IsMultiCustomers  { get; set; }
        [DataMember]
        public bool? IsMultiExportFiles  { get; set; }
    }
