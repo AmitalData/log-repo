@@ -372,6 +372,11 @@ namespace WebFreight.Web.ExternalAPIs.V1
 
                     if (FeatureToggleHelper.HasFeatureToggle("API", authToken.Tenant))
                     {
+                        string computingPartnerCode = "";
+                        if (!string.IsNullOrEmpty(entity.ComputingPartnerCode))
+                        {
+                            computingPartnerCode = entity.ComputingPartnerCode;
+                        }
                         IShipmentsContext MyContext = ShipmentsContext.GetContext(authToken.Tenant);
                         HouseQueryService mappingService = new HouseQueryService(authToken.Tenant);
                         ShipmentPM HousePM = mappingService.HouseDataMappingAndValidatin(entity, authToken.Tenant, "", true);
