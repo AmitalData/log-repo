@@ -40,6 +40,7 @@ using Logitude.Infrastructure.Data;
 using Logitude.Infrastructure.Data.Repsitories;
 using Logitude.Infrastructure.Data.EntityPOCOs;
 using WebFreight.Web.ExternalAPIs.ExternalAPIsHelpers;
+using Logitude.BL.CommonDataModel.APIDataContract.QueryService;
 
 namespace WebFreight.Web.ExternalAPIs.V1
 {
@@ -109,6 +110,10 @@ namespace WebFreight.Web.ExternalAPIs.V1
 
                     IShipmentsContext MyContext = ShipmentsContext.GetContext(authToken.Tenant);
                     MasterQueryService mappingService = new MasterQueryService(authToken.Tenant);
+
+                    UnassignedDataQueryService unassignedDataQueryService = new UnassignedDataQueryService(authToken.Tenant, computingPartnerCode);
+                    entity = unassignedDataQueryService.HandleUnassignedMasterShipmentData(entity);
+
                     ShipmentPM entityPM = mappingService.MasterCustomDataMappingAndValidatin(entity, authToken.Tenant, computingPartnerCode);
                     entityPM.IsExternalAPI = true;
 
@@ -170,6 +175,9 @@ namespace WebFreight.Web.ExternalAPIs.V1
                             var partner = computingPartnerQuery.GetSinglePMByCodeAndCheckTenantZero(entity.ComputingPartnerCode, authToken.Tenant);
                             entityPM.CreatedByPartner = (partner != null ? partner.Name : null);
                         }
+
+                        entityPM.HasUnassignedData = unassignedDataQueryService.HasUnassignedData;
+                        entityPM = unassignedDataQueryService.AddMasterShipmentUnassignedAddress(entity, entityPM);
 
                         ShipmentService service = new ShipmentService(MyContext, entityPM, SecurityUtility.GetAuthenticatedUser());
                         service.Create();
@@ -259,6 +267,10 @@ namespace WebFreight.Web.ExternalAPIs.V1
                     {
                         IShipmentsContext MyContext = ShipmentsContext.GetContext(authToken.Tenant);
                         MasterQueryService mappingService = new MasterQueryService(authToken.Tenant);
+
+                        UnassignedDataQueryService unassignedDataQueryService = new UnassignedDataQueryService(authToken.Tenant, "");
+                        entity = unassignedDataQueryService.HandleUnassignedMasterShipmentData(entity);
+
                         ShipmentPM MasterPM = mappingService.MasterDataMappingAndValidatin(entity, authToken.Tenant, "", true);
 
                         if (MasterPM != null)
@@ -286,6 +298,9 @@ namespace WebFreight.Web.ExternalAPIs.V1
                             externalAPIMainCarriageLegsHelper.MapTransshipments();
 
                             this.UpdatePartners(MyContext, MasterPM);
+
+                            MasterPM.HasUnassignedData = unassignedDataQueryService.HasUnassignedData;
+                            MasterPM = unassignedDataQueryService.AddMasterShipmentUnassignedAddress(entity, MasterPM);
 
                             ShipmentService service = new ShipmentService(MyContext, MasterPM, SecurityUtility.GetAuthenticatedUser());
                             service.Update(true);

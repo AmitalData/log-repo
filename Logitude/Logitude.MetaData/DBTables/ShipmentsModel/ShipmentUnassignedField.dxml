@@ -28,7 +28,7 @@
   <Column
     Name="FieldName"
     Type="varchar"
-    Size="25">
+    Size="35">
     <Constraints
       Nullable="true" />
   </Column>
