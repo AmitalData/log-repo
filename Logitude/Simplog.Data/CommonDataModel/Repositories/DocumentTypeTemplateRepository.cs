@@ -69,6 +69,15 @@ namespace Simplog.Data.CommonDataModel.Repositories
 
 
 
+        public List<DocumentTypeTemplate> GetDocumentTypeTemplatesByDocumentTypeId(int tenant, string documentTypeId)
+        {
+            return (from a in context.DocumentTypeTemplates
+                   where a.Tenant == tenant && a.DocumentTypeId == documentTypeId
+                   select a).ToList();
+        }
+
+
+
         public DocumentTypeTemplate GetSingleDocumentTypeTemplate(string id,int tenant)
         {
             return (from a in context.DocumentTypeTemplates.Include("LastUpdatedByUser.Contact").Include("DocumentType")

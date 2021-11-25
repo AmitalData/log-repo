@@ -43,9 +43,9 @@ namespace WebFreight.Web.Helpers
             TenantManagmentPrivateLabelsPM privatelabel = null;
 
             string LogitudeURL = LogitudeSettings.LogitudeURL;
-            string path = GetFogotPasswordPagePath(resetPasswordParameters, LogitudeURL, reqNumber);           
+            string path = GetFogotPasswordPagePath(resetPasswordParameters, LogitudeURL, reqNumber);
 
-            if (LogitudeSettings.DeploymentStage != null && 
+            if (LogitudeSettings.DeploymentStage != null &&
                 (LogitudeSettings.DeploymentStage.ToLower() == "logboxwe1" || LogitudeSettings.DeploymentStage.ToLower() == "test2" || LogitudeSettings.DeploymentStage.ToLower() == "logboxpre")
                 && !IsCargoTrackingDomain())
             {
@@ -162,8 +162,11 @@ namespace WebFreight.Web.Helpers
             StringBuilder HtmlTemplate = new StringBuilder();
             if (!resetPasswordParameters.IsMobile)
             {
-                bool IsLoadingTemplate = false;
-                if (!string.IsNullOrEmpty(emailBodyArgs.BrandingTenant))
+                if (!string.IsNullOrEmpty(resetPasswordParameters.TemplateName))
+                {
+                    result = new ResetUserPasswordDocumentService().GetMessageArgsByTemplateName(resetPasswordParameters, emailBodyArgs);
+                }
+                else if (!string.IsNullOrEmpty(emailBodyArgs.BrandingTenant))
                 {
                     var documenttype = GetDocumentTypeForResetPassword(Int32.Parse(emailBodyArgs.BrandingTenant));
                     if (documenttype != null)
@@ -171,16 +174,15 @@ namespace WebFreight.Web.Helpers
                         result = HtmlEditorHelper.GetHtmlFromTemplate(documenttype.DocumentTypeDefaultHTMLTemplateId, documenttype.ObjectTableId, documenttype.Tenant);
                         if (!string.IsNullOrEmpty(result.HtmlTemplate))
                         {
-                            IsLoadingTemplate = true;
                             string url = GetFogotPasswordPagePath(resetPasswordParameters, "", emailBodyArgs.ReqestNumber);
                             url = AddBrandingTenantForPagePath(url, emailBodyArgs.BrandingTenant);
                             result.HtmlTemplate = result.HtmlTemplate.Replace("[ResetPasswordURL]", url);
-                            HtmlTemplate.Append(result.HtmlTemplate);
                         }
                     }
                 }
 
-                if (!IsLoadingTemplate)
+                HtmlTemplate.Append(result.HtmlTemplate);
+                if (string.IsNullOrEmpty(result.HtmlTemplate))
                 {
                     EmailBodyParams emailBodyParams = new EmailBodyParams
                     {
@@ -296,7 +298,7 @@ namespace WebFreight.Web.Helpers
         private bool IsPrivateLabelDomain()
         {
             TenantManagmentPrivateLabelsPM privatelabel = GetPrivateLabelByLoggedDomain();
-            return privatelabel != null; 
+            return privatelabel != null;
         }
         private PasswordResetRequest GetPasswordResetRequestForMobile(string email, string reqNumber)
         {
@@ -373,6 +375,7 @@ namespace WebFreight.Web.Helpers
 
             else return null;
         }
+
     }
 
     public class EmailMessageParams

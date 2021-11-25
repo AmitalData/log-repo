@@ -2683,6 +2683,7 @@
     <Compile Include="Helpers\QuotesRequestService.cs" />
     <Compile Include="Helpers\QuoteTemplate\QuoteTemplateSettingDataUpdater.cs" />
     <Compile Include="Helpers\Reports\ReportManipulationDataService.cs" />
+    <Compile Include="Helpers\ResetUserPasswordDocumentService.cs" />
     <Compile Include="Helpers\SharedLogisticReportService.cs" />
     <Compile Include="Helpers\ShipmentOrderModule\ShipmentOrderService.cs" />
     <Compile Include="Helpers\SignUp\TruckerSignUpService.cs" />
