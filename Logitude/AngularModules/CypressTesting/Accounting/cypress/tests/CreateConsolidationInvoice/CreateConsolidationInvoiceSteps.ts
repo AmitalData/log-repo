@@ -183,17 +183,10 @@ Given("a consolidation invoice with the following details", (dataTable) => {
   const ARInvoiceData = Assists.CreateInstance<ARInvoiceDetails>(dataTable, true)
   ARInvoiceData.Partner = customerCode
   AccountingActions.FillconsolidationInvoiceDetails(ARInvoiceData)
-
 });
 
 When("create consolidation invoice", () => {
   AccountingActions.CreateARInvoice()
-});
-
-When("the status of Constituent invoice is {string}", (statusValue) => {
-  cy.Click(ShipmentSelectors.HouseHyperLink,"CNS" ,true)
-  BaseAssertion.AssertElementContain(ShipmentSelectors.ARInvoiceStatus, statusValue)
-  cy.Click(ShipmentSelectors.Backbutton_2, "A/R Invoice", true)
 });
 
 Then("the consolidation invoice should create successfully", () => {
@@ -206,26 +199,37 @@ Then ("status value as {string}", (statusValue) => {
   BaseAssertion.AssertElementContain(ShipmentSelectors.ARInvoiceStatus, statusValue)
 });
 //#endregion
+//#startregoin
+When("user is in the Constituent workspace", () => {
+  cy.Click(ShipmentSelectors.HouseHyperLink,"CNS" ,true)
+});
+Then("the status of Constituent invoice is {string}",(statusValue) => {
+  BaseAssertion.AssertElementContain(ShipmentSelectors.ARInvoiceStatus, statusValue)
+  cy.Click(ShipmentSelectors.Backbutton + BaseSelectors.LastElement, "A/R Invoice", true)
+});
+//#endregoin
 //#region back to Accounting workspace
 Given("the user back to Accounting workspace", () => {
   cy.BackButton(BaseSelectors.ContainsAccounting)
 });
 //#endregion
+
 //#region add receivable
 Given("a receivable with the following details", (dataTable) => {
   ShipmentActions.OpenShipment(shipmentNumber);
   const ReceivableData = Assists.CreateSet<ReceivableDetails>(dataTable);
   ShipmentActions.FillReceivablesTab(ReceivableData)
 });
+
 When("add receivable", () => {
   ShipmentActions.UpdateShipment(ShipmentSelectors.ShipmentSaveButton)
-
 });
 
 Then("the receivable should add successfully", () => {
   BaseAssertion.AssertStatusCode(RequestAliases.ShipmentRequest, 200)
 });
 //#endregion
+
 //#region Edit Consolidation Invoice
 Given("the user navigates to draft consolidation invoice", () => {
   cy.BackButton(BaseSelectors.ContainsShipment + shipmentNumber)
@@ -261,6 +265,7 @@ Given("the user in accounting workspace",() => {
   cy.BackButton("Draft Invoices")
   cy.BackButton(BaseSelectors.ContainsAccounting)
 });
+
 Given("a payment with the following details", (dataTable) => {
   const arPaymentDetails = Assists.CreateInstance<ARPaymentDetails>(dataTable, true);
   arPaymentDetails.Partner = customerCode;

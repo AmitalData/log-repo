@@ -92,10 +92,12 @@ Feature: Create Consolidation Invoice
             | VATNo               | Zero        |
             | Branch              | Main Office |
         When create consolidation invoice
-        And the status of Constituent invoice is "Connected"
-        Then the consolidation invoice should create successfully
+        And the consolidation invoice should create successfully
         And status value as "Draft"
         
+    Scenario: Connect Constituent to the consildation invoice
+        Given user is in the Constituent workspace
+        Then the status of Constituent invoice is "Connected"
 
     Scenario: Create direct export air shipment
         Given the user back to Accounting workspace
