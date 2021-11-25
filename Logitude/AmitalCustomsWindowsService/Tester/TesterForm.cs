@@ -287,7 +287,8 @@ namespace AmitalCustomsWindowsService.Tester
 
         private void testToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            clsTester.TestUpdateLOGITUDE_FILE();
+             
+            clsTester.TestUnifreightFUStatusTaskService();
             //clsTester.GetListByCourierHAWB();
 
             return;
