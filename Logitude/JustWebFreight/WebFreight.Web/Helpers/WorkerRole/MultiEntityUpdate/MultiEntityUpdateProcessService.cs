@@ -1,5 +1,6 @@
 ﻿using Logitude.BL.InfrastructureModel.DataContracts;
 using Logitude.BL.InfrastructureModel.EntityPMs;
+using Logitude.BL.ShipmentsModel.Tools.Validating;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.EntityChanges.AutomationResult;
 using Logitude.Server.Tools.QueueService;
@@ -119,6 +120,7 @@ namespace WebFreight.Web.Helpers.WorkerRole.MultiEntityUpdate
                 SetNewValueToEntityPM(multiEntityUpdateData, entityPM, item);
             }
 
+            ShipmentBaseValidator.ValidateUpdate(entityPM); //For now, untill move this to shipment service
             InjectionUtil.Instance.UpdateEntity(entityPM, multiEntityUpdateData.ObjectTableName, (int)tenant);
             UpdateMultiEntityDataEntity(multiEntityUpdateDataEntity, null);
         }

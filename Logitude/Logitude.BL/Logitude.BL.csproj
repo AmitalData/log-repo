@@ -2939,7 +2939,14 @@
     <Compile Include="ShipmentsModel\Tools\TraceEvents\ShipmentTracing.ShipmentSubType.cs" />
     <Compile Include="ShipmentsModel\Tools\TraceEvents\SpecialServicesTypeTracing.cs" />
     <Compile Include="ShipmentsModel\Tools\Validating\IEntityValidator.cs" />
+    <Compile Include="ShipmentsModel\Tools\Validating\ShipmentWarehouseLegsValidator.cs" />
+    <Compile Include="ShipmentsModel\Tools\Validating\ShipmentMasterValidator.cs" />
+    <Compile Include="ShipmentsModel\Tools\Validating\ShipmentCustomsValidator.cs" />
+    <Compile Include="ShipmentsModel\Tools\Validating\ShipmentMainCarriageLegsValidator.cs" />
+    <Compile Include="ShipmentsModel\Tools\Validating\ShipmentHouseValidator.cs" />
+    <Compile Include="ShipmentsModel\Tools\Validating\ShipmentDirectValidator.cs" />
     <Compile Include="ShipmentsModel\Tools\Validating\ShipmentReceivableValidator.cs" />
+    <Compile Include="ShipmentsModel\Tools\Validating\ShipmentBaseValidator.cs" />
     <Compile Include="ShipmentsModel\Tools\Validating\ShipmentValidating.cs" />
     <Compile Include="Validators\ClassLevelValidator.cs" />
     <Compile Include="Validators\ClassLevelValidator.Shared.cs" />
