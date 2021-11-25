@@ -286,7 +286,9 @@ export class ManageExternalReconciliationTabComponent extends BaseComponent impl
             bankTransferGLAccountId = this.EntityPM.TransferGLAcccountId;
 
         filters.addAdditionalFilter("GLAccountId", glaccountId + "," + bankTransferGLAccountId, null, null, "InListExact", false, false, false, "string");
-        filters.addAdditionalFilter("CrossYearReconcile", this.ShowCrossYearReconciliations, null, null, "Equals", false, false, false, "boolean");
+
+        if(this.ShowCrossYearReconciliations)
+            filters.addAdditionalFilter("CrossYearReconcile", true, null, null, "Equals", false, false, false, "boolean");
         // filters.addAdditionalFilter("GLAccountId", glaccountId, null, null, "Equals", false, false, false, "string");
         //filters.addAdditionalFilter("IsCancelled", false, null, null, "Equals", false, false, false, "boolean");
 
