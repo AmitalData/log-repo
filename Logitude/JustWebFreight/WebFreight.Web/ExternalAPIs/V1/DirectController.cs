@@ -238,7 +238,11 @@ namespace WebFreight.Web.ExternalAPIs.V1
                     string token = HttpContext.Current.Request.Headers["Token"];
                     AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                     SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-
+                    string computingPartnerCode = "";
+                    if (!string.IsNullOrEmpty(entity.ComputingPartnerCode))
+                    {
+                        computingPartnerCode = entity.ComputingPartnerCode;
+                    }
                     if (entity.TransportMode != null && entity.TransportMode.Code == "A")
                     {
                         this.ValidateMasterNumberAndCarrier(entity);
