@@ -532,7 +532,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
         public IQueryable<PortList> GetIQueryableEntityList(IQueryable<Port> iQueryable)
         {
-            IQueryable<PortList> result = from f in iQueryable.Include("Country")
+            IQueryable<PortList> result = from f in iQueryable.Include("Country").Include("State")
                                           select new PortList()
                                           {
                                               Code = f.Code,
@@ -553,7 +553,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                               TransportModeId = (f.IsAir ? "A" : "") + (f.IsInland ? "I" : "") + (f.IsOcean ? "O" : ""),
                                               StateId = f.StateId,
                                               CombinedCode = f.CombinedCode,
-                                              StateName = f.StateName,
+                                              StateName = f.State!=null ? f.State.EnglishName:null,
                                               StateCode = f.StateCode,
                                           };
             return result;
