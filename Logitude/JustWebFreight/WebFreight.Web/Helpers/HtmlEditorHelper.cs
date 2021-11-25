@@ -1081,7 +1081,7 @@ namespace WebFreight.Web.Helpers
                     document.LoadHtml(htmlString);
                     CorrectingBuildingHtml(document, htmlString);
 
-                    IEnumerable<HtmlNode> spansList  = document.DocumentNode.SelectNodes("//span").Where(n => n.InnerText.Contains("[") && n.InnerText.Contains("[") && (n.LastChild.Name != "span" || n.FirstChild.Name != "span"));
+                    IEnumerable<HtmlNode> spansList  = document.DocumentNode.SelectNodes("//span")?.Where(n => n.InnerText.Contains("[") && n.InnerText.Contains("[") && (n.LastChild.Name != "span" || n.FirstChild.Name != "span"));
                     if (spansList != null)
                     {
                         foreach (HtmlNode node in spansList)

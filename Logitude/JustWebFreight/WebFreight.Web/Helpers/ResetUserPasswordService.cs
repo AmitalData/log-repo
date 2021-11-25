@@ -158,16 +158,16 @@ namespace WebFreight.Web.Helpers
             globalContext.PasswordResetRequests.Add(resetRequest);
             globalContext.SaveChanges();
 
+            resetPasswordParameters.BrandingTenant = "1";
+            resetPasswordParameters.TemplateName = "ahmed test";
+
             MessageArgs result = new MessageArgs();
             StringBuilder HtmlTemplate = new StringBuilder();
             if (!resetPasswordParameters.IsMobile)
             {
-                bool IsLoadingTemplate = false;
                 if (!string.IsNullOrEmpty(resetPasswordParameters.TemplateName))
                 {
-                    result = GetMessageArgsByTemplateName(resetPasswordParameters, emailBodyArgs);
-                    IsLoadingTemplate = !string.IsNullOrEmpty(result.HtmlTemplate);
-                    if (IsLoadingTemplate) HtmlTemplate.Append(result.HtmlTemplate);
+                    result = new ResetUserPasswordDocumentService().GetMessageArgsByTemplateName(resetPasswordParameters, emailBodyArgs);
                 }
                 else if (!string.IsNullOrEmpty(emailBodyArgs.BrandingTenant))
                 {
@@ -177,16 +177,15 @@ namespace WebFreight.Web.Helpers
                         result = HtmlEditorHelper.GetHtmlFromTemplate(documenttype.DocumentTypeDefaultHTMLTemplateId, documenttype.ObjectTableId, documenttype.Tenant);
                         if (!string.IsNullOrEmpty(result.HtmlTemplate))
                         {
-                            IsLoadingTemplate = true;
                             string url = GetFogotPasswordPagePath(resetPasswordParameters, "", emailBodyArgs.ReqestNumber);
                             url = AddBrandingTenantForPagePath(url, emailBodyArgs.BrandingTenant);
                             result.HtmlTemplate = result.HtmlTemplate.Replace("[ResetPasswordURL]", url);
-                            HtmlTemplate.Append(result.HtmlTemplate);
                         }
                     }
                 }
 
-                if (!IsLoadingTemplate)
+                HtmlTemplate.Append(result.HtmlTemplate);
+                if (string.IsNullOrEmpty(result.HtmlTemplate))
                 {
                     EmailBodyParams emailBodyParams = new EmailBodyParams
                     {
@@ -207,23 +206,6 @@ namespace WebFreight.Web.Helpers
                 Result = result,
             };
             return emailBodyResults;
-        }
-
-        private MessageArgs GetMessageArgsByTemplateName(ResetPasswordParameters resetPasswordParameters, EmailBodyArgs emailBodyArgs)
-        {
-            MessageArgs result = new MessageArgs();
-            var documenttype = GetDocumentTypeForResetPasswordByName(resetPasswordParameters.TemplateName, Int32.Parse(resetPasswordParameters.BrandingTenant));
-            if (documenttype == null)
-                return result;
-
-            result = HtmlEditorHelper.GetHtmlFromTemplate(documenttype.DocumentTypeDefaultHTMLTemplateId, documenttype.ObjectTableId, documenttype.Tenant);
-            if (string.IsNullOrEmpty(result.HtmlTemplate))
-                return result;
-
-            string path = "?email=" + resetPasswordParameters.Email + "&reset_request_number=" + emailBodyArgs.ReqestNumber + "&ischamplogin=" + resetPasswordParameters.IsChampLogin;
-            result.HtmlTemplate = result.HtmlTemplate.Replace("[ResetPasswordURL]", path);
-
-            return result;
         }
 
         private void CreateEmailCommunicationLog(StringBuilder HtmlTemplate, EmailCommunicationLogBuilderArgs emailCommunicationLogBuilderArgs, TenantManagmentPrivateLabelsPM privatelabel)
@@ -397,39 +379,6 @@ namespace WebFreight.Web.Helpers
             else return null;
         }
 
-        private DocumentType GetDocumentTypeForResetPasswordByName(string templateName, int tenant)
-        {
-            DocumentType documentType = null;
-            using (TransactionScope scope = new TransactionScope(TransactionScopeOption.RequiresNew))
-            {
-                DocumentTypeRepository documentTypeRepository = new DocumentTypeRepository(tenant);
-                documentType = documentTypeRepository.GetDocumentTypeByCode("SLCRP", tenant);
-                scope.Complete();
-            }
-
-            if (documentType == null)
-                return null;
-
-            var documentTypeTemplateId = GetDocumentTypeTemplateByDocumentTypeIdAndName(documentType, templateName);
-
-            if (documentTypeTemplateId == null)
-                return null;
-
-            documentType.DocumentTypeDefaultHTMLTemplateId = documentTypeTemplateId;
-            return documentType;
-        }
-
-        private string GetDocumentTypeTemplateByDocumentTypeIdAndName(DocumentType documentType, string templateName)
-        {
-            DocumentTypeTemplate documentTypeTemplate;
-            using (TransactionScope scope = new TransactionScope(TransactionScopeOption.RequiresNew))
-            {
-                DocumentTypeTemplateRepository documentTypeTemplateRepository = new DocumentTypeTemplateRepository(documentType.Tenant);
-                documentTypeTemplate = documentTypeTemplateRepository.GetDocumentTypeTemplatesByDocumentTypeId(documentType.Tenant, documentType.Id).Where(x => x.Description == templateName).FirstOrDefault();
-                scope.Complete();
-            }
-            return documentTypeTemplate?.Id;
-        }
     }
 
     public class EmailMessageParams
