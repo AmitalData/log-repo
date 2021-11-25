@@ -81,7 +81,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         protected override void OnUpdating(ContainerizationPM entityPM, Containerization entityPOCO)
         {
             entityPOCO.IsMultiExportFiles = false;
-            entityPOCO.IsMultiCustomers = false;
+            entityPOCO.IsMultiCustomers = null;
             if (String.IsNullOrWhiteSpace(entityPM.ConnectedDeclarations))
             {
                 entityPM.IsChange = false;
@@ -98,7 +98,11 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 var containerizationImporters = containerizationRepository.GetContainerizationImporters(entityPM.Tenant, entityPM.ConnectedDeclarations);
                 if (containerizationImporters.Count > 1)
                 {
-                    entityPOCO.IsMultiCustomers = true;
+                    entityPOCO.IsMultiCustomers = "List";
+                }
+                else
+                {
+                    entityPOCO.IsMultiCustomers = containerizationImporters[0].LocalName;
                 }
             }
 

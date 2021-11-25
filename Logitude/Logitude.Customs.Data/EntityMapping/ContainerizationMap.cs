@@ -43,7 +43,7 @@ namespace Logitude.Customs.Data.EntityMapping
 
             this.Property(t => t.IsChange).HasColumnName("IsChange");
 
-            this.Property(t => t.IsMultiCustomers).HasColumnName("IsMultiCustomers");
+            this.Property(t => t.IsMultiCustomers).HasColumnName("IsMultiCustomers").HasMaxLength(100).IsUnicode(true);
 
             this.Property(t => t.IsMultiExportFiles).HasColumnName("IsMultiExportFiles");
         }
