@@ -168,6 +168,7 @@
     <Compile Include="EntityQueryServices\CargoTrackingIncrementalStatQueryService.cs" />
     <Compile Include="CoreBL\CargoTrackingShipmenPartnersCardsBuilder.cs" />
     <Compile Include="CoreBL\CargoTrackingShipmentMappingService.cs" />
+    <Compile Include="EntityQueryServices\CargoTrackingMilestoneQueryService.cs" />
     <Compile Include="EntityQueryServices\CargoTrackingShipmentQueryService.cs" />
     <Compile Include="CoreBL\CargoTrackingShipmentRouteBuilder.cs" />
     <Compile Include="EntityQueryServices\CargoTrackingTransportModeQueryService.cs" />
