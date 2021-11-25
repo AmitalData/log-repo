@@ -15,8 +15,6 @@ import { ARInvoiceDetails } from '../../models/ARInvoiceDetails';
 import { AccountingSelectors } from "../../selectors/Selectors";
 import { ARPaymentDetails } from '../../models/ARPaymentDetails';
 import { ReceivableDetails } from "../../../../Shipment/cypress/models/ReceivableDetails"
-import { AccountingURLs } from '../../constants/URLs';
-import { RestAPI } from '../../../../Base/cypress/constants/RestAPI';
 import * as Assists from "../../../../Base/cypress/assists/Assists";
 
 //#region variables
@@ -167,6 +165,15 @@ Then("the invoice should create successfully", () => {
     ARInvoiceNumber = interception.response.body.InvoiceNumber;
   })
 });
+
+Then ("approve button does not exist", () => {
+  BaseAssertion.AssertElementNotExist(AccountingSelectors.ARInvoiceApproveButton)
+});
+
+Then ("status value as {string}", (statusValue) => {
+  BaseAssertion.AssertElementContain(ShipmentSelectors.ARInvoiceStatus, statusValue)
+
+});
 //#endregion
 
 //#region Create Consolidation Invoice
@@ -183,11 +190,20 @@ When("create consolidation invoice", () => {
   AccountingActions.CreateARInvoice()
 });
 
+When("the status of Constituent invoice is {string}", (statusValue) => {
+  cy.Click(ShipmentSelectors.HouseHyperLink,"CNS" ,true)
+  BaseAssertion.AssertElementContain(ShipmentSelectors.ARInvoiceStatus, statusValue)
+  cy.Click(ShipmentSelectors.Backbutton_2, "A/R Invoice", true)
+});
+
 Then("the consolidation invoice should create successfully", () => {
   BaseAssertion.AssertStatusCode(RequestAliases.ARInvoicesRequest, 200).then((interception) => {
     draftConsolidationInvoiceNumber = interception.response.body.DraftNumber;
     cy.log(draftConsolidationInvoiceNumber)
   })
+});
+Then ("status value as {string}", (statusValue) => {
+  BaseAssertion.AssertElementContain(ShipmentSelectors.ARInvoiceStatus, statusValue)
 });
 //#endregion
 //#region back to Accounting workspace
@@ -233,6 +249,10 @@ Then("the consolidation invoice should approve successfully", () => {
   BaseAssertion.AssertStatusCode(RequestAliases.ARInvoicesRequest, 200).then((interception) => {
     consolidationInvoiceNumber = interception.response.body.InvoiceNumber;
   })
+});
+
+Then ("status value as {string}", (statusValue) => {
+  BaseAssertion.AssertElementContain(ShipmentSelectors.ARInvoiceStatus, statusValue)
   cy.BackButton("Draft Invoices")
   cy.BackButton(BaseSelectors.ContainsAccounting)
 });

@@ -64,7 +64,7 @@ Feature: Create Consolidation Invoice
         When generate receivables from payables
         Then the receivables should generate successfully
 
-    Scenario: Create ARInvoice
+    Scenario: Create Constituent ARInvoice
         Given an ARInvoice with a random invoice number and the following details
             | PartnerType         | Customer    |
             | InvoiceCurrency     | EUR         |
@@ -78,7 +78,8 @@ Feature: Create Consolidation Invoice
             | IsConstituent       | Yes         |
         When create invoice
         Then the invoice should create successfully
-
+        And approve button does not exist
+        And status value as "Not Connected"
     Scenario: Create a new consolidation invoice
         Given a consolidation invoice with the following details
             | PartnerType         | Customer    |
@@ -91,7 +92,10 @@ Feature: Create Consolidation Invoice
             | VATNo               | Zero        |
             | Branch              | Main Office |
         When create consolidation invoice
+        And the status of Constituent invoice is "Connected"
         Then the consolidation invoice should create successfully
+        And status value as "Draft"
+        
 
     Scenario: Create direct export air shipment
         Given the user back to Accounting workspace
@@ -136,6 +140,7 @@ Feature: Create Consolidation Invoice
     Scenario: Approve Consolidation Invoice
         When approve consolidation invoice
         Then the consolidation invoice should approve successfully
+        And status value as "Unpaid"
 
     Scenario: Pay consolidation invoice
         Given a payment with the following details

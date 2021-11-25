@@ -22,6 +22,7 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly ShipmentConsignee = '#Shipment_ConsigneeId';
   public static readonly ShipmentCustomerType = '#Shipment_ShipmentCustomerTypeCode';
   public static readonly Backbutton_1 = '#EditBackbutton_1';
+  public static readonly Backbutton_2 = '#EditBackbutton_2'
   public static readonly Backbutton = '[id^=EditBackbutton]'
   public static readonly HouseHyperLink = ".HyperlinkButtonControl";
   public static readonly RoutingTab_1 = "#ShipmentTHRoutings_1";
