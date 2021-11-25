@@ -104,7 +104,6 @@ namespace WebFreight.Web.Helpers
     public class PODMobileDocumentsFilingArgs
     {
         public string ShipmentNumber { get; set; }
-        public string ContactId { get; set; }
         public string DocumentTypeName { get; set; }
         public string ObjectTableId { get; set; }
         public string DocumentTypeId { get; set; }
