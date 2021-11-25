@@ -1,3 +1,4 @@
+
 <style type="text/css">
     .RedInfo {
         padding: 2px 5px;
@@ -40,14 +41,10 @@
                 Cancelled
             </div>
 
-            <div class="ShortTitleDiv" style="padding-left: 5px;" *ngIf="IsUnassigedValidationVisible">
-                <div class="MediaFill">
-                    <div class="MediaFillAbsolute RedInfo">
-                        <div style="margin-left: 5px; float: left; color:black; font-size:11px;">{{UnassigedValidationMessage}}</div>
-                        <div style="margin-left: 10px; float: left; width: 50px;">
-                            <button class="Button" style="margin-top: 1px;" (click)="UpdateUnassigedDataClicked()">Update</button>
-                        </div>
-                    </div>
+            <div class="RedInfo" style="padding-left: 5px; width:900px;" *ngIf="IsUnassigedValidationVisible">
+                <div style="margin-left: 5px; float: left; color:black; font-size:11px;">{{UnassigedValidationMessage}}</div>
+                <div style="margin-left: 10px; float: left; width: 50px;">
+                    <button class="Button" style="margin-top: 1px;" (click)="UpdateUnassigedDataClicked()">Update</button>
                 </div>
             </div>
         </td>
