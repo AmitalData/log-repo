@@ -693,6 +693,7 @@ export class AddEditPrivateLabelsComponent extends BaseComponent implements OnIn
         this.imageParameter.Base64String = imageIndex == 1 ? this.MainLogoData : this.SmallLogoData;
         this.imageParameter.Width = 239;
         this.imageParameter.Height = 85 ;
+        this.imageParameter.KeepOriginalSize = true;
         service.PostImageAfterResize(this.imageParameter).subscribe((Result: ServiceResponse) => {
             if (!Result.HasError) {
                 var image = "data:image/" + "jpg" + ";base64," + Result.Result.Base64String;
