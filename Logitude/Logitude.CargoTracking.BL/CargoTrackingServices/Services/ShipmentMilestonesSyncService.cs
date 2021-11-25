@@ -1,5 +1,7 @@
 ﻿using Logitude.CargoTracking.BL.CargoTrackingServices.HelperClasses;
 using Logitude.CargoTracking.BL.CargoTrackingServices.Services.ServicesHelper;
+using Logitude.CargoTracking.BL.CloseTables;
+using Logitude.CargoTracking.Data.EntityLists;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -81,33 +83,129 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
 
 
 
-        public void SyncShipmentMilstones(CargoTrackingArgs cargoArgs)
+        public void SyncShipmentMilstones(BulkDataPreperation bulkDataPreperation)
         {
-
+            var buildCargoArgs = bulkDataPreperation.CargoTrackingUpdateDataBaseArgs.BuildCargoArgs;
             // move fields from order to forwarding
             // & if fields of forwarding is empty, fill their values from order
             var sql = BuildScriptForUpdatingForwardingShipmentMilstonesFromShipmentOrder();
-            ExcuteSqlScript(cargoArgs, sql);
+            ExcuteSqlScript(buildCargoArgs, sql);
 
             sql = BuildScriptForUpdatingOrderShipmentMilstones();
-            ExcuteSqlScript(cargoArgs, sql);
+            ExcuteSqlScript(buildCargoArgs, sql);
 
 
             // customs
             sql = BuildScriptForUpdatingCustomsShipmentMilstones();
-            ExcuteSqlScript(cargoArgs, sql);
+            ExcuteSqlScript(buildCargoArgs, sql);
 
             sql = BuildScriptForUpdatingForwardingShipmentMilstonesFromCustoms();
-            ExcuteSqlScript(cargoArgs, sql);
+            ExcuteSqlScript(buildCargoArgs, sql);
 
             // current
-            sql = BuildScriptToSetCurrentMistones();
-            ExcuteSqlScript(cargoArgs, sql);
+            //sql = BuildScriptToSetCurrentMistones();
+            sql = BuildScriptToSetCurrentMistonesByWeight(bulkDataPreperation);
+            ExcuteSqlScript(buildCargoArgs, sql);
 
 
-            sql = DisconnectShipments(cargoArgs);
+            sql = DisconnectShipments(buildCargoArgs);
             //ExcuteSqlScriptForSourceDatabase(cargoArgs, sql);
         }
+
+        private string BuildScriptToSetCurrentMistonesByWeight(BulkDataPreperation bulkDataPreperation)
+        {
+            var Milestones = bulkDataPreperation.Milestones.Where(e => e.Weight != null).OrderByDescending(e => e.Weight).ToList();
+            var doneCases = GetCurrentMistonesQueryDoneCases(Milestones);
+            var dateCases = GetCurrentMistonesQueryDateCases(Milestones);
+            var query = $@" update CargoTrackingShipments set 
+                            CurrentMilestoneCode = 
+                                CASE
+		                            {doneCases}
+		                            ELSE '{CargoTrackingMilestoneValues.Created}'
+	                            END,
+                            CurrentMilestoneDate = 
+                                CASE
+		                            {dateCases}
+		                            ELSE CurrentMilestoneDate
+	                            END
+            ";
+            return query;
+        }
+
+        private string GetCurrentMistonesQueryDoneCases(List<CargoTrackingMilestoneList> milestones)
+        {
+            var cases = "";
+            foreach (var milestone in milestones)
+            {
+                cases += GetMistonesDoneCase(milestone);
+            }
+            return cases;
+        }
+
+        private string GetMistonesDoneCase(CargoTrackingMilestoneList milestone)
+        {
+            switch (milestone.Code)
+            {
+                case CargoTrackingMilestoneValues.Created: return $"WHEN [CreatedDone] = 1 THEN {CargoTrackingMilestoneValues.Created}  ";
+                case CargoTrackingMilestoneValues.Booking: return $"WHEN [BookingDone] = 1 THEN {CargoTrackingMilestoneValues.Booking}  ";
+                case CargoTrackingMilestoneValues.Pickup: return $"WHEN [PickupDone] = 1 THEN {CargoTrackingMilestoneValues.Pickup}  ";
+                case CargoTrackingMilestoneValues.FromWarehouse: return $"WHEN [FromWarehouseDone] = 1 THEN {CargoTrackingMilestoneValues.FromWarehouse}  ";
+                case CargoTrackingMilestoneValues.Departure: return $"WHEN [DepartureDone] = 1 THEN {CargoTrackingMilestoneValues.Departure}  ";
+                case CargoTrackingMilestoneValues.Arrival: return $"WHEN [ArrivalDone] = 1 THEN {CargoTrackingMilestoneValues.Arrival}  ";
+                case CargoTrackingMilestoneValues.ToWarehouse: return $"WHEN [ToWarehouseDone] = 1 THEN {CargoTrackingMilestoneValues.ToWarehouse}  ";
+                case CargoTrackingMilestoneValues.AssignedToCustomsBroker: return $"WHEN [AssignedCustomsAgentDone] = 1 THEN {CargoTrackingMilestoneValues.AssignedToCustomsBroker}  ";
+                //case CargoTrackingMilestoneValues.CustomsProcess: return $"WHEN [CreatedDone] = 1 THEN {CargoTrackingMilestoneValues.CustomsProcess}  ";
+                case CargoTrackingMilestoneValues.GoodsClassification: return $"WHEN [GoodsClassificationDone] = 1 THEN {CargoTrackingMilestoneValues.GoodsClassification}  ";
+                case CargoTrackingMilestoneValues.DocumentInspection: return $"WHEN [DocumentInspectionDone] = 1 THEN {CargoTrackingMilestoneValues.DocumentInspection}  ";
+                case CargoTrackingMilestoneValues.PaymentRequested: return $"WHEN [PaymentRequiredDone] = 1 THEN {CargoTrackingMilestoneValues.PaymentRequested}  ";
+                case CargoTrackingMilestoneValues.PaymentReceived: return $"WHEN [PaymentReceivedDone] = 1 THEN {CargoTrackingMilestoneValues.PaymentReceived}  ";
+                case CargoTrackingMilestoneValues.CustomsPayment: return $"WHEN [CustomsPaymentDone] = 1 THEN {CargoTrackingMilestoneValues.CustomsPayment}  ";
+                case CargoTrackingMilestoneValues.Clearance: return $"WHEN [ClearanceDone] = 1 THEN {CargoTrackingMilestoneValues.Clearance}  ";
+                case CargoTrackingMilestoneValues.GatepassArrived: return $"WHEN [GatepassArrivedDone] = 1 THEN {CargoTrackingMilestoneValues.GatepassArrived}  ";
+                case CargoTrackingMilestoneValues.AssignedToTrucker: return $"WHEN [AssignedTruckerDone] = 1 THEN {CargoTrackingMilestoneValues.AssignedToTrucker}  ";
+                case CargoTrackingMilestoneValues.DeliveryOut: return $"WHEN [DeliveryDone] = 1 THEN {CargoTrackingMilestoneValues.DeliveryOut}  ";
+                case CargoTrackingMilestoneValues.Delivered: return $"WHEN [DeliveredDone] = 1 THEN {CargoTrackingMilestoneValues.Delivered}  ";
+                //case CargoTrackingMilestoneValues.Invoiced: return $"WHEN [CreatedDone] = 1 THEN {CargoTrackingMilestoneValues.Invoiced}  ";
+            }
+            return "";
+        }
+        private string GetCurrentMistonesQueryDateCases(List<CargoTrackingMilestoneList> milestones)
+        {
+            var cases = "";
+            foreach (var milestone in milestones)
+            {
+                cases += GetMistonesDateCase(milestone);
+            }
+            return cases;
+        }
+        private string GetMistonesDateCase(CargoTrackingMilestoneList milestone)
+        {
+            switch (milestone.Code)
+            {
+                case CargoTrackingMilestoneValues.Created: return $"WHEN [CreatedDone] = 1 THEN [CreateDate] ";
+                case CargoTrackingMilestoneValues.Booking: return $"WHEN [BookingDone] = 1 THEN [BookingDate]  ";
+                case CargoTrackingMilestoneValues.Pickup: return $"WHEN [PickupDone] = 1 THEN [PickupDate]  ";
+                case CargoTrackingMilestoneValues.FromWarehouse: return $"WHEN [FromWarehouseDone] = 1 THEN [FromWarehouseDate]  ";
+                case CargoTrackingMilestoneValues.Departure: return $"WHEN [DepartureDone] = 1 THEN [DepartureDate]  ";
+                case CargoTrackingMilestoneValues.Arrival: return $"WHEN [ArrivalDone] = 1 THEN [ArrivalDate]  ";
+                case CargoTrackingMilestoneValues.ToWarehouse: return $"WHEN [ToWarehouseDone] = 1 THEN [ToWarehouseDate]  ";
+                case CargoTrackingMilestoneValues.AssignedToCustomsBroker: return $"WHEN [AssignedCustomsAgentDone] = 1 THEN [AssignedCustomsAgentDate]  ";
+                //case CargoTrackingMilestoneValues.CustomsProcess: return $"WHEN [] = 1 THEN  [] ";
+                case CargoTrackingMilestoneValues.GoodsClassification: return $"WHEN [GoodsClassificationDone] = 1 THEN [GoodsClassificationDate]  ";
+                case CargoTrackingMilestoneValues.DocumentInspection: return $"WHEN [DocumentInspectionDone] = 1 THEN [DocumentInspectionDate]  ";
+                case CargoTrackingMilestoneValues.PaymentRequested: return $"WHEN [PaymentRequiredDone] = 1 THEN [PaymentReceivedDate]  ";
+                case CargoTrackingMilestoneValues.PaymentReceived: return $"WHEN [PaymentReceivedDone] = 1 THEN [PaymentRequiredDate]  ";
+                case CargoTrackingMilestoneValues.CustomsPayment: return $"WHEN [CustomsPaymentDone] = 1 THEN [CustomsPaymentDate]  ";
+                case CargoTrackingMilestoneValues.Clearance: return $"WHEN [ClearanceDone] = 1 THEN [ClearanceDate]  ";
+                case CargoTrackingMilestoneValues.GatepassArrived: return $"WHEN [GatepassArrivedDone] = 1 THEN [GatepassArrivedDate]  ";
+                case CargoTrackingMilestoneValues.AssignedToTrucker: return $"WHEN [AssignedTruckerDone] = 1 THEN [AssignedTruckerDate]  ";
+                case CargoTrackingMilestoneValues.DeliveryOut: return $"WHEN [DeliveryDone] = 1 THEN [DeliveryDate]  ";
+                case CargoTrackingMilestoneValues.Delivered: return $"WHEN [DeliveredDone] = 1 THEN [DeliveredDate]  ";
+                    //case CargoTrackingMilestoneValues.Invoiced: return $"WHEN [] = 1 THEN  [] ";
+            }
+            return "";
+        }
+
         private string BuildScriptForUpdatingForwardingShipmentMilstonesFromShipmentOrder()
         { // order
             string forwardingFields = BuildForwardingUpdatedFieldsFromOrder();
@@ -172,7 +270,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
                 , "left join CargoTrackingMilestones OrderMilestones on OrderShipment.CurrentMilestoneCode = OrderMilestones.Code  "
                 , " where	OrderShipment.EntityType='O' and (ForwardingShipment.CurrentMilestoneCode is not null and OrderShipment.CurrentMilestoneCode is not null)  "
                 , Environment.NewLine
-                ,"update  ForwardingShipment    "
+                , "update  ForwardingShipment    "
                 , "set		ForwardingShipment.CurrentMilestoneCode = iif(cast(ForwardingMilestones.Weight as int) > cast(CustomMilestones.Weight as int), ForwardingShipment.CurrentMilestoneCode ,CustomShipment.CurrentMilestoneCode),  ForwardingShipment.CurrentMilestoneDate = iif(cast(ForwardingMilestones.Weight as int) > cast(CustomMilestones.Weight as int), ForwardingShipment.CurrentMilestoneDate ,CustomShipment.CurrentMilestoneDate)    "
                 , "from	CargoTrackingShipments ForwardingShipment join CargoTrackingShipments CustomShipment on ForwardingShipment.CustomsShipmentHeaderId = CustomShipment.EntityId  "
                 , "left join CargoTrackingMilestones ForwardingMilestones on ForwardingShipment.CurrentMilestoneCode = ForwardingMilestones.Code "
@@ -220,7 +318,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
             if (disconnectedShipmentsIds.Length == 0)
                 return null;
 
-            string script = 
+            string script =
                 $"update shipments  " +
                 $"set LastUpdateDate = GETDATE() " +
                 $"where id in ({disconnectedShipmentsIds}) ";
@@ -353,7 +451,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
         }
         private void AppendForwardingAssignmentFromForwardingWhenOrderIsEmpty(List<string> fieldsAssignments)
         {
-            foreach (var field in forwardingMilstonesFields.Where(d=>!orderMilstonesFields.Contains(d)))
+            foreach (var field in forwardingMilstonesFields.Where(d => !orderMilstonesFields.Contains(d)))
                 fieldsAssignments.Add(BuildForwardingAssignmentFromForwardingWhenOrderIsEmpty(field));
         }
         private void AppendForwardingFieldAssignmentScriptFromCustom(List<string> fieldsAssignments)
@@ -423,14 +521,14 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
             return $"CustomShipment.{fieldName} = iif(CustomShipment.{fieldName} {compareOperator},ForwardingShipment.{fieldName},CustomShipment.{fieldName})" + Environment.NewLine;
         }
         private string BuildCustomsFieldAssignmentScript(string fieldName)
-		{
+        {
             var compareOperator = "is not null";
 
             if (fieldName.Contains("Done"))
                 compareOperator = " = 1";
 
             return $"CustomShipment.{fieldName} = iif(ForwardingShipment.{fieldName} {compareOperator}, ForwardingShipment.{fieldName}, CustomShipment.{fieldName})" + Environment.NewLine;
-		}
+        }
         private string BuildOrderFieldAssignmentScript(string fieldName)
         {
             var compareOperator = "is not null";
