@@ -32,6 +32,7 @@ namespace Logitude.Customs.BL.TraceEvents
         public bool NotConnectedToUniface { get; set; }
         public UnifreightEventParam MyUnifreightEventParam { get; set; }
       
+        
         public class FUStatus
         {
             public string xml_status { get; set; }
@@ -43,6 +44,7 @@ namespace Logitude.Customs.BL.TraceEvents
             public string status_id { get; set; }//"PUI";
             public string comments { get; set; }
             public string status_place { get; set; }//= "FRA";
+            public string OwnerUnifreightUserCode { get;  set; }
         }
     }
 }
