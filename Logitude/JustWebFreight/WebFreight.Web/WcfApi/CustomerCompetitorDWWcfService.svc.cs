@@ -27,12 +27,12 @@ namespace WebFreight.Web.WcfApi
 
             try
             {
+                if (tenant == 0 || tenant == 341) return new List<CustomerCompetitorDW>();
+
                 SecurityUtility.AuthenticationOnTenant(tenant);
                 SecurityUtility.CheckContactFeature("CustomerCompetitor", "READ", tenant);
-                //CustomerCompetitorQuery customerCompetitorQuery = new CustomerCompetitorQuery(tenant);
-
-                //return customerCompetitorQuery.GetCustomerCompetitorsDW(tenant);
-                return new List<CustomerCompetitorDW>();
+                CustomerCompetitorQuery customerCompetitorQuery = new CustomerCompetitorQuery(tenant);
+                return customerCompetitorQuery.GetCustomerCompetitorsDW(tenant);
             }
 
             catch (Exception ex)

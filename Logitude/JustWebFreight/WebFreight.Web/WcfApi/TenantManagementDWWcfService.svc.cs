@@ -28,11 +28,13 @@ namespace WebFreight.Web.WcfApi
 
             try
             {
+                if (tenant == 0 || tenant == 341) return new List<TenantManagementDW>();
+
                 SecurityUtility.AuthenticationOnTenant(tenant);
                 SecurityUtility.CheckContactFeature("TenantManagement", "READ", tenant);
-                //TenantManagementQuery tenantManagementQuery = new TenantManagementQuery(tenant);
-                //List<TenantManagementDW> result = tenantManagementQuery.GetTenantManagementDWs(tenant,skip, take);
-                return new List<TenantManagementDW>();
+                TenantManagementQuery tenantManagementQuery = new TenantManagementQuery(tenant);
+                List<TenantManagementDW> result = tenantManagementQuery.GetTenantManagementDWs(tenant, skip, take);
+                return result;
             }
 
             catch (Exception ex)

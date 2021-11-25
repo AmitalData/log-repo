@@ -21,7 +21,7 @@ namespace WebFreight.Web.WcfApi
     // NOTE: You can use the "Rename" command on the "Refactor" menu to change the class name "ActivityDWWcfService" in code, svc and config file together.
     // NOTE: In order to launch WCF Test Client for testing this service, please select ActivityDWWcfService.svc or ActivityDWWcfService.svc.cs at the Solution Explorer and start debugging.
 
-  
+
 
     [AspNetCompatibilityRequirements(RequirementsMode = AspNetCompatibilityRequirementsMode.Allowed)]
     public class ActivityDWWcfService : IActivityDWWcfService
@@ -35,14 +35,14 @@ namespace WebFreight.Web.WcfApi
 
             try
             {
+                if (tenant == 0 || tenant == 341) return new List<ActivitiyDW>();
+
                 SecurityUtility.AuthenticationOnTenant(tenant);
                 SecurityUtility.CheckContactFeature("Activity", "READ", tenant);
                 ICRMContext objectContext = CRMContext.GetContext(tenant);
 
-                //ActivityQueryService activityQueryService = new ActivityQueryService(objectContext);
-                //return activityQueryService.GetctivitiesDWListsByDates(tenant, fromDate, toDate, skip, take);
-
-                return new List<ActivitiyDW>();
+                ActivityQueryService activityQueryService = new ActivityQueryService(objectContext);
+                return activityQueryService.GetctivitiesDWListsByDates(tenant, fromDate, toDate, skip, take);
             }
             catch (Exception ex)
             {
@@ -71,13 +71,14 @@ namespace WebFreight.Web.WcfApi
 
             try
             {
+                if (tenant == 0 || tenant == 341) return 0;
+
                 SecurityUtility.AuthenticationOnTenant(tenant);
                 SecurityUtility.CheckContactFeature("Activity", "READ", tenant);
                 ICRMContext objectContext = CRMContext.GetContext(tenant);
 
-                //ActivityQueryService activityQueryService = new ActivityQueryService(objectContext);
-                //return activityQueryService.GetctivitiesDWListsCountByDates(tenant, fromDate, toDate);
-                return 0;
+                ActivityQueryService activityQueryService = new ActivityQueryService(objectContext);
+                return activityQueryService.GetctivitiesDWListsCountByDates(tenant, fromDate, toDate);
             }
             catch (Exception ex)
             {
@@ -107,14 +108,14 @@ namespace WebFreight.Web.WcfApi
 
             try
             {
+                if (tenant == 0 || tenant == 341) return new List<ActivitiyDW>();
+
                 SecurityUtility.AuthenticationOnTenant(tenant);
                 SecurityUtility.CheckContactFeature("Activity", "READ", tenant);//UPDATE//READ
                 ICRMContext objectContext = CRMContext.GetContext(tenant);
 
-                //ActivityQueryService activityQueryService = new ActivityQueryService(objectContext);
-                //return activityQueryService.GetActivitiesDWBListsByUpdateDate(tenant, updateDate, skip, take);
-
-                return new List<ActivitiyDW>();
+                ActivityQueryService activityQueryService = new ActivityQueryService(objectContext);
+                return activityQueryService.GetActivitiesDWBListsByUpdateDate(tenant, updateDate, skip, take);
             }
             catch (Exception ex)
             {
@@ -143,13 +144,14 @@ namespace WebFreight.Web.WcfApi
 
             try
             {
+                if (tenant == 0 || tenant == 341) return 0;
+
                 SecurityUtility.AuthenticationOnTenant(tenant);
                 SecurityUtility.CheckContactFeature("Activity", "READ", tenant);
                 ICRMContext objectContext = CRMContext.GetContext(tenant);
 
-                //ActivityQueryService activityQueryService = new ActivityQueryService(objectContext);
-                //return activityQueryService.GetctivitiesDWCountByUpdateDate(tenant, updateDate);
-                return 0;
+                ActivityQueryService activityQueryService = new ActivityQueryService(objectContext);
+                return activityQueryService.GetctivitiesDWCountByUpdateDate(tenant, updateDate);
             }
             catch (Exception ex)
             {
