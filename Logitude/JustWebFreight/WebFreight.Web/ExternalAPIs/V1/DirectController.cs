@@ -203,7 +203,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         }
 
                         entityPM.HasUnassignedData = unassignedDataQueryService.HasUnassignedData;
-                        entityPM = unassignedDataQueryService.AddDirectShipmentUnassignedAddress(entity,entityPM);
+                        entityPM = unassignedDataQueryService.AddDirectShipmentUnassignedData(entity,entityPM);
                         ShipmentService service = new ShipmentService(MyContext, entityPM, SecurityUtility.GetAuthenticatedUser());
                         service.Create();
 
@@ -290,7 +290,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                             ComputeHelper.ComputeTotals(directPM);
 
                             directPM.HasUnassignedData = unassignedDataQueryService.HasUnassignedData;
-                            directPM = unassignedDataQueryService.AddDirectShipmentUnassignedAddress(entity, directPM);
+                            directPM = unassignedDataQueryService.AddDirectShipmentUnassignedData(entity, directPM);
 
                             ShipmentService service = new ShipmentService(MyContext, directPM, SecurityUtility.GetAuthenticatedUser());
                             service.Update(true);

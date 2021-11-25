@@ -207,7 +207,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         externalAPIMainCarriageLegsHelper.ValidateRoutingsSeriesDates();
 
                         entityPM.HasUnassignedData = unassignedDataQueryService.HasUnassignedData;
-                        entityPM = unassignedDataQueryService.AddHouseShipmentUnassignedAddress(entity, entityPM);
+                        entityPM = unassignedDataQueryService.AddHouseShipmentUnassignedData(entity, entityPM);
 
                         ShipmentService service = new ShipmentService(MyContext, entityPM, SecurityUtility.GetAuthenticatedUser());
                         service.Create();
@@ -415,7 +415,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                             this.UpdatePartners(MyContext, HousePM);
 
                             HousePM.HasUnassignedData = unassignedDataQueryService.HasUnassignedData;
-                            HousePM = unassignedDataQueryService.AddHouseShipmentUnassignedAddress(entity, HousePM);
+                            HousePM = unassignedDataQueryService.AddHouseShipmentUnassignedData(entity, HousePM);
 
                             ShipmentService service = new ShipmentService(MyContext, HousePM, SecurityUtility.GetAuthenticatedUser());
                             service.Update(true);
