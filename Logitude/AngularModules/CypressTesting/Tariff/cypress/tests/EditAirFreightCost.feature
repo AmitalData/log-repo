@@ -7,10 +7,11 @@ Feature: Edit Air Freight Cost Tariff
     Scenario: Login and create new air freight cost
         Given the user logged in and navigate to tariff workspace
         And an air freight cost with the following details
-            | Name      | TestAirFreightCost |
-            | Seller    | AA                 |
-            | StartDate | Today              |
-            | Product   | General            |
+            | Name           | TestAirFreightCost |
+            | Seller         | AA                 |
+            | StartDate      | Today              |
+            | ExpirationDate | Today              |
+            | Product        | General            |
         When create freight cost
         Then the freight cost should create successfully
 

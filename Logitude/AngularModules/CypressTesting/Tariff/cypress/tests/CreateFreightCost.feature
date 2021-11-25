@@ -5,10 +5,11 @@ Feature: Create New Freight Cost Tariff
     Scenario: Login and create new air freight cost
         Given the user logged in and navigate to tariff workspace
         And an air freight cost with the following details
-            | Name      | TestAirFreightCost |
-            | Seller    | AA                 |
-            | StartDate | Today              |
-            | Product   | General            |
+            | Name           | TestAirFreightCost |
+            | Seller         | AA                 |
+            | StartDate      | Today              |
+            | ExpirationDate | Today              |
+            | Product        | General            |
         And the following All-In charges
             | Name             |
             | Agent Commission |
@@ -18,9 +19,10 @@ Feature: Create New Freight Cost Tariff
 
     Scenario: Create new ocean LCL freight cost
         Given an ocean LCL freight cost with the following details
-            | Name      | TestOceanLCLFreightCost |
-            | Seller    | MAEU                    |
-            | StartDate | Today                   |
+            | Name           | TestOceanLCLFreightCost |
+            | Seller         | MSCU                    |
+            | StartDate      | Today                   |
+            | ExpirationDate | Today                   |
         And the following All-In charges
             | Name                     |
             | Bunker Adjustment Factor |
@@ -30,9 +32,10 @@ Feature: Create New Freight Cost Tariff
 
     Scenario: Create new ocean FCL freight cost
         Given an ocean FCL freight cost with the following details
-            | Name      | TestOceanFCLFreightCost |
-            | Seller    | MAEU                    |
-            | StartDate | Today                   |
+            | Name           | TestOceanFCLFreightCost |
+            | Seller         | MSCU                    |
+            | StartDate      | Today                   |
+            | ExpirationDate | Today                   |
         And the following All-In charges
             | Name                     |
             | Bunker Adjustment Factor |
