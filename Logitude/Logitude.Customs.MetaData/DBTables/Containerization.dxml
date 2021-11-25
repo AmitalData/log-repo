@@ -80,7 +80,6 @@
   </Column>
   <Column
     Name="IsMultiExportFiles"
-    OldNames="IsMultiCustomers"
     Type="bit">
     <Constraints
       Nullable="false" />
