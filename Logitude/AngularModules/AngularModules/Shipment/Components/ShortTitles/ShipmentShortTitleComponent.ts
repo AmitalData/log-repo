@@ -10,7 +10,6 @@ import { AppTool } from '../../../Infrastructure/Tools';
 
 export class ShipmentShortTitleComponent {
   public CustomerRankName: string = null;
-
     public EntityPM: ShipmentPM;
     constructor(public entityArgs: EntityArgs) {
         this.EntityPM = this.entityArgs.EntityPM;
@@ -46,10 +45,15 @@ export class ShipmentShortTitleComponent {
     public RankSource1: string;
     public RankSource2: string;
     public RankSource3: string;
-    public IsRankVisible: boolean = false;
-    //public IsCancelled: boolean = false;
-
+    public IsRankVisible: boolean = false;   
+    public IsUnassigedValidationVisible: boolean = false;
+    public UnassigedValidationMessage: string;
     private BuildComponent() {
+
+        //if (this.EntityPM.HasUnassignedData) {
+            this.IsUnassigedValidationVisible = true;
+            this.UnassigedValidationMessage = "Some fields in this shipment contain unassigned data, would you like to update them?"
+        //}
 
         if (this.EntityPM.ShipmentLevelCode == "C") {
             this.Background = "rgba(35, 172, 214, 0.15)";
@@ -105,4 +109,8 @@ export class ShipmentShortTitleComponent {
     }
 
     get IsCancelled() { return this.EntityPM.IsCancelled; }
+
+    UpdateUnassigedDataClicked() {
+
+    }
 }
