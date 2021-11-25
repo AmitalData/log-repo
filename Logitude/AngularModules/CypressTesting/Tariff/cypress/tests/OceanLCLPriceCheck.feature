@@ -8,7 +8,7 @@ Feature: Ocean LCL Price Check
         Given the user logged in and navigate to tariff workspace
         And an ocean LCL freight cost with the following details
             | Name      | TestOceanLCLFreightCost |
-            | Seller    | MAEU                    |
+            | Seller    | MSCU                    |
             | StartDate | Today                   |
         When create freight cost
         Then the freight cost should create successfully

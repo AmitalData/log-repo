@@ -6,7 +6,7 @@ Feature: Download Excel in Tariff
         Given the user logged in and navigate to tariff workspace
         And an "Ocean LCL" freight cost with the following details
             | Name      | TestOceanLCLFreightCost |
-            | Seller    | MAEU                    |
+            | Seller    | MSCU                    |
             | StartDate | Today                   |
         And the following All-In charges
             | Name                     |
@@ -26,5 +26,3 @@ Feature: Download Excel in Tariff
     Scenario: Download Excel File
         When download excel file
         Then the file should download successfully
-
-    

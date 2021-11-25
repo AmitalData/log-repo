@@ -64,7 +64,7 @@ Given("open surchage with {string} as seller", (SellerName) => {
 
 When("copy into new version if start date is not {string}", (startdate) => {
     let NowDate = BaseActions.GetTodayDate()
-    Actions.CheckIfVersionApproved();
+    Actions.CheckIfVersionApproved2();
     cy.get(BaseSelectors.PackageGrid("4")).find(BaseSelectors.SpanElement).invoke(BaseSelectors.TextElement).then((text) => {
         if(text.trim()==NowDate){
             cy.log("Use Same Tariff Line")
