@@ -42,8 +42,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
     public DontShowLogboxToolTip: boolean = false;
     public _ShipmentAdditionalCloudDataService: ShipmentAdditionalCloudDataService;
     public _ShipmentPMService: ShipmentPMService;
-    private CurrentSession = SessionLocator.SelectedSession;
-    public ToggleIsExportShipments: boolean = false;
+    private CurrentSession = SessionLocator.SelectedSession; 
     public _UserLastSettingsPMService: UserLastSettingsPMService;
     public _UserLastSettingsExtendedPMService: UserLastSettingsExtendedPMService;
     RefTemplateWidth: string = '220px';
@@ -52,14 +51,13 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
         "ShortName": true,
         "LongName": false
     }
-    private entityResourceService: EntityResourceService;
-    public HasExportShipmentToggle: boolean = false;
+    private entityResourceService: EntityResourceService; 
 
     public IsPrivateLabelExportActivated: boolean = false;
     public IsPrivateLabelCustomsActivated: boolean = false;
 
-    public IsExportActivated: boolean = true;
-    public IsCustomsActivated: boolean = true;
+    public IsExportActivated: boolean = false;
+    public IsCustomsActivated: boolean = false;
     public ShowDirectionFilters: boolean = false;
 
     public customerTenantAccessRequestExtendedPMService: CustomerTenantAccessRequestExtendedPMService;
@@ -68,22 +66,8 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
 
     constructor(private _entityListService: EntityListService) {
         this.InitializeServices();
-        this.LoadEntityResource("Shipment");
-        var FeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "LEX")[0];
-        if (FeatureToggle) {
-            this.ToggleIsExportShipments = true;
-        }
-        this.checkAirShipmentToggle();
-    }
-
-    private checkAirShipmentToggle() {
-        let AirShipmentFeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "PLE")[0];
-        if (AirShipmentFeatureToggle) {
-            this.HasExportShipmentToggle = true;
-
-        }
-    }
-
+        this.LoadEntityResource("Shipment"); 
+    } 
 
     private InitializeServices() {
         this.myShipmentDomainService = new ShipmentDomainService();
@@ -161,7 +145,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
 
         }
         else {
-            this.RefTemplateWidth = this.ToggleIsExportShipments ? '250px' : '220px';
+            this.RefTemplateWidth =  '250px';
         }
     }
     SetCustomerTenantAccessRequestsDirections(hybridPartnerId: any) {
@@ -526,7 +510,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
         this.columns.push({
             FieldName: 'ShipperName',
             DataTypeCode: 'String',
-            Display: this.HasExportShipmentToggle ? 'Supplier / Consignee' : 'Supplier' ,
+            Display: this.IsExportActivated ? 'Supplier / Consignee' : 'Supplier',
             Styles: { width: '150px' },
             HtmlListComponentName: 'SupplierConsigneeListTemplate',
             HtmlListComponentUrl: './Shipment/Components/ListTemplates/SupplierConsigneeListTemplate',
@@ -536,10 +520,10 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
         });
 
         this.QueryColumns.push(
-            this.GetQueryColumn("ShipperName", 'Text', this.HasExportShipmentToggle ? 'Supplier / Consignee' : 'Supplier')
+            this.GetQueryColumn("ShipperName", 'Text', this.IsExportActivated ? 'Supplier / Consignee' : 'Supplier')
         );
 
-        if (this.HasExportShipmentToggle) {
+        if (this.IsExportActivated) {
             this.DisplayAgentColumn();
         }
 
@@ -556,7 +540,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
                 ServerSideSortable: false,
                 SortByName: "Task"
             });
-            this.HoverTemplateIndex = this.HasExportShipmentToggle ? 6 : 5;
+            this.HoverTemplateIndex = this.IsExportActivated ? 6 : 5;
 
             this.QueryColumns.push(this.GetQueryColumn("Task", 'Text', 'Task'));
         }
@@ -589,7 +573,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
                 this.QueryColumns.push(this.GetQueryColumn("ComputedStatusDate", 'DateTime', 'Status Date' ));
             }
             else {
-                this.HoverTemplateIndex = this.HasExportShipmentToggle ? 6 : 5;
+                this.HoverTemplateIndex = this.IsExportActivated ? 6 : 5;
             }
         }
 

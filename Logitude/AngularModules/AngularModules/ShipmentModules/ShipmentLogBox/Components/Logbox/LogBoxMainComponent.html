@@ -178,7 +178,7 @@
                                                 <DirectionsFilter *ngIf="ShowDirectionFilters" [HideExport]="isLogbox || !IsExportActivated" [ShowCustomFilter]="isLogbox|| IsCustomsActivated" [HideImportDomistic]="isLogbox|| isPrivateLabel" [HideAMANACFilters]="true" [SelectedValue]="SelectedDirectionFilter" (SelectedValueChanged)="SelectedDirectionFilter = $event"></DirectionsFilter>
                                             </td>
 
-                                            <td *ngIf="ToggleIsExportShipments" style="width: 7px;">
+                                            <td   style="width: 7px;">
                                                 <div></div>
                                             </td>
 
@@ -312,7 +312,7 @@
 
                             <td style="width: 35%; min-width: 415px; vertical-align: top;">
                                 <div class="MediaFill">
-                                    <LogBoxDocuments [ShipmentSelectedEvent]="ShipmentSelectedEvent" [OnImporterShipmentsFilterChanged]="OnImporterShipmentsFilterChanged" [SearchText]="SearchFilter" (ArchiveDone)="ArchiveDone($event)"></LogBoxDocuments>
+                                    <LogBoxDocuments [IsExportActivated]="IsExportActivated" [ShipmentSelectedEvent]="ShipmentSelectedEvent" [OnImporterShipmentsFilterChanged]="OnImporterShipmentsFilterChanged" [SearchText]="SearchFilter" (ArchiveDone)="ArchiveDone($event)"></LogBoxDocuments>
                                 </div>
                             </td>
                         </tr>
