@@ -26,6 +26,7 @@ using Logitude.Infrastructure.Data.Repsitories;
 using Logitude.Infrastructure.Data.EntityPOCOs;
 using WebFreight.Web.ExternalAPIs.ExternalAPIsHelpers;
 using Simplog.Data.Helpers;
+using Logitude.BL.CommonDataModel.APIDataContract.QueryService;
 
 namespace WebFreight.Web.ExternalAPIs.V1
 {
@@ -86,6 +87,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         SecurityUtility.AuthenticateAPICall(authToken.Tenant);
                         ContactInfo loggedContactInfo = SecurityUtility.GetContactInfo(authToken.Email, authToken.Tenant);
+
                         string computingPartnerCode = "";
                         if (!string.IsNullOrEmpty(entity.ComputingPartnerCode))
                         {
@@ -97,6 +99,10 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         this.InitOceanOrInlandPackages(entity);                        
 
                         IShipmentsContext MyContext = ShipmentsContext.GetContext(authToken.Tenant);
+       
+                        UnassignedDataQueryService unassignedDataQueryService = new UnassignedDataQueryService(authToken.Tenant, computingPartnerCode);
+                        entity = unassignedDataQueryService.HandleUnassignedDirectShipmentData(entity);
+
                         DirectQueryService mappingService = new DirectQueryService(authToken.Tenant);
                         ShipmentPM entityPM = mappingService.DirectCustomDataMappingAndValidatin(entity, authToken.Tenant, computingPartnerCode);
                         entityPM.IsExternalAPI = true;
@@ -196,6 +202,8 @@ namespace WebFreight.Web.ExternalAPIs.V1
                             entityPM.CreatedByPartner = (partner != null ? partner.Name : null);
                         }
 
+                        entityPM.HasUnassignedData = unassignedDataQueryService.HasUnassignedData;
+                       // entityPM = unassignedDataQueryService.AddDirectShipmentUnassignedAddress(entity,entityPM);
                         ShipmentService service = new ShipmentService(MyContext, entityPM, SecurityUtility.GetAuthenticatedUser());
                         service.Create();
 

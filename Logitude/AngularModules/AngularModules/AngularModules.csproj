@@ -388,6 +388,7 @@
     <TypeScriptCompile Include="Common\EntityPMs\PortTimeZonePM.ts" />
     <TypeScriptCompile Include="Common\EntityPMs\ProductItemPM.ts" />
     <TypeScriptCompile Include="Common\EntityPMs\ReportExecutionLogPM.ts" />
+    <TypeScriptCompile Include="Common\EntityPMs\UnassignedEntityPM.ts" />
     <TypeScriptCompile Include="Common\Services\DocumentServices\DocumentFileService.ts" />
     <TypeScriptCompile Include="Common\Services\ExtendedPMs\CarrierAreaExtendedPMService.ts" />
     <TypeScriptCompile Include="Common\Services\ExtendedPMs\ShippingLineExtendedPMService.ts" />
@@ -396,6 +397,7 @@
     <TypeScriptCompile Include="Common\Services\StandardLists\ReportExecutionLogListService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardPMs\PortTimeZonePMService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardPMs\ReportExecutionLogPMService.ts" />
+    <TypeScriptCompile Include="Common\Services\StandardPMs\UnassignedEntityPMService.ts" />
     <TypeScriptCompile Include="Common\Tools.ts" />
     <TypeScriptCompile Include="Common\Validators\CustomerValidator.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsCourier\Components\CourierWorkSheet\GetUnloadPortCodeComponent.ts" />
@@ -7567,6 +7569,7 @@
     <TypeScriptCompile Include="Shipment\EntityPMs\ShipmentProductItemPM.ts" />
     <TypeScriptCompile Include="Shipment\EntityPMs\ShipmentStoragePricingPM.ts" />
     <TypeScriptCompile Include="Shipment\EntityPMs\ShipmentSubTypePM.ts" />
+    <TypeScriptCompile Include="Shipment\EntityPMs\ShipmentUnassignedFieldPM.ts" />
     <TypeScriptCompile Include="Shipment\MetaDataServices\HeaderScreenServices\ShipmentHeaderScreenService.ts" />
     <TypeScriptCompile Include="Shipment\MetaDataServices\MenuButtonServices\ShipmentMenuButtonService.ts" />
     <TypeScriptCompile Include="Shipment\MetaDataServices\TabsServices\ShipmentTabsService.ts" />
