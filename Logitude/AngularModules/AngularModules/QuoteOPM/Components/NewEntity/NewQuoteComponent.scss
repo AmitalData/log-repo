@@ -18,6 +18,17 @@
 }
 
 :host ::ng-deep {
+    .error-msg {
+        color:red;    
+        position: absolute;    
+        display: none;
+        font-size: 11px;
+    }
+
+    .ng-submitted .error-msg.invalid {        
+        display: block;
+    }
+
     button,
     textarea,
     input {
@@ -26,6 +37,7 @@
 
     .p-field {
         margin-bottom: 1em !important;
+        position: relative;
     }
 
     .root-header-text {
@@ -159,6 +171,10 @@
     background: var(--surface-0);
     margin-bottom: 20px;
     border-radius: 14px;
+}
+
+.section:last-of-type {
+    margin-bottom: 0px;
 }
 
 .section-btn {

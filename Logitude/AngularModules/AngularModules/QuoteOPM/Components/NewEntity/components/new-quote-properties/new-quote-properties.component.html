@@ -15,7 +15,8 @@
           <span *ngIf='x.value.toPort?.Code'>{{x.value.toPort?.Code}}</span>
           <span *ngIf='x.value.toPort?.Code && x.value.mainCarriageCarrier?.AIRLINE_ID'>,</span>
           <span *ngIf='x.value.mainCarriageCarrier?.AIRLINE_ID'>{{x.value.mainCarriageCarrier?.AIRLINE_ID}}</span>
-          <span *ngIf='x.value.incoterm?.PTERMID && (x.value.mainCarriageCarrier?.AIRLINE_ID || x.value.toPort?.Code)'>,</span>
+          <span
+            *ngIf='x.value.incoterm?.PTERMID && (x.value.mainCarriageCarrier?.AIRLINE_ID || x.value.toPort?.Code)'>,</span>
           <span *ngIf='x.value.incoterm?.PTERMID'>{{x.value.incoterm?.PTERMID}}</span>
         </ng-template>
         <h3 class="sub-header">Quote Properties</h3>
@@ -23,6 +24,9 @@
 
           <div class="col-4 p-fluid">
             <div class="p-field">
+              <div class="error-msg" [ngClass]='{"invalid": x.controls["fromPort"].invalid}'>{{'QuoteOP.S.NewQuote.' +
+                (formGroup.value.transportMode?.Id === 'A' ? 'Gateway': 'LoadingPort') | TextCodeTranslationPipe}}
+                field is required</div>
               <app-autocomplate-table [columnsShow]="{Code:'Code', Name: 'Name',CountryName:'CountryName'}"
                 [data]='toPortList' [fieldShow]='"Name"' [searchIcon]='true'
                 [label]="'QuoteOP.S.NewQuote.' + (formGroup.value.transportMode?.Id === 'A' ? 'Gateway': 'LoadingPort') | TextCodeTranslationPipe"
@@ -31,6 +35,9 @@
             </div>
 
             <div class="p-field">
+              <div class="error-msg" [ngClass]='{"invalid": x.controls["toPort"].invalid}'>{{'QuoteOP.S.NewQuote.' +
+                (formGroup.value.transportMode?.Id === 'A' ? 'Destination': 'DischargePort') | TextCodeTranslationPipe}}
+                field is required</div>
               <app-autocomplate-table [columnsShow]="{Code:'Code', Name: 'Name',CountryName:'CountryName'}"
                 [data]='fromPortList' [fieldShow]='"Name"' [searchIcon]='true'
                 [label]="'QuoteOP.S.NewQuote.' + (formGroup.value.transportMode?.Id === 'A' ? 'Destination': 'DischargePort') | TextCodeTranslationPipe"
@@ -38,8 +45,8 @@
               </app-autocomplate-table>
             </div>
 
-            <app-new-quote-address [type]="'pickup'" [propertyForm]='x' [qouteForm]='formGroup'
-              [EntityPM]='EntityPM'></app-new-quote-address>
+            <app-new-quote-address [type]="'pickup'" [propertyForm]='x' [qouteForm]='formGroup' [EntityPM]='EntityPM'>
+            </app-new-quote-address>
             <!-- <div class="p-field">
               <div class="p-field accordion-container">
                 <h4 class="text-style simple-text">{{"QuoteOP.S.NewQuote.Pickup" | TextCodeTranslationPipe}}</h4>
@@ -66,8 +73,8 @@
               </app-autocomplate-table>
             </div>
 
-            <app-new-quote-address [type]="'delivery'" [propertyForm]='x' [qouteForm]='formGroup'
-              [EntityPM]='EntityPM'></app-new-quote-address>
+            <app-new-quote-address [type]="'delivery'" [propertyForm]='x' [qouteForm]='formGroup' [EntityPM]='EntityPM'>
+            </app-new-quote-address>
             <!-- <div class="p-field">
               <div class="p-field accordion-container">
                 <h4 class="text-style simple-text">{{"QuoteOP.S.NewQuote.Delivery" | TextCodeTranslationPipe}}</h4>
