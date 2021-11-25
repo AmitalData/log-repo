@@ -67,6 +67,7 @@
 	declare @ConsolidationStatusCode as varchar(2)
 	declare @ConsolidationDraftNumber as varchar(20)
 	declare @Partner as int
+	declare @ConsolidationId as varchar(15)
 
 	DECLARE ARInvoicesCursor CURSOR READ_ONLY
 	FOR
@@ -80,7 +81,7 @@
 	dw_ARInvoiceLines.ProfitCurrencyAmount,dw_ARInvoiceLines.Notes,dw_ARInvoices.InvoiceCurrencyExchangeRate,dw_ARInvoiceLines.IsExpense,dw_ARInvoiceLines.IsRegionalTax,
 	NewDIM_Branches.Id_Number,dw_ARInvoices.StatusCode, dw_ARInvoices.DraftNumber,
 	dw_ARInvoices.IsConsolidationInvoice, dw_ARInvoices.MainEntityId,dw_ARInvoiceLines.EntityId , dw_ARInvoices.MasterNumber, dw_ARInvoices.HouseNumber,  @dw_ARInvoices.CustomFieldsVariable,
-	ConsolidationInvoice.InvoiceNumber,ConsolidationInvoice.InvoiceDate, ConsolidationInvoice.StatusCode, ConsolidationInvoice.DraftNumber,  Partner.Id_Number
+	ConsolidationInvoice.InvoiceNumber,ConsolidationInvoice.InvoiceDate, ConsolidationInvoice.StatusCode, ConsolidationInvoice.DraftNumber,  Partner.Id_Number, ConsolidationInvoice.Id
 
 	 
     From dw_ARInvoices
@@ -113,7 +114,7 @@
 	 @AmountInLocalCurrency, @AmountInProfitCurrency, @AmountDueInLocalCurrency, @AmountDueInProfitCurrency, @Description, @LocalDescription, @UnitPrice, @Quantity, @VatType,
 	 @VatPercentage, @LocalCurrencyAmount,@ForiegnCurrencyAmount,@InvoiceCurrencyAmount,@ForiegnCurrencyId, @ForiegnExchangeRate, @ProfitCurrencyAmount,@Notes,@InvoiceCurrencyExchangeRate,@IsExpens,@IsRegionalTax,
 	 @Branch,@StatusCode, @DraftNumber, @IsConsolidationInvoice, @ARInvoiceEntityId,@ARInvoiceLineEntityId, @InvoiceMasterNumber , @InvoiceHouseNumber, @CursorCustomFieldsVariable,
-	 @ConsolidationInvoiceNumber, @ConsolidationInvoiceDate, @ConsolidationStatusCode, @ConsolidationDraftNumber, @Partner
+	 @ConsolidationInvoiceNumber, @ConsolidationInvoiceDate, @ConsolidationStatusCode, @ConsolidationDraftNumber, @Partner, @ConsolidationId
 	 
 	WHILE @@FETCH_STATUS = 0
 	BEGIN
@@ -171,6 +172,15 @@
 		 
 		----------------------------------------------
 
+		 ---------------Consolidation Invoice Date -----------------
+	 
+	 		 
+		if(@ConsolidationId = '-1') 
+		begin set @ConsolidationInvoiceDate = Null end  
+
+  
+		----------------------------------------------
+
 	 
 	 ------------Resolve Custom Field Data Type Code-------------------
             
@@ -194,7 +204,7 @@
 	 
 	 @SubTotalInLocalCurrency, @SubTotalInInvoiceCurrency, @AmountInLocalCurrency, @AmountInProfitCurrency, @AmountDueInLocalCurrency, @AmountDueInProfitCurrency, @Description, @LocalDescription, @UnitPrice, @Quantity,  @VatType,
 	 @VatPercentage, @LocalCurrencyAmount,@ForiegnCurrencyAmount,@InvoiceCurrencyAmount,@ForiegnCurrencyId, @ForiegnExchangeRate, @ProfitCurrencyAmount,@Notes,@InvoiceCurrencyExchangeRate,@IsExpens,@IsRegionalTax,
-	 @Branch,@IsCancelled,@MainEntityId, @OriginalInvoiceNumber , @InvoiceMasterNumber , @InvoiceHouseNumber,[CustomFieldValuesVariable],@ConsolidationInvoiceNumber, @ConsolidationInvoiceDate, @Partner)
+	 @Branch,@IsCancelled,@MainEntityId, @OriginalInvoiceNumber , @InvoiceMasterNumber , @InvoiceHouseNumber,[CustomFieldValuesVariable],@ConsolidationInvoiceNumber,  dbo.GetDateFormateAsNumber(@ConsolidationInvoiceDate), @Partner)
 
 
 
@@ -218,7 +228,7 @@ END CATCH
 	@AmountInLocalCurrency, @AmountInProfitCurrency, @AmountDueInLocalCurrency, @AmountDueInProfitCurrency, @Description, @LocalDescription, @UnitPrice , @Quantity,  @VatType,
 	@VatPercentage, @LocalCurrencyAmount,@ForiegnCurrencyAmount,@InvoiceCurrencyAmount,@ForiegnCurrencyId, @ForiegnExchangeRate, @ProfitCurrencyAmount,@Notes,@InvoiceCurrencyExchangeRate,@IsExpens,@IsRegionalTax,
 	@Branch, @StatusCode, @DraftNumber, @IsConsolidationInvoice, @ARInvoiceEntityId,@ARInvoiceLineEntityId , @InvoiceMasterNumber , @InvoiceHouseNumber, @CursorCustomFieldsVariable,
-	@ConsolidationInvoiceNumber, @ConsolidationInvoiceDate, @ConsolidationStatusCode, @ConsolidationDraftNumber, @Partner
+	@ConsolidationInvoiceNumber, @ConsolidationInvoiceDate, @ConsolidationStatusCode, @ConsolidationDraftNumber, @Partner, @ConsolidationId
 
 		End
 	CLOSE ARInvoicesCursor
