@@ -51,6 +51,11 @@
                             <div style="width: 220px;" [style.float]="isRTL ? 'left' : 'right'">
                                 <SearchTextBox [ObjectTableName]="'ExternalReconciliation'" (SearchTextChangeEvent)="TextChanged($event)" [PlaceHolder]="'Reconciliation.F.Number' | TextCodeTranslationPipe"></SearchTextBox>
                             </div>
+                            <div float-end style="width: fit-content; padding: 2px 15px 0px;">
+                                <CheckBox (Checked)="ShowCrossYearReconciliations = $event"
+                                        [Text]="'ExternalReconciliation.O.ShowCrossYearLabel' | TextCodeTranslationPipe"
+                                        [IsChecked]="ShowCrossYearReconciliations"></CheckBox>
+                            </div>
                             <div style="width: 40px;padding: 0px 10px;" [style.float]="isRTL ? 'left' : 'right'">
                                 <!--<IconButton [Name]="'Refresh'" (click)="RefreshButtonClicked()"></IconButton>-->
                             </div>

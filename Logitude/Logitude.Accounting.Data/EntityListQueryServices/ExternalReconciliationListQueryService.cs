@@ -36,6 +36,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                                 AccountName = a.Account != null ? a.Account.EnglishName : null,
                                                                 AccountLocalName = a.Account != null ? a.Account.LocalName : null,
                                                                 IsCancelled = a.IsCancelled,
+                                                                CrossYearReconcile = a.CrossYearReconcile,
 
                                                             });
             return query;
