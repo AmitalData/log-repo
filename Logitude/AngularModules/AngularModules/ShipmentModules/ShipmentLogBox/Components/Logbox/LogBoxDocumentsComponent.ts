@@ -37,7 +37,7 @@ import { SystemEnvironmentService } from '../../../../Infrastructure/Utilities/S
     
     templateUrl: './LogBoxDocumentsComponent.html',
     //providers: [ EntityListService, DocumentsFilingExtendedPMService],
-    inputs: ['ShipmentSelectedEvent', 'OnImporterShipmentsFilterChanged', 'SearchText'],
+    inputs: ['ShipmentSelectedEvent', 'OnImporterShipmentsFilterChanged', 'SearchText', 'IsExportActivated'],
     //pipes: [CountryFlagPipe, AttatchmentIconPipe]
 })
 
@@ -80,8 +80,8 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
     public MainCarriageTD: any = "";
     public MainCarriageTALabel: string = "";
     public MainCarriageTDLabel: string = "";
-
-    public hasExportShipmentToggle: boolean = false;
+     
+    public IsExportActivated: boolean = false;
 
     public hasDocumentTypeHighlightColor = SessionLocator.PrivateLableSettings ? (SessionLocator.PrivateLableSettings.DocumentTypeHighlightColor == null ? false : true) : false; 
     public privateLabelClass = {
@@ -112,16 +112,9 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
                 this.StopBusyIndicator();
             }
         });
-
-        this.checkExportShipmentToggle();
+         
     }
-
-    checkExportShipmentToggle() { 
-        let ExportShipmentFeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "PLE")[0];
-        if (ExportShipmentFeatureToggle) {
-            this.hasExportShipmentToggle = true; 
-        }
-    }
+     
     SetPortFields() {
 
         if (this.SelectedShipment) {

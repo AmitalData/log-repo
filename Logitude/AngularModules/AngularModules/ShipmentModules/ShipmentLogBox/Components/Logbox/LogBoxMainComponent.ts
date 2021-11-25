@@ -42,8 +42,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
     public DontShowLogboxToolTip: boolean = false;
     public _ShipmentAdditionalCloudDataService: ShipmentAdditionalCloudDataService;
     public _ShipmentPMService: ShipmentPMService;
-    private CurrentSession = SessionLocator.SelectedSession;
-/*    public ToggleIsExportShipments: boolean = false;*/
+    private CurrentSession = SessionLocator.SelectedSession; 
     public _UserLastSettingsPMService: UserLastSettingsPMService;
     public _UserLastSettingsExtendedPMService: UserLastSettingsExtendedPMService;
     RefTemplateWidth: string = '220px';
@@ -52,8 +51,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
         "ShortName": true,
         "LongName": false
     }
-    private entityResourceService: EntityResourceService;
-/*    public HasExportShipmentToggle: boolean = false;*/
+    private entityResourceService: EntityResourceService; 
 
     public IsPrivateLabelExportActivated: boolean = false;
     public IsPrivateLabelCustomsActivated: boolean = false;
@@ -68,22 +66,8 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
 
     constructor(private _entityListService: EntityListService) {
         this.InitializeServices();
-        this.LoadEntityResource("Shipment");
-        //var FeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "LEX")[0];
-        //if (FeatureToggle) {
-        //    this.ToggleIsExportShipments = true;
-        //}
-        //this.checkAirShipmentToggle();
-    }
-
-    //private checkAirShipmentToggle() {
-    //    let AirShipmentFeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "PLE")[0];
-    //    if (AirShipmentFeatureToggle) {
-    //        this.HasExportShipmentToggle = true;
-
-    //    }
-    //}
-
+        this.LoadEntityResource("Shipment"); 
+    } 
 
     private InitializeServices() {
         this.myShipmentDomainService = new ShipmentDomainService();
