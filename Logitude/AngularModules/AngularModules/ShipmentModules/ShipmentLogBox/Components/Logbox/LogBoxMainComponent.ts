@@ -161,7 +161,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
 
         }
         else {
-            this.RefTemplateWidth =  '220px';
+            this.RefTemplateWidth =  '250px';
         }
     }
     SetCustomerTenantAccessRequestsDirections(hybridPartnerId: any) {

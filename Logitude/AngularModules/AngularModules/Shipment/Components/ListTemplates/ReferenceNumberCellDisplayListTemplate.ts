@@ -16,7 +16,7 @@ import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceRe
                 <td style="width:10%;">
                     <div></div>
                 </td>
-                <td *ngIf="ToggleIsExportShipments">
+                <td>
                        <div style="text-indent: 10px; overflow: hidden; text-overflow: ellipsis;float:left;">
                         <img width="18" height="15" style="vertical-align: middle;margin-left: -7px;" [src]="DirectionSRC" title="{{rowData ? rowData['DirectionName']:''}}" />
                        </div>
@@ -51,15 +51,11 @@ export class ReferenceNumberCellDisplayListTemplate {
 
     //public Imgs: Logosdictionary[];
     private CurrentSession = SessionLocator.SelectedSession;
-    public ToggleIsExportShipments: boolean = false;
+ 
     constructor(private CD: ChangeDetectorRef) {
         if (!this.CurrentSession.Imgs) {
             this.CurrentSession.Imgs = [];
-        }
-        var FeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "LEX")[0];
-        if (FeatureToggle) {
-            this.ToggleIsExportShipments = true;
-        }
+        } 
     }
 
     setVariables(rowData: any, fieldName: string) {
