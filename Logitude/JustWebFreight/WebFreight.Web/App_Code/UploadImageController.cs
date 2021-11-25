@@ -168,7 +168,6 @@ namespace WebFreight.Web.App_Code
         {
             return new PODMobileDocumentsFilingArgs()
             {
-                ContactId = filters.ContactId,
                 ShipmentNumber = filters.ShipmentNumber,
                 ShipmentId = filters.ShipmentId,
                 DocumentTypeName = filters.DocumentType,
@@ -185,7 +184,6 @@ namespace WebFreight.Web.App_Code
            IQueueService queueservice = new DbQueueService();
             queueservice.InitializeQueue("PODImageConverterQueue", podMobileAppServiceArgs.Tenant);
             queueservice.Send(new Dictionary<string, string>() { 
-              { "ContactId", podMobileAppServiceArgs.ContactId },
               { "ShipmentNumber", podMobileAppServiceArgs.ShipmentNumber },
               { "ShipmentId", podMobileAppServiceArgs.ShipmentId },
               { "DocumentTypeName", podMobileAppServiceArgs.DocumentTypeName },

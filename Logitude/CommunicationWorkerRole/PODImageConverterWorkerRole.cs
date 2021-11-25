@@ -129,7 +129,6 @@ namespace CommunicationWorkerRole
         {
 
             PODMobileDocumentsFilingArgs pODMobileDocumentsFilingArgs = new PODMobileDocumentsFilingArgs();
-            pODMobileDocumentsFilingArgs.ContactId = queueResponse.MessageValues.Keys.Contains("ContactId") ? queueResponse.MessageValues["ContactId"].ToString() : "";
             pODMobileDocumentsFilingArgs.ShipmentNumber = queueResponse.MessageValues.Keys.Contains("ShipmentNumber") ? queueResponse.MessageValues["ShipmentNumber"].ToString() : "";
             pODMobileDocumentsFilingArgs.ShipmentId = queueResponse.MessageValues.Keys.Contains("ShipmentId") ? queueResponse.MessageValues["ShipmentId"].ToString() : "";
             pODMobileDocumentsFilingArgs.DocumentTypeName = queueResponse.MessageValues.Keys.Contains("DocumentTypeName") ? queueResponse.MessageValues["DocumentTypeName"].ToString() : "";
