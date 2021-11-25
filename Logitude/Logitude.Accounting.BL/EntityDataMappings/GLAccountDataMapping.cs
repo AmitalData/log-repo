@@ -661,8 +661,16 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             GLAccountFollowUpDataPM gLAccountFollowUpData = GetGLAccountFollowUpDataPM(accountPM);
             if(gLAccountFollowUpData != null)
             {
-                accountPM.GLAccountFollowUpDate = gLAccountFollowUpData.FollowUpDate;
-                accountPM.GLAccountFollowUpRemarks = gLAccountFollowUpData.FollowUpRemarks;
+                if (accountPM.AccountTypeCode == "2")
+                {
+                    accountPM.GLAccountFollowUpDate = gLAccountFollowUpData.FollowUpDate;
+                    accountPM.GLAccountFollowUpRemarks = gLAccountFollowUpData.FollowUpRemarks;
+                }
+                else if (accountPM.AccountTypeCode == "1" || accountPM.AccountTypeCode == "3")
+                {
+                    accountPM.FollowupDate = gLAccountFollowUpData.FollowUpDate;
+                    accountPM.FollowupNotes = gLAccountFollowUpData.FollowUpRemarks;
+                }
             }
            
         }

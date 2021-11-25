@@ -679,7 +679,8 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             }
             else
             {
-                if(entityPM.GLAccountFollowUpRemarks != null || entityPM.GLAccountFollowUpDate!= null)
+                if(entityPM.GLAccountFollowUpRemarks != null || entityPM.GLAccountFollowUpDate!= null
+                    || entityPM.FollowupNotes != null || entityPM.FollowupDate != null)
                 gLAccountFollowUpData= CreateGLAccountFollowUpData(entityPM, loggedUser);
             }
           if( gLAccountFollowUpData != null)
@@ -694,8 +695,16 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         }
         private GLAccountFollowUpDataPM MapGLAccountFollowUpFields(GLAccountFollowUpDataPM gLAccountFollowUpData, GLAccountPM accountPM, ContactPM loggedUser)
         {
-            gLAccountFollowUpData.FollowUpDate = accountPM.GLAccountFollowUpDate;
-            gLAccountFollowUpData.FollowUpRemarks = accountPM.GLAccountFollowUpRemarks;            
+            if ((accountPM.AccountTypeCode == "2" || accountPM.AccountTypeCode == "3") && accountPM.GLAccountFollowUpRemarks != null || accountPM.GLAccountFollowUpDate != null)
+            {
+                gLAccountFollowUpData.FollowUpDate = accountPM.GLAccountFollowUpDate;
+                gLAccountFollowUpData.FollowUpRemarks = accountPM.GLAccountFollowUpRemarks;
+            }
+            else if (accountPM.AccountTypeCode == "1" &&  accountPM.FollowupNotes != null || accountPM.FollowupDate != null) {
+                gLAccountFollowUpData.FollowUpDate = accountPM.FollowupDate;
+                gLAccountFollowUpData.FollowUpRemarks = accountPM.FollowupNotes;
+            }
+                          
             gLAccountFollowUpData.UpdatedByUserId = loggedUser?.Id;
             gLAccountFollowUpData.Tenant = accountPM.Tenant;
             gLAccountFollowUpData.GlAccountId = accountPM.Id;
@@ -1743,18 +1752,18 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             gLAccountFollowUp = GetGLAccountFollowUpDataPM(accountPM);
             if(gLAccountFollowUp != null)
             {
-                if(gLAccountFollowUp.FollowUpDate != accountPM.GLAccountFollowUpDate )
+                if(gLAccountFollowUp.FollowUpDate != accountPM.GLAccountFollowUpDate)
                 {
                     string oldValue = gLAccountFollowUp.FollowUpDate.ToString();
                     string newValue = accountPM.GLAccountFollowUpDate.ToString();                  
-                    CreateEvent("EVFD", oldValue , newValue);                  
+                    // CreateEvent("EVFD", oldValue , newValue);                  
                 }
               
                 if (gLAccountFollowUp.FollowUpRemarks != accountPM.GLAccountFollowUpRemarks)
                 {
                     string oldValue = gLAccountFollowUp.FollowUpRemarks;
                     string newValue = accountPM.GLAccountFollowUpRemarks;                  
-                    CreateEvent( "EVFR",oldValue,newValue);
+                    // CreateEvent( "EVFR",oldValue,newValue);
                     
                 }
             }
