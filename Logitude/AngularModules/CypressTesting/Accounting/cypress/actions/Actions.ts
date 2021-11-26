@@ -366,9 +366,6 @@ export function AssertARInvoiceDetailsFieldsNotBeDisabled() {
 }
 //#endregion
 
-
-
-
 //#region Add Two Shipment Lines And Edit Amount
 export function AddShipmentLines(shipmentNumbers: string[]) {
     for (let i = 0; i < shipmentNumbers.length; i++) {
@@ -383,6 +380,7 @@ export function AddShipmentLines(shipmentNumbers: string[]) {
         cy.SelectQuickSearchFirstElement(quickSearchDetails);
     }
 }
+
 export function EditAmountsINMultipleShipmentAPInvoice(shipmentNumbers: string[], VATType: string, payableDetails: PayableDetails) {
     const amount = CalculateAmount(payableDetails.Quantity, payableDetails.UnitPrice);
     const totalAmount = amount * shipmentNumbers.length;
@@ -412,7 +410,6 @@ export function FillconsolidationInvoiceDetails(ARInvoiceData: ARInvoiceDetails)
     cy.Click(BaseSelectors.ToggleIcon, null)
     cy.Click(BaseSelectors.button, "New consolidation invoice")
     FillARInvoiceDetails(ARInvoiceData)
-
 }
 
 export function ApproveConsilidationInvoice() {
@@ -619,4 +616,3 @@ export function AssertAutoCreditByInvoiceNumber(invoiceNumber: string) {
         expect(text.replace(/\s/g, "")).to.equals("ByInvoice" + invoiceNumber);
     });
 }
-

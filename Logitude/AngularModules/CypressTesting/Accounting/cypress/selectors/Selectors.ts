@@ -67,6 +67,7 @@ export class AccountingSelectors extends RegexSelectors {
     public static readonly QueryLink = '.QueryLink';
     public static readonly EditShipmentLine = 'button[id^="Edit_"]';
     //#endregion
+
     //#region ARPayment
     public static readonly ARPaymentTabInsideShipment = '#ARInvoiceTHARPayments';
     public static readonly NewARPayment = '#NewPayment';
@@ -77,10 +78,9 @@ export class AccountingSelectors extends RegexSelectors {
     public static readonly ARPaymentSave = '#ARPayment-Save';
     public static readonly ARPaymentBApprove = '#ARPaymentBApprove';
     public static readonly ARPaymentCurrency = '#ARPayment_PaymentCurrencyId';
-    
-    
-
+    public static readonly PaymentHeaderStatus = "[data-cy='Header_Status:']";
     //#endregion
+
     //#region ARInvoice
     public static readonly ARInvoiceBranch = '#ARInvoice_BranchId';
     public static readonly ARInvoiceVatNumber = '#ARInvoice_VatNumber';
