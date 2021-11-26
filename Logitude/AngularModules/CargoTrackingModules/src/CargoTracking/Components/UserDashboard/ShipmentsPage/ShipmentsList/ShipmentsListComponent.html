@@ -41,7 +41,7 @@
         <div class="hide-mobile shipments-filters" style="margin-left: 20px;">
             <multiple-selection #shipmentTypeMultipleSelection class="multipe-select"
                 [MultipleSelectionList]="ToggleFilters.slice(0, 0).concat(ToggleFilters.slice(3,ToggleFilters.length))"
-                [Title]="'Shipment Type'" (SelectionChanged)="SelectionChangedHandler($event)"> </multiple-selection>
+                [Title]="'Transportation Type'" (SelectionChanged)="SelectionChangedHandler($event)"> </multiple-selection>
             <multiple-selection #shipmentDirectionMultipleSelection class="multipe-select"
                 [MultipleSelectionList]="ToggleFilters.slice(0,3)" [Title]="'Shipment Direction'"
                 (SelectionChanged)="SelectionChangedHandler($event)"> </multiple-selection>
@@ -511,7 +511,8 @@
 
             <li class="mobile-only" [class.expanded]="isShipmentTypeFilterExpanded">
                 <div class="filter-title" (click)="isShipmentTypeFilterExpanded = !isShipmentTypeFilterExpanded">
-                    Shipment Type</div>
+                    Transportation Type
+                </div>
                 <div class="expand-icon" (click)="isShipmentTypeFilterExpanded = !isShipmentTypeFilterExpanded">
                     <img src="./assets/images/icons/down-arrow.png" alt=" "
                         [class.expanded]="isShipmentTypeFilterExpanded" />
