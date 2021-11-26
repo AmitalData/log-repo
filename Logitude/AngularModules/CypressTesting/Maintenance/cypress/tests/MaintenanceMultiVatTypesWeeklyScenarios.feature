@@ -45,6 +45,7 @@ Feature: Multi Vat Type Create, Search and Edit from Maintenance
         And the following event should appear in events tab
             | Event            | Notes                |
             | Vat Type Updated | Vat Type Inactivated |
+        And this message "This is Multi-percentages VAT" should appear in percentage tab
 
     Scenario: Save and close the multi vat type
         When save and close multi vat type
