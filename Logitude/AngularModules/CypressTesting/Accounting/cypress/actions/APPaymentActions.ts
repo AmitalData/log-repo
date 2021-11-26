@@ -30,6 +30,16 @@ export function AssertSaveAPPayment() {
     BaseAssertion.AssertStatusCode(RequestAliases.PostAPPayments, 200)
 }
 
+export function AssertAPPaymentDetailsFieldsDisabled(condition) {
+    BaseAssertion.AssertElementDisabled(APPaymentSelectors.APPaymentVendor, condition)
+    BaseAssertion.AssertElementDisabled(APPaymentSelectors.APPaymentVendorAddress, condition)
+    BaseAssertion.AssertElementDisabled(APPaymentSelectors.APPaymentMethod, condition)
+    BaseAssertion.AssertElementDisabled(APPaymentSelectors.APPaymentAmount, condition)
+    BaseAssertion.AssertElementDisabled(APPaymentSelectors.APPaymentCurrency, condition)
+    BaseAssertion.AssertElementDisabled(APPaymentSelectors.RegisterDate, condition)
+    BaseAssertion.AssertElementDisabled(APPaymentSelectors.APPaymentBranch, condition)
+}
+
 export function ApproveAPPayment() {
     cy.DefineRequestWait(RestAPI.PUT, AccountingURLs.APPayments, RequestAliases.PutAPPayments)
     cy.Click(APPaymentSelectors.APPaymentApproveButton, null)
