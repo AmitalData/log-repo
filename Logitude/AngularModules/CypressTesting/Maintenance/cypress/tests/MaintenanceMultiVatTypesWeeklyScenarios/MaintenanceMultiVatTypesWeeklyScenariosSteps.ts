@@ -7,6 +7,7 @@ import { VatTypeDetails } from "cypress/models/VatTypeDetails";
 import * as BaseActions from "../../../../Base/cypress/actions/Actions"
 import { EventTypeDetails } from "../../../../Base/cypress/models/EventTypeDetails";
 import { BaseSelectors } from "../../../../Base/cypress/selectors/BaseSelectors";
+import * as BaseAssertions from "../../../../Base/cypress/actions/Assertion";
 
 //#region Enable Multi-percentage
 Given("the user logged in and open {string} in maintenance menu", (maintenanceItemName) => {
@@ -101,6 +102,11 @@ Then("the multi vat type should update successfully", () => {
 Then("the following event should appear in events tab", (dataTable) => {
     let eventDetailsList = Assists.CreateSet<EventTypeDetails>(dataTable);
     BaseActions.ValidateEventsTab(eventDetailsList, VatTypesSelectors.EventsTab);
+});
+
+Then("this message {string} should appear in percentage tab", (message) => {
+    cy.Click(VatTypesSelectors.PercentagesTab, null)
+    BaseAssertions.AssertElementContain(BaseSelectors.NoDataText, message)
 });
 //#endregion
 
