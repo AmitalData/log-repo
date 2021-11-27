@@ -30,7 +30,13 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly APInvoiceStatus = "[data-cy='StatusValue']";
   public static readonly ARInvoiceStatus = "[id^='ARInvoiceHeaderStatusName']";
   public static readonly RoutingStatus = "[data-cy='ShipmentStatusValue']";
-  public static readonly ARPaymentStatus = "[data-cy='Header_Status']";
+  public static readonly ARPaymentStatus = "[data-cy='Header_Status:']";
+  public static readonly ARInvoiceBPrint = "#ARInvoiceBPrint";
+  public static readonly ARInvoiceTHDocsOutTab = "#ARInvoiceTHDocsOut";
+  public static readonly WindowHeader = ".WindowHeader";
+  public static readonly closeButtonId = "#closeButtonId";
+  public static readonly TabHolder = ".TabHolder";
+  public static readonly ARInvoiceTransferTab = "[id^='ARInvoiceTHAccounting']"
   
   //#endregion
 

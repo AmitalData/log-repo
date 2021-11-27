@@ -78,6 +78,10 @@ export class AccountingSelectors extends RegexSelectors {
     public static readonly ARPaymentSave = '#ARPayment-Save';
     public static readonly ARPaymentBApprove = '#ARPaymentBApprove';
     public static readonly ARPaymentCurrency = '#ARPayment_PaymentCurrencyId';
+    public static readonly ARPayment_BillToId = '#ARPayment_BillToId';
+    public static readonly ARPayment_BillToAddressId = '#ARPayment_BillToAddressId';
+    public static readonly ARPayment_BranchId = '#ARPayment_BranchId';
+    public static readonly ARPayment_PaymentNo = '#ARPayment_PaymentNo';
     
     
 

@@ -168,6 +168,23 @@ Then("the invoice should create successfully", () => {
   })
 });
 //#endregion
+Given("the user in the Docsout tab in invoice",()=>{
+  cy.Navigate(ShipmentSelectors.ARInvoiceTHDocsOutTab,true)
+
+})
+When("click print button",()=>{
+  cy.Navigate(ShipmentSelectors.ARInvoiceBPrint,false)
+  cy.DefineRequestWait(RestAPI.GET, AccountingURLs.DocumentTypeTemplateExtended, RequestAliases.DocumentTypeTemplateExtended)
+  BaseAssertion.AssertStatusCode(RequestAliases.DocumentTypeTemplateExtended, 200)
+})
+
+Then("a new page should open successfully",()=>{
+  BaseAssertion.AssertElementContain(ShipmentSelectors.WindowHeader,'Print Shipment Invoice')
+  cy.Navigate(ShipmentSelectors.closeButtonId,false)
+  cy.Navigate(ShipmentSelectors.ARInvoiceTransferTab+BaseSelectors.LastElement,false)
+  BaseAssertion.AssertElementContain(ShipmentSelectors.TabHolder,'Constituent invoice')
+  
+})
 
 //#region Create Consolidation Invoice
 Given("a consolidation invoice with the following details", (dataTable) => {
@@ -272,3 +289,6 @@ Then("the payment should approve successfully", () => {
   BaseAssertion.AssertStatusCode(RequestAliases.ARPayments, 200)
 });
 //#endregion
+Then("details screen should be dim",()=>{
+  AccountingActions.AssertARPaymentDetailsFieldsNotBeDisabled()
+})

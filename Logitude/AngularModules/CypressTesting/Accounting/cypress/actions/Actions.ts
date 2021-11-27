@@ -341,6 +341,19 @@ export function AssertARInvoiceDetailsFieldsDisabled() {
 }
 //#endregion
 
+export function AssertARPaymentDetailsFieldsNotBeDisabled() {
+    BaseAssertion.AssertElementDisabled(AccountingSelectors.ARPaymentPartner, BaseSelectors.BeDisabled)
+    BaseAssertion.AssertElementDisabled(AccountingSelectors.ARPaymentAmount, BaseSelectors.BeDisabled)
+    BaseAssertion.AssertElementDisabled(AccountingSelectors.ARPaymentPaymentMethod, BaseSelectors.BeDisabled)
+    BaseAssertion.AssertElementDisabled(AccountingSelectors.ARPaymentCurrency, BaseSelectors.BeDisabled)
+    BaseAssertion.AssertElementDisabled(AccountingSelectors.ARPayment_BillToId, BaseSelectors.BeDisabled)
+    BaseAssertion.AssertElementDisabled(AccountingSelectors.ARPayment_BillToAddressId, BaseSelectors.BeDisabled)
+    BaseAssertion.AssertElementDisabled(AccountingSelectors.ARPayment_BranchId, BaseSelectors.BeDisabled)
+    BaseAssertion.AssertElementDisabled(AccountingSelectors.ARPayment_PaymentNo, BaseSelectors.BeDisabled)
+    
+}
+//#endregion
+
 //#region Add Two Shipment Lines And Edit Amount
 export function AddShipmentLines(shipmentNumbers: string[]) {
     for (let i = 0; i < shipmentNumbers.length; i++) {
