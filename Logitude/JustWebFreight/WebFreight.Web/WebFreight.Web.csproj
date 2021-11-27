@@ -3436,6 +3436,8 @@
     <Content Include="Monitoring\AgentSharedManifestMonitoring.aspx" />
     <Content Include="Monitoring\AnalyzeQueue.aspx" />
     <Content Include="Monitoring\AzureDevOpsQueue.aspx" />
+    <Content Include="Monitoring\CargoBuild.aspx" />
+    <Content Include="Monitoring\CargoShipmentsWaiting.aspx" />
     <Content Include="Monitoring\DocumentsExecutionLogWaitingStatus.aspx" />
     <Content Include="Monitoring\EmailSendingFailedStatus.aspx" />
     <Content Include="Monitoring\FailedLoginLog.aspx" />
@@ -5522,6 +5524,20 @@
     </Compile>
     <Compile Include="Monitoring\AzureDevOpsQueue.aspx.designer.cs">
       <DependentUpon>AzureDevOpsQueue.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Monitoring\CargoBuild.aspx.cs">
+      <DependentUpon>CargoBuild.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Monitoring\CargoBuild.aspx.designer.cs">
+      <DependentUpon>CargoBuild.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Monitoring\CargoShipmentsWaiting.aspx.cs">
+      <DependentUpon>CargoShipmentsWaiting.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Monitoring\CargoShipmentsWaiting.aspx.designer.cs">
+      <DependentUpon>CargoShipmentsWaiting.aspx</DependentUpon>
     </Compile>
     <Compile Include="Monitoring\DocumentsExecutionLogWaitingStatus.aspx.cs">
       <DependentUpon>DocumentsExecutionLogWaitingStatus.aspx</DependentUpon>
