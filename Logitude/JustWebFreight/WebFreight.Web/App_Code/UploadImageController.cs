@@ -59,8 +59,7 @@ namespace WebFreight.Web.App_Code
                 if (string.IsNullOrEmpty(shipmentId))
                 {
                     ShipmentRepository shipmentRepository = new ShipmentRepository(tenant);
-                    shipmentId = shipmentRepository.GetShipmentIdByShipmentNumber(filters.ShipmentNumber, tenant);
-                    result.ShipmentId = shipmentId;
+                    shipmentId = result.ShipmentId= shipmentRepository.GetShipmentIdByShipmentNumber(filters.ShipmentNumber, tenant);
                     if (string.IsNullOrEmpty(shipmentId))
                     {
                         result.IsScceed = false;
@@ -118,52 +117,9 @@ namespace WebFreight.Web.App_Code
 
                     if (filters.FileSize == filters.SentSize)
                     {
-                        ObjectTableRepository objectTabelRepository = new ObjectTableRepository(filters.Tenant);
-                        ContactRepository contactRepository = new ContactRepository(filters.Tenant);
-
-                        string objectTableId = objectTabelRepository.GetObjectTableIdByName("Shipment");
-                        string userId = contactRepository.GetConactIdByemail("system@tenant" + filters.Tenant.ToString() + ".com", filters.Tenant);
-
-                        ICommonDataContext objectContext = CommonDataContext.GetContext(tenant);
-                        DocumentsFilingService documentsService = new DocumentsFilingService(objectContext, tenant);
-
-                        DocumentsFilingPM extDocPM = new DocumentsFilingPM()
-                        {
-                            Id = IdCounter.GetNumber("DocumentsFiling", tenant).ToString(),
-                            DirectionCode = "I",
-                            Tenant = tenant,
-                            DocumentId = filters.DocumentId,
-                            EntityId = shipmentId,
-                            DocumentTypeId = documentTypeId,
-                            ObjectTableId = objectTableId,
-                            CreatedByUserId = userId,
-                            CreateDate = DateTime.Now,
-                            OwnerId = userId,
-                            UpdatedByUserId = userId,
-                            ExternalEntityName = "Shipment",
-                            EntityReference = filters.ShipmentNumber,
-                            FileExtension = "jpg",
-                            FileSize = filters.FileSize,
-                            Folder = "docsin",
-                            HasFile = true,
-                            FileName = filters.FileName.Split('.')[0],
-                            Received = true,
-                            ReceivedDate = DateTime.Now,
-                            ReceivedByUserId = userId,
-                            Notes = filters.DeviceName + " _ " + filters.PhoneNumber,
-                            Description = filters.DocumentType + " for file " + filters.ShipmentNumber,
-                            IsFromUnifreightPodMobile = true,
-                        };
-
-                        documentsService.Create(extDocPM, null, null, true);
-                        result.DocumentsFilingId = extDocPM.Id;
-
-                        if (FeatureToggleHelper.HasFeatureToggle("POD", extDocPM.Tenant))
-                        {
-                            AddConvertImagetoPDFQueue(extDocPM);
-                        }
-
+                        result.DocumentsFilingId = FinishProcessingPODImage(filters);
                     }
+
                     result.IsScceed = true;
                 }
                 else
@@ -192,11 +148,50 @@ namespace WebFreight.Web.App_Code
             }
         }
 
-        private  void AddConvertImagetoPDFQueue(DocumentsFilingPM extDocPM)
+        private string FinishProcessingPODImage(ImageParameter filters)
         {
-            IQueueService queueservice = new DbQueueService();
-            queueservice.InitializeQueue("PODImageConverterQueue", extDocPM.Tenant);
-            queueservice.Send(new Dictionary<string, string>() { { "DocumentsFilingId", extDocPM.Id }, { "EntityId", extDocPM.EntityId }, { "Tenant", extDocPM.Tenant.ToString() } }, extDocPM.Tenant, null, null, null, null);
+            string result = "The process will be done Via worker role";
+            PODMobileDocumentsFilingArgs podMobileDocumentsFilingArgs = GetNewIstanceFromPODMobileDocumentsFilingArgs(filters);
+            if (FeatureToggleHelper.HasFeatureToggle("POD", filters.Tenant))
+            {
+                AddConvertImagetoPDFQueue(podMobileDocumentsFilingArgs);
+            }
+            else
+            {
+                result = new PODMobileDocumentsFilingService(podMobileDocumentsFilingArgs).Create().Id;
+            }
+
+            return result;
+        }
+
+        private PODMobileDocumentsFilingArgs GetNewIstanceFromPODMobileDocumentsFilingArgs(ImageParameter filters)
+        {
+            return new PODMobileDocumentsFilingArgs()
+            {
+                ShipmentNumber = filters.ShipmentNumber,
+                ShipmentId = filters.ShipmentId,
+                DocumentTypeName = filters.DocumentType,
+                DocumentTypeId = filters.DocumentTypeId,
+                DocumentId = filters.DocumentId,
+                Note = filters.DeviceName + " _ " + filters.PhoneNumber,
+                Tenant = filters.Tenant
+
+            };
+        }
+
+        private  void AddConvertImagetoPDFQueue(PODMobileDocumentsFilingArgs podMobileAppServiceArgs)
+        {
+           IQueueService queueservice = new DbQueueService();
+            queueservice.InitializeQueue("PODImageConverterQueue", podMobileAppServiceArgs.Tenant);
+            queueservice.Send(new Dictionary<string, string>() { 
+              { "ShipmentNumber", podMobileAppServiceArgs.ShipmentNumber },
+              { "ShipmentId", podMobileAppServiceArgs.ShipmentId },
+              { "DocumentTypeName", podMobileAppServiceArgs.DocumentTypeName },
+              { "DocumentTypeId", podMobileAppServiceArgs.DocumentTypeId },
+              { "DocumentId", podMobileAppServiceArgs.DocumentId },
+              { "Note", podMobileAppServiceArgs.Note },
+              { "Tenant", podMobileAppServiceArgs.Tenant.ToString() }},
+             podMobileAppServiceArgs.Tenant, null, null, null, null);
         }
 
         private SuccessMobile AuthorizationVersion()
