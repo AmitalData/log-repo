@@ -1,4 +1,5 @@
-﻿using Logitude.Infrastructure.Data;
+﻿using Logitude.BL.CommonDataModel.Helpers;
+using Logitude.Infrastructure.Data;
 using Logitude.SystemLogs;
 
 using System;
@@ -39,7 +40,7 @@ namespace WebFreight.Web.Monitoring
             DateTime fiveMinutesBefore = DateTime.Now.AddMinutes(-5);
             try
             {
-                isFaild = context.BatchTaskExecutions.Where(e => e.CreateDate >= fiveMinutesBefore && e.StatusCode == Fail).Any();
+                isFaild = context.BatchTaskExecutions.Where(e =>e.Subject == BatchTaskNames.BuildCargoTrackingShipments && e.CreateDate >= fiveMinutesBefore && e.StatusCode == Fail).Any();
             }
             catch (Exception errorInfo)
             {
