@@ -2,6 +2,7 @@
 using Logitude.BL.CommonDataModel.DataContracts;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.CommonDataModel.Helpers;
 using Logitude.BL.CommonDataModel.Tools.EntityService;
 using Logitude.BL.DataContracts;
 using Logitude.BL.InfrastructureModel.EntityPMs;
@@ -43,6 +44,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
     public class CargoTrackingTenantMilestoneDefinitionExtendedController : ApiController
     {
         const string CreatedStatusCode = "C";
+        const string InProgressStatusCode = "C";
 
         public HttpResponseMessage GetAll()
         {
@@ -78,7 +80,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
                     {
                         SecurityUtility.AuthenticationOnEntityTenant("CargoTenantMilestoneDefinition", entityPM.Tenant, authToken.Tenant);
                     }
-
+                    CheckIsThereTaskNotCombleted(authToken.Tenant);
                     ICommonDataContext commonDataContext = CommonDataContext.GetContext(authToken.Tenant);
                     CargoTenantMilestoneDefinitionService cargoTenantMilestoneDefinitionService = new CargoTenantMilestoneDefinitionService(commonDataContext, authToken.Tenant);
                     cargoTenantMilestoneDefinitionService.UpdateCargoTenantMilestoneDefinitionsPM(cargoTenantMilestoneDefinitionPMs, authToken.Tenant);
@@ -94,6 +96,16 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
+
+        private void CheckIsThereTaskNotCombleted(int tenant)
+        {
+            IInfrastructureContext MyContext = InfrastructureContext.GetContext(tenant);
+            var IsThereTaskNotCombleted = MyContext.BatchTaskExecutions.Where(e => e.Subject == BatchTaskNames.UpdateShipmentsForIncrementalService
+            && (e.StatusCode == CreatedStatusCode || e.StatusCode == InProgressStatusCode)).Any();
+            if (IsThereTaskNotCombleted)
+                throw new ApplicationException("Wait for the previous update completed");
+        }
+
         private void CreateUpdateShipmentsBatchTask(int tenant)
         {
             UpdateShipmetsBatchArgs args = new UpdateShipmetsBatchArgs() { Tenant = tenant };
@@ -124,7 +136,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
         {
             return new BatchTaskExecutionPM()
             {
-                Subject = $"Update all shipments and orders in the tenant {args.Tenant} for Cargo Incremental service",
+                Subject = BatchTaskNames.UpdateShipmentsForIncrementalService,
                 Tenant = args.Tenant,
                 ChangeSetOp = ChangeSetOperation.Insert,
                 ClassName = "Logitude.CargoTracking.BL.CoreBL.Batch.BatchUpdateShipmentsForCargoIncremental,Logitude.CargoTracking.BL",

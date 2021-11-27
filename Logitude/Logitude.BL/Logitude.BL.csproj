@@ -448,6 +448,7 @@
     <Compile Include="CommonDataModel\EntityQueries\WarehouseStoragePricingQuery.cs" />
     <Compile Include="CommonDataModel\EntityQueries\WarehouseWeightMeasurementQuery.cs" />
     <Compile Include="CommonDataModel\EntityQueries\WarehouseWeightRoundingQuery.cs" />
+    <Compile Include="CommonDataModel\Helpers\BatchTaskNames.cs" />
     <Compile Include="CommonDataModel\Tools\DataMapping\CardSearchMapping.cs" />
     <Compile Include="CommonDataModel\Tools\DataMapping\CarrierAreasPortMapping.cs" />
     <Compile Include="CommonDataModel\Tools\DataMapping\CarrierAreaMapping.cs" />

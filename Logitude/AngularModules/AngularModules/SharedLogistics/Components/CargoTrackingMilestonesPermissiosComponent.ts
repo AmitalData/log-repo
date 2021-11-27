@@ -5,6 +5,7 @@ import {MilestonePermissiosViewModel} from './ViewModel/MilestonePermissiosViewM
 import {CargoTrackingMilestoneExtendedService} from '../Services/Others/CargoTrackingMilestoneExtendedService';
 import { CargoTrackingTenantMilestoneDefinitionExtendedService } from '../Services/Others/CargoTrackingTenantMilestoneDefinitionExtendedService';
 import { CargoTenantMilestoneDefinitionPM } from '../../Common/EntityPMs/CargoTenantMilestoneDefinitionPM';
+import { MessageWindow } from 'Controls/Windows/MessageWindow';
 
 @Component({
     selector: 'CargoTrackingMilestonesPermissiosComponent',
@@ -111,6 +112,9 @@ export class CargoTrackingMilestonesPermissiosComponent implements OnInit {
             this.cargoTrackingTenantMilestoneDefinitionExtendedService.update(this.myTenantList).subscribe((res: ServiceResponse) => {
                 if (!res.HasError) {
                     this.CloseButtonClicked();
+                }else{
+                    this.CurrentSession.StopBusyIndicator();
+                    this.ShowMessage(res.ErrorsArray[0])
                 }
             });
         }
@@ -118,7 +122,10 @@ export class CargoTrackingMilestonesPermissiosComponent implements OnInit {
             this.CloseButtonClicked();
         }
     }
-
+    ShowMessage(message: string) {
+        var messageWindow: MessageWindow = new MessageWindow();
+        messageWindow.Show(message);
+    }
     onSearchTextChangeEvent(searchText) {
         if (!searchText) searchText = "";
         this.mySearchText = searchText;
