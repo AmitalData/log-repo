@@ -14006,13 +14006,16 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             {
                 var shipmentIdsList = shipmentIds.Split(',').ToList();
                 var shipmentsAdditionalFields = from shipment in repository.context.Shipments
+                                                where shipmentIdsList.Contains(shipment.Id) && shipment.Tenant == tenant
                                                 join shipmentPickUpDelivery in repository.context.ShipmentPickUpDeliveries
                                                 on shipment.Id equals shipmentPickUpDelivery.ShipmentId
                                                 into shipmentPickUpDeliveries
                                                 join shipmentOrderPackage in repository.context.ShipmentOrderPackages
-                                                on shipment.Id equals shipmentOrderPackage.ShipmentId
+                                                on shipment.Id equals shipmentOrderPackage.ShipmentId 
                                                 into shipmentOrderPackages
-                                                where shipmentIdsList.Contains(shipment.Id) && shipment.Tenant == tenant
+                                                join shipmentMasterData in repository.context.ShipmentMasterDatas.Include("Port")
+                                                on shipment.MasterShipmentDataId equals shipmentMasterData.Id 
+                                                into shipmentMasterData
                                                 select new ShipmentAdditionalFields
                                                 {
                                                     ShipmentId = shipment.Id,
@@ -14047,13 +14050,137 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                     (shipmentOrderPackages.Select(x => x.PackageType).FirstOrDefault() != null ?
                                                     shipmentOrderPackages.Select(x => x.PackageType).FirstOrDefault().EnglishName : "Packages") : "Packages",
 
-                                                    NumberOfOrderPackages = shipment.BookingNumberOfPackages.ToString()
+                                                    NumberOfOrderPackages = shipment.BookingNumberOfPackages.ToString(),
+
+                                                    Transshipment1ATD = shipmentMasterData.FirstOrDefault() != null ? shipmentMasterData.FirstOrDefault().Transshipment1ATD : null,
+                                                    Transshipment1ATA = shipmentMasterData.FirstOrDefault() != null ? shipmentMasterData.FirstOrDefault().Transshipment1ATA : null,
+                                                    Transshipment1ETA = shipmentMasterData.FirstOrDefault() != null ? shipmentMasterData.FirstOrDefault().Transshipment1ETA : null,
+                                                    Transshipment1ETD = shipmentMasterData.FirstOrDefault() != null ? shipmentMasterData.FirstOrDefault().Transshipment1ETD : null,
+                                                    Transshipment1FromPortName = shipmentMasterData.FirstOrDefault() != null  && 
+                                                                                 shipmentMasterData.FirstOrDefault().Transshipment1FromPort != null ? 
+                                                                                 shipmentMasterData.FirstOrDefault().Transshipment1FromPort.EnglishName : null,
+                                                    Transshipment1FromPortCountryCode = shipmentMasterData.FirstOrDefault() != null &&
+                                                                                         shipmentMasterData.FirstOrDefault().Transshipment1FromPort != null ? 
+                                                                                         shipmentMasterData.FirstOrDefault().Transshipment1FromPort.CountryCode : null,
+                                                    Transshipment1ToPortName = shipmentMasterData.FirstOrDefault() != null &&
+                                                                               shipmentMasterData.FirstOrDefault().Transshipment1ToPort != null ? 
+                                                                               shipmentMasterData.FirstOrDefault().Transshipment1ToPort.EnglishName : null,
+                                                    Transshipment1ToPortCountryCode = shipmentMasterData.FirstOrDefault() != null &&
+                                                                                       shipmentMasterData.FirstOrDefault().Transshipment1ToPort != null ? 
+                                                                                       shipmentMasterData.FirstOrDefault().Transshipment1ToPort.CountryCode : null,
+
+                                                    Transshipment2ATD = shipmentMasterData.FirstOrDefault() != null ? shipmentMasterData.FirstOrDefault().Transshipment2ATD : null,
+                                                    Transshipment2ATA = shipmentMasterData.FirstOrDefault() != null ? shipmentMasterData.FirstOrDefault().Transshipment2ATA : null,
+                                                    Transshipment2ETA = shipmentMasterData.FirstOrDefault() != null ? shipmentMasterData.FirstOrDefault().Transshipment2ETA : null,
+                                                    Transshipment2FromPortName = shipmentMasterData.FirstOrDefault() != null &&
+                                                                                 shipmentMasterData.FirstOrDefault().Transshipment2FromPort != null ?
+                                                                                 shipmentMasterData.FirstOrDefault().Transshipment2FromPort.EnglishName : null,
+                                                    Transshipment2FromPortCountryCode = shipmentMasterData.FirstOrDefault() != null &&
+                                                                                         shipmentMasterData.FirstOrDefault().Transshipment2FromPort != null ?
+                                                                                         shipmentMasterData.FirstOrDefault().Transshipment2FromPort.CountryCode : null,
+                                                    Transshipment2ToPortName = shipmentMasterData.FirstOrDefault() != null &&
+                                                                               shipmentMasterData.FirstOrDefault().Transshipment2ToPort != null ?
+                                                                               shipmentMasterData.FirstOrDefault().Transshipment2ToPort.EnglishName : null,
+                                                    Transshipment2ToPortCountryCode = shipmentMasterData.FirstOrDefault() != null &&
+                                                                                       shipmentMasterData.FirstOrDefault().Transshipment2ToPort != null ?
+                                                                                       shipmentMasterData.FirstOrDefault().Transshipment2ToPort.CountryCode : null,
+
+                                                    Transshipment3ATD = shipmentMasterData.FirstOrDefault() != null ? shipmentMasterData.FirstOrDefault().Transshipment3ATD : null,
+                                                    Transshipment3ATA = shipmentMasterData.FirstOrDefault() != null ? shipmentMasterData.FirstOrDefault().Transshipment3ATA : null,
+                                                    Transshipment3ETA = shipmentMasterData.FirstOrDefault() != null ? shipmentMasterData.FirstOrDefault().Transshipment3ETA : null,
+                                                    Transshipment3ETD = shipmentMasterData.FirstOrDefault() != null ? shipmentMasterData.FirstOrDefault().Transshipment3ETD : null,
+                                                    Transshipment3FromPortName = shipmentMasterData.FirstOrDefault() != null &&
+                                                                                 shipmentMasterData.FirstOrDefault().Transshipment3FromPort != null ?
+                                                                                 shipmentMasterData.FirstOrDefault().Transshipment3FromPort.EnglishName : null,
+                                                    Transshipment3FromPortCountryCode = shipmentMasterData.FirstOrDefault() != null &&
+                                                                                         shipmentMasterData.FirstOrDefault().Transshipment3FromPort != null ?
+                                                                                         shipmentMasterData.FirstOrDefault().Transshipment3FromPort.CountryCode : null,
+                                                    Transshipment3ToPortName = shipmentMasterData.FirstOrDefault() != null &&
+                                                                               shipmentMasterData.FirstOrDefault().Transshipment3ToPort != null ?
+                                                                               shipmentMasterData.FirstOrDefault().Transshipment3ToPort.EnglishName : null,
+                                                    Transshipment3ToPortCountryCode = shipmentMasterData.FirstOrDefault() != null &&
+                                                                                       shipmentMasterData.FirstOrDefault().Transshipment3ToPort != null ?
+                                                                                       shipmentMasterData.FirstOrDefault().Transshipment3ToPort.CountryCode : null
                                                 };
 
                 return shipmentsAdditionalFields.ToList();
             }
 
             return new List<ShipmentAdditionalFields>();
+        }
+
+        public void MapMainCarriageLegs(ShipmentPM shipmentPM)
+        {
+            shipmentPM.MainCarriageLegs = new List<TransshipmentLeg>();
+
+            shipmentPM.MainCarriageLegs.Add(new TransshipmentLeg()
+            {
+                LegIndex = 1,
+                ATA = shipmentPM.MainCarriageATA,
+                ATD = shipmentPM.MainCarriageATD,
+                ETA = shipmentPM.MainCarriageETA,
+                ETD = shipmentPM.MainCarriageETD,
+                FromPortId = shipmentPM.MainCarriageFromPortId,
+                ToPortId = shipmentPM.MainCarriageToPortId,
+                VesselId = shipmentPM.MainCarriageVesselId,
+                CarrierId = shipmentPM.MainCarriageCarrierId,
+                CarrierNumber = shipmentPM.MainCarriageCarrierNumber,
+                MasterNumber = shipmentPM.Master,
+            });
+
+            if (!string.IsNullOrEmpty(shipmentPM.Transshipment1FromPortId))
+            {
+                shipmentPM.MainCarriageLegs.Add(new TransshipmentLeg()
+                {
+                    LegIndex = 2,
+                    ATA = shipmentPM.Transshipment1ATA,
+                    ATD = shipmentPM.Transshipment1ATD,
+                    ETA = shipmentPM.Transshipment1ETA,
+                    ETD = shipmentPM.Transshipment1ETD,
+                    FromPortId = shipmentPM.Transshipment1FromPortId,
+                    ToPortId = shipmentPM.Transshipment1ToPortId,
+                    VesselId = shipmentPM.Transshipment1VesselId,
+                    CarrierId = shipmentPM.Transshipment1CarrierId,
+                    CarrierNumber = shipmentPM.Transshipment1CarrierNumber,
+                    MasterNumber = shipmentPM.Transshipment1AdditionalMAWBOBLBL,
+                });
+            }
+
+            if (!string.IsNullOrEmpty(shipmentPM.Transshipment2FromPortId))
+            {
+                shipmentPM.MainCarriageLegs.Add(new TransshipmentLeg()
+                {
+                    LegIndex = 3,
+                    ATA = shipmentPM.Transshipment2ATA,
+                    ATD = shipmentPM.Transshipment2ATD,
+                    ETA = shipmentPM.Transshipment2ETA,
+                    ETD = shipmentPM.Transshipment2ETD,
+                    FromPortId = shipmentPM.Transshipment2FromPortId,
+                    ToPortId = shipmentPM.Transshipment2ToPortId,
+                    VesselId = shipmentPM.Transshipment2VesselId,
+                    CarrierId = shipmentPM.Transshipment2CarrierId,
+                    CarrierNumber = shipmentPM.Transshipment2CarrierNumber,
+                    MasterNumber = shipmentPM.Transshipment2AdditionalMAWBOBLBL,
+                });
+            }
+
+            if (!string.IsNullOrEmpty(shipmentPM.Transshipment3FromPortId))
+            {
+                shipmentPM.MainCarriageLegs.Add(new TransshipmentLeg()
+                {
+                    LegIndex = 4,
+                    ATA = shipmentPM.Transshipment3ATA,
+                    ATD = shipmentPM.Transshipment3ATD,
+                    ETA = shipmentPM.Transshipment3ETA,
+                    ETD = shipmentPM.Transshipment3ETD,
+                    FromPortId = shipmentPM.Transshipment3FromPortId,
+                    ToPortId = shipmentPM.Transshipment3ToPortId,
+                    VesselId = shipmentPM.Transshipment3VesselId,
+                    CarrierId = shipmentPM.Transshipment3CarrierId,
+                    CarrierNumber = shipmentPM.Transshipment3CarrierNumber,
+                    MasterNumber = shipmentPM.Transshipment3AdditionalMAWBOBLBL,
+                });
+            }
         }
 
         private List<string> GetConnectedContainerEntityIdsToLegs(ShipmentPM shipmentPM, ShipmentPM stanAloneShipment)
