@@ -1,5 +1,3 @@
-
-
 import { Component } from '@angular/core';
 import { AppTool } from '../../../Infrastructure/Tools';
 import { CRMTool } from '../../../CRM/Tools';
