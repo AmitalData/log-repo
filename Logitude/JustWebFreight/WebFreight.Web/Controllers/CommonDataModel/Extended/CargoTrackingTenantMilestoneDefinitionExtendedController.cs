@@ -103,7 +103,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
             var IsThereTaskNotCombleted = MyContext.BatchTaskExecutions.Where(e => e.Subject == BatchTaskNames.UpdateShipmentsForIncrementalService
             && (e.StatusCode == CreatedStatusCode || e.StatusCode == InProgressStatusCode)).Any();
             if (IsThereTaskNotCombleted)
-                throw new ApplicationException("Wait for the previous update completed");
+                throw new ApplicationException("Can't perform a permission update. There is an existing Update running in the background'");
         }
 
         private void CreateUpdateShipmentsBatchTask(int tenant)
