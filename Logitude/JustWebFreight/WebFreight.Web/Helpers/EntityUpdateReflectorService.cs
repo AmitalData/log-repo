@@ -166,8 +166,8 @@ namespace WebFreight.Web.Helpers
             object entityService = null;
             if (updateEntityArgs.EntityName == "Shipment")
             {
-                string loggedUserEmail = !string.IsNullOrEmpty(updateEntityArgs.LoggedUserEmail) ? updateEntityArgs.LoggedUserEmail : AuthenticationUtil.GetLoggedUserEmail(this.tenant);
-                entityService = Activator.CreateInstance(PrepareUpdateEntityResult.Type, new object[] { PrepareUpdateEntityResult.ObjectContext, updateEntityArgs.EntityPM, loggedUserEmail });
+                entityService = Activator.CreateInstance(PrepareUpdateEntityResult.Type, new object[] { PrepareUpdateEntityResult.ObjectContext, updateEntityArgs.EntityPM, GetLoggedUserEmail(updateEntityArgs)
+            });
             }
             else if (PrepareUpdateEntityResult.IsNewModule)
             {
@@ -181,7 +181,10 @@ namespace WebFreight.Web.Helpers
             return entityService;
         }
 
-
+        private string GetLoggedUserEmail(UpdateEntityArgs updateEntityArgs)
+        {
+            return !string.IsNullOrEmpty(updateEntityArgs.LoggedUserEmail) ? updateEntityArgs.LoggedUserEmail : AuthenticationUtil.GetLoggedUserEmail(this.tenant);
+        }
     }
 
 
