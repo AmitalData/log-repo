@@ -237,6 +237,10 @@ namespace Logitude.Server.Tools.EntityChanges.AutomationResult
             {
                 result = !string.IsNullOrEmpty(item.Value) ? Int32.Parse(item.Value) : 0;
             }
+            else if (item.DataTypeCode.Trim() == "Double")
+            {
+                result = !string.IsNullOrEmpty(item.Value) ? double.Parse(item.Value, System.Globalization.CultureInfo.InvariantCulture) : 0;
+            }
             else if (item.IsCustomField)
             {
                 result = GetNewCustomFieldClass(item);

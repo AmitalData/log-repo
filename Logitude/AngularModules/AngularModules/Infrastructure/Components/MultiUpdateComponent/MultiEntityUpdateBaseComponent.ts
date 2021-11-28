@@ -44,8 +44,8 @@ export class MultiEntityUpdateBaseComponent implements OnInit {
 
     RunComponent() {
         if (!this.AllLocations) this.RunComponentTimer();
-        if (this.AllLocations.toArray().length == 0) this.RunComponentTimer();
-        else this.SetSelectedItem("MTUP");
+        if (this.AllLocations && this.AllLocations.toArray().length == 0) this.RunComponentTimer();
+        else if (this.AllLocations) this.SetSelectedItem("MTUP");
     }
 
     SetSelectedItem(tabCode: string) {
