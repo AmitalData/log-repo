@@ -66,13 +66,13 @@
                         <td>{{'Contact.O.Contacts' | TextCodeTranslationPipe}}</td>
 
                         <td style="width: 1px;">
-                            <button class="Button"  [disabled]="IsBlockingUnifreightCustomer" (click)="NewEntityClicked()">{{'Contact.B.NewContact' | TextCodeTranslationPipe}}</button>
+                            <button class="Button" (click)="NewEntityClicked()">{{'Contact.B.NewContact' | TextCodeTranslationPipe}}</button>
                         </td>
                     </tr>
                 </table>
             </td>
         </tr>
-        <tr style="height: 1px;" *ngIf="HasExternalId">
+        <tr style="height: 1px;" *ngIf="IsBlockingUnifreightCustomer">
             <td>
                 <div class="OrangeInfo" style="margin: 5px;">
                     <label class="Value">Customer connected to uni-freight, updates allowed from Unifreight only</label>
