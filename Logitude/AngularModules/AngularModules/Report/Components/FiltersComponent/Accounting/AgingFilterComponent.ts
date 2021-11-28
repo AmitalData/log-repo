@@ -467,7 +467,7 @@ export class AgingFilterComponent extends BaseComponent implements OnInit
             if (securityLevel == undefined) {
                 securityLevel = 0;
             }
-            if (securityLevel > this.loggedUser.SecurityLevel) {
+            if (!this.loggedUser.IsCustomerCare && securityLevel > this.loggedUser.SecurityLevel) {
                this.errors.push(TextCodeTranslator.Translate("ChartOfAccounts.O.SecurityLevelErrorMessage"));
                 return false;
             }
