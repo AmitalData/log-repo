@@ -23,7 +23,7 @@ namespace Logitude.CargoTracking.Data.EntityPOCOs
         [Column("SearchFields")]
 	    public string SearchFields { get; set; }
         [Column("ShipmentDate")]
-	    public DateTime ShipmentDate { get; set; }
+	    public DateTime? ShipmentDate { get; set; }
      [Key]
         [Column("Id")]
 	    public int Id { get; set; }
