@@ -1211,104 +1211,104 @@ namespace Logitude.BL.GlobalModel.EntityQueries
 
         public List<TenantManagementDW> GetTenantManagementDWs(int tenant, int skip, int take)
         {
-            //List<TenantManagementDW> result = (from a in repository.context.TenantManagements.Include("PaymentChannel").Include("PaymentCurrency").Include("RecurringPeriod")
-            //                                   select new TenantManagementDW()
-            //                                   {
-            //                                       TenantNumber = a.Id,
-            //                                       FreeUsers = a.TotalFreeUsers,
-            //                                       IsRecurring = a.IsRecurring,
-            //                                       LicensePrice = a.AveragePrice,
-            //                                       Notes = a.Notes,
-            //                                       NumberOfUsers = a.TotalNumberOfUsers == null ? 0 : a.TotalNumberOfUsers.Value,
-            //                                       PaidUntilDate = a.PaidUntilDate,
-            //                                       PaymentChannel = a.PaymentChannel != null ? a.PaymentChannel.Name : "",
-            //                                       PaymentCurrency = a.PaymentCurrency != null ? a.PaymentCurrency.Name : "",
-            //                                       RecurringPeriod = a.RecurringPeriod != null ? a.RecurringPeriod.Name : "",
-            //                                       ResellerCommission = a.ResellerCommission,
-            //                                       IsMultiPackage = a.IsMultiPackage,
-            //                                       PackageCode = a.PackageCode,
-            //                                       MainPackage = a.PackageName,
-            //                                       CRMYN = a.PackageCode == "LOGI" ? "Y" : "N",
-            //                                       EAWBYN = a.IsAWBStockPrepaid || a.PackageCode == "EAWB" || a.PackageCode == "BUBK" ? "Y" : "N",
-            //                                       MainPackageNumberOfUsers = a.MainAdditionalPackageApplied ? (a.NumberOfUsers == null ? 0 : a.NumberOfUsers.Value) : (!a.IsMultiPackage ? (a.NumberOfUsers == null ? 0 : a.NumberOfUsers.Value) : 0),
-            //                                       CRMNumberOfUsers = !a.IsMultiPackage && a.PackageCode == "LOGI" ? (a.NumberOfUsers == null ? 0 : a.NumberOfUsers.Value) : 0,
-            //                                       EAWBNumberOfUsers = !a.IsMultiPackage && (a.PackageCode == "EAWB" || a.PackageCode == "BUBK") ? (a.NumberOfUsers == null ? 0 : a.NumberOfUsers.Value) : 0,
-            //                                   }).OrderBy(d => d.TenantNumber).Skip(skip).Take(take).ToList();
+            List<TenantManagementDW> result = (from a in repository.context.TenantManagements.Include("PaymentChannel").Include("PaymentCurrency").Include("RecurringPeriod")
+                                               select new TenantManagementDW()
+                                               {
+                                                   TenantNumber = a.Id,
+                                                   FreeUsers = a.TotalFreeUsers,
+                                                   IsRecurring = a.IsRecurring,
+                                                   LicensePrice = a.AveragePrice,
+                                                   Notes = a.Notes,
+                                                   NumberOfUsers = a.TotalNumberOfUsers == null ? 0 : a.TotalNumberOfUsers.Value,
+                                                   PaidUntilDate = a.PaidUntilDate,
+                                                   PaymentChannel = a.PaymentChannel != null ? a.PaymentChannel.Name : "",
+                                                   PaymentCurrency = a.PaymentCurrency != null ? a.PaymentCurrency.Name : "",
+                                                   RecurringPeriod = a.RecurringPeriod != null ? a.RecurringPeriod.Name : "",
+                                                   ResellerCommission = a.ResellerCommission,
+                                                   IsMultiPackage = a.IsMultiPackage,
+                                                   PackageCode = a.PackageCode,
+                                                   MainPackage = a.PackageName,
+                                                   CRMYN = a.PackageCode == "LOGI" ? "Y" : "N",
+                                                   EAWBYN = a.IsAWBStockPrepaid || a.PackageCode == "EAWB" || a.PackageCode == "BUBK" ? "Y" : "N",
+                                                   MainPackageNumberOfUsers = a.MainAdditionalPackageApplied ? (a.NumberOfUsers == null ? 0 : a.NumberOfUsers.Value) : (!a.IsMultiPackage ? (a.NumberOfUsers == null ? 0 : a.NumberOfUsers.Value) : 0),
+                                                   CRMNumberOfUsers = !a.IsMultiPackage && a.PackageCode == "LOGI" ? (a.NumberOfUsers == null ? 0 : a.NumberOfUsers.Value) : 0,
+                                                   EAWBNumberOfUsers = !a.IsMultiPackage && (a.PackageCode == "EAWB" || a.PackageCode == "BUBK") ? (a.NumberOfUsers == null ? 0 : a.NumberOfUsers.Value) : 0,
+                                               }).OrderBy(d => d.TenantNumber).Skip(skip).Take(take).ToList();
 
-            //List<int> tenantManagementIds = new List<int>();
-            //foreach (TenantManagementDW item in result.Where(d => d.IsMultiPackage == true).ToList())
-            //{
-            //    if (!tenantManagementIds.Contains(item.TenantNumber)) tenantManagementIds.Add(item.TenantNumber);
-            //}
-
-
-            //List<TenantManagementLicensePM> tenantManagementLicensePMLists = new List<TenantManagementLicensePM>();
-            //if (tenantManagementIds.Count > 0)
-            //{
-            //    TenantManagementLicenseQuery tenantManagementLicenseQuery = new TenantManagementLicenseQuery(tenant);
-            //    tenantManagementLicensePMLists = tenantManagementLicenseQuery.GetTenantManagementLicenseByListids(tenantManagementIds).ToList();
-
-            //}
-            //PackageRepository packageRepository = new PackageRepository(tenant);
-            //List<Package> packageLists = packageRepository.GetPackages().ToList();
-
-            //foreach (TenantManagementDW item in result)
-            //{
-            //    if (!string.IsNullOrEmpty(item.PackageCode))
-            //    {
-            //        Package package = packageLists.Where(d => d.Code == item.PackageCode).FirstOrDefault();
-            //        if (package != null)
-            //        {
-            //            item.MainPackage = package.Name;
-            //        }
-            //    }
-
-            //    if (item.IsMultiPackage)
-            //    {
-            //        List<TenantManagementLicensePM> multiPackage = tenantManagementLicensePMLists.Where(d => d.Tenant == item.TenantNumber).ToList();
-            //        if (multiPackage.Count > 0)
-            //        {
-            //            #region CRMYN
-            //            if (item.CRMYN == "N")
-            //            {
-            //                item.CRMYN = CheckIfMultiPackageHasThisCode(multiPackage, "LOGI") ? "Y" : "N";
-            //            }
-            //            #endregion
-
-            //            #region EAWBYN
-            //            if (item.EAWBYN == "N")
-            //            {
-            //                item.EAWBYN = CheckIfMultiPackageHasThisCode(multiPackage, "EAWB", "BUBK") ? "Y" : "N";
-            //            }
-            //            #endregion
-
-            //            #region Main Package Number of User
-            //            TenantManagementLicensePM package = multiPackage.Where(d => d.PackageCode != "EAWB" || d.PackageCode != "LOGI").OrderByDescending(d => d.NumberOfUsers).FirstOrDefault();
-            //            if (package != null) item.MainPackageNumberOfUsers = package.NumberOfUsers != null ? (int)package.NumberOfUsers : 0;
-
-            //            #endregion
-
-            //            #region CRM  Number of User
-            //            TenantManagementLicensePM crmPackage = multiPackage.Where(d => d.PackageCode == "LOGI").FirstOrDefault();
-            //            if (crmPackage != null) item.CRMNumberOfUsers = crmPackage.NumberOfUsers != null ? (int)crmPackage.NumberOfUsers : 0;
-            //            else item.CRMNumberOfUsers = 0;
+            List<int> tenantManagementIds = new List<int>();
+            foreach (TenantManagementDW item in result.Where(d => d.IsMultiPackage == true).ToList())
+            {
+                if (!tenantManagementIds.Contains(item.TenantNumber)) tenantManagementIds.Add(item.TenantNumber);
+            }
 
 
-            //            #endregion
+            List<TenantManagementLicensePM> tenantManagementLicensePMLists = new List<TenantManagementLicensePM>();
+            if (tenantManagementIds.Count > 0)
+            {
+                TenantManagementLicenseQuery tenantManagementLicenseQuery = new TenantManagementLicenseQuery(tenant);
+                tenantManagementLicensePMLists = tenantManagementLicenseQuery.GetTenantManagementLicenseByListids(tenantManagementIds).ToList();
 
-            //            #region E-AWB  Number of User
-            //            TenantManagementLicensePM eAWBBackage = multiPackage.Where(d => d.PackageCode == "EAWB" || d.PackageCode == "BUBK").FirstOrDefault();
-            //            if (eAWBBackage != null) item.EAWBNumberOfUsers = eAWBBackage.NumberOfUsers != null ? (int)eAWBBackage.NumberOfUsers : 0;
-            //            else item.EAWBNumberOfUsers = 0;
+            }
+            PackageRepository packageRepository = new PackageRepository(tenant);
+            List<Package> packageLists = packageRepository.GetPackages().ToList();
+
+            foreach (TenantManagementDW item in result)
+            {
+                if (!string.IsNullOrEmpty(item.PackageCode))
+                {
+                    Package package = packageLists.Where(d => d.Code == item.PackageCode).FirstOrDefault();
+                    if (package != null)
+                    {
+                        item.MainPackage = package.Name;
+                    }
+                }
+
+                if (item.IsMultiPackage)
+                {
+                    List<TenantManagementLicensePM> multiPackage = tenantManagementLicensePMLists.Where(d => d.Tenant == item.TenantNumber).ToList();
+                    if (multiPackage.Count > 0)
+                    {
+                        #region CRMYN
+                        if (item.CRMYN == "N")
+                        {
+                            item.CRMYN = CheckIfMultiPackageHasThisCode(multiPackage, "LOGI") ? "Y" : "N";
+                        }
+                        #endregion
+
+                        #region EAWBYN
+                        if (item.EAWBYN == "N")
+                        {
+                            item.EAWBYN = CheckIfMultiPackageHasThisCode(multiPackage, "EAWB", "BUBK") ? "Y" : "N";
+                        }
+                        #endregion
+
+                        #region Main Package Number of User
+                        TenantManagementLicensePM package = multiPackage.Where(d => d.PackageCode != "EAWB" || d.PackageCode != "LOGI").OrderByDescending(d => d.NumberOfUsers).FirstOrDefault();
+                        if (package != null) item.MainPackageNumberOfUsers = package.NumberOfUsers != null ? (int)package.NumberOfUsers : 0;
+
+                        #endregion
+
+                        #region CRM  Number of User
+                        TenantManagementLicensePM crmPackage = multiPackage.Where(d => d.PackageCode == "LOGI").FirstOrDefault();
+                        if (crmPackage != null) item.CRMNumberOfUsers = crmPackage.NumberOfUsers != null ? (int)crmPackage.NumberOfUsers : 0;
+                        else item.CRMNumberOfUsers = 0;
 
 
-            //            #endregion
-            //        }
-            //    }
-            //}
+                        #endregion
+
+                        #region E-AWB  Number of User
+                        TenantManagementLicensePM eAWBBackage = multiPackage.Where(d => d.PackageCode == "EAWB" || d.PackageCode == "BUBK").FirstOrDefault();
+                        if (eAWBBackage != null) item.EAWBNumberOfUsers = eAWBBackage.NumberOfUsers != null ? (int)eAWBBackage.NumberOfUsers : 0;
+                        else item.EAWBNumberOfUsers = 0;
 
 
-            return new List<TenantManagementDW>();
+                        #endregion
+                    }
+                }
+            }
+
+
+            return result;
         }
 
         private bool CheckIfMultiPackageHasThisCode(List<TenantManagementLicensePM> multiPackage, string packageCode, string packageCode2 = null)
