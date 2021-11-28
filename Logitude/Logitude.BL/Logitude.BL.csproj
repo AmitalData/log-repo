@@ -292,7 +292,7 @@
     <Compile Include="CommonDataModel\APIDataContract\QueryService\LastMileDetailsQueryService.Generated.cs" />
     <Compile Include="CommonDataModel\APIDataContract\QueryService\PaymentTermQueryService.Generated.cs" />
     <Compile Include="CommonDataModel\APIDataContract\QueryService\ShipmentCardQueryService.Generated.cs" />
-    <Compile Include="CommonDataModel\APIDataContract\QueryService\UnassignedDataQueryService.cs" />
+    <Compile Include="CommonDataModel\APIDataContract\QueryService\APIUnassignedDataHandler.cs" />
     <Compile Include="CommonDataModel\APIDataContract\QueryService\UserQueryService.cs" />
     <Compile Include="CommonDataModel\APIDataContract\QueryService\VatTypeQueryService.cs" />
     <Compile Include="CommonDataModel\APIDataContract\QueryService\VendorQueryService.cs" />
