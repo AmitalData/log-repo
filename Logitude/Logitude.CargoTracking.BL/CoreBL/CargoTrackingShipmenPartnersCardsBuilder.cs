@@ -8,6 +8,7 @@ using Logitude.ShipmentOrderModule.BL.EntityQueryServices;
 using Logitude.ShipmentOrderModule.Def.EntityPMs;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Data.ShipmentsModel.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -68,9 +69,29 @@ namespace Logitude.CargoTracking.BL.EntityQueryServices
             {
                 CreatePartnerCard(partnerCardMetaData);
             }
-            GetCollectorPartner();
-
+            BuildCustomPartners();
             return partnerCards;
+        }
+
+        private void BuildCustomPartners()
+        {
+            if (shipmentPM == null)
+                return;
+            var shipmentRepository = new ShipmentRepository(shipmentPM.Tenant);
+            var shipment = shipmentRepository.getShipmentDirection
+            GetAccountManager();
+            GetCollectorPartner();
+            GetCollectorPartner();
+        }
+
+        private void GetAccountManager()
+        {
+            if (shipmentPM.AccountManagerUserId == null)
+                return;
+            var customer = GetCard(shipmentPM.CustomerId);
+            if (customer.CollectorUser == null)
+                return;
+            AddUserCard(customer.CollectorUser,CollectorPartnerType);
         }
 
         private void GetCollectorPartner()
@@ -80,34 +101,22 @@ namespace Logitude.CargoTracking.BL.EntityQueryServices
             var customer = GetCard(shipmentPM.CustomerId);
             if (customer.CollectorUser == null)
                 return;
-            var partnerCard = new PartnerCard()
-            {
-                Type = CollectorPartnerType,
-
-                Name = GetProperty(shipmentPM, customer.CollectorUser.Contact.EnglishName),
-                //Address = customer.CollectorUser..
-                PhoneNumber = customer.CollectorUser.Contact.BusinessPhone,
-                FaxNumber = customer.CollectorUser.Contact.Fax
-            };
-            partnerCards.Add(partnerCard);
+            AddUserCard(customer.CollectorUser,CollectorPartnerType);
             
         }
 
-        private void FillAddress(PartnerCard partnerCard, string collectorId)
+        private void AddUserCard(User collectorUser,string partnerType)
         {
-            var address = GetAddress(collectorId);
-            if (address == null)
-                return;
-            partnerCard.Address = GetAddressAsString(address);
-            partnerCard.PhoneNumber = address.PhoneNumber;
-            partnerCard.FaxNumber = address.FaxNumber;
-        }
-
-        private AddressList GetAddress(string id)
-        {
-            AddressQuery addressQuery = new AddressQuery(cargoShipmentPM.Tenant);
-            var addresses = addressQuery.GetAddressesByCardIds(new List<string>() { id }, cargoShipmentPM.Tenant);
-            return addresses.FirstOrDefault();
+            var partnerCard = new PartnerCard()
+            {
+                Type = partnerType,
+                Name = collectorUser.Contact?.EnglishName,
+                BusinessPhone = collectorUser.Contact?.BusinessPhone,
+                Mobile = collectorUser.Contact?.Mobile,
+                FaxNumber = collectorUser.Contact?.Fax,
+                Email = collectorUser.Contact?.Email
+            };
+            partnerCards.Add(partnerCard);
         }
 
         private Card GetCard(string cardId)

@@ -137,8 +137,10 @@ namespace Simplog.Data.CommonDataModel.Repositories
         }
         public Card GetCardWithCollecter(string id, int tenant)
         {
-            var card = context.Cards.Include("CollectorUser.Contact").Where(e => e.Id == id && e.Tenant == tenant).FirstOrDefault();
-
+            var card = context.Cards
+                .Include("CollectorUser.Contact")
+                .Include("CollectorUser.Contact")
+                .Where(e => e.Id == id && e.Tenant == tenant).FirstOrDefault();
             return card;
         }
         public Card Get(string id, int tenant)
