@@ -63,8 +63,11 @@
 
                                     <div class="QueriesSection" *ngIf="IsQueryVisible_MyViewsGroup">
                                         <div>My Views</div>
-                                        <div style="height:80px;">
+                                        <div>
                                             <UsersQueryList [ReloadUserQueries]="ReloadUserQueries" [ObjectTableName]="'ContainerFollowUp'" [BackButtonTitle]="BackButtonTitle" (BackCompletedEvent)="onUserQueriesBackComplete($event)"></UsersQueryList>
+                                        </div>
+                                        <div>
+                                            <UsersQueryList [ReloadUserQueries]="ReloadUserQueries" [ObjectTableName]="'Container'" [BackButtonTitle]="BackButtonTitle" (BackCompletedEvent)="onUserQueriesBackComplete($event)"></UsersQueryList>
                                         </div>
                                     </div>
 
