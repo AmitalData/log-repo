@@ -252,6 +252,13 @@ export class ContactInputTemplate extends BaseComponent {
         }
     }
 
+    get ExternalId() { return this.EntityPM.ExternalId; }
+    set ExternalId(newValue: string) {
+        if (this.EntityPM.ExternalId != newValue) {
+            this.EntityPM.ExternalId = newValue;
+        }
+    }
+
     get Position() { return this.EntityPM.Position; }
     set Position(newValue: string) {
         if (this.EntityPM.Position != newValue) {
@@ -444,6 +451,7 @@ export class ContactInputTemplate extends BaseComponent {
                             this.IsOceanExport = this.loadedContact.IsOceanExport;
                             this.IsOceanImport = this.loadedContact.IsOceanImport;
                             this.HasCardContact = this.loadedContact.HasCardContact;
+                            this.ExternalId = this.loadedContact.ExternalId;
                             this.SetIsProductsVisible();
 
                             if (!AppTool.IsNullOrEmpty(this.CardId)) {
