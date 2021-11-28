@@ -1,6 +1,7 @@
 export interface FreightCostTariffLineDetails {
     FromPort: string,
     ToPort: string,
+    Via: number,
     MinPrice: number,
     Step1Price: number,
     Step2Price: number,
