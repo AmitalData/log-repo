@@ -33,7 +33,7 @@ namespace WebFreight.Web.WcfApi
 
             try
             {
-                if (tenant == 0 || tenant == 341) return new List<OpportunityDW>();
+                if (CrmWebServicesValidator.IsDisabled(tenant)) return new List<OpportunityDW>();
 
                 SecurityUtility.AuthenticationOnTenant(tenant);
                 SecurityUtility.CheckContactFeature("Opportunity", "READ", tenant);
@@ -71,7 +71,7 @@ namespace WebFreight.Web.WcfApi
 
             try
             {
-                if (tenant == 0 || tenant == 341) return 0;
+                if (CrmWebServicesValidator.IsDisabled(tenant)) return 0;
 
                 SecurityUtility.AuthenticationOnTenant(tenant);
                 SecurityUtility.CheckContactFeature("Opportunity", "READ", tenant);
@@ -108,7 +108,7 @@ namespace WebFreight.Web.WcfApi
 
             try
             {
-                if (tenant == 0 || tenant == 341) return new List<OpportunityDW>();
+                if (CrmWebServicesValidator.IsDisabled(tenant)) return new List<OpportunityDW>();
 
                 SecurityUtility.AuthenticationOnTenant(tenant);
                 SecurityUtility.CheckContactFeature("Opportunity", "READ", tenant);//UPDATE//READ
@@ -145,7 +145,7 @@ namespace WebFreight.Web.WcfApi
 
             try
             {
-                if (tenant == 0 || tenant == 341) return 0;
+                if (CrmWebServicesValidator.IsDisabled(tenant)) return 0;
 
                 SecurityUtility.AuthenticationOnTenant(tenant);
                 SecurityUtility.CheckContactFeature("Opportunity", "READ", tenant);
