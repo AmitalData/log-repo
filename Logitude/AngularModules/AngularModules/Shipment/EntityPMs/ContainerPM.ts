@@ -1176,6 +1176,21 @@ export class ContainerPM {
     public set FreightForwarderContactId(newValue: string) { if (this.freightForwarderContactId != newValue) { this.freightForwarderContactId = newValue; this.MarkAsDirty("FreightForwarderContactId"); } }
        
 	 
+    private statusId: string;
+    public get StatusId() { return this.statusId; }
+    public set StatusId(newValue: string) { if (this.statusId != newValue) { this.statusId = newValue; this.MarkAsDirty("StatusId"); } }
+       
+	 
+    private statusName: string;
+    public get StatusName() { return this.statusName; }
+    public set StatusName(newValue: string) { if (this.statusName != newValue) { this.statusName = newValue; this.MarkAsDirty("StatusName"); } }
+       
+	 
+    private statusWeight: number;
+    public get StatusWeight() { return this.statusWeight; }
+    public set StatusWeight(newValue: number) { if (this.statusWeight != newValue) { this.statusWeight = newValue; this.MarkAsDirty("StatusWeight"); } }
+       
+	 
 
     public OldEntityPM: ContainerPM;
 		

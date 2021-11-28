@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 {
    public class ContainerUpdateClass
    {  		
-		public const string HashString = "51919ee42edef0bc4426d22e99698095";
+		public const string HashString = "2fea26543b9bd0951ee4834d27b5689b";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -2941,9 +2941,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "POLLocation",
-					  						DefaultText =  "POL Location",
+					  						DefaultText =  "POL",
 					  						ListFieldLable =  "POLLocationListLable",
-					  						ListLableDefaultText =  "POL Location",
+					  						ListLableDefaultText =  "POL",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -3181,9 +3181,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ActualPOLLoaded",
-					  						DefaultText =  "Actual POL Loaded",
+					  						DefaultText =  "Vessel Loading Date",
 					  						ListFieldLable =  "ActualPOLLoadedListLable",
-					  						ListLableDefaultText =  "Actual POL Loaded",
+					  						ListLableDefaultText =  "Vessel Loading Date",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -3301,9 +3301,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ActualPOLVesselDeparture",
-					  						DefaultText =  "Actual POL Vessel Departure",
+					  						DefaultText =  "Actual Departure Date",
 					  						ListFieldLable =  "ActualPOLVesselDepartureListLable",
-					  						ListLableDefaultText =  "Actual POL Vessel Departure",
+					  						ListLableDefaultText =  "Actual Departure Date",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -6661,9 +6661,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "EstimatedDelivery",
-					  						DefaultText =  "Estimated Delivery",
+					  						DefaultText =  "Delivery Appointment Date",
 					  						ListFieldLable =  "EstimatedDeliveryListLable",
-					  						ListLableDefaultText =  "Estimated Delivery",
+					  						ListLableDefaultText =  "Delivery Appointment Date",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -6721,9 +6721,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ActualDelivery",
-					  						DefaultText =  "Actual Delivery",
+					  						DefaultText =  "Actual Delivery Date",
 					  						ListFieldLable =  "ActualDeliveryListLable",
-					  						ListLableDefaultText =  "Actual Delivery",
+					  						ListLableDefaultText =  "Actual Delivery Date",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -7081,9 +7081,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "GateIn",
-					  						DefaultText =  "Gate In",
+					  						DefaultText =  "POL Gate In",
 					  						ListFieldLable =  "GateInListLable",
-					  						ListLableDefaultText =  "Gate In",
+					  						ListLableDefaultText =  "POL Gate In",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -7141,9 +7141,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "GateOut",
-					  						DefaultText =  "Gate Out",
+					  						DefaultText =  "POD Gate Out",
 					  						ListFieldLable =  "GateOutListLable",
-					  						ListLableDefaultText =  "Gate Out",
+					  						ListLableDefaultText =  "POD Gate Out",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -13110,6 +13110,181 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "StatusId",
+					  						ObjectTableName =  "Container",
+					  						FieldsDataType =  "LookUp",
+					  						LookUpTableName =  "EntityStatus",
+					  						MinLength =  0,
+					  						MaxLength =  15,
+					  						IsRequired =  false,
+					  						CopyToDW =  true,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  true,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						Operator =  "Equals",
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "StatusId",
+					  						ListPropertyPath =  "StatusId",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter2Value =  "Container",
+					  						DependencyFilter2Type =  "Constant",
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Container",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  true,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "StatusId",
+					  						DefaultText =  "Status",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "StatusName",
+					  						ObjectTableName =  "Container",
+					  						FieldsDataType =  "Text",
+					  						MinLength =  0,
+					  						MaxLength =  40,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "StatusName",
+					  						ListPropertyPath =  "StatusName",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Container",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "StatusName",
+					  						DefaultText =  "Status",
+					  						ListFieldLable =  "StatusNameListLable",
+					  						ListLableDefaultText =  "Status",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  true,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "StatusWeight",
+					  						ObjectTableName =  "Container",
+					  						FieldsDataType =  "Integer",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "StatusWeight",
+					  						ListPropertyPath =  "StatusWeight",
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "StatusWeight",
+					  						DefaultText =  "Status Weight",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
@@ -13336,8 +13511,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
                 Code =  "EMPS",
-                EnglishName =  "Empty to Shipper",
-                LocalName =  "Empty to Shipper",
+                EnglishName =  "Empty Pick up",
+                LocalName =  "Empty Pick up",
                 IsManualEntry =  false,
                 ShortView =  true,
                 IsAgentView =  false,
@@ -13355,8 +13530,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
                 Code =  "PICS",
-                EnglishName =  "Picked up at Shipper",
-                LocalName =  "Picked up at Shipper",
+                EnglishName =  "Departed from Shipper",
+                LocalName =  "Departed from Shipper",
                 IsManualEntry =  false,
                 ShortView =  true,
                 IsAgentView =  false,
@@ -13367,25 +13542,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
                 IsFollowUp =  false,
                 ObjectTableId = ContainerObjectTable.Id,
                 EntityStatusId = AllEntityStatuses.Where(d => d.Tenant == 0 && d.Code == "PICS").FirstOrDefault().Id,
-				 
-            }, EventTypeRepository, tenantEventTypes);
-
-
-            AddEventTypes.AddEventType(new EventTypeDetails()
-            {
-                Code =  "GTIN",
-                EnglishName =  "Gate In",
-                LocalName =  "Gate In",
-                IsManualEntry =  false,
-                ShortView =  true,
-                IsAgentView =  false,
-                IsCustomerView =  false,
-                IsSharedLogisticsEnabled =  false,
-                AllowedInAutomation =  false,
-                ManualActivatedFollowUp =  false,
-                IsFollowUp =  false,
-                ObjectTableId = ContainerObjectTable.Id,
-                EntityStatusId = AllEntityStatuses.Where(d => d.Tenant == 0 && d.Code == "GTIN").FirstOrDefault().Id,
 				 
             }, EventTypeRepository, tenantEventTypes);
 
@@ -13431,8 +13587,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
                 Code =  "POLD",
-                EnglishName =  "POL Departed",
-                LocalName =  "POL Departed",
+                EnglishName =  "Departed POL ",
+                LocalName =  "Departed POL",
                 IsManualEntry =  false,
                 ShortView =  true,
                 IsAgentView =  false,
@@ -13450,8 +13606,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
                 Code =  "T1AV",
-                EnglishName =  "Transshipment  1 Arrived",
-                LocalName =  "Transshipment  1 Arrived",
+                EnglishName =  "TS1 Arrived",
+                LocalName =  "TS1 Arrived",
                 IsManualEntry =  false,
                 ShortView =  true,
                 IsAgentView =  false,
@@ -13469,8 +13625,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
                 Code =  "T1DT",
-                EnglishName =  "Transshipment1 Departed",
-                LocalName =  "Transshipment1 Departed",
+                EnglishName =  "TS1 Departed",
+                LocalName =  "TS1 Departed",
                 IsManualEntry =  false,
                 ShortView =  true,
                 IsAgentView =  false,
@@ -13488,8 +13644,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
                 Code =  "T2AV",
-                EnglishName =  "Transshipment 2 Arrived",
-                LocalName =  "Transshipment 2 Arrived",
+                EnglishName =  "TS2 Arrived",
+                LocalName =  "TS2 Arrived",
                 IsManualEntry =  false,
                 ShortView =  true,
                 IsAgentView =  false,
@@ -13507,8 +13663,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
                 Code =  "T2DT",
-                EnglishName =  "Transshipment 2 Departed",
-                LocalName =  "Transshipment 2 Departed",
+                EnglishName =  "TS2 Departed",
+                LocalName =  "TS2 Departed",
                 IsManualEntry =  false,
                 ShortView =  true,
                 IsAgentView =  false,
@@ -13526,8 +13682,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
                 Code =  "T3AV",
-                EnglishName =  "Transshipment 3 Arrived",
-                LocalName =  "Transshipment 3 Arrived",
+                EnglishName =  "TS3 Arrived",
+                LocalName =  "TS3 Arrived",
                 IsManualEntry =  false,
                 ShortView =  true,
                 IsAgentView =  false,
@@ -13545,8 +13701,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
                 Code =  "T3DT",
-                EnglishName =  "Transshipment 3 Departed",
-                LocalName =  "Transshipment 3 Departed",
+                EnglishName =  "TS3 Departed",
+                LocalName =  "TS3 Departed",
                 IsManualEntry =  false,
                 ShortView =  true,
                 IsAgentView =  false,
@@ -13564,8 +13720,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
                 Code =  "ARPD",
-                EnglishName =  "Arrived at POD",
-                LocalName =  "Arrived at POD",
+                EnglishName =  "Arrived POD",
+                LocalName =  "Arrived POD",
                 IsManualEntry =  false,
                 ShortView =  true,
                 IsAgentView =  false,
@@ -13602,8 +13758,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
                 Code =  "APAR",
-                EnglishName =  "Appointment Arranged",
-                LocalName =  "Appointment Arranged",
+                EnglishName =  "Delivery Appointment Scheduled",
+                LocalName =  "Delivery Appointment Scheduled",
                 IsManualEntry =  false,
                 ShortView =  true,
                 IsAgentView =  false,
@@ -13640,8 +13796,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
                 Code =  "ARWH",
-                EnglishName =  "Arrived to Warehouse",
-                LocalName =  "Arrived to Warehouse",
+                EnglishName =  "On Carriage Departed",
+                LocalName =  "On Carriage Departed",
                 IsManualEntry =  false,
                 ShortView =  true,
                 IsAgentView =  false,
@@ -13659,8 +13815,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
                 Code =  "AVDL",
-                EnglishName =  "Available for Delivery",
-                LocalName =  "Available for Delivery",
+                EnglishName =  "Available for Pick up",
+                LocalName =  "Available for Pick up",
                 IsManualEntry =  false,
                 ShortView =  true,
                 IsAgentView =  false,
@@ -13678,8 +13834,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
                 Code =  "DPWH",
-                EnglishName =  "Departed from Warehouse",
-                LocalName =  "Departed from Warehouse",
+                EnglishName =  "On Carriage Arrived",
+                LocalName =  "On Carriage Arrived",
                 IsManualEntry =  false,
                 ShortView =  true,
                 IsAgentView =  false,
@@ -13697,8 +13853,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
                 Code =  "DLCO",
-                EnglishName =  "Delivered to Consignee",
-                LocalName =  "Delivered to Consignee",
+                EnglishName =  "Delivered",
+                LocalName =  "Delivered",
                 IsManualEntry =  false,
                 ShortView =  true,
                 IsAgentView =  false,
@@ -13716,8 +13872,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
                 Code =  "UNDS",
-                EnglishName =  "Unloaded at Destination",
-                LocalName =  "Unloaded at Destination",
+                EnglishName =  "On Carriage Discharged",
+                LocalName =  "On Carriage Discharged",
                 IsManualEntry =  false,
                 ShortView =  true,
                 IsAgentView =  false,
@@ -13746,7 +13902,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
                 ManualActivatedFollowUp =  false,
                 IsFollowUp =  false,
                 ObjectTableId = ContainerObjectTable.Id,
-                EntityStatusId = AllEntityStatuses.Where(d => d.Tenant == 0 && d.Code == "PODC").FirstOrDefault().Id,
 				 
             }, EventTypeRepository, tenantEventTypes);
 
@@ -13791,8 +13946,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
                 Code =  "ROCO",
-                EnglishName =  "Re-open",
-                LocalName =  "Re-open",
+                EnglishName =  "Re-opened",
+                LocalName =  "Re-opened",
                 IsManualEntry =  false,
                 ShortView =  true,
                 IsAgentView =  false,

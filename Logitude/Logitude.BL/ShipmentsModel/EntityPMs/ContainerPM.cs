@@ -315,5 +315,8 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string ShipperContactId { get; set; }
         public string ShipperNotExporterContactId { get; set; }
         public string FreightForwarderContactId { get; set; }
+        public string StatusId { get; set; }
+        public string StatusName { get; set; }
+        public int StatusWeight { get; set; }
     }
 }
