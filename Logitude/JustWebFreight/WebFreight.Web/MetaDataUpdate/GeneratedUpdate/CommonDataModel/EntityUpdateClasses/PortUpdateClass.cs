@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class PortUpdateClass
    {  		
-		public const string HashString = "73f104d50a30be212f94d83e88263de6";
+		public const string HashString = "9cd230c10983cabcac78e944affe5467";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -1058,10 +1058,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInSearchWindowList =  true,
 					  						PMPropertyPath =  "CountryName",
 					  						ListPropertyPath =  "CountryName",
-					  						DisplayInLookUpIndex =  3,
+					  						DisplayInLookUpIndex =  2,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
-					  						DisplayInSearchWindowListIndex =  3,
+					  						DisplayInSearchWindowListIndex =  2,
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
@@ -1689,10 +1689,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInSearchWindowList =  true,
 					  						PMPropertyPath =  "StateName",
 					  						ListPropertyPath =  "StateName",
-					  						DisplayInLookUpIndex =  4,
+					  						DisplayInLookUpIndex =  3,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
-					  						DisplayInSearchWindowListIndex =  2,
+					  						DisplayInSearchWindowListIndex =  3,
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
