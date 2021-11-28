@@ -769,7 +769,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
         new ToggleFilter('R', 'Drop', 'shipmentDirection'),
         new ToggleFilter('A', 'Air', 'shipmentType'),
         new ToggleFilter('I', 'Land', 'shipmentType'),
-        new ToggleFilter('O', 'Sea', 'shipmentType'),
+        new ToggleFilter('O', 'Ocean', 'shipmentType'),
     ];
 
     sortByOptions: ToggleFilter[] = [
