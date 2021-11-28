@@ -2,7 +2,7 @@ import { Given, When, Then } from "cypress-cucumber-preprocessor/steps";
 import * as Actions from "../../actions/Actions";
 import { TariffDetails } from "../../models/TariffDetails";
 import { SurchargeDetails } from "../../models/SurchargeDetails";
-import { SurchargeCostTariffLineDetails} from "cypress/models/SurchargeCostTariffLineDetails";
+import { SurchargeCostTariffLineDetails } from "cypress/models/SurchargeCostTariffLineDetails";
 import * as Assists from "../../../../Base/cypress/assists/Assists";
 
 //#region  Create ocean FCL surcharge cost
@@ -54,7 +54,7 @@ Given("the user in update tab", () => {
 });
 
 Given("the follwing surcharge cost update details", (dataTable) => {
-    let tariffDetails = Assists.CreateInstance<SurchargeCostTariffLineDetails>(dataTable, true);
+    let tariffDetails = Assists.CreateInstance<SurchargeCostTariffLineDetails>(dataTable);
     Actions.FillUpdateSurcharges(tariffDetails);
 });
 
