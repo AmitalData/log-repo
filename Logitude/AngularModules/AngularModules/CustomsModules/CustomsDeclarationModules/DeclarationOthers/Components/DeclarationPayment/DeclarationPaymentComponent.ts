@@ -3301,12 +3301,9 @@ export class PaymentMethodModel extends BaseComponent {
                             }
 
                             if (this.parent.BetweenMinAndMax && this.methodPM.PayerActivityTypeCode == "3" && this.parent.PaymentMethodsList.Length == 0) {
-                                this.BankIsNull = true;
                                 this.methodPM.MethodTypeCode = "2";
                                 this.methodPM.PayerActivityTypeCode = "3";
                                 this.methodPM.Amount = this.parent.DeclarationPM.TotalTax;
-                                this.InternalBankName = null;
-                                this.InternalBankId = null;
                                 this.parent.paymentMethodTypeListService.getSingleFromCache("2").subscribe((response: ServiceResponse) => {
                                     this.methodPM.MethodTypeName = response.Result.LocalName;
                                 });
@@ -3320,12 +3317,9 @@ export class PaymentMethodModel extends BaseComponent {
                             if (customBank == null && this.BanksList.length > 0) {
                                 for (let bank of this.BanksList) {
                                     if (this.parent.BetweenMinAndMax && bank.PayerTypeCode == "3" && this.parent.PaymentMethodsList.Length == 0) {
-                                        this.BankIsNull = true;
                                         this.methodPM.MethodTypeCode = "2";
                                         this.methodPM.PayerActivityTypeCode = "3";
                                         this.methodPM.Amount = this.parent.DeclarationPM.TotalTax;
-                                        this.InternalBankName = null;
-                                        this.InternalBankId = null;
                                         this.parent.paymentMethodTypeListService.getSingleFromCache("2").subscribe((response: ServiceResponse) => {
                                             this.methodPM.MethodTypeName = response.Result.LocalName;
                                         });
