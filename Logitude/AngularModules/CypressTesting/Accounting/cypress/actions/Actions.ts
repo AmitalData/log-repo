@@ -366,6 +366,16 @@ export function AssertARInvoiceDetailsFieldsNotBeDisabled() {
 }
 //#endregion
 
+
+//#endregion
+export function AssertNewPageOpen(){
+    BaseAssertion.AssertStatusCode(RequestAliases.DocumentTypeTemplateExtended, 200)
+    BaseAssertion.AssertElementContain(BaseSelectors.WindowHeader,'Print Shipment Invoice')
+    cy.Navigate(AccountingSelectors.closeButtonId,false)
+    cy.Navigate(AccountingSelectors.ARInvoiceTransferTab+BaseSelectors.LastElement,false)
+    BaseAssertion.AssertElementContain(BaseSelectors.TabHolder,'Constituent invoice')
+    
+}
 //#region Add Two Shipment Lines And Edit Amount
 export function AddShipmentLines(shipmentNumbers: string[]) {
     for (let i = 0; i < shipmentNumbers.length; i++) {

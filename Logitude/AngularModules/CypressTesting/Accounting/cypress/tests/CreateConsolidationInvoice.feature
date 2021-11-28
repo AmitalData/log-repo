@@ -79,6 +79,11 @@ Feature: Create Consolidation Invoice
         When create invoice
         Then the invoice should create successfully
 
+        Scenario: Check print button in AR invoice
+        Given the user in the Docsout tab in invoice
+        When click print button
+        Then a new page should open successfully
+
     Scenario: Create a new consolidation invoice
         Given a consolidation invoice with the following details
             | PartnerType         | Customer    |
@@ -155,3 +160,4 @@ Feature: Create Consolidation Invoice
         When approve the payment
         Then the payment should approve successfully
         And the status of AR Payment value should be "Closed"
+        And details screen should be dim
