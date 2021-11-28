@@ -19,9 +19,15 @@ namespace Logitude.CargoTracking.BL.EntityQueryServices
 { 
    public partial class CargoTrackingWatermarkQueryService
     {
+        const string CargoTrackingShipments = "CargoTrackingShipments";
         public List<CargoTrackingWatermark> GetAllWaterMarks()
         {
             List<CargoTrackingWatermark> cargoTrackingWatermarks = repository.GetAll().ToList();
+            return cargoTrackingWatermarks;
+        }
+        public CargoTrackingWatermark GetShipmentsWaterMarks()
+        {
+            CargoTrackingWatermark cargoTrackingWatermarks = repository.GetAll().Where(e=>e.TableName == CargoTrackingShipments).FirstOrDefault();
             return cargoTrackingWatermarks;
         }
 
