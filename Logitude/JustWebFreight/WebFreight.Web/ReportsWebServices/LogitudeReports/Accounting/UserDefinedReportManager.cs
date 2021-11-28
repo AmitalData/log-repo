@@ -39,6 +39,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
         public DateTime? SecoundPeriodDateTo;
         public bool DetailedCurrencies;
         public bool ExpandChartOfAccountToGLAccounts;
+        public bool ExcludeZeroCloseBalance;
         private IAccountingContext accountingContext;
         private UserDefinedReportDataProvider iDataProvider;
         public List<string> AllChartsofAccountTypeCodeinReport;
@@ -66,6 +67,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             this.GetIncludeAnOpeningBalanceFilter(iQueryOperations);
             this.GetDetailedCurrenciesFilter(iQueryOperations);
             this.GetExpandChartOfAccountToGLAccountsFilter(iQueryOperations);
+            ExcludeZeroCloseBalance = GetFilterValue<bool>(iQueryOperations, "ExcludeZeroCloseBalance");
         }
         public byte[] GetData()
         {
@@ -130,6 +132,15 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                 MapUserDefinedReportDataProvider(userDefinedReport);
                 FillAllCalculatedChartsofAccountsLineListDataProvider();
                 SetCalculatedChartsofAccountsLinesAmountByLedgerTransactionConnectedWithAccounts(userDefinedReport);
+
+                // remove zero glaccounts
+                if (ExcludeZeroCloseBalance)
+                {
+                    this.iDataProvider.UserDefinedReportPeriod.AllCalculatedChartsOfAccountsLinePeriods =
+                        this.iDataProvider.UserDefinedReportPeriod.AllCalculatedChartsOfAccountsLinePeriods
+                        .Where(d=> !zeroBalanceGLAccounts.Contains(d.GLAccountId)).ToList();
+                }
+
                 AddParentLinesToAllCalculatedChartsOfAccountsLinePeriods();
                 AddSubParentLinesToAllCalculatedChartsOfAccountsLinePeriods();
             }
@@ -331,7 +342,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                 SetParentCalculatedChartsofAccountsLinesAmountByLedgerTransactionsForGLAcountIds(SubParentLine);
             }
         }
-
+        List<string> zeroBalanceGLAccounts = new List<string>();
         private decimal GetGLAccountAmountFromLedgerTransactionBalanceFilter(string GLAccountId, DateTime FromDate, DateTime ToDate)
         {
             LedgerTransactionBalanceFilter ledgerTransactionBalanceFilter = new LedgerTransactionBalanceFilter
@@ -365,6 +376,9 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             {
                 GLAccountAmount = 0;
             }
+
+            if (GLAccountAmount == 0)
+                zeroBalanceGLAccounts.Add(GLAccountId);
 
             return GLAccountAmount;
         }
@@ -525,6 +539,29 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                     IncludeAnOpeningBalance = (bool)filterItem_IncludeAnOpeningBalance.FieldValue;
                 }
             }
+        }
+
+        public T GetFilterValue<T>(QueryOperations reportQueryOperations, string FieldName)
+        {
+            QueryFilterItem filterItem = reportQueryOperations.QueryFilterItems
+                .Where(d => d.FieldName == FieldName).FirstOrDefault();
+
+            if (filterItem != null && filterItem.FieldValue != null)
+            {
+                if (filterItem.FieldDataType == "decimal")
+                {
+                    decimal value = Convert.ToDecimal(filterItem.FieldValue);
+                    object x = value;
+
+                    return (T)x;
+                }
+                else
+                {
+                    return (T)filterItem.FieldValue;
+                }
+            }
+
+            return default(T);
         }
 
         private void GetFirstPeriodDateToFilters(QueryOperations iQueryOperations)

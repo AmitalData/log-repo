@@ -1566,6 +1566,12 @@
       LocalDefaultText="&quot;חובה להקליד לפחות תקופה אחת &quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;UserDefinedReport.O.ZeroCloseBalanceLabel&quot;"
+      DefaultText="&quot;Exclude GLAccount with Close Balance 0&quot;"
+      LocalDefaultText="&quot;כלול כרטיסים ללא תנועות עם יתרה 0&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures />
 </entity>
