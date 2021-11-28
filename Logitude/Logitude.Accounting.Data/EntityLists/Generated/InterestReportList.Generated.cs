@@ -100,6 +100,16 @@ namespace Logitude.Accounting.Data.EntityLists
        public string Category4LocalName  { get; set; }
        [DataMember]
        public string Category5LocalName  { get; set; }
+       [DataMember]
+       public string Category1Id  { get; set; }
+       [DataMember]
+       public string Category2Id  { get; set; }
+       [DataMember]
+       public string Category3Id  { get; set; }
+       [DataMember]
+       public string Category4Id  { get; set; }
+       [DataMember]
+       public string Category5Id  { get; set; }
    }
 
 }
