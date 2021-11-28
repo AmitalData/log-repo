@@ -39,6 +39,7 @@ using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.BL.InfrastructureModel.EntityPMs;
 using System.Reflection;
 using Logitude.BL.CommonDataModel.EntityLists;
+using Logitude.Accounting.Data.Enums;
 
 namespace Logitude.Accounting.BL.EntityUpdateServices
 {
@@ -695,12 +696,12 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         }
         private GLAccountFollowUpDataPM MapGLAccountFollowUpFields(GLAccountFollowUpDataPM gLAccountFollowUpData, GLAccountPM accountPM, ContactPM loggedUser)
         {
-            if ((accountPM.AccountTypeCode == "2" || accountPM.AccountTypeCode == "3") && accountPM.GLAccountFollowUpRemarks != null || accountPM.GLAccountFollowUpDate != null)
+            if ((accountPM.AccountTypeCode == GLAccountTypes.Client || accountPM.AccountTypeCode == GLAccountTypes.Vendor) && accountPM.GLAccountFollowUpRemarks != null || accountPM.GLAccountFollowUpDate != null)
             {
                 gLAccountFollowUpData.FollowUpDate = accountPM.GLAccountFollowUpDate;
                 gLAccountFollowUpData.FollowUpRemarks = accountPM.GLAccountFollowUpRemarks;
             }
-            else if (accountPM.AccountTypeCode == "1" &&  accountPM.FollowupNotes != null || accountPM.FollowupDate != null) {
+            else if (accountPM.AccountTypeCode == GLAccountTypes.Card &&  accountPM.FollowupNotes != null || accountPM.FollowupDate != null) {
                 gLAccountFollowUpData.FollowUpDate = accountPM.FollowupDate;
                 gLAccountFollowUpData.FollowUpRemarks = accountPM.FollowupNotes;
             }
