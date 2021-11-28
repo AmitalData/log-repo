@@ -2,6 +2,7 @@ import {Component} from '@angular/core';
 import {EntityArgs} from '../../../Infrastructure/DataContracts/EntityArgs';
 import {ShipmentPM} from '../../EntityPMs/ShipmentPM';
 import { AppTool } from '../../../Infrastructure/Tools';
+import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
 
 @Component({
     
@@ -111,6 +112,11 @@ export class ShipmentShortTitleComponent {
     get IsCancelled() { return this.EntityPM.IsCancelled; }
 
     UpdateUnassigedDataClicked() {
-
+        var logitudeWindow = new LogitudeWindow();
+        //logitudeWindow.Width = 500;
+        //logitudeWindow.Height = 400;
+        logitudeWindow.WindowArgs = this.EntityPM;
+        logitudeWindow.Title = "Unassiged Data Management - " + this.EntityPM.ShipmentNumber;
+        logitudeWindow.Show("./Shipment/Components/UnassigedData/UpdateUnassigedDataComponent");
     }
 }
