@@ -37,7 +37,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             this.containerPm.Id = IdCounter.GetNumber("Container", tenant).ToString();
             this.containerPoco = new Container { Id = this.containerPm.Id, Tenant = this.containerPm.Tenant };
             RunAutomation("OnCreate", entityPM);
-            ContainerTracing.Trace(entityPM, containerPoco, isNewEntity);
+            ContainerTracing containerTracing = new ContainerTracing(entityPM, containerPoco, isNewEntity);
+            containerTracing.Trace();
             ShipmentMapping.MapContainer(entityPM, containerPoco, isNewEntity);
             entityRepository.Add(containerPoco);
             entityRepository.SubmitChanges();
@@ -51,7 +52,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             containerPm.UpdateDate = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
             this.containerPoco = entityRepository.GetSingleContainer(entityPM.Id, tenant);
             this.MapContainerClosedDate(entityPM, containerPoco);
-            ContainerTracing.Trace(entityPM, containerPoco, isNewEntity);
+            ContainerTracing containerTracing = new ContainerTracing(entityPM, containerPoco, isNewEntity);
+            containerTracing.Trace();
             if (!entityPM.IsUpdateByAutomation)
             {
                 RunAutomation("OnUpdate", entityPM);
@@ -101,7 +103,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         {
             this.containerPm = entityPM;
             this.containerPoco = entityRepository.GetSingleContainer(entityPM.Id, tenant);
-            ContainerTracing.Trace(entityPM, containerPoco, isNewEntity);
+            ContainerTracing containerTracing = new ContainerTracing(entityPM, containerPoco, isNewEntity);
+            containerTracing.Trace();
             entityRepository.Remove(containerPoco);
             entityRepository.SubmitChanges();
         }
