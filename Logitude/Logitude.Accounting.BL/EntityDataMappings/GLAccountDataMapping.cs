@@ -28,6 +28,7 @@ using Microsoft.Practices.Unity;
 using Logitude.BL.Helpers;
 using Logitude.BL.Resolvers;
 using Logitude.Accounting.BL.EntityUpdateServices;
+using Logitude.Accounting.Data.Enums;
 
 namespace Logitude.Accounting.BL.EntityDataMappings
 {
@@ -619,7 +620,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                 }
                 SetPaymentTermToMulti(CardLists, FirstPaymentTermId);
             }
-           GetGLaccountFollowUpDataFields(entityPM);
+            entityPM = GetGLaccountFollowUpDataFields(entityPM);
             if (entityPM.ParentCurrencyId != null)
             {
                 SetVariblesFromParentCurrencyGLAccount(entityPM);
@@ -656,17 +657,31 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             account.TotFutureOpenChequesInLocalCur = 0;
         }
 
-        private void GetGLaccountFollowUpDataFields(GLAccountPM accountPM)
+        private GLAccountPM GetGLaccountFollowUpDataFields(GLAccountPM accountPM)
         {
             GLAccountFollowUpDataPM gLAccountFollowUpData = GetGLAccountFollowUpDataPM(accountPM);
             if(gLAccountFollowUpData != null)
             {
+                accountPM = MapFollowUpDataFields(accountPM, gLAccountFollowUpData);
+            }
+            return accountPM;
+        }
+
+        private GLAccountPM MapFollowUpDataFields(GLAccountPM accountPM, GLAccountFollowUpDataPM gLAccountFollowUpData)
+        {
+            if (accountPM.AccountTypeCode == GLAccountTypes.Client)
+            {
                 accountPM.GLAccountFollowUpDate = gLAccountFollowUpData.FollowUpDate;
                 accountPM.GLAccountFollowUpRemarks = gLAccountFollowUpData.FollowUpRemarks;
             }
-           
+            else if (accountPM.AccountTypeCode == GLAccountTypes.Card || accountPM.AccountTypeCode == GLAccountTypes.Vendor)
+            {
+                accountPM.FollowupDate = gLAccountFollowUpData.FollowUpDate;
+                accountPM.FollowupNotes = gLAccountFollowUpData.FollowUpRemarks;
+            }
+            return accountPM;
         }
-       
+
         private GLAccountFollowUpDataPM GetGLAccountFollowUpDataPM(GLAccountPM account)
         {
             GLAccountFollowUpDataQueryService accountFollowUpDataQueryService = new GLAccountFollowUpDataQueryService(account.Tenant);

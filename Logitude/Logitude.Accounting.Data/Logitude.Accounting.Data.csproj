@@ -333,6 +333,7 @@
     <Compile Include="EntityPOCOs\UserDefinedReport.cs" />
     <Compile Include="EntityPOCOs\VatReportStatus.cs" />
     <Compile Include="Enums\AccountingEntityCodes.cs" />
+    <Compile Include="Enums\GLAccountTypes.cs" />
     <Compile Include="Enums\InterestReportStatusCodes.cs" />
     <Compile Include="Repositories\ARPaymentsJournalRepository.cs" />
     <Compile Include="Repositories\CalculatedChartsLineTypeRepository.cs" />
