@@ -72,7 +72,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 ShipmentTypeId = shipmentPM.ShipmentTypeId,
                 ConsigneeName = shipmentPM.ConsigneeName,
                 InvoiceReference = shipmentPM.PrivateLabelInvoiceNumber,
-                CustomerReference = shipmentPM.CustomerReference1,
+                CustomerReference = !string.IsNullOrEmpty(shipmentPM.CustomerReference3) ? shipmentPM.CustomerReference3 : shipmentPM.CustomerReference1,
                 IncludePickup = shipmentPM.PrivateLabelIncludePickup,
                 IncludeDelivery = shipmentPM.PrivateLabelIncludeDelivery,
                 DangerousGoods = shipmentPM.IsDangerous,

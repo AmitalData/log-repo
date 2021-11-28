@@ -12136,10 +12136,10 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             return shipmentPM;
         }
 
-        public ShipmentPM GetByCustomerReference1(string CustomerReference1, int tenant, bool IsForwarderShipment)
+        public ShipmentPM GetByCustomerReferences1or3(string CustomerReference, int tenant, bool IsForwarderShipment)
         {
             var shipments = (from a in repository.context.Shipments.Include("EntityStatus").Include("ShipmentType").Include("Incoterm").Include("ShipmentReceivableStatus").Include("ShipmentPayableStatus").Include("ShipmentLevel").Include("NextLeg").Include("ShipmentType").Include("MoveType").Include("SalesmanUser").Include("SalesmanUser.Contact")
-                             where a.CustomerReference1 == CustomerReference1 && (IsForwarderShipment ? a.ForwarderShipmentNumber != null : true) && a.Tenant == tenant
+                             where (a.CustomerReference1 == CustomerReference || a.CustomerReference3 == CustomerReference) && (IsForwarderShipment ? a.ForwarderShipmentNumber != null : true) && a.Tenant == tenant
                              select a);
             if (shipments == null || shipments.Count() < 1)
             {
@@ -12158,10 +12158,10 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             return shipmentPM;
         }
 
-        public ShipmentPM GetByCustomerReference1ForUpdate(string CustomerReference1, string ShipmentId, int tenant, bool IsForwarderShipment)
+        public ShipmentPM GetByCustomerReferences1or3ForUpdate(string CustomerReference, string ShipmentId, int tenant, bool IsForwarderShipment)
         {
             var shipments = (from a in repository.context.Shipments.Include("EntityStatus").Include("ShipmentType").Include("Incoterm").Include("ShipmentReceivableStatus").Include("ShipmentPayableStatus").Include("ShipmentLevel").Include("NextLeg").Include("ShipmentType").Include("MoveType").Include("SalesmanUser").Include("SalesmanUser.Contact")
-                             where a.CustomerReference1 == CustomerReference1 && a.Id != ShipmentId && (IsForwarderShipment ? a.ForwarderShipmentNumber != null : true) && a.Tenant == tenant
+                             where (a.CustomerReference1 == CustomerReference || a.CustomerReference3 == CustomerReference) && a.Id != ShipmentId && (IsForwarderShipment ? a.ForwarderShipmentNumber != null : true) && a.Tenant == tenant
                              select a);
             if (shipments == null || shipments.Count() < 1)
             {
