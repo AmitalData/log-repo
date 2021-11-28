@@ -95,8 +95,9 @@ export class TariffSelectors {
     public static readonly DownArrow = "{downarrow}"
     public static readonly ExcelType = "application/vnd.ms-excel"
     public static readonly ContainsViewTariff = "View Tariff";
-    //#endregion
 
+    public static readonly OceanFCLSurchargeLinePrice = "#TariffLinesContainersPrice_Price";
+    //#endregion
 
 
     public static TariffSurcharge(number: number): string {

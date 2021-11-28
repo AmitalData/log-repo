@@ -89,8 +89,25 @@ export function EditFreightCostTariffLines(freightCostType: string, freightCostT
     FillFreightCostTariffLines(freightCostType, freightCostTariffLineDetailsList, false);
 }
 
-export function AddSurchargeCostTariffLines(surchargeTariffLineDetailsList: SurchargeCostTariffLineDetails[]) {
-    FillSurchargeCostTariffLines(surchargeTariffLineDetailsList);
+export function AddSurchargeCostTariffLines(surchargeTariffLineDetailsList: SurchargeCostTariffLineDetails[], type?) {
+    for (let i = 0; i < surchargeTariffLineDetailsList.length; i++) {
+        cy.get("body").then($body => {
+            if ($body.find(BaseSelectors.GreenButton).length > 0) {
+                cy.Click(BaseSelectors.AddButton, null);
+                FillTariffLinePorts(surchargeTariffLineDetailsList[i].FromPort, surchargeTariffLineDetailsList[i].ToPort);
+                FillTariffDate(TariffSelectors.TariffLineStartDate, surchargeTariffLineDetailsList[i].StartDate)
+                if (type === "FCL") {
+                    FillTariffLineFCLSurchargePrice("1", surchargeTariffLineDetailsList[i].Step1Price);
+                    FillTariffLineFCLSurchargePrice("1_1", surchargeTariffLineDetailsList[i].Step2Price);
+                }
+                else {
+                    FillTariffLineSurchargePrice(1, surchargeTariffLineDetailsList[i].Step1Price);
+                    FillTariffLineSurchargePrice(2, surchargeTariffLineDetailsList[i].Step2Price);
+                }
+                cy.Click(BaseSelectors.RedButton, null);
+            }
+        });
+    }
 }
 
 export function EditFreightCostGeneralTab(freightCostType: string, tariffDetails: TariffDetails) {
@@ -192,13 +209,13 @@ export function ValidateUploadExcelFile() {
 export function ValidateTariffLineRow(freightCostTariffLineDetailsList: FreightCostTariffLineDetails) {
     GetCellAssertion("2", freightCostTariffLineDetailsList.FromPort.toString());
     GetCellAssertion("3", freightCostTariffLineDetailsList.ToPort.toString());
-    GetCellAssertion("4", freightCostTariffLineDetailsList.MinPrice.toString());
-    GetCellAssertion("5", freightCostTariffLineDetailsList.Step1Price.toString());
-    GetCellAssertion("6", freightCostTariffLineDetailsList.Step2Price.toString());
-    GetCellAssertion("7", freightCostTariffLineDetailsList.Step3Price.toString());
-    GetCellAssertion("8", freightCostTariffLineDetailsList.Step4Price.toString());
-    GetCellAssertion("9", freightCostTariffLineDetailsList.Step5Price.toString());
-    GetCellAssertion("10", freightCostTariffLineDetailsList.Step6Price.toString());
+    GetCellAssertion("4", freightCostTariffLineDetailsList.Via.toString());
+    GetCellAssertion("5", freightCostTariffLineDetailsList.MinPrice.toString());
+    GetCellAssertion("6", freightCostTariffLineDetailsList.Step1Price.toString());
+    GetCellAssertion("7", freightCostTariffLineDetailsList.Step2Price.toString());
+    GetCellAssertion("8", freightCostTariffLineDetailsList.Step3Price.toString());
+    GetCellAssertion("9", freightCostTariffLineDetailsList.Step4Price.toString());
+    GetCellAssertion("10", freightCostTariffLineDetailsList.Step5Price.toString());
 }
 
 export function BackToTariffWorkspace() {
@@ -385,21 +402,6 @@ function FillFreightCostTariffLines(freightCostType: string, freightCostTariffLi
     }
 }
 
-function FillSurchargeCostTariffLines(surchargeTariffLineDetailsList: SurchargeCostTariffLineDetails[]) {
-    for (let i = 0; i < surchargeTariffLineDetailsList.length; i++) {
-        cy.get("body").then($body => {
-            if ($body.find(BaseSelectors.GreenButton).length > 0) {
-                cy.Click(BaseSelectors.AddButton, null);
-                FillTariffLinePorts(surchargeTariffLineDetailsList[i].FromPort, surchargeTariffLineDetailsList[i].ToPort);
-                FillTariffDate(TariffSelectors.TariffLineStartDate, surchargeTariffLineDetailsList[i].StartDate)
-                FillTariffLineSurchargePrice(1, surchargeTariffLineDetailsList[i].Step1Price);
-                FillTariffLineSurchargePrice(2, surchargeTariffLineDetailsList[i].Step2Price);
-                cy.Click(BaseSelectors.RedButton, null);
-            }
-        });
-    }
-}
-
 function CopyVirsion() {
     cy.Click(TariffSelectors.TariffActionsMenu, TariffSelectors.ContainsActions);
     cy.Click(TariffSelectors.ToggleButtonMenu, TariffSelectors.ContainsCopyIntoNewVersion);
@@ -495,6 +497,12 @@ function FillTariffLineStepPrice(stepNumber: number, price: number) {
 function FillTariffLineSurchargePrice(surchargeNumber: number, price: number) {
     if (price) {
         cy.FillLogTextBox(TariffSelectors.TariffLineSurchargePrice(surchargeNumber), price.toString());
+    }
+}
+
+function FillTariffLineFCLSurchargePrice(surchargeNumber, price: number) {
+    if (price) {
+        cy.FillLogTextBox(TariffSelectors.OceanFCLSurchargeLinePrice + surchargeNumber, price.toString());
     }
 }
 
