@@ -79,7 +79,7 @@ Feature: Create Consolidation Invoice
         When create invoice
         Then the invoice should create successfully
 
-        Scenario: Check Print Button in AR invoice
+        Scenario: Check print button in AR invoice
         Given the user in the Docsout tab in invoice
         When click print button
         Then a new page should open successfully

@@ -290,7 +290,7 @@ export class RequestAliases {
     public static readonly PostChequeDeposit = "PostChequeDeposit"
     public static readonly PutChequeDeposit = "PutChequeDeposit"
     public static readonly CashbookViewGetSingle = "CashbookViewGetSingle"
-    public static readonly getsingle = "getsingle"
+    public static readonly Getsingle = "getsingle"
     public static readonly DocumentTypeTemplateExtended = "DocumentTypeTemplateExtended"
     public static readonly DocumentTypeExtended = "DocumentTypeExtended"
     public static readonly DocumentTypeCustomField = "DocumentTypeCustomField"

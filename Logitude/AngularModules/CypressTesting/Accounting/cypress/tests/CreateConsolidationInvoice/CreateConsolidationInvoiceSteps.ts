@@ -18,6 +18,7 @@ import { ReceivableDetails } from "../../../../Shipment/cypress/models/Receivabl
 import { AccountingURLs } from '../../constants/URLs';
 import { RestAPI } from '../../../../Base/cypress/constants/RestAPI';
 import * as Assists from "../../../../Base/cypress/assists/Assists";
+import * as ARPaymentActions from '../../actions/ARPaymentActions';
 
 //#region variables
 let shipmentDetails: ShipmentDetails;
@@ -169,21 +170,17 @@ Then("the invoice should create successfully", () => {
 });
 //#endregion
 Given("the user in the Docsout tab in invoice",()=>{
-  cy.Navigate(ShipmentSelectors.ARInvoiceTHDocsOutTab,true)
+  cy.Navigate(AccountingSelectors.ARInvoiceTHDocsOutTab,true)
 
 })
 When("click print button",()=>{
-  cy.Navigate(ShipmentSelectors.ARInvoiceBPrint,false)
   cy.DefineRequestWait(RestAPI.GET, AccountingURLs.DocumentTypeTemplateExtended, RequestAliases.DocumentTypeTemplateExtended)
-  BaseAssertion.AssertStatusCode(RequestAliases.DocumentTypeTemplateExtended, 200)
+  cy.Navigate(AccountingSelectors.ARInvoiceBPrint,false)
+ 
 })
 
 Then("a new page should open successfully",()=>{
-  BaseAssertion.AssertElementContain(ShipmentSelectors.WindowHeader,'Print Shipment Invoice')
-  cy.Navigate(ShipmentSelectors.closeButtonId,false)
-  cy.Navigate(ShipmentSelectors.ARInvoiceTransferTab+BaseSelectors.LastElement,false)
-  BaseAssertion.AssertElementContain(ShipmentSelectors.TabHolder,'Constituent invoice')
-  
+  AccountingActions.AssertNewPageOpen()
 })
 
 //#region Create Consolidation Invoice
@@ -257,7 +254,7 @@ Then("the status value should be {string}", (statusValue) => {
 });
 
 Then("the status of AR Payment value should be {string}", (statusValue) => {
-  BaseAssertion.AssertElementContain(ShipmentSelectors.ARPaymentStatus, statusValue)
+  BaseAssertion.AssertElementContain(AccountingSelectors.ARPaymentStatus, statusValue)
 });
 
 //#endregion
@@ -290,5 +287,5 @@ Then("the payment should approve successfully", () => {
 });
 //#endregion
 Then("details screen should be dim",()=>{
-  AccountingActions.AssertARPaymentDetailsFieldsNotBeDisabled()
+  //ARPaymentActions.AssertARPaymentDetailsFieldsBeDisabled()
 })
