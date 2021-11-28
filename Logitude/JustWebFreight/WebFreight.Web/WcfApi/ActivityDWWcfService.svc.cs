@@ -36,7 +36,7 @@ namespace WebFreight.Web.WcfApi
             try
             {
                 if (CrmWebServicesValidator.IsDisabled(tenant)) return new List<ActivitiyDW>();
-
+                // Test
                 SecurityUtility.AuthenticationOnTenant(tenant);
                 SecurityUtility.CheckContactFeature("Activity", "READ", tenant);
                 ICRMContext objectContext = CRMContext.GetContext(tenant);
