@@ -89,7 +89,7 @@ namespace Logitude.Customs.Data.Repsitories
                          select new
                          {
                              LastMileDate = s.Delivered ? s.LastMileStatusDate : null,
-                             Mawb = c.MAWB,
+                             Mawb = d.CourierHAWB,
                              IntegratorCode = c.IntegratorCode,
                              IntegratorName = c.Card != null ? c.Card.LocalName : null,
                              Airline = c.AirlineId,
