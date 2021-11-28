@@ -44,7 +44,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
     public class CargoTrackingTenantMilestoneDefinitionExtendedController : ApiController
     {
         const string CreatedStatusCode = "C";
-        const string InProgressStatusCode = "C";
+        const string InProgressStatusCode = "I";
 
         public HttpResponseMessage GetAll()
         {
