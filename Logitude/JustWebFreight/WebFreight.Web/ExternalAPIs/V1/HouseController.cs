@@ -107,8 +107,8 @@ namespace WebFreight.Web.ExternalAPIs.V1
                     externalAPIXMLEntityValidator.ValidateHouseEntity(entity, MyContext);
                     this.InitOceanOrInlandPackages(entity);
 
-                    UnassignedDataQueryService unassignedDataQueryService = new UnassignedDataQueryService(authToken.Tenant, computingPartnerCode);
-                    entity = unassignedDataQueryService.HandleUnassignedHouseShipmentData(entity);
+                    APIUnassignedDataHandler apiUnassignedDataHandler = new APIUnassignedDataHandler(authToken.Tenant, computingPartnerCode);
+                    entity = apiUnassignedDataHandler.HandleUnassignedHouseShipmentData(entity);
 
                     HouseQueryService mappingService = new HouseQueryService(authToken.Tenant);
                     ShipmentPM entityPM = mappingService.HouseCustomDataMappingAndValidatin(entity, authToken.Tenant, computingPartnerCode);
@@ -206,8 +206,8 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         ExternalAPIMainCarriageLegsHelper externalAPIMainCarriageLegsHelper = new ExternalAPIMainCarriageLegsHelper(entityPM, authToken.Tenant);
                         externalAPIMainCarriageLegsHelper.ValidateRoutingsSeriesDates();
 
-                        entityPM.HasUnassignedData = unassignedDataQueryService.HasUnassignedData;
-                        entityPM = unassignedDataQueryService.AddHouseShipmentUnassignedData(entity, entityPM);
+                        entityPM.HasUnassignedData = apiUnassignedDataHandler.HasUnassignedData;
+                        entityPM = apiUnassignedDataHandler.AddHouseShipmentUnassignedData(entity, entityPM);
 
                         ShipmentService service = new ShipmentService(MyContext, entityPM, SecurityUtility.GetAuthenticatedUser());
                         service.Create();
@@ -376,8 +376,8 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         IShipmentsContext MyContext = ShipmentsContext.GetContext(authToken.Tenant);
                         HouseQueryService mappingService = new HouseQueryService(authToken.Tenant);
 
-                        UnassignedDataQueryService unassignedDataQueryService = new UnassignedDataQueryService(authToken.Tenant, "");
-                        entity = unassignedDataQueryService.HandleUnassignedHouseShipmentData(entity);
+                        APIUnassignedDataHandler apiUnassignedDataHandler = new APIUnassignedDataHandler(authToken.Tenant, "");
+                        entity = apiUnassignedDataHandler.HandleUnassignedHouseShipmentData(entity);
 
                         ShipmentPM HousePM = mappingService.HouseDataMappingAndValidatin(entity, authToken.Tenant, "", true);
 
@@ -414,8 +414,8 @@ namespace WebFreight.Web.ExternalAPIs.V1
 
                             this.UpdatePartners(MyContext, HousePM);
 
-                            HousePM.HasUnassignedData = unassignedDataQueryService.HasUnassignedData;
-                            HousePM = unassignedDataQueryService.AddHouseShipmentUnassignedData(entity, HousePM);
+                            HousePM.HasUnassignedData = apiUnassignedDataHandler.HasUnassignedData;
+                            HousePM = apiUnassignedDataHandler.AddHouseShipmentUnassignedData(entity, HousePM);
 
                             ShipmentService service = new ShipmentService(MyContext, HousePM, SecurityUtility.GetAuthenticatedUser());
                             service.Update(true);

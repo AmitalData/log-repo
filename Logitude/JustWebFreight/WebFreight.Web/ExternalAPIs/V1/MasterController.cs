@@ -111,8 +111,8 @@ namespace WebFreight.Web.ExternalAPIs.V1
                     IShipmentsContext MyContext = ShipmentsContext.GetContext(authToken.Tenant);
                     MasterQueryService mappingService = new MasterQueryService(authToken.Tenant);
 
-                    UnassignedDataQueryService unassignedDataQueryService = new UnassignedDataQueryService(authToken.Tenant, computingPartnerCode);
-                    entity = unassignedDataQueryService.HandleUnassignedMasterShipmentData(entity);
+                    APIUnassignedDataHandler apiUnassignedDataHandler = new APIUnassignedDataHandler(authToken.Tenant, computingPartnerCode);
+                    entity = apiUnassignedDataHandler.HandleUnassignedMasterShipmentData(entity);
 
                     ShipmentPM entityPM = mappingService.MasterCustomDataMappingAndValidatin(entity, authToken.Tenant, computingPartnerCode);
                     entityPM.IsExternalAPI = true;
@@ -176,8 +176,8 @@ namespace WebFreight.Web.ExternalAPIs.V1
                             entityPM.CreatedByPartner = (partner != null ? partner.Name : null);
                         }
 
-                        entityPM.HasUnassignedData = unassignedDataQueryService.HasUnassignedData;
-                        entityPM = unassignedDataQueryService.AddMasterShipmentUnassignedData(entity, entityPM);
+                        entityPM.HasUnassignedData = apiUnassignedDataHandler.HasUnassignedData;
+                        entityPM = apiUnassignedDataHandler.AddMasterShipmentUnassignedData(entity, entityPM);
 
                         ShipmentService service = new ShipmentService(MyContext, entityPM, SecurityUtility.GetAuthenticatedUser());
                         service.Create();
@@ -268,8 +268,8 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         IShipmentsContext MyContext = ShipmentsContext.GetContext(authToken.Tenant);
                         MasterQueryService mappingService = new MasterQueryService(authToken.Tenant);
 
-                        UnassignedDataQueryService unassignedDataQueryService = new UnassignedDataQueryService(authToken.Tenant, "");
-                        entity = unassignedDataQueryService.HandleUnassignedMasterShipmentData(entity);
+                        APIUnassignedDataHandler apiUnassignedDataHandler = new APIUnassignedDataHandler(authToken.Tenant, "");
+                        entity = apiUnassignedDataHandler.HandleUnassignedMasterShipmentData(entity);
 
                         ShipmentPM MasterPM = mappingService.MasterDataMappingAndValidatin(entity, authToken.Tenant, "", true);
 
@@ -299,8 +299,8 @@ namespace WebFreight.Web.ExternalAPIs.V1
 
                             this.UpdatePartners(MyContext, MasterPM);
 
-                            MasterPM.HasUnassignedData = unassignedDataQueryService.HasUnassignedData;
-                            MasterPM = unassignedDataQueryService.AddMasterShipmentUnassignedData(entity, MasterPM);
+                            MasterPM.HasUnassignedData = apiUnassignedDataHandler.HasUnassignedData;
+                            MasterPM = apiUnassignedDataHandler.AddMasterShipmentUnassignedData(entity, MasterPM);
 
                             ShipmentService service = new ShipmentService(MyContext, MasterPM, SecurityUtility.GetAuthenticatedUser());
                             service.Update(true);

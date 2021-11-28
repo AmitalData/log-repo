@@ -13,7 +13,7 @@ using System.Xml.Serialization;
 
 namespace Logitude.BL.CommonDataModel.APIDataContract.QueryService
 {
-    public class UnassignedDataQueryService
+    public class APIUnassignedDataHandler
 	{
 		public bool HasUnassignedData ;
 		public Dictionary<string,string> ReceivedCodes;
@@ -25,7 +25,7 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.QueryService
 		private UnassignedEntityQuery unassignedEntityQuery;
 		private string customerObjectTableName  = "Customer";
 
-		public UnassignedDataQueryService(int tenant,string computingPartnerName)
+		public APIUnassignedDataHandler(int tenant,string computingPartnerName)
 		{
 			this.tenant = tenant;
 			this.query = new CardQuery(tenant);
