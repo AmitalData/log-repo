@@ -8,7 +8,8 @@
             (click)="setFilter(x.filter)">{{x.alias}}</div>
     </div>
 
-    <button (click)='cancel()' pButton pRipple type="button" icon="pi pi-times" class="p-button-rounded p-button-secondary p-button-text"></button>
+    <button (click)='cancel()' pButton pRipple type="button" icon="pi pi-times"
+        class="p-button-rounded p-button-secondary p-button-text"></button>
 </div>
 
 <div class="no-offer" *ngIf='offersFilterd.length === 0; else offersDisplay'>
@@ -133,8 +134,12 @@
     </div>
 
     <div class="footer">
-        <button pButton (click)='cancel()' label="Cancel" class="p-button-danger"></button>
-        <button pButton (click)='sendData()' label="Next" class="p-button-primary"></button>
+        <button pButton pRipple style="color: #f57974; border-radius: 5px;background: white;" type="submit" label="Cancel"
+            class="p-button-raised  p-button-text" icon="pi pi-times" iconPos="right" (click)='cancel()'></button>
+        <button pButton pRipple style="color: #1084dc; border-radius: 5px;background: white;" type="button" label="Next"
+            class="p-button-raised p-button-text" icon="pi pi-check" iconPos="right" (click)='sendData()'></button>
+        <!-- <button pButton (click)='cancel()' label="Cancel" class="p-button-danger"></button>
+        <button pButton (click)='sendData()' label="Next" class="p-button-primary"></button> -->
     </div>
 </ng-template>
 

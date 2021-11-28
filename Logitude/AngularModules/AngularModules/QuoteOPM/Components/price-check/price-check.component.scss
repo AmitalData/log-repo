@@ -1,12 +1,12 @@
 ::ng-deep {
     .price-check {
         background: #e5e5e5;
-        
+
         .p-dialog-content {
             padding: 0;
             background: #e5e5e5;
         }
-    } 
+    }
 }
 
 :host {
@@ -59,14 +59,13 @@
             font-weight: 500;
         }
 
-
         .filter.active,
         .filter:hover {
             border-color: #1084dc;
             box-shadow: rgb(0 0 0 / 35%) 0px 5px 15px;
         }
 
-        .filter.active {        
+        .filter.active {
             background: #1084dc;
             color: white;
         }
@@ -83,7 +82,7 @@
             border-color: #1084dc transparent transparent transparent;
         }
     }
-    
+
     button {
         position: absolute;
         right: 0;
@@ -303,7 +302,7 @@
         font-family: "Poppins", sans-serif !important;
     }
 
-    .pi {     
+    .pi {
         font-family: "primeicons" !important;
     }
 
@@ -401,7 +400,7 @@
                             }
                         }
 
-                        .expansion-row-highlight  > * {
+                        .expansion-row-highlight > * {
                             color: red !important;
                         }
 
@@ -433,26 +432,13 @@
     }
 }
 
-:host {
-    .footer {
-        padding: 47px 19px;
-        text-align: right;
-        height: 193px;
+.footer {
+    padding: 47px 19px;
+    text-align: right;
+    height: 193px;
 
-        .p-button-primary {
-            color: black;
-            background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(237, 192, 147, 1) 100%) !important;
-            border: 1px solid #6a8299;
-            padding: 12px 49px !important;
-        }
-        
-        .p-button-danger {
-            width: 135px;
-            height: 49px !important;
-            background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(186, 206, 227, 1) 100%);
-            border-color: #6a8299;
-            margin-right: 40px;
-        }
+    button {
+        margin-left: 20px;
     }
 }
 
