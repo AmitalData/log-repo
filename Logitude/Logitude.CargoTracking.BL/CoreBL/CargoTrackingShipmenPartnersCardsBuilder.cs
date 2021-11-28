@@ -6,6 +6,8 @@ using Logitude.BL.ShipmentsModel.EntityQueries;
 using Logitude.CargoTracking.Def.EntityPMs;
 using Logitude.ShipmentOrderModule.BL.EntityQueryServices;
 using Logitude.ShipmentOrderModule.Def.EntityPMs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +17,7 @@ namespace Logitude.CargoTracking.BL.EntityQueryServices
     public class CargoTrackingShipmenPartnersCardsBuilder
     {
         const string ShipmentOrderEntityType = "O";
+        const string CollectorPartnerType = "COLLECTOR";
         private const string AddressSeparator = "<br>";
         readonly List<PartnerCardMetaData> partnerCardsMetaDatas = new List<PartnerCardMetaData>
             {
@@ -41,7 +44,9 @@ namespace Logitude.CargoTracking.BL.EntityQueryServices
                 new PartnerCardMetaData("consignee", "ConsigneeId", "ConsigneeName"),
                 new PartnerCardMetaData("consignee", "ConsigneeId", "ConsigneeName", true),
                 new PartnerCardMetaData("shipper", "ShipperId", "ShipperName"),
-                new PartnerCardMetaData("shipper", "ShipperId", "ShipperName", true)
+                new PartnerCardMetaData("shipper", "ShipperId", "ShipperName", true),
+                new PartnerCardMetaData("ACCOUNT MANAGER", "AccountManagerUserId", "AccountManagerUserName"),
+                new PartnerCardMetaData("SALESMAN", "SalesmanUserId", "SalesmanUserName"),
             };
         List<AddressList> partnersAddresses;
         List<PartnerCard> partnerCards = new List<PartnerCard>();
@@ -63,8 +68,53 @@ namespace Logitude.CargoTracking.BL.EntityQueryServices
             {
                 CreatePartnerCard(partnerCardMetaData);
             }
+            GetCollectorPartner();
 
             return partnerCards;
+        }
+
+        private void GetCollectorPartner()
+        {
+            if (shipmentPM.CustomerId == null)
+                return;
+            var customer = GetCard(shipmentPM.CustomerId);
+            if (customer.CollectorUser == null)
+                return;
+            var partnerCard = new PartnerCard()
+            {
+                Type = CollectorPartnerType,
+
+                Name = GetProperty(shipmentPM, customer.CollectorUser.Contact.EnglishName),
+                //Address = customer.CollectorUser..
+                PhoneNumber = customer.CollectorUser.Contact.BusinessPhone,
+                FaxNumber = customer.CollectorUser.Contact.Fax
+            };
+            partnerCards.Add(partnerCard);
+            
+        }
+
+        private void FillAddress(PartnerCard partnerCard, string collectorId)
+        {
+            var address = GetAddress(collectorId);
+            if (address == null)
+                return;
+            partnerCard.Address = GetAddressAsString(address);
+            partnerCard.PhoneNumber = address.PhoneNumber;
+            partnerCard.FaxNumber = address.FaxNumber;
+        }
+
+        private AddressList GetAddress(string id)
+        {
+            AddressQuery addressQuery = new AddressQuery(cargoShipmentPM.Tenant);
+            var addresses = addressQuery.GetAddressesByCardIds(new List<string>() { id }, cargoShipmentPM.Tenant);
+            return addresses.FirstOrDefault();
+        }
+
+        private Card GetCard(string cardId)
+        {
+            var cardRepository = new CardRepository(shipmentPM.Tenant);
+            var card = cardRepository.GetCardWithCollecter(cardId, shipmentPM.Tenant);
+            return card;
         }
 
         private void GetPartnersAddresses()
@@ -107,6 +157,8 @@ namespace Logitude.CargoTracking.BL.EntityQueryServices
                     shipmentPM.ReleasingAgentId,
                     shipmentPM.MainCarriageCarrierId,
                     shipmentPM.WarehouseLegWarehouseId,
+                    shipmentPM.AccountManagerUserId,
+                    shipmentPM.SalesmanUserId,
                     cargoShipmentPM.ShipperId
                 };
 
@@ -168,16 +220,45 @@ namespace Logitude.CargoTracking.BL.EntityQueryServices
             var address = partnersAddresses.FirstOrDefault(a => a.CardId == cardId);
             if (address != null)
             {
-                var addressLines = new List<string>() {
-                    address.Address1,
-                    address.Address2,
-                    address.ZipCode,
-                    address.City + ',' + address.CountryName
-                    };
-                return string.Join(AddressSeparator, addressLines);
+                return GetAddressAsString(address);
             }
             return null;
         }
+
+        private string GetAddressAsString(AddressList address)
+        {
+            var addressLines = new List<string>();
+            AddAddressToList(addressLines, address.Address1);
+            AddAddressToList(addressLines, address.Address2);
+            AddAddressToList(addressLines, address.ZipCode);
+            AddAddressToList(addressLines, GetCityWithCountryName(address.City, address.CountryName));
+            return string.Join(AddressSeparator, addressLines);
+        }
+
+        private string GetCityWithCountryName(string city, string countryName)
+        {
+            string address = null;
+            if (string.IsNullOrEmpty(city))
+            {
+                if (string.IsNullOrEmpty(countryName))
+                    return null;
+                address = countryName;
+                return address;
+            }
+            address = city;
+            if (string.IsNullOrEmpty(countryName))
+                return address;
+            return address + "," + countryName;
+
+        }
+
+        private void AddAddressToList(List<string> addressLines, string address)
+        {
+            if (string.IsNullOrEmpty(address))
+                return;
+            addressLines.Add(address);
+        }
+
         private string GetPartnerFaxNumberFromAddress(string cardId)
         {
             var address = this.partnersAddresses.FirstOrDefault(a => a.CardId == cardId);
@@ -208,5 +289,5 @@ namespace Logitude.CargoTracking.BL.EntityQueryServices
         public string NameFieldName { get; set; }
         public bool IsFromShipmentOrder { get; set; }
     }
-   
+
 }
