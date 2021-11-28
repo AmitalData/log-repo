@@ -25,6 +25,8 @@ namespace WebFreight.Web.Helpers
     public class ResetUserPasswordService
     {
         IGlobalContext globalContext;
+        private string templateName;
+
         public ResetUserPasswordService()
         {
             globalContext = GlobalContext.GetContext();
@@ -33,6 +35,7 @@ namespace WebFreight.Web.Helpers
         private TenantManagementPM tenantManagementPM { get; set; }
         public void ResetUserPassword(ResetPasswordParameters resetPasswordParameters, string brandingTenant)
         {
+            templateName = resetPasswordParameters.TemplateName;
             //string newPassword = PasswordGenerator.GetBCryptHashedPassword(resetPasswordParameters.Email, PasswordGenerator.Generate(8));
             TenantManagementQuery tenantManagementQuery = new TenantManagementQuery(0);
             if (!string.IsNullOrEmpty(resetPasswordParameters.BrandingTenant))
@@ -292,7 +295,7 @@ namespace WebFreight.Web.Helpers
 
         private bool IsCargoTrackingDomain()
         {
-            return (tenantManagementPM != null && tenantManagementPM.EnableBranding && !String.IsNullOrEmpty(tenantManagementPM.CustomerURL));
+            return tenantManagementPM != null && tenantManagementPM.EnableBranding && !String.IsNullOrEmpty(tenantManagementPM.CustomerURL) && string.IsNullOrEmpty(templateName);
         }
 
         private bool IsPrivateLabelDomain()
