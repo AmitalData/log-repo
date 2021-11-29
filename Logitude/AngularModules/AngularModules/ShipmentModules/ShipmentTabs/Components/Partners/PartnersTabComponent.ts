@@ -268,6 +268,8 @@ export class PartnersTabComponent implements OnInit, OnDestroy {
                 this.BuildItemsCollection();
                 this.SetAddButtonsIsDisabled();
                 this.UpdateShipmentUnassignedFields(myPartnerItem.Code);
+                this.ComputeHasUnassignedField();
+                this.CurrentSession.FireEvent("ShipmentUnassignedDataChanged");
             }
         });
     }
@@ -338,19 +340,31 @@ export class PartnersTabComponent implements OnInit, OnDestroy {
     UpdateShipmentUnassignedFields(partnerCode) {
         if (this.EntityPM.HasUnassignedData) {
             var fieldName: string;
+            var replacedId: string;
+
             if (partnerCode == "SHIPR") {
                 fieldName = "Shipper";
+                replacedId = this.EntityPM.ShipperId;
             }
             else if (partnerCode == "CONSI") {
                 fieldName = "Consignee";
+                replacedId = this.EntityPM.ConsigneeId;
             }
 
             if (fieldName) {
-                var unassignedConsignee: ShipmentUnassignedFieldPM = this.EntityPM.ShipmentUnassignedFields.filter(d => d.FieldName == fieldName)[0];
-                if (unassignedConsignee) {
-                    unassignedConsignee.ReplacedDataId = this.EntityPM.ConsigneeId;
+                var unassignedField: ShipmentUnassignedFieldPM = this.EntityPM.ShipmentUnassignedFields.filter(d => d.FieldName == fieldName)[0];
+                if (unassignedField) {
+                    unassignedField.ReplacedDataId = replacedId;
                 }
             }
+        }
+    }
+    private ComputeHasUnassignedField() {
+        this.EntityPM.HasUnassignedData = false;
+
+        var myList: ShipmentUnassignedFieldPM[] = this.EntityPM.ShipmentUnassignedFields.filter(s => AppTool.IsNullOrEmpty(s.ReplacedDataId));
+        if (myList.length > 0) {
+            this.EntityPM.HasUnassignedData = true;
         }
     }
 

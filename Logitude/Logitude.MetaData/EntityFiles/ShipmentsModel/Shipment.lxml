@@ -94166,6 +94166,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;HasUnassignedData&quot;"
     ListPropertyPath="&quot;HasUnassignedData&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -107146,6 +107147,15 @@
       FeatureTextCodeCode="&quot;Shipment.Features.ContainerStatusSimulator&quot;"
       FeatureDefaultText="&quot;Container Status Simulator&quot;"
       IsPackagable="false"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;UpdateUnassignedData&quot;"
+      FeatureTypeCode="&quot;AREA&quot;"
+      FeatureTextCodeCode="&quot;Shipment.Features.UpdateUnassignedData&quot;"
+      FeatureDefaultText="&quot;Update Unassigned Data&quot;"
+      IsPackagable="true"
       IsOld="false"
       IsCoreFeature="false"
       IsBusinessUnitEnabled="false" />

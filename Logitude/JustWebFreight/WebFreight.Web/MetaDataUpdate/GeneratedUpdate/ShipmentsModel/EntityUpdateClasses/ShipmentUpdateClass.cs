@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 {
    public class ShipmentUpdateClass
    {  		
-		public const string HashString = "e11ffeb5f3e45354dbfb7a1936141169";
+		public const string HashString = "6b62c8fa7342e753238f20a2ed1e1716";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -47006,6 +47006,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "HasUnassignedData",
 					  						ListPropertyPath =  "HasUnassignedData",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -48160,6 +48161,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 		   Feature ShipmentFeature_MULTIUPDATE = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "MULTIUPDATE", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.MULTIUPDATE", NameTextCodeDefaultText = @"Multi Update" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ShipmentObjectTable);
 
 		   Feature ShipmentFeature_ContainerStatusSimulator = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ContainerStatusSimulator", FeatureTypeCode = "ACT", Packagable = false, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.ContainerStatusSimulator", NameTextCodeDefaultText = @"Container Status Simulator" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ShipmentObjectTable);
+
+		   Feature ShipmentFeature_UpdateUnassignedData = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UpdateUnassignedData", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.UpdateUnassignedData", NameTextCodeDefaultText = @"Update Unassigned Data" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ShipmentObjectTable);
 
    
 	    

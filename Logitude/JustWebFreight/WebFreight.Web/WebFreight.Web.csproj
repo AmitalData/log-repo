@@ -1013,6 +1013,7 @@
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\PortTimeZoneViewsController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\ProductItemViewsController.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\ReportExecutionLogViewsController.Generated.cs" />
+    <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\UnassignedEntityViewsController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\VatUniquePartnerTypeViewsController.Generated.cs" />
     <Compile Include="CommonDataModel\DomainServices\CommonDataDomainService.WarehouseWeightMeasurement.cs" />
     <Compile Include="CommonDataModel\DomainServices\CommonDataDomainService.WarehouseWeightRounding.cs" />

@@ -347,6 +347,7 @@
     <Content Include="ShipmentModules\ShipmentLogBox\Components\Logbox\ApprovePaymentBaseComponent.html" />
     <Content Include="ShipmentModules\ShipmentLogBox\Components\Logbox\PrivateLabelApprovePaymentComponent.html" />
     <Content Include="Shipment\Components\Helpers\ContainerHelperComponent.html" />
+    <Content Include="Shipment\Components\UnassigedData\UpdateUnassigedDataComponent.html" />
     <Content Include="TasksApp\Components\TasksAppComponent.html" />
     <Content Include="TasksApp\Scripts\tasks-app.js" />
     <Content Include="_Resources\css\PrimeWebComponent.css" />
@@ -381,6 +382,7 @@
     <TypeScriptCompile Include="Common\EntityLists\PortTimeZoneList.ts" />
     <TypeScriptCompile Include="Common\EntityLists\ProductItemList.ts" />
     <TypeScriptCompile Include="Common\EntityLists\ReportExecutionLogList.ts" />
+    <TypeScriptCompile Include="Common\EntityLists\UnassignedEntityList.ts" />
     <TypeScriptCompile Include="Common\EntityPMInitServices\PortTimeZonePMInitService.ts" />
     <TypeScriptCompile Include="Common\EntityPMInitServices\ReportExecutionLogPMInitService.ts" />
     <TypeScriptCompile Include="Common\EntityPMInitServices\ShippingLinePMInitService.ts" />
@@ -7530,6 +7532,7 @@
     <TypeScriptCompile Include="Shipment\Components\SplitShipment\SplitShipmentComponent.ts" />
     <TypeScriptCompile Include="Shipment\Components\Spotlight\SpotLightDateComponent.ts" />
     <TypeScriptCompile Include="Shipment\Components\TabsBuilder\ShipmentTabsBuilder.ts" />
+    <TypeScriptCompile Include="Shipment\Components\UnassigedData\UpdateUnassigedDataComponent.ts" />
     <TypeScriptCompile Include="Shipment\Components\Workspaces\AMANACComponent.ts" />
     <TypeScriptCompile Include="Shipment\Components\Workspaces\ContainersFUsComponent.ts" />
     <TypeScriptCompile Include="Shipment\DataContract\LogboxShipmentExportExcelArgs.ts" />

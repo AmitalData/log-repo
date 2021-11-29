@@ -48,7 +48,7 @@
                                                                             [Text]="ShipperName"
                                                                             [ObjectTableName]="ObjectTableName"
                                                                             [DataContext]="DataContext"
-                                                                            [HideColumns]="true"></LogTextBox>
+                                                                            [HideLastColumn]="true"></LogTextBox>
                                                             </td>
                                                             <td>
                                                                 <div></div>
@@ -61,7 +61,7 @@
                                                             </td>
 
                                                             <td style="width:256px;">
-                                                                <AddressTemplate [Address]="ShipperAddressList"></AddressTemplate>
+                                                                <AddressTemplate [Address]="ShipperAddressList" [Right]="18"></AddressTemplate>
                                                             </td>
 
                                                             <td>
@@ -76,7 +76,7 @@
                                                                             [Text]="ConsigneeName"
                                                                             [ObjectTableName]="ObjectTableName"
                                                                             [DataContext]="DataContext"
-                                                                            [HideColumns]="true"></LogTextBox>
+                                                                            [HideLastColumn]="true"></LogTextBox>
                                                             </td>
                                                             <td>
                                                                 <div></div>
@@ -89,7 +89,7 @@
                                                             </td>
 
                                                             <td style="width:256px;">
-                                                                <AddressTemplate [Address]="ConsigneeAddressList"></AddressTemplate>
+                                                                <AddressTemplate [Address]="ConsigneeAddressList" [Right]="18"></AddressTemplate>
                                                             </td>
 
                                                             <td>
@@ -127,7 +127,7 @@
                                                     <table>
                                                         <tr class="FormFieldRow"  *ngIf="IsShipperVisible">
                                                             <td style="width:70px;" class="Label">Shipper</td>
-                                                            <td style="width:230px;">
+                                                            <td style="width:248px;">
                                                                 <LogLov [ObjectFieldName]="'UpdatedShipperId'"
                                                                         [SelectedValue]="UpdatedShipperId"
                                                                         [ObjectTableName]="ObjectTableName"
@@ -142,7 +142,7 @@
                                                             </td>
                                                             <td>
                                                                 <div class="MediaFill">
-                                                                    <div class="LeftCenter" style="width: 12px; height: 12px;">
+                                                                    <div class="LeftCenter" style="width: 12px; height: 12px; left:3px;">
                                                                         <div class="GreenAddButton" (mousedown)="AddPartnerClicked('Shipper')"></div>
                                                                     </div>
                                                                 </div>
@@ -154,8 +154,8 @@
                                                                 <div></div>
                                                             </td>
 
-                                                            <td style="width:230px;">
-                                                                <AddressTemplate [Address]="UpdatedShipperAddressList" [Right]="36"></AddressTemplate>
+                                                            <td style="width:248px;">
+                                                                <AddressTemplate [Address]="UpdatedShipperAddressList" [Right]="18"></AddressTemplate>
                                                             </td>
 
                                                             <td>
@@ -165,7 +165,7 @@
 
                                                         <tr class="FormFieldRow" *ngIf="IsConsigneeVisible">
                                                             <td style="width:70px;" class="Label">Consignee</td>
-                                                            <td style="width:230px;">
+                                                            <td style="width:248px;">
                                                                 <LogLov [ObjectFieldName]="'ConsigneeId'"
                                                                         [SelectedValue]="UpdatedConsigneeId"
                                                                         [ObjectTableName]="ObjectTableName"
@@ -179,7 +179,7 @@
                                                             </td>
                                                             <td>
                                                                 <div class="MediaFill">
-                                                                    <div class="LeftCenter" style="width: 12px; height: 12px;">
+                                                                    <div class="LeftCenter" style="width: 12px; height: 12px; left:3px;">
                                                                         <div class="GreenAddButton" (mousedown)="AddPartnerClicked('Consignee')"></div>
                                                                     </div>
                                                                 </div>
@@ -191,8 +191,8 @@
                                                                 <div></div>
                                                             </td>
 
-                                                            <td style="width:230px;">
-                                                                <AddressTemplate [Address]="UpdatedConsigneeAddressList" [Right]="36"></AddressTemplate>
+                                                            <td style="width:248px;">
+                                                                <AddressTemplate [Address]="UpdatedConsigneeAddressList" [Right]="18"></AddressTemplate>
                                                             </td>
 
                                                             <td>
