@@ -764,7 +764,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
             {
                 return true;
             }
-            else if (entityPM.CustomerId == entityPM.CustomerId == entityPM.Notify1Id)
+            else if (entityPM.CustomerId == entityPM.Notify1Id)
             {
                 return true;
             }
