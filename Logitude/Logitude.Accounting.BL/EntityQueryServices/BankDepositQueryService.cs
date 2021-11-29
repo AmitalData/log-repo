@@ -23,6 +23,7 @@ using Logitude.BL.Interfaces;
 using Microsoft.Practices.Unity;
 using Logitude.BL.Helpers;
 using Logitude.BL.Resolvers;
+using Logitude.Accounting.BL.CloseTables;
 
 namespace Logitude.Accounting.BL.EntityQueryServices
 {
@@ -372,6 +373,31 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             journalLineCredit.DebitAccountId = journalLineDebit.DebitAccountId;
             journalPM.JournalLines.Add(journalLineCredit);
             journalPM.JournalLines.Add(journalLineDebit);
+
+
+            // get cheque transactions from deposit
+            LedgerTransactionQueryService ledgerTransactionQuery = new LedgerTransactionQueryService(tenant);
+            List<LedgerTransactionPM> depositTransactions = ledgerTransactionQuery.GetTransactionBySourceEntity(bankDepositId,AccountingEntityValues.ChequeDeposit, tenant);
+
+            var chequeTransactions = depositTransactions.Where(transaction => transaction.Reference2 == chequePM.ChequeNumber).ToList();
+            var count = 1;
+            foreach (var transaction in chequeTransactions)
+            {
+                var journalReconcile = new JournalReconcilePM()
+                {
+                    ChangeSetOp = ChangeSetOperation.Insert,
+                    Tenant = journalPM.Tenant,
+                    JournalId = journalPM.Id,
+                    LedgerTransactionId = transaction.Id,
+                    Line = count++,
+                    CurrencyId = transaction.CurrencyId,
+                    ReconciliationAmount = transaction.ForeignAmountDebit - transaction.ForeignAmountCredit,
+                    IsPartial = false
+                };
+                journalPM.JournalReconciles.Add(journalReconcile);
+            }
+
+           
 
 
             // save journal
