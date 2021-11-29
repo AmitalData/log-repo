@@ -1,4 +1,5 @@
 ﻿
+using Logitude.BL.CommonDataModel.Helpers;
 using Logitude.CargoTracking.BL.CargoTrackingServices.HelperClasses;
 using Logitude.CargoTracking.BL.CargoTrackingServices.Services;
 using Logitude.CargoTracking.BL.CoreBL.Batch;
@@ -44,7 +45,7 @@ namespace WebFreight.Web.Controllers.AccountingModel
                     SecurityUtility.AuthenticationOnTenant(Args.Tenant.Value);
 
                 int tenant = authToken.Tenant;
-                CreateBatchTaskExecution(Args, "Build Cargo Tracking Shipments", "Logitude.CargoTracking.BL.CoreBL.Batch.BuildCargoTrackingShipments,Logitude.CargoTracking.BL", tenant);
+                CreateBatchTaskExecution(Args, BatchTaskNames.BuildCargoTrackingShipments, "Logitude.CargoTracking.BL.CoreBL.Batch.BuildCargoTrackingShipments,Logitude.CargoTracking.BL", tenant);
                 return Request.CreateResponse(HttpStatusCode.OK, Args);
             }
 

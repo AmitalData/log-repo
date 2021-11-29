@@ -54,7 +54,15 @@ where Id = @CountryId
     declare  @CombinedCode varchar(30)
 	set @CombinedCode = ( @CountryCode +@Code )
   declare  @SearchFields nvarchar(1000)
-  set @SearchFields = @Code + ',' + @EnglishName +  ',' +@LocalName +  ',' +@CountryCode + ','+@CountryName+ ',' + @CombinedCode
+
+ 
+
+  set @SearchFields = @Code + ',' + @EnglishName;
+  if(@LocalName is not null) begin set @SearchFields +=   (',' + @LocalName);end
+  if(@CountryCode is not null) begin set @SearchFields +=   (',' + @CountryCode);end
+	if(@CountryName is not null) begin set @SearchFields +=   (',' + @CountryName);end
+	 if(@CombinedCode is not null) begin set @SearchFields +=   (',' + @CombinedCode);end
+
   update ports set SearchFields =  SUBSTRING(@SearchFields,0, 999) , CombinedCode = @CombinedCode  where id = @PortId and Tenant = @Tenant
 
 
@@ -63,6 +71,7 @@ where Id = @CountryId
   end
 
     end
+
 
 ]]>
   </SqlScript>

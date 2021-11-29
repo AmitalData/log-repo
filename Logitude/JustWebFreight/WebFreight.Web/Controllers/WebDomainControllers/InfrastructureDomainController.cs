@@ -146,7 +146,10 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                             loggedUser = myUserRepository.GetSingleUser(loggedUserId, 0);
                         }
                     }
-
+                    if (loggedUser == null)
+                    {
+                        loggedUser = myUserRepository.GetSingleUserByEmail(loggedUserEmail, tenant, false);
+                    }
                     if (loggedUser != null)
                     {
                         CRMFilterSettingRepository myRepository = new CRMFilterSettingRepository(crmContext);

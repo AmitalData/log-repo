@@ -197,6 +197,7 @@ export class ContactsTabComponent implements OnDestroy {
                     args.Contact = myContactPM;
                     args.IsContactDirty = true;
                     args.IsPartnerDirty = isCardEntityDirty;
+                    args.ExternalId = myContactPM.ExternalId;
 
                     this.DomainService.SetPartner(args, this.EntityPM);
 

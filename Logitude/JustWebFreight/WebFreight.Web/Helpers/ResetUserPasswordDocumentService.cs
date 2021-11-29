@@ -21,7 +21,7 @@ namespace WebFreight.Web.Helpers
 
             string path = "?email=" + resetPasswordParameters.Email + "&reset_request_number=" + emailBodyArgs.ReqestNumber + "&ischamplogin=" + resetPasswordParameters.IsChampLogin;
             result.HtmlTemplate = result.HtmlTemplate.Replace("[ResetPasswordURL]", path);
-
+            result.HtmlTemplate = result.HtmlTemplate.Replace("[InvitationEmail]", resetPasswordParameters.Email); 
             return result;
         }
 

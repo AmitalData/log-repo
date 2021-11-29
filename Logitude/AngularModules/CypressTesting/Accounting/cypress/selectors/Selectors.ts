@@ -79,6 +79,12 @@ export class AccountingSelectors extends RegexSelectors {
     public static readonly ARPaymentBApprove = '#ARPaymentBApprove';
     public static readonly ARPaymentCurrency = '#ARPayment_PaymentCurrencyId';
     public static readonly PaymentHeaderStatus = "[data-cy='Header_Status:']";
+    public static readonly ARInvoiceBPrint = "#ARInvoiceBPrint";
+    public static readonly ARInvoiceTHDocsOutTab = "#ARInvoiceTHDocsOut";
+    public static readonly closeButtonId = "#closeButtonId";
+    public static readonly ARInvoiceTransferTab = "[id^='ARInvoiceTHAccounting']"
+    public static readonly ARPaymentStatus = "[data-cy='Header_Status:']";
+
     //#endregion
 
     //#region ARInvoice

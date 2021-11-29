@@ -7,9 +7,10 @@ Feature: Ocean LCL Price Check
     Scenario: Login and create new ocean LCL freight cost
         Given the user logged in and navigate to tariff workspace
         And an ocean LCL freight cost with the following details
-            | Name      | TestOceanLCLFreightCost |
-            | Seller    | MSCU                    |
-            | StartDate | Today                   |
+            | Name           | TestOceanLCLFreightCost        |
+            | Seller         | Yangming marine transport corp |
+            | StartDate      | Today                          |
+            | ExpirationDate | Today                          |
         When create freight cost
         Then the freight cost should create successfully
 
@@ -21,9 +22,23 @@ Feature: Ocean LCL Price Check
         When approve version
         Then the version should approve successfully
 
-    Scenario: Edit air surcharge cost if need
+    Scenario: Create new ocean LCL surcharge cost
+        Given an ocean FCL surcharge cost with the following details
+            | Name   | TestOceanFCLSurchargeCost      |
+            | Seller | Yangming marine transport corp |
+        And add the following surcharges
+            | Name                     |
+            | Bunker Adjustment Factor |
+            | B/L Fee                  |
+        When create surcharge cost
+        Then the surcharge cost should create successfully
+
+    Scenario: Edit Surcharge
         Given the user in "OceanLCL" surchage workspace
-        And open surchage with "Maersk lines; INC." as seller
+        And open surchage with "Yangming marine transport corp" as seller
+        And add the following surcharge line
+            | FromPort | ToPort | StartDate | Step1Price | Step2Price |
+            | LHR      | MIA    | Today     | 30         | 30         |
         When copy into new version if start date is not "Today"
         Then new version should approve successfully
 
@@ -35,6 +50,6 @@ Feature: Ocean LCL Price Check
             | ChargeableWeight | 10  |
         When search about prices
         Then ocean LCL price should equal the following
-            | AirFreight | 200.00 |
-            | Surcharges | 150.00 |
-            | Total      | 350.00 |
+            | AirFreight | 200.00 ₪ |
+            | Surcharges | 60.00 ₪  |
+            | Total      | 260.00 ₪ |

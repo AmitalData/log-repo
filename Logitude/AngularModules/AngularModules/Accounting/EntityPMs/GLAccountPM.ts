@@ -911,4 +911,4 @@ export class GLAccountPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

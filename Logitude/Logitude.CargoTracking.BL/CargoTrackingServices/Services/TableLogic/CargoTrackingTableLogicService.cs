@@ -1,4 +1,5 @@
 ﻿
+using Logitude.CargoTracking.BL.CargoTrackingServices.HelperClasses;
 using Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTrackingSetLogic;
 using Logitude.CargoTracking.Data.EntityLists;
 using System;
@@ -15,23 +16,23 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableLogic
     {
         const int ShipmentOrderTableCondition = 3;
 
-        public static void SetTableLogic(DataRow tableRow, string tableName, int conditionNumber, List<CargoTrackingMilestoneList> milestoneList)
+        public static void SetTableLogic(SetTableLogicArgs args)
         {
-            switch (tableName)
+            switch (args.TableName)
             {
                 case "CargoTrackingPorts":
                     {
-                        CargoTrackingPortsLogicService.SetTableLogic(tableRow, conditionNumber);
+                        CargoTrackingPortsLogicService.SetTableLogic(args.TableRow, args.ConditionNumber);
                         break;
                     }
                 case "CargoTrackingShipments":
                     {
-                        SetCargoTrackingShipmentsLogic(conditionNumber, tableRow, milestoneList);
+                        SetCargoTrackingShipmentsLogic(args);
                         break;
                     }
                 case "CargoTrackingShipmentSearches":
                     {
-                        CargoTrackingShipmentSearchesLogicService.SetTableLogic(tableRow, conditionNumber);
+                        CargoTrackingShipmentSearchesLogicService.SetTableLogic(args.TableRow, args.ConditionNumber);
                         break;
                     }
 
@@ -39,12 +40,12 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableLogic
 
        }
 
-        private static void SetCargoTrackingShipmentsLogic(int conditionNumber, DataRow tableRow, List<CargoTrackingMilestoneList> milestoneList)
+        private static void SetCargoTrackingShipmentsLogic(SetTableLogicArgs args)
         {
-            if (conditionNumber == ShipmentOrderTableCondition)
-                CargoTrackingShipmentsOrderLogicService.SetTableLogic(tableRow, milestoneList);
+            if (args.ConditionNumber == ShipmentOrderTableCondition)
+                CargoTrackingShipmentsOrderLogicService.SetTableLogic(args);
             else
-                CargoTrackingShipmentsLogicService.SetTableLogic(tableRow, conditionNumber, milestoneList);
+                CargoTrackingShipmentsLogicService.SetTableLogic(args);
         }
     }
 

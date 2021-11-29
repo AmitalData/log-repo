@@ -11,5 +11,6 @@ export class APPaymentSelectors {
     public static readonly RegisterDate = '#date_APPayment_RegisterDate';
     public static readonly APPaymentBranch = '#APPayment_BranchId';
     public static readonly ShipmentPaymentDisconnectButton = "#Disconnect";
+  
 
 }

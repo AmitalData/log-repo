@@ -34,7 +34,7 @@ Feature: Air Price Check
         When create surcharge cost
         Then the surcharge cost should create successfully
 
-    Scenario: Add surcharge lines in draft version tab
+    Scenario: Edit Surcharge
         Given the user in "Air" surchage workspace
         And open surchage with "Air Astana" as seller
         And add the following surcharge line

@@ -142,25 +142,25 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
         public List<CustomerAdditionalServiceDW> GetCustomerAdditionalServicesDW(int tenant)
         {
-            //List<CustomerAdditionalServiceDW> result =
+            List<CustomerAdditionalServiceDW> result =
 
-            //    (from a in repository.context.CustomerAdditionalServices.Include("AdditionalService").Include("Customer").Include("Customer.Card.PrimaryContact").Include("Customer.SalesmanUser")
-            //     where a.Tenant == tenant
-            //     select new CustomerAdditionalServiceDW()
-            //     {
-            //         CustomerId = a.CustomerId,
-            //         AdditionalServiceId = a.AdditionalServiceId,
-            //         Tenant = a.Tenant,
-            //         CustomerName = a.Customer != null ? a.Customer.Card.EnglishName : null,
-            //         AdditionalServiceName = a.AdditionalService != null ? a.AdditionalService.Name : null,
-            //         Potential = a.Potential,
-            //         PrimaryContact = a.Customer != null ? (a.Customer.Card.PrimaryContact != null ? a.Customer.Card.PrimaryContact.EnglishName : null) : null,
-            //         Salesman = a.Customer != null ? (a.Customer.SalesmanUser != null ? a.Customer.SalesmanUser.Contact.EnglishName : null) : null,
-            //         SalesmanUserId = a.Customer != null ? a.Customer.SalesmanUserId : null,
-            //         BusinessUnitId = a.Customer != null ? (a.Customer.SalesmanUser != null ? a.Customer.SalesmanUser.BusinessUnitId : null) : null,
-            //     }).ToList();
+                (from a in repository.context.CustomerAdditionalServices.Include("AdditionalService").Include("Customer").Include("Customer.Card.PrimaryContact").Include("Customer.SalesmanUser")
+                 where a.Tenant == tenant
+                 select new CustomerAdditionalServiceDW()
+                 {
+                     CustomerId = a.CustomerId,
+                     AdditionalServiceId = a.AdditionalServiceId,
+                     Tenant = a.Tenant,
+                     CustomerName = a.Customer != null ? a.Customer.Card.EnglishName : null,
+                     AdditionalServiceName = a.AdditionalService != null ? a.AdditionalService.Name : null,
+                     Potential = a.Potential,
+                     PrimaryContact = a.Customer != null ? (a.Customer.Card.PrimaryContact != null ? a.Customer.Card.PrimaryContact.EnglishName : null) : null,
+                     Salesman = a.Customer != null ? (a.Customer.SalesmanUser != null ? a.Customer.SalesmanUser.Contact.EnglishName : null) : null,
+                     SalesmanUserId = a.Customer != null ? a.Customer.SalesmanUserId : null,
+                     BusinessUnitId = a.Customer != null ? (a.Customer.SalesmanUser != null ? a.Customer.SalesmanUser.BusinessUnitId : null) : null,
+                 }).ToList();
 
-            return new List<CustomerAdditionalServiceDW>();
+            return result;
         }
     }
 }

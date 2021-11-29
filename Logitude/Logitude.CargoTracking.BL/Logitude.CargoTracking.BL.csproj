@@ -81,6 +81,7 @@
     <Compile Include="CargoTrackingServices\DBTablesCopy\Generated\CargoTrackingShipmentSearchDxml.Generated.cs" />
     <Compile Include="CargoTrackingServices\DBTablesCopy\Generated\CargoTrackingTransportModeDxml.Generated.cs" />
     <Compile Include="CargoTrackingServices\DBTablesCopy\Generated\CargoTrackingWatermarkDxml.Generated.cs" />
+    <Compile Include="CargoTrackingServices\HelperClasses\CargoTenantMilestoneDefinitions.cs" />
     <Compile Include="CargoTrackingServices\HelperClasses\CargoTrackingArgs.cs" />
     <Compile Include="CargoTrackingServices\HelperClasses\BulkDataPreperation.cs" />
     <Compile Include="CargoTrackingServices\HelperClasses\CargoTrackingShipmentResources.cs" />
@@ -96,6 +97,7 @@
     <Compile Include="CargoTrackingServices\HelperClasses\CargoTrackingIncrementalArgs.cs" />
     <Compile Include="CargoTrackingServices\HelperClasses\RecordUpdated.cs" />
     <Compile Include="CargoTrackingServices\HelperClasses\RunBulkArgs.cs" />
+    <Compile Include="CargoTrackingServices\HelperClasses\SetTableLogicArgs.cs" />
     <Compile Include="CargoTrackingServices\HelperClasses\SplittedDataArguments.cs" />
     <Compile Include="CargoTrackingServices\HelperClasses\UpdateCargoTrackingRecords.cs" />
     <Compile Include="CargoTrackingServices\Services\CargoTrackingSetLogic\CargoTrackingShipmentsOrderLogicService.cs" />
@@ -133,9 +135,11 @@
     <Compile Include="CloseTables\DetailsClassesGenerated\CargoTrackingMilestoneDetails.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\CargoTrackingHeaderEntityTypeStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\CargoTrackingMilestoneStruct.Generated.cs" />
+    <Compile Include="CoreBL\Batch\BatchUpdateShipmentsForCargoIncremental.cs" />
     <Compile Include="CoreBL\Batch\BuildCargoTrackingShipments.cs" />
     <Compile Include="CoreBL\CargoTrackingMilestoneBuilder.cs" />
     <Compile Include="CoreBL\CargoTrackingUsersShipmentService.cs" />
+    <Compile Include="CoreBL\UpdateShipmetsBatchArgs.cs" />
     <Compile Include="DataContracts\MixPanelTrackingEvent.cs" />
     <Compile Include="EntityDataMappings\CargoTrackingCardDataMapping.cs" />
     <Compile Include="EntityDataMappings\CargoTrackingCountryDataMapping.cs" />
@@ -164,6 +168,7 @@
     <Compile Include="EntityQueryServices\CargoTrackingIncrementalStatQueryService.cs" />
     <Compile Include="CoreBL\CargoTrackingShipmenPartnersCardsBuilder.cs" />
     <Compile Include="CoreBL\CargoTrackingShipmentMappingService.cs" />
+    <Compile Include="EntityQueryServices\CargoTrackingMilestoneQueryService.cs" />
     <Compile Include="EntityQueryServices\CargoTrackingShipmentQueryService.cs" />
     <Compile Include="CoreBL\CargoTrackingShipmentRouteBuilder.cs" />
     <Compile Include="EntityQueryServices\CargoTrackingTransportModeQueryService.cs" />

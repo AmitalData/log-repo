@@ -16,6 +16,6 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.HelperClasses
         public CargoTrackingArguments CargoTrackingArguments  { get; set; }
         public bool IsUpdateFromBuild { get; set; }
         public DataTable DataTableSchema { get; set; }
-
+        public DateTime? MaxDate { get; internal set; }
     }
 }

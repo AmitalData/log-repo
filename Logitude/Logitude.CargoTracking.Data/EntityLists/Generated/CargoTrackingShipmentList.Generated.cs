@@ -53,7 +53,7 @@ namespace Logitude.CargoTracking.Data.EntityLists
        [DataMember]
        public DateTime? PickupDate  { get; set; }
        [DataMember]
-       public DateTime CreateDate  { get; set; }
+       public DateTime? CreateDate  { get; set; }
        [DataMember]
        public string SecurityKey  { get; set; }
        [DataMember]

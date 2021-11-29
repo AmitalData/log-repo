@@ -8,8 +8,10 @@ import { priceCheck } from "cypress/models/priceCheck";
 import { TariffSelectors } from "../../selectors/Selectors";
 import { BaseSelectors } from "../../../../Base/cypress/selectors/BaseSelectors";
 import * as Assists from "../../../../Base/cypress/assists/Assists";
+import { SurchargeCostTariffLineDetails } from "../../models/SurchargeCostTariffLineDetails";
+import { SurchargeDetails } from "../../models/SurchargeDetails";
 
-var isSameDate : Boolean
+var isSameDate: Boolean
 
 //#region ocean LCL Create Freight Cost 
 Given("the user logged in and navigate to tariff workspace", () => {
@@ -26,7 +28,7 @@ When("create freight cost", () => {
 });
 
 Then("the freight cost should create successfully", () => {
-    Actions.ValidateCreateFreightCost(); 
+    Actions.ValidateCreateFreightCost();
 });
 //#endregion
 
@@ -48,9 +50,29 @@ Then("the version should approve successfully", () => {
 });
 //#endregion
 
+//#region create ocean LCL surcharge cost
+Given("an ocean FCL surcharge cost with the following details", (dataTable) => {
+    Actions.BackToTariffWorkspace()
+    let tariffDetails = Assists.CreateInstance<TariffDetails>(dataTable, true);
+    Actions.FillNewSurchargeCost("Ocean LCL", tariffDetails);
+  });
+  
+  Given("add the following surcharges", (dataTable) => {
+    let surchargeDetailsList = Assists.CreateSet<SurchargeDetails>(dataTable);
+    Actions.FillSurcharges(surchargeDetailsList);
+  });
+  
+  When("create surcharge cost", () => {
+    Actions.CreateTariff();
+  });
+  
+  Then("the surcharge cost should create successfully", () => {
+    Actions.ValidateCreateSurchargeCost();
+  });
+  //#endregion
+
 //#region Edit Surcharge
 Given("the user in {string} surchage workspace", (SurchargeType) => {
-    Actions.BackToTariffWorkspace()
     Actions.OpenSurchargeQueries(SurchargeType);
 });
 
@@ -62,29 +84,32 @@ Given("open surchage with {string} as seller", (SellerName) => {
     Actions.OpenTheFirstResult();
 });
 
+Given("add the following surcharge line", (dataTable) => {
+    cy.wait(3000)
+    let surchargeCostTariffLineDetails = Assists.CreateSet<SurchargeCostTariffLineDetails>(dataTable);
+    Actions.AddSurchargeCostTariffLines(surchargeCostTariffLineDetails)
+    Actions.CheckIfVersionApproved2()
+});
+
 When("copy into new version if start date is not {string}", (startdate) => {
     let NowDate = BaseActions.GetTodayDate()
-    Actions.CheckIfVersionApproved2();
     cy.get(BaseSelectors.PackageGrid("4")).find(BaseSelectors.SpanElement).invoke(BaseSelectors.TextElement).then((text) => {
-        if(text.trim()==NowDate){
-            cy.log("Use Same Tariff Line")
+        if (text.trim() == NowDate) {
             isSameDate = true
-        }else{
-           Actions.CopyIntoNewVersion(startdate)
+        } else {
+            Actions.CopyIntoNewVersion(startdate)
         }
     })
 });
 
 Then("new version should approve successfully", () => {
-    if(isSameDate){
-        cy.log("Same Date")
-    }else{
+    if (isSameDate) {
+    } else {
         Actions.ValidateApproveTariffVersion
     }
     Actions.SetTariffNumberFromTitle(TariffSelectors.TariffNumberShortTitle);
     cy.BackButton(TariffSelectors.ContainsBackButton("Ocean LCL"))
-    cy.Click(BaseSelectors.BackBottonBodyClass,"Tariff");
-    
+    cy.Click(BaseSelectors.BackBottonBodyClass, "Tariff");
 })
 
 //#region Check Ocean LCL Price 
@@ -106,5 +131,4 @@ Then("ocean LCL price should equal the following", (dataTable) => {
     let PriceCheckDetails = Assists.CreateInstance<priceCheck>(dataTable, true);
     Actions.ValidateTariffPriceCheck(PriceCheckDetails);
 });
-
 //#endregion

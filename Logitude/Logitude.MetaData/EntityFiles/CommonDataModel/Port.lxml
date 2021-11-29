@@ -3206,7 +3206,7 @@
     DisplayInSearchWindowList="true"
     PMPropertyPath="&quot;StateName&quot;"
     ListPropertyPath="&quot;StateName&quot;"
-    DisplayInLookUpIndex="4"
+    DisplayInLookUpIndex="2"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="2"

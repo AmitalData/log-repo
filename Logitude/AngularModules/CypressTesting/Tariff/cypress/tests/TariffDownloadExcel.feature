@@ -1,13 +1,14 @@
 @devrelease @FeatureToggle
 Feature: Download Excel in Tariff
- The user will create new Ocean LCL freight cost tariff and then downloads the excel file.
+    The user will create new Ocean LCL freight cost tariff and then downloads the excel file.
 
     Scenario: Create new ocean LCL freight cost
         Given the user logged in and navigate to tariff workspace
         And an "Ocean LCL" freight cost with the following details
-            | Name      | TestOceanLCLFreightCost |
-            | Seller    | MSCU                    |
-            | StartDate | Today                   |
+            | Name           | TestOceanLCLFreightCost |
+            | Seller         | MSCU                    |
+            | StartDate      | Today                   |
+            | ExpirationDate | Today                   |
         And the following All-In charges
             | Name                     |
             | Bunker Adjustment Factor |

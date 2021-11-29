@@ -432,6 +432,31 @@
                                                 </td>
                                                 <td><div></div></td>
                                             </tr>
+                                            <tr *ngIf="EnableFollowUpData || IsVendor">
+                                                <td style="width: 150px;">
+                                                    <LogLabel [ObjectFieldName]="'FollowupDate'" [ObjectTableName]="ObjectTableName"
+                                                              [DataContext]="DataContext"></LogLabel>
+                                                </td>
+                                                <td style="width:150px">
+                                                    <LogDatePicker [ObjectFieldName]="'FollowupDate'" [ObjectTableName]="ObjectTableName"
+                                                                   [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
+                                                </td>
+                                                <td></td>
+                                            </tr>
+                                            <tr style="height:5px"></tr>
+                                            <tr *ngIf="EnableFollowUpData || IsVendor">
+                                                <td style="width: 150px;">
+                                                    <LogLabel [ObjectFieldName]="'FollowupNotes'" [ObjectTableName]="ObjectTableName"
+                                                              [DataContext]="DataContext"></LogLabel>
+                                                </td>
+                                                <td>
+                                                    <LogTextBox style="width:240px;" [IsMultiline]="true" [ObjectFieldName]="'FollowupNotes'"
+                                                         [HideColumns]="true" [ObjectTableName]="ObjectTableName" [InputType]="'nText'"
+                                                          [DataContext]="DataContext"></LogTextBox>
+
+                                                </td>
+                                                <td></td>
+                                            </tr>
                                             <tr><td><div></div></td></tr>
                                         </table>
                                     </td>

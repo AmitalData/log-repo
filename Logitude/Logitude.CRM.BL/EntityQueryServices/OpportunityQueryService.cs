@@ -790,39 +790,39 @@ namespace Logitude.CRM.BL.EntityQueryServices
         public List<OpportunityDW> GetOpportunitiesDWByDates(int tenant, DateTime fromDate, DateTime toDate, int skip, int take)
         {
 
-            //ICRMContext context = MainContext as ICRMContext;
-            //List<OpportunityDW> OpportunityDWList = (from a in context.Opportunities.Include("OpportunityType").Include("Rating").Include("OpportunityClosingReason").Include("LeadSource")
-            //                                        where a.Tenant == tenant && a.CreateDate >= fromDate && a.CreateDate <= toDate
-            //                                         select new OpportunityDW()
-            //                                         {
+            ICRMContext context = MainContext as ICRMContext;
+            List<OpportunityDW> OpportunityDWList = (from a in context.Opportunities.Include("OpportunityType").Include("Rating").Include("OpportunityClosingReason").Include("LeadSource")
+                                                     where a.Tenant == tenant && a.CreateDate >= fromDate && a.CreateDate <= toDate
+                                                     select new OpportunityDW()
+                                                     {
 
-            //                                             OpportunityId = a.Id,
-            //                                             CustomerId = a.CustomerId,
-            //                                             Subject = a.Subject,
-            //                                             OpportunityTypeId = a.OpportunityTypeId,
-            //                                             OpportunityTypeName = a.OpportunityType != null ? a.OpportunityType.Name : "",
-            //                                             StageId = a.StageId,
-            //                                             StageName = a.Stage != null ? a.Stage.Name : "",
-            //                                             EstimatedClosingDate = a.EstimatedClosingDate,
-            //                                             CreateDate = a.CreateDate,
-            //                                             UpdateDate = a.UpdateDate,
-            //                                             RatingCode = a.RatingCode,
-            //                                             ClosingReasonId = a.ClosingReasonId,
-            //                                             ClosingReasonName = a.OpportunityClosingReason != null ? a.OpportunityClosingReason.Name : "",
-            //                                             ClosingDescription = a.ClosingDescription,
-            //                                             ClientId = a.Customer.Id,
-            //                                             RatingName = a.Rating != null ? a.Rating.Name : "",
-            //                                             ClientIDDW = a.CustomerId,
-            //                                             NumberOfShipments = a.NumberOfShipments,
-            //                                             Field4 = a.Field4,
-            //                                             LeadsourceName = a.LeadSource != null ? a.LeadSource.Name : "",
-            //                                             ActualClosingDate = a.ActualClosingDate,
-            //                                             Reseller = a.Field1,
-            //                                             OwnerId = a.OwnerId,
-            //                                             IsCancelled = a.IsCancelled,
-            //                                         }).OrderBy(d => d.UpdateDate).Skip(skip).Take(take).ToList();
+                                                         OpportunityId = a.Id,
+                                                         CustomerId = a.CustomerId,
+                                                         Subject = a.Subject,
+                                                         OpportunityTypeId = a.OpportunityTypeId,
+                                                         OpportunityTypeName = a.OpportunityType != null ? a.OpportunityType.Name : "",
+                                                         StageId = a.StageId,
+                                                         StageName = a.Stage != null ? a.Stage.Name : "",
+                                                         EstimatedClosingDate = a.EstimatedClosingDate,
+                                                         CreateDate = a.CreateDate,
+                                                         UpdateDate = a.UpdateDate,
+                                                         RatingCode = a.RatingCode,
+                                                         ClosingReasonId = a.ClosingReasonId,
+                                                         ClosingReasonName = a.OpportunityClosingReason != null ? a.OpportunityClosingReason.Name : "",
+                                                         ClosingDescription = a.ClosingDescription,
+                                                         ClientId = a.Customer.Id,
+                                                         RatingName = a.Rating != null ? a.Rating.Name : "",
+                                                         ClientIDDW = a.CustomerId,
+                                                         NumberOfShipments = a.NumberOfShipments,
+                                                         Field4 = a.Field4,
+                                                         LeadsourceName = a.LeadSource != null ? a.LeadSource.Name : "",
+                                                         ActualClosingDate = a.ActualClosingDate,
+                                                         Reseller = a.Field1,
+                                                         OwnerId = a.OwnerId,
+                                                         IsCancelled = a.IsCancelled,
+                                                     }).OrderBy(d => d.UpdateDate).Skip(skip).Take(take).ToList();
 
-            return new List<OpportunityDW>();//SetOtherPropInOpportunityDwLists(OpportunityDWList, tenant);
+            return SetOtherPropInOpportunityDwLists(OpportunityDWList, tenant);
 
 
         }
@@ -830,44 +830,44 @@ namespace Logitude.CRM.BL.EntityQueryServices
         public int GetOpportunitiesCountDWByDates(int tenant, DateTime fromDate, DateTime toDate)
         {
             ///ICRMContext context = MainContext as ICRMContext;
-            return 0;//context.Opportunities.Where(a => a.Tenant == tenant && a.CreateDate >= fromDate && a.CreateDate <= toDate).Count();
+            return context.Opportunities.Where(a => a.Tenant == tenant && a.CreateDate >= fromDate && a.CreateDate <= toDate).Count();
         }
 
         public List<OpportunityDW> GetOpportunitiesDWByUpdateDate(int tenant, DateTime updateDate, int skip, int take)
         {
-            //ICRMContext context = MainContext as ICRMContext;
-            //List<OpportunityDW> OpportunityDWList = (from a in context.Opportunities.Include("OpportunityType").Include("Rating").Include("OpportunityClosingReason").Include("LeadSource")
-            //                                         where a.Tenant == tenant && a.UpdateDate > updateDate
-            //                                         select new OpportunityDW()
-            //                                         {
+            ICRMContext context = MainContext as ICRMContext;
+            List<OpportunityDW> OpportunityDWList = (from a in context.Opportunities.Include("OpportunityType").Include("Rating").Include("OpportunityClosingReason").Include("LeadSource")
+                                                     where a.Tenant == tenant && a.UpdateDate > updateDate
+                                                     select new OpportunityDW()
+                                                     {
 
-            //                                             OpportunityId = a.Id,
-            //                                             CustomerId = a.CustomerId,
-            //                                             Subject = a.Subject,
-            //                                             OpportunityTypeId = a.OpportunityTypeId,
-            //                                             OpportunityTypeName = a.OpportunityType != null ? a.OpportunityType.Name : "",
-            //                                             StageId = a.StageId,
-            //                                             StageName = a.Stage != null ? a.Stage.Name : "",
-            //                                             EstimatedClosingDate = a.EstimatedClosingDate,
-            //                                             CreateDate = a.CreateDate,
-            //                                             UpdateDate = a.UpdateDate,
-            //                                             RatingCode = a.RatingCode,
-            //                                             ClosingReasonId = a.ClosingReasonId,
-            //                                             ClosingReasonName = a.OpportunityClosingReason != null ? a.OpportunityClosingReason.Name : "",
-            //                                             ClosingDescription = a.ClosingDescription,
-            //                                             ClientId = a.Customer.Id,
-            //                                             RatingName = a.Rating != null ? a.Rating.Name : "",
-            //                                             ClientIDDW = a.CustomerId,
-            //                                             NumberOfShipments = a.NumberOfShipments,
-            //                                             Field4 = a.Field4,
-            //                                             LeadsourceName = a.LeadSource != null ? a.LeadSource.Name : "",
-            //                                             ActualClosingDate = a.ActualClosingDate,
-            //                                             Reseller = a.Field1,
-            //                                             OwnerId = a.OwnerId,
-            //                                             IsCancelled = a.IsCancelled,
-            //                                         }).OrderBy(d=>d.UpdateDate).Skip(skip).Take(take).ToList();
+                                                         OpportunityId = a.Id,
+                                                         CustomerId = a.CustomerId,
+                                                         Subject = a.Subject,
+                                                         OpportunityTypeId = a.OpportunityTypeId,
+                                                         OpportunityTypeName = a.OpportunityType != null ? a.OpportunityType.Name : "",
+                                                         StageId = a.StageId,
+                                                         StageName = a.Stage != null ? a.Stage.Name : "",
+                                                         EstimatedClosingDate = a.EstimatedClosingDate,
+                                                         CreateDate = a.CreateDate,
+                                                         UpdateDate = a.UpdateDate,
+                                                         RatingCode = a.RatingCode,
+                                                         ClosingReasonId = a.ClosingReasonId,
+                                                         ClosingReasonName = a.OpportunityClosingReason != null ? a.OpportunityClosingReason.Name : "",
+                                                         ClosingDescription = a.ClosingDescription,
+                                                         ClientId = a.Customer.Id,
+                                                         RatingName = a.Rating != null ? a.Rating.Name : "",
+                                                         ClientIDDW = a.CustomerId,
+                                                         NumberOfShipments = a.NumberOfShipments,
+                                                         Field4 = a.Field4,
+                                                         LeadsourceName = a.LeadSource != null ? a.LeadSource.Name : "",
+                                                         ActualClosingDate = a.ActualClosingDate,
+                                                         Reseller = a.Field1,
+                                                         OwnerId = a.OwnerId,
+                                                         IsCancelled = a.IsCancelled,
+                                                     }).OrderBy(d => d.UpdateDate).Skip(skip).Take(take).ToList();
 
-            return new List<OpportunityDW>();//SetOtherPropInOpportunityDwLists(OpportunityDWList,tenant);
+            return SetOtherPropInOpportunityDwLists(OpportunityDWList,tenant);
 
 
 
@@ -984,9 +984,8 @@ namespace Logitude.CRM.BL.EntityQueryServices
 
         public int GetOpportunitiesDWCountByUpdateDate(int tenant, DateTime updateDate)
         {
-            //ICRMContext context = MainContext as ICRMContext;
-            //return context.Opportunities.Where(a => a.Tenant == tenant && a.UpdateDate > updateDate).Count();
-            return 0;
+            ICRMContext context = MainContext as ICRMContext;
+            return context.Opportunities.Where(a => a.Tenant == tenant && a.UpdateDate > updateDate).Count();
         }
 
         public List<OpportunityCRMDetails> GetLogitudeOpportunities(int tenant, LogitudeCRMReportFilter logitudeCRMReportFilter)

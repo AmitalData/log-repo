@@ -12,6 +12,8 @@ export class BaseSelectors extends RegexSelectors {
     public static readonly FullAccountingVendorsTab = "#FAVND"
     public static readonly TariffMenu = "#GeneralMHTariffModule";
     public static readonly ShippingLine = "#MaintenanceItemMTSL"
+    public static readonly TabHolder = ".TabHolder";
+  
     //#endregion
     //#region CRM
     public static readonly CRMCustomers = "#CRMCUS"

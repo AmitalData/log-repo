@@ -769,7 +769,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
         new ToggleFilter('R', 'Drop', 'shipmentDirection'),
         new ToggleFilter('A', 'Air', 'shipmentType'),
         new ToggleFilter('I', 'Land', 'shipmentType'),
-        new ToggleFilter('O', 'Sea', 'shipmentType'),
+        new ToggleFilter('O', 'Ocean', 'shipmentType'),
     ];
 
     sortByOptions: ToggleFilter[] = [
@@ -895,7 +895,18 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
         }
         this.hasException = this.hasExceptionAdvancedFilter;
     }
+    CheckFiltersExists(){
+        return this.SelectedInvitedCustomers.length > 0
+        || this.selectedFilterMilestonesStatus.length > 0
+        || this.MilestonesStatus.find(e=>e.IsSelected)
+        || this.selectedShipmentTypesFilter.length > 0
+        || this.selectedShipmentDirectionsFilter.length > 0
+        || this.appliedSelectedFilterMilestonesStatus.length > 0
+        || this.FiltersInvitedCustomers.find(e=>e.IsSelected)
+        || this.SelectedFilters.length > 0
+        || this.hasException
 
+    }
     ClearAdvancedFilters(){
         this.SelectedInvitedCustomers = [];
         this.selectedFilterMilestonesStatus = [];
