@@ -110,6 +110,8 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
                 "Volume",
                 "CustomerId",
                 "LastExceptionDate",
+                "OnHandDate",
+                "OnHandNumber",
                 "LastExceptionDescription"
             };
         public string GetColumnsForCopy()
