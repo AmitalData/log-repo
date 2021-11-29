@@ -1,0 +1,14 @@
+﻿<Script DBType="Global" Module="Global" Pre="true">
+  <Sql Version="1">
+    <![CDATA[
+    
+       iF OBJECT_ID('CK_NotNull_TenantManagmentPrivateLabels_IsImportActivated', 'C') IS NOT NULL begin
+ALTER TABLE dbo.[TenantManagmentPrivateLabels] DROP CONSTRAINT CK_NotNull_TenantManagmentPrivateLabels_IsImportActivated
+end
+      
+    ]]>
+  </Sql>
+</Script>
+
+
+ 
