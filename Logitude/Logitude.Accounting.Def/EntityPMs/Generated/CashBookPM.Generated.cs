@@ -607,6 +607,29 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
+	  private bool inDepositingProgress ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool InDepositingProgress  
+	   {
+	    
+	     get
+		{
+		   return inDepositingProgress;
+		 }
+		 set
+		 {
+		   if(inDepositingProgress != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="InDepositingProgress",OldValue=inDepositingProgress,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   inDepositingProgress=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

@@ -62,6 +62,8 @@ namespace Logitude.Accounting.Data.EntityLists
        public string CurrencySign  { get; set; }
        [DataMember]
        public string BranchName  { get; set; }
+       [DataMember]
+       public bool InDepositingProgress  { get; set; }
    }
 
 }
