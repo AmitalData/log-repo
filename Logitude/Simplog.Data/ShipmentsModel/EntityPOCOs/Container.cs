@@ -306,6 +306,7 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public bool IsAutomaticUpdates { get; set; }
         public bool IsClosed { get; set; }
         public DateTime? ClosedDate { get; set; }
+        [ForeignKey("StatusId")]
         public virtual EntityStatus EntityStatus { get; set; }
         public string StatusId { get; set; }
     }

@@ -750,6 +750,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                    ClosedDate = entity.ClosedDate,
                                                    StatusName = entity.EntityStatus != null ? entity.EntityStatus.Name : null,
                                                    StatusWeight = entity.EntityStatus != null ? entity.EntityStatus.StatusWeight : 0,
+                                                   StatusId = entity.StatusId
                                                };
             return result;
         }
