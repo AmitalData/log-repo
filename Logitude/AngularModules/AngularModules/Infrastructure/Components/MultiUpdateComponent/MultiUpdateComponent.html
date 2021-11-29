@@ -100,8 +100,7 @@
                                     [columns]="columns" [autoLoad]="true" [rows]="items"
                                     (AfterViewInitCompleted)="GridAfterViewInitCompleted($event)"
                                     (CountReady)="onCountReady($event)" [EnableRowHoverVisibility]="true"
-                                    (CheckBoxChecked)="onCheckBoxChecked($event)"
-                                    [IsAllRecordsChecked]="IsGridAllRecordSelected" (AllRecordsReady)="AllRecordsReady($event)"
+                                    (AllRecordsReady)="AllRecordsReady($event)"
                                     [CheckboxProp]="'Id'" [SearchFieldchangeevent]="SearchFieldchangeevent">
                                 </logitude-grid>
                             </div>

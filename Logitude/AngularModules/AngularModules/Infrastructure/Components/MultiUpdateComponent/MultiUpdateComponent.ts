@@ -3,7 +3,6 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { BaseComponent } from '../LogitudeComponents/BaseComponent';
 import { SessionLocator } from 'Infrastructure/Utilities/SessionLocator';
 import { ApiQueryFilters } from 'Infrastructure/DataContracts/ApiQueryFilters';
-import { ObjectsLocator } from 'Infrastructure/Locators/ObjectsLocator';
 import { EntityListService } from 'Infrastructure/Services/EntityListService';
 import { AutomationSetValue } from 'Infrastructure/DataContracts/AutomationSetValue';
 import { AutomationSetValueViewModel } from '../Maintenance/Automation/ViewModel/AutomationSetValueViewModel';
@@ -15,7 +14,6 @@ import { ServiceResponse } from 'Infrastructure/DataContracts/ServiceResponse';
 import { MultiEntityUpdateLogPM } from 'Infrastructure/EntityPMs/MultiEntityUpdateLogPM';
 import { MultiEntityUpdateData } from 'Infrastructure/DataContracts/MultiEntityUpdateData';
 import { MultiEntityUpdateDataEntity } from 'Infrastructure/DataContracts/MultiEntityUpdateDataEntity';
-import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator';
 
 @Component({
     selector: 'MultiUpdateComponent',
@@ -43,7 +41,6 @@ export class MultiUpdateComponent extends BaseComponent implements OnInit {
     SelectedRecordsCount: number = 0;
     public items: any[] = [];
 
-    private isAllRecordSelected: boolean;
     Title: string;
     AllRecords: any[] = [];
 
@@ -64,9 +61,10 @@ export class MultiUpdateComponent extends BaseComponent implements OnInit {
         super();
         this.multiEntityUpdateLogPMService = new MultiEntityUpdateLogPMService();
         window.AllRecords = [];
+        this.Listen();
     }
 
-    
+
     ngOnInit() {
     }
 
@@ -81,27 +79,41 @@ export class MultiUpdateComponent extends BaseComponent implements OnInit {
     }
 
     public IsAllRecordSelected: boolean;
-    public IsGridAllRecordSelected: boolean;
 
-    public IsAllRecordSelectedChange(isChecked, applyForAll) {
+
+    public IsAllRecordSelectedChange(isChecked, applyForAll, refreshList = true) {
         this.IsAllRecordSelected = isChecked;
         if (applyForAll) {
-            this.ChangeAllRecordsSelection(isChecked);
+            this.ChangeAllRecordsSelection(isChecked, refreshList);
         }
     }
 
-    private ChangeAllRecordsSelection(isChecked: boolean) {
-      this.IsGridAllRecordSelected = isChecked;
+    private ChangeAllRecordsSelection(isChecked: boolean, refreshList: boolean) {
         isChecked == true ? this.CheckAllRecords() : this.UnCheckAllRecords();
+        if (refreshList) {
+            this.RefreshList();
+        }
+    }
+    RefreshList() {
+        window.AllRecords = this.AllRecords;
+        this.SearchFieldchangeevent.emit("");
     }
 
     private CheckAllRecords() {
+        this.AllRecords.forEach(element => {
+            element.IsChecked = true;
+        });
+
         this.ChangeSelectedItemsCountText(this.AllRecordsCount);
         this.SelectedRecordsCount = this.AllRecords.length;
         this.SelectedRecords = this.AllRecords;
     }
 
     private UnCheckAllRecords() {
+        this.AllRecords.forEach(element => {
+            element.IsChecked = false;
+        });
+
         this.ChangeSelectedItemsCountText(0);
         this.SelectedRecords = [];
         this.SelectedRecordsCount = 0;
@@ -140,10 +152,15 @@ export class MultiUpdateComponent extends BaseComponent implements OnInit {
         this.LoadList();
     }
 
+    FirstTime: boolean = true;
     AllRecordsReady(result) {
+        if(!this.FirstTime){
+            return;
+        }
+        this.FirstTime = false;
         this.AllRecords = result;
         this.SelectedRecords = result;
-        this.IsAllRecordSelectedChange(true, true);
+        this.IsAllRecordSelectedChange(true, true, false);
     }
 
     SetWindowArgs(windowArgs: any) {
@@ -170,7 +187,9 @@ export class MultiUpdateComponent extends BaseComponent implements OnInit {
             Display: '',
             IsCustomTemplate: true,
             Styles: { width: '35px' },
-            IsCheckBox: true,
+            //IsCheckBox: true,
+            HtmlListComponentName: 'MultiUpdateCheckBoxComponent',
+            HtmlListComponentUrl: './Infrastructure/Components/MultiUpdateComponent/MultiUpdateCheckBoxComponent',
         };
 
         var updateSuccess = {
@@ -191,9 +210,8 @@ export class MultiUpdateComponent extends BaseComponent implements OnInit {
             var entity = entities.find(item => item.EntityId == record.Id);
             record.UpdateSuccess = entity ? !entity.HasException : undefined;
         });
-        window.AllRecords = this.AllRecords;
-        this.SearchFieldchangeevent.emit("");
 
+        this.RefreshList();
     }
 
     Clone(list: any): any {
@@ -201,6 +219,9 @@ export class MultiUpdateComponent extends BaseComponent implements OnInit {
     }
 
     onCountReady(count) {
+        if(!this.FirstTime){
+            return;
+        }
         this.SelectedRecordsCount = count;
         this.AllRecordsCount = count;
     }
@@ -211,26 +232,35 @@ export class MultiUpdateComponent extends BaseComponent implements OnInit {
         this.MenuHeaderchangeevent.emit({ Filters: this.Filters, IgnoreFilter: false });
     }
 
-    onCheckBoxChecked(event) {
-        var temp = this.SelectedRecords.filter(a => a.Id == event.rowData.Id);
-        if (event.IsChecked && temp.length == 0) {
-            this.AddToSelectedRecords(event);
-            return;
-        }
-        if (temp.length > 0) {
-            this.RemoveFromSelectedRecords(event);
-        }
+    private ListenEvent: any = null;
+    Listen() {
+        this.ListenEvent = this.CurrentSession.PseventRowSelectEvent.subscribe((res) => {
+            var temp = this.SelectedRecords.filter(a => a.Id == res.Id);
+            if (res.IsChecked && temp.length == 0) {
+                this.AddToSelectedRecords(res);
+                return;
+            }
+            if (temp.length > 0) {
+                this.RemoveFromSelectedRecords(res);
+            }
+        });
     }
 
+    ngOnDestroy() {
+        AppTool.KillEventEmitter(this.ListenEvent);
+        this.ListenEvent = null
+    }
+
+
     private RemoveFromSelectedRecords(event: any) {
-        this.SelectedRecords = this.SelectedRecords.filter(a => a.Id != event.rowData.Id);
+        this.SelectedRecords = this.SelectedRecords.filter(a => a.Id != event.Id);
         this.SelectedRecordsCount--;
         this.IsAllRecordSelectedChange(false, false);
         this.ChangeSelectedItemsCountText(this.SelectedRecordsCount);
     }
 
     private AddToSelectedRecords(event: any) {
-        this.SelectedRecords.push(event.rowData);
+        this.SelectedRecords.push(event);
         this.SelectedRecordsCount++;
         if (this.SelectedRecordsCount == this.AllRecords.length) {
             this.IsAllRecordSelectedChange(true, false);
