@@ -95,7 +95,8 @@ Given("bress on build from shipments", () => {
 });
 
 When("save the shipment", () => {
-    Actions.UpdateShipment(ShipmentSelectors.ShipmentSaveButton + BaseSelectors.LastElement)
+    cy.wait(1000)
+    Actions.UpdateShipment(ShipmentSelectors.ShipmentSaveButton)
 });
 //#endregion
 
@@ -127,7 +128,7 @@ Then("the prorate should be divided the values in the correct way", () => {
 Given("the user in the first house payable tab", () => {
     cy.Navigate(ShipmentSelectors.ShipmentsTab);
     cy.get(ShipmentSelectors.HouseHyperLink).eq(0).click({ force: true })
-    cy.Click(ShipmentSelectors.StartWithPayablesTab + BaseSelectors.LastElement, null)
+    cy.Click(ShipmentSelectors.PayablesTab + "_3", null)
 });
 
 When("press on edit payable button", () => {
