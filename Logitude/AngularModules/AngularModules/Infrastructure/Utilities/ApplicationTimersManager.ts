@@ -337,13 +337,13 @@ export class ApplicationTimersManager {
                     var logJson = window.sessionStorage.getItem(key)
                     var errorLog: ErrorLogPM = JSON.parse(logJson);
 
-                    // this.logService.insert(errorLog).subscribe((response: ServiceResponse) => {
+                    this.logService.insert(errorLog).subscribe((response: ServiceResponse) => {
 
-                    //     window.sessionStorage.removeItem(["ErrorLogs", response.Result.Id]);
+                        window.sessionStorage.removeItem(["ErrorLogs", response.Result.Id]);
 
-                    // }, error=> {
-                    //     console.error("Adding ErrorLog Timer: ", error);
-                    // });
+                    }, error=> {
+                        console.error("Adding ErrorLog Timer: ", error);
+                    });
 
 
                 }
