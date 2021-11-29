@@ -182,7 +182,6 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
         this._SelectedACCValue = 'A';
         this._SelectedPAYValue = 'R';
         if (this.SelectedPendingCodeFilter == null && this._PendingCodes != null && this._PendingCodes.length > 0) this.SelectedPendingCodeFilter = this._PendingCodes[0];
-        debugger;
 
         switch (item.Code) {
             case "DECR":
