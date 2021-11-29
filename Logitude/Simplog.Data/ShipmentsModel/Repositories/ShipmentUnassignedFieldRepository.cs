@@ -85,5 +85,11 @@ namespace Simplog.Data.ShipmentsModel.Repositories
             throw new System.NotImplementedException();
         }
 
+        public IQueryable<ShipmentUnassignedField> GetShipmentUnassignedFieldsByShipmentId(string shipmentId, int tenant)
+        {
+            return (from record in context.ShipmentUnassignedFields
+                    where record.Tenant == tenant && record.ShipmentId == shipmentId
+                    select record);
+        }
     }
 }

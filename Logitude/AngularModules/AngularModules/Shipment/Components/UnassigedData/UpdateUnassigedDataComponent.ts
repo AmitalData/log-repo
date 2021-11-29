@@ -14,6 +14,7 @@ import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceRe
 import { CardListService } from '../../../Common/Services/StandardLists/CardListService';
 import { AddressListService } from '../../../Common/Services/StandardLists/AddressListService';
 import { CardList } from '../../../Common/EntityLists/CardList';
+import { ShipmentDomainService } from '../../Services/ShipmentDomainService';
 
 @Component({
     templateUrl: './UpdateUnassigedDataComponent.html',
@@ -28,6 +29,8 @@ export class UpdateUnassigedDataComponent extends BaseComponent {
     public CardDependencyProperty1: string = "CS";
     public CardDependencyProperty1IsList: boolean = false;
     public IsInlandDomestic: boolean = false;
+    public IsShipperVisible: boolean = false;
+    public IsConsigneeVisible: boolean = false;
     constructor() {
         super();
     }
@@ -36,15 +39,28 @@ export class UpdateUnassigedDataComponent extends BaseComponent {
         this.EntityPM = entityPM;
         this.ObjectTableName = "Shipment";
         this.IsInlandDomestic = this.EntityPM.TransportModeId == "I" && this.EntityPM.DirectionId == "D" ? true : false;
+
+        this.LoadAddressesFromUnassignedXML();
+
         this.SetUIProperties();
         this.SetCardDependency();
-        this.InitializeServices();
-        this.LoadAddress(this.EntityPM.ShipperAddressId, "S");
-        this.LoadAddress(this.EntityPM.ConsigneeAddressId, "C");  
+        this.InitializeServices();        
         this.Clone();
     }
 
+    private LoadAddressesFromUnassignedXML() {
+        var shipmentDomainService: ShipmentDomainService = new ShipmentDomainService();
+        shipmentDomainService.LoadAddressesFromUnassignedXML(this.EntityPM.Id).subscribe((myResponse: ServiceResponse) => {
+            if (!myResponse.HasError) {
+                
+            }
+        });
+    }
+
     SetUIProperties() {
+        this.IsShipperVisible = this.EntityPM.ShipmentUnassignedFields.filter(d => d.FieldName == "Shipper").length > 0;
+        this.IsConsigneeVisible = this.EntityPM.ShipmentUnassignedFields.filter(d => d.FieldName == "Consignee").length > 0;
+
         this.UIProperties.SetEnabled("ShipperName", this.ObjectTableName, false);
         this.UIProperties.SetEnabled("ConsigneeName", this.ObjectTableName, false);
     }
@@ -71,14 +87,12 @@ export class UpdateUnassigedDataComponent extends BaseComponent {
         this.myAddressListService = new AddressListService();
     }
 
-    //UnassigedShipperName
-    //UnassigedConsigneeName
-
     //UnassigedShipperAddressList
     //UnassigedConsigneeAddressList
 
-    get ShipperId() { return this.EntityPM.ShipperId; }
-    set ShipperId(newValue: string) {
+    get ShipperName() { return this.EntityPM.ShipperName; }
+    get UpdatedShipperId() { return this.EntityPM.ShipperId; }
+    set UpdatedShipperId(newValue: string) {
         if (this.EntityPM.ShipperId != newValue) {
             this.EntityPM.ShipperId = newValue;
             this.OnShipperChanged();
@@ -88,20 +102,26 @@ export class UpdateUnassigedDataComponent extends BaseComponent {
     private OnShipperChanged() {
         this.SetCustomer();
 
-        if (AppTool.IsNullOrEmpty(this.ShipperId)) {
+        if (AppTool.IsNullOrEmpty(this.UpdatedShipperId)) {
             this.SetShipperFields();
         }
 
         else {
-            this.myCardListService.getSingle(this.ShipperId).subscribe((myResponse: ServiceResponse) => {
+            this.myCardListService.getSingle(this.UpdatedShipperId).subscribe((myResponse: ServiceResponse) => {
                 if (!myResponse.HasError) {
                     var myCardList: CardList = myResponse.Result;
                     if (myCardList) {
                         if (AppTool.IsNullOrEmpty(this.EntityPM.StandalonePickupDeliveryId) && this.IsInlandDomestic && this.EntityPM.InlandDomesticFromTypeCode == "PART") {
-                            this.EntityPM.MainCarriageFromPartnerId = this.ShipperId;
+                            this.EntityPM.MainCarriageFromPartnerId = this.UpdatedShipperId;
                             this.EntityPM.MainCarriageFromAddressId = myCardList.MainAddressId;
                         }
 
+                        var unassignedShipper: ShipmentUnassignedFieldPM = this.EntityPM.ShipmentUnassignedFields.filter(d => d.FieldName == "Shipper")[0];
+                        if (unassignedShipper) {
+                            unassignedShipper.ReplacedDataId = myCardList.Id;
+                        }
+
+                        this.EntityPM.ShipperId = myCardList.Id;
                         this.EntityPM.ShipperContactId = myCardList.PrimaryContactId;
                         this.EntityPM.ShipperName = myCardList.EnglishName;
                         this.EntityPM.ShipperNote = myCardList.Notes;
@@ -109,7 +129,7 @@ export class UpdateUnassigedDataComponent extends BaseComponent {
                         this.EntityPM.ShipperPickAddressId = myCardList.PickAddressId;
                         this.EntityPM.KnownConsignorNumber = myCardList.KnownConsignor;
                         this.EntityPM.KCExpirationDate = myCardList.KCExpirationDate;
-                        this.ShipperAddressId = myCardList.MainAddressId;
+                        this.UpdatedShipperAddressId = myCardList.MainAddressId;
                     }
                 }
             });
@@ -126,20 +146,20 @@ export class UpdateUnassigedDataComponent extends BaseComponent {
         this.EntityPM.ShipperPickAddressId = null;
         this.EntityPM.KnownConsignorNumber = null;
         this.EntityPM.KCExpirationDate = null;
-        this.ShipperAddressId = null;
+        this.UpdatedShipperAddressId = null;
         if (AppTool.IsNullOrEmpty(this.EntityPM.StandalonePickupDeliveryId) && this.IsInlandDomestic && this.EntityPM.InlandDomesticFromTypeCode == "PART") {
             this.EntityPM.MainCarriageFromPartnerId = null;
             this.EntityPM.MainCarriageFromAddressId = null;
         }
     }
 
-    get ShipperAddressId() { return this.EntityPM.ShipperAddressId; }
-    set ShipperAddressId(newValue: string) {
+    get UpdatedShipperAddressId() { return this.EntityPM.ShipperAddressId; }
+    set UpdatedShipperAddressId(newValue: string) {
         if (this.EntityPM.ShipperAddressId != newValue) {
             this.EntityPM.ShipperAddressId = newValue;
 
             if (AppTool.IsNullOrEmpty(newValue)) {
-                this.ShipperAddressList = null;
+                this.UpdatedShipperAddressList = null;
             }
 
             else {
@@ -149,13 +169,14 @@ export class UpdateUnassigedDataComponent extends BaseComponent {
     }
 
     private myShipperAddressList: AddressList;
-    get ShipperAddressList() { return this.myShipperAddressList; }
-    set ShipperAddressList(newValue: AddressList) {
+    get UpdatedShipperAddressList() { return this.myShipperAddressList; }
+    set UpdatedShipperAddressList(newValue: AddressList) {
         this.myShipperAddressList = newValue;
     }
 
-    get ConsigneeId() { return this.EntityPM.ConsigneeId; }
-    set ConsigneeId(newValue: string) {
+    get ConsigneeName() { return this.EntityPM.ConsigneeName; }
+    get UpdatedConsigneeId() { return this.EntityPM.ConsigneeId; }
+    set UpdatedConsigneeId(newValue: string) {
         if (this.EntityPM.ConsigneeId != newValue) {
             this.EntityPM.ConsigneeId = newValue;
             this.OnConsigneeChanged();
@@ -165,26 +186,32 @@ export class UpdateUnassigedDataComponent extends BaseComponent {
     private OnConsigneeChanged() {
         this.SetCustomer();
        
-        if (AppTool.IsNullOrEmpty(this.ConsigneeId)) {
+        if (AppTool.IsNullOrEmpty(this.UpdatedConsigneeId)) {
             this.SetConsigneeFields();            
         }
 
         else {
-            this.myCardListService.getSingle(this.ConsigneeId).subscribe((myResponse: ServiceResponse) => {
+            this.myCardListService.getSingle(this.UpdatedConsigneeId).subscribe((myResponse: ServiceResponse) => {
                 if (!myResponse.HasError) {
                     var myCardList: CardList = myResponse.Result;
                     if (myCardList) {
                         if (AppTool.IsNullOrEmpty(this.EntityPM.StandalonePickupDeliveryId) && this.IsInlandDomestic && this.EntityPM.InlandDomesticToTypeCode == "PART") {
-                            this.EntityPM.MainCarriageToPartnerId = this.ConsigneeId;
+                            this.EntityPM.MainCarriageToPartnerId = this.UpdatedConsigneeId;
                             this.EntityPM.MainCarriageToAddressId = myCardList.MainAddressId;
                         }
 
+                        var unassignedConsignee: ShipmentUnassignedFieldPM = this.EntityPM.ShipmentUnassignedFields.filter(d => d.FieldName == "Consignee")[0];
+                        if (unassignedConsignee) {
+                            unassignedConsignee.ReplacedDataId = myCardList.Id;
+                        }
+
+                        this.EntityPM.ConsigneeId = myCardList.Id;
                         this.EntityPM.ConsigneeContactId = myCardList.PrimaryContactId;
                         this.EntityPM.ConsigneeName = myCardList.EnglishName;
                         this.EntityPM.ConsigneeNote = myCardList.Notes;
                         this.EntityPM.ConsigneeMainAddressId = myCardList.MainAddressId;
                         this.EntityPM.ConsigneePickAddressId = myCardList.PickAddressId;
-                        this.ConsigneeAddressId = myCardList.MainAddressId;
+                        this.UpdatedConsigneeAddressId = myCardList.MainAddressId;
                     }
                 }
             });
@@ -199,20 +226,20 @@ export class UpdateUnassigedDataComponent extends BaseComponent {
         this.EntityPM.ConsigneeReference2 = null;
         this.EntityPM.ConsigneeMainAddressId = null;
         this.EntityPM.ConsigneePickAddressId = null;
-        this.ConsigneeAddressId = null;
+        this.UpdatedConsigneeAddressId = null;
         if (AppTool.IsNullOrEmpty(this.EntityPM.StandalonePickupDeliveryId) && this.IsInlandDomestic && this.EntityPM.InlandDomesticToTypeCode == "PART") {
             this.EntityPM.MainCarriageToPartnerId = null;
             this.EntityPM.MainCarriageToAddressId = null;
         }
     }
 
-    get ConsigneeAddressId() { return this.EntityPM.ConsigneeAddressId; }
-    set ConsigneeAddressId(newValue: string) {
+    get UpdatedConsigneeAddressId() { return this.EntityPM.ConsigneeAddressId; }
+    set UpdatedConsigneeAddressId(newValue: string) {
         if (this.EntityPM.ConsigneeAddressId != newValue) {
             this.EntityPM.ConsigneeAddressId = newValue;
 
             if (AppTool.IsNullOrEmpty(newValue)) {
-                this.ConsigneeAddressList = null;
+                this.UpdatedConsigneeAddressList = null;
             }
 
             else {
@@ -222,18 +249,18 @@ export class UpdateUnassigedDataComponent extends BaseComponent {
     }
 
     private myConsigneeAddressList: AddressList;
-    get ConsigneeAddressList() { return this.myConsigneeAddressList; }
-    set ConsigneeAddressList(newValue: AddressList) {
+    get UpdatedConsigneeAddressList() { return this.myConsigneeAddressList; }
+    set UpdatedConsigneeAddressList(newValue: AddressList) {
         this.myConsigneeAddressList = newValue;
     }   
 
     private SetCustomer() {
         if (this.EntityPM.ShipmentCustomerTypeCode == "SHI") {
-            this.EntityPM.CustomerId = this.ShipperId;
+            this.EntityPM.CustomerId = this.UpdatedShipperId;
         }
 
         else if (this.EntityPM.ShipmentCustomerTypeCode == "CON") {
-            this.EntityPM.CustomerId = this.ConsigneeId;
+            this.EntityPM.CustomerId = this.UpdatedConsigneeId;
         }
     }
 
@@ -241,11 +268,11 @@ export class UpdateUnassigedDataComponent extends BaseComponent {
         this.myAddressListService.getSingle(addressId).subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
                 if (partner == "S") {
-                    this.ShipperAddressList = myResponse.Result;
+                    this.UpdatedShipperAddressList = myResponse.Result;
                 }
 
                 else if (partner == "C") {
-                    this.ConsigneeAddressList = myResponse.Result;
+                    this.UpdatedConsigneeAddressList = myResponse.Result;
                 }
             }
         });
@@ -274,11 +301,11 @@ export class UpdateUnassigedDataComponent extends BaseComponent {
             logeWindow.WindowClosed.subscribe(s => {
                 if (s) {
                     if (myPartnerCode == "Shipper") {
-                        this.ShipperId = comp.EntityPM.Id;
+                        this.UpdatedShipperId = comp.EntityPM.Id;
                     }
 
                     else if (myPartnerCode == "Consignee") {
-                        this.ConsigneeId = comp.EntityPM.Id;
+                        this.UpdatedConsigneeId = comp.EntityPM.Id;
                     }
                 }
             });

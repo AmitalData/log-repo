@@ -41,11 +41,11 @@
 
                                                 <div style="width: 100%; margin-top: -5px;">
                                                     <table>
-                                                        <tr class="FormFieldRow">
+                                                        <tr class="FormFieldRow" *ngIf="IsShipperVisible">
                                                             <td style="width:70px;" class="Label">Shipper</td>
                                                             <td style="width:220px;">
                                                                 <LogTextBox [ObjectFieldName]="'ShipperName'"
-                                                                            [Text]="UnassigedShipperName"
+                                                                            [Text]="ShipperName"
                                                                             [ObjectTableName]="ObjectTableName"
                                                                             [DataContext]="DataContext"
                                                                             [HideColumns]="true"></LogTextBox>
@@ -55,7 +55,7 @@
                                                             </td>
                                                         </tr>
 
-                                                        <tr class="FormFieldRow" style="height: 80px;">
+                                                        <tr class="FormFieldRow" style="height: 80px;"  *ngIf="IsShipperVisible">
                                                             <td style="width:70px;">
                                                                 <div></div>
                                                             </td>
@@ -69,11 +69,11 @@
                                                             </td>
                                                         </tr>
 
-                                                        <tr class="FormFieldRow">
+                                                        <tr class="FormFieldRow" *ngIf="IsConsigneeVisible">
                                                             <td style="width:70px;" class="Label">Consignee</td>
                                                             <td style="width:220px;">
                                                                 <LogTextBox [ObjectFieldName]="'ConsigneeName'"
-                                                                            [Text]="UnassigedConsigneeName"
+                                                                            [Text]="ConsigneeName"
                                                                             [ObjectTableName]="ObjectTableName"
                                                                             [DataContext]="DataContext"
                                                                             [HideColumns]="true"></LogTextBox>
@@ -83,7 +83,7 @@
                                                             </td>
                                                         </tr>
 
-                                                        <tr class="FormFieldRow" style="height: 80px;">
+                                                        <tr class="FormFieldRow" style="height: 80px;" *ngIf="IsConsigneeVisible">
                                                             <td style="width:70px;">
                                                                 <div></div>
                                                             </td>
@@ -125,11 +125,11 @@
 
                                                 <div style="width: 100%; margin-top: -5px;">
                                                     <table>
-                                                        <tr class="FormFieldRow">
+                                                        <tr class="FormFieldRow"  *ngIf="IsShipperVisible">
                                                             <td style="width:70px;" class="Label">Shipper</td>
                                                             <td style="width:230px;">
                                                                 <LogLov [ObjectFieldName]="'ShipperId'"
-                                                                        [SelectedValue]="ShipperId"
+                                                                        [SelectedValue]="UpdatedShipperId"
                                                                         [ObjectTableName]="ObjectTableName"
                                                                         [DataContext]="DataContext"
                                                                         [LookUpTableName]="'Card'"
@@ -147,13 +147,13 @@
                                                             </td>
                                                         </tr>
 
-                                                        <tr class="FormFieldRow" style="height: 80px;">
+                                                        <tr class="FormFieldRow" style="height: 80px;" *ngIf="IsShipperVisible">
                                                             <td style="width:70px;">
                                                                 <div></div>
                                                             </td>
 
                                                             <td style="width:230px;">
-                                                                <AddressTemplate [Address]="ShipperAddressList" [Right]="36"></AddressTemplate>
+                                                                <AddressTemplate [Address]="UpdatedShipperAddressList" [Right]="36"></AddressTemplate>
                                                             </td>
 
                                                             <td>
@@ -161,11 +161,11 @@
                                                             </td>
                                                         </tr>
 
-                                                        <tr class="FormFieldRow">
+                                                        <tr class="FormFieldRow" *ngIf="IsConsigneeVisible">
                                                             <td style="width:70px;" class="Label">Consignee</td>
                                                             <td style="width:230px;">
                                                                 <LogLov [ObjectFieldName]="'ConsigneeId'"
-                                                                        [SelectedValue]="ConsigneeId"
+                                                                        [SelectedValue]="UpdatedConsigneeId"
                                                                         [ObjectTableName]="ObjectTableName"
                                                                         [DataContext]="DataContext"
                                                                         [LookUpTableName]="'Card'"
@@ -183,13 +183,13 @@
                                                             </td>
                                                         </tr>
 
-                                                        <tr class="FormFieldRow" style="height: 80px;">
+                                                        <tr class="FormFieldRow" style="height: 80px;" *ngIf="IsConsigneeVisible">
                                                             <td style="width:70px;">
                                                                 <div></div>
                                                             </td>
 
                                                             <td style="width:230px;">
-                                                                <AddressTemplate [Address]="ConsigneeAddressList" [Right]="36"></AddressTemplate>
+                                                                <AddressTemplate [Address]="UpdatedConsigneeAddressList" [Right]="36"></AddressTemplate>
                                                             </td>
 
                                                             <td>

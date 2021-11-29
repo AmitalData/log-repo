@@ -2255,6 +2255,12 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
                 shipmentPM.ShipmentProductItems = shipmentProductItemQuery.GetShipmentProductItems(shipment.Id, shipment.Tenant);
                 #endregion
+
+                #region ShipmentUnassignedFields
+                ShipmentUnassignedFieldRepository shipmentUnassignedFieldRepository = new ShipmentUnassignedFieldRepository(tenant);
+                ShipmentUnassignedFieldQuery shipmentUnassignedFieldQuery = new ShipmentUnassignedFieldQuery(shipmentUnassignedFieldRepository);
+                shipmentPM.ShipmentUnassignedFields = shipmentUnassignedFieldQuery.GetShipmentUnassignedFields(shipment.Id, shipment.Tenant);
+                #endregion
             }
 
             #region Pickups & Deliveries

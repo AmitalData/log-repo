@@ -1,4 +1,5 @@
-﻿using Logitude.BL.CommonDataModel.EntityPMs;
+﻿using Logitude.BL.CommonDataModel.EntityLists;
+using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.DataContracts;
 using Logitude.BL.Helpers;
@@ -18,21 +19,16 @@ using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.StorageService;
-using Logitude.WarehouseLib.BL.EntityQueryServices;
 using Logitude.WarehouseLib.Data;
-using Logitude.WarehouseLib.Data.EntityLists;
 using Logitude.WarehouseLib.Data.EntityPOCOs;
 using Logitude.WarehouseLib.Data.Repositories;
 using Logitude.XSD.Artemus;
 using Microsoft.Practices.Unity;
-using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
-using Simplog.Data.InvoiceModel;
-using Simplog.Data.InvoiceModel.Repositories;
 using Simplog.Data.QuoteModel;
 using Simplog.Data.QuoteModel.EntityPOCOs;
 using Simplog.Data.QuoteModel.Repositories;
@@ -59,6 +55,7 @@ using System.Transactions;
 using System.Web;
 using System.Web.Http;
 using System.Web.Script.Serialization;
+using System.Xml.Serialization;
 using WebFreight.Web.Helpers;
 using WebFreight.Web.Helpers.APIHelpers;
 using WebFreight.Web.Security;
@@ -3149,6 +3146,56 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
+        }
+
+        public HttpResponseMessage GetAddressesFromUnassignedXML(string shipmentId)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+                SecurityUtility.AuthenticationOnTenant(tenant);
+
+                IQueryable<ShipmentUnassignedField> shipmentUnassignedFields = this.GetShipmentUnassignedField(shipmentId, tenant);
+
+                List<AddressList> addressPMs = new List<AddressList>();
+                foreach(ShipmentUnassignedField unassignedField in shipmentUnassignedFields)
+                {
+                    byte[] barr = Encoding.ASCII.GetBytes(unassignedField.ReceivedData);
+                    MemoryStream memorystream = new MemoryStream(barr);
+                    XmlSerializer serializer = new XmlSerializer(typeof(Address));
+                    Address address = (Address)serializer.Deserialize(memorystream);
+
+                    //Address address = LogitudeXmlSerializer.DeserializeObject<Address>(unassignedField.ReceivedData);
+                    addressPMs.Add(this.CreateAddressList(address, unassignedField.FieldName));
+                }
+
+                return Request.CreateResponse(HttpStatusCode.OK, addressPMs);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+        private IQueryable<ShipmentUnassignedField> GetShipmentUnassignedField(string shipmentId, int tenant)
+        {
+            ShipmentUnassignedFieldRepository shipmentUnassignedFieldRepository = new ShipmentUnassignedFieldRepository(tenant);
+            return shipmentUnassignedFieldRepository.GetShipmentUnassignedFieldsByShipmentId(shipmentId, tenant);
+        }
+        private AddressList CreateAddressList(Address address, string fieldName)
+        {
+            return new AddressList()
+            {
+                City = address.City,
+                CountryId = address.CountryId,
+                Address1 = address.Address1,
+                Address2 = address.Address2,
+                ZipCode = address.ZipCode,
+                PhoneNumber = address.PhoneNumber,
+                FaxNumber = address.FaxNumber,
+                UnassigedFieldName = fieldName,
+            };
         }
     }
 }
