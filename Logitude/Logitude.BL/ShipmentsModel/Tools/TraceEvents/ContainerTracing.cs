@@ -38,8 +38,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
         private TraceEventRepository traceEventRepository;
         private EntityStatusRepository entityStatusRepository;
         private ObjectTableRepository objectTabelRepository;
-        string myUserId = null;
-        string myCustomerCareUserEmail = null;
+        string eventUserId = null;
+        string customerCareUserEmail = null;
+        EventType eventType;
         public ContainerTracing(ContainerPM containerPM, Container container, bool isNewEntity)
         {
             this.containerPM = containerPM;
@@ -83,233 +84,219 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
         }
         public void CreateTraceEvent(EventStatusTracerArgs args)
         {
-            if (!string.IsNullOrEmpty(args.EventTypeCode))
+            this.HandleEventLogDate(args);
+            this.ValidateEvent(args);
+            this.GetEventUser(args);
+            this.HandleEventStatus(args);
+            this.AddNewTraceEvent(args);
+        }
+        private void HandleEventLogDate(EventStatusTracerArgs args)
+        {
+            if (args.LogDateTime == null)
             {
-                if (args.ObjectTableName != this.objectTableName)
-                {
-                    EventTracer.CreateTraceEvent(new EventTracerArgs()
-                    {
-                        Tenant = tenant,
-                        EventTypeCode = args.EventTypeCode,
-                        UserId = loggedContactId,
-                        EntityId = args.EntityId,
-                        ObjectTableName = args.ObjectTableName,
-                        Notes = args.Notes,
-                        Entity = containerPM,
-                    });
-                }
+                args.LogDateTime = TenantServerConfigration.GetCurrentDateTime(tenant);
+            }
+            else if (args.LogDateTime.Value.Year == 1)
+            {
+                args.LogDateTime = TenantServerConfigration.GetCurrentDateTime(tenant);
+            }
 
-                else
-                {
-                    EventType eventType = allEventTypes.Where(d => d.Code == args.EventTypeCode).FirstOrDefault();
-
-                    if (eventType == null)
-                    {
-                        throw new Exception("Event Type is not recognized:" + args.EventTypeCode);
-                    }
-
-                    else
-                    {
-                        #region User
-                        if (args.IsFromShipmentAPI)
-                        {
-                            myUserId = args.UserId;
-                        }
-
-                        else
-                        {
-                            if (myUserId == null)
-                            {
-                                if (!string.IsNullOrEmpty(args.UserId))
-                                {
-                                    myUserId = args.UserId;
-
-                                    if (tenant != 0)
-                                    {
-                                        UserRepository userRepository = new UserRepository(0);
-                                        User user = userRepository.GetSingleUser(myUserId, 0, true);
-                                        if (user != null)
-                                        {
-                                            User systemUser = userRepository.GetSingleUserByEmail("system@tenant" + tenant + ".com", tenant, true);
-                                            if (systemUser != null)
-                                            {
-                                                myUserId = systemUser.Id;
-                                            }
-
-                                            myCustomerCareUserEmail = user.Contact.Email;
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                        #endregion
-
-                        #region Dates
-                        if (args.LogDateTime == null)
-                        {
-                            args.LogDateTime = TenantServerConfigration.GetCurrentDateTime(tenant);
-                        }
-
-                        else if (args.LogDateTime.Value.Year == 1)
-                        {
-                            args.LogDateTime = TenantServerConfigration.GetCurrentDateTime(tenant);
-                        }
-
-                        if (args.EventDateTime == null)
-                        {
-                            args.EventDateTime = TenantServerConfigration.GetCurrentDateTime(tenant);
-                        }
-
-                        else if (args.EventDateTime.Value.Year == 1)
-                        {
-                            args.EventDateTime = TenantServerConfigration.GetCurrentDateTime(tenant);
-                        }
-                        #endregion
-
-                        #region Status
-                        if (args.IsAddedManually)
-                        {
-                            if (!string.IsNullOrEmpty(args.NewStatusId) && !string.IsNullOrEmpty(args.OldStatusId))
-                            {
-                                EntityStatus newStatus = EntityStatusRepository.GetSingleEntityStatus(args.NewStatusId, tenant, true);
-                                EntityStatus oldStatus = EntityStatusRepository.GetSingleEntityStatus(args.OldStatusId, tenant, true);
-
-                                Contact user = ContactRepository.GetSingleContact(myUserId, tenant, true);
-                                if (newStatus != null)
-                                {
-                                    args.Notes = "Status was changed manually from " + oldStatus.Name + " to " + newStatus.Name + " by " + (user != null ? user.EnglishName : "");
-                                }
-                            }
-                        }
-
-                        else
-                        {
-                            ComputeEventStatus(args);
-                        }
-                        #endregion
-
-                        TraceEvent myTraceEvent = new TraceEvent()
-                        {
-                            Id = Guid.NewGuid().ToString(),
-                            Tenant = tenant,
-                            EntityId = args.EntityId,
-                            EventTypeId = eventType.Id,
-                            ObjectTableId = this.objectTableId,
-                            LogDateTime = args.LogDateTime.Value,
-                            EventDateTime = args.EventDateTime.Value,
-                            ExternalId = args.ExternalId,
-                            IsAddedManually = args.IsAddedManually,
-                            UserId = myUserId,
-                            CustomerCareUserEmail = myCustomerCareUserEmail,
-                            Notes = args.Notes,
-                            Location = args.StatusLocation,
-                        };
-
-                        this.traceEventRepository.Add(myTraceEvent);
-                        this.traceEventRepository.SubmitChanges();
-                        objectContext.SaveChanges();
-
-                        if (!string.IsNullOrEmpty(eventType.CustomField))
-                        {
-                            EventCustomFieldUpdateService.UpdateEventCustomFieldValue(new UpdateEventCustomFieldArgs() { CustomField = eventType.CustomField, EventDateTime = myTraceEvent.EventDateTime, Entity = containerPM, EntityId = args.EntityId, ObjectTableName = args.ObjectTableName, Tenant = args.Tenant });
-                        }
-                    }
-                }
+            if (args.EventDateTime == null)
+            {
+                args.EventDateTime = TenantServerConfigration.GetCurrentDateTime(tenant);
+            }
+            else if (args.EventDateTime.Value.Year == 1)
+            {
+                args.EventDateTime = TenantServerConfigration.GetCurrentDateTime(tenant);
             }
         }
-        private void DeleteTraceEvent(string eventTypeCode, string pickupDeliveryIndex = null, DateTime? eventDateTime = null)
+        private void ValidateEvent(EventStatusTracerArgs args)
         {
-            if (!string.IsNullOrEmpty(eventTypeCode))
+            if (string.IsNullOrEmpty(args.EventTypeCode))
             {
-                EventType eventType = allEventTypes.Where(d => d.Code == eventTypeCode).FirstOrDefault();
+                return;
+            }
+            eventType = allEventTypes.Where(d => d.Code == args.EventTypeCode).FirstOrDefault();
+            if (eventType == null)
+            {
+                throw new Exception("Event Type is not recognized:" + args.EventTypeCode);
+            }
+        }
+        private void GetEventUser(EventStatusTracerArgs args)
+        {
+            if (eventUserId != null)
+            {
+                return;
+            }
+            eventUserId = args.UserId;
+            this.GetCustomerCareUser();
+        }
 
-                if (eventType != null)
+        private void GetCustomerCareUser()
+        {
+            if (tenant == 0)
+            {
+                return;
+            }
+            UserRepository userRepository = new UserRepository(0);
+            User user = userRepository.GetSingleUser(eventUserId, 0, true);
+            if (user != null)
+            {
+                User systemUser = userRepository.GetSingleUserByEmail("system@tenant" + tenant + ".com", tenant, true);
+                if (systemUser != null)
                 {
-                    List<TraceEvent> AllEventTraces = this.traceEventRepository.GetAllTraceEventsByEventType(containerPM.Id, eventType.Id, tenant).ToList();
-                    if (AllEventTraces.Count > 0)
+                    eventUserId = systemUser.Id;
+                }
+                customerCareUserEmail = user.Contact.Email;
+            }
+        }
+        private void HandleEventStatus(EventStatusTracerArgs args)
+        {
+            HandleAddedManuallyEvent(args);
+            ComputeEventStatus(args);
+        }
+        private void HandleAddedManuallyEvent(EventStatusTracerArgs args)
+        {
+            if (args.IsAddedManually)
+            {
+                if (!string.IsNullOrEmpty(args.NewStatusId) && !string.IsNullOrEmpty(args.OldStatusId))
+                {
+                    EntityStatus newStatus = EntityStatusRepository.GetSingleEntityStatus(args.NewStatusId, tenant, true);
+                    EntityStatus oldStatus = EntityStatusRepository.GetSingleEntityStatus(args.OldStatusId, tenant, true);
+
+                    Contact user = ContactRepository.GetSingleContact(eventUserId, tenant, true);
+                    if (newStatus != null)
                     {
-                        foreach (TraceEvent iTraceEvent in AllEventTraces)
-                        {
-                            iTraceEvent.Deleted = true;
-                            traceEventRepository.Update(iTraceEvent);
-                        }
-
-                        traceEventRepository.SubmitChanges();
-
-                        if (!string.IsNullOrEmpty(eventType.EntityStatusId))
-                        {
-                            TraceEvent previousEvent = null;
-
-                            List<TraceEvent> iTraceEventList = (from a in objectContext.TraceEvent.Include("EventType").Include("EventType.EntityStatus")
-                                                                where a.Tenant == tenant
-                                                                && a.EntityId == containerPM.Id
-                                                                && a.ObjectTableId == objectTableId
-                                                                && a.EventType.EntityStatus != null
-                                                                && a.Deleted == false
-                                                                select a).ToList();
-
-                            foreach (TraceEvent e in iTraceEventList)
-                            {
-                                if (!e.Deleted)
-                                {
-                                    if (e.EventType.EntityStatus != null)
-                                    {
-                                        if (previousEvent == null)
-                                        {
-                                            previousEvent = e;
-                                        }
-
-                                        else
-                                        {
-                                            if (e.EventType.EntityStatus.StatusWeight > previousEvent.EventType.EntityStatus.StatusWeight)
-                                            {
-                                                previousEvent = e;
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-
-                            if (previousEvent != null)
-                            {
-                                containerPM.StatusId = previousEvent.EventType.EntityStatusId;
-                            }
-                            else
-                            {
-                                EventType firstEventType = allEventTypes.Where(d => d.Code == "ORDR").FirstOrDefault();
-                                containerPM.StatusId = firstEventType.EntityStatusId;
-                            }
-                            container.StatusId = containerPM.StatusId;
-                        }
+                        args.Notes = "Status was changed manually from " + oldStatus.Name + " to " + newStatus.Name + " by " + (user != null ? user.EnglishName : "");
                     }
                 }
             }
         }
         private void ComputeEventStatus(EventStatusTracerArgs args)
         {
-            EventType newEventType = allEventTypes.Where(d => d.Code == args.EventTypeCode).FirstOrDefault();
-
-            if (newEventType.EntityStatusId != null)
+            if (!args.IsAddedManually)
             {
-                if (string.IsNullOrEmpty(args.OldStatusId))
+                EventType newEventType = allEventTypes.Where(d => d.Code == args.EventTypeCode).FirstOrDefault();
+                if (newEventType.EntityStatusId != null)
                 {
-                    containerPM.StatusId = newEventType.EntityStatusId;
-                    container.StatusId = containerPM.StatusId;
-                }
-                else
-                {
-                    EntityStatus newEntityStatus = allEntityStatuses.Where(d => d.Id == newEventType.EntityStatusId).FirstOrDefault();
-                    EntityStatus oldEntityStatus = allEntityStatuses.Where(d => d.Id == args.OldStatusId).FirstOrDefault();
-
-                    if (newEntityStatus.StatusWeight >= oldEntityStatus.StatusWeight)
+                    if (string.IsNullOrEmpty(args.OldStatusId))
                     {
                         containerPM.StatusId = newEventType.EntityStatusId;
                         container.StatusId = containerPM.StatusId;
                     }
+                    else
+                    {
+                        EntityStatus newEntityStatus = allEntityStatuses.Where(d => d.Id == newEventType.EntityStatusId).FirstOrDefault();
+                        EntityStatus oldEntityStatus = allEntityStatuses.Where(d => d.Id == args.OldStatusId).FirstOrDefault();
+
+                        if (newEntityStatus.StatusWeight >= oldEntityStatus.StatusWeight)
+                        {
+                            containerPM.StatusId = newEventType.EntityStatusId;
+                            container.StatusId = containerPM.StatusId;
+                        }
+                    }
                 }
             }
         }
+        private void AddNewTraceEvent(EventStatusTracerArgs args)
+        {
+            TraceEvent myTraceEvent = new TraceEvent()
+            {
+                Id = Guid.NewGuid().ToString(),
+                Tenant = tenant,
+                EntityId = args.EntityId,
+                EventTypeId = eventType.Id,
+                ObjectTableId = this.objectTableId,
+                LogDateTime = args.LogDateTime.Value,
+                EventDateTime = args.EventDateTime.Value,
+                ExternalId = args.ExternalId,
+                IsAddedManually = args.IsAddedManually,
+                UserId = eventUserId,
+                CustomerCareUserEmail = customerCareUserEmail,
+                Notes = args.Notes,
+                Location = args.StatusLocation,
+            };
+            this.traceEventRepository.Add(myTraceEvent);
+            this.traceEventRepository.SubmitChanges();
+            objectContext.SaveChanges();
+            if (!string.IsNullOrEmpty(eventType.CustomField))
+            {
+                EventCustomFieldUpdateService.UpdateEventCustomFieldValue(new UpdateEventCustomFieldArgs() { CustomField = eventType.CustomField, EventDateTime = myTraceEvent.EventDateTime, Entity = containerPM, EntityId = args.EntityId, ObjectTableName = args.ObjectTableName, Tenant = args.Tenant });
+            }
+        }
+        private void DeleteTraceEvent(string eventTypeCode)
+        {
+            if (string.IsNullOrEmpty(eventTypeCode))
+            {
+                return;
+            }
 
+            EventType deletedEventType = allEventTypes.Where(d => d.Code == eventTypeCode).FirstOrDefault();
+
+            if (deletedEventType == null)
+            {
+                return;
+            }
+
+            List<TraceEvent> AllEventTraces = this.traceEventRepository.GetAllTraceEventsByEventType(containerPM.Id, deletedEventType.Id, tenant).ToList();
+            if (AllEventTraces.Count > 0)
+            {
+                foreach (TraceEvent iTraceEvent in AllEventTraces)
+                {
+                    iTraceEvent.Deleted = true;
+                    traceEventRepository.Update(iTraceEvent);
+                }
+
+                traceEventRepository.SubmitChanges();
+
+                if (!string.IsNullOrEmpty(deletedEventType.EntityStatusId))
+                {
+                    TraceEvent previousEvent = null;
+
+                    List<TraceEvent> iTraceEventList = (from a in objectContext.TraceEvent.Include("EventType").Include("EventType.EntityStatus")
+                                                        where a.Tenant == tenant
+                                                        && a.EntityId == containerPM.Id
+                                                        && a.ObjectTableId == objectTableId
+                                                        && a.EventType.EntityStatus != null
+                                                        && a.Deleted == false
+                                                        select a).ToList();
+
+                    foreach (TraceEvent e in iTraceEventList)
+                    {
+                        if (!e.Deleted)
+                        {
+                            if (e.EventType.EntityStatus != null)
+                            {
+                                if (previousEvent == null)
+                                {
+                                    previousEvent = e;
+                                }
+
+                                else
+                                {
+                                    if (e.EventType.EntityStatus.StatusWeight > previousEvent.EventType.EntityStatus.StatusWeight)
+                                    {
+                                        previousEvent = e;
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    if (previousEvent != null)
+                    {
+                        containerPM.StatusId = previousEvent.EventType.EntityStatusId;
+                    }
+                    else
+                    {
+                        EventType firstEventType = allEventTypes.Where(d => d.Code == "ORDR").FirstOrDefault();
+                        containerPM.StatusId = firstEventType.EntityStatusId;
+                    }
+                    container.StatusId = containerPM.StatusId;
+                }
+            }
+        }
+       
         public void Trace()
         {
             GetLoggedUser();
@@ -326,6 +313,14 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
             TracTransshipment3Departed();
             TracDischarged();
             TracOnCarriageDischarged();
+            TracEmptyReturned();
+            TracGatedOut();
+            TracOnCarriageArrived();
+            TracOnCarriageDeparted();
+            TracArrivedPOD();
+            TracDepartedPOD();
+            TracPreCarriageArrived();
+            TracPreCarriageDeparted();
         }
         private void GetLoggedUser()
         {
@@ -342,6 +337,37 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                 this.loggedContactId = contact.Id;
             }
         }
+      
+        private void TraceCreatedEvent()
+        {
+            if (!isNewEntity)
+            {
+                this.TraceNewEvent();
+                this.TraceOrderEvent();
+            }
+        }
+        private void TraceNewEvent()
+        {
+            EventTracer.CreateTraceEvent(new EventTracerArgs()
+            {
+                Tenant = containerPM.Tenant,
+                EventTypeCode = "UPEV",
+                UserId = containerPM.UpdatedByUserId,
+                EntityId = containerPM.Id,
+                ObjectTableName = "Container",
+            });
+        }
+        private void TraceOrderEvent()
+        {
+            EventTracer.CreateTraceEvent(new EventTracerArgs()
+            {
+                Tenant = containerPM.Tenant,
+                EventTypeCode = "COOR",
+                UserId = containerPM.UpdatedByUserId,
+                EntityId = containerPM.Id,
+                ObjectTableName = "Container",
+            });
+        }
         private void TraceUpdatedEvent()
         {
             if (isNewEntity)
@@ -351,20 +377,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                     Tenant = containerPM.Tenant,
                     EventTypeCode = "CREV",
                     UserId = containerPM.CreatedByUserId,
-                    EntityId = containerPM.Id,
-                    ObjectTableName = "Container",
-                });
-            }
-        }
-        private void TraceCreatedEvent()
-        {
-            if (!isNewEntity)
-            {
-                EventTracer.CreateTraceEvent(new EventTracerArgs()
-                {
-                    Tenant = containerPM.Tenant,
-                    EventTypeCode = "UPEV",
-                    UserId = containerPM.UpdatedByUserId,
                     EntityId = containerPM.Id,
                     ObjectTableName = "Container",
                 });
@@ -420,19 +432,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                 this.DeleteTraceEvent("PICS");
             }
         }
-        private void TracPreCarriageDeparted()
-        {
-            if (containerPM.ShipmentPickupATD != null && container.ShipmentPickupATD == null)
-            {
-                this.CreateTraceEvent("PCDP");
-            }
-
-            else if (containerPM.ShipmentPickupATD == null && containerPM.ShipmentPickupATD != null)
-            {
-                this.DeleteTraceEvent("PCDP");
-            }
-        }
-
         private void TracTransshipment1Arrived()
         {
             if (containerPM.ActualTransshipment1VesselArrival != null && container.ActualTransshipment1VesselArrival == null)
@@ -529,8 +528,181 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                 this.DeleteTraceEvent("UNDS");
             }
         }
-
-
-
+        private void TracEmptyReturned()
+        {
+            if (containerPM.ActualEmptyReturn != null && container.ActualOnCarriageDeparture == null)
+            {
+                this.CreateTraceEvent("EMRT");
+            }
+            else
+            {
+                if (containerPM.ActualEmptyReturn == null && container.ActualOnCarriageDeparture != null)
+                {
+                    this.DeleteTraceEvent("EMRT");
+                }
+                if (containerPM.EstimatedDelivery != null && container.EstimatedDelivery == null)
+                {
+                    this.CreateTraceEvent("EMRT");
+                }
+                else if (containerPM.EstimatedDelivery == null && container.EstimatedDelivery != null)
+                {
+                    this.DeleteTraceEvent("EMRT");
+                }  
+            }
+        }
+        private void TracGatedOut()
+        {
+            if (containerPM.ActualOnCarriageDeparture != null && container.ActualOnCarriageDeparture == null)
+            {
+                this.CreateTraceEvent("GTOT");
+            }
+            else
+            {
+                if (containerPM.ActualOnCarriageDeparture == null && container.ActualOnCarriageDeparture != null)
+                {
+                    this.DeleteTraceEvent("GTOT");
+                }
+                if (containerPM.ActualPODDeparture != null && container.ActualPODDeparture == null)
+                {
+                    this.CreateTraceEvent("GTOT");
+                }
+                else if (containerPM.ActualPODDeparture == null && container.ActualPODDeparture != null)
+                {
+                    this.DeleteTraceEvent("GTOT");
+                }
+            }
+        }
+        private void TracOnCarriageArrived()
+        {
+            if (containerPM.ShipmentOnCarriageATA != null && container.ShipmentOnCarriageATA == null)
+            {
+                this.CreateTraceEvent("DPWH");
+            }
+            else
+            {
+                if (containerPM.ShipmentOnCarriageATA == null && container.ShipmentOnCarriageATA != null)
+                {
+                    this.DeleteTraceEvent("DPWH");
+                }
+                if (containerPM.ShipmentOnCarriageATA != null && container.ShipmentOnCarriageATA == null)
+                {
+                    this.CreateTraceEvent("DPWH");
+                }
+                else if (containerPM.ShipmentOnCarriageATA == null && container.ShipmentOnCarriageATA != null)
+                {
+                    this.DeleteTraceEvent("DPWH");
+                }
+            }
+        }
+        private void TracOnCarriageDeparted()
+        {
+            if (containerPM.ShipmentOnCarriageATD != null && container.ShipmentOnCarriageATD == null)
+            {
+                this.CreateTraceEvent("ARWH");
+            }
+            else
+            {
+                if (containerPM.ShipmentOnCarriageATD == null && container.ShipmentOnCarriageATD != null)
+                {
+                    this.DeleteTraceEvent("ARWH");
+                }
+                if (containerPM.ShipmentOnCarriageATD != null && container.ShipmentOnCarriageATD == null)
+                {
+                    this.CreateTraceEvent("ARWH");
+                }
+                else if (containerPM.ShipmentOnCarriageATD == null && container.ShipmentOnCarriageATD != null)
+                {
+                    this.DeleteTraceEvent("ARWH");
+                }
+            }
+        }
+        private void TracArrivedPOD()
+        {
+            if (containerPM.ActualPODVesselArrival != null && container.ActualPODVesselArrival == null)
+            {
+                this.CreateTraceEvent("ARPD");
+            }
+            else
+            {
+                if (containerPM.ActualPODVesselArrival == null && container.ActualPODVesselArrival != null)
+                {
+                    this.DeleteTraceEvent("ARPD");
+                }
+                if (containerPM.ShipmentMainCarriageATA != null && container.ShipmentMainCarriageATA == null)
+                {
+                    this.CreateTraceEvent("ARPD");
+                }
+                else if (containerPM.ShipmentMainCarriageATA == null && container.ShipmentMainCarriageATA != null)
+                {
+                    this.DeleteTraceEvent("ARPD");
+                }
+            }
+        }
+        private void TracDepartedPOD()
+        {
+            if (containerPM.ActualPOLVesselDeparture != null && container.ActualPOLVesselDeparture == null)
+            {
+                this.CreateTraceEvent("POLD");
+            }
+            else
+            {
+                if (containerPM.ActualPOLVesselDeparture == null && container.ActualPOLVesselDeparture != null)
+                {
+                    this.DeleteTraceEvent("POLD");
+                }
+                if (containerPM.ShipmentMainCarriageATD != null && container.ShipmentMainCarriageATD == null)
+                {
+                    this.CreateTraceEvent("POLD");
+                }
+                else if (containerPM.ShipmentMainCarriageATD == null && container.ShipmentMainCarriageATD != null)
+                {
+                    this.DeleteTraceEvent("POLD");
+                }
+            }
+        }
+        private void TracPreCarriageArrived()
+        {
+            if (containerPM.MainCarriageATA != null && container.MainCarriageATA == null)
+            {
+                this.CreateTraceEvent("PCAV");
+            }
+            else
+            {
+                if (containerPM.MainCarriageATA == null && container.MainCarriageATA != null)
+                {
+                    this.DeleteTraceEvent("PCAV");
+                }
+                if (containerPM.ShipmentPreCarriageATA != null && container.ShipmentPreCarriageATA == null)
+                {
+                    this.CreateTraceEvent("PCAV");
+                }
+                else if (containerPM.ShipmentPreCarriageATA == null && container.ShipmentPreCarriageATA != null)
+                {
+                    this.DeleteTraceEvent("PCAV");
+                }
+            }
+        }
+        private void TracPreCarriageDeparted()
+        {
+            if (containerPM.MainCarriageATD != null && container.MainCarriageATD == null)
+            {
+                this.CreateTraceEvent("PCDP");
+            }
+            else
+            {
+                if (containerPM.MainCarriageATD == null && container.MainCarriageATD != null)
+                {
+                    this.DeleteTraceEvent("PCDP");
+                }
+                if (containerPM.ShipmentPreCarriageATD != null && container.ShipmentPreCarriageATD == null)
+                {
+                    this.CreateTraceEvent("PCDP");
+                }
+                else if (containerPM.ShipmentPreCarriageATD == null && container.ShipmentPreCarriageATD != null)
+                {
+                    this.DeleteTraceEvent("PCDP");
+                }
+            }
+        }
     }
 }

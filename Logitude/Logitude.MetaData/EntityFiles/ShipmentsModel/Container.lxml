@@ -17000,6 +17000,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;StatusWeight&quot;"
     ListPropertyPath="&quot;StatusWeight&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -17654,6 +17655,20 @@
       AllowedInAutomation="false"
       ManualActivatedFollowUp="false"
       IsFollowUp="false" />
+    <EventType
+      Code="&quot;COOR&quot;"
+      ObjectTableName="&quot;Container&quot;"
+      EnglishName="&quot;Order&quot;"
+      LocalName="&quot;Order&quot;"
+      IsManualEntry="false"
+      ShortView="true"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false"
+      EntityStatusCode="&quot;COOR&quot;" />
   </EventTypes>
   <Records />
   <MenuButtons
