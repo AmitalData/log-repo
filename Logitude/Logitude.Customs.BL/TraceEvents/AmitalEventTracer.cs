@@ -149,7 +149,7 @@ namespace Logitude.Customs.BL.TraceEvents
                 unfreightUserId = AuthenticationUtil.ResolveUnifreightUserId(myAmitalEventTracer.Tenant);
                 if (String.IsNullOrWhiteSpace(unfreightUserId))
                 {
-                    unfreightUserId = "MEHES"; // change from "AMITAL"
+                    unfreightUserId = myAmitalEventTracer.MyFUStatus.OwnerUnifreightUserCode ?? "MEHES"; // change from "AMITAL"
                 }
             }
 

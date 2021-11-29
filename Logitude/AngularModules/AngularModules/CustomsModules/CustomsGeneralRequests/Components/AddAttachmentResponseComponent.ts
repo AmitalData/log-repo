@@ -26,6 +26,17 @@ import { ObservableCollection } from '../../../Infrastructure/Utilities/Observab
     selector: 'AddAttachmentResponseComponent',
     
     templateUrl: './AddAttachmentResponseComponent.html',
+    styles: [
+        `        
+            :host ::ng-deep input{
+                color: black;
+            }
+
+            :host ::ng-deep LogLabel  label {
+                color: black !important;
+            }
+        `
+    ]
 })
 
 

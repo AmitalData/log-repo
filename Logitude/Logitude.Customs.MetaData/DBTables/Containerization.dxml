@@ -73,13 +73,13 @@
   </Column>
   <Column
     Name="IsMultiCustomers"
-    Type="bit">
+    Type="nvarchar"
+    Size="100">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
     Name="IsMultiExportFiles"
-    OldNames="IsMultiCustomers"
     Type="bit">
     <Constraints
       Nullable="true" />

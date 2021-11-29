@@ -104,6 +104,11 @@ export class ContainerizationPM {
     public set IsChange(newValue: boolean) { if (this.isChange != newValue) { this.isChange = newValue; this.MarkAsDirty("IsChange"); } }
        
 	 
+    private isMultiCustomers: string;
+    public get IsMultiCustomers() { return this.isMultiCustomers; }
+    public set IsMultiCustomers(newValue: string) { if (this.isMultiCustomers != newValue) { this.isMultiCustomers = newValue; this.MarkAsDirty("IsMultiCustomers"); } }
+       
+	 
 
     public OldEntityPM: ContainerizationPM;
 		
