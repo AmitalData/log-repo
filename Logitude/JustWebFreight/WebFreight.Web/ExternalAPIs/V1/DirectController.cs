@@ -438,6 +438,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
             if (!string.IsNullOrEmpty(entityPM.CustomerId))
             {
                 if (!IsSentCustomerAShipmentPatrner(entityPM))
+
                 {
                     throw new ApplicationException("The sent customer is not one of the sent partners");
                 }
@@ -731,15 +732,15 @@ namespace WebFreight.Web.ExternalAPIs.V1
             {
                 return true;
             }
-            if (entityPM.CustomerId == entityPM.ConsigneeId)
+            else if (entityPM.CustomerId == entityPM.ConsigneeId)
             {
                 return true;
             }
-            if (entityPM.CustomerId == entityPM.ShipperNotExporterId)
+            else if (entityPM.CustomerId == entityPM.ShipperNotExporterId)
             {
                 return true;
             }
-            if (entityPM.CustomerId == entityPM.AgentId)
+            else if (entityPM.CustomerId == entityPM.AgentId)
             {
                 return true;
             }
@@ -747,11 +748,11 @@ namespace WebFreight.Web.ExternalAPIs.V1
             {
                 return true;
             }
-            if (entityPM.CustomerId == entityPM.ReleasingAgentId)
+            else if (entityPM.CustomerId == entityPM.ReleasingAgentId)
             {
                 return true;
             }
-            if (entityPM.CustomerId == entityPM.FreightForwarderId)
+            else if (entityPM.CustomerId == entityPM.FreightForwarderId)
             {
                 return true;
             }
@@ -760,6 +761,10 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 return true;
             }
             if (entityPM.CustomerId == entityPM.ConsigneeNotImporterId)
+            {
+                return true;
+            }
+            else if (entityPM.CustomerId == entityPM.CustomerId == entityPM.Notify1Id)
             {
                 return true;
             }
