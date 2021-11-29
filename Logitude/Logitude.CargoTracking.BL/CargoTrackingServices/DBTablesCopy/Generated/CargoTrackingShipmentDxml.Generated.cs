@@ -333,6 +333,15 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.DBTablesCopy.Generated
 "  <Column Name='PaymentReceivedNotes' Type='nvarchar' Size='32'>"+
 "    <Constraints Nullable='true' />"+
 "  </Column>"+
+"  <Column Name='PoNumber' Type='varchar' Size='50'>"+
+"    <Constraints Nullable='true' />"+
+"  </Column>"+
+"  <Column Name='DescriptionOfGoods' Type='nvarchar' Size='2000'>"+
+"    <Constraints Nullable='true' />"+
+"  </Column>"+
+"  <Column Name='SupplyDateTime' Type='datetime'>"+
+"    <Constraints Nullable='true' />"+
+"  </Column>"+
 "  <Relation ForeignKeyColumn='EntityType' ReferencedTable='CargoTrackingHeaderEntityTypes' ReferencedColumn='Code' ReferencedTableSchema='dbo' />"+
 "  <Relation ForeignKeyColumn='CurrentMilestoneCode' ReferencedTable='CargoTrackingMilestones' ReferencedColumn='Code' ReferencedTableSchema='dbo' />"+
 "  <Index Columns='EntityId' />"+

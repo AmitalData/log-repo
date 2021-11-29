@@ -45,6 +45,8 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.MainService
 					OrderTable.House as OrderHouse , 
 					OrderTable.OrderNumber as OrderShipmentNumber , 
 					OrderTable.OriginPortId as OrderFromPortId , 
+					OrderTable.DescriptionOfGoods as OrderDescriptionOfGoods ,
+					OrderTable.SupplyDateTime as OrderSupplyDateTime ,
 					OrderTable.DestinationPortId as OrderToPortId , 
 					OrderTable.ShipperId as OrderShipperId , 
 					OrderTable.ConsigneeId as OrderConsigneeId , 

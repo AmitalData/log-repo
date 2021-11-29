@@ -170,6 +170,8 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CustomMapping
             item.ShipmentNumber = row.OrderShipmentNumber;
             item.FromPortId = row.OrderFromPortId;
             item.ToPortId = row.OrderToPortId;
+            item.DescriptionOfGoods = row.OrderDescriptionOfGoods;
+            item.SupplyDateTime = row.OrderSupplyDateTime;
             item.ShipperId = row.OrderShipperId;
             item.ConsigneeId = row.OrderConsigneeId;
             item.GrossWeight = row.OrderGrossWeight;

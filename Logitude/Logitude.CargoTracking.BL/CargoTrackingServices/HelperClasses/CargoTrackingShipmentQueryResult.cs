@@ -20,6 +20,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.HelperClasses
         public string OrderShipmentNumber { get; set; }
         public string OrderFromPortId { get; set; }
         public string OrderToPortId { get; set; }
+        public string OrderDescriptionOfGoods { get; set; }
         public string OrderShipperId { get; set; }
         public string OrderConsigneeId { get; set; }
         public double? OrderGrossWeight { get; set; }
@@ -232,6 +233,6 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.HelperClasses
         public string CustomCarrierEnglishName { get; set; }
         public bool CustomIsPaymentRequired { get; set; }
         public DateTime? CustomAutomaticLastUpdateDate { get; set; }
-
+        public DateTime? OrderSupplyDateTime { get; set; }
     }
 }

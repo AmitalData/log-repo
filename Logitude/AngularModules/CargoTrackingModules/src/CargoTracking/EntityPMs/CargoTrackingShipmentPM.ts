@@ -619,6 +619,21 @@ export class CargoTrackingShipmentPM {
     public set PaymentReceivedNotes(newValue: string) { if (this.paymentReceivedNotes != newValue) { this.paymentReceivedNotes = newValue; this.MarkAsDirty("PaymentReceivedNotes"); } }
        
 	 
+    private poNumber: string;
+    public get PoNumber() { return this.poNumber; }
+    public set PoNumber(newValue: string) { if (this.poNumber != newValue) { this.poNumber = newValue; this.MarkAsDirty("PoNumber"); } }
+       
+	 
+    private descriptionOfGoods: string;
+    public get DescriptionOfGoods() { return this.descriptionOfGoods; }
+    public set DescriptionOfGoods(newValue: string) { if (this.descriptionOfGoods != newValue) { this.descriptionOfGoods = newValue; this.MarkAsDirty("DescriptionOfGoods"); } }
+       
+	 
+    private supplyDateTime: Date;
+    public get SupplyDateTime() { return this.supplyDateTime; }
+    public set SupplyDateTime(newValue: Date) { if (this.supplyDateTime != newValue) { this.supplyDateTime = newValue; this.MarkAsDirty("SupplyDateTime"); } }
+       
+	 
 
     public OldEntityPM: CargoTrackingShipmentPM;
 		
