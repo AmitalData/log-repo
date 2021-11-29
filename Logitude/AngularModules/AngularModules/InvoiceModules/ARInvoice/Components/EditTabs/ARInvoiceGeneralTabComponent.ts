@@ -3,7 +3,6 @@ import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {ARInvoicePM} from '../../../../Invoice/EntityPMs/ARInvoicePM';
-import { ObjectsLocator } from '../../../../Infrastructure/Locators/ObjectsLocator';
 
 @Component({
     
@@ -25,7 +24,7 @@ export class ARInvoiceGeneralTabComponent extends BaseComponent implements OnIni
             this.DisplaySATSettings = true;
         }
 
-        if (this.IsQBOAccountingSystem()) {
+        if (this.IsQBOAccountingSystem() && SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "QBT")[0]) {
             this.DisplayQBOSettings = true;
         }
 

@@ -372,6 +372,14 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "SAL,Use Security Access Level", 
                 Description = "Use Security Access Level", 
 			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "QBT", 
+                Name = "QBO Tax Id Calculations", 
+                SearchFields = "QBT,QBO Tax Id Calculations", 
+                Description = "QBO Tax Id Calculations", 
+			});
 			
             return all;
        }
