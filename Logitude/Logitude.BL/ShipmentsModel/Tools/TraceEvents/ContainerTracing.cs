@@ -351,8 +351,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
             EventTracer.CreateTraceEvent(new EventTracerArgs()
             {
                 Tenant = containerPM.Tenant,
-                EventTypeCode = "UPEV",
-                UserId = containerPM.UpdatedByUserId,
+                EventTypeCode = "CREV",
+                UserId = containerPM.CreatedByUserId,
                 EntityId = containerPM.Id,
                 ObjectTableName = "Container",
             });
@@ -375,8 +375,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                 EventTracer.CreateTraceEvent(new EventTracerArgs()
                 {
                     Tenant = containerPM.Tenant,
-                    EventTypeCode = "CREV",
-                    UserId = containerPM.CreatedByUserId,
+                    EventTypeCode = "UPEV",
+                    UserId = containerPM.UpdatedByUserId,
                     EntityId = containerPM.Id,
                     ObjectTableName = "Container",
                 });
