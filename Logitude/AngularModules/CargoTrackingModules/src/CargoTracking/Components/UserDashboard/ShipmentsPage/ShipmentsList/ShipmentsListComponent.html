@@ -284,9 +284,9 @@
                                     </span>
                                 </div>
 
-                                <custom-label [width]="110" class="mobile-only-inline-block">
-                                    {{ shipment.ShipmentNumber }}
-                                </custom-label>
+                                <span matTooltip="Info about the action" class="mobile-only-inline-block">
+                                   {{ GetSlice(shipment.ShipmentNumber,20) }}
+                                </span>
                                 <div class="truncateText mobile-inline-block"
                                     *ngFor="let item of references; let i = index">
                                     <custom-label [ngClass]="{'hide-mobile': i >= 0}" *ngIf="i < 3">
@@ -341,7 +341,7 @@
                             <div [attr.src]="SetTitileAndValueForSupplierOrClient(shipment)">
                                 <div class="subtitle">{{SupplierOrClientTitle}}</div>
                                 <div class="value truncateText">
-                                    <custom-label>{{SupplierOrClientValue}}</custom-label> 
+                                    <span matTooltip="Info about the action">{{SupplierOrClientValue}}</span> 
                                 </div>
 
 

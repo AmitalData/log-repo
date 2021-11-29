@@ -1066,6 +1066,15 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
             this.mobileSearchInput?.nativeElement?.focus();
         }, 50);
     }
+
+    GetSlice(text:string,numberOfCharacter){
+        var result = text
+        if(text.length> numberOfCharacter){
+            result = text.slice(0,numberOfCharacter) 
+        }
+        return result;
+
+    }
 }
 
 export class ToggleFilter
