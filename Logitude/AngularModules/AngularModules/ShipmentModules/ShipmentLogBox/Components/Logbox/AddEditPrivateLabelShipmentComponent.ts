@@ -568,8 +568,14 @@ export class AddEditPrivateLabelShipmentComponent extends BaseComponent implemen
     public get ShipperName() { return this.EntityPM.ShipperName }
     public set ShipperName(newValue: string) { this.EntityPM.ShipperName = newValue; }
 
-    public get CustomerReference1() { return this.EntityPM.CustomerReference1 }
-    public set CustomerReference1(newValue: string) { this.EntityPM.CustomerReference1 = newValue; }
+    public get CustomerReference3() {
+        if (!AppTool.IsNullOrEmpty(this.EntityPM.CustomerReference3)) return this.EntityPM.CustomerReference3;
+        else return this.EntityPM.CustomerReference1;
+    }
+    public set CustomerReference3(newValue: string) {
+        if (!AppTool.IsNullOrEmpty(newValue)) this.EntityPM.CustomerReference1 = newValue.substring(0, 50);
+        this.EntityPM.CustomerReference3 = newValue;
+    }
 
     public get CustomerReference2() { return this.EntityPM.CustomerReference2 }
     public set CustomerReference2(newValue: string) { this.EntityPM.CustomerReference2 = newValue; }
@@ -694,7 +700,7 @@ export class AddEditPrivateLabelShipmentComponent extends BaseComponent implemen
             this.ValidationErrorsList.push(msg.replace("%FieldName", "TransportationTypes"));
         }
 
-        if (AppTool.IsNullOrEmpty(this.CustomerReference1)) {
+        if (AppTool.IsNullOrEmpty(this.CustomerReference3)) {
             this.ValidationErrorsList.push(msg.replace("%FieldName", "OrderNumber"));
         }
 
@@ -745,7 +751,7 @@ export class AddEditPrivateLabelShipmentComponent extends BaseComponent implemen
                         this._PortExtendedPMService.getSinglePort("---", "IL", SessionLocator.Tenant).subscribe((Result: any) => {
                             this.FromPortId = Result.Result.Id;
                             if (this.IsNew) {
-                                this._ShipmentPMService.GetByCustomerReference1(this.CustomerReference1, false).subscribe((myResult: any) => {
+                                this._ShipmentPMService.GetByCustomerReferences1or3(this.CustomerReference3, false).subscribe((myResult: any) => {
                                     if (myResult.Result) {
                                         var confirmWindow = new ConfirmWindow();
                                         confirmWindow.Title = "Warning !";
@@ -770,7 +776,7 @@ export class AddEditPrivateLabelShipmentComponent extends BaseComponent implemen
                                 });
                             }
                             else {
-                                this._ShipmentPMService.GetByCustomerReference1ForUpdate(this.CustomerReference1, this.EntityPM.Id, false).subscribe((myResult: any) => {
+                                this._ShipmentPMService.GetByCustomerReferences1or3ForUpdate(this.CustomerReference3, this.EntityPM.Id, false).subscribe((myResult: any) => {
                                     if (myResult.Result) {
                                         var confirmWindow = new ConfirmWindow();
                                         confirmWindow.Title = "Warning !";
@@ -799,7 +805,7 @@ export class AddEditPrivateLabelShipmentComponent extends BaseComponent implemen
                     }
                     else {
                         if (this.IsNew == true) {
-                            this._ShipmentPMService.GetByCustomerReference1(this.CustomerReference1, false).subscribe((myResult: any) => {
+                            this._ShipmentPMService.GetByCustomerReferences1or3(this.CustomerReference3, false).subscribe((myResult: any) => {
                                 if (myResult.Result) {
                                     var confirmWindow = new ConfirmWindow();
                                     confirmWindow.Title = "Warning !";
@@ -824,7 +830,7 @@ export class AddEditPrivateLabelShipmentComponent extends BaseComponent implemen
                             });
                         }
                         else {
-                            this._ShipmentPMService.GetByCustomerReference1ForUpdate(this.CustomerReference1, this.EntityPM.Id, false).subscribe((myResult: any) => {
+                            this._ShipmentPMService.GetByCustomerReferences1or3ForUpdate(this.CustomerReference3, this.EntityPM.Id, false).subscribe((myResult: any) => {
                                 if (myResult.Result) {
                                     var confirmWindow = new ConfirmWindow();
                                     confirmWindow.Title = "Warning !";
@@ -882,7 +888,7 @@ export class AddEditPrivateLabelShipmentComponent extends BaseComponent implemen
             this.ValidationErrorsList.push(msg.replace("%FieldName", "TransportationTypes"));
         }
 
-        if (AppTool.IsNullOrEmpty(this.CustomerReference1)) {
+        if (AppTool.IsNullOrEmpty(this.CustomerReference3)) {
             this.ValidationErrorsList.push(msg.replace("%FieldName", "OrderNumber"));
         }
 

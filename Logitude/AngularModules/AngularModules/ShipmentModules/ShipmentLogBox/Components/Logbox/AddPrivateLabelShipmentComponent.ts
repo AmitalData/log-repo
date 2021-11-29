@@ -427,7 +427,7 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
         if (!AppTool.IsNullOrEmpty(this.RequestedFlightDate)) {
             this.ValidateRequestedFlightDate();
         }
-        if (AppTool.IsNullOrEmpty(this.CustomerReference1)) {
+        if (AppTool.IsNullOrEmpty(this.CustomerReference3)) {
             this.PushErrorMessage("Reference");
         }
 
@@ -503,8 +503,16 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
     public set ShipmentLevelCode(newValue: string) { this.EntityPM.ShipmentLevelCode = newValue; }
 
 
-    public get CustomerReference1() { return this.EntityPM.CustomerReference1 }
-    public set CustomerReference1(newValue: string) { this.EntityPM.CustomerReference1 = newValue; }
+    public get CustomerReference3() {
+        if (!AppTool.IsNullOrEmpty(this.EntityPM.CustomerReference3))
+            return this.EntityPM.CustomerReference3;
+        else
+            return this.EntityPM.CustomerReference1;
+    }
+    public set CustomerReference3(newValue: string) {
+        if (!AppTool.IsNullOrEmpty(newValue)) this.EntityPM.CustomerReference1 = newValue.substring(0, 50);
+        this.EntityPM.CustomerReference3 = newValue;
+    }
 
 
     get CustomerReference2() { return this.EntityPM.CustomerReference2; }

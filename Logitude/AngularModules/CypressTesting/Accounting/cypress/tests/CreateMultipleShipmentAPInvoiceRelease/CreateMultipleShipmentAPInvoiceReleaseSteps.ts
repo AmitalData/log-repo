@@ -154,7 +154,6 @@ Then("the invoice should approve successfully", () => {
 });
 
 Then("the status value should be {string}", (statusValue) => {
-  cy.wait(1000)
   BaseAssertion.AssertElementContain(ShipmentSelectors.APInvoiceStatus, statusValue)
 });
 //#endregion

@@ -56,8 +56,8 @@ export class BaseSelectors extends RegexSelectors {
     public static readonly ConfrimApproved = '#ConfrimApproved';
     public static readonly SettingsButton = '#Settings';
     public static readonly EditButton = '#Edit';
-
     //#endregion
+
     //#region Contains
     public static readonly ContainsApplytoall = 'Apply to all';
     public static readonly ContainsOK = 'OK';
@@ -118,6 +118,7 @@ export class BaseSelectors extends RegexSelectors {
     public static readonly LoggedUser = "#LoggedUser"
     public static readonly DefaultMenuItem = ".DefaultMenuItem"
     public static readonly LogCellTemplate = ".LogCellTemplate"
+    public static readonly NoDataText = ".NoDataText"
     //#endregion
 
     public static readonly FirstElementInList = 'ul > li';

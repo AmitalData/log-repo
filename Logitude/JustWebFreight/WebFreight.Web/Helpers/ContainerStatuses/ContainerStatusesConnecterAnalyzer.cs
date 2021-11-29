@@ -1174,6 +1174,8 @@ namespace WebFreight.Web.Helpers.Analyzers
                 container.EstimatedPODDeparture = containerUpdatedFields.EstimatedPODDeparture;
                 container.ActualPODDeparture = containerUpdatedFields.ActualPODDeparture;
                 container.DeliveryLocation = containerUpdatedFields.DeliveryLocation;
+                container.EstimatedDelivery = containerUpdatedFields.EstimatedDelivery;
+                container.ActualDelivery = containerUpdatedFields.ActualDelivery;
                 container.LIFLocation = containerUpdatedFields.LIFLocation;
                 container.EstimatedLIFArrival = containerUpdatedFields.EstimatedLIFArrival;
                 container.ActualLIFArrival = containerUpdatedFields.ActualLIFArrival;
@@ -1200,8 +1202,6 @@ namespace WebFreight.Web.Helpers.Analyzers
                 container.Transshipment2LocationPortId = this.GetPortId(containerUpdatedFields.Transshipment2Location);
                 container.Transshipment3LocationPortId = this.GetPortId(containerUpdatedFields.Transshipment3Location);
                 container.Transshipment4LocationPortId = this.GetPortId(containerUpdatedFields.Transshipment4Location);
-                container.GateIn = containerUpdatedFields.GateIn;
-                container.GateOut = containerUpdatedFields.GateOut;
                 container.IsAutomaticUpdates = true;
                 this.SaveContainer();
             }
@@ -1323,7 +1323,9 @@ namespace WebFreight.Web.Helpers.Analyzers
             containerUpdatedFields.EstimatedPODDischarge = ComputeEstimatedPODDischarge();
             containerUpdatedFields.ActualPODDischarge = ComputeActualPODDischarge();
             containerUpdatedFields.EstimatedPODDeparture = ComputeEstimatedPODDeparture();
-            containerUpdatedFields.ActualPODDeparture = ComputeActualPODDeparture();           
+            containerUpdatedFields.ActualPODDeparture = ComputeActualPODDeparture();
+            containerUpdatedFields.EstimatedDelivery = ComputeEstimatedDelivery();
+            containerUpdatedFields.ActualDelivery = ComputeActualDelivery();
             containerUpdatedFields.EstimatedLIFArrival = ComputeEstimatedLIFArrival();
             containerUpdatedFields.ActualLIFArrival = ComputeActualLIFArrival();
             containerUpdatedFields.EstimatedOnCarriageDeparture = ComputeEstimatedOnCarriageDeparture();
@@ -1334,9 +1336,6 @@ namespace WebFreight.Web.Helpers.Analyzers
             containerUpdatedFields.CustomsReleaseDate = this.ComputeCustomsReleaseDate();            
             containerUpdatedFields.CarrierReleaseDate = this.ComputeCarrierReleaseDate();
             containerUpdatedFields.AvailablityDate = this.ComputeAvailablityDate();
-            containerUpdatedFields.GateIn = this.ComputeGateIn();
-            containerUpdatedFields.GateOut = this.ComputeGateOut();
-
             return containerUpdatedFields;
         }
         private DateTime? ComputeMainCarriageETD()
@@ -1979,6 +1978,27 @@ namespace WebFreight.Web.Helpers.Analyzers
             }
             return null;
         }
+        private DateTime? ComputeEstimatedDelivery()
+        {
+            if (!string.IsNullOrEmpty(dlv_delivery_planned_last))
+            {
+                return AnalyzeXMLDateValue(dlv_delivery_planned_last, dlv_loc_timezone);
+            }
+
+            else if (!string.IsNullOrEmpty(dlv_delivery_planned_initial))
+            {
+                return AnalyzeXMLDateValue(dlv_delivery_planned_initial, dlv_loc_timezone);
+            }
+            return null;
+        }
+        private DateTime? ComputeActualDelivery()
+        {
+            if (!string.IsNullOrEmpty(dlv_delivery_actual))
+            {
+                return AnalyzeXMLDateValue(dlv_delivery_actual, dlv_loc_timezone);
+            }
+            return null;
+        }
         private DateTime? ComputeEstimatedLIFArrival()
         {
             if (!string.IsNullOrEmpty(lif_arrival_planned_last))
@@ -2595,6 +2615,8 @@ namespace WebFreight.Web.Helpers.Analyzers
         public DateTime? EstimatedPODDeparture { get; set; }
         public DateTime? ActualPODDeparture { get; set; }
         public string DeliveryLocation { get; set; }
+        public DateTime? EstimatedDelivery { get; set; }
+        public DateTime? ActualDelivery { get; set; }
         public string LIFLocation { get; set; }
         public DateTime? EstimatedLIFArrival { get; set; }
         public DateTime? ActualLIFArrival { get; set; }

@@ -401,7 +401,6 @@ using Simplog.Data.ShipmentsModel;
 				   temp.ShipperNotExporterReference2 = MyEntityPM.ShipperNotExporterReference2;
 				   temp.CustomsClearanceDate = MyEntityPM.CustomsClearanceDate; 
 
-			  
 				   if(MyEntityPM.Notify1Id != null)
 				   {
 					   CardQueryService CardService27 = new CardQueryService(Tenant);
@@ -1309,7 +1308,6 @@ using Simplog.Data.ShipmentsModel;
 
 					 
 
-					
 					CardQueryService Notify1CardService = new CardQueryService(Tenant);
 					if(MyEntity.Notify1 != null)
 					{
@@ -1359,7 +1357,6 @@ using Simplog.Data.ShipmentsModel;
 						
 					}
 
-								 					   
 					return temp;
 		    }
             catch (Exception ex)
@@ -1370,4 +1367,4 @@ using Simplog.Data.ShipmentsModel;
         }
 		 
    }
-}
+}

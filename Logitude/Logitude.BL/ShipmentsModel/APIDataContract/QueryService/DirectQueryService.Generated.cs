@@ -526,7 +526,15 @@ using Simplog.Data.ShipmentsModel;
 					   					   temp.MainCarriageToPort = PortService37.GetPortById(MyEntityPM.MainCarriageToPortId,Tenant,ComputingPartnerName); 
 			       
 					   				   }
-				   
+				    
+
+			  
+				   if(MyEntityPM.Notify1Id != null)
+				   {
+					   CardQueryService CardService38 = new CardQueryService(Tenant);
+					   					   temp.Notify1 = CardService38.GetCardById(MyEntityPM.Notify1Id,Tenant,ComputingPartnerName); 
+			       
+					   				   }
 				   temp.CutoffDate = MyEntityPM.CutoffDate;
 				   temp.IsDangerous = MyEntityPM.IsDangerous;
 				   temp.HAWBDate = MyEntityPM.HAWBDate; 
@@ -950,11 +958,15 @@ using Simplog.Data.ShipmentsModel;
 
 					if(MyEntity.AirPackages != null && MyEntity.AirPackages.Count > 0)
 					{
-						AirPackageQueryService AirPackageService48 = new AirPackageQueryService(Tenant);
-						 								//throw new ApplicationException("AirPackages Can't be update"); 
-								temp.ShipmentPackages = AirPackageService48.AirPackageCustomDataMappingAndValidatin(MyEntity,MyEntity.AirPackages,Tenant,ComputingPartnerName);
+						AirPackageQueryService AirPackageService39 = new AirPackageQueryService(Tenant);
+						 								
 
-					 
+						  
+						if(!IsUpdate)
+						{								//throw new ApplicationException("AirPackages Can't be update"); 
+								temp.ShipmentPackages = AirPackageService39.AirPackageCustomDataMappingAndValidatin(MyEntity,MyEntity.AirPackages,Tenant,ComputingPartnerName);
+
+						}
 
 						
 					}
@@ -963,9 +975,12 @@ using Simplog.Data.ShipmentsModel;
 
 					if(MyEntity.OceanOrInlandPackages != null && MyEntity.OceanOrInlandPackages.Count > 0)
 					{
-						OceanOrInlandPackageQueryService OceanOrInlandPackageService48 = new OceanOrInlandPackageQueryService(Tenant);
-						 								//throw new ApplicationException("OceanOrInlandPackages Can't be update"); 
-								temp.ShipmentPackages = OceanOrInlandPackageService48.OceanOrInlandPackageCustomDataMappingAndValidatin(MyEntity,MyEntity.OceanOrInlandPackages,Tenant,ComputingPartnerName);
+						OceanOrInlandPackageQueryService OceanOrInlandPackageService39 = new OceanOrInlandPackageQueryService(Tenant);
+						  
+						if(!IsUpdate)
+						{								//throw new ApplicationException("OceanOrInlandPackages Can't be update"); 
+								temp.ShipmentPackages = OceanOrInlandPackageService39.OceanOrInlandPackageCustomDataMappingAndValidatin(MyEntity,MyEntity.OceanOrInlandPackages,Tenant,ComputingPartnerName);
+
 
 					 
 
@@ -976,11 +991,13 @@ using Simplog.Data.ShipmentsModel;
 
 					if(MyEntity.Containers != null && MyEntity.Containers.Count > 0)
 					{
-						ContainerQueryService ContainerService48 = new ContainerQueryService(Tenant);
-						 								//throw new ApplicationException("Containers Can't be update"); 
-								temp.ShipmentPackages = ContainerService48.ContainerCustomDataMappingAndValidatin(MyEntity,MyEntity.Containers,Tenant,ComputingPartnerName);
+						ContainerQueryService ContainerService39 = new ContainerQueryService(Tenant);
+						  
+						if(!IsUpdate)
+						{								//throw new ApplicationException("Containers Can't be update"); 
+								temp.ShipmentPackages = ContainerService39.ContainerCustomDataMappingAndValidatin(MyEntity,MyEntity.Containers,Tenant,ComputingPartnerName);
 
-					 
+						}
 
 						
 					}
@@ -1112,9 +1129,8 @@ using Simplog.Data.ShipmentsModel;
 
 					if(MyEntity.Deliveries != null && MyEntity.Deliveries.Count > 0)
 					{
-						DeliveryQueryService DeliveryService48 = new DeliveryQueryService(Tenant);
-						 								//throw new ApplicationException("Deliveries Can't be update"); 
-								temp.ShipmentDeliveries = DeliveryService48.DeliveryDataMappingAndValidatin(MyEntity.Deliveries,Tenant,ComputingPartnerName,IsUpdate);
+						DeliveryQueryService DeliveryService39 = new DeliveryQueryService(Tenant);
+								temp.ShipmentDeliveries = DeliveryService39.DeliveryDataMappingAndValidatin(MyEntity.Deliveries,Tenant,ComputingPartnerName,IsUpdate);
 
 					 
 
@@ -1125,9 +1141,8 @@ using Simplog.Data.ShipmentsModel;
 
 					if(MyEntity.PickUps != null && MyEntity.PickUps.Count > 0)
 					{
-						PickUpQueryService PickUpService48 = new PickUpQueryService(Tenant);
-						 								//throw new ApplicationException("PickUps Can't be update"); 
-								temp.ShipmentPickUps = PickUpService48.PickUpDataMappingAndValidatin(MyEntity.PickUps,Tenant,ComputingPartnerName,IsUpdate);
+						PickUpQueryService PickUpService39 = new PickUpQueryService(Tenant);
+								temp.ShipmentPickUps = PickUpService39.PickUpDataMappingAndValidatin(MyEntity.PickUps,Tenant,ComputingPartnerName,IsUpdate);
 
 					 
 
@@ -1239,11 +1254,11 @@ using Simplog.Data.ShipmentsModel;
 
 					if(MyEntity.Receivables != null && MyEntity.Receivables.Count > 0)
 					{
-						ReceivableQueryService ReceivableService48 = new ReceivableQueryService(Tenant);
+						ReceivableQueryService ReceivableService39 = new ReceivableQueryService(Tenant);
 						  
 						if(!IsUpdate)
-						{								//throw new ApplicationException("Receivables Can't be update"); 
-								temp.ShipmentReceivables = ReceivableService48.ReceivableDataMappingAndValidatin(MyEntity.Receivables,Tenant,ComputingPartnerName,IsUpdate);
+						{	
+								temp.ShipmentReceivables = ReceivableService39.ReceivableDataMappingAndValidatin(MyEntity.Receivables,Tenant,ComputingPartnerName,IsUpdate);
 
 					 
 						}  
@@ -1255,11 +1270,11 @@ using Simplog.Data.ShipmentsModel;
 
 					if(MyEntity.Payables != null && MyEntity.Payables.Count > 0)
 					{
-						PayableQueryService PayableService48 = new PayableQueryService(Tenant);
+						PayableQueryService PayableService39 = new PayableQueryService(Tenant);
 						  
 						if(!IsUpdate)
-						{								//throw new ApplicationException("Payables Can't be update"); 
-								temp.ShipmentPayables = PayableService48.PayableDataMappingAndValidatin(MyEntity.Payables,Tenant,ComputingPartnerName,IsUpdate);
+						{	
+								temp.ShipmentPayables = PayableService39.PayableDataMappingAndValidatin(MyEntity.Payables,Tenant,ComputingPartnerName,IsUpdate);
 
 					 
 						}  
@@ -1498,9 +1513,9 @@ using Simplog.Data.ShipmentsModel;
 
 					if(MyEntity.MainCarriageLegs != null && MyEntity.MainCarriageLegs.Count > 0)
 					{
-						MainCarriageLegQueryService MainCarriageLegService48 = new MainCarriageLegQueryService(Tenant);
+						MainCarriageLegQueryService MainCarriageLegService39 = new MainCarriageLegQueryService(Tenant);
 						 								//throw new ApplicationException("MainCarriageLegs Can't be update"); 
-								temp.MainCarriageLegs = MainCarriageLegService48.MainCarriageLegDataMappingAndValidatin(MyEntity.MainCarriageLegs,Tenant,ComputingPartnerName,IsUpdate);
+								temp.MainCarriageLegs = MainCarriageLegService39.MainCarriageLegDataMappingAndValidatin(MyEntity.MainCarriageLegs,Tenant,ComputingPartnerName,IsUpdate);
 
 					 
 
@@ -1818,8 +1833,6 @@ using Simplog.Data.ShipmentsModel;
 						 								//throw new ApplicationException("MainCarriageToPort Can't be update"); 
 								temp.MainCarriageToPortId = myMainCarriageToPortPM.Id;
 						  
-
-							
 						} 
 
 					}
@@ -2138,6 +2151,10 @@ using Simplog.Data.ShipmentsModel;
 						{								//throw new ApplicationException("AddManualEvents Can't be update"); 
 								temp.AddManualEvents = EventService48.EventCustomDataMappingAndValidatin(MyEntity,MyEntity.AddManualEvents,Tenant,ComputingPartnerName);
 
+						} 
+
+					}
+			
 					 
 						}  
 
@@ -2155,4 +2172,4 @@ using Simplog.Data.ShipmentsModel;
         }
 		 
    }
-}
+}

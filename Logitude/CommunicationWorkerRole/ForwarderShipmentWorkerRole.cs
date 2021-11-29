@@ -321,6 +321,7 @@ namespace CommunicationWorkerRole
                                                     CustomerReference1 = ForwarderShipment.CustomerReference1,
                                                     ConsigneeReference2 = ForwarderShipment.ConsigneeReference2,
                                                     CustomerReference2 = ForwarderShipment.CustomerReference2,
+                                                    CustomerReference3 = ForwarderShipment.CustomerReference3,
                                                     ShipmentCustomerTypeCode = ForwarderShipment.ShipmentCustomerTypeCode,
                                                     IsCancelled = ForwarderShipment.IsCancelled,
                                                     ShipperName = ForwarderShipment.ShipperName,
