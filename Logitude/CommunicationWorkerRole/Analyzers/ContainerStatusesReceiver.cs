@@ -116,6 +116,7 @@ namespace CommunicationWorkerRole.Analyzers
                 }
                 if (envelopeResponse.HasError)
                 {
+                    externalTasksQueueWcfService.Close();
                     throw new ApplicationException(envelopeResponse.ErrorMessage);
                 }
                 var oceanInsightsPushUpdate = envelopeResponse?.Tasks?.Where(a => a.Action == "OceanInsights.PushUpdate").FirstOrDefault();
@@ -130,18 +131,31 @@ namespace CommunicationWorkerRole.Analyzers
 
         private async void MarkTaskAsDone(ExternalTasksQueueWcfServiceClient externalTasksQueueWcfService)
         {
-            System.Threading.Tasks.Task<CommunicationWorkerRole.ExternalTasksQueueWcfService.Response> response;
-            using (new System.ServiceModel.OperationContextScope((System.ServiceModel.IClientChannel)externalTasksQueueWcfService.InnerChannel))
+            try
             {
-                System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", token);
-                response = externalTasksQueueWcfService.MarkTaskAsDoneAsync(communicationId, LogitudeSettings.OITenantNumber, queuePriority);
+                System.Threading.Tasks.Task<CommunicationWorkerRole.ExternalTasksQueueWcfService.Response> response;
+                using (new System.ServiceModel.OperationContextScope((System.ServiceModel.IClientChannel)externalTasksQueueWcfService.InnerChannel))
+                {
+                    System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", token);
+                    response = externalTasksQueueWcfService.MarkTaskAsDoneAsync(communicationId, LogitudeSettings.OITenantNumber, queuePriority);
+                }
+                var communicationLogResponse = await response;
+                externalTasksQueueWcfService.Close();
+                if (communicationLogResponse.HasError)
+                {
+                    externalTasksQueueWcfService.Close();
+                    throw new ApplicationException(communicationLogResponse.ErrorMessage);
+                }
             }
-            var communicationLogResponse = await response;
-            if (communicationLogResponse.HasError)
+            catch (Exception exception)
             {
-                throw new ApplicationException(communicationLogResponse.ErrorMessage);
+                externalTasksQueueWcfService.Close();
+                throw new ApplicationException(exception.Message);
             }
-            externalTasksQueueWcfService.Close();
+            finally
+            {
+                externalTasksQueueWcfService.Close();
+            }
         }
 
         private void ReadExternalTasksQueueWcfServiceResponse(Envelope envelopeResponse)
