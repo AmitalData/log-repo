@@ -22,6 +22,7 @@ import {AddEditPartnerArgs} from '../../../../Shipment/Args';
 import { ShipmentTool, ShipmentGenerator} from '../../../../Shipment/Tools';
 import { ContactInputTemplateArgs } from '../../../../CommonModules/CommonPartners/Components/Templates/ContactInputTemplate';
 import { CurrencyRatesService, LastRate } from '../../../../Common/Services/CurrencyRatesService';
+import { ShipmentUnassignedFieldPM } from '../../../../Shipment/EntityPMs/ShipmentUnassignedFieldPM';
 
 @Component({    
     templateUrl: './PartnersTabComponent.html',
@@ -266,6 +267,7 @@ export class PartnersTabComponent implements OnInit, OnDestroy {
             if (s == "OK") {
                 this.BuildItemsCollection();
                 this.SetAddButtonsIsDisabled();
+                this.UpdateShipmentUnassignedFields(myPartnerItem.Code);
             }
         });
     }
@@ -332,6 +334,24 @@ export class PartnersTabComponent implements OnInit, OnDestroy {
         }
 
         this.OnCustomerChanged();
+    }
+    UpdateShipmentUnassignedFields(partnerCode) {
+        if (this.EntityPM.HasUnassignedData) {
+            var fieldName: string;
+            if (partnerCode == "SHIPR") {
+                fieldName = "Shipper";
+            }
+            else if (partnerCode == "CONSI") {
+                fieldName = "Consignee";
+            }
+
+            if (fieldName) {
+                var unassignedConsignee: ShipmentUnassignedFieldPM = this.EntityPM.ShipmentUnassignedFields.filter(d => d.FieldName == fieldName)[0];
+                if (unassignedConsignee) {
+                    unassignedConsignee.ReplacedDataId = this.EntityPM.ConsigneeId;
+                }
+            }
+        }
     }
 
     public UpdateSalesmanId: string = null;

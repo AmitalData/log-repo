@@ -29,6 +29,5 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public string SearchFields { get; set; }
         public string StateId { get; set; }
         public string ATTN { get; set; }
-        public string UnassigedFieldName { get; set; }
     }
 }

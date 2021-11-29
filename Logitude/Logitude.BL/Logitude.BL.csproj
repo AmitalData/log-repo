@@ -383,6 +383,7 @@
     <Compile Include="CommonDataModel\EntityLists\PortTimeZoneList.cs" />
     <Compile Include="CommonDataModel\EntityLists\ProductItemList.cs" />
     <Compile Include="CommonDataModel\EntityLists\ReportExecutionLogList.cs" />
+    <Compile Include="CommonDataModel\EntityLists\UnassignedEntityList.cs" />
     <Compile Include="CommonDataModel\EntityPMs\AddressTypePM.cs" />
     <Compile Include="CommonDataModel\EntityPMs\CommunicationLogExtendedArgs.cs" />
     <Compile Include="CommonDataModel\EntityPMs\PortTimeZonePM.cs" />

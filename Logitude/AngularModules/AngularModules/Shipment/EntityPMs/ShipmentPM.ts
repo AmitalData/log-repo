@@ -4148,7 +4148,7 @@ export class ShipmentPM {
     public set RequestedFlightDate(newValue: Date) { if (this.requestedFlightDate != newValue) { this.requestedFlightDate = newValue; this.MarkAsDirty(); } }
 
     private hasUnassignedData: boolean;
-    public get HasUnassignedData() { return this.isHybrid; }
+    public get HasUnassignedData() { return this.hasUnassignedData; }
     public set HasUnassignedData(newValue: boolean) { if (this.hasUnassignedData != newValue) { this.hasUnassignedData = newValue; this.MarkAsDirty("HasUnassignedData"); } }
 
 

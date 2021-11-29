@@ -1012,11 +1012,11 @@ export class ShipmentDomainService extends BaseService  {
         });
     }
 
-    LoadAddressesFromUnassignedXML(shipmentId: string) {
+    LoadAddresseFromUnassignedXML(shipmentId: string, fieldName: string) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
-        var url = this._apiUrl + '/GetAddressesFromUnassignedXML?shipmentId=' + shipmentId;
+        var url = this._apiUrl + '/GetAddressFromUnassignedXML?shipmentId=' + shipmentId + "&fieldName=" + fieldName;
 
         return defer(() => {
             return this._httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {

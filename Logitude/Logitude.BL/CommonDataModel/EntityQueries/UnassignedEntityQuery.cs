@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
+using Logitude.BL.CommonDataModel.EntityLists;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 
 namespace Logitude.BL.CommonDataModel.EntityQueries
 {
@@ -67,6 +69,17 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     }).FirstOrDefault();
         }
 
-
+        public IQueryable<UnassignedEntityList> GetIQueryableEntityList(IQueryable<UnassignedEntity> iQueryable)
+        {
+            IQueryable<UnassignedEntityList> result = (from a in iQueryable
+                                              select new UnassignedEntityList()
+                                              {
+                                                  Id = a.Id,
+                                                  Tenant = a.Tenant,
+                                                  ObjectTableId = a.ObjectTableId,
+                                                  UnassignedCode = a.UnassignedCode
+                                              });
+            return result;
+        }
     }
 }

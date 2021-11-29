@@ -61,7 +61,7 @@
                                                             </td>
 
                                                             <td style="width:256px;">
-                                                                <AddressTemplate [Address]="UnassigedShipperAddressList"></AddressTemplate>
+                                                                <AddressTemplate [Address]="ShipperAddressList"></AddressTemplate>
                                                             </td>
 
                                                             <td>
@@ -89,7 +89,7 @@
                                                             </td>
 
                                                             <td style="width:256px;">
-                                                                <AddressTemplate [Address]="UnassigedConsigneeAddressList"></AddressTemplate>
+                                                                <AddressTemplate [Address]="ConsigneeAddressList"></AddressTemplate>
                                                             </td>
 
                                                             <td>
@@ -128,14 +128,16 @@
                                                         <tr class="FormFieldRow"  *ngIf="IsShipperVisible">
                                                             <td style="width:70px;" class="Label">Shipper</td>
                                                             <td style="width:230px;">
-                                                                <LogLov [ObjectFieldName]="'ShipperId'"
+                                                                <LogLov [ObjectFieldName]="'UpdatedShipperId'"
                                                                         [SelectedValue]="UpdatedShipperId"
                                                                         [ObjectTableName]="ObjectTableName"
+                                                                        [NoObjectField]="true"
                                                                         [DataContext]="DataContext"
                                                                         [LookUpTableName]="'Card'"
                                                                         [DisplayMemberPath]="'EnglishName'"
                                                                         [DependencyFilter1Value]="CardDependencyProperty1"
-                                                                        [DependencyFilter1IsList]="CardDependencyProperty1IsList">
+                                                                        [DependencyFilter1IsList]="CardDependencyProperty1IsList"
+                                                                        [HideLastColumn]="true">
                                                                 </LogLov>
                                                             </td>
                                                             <td>
@@ -171,7 +173,8 @@
                                                                         [LookUpTableName]="'Card'"
                                                                         [DisplayMemberPath]="'EnglishName'"
                                                                         [DependencyFilter1Value]="CardDependencyProperty1"
-                                                                        [DependencyFilter1IsList]="CardDependencyProperty1IsList">
+                                                                        [DependencyFilter1IsList]="CardDependencyProperty1IsList"
+                                                                        [HideLastColumn]="true">
                                                                 </LogLov>
                                                             </td>
                                                             <td>

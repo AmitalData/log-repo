@@ -298,6 +298,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 this.ComputeIsAssemblyField();
                 this.ComputeFinalDestination();
                 this.ComputeIsHTSMissingField();
+                this.ComputeHasUnassignedField();
 
                 ShipmentMapping.MapEntity(entityPM, entityPoco, entityMasterData, isNewEntity, entityPM.ShipmentPackages, objectContext);
                 this.ComputeAgentComputed(entityPM, entityPoco);
@@ -497,6 +498,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     this.ComputeFinalDestination();
                     this.CheckUpdatingMasterHouses();
                     this.ComputeIsHTSMissingField();
+                    this.ComputeHasUnassignedField();
 
                     entityPM.IsConnectToMasterShipment = entityMasterData != null ? true : false;
                     shipmentBehaviourFacade = new ShipmentBehaviourFacade(entityPM, objectContext, UpdatedShipmentComputedFields, isNewEntity);
@@ -6534,6 +6536,18 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             else
             {
                 entityPM.IsAssembly = true;
+            }
+        }
+
+        private void ComputeHasUnassignedField()
+        {
+            List<ShipmentUnassignedFieldPM> myList = this.entityPM.ShipmentUnassignedFields.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete).ToList();
+
+            entityPM.HasUnassignedData = false;
+
+            if (myList.Count >  0 && myList.Where(s => string.IsNullOrEmpty(s.ReplacedDataId)).Any())
+            {
+                entityPM.HasUnassignedData = true;
             }
         }
         private void ComputeFinalDestination()
