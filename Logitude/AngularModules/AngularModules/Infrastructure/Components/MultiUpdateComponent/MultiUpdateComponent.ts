@@ -160,6 +160,7 @@ export class MultiUpdateComponent extends BaseComponent implements OnInit {
         this.FirstTime = false;
         this.AllRecords = result;
         this.SelectedRecords = result;
+        window.AllRecords = result;
         this.IsAllRecordSelectedChange(true, true, false);
     }
 
@@ -236,6 +237,7 @@ export class MultiUpdateComponent extends BaseComponent implements OnInit {
     Listen() {
         this.ListenEvent = this.CurrentSession.PseventRowSelectEvent.subscribe((res) => {
             var temp = this.SelectedRecords.filter(a => a.Id == res.Id);
+            this.ChangeItemCheck(res);
             if (res.IsChecked && temp.length == 0) {
                 this.AddToSelectedRecords(res);
                 return;
@@ -243,6 +245,13 @@ export class MultiUpdateComponent extends BaseComponent implements OnInit {
             if (temp.length > 0) {
                 this.RemoveFromSelectedRecords(res);
             }
+        });
+    }
+
+    private ChangeItemCheck(res: any) {
+        this.AllRecords.forEach(function (record) {
+            if (record.Id == res.Id)
+                record.IsChecked = res.IsChecked;
         });
     }
 
