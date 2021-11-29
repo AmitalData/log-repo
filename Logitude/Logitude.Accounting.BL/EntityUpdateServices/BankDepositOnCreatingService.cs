@@ -34,27 +34,34 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         {
             CashBookPM cashBookPM = GetCashbookById(depositPM.Tenant, depositPM.CashBookId);
             CheckIfTheCashBookInDepositProgress(depositPM, cashBookPM);
-            SetEntityId(depositPM);
-            SetEntityCode(depositPM);
-            SetUserFields(depositPM);
-            depositPM.UpdateDate = GetCurrentDateTime(depositPM.Tenant);
-            depositPM.CreateDate = GetCurrentDateTime(depositPM.Tenant);
-
-            CopyDepositIdToLines(depositPM);
-
-            CheckCashbookAmount(depositPM, depositPM.Tenant, cashBookPM);
-
-            CreateJournalForBankDeposit(depositPM);
-
-            if (!depositPM.IsCashDeposit)
+            try
             {
-                DepositChequesForBankDeposit(depositPM);
+                SetEntityId(depositPM);
+                SetEntityCode(depositPM);
+                SetUserFields(depositPM);
+                depositPM.UpdateDate = GetCurrentDateTime(depositPM.Tenant);
+                depositPM.CreateDate = GetCurrentDateTime(depositPM.Tenant);
+
+                CopyDepositIdToLines(depositPM);
+
+                CheckCashbookAmount(depositPM, depositPM.Tenant, cashBookPM);
+
+                CreateJournalForBankDeposit(depositPM);
+
+                if (!depositPM.IsCashDeposit)
+                {
+                    DepositChequesForBankDeposit(depositPM);
+                }
+
+                UpdateCashbookTotals(depositPM, cashBookPM);
+                SubmitCashbook(depositPM.Tenant, cashBookPM);
+
+                LogActivity(depositPM);
             }
-
-            UpdateCashbookTotals(depositPM, cashBookPM);
-            SubmitCashbook(depositPM.Tenant, cashBookPM);
-
-            LogActivity(depositPM);
+            catch (Exception exc) {
+                cashBookPM.InDepositingProgress = false;
+                SubmitCashbook(depositPM.Tenant, cashBookPM);
+            }
 
         }
         private void CheckIfTheCashBookInDepositProgress(BankDepositPM depositPM, CashBookPM cashBookPM)
