@@ -60,6 +60,16 @@ export class MultiUpdateComponent extends BaseComponent implements OnInit {
 
     @Output() SearchFieldchangeevent = new EventEmitter();
 
+    constructor(private _entityListService: EntityListService) {
+        super();
+        this.multiEntityUpdateLogPMService = new MultiEntityUpdateLogPMService();
+        window.AllRecords = [];
+    }
+
+    
+    ngOnInit() {
+    }
+
     public StartBusyIndicator(myText: string) {
         this.BusyIndicatorText = myText;
         this.ShowBusyIndicator = true;
@@ -70,17 +80,19 @@ export class MultiUpdateComponent extends BaseComponent implements OnInit {
         this.ShowBusyIndicator = false;
     }
 
-    public get IsAllRecordSelected() { return this.isAllRecordSelected };
-    public set IsAllRecordSelected(value: boolean) {
-        this.isAllRecordSelected = value;
-        value == true ? this.CheckAllRecords() : this.UnCheckAllRecords();
+    public IsAllRecordSelected: boolean;
+    public IsGridAllRecordSelected: boolean;
+
+    public IsAllRecordSelectedChange(isChecked, applyForAll) {
+        this.IsAllRecordSelected = isChecked;
+        if (applyForAll) {
+            this.ChangeAllRecordsSelection(isChecked);
+        }
     }
 
-    constructor(private _entityListService: EntityListService) {
-        super();
-        this.multiEntityUpdateLogPMService = new MultiEntityUpdateLogPMService();
-        window.AllRecords = [];
-
+    private ChangeAllRecordsSelection(isChecked: boolean) {
+      this.IsGridAllRecordSelected = isChecked;
+        isChecked == true ? this.CheckAllRecords() : this.UnCheckAllRecords();
     }
 
     private CheckAllRecords() {
@@ -97,9 +109,6 @@ export class MultiUpdateComponent extends BaseComponent implements OnInit {
 
     private ChangeSelectedItemsCountText(selectedCount) {
         this.SelectedItemsCountText = selectedCount + " of " + this.AllRecordsCount + " " + this.Title + " selected";
-    }
-
-    ngOnInit() {
     }
 
     dataSource = {
@@ -134,7 +143,7 @@ export class MultiUpdateComponent extends BaseComponent implements OnInit {
     AllRecordsReady(result) {
         this.AllRecords = result;
         this.SelectedRecords = result;
-        this.IsAllRecordSelected = true;
+        this.IsAllRecordSelectedChange(true, true);
     }
 
     SetWindowArgs(windowArgs: any) {
@@ -216,12 +225,16 @@ export class MultiUpdateComponent extends BaseComponent implements OnInit {
     private RemoveFromSelectedRecords(event: any) {
         this.SelectedRecords = this.SelectedRecords.filter(a => a.Id != event.rowData.Id);
         this.SelectedRecordsCount--;
+        this.IsAllRecordSelectedChange(false, false);
         this.ChangeSelectedItemsCountText(this.SelectedRecordsCount);
     }
 
     private AddToSelectedRecords(event: any) {
         this.SelectedRecords.push(event.rowData);
         this.SelectedRecordsCount++;
+        if (this.SelectedRecordsCount == this.AllRecords.length) {
+            this.IsAllRecordSelectedChange(true, false);
+        }
         this.ChangeSelectedItemsCountText(this.SelectedRecordsCount);
     }
 
