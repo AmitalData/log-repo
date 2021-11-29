@@ -44,11 +44,9 @@
         </div>
     </div>
     <div class="section-btn">
-        <button pButton type="button" label="Cancel" class="p-button-danger" (click)='cancel()'>
-            <i class='pi pi-times-circle'></i>
-        </button>
-        <button pButton type="submit" label="Create" class="p-button-primary">
-            <i class='pi pi-plus-circle'></i>
-        </button>
+        <button pButton pRipple style="color: #f57974; border-radius: 5px;" type="button" label="Cancel"
+            class="p-button-raised  p-button-text" icon="pi pi-times" iconPos="right" (click)='cancel()'></button>
+        <button pButton pRipple style="color: #1084dc; border-radius: 5px;" type="submit" label="Create"
+            class="p-button-raised p-button-text" icon="pi pi-check" iconPos="right"></button>
     </div>
 </form>

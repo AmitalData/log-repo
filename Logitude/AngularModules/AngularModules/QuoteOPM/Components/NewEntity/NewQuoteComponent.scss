@@ -4,17 +4,17 @@
     }
 
     .right-side::-webkit-scrollbar {
-        width: 4px;
-        outline: 3px solid #b7b7b7;
+        border-radius: 20px;
+        width: 8px;
         background-color: #b7b7b7;
-        border-radius: 20px;
     }
-
+    
     .right-side::-webkit-scrollbar-thumb {
+        border-radius: 10px;
         background-color: white;
-        outline: 3px solid #b7b7b7;
-        border-radius: 20px;
+        border: 2.5px solid #b7b7b7;
     }
+    
 }
 
 :host ::ng-deep {
@@ -180,42 +180,20 @@
 .section-btn {
     border-radius: 0;
     text-align: right;
-    padding: 20px;
+    padding: 12px;
     margin-top: 15px;
-
-    .pi {
-        color: black;
-        margin-left: 8px;
-        align-self: end;
-        font-size: 13px;
-    }
-
+    border-radius: 0px 0px  14px 14px;
+    background: white;
+    
     button {
-        color: black;
-        direction: rtl;
-    }
-
-    .p-button-danger:hover,
-    .p-button-danger {
-        margin-right: 7px;
-        background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(186, 206, 227, 1) 100%);
-        border: 1px solid #6a8299;
-    }
-
-    .p-button-primary {
-        background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(237, 192, 147, 1) 100%) !important;
-        border: 1px solid #6a8299;
-    }
-
-    .p-button.p-button-danger:not(a):not(.p-disabled):hover {
-        color: inherit;
+        margin-left: 20px;
     }
 }
 
 .root-header {
     margin-bottom: 2px;
     padding: 13px 20px;
-    border-radius: 0;
+    border-radius: 14px 14px 0 0;
 
     h2 {
         font-size: 18px;
@@ -237,8 +215,8 @@ hr {
 
 .right-side {
     padding-left: 13px;
-    padding-right: 17px;
-    padding-top: 15px;
+    padding-right: 14px;
+    // padding-top: 15px;
     overflow-x: hidden;
     height: 100%;
     position: relative;
