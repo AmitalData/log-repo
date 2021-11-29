@@ -323,6 +323,7 @@
     <Content Include="Infrastructure\Components\Maintenance\Automation\AutomationConditionsDetailsComponent.html" />
     <Content Include="Infrastructure\Components\Maintenance\Automation\AutomationResult\CreateTaskResultComponent.html" />
     <Content Include="Infrastructure\Components\Maintenance\Automation\AutomationsConditionsViewDetailsComponent.html" />
+    <Content Include="InvoiceModules\APInvoice\Components\EditTabs\APInvoiceGeneralTabComponent.html" />
     <Content Include="InvoiceModules\ARPayment\Components\Other\ARPaymentMultiChequesComponent.html" />
     <Content Include="SharedLogistics\Components\CargoTrackingMilestonesPermissiosComponent.html" />
     <Content Include="ShipmentModules\ShipmentAWB\Components\AWBWizard\Packages\AWBAddEditCommodityComponent.html" />
@@ -2002,6 +2003,7 @@
     <TypeScriptCompile Include="Infrastructure\Utilities\SystemEnvironmentService.ts" />
     <TypeScriptCompile Include="Infrastructure\Validators\EventTypeValidator.ts" />
     <TypeScriptCompile Include="InvoiceModules\APInvoice\Components\EditTabs\APInvoiceAuditTabComponent.ts" />
+    <TypeScriptCompile Include="InvoiceModules\APInvoice\Components\EditTabs\APInvoiceGeneralTabComponent.ts" />
     <TypeScriptCompile Include="InvoiceModules\APInvoice\Components\Others\APInvoiceTotalVATOnlyComponent.ts" />
     <TypeScriptCompile Include="InvoiceModules\APInvoice\ModuleAPInvoice.ts" />
     <TypeScriptCompile Include="InvoiceModules\APPayment\Components\EditTabs\APPaymentCancelationDetailsComponent.ts" />
