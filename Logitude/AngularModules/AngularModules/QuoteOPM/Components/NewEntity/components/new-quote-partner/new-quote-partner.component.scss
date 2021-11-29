@@ -26,29 +26,29 @@
     p-button button.p-button {
         padding: 8px 7px !important;
         top: 3px;
-        position: relative;        
+        position: relative;
     }
 
-    app-accordion {
-        display: block;
-        padding: 12px 0;
+    // app-accordion {
+    //     display: block;
+    //     padding: 12px 0;
 
-        .accordion-contect {
-            border-top: 1px solid var(--surface-200);
-        }
+    //     .accordion-contect {
+    //         border-top: 1px solid var(--surface-200);
+    //     }
 
-        h4 {
-            font-size: 17px;
-            font-weight: bold;
-        }
+    //     h4 {
+    //         font-size: 17px;
+    //         font-weight: bold;
+    //     }
 
-        .accordion-container > i.pi-angle-down {
-            margin-right: 18px !important;
-            margin-top: 6px;
-            // margin-left: 7px;
-            color: #1084dc;
-        }
-    }
+    //     .accordion-container > i.pi-angle-down {
+    //         margin-right: 18px !important;
+    //         margin-top: 6px;
+    //         // margin-left: 7px;
+    //         color: #1084dc;
+    //     }
+    // }
 
     textarea {
         height: 136px;
@@ -56,7 +56,18 @@
 
     app-autocomplate-table {
         display: inline-block;
-        width: calc(100% - 69px);
+        // width: calc(100% - 69px);
+        // padding-bottom: 15px;
+        top: -6px;
+        position: relative;
+
+        p-autocomplete {
+            display: block;
+
+            input {
+                width: 290px;
+            }
+        }
     }
 
     app-btn-menu-plus {
@@ -85,6 +96,46 @@
     }
 }
 
+:host {
+    display: block;
+    background: white;
+    border-radius: 8px;
+}
+
 .error-msg {
     top: 48px;
+}
+
+.header {
+    display: flex;
+    padding: 0px 19px;
+
+    .p-field {
+        flex: 7;
+        display: block;
+    }
+
+    .icon-wrapper {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+
+
+        i {
+            // margin: auto;
+            background: #e2f0fb;
+            color: #1084dc;
+            padding: 9px;
+            border-radius: 7px;
+        }
+    }
+}
+
+.p-field {
+    padding: 0;
+}
+
+.grid {
+    padding: 0 20px;
 }

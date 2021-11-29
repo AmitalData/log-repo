@@ -1,39 +1,50 @@
-<app-accordion [(isHidden)]='isHidden' class="partner" [label]='"QuoteOP.F." + capitalizeType | TextCodeTranslationPipe'>
+<!-- <app-accordion [(isHidden)]='isHidden' class="partner" [label]='"QuoteOP.F." + capitalizeType | TextCodeTranslationPipe'> -->
 
-  <div class="grid content-in-section" [formGroup]='partnerform' >
-    <div class="col-6 p-fluid">
-      <div class="p-field">
-        <div class="error-msg" [ngClass]='{"invalid": partnerform.controls["partner"].invalid}'>{{capitalizeType}} field is required</div>
-        <app-autocomplate-table
-          [columnsShow]="{Code: 'Code', EnglishName: 'English Name', Address1:'Address', CityName: 'City Name', CountryName: 'Country Name', PartnerTypeName: 'Type'}"
-          [data]='cardsList' [fieldShow]='"EnglishName"' [label]="'Name'" [controlName]='"partner"'
-          [formGroup]='partnerform' [searchIcon]='true' logTableName='Card' #partner>
-        </app-autocomplate-table>
+<div class="header">
+  <div class="p-field">
+    <div class="error-msg" [ngClass]='{"invalid": partnerform.controls["partner"].invalid}'>{{capitalizeType}} field
+      is required</div>
+    <app-autocomplate-table
+      [columnsShow]="{Code: 'Code', EnglishName: 'English Name', Address1:'Address', CityName: 'City Name', CountryName: 'Country Name', PartnerTypeName: 'Type'}"
+      [data]='cardsList' [fieldShow]='"EnglishName"' [label]="'Name'" [controlName]='"partner"'
+      [formGroup]='partnerform' [searchIcon]='true' logTableName='Card' #partner>
+    </app-autocomplate-table>
+    <!-- <app-btn-menu-plus [ddl]='ddl'></app-btn-menu-plus> -->
+  </div>
+  <div class="icon-wrapper">
+  <i [class]='"pi pi-angle-" + (isHidden ?  "down" : "up")' (click)='isHidden  = !isHidden'></i>
+</div>
+</div>
+<div [hidden]='isHidden' class="accordion-contect">
 
-        <app-btn-menu-plus [ddl]='ddl'></app-btn-menu-plus>
-      </div>
+  <div class="grid p-fluid content-in-section" [formGroup]='partnerform'>
+    <div class="col-12 p-field">
+      <app-address-textarea [Address]='Address'></app-address-textarea>
+    </div>
+    <div class="col-6 p-field">
+      <label [for]="type + 'reference1'">Reference 1</label>
+      <input formControlName="reference1" [id]="type + 'reference1'" type="text" pInputText>
+    </div>
+    <div class="col-6 p-field">
+      <app-autocomplate-table [columnsShow]="['Email', 'EnglishName']" [data]='contactsList' [fieldShow]='"EnglishName"'
+        [label]="'Contact'" [controlName]='"contact"' [formGroup]='partnerform' (onSelect)='onSelectedContact($event)'
+        [dropIcon]='true' logTableName='Contact' outSearchIcon='true'>
+      </app-autocomplate-table>
 
+      <!-- <i class="pi pi-plus plus-btn" (click)='addContact()'></i> -->
+    </div>
+  </div>
+</div>
+<!--     
       <div *ngIf='Address'>
-        <div class="p-field">
-          <app-address-textarea [Address]='Address'></app-address-textarea>
-        </div>
 
         <div class="p-field">
-          <label [for]="type + 'reference1'">Reference 1</label>
-          <input formControlName="reference1" [id]="type + 'reference1'" type="text" pInputText>
-        </div>
       </div>
     </div>
 
     <div class="col-6 p-fluid">
       <div *ngIf='Address'>
         <div class="p-field">
-          <app-autocomplate-table [columnsShow]="['Email', 'EnglishName']" [data]='contactsList'
-            [fieldShow]='"EnglishName"' [label]="'Contact'" [controlName]='"contact"' [formGroup]='partnerform'
-            (onSelect)='onSelectedContact($event)' [dropIcon]='true' logTableName='Contact'>
-          </app-autocomplate-table>
-
-          <i class="pi pi-plus plus-btn" (click)='addContact()'></i>
         </div>
         <div class="p-field">
           <label [for]="type + 'notes'">{{'QuoteOP.S.NewQuote.' + capitalizeType + 'Notes' |
@@ -48,4 +59,5 @@
       </div>
     </div>
   </div>
-</app-accordion>
+</div> -->
+<!-- </app-accordion> -->

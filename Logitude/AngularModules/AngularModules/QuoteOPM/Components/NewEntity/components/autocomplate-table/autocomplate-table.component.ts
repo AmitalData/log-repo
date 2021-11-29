@@ -30,6 +30,7 @@ export class AutocomplateTableComponent {
   @Input() columnsFilter: string[] = []
   @Input() searchIcon: boolean = false;
   @Input() dropIcon: boolean = false;
+  @Input() outSearchIcon: boolean = false;
   @Input() virtualScroll: boolean = false;
   @Input() itemSize: number = 26;
   @Input() set columnsShow(columns: any) {
@@ -195,5 +196,13 @@ export class AutocomplateTableComponent {
         if (diff > 2 && diff < 24)
           div.scrollBy(0, 26 - diff + 1);
       });
+  }
+
+  openDdl(e: Event,autoCompleteRef: AutoComplete ){
+    console.log(autoCompleteRef)
+    setTimeout(() => {
+      // this.autoCompleteObject.show();
+      autoCompleteRef.show()
+  }, 100)
   }
 }
