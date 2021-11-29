@@ -102,6 +102,8 @@ namespace Logitude.Customs.Data.EntityLists
        public string CheckAuthorityAttenderTypeName  { get; set; }
        [DataMember]
        public int? CheckAnwserStatus  { get; set; }
+       [DataMember]
+       public bool MyCloseCheckBox  { get; set; }
    }
 
 }

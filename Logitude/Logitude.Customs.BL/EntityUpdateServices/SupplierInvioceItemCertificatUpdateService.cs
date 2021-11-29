@@ -435,6 +435,15 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                             cn.Close();
                             count = 0;
                             cmd = null;
+                            var stringBuilder1 = new StringBuilder();
+                            stringBuilder1
+                                .AppendLine($"UpdateCertificateConnectedItems(declarationId:{declarationId},certificateExemptionTypeCode:{certificateExemptionTypeCode})")
+                                .AppendLine($"CertificateExemptionTypeCode:cmd.Contains(92)={cmd.Contains("92")}")
+                                .AppendLine(cmd);
+                            var logChangesService1 = new LogChangesService();
+                            logChangesService1.SBLog(
+                                SIICerExemptionHD379305,
+                                stringBuilder1);
                         }
                     }
                     char[] Chars = { 'o', 'r' };
@@ -883,7 +892,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                                   where SIIC.DeclarationId ='" + declarationId + "' and SIIC.InvoiceCounterKey || ' ' || SIIC.LineNumber || ' ' || SIIC.ItemCertificateCounterKey  in (" + whereInCertificateKeys + ") ";
 
                     string cmd1 = @"
-                                Update supplierInvoiceItems s set s.CertificatesStatusCode = '1'
+                 MamanStatusAvailabilityQService.cs               Update supplierInvoiceItems s set s.CertificatesStatusCode = '1'
                                 where s.DeclarationId ='" + declarationId + "' and s.CounterKey || ' ' || s.LineNumber in ( " + whereInInvoiceItemKeys + " )";
 
                     OracleCommand sqlCommand = new OracleCommand(cmd, con);

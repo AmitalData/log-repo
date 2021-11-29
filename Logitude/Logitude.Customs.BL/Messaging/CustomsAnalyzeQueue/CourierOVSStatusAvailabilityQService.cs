@@ -121,7 +121,8 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
                                 PrimaryNum = _DeclarationPM.CustomFileNo,
                                 Mode = UnifreightEventMode.@new,
                                 StatusCode = "SMG",
-                                EventDateTime = mySTBMessage.StatusDate
+                                EventDateTime = mySTBMessage.StatusDate,
+                                OwnerUnifreightUserCode = FUOwnerUnifreightUserCode.OVERSEAS
                             });
                         }
                         break;
@@ -133,7 +134,8 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
                                 PrimaryNum = _DeclarationPM.CustomFileNo,
                                 Mode = UnifreightEventMode.@new,
                                 StatusCode = "OMN",
-                                EventDateTime = mySTBMessage.StatusDate
+                                EventDateTime = mySTBMessage.StatusDate,
+                                OwnerUnifreightUserCode = FUOwnerUnifreightUserCode.OVERSEAS
                             });
                             this.UpadteTerminalReleaseDate(mySTBMessage, theDecId);
                         }

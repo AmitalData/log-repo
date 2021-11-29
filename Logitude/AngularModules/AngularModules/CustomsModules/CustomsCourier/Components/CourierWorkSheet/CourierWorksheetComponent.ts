@@ -212,6 +212,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
                 break;
         }
         if (item.Code != "HOLD") {
+            this.SelectedPendingCodeFilter = this._PendingCodes[0];
             this.RefreshButtonClicked();
         } else {
             this.GetPending();
