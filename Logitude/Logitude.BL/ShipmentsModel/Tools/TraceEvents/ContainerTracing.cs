@@ -52,22 +52,26 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
 
         private void InitalizeServices()
         {
-            this.GetShipmentObjectTable();
-            this.GetAllEvents();
-        }
-        private void GetShipmentObjectTable()
-        {
             this.objectContext = WebFreightContext.GetContext(tenant);
             this.objectTabelRepository = new ObjectTableRepository(objectContext);
-            ObjectTable objectTable = objectTabelRepository.GetObjectTableByName(objectTableName, 0, true);
-            this.objectTableId = objectTable.Id;
-        }
-        private void GetAllEvents()
-        {
             this.traceEventRepository = new TraceEventRepository(objectContext);
             this.eventTypeRepository = new EventTypeRepository(objectContext);
             this.entityStatusRepository = new EntityStatusRepository(objectContext);
+            this.GetShipmentObjectTable();
+            this.SetAllEvents();
+            this.SetAllStatuses();
+        }
+        private void GetShipmentObjectTable()
+        {
+            ObjectTable objectTable = objectTabelRepository.GetObjectTableByName(objectTableName, 0, true);
+            this.objectTableId = objectTable.Id;
+        }
+        private void SetAllEvents()
+        {
             this.allEventTypes = eventTypeRepository.GetEventTypesByTenantAndObjectTableId(tenant, objectTableId).ToList();
+        }
+        private void SetAllStatuses()
+        {
             this.allEntityStatuses = entityStatusRepository.GetEntityStatusByTenantAndObjectTableId(tenant, objectTableId).ToList();
         }
         private void CreateTraceEvent(string eventTypeCode)
@@ -84,13 +88,14 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
         }
         public void CreateTraceEvent(EventStatusTracerArgs args)
         {
-            this.HandleEventLogDate(args);
+            this.HandleEventDates(args);
             this.ValidateEvent(args);
             this.GetEventUser(args);
             this.HandleEventStatus(args);
             this.AddNewTraceEvent(args);
+            this.UpdateEventCustomFieldValue(args);
         }
-        private void HandleEventLogDate(EventStatusTracerArgs args)
+        private void HandleEventDates(EventStatusTracerArgs args)
         {
             if (args.LogDateTime == null)
             {
@@ -140,15 +145,16 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
             }
             UserRepository userRepository = new UserRepository(0);
             User user = userRepository.GetSingleUser(eventUserId, 0, true);
-            if (user != null)
+            if (user == null)
             {
-                User systemUser = userRepository.GetSingleUserByEmail("system@tenant" + tenant + ".com", tenant, true);
-                if (systemUser != null)
-                {
-                    eventUserId = systemUser.Id;
-                }
-                customerCareUserEmail = user.Contact.Email;
+                return;
             }
+            User systemUser = userRepository.GetSingleUserByEmail("system@tenant" + tenant + ".com", tenant, true);
+            if (systemUser != null)
+            {
+                eventUserId = systemUser.Id;
+            }
+            customerCareUserEmail = user.Contact.Email;
         }
         private void HandleEventStatus(EventStatusTracerArgs args)
         {
@@ -174,30 +180,37 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
         }
         private void ComputeEventStatus(EventStatusTracerArgs args)
         {
-            if (!args.IsAddedManually)
+            if (args.IsAddedManually)
             {
-                EventType newEventType = allEventTypes.Where(d => d.Code == args.EventTypeCode).FirstOrDefault();
-                if (newEventType.EntityStatusId != null)
-                {
-                    if (string.IsNullOrEmpty(args.OldStatusId))
-                    {
-                        containerPM.StatusId = newEventType.EntityStatusId;
-                        container.StatusId = containerPM.StatusId;
-                    }
-                    else
-                    {
-                        EntityStatus newEntityStatus = allEntityStatuses.Where(d => d.Id == newEventType.EntityStatusId).FirstOrDefault();
-                        EntityStatus oldEntityStatus = allEntityStatuses.Where(d => d.Id == args.OldStatusId).FirstOrDefault();
-
-                        if (newEntityStatus.StatusWeight >= oldEntityStatus.StatusWeight)
-                        {
-                            containerPM.StatusId = newEventType.EntityStatusId;
-                            container.StatusId = containerPM.StatusId;
-                        }
-                    }
-                }
+                return;
+            }
+            EventType newEventType = allEventTypes.Where(d => d.Code == args.EventTypeCode).FirstOrDefault();
+            if (newEventType.EntityStatusId == null)
+            {
+                return;
+            }
+            if (string.IsNullOrEmpty(args.OldStatusId))
+            {
+                containerPM.StatusId = newEventType.EntityStatusId;
+                container.StatusId = containerPM.StatusId;
+            }
+            else
+            {
+                this.HabdleNewStatussWeight(newEventType, args);
             }
         }
+        private void HabdleNewStatussWeight(EventType newEventType, EventStatusTracerArgs args)
+        {
+            EntityStatus newEntityStatus = allEntityStatuses.Where(d => d.Id == newEventType.EntityStatusId).FirstOrDefault();
+            EntityStatus oldEntityStatus = allEntityStatuses.Where(d => d.Id == args.OldStatusId).FirstOrDefault();
+
+            if (newEntityStatus.StatusWeight >= oldEntityStatus.StatusWeight)
+            {
+                containerPM.StatusId = newEventType.EntityStatusId;
+                container.StatusId = containerPM.StatusId;
+            }
+        }
+
         private void AddNewTraceEvent(EventStatusTracerArgs args)
         {
             TraceEvent myTraceEvent = new TraceEvent()
@@ -219,11 +232,16 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
             this.traceEventRepository.Add(myTraceEvent);
             this.traceEventRepository.SubmitChanges();
             objectContext.SaveChanges();
+        }
+
+        private void UpdateEventCustomFieldValue(EventStatusTracerArgs args)
+        {
             if (!string.IsNullOrEmpty(eventType.CustomField))
             {
-                EventCustomFieldUpdateService.UpdateEventCustomFieldValue(new UpdateEventCustomFieldArgs() { CustomField = eventType.CustomField, EventDateTime = myTraceEvent.EventDateTime, Entity = containerPM, EntityId = args.EntityId, ObjectTableName = args.ObjectTableName, Tenant = args.Tenant });
+                EventCustomFieldUpdateService.UpdateEventCustomFieldValue(new UpdateEventCustomFieldArgs() { CustomField = eventType.CustomField, EventDateTime = args.EventDateTime.Value, Entity = containerPM, EntityId = args.EntityId, ObjectTableName = args.ObjectTableName, Tenant = args.Tenant });
             }
         }
+
         private void DeleteTraceEvent(string eventTypeCode)
         {
             if (string.IsNullOrEmpty(eventTypeCode))
@@ -296,7 +314,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                 }
             }
         }
-       
         public void Trace()
         {
             GetLoggedUser();
@@ -337,7 +354,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                 this.loggedContactId = contact.Id;
             }
         }
-      
         private void TraceCreatedEvent()
         {
             if (isNewEntity)
