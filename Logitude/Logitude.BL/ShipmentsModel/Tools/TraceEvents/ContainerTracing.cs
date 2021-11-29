@@ -340,7 +340,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
       
         private void TraceCreatedEvent()
         {
-            if (!isNewEntity)
+            if (isNewEntity)
             {
                 this.TraceNewEvent();
                 this.TraceOrderEvent();
@@ -370,7 +370,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
         }
         private void TraceUpdatedEvent()
         {
-            if (isNewEntity)
+            if (!isNewEntity)
             {
                 EventTracer.CreateTraceEvent(new EventTracerArgs()
                 {
@@ -534,20 +534,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
             {
                 this.CreateTraceEvent("EMRT");
             }
-            else
+            if (containerPM.ActualEmptyReturn == null && container.ActualEmptyReturn != null)
             {
-                if (containerPM.ActualEmptyReturn == null && container.ActualEmptyReturn != null)
-                {
-                    this.DeleteTraceEvent("EMRT");
-                }
-                if (containerPM.EstimatedDelivery != null && container.EstimatedDelivery == null)
-                {
-                    this.CreateTraceEvent("EMRT");
-                }
-                else if (containerPM.EstimatedDelivery == null && container.EstimatedDelivery != null)
-                {
-                    this.DeleteTraceEvent("EMRT");
-                }  
+                this.DeleteTraceEvent("EMRT");
             }
         }
         private void TracGatedOut()
