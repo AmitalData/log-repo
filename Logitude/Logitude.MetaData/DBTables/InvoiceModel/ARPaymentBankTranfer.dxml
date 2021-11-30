@@ -49,7 +49,7 @@
     Name="ValueDate"
     Type="datetime">
     <Constraints
-      Nullable="false" />
+      Nullable="true" />
   </Column>
   <Column
     Name="BankAccountId"

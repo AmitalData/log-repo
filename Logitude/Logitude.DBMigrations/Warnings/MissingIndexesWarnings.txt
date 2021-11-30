@@ -1,0 +1,11 @@
+Warning: Missing Index In DXML File DocumentsFiling.dxml, The Found Index On DB Is IX_DocumentsFilings_CustomerDocumentId, The Index Should Added To The DXML File
+Warning: Missing Index In DXML File DocumentsFiling.dxml, The Found Index On DB Is IX_DocumentId, The Index Should Added To The DXML File
+Warning: Missing Index In DXML File DocumentsFiling.dxml, The Found Index On DB Is DocumentsFilings_Tenant_ForwarderDocumentId, The Index Should Added To The DXML File
+Warning: Missing Index In DXML File DocumentsFiling.dxml, The Found Index On DB Is IX_DocumentsFilings_Tenant_Code, The Index Should Added To The DXML File
+Warning: Missing Index In DXML File Report.dxml, The Found Index On DB Is IX_FeatureId, The Index Should Added To The DXML File
+Warning: Missing Index In DXML File APInvoice.dxml, The Found Index On DB Is IX_APInvoices_MainEntityId, The Index Should Added To The DXML File
+Warning: Missing Index In DXML File Shipment.dxml, The Found Index On DB Is IX_Shipments_Tenant_QuoteId, The Index Should Added To The DXML File
+Warning: Missing Index In DXML File Shipment.dxml, The Found Index On DB Is IX_Tenant_ShipmentLEvelCode_CreateDateTime, The Index Should Added To The DXML File
+Warning: Missing Index In DXML File Shipment.dxml, The Found Index On DB Is Shipment_CustomerId_LastStatusLogDate, The Index Should Added To The DXML File
+Warning: Missing Index In DXML File Shipment.dxml, The Found Index On DB Is IX_Shipments_CustomFileId, The Index Should Added To The DXML File
+Warning: Missing Index In DXML File Shipment.dxml, The Found Index On DB Is Shipments_CustomerId_ComputedStatusDate, The Index Should Added To The DXML File

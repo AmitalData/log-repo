@@ -373,12 +373,13 @@
     Name="IsTransferdToQBO"
     Type="bit">
     <Constraints
-      Nullable="false" />
+      Nullable="true" />
   </Column>
   <Relation
     ForeignKeyColumn="DocumentId"
     ReferencedTable="Documents"
     ReferencedColumn="Id"
+    Ignore="true"
     ReferencedTableSchema="dbo" />
   <Relation
     ForeignKeyColumn="ChildObjectTableId"
