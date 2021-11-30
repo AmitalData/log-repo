@@ -88,9 +88,6 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="Unifreight.Data">
-      <HintPath>..\JustWebFreight\WebFreight.Web\bin\Unifreight.Data.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CustomContext.SharedTables.cs" />
