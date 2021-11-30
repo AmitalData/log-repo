@@ -380,7 +380,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         }
                         IShipmentsContext MyContext = ShipmentsContext.GetContext(authToken.Tenant);
                         HouseQueryService mappingService = new HouseQueryService(authToken.Tenant);
-                        ShipmentPM HousePM = mappingService.HouseDataMappingAndValidatin(entity, authToken.Tenant, "", true);
+                        ShipmentPM HousePM = mappingService.HouseDataMappingAndValidatin(entity, authToken.Tenant, computingPartnerCode, true);
 
                         if (HousePM != null)
                         {

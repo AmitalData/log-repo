@@ -252,7 +252,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                     {
                         IShipmentsContext MyContext = ShipmentsContext.GetContext(authToken.Tenant);
                         DirectQueryService mappingService = new DirectQueryService(authToken.Tenant);
-                        ShipmentPM directPM = mappingService.DirectDataMappingAndValidatin(entity, authToken.Tenant, "", true);
+                        ShipmentPM directPM = mappingService.DirectDataMappingAndValidatin(entity, authToken.Tenant, computingPartnerCode, true);
 
                         if (directPM != null)
                         {
