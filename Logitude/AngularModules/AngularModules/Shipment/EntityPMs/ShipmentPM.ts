@@ -20,6 +20,7 @@ import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldCl
 import { ShipmentAssemblyPM } from './ShipmentAssemblyPM';
 import { ShipmentStoragePricingPM } from './ShipmentStoragePricingPM';
 import { ShipmentProductItemPM } from './ShipmentProductItemPM';
+import { ShipmentUnassignedFieldPM } from './ShipmentUnassignedFieldPM';
 
 export class ShipmentPM {
     public UIProperties: UIProperties;
@@ -4146,6 +4147,9 @@ export class ShipmentPM {
     public get RequestedFlightDate() { return this.requestedFlightDate; }
     public set RequestedFlightDate(newValue: Date) { if (this.requestedFlightDate != newValue) { this.requestedFlightDate = newValue; this.MarkAsDirty(); } }
 
+    private hasUnassignedData: boolean;
+    public get HasUnassignedData() { return this.hasUnassignedData; }
+    public set HasUnassignedData(newValue: boolean) { if (this.hasUnassignedData != newValue) { this.hasUnassignedData = newValue; this.MarkAsDirty("HasUnassignedData"); } }
 
 
     private notify1Reference: string;
@@ -5527,6 +5531,39 @@ export class ShipmentPM {
             var index = this.ShipmentProductItems.indexOf(item);
             if (index > -1) {
                 this.ShipmentProductItems.splice(index, 1);
+                this.MarkAsDirty();
+            }
+        }
+    }
+
+    private shipmentUnassignedFields: ShipmentUnassignedFieldPM[];
+    get ShipmentUnassignedFields() {
+        if (this.shipmentUnassignedFields == null) {
+            this.shipmentUnassignedFields = [];
+        }
+
+        return this.shipmentUnassignedFields;
+    }
+    set ShipmentUnassignedFields(newValue: ShipmentUnassignedFieldPM[]) {
+        if (this.shipmentUnassignedFields != newValue) {
+            this.shipmentUnassignedFields = newValue;
+        }
+    }
+    public AddShipmentUnassignedField(item: ShipmentUnassignedFieldPM) {
+        if (item != null) {
+            var index = this.shipmentUnassignedFields.indexOf(item);
+            if (index == -1) {
+                item.EntityParentPM = this;
+                this.shipmentUnassignedFields.push(item);
+                this.MarkAsDirty();
+            }
+        }
+    }
+    public RemoveShipmentUnassignedFields(item: ShipmentUnassignedFieldPM) {
+        if (item != null) {
+            var index = this.shipmentUnassignedFields.indexOf(item);
+            if (index > -1) {
+                this.shipmentUnassignedFields.splice(index, 1);
                 this.MarkAsDirty();
             }
         }

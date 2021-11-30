@@ -504,6 +504,11 @@ export class CardPM {
     public set ICAO(newValue: string) { if (this.iCAO != newValue) { this.iCAO = newValue; this.MarkAsDirty("ICAO"); } }
        
 	 
+    private allowUnassignedEntry: boolean;
+    public get AllowUnassignedEntry() { return this.allowUnassignedEntry; }
+    public set AllowUnassignedEntry(newValue: boolean) { if (this.allowUnassignedEntry != newValue) { this.allowUnassignedEntry = newValue; this.MarkAsDirty("AllowUnassignedEntry"); } }
+       
+	 
 
     public OldEntityPM: CardPM;
 		

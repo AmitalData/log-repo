@@ -389,8 +389,22 @@ namespace WebFreight.Web.ShipmentsModel.DomainServices
             }
             #endregion
 
+            #region ShipmentUnassignedFields
+            List<ShipmentUnassignedFieldPM> shipmentUnassignedFieldsChangeSet = ChangeSet.GetAssociatedChanges(entityPM, d => d.ShipmentUnassignedFields).Cast<ShipmentUnassignedFieldPM>().ToList();
+            foreach (ShipmentUnassignedFieldPM itemPM in shipmentUnassignedFieldsChangeSet)
+            {
+                switch (ChangeSet.GetChangeOperation(itemPM))
+                {
+                    case ChangeOperation.Insert: { itemPM.ChangeSetOp = ChangeSetOperation.Insert; break; }
+                    case ChangeOperation.Delete: { itemPM.ChangeSetOp = ChangeSetOperation.Delete; break; }
+                    case ChangeOperation.Update: { itemPM.ChangeSetOp = ChangeSetOperation.Update; break; }
+                    default: { itemPM.ChangeSetOp = ChangeSetOperation.None; break; }
+                }
+            }
+            #endregion
+
             ShipmentService service = new ShipmentService(objectContext, entityPM, ServiceContext.User.Identity.Name);
-            service.SetChangeSet(shipmentPackagesChangeSet, shipmentOrderPackagesChangeSet, shipmentPickUpsChangeSet, shipmentDeliveriesChangeSet, shipmentReceivablesChangeSet, shipmentPayablesChangeSet, shipmentFollowUpsChangeSet, shipmentAWBPrintOnliesChangeSet, shipmentConsoleShipmentsChangeSet, shipmentCarrierStatusesChangeSet, aWBOCIPMChangeSet, shipmentCommoditiesChangeSet, shipmentAssembliesChangeSet, shipmentStoragePricingsChangeSet, shipmentProductItemsChangeSet);
+            service.SetChangeSet(shipmentPackagesChangeSet, shipmentOrderPackagesChangeSet, shipmentPickUpsChangeSet, shipmentDeliveriesChangeSet, shipmentReceivablesChangeSet, shipmentPayablesChangeSet, shipmentFollowUpsChangeSet, shipmentAWBPrintOnliesChangeSet, shipmentConsoleShipmentsChangeSet, shipmentCarrierStatusesChangeSet, aWBOCIPMChangeSet, shipmentCommoditiesChangeSet, shipmentAssembliesChangeSet, shipmentStoragePricingsChangeSet, shipmentProductItemsChangeSet, shipmentUnassignedFieldsChangeSet);
             service.Update();
 
             //if (this.ChangeSet != null)

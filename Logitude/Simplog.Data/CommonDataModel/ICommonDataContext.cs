@@ -239,6 +239,8 @@ namespace Simplog.Data.CommonDataModel
         IDbSet<ProductItem> ProductItems { get; set; }
         IDbSet<HTSCode> HTSCodes { get; set; }
         IDbSet<CargoTenantMilestoneDefinition> CargoTenantMilestoneDefinitions { get; set; }
+        IDbSet<UnassignedEntity> UnassignedEntitys { get; set; }
+
         void SetAsModified(object entity);
         void DetectChanges();
         int SaveChanges();

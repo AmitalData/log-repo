@@ -1787,6 +1787,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.WeightRoundingCode = shipment.WeightRoundingCode;
             shipmentPM.IsCFSWarehouse = shipment.IsCFSWarehouse;
             shipmentPM.IsCFSWarehouseChanged = shipment.IsCFSWarehouseChanged;
+            shipmentPM.HasUnassignedData = shipment.HasUnassignedData;
 
             if (!string.IsNullOrEmpty(shipment.WarehouseLegWarehouseId))
             {
@@ -2273,6 +2274,12 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 ShipmentProductItemQuery shipmentProductItemQuery = new ShipmentProductItemQuery(shipmentProductItemRepository);
 
                 shipmentPM.ShipmentProductItems = shipmentProductItemQuery.GetShipmentProductItems(shipment.Id, shipment.Tenant);
+                #endregion
+
+                #region ShipmentUnassignedFields
+                ShipmentUnassignedFieldRepository shipmentUnassignedFieldRepository = new ShipmentUnassignedFieldRepository(tenant);
+                ShipmentUnassignedFieldQuery shipmentUnassignedFieldQuery = new ShipmentUnassignedFieldQuery(shipmentUnassignedFieldRepository);
+                shipmentPM.ShipmentUnassignedFields = shipmentUnassignedFieldQuery.GetShipmentUnassignedFields(shipment.Id, shipment.Tenant);
                 #endregion
             }
 
@@ -3756,6 +3763,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             }
 
             shipmentPM.IsHTSMissing = shipment.IsHTSMissing;
+            shipmentPM.HasUnassignedData = shipment.HasUnassignedData;
             shipmentPM.IsStandalonePickupDelivery = shipment.IsStandalonePickupDelivery;
             shipmentPM.StandalonePickupDeliveryId = shipment.StandalonePickupDeliveryId;
             shipmentPM.ForwarderStandaloneShipmentId = shipment.ForwarderStandaloneShipmentId;
@@ -3901,6 +3909,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.PODReceivedDate = shipment.PODReceivedDate;
             shipmentPM.IsPODReceived = shipment.IsPODReceived;
             shipmentPM.IsHTSMissing = shipment.IsHTSMissing;
+            shipmentPM.HasUnassignedData = shipment.HasUnassignedData;
             shipmentPM.IsStandalonePickupDelivery = shipment.IsStandalonePickupDelivery;
             shipmentPM.ParentShipmentDirectionId = shipment.ParentShipmentDirectionId;
             shipmentPM.ParentShipmentNumber = shipment.ParentShipmentNumber;
@@ -11324,6 +11333,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         ApprovedCargoReadyDate = view.ApprovedCargoReadyDate,
                         HandlerUserId = view.HandlerUserId,
                         HandlerUserName = view.HandlerUserName,
+                        HasUnassignedData = view.HasUnassignedData,
                     };
 
                     list.LongMaster = EntityFieldsHelper.GetLongMasterField(view);
@@ -11994,6 +12004,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                          ParentShipmentNumber = s.ParentShipmentNumber,
                                                          ParentShipmentType = s.ParentShipmentType,
                                                          IsHTSMissing = s.IsHTSMissing,
+                                                         HasUnassignedData = s.HasUnassignedData,
                                                      };
 
             return shipmentsList;
@@ -12572,6 +12583,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                ContainersNumbersandTypesArray = f.ContainersNumbersandTypesArray,
                                CustomerContactEmail = f.CustomerContactEmail,
                                CustomerContactName = f.CustomerContactName,
+                               HasUnassignedData = f.HasUnassignedData,
                            };
             return myResult;
         }
@@ -12949,6 +12961,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     IsAccrualsApproved = f.IsAccrualsApproved,
                     CustomerContactEmail = f.CustomerContactEmail,
                     CustomerContactName = f.CustomerContactName,
+                    HasUnassignedData = f.HasUnassignedData,
                 };
 
                 List<ObjectField> customFields = ObjectFieldRepository.GetCustomObjectFieldsByObjectTableName("Shipment", tenant).ToList();
@@ -13223,6 +13236,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     ApprovedCargoReadyDate = f.ApprovedCargoReadyDate,
                     HandlerUserId = f.HandlerUserId,
                     HandlerUserName = f.HandlerUserName,
+                    HasUnassignedData = f.HasUnassignedData,
                 };
 
                 List<ObjectField> customFields = ObjectFieldRepository.GetCustomObjectFieldsByObjectTableName("Shipment", tenant).ToList();

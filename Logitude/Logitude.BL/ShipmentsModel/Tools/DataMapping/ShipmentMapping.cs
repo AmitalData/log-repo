@@ -485,6 +485,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             entityPoco.RequestedFlightDate = entityPM.RequestedFlightDate;
             entityPoco.IsPODReceived = entityPM.IsPODReceived;
             entityPoco.PODReceivedDate = entityPM.PODReceivedDate;
+            entityPoco.HasUnassignedData = entityPM.HasUnassignedData;
 
             BuildSearchField(entityPM, entityPoco, entityMasterData, myPackagesList);
             if (!LBcurrentTenant.IsDocumentsArchive)

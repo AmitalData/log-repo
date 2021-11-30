@@ -103,7 +103,8 @@ using Simplog.Data.CommonDataModel;
 				   temp.IsDisconnectedFromGLAccount = MyEntityPM.IsDisconnectedFromGLAccount;
 				   temp.ReceivablesAccountingCard = MyEntityPM.ReceivablesAccountingCard;
 				   temp.PayablesAccountingCard = MyEntityPM.PayablesAccountingCard;
-				   temp.ICAO = MyEntityPM.ICAO;					
+				   temp.ICAO = MyEntityPM.ICAO;
+				   temp.AllowUnassignedEntry = MyEntityPM.AllowUnassignedEntry;					
 				   return temp;
 			}
             catch (Exception ex)
@@ -265,6 +266,14 @@ using Simplog.Data.CommonDataModel;
 					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.ICAO))
 					{							//throw new ApplicationException("ICAO Can't be update"); 
 							temp.ICAO = MyEntity.ICAO;
+
+										}  
+
+					
+                    
+					if(!IsUpdate)// && (MyEntity.AllowUnassignedEntry != temp.AllowUnassignedEntry))
+					{							//throw new ApplicationException("AllowUnassignedEntry Can't be update"); 
+							temp.AllowUnassignedEntry = MyEntity.AllowUnassignedEntry;
 
 										}  
 

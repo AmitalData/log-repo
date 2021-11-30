@@ -28,6 +28,7 @@ using WebFreight.Web.ExternalAPIs.ExternalAPIsHelpers;
 using Simplog.Data.Helpers;
 using Logitude.BL.InfrastructureModel.APIDataContract.ApiV1;
 using Logitude.BL.ShipmentsModel.EntityQueries;
+using Logitude.BL.CommonDataModel.APIDataContract.QueryService;
 
 namespace WebFreight.Web.ExternalAPIs.V1
 {
@@ -88,6 +89,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         SecurityUtility.AuthenticateAPICall(authToken.Tenant);
                         ContactInfo loggedContactInfo = SecurityUtility.GetContactInfo(authToken.Email, authToken.Tenant);
+
                         string computingPartnerCode = "";
                         if (!string.IsNullOrEmpty(entity.ComputingPartnerCode))
                         {
@@ -99,6 +101,10 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         this.InitOceanOrInlandPackages(entity);                        
 
                         IShipmentsContext MyContext = ShipmentsContext.GetContext(authToken.Tenant);
+       
+                        APIUnassignedDataHandler apiUnassignedDataHandler = new APIUnassignedDataHandler(authToken.Tenant, computingPartnerCode);
+                        entity = apiUnassignedDataHandler.HandleUnassignedDirectShipmentData(entity);
+
                         DirectQueryService mappingService = new DirectQueryService(authToken.Tenant);
                         ShipmentPM entityPM = mappingService.DirectCustomDataMappingAndValidatin(entity, authToken.Tenant, computingPartnerCode);
                         entityPM.IsExternalAPI = true;
@@ -198,6 +204,8 @@ namespace WebFreight.Web.ExternalAPIs.V1
                             entityPM.CreatedByPartner = (partner != null ? partner.Name : null);
                         }
 
+                        entityPM.HasUnassignedData = apiUnassignedDataHandler.HasUnassignedData;
+                        entityPM = apiUnassignedDataHandler.AddDirectShipmentUnassignedData(entity,entityPM);
                         ShipmentService service = new ShipmentService(MyContext, entityPM, SecurityUtility.GetAuthenticatedUser());
                         service.Create();
 
@@ -252,6 +260,10 @@ namespace WebFreight.Web.ExternalAPIs.V1
                     {
                         IShipmentsContext MyContext = ShipmentsContext.GetContext(authToken.Tenant);
                         DirectQueryService mappingService = new DirectQueryService(authToken.Tenant);
+
+                        APIUnassignedDataHandler apiUnassignedDataHandler = new APIUnassignedDataHandler(authToken.Tenant, computingPartnerCode);
+                        entity = apiUnassignedDataHandler.HandleUnassignedDirectShipmentData(entity);
+
                         ShipmentPM directPM = mappingService.DirectDataMappingAndValidatin(entity, authToken.Tenant, computingPartnerCode, true);
 
                         if (directPM != null)
@@ -288,6 +300,10 @@ namespace WebFreight.Web.ExternalAPIs.V1
                             this.ValidatePreCarriageDates(directPM);
                             this.UpdatePartners(MyContext, directPM);
                             ComputeHelper.ComputeTotals(directPM);
+
+                            directPM.HasUnassignedData = apiUnassignedDataHandler.HasUnassignedData;
+                            directPM = apiUnassignedDataHandler.AddDirectShipmentUnassignedData(entity, directPM);
+
                             ShipmentService service = new ShipmentService(MyContext, directPM, SecurityUtility.GetAuthenticatedUser());
                             service.Update(true);
 
