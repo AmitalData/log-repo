@@ -23,6 +23,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 using UnifreightIIG.Common.DeclarationPrintServiceReference;
+using Unifreight.BL.EntityQueryServices;
+using Unifreight.Data.AmitalModel;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -193,7 +195,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 return;
             }
 
-
+            var uniGDMFILINGQueryService = new GDMFILINGQueryService(AmitalContext.GetContext(requestParams.Tenant));
             //Check if file already exists
             var objectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
             var documentType = documentTypeQuery.GetSinglePMByCodeAndTenant("DEC", requestParams.Tenant);
@@ -202,6 +204,13 @@ namespace Logitude.CustomsMessaging.ResponseServices
             {
                 if (documentItem.DocumentTypeId == documentType.Id)
                 {
+                    
+                    var gdmfiling = uniGDMFILINGQueryService.GetSingle(documentItem.Id, true);
+                    if (gdmfiling?.DELETED == "T")
+                    {
+                        // uniface deleted!!
+                        continue;
+                    }
                     documentsFilingPM = documentItem;
                     break;
                 }
