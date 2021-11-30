@@ -108,7 +108,7 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.QueryService
 			if (!card.AllowUnassignedEntry)
 				return card;
 
-			if (this.IsCardExsist(card))
+			if (this.IsCardExsist(card, cardType))
 				return card;
 
 			string cardReceivedCode = card.Code;
@@ -119,7 +119,7 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.QueryService
 			return card;
 		}
 
-		private Card HandleCustomerUnassignedCard(Card card, Direct shipment)
+		private Card HandleCustomerUnassignedCard(Card card, dynamic shipment)
 		{
 			if (card == null)
 				return null;
@@ -130,33 +130,16 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.QueryService
 			string cardTypeSameAsCustomerCode = ReceivedCodes.FirstOrDefault(x => x.Value == card.Code).Key;
 
 			if (cardTypeSameAsCustomerCode == CardsTypes.Shipper.ToString())
-				card.Code = shipment.Shipper.Code;
+				card.Code = shipment?.Shipper?.Code;
 			else if (cardTypeSameAsCustomerCode == CardsTypes.Consignee.ToString())
-				card.Code = shipment.Consignee.Code;
+				card.Code = shipment?.Consignee?.Code;
 
 			return card;
 		}
 
-		private Card HandleCustomerUnassignedCard(Card card, House shipment)
+		private bool IsCardExsist(Card card,string cardType)
 		{
-			if (card == null)
-				return null;
-
-			if (!ReceivedCodes.ContainsValue(card.Code))
-				return card;
-
-			string cardTypeSameAsCustomerCode = ReceivedCodes.FirstOrDefault(x => x.Value == card.Code).Key;
-
-			if (cardTypeSameAsCustomerCode == CardsTypes.Shipper.ToString())
-				card.Code = shipment.Shipper.Code;
-			else if (cardTypeSameAsCustomerCode == CardsTypes.Consignee.ToString())
-				card.Code = shipment.Consignee.Code;
-
-			return card;
-		}
-
-		private bool IsCardExsist(Card card)
-		{
+			this.ValidateCardPartnerCode(card, cardType);
 			if (!string.IsNullOrEmpty(card.Id))
 			{
 				return query.IsCardExisitByCardId(card.Id, this.tenant);
@@ -171,6 +154,20 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.QueryService
 				return query.IsCardExisitByCardCode(cardCode, this.tenant);
 			}
 			return false;
+		}
+
+		private void ValidateCardPartnerCode(Card card, string cardType)
+        {
+			if (!string.IsNullOrEmpty(card.Id))
+				return;
+
+			if (!string.IsNullOrEmpty(card.Code))
+				return;
+
+			if (!string.IsNullOrEmpty(card.PartnerCode))
+				return;
+
+			throw new ApplicationException(cardType + " PartnerCode is required");
 		}
 
 		private string GetUnassignedCardCode(string objectTableName)

@@ -696,16 +696,23 @@ namespace RestClientApplication
 
         private void SetXmlBrouserXml(string xmlString)
         {
-            System.Xml.Xsl.XslCompiledTransform xTrans = new System.Xml.Xsl.XslCompiledTransform();
+            try
+            {
+                System.Xml.Xsl.XslCompiledTransform xTrans = new System.Xml.Xsl.XslCompiledTransform();
+                StringReader sr = new StringReader(xmlString);
+                XmlReader xReader = XmlReader.Create(sr);
 
-            StringReader sr = new StringReader(xmlString);
-            XmlReader xReader = XmlReader.Create(sr);
+                xmlBrowser1.XmlDocumentTransformType = XmlRender.XmlBrowser.XslTransformType.XSL;
 
-            xmlBrowser1.XmlDocumentTransformType = XmlRender.XmlBrowser.XslTransformType.XSL;
+                XmlDocument _xd = new XmlDocument();
 
-            XmlDocument _xd = new XmlDocument();
-            _xd.Load(xReader);
-            xmlBrowser1.XmlDocument = _xd;
+                _xd.Load(xReader);
+                xmlBrowser1.XmlDocument = _xd;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         private void txtCredentialsPrimary_TextChanged(object sender, EventArgs e)
