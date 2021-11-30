@@ -3165,8 +3165,12 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 IQueryable<ShipmentUnassignedField> shipmentUnassignedFields = this.GetShipmentUnassignedField(shipmentId);
                 ShipmentUnassignedField myUnassignedField = shipmentUnassignedFields.Where(d => d.FieldName == fieldName).FirstOrDefault();
 
-                Logitude.BL.CommonDataModel.APIDataContract.ApiV1.Address address = LogitudeXmlSerializer.DeserializeObject<Logitude.BL.CommonDataModel.APIDataContract.ApiV1.Address>(myUnassignedField.ReceivedData);
-                AddressList myResult = this.CreateAddressList(address);
+                AddressList myResult = null;
+                if (!string.IsNullOrEmpty(myUnassignedField.ReceivedData))
+                {
+                    Logitude.BL.CommonDataModel.APIDataContract.ApiV1.Address address = LogitudeXmlSerializer.DeserializeObject<Logitude.BL.CommonDataModel.APIDataContract.ApiV1.Address>(myUnassignedField.ReceivedData);
+                    myResult = this.CreateAddressList(address);
+                }
 
                 return Request.CreateResponse(HttpStatusCode.OK, myResult);
             }
