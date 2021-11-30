@@ -578,6 +578,11 @@ export class DocumentsFilingPM {
     public set BackedupExternally(newValue: boolean) { if (this.backedupExternally != newValue) { this.backedupExternally = newValue; this.MarkAsDirty("BackedupExternally"); } }
        
 	 
+    private isTransferdToQBO: boolean;
+    public get IsTransferdToQBO() { return this.isTransferdToQBO; }
+    public set IsTransferdToQBO(newValue: boolean) { if (this.isTransferdToQBO != newValue) { this.isTransferdToQBO = newValue; this.MarkAsDirty("IsTransferdToQBO"); } }
+       
+	 
 
     public OldEntityPM: DocumentsFilingPM;
 		
