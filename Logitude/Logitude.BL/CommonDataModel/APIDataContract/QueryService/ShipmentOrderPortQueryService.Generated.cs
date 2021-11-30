@@ -24,7 +24,7 @@ using Simplog.Data.CommonDataModel;
 
  namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
 { 
-   public partial class PortQueryService
+   public partial class ShipmentOrderPortQueryService
    {
    
 		ICommonDataContext  context;
@@ -32,7 +32,7 @@ using Simplog.Data.CommonDataModel;
 		
 		PortQuery query; 
 
-        public PortQueryService(int tenant)
+        public ShipmentOrderPortQueryService(int tenant)
         {
 				    context = CommonDataContext.GetContext(tenant); 
 			//service = new PortService(context, tenant); 
@@ -40,7 +40,7 @@ using Simplog.Data.CommonDataModel;
         }
 
 		
-		public Port GetPortById(string Id,int Tenant,string ComputingPartnerName = "")
+		public ShipmentOrderPort GetShipmentOrderPortById(string Id,int Tenant,string ComputingPartnerName = "")
         { 
 		    try
             {
@@ -50,7 +50,7 @@ using Simplog.Data.CommonDataModel;
 				 if (temp == null)
                     throw new ApplicationException("Port with Id " + Id + " doesn't exist");
 
-				return PortDataMapping(temp,Tenant,ComputingPartnerName);
+				return ShipmentOrderPortDataMapping(temp,Tenant,ComputingPartnerName);
 			}
             catch (Exception ex)
             {
@@ -59,7 +59,7 @@ using Simplog.Data.CommonDataModel;
             }
         }
 		
-		public Port GetPortByCombinedCode(string CombinedCode,int Tenant,string ComputingPartnerName = "")
+		public ShipmentOrderPort GetShipmentOrderPortByCombinedCode(string CombinedCode,int Tenant,string ComputingPartnerName = "")
         { 
 		    try
             {
@@ -69,7 +69,7 @@ using Simplog.Data.CommonDataModel;
 				 if (temp == null)
                     throw new ApplicationException("Port with CombinedCode " + CombinedCode + " doesn't exist");
 
-				return PortDataMapping(temp,Tenant,ComputingPartnerName);
+				return ShipmentOrderPortDataMapping(temp,Tenant,ComputingPartnerName);
 			}
             catch (Exception ex)
             {
@@ -78,12 +78,31 @@ using Simplog.Data.CommonDataModel;
             }
         }
 		
-		public Port PortDataMapping(PortPM MyEntityPM,int Tenant,string ComputingPartnerName = "")
+		public ShipmentOrderPort GetShipmentOrderPortByCode(string Code,int Tenant,string ComputingPartnerName = "")
+        { 
+		    try
+            {
+
+				
+				var temp = query.GetSinglePMByCode(Code,Tenant);				
+				 if (temp == null)
+                    throw new ApplicationException("Port with Code " + Code + " doesn't exist");
+
+				return ShipmentOrderPortDataMapping(temp,Tenant,ComputingPartnerName);
+			}
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+		
+		public ShipmentOrderPort ShipmentOrderPortDataMapping(PortPM MyEntityPM,int Tenant,string ComputingPartnerName = "")
         {
 		    try
             {
 				   
-				   var temp = new Port(); 
+				   var temp = new ShipmentOrderPort(); 
 				   temp.Id = MyEntityPM.Id;
 				   temp.Code = MyEntityPM.CombinedCode;
 				   temp.LocalName = MyEntityPM.LocalName;
@@ -107,7 +126,8 @@ using Simplog.Data.CommonDataModel;
 					   					   temp.State = StateService1.GetStateById(MyEntityPM.StateId,Tenant,ComputingPartnerName); 
 			       
 					   				   }
-				   					
+				   
+				   temp.PortCode = MyEntityPM.Code;					
 				   return temp;
 			}
             catch (Exception ex)
@@ -117,7 +137,7 @@ using Simplog.Data.CommonDataModel;
             }
         } 
 
-		public PortPM PortDataMappingAndValidatin(Port MyEntity,int Tenant,string ComputingPartnerName = "",bool IsUpdate = false)
+		public PortPM ShipmentOrderPortDataMappingAndValidatin(ShipmentOrderPort MyEntity,int Tenant,string ComputingPartnerName = "",bool IsUpdate = false)
         {
 		    try
             {
@@ -146,10 +166,14 @@ using Simplog.Data.CommonDataModel;
 						
 					}
 					
-					   					   
+					   
+					if (!string.IsNullOrEmpty(MyEntity.PortCode))
+					{
+						temp = query.GetSinglePMByCode(MyEntity.PortCode, Tenant);
+					} 					   
 					if(temp == null)
 					{   
-					    throw new ApplicationException("Port with Code " + MyEntity.Code + " doesn't exist");
+					    throw new ApplicationException("Port with PortCode " + MyEntity.PortCode + " doesn't exist");
 					} 
 					
 					if(string.IsNullOrEmpty(temp.Id))
@@ -241,7 +265,21 @@ using Simplog.Data.CommonDataModel;
 
 					}
 			
-										   
+					
+					if(string.IsNullOrEmpty(temp.Code))
+					{
+					   
+						 
+						if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.PortCode))
+						{
+								//throw new ApplicationException("PortCode Can't be update"); 
+								temp.Code = MyEntity.PortCode;
+								
+						
+						}  
+
+						
+					}					   
 					return temp;
 		    }
             catch (Exception ex)
