@@ -131,6 +131,11 @@
             padding: 0;
         }
     }
+
+    .value-not-exist {
+        z-index: 2;
+        top: 45px;
+    }
 }
 
 .sub-header {

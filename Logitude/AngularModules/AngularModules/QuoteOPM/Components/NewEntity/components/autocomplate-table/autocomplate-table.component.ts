@@ -1,6 +1,6 @@
 import { DOCUMENT } from '@angular/common';
 import { ChangeDetectorRef, Component, EventEmitter, HostListener, Inject, Input, Output, SimpleChanges, ViewChild } from '@angular/core';
-import { AbstractControl, FormGroup } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn } from '@angular/forms';
 import { GenericTableColumn } from 'Infrastructure/Components/generic-table/generic-table.component';
 import { GenericTableService } from 'Infrastructure/Components/generic-table/generic-table.service';
 import { ApiQueryFilters } from 'Infrastructure/DataContracts/ApiQueryFilters';
@@ -47,6 +47,7 @@ export class AutocomplateTableComponent {
   isGetAll: boolean = false;
   filterVal: string = ''
   toHighlight: string = null as any;
+  defaultValidator: ValidatorFn = null as any;
 
   constructor(
     @Inject(DOCUMENT) private document: any,
@@ -125,14 +126,17 @@ export class AutocomplateTableComponent {
       dialogRef.onClose.pipe(take(1)).subscribe(x => resolve(x));
     });
 
-    this.formGroup.controls[this.controlName].setValue(recordSelected)
+    this.formGroup.controls[this.controlName].setValue(recordSelected);
+    this.setDefaultValidator();
   }
 
   onSelected(val: any) {
     if (this.selected[0] == val)
       this.formGroup.controls[this.controlName].reset()
-    else
+    else {
       this.onSelect.emit(val)
+      this.setDefaultValidator()
+    }
   }
 
   onBlur() {
@@ -140,9 +144,33 @@ export class AutocomplateTableComponent {
     const val: any = ctrl.value;
 
     if (!this.data?.includes(val))
-      ctrl.reset();
-    else
+    this.setNotIdentityValueValidator()
+    else {
+      this.setDefaultValidator()
       this.onSelect.emit(val)
+    }
+  }
+
+  private setNotIdentityValueValidator() {
+    if (this.defaultValidator !== null) return;
+    
+    const ctrl: AbstractControl = this.formGroup.controls[this.controlName];
+    this.defaultValidator = (this.formGroup.get(this.controlName)?.validator as ValidatorFn) || undefined;
+    ctrl.setValidators([this.notIdentityValueValidator]);
+    ctrl.updateValueAndValidity()
+  }
+
+  notIdentityValueValidator = (control: AbstractControl): ValidationErrors | null => {
+    return { notIdentityValue: { value: control?.value } };
+  };
+
+  private setDefaultValidator() {
+    if (this.defaultValidator === null) return
+    
+    const ctrl: AbstractControl = this.formGroup.controls[this.controlName];
+    ctrl.setValidators(this.defaultValidator || null);
+    this.defaultValidator = null as any
+    ctrl.updateValueAndValidity()
   }
 
   private searchValueInObject(value: string, propsName: string[]): (value1: any, index: number, array: any[]) => unknown {
@@ -198,11 +226,8 @@ export class AutocomplateTableComponent {
       });
   }
 
-  openDdl(e: Event,autoCompleteRef: AutoComplete ){
-    console.log(autoCompleteRef)
-    setTimeout(() => {
-      // this.autoCompleteObject.show();
-      autoCompleteRef.show()
-  }, 100)
+  openDdl(e: Event) {
+    e.stopPropagation();
+    this.autoComplete.handleDropdownClick(this.autoComplete);
   }
 }

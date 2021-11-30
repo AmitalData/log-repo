@@ -70,6 +70,34 @@
         }
     }
 
+    .contact-wrapper {
+        app-autocomplate-table {
+            top: 19px;
+
+            > div {
+                position: relative;
+                display: flex;
+
+                label {
+                    position: absolute;
+                    top: -8px;
+                }
+                
+                p-autocomplete {
+                    // width: calc(100% - 50px) !important;
+                    display: inline-block;
+                }
+
+                .pi-chevron-down {
+                    margin-left: 8px;
+                    background: #e2f0fb;
+                    padding: 9px;
+                    border-radius: 7px;
+                }
+            }
+        }
+    }
+
     app-btn-menu-plus {
         float: right;
         margin-top: 12px;
@@ -103,7 +131,7 @@
 }
 
 .error-msg {
-    top: 48px;
+    top: 39px;
 }
 
 .header {
@@ -121,7 +149,6 @@
         align-items: center;
         justify-content: flex-end;
 
-
         i {
             // margin: auto;
             background: #e2f0fb;
@@ -138,4 +165,18 @@
 
 .grid {
     padding: 0 20px;
+    
+}
+
+.referenc1-wrapper,
+.contact-wrapper {
+    padding-bottom: 17px;
+}
+
+.referenc1-wrapper {
+    padding-right: 7px;
+}
+
+.contact-wrapper {
+    padding-left: 7px;
 }

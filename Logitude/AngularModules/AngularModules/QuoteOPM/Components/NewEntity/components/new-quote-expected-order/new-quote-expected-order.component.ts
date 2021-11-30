@@ -162,7 +162,13 @@ export class NewQuoteExpectedOrderComponent implements OnInit, AfterViewInit {
 
   addPackage() {
     if (this.formArray.invalid) {
-      const msg: string = this.formArray.length === 1 ? 'Please insert data to the first package' : 'Volume or Gross Weight fields required';
+      let msg: string = 'Volume or Gross Weight fields required';
+
+      if(this.formArray.controls.some(ctrl=> (<FormGroup>ctrl).controls.packageType.errors.notIdentityValue))
+        msg = 'value in package type not exist';
+      else if (this.formArray.length === 1)
+        msg = 'Please insert data to the first package';
+
       this.msg.add({ severity: 'error', summary: 'Add new package failed', detail: msg })
       return;
     }
