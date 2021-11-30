@@ -893,7 +893,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                                   where SIIC.DeclarationId ='" + declarationId + "' and SIIC.InvoiceCounterKey || ' ' || SIIC.LineNumber || ' ' || SIIC.ItemCertificateCounterKey  in (" + whereInCertificateKeys + ") ";
 
                     string cmd1 = @"
-                 MamanStatusAvailabilityQService.cs               Update supplierInvoiceItems s set s.CertificatesStatusCode = '1'
+                                Update supplierInvoiceItems s set s.CertificatesStatusCode = '1'
                                 where s.DeclarationId ='" + declarationId + "' and s.CounterKey || ' ' || s.LineNumber in ( " + whereInInvoiceItemKeys + " )";
 
                     OracleCommand sqlCommand = new OracleCommand(cmd, con);
