@@ -32,4 +32,11 @@ namespace Logitude.Accounting.Data.DataContract
         public string TransmitStatusCode { get; set; }
         public int Tenant { get; set; }
     }
+
+    public class CustomTaxReportData : TaxReportData
+    {
+        public bool? IsVoided { get; set; }
+        public string TaxReportId { get; set; }
+        public string OriginalJournalId { get; set; }
+    }
 }

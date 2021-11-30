@@ -403,6 +403,8 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
             return gLAccountPM;
         }
+
+      
         public FullAccountingSettingPM GetFullAccountingSettings(int tenant)
         {
             FullAccountingSettingQueryService fullAccountingSettingQueryService = new FullAccountingSettingQueryService(tenant);

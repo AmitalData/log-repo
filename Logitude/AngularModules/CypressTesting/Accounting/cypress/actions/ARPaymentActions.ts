@@ -28,6 +28,16 @@ export function AssertCreateARPayment() {
     BaseAssertion.AssertStatusCode(RequestAliases.ARPaymentView, 200)
 }
 
+export function AssertARPaymentDetailsFieldsDisabled(condition) {
+    BaseAssertion.AssertElementDisabled(ARPaymentSelectors.Partner, condition)
+    BaseAssertion.AssertElementDisabled(ARPaymentSelectors.ARPaymentBillToAddress, condition)
+    BaseAssertion.AssertElementDisabled(ARPaymentSelectors.PaymentMethod, condition)
+    BaseAssertion.AssertElementDisabled(ARPaymentSelectors.PaymentAmount, condition)
+    BaseAssertion.AssertElementDisabled(ARPaymentSelectors.PaymentCurrency, condition)
+    BaseAssertion.AssertElementDisabled(ARPaymentSelectors.dateARPaymentRegisterDate, condition)
+    BaseAssertion.AssertElementDisabled(ARPaymentSelectors.ARPaymentBranch, condition)
+}
+
 export function ApproveARPayment() {
     cy.DefineRequestWait(RestAPI.POST, AccountingURLs.ARPayments, RequestAliases.ARPayments)
     cy.Click(ARPaymentSelectors.ARPaymentBApprove, null)

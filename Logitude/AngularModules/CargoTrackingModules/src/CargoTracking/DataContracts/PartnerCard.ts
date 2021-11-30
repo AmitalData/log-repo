@@ -6,4 +6,6 @@ export class PartnerCard
     PhoneNumber: string;
     FaxNumber: string;
     ShowDetails: boolean;
+    Email:string;
+    Mobile:string;
 }

@@ -18,15 +18,9 @@ export class MainMenuAutomationComponent implements OnInit {
     AutomationEntityLists: AutomationItemClass[] = [];
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
-
-
     }
 
-    ngOnInit(
-
-
-    ) {
-
+    ngOnInit() {
         
         if (FeatureLocator.HasFeaturePermession("Shipment", "AUTOMATION")) {
             this.AutomationEntityLists.push(new AutomationItemClass("Masters", "Master","Master", "Masters & Directs"));
@@ -34,12 +28,11 @@ export class MainMenuAutomationComponent implements OnInit {
         }
 
         if (FeatureLocator.HasFeaturePermession("Ticket", "AUTOMATION")) this.AutomationEntityLists.push(new AutomationItemClass("Tickets", "Ticket", "Ticket"));
-
         if (FeatureLocator.HasFeaturePermession("LogitudeMessagesTransmissionLog", "AUTOMATION")) this.AutomationEntityLists.push(new AutomationItemClass("Transmission Logs", "LogitudeMessagesTransmissionLog","Transmission Log"));
         if (FeatureLocator.HasFeaturePermession("ARInvoice", "AUTOMATION")) this.AutomationEntityLists.push(new AutomationItemClass("AR Invoices", "ARInvoice", "AR Invoice", "Receivables Invoices"));
         if (FeatureLocator.HasFeaturePermession("APInvoice", "AUTOMATION")) this.AutomationEntityLists.push(new AutomationItemClass("AP Invoices", "APInvoice", "AP Invoice", "Payables Invoices"));
-
         if (FeatureLocator.HasFeaturePermession("Quote", "AUTOMATION")) this.AutomationEntityLists.push(new AutomationItemClass("Quotes", "Quote", "Quote"));
+        if (FeatureLocator.HasFeaturePermession("Container", "AUTOMATION")) this.AutomationEntityLists.push(new AutomationItemClass("Containers", "Container", "Container"));
        
 
     }

@@ -40,40 +40,38 @@ using Simplog.Data.ShipmentsModel;
         }
 
 		
-		public Master GetMasterById(string Id,int Tenant,string ComputingPartnerName = "")
+		public Master GetMasterById(string Id,int Tenant, string include, string ComputingPartnerName = "")
         { 
 		    try
             {
-
-				
-				var temp = query.GetSinglePM(Id,Tenant);				
+								
+				var temp = query.GetSinglePM(Id, Tenant, include);
 				 if (temp == null)
                     throw new ApplicationException("Shipment with Id " + Id + " doesn't exist");
 
 				return MasterDataMapping(temp,Tenant,ComputingPartnerName);
 			}
+
             catch (Exception ex)
             {
-
                 throw ex;
             }
         }
 		
-		public Master GetMasterByShipmentNumber(string ShipmentNumber,int Tenant,string ComputingPartnerName = "")
+		public Master GetMasterByShipmentNumber(string ShipmentNumber,int Tenant, string include, string ComputingPartnerName = "")
         { 
 		    try
             {
-
-				
-				var temp = query.GetSinglePMByShipmentNumber(ShipmentNumber,Tenant);				
+								
+				var temp = query.GetSinglePMByShipmentNumber(ShipmentNumber, Tenant, include);
 				 if (temp == null)
                     throw new ApplicationException("Shipment with ShipmentNumber " + ShipmentNumber + " doesn't exist");
 
 				return MasterDataMapping(temp,Tenant,ComputingPartnerName);
 			}
+
             catch (Exception ex)
             {
-
                 throw ex;
             }
         }
@@ -410,7 +408,21 @@ using Simplog.Data.ShipmentsModel;
 					   					   temp.Notify1 = CardService27.GetCardById(MyEntityPM.Notify1Id,Tenant,ComputingPartnerName); 
 			       
 					   				   }
-				   					
+				   
+				if(MyEntityPM.EventList != null && MyEntityPM.EventList.Count > 0)
+				{
+					 EventQueryService EventService28 = new EventQueryService(Tenant);
+					 temp.EventList = EventService28.EventCustomDataMapping(MyEntityPM,MyEntityPM.EventList,Tenant,ComputingPartnerName);
+				}
+
+							 
+				if(MyEntityPM.AddManualEvents != null && MyEntityPM.AddManualEvents.Count > 0)
+				{
+					 EventQueryService EventService28 = new EventQueryService(Tenant);
+					 temp.AddManualEvents = EventService28.EventCustomDataMapping(MyEntityPM,MyEntityPM.AddManualEvents,Tenant,ComputingPartnerName);
+				}
+
+							 					
 				   return temp;
 			}
             catch (Exception ex)
@@ -432,7 +444,7 @@ using Simplog.Data.ShipmentsModel;
 					
 					if (!string.IsNullOrEmpty(MyEntity.ShipmentNumber))
 					{
-						temp = query.GetSinglePMByShipmentNumber(MyEntity.ShipmentNumber, Tenant);
+						temp = query.GetSinglePMByShipmentNumber(MyEntity.ShipmentNumber, Tenant  );
 					} 					   
 					if(temp == null)
 					{   
@@ -1315,7 +1327,39 @@ using Simplog.Data.ShipmentsModel;
 
 					}
 			
-										   
+					 
+
+					if(MyEntity.EventList != null && MyEntity.EventList.Count > 0)
+					{
+						EventQueryService EventService28 = new EventQueryService(Tenant);
+						  
+						if(!IsUpdate)
+						{								//throw new ApplicationException("EventList Can't be update"); 
+								temp.EventList = EventService28.EventCustomDataMappingAndValidatin(MyEntity,MyEntity.EventList,Tenant,ComputingPartnerName);
+
+					 
+						}  
+
+						
+					}
+
+								  
+
+					if(MyEntity.AddManualEvents != null && MyEntity.AddManualEvents.Count > 0)
+					{
+						EventQueryService EventService28 = new EventQueryService(Tenant);
+						  
+						if(!IsUpdate)
+						{								//throw new ApplicationException("AddManualEvents Can't be update"); 
+								temp.AddManualEvents = EventService28.EventCustomDataMappingAndValidatin(MyEntity,MyEntity.AddManualEvents,Tenant,ComputingPartnerName);
+
+					 
+						}  
+
+						
+					}
+
+								 					   
 					return temp;
 		    }
             catch (Exception ex)

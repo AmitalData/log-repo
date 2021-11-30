@@ -371,7 +371,7 @@ namespace WebFreight.Web.Controllers.WarehouseModel.Extended
 
                         EventTypeQuery eventTypeQuery = new EventTypeQuery(entityPM.Tenant);
 
-                        EventTypePM eventTypePM = eventTypeQuery.GetSingleEventTypePMByCode("CARE", entityPM.Tenant);
+                        EventTypePM eventTypePM = eventTypeQuery.GetSinglePMByCode("CARE", entityPM.Tenant);
 
                         if (eventTypePM != null)
                         {

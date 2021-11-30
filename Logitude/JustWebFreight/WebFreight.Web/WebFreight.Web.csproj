@@ -2630,6 +2630,7 @@
     </Compile>
     <Compile Include="Helpers\AdvancedDateResolver.cs" />
     <Compile Include="Helpers\AutomationModel\WebHookAutomationService.cs" />
+    <Compile Include="Helpers\CrmWebServicesValidator.cs" />
     <Compile Include="Helpers\DocumentFile.cs" />
     <Compile Include="Helpers\DocumentDownloadTokenService.cs" />
     <Compile Include="Helpers\ContainerStatuses\ContainerStatusesConnecterAnalyzer.cs" />
@@ -2678,13 +2679,16 @@
     <Compile Include="Helpers\DocumentTypeTemplateDefultAttachmentService.cs" />
     <Compile Include="Helpers\DWObjectTableAdditionalConditionService.cs" />
     <Compile Include="Helpers\MixPanel\AuthenticationMixPanelService.cs" />
+    <Compile Include="Helpers\PODMobileDocumentsFilingService.cs" />
     <Compile Include="Helpers\PrivateLabelsBrandingDataService.cs" />
     <Compile Include="Helpers\QuotesRequestService.cs" />
     <Compile Include="Helpers\QuoteTemplate\QuoteTemplateSettingDataUpdater.cs" />
     <Compile Include="Helpers\Reports\ReportManipulationDataService.cs" />
+    <Compile Include="Helpers\ResetUserPasswordDocumentService.cs" />
     <Compile Include="Helpers\SharedLogisticReportService.cs" />
     <Compile Include="Helpers\ShipmentOrderModule\ShipmentOrderService.cs" />
     <Compile Include="Helpers\SignUp\TruckerSignUpService.cs" />
+    <Compile Include="Helpers\UpdateShipmetsBatchArgs.cs" />
     <Compile Include="Helpers\UserViewLinkLimitationService.cs" />
     <Compile Include="Helpers\DWQueryBuilderHelper.cs" />
     <Compile Include="Helpers\AgentSharedManifestHelper.cs" />
@@ -2699,7 +2703,6 @@
     <Content Include="App_Code\AngularJS_App_Code\Global\QueriesController.cs" />
     <Compile Include="DataContracts\GeneralEntitiesArgs.cs" />
     <Compile Include="Helpers\APIHelpers\FeaturesUpdateHelper.cs" />
-    <Compile Include="Helpers\APIHelpers\TraceEventsServiceArgs.cs" />
     <Compile Include="Helpers\APIHelpers\UserLicenseUpdateHelper.cs" />
     <Compile Include="Helpers\APIHelpers\ValidateShipmentMasterArgs.cs" />
     <Compile Include="Helpers\AutomationHelper.cs" />
@@ -3435,6 +3438,8 @@
     <Content Include="Monitoring\AgentSharedManifestMonitoring.aspx" />
     <Content Include="Monitoring\AnalyzeQueue.aspx" />
     <Content Include="Monitoring\AzureDevOpsQueue.aspx" />
+    <Content Include="Monitoring\CargoBuild.aspx" />
+    <Content Include="Monitoring\CargoShipmentsWaiting.aspx" />
     <Content Include="Monitoring\DocumentsExecutionLogWaitingStatus.aspx" />
     <Content Include="Monitoring\EmailSendingFailedStatus.aspx" />
     <Content Include="Monitoring\FailedLoginLog.aspx" />
@@ -5521,6 +5526,20 @@
     </Compile>
     <Compile Include="Monitoring\AzureDevOpsQueue.aspx.designer.cs">
       <DependentUpon>AzureDevOpsQueue.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Monitoring\CargoBuild.aspx.cs">
+      <DependentUpon>CargoBuild.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Monitoring\CargoBuild.aspx.designer.cs">
+      <DependentUpon>CargoBuild.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Monitoring\CargoShipmentsWaiting.aspx.cs">
+      <DependentUpon>CargoShipmentsWaiting.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Monitoring\CargoShipmentsWaiting.aspx.designer.cs">
+      <DependentUpon>CargoShipmentsWaiting.aspx</DependentUpon>
     </Compile>
     <Compile Include="Monitoring\DocumentsExecutionLogWaitingStatus.aspx.cs">
       <DependentUpon>DocumentsExecutionLogWaitingStatus.aspx</DependentUpon>

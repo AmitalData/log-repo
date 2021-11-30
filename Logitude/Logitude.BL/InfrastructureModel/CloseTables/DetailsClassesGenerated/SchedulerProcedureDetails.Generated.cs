@@ -179,6 +179,15 @@ namespace Logitude.BL.InfrastructureModel
                 Description = "ExchangeRateUpdateTask", 
                 IsInternallyDefined = false, 
 			});
+			 
+            all.Add(new SchedulerProcedureDetails()
+            {    
+                Code = "ContainerAutomaticallyClosingTask", 
+                Name = "ContainerAutomaticallyClosingTask", 
+                SearchFields = "ContainerAutomaticallyClosingTask", 
+                Description = "ContainerAutomaticallyClosingTask", 
+                IsInternallyDefined = false, 
+			});
 			
             return all;
        }

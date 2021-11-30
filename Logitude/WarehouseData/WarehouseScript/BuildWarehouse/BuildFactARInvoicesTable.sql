@@ -62,8 +62,12 @@
 	declare @InvoiceMasterNumber as nvarchar(30)
 	declare @InvoiceHouseNumber as nvarchar(20)
   --@[DeclareCustomFieldsVariable]
-		
-	
+	declare @ConsolidationInvoiceNumber as varchar(25)
+    declare @ConsolidationInvoiceDate as datetime	
+	declare @ConsolidationStatusCode as varchar(2)
+	declare @ConsolidationDraftNumber as varchar(20)
+	declare @Partner as int
+	declare @ConsolidationId as varchar(15)
 
 	DECLARE ARInvoicesCursor CURSOR READ_ONLY
 	FOR
@@ -76,7 +80,8 @@
 	dw_ARInvoiceLines.VatPercentage, dw_ARInvoiceLines.LocalCurrencyAmount,dw_ARInvoiceLines.ForiegnCurrencyAmount,dw_ARInvoiceLines.InvoiceCurrencyAmount, ForiegnCurrency.Id_Number, dw_ARInvoiceLines.ForiegnExchangeRate,
 	dw_ARInvoiceLines.ProfitCurrencyAmount,dw_ARInvoiceLines.Notes,dw_ARInvoices.InvoiceCurrencyExchangeRate,dw_ARInvoiceLines.IsExpense,dw_ARInvoiceLines.IsRegionalTax,
 	NewDIM_Branches.Id_Number,dw_ARInvoices.StatusCode, dw_ARInvoices.DraftNumber,
-	dw_ARInvoices.IsConsolidationInvoice, dw_ARInvoices.MainEntityId,dw_ARInvoiceLines.EntityId , dw_ARInvoices.MasterNumber, dw_ARInvoices.HouseNumber,  @dw_ARInvoices.CustomFieldsVariable
+	dw_ARInvoices.IsConsolidationInvoice, dw_ARInvoices.MainEntityId,dw_ARInvoiceLines.EntityId , dw_ARInvoices.MasterNumber, dw_ARInvoices.HouseNumber,  @dw_ARInvoices.CustomFieldsVariable,
+	ConsolidationInvoice.InvoiceNumber,ConsolidationInvoice.InvoiceDate, ConsolidationInvoice.StatusCode, ConsolidationInvoice.DraftNumber,  Partner.Id_Number, ConsolidationInvoice.Id
 
 	 
     From dw_ARInvoices
@@ -98,13 +103,18 @@
     inner JOIN NewDIM_Currencies ForiegnCurrency ON dw_ARInvoiceLines.ForiegnCurrencyId = ForiegnCurrency.Id   
     inner JOIN NewDIM_VatTypes ON dw_ARInvoiceLines.VatTypeId = NewDIM_VatTypes.Id
     inner JOIN dw_CustomObjectFields  ON dw_ARInvoices.Tenant = dw_CustomObjectFields.Tenant and dw_CustomObjectFields.ObjectTableName = 'ARInvoice' 
+	inner JOIN dw_ARInvoices ConsolidationInvoice  ON ConsolidationInvoice.Id = dw_ARInvoices.ConsolidationInvoiceId
+	inner JOIN NewDIM_Partners Partner ON dw_ARInvoices.PartnerId = Partner.Id 
+
+	where dw_ARInvoices.IsConsolidationInvoice = 0 and dw_ARInvoices.Id != '-1'
 
 	OPEN ARInvoicesCursor FETCH NEXT FROM ARInvoicesCursor   into  @Id ,@Tenant , @SourceTenant, @ParentTenant, @InvoiceType, @InvoiceNumber,
 	 @InvoiceDate, @CreateDate, @ApprovedDate, @DueDate, @PrintDate, @PaidDate, @ApprovedBy, @CreatedBy, @PrintedBy,
 	 @ARInvoicesSalesman, @Status, @PrintNotes, @PaymentTerm, @LocalCurrency, @InvoiceCurrency, @VATNumber, @BillTo, @SubTotalInLocalCurrency, @SubTotalInInvoiceCurrency,
 	 @AmountInLocalCurrency, @AmountInProfitCurrency, @AmountDueInLocalCurrency, @AmountDueInProfitCurrency, @Description, @LocalDescription, @UnitPrice, @Quantity, @VatType,
 	 @VatPercentage, @LocalCurrencyAmount,@ForiegnCurrencyAmount,@InvoiceCurrencyAmount,@ForiegnCurrencyId, @ForiegnExchangeRate, @ProfitCurrencyAmount,@Notes,@InvoiceCurrencyExchangeRate,@IsExpens,@IsRegionalTax,
-	 @Branch,@StatusCode, @DraftNumber, @IsConsolidationInvoice, @ARInvoiceEntityId,@ARInvoiceLineEntityId, @InvoiceMasterNumber , @InvoiceHouseNumber, @CursorCustomFieldsVariable
+	 @Branch,@StatusCode, @DraftNumber, @IsConsolidationInvoice, @ARInvoiceEntityId,@ARInvoiceLineEntityId, @InvoiceMasterNumber , @InvoiceHouseNumber, @CursorCustomFieldsVariable,
+	 @ConsolidationInvoiceNumber, @ConsolidationInvoiceDate, @ConsolidationStatusCode, @ConsolidationDraftNumber, @Partner, @ConsolidationId
 	 
 	WHILE @@FETCH_STATUS = 0
 	BEGIN
@@ -149,8 +159,28 @@
 		begin set @IsCancelled = 1 end  
 
 
-		 ----------------------------------------------
+		 ---------------Consolidation Invoice Number -----------------
 	 
+	 
+				IF( @ConsolidationStatusCode = 'DR' or  @ConsolidationStatusCode = 'LL')
+					BEGIN
+						IF(@ConsolidationDraftNumber is not null)
+							BEGIN
+								SET @ConsolidationInvoiceNumber = @ConsolidationDraftNumber;
+							END
+					END
+		 
+		----------------------------------------------
+
+		 ---------------Consolidation Invoice Date -----------------
+	 
+	 		 
+		if(@ConsolidationId = '-1') 
+		begin set @ConsolidationInvoiceDate = Null end  
+
+  
+		----------------------------------------------
+
 	 
 	 ------------Resolve Custom Field Data Type Code-------------------
             
@@ -164,7 +194,8 @@
 	   [Subtotal (Local)],[Subtotal (Profit)],[Invoice Amount (Local)],[Invoice Amount (Profit)],[Amount Due (Local)],[Amount Due (Profit)],
 	  [Line Description],[Line Local Description], [Line Unit Price], [Line Quantity], [Line VAT Type], 
 	   [Line VAT Percentage],[Line Amount (Local)], [Line Amount (Foreign)],[Line Amount (Invoice Currency)], [Foreign Currency], [Foreign Exchange Rate],[Line Amount (Profit)],
-       [Line Notes], [Invoice Currency Exchange Rate], [Is Expense], [Is Regional Tax],[Invoice Branch],[Is Cancelled],[Main Entity Id],[Original Invoice Number], [Invoice Master Number] , [Invoice House Number],[CustomFieldNamesVariable])
+       [Line Notes], [Invoice Currency Exchange Rate], [Is Expense], [Is Regional Tax],[Invoice Branch],[Is Cancelled],[Main Entity Id],[Original Invoice Number], [Invoice Master Number] , [Invoice House Number],[CustomFieldNamesVariable],
+	   [Consolidation Invoice Number],[Consolidated Invoice Date],[Partner] )
 
 	   
 	   
@@ -173,7 +204,7 @@
 	 
 	 @SubTotalInLocalCurrency, @SubTotalInInvoiceCurrency, @AmountInLocalCurrency, @AmountInProfitCurrency, @AmountDueInLocalCurrency, @AmountDueInProfitCurrency, @Description, @LocalDescription, @UnitPrice, @Quantity,  @VatType,
 	 @VatPercentage, @LocalCurrencyAmount,@ForiegnCurrencyAmount,@InvoiceCurrencyAmount,@ForiegnCurrencyId, @ForiegnExchangeRate, @ProfitCurrencyAmount,@Notes,@InvoiceCurrencyExchangeRate,@IsExpens,@IsRegionalTax,
-	 @Branch,@IsCancelled,@MainEntityId, @OriginalInvoiceNumber , @InvoiceMasterNumber , @InvoiceHouseNumber,[CustomFieldValuesVariable])
+	 @Branch,@IsCancelled,@MainEntityId, @OriginalInvoiceNumber , @InvoiceMasterNumber , @InvoiceHouseNumber,[CustomFieldValuesVariable],@ConsolidationInvoiceNumber,  dbo.GetDateFormateAsNumber(@ConsolidationInvoiceDate), @Partner)
 
 
 
@@ -196,7 +227,8 @@ END CATCH
 	@ARInvoicesSalesman,  @Status, @PrintNotes, @PaymentTerm, @LocalCurrency, @InvoiceCurrency, @VATNumber, @BillTo,@SubTotalInLocalCurrency, @SubTotalInInvoiceCurrency,
 	@AmountInLocalCurrency, @AmountInProfitCurrency, @AmountDueInLocalCurrency, @AmountDueInProfitCurrency, @Description, @LocalDescription, @UnitPrice , @Quantity,  @VatType,
 	@VatPercentage, @LocalCurrencyAmount,@ForiegnCurrencyAmount,@InvoiceCurrencyAmount,@ForiegnCurrencyId, @ForiegnExchangeRate, @ProfitCurrencyAmount,@Notes,@InvoiceCurrencyExchangeRate,@IsExpens,@IsRegionalTax,
-	@Branch, @StatusCode, @DraftNumber, @IsConsolidationInvoice, @ARInvoiceEntityId,@ARInvoiceLineEntityId , @InvoiceMasterNumber , @InvoiceHouseNumber, @CursorCustomFieldsVariable
+	@Branch, @StatusCode, @DraftNumber, @IsConsolidationInvoice, @ARInvoiceEntityId,@ARInvoiceLineEntityId , @InvoiceMasterNumber , @InvoiceHouseNumber, @CursorCustomFieldsVariable,
+	@ConsolidationInvoiceNumber, @ConsolidationInvoiceDate, @ConsolidationStatusCode, @ConsolidationDraftNumber, @Partner, @ConsolidationId
 
 		End
 	CLOSE ARInvoicesCursor

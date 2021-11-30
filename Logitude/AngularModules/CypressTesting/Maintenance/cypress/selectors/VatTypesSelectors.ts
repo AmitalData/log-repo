@@ -27,5 +27,4 @@ export class VatTypesSelectors {
     public static readonly EventsTab = "#VatTypeTHEvents"
     public static readonly AccountingSetting_AdvancedARHyperlinkId = "[data-cy='AdvancedARHyperlinkId']"
     public static readonly AccountingSetting_EnableMultiPercentageVATTypes = "#AccountingSetting_EnableMultiPercentageVATTypes"
-
 }

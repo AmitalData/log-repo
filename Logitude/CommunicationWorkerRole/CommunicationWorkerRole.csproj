@@ -393,7 +393,9 @@
     <Compile Include="PODDocumnetUploaderWR.cs" />
     <Compile Include="PODImageConverterWorkerRole.cs" />
     <Compile Include="MultiEntityUpdateWorkerRole.cs" />
+    <Compile Include="Services\ContainerSchedulerTaskService.cs" />
     <Compile Include="Services\MultiEntityUpdateService.cs" />
+    <Compile Include="Tasks\ContainerAutomaticallyClosingTask.cs" />
     <Compile Include="UpdatePortTimeZoneWR.cs" />
     <Compile Include="WebHookCommunicationWorkerRole.cs" />
     <Compile Include="Service References\LoginServiceReference\Reference.cs">

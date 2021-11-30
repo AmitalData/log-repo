@@ -604,6 +604,16 @@ export class TenantManagementPM {
     public set EnableBranding(newValue: boolean) { if (this.enableBranding != newValue) { this.enableBranding = newValue; this.MarkAsDirty("EnableBranding"); } }
        
 	 
+    private activatedforDeclarationApprove: boolean;
+    public get ActivatedforDeclarationApprove() { return this.activatedforDeclarationApprove; }
+    public set ActivatedforDeclarationApprove(newValue: boolean) { if (this.activatedforDeclarationApprove != newValue) { this.activatedforDeclarationApprove = newValue; this.MarkAsDirty("ActivatedforDeclarationApprove"); } }
+       
+	 
+    private declarationMessage: string;
+    public get DeclarationMessage() { return this.declarationMessage; }
+    public set DeclarationMessage(newValue: string) { if (this.declarationMessage != newValue) { this.declarationMessage = newValue; this.MarkAsDirty("DeclarationMessage"); } }
+       
+	 
     private customerURL: string;
     public get CustomerURL() { return this.customerURL; }
     public set CustomerURL(newValue: string) { if (this.customerURL != newValue) { this.customerURL = newValue; this.MarkAsDirty("CustomerURL"); } }

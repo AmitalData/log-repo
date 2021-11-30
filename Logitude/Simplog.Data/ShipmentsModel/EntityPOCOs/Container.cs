@@ -38,6 +38,8 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public DateTime? MainCarriageATD { get; set; }
         public DateTime? DischargeDate { get; set; }
         public string ShipmentId { get; set; }
+        [ForeignKey("ShipmentId")]
+        public virtual Shipment Shipment { get; set; }
         public DateTime? EstimatedEmptyPickupDate { get; set; }
         public DateTime? ActualEmptyPickupDate { get; set; }
         public string DepartureLocation { get; set; }

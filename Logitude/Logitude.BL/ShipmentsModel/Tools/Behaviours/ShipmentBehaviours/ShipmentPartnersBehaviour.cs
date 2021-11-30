@@ -304,11 +304,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
 
             if (string.IsNullOrEmpty(cardId))
             {
-                ResetNotify1Properties();                
+                ResetNotify1Properties();
             }
 
             else if (entityPM.IsExternalAPI || entityPM.IsHybrid)
-            {                
+            {
                 MapNotify1FieldsFromNotify1Card(cardId);
             }
         }
@@ -327,7 +327,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
             {
                 entityPM.Notify1Name = card.EnglishName;
                 MapNotify1Address(card);
-                MapNotify1Contact(card);               
+                MapNotify1Contact(card);
             }
         }
         private void MapNotify1Address(Card card)
@@ -360,6 +360,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
                 entityPM.Notify1ContactId = card.PrimaryContactId;
             }
         }
+        
         private void HandleConsigneeNotImporter()
         {
             string cardId = entityPM.ConsigneeNotImporterId;

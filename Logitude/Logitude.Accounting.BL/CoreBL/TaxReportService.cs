@@ -56,7 +56,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
         public static string FilePath = @"E:\PCN874.txt";
         private static Simplog.Data.CommonDataModel.EntityPOCOs.Card card;
-        private static List<TaxReportData> ledgerTransactons;
+        private static List<CustomTaxReportData> ledgerTransactons;
         private static List<LedgerTransaction> journalsTransactions;
         private static  List<Simplog.Data.CommonDataModel.EntityPOCOs.Card> cards;
         private static List<GLAccountPM> oppositeAccounts;
@@ -211,16 +211,13 @@ namespace Logitude.Accounting.BL.CoreBL
 
 
 
-            foreach (TaxReportData transaction in ledgerTransactons)
+            foreach (CustomTaxReportData transaction in ledgerTransactons.Where(x => x.TaxReportId == null || x.TransmitStatusCode == "2" || x.TransmitStatusCode == null))
             {
                 VatNumber = null;
                 InputVatAmount = 0;
                 InputInvoiceAmount = 0;
 
                 bool voidedAPInvoiceTaxMonthTransaction = CheckIfAPInvoiceTaxMonthTransactionIsVoided(taxReport, voidedAPInvoices, transaction);
-                if (voidedAPInvoiceTaxMonthTransaction)
-                    continue;
-
 
                 GLAccountPM account = GetAccountByLedgerTransaction(transaction);
                 card = GetGLAccountCard(account);
@@ -236,8 +233,15 @@ namespace Logitude.Accounting.BL.CoreBL
                 VatNumber = VatNumber == null ? "000000000" : VatNumber;
                 SetVatAmounts(transaction);
 
-             
+                
                 string transmitStatusCode = SetTransmitStatusByDocumentDate(transaction.ReferenceDate, setting.VATreportEveryTwoMonths);
+                
+                if (voidedAPInvoices.Any(x => x.Id == transaction.AccountingEntityId))
+                {
+                    transmitStatusCode = SetTransmitStatusForVoidedInvoiceTransaction(ledgerTransactons, transaction, transmitStatusCode);
+                }
+
+
                 TaxReportLinePM inputReportLine = new TaxReportLinePM()
                 {
 
@@ -297,7 +301,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 }
 
                 reportLinesList.Add(inputReportLine);
-           //     UpdateJournalAdditionalDataRecord(inputReportLine, transaction);
+                //     UpdateJournalAdditionalDataRecord(inputReportLine, transaction);
 
             }
 
@@ -330,6 +334,22 @@ namespace Logitude.Accounting.BL.CoreBL
                 return TaxReportLineTransmitStatusValues.WithoutTransmit;
             }
             return TaxReportLineTransmitStatusValues.Fortransmit;
+        }
+
+        private static string SetTransmitStatusForVoidedInvoiceTransaction(List<CustomTaxReportData> ledgerTransactons, CustomTaxReportData transaction, string transmitStatusCode)
+        {
+            if (!string.IsNullOrEmpty(transaction.OriginalJournalId))
+            {
+                var orginalJournal = ledgerTransactons.Where(x => x.JournalId == transaction.OriginalJournalId).FirstOrDefault();
+                transmitStatusCode = orginalJournal.TransmitStatusCode == TaxReportLineTransmitStatusValues.Fortransmit 
+                    ? TaxReportLineTransmitStatusValues.Fortransmit
+                    : TaxReportLineTransmitStatusValues.Notfortransmitatall;
+            }
+            else if (transaction.IsVoided == true && transaction.TransmitStatusCode != TaxReportLineTransmitStatusValues.Fortransmit)
+            {
+                transmitStatusCode = TaxReportLineTransmitStatusValues.Notfortransmitatall;
+            }
+            return transmitStatusCode;
         }
 
         private static void UpdateTaxReport(TaxReportPM taxReport)
@@ -394,9 +414,9 @@ namespace Logitude.Accounting.BL.CoreBL
             bool isTotalInvoiceAmountAndVatAmountHaveOppositeSigns = (reportLinePM.TotalInvoiceAmount > 0 && reportLinePM.VatAmount < 0) || (reportLinePM.TotalInvoiceAmount < 0 && reportLinePM.VatAmount > 0);
             if (isTotalInvoiceAmountAndVatAmountHaveOppositeSigns)
                 reportLinePM.StatusCode = StatusCode_VATAmountInTheRecordIsHigherThanThePercentageOfVATAllowed;
+
         }
 
-   
 
         private static bool CheckIfAPInvoiceTaxMonthTransactionIsVoided(TaxReportPM taxReport, List<APInvoicePM> voidedAPInvoices, TaxReportData transaction)
         {

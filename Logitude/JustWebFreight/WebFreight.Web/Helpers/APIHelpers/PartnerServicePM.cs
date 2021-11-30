@@ -34,5 +34,7 @@ namespace WebFreight.Web.Helpers.APIHelpers
         public bool IsConnectingInactiveContact { get; set; }
         public string InactiveContactId { get; set; }
 
+        public string ExternalId { get; set; }
+
     }
 }

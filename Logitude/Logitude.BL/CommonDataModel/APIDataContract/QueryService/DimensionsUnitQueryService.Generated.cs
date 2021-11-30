@@ -36,21 +36,21 @@ using Simplog.Data.CommonDataModel;
         }
 
 		
-		public DimensionsUnit GetDimensionsUnitByCode(string Code,int Tenant,string ComputingPartnerName = "")
+		public DimensionsUnit GetDimensionsUnitByCode(string Code,int Tenant,  string ComputingPartnerName = "")
         { 
 		    try
             {
-
+				 
 				
-				var temp = query.GetSinglePM(Code,Tenant);				
+				var temp = query.GetSinglePM(Code, Tenant);				
 				 if (temp == null)
                     throw new ApplicationException("DimensionsUnit with Code " + Code + " doesn't exist");
 
 				return DimensionsUnitDataMapping(temp,Tenant,ComputingPartnerName);
 			}
+
             catch (Exception ex)
             {
-
                 throw ex;
             }
         }

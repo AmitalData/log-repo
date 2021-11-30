@@ -40,21 +40,21 @@ using Simplog.Data.InvoiceModel;
         }
 
 		
-		public AccountingPaymentMethod GetAccountingPaymentMethodById(string Id,int Tenant,string ComputingPartnerName = "")
+		public AccountingPaymentMethod GetAccountingPaymentMethodById(string Id,int Tenant,  string ComputingPartnerName = "")
         { 
 		    try
             {
-
+				 
 				
-				var temp = query.GetSinglePM(Id,Tenant);				
+				var temp = query.GetSinglePM(Id, Tenant);				
 				 if (temp == null)
                     throw new ApplicationException("AccountingPaymentMethod with Id " + Id + " doesn't exist");
 
 				return AccountingPaymentMethodDataMapping(temp,Tenant,ComputingPartnerName);
 			}
+
             catch (Exception ex)
             {
-
                 throw ex;
             }
         }

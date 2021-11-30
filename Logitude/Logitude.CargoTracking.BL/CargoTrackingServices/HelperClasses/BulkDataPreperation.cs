@@ -24,9 +24,9 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.HelperClasses
         public CargoTrackingUpdateDataBaseArgs CargoTrackingUpdateDataBaseArgs { get; set; }
         public DataTable SelectedDataTable { get; set; }
         public string CoulmnForCusstomMapping { get; set; }
-        public List<CargoTrackingMilestoneList> MilestoneList { get; internal set; }
+        public List<CargoTrackingMilestoneList> Milestones { get; internal set; }
 
-
-
+        // first key = tenant , second key = milestone code , value = milestone code
+        public Dictionary<int, Dictionary<string, string>> MilestonesNotPermitted { get; internal set; }
     }
 }

@@ -116,6 +116,7 @@
                                                                     <table>
                                                                         <tr>
                                                                             <td style="width:100px; min-width:100px;max-width:100px;">Code</td>
+                                                                            <td style="width:100px; min-width:100px;max-width:100px;">SCAC Code</td>
                                                                             <td style="width:100%; min-width:100%;max-width:100%">Name</td>
                                                                             <td style="width:200px; min-width:200px; max-width:200px;">Allowed for Sending by Container</td>
                                                                             <td style="width:200px; min-width:200px; max-width:200px;" *ngIf="!IsVisibleForTenantZero">Enabled for Sending by Container</td>
@@ -134,6 +135,9 @@
                                                                                         <td>
                                                                                             <table>
                                                                                                 <tr style="height:25px;">
+                                                                                                    <td class="GridViewCell" style="width:100px; min-width:100px; max-width:100px;">
+                                                                                                        {{item.SCACCode}}
+                                                                                                    </td>
                                                                                                     <td class="GridViewCell" style="width:100px; min-width:100px; max-width:100px;">
                                                                                                         {{item.Code}}
                                                                                                     </td>
@@ -168,7 +172,7 @@
                                                                                                 </tr>
 
                                                                                                 <tr>
-                                                                                                    <td colspan="6"></td>
+                                                                                                    <td colspan="7"></td>
                                                                                                 </tr>
                                                                                             </table>
 

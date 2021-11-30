@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class PortUpdateClass
    {  		
-		public const string HashString = "2b5bc31143fa9efebcab0f71bdccde12";
+		public const string HashString = "e20d9690d779929f04b3e07ffdab6c2d";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -1675,7 +1675,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						MaxLength =  40,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
-					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUp =  true,
 					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
@@ -1686,13 +1686,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						Operator =  "StartsWith",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
-					  						DisplayInSearchWindowList =  false,
+					  						DisplayInSearchWindowList =  true,
 					  						PMPropertyPath =  "StateName",
 					  						ListPropertyPath =  "StateName",
-					  						DisplayInLookUpIndex =  4,
+					  						DisplayInLookUpIndex =  2,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
-					  						DisplayInSearchWindowListIndex =  4,
+					  						DisplayInSearchWindowListIndex =  2,
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,

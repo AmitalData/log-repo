@@ -7,6 +7,7 @@ import { MultiEntityUpdateLogPMService } from '../../Services/StandardPMs/MultiE
 import { ServiceResponse } from '../../DataContracts/ServiceResponse';
 import { MessageWindow } from '../../../Controls/Windows/MessageWindow';
 import { MultiEntityUpdateLogPM } from '../../EntityPMs/MultiEntityUpdateLogPM';
+import { MultiUpdateComponent } from './MultiUpdateComponent';
 
 @Component({
     selector: 'MultiEntityUpdateBaseComponent',
@@ -19,6 +20,7 @@ export class MultiEntityUpdateBaseComponent implements OnInit {
     private PageChild_MTUP: any = null;
     private PageChild_MTHE: any = null;
     MultiEntityUpdatedLogPM: MultiEntityUpdateLogPM;
+
     WindowArgs: any;
 
     constructor() {
@@ -42,8 +44,8 @@ export class MultiEntityUpdateBaseComponent implements OnInit {
 
     RunComponent() {
         if (!this.AllLocations) this.RunComponentTimer();
-        if (this.AllLocations.toArray().length == 0) this.RunComponentTimer();
-        else this.SetSelectedItem("MTUP");
+        if (this.AllLocations && this.AllLocations.toArray().length == 0) this.RunComponentTimer();
+        else if (this.AllLocations) this.SetSelectedItem("MTUP");
     }
 
     SetSelectedItem(tabCode: string) {
@@ -141,6 +143,7 @@ export class MultiEntityUpdateBaseComponent implements OnInit {
         let pmResponse = serviceResponse.Result;
         if (!this.IsStartCheckMultiEntityUpdateViaWorkerRoleTimer) return;
         if (!pmResponse) this.ShowErrorMessage("Multi Entity Update Log not found");
+        this.CurrentSession.StartBusyIndicator("Updating " + pmResponse.UpdatedEntitiesNumber + " / " + pmResponse.MultiEntityUpdateData.Entities.length);
         if (pmResponse.StatusCode == "F") this.ShowErrorMessage("Update Failed!");
         else if (pmResponse.StatusCode == "D") this.HandleUpdateSuccessfully(pmResponse);
     }
@@ -149,6 +152,7 @@ export class MultiEntityUpdateBaseComponent implements OnInit {
         this.CurrentSession.StopBusyIndicator();
         this.PageChild_MTUP.IsMultiEntityUpdatedSuccessfully = true;
         this.MultiEntityUpdatedLogPM = pmResponse;
+        this.PageChild_MTUP.OnUpdateFinish(pmResponse.MultiEntityUpdateData.Entities);
     }
 
     private HandleGetMultiEntityUpdateLogPMError(serviceResponse: any) {

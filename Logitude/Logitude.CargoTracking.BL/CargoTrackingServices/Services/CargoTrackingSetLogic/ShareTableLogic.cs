@@ -1,4 +1,5 @@
 ﻿using Logitude.CargoTracking.BL.CargoTrackingServices.HelperClasses;
+using Logitude.CargoTracking.Data.EntityLists;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -18,6 +19,17 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
                 CurrentMilestoneArgs.tableRow.SetField("CurrentMilestoneDate", CurrentMilestoneArgs.date);
                 CurrentMilestoneArgs.tableRow.SetField("CurrentMilestoneCode", CurrentMilestoneArgs.milestone.Code);
             }
+        }
+        public static bool CheckIfUserHasAccessToMilestone(Dictionary<int, Dictionary<string, string>> milestonesNotPermitted, string milestoneCode, int tenant)
+        {
+            if (!milestonesNotPermitted.ContainsKey(tenant))
+                return true;
+
+            var milestonesCodeNotPermitted = milestonesNotPermitted[tenant];
+            if (milestonesCodeNotPermitted.ContainsKey(milestoneCode))
+                return false;
+
+            return true;
         }
     }
 }

@@ -21,6 +21,7 @@ export class ExternalReconciliationList {
 	AccountCurrencyId: string;
 	IsCancelled: boolean;
 	AccountLocalName: string;
+	CrossYearReconcile: boolean;
 	
 }
  

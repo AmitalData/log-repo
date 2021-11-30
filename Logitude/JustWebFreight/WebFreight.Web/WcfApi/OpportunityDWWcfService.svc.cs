@@ -33,13 +33,14 @@ namespace WebFreight.Web.WcfApi
 
             try
             {
+                if (CrmWebServicesValidator.IsDisabled(tenant)) return new List<OpportunityDW>();
+
                 SecurityUtility.AuthenticationOnTenant(tenant);
                 SecurityUtility.CheckContactFeature("Opportunity", "READ", tenant);
                 ICRMContext objectContext = CRMContext.GetContext(tenant);
 
-                //OpportunityQueryService opportunityQueryService = new OpportunityQueryService(objectContext);
-                //return opportunityQueryService.GetOpportunitiesDWByDates(tenant, fromDate, toDate, skip, take);
-                return new List<OpportunityDW>();
+                OpportunityQueryService opportunityQueryService = new OpportunityQueryService(objectContext);
+                return opportunityQueryService.GetOpportunitiesDWByDates(tenant, fromDate, toDate, skip, take);
 
 
             }
@@ -70,13 +71,14 @@ namespace WebFreight.Web.WcfApi
 
             try
             {
+                if (CrmWebServicesValidator.IsDisabled(tenant)) return 0;
+
                 SecurityUtility.AuthenticationOnTenant(tenant);
                 SecurityUtility.CheckContactFeature("Opportunity", "READ", tenant);
                 ICRMContext objectContext = CRMContext.GetContext(tenant);
 
-                //OpportunityQueryService opportunityQueryService = new OpportunityQueryService(objectContext);
-                //return opportunityQueryService.GetOpportunitiesCountDWByDates(tenant, fromDate, toDate);
-                return 0;
+                OpportunityQueryService opportunityQueryService = new OpportunityQueryService(objectContext);
+                return opportunityQueryService.GetOpportunitiesCountDWByDates(tenant, fromDate, toDate);
 
             }
             catch (Exception ex)
@@ -106,13 +108,14 @@ namespace WebFreight.Web.WcfApi
 
             try
             {
+                if (CrmWebServicesValidator.IsDisabled(tenant)) return new List<OpportunityDW>();
+
                 SecurityUtility.AuthenticationOnTenant(tenant);
                 SecurityUtility.CheckContactFeature("Opportunity", "READ", tenant);//UPDATE//READ
                 ICRMContext objectContext = CRMContext.GetContext(tenant);
 
-                //OpportunityQueryService opportunityQueryService = new OpportunityQueryService(objectContext);
-                //return opportunityQueryService.GetOpportunitiesDWByUpdateDate(tenant, updateDate, skip, take);
-                return new List<OpportunityDW>();
+                OpportunityQueryService opportunityQueryService = new OpportunityQueryService(objectContext);
+                return opportunityQueryService.GetOpportunitiesDWByUpdateDate(tenant, updateDate, skip, take);
 
             }
             catch (Exception ex)
@@ -142,13 +145,14 @@ namespace WebFreight.Web.WcfApi
 
             try
             {
+                if (CrmWebServicesValidator.IsDisabled(tenant)) return 0;
+
                 SecurityUtility.AuthenticationOnTenant(tenant);
                 SecurityUtility.CheckContactFeature("Opportunity", "READ", tenant);
                 ICRMContext objectContext = CRMContext.GetContext(tenant);
 
-                //OpportunityQueryService opportunityQueryService = new OpportunityQueryService(objectContext);
-                //return opportunityQueryService.GetOpportunitiesDWCountByUpdateDate(tenant, updateDate);
-                return  0;
+                OpportunityQueryService opportunityQueryService = new OpportunityQueryService(objectContext);
+                return opportunityQueryService.GetOpportunitiesDWCountByUpdateDate(tenant, updateDate);
 
             }
             catch (Exception ex)

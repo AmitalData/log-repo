@@ -992,6 +992,10 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
                 this.ResultCodeList.push(new ResultCode("Set SLA", "SETSLA"));
             }
 
+            if (this.ObjectTableName == "Container") {
+                this.ResultCodeList.push(new ResultCode("Set Fields Value", "FIELDSET"));
+            }
+
             if (this.ObjectTableName == "APInvoice") {
                 const documentSendFeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "DSR")[0];
                 if (documentSendFeatureToggle != null) this.ResultCodeList.push(new ResultCode("Documents Send", "SENDDOCUMENT"));

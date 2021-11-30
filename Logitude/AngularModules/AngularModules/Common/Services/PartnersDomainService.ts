@@ -2170,6 +2170,7 @@ export class PartnerServicePM {
     public IsReactivatingContact: boolean = false;
     public IsConnectingInactiveContact: boolean = false;
     public InactiveContactId: string = null;
+    public ExternalId: string = null;
 }
 export class PartnerExternalAccountsServicePM {
     public Tenant: number;

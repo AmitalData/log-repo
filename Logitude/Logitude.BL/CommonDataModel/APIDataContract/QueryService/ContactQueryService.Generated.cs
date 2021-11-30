@@ -40,21 +40,21 @@ using Simplog.Data.CommonDataModel;
         }
 
 		
-		public Contact GetContactById(string Id,int Tenant,string ComputingPartnerName = "")
+		public Contact GetContactById(string Id,int Tenant,  string ComputingPartnerName = "")
         { 
 		    try
             {
-
+				 
 				
-				var temp = query.GetSinglePM(Id,Tenant);				
+				var temp = query.GetSinglePM(Id, Tenant);				
 				 if (temp == null)
                     throw new ApplicationException("Contact with Id " + Id + " doesn't exist");
 
 				return ContactDataMapping(temp,Tenant,ComputingPartnerName);
 			}
+
             catch (Exception ex)
             {
-
                 throw ex;
             }
         }

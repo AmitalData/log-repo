@@ -377,6 +377,29 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
+	  private bool crossYearReconcile ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool CrossYearReconcile  
+	   {
+	    
+	     get
+		{
+		   return crossYearReconcile;
+		 }
+		 set
+		 {
+		   if(crossYearReconcile != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CrossYearReconcile",OldValue=crossYearReconcile,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   crossYearReconcile=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

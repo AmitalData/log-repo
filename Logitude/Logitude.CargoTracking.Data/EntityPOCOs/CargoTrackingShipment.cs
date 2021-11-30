@@ -65,7 +65,7 @@ namespace Logitude.CargoTracking.Data.EntityPOCOs
         [Column("PickupDate")]
 	    public DateTime? PickupDate { get; set; }
         [Column("CreateDate")]
-	    public DateTime CreateDate { get; set; }
+	    public DateTime? CreateDate { get; set; }
         [Column("SecurityKey")]
 	    public string SecurityKey { get; set; }
         [Column("ConsigneeName")]

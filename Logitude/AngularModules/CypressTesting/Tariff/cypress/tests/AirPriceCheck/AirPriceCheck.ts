@@ -8,8 +8,10 @@ import { priceCheck } from "cypress/models/priceCheck";
 import { TariffSelectors } from "../../selectors/Selectors";
 import { BaseSelectors } from "../../../../Base/cypress/selectors/BaseSelectors";
 import * as Assists from "../../../../Base/cypress/assists/Assists";
+import { SurchargeDetails } from "../../models/SurchargeDetails";
+import { SurchargeCostTariffLineDetails } from "../../models/SurchargeCostTariffLineDetails";
 
-var isSameDate : Boolean
+var isSameDate: Boolean
 
 //#region Air Create Freight Cost 
 Given("the user logged in and navigate to tariff workspace", () => {
@@ -35,7 +37,7 @@ Given("the user open the freight cost", () => {
     Actions.OpenLastCreatedTariff();
 });
 
-Given("add the follwing tariff line", (dataTable) => {
+Given("add the following tariff line", (dataTable) => {
     let freightCostTariffLineDetailsList = Assists.CreateSet<FreightCostTariffLineDetails>(dataTable);
     Actions.AddFreightCostTariffLines("Air", freightCostTariffLineDetailsList);
 });
@@ -48,43 +50,66 @@ Then("the version should approve successfully", () => {
 });
 //#endregion
 
+//#region create air surcharge cost
+Given("an air surcharge cost with the following details", (dataTable) => {
+    Actions.BackToTariffWorkspace()
+    let tariffDetails = Assists.CreateInstance<TariffDetails>(dataTable, true);
+    Actions.FillNewSurchargeCost("Air", tariffDetails);
+});
+
+Given("add the following surcharges", (dataTable) => {
+    let surchargeDetailsList = Assists.CreateSet<SurchargeDetails>(dataTable);
+    Actions.FillSurcharges(surchargeDetailsList);
+});
+
+When("create surcharge cost", () => {
+    Actions.CreateTariff();
+});
+
+Then("the surcharge cost should create successfully", () => {
+    Actions.ValidateCreateSurchargeCost();
+});
+//#endregion
+
 //#region Edit Surcharge
 Given("the user in {string} surchage workspace", (SurchargeType) => {
-    Actions.BackToTariffWorkspace()
     Actions.OpenSurchargeQueries(SurchargeType);
 });
 
-Given("open surchage with {string} as seller", (SellerName) => {
-    var FiltetSellerName = Actions.FilterName(SellerName)
-    Actions.DefineViewsGetByFiltersRequest(FiltetSellerName);
-    Actions.SearchASurcharge(SellerName);
+Given("open surchage with {string} as seller", (sellerName) => {
+    var filterSellerName = Actions.FilterName(sellerName)
+    Actions.DefineViewsGetByFiltersRequest(filterSellerName);
+    Actions.SearchASurcharge(sellerName);
     Actions.AssertViewsGetByFilters();
     Actions.OpenTheFirstResult();
 });
 
+Given("add the following surcharge line", (dataTable) => {
+    cy.wait(3000)
+    let surchargeCostTariffLineDetails = Assists.CreateSet<SurchargeCostTariffLineDetails>(dataTable);
+    Actions.AddSurchargeCostTariffLines(surchargeCostTariffLineDetails)
+    Actions.CheckIfVersionApproved2()
+});
+
 When("copy into new version if start date is not {string}", (startdate) => {
     let NowDate = BaseActions.GetTodayDate()
-    Actions.CheckIfVersionApproved() 
     cy.get(BaseSelectors.PackageGrid("4")).find(BaseSelectors.SpanElement).invoke(BaseSelectors.TextElement).then((text) => {
-        if(text.trim()==NowDate){
-            cy.log("Use Same Tariff Line")
+        if (text.trim() == NowDate) {
             isSameDate = true
-        }else{
-           Actions.CopyIntoNewVersion(startdate)
+        } else {
+            Actions.CopyIntoNewVersion(startdate)
         }
     })
 });
 
 Then("new version should approve successfully", () => {
-    if(isSameDate){
-        cy.log("Same Date")
-    }else{
+    if (isSameDate) {
+    } else {
         Actions.ValidateApproveTariffVersion
     }
     Actions.SetTariffNumberFromTitle(TariffSelectors.TariffNumberShortTitle);
     cy.BackButton(TariffSelectors.ContainsBackButton("Air"))
-    cy.Click(BaseSelectors.BackBottonBodyClass,"Tariff");
-    
+    cy.Click(BaseSelectors.BackBottonBodyClass, "Tariff");
 })
 //#endregion
 
@@ -96,7 +121,6 @@ Given("the user back into tariff workspace and open price check wizard", () => {
 Given("fill the following price check details", (dataTable) => {
     let airPriceCheckDetails = Assists.CreateInstance<PriceCheckDetails>(dataTable, true);
     Actions.FillPriceCheckWizard("Air", airPriceCheckDetails)
-
 });
 
 When("search about prices", () => {

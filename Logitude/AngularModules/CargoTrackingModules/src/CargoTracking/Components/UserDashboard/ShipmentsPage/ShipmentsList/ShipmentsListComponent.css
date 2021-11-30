@@ -811,7 +811,10 @@ h1{
     top: 56%;
     right: 10%;
 }
-
+.blackText{
+    color: #000;
+    font-weight: bold;
+}
 
 .direction-icon{
     position: relative;

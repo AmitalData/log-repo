@@ -42,6 +42,7 @@ export class AddEditMainCarriageComponent extends BaseComponent {
     public LabelWidth: number = 100;
     private CurrentSession = SessionLocator.SelectedSession;
     private oldCountryId: string = null;
+
     constructor() {
         super();
         this.InitServices();
@@ -1854,6 +1855,7 @@ export class AddEditMainCarriageComponent extends BaseComponent {
         }
     }
 
+
     private CloseOk() {
         this.FatherComponent.BuildItemsCollection();
         this.CurrentSession.CloseCurrentWindowEmit("OK");
@@ -2024,4 +2026,6 @@ export class AddEditMainCarriageComponent extends BaseComponent {
 
         this.myCloner.RejectChanges();
     }
+
+   
 }

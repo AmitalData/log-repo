@@ -32,29 +32,50 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         // Main Method
         public void OnCreating(BankDepositPM depositPM)
         {
-            SetEntityId(depositPM);
-            SetEntityCode(depositPM);
-            SetUserFields(depositPM);
-            depositPM.UpdateDate = GetCurrentDateTime(depositPM.Tenant);
-            depositPM.CreateDate = GetCurrentDateTime(depositPM.Tenant);
-
-            CopyDepositIdToLines(depositPM);
-
             CashBookPM cashBookPM = GetCashbookById(depositPM.Tenant, depositPM.CashBookId);
-            CheckCashbookAmount(depositPM, depositPM.Tenant, cashBookPM);
-
-            CreateJournalForBankDeposit(depositPM);
-
-            if (!depositPM.IsCashDeposit)
+            CheckIfTheCashBookInDepositProgress(depositPM, cashBookPM);
+            try
             {
-                DepositChequesForBankDeposit(depositPM);
+                SetEntityId(depositPM);
+                SetEntityCode(depositPM);
+                SetUserFields(depositPM);
+                depositPM.UpdateDate = GetCurrentDateTime(depositPM.Tenant);
+                depositPM.CreateDate = GetCurrentDateTime(depositPM.Tenant);
+
+                CopyDepositIdToLines(depositPM);
+
+                CheckCashbookAmount(depositPM, depositPM.Tenant, cashBookPM);
+
+                CreateJournalForBankDeposit(depositPM);
+
+                if (!depositPM.IsCashDeposit)
+                {
+                    DepositChequesForBankDeposit(depositPM);
+                }
+
+                UpdateCashbookTotals(depositPM, cashBookPM);
+                SubmitCashbook(depositPM.Tenant, cashBookPM);
+
+                LogActivity(depositPM);
+            }
+            catch (Exception exc) {
+                cashBookPM.InDepositingProgress = false;
+                SubmitCashbook(depositPM.Tenant, cashBookPM);
             }
 
-            UpdateCashbookTotals(depositPM, cashBookPM);
-            SubmitCashbook(depositPM.Tenant, cashBookPM);
-
-            LogActivity(depositPM);
-
+        }
+        private void CheckIfTheCashBookInDepositProgress(BankDepositPM depositPM, CashBookPM cashBookPM)
+        {
+            if (cashBookPM.InDepositingProgress)
+            {
+                throw new ApplicationException(TextCodesTranslator.TranslateText("Cashbook.O.InDepositingProgressMessage",
+                    depositPM.Tenant, LoggedContactResolver.GetLoggedContactShowLocal(depositPM.Tenant)));
+            }
+            else
+            {
+                cashBookPM.InDepositingProgress = true;
+                SubmitCashbook(depositPM.Tenant, cashBookPM);
+            }
         }
         public virtual void CreateJournalForBankDeposit(BankDepositPM depositPM)
         {
@@ -70,6 +91,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         private static void UpdateCashbookTotals(BankDepositPM depositPM, CashBookPM cashBookPM)
         {
             cashBookPM.TotalAmount = cashBookPM.TotalAmount - Math.Round(depositPM.ForeignAmount, 2);
+            cashBookPM.InDepositingProgress = false;
         }
 
         public virtual void SubmitCashbook(int tenant, CashBookPM cashBookPM)

@@ -40,21 +40,21 @@ using Simplog.Data.InfrastructureModel;
         }
 
 		
-		public ChargesGroup GetChargesGroupById(string Id,int Tenant,string ComputingPartnerName = "")
+		public ChargesGroup GetChargesGroupById(string Id,int Tenant,  string ComputingPartnerName = "")
         { 
 		    try
             {
-
+				 
 				
-				var temp = query.GetSinglePM(Id,Tenant);				
+				var temp = query.GetSinglePM(Id, Tenant);				
 				 if (temp == null)
                     throw new ApplicationException("ChargesGroup with Id " + Id + " doesn't exist");
 
 				return ChargesGroupDataMapping(temp,Tenant,ComputingPartnerName);
 			}
+
             catch (Exception ex)
             {
-
                 throw ex;
             }
         }

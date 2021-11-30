@@ -1029,6 +1029,8 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
         filter.Attachments = "";
         filter.ObjectTableName = this.ObjecttableName;
         filter.DocumentTypeCode = this.SelectedInternalDocument.DocumentTypePM.Code;
+        filter.ChildObjectTableId = this.ChildObjectTableId;
+        filter.ChildEntityId = this.ChildEntityId;
 
         if (this.SelectedInternalDocument.IsCrm) {
             filter.EventTypeCode = this.SelectedInternalDocument.EventTypeCode;

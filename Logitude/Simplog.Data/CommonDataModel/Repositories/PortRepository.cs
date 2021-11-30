@@ -45,7 +45,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
 
         public IQueryable<Port> GetPorts(int tenant)
         {
-            return (from record in context.Ports.Include("Country") where record.Tenant == tenant select record);
+            return (from record in context.Ports.Include("Country").Include("State") where record.Tenant == tenant select record);
         }
 
         public Port GetSinglePort(string id, int tenant)

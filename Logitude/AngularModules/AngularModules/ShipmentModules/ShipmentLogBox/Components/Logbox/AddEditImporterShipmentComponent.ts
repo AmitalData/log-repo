@@ -92,8 +92,16 @@ export class AddEditImporterShipmentComponent extends BaseComponent implements O
     public get ShipperName() { return this.EntityPM.ShipperName }
     public set ShipperName(newValue: string) { this.EntityPM.ShipperName = newValue; }
 
-    public get CustomerReference1() { return this.EntityPM.CustomerReference1 }
-    public set CustomerReference1(newValue: string) { this.EntityPM.CustomerReference1 = newValue; }
+    public get CustomerReference3() {
+        if (!AppTool.IsNullOrEmpty(this.EntityPM.CustomerReference3))
+            return this.EntityPM.CustomerReference3;
+        else
+            return this.EntityPM.CustomerReference1;
+    }
+    public set CustomerReference3(newValue: string) {
+        if (!AppTool.IsNullOrEmpty(newValue)) this.EntityPM.CustomerReference1 = newValue.substring(0, 50);
+        this.EntityPM.CustomerReference3 = newValue;
+    }
 
     public get CustomerReference2() { return this.EntityPM.CustomerReference2 }
     public set CustomerReference2(newValue: string) { this.EntityPM.CustomerReference2 = newValue; }
@@ -153,7 +161,7 @@ export class AddEditImporterShipmentComponent extends BaseComponent implements O
             this.ValidationErrorsList.push(msg.replace("%FieldName", "Transportation Type"));
         }
 
-        if (AppTool.IsNullOrEmpty(this.CustomerReference1)) {
+        if (AppTool.IsNullOrEmpty(this.CustomerReference3)) {
             this.ValidationErrorsList.push(msg.replace("%FieldName", "Order Number"));
         }
 

@@ -16,6 +16,8 @@ using Logitude.BL.CommonDataModel.EntityPMs;
 using Simplog.Data.CommonDataModel;
 using Logitude.BL.CommonDataModel.Tools.EntityService;
 using Logitude.BL.DataContracts;
+using Simplog.Data.InfrastructureModel.Repositories;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 
 namespace WebFreight.Web.Helpers.WorkerRoleHelpers
 {
@@ -75,7 +77,7 @@ namespace WebFreight.Web.Helpers.WorkerRoleHelpers
                 });
                 UpdateDocumentOut(exportDocumentArgs);
                 DocumentPopulateAutomaticDateUpdateService documentPopulateAutomaticDateUpdateService = new DocumentPopulateAutomaticDateUpdateService();
-                documentPopulateAutomaticDateUpdateService.Update(new DocumentPopulateAutomaticDateArgs() { EntityId = exportDocumentArgs.EntityId, ObjectTableName = exportDocumentArgs.ObjectTableName, DocumentTypeCode = exportDocumentArgs.CurrentDocumentTypeCode, ProcessType = "Print", Tenant = exportDocumentArgs.Tenant });
+                documentPopulateAutomaticDateUpdateService.Update(new DocumentPopulateAutomaticDateArgs() { EntityId = exportDocumentArgs.EntityId, ObjectTableName = exportDocumentArgs.ObjectTableName, ChildObjectTableId = exportDocumentArgs.ChildObjectTableId, ChildEntityId = exportDocumentArgs.ChildEntityId, DocumentTypeCode = exportDocumentArgs.CurrentDocumentTypeCode, ProcessType = "Print", Tenant = exportDocumentArgs.Tenant });
 
                 UpdateDocumentsExecutionLog(new DocumentsExecutionLogArgs() {StatusCode = "D", DoneDate = DateTime.Now });
                 queueService.Complete();

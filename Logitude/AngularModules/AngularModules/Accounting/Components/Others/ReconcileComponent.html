@@ -22,6 +22,17 @@
 
 
 </div>
+
+<div *ngIf="showInternalReconcileAPPaymentAlert" class="alert-animation SaveAlert"
+     [style.text-align]="isRTL ? 'right' : 'left'"
+     style="min-width: 720px;background: #c0e8c2;border: 1px solid #54a758;color: #6a7769;">
+    <div class="alert-close" (click)="CloseGetInternalReconcileAPPaymentAlert()" [style.right]="isRTL ? 'initial' : '5px'"
+     [style.left]="isRTL ? '5px' : 'initial'" 
+     style="color: #439c47;text-decoration: underline;">{{'Accounting.General.B.Close' | TextCodeTranslationPipe}}</div>
+
+    <span>{{GetInternalReconcileAPPaymentAlertMessage()}}</span>
+</div>
+
 <table>
     <tr style="height:10px"></tr>
     <tr><td style="width :10px"></td>
@@ -97,6 +108,33 @@
                         <div [style.float]="isRTL ? 'left' : 'right'"  style="padding: 3px 4px;">
                             <IconButton [style.float]="isRTL ? 'right' : 'left'" [Name]="'excel'"  (click)="ExportToExcelClick()"></IconButton>
                         </div>
+                        <div [style.float]="isRTL ? 'left' : 'right'" style="padding: 3px 4px">
+                            <div
+                              [style.float]="isRTL ? 'right' : 'left'"
+                              style="margin: 3px 10px 0; height: 24px; display: flex"
+                            >
+                              <button
+                                class="Button"
+                                [disabled]="!EnableCreateAPPaymentButton"
+                                (click)="CreatePaymentButtonClicked()"
+                                style="width: fit-content"
+                              >
+                              {{'APPAyment.O.NewAPPaymentTitle' | TextCodeTranslationPipe}}
+                              </button>
+                          
+                              <div style="width: 10px"></div>
+                          
+                              <LogToolTip
+                                float-start
+                                [direction]="isRTL?'bottomright':'bottomleft'"
+                                [name]="'tooltip-reco'"
+                              >
+                                <div style="width: 300px; white-space: pre-line">
+                                  {{'APPayment.M.NewAPPaymentInfo' | TextCodeTranslationPipe}}
+                                </div>
+                              </LogToolTip>
+                            </div>
+                          </div>
                     </li>
                 </ul>
             </div>

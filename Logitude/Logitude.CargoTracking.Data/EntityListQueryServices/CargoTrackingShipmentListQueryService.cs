@@ -148,7 +148,9 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
                                                                CustomsPaymentDone = shipment.CustomsPaymentDone,
                                                                PoNumber = shipment.PoNumber,
                                                                SupplyDateTime = shipment.SupplyDateTime,
-                                                               DescriptionOfGoods = shipment.DescriptionOfGoods
+                                                               DescriptionOfGoods = shipment.DescriptionOfGoods,
+                                                               ATAETASortingField = shipment.ArrivalDate != null ? shipment.ArrivalDate: shipment.ArrivalEstimationDate,
+                                                               ATDETDSortingField = shipment.DepartureDate != null ? shipment.DepartureDate : shipment.DepartureEstimationDate
                                                            });
             return query;
         }
@@ -559,11 +561,11 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
                 shipments = shipments.OrderByDescending(d => d.CurrentMilestoneDate);
             } else if (shipmentFilters.SortFieldName == "ATA")
             {
-                shipments = shipments.OrderByDescending(d => d.ArrivalDate).ThenByDescending(d => d.ArrivalEstimationDate);
+                shipments = shipments.OrderByDescending(d => d.ATAETASortingField);
             }
             else if (shipmentFilters.SortFieldName == "ATD")
             {
-                shipments = shipments.OrderByDescending(d => d.DepartureDate).ThenByDescending(d => d.DepartureEstimationDate);
+                shipments = shipments.OrderByDescending(d => d.ATDETDSortingField);
             }
             else
             {
@@ -579,11 +581,11 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
                 shipments = shipments.OrderBy(d => d.CurrentMilestoneDate);
             } else if (shipmentFilters.SortFieldName == "ATA")
             {
-                shipments = shipments.OrderBy(d => d.ArrivalDate).ThenBy(d => d.ArrivalEstimationDate);
+                shipments = shipments.OrderBy(d => d.ATAETASortingField);
             }
             else if (shipmentFilters.SortFieldName == "ATD")
             {
-                shipments = shipments.OrderBy(d => d.DepartureDate).ThenBy(d => d.DepartureEstimationDate);
+                shipments = shipments.OrderBy(d => d.ATDETDSortingField);
             }
             else
             {

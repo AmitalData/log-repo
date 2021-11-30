@@ -1,5 +1,4 @@
-export class TariffSelectors
-{
+export class TariffSelectors {
     //#region Buttons Without Id 
     public static readonly NewFreightCostToggleButton = "div[id^='NEWTARIFF']:first";
     public static readonly NewSurchargeCostToggleButton = "div[id^='NEWTARIFF']:last";
@@ -34,8 +33,8 @@ export class TariffSelectors
     public static readonly TariffLineNotes = "#TariffLine_Notes";
     public static readonly TariffLineMinPrice = "#TariffLine_MinPrice";
     public static readonly TariffContractNumber = "#Tariff_ContractNumber";
-    public static readonly ShippingLineSCACCode="#ShippingLine_SCACCode"
-    public static readonly ShippingLineCode="#ShippingLine_Code"
+    public static readonly ShippingLineSCACCode = "#ShippingLine_SCACCode"
+    public static readonly ShippingLineCode = "#ShippingLine_Code"
     public static readonly ShippingLineName = "#ShippingLine_EnglishName"
     public static readonly TariffChargeableWeight = "#TariffLine_Weight";
     //#endregion
@@ -52,6 +51,7 @@ export class TariffSelectors
 
     //#region Date
     public static readonly TariffStartDate = "#date_Tariff_StartDate";
+    public static readonly TariffExpirationDate = "#date_Tariff_ExpirationDate";
     public static readonly TariffLineStartDate = "#date_TariffLine_StartDate"
     public static readonly TarifflLineStartDate = "#date_TarifflLine_StartDate"
     public static readonly TariffUpdateStartDate = "#StartDate"
@@ -60,7 +60,7 @@ export class TariffSelectors
 
     //#region Button
     public static readonly SaveTariff = "#Tariff-Save";
-    public static readonly AddButton  = "#Add" ; 
+    public static readonly AddButton = "#Add";
     public static readonly FromPort = "#FromPort"
     public static readonly ToPort = "#ToPort"
     public static readonly TariffSearchIcon = "#searchicon_Tariff_SellerId"
@@ -68,16 +68,16 @@ export class TariffSelectors
 
     //#region Contains
     public static readonly ContainsAir = "Air"
-    public static readonly ContainsOceanFCL ="Ocean FCL"
-    public static readonly ContainsOceanLCL="Ocean LCL"
-    public static readonly ContainsTariff="Tariff"
+    public static readonly ContainsOceanFCL = "Ocean FCL"
+    public static readonly ContainsOceanLCL = "Ocean LCL"
+    public static readonly ContainsTariff = "Tariff"
     public static readonly ContainsCopyIntoNewVersion = "Copy into new Version";
     public static readonly ContainsVersionHistory = "Version History"
-    public static readonly ContainsApproveVersion ="Approve Version"
+    public static readonly ContainsApproveVersion = "Approve Version"
     public static readonly ContainsUpdateSurcharges = "Update Surcharges"
     public static readonly ContainsAdd = "Add"
     public static readonly ContainsClose = "Close"
-    public static readonly ContainsSearch="Search"
+    public static readonly ContainsSearch = "Search"
     public static readonly ContainsGeneral = "General"
     public static readonly ContainsUpdate = "Update"
     public static readonly ContainsCancel = "Cancel"
@@ -95,47 +95,48 @@ export class TariffSelectors
     public static readonly DownArrow = "{downarrow}"
     public static readonly ExcelType = "application/vnd.ms-excel"
     public static readonly ContainsViewTariff = "View Tariff";
+
+    public static readonly OceanFCLSurchargeLinePrice = "#TariffLinesContainersPrice_Price";
     //#endregion
 
-    
-    
-    public static TariffSurcharge(number: number): string{
+
+    public static TariffSurcharge(number: number): string {
         return "#Tariff_Surcharge" + number.toString() + "Id";
     }
 
-    public static TariffLineSurchargePrice(number: number): string{
+    public static TariffLineSurchargePrice(number: number): string {
         return "#TariffLine_Surcharge" + number.toString() + "Price";
     }
 
-    public static TariffLineStepPrice(number: number): string{
+    public static TariffLineStepPrice(number: number): string {
         return "#TariffLine_Step" + number.toString() + "Price";
     }
 
-    public static TariffUpdatePrice(number: number): string{
+    public static TariffUpdatePrice(number: number): string {
         return "#Price" + number.toString();
     }
 
-    public static TariffLineEditButton(lineNumber: number): string{
+    public static TariffLineEditButton(lineNumber: number): string {
         return ".TabControlBody[id!='ApplicationSession'] .MediaFillAbsolute:visible #row" + lineNumber.toString() + " button[id^='Edit']";
     }
 
-    public static TariffVersionHistoryComboBoxItem(versionNumber: number): string{
+    public static TariffVersionHistoryComboBoxItem(versionNumber: number): string {
         return ".TabControlBody[id!='ApplicationSession'] .MediaFillAbsolute:visible .ComboBox .ComboBoxItem span[title^='Version " + versionNumber.toString() + "']";
     }
 
-    public static PriceCheckQuantity(quantityNumber: number): string{
+    public static PriceCheckQuantity(quantityNumber: number): string {
         return "#Quantity" + quantityNumber.toString();
     }
 
-    public static QueriesSurcharge(SurchargeName: string): string{
+    public static QueriesSurcharge(SurchargeName: string): string {
         return "hyperlinkquery[data-cy^=Surcharge_" + SurchargeName + "]";
     }
 
-    public static GridFitstRow(): string{
+    public static GridFitstRow(): string {
         return "div[id^='LogGrid_'][id$='row0']";
     }
 
-    public static ContainsBackButton(mode:string): string{
+    public static ContainsBackButton(mode: string): string {
         return mode + " Surcharges Cost"
     }
 }

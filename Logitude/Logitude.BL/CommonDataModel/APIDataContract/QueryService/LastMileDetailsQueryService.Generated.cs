@@ -40,21 +40,21 @@ using Simplog.Data.CommonDataModel;
         }
 
 		
-		public LastMileDetails GetLastMileDetailsById(string Id,int Tenant,string ComputingPartnerName = "")
+		public LastMileDetails GetLastMileDetailsById(string Id,int Tenant,  string ComputingPartnerName = "")
         { 
 		    try
             {
-
+				 
 				
-				var temp = query.GetSinglePM(Id,Tenant);				
+				var temp = query.GetSinglePM(Id, Tenant);				
 				 if (temp == null)
                     throw new ApplicationException("Card with Id " + Id + " doesn't exist");
 
 				return LastMileDetailsDataMapping(temp,Tenant,ComputingPartnerName);
 			}
+
             catch (Exception ex)
             {
-
                 throw ex;
             }
         }
@@ -113,9 +113,9 @@ using Simplog.Data.CommonDataModel;
 					{
 					   
 						 
-						if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.LogitudeCode))
+						if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.Code))
 						{
-								//throw new ApplicationException("LogitudeCode Can't be update"); 
+								//throw new ApplicationException("Code Can't be update"); 
 								temp.Code = MyEntity.Code;
 								
 						

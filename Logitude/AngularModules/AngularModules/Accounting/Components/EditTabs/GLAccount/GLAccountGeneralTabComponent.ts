@@ -33,6 +33,7 @@ export class GLAccountGeneralTabComponent extends BaseComponent {
     public ChartOfAccountTypeFilterItems: ApiQueryFilters;
     public ParentsFilterItems: ApiQueryFilters;
     public IsVendor: boolean = false;
+    public EnableFollowUpData: boolean = false;
     public IsVendorChartOfAccount: boolean = false;
     public isRTL: boolean = false;
     public TenantPM: TenantPM;
@@ -111,6 +112,8 @@ export class GLAccountGeneralTabComponent extends BaseComponent {
             this.UIProperties.SetEnabled("ChartOfAccountsTypeCode", this.ObjectTableName, false);
             // this.UIProperties.SetEnabled("EnglishName", this.ObjectTableName, false);
             // this.UIProperties.SetEnabled("LocalName", this.ObjectTableName, false);
+        } else if(this.EntityPM.AccountTypeCode == "1" || this.EntityPM.AccountTypeCode == "3"){
+            this.EnableFollowUpData = true;
         }
          if (this.EntityPM.AccountTypeCode == "3") {
           this.IsVendor = true;
@@ -478,6 +481,20 @@ export class GLAccountGeneralTabComponent extends BaseComponent {
         }
     }
 
+    get FollowupDate() { return this.EntityPM.FollowupDate; }
+    set FollowupDate(value: Date) {
+        if (this.EntityPM.FollowupDate != value) {
+            this.EntityPM.FollowupDate = value;
+        }
+    }
+
+    get FollowupNotes() { return this.EntityPM.FollowupNotes; }
+    set FollowupNotes(value: string) {
+        if (this.EntityPM.FollowupNotes != value) {
+            this.EntityPM.FollowupNotes = value;
+        }
+    }
+
     get RevenueExpenseType() { return this.EntityPM.RevenueExpenseType; }
     set RevenueExpenseType(value: string) {
         if (this.EntityPM.RevenueExpenseType != value) {
@@ -559,6 +576,8 @@ export class GLAccountGeneralTabComponent extends BaseComponent {
         this.UIProperties.SetEnabled("Category4Id", this.ObjectTableName, enable);
         this.UIProperties.SetEnabled("Category5Id", this.ObjectTableName, enable);
         this.UIProperties.SetEnabled("RevenueExpenseType", this.ObjectTableName, enable);
+        this.UIProperties.SetEnabled("FollowupDate", this.ObjectTableName, enable);
+        this.UIProperties.SetEnabled("FollowupNotes", this.ObjectTableName, enable);
 
     }
 

@@ -246,6 +246,13 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     IsClosed = entityPoco.IsClosed,
                     ClosedDate = entityPoco.ClosedDate,
 
+                    MasterEntityId = entityPoco.ShipmentId,
+                    CustomerContactId = entityPoco.CustomerCard?.PrimaryContactId,
+                    HandlerContactId = entityPoco.Handler?.Contact?.Id,
+                    ConsigneeContactId = entityPoco.Shipment?.ConsigneeContactId,
+                    ShipperContactId = entityPoco.Shipment?.ShipperContactId,
+                    ShipperNotExporterContactId = entityPoco.Shipment?.ShipperNotExporterContactId,
+                    FreightForwarderContactId = entityPoco.Shipment?.FreightForwarderContactId,
                 };
 
                 MapCustomFields(result, entityPoco);
@@ -490,6 +497,13 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         IsAutomaticUpdates = a.IsAutomaticUpdates,
                         IsClosed = a.IsClosed,
                         ClosedDate = a.ClosedDate,
+                        MasterEntityId = a.ShipmentId,
+                        CustomerContactId = a.CustomerCard == null ? null : a.CustomerCard.PrimaryContactId,
+                        HandlerContactId = (a.Handler == null || a.Handler.Contact == null) ? null : a.Handler.Contact.Id,
+                        ConsigneeContactId = a.Shipment == null ? null : a.Shipment.ConsigneeContactId,
+                        ShipperContactId = a.Shipment == null ? null : a.Shipment.ShipperContactId,
+                        ShipperNotExporterContactId = a.Shipment == null ? null : a.Shipment.ShipperNotExporterContactId,
+                        FreightForwarderContactId = a.Shipment == null ? null : a.Shipment.FreightForwarderContactId,
 
                     }).ToList();
         }
@@ -1176,6 +1190,14 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     IsAutomaticUpdates = entityPoco.IsAutomaticUpdates,
                     IsClosed = entityPoco.IsClosed,
                     ClosedDate = entityPoco.ClosedDate,
+                    MasterEntityId = entityPoco.ShipmentId,
+                    CustomerContactId = entityPoco.CustomerCard?.PrimaryContactId,
+                    HandlerContactId = entityPoco.Handler?.Contact?.Id,
+                    ConsigneeContactId = entityPoco.Shipment?.ConsigneeContactId,
+                    ShipperContactId = entityPoco.Shipment?.ShipperContactId,
+                    ShipperNotExporterContactId = entityPoco.Shipment?.ShipperNotExporterContactId,
+                    FreightForwarderContactId = entityPoco.Shipment?.FreightForwarderContactId,
+
                 };
             }
 

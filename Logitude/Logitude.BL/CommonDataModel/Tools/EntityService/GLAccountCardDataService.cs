@@ -41,7 +41,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         private GLAccountPM GetGLaccount(string accountId)
         {
             IGLAccountQueryServiceExt gLAccountQueryServiceExt = ContainerAccessor.Container.Resolve(typeof(IGLAccountQueryServiceExt), "GLAccountQueryServiceExt", new ParameterOverride("", 1)) as IGLAccountQueryServiceExt;
-            return gLAccountQueryServiceExt.GetSingleGLAccountPM(accountId, tenant);
+            return gLAccountQueryServiceExt.GetSingleGLAccountWithComposition(accountId, tenant);
         }
        
     

@@ -17,7 +17,9 @@ namespace Logitude.Accounting.BL.CloseTables
        public const string Readyfortransmit = "6";  
        public const string WrongVATNumber = "2";  
        public const string Invoicenotpreviouslyreported = "7";  
-       public const string TheVATamountintherecordishigherthanthepercentageofVATallowed = "9";  
+       public const string TheVATamountintherecordishigherthanthepercentageofVATallowed = "9";
+       public const string SmallCashAPinvoiceFromThePreviousMonth = "10";
+
     }
 }
 

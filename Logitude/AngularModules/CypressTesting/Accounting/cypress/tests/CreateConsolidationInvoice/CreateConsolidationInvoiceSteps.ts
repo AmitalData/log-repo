@@ -18,6 +18,7 @@ import { ReceivableDetails } from "../../../../Shipment/cypress/models/Receivabl
 import { AccountingURLs } from '../../constants/URLs';
 import { RestAPI } from '../../../../Base/cypress/constants/RestAPI';
 import * as Assists from "../../../../Base/cypress/assists/Assists";
+import * as ARPaymentActions from '../../actions/ARPaymentActions';
 
 //#region variables
 let shipmentDetails: ShipmentDetails;
@@ -168,6 +169,19 @@ Then("the invoice should create successfully", () => {
   })
 });
 //#endregion
+Given("the user in the Docsout tab in invoice",()=>{
+  cy.Navigate(AccountingSelectors.ARInvoiceTHDocsOutTab,true)
+
+})
+When("click print button",()=>{
+  cy.DefineRequestWait(RestAPI.GET, AccountingURLs.DocumentTypeTemplateExtended, RequestAliases.DocumentTypeTemplateExtended)
+  cy.Navigate(AccountingSelectors.ARInvoiceBPrint,false)
+ 
+})
+
+Then("a new page should open successfully",()=>{
+  AccountingActions.AssertNewPageOpen()
+})
 
 //#region Create Consolidation Invoice
 Given("a consolidation invoice with the following details", (dataTable) => {
@@ -233,13 +247,22 @@ Then("the consolidation invoice should approve successfully", () => {
   BaseAssertion.AssertStatusCode(RequestAliases.ARInvoicesRequest, 200).then((interception) => {
     consolidationInvoiceNumber = interception.response.body.InvoiceNumber;
   })
-  cy.BackButton("Draft Invoices")
-  cy.BackButton(BaseSelectors.ContainsAccounting)
 });
+
+Then("the status value should be {string}", (statusValue) => {
+  BaseAssertion.AssertElementContain(ShipmentSelectors.ARInvoiceStatus, statusValue)
+});
+
+Then("the status of AR Payment value should be {string}", (statusValue) => {
+  BaseAssertion.AssertElementContain(AccountingSelectors.ARPaymentStatus, statusValue)
+});
+
 //#endregion
 
 //#region Connect to Payment
 Given("a payment with the following details", (dataTable) => {
+  cy.BackButton("Draft Invoices")
+  cy.BackButton(BaseSelectors.ContainsAccounting)
   const arPaymentDetails = Assists.CreateInstance<ARPaymentDetails>(dataTable, true);
   arPaymentDetails.Partner = customerCode;
   AccountingActions.NewARPaymentFromAccounting(arPaymentDetails, consolidationInvoiceNumber);
@@ -263,3 +286,6 @@ Then("the payment should approve successfully", () => {
   BaseAssertion.AssertStatusCode(RequestAliases.ARPayments, 200)
 });
 //#endregion
+Then("details screen should be dim",()=>{
+  //ARPaymentActions.AssertARPaymentDetailsFieldsBeDisabled()
+})

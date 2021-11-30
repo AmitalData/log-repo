@@ -246,7 +246,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
             }
         }
 
-        public HttpResponseMessage GetByCustomerReference1(string CustomerReference1, bool IsForwarderShipment)
+        public HttpResponseMessage GetByCustomerReferences1or3(string CustomerReference1, bool IsForwarderShipment)
         {
             try
             {
@@ -260,7 +260,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
                 SecurityUtility.CheckContactFeature("Shipment", "READ", tenant);
 
                 ShipmentQuery shipmentQuery = new ShipmentQuery(tenant);
-                ShipmentPM shipmentPM = shipmentQuery.GetByCustomerReference1(CustomerReference1, tenant, IsForwarderShipment);
+                ShipmentPM shipmentPM = shipmentQuery.GetByCustomerReferences1or3(CustomerReference1, tenant, IsForwarderShipment);
 
                 //DateTime completionTime = DateTime.Now;
                 //int executionTime = (int)((completionTime.Ticks - callTime.Ticks) / TimeSpan.TicksPerMillisecond);
@@ -279,7 +279,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
             }
         }
 
-        public HttpResponseMessage GetByCustomerReference1ForUpdate(string CustomerReference1,string ShipmentId, bool IsForwarderShipment)
+        public HttpResponseMessage GetByCustomerReferences1or3ForUpdate(string CustomerReference1,string ShipmentId, bool IsForwarderShipment)
         {
             try
             {
@@ -293,7 +293,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
                 SecurityUtility.CheckContactFeature("Shipment", "READ", tenant);
 
                 ShipmentQuery shipmentQuery = new ShipmentQuery(tenant);
-                ShipmentPM shipmentPM = shipmentQuery.GetByCustomerReference1ForUpdate(CustomerReference1, ShipmentId, tenant, IsForwarderShipment);
+                ShipmentPM shipmentPM = shipmentQuery.GetByCustomerReferences1or3ForUpdate(CustomerReference1, ShipmentId, tenant, IsForwarderShipment);
 
                 //DateTime completionTime = DateTime.Now;
                 //int executionTime = (int)((completionTime.Ticks - callTime.Ticks) / TimeSpan.TicksPerMillisecond);

@@ -81,11 +81,19 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 											 Category3Name = a.GLAccount.Category3.EnglishName,
 											 Category4Name = a.GLAccount.Category4.EnglishName,
 											 Category5Name = a.GLAccount.Category5.EnglishName,
+
 											 Category1LocalName= a.GLAccount.Category1.LocalName,
 											 Category2LocalName = a.GLAccount.Category2.LocalName,
 											 Category3LocalName = a.GLAccount.Category3.LocalName,
 											 Category4LocalName = a.GLAccount.Category4.LocalName,
-											 Category5LocalName = a.GLAccount.Category5.LocalName
+											 Category5LocalName = a.GLAccount.Category5.LocalName,
+
+											 Category1Id = a.GLAccount.Category1Id,
+											 Category2Id = a.GLAccount.Category2Id,
+											 Category3Id = a.GLAccount.Category3Id,
+											 Category4Id = a.GLAccount.Category4Id,
+											 Category5Id = a.GLAccount.Category5Id,
+
 												});
             return query;
 		}

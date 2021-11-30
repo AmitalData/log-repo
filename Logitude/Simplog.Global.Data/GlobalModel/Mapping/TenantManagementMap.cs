@@ -144,6 +144,8 @@ namespace Simplog.Global.Data.GlobalModel.Mapping
             this.Property(t => t.RegisteredAirlines).HasColumnName("RegisteredAirlines");
             this.Property(t => t.PendingAirlines).HasColumnName("PendingAirlines");
             this.Property(t => t.EnableBranding).HasColumnName("EnableBranding");
+            this.Property(t => t.DeclarationMessage).HasColumnName("DeclarationMessage");
+            this.Property(t => t.ActivatedforDeclarationApprove).HasColumnName("ActivatedforDeclarationApprove");
             this.Property(t => t.CustomerURL).HasColumnName("CustomerURL");
             this.Property(t => t.HideSharedlogistics).HasColumnName("HideSharedlogistics");
             this.Property(t => t.ContactEmail).HasColumnName("ContactEmail");

@@ -40,21 +40,21 @@ using Simplog.Data.CommonDataModel;
         }
 
 		
-		public VatType GetVatTypeById(string Id,int Tenant,string ComputingPartnerName = "")
+		public VatType GetVatTypeById(string Id,int Tenant,  string ComputingPartnerName = "")
         { 
 		    try
             {
-
+				 
 				
-				var temp = query.GetSinglePM(Id,Tenant);				
+				var temp = query.GetSinglePM(Id, Tenant);				
 				 if (temp == null)
                     throw new ApplicationException("VatType with Id " + Id + " doesn't exist");
 
 				return VatTypeDataMapping(temp,Tenant,ComputingPartnerName);
 			}
+
             catch (Exception ex)
             {
-
                 throw ex;
             }
         }

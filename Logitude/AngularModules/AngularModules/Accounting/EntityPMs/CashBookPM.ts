@@ -179,6 +179,11 @@ export class CashBookPM {
     public set BranchName(newValue: string) { if (this.branchName != newValue) { this.branchName = newValue; this.MarkAsDirty("BranchName"); } }
        
 	 
+    private inDepositingProgress: boolean;
+    public get InDepositingProgress() { return this.inDepositingProgress; }
+    public set InDepositingProgress(newValue: boolean) { if (this.inDepositingProgress != newValue) { this.inDepositingProgress = newValue; this.MarkAsDirty("InDepositingProgress"); } }
+       
+	 
 
     public OldEntityPM: CashBookPM;
 		

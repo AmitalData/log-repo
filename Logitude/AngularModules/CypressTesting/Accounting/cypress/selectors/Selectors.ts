@@ -36,7 +36,7 @@ export class AccountingSelectors extends RegexSelectors {
     public static readonly APInvoiceVATNumber = '#APInvoice_VATNumber'
     public static readonly OkCreateAPInvoiceButton = '#Ok-CreateAPInvoice';
     public static readonly APInvoiceLineCheckBox = '#CheckBox_0_0_LBL';
-    public static readonly APInvoiceVatType = '#APInvoice_VatTypeId';
+    public static readonly APInvoiceVatType = '#APInvoice_VatTypeId'; 
     public static readonly APInvoiceSaveButton = '#APInvoiceBSave';
     public static readonly APInvoiceApproveButton = '#APInvoiceBApprove';
     public static readonly APInvoiceCancelApprovalButton = '#APInvoiceBCancelApproval';
@@ -48,7 +48,6 @@ export class AccountingSelectors extends RegexSelectors {
     public static readonly APInvoiceCopyButton = '#APInvoiceBCopyInvoice';
     public static readonly AddAPInvoiceLine = '#AddInvoiceLine';
     public static readonly APInvoiceDetails = '#APInvoiceTHDetails';
-
     //#endregion
     //#region Receivable tab
     public static readonly ReceivableAccounting = '#RECEIVABLEAccounting';
@@ -68,6 +67,7 @@ export class AccountingSelectors extends RegexSelectors {
     public static readonly QueryLink = '.QueryLink';
     public static readonly EditShipmentLine = 'button[id^="Edit_"]';
     //#endregion
+
     //#region ARPayment
     public static readonly ARPaymentTabInsideShipment = '#ARInvoiceTHARPayments';
     public static readonly NewARPayment = '#NewPayment';
@@ -78,8 +78,15 @@ export class AccountingSelectors extends RegexSelectors {
     public static readonly ARPaymentSave = '#ARPayment-Save';
     public static readonly ARPaymentBApprove = '#ARPaymentBApprove';
     public static readonly ARPaymentCurrency = '#ARPayment_PaymentCurrencyId';
+    public static readonly PaymentHeaderStatus = "[data-cy='Header_Status:']";
+    public static readonly ARInvoiceBPrint = "#ARInvoiceBPrint";
+    public static readonly ARInvoiceTHDocsOutTab = "#ARInvoiceTHDocsOut";
+    public static readonly closeButtonId = "#closeButtonId";
+    public static readonly ARInvoiceTransferTab = "[id^='ARInvoiceTHAccounting']"
+    public static readonly ARPaymentStatus = "[data-cy='Header_Status:']";
 
     //#endregion
+
     //#region ARInvoice
     public static readonly ARInvoiceBranch = '#ARInvoice_BranchId';
     public static readonly ARInvoiceVatNumber = '#ARInvoice_VatNumber';

@@ -370,11 +370,10 @@ namespace WarehouseData.Service
                     + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "PartnerId DEFAULT -1 FOR PartnerId"
                     + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "PaymentTermId DEFAULT -1 FOR PaymentTermId"
                     + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "CreatedByUserId DEFAULT '-1' FOR CreatedByUserId"
-                    +" ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "LocalCurrencyId DEFAULT '-1' FOR LocalCurrencyId"
-                    +" ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "InvoiceCurrencyId DEFAULT '-1' FOR InvoiceCurrencyId"
-                    +" ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "MainEntityId DEFAULT '-1' FOR MainEntityId";
-
-                    
+                    + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "LocalCurrencyId DEFAULT '-1' FOR LocalCurrencyId"
+                    + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "InvoiceCurrencyId DEFAULT '-1' FOR InvoiceCurrencyId"
+                    + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "MainEntityId DEFAULT '-1' FOR MainEntityId"
+                    + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "ConsolidationInvoiceId DEFAULT '-1' FOR ConsolidationInvoiceId";
                     break;
 
                 case "APInvoices":

@@ -17,20 +17,21 @@ namespace WebFreight.Web.Helpers.WorkerRole.PODImage
         private int tenant;
         private DocumentRepository documentRepository;
         private Simplog.Data.CommonDataModel.EntityPOCOs.Document document;
+        private PODMobileDocumentsFilingArgs podMobileDocumentsFilingArgs;
 
-        public PODImageConverterService(string documnetFilingId, int tenant)
+        public PODImageConverterService(PODMobileDocumentsFilingArgs podMobileDocumentsFilingArgs)
         {
-            this.tenant = tenant;
-           LoadDocument(documnetFilingId, tenant);
+            this.tenant = podMobileDocumentsFilingArgs.Tenant;
+            this.podMobileDocumentsFilingArgs = podMobileDocumentsFilingArgs;
+            LoadDocument();
         }
 
 
 
-        private void LoadDocument(string documnetFilingId, int tenant)
+        private void LoadDocument()
         {
-            string documentId = new DocumentsFilingRepository(tenant).GetDocumentIdById(documnetFilingId, tenant);
-            documentRepository = new DocumentRepository(tenant);
-            document = documentRepository.GetSingleDocument(tenant, documentId);
+            documentRepository = new DocumentRepository( tenant);
+            document = documentRepository.GetSingleDocument(tenant, podMobileDocumentsFilingArgs.DocumentId);
         }
 
         public void Convert(IPODImageConverter podImageConverter)
@@ -42,10 +43,16 @@ namespace WebFreight.Web.Helpers.WorkerRole.PODImage
             {
                 UpdateDocument(convertedFileData, podImageConverter.Extention);
                 UpdateFileOnStorage(convertedFileData);
+                CreateDocumentsFiling();
+
             }
-            
+
         }
 
+        private void CreateDocumentsFiling()
+        {
+            new PODMobileDocumentsFilingService(podMobileDocumentsFilingArgs).Create();
+        }
 
         private bool IsAllowConvert(IPODImageConverter podImageConverter)
         {

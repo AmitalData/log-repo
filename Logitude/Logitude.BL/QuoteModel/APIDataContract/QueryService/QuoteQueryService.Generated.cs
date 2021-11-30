@@ -40,40 +40,40 @@ using Simplog.Data.QuoteModel;
         }
 
 		
-		public Quote GetQuoteById(string Id,int Tenant,string ComputingPartnerName = "")
+		public Quote GetQuoteById(string Id,int Tenant,  string ComputingPartnerName = "")
         { 
 		    try
             {
-
+				 
 				
-				var temp = query.GetSinglePM(Id,Tenant);				
+				var temp = query.GetSinglePM(Id, Tenant);				
 				 if (temp == null)
                     throw new ApplicationException("Quote with Id " + Id + " doesn't exist");
 
 				return QuoteDataMapping(temp,Tenant,ComputingPartnerName);
 			}
+
             catch (Exception ex)
             {
-
                 throw ex;
             }
         }
 		
-		public Quote GetQuoteByQuoteNumber(string QuoteNumber,int Tenant,string ComputingPartnerName = "")
+		public Quote GetQuoteByQuoteNumber(string QuoteNumber,int Tenant,  string ComputingPartnerName = "")
         { 
 		    try
             {
-
+				 
 				
-				var temp = query.GetSinglePMByQuoteNumber(QuoteNumber,Tenant);				
+				var temp = query.GetSinglePMByQuoteNumber(QuoteNumber, Tenant);				
 				 if (temp == null)
                     throw new ApplicationException("Quote with QuoteNumber " + QuoteNumber + " doesn't exist");
 
 				return QuoteDataMapping(temp,Tenant,ComputingPartnerName);
 			}
+
             catch (Exception ex)
             {
-
                 throw ex;
             }
         }
@@ -515,7 +515,7 @@ using Simplog.Data.QuoteModel;
 					
 					if (!string.IsNullOrEmpty(MyEntity.QuoteNumber))
 					{
-						temp = query.GetSinglePMByQuoteNumber(MyEntity.QuoteNumber, Tenant);
+						temp = query.GetSinglePMByQuoteNumber(MyEntity.QuoteNumber, Tenant  );
 					} 					   
 					if(temp == null)
 					{   
