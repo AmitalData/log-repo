@@ -271,7 +271,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         }
                         IShipmentsContext MyContext = ShipmentsContext.GetContext(authToken.Tenant);
                         MasterQueryService mappingService = new MasterQueryService(authToken.Tenant);
-                        ShipmentPM MasterPM = mappingService.MasterDataMappingAndValidatin(entity, authToken.Tenant, "", true);
+                        ShipmentPM MasterPM = mappingService.MasterDataMappingAndValidatin(entity, authToken.Tenant, computingPartnerCode, true);
 
                         if (MasterPM != null)
                         {
