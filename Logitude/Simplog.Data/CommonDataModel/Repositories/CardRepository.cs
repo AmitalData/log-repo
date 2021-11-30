@@ -135,6 +135,22 @@ namespace Simplog.Data.CommonDataModel.Repositories
 
             return entity;
         }
+        public Card GetCardWithCollecter(string id, int tenant)
+        {
+            var card = context.Cards
+                .Include("CollectorUser.Contact")
+                .Include("CollectorUser.Contact")
+                .Where(e => e.Id == id && e.Tenant == tenant).FirstOrDefault();
+            return card;
+        }
+        public Card Get(string id, int tenant)
+        {
+            Card entity = Queryable.FirstOrDefault<Card>((from a in context.Cards.Include("PartnerType").Include("PaymentTerm").Include("Customer").Include("Customer.SalesmanUser").Include("Airline").Include("SharedLogisticsInvitationStatus").Include("ImageDetail").Include("InvoiceCurrency").Include("VatType").Include("Trucker").Include("ShippingLine").Include("CustomAgent").Include("ShippingAgent").Include("Warehouse").Include("Agent").Include("Vendor")
+                                                          where a.Id == id
+                                                          select a));
+
+            return entity;
+        }
 
         public Card GetSingleCardWithoutInclude(string id, int tenant)
         {

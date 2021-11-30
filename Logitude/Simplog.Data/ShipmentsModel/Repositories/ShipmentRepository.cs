@@ -317,6 +317,13 @@ namespace Simplog.Data.ShipmentsModel.Repositories
         {
             return (from record in context.Shipments where record.Id == id && record.Tenant == tenant select record.TransportModeId).FirstOrDefault();
         }
+        public Shipment GetShipmentWithRelatedUsers(string id, int tenant)
+        {
+            return context.Shipments
+                .Include("AccountManagerUser.Contact")
+                .Include("SalesmanUser.Contact")
+                .Where(e=>e.Id ==id && e.Tenant == tenant).FirstOrDefault();
+        }
 
         public Shipment GetSingleShipmentOnlyByNumber(string number, int tenant)
         {
