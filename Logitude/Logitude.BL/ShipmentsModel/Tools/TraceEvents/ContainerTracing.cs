@@ -375,14 +375,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
         }
         private void TraceOrderEvent()
         {
-            EventTracer.CreateTraceEvent(new EventTracerArgs()
-            {
-                Tenant = containerPM.Tenant,
-                EventTypeCode = "COOR",
-                UserId = containerPM.UpdatedByUserId,
-                EntityId = containerPM.Id,
-                ObjectTableName = "Container",
-            });
+            this.CreateTraceEvent("COOR");
         }
         private void TraceUpdatedEvent()
         {
