@@ -292,11 +292,13 @@
     <Compile Include="CommonDataModel\APIDataContract\QueryService\LastMileDetailsQueryService.Generated.cs" />
     <Compile Include="CommonDataModel\APIDataContract\QueryService\PaymentTermQueryService.Generated.cs" />
     <Compile Include="CommonDataModel\APIDataContract\QueryService\ShipmentCardQueryService.Generated.cs" />
+    <Compile Include="CommonDataModel\APIDataContract\QueryService\ShipmentOrderPortQueryService.Generated.cs" />
     <Compile Include="CommonDataModel\APIDataContract\QueryService\UserQueryService.cs" />
     <Compile Include="CommonDataModel\APIDataContract\QueryService\VatTypeQueryService.cs" />
     <Compile Include="CommonDataModel\APIDataContract\QueryService\VendorQueryService.cs" />
     <Compile Include="CommonDataModel\APIDataContract\QueryService\VendorQueryService.Generated.cs" />
     <Compile Include="CommonDataModel\APIDataContract\QueryService\VesselQueryService.Generated.cs" />
+    <Compile Include="CommonDataModel\APIDataContract\ShipmentOrderPort.Generated.cs" />
     <Compile Include="CommonDataModel\APIDataContract\Vendor.Generated.cs" />
     <Compile Include="CommonDataModel\APIDataContract\Vessel.Generated.cs" />
     <Compile Include="CommonDataModel\Args\CustomReferenceDocumentsMetaDataType.cs" />

@@ -152,7 +152,7 @@ namespace Logitude.ShipmentOrderModule.BL.EntityDataMappings
 	         OriginPortCode, 
 	         DestinationPortCode, 
 	         GatewayCode, 
-	         IncotermName,
+	         IncotermName, 
 	         LastExceptionDescription, 
 	         LastExceptionDate,
 	      }

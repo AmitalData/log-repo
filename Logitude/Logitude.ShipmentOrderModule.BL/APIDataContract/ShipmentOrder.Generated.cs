@@ -78,11 +78,11 @@ namespace Logitude.ShipmentOrderModule.BL.APIDataContract.ApiV1
     
     public DateTime? SupplyDateTime { get; set; }
     
-    public Port OriginPort { get; set; }
+    public ShipmentOrderPort OriginPort { get; set; }
     
-    public Port DestinationPort { get; set; }
+    public ShipmentOrderPort DestinationPort { get; set; }
     
-    public Port Gateway { get; set; }
+    public ShipmentOrderPort Gateway { get; set; }
     
     public string CasualImporterName { get; set; }
     
