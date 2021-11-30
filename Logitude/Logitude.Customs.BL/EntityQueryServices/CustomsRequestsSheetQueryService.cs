@@ -320,7 +320,8 @@ namespace Logitude.Customs.BL.EntityQueryServices
 "ClosePending",//סגירה גורפת ל-Pending
 "UCB9999", // ניתוח מחדש
 "8326", // שאילתא לתצהיר יבואן
-"DCAMU" // multi update 
+"DCAMU", // multi update 
+"DCAUAC" // multi update 
 
 
             };
