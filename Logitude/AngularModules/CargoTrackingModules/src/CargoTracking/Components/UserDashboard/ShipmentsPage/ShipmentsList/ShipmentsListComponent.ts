@@ -1,5 +1,5 @@
 
-import { Component, ViewChild, AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, ElementRef, OnInit, Injectable } from '@angular/core';
+import { Component, ViewChild, AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, ElementRef, OnInit, Injectable, HostListener } from '@angular/core';
 import { Router, ActivatedRoute, NavigationStart, NavigationEnd } from '@angular/router';
 import { FormBuilder } from '@angular/forms';
 import { CargoTrackingSearchService } from '../../../../Services/Others/CargoTrackingSearchService';
@@ -32,8 +32,7 @@ import { SharedService } from 'src/CargoTracking/Services/Others/SharedService';
     changeDetection: ChangeDetectionStrategy.OnPush,
 
 })
-export class ShipmentsListComponent implements AfterViewInit, OnInit
-{
+export class ShipmentsListComponent implements AfterViewInit, OnInit {
 
 
     noResult: boolean = false;
@@ -74,11 +73,11 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
     SupplierOrClientValue: string;
     ShowMobileSearch: boolean = false;
     ShipmenTypeForRouting: string;
-    public SortOptions= SortOptions;
+    public SortOptions = SortOptions;
     PanelSearchText;
     MasterOrHouseLabel: string = "";
     EntityType_Customs = "C";
-    get tenant(){
+    get tenant() {
         return CargoTrackingBrandingData.Tenant;
     }
 
@@ -91,13 +90,13 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
         public dialog: MatDialog,
         private searchService: CargoTrackingSearchService,
         private milestonesService: CargoTrackingMilestoneService,
-        public sharedService: SharedService)
-    {
+        public sharedService: SharedService) {
         this.InitComponent();
         this.SetDefaultBackgroundColor();
     }
 
     ngOnInit(): void {
+        this.setMaxNumberOfCarachter(window.innerWidth);
         this.setDefaultSort();
         this.GetPreservedToggleFiltersFromSessionInfo();
         this.GetCompanyLoginsFromCache();
@@ -105,47 +104,46 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
         this.getPreviousScroll();
         this.selectDefaultSortFields();
     }
+    
 
-    private setDefaultSort(){
+    private setDefaultSort() {
         this.sortField = SortOptions.CMD;
         this.isSortDescending = SortOptions.DESC;
     }
 
-    private selectDefaultSortFields(){
-        this.sortByMultipleSelection.select.options.filter(d => 
+    private selectDefaultSortFields() {
+        this.sortByMultipleSelection.select.options.filter(d =>
             [SortOptions.CMD, SortOptions.DESC].includes(d.value.Code))
             .map(x => x.select());
     }
 
-    private getPreviousScroll(){
+    private getPreviousScroll() {
         this.router.events.pipe(
             filter((e: any): e is NavigationEnd => e instanceof NavigationEnd)
-         ).subscribe((e: NavigationEnd) => {
-             if(e.url === '/cargo-tracking/shipments'){
+        ).subscribe((e: NavigationEnd) => {
+            if (e.url === '/cargo-tracking/shipments') {
                 const shipmentCardsContainer = document.getElementById("scrollArea");
-                if(shipmentCardsContainer && RootContext.ShipmentsScrollPosition > 0) {
+                if (shipmentCardsContainer && RootContext.ShipmentsScrollPosition > 0) {
                     shipmentCardsContainer.scrollTop = RootContext.ShipmentsScrollPosition || 0;
                 }
-             }
+            }
 
-         });
+        });
     }
-    ngAfterViewInit(): void
-    {
+    ngAfterViewInit(): void {
         this.LoadScreenData();
         this.SetShipmentsScrollPosition();
     }
 
     private SetShipmentsScrollPosition() {
         const shipmentCardsContainer = document.getElementById("scrollArea");
-        if(shipmentCardsContainer) {
+        if (shipmentCardsContainer) {
             shipmentCardsContainer.scrollTop = RootContext.ShipmentsScrollPosition || 0;
         }
     }
 
 
-    private SetDefaultBackgroundColor()
-    {
+    private SetDefaultBackgroundColor() {
         document.documentElement.style.setProperty('--BGColor', 'RGB(250,251,252)');
     }
 
@@ -181,12 +179,11 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
             }
         }
 
-        this.ShipmentTypeAndDirectionTooltip = type +' '+ direction;
+        this.ShipmentTypeAndDirectionTooltip = type + ' ' + direction;
 
     }
 
-    SetTitileAndValueForSupplierOrClient(shipment: CargoTrackingShipmentList)
-    {
+    SetTitileAndValueForSupplierOrClient(shipment: CargoTrackingShipmentList) {
         this.SetTitleForSupplierOrClient(shipment);
         this.SetValueForSupplierOrClient(shipment);
     }
@@ -195,7 +192,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
     SetTitleForSupplierOrClient(shipment: CargoTrackingShipmentList) {
         var title;
         switch (shipment.DirectionId) {
-            case ShipmentDirections.Import:{
+            case ShipmentDirections.Import: {
                 title = "SHIPPER"
                 break;
             }
@@ -263,14 +260,13 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
     }
 
 
-    private GetPreservedToggleFiltersFromSessionInfo()
-    {
+    private GetPreservedToggleFiltersFromSessionInfo() {
         if (SessionInfo.ShipmentsFilters) {
             this.appliedSelectedFilterMilestonesStatus = SessionInfo.ShipmentsFilters.SelectedMilestonesStatus;
             this.SelectedInvitedCustomers = SessionInfo.ShipmentsFilters.SelectedInvitedCustomers;
             this.SearchText = RootContext.LastSearchText ? SessionInfo.ShipmentsFilters.SearchText : '';
             this.updateShipmentTypeAndDirectionSelectedFilters();
-            this.hasException = SessionInfo.ShipmentsFilters.HasException? SessionInfo.ShipmentsFilters.HasException : this.hasException;
+            this.hasException = SessionInfo.ShipmentsFilters.HasException ? SessionInfo.ShipmentsFilters.HasException : this.hasException;
             this.GetInvitedCustomers();
             this.updateShipmentTypeAndDirectionSelection();
 
@@ -278,34 +274,31 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
         }
     }
 
-    private InitComponent()
-    {
+    private InitComponent() {
         this.InitForm();
         ''.substring(''.indexOf('('))
     }
 
-    private updateShipmentTypeAndDirectionSelectedFilters(){
-        if(SessionInfo.ShipmentsFilters.TransportModeCodes){
+    private updateShipmentTypeAndDirectionSelectedFilters() {
+        if (SessionInfo.ShipmentsFilters.TransportModeCodes) {
             var splitted = SessionInfo.ShipmentsFilters.TransportModeCodes.split(',');
-            splitted.forEach(filterCode=>{
+            splitted.forEach(filterCode => {
                 this.SelectFilterByCode(filterCode);
             });
         }
-        if(SessionInfo.ShipmentsFilters.DirectionCodes){
+        if (SessionInfo.ShipmentsFilters.DirectionCodes) {
             var splitted = SessionInfo.ShipmentsFilters.DirectionCodes.split(',');
-            splitted.forEach(filterCode=>{
+            splitted.forEach(filterCode => {
                 this.SelectFilterByCode(filterCode);
             });
         }
     }
 
-    private updateShipmentTypeAndDirectionSelection(){
+    private updateShipmentTypeAndDirectionSelection() {
         this.SelectedFilters.map(x => {
-            if(x.FilterName == 'shipmentType')
-            {
+            if (x.FilterName == 'shipmentType') {
                 this.shipmentTypeMultipleSelection.select.options.find(d => d.value.Code == x.Code).select();
-            } else if (x.FilterName == 'shipmentDirection')
-            {
+            } else if (x.FilterName == 'shipmentDirection') {
                 this.shipmentDirectionMultipleSelection.select.options.find(d => d.value.Code == x.Code).select();
             }
         });
@@ -320,8 +313,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
 
         }
     }
-    private GetCompanyLoginsFromCache()
-    {
+    private GetCompanyLoginsFromCache() {
         SessionInfo.LoggedUserCompanyLogins = JSON.parse(sessionStorage.getItem("LoggedUserCompanyLogins"));
         this.GetInvitedCustomers();
     }
@@ -332,8 +324,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
     appliedSelectedFilterMilestonesStatus: any[] = [];
     selectedShipmentTypesFilter: any[] = [];
     selectedShipmentDirectionsFilter: any[] = [];
-    private GetInvitedCustomers()
-    {
+    private GetInvitedCustomers() {
         this.InvitedCustomersIds = SessionInfo.LoggedUserCompanyLogins
             .filter(d => d.CardType == 'CS' && d.CardId != null && d.Tenant == this.tenant)
             .map(d => d.CardId);
@@ -343,24 +334,24 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
             .map(d => (
                 {
                     IsSelected: false,
-                    Name: d.CompanyName.substring(0,d.CompanyName.lastIndexOf('(')),
-                    ...d }
-                ));
+                    Name: d.CompanyName.substring(0, d.CompanyName.lastIndexOf('(')),
+                    ...d
+                }
+            ));
         this.LoadScreenData();
     }
 
 
 
-    private GetMilstones(){
+    private GetMilstones() {
         this.milestonesService.getAll(this.tenant)
-            .subscribe((milestones:any) => {
-                this.MilestonesStatus  = milestones.map(s => ({ IsSelected: false, ...s}));
+            .subscribe((milestones: any) => {
+                this.MilestonesStatus = milestones.map(s => ({ IsSelected: false, ...s }));
             });
     }
 
 
-    private AddDemoCustomersForTest()
-    {
+    private AddDemoCustomersForTest() {
         var demoCustomer1 = {
             CardType: 'CS',
             CardId: '1-711',
@@ -376,8 +367,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
         SessionInfo.LoggedUserCompanyLogins.push(demoCustomer1, demoCustomer2);
     }
 
-    private InitForm()
-    {
+    private InitForm() {
         this.searchForm = this.formBuilder.group({
             SearchText: ''
         });
@@ -390,28 +380,24 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
 
 
     private _SearchText: string = '';
-    public get SearchText(): string
-    {
+    public get SearchText(): string {
         return this._SearchText;
     }
-    public set SearchText(v: string)
-    {
+    public set SearchText(v: string) {
         this._SearchText = v;
 
         // if (this.SearchText)
         //     this.LoadShipments();
     }
 
-    Clear()
-    {
+    Clear() {
         this.SearchText = '';
         RootContext.LastSearchText = '';
         this.LoadScreenData();
     }
 
-    Search()
-    {
-        if (this.tenant!=null && this.SearchText) {
+    Search() {
+        if (this.tenant != null && this.SearchText) {
             this.Shipments = [];
             RootContext.LastSearchText = this.SearchText;
             this.LoadScreenData();
@@ -419,8 +405,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
 
     }
 
-    ItemClicked(item)
-    {
+    ItemClicked(item) {
         var selection = window.getSelection();
         if (selection.toString().length === 0) {
             var SecurityKey = item.SecurityKey;
@@ -438,10 +423,8 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
     }
 
     ShipmentsCounter: CargoTrackingShipmentsCounter = new CargoTrackingShipmentsCounter();
-    LoadScreenData()
-    {
-        if (this.tenant)
-        {
+    LoadScreenData() {
+        if (this.tenant) {
             var shipmentFilters = this.BuildShipmentFilters();
             this.LoadShipments(shipmentFilters);
             this.LoadShipmentsCounter(shipmentFilters);
@@ -453,21 +436,18 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
     isSortDescending: string = '';
     hasException: boolean = false;
     hasExceptionAdvancedFilter: boolean = false;
-    private LoadShipments(shipmentFilters: CargoTrackingShipmentFilters)
-    {
+    private LoadShipments(shipmentFilters: CargoTrackingShipmentFilters) {
         if (this.ShipmentsDataSource)
             this.ReloadShipments(shipmentFilters);
 
-        else{
+        else {
             this.InitiateShipmentDataSource(shipmentFilters);
             this.ReloadShipments(shipmentFilters);
         }
     }
 
-    private LoadShipmentsCounter(shipmentFilters: CargoTrackingShipmentFilters)
-    {
-        this.searchService.GetUserShipmentsCounter(shipmentFilters).subscribe((counter: any) =>
-        {
+    private LoadShipmentsCounter(shipmentFilters: CargoTrackingShipmentFilters) {
+        this.searchService.GetUserShipmentsCounter(shipmentFilters).subscribe((counter: any) => {
             this.ShipmentsCounter = counter;
             this.BuildToggleFilters();
             this.SetShipmentsScrollPosition();
@@ -475,19 +455,16 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
     }
 
 
-    private InitiateShipmentDataSource(shipmentFilters: CargoTrackingShipmentFilters)
-    {
+    private InitiateShipmentDataSource(shipmentFilters: CargoTrackingShipmentFilters) {
         this.ShipmentsDataSource = new ShipmentDataSource(this.changeDetector, this.searchService, shipmentFilters, this);
     }
 
-    private ReloadShipments(shipmentFilters: CargoTrackingShipmentFilters)
-    {
+    private ReloadShipments(shipmentFilters: CargoTrackingShipmentFilters) {
         this.ShipmentsDataSource.ReloadData(shipmentFilters);
         this.ResetShipmentsScrollbarPosition();
     }
 
-    private ResetShipmentsScrollbarPosition()
-    {
+    private ResetShipmentsScrollbarPosition() {
         this.virtualScroll.scrollToIndex(0);
     }
 
@@ -495,11 +472,10 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
     //     this.isSortDescending = !this.isSortDescending;
     //     this.LoadScreenData();
     // }
-    private BuildShipmentFilters()
-    {
+    private BuildShipmentFilters() {
         var shipmentFilters = new CargoTrackingShipmentFilters();
         shipmentFilters.Tenant = this.tenant;
-        shipmentFilters.SearchText = this._SearchText? this._SearchText.trim().toLowerCase() : '';
+        shipmentFilters.SearchText = this._SearchText ? this._SearchText.trim().toLowerCase() : '';
 
         shipmentFilters.SortFieldName = this.sortField;
         shipmentFilters.SortDescending = this.isSortDescending;
@@ -512,12 +488,11 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
         return shipmentFilters;
     }
 
-    private SetCustomersFilter(shipmentFilters: CargoTrackingShipmentFilters)
-    {
-        if(this.SelectedInvitedCustomers.length > 0){
+    private SetCustomersFilter(shipmentFilters: CargoTrackingShipmentFilters) {
+        if (this.SelectedInvitedCustomers.length > 0) {
             var str = this.SelectedInvitedCustomers.map(d => d.CardId)?.join(',');
 
-        }else{
+        } else {
             var str = this.InvitedCustomers.map(d => d.CardId)?.join(',');
         }
         shipmentFilters.CustomersIds = this.InvitedCustomersIds;
@@ -525,29 +500,26 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
         shipmentFilters.SelectedInvitedCustomers = this.SelectedInvitedCustomers;
     }
 
-    private SetMilestonesFilter(shipmentFilters: CargoTrackingShipmentFilters)
-    {
-        if(this.appliedSelectedFilterMilestonesStatus.length > 0){
+    private SetMilestonesFilter(shipmentFilters: CargoTrackingShipmentFilters) {
+        if (this.appliedSelectedFilterMilestonesStatus.length > 0) {
             var str = this.appliedSelectedFilterMilestonesStatus.map(state => state.Code)?.join(',');
             shipmentFilters.SelectedMilestonesStatus = this.appliedSelectedFilterMilestonesStatus;
             shipmentFilters.MilestonesStatus = str;
         }
     }
 
-    private SetDirectionFilters(shipmentFilters: CargoTrackingShipmentFilters)
-    {
+    private SetDirectionFilters(shipmentFilters: CargoTrackingShipmentFilters) {
         var direction = "";
-        if (this.SelectedFilters.length > 0){
-            const directionsCodes = ['IM', 'EX','R'];
+        if (this.SelectedFilters.length > 0) {
+            const directionsCodes = ['IM', 'EX', 'R'];
             direction = this.SelectedFilters.filter(d => directionsCodes.includes(d.Code)).map(d => d.Code).join(',');
         }
         shipmentFilters.DirectionCodes = direction;
     }
 
-    private SetTransportModeFilters(shipmentFilters: CargoTrackingShipmentFilters)
-    {
+    private SetTransportModeFilters(shipmentFilters: CargoTrackingShipmentFilters) {
         var transportMode = "";
-        if (this.SelectedFilters.length > 0){
+        if (this.SelectedFilters.length > 0) {
             const transportModeCodes = ['A', 'I', 'O'];
             transportMode = this.SelectedFilters.filter(d => transportModeCodes.includes(d.Code)).map(d => d.Code).join(',');
         }
@@ -559,7 +531,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
         this.SelectToggleFilters(toggleFilterCodes);
     }
 
-    OnHasExceptionChanged(event){
+    OnHasExceptionChanged(event) {
         RootContext.ShipmentsScrollPosition = 0;
         this.hasException = event;
         this.hasExceptionAdvancedFilter = event;
@@ -572,56 +544,53 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
 
     sortBySelectionChangedHandler(event) {
         const index = this.sortByOptions.findIndex(d => d.Code == event);
-        switch(index) {
+        switch (index) {
             case 0: {
                 this.sortField = this.sortField === event ? '' : event;
-                this.sortByMultipleSelection.select.options.filter(d => 
+                this.sortByMultipleSelection.select.options.filter(d =>
                     [SortOptions.ATA, SortOptions.ATD].includes(d.value.Code)).map(x => x.deselect());
                 break;
             }
             case 1: {
                 this.sortField = this.sortField === event ? '' : event;
-                this.sortByMultipleSelection.select.options.filter(d => 
+                this.sortByMultipleSelection.select.options.filter(d =>
                     [SortOptions.CMD, SortOptions.ATD].includes(d.value.Code)).map(x => x.deselect());
                 break;
             }
-            case 2:{
+            case 2: {
                 this.sortField = this.sortField === event ? '' : event;
-                this.sortByMultipleSelection.select.options.filter(d => 
+                this.sortByMultipleSelection.select.options.filter(d =>
                     [SortOptions.CMD, SortOptions.ATA].includes(d.value.Code)).map(x => x.deselect());
                 break;
             }
-            case 3:{
+            case 3: {
                 this.isSortDescending = this.isSortDescending === event ? '' : event;
                 this.sortByMultipleSelection.select.options.find(d => d.value.Code == SortOptions.DESC).deselect();
                 break;
             }
-            case 4:{
+            case 4: {
                 this.isSortDescending = this.isSortDescending === event ? '' : event;
                 this.sortByMultipleSelection.select.options.find(d => d.value.Code == SortOptions.ASC).deselect();
                 break;
             }
         }
-        if((this.sortField && this.isSortDescending) || (!this.sortField && !this.isSortDescending))
-        {
+        if ((this.sortField && this.isSortDescending) || (!this.sortField && !this.isSortDescending)) {
             RootContext.ShipmentsScrollPosition = 0;
             this.LoadScreenData();
         }
     }
 
-    private SelectToggleFilters(toggleFilterCodes: string)
-    {
-        if(toggleFilterCodes){
+    private SelectToggleFilters(toggleFilterCodes: string) {
+        if (toggleFilterCodes) {
             var splitted = toggleFilterCodes.split(',');
-            splitted.forEach(filterCode=>{
+            splitted.forEach(filterCode => {
                 this.SelectFilterByCode(filterCode);
             });
             this.LoadScreenData();
         }
     }
 
-    SplitReference(reference: string)
-    {
+    SplitReference(reference: string) {
         this.references = reference != null ? reference.split(',') : null;
 
     }
@@ -633,7 +602,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
         if (shipment.ForwardingShipmentLevelCode == ShipmentLevelCodes.Direct || isShipmentDirectOrder)
             this.SetMasterOrHouseLabelForDirect(shipment);
 
-       else if (shipment.ForwardingShipmentLevelCode == ShipmentLevelCodes.House || isShipmentHouseOrder)
+        else if (shipment.ForwardingShipmentLevelCode == ShipmentLevelCodes.House || isShipmentHouseOrder)
             this.SetMasterOrHouseLabelForHouse(shipment);
 
         else if (shipment.EntityType == ShipmentEntityTypes.Customs && !shipment.ForwardingShipmentHeaderId)
@@ -740,8 +709,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
         });
     }
 
-    GetModeIcon(mode: string)
-    {
+    GetModeIcon(mode: string) {
         var iconPath = "";
         const Air = 'A';
         const Ocean = 'O';
@@ -780,7 +748,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
         new ToggleFilter(SortOptions.DESC, 'Descending', '', null),
     ];
 
-    BuildToggleFilters(){
+    BuildToggleFilters() {
         this.shipmentTypeMultipleSelection.MultipleSelectionList.map(x => {
             x.Count = this.setCounterForMultipleSelect(x);
             return x;
@@ -792,44 +760,36 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
         this.changeDetector.detectChanges();
     }
 
-    setCounterForMultipleSelect(toggleFilter: ToggleFilter) : number{
-        if(toggleFilter.Code == 'AL')
-        {
+    setCounterForMultipleSelect(toggleFilter: ToggleFilter): number {
+        if (toggleFilter.Code == 'AL') {
             return this.ShipmentsCount;
-        } else if(toggleFilter.Code == 'IM')
-        {
+        } else if (toggleFilter.Code == 'IM') {
             return this.ShipmentsCounter.Import;
-        } else if(toggleFilter.Code == 'R')
-        {
+        } else if (toggleFilter.Code == 'R') {
             return this.ShipmentsCounter.Drop;
-        } else if(toggleFilter.Code == 'EX')
-        {
+        } else if (toggleFilter.Code == 'EX') {
             return this.ShipmentsCounter.Export;
-        } else if(toggleFilter.Code == 'A')
-        {
+        } else if (toggleFilter.Code == 'A') {
             return this.ShipmentsCounter.Air;
-        } else if(toggleFilter.Code == 'I')
-        {
+        } else if (toggleFilter.Code == 'I') {
             return this.ShipmentsCounter.Land;
-        } else if(toggleFilter.Code == 'O')
-        {
+        } else if (toggleFilter.Code == 'O') {
             return this.ShipmentsCounter.Sea;
         }
     }
 
     SelectedFilters: ToggleFilter[] = [];
-    SelectFilter(filter: ToggleFilter)
-    {
+    SelectFilter(filter: ToggleFilter) {
         var item = this.SelectedFilters.find(d => d.Name == filter.Name);
         if (!item)
             this.SelectedFilters.push(filter);
-            RootContext.ShipmentsScrollPosition = 0;
+        RootContext.ShipmentsScrollPosition = 0;
         this.LoadScreenData();
     }
 
     SelectFilterWithoutLoadScreenData(filter: ToggleFilter) {
         var item = this.SelectedFilters.find(d => d.Name == filter.Name);
-        if (!item){
+        if (!item) {
             this.SelectedFilters.push(filter);
         } else {
             var index = this.SelectedFilters.findIndex(d => d.Name == filter.Name);
@@ -837,60 +797,54 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
         }
     }
 
-    SelectFilterByCode(filterCode: string)
-    {
+    SelectFilterByCode(filterCode: string) {
         var filter = this.ToggleFilters.find(d => d.Code == filterCode);
         this.SelectFilterWithoutLoadScreenData(filter);
     }
-    DeselectFilter(filter: ToggleFilter)
-    {
+    DeselectFilter(filter: ToggleFilter) {
         var index = this.SelectedFilters.findIndex(d => d.Name == filter.Name);
         this.SelectedFilters.splice(index, 1);
-        if(filter.FilterName == 'shipmentType')
-        {
+        if (filter.FilterName == 'shipmentType') {
             this.shipmentTypeMultipleSelection.DeselectFilter(filter.Code);
-            var index = this.selectedShipmentTypesFilter.findIndex(d=>d.Code==filter.Code);
-            if(index >= 0){
-                    this.selectedShipmentTypesFilter.splice(index,1);
+            var index = this.selectedShipmentTypesFilter.findIndex(d => d.Code == filter.Code);
+            if (index >= 0) {
+                this.selectedShipmentTypesFilter.splice(index, 1);
             };
-        } else if (filter.FilterName == 'shipmentDirection')
-        {
+        } else if (filter.FilterName == 'shipmentDirection') {
             this.shipmentDirectionMultipleSelection.DeselectFilter(filter.Code);
-            var index = this.selectedShipmentDirectionsFilter.findIndex(d=>d.Code==filter.Code);
-            if(index >= 0){
-                    this.selectedShipmentDirectionsFilter.splice(index,1);
+            var index = this.selectedShipmentDirectionsFilter.findIndex(d => d.Code == filter.Code);
+            if (index >= 0) {
+                this.selectedShipmentDirectionsFilter.splice(index, 1);
             };
         }
         RootContext.ShipmentsScrollPosition = 0;
         this.LoadScreenData();
 
     }
-    ClearFilters()
-    {
+    ClearFilters() {
         this.SelectedFilters = [];
         this.ClearAdvancedFilters();
         this.shipmentTypeMultipleSelection.ClearFilters();
         this.shipmentDirectionMultipleSelection.ClearFilters();
-        this.hasException =false;
+        this.hasException = false;
         this.LoadScreenData();
     }
 
-    ApplyFilterButtonClicked()
-    {
+    ApplyFilterButtonClicked() {
         this.sharedService.updateValue(false);
-        this.SelectedInvitedCustomers = this.FiltersSelectedInvitedCustoms.map(d=>d);
-        this.appliedSelectedFilterMilestonesStatus= this.selectedFilterMilestonesStatus.map(state => state);
+        this.SelectedInvitedCustomers = this.FiltersSelectedInvitedCustoms.map(d => d);
+        this.appliedSelectedFilterMilestonesStatus = this.selectedFilterMilestonesStatus.map(state => state);
         this.toggleMobileAdvancedFilters();
         RootContext.ShipmentsScrollPosition = 0;
         this.LoadScreenData();
     }
 
-    private toggleMobileAdvancedFilters(){
+    private toggleMobileAdvancedFilters() {
         this.SelectedFilters = this.SelectedFilters.filter(item => !this.ToggleFilters.includes(item));
-        if(this.selectedShipmentTypesFilter.length) {
+        if (this.selectedShipmentTypesFilter.length) {
             this.SelectToggleFilters(this.selectedShipmentTypesFilter.map(x => x.Code).join(','));
         }
-        if(this.selectedShipmentDirectionsFilter.length) {
+        if (this.selectedShipmentDirectionsFilter.length) {
             this.SelectToggleFilters(this.selectedShipmentDirectionsFilter.map(x => x.Code).join(','));
         }
         this.hasException = this.hasExceptionAdvancedFilter;
@@ -916,29 +870,26 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
         this.selectedShipmentTypesFilter = [];
         this.selectedShipmentDirectionsFilter = [];
         this.hasExceptionAdvancedFilter = false;
-        this.appliedSelectedFilterMilestonesStatus= [];
+        this.appliedSelectedFilterMilestonesStatus = [];
         this.FiltersInvitedCustomers.map((item, index) => {
             item.IsSelected = false;
         });
         // RootContext.ShipmentsScrollPosition = 0;
         // this.LoadScreenData();
     }
-    SortMenuClicked(buttonCode: string)
-    {
+    SortMenuClicked(buttonCode: string) {
         // this.LoadScreenData();
     }
 
     lastClickedShipment: any;
-    ShipmentMoreButtonClicked(shipment: any, event: any)
-    {
+    ShipmentMoreButtonClicked(shipment: any, event: any) {
         event.preventDefault();
         event.stopPropagation();
 
         this.lastClickedShipment = shipment;
         this.showShipmentDetailsMenu = true;
     }
-    ShipmentDetailsMenuClicked(buttonCode: string)
-    {
+    ShipmentDetailsMenuClicked(buttonCode: string) {
 
         if (buttonCode == "set")
             this.lastClickedShipment.IsFavorite = true;
@@ -949,140 +900,158 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit
 
     ShipmentsLoadingError: string;
 
-    FocusOnSearchInput(){
+    FocusOnSearchInput() {
         this.searchInput.nativeElement.focus();
     }
 
 
-    public get SelectedCustomers() : any[] {
-        return this.InvitedCustomers.filter(customer=>customer.IsSelected) || [];
+    public get SelectedCustomers(): any[] {
+        return this.InvitedCustomers.filter(customer => customer.IsSelected) || [];
     }
 
-    UnselectCustomer(customer)
-    {
-        var index = this.SelectedInvitedCustomers.findIndex(d=>d==customer);
-            if(index >= 0)
-                this.SelectedInvitedCustomers.splice(index,1);
-                RootContext.ShipmentsScrollPosition = 0;
+    UnselectCustomer(customer) {
+        var index = this.SelectedInvitedCustomers.findIndex(d => d == customer);
+        if (index >= 0)
+            this.SelectedInvitedCustomers.splice(index, 1);
+        RootContext.ShipmentsScrollPosition = 0;
         this.LoadScreenData();
 
     }
 
-    UnselectMiletone(state)
-    {
-        var index = this.appliedSelectedFilterMilestonesStatus.findIndex(d=>d==state);
-            if(index >= 0)
-                this.appliedSelectedFilterMilestonesStatus.splice(index,1);
-                let itemIndex = this.MilestonesStatus.findIndex(item => item.Code == state.Code);
-                state.IsSelected = false;
-                this.MilestonesStatus[itemIndex] = state;
-                RootContext.ShipmentsScrollPosition = 0;
+    UnselectMiletone(state) {
+        var index = this.appliedSelectedFilterMilestonesStatus.findIndex(d => d == state);
+        if (index >= 0)
+            this.appliedSelectedFilterMilestonesStatus.splice(index, 1);
+        let itemIndex = this.MilestonesStatus.findIndex(item => item.Code == state.Code);
+        state.IsSelected = false;
+        this.MilestonesStatus[itemIndex] = state;
+        RootContext.ShipmentsScrollPosition = 0;
         this.LoadScreenData();
 
     }
     FiltersInvitedCustomers: any[] = [];
-    OpenAdvancedFiltersSidebar(){
+    OpenAdvancedFiltersSidebar() {
         this.sharedService.updateValue(true);
         this.mapFiltersInvitedCustomers();
     }
 
     mapFiltersInvitedCustomers() {
 
-        this.FiltersSelectedInvitedCustoms = this.SelectedInvitedCustomers.map(d=>d);
+        this.FiltersSelectedInvitedCustoms = this.SelectedInvitedCustomers.map(d => d);
 
-        this.InvitedCustomers.forEach(d=>d.IsSelected = false);
-        this.FiltersSelectedInvitedCustoms.forEach(d=>d.IsSelected = true);
+        this.InvitedCustomers.forEach(d => d.IsSelected = false);
+        this.FiltersSelectedInvitedCustoms.forEach(d => d.IsSelected = true);
 
-        this.FiltersInvitedCustomers = this.InvitedCustomers.map(d=>{
-            var selected = this.FiltersSelectedInvitedCustoms.find(g=>g==d);
+        this.FiltersInvitedCustomers = this.InvitedCustomers.map(d => {
+            var selected = this.FiltersSelectedInvitedCustoms.find(g => g == d);
             return selected || d;
         });
     }
-    OnCustomerValueChanged(value,customer){
-        if(value){
-            var index = this.FiltersSelectedInvitedCustoms.findIndex(d=>d==customer);
-            if(index < 0)
+    OnCustomerValueChanged(value, customer) {
+        if (value) {
+            var index = this.FiltersSelectedInvitedCustoms.findIndex(d => d == customer);
+            if (index < 0)
                 this.FiltersSelectedInvitedCustoms.push(customer);
         }
-        else{
-            var index = this.FiltersSelectedInvitedCustoms.findIndex(d=>d==customer);
-            if(index >= 0)
-                this.FiltersSelectedInvitedCustoms.splice(index,1);
+        else {
+            var index = this.FiltersSelectedInvitedCustoms.findIndex(d => d == customer);
+            if (index >= 0)
+                this.FiltersSelectedInvitedCustoms.splice(index, 1);
         }
     }
 
     // Milestones filter
     MilestonesStatus: any[] = [];
-    OnMilestonesStatusFilterChanged(value,state){
-        var index = this.selectedFilterMilestonesStatus.findIndex(d=>d==state);
-        if(value === true && index < 0){
+    OnMilestonesStatusFilterChanged(value, state) {
+        var index = this.selectedFilterMilestonesStatus.findIndex(d => d == state);
+        if (value === true && index < 0) {
             this.MilestonesStatus.filter(x => x.Code === state.Code)[0].IsSelected = true;
-                this.selectedFilterMilestonesStatus.push(state);
+            this.selectedFilterMilestonesStatus.push(state);
         }
-        else if(value === false && index >= 0){
+        else if (value === false && index >= 0) {
             this.MilestonesStatus.filter(x => x.Code === state.Code)[0].IsSelected = false;
-                this.selectedFilterMilestonesStatus.splice(index,1);
+            this.selectedFilterMilestonesStatus.splice(index, 1);
         }
     }
 
-    OnShipmentTypeFilterChanged(value,item){
-        var index = this.selectedShipmentTypesFilter.findIndex(d=>d==item);
-        if(value === true && index < 0){
-                this.selectedShipmentTypesFilter.push(item);
+    OnShipmentTypeFilterChanged(value, item) {
+        var index = this.selectedShipmentTypesFilter.findIndex(d => d == item);
+        if (value === true && index < 0) {
+            this.selectedShipmentTypesFilter.push(item);
         }
-        else if(value === false && index >= 0){
-                this.selectedShipmentTypesFilter.splice(index,1);
+        else if (value === false && index >= 0) {
+            this.selectedShipmentTypesFilter.splice(index, 1);
         };
     }
 
-    OnShipmentDirectionFilterChanged(value,item){
-        var index = this.selectedShipmentDirectionsFilter.findIndex(d=>d==item);
-        if(value === true && index < 0){
-                this.selectedShipmentDirectionsFilter.push(item);
+    OnShipmentDirectionFilterChanged(value, item) {
+        var index = this.selectedShipmentDirectionsFilter.findIndex(d => d == item);
+        if (value === true && index < 0) {
+            this.selectedShipmentDirectionsFilter.push(item);
         }
-        else if(value === false && index >= 0){
-                this.selectedShipmentDirectionsFilter.splice(index,1);
+        else if (value === false && index >= 0) {
+            this.selectedShipmentDirectionsFilter.splice(index, 1);
         }
     }
 
-    ShowSearchPanel()
-    {
+    ShowSearchPanel() {
         this.ShowMobileSearch = true;
         this.FocusOnMobileSearchBox();
     }
-    HideSearchPanel()
-    {
+    HideSearchPanel() {
         this.ShowMobileSearch = false;
         this.SearchText = this.PanelSearchText;
-        if(!this.SearchText){
+        if (!this.SearchText) {
             this.Shipments = [];
             RootContext.LastSearchText = this.SearchText;
             this.LoadScreenData();
-        }else{
+        } else {
             this.Search();
         }
     }
-    ToggleSearchPanel()
-    {
+    ToggleSearchPanel() {
         this.ShowMobileSearch = !this.ShowMobileSearch;
 
         if (this.ShowMobileSearch)
             this.FocusOnMobileSearchBox();
     }
 
-    private FocusOnMobileSearchBox()
-    {
-        setTimeout(() =>
-        {
+    private FocusOnMobileSearchBox() {
+        setTimeout(() => {
             this.mobileSearchInput?.nativeElement?.focus();
         }, 50);
     }
+
+    GetSlice(text: string, numberOfCharacter) {
+
+        var result = text
+        if (text.length > numberOfCharacter) {
+            result = text.slice(0, numberOfCharacter) + "..."
+        }
+        return result;
+
+    }
+    maxNumberOfCarachter = 15;
+    @HostListener('window:resize', ['$event'])
+    onResize(event) {
+        this.setMaxNumberOfCarachter(event.srcElement.innerWidth);
+    }
+
+    setMaxNumberOfCarachter(width) {
+        if (width <= 1024 && width > 768 ) {
+            this.maxNumberOfCarachter = 10
+        }else if (width <= 768 && width > 425) {
+            this.maxNumberOfCarachter = 9;
+
+        } else {
+            this.maxNumberOfCarachter = 15
+        }
+    }
+    
 }
 
-export class ToggleFilter
-{
-    constructor(code: string, name: string, filterName: string = '', count: number = 0)
-    {
+export class ToggleFilter {
+    constructor(code: string, name: string, filterName: string = '', count: number = 0) {
         this.Code = code;
         this.Name = name;
         this.Count = count;
@@ -1091,51 +1060,43 @@ export class ToggleFilter
 
 
     private name: string;
-    public get Name(): string
-    {
+    public get Name(): string {
         return this.name;
     }
-    public set Name(v: string)
-    {
+    public set Name(v: string) {
         this.name = v;
     }
 
 
 
     private count: number = 0;
-    public get Count(): number
-    {
+    public get Count(): number {
         return this.count;
     }
-    public set Count(v: number)
-    {
+    public set Count(v: number) {
         this.count = v;
     }
 
 
     private code: string;
-    public get Code(): string
-    {
+    public get Code(): string {
         return this.code;
     }
-    public set Code(v: string)
-    {
+    public set Code(v: string) {
         this.code = v;
     }
 
     private filterName: string;
-    public get FilterName(): string
-    {
+    public get FilterName(): string {
         return this.filterName;
     }
-    public set FilterName(v: string)
-    {
+    public set FilterName(v: string) {
         this.filterName = v;
     }
 
 }
 
-export class CargoTrackingShipmentsCounter{
+export class CargoTrackingShipmentsCounter {
 
     Import: number = 0;
     Export: number = 0;
@@ -1175,7 +1136,7 @@ export enum SortOptions {
 
 export enum ShipmentLevelCodes {
     House = 'H',
-    Direct ='D'
+    Direct = 'D'
 }
 
 export enum ShipmentEntityTypes {

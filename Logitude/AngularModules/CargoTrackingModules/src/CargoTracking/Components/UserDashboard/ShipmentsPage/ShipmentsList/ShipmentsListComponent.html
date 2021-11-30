@@ -285,14 +285,14 @@
                                     </span>
                                 </div>
 
-                                <custom-label [width]="110" class="mobile-only-inline-block">
-                                    {{ shipment.ShipmentNumber }}
-                                </custom-label>
+                                <span  class="mobile-only-inline-block">
+                                   {{ GetSlice(shipment.ShipmentNumber,maxNumberOfCarachter) }}
+                                </span>
                                 <div class="truncateText mobile-inline-block"
                                     *ngFor="let item of references; let i = index">
-                                    <custom-label [ngClass]="{'hide-mobile': i >= 0}" *ngIf="i < 3">
-                                        {{item}}
-                                    </custom-label>
+                                    <span (click)="$event.stopPropagation()" [matTooltip]="item.length > maxNumberOfCarachter ? item : ''" [ngClass]="{'hide-mobile': i >= 0}" *ngIf="i < 3">
+                                        {{GetSlice(item,maxNumberOfCarachter)}}
+                                    </span>
                                     <span class="more-mobile" *ngIf="i == 0">
                                         <a
                                             (click)="OpenReferencesMessageWindow(shipment.CustomerReference?.split(','), true); $event.stopPropagation()"><u>+
@@ -342,7 +342,7 @@
                             <div [attr.src]="SetTitileAndValueForSupplierOrClient(shipment)">
                                 <div class="subtitle">{{SupplierOrClientTitle}}</div>
                                 <div class="value truncateText">
-                                    <custom-label>{{SupplierOrClientValue}}</custom-label> 
+                                    <span (click)="$event.stopPropagation()" [matTooltip]=" SupplierOrClientValue.length > maxNumberOfCarachter ? SupplierOrClientValue : ''">{{GetSlice(SupplierOrClientValue,maxNumberOfCarachter)}}</span> 
                                 </div>
 
 
