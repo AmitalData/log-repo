@@ -70,7 +70,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         private void GetForeignFields_Status(ContainerPM entityPM, Container entityPoco)
         {
             entityPM.StatusName = null;
-            if (entityPoco.StatusId != null)
+            if (entityPoco.StatusId == null)
             {
                 return;
             }
