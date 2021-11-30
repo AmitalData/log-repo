@@ -6,6 +6,8 @@ using Logitude.Server.Tools.EntityChanges;
 using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.QueueService;
 using Simplog.Data.Helpers;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Data.ShipmentsModel;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Simplog.Data.ShipmentsModel.Repositories;
@@ -40,6 +42,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             ContainerTracing containerTracing = new ContainerTracing(entityPM, containerPoco, isNewEntity);
             containerTracing.Trace();
             ShipmentMapping.MapContainer(entityPM, containerPoco, isNewEntity);
+            this.GetForeignFields_Status(entityPM, containerPoco);
             entityRepository.Add(containerPoco);
             entityRepository.SubmitChanges();
             AddShipmentUpdateKafkaQueueMessage("CToolContainerCreate");
@@ -59,9 +62,23 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 RunAutomation("OnUpdate", entityPM);
             }
             ShipmentMapping.MapContainer(entityPM, containerPoco, isNewEntity);
+            this.GetForeignFields_Status(entityPM, containerPoco);
             entityRepository.Update(containerPoco);
             entityRepository.SubmitChanges();
             AddShipmentUpdateKafkaQueueMessage("CToolContainerUpdate");
+        }
+        private void GetForeignFields_Status(ContainerPM entityPM, Container entityPoco)
+        {
+            entityPM.StatusName = null;
+            if (entityPoco.StatusId != null)
+            {
+                return;
+            }
+            EntityStatus iEntityStatus = EntityStatusRepository.GetSingleEntityStatus(entityPoco.StatusId, entityPoco.Tenant, true);
+            if (iEntityStatus != null)
+            {
+                entityPM.StatusName = iEntityStatus.Name;
+            }
         }
 
         private void MapContainerClosedDate(ContainerPM containerPM, Container container)
