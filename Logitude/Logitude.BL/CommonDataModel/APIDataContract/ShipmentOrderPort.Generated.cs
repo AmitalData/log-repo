@@ -14,24 +14,32 @@ using Logitude.BL.ShipmentsModel.APIDataContract.ApiV1;
 using System.Xml.Serialization;
 using Simplog.Data.QuoteModel.EntityPOCOs;
 
-namespace Logitude.BL.InfrastructureModel.APIDataContract.ApiV1
+namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
 {
    
-    public partial class EventType
+    public partial class ShipmentOrderPort
     {
 
 	    
+	[XmlAttribute]
     public string Id { get; set; }
     
 	[XmlAttribute]
     public string Code { get; set; }
     
-    public string EnglishName { get; set; }
+    public string LocalName { get; set; }
     
-    public bool IsManualEntry { get; set; }
+    public string EnglishName { get; set; }
     
 	[XmlAttribute]
     public string PartnerCode { get; set; }
+    
+    public Country Country { get; set; }
+    
+    public State State { get; set; }
+    
+	[XmlAttribute]
+    public string PortCode { get; set; }
 
     public  string  ComputingPartnerCode { get; set; }
 

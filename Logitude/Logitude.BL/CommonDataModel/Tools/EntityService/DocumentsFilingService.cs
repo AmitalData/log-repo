@@ -880,7 +880,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             entityRepository.SubmitChanges();
 
             this.OpenPODDocumentUploderQueue(theEntityPm);
-            this.OpenSendingQBODocumentsQueue(theEntityPm);
+            //this.OpenSendingQBODocumentsQueue(theEntityPm);
 
             RunDocumentPopulateAutomaticDatesService(theEntityPm);
             

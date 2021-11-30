@@ -229,5 +229,8 @@ export class ContainerList {
 		IsAutomaticUpdates: boolean;
 		IsClosed: boolean;
 		ClosedDate: Date;
+		StatusId: string;
+		StatusName: string;
+		StatusWeight: number;
 	
 }

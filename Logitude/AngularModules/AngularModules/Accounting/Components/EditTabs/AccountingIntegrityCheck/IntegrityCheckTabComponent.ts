@@ -14,9 +14,10 @@ import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
 import { ObservableCollection } from '../../../../Infrastructure/Utilities/ObservableCollection';
 import { AccountingEntegrityCheckExtendedPMService } from '../../../Services/ExtendedPMs/AccountingEntegrityCheckExtendedPMService';
 import { AccountingIntegrityCheckPMService } from '../../../Services/StandardPMs/AccountingIntegrityCheckPMService';
+import { ServiceHelper } from '../../../../Infrastructure/Utilities/ServiceHelper';
 
 @Component({
-    
+
     templateUrl: './IntegrityCheckTabComponent.html',
 })
 
@@ -44,7 +45,7 @@ export class IntegrityCheckTabComponent extends BaseComponent implements OnInit 
         this.ShouldFix = this.entityPM.ShouldFix;
         // this.encodeParameters();
         // this.decodeParameters();
-        if(this.entityPM.StatusCode =="2") this.Fixing =true;
+        if (this.entityPM.StatusCode == "2") this.Fixing = true;
         this.SetUIProperty();
 
     }
@@ -57,7 +58,7 @@ export class IntegrityCheckTabComponent extends BaseComponent implements OnInit 
 
     SetUIProperty() {
         this.UIProperties.SetEnabled("ResultXML", this.ObjectTableName, false);
-        if(this.entityPM.Id && this.entityPM.Id != "new"){
+        if (this.entityPM.Id && this.entityPM.Id != "new") {
             this.UIProperties.SetEnabled("FromMonthInclusive", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("ToMonthInclusive", this.ObjectTableName, false);
         }
@@ -72,10 +73,10 @@ export class IntegrityCheckTabComponent extends BaseComponent implements OnInit 
         }
     }
 
-    get FromMonthInclusive () { return this.entityPM.FromMonthInclusive ; }
-    set FromMonthInclusive (value: Date) {
-        if (this.entityPM.FromMonthInclusive  != value) {
-            this.entityPM.FromMonthInclusive  = value;
+    get FromMonthInclusive() { return this.entityPM.FromMonthInclusive; }
+    set FromMonthInclusive(value: Date) {
+        if (this.entityPM.FromMonthInclusive != value) {
+            this.entityPM.FromMonthInclusive = value;
             // this.encodeParameters();
 
             if (!this.isValidate)
@@ -87,10 +88,10 @@ export class IntegrityCheckTabComponent extends BaseComponent implements OnInit 
         }
     }
 
-    get ToMonthInclusive () { return this.entityPM.ToMonthInclusive ; }
-    set ToMonthInclusive (value: Date) {
-        if (this.entityPM.ToMonthInclusive  != value) {
-            this.entityPM.ToMonthInclusive  = value;
+    get ToMonthInclusive() { return this.entityPM.ToMonthInclusive; }
+    set ToMonthInclusive(value: Date) {
+        if (this.entityPM.ToMonthInclusive != value) {
+            this.entityPM.ToMonthInclusive = value;
             // this.encodeParameters();
 
             if (!this.isValidate)
@@ -102,10 +103,10 @@ export class IntegrityCheckTabComponent extends BaseComponent implements OnInit 
     }
 
 
-    get ResultXML () { return this.entityPM.ResultXML ; }
-    set ResultXML (value: string) {
-        if (this.entityPM.ResultXML  != value) {
-            this.entityPM.ResultXML  = value;
+    get ResultXML() { return this.entityPM.ResultXML; }
+    set ResultXML(value: string) {
+        if (this.entityPM.ResultXML != value) {
+            this.entityPM.ResultXML = value;
         }
     }
 
@@ -142,13 +143,13 @@ export class IntegrityCheckTabComponent extends BaseComponent implements OnInit 
             if (myResponse != null) {
                 if (!myResponse.HasError) {
 
-                   
+
                     this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
-                 
-                    this.AccountingEntegrityCheckExtendedPMService.PostFixEntegrityCheckErrorInBatch(this.entityPM).subscribe((myResult:ServiceResponse) => {
-                   
+
+                    this.AccountingEntegrityCheckExtendedPMService.PostFixEntegrityCheckErrorInBatch(this.entityPM).subscribe((myResult: ServiceResponse) => {
+
                         this.CurrentSession.StopBusyIndicator();
-                        
+
                         var mm: ServiceResponse = myResult;
                         var entity = mm.Result;
 
@@ -162,9 +163,17 @@ export class IntegrityCheckTabComponent extends BaseComponent implements OnInit 
                 }
             }
         });
-     
+    }
 
-}
+    ViewResultXMLButtonClicked() {
+        var _apiUrl = ServiceHelper.GetLogitudeURL() + 'api/AccountingEntegrityCheck';
+        var url = _apiUrl + '/getAccountingIntegrityResultByIdAndTenant?' + 'id=' + this.entityPM.Id + '&tenant=' + this.entityPM.Tenant;
+        var win = window.open(url, '_blank');
+
+        if (win) {
+            win.focus();
+        }
+    }
 }
 
 export class IntegrityCheckParameters {

@@ -267,7 +267,8 @@ namespace WebFreight.Web.ExternalAPIs.V1
                     || entityPM.CustomerId == entityPM.AgentId
                     || entityPM.CustomerId == entityPM.CustomAgentImportId
                     || entityPM.CustomerId == entityPM.ReleasingAgentId
-                    || entityPM.CustomerId == entityPM.FreightForwarderId)
+                    || entityPM.CustomerId == entityPM.FreightForwarderId
+                    || entityPM.CustomerId == entityPM.Notify1Id)
                 {
                     this.SetCustomerTypeCode(entityPM);
 
@@ -379,7 +380,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         }
                         IShipmentsContext MyContext = ShipmentsContext.GetContext(authToken.Tenant);
                         HouseQueryService mappingService = new HouseQueryService(authToken.Tenant);
-                        ShipmentPM HousePM = mappingService.HouseDataMappingAndValidatin(entity, authToken.Tenant, "", true);
+                        ShipmentPM HousePM = mappingService.HouseDataMappingAndValidatin(entity, authToken.Tenant, computingPartnerCode, true);
 
                         if (HousePM != null)
                         {

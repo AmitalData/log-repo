@@ -91,6 +91,7 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.PayablesAccountingCard);
             MethodHelper.AddToSearchFields(ref mySearchFields, entityCard.CityName);
             MethodHelper.AddToSearchFields(ref mySearchFields, entityCard.CountryName);
+            MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.SCACCode);
 
             if (mySearchFields.Length > 1000)
             {

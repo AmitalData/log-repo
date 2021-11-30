@@ -1497,6 +1497,17 @@ on record.JournalId equals j.Id
                  select a).OrderByDescending(a => a.AccountingDate);
             return pocos;
         }
+
+        public List<LedgerTransaction> GetTransactionsBySourceId(string sourceId, string sourceTypeCode, int tenant)
+        {
+            return (from transaction in context.LedgerTransactions
+                    join journal in context.Journals on transaction.JournalId equals journal.Id
+                    where journal.AccountingEntityId == sourceId
+                            && journal.AccountingEntityCode == sourceTypeCode
+                            && transaction.Tenant == tenant
+                    select transaction).ToList();
+        }
+
     }
     public class GLAccountTotalByMonthsKey
     {

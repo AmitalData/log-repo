@@ -3006,22 +3006,6 @@
         IsCompositKey="false"
         IsUpdateAllowed="false" />
       <DCField
-        DCFieldName="&quot;EntityStatus&quot;"
-        DCVersion="&quot;ApiV1&quot;"
-        FieldName="&quot;EntityStatusId&quot;"
-        IsKey="false"
-        IsManualMapping="false"
-        IsMulti="false"
-        FieldsDataType="&quot;EntityStatus&quot;"
-        IsNullable="false"
-        IsSpecialField="false"
-        IsCustomType="true"
-        IsAttribute="false"
-        IgnoreCustomTypeCheck="false"
-        IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
-      <DCField
         DCFieldName="&quot;IsManualEntry&quot;"
         FieldName="&quot;IsManualEntry&quot;"
         IsKey="false"

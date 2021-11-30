@@ -1,13 +1,14 @@
 declare var window: any;
 import {Component,ChangeDetectorRef} from '@angular/core'; 
 import {ObjectsLocator} from '../../../Infrastructure/Locators/ObjectsLocator';
+import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
 
 @Component({  
     templateUrl: './MultiUpdateCheckTemplate.html',
 })
 
 export class MultiUpdateCheckTemplate {
-
+    private CurrentSession = SessionLocator.SelectedSession;
     public UpdateSuccess: any;
     public fieldName: any;
     public AdditionalData: any;

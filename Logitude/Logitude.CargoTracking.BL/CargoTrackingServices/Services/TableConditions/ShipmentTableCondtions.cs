@@ -295,6 +295,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
                 "NULL as AssginedToCustomsAgentDate," +
                 "NULL as AssignedToTruckerDate," +
                 "NULL as ExceptionDate," +
+                "NULL as FromWarehouseEstimationDate," +
                 "NULL as ContainersNumbers," +
                 "SHO.OrderNumber as ShipmentNumber," +
 
@@ -340,9 +341,12 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
                 "CreateDate as CreateDateTime," +
                 "(case when AutomaticLastUpdateDate is null then UpdateDate when AutomaticLastUpdateDate is not null then AutomaticLastUpdateDate end) as AutomaticLastUpdateDate," +
                 "PickupActualDateTime as PickupDate," +
-                "PickupEstimatedDateTime as PickupEstimationDate";
+                "PickupEstimatedDateTime as PickupEstimationDate," +
+                "OnHandNumber as FromWarehouseNotes," +
+                "OnHandDate as FromWarehouseDate";
 
-            var selectScript = $"SELECT {shipmentOrderFields} , {cargoTrackingShipmentDefaultFields} ";
+
+             var selectScript = $"SELECT {shipmentOrderFields} , {cargoTrackingShipmentDefaultFields} ";
 
             var fromScript = $"FROM dbo.ShipmentOrders SHO ";
 

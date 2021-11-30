@@ -59,7 +59,8 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
             new FieldMap("ArrivalEstimationDate", ArrivalEstimationDate),
             new FieldMap("ArrivalDate", ArrivalDate),
             new FieldMap("PoNumber", "PoNumber"),
-
+            new FieldMap("FromWarehouseDate", "OnHandDate"),
+            new FieldMap("FromWarehouseNotes", "OnHandNumber"),
 
         };
 
@@ -88,6 +89,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
             tableRow.SetField("CreateDone", !IsFieldNullOrEmpty(tableRow, "CreateDate"));
             tableRow.SetField("DepartureDone", !IsFieldNullOrEmpty(tableRow, "DepartureDate"));
             tableRow.SetField("ArrivalDone", !IsFieldNullOrEmpty(tableRow, "ArrivalDate"));
+            tableRow.SetField("FromWarehouseDone", !IsFieldNullOrEmpty(tableRow, "FromWarehouseDate"));
 
 
         }
@@ -138,13 +140,13 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
                         CheckMilestone(currentMilestoneArgs);
                     }
                     break;
-                //case CargoTrackingMilestoneValues.FromWarehouse:
-                //    if (!IsFieldNullOrEmpty(tableRow, "FromWarehouseDone") && !tableRow["FromWarehouseDone"].Equals("False"))
-                //    {
-                //        currentMilestoneArgs.date = tableRow[""];
-                //        CheckMilestone(currentMilestoneArgs);
-                //    }
-                //    break;
+                case CargoTrackingMilestoneValues.FromWarehouse:
+                    if (!IsFieldNullOrEmpty(currentMilestoneArgs.tableRow, "FromWarehouseDone") && !currentMilestoneArgs.tableRow["FromWarehouseDone"].Equals("False"))
+                    {
+                        currentMilestoneArgs.date = currentMilestoneArgs.tableRow["FromWarehouseDate"];
+                        CheckMilestone(currentMilestoneArgs);
+                    }
+                    break;
                 case CargoTrackingMilestoneValues.Departure:
                     if (!IsFieldNullOrEmpty(currentMilestoneArgs.tableRow, "DepartureDone") && !currentMilestoneArgs.tableRow["DepartureDone"].Equals("False"))
                     {

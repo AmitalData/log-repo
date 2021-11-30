@@ -563,6 +563,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
                 try
                 {
                     MapCargoTrackingDate(bulkCopy, bulkDataPreperation, isFromInnerCargoTrackingTable);
+                    SubstringDeliveryNotesFieldValue(bulkDataPreperation, isFromInnerCargoTrackingTable);
                     SqlBulkCopyWriteData(bulkCopy, bulkDataPreperation, isFromInnerCargoTrackingTable);
                 }
                 catch (Exception exception)
@@ -579,6 +580,21 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
 
         }
 
+        private void SubstringDeliveryNotesFieldValue(BulkDataPreperation bulkDataPreperation, bool isFromInnerCargoTrackingTable)
+        {
+            if (bulkDataPreperation.CargoTrackingTable.CargoTracking_TableName == "CargoTrackingShipments" && !isFromInnerCargoTrackingTable)
+            {
+
+                foreach (DataRow row in bulkDataPreperation.SelectedDataTable.Rows)
+                {
+                    if (row["DeliveryNotes"] != null && row["DeliveryNotes"].GetType() != typeof(DBNull))
+                    {
+                        var value = row["DeliveryNotes"].ToString();
+                        row["DeliveryNotes"] = value.Length > 32 ? value.Substring(0, 31) : value;
+                    }
+                }
+            }
+        }
 
         private void SetErrorLog(Exception exception, BulkDataPreperation bulkDataPreperation)
         {

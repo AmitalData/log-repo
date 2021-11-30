@@ -325,7 +325,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
         private List<string> GetTaxReportLinesJournalIds(TaxReportList taxReport, string inputOrOutput)
         {
           return  (from a in context.TaxReportLines
-             where a.TaxReportId == taxReport.Id && a.Tenant == taxReport.Tenant && a.OutputOrInput == inputOrOutput && a.TransmitStatusCode !="3"
+             where a.TaxReportId == taxReport.Id && a.Tenant == taxReport.Tenant && a.OutputOrInput == inputOrOutput && (a.TransmitStatusCode != TansmitStatuses.NotForTransmitAtAll ||  a.TransmitStatusCode != TansmitStatuses.NotForTransmitInThisReport)
                    select a.JournalId).ToList();
         }
         private TaxReportList GetTaxReport(string Id, int tenant)
@@ -1678,6 +1678,11 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
     {
         public const string Input = "I";
         public const string Output = "O";
+    }
+    public struct TansmitStatuses
+    {
+        public const string NotForTransmitInThisReport = "2";
+        public const string NotForTransmitAtAll = "3";
     }
     public class LedgerTransactionDto
     {

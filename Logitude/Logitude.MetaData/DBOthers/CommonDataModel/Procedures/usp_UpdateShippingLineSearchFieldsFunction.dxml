@@ -1,0 +1,78 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Procedure
+  DBType="Main"
+  Name="usp_UpdateShippingLineSearchFieldsFunction"
+  Schema="dbo"
+  Module="Common">
+  <SqlScript>
+    <![CDATA[
+
+
+
+
+Create PROCEDURE [dbo].[usp_UpdateShippingLineSearchFieldsFunction]
+(
+	@ShippingLineId varchar(15)
+)
+AS
+
+
+declare  @Tenant int
+declare  @Code varchar(4)
+declare  @SCACCode varchar(4)
+declare  @EnglishName varchar(70)
+declare  @LocalName nvarchar(100)
+declare  @VatNumber nvarchar(20)
+declare  @ReceivablesAccountingCard nvarchar(25)
+declare  @PayablesAccountingCard nvarchar(25)
+declare  @CountryId varchar(15)
+declare  @CityName varchar(40)
+declare  @CountryName varchar(120)
+
+
+if (@ShippingLineId is not null)
+
+begin 
+
+select
+@Tenant = Cards.Tenant,
+@Code = Cards.Code,
+@SCACCode = ShippingLines.SCACCode,
+@EnglishName = Cards.EnglishName,
+@LocalName = Cards.LocalName,
+@VatNumber = Cards.VatNumber,
+@ReceivablesAccountingCard = Cards.ReceivablesAccountingCard,
+@PayablesAccountingCard = Cards.PayablesAccountingCard,
+@CountryId = Cards.CountryId,
+@CityName = Cards.CityName,
+@CountryName = Cards.CountryName
+from ShippingLines join Cards on ShippingLines.Id = Cards.Id
+where ShippingLines.Id = @ShippingLineId
+
+begin 
+
+  if(@CountryId is not null)
+  begin 
+	select @CountryName = EnglishName from Countries where Id = @CountryId
+  end 
+
+  declare  @SearchFields nvarchar(1000) 
+
+  set @SearchFields = @Code + ',' + @SCACCode + ',' + @EnglishName;
+  if(@LocalName is not null) begin set @SearchFields +=   (',' + @LocalName);end
+  if(@VatNumber is not null) begin set @SearchFields +=   (',' + @VatNumber);end
+  if(@ReceivablesAccountingCard is not null) begin set @SearchFields +=   (',' + @ReceivablesAccountingCard);end
+  if(@PayablesAccountingCard is not null) begin set @SearchFields +=   (',' + @PayablesAccountingCard);end
+  if(@CityName is not null) begin set @SearchFields +=   (',' + @CityName);end
+  if(@CountryName is not null) begin set @SearchFields +=   (',' + @CountryName);end
+
+  update Cards set SearchFields =  SUBSTRING(@SearchFields,0, 999) where Id = @ShippingLineId and Tenant = @Tenant
+  end
+end
+
+
+]]>
+  </SqlScript>
+  <OracleScript>
+  </OracleScript>
+</Procedure>

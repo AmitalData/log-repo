@@ -136,7 +136,7 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public bool IsDigitalSignRequired { get; set; }
         public bool BackedupExternally { get; set; }
         public DateTime? LastBackupDate { get; set; }
-        public bool IsTransferdToQBO { get; set; }
+        public bool? IsTransferdToQBO { get; set; }
 
 
     }

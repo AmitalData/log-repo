@@ -161,22 +161,22 @@ using Logitude.ShipmentOrderModule.Data;
 				   temp.SupplyDateTime = MyEntityPM.SupplyDateTime;			  
 				   if(MyEntityPM.OriginPortId != null)
 				   {
-					   PortQueryService PortService11 = new PortQueryService(Tenant);
-					   					   temp.OriginPort = PortService11.GetPortById(MyEntityPM.OriginPortId,Tenant); 
+					   ShipmentOrderPortQueryService ShipmentOrderPortService11 = new ShipmentOrderPortQueryService(Tenant);
+					   					   temp.OriginPort = ShipmentOrderPortService11.GetShipmentOrderPortById(MyEntityPM.OriginPortId,Tenant); 
 			       
 					   				   }
 				   			  
 				   if(MyEntityPM.DestinationPortId != null)
 				   {
-					   PortQueryService PortService12 = new PortQueryService(Tenant);
-					   					   temp.DestinationPort = PortService12.GetPortById(MyEntityPM.DestinationPortId,Tenant); 
+					   ShipmentOrderPortQueryService ShipmentOrderPortService12 = new ShipmentOrderPortQueryService(Tenant);
+					   					   temp.DestinationPort = ShipmentOrderPortService12.GetShipmentOrderPortById(MyEntityPM.DestinationPortId,Tenant); 
 			       
 					   				   }
 				   			  
 				   if(MyEntityPM.GatewayId != null)
 				   {
-					   PortQueryService PortService13 = new PortQueryService(Tenant);
-					   					   temp.Gateway = PortService13.GetPortById(MyEntityPM.GatewayId,Tenant); 
+					   ShipmentOrderPortQueryService ShipmentOrderPortService13 = new ShipmentOrderPortQueryService(Tenant);
+					   					   temp.Gateway = ShipmentOrderPortService13.GetShipmentOrderPortById(MyEntityPM.GatewayId,Tenant); 
 			       
 					   				   }
 				   
@@ -396,10 +396,10 @@ using Logitude.ShipmentOrderModule.Data;
 					
 					temp.ShipmentNumber = MyEntity.ShipmentNumber;
 					temp.SupplyDateTime = MyEntity.SupplyDateTime;
-					PortQueryService OriginPortPortService = new PortQueryService(Tenant);
+					ShipmentOrderPortQueryService OriginPortShipmentOrderPortService = new ShipmentOrderPortQueryService(Tenant);
 					if(MyEntity.OriginPort != null)
 					{
-						var myOriginPortPM = OriginPortPortService.PortDataMappingAndValidatin(MyEntity.OriginPort,Tenant,ComputingPartnerName);
+						var myOriginPortPM = OriginPortShipmentOrderPortService.ShipmentOrderPortDataMappingAndValidatin(MyEntity.OriginPort,Tenant,ComputingPartnerName);
 												if(myOriginPortPM != null)
 						{
 							temp.OriginPortId = myOriginPortPM.Id;
@@ -408,10 +408,10 @@ using Logitude.ShipmentOrderModule.Data;
 					}
 			
 					
-					PortQueryService DestinationPortPortService = new PortQueryService(Tenant);
+					ShipmentOrderPortQueryService DestinationPortShipmentOrderPortService = new ShipmentOrderPortQueryService(Tenant);
 					if(MyEntity.DestinationPort != null)
 					{
-						var myDestinationPortPM = DestinationPortPortService.PortDataMappingAndValidatin(MyEntity.DestinationPort,Tenant,ComputingPartnerName);
+						var myDestinationPortPM = DestinationPortShipmentOrderPortService.ShipmentOrderPortDataMappingAndValidatin(MyEntity.DestinationPort,Tenant,ComputingPartnerName);
 												if(myDestinationPortPM != null)
 						{
 							temp.DestinationPortId = myDestinationPortPM.Id;
@@ -420,10 +420,10 @@ using Logitude.ShipmentOrderModule.Data;
 					}
 			
 					
-					PortQueryService GatewayPortService = new PortQueryService(Tenant);
+					ShipmentOrderPortQueryService GatewayShipmentOrderPortService = new ShipmentOrderPortQueryService(Tenant);
 					if(MyEntity.Gateway != null)
 					{
-						var myGatewayPM = GatewayPortService.PortDataMappingAndValidatin(MyEntity.Gateway,Tenant,ComputingPartnerName);
+						var myGatewayPM = GatewayShipmentOrderPortService.ShipmentOrderPortDataMappingAndValidatin(MyEntity.Gateway,Tenant,ComputingPartnerName);
 												if(myGatewayPM != null)
 						{
 							temp.GatewayId = myGatewayPM.Id;

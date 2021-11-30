@@ -151,6 +151,7 @@ import { MultiUpdateComponent } from './Components/MultiUpdateComponent/MultiUpd
 import { MultiEntityUpdateBaseComponent } from './Components/MultiUpdateComponent/MultiEntityUpdateBaseComponent';
 import { MultiEntityUpdateErrorHandlerComponent } from './Components/MultiUpdateComponent/MultiEntityUpdateErrorHandlerComponent';
 import { MultiUpdateCheckTemplate } from './Components/MultiUpdateComponent/MultiUpdateCheckTemplate';
+import { MultiUpdateCheckBoxComponent } from './Components/MultiUpdateComponent/MultiUpdateCheckBoxComponent';
 
 
 // Followups
@@ -400,7 +401,8 @@ export const Components =
         MultiUpdateComponent,
         MultiEntityUpdateBaseComponent,
         MultiEntityUpdateErrorHandlerComponent,
-        MultiUpdateCheckTemplate
+        MultiUpdateCheckTemplate,
+        MultiUpdateCheckBoxComponent
 
         
     ];
@@ -516,6 +518,7 @@ export class ModuleDeclarations {
             case 'MultiEntityUpdateBaseComponent': { myResult = MultiEntityUpdateBaseComponent; break; }
             case 'MultiEntityUpdateErrorHandlerComponent': { myResult = MultiEntityUpdateErrorHandlerComponent; break; }
             case 'MultiUpdateCheckTemplate': { myResult = MultiUpdateCheckTemplate; break; }
+            case 'MultiUpdateCheckBoxComponent': { myResult = MultiUpdateCheckBoxComponent; break; }
                  
                  
 

@@ -16,11 +16,15 @@ export class LastFilterClass {
     }
     private static MapJsonToEntityList(jsonItem: any) {
         var entity: CRMFilterSettingList = new CRMFilterSettingList();
-        var jsonItemKeys = Object.keys(jsonItem);
 
-        for (var key in jsonItemKeys) {
-            var property = jsonItemKeys[key];
-            entity[property] = jsonItem[property];
+        if(jsonItem){
+            var jsonItemKeys = Object.keys(jsonItem);
+
+            for (var key in jsonItemKeys) {
+                var property = jsonItemKeys[key];
+                entity[property] = jsonItem[property];
+            }
+
         }
 
         return entity;
