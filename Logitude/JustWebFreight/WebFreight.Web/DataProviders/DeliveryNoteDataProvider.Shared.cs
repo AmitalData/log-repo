@@ -192,5 +192,7 @@ namespace WebFreight.Web.DataProviders
         public string ImportCustomsAgentFullDetails { get; set; }
         public string ExportCustomsAgentFullDetails { get; set; }
         public string MasterShipmentNumber { get; set; }
+        public string TruckerAddress { get; set; }
+        public string ContainerSeals { get; set; }
     }
 }
