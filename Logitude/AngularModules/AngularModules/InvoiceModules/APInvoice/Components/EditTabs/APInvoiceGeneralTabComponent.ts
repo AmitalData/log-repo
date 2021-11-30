@@ -3,7 +3,6 @@ import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import { APInvoicePM } from '../../../../Invoice/EntityPMs/APInvoicePM';
-import { ObjectsLocator } from '../../../../Infrastructure/Locators/ObjectsLocator';
 
 @Component({    
     templateUrl: './APInvoiceGeneralTabComponent.html',
@@ -19,7 +18,7 @@ export class APInvoiceGeneralTabComponent extends BaseComponent implements OnIni
     @ViewChild('Child', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
     constructor(public entityArgs: EntityArgs) {
         super();
-        if (this.IsQBOAccountingSystem()) {
+        if (this.IsQBOAccountingSystem() && SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "QBT")[0]) {
             this.DisplayQBOSettings = true;
         }
 
