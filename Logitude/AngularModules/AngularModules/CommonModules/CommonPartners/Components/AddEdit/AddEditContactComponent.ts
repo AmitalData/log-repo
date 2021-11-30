@@ -189,6 +189,7 @@ export class AddEditContactComponent {
         args.PartnerId = this.EntityPM.CardId;
         args.Contact = this.EntityPM;
         args.IsContactDirty = this.EntityPM.IsDirty;
+        args.ExternalId = this.EntityPM.ExternalId;
 
         if (this.DataContext.fatherComponent) {
             args.IsPartnerDirty = this.DataContext.fatherComponent.EntityPM.IsDirty;

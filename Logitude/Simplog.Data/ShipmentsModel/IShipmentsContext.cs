@@ -6,6 +6,7 @@ using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Simplog.Server.Infrastructure;
 using System.Linq;
 using System.Data.SqlClient;
+using Simplog.Data.InvoiceModel.EntityPOCOs;
 
 namespace Simplog.Data.ShipmentsModel
 {
@@ -84,6 +85,7 @@ namespace Simplog.Data.ShipmentsModel
         IDbSet<ShipmentUnassignedField> ShipmentUnassignedFields { get; set; }
         IDbSet<ContainerStatus> ContainerStatuses { get; }
         IDbSet<ContainerStatusSource> ContainerStatusSources { get; }
+        IDbSet<ARInvoice> ARInvoicesForReports{ get; }
         IQueryable<TOutput> FunctionTableValue<TOutput>(string functionName, SqlParameter[] parameters);
         IQueryable<ShipmentDataView> ShipmentSearch(string SearchFields);
 

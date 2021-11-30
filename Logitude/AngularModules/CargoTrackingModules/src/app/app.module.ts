@@ -49,6 +49,8 @@ import { IconButtonComponent } from '../Infrastructure/Components/IconButton/Ico
 import { DateTimeFormatPipe } from '../Infrastructure/Pipes/DateTimeFormatPipe';
 import { CargoTrackingShipmentExtendedService } from 'src/CargoTracking/Services/Others/CargoTrackingShipmentExtendedService';
 import { SharedService } from 'src/CargoTracking/Services/Others/SharedService';
+import { CustomLabelComponent } from 'src/Infrastructure/Components/CustomLabel/CustomLabel.component';
+import {MatTooltipModule} from '@angular/material/tooltip';
 
 export function getBaseUrl() {
     return document.getElementsByTagName('base')[0].href;
@@ -80,6 +82,7 @@ export function getBaseUrl() {
         MultipleSelectionComponent,
         IconButtonComponent,
         DateTimeFormatPipe,
+        CustomLabelComponent,
 
 
         //Erros
@@ -102,6 +105,7 @@ export function getBaseUrl() {
         MatFormFieldModule,
         MatIconModule,
         FormsModule, HttpClientModule, NoopAnimationsModule,
+        MatTooltipModule,
     ],
     providers: [
         CargoTrackingSearchService,

@@ -282,6 +282,7 @@ namespace CommunicationWorkerRole
                                                             }
                                                             catch (Exception ex)
                                                             {
+                                                                ExceptionHandler.HandleException(ex, DateTime.Now, Tenant, "", "Import worker role, Cancelling Shipment", "", null);
                                                                 string errorMessage = ex.Message + Environment.NewLine;
 
                                                                 if (ex.InnerException != null)
@@ -375,6 +376,7 @@ namespace CommunicationWorkerRole
                                                         }
                                                         catch (Exception ex)
                                                         {
+                                                            ExceptionHandler.HandleException(ex, DateTime.Now, Tenant, "", "Import worker role, Cancelling Shipment", "", null);
                                                             string errorMessage = ex.Message + Environment.NewLine;
 
                                                             if (ex.InnerException != null)
@@ -573,6 +575,7 @@ namespace CommunicationWorkerRole
                                                             CustomerReference1 = Shipment.CustomerReference1,
                                                             ConsigneeReference2 = Shipment.ConsigneeReference2,
                                                             CustomerReference2 = Shipment.CustomerReference2,
+                                                            CustomerReference3 = Shipment.CustomerReference3,
                                                             ShipmentCustomerTypeCode = Shipment.ShipmentCustomerTypeCode,
                                                             IsCancelled = Shipment.IsCancelled,
                                                             ShipperName = Shipment.ShipperName,
@@ -744,6 +747,7 @@ namespace CommunicationWorkerRole
                                                             }
                                                             catch (Exception ex)
                                                             {
+                                                                ExceptionHandler.HandleException(ex, DateTime.Now, Tenant, "", "Import worker role, Updates Of Shipment", "", null);
                                                                 string errorMessage = ex.Message + Environment.NewLine;
 
                                                                 if (ex.InnerException != null)
@@ -809,6 +813,7 @@ namespace CommunicationWorkerRole
                                                             CustomerReference1 = Shipment.CustomerReference1,
                                                             ConsigneeReference2 = Shipment.ConsigneeReference2,
                                                             CustomerReference2 = Shipment.CustomerReference2,
+                                                            CustomerReference3 = Shipment.CustomerReference3,
                                                             ShipmentCustomerTypeCode = Shipment.ShipmentCustomerTypeCode,
                                                             IsCancelled = Shipment.IsCancelled,
                                                             ShipperName = Shipment.ShipperName,
@@ -994,6 +999,8 @@ namespace CommunicationWorkerRole
                                                             }
                                                             catch (Exception ex)
                                                             {
+                                                                ExceptionHandler.HandleException(ex, DateTime.Now, Tenant, "", "Import worker role, Update CustomerShipmentNumber ", "", null);
+
                                                                 string errorMessage = ex.Message + Environment.NewLine;
 
                                                                 if (ex.InnerException != null)
@@ -1143,6 +1150,7 @@ namespace CommunicationWorkerRole
                                 //LogPM.QueueMessage = DictionaryJsonConverter.FromDictionaryToJson((Dictionary<string, string>)response.MessageValues);
                                 try
                                 {
+                                    ExceptionHandler.HandleException(ex, DateTime.Now, Tenant, "", "Import worker role,", "", null);
                                     string errorMessage = ex.Message + Environment.NewLine;
 
                                     if (ex.InnerException != null)

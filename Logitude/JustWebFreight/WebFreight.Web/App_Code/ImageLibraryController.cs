@@ -169,7 +169,7 @@ namespace WebFreight.Web.App_Code
             ImageLibraryControllerHelper imageLibraryControllerHelper = new ImageLibraryControllerHelper();
             ImageParameter.FileData = Convert.FromBase64String(ImageParameter.Base64String);
             ImageParameter.Base64String = "";
-            ImageParameter.FileData = imageLibraryControllerHelper.ResizeImage(ImageParameter.FileData, ImageParameter.Width, ImageParameter.Height, ImageParameter.Extension);
+            if (!ImageParameter.KeepOriginalSize) ImageParameter.FileData = imageLibraryControllerHelper.ResizeImage(ImageParameter.FileData, ImageParameter.Width, ImageParameter.Height, ImageParameter.Extension);
             ImageParameter.Base64String = Convert.ToBase64String(ImageParameter.FileData);
             return Request.CreateResponse(HttpStatusCode.OK, ImageParameter);
         }

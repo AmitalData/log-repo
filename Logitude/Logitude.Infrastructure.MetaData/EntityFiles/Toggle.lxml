@@ -39,7 +39,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Toggle&quot;"
-  Code="&quot;d823&quot;"
+  Code="&quot;fa6e&quot;"
   Name="&quot; Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;Name&quot;"
@@ -622,6 +622,16 @@
       Description="&quot;User can login to different environment at the same time&quot;"
       Code="&quot;ULE&quot;"
       SearchFields="&quot;ULE,Same User Login Enabled&quot;" />
+    <Record
+      Code="&quot;AFO&quot;"
+      Name="&quot;Advanced Filters Options&quot;"
+      SearchFields="&quot;AFO,Advanced Filters Options,Enable New Option for Date Advanced Filters&quot;"
+      Description="&quot;Enable New Option for Date Advanced Filters&quot;" />
+    <Record
+      Code="&quot;QBT&quot;"
+      Name="&quot;QBO Tax Id Calculations&quot;"
+      SearchFields="&quot;QBT,QBO Tax Id Calculations&quot;"
+      Description="&quot;QBO Tax Id Calculations&quot;" />
   </Records>
   <DataContracts />
   <AdditionalTextCodes />

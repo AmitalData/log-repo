@@ -27,12 +27,12 @@ export class GLAccountSecurityLevelService{
 
                     loginService.GetLoggedUser().subscribe((myResult: any) => {
                         var loggedUserSecurityLevel = myResult?.SecurityLevel;
-
+                        var isLoggedUserCustomerCare = myResult?.IsCustomerCare;
                         var glaccountService = new GLAccountListService();
                         glaccountService.getSingle(glaccountId).subscribe((response: any) =>
                         {
                             var glaccount = response.Result;
-                            var hasAccess = (glaccount.ChartOfAccountSecurityLevel <= loggedUserSecurityLevel || glaccount.ChartOfAccountSecurityLevel == null);
+                            var hasAccess = (isLoggedUserCustomerCare || glaccount.ChartOfAccountSecurityLevel <= loggedUserSecurityLevel || glaccount.ChartOfAccountSecurityLevel == null);
                             resolve(hasAccess);
                         });
                     });

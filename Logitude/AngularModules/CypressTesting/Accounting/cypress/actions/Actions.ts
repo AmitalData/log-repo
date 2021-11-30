@@ -17,6 +17,9 @@ import { RestAPI } from '../../../Base/cypress/constants/RestAPI'
 import * as BaseActions from '../../../Base/cypress/actions/Actions';
 import { intersection } from 'cypress/types/lodash';
 import { InvoiceSettingsDetails } from "../../../Maintenance/cypress/models/InvoiceSettingsDetails";
+import { InvoiceLineDetails } from "../../../FullAccounting/cypress/models/InvoiceLineDetails"
+import { APInvoiceSelectors } from "../../../FullAccounting/cypress/selectors/APInvoiceSelectors"
+
 
 export function NavigatesToAccountingMenu() {
     cy.Click(BaseSelectors.AccountingMenu, null)
@@ -24,7 +27,6 @@ export function NavigatesToAccountingMenu() {
 export function NavigatesToAccountingSettings() {
     NavigatesToAccountingMenu();
     cy.Click(AccountingSelectors.AccountingSettings, null);
-
 }
 export function NavigatesToAccountingTransfer() {
     NavigatesToAccountingMenu();
@@ -97,7 +99,7 @@ export function NavigatesToAccountsReceivableWorkspace() {
     cy.Click(AccountingSelectors.ReceivableAccounting, null)
 }
 //#region APInvoice
-export function FillAPInvoiceDetails(aPInvoiceDetails: APInvoiceDetails, multiple = false, havePayableVendor?: string) {
+export function FillAPInvoiceDetails(aPInvoiceDetails: APInvoiceDetails, multiple = false, isUnexpectedPayable = false, havePayableVendor?: string) {
     var generatedInvoiceNumber = "AP" + gr.GenerateRandomNumber(10000, 99999).toString();
     cy.FillLogLov(AccountingSelectors.APInvoiceVendor, aPInvoiceDetails.Vendor, false);
     cy.FillLogTextBox(AccountingSelectors.APInvoiceInvoiceNumber, generatedInvoiceNumber)
@@ -110,14 +112,23 @@ export function FillAPInvoiceDetails(aPInvoiceDetails: APInvoiceDetails, multipl
     cy.FillLogTextBox(AccountingSelectors.APInvoiceVATNumber, aPInvoiceDetails.VatNo.toString())
     cy.FillLogLov(AccountingSelectors.APInvoiceBranch, aPInvoiceDetails.Branch, true)
     cy.Click(AccountingSelectors.OkCreateAPInvoiceButton, null);
-    if (!multiple) {
-        if (!havePayableVendor) {
-            cy.Click(BaseSelectors.CheckBoxLine, null)
+    if (!isUnexpectedPayable) {
+        if (!multiple) {
+            if (!havePayableVendor) {
+                cy.Click(BaseSelectors.CheckBoxLine, null)
+            }
+            cy.FillLogLov(AccountingSelectors.APInvoiceVatType, aPInvoiceDetails.VATType, true)
+            cy.Click(AccountingSelectors.VatTypeApplyToAll, null)
         }
-        cy.FillLogLov(AccountingSelectors.APInvoiceVatType, aPInvoiceDetails.VATType, true)
-        cy.Click(AccountingSelectors.VatTypeApplyToAll, null)
     }
 }
+export function FillAPInvoiceLine(invoiceLineDetails: InvoiceLineDetails) {
+    cy.Click(APInvoiceSelectors.AddInvoiceLine, null)
+    cy.FillLogLov(APInvoiceSelectors.APInvoiceLineChargesType, invoiceLineDetails.ChargesType, true);
+    cy.FillLogLov(APInvoiceSelectors.APInvoiceLineVatType, invoiceLineDetails.VatType, true);
+    cy.FillLogTextBox(APInvoiceSelectors.APInvoiceLineAmount, invoiceLineDetails.Amount)
+}
+
 export function ReceiveAPInvoice() {
     cy.DefineRequestWait(RestAPI.POST, AccountingURLs.APInvoices, RequestAliases.APInvoicesRequest)
     cy.DefineRequestWait(RestAPI.POST, AccountingURLs.InvoiceDomain, RequestAliases.InvoiceDomain)
@@ -149,6 +160,7 @@ export function APApproveInvoice() {
         }
     })
 }
+
 export function APInvoiceCancelApproval() {
     cy.Click(BaseSelectors.MoreList, null, true)
     cy.DefineRequestWait(RestAPI.PUT, AccountingURLs.APInvoices, RequestAliases.APInvoicesRequest)
@@ -193,6 +205,12 @@ export function AssertARInvoiceMenuButtonsEnabled() {
 }
 
 export function AssertAPInvoiceDetailsFieldsDisabled() {
+    AssertAPInvoiceMultipleShipmentsDetailsFieldsDisabled()
+    BaseAssertion.AssertElementDisabled(AccountingSelectors.APInvoiceVatType, BaseSelectors.BeDisabled)
+    BaseAssertion.AssertElementDisabled(AccountingSelectors.AddAPInvoiceLine, BaseSelectors.BeDisabled)
+}
+
+export function AssertAPInvoiceMultipleShipmentsDetailsFieldsDisabled() {
     BaseAssertion.AssertElementDisabled(AccountingSelectors.APInvoiceVendor, BaseSelectors.BeDisabled)
     BaseAssertion.AssertElementDisabled(AccountingSelectors.APInvoicePaymentTerm, BaseSelectors.BeDisabled)
     BaseAssertion.AssertElementDisabled(AccountingSelectors.APInvoiceDueDate, BaseSelectors.BeDisabled)
@@ -202,8 +220,6 @@ export function AssertAPInvoiceDetailsFieldsDisabled() {
     BaseAssertion.AssertElementDisabled(AccountingSelectors.APInvoiceInvoiceNumber, BaseSelectors.BeDisabled)
     BaseAssertion.AssertElementDisabled(AccountingSelectors.APInvoiceVATNumber, BaseSelectors.BeDisabled)
     BaseAssertion.AssertElementDisabled(AccountingSelectors.APInvoiceInvoiceDate, BaseSelectors.BeDisabled)
-    BaseAssertion.AssertElementDisabled(AccountingSelectors.APInvoiceVatType, BaseSelectors.BeDisabled)
-    BaseAssertion.AssertElementDisabled(AccountingSelectors.AddAPInvoiceLine, BaseSelectors.BeDisabled)
 }
 
 export function AssertAPInvoiceDetailsFieldsEnabled() {
@@ -219,8 +235,20 @@ export function AssertAPInvoiceDetailsFieldsEnabled() {
     BaseAssertion.AssertElementDisabled(AccountingSelectors.APInvoiceVatType, BaseSelectors.NotBeDisabled)
     BaseAssertion.AssertElementDisabled(AccountingSelectors.AddAPInvoiceLine, BaseSelectors.NotBeDisabled)
 }
-//#endregion
 
+export function MultipleShipmentAPInvoiceCancelApproval() {
+    cy.Click(BaseSelectors.MenuButtons, null, true)
+    cy.DefineRequestWait(RestAPI.PUT, AccountingURLs.APInvoices, RequestAliases.APInvoicesRequest)
+    cy.Click(AccountingSelectors.APInvoiceCancelApprovalButton, null)
+}
+
+export function VoidMultipleShipmentAPInvoice() {
+    cy.Click(BaseSelectors.MenuButtons, null, true)
+    cy.Click(AccountingSelectors.APInvoiceVoidButton, null)
+    cy.DefineRequestWait(RestAPI.PUT, AccountingURLs.APInvoices, RequestAliases.APInvoicesRequest)
+    cy.Click(ShipmentSelectors.ConfirmWindowYes, null);
+}
+//#endregion
 //#region ARInvoice
 export function FillARInvoiceDetails(aRInvoiceDetails: ARInvoiceDetails) {
     if (aRInvoiceDetails.Partner) {
@@ -322,7 +350,32 @@ export function AssertARInvoiceDetailsFieldsDisabled() {
     BaseAssertion.AssertElementDisabled(AccountingSelectors.ARInvoiceVatType, BaseSelectors.BeDisabled)
 }
 //#endregion
+export function AssertARInvoiceDetailsFieldsNotBeDisabled() {
+    BaseAssertion.AssertElementDisabled(AccountingSelectors.ARInvoicePartner, BaseSelectors.NotBeDisabled)
+    BaseAssertion.AssertElementDisabled(AccountingSelectors.ARInvoiceBillTo, BaseSelectors.BeDisabled)
+    BaseAssertion.AssertElementDisabled(AccountingSelectors.ARInvoiceBillToAddress, BaseSelectors.NotBeDisabled)
+    BaseAssertion.AssertElementDisabled(AccountingSelectors.ARInvoicePaymentTerm, BaseSelectors.NotBeDisabled)
+    BaseAssertion.AssertElementDisabled(AccountingSelectors.ARInvoiceDueDate, BaseSelectors.NotBeDisabled)
+    BaseAssertion.AssertElementDisabled(AccountingSelectors.ARInvoiceRegionalTax, BaseSelectors.NotBeDisabled)
+    BaseAssertion.AssertElementDisabled(AccountingSelectors.ARInvoiceInvoiceCurrency, BaseSelectors.NotBeDisabled)
+    BaseAssertion.AssertElementDisabled(AccountingSelectors.ARInvoiceExchangeRate, BaseSelectors.NotBeDisabled)
+    BaseAssertion.AssertElementDisabled(AccountingSelectors.ARInvoiceInvoiceNumber, BaseSelectors.BeDisabled)
+    BaseAssertion.AssertElementDisabled(AccountingSelectors.ARInvoiceVatNumber, BaseSelectors.NotBeDisabled)
+    BaseAssertion.AssertElementDisabled(AccountingSelectors.ARInvoiceInvoiceDate, BaseSelectors.NotBeDisabled)
+    BaseAssertion.AssertElementDisabled(AccountingSelectors.ARInvoiceVatType, BaseSelectors.NotBeDisabled)
+}
+//#endregion
 
+
+//#endregion
+export function AssertNewPageOpen(){
+    BaseAssertion.AssertStatusCode(RequestAliases.DocumentTypeTemplateExtended, 200)
+    BaseAssertion.AssertElementContain(BaseSelectors.WindowHeader,'Print Shipment Invoice')
+    cy.Navigate(AccountingSelectors.closeButtonId,false)
+    cy.Navigate(AccountingSelectors.ARInvoiceTransferTab+BaseSelectors.LastElement,false)
+    BaseAssertion.AssertElementContain(BaseSelectors.TabHolder,'Constituent invoice')
+    
+}
 //#region Add Two Shipment Lines And Edit Amount
 export function AddShipmentLines(shipmentNumbers: string[]) {
     for (let i = 0; i < shipmentNumbers.length; i++) {
@@ -337,6 +390,7 @@ export function AddShipmentLines(shipmentNumbers: string[]) {
         cy.SelectQuickSearchFirstElement(quickSearchDetails);
     }
 }
+
 export function EditAmountsINMultipleShipmentAPInvoice(shipmentNumbers: string[], VATType: string, payableDetails: PayableDetails) {
     const amount = CalculateAmount(payableDetails.Quantity, payableDetails.UnitPrice);
     const totalAmount = amount * shipmentNumbers.length;
@@ -366,7 +420,6 @@ export function FillconsolidationInvoiceDetails(ARInvoiceData: ARInvoiceDetails)
     cy.Click(BaseSelectors.ToggleIcon, null)
     cy.Click(BaseSelectors.button, "New consolidation invoice")
     FillARInvoiceDetails(ARInvoiceData)
-
 }
 
 export function ApproveConsilidationInvoice() {

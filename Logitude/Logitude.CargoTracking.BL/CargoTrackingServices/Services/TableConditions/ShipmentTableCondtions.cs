@@ -68,15 +68,16 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
 
 
 
-            var fromScript = $"FROM dbo.{table.DBTableName} P ";
 
-            var joinScript = $"LEFT  OUTER JOIN dbo.{table.DBTableName} C                   ON P.CustomFileId = C.Id " +
+            var fromScript = $"FROM dbo.{table.DBTableName} C ";
+
+            var joinScript = $"left  OUTER JOIN dbo.{table.DBTableName} P                   ON P.CustomFileId = C.Id " +
                              $"LEFT OUTER JOIN dbo.ShipmentComputedFields com ON com.Id = C.Id " +
                              $"LEFT OUTER JOIN dbo.ShipmentMasterDatas Mas    ON Mas.Id = C.MasterShipmentDataId "+
-                             $"LEFT OUTER JOIN dbo.ShipmentMasterDatas ForwardingMaster    ON ForwardingMaster.Id = P.MasterShipmentDataId "+
-                             $"LEFT OUTER JOIN dbo.ShipmentComputedFields ForwardingComputed    ON ForwardingComputed.Id = P.Id " +
-                             $"LEFT OUTER JOIN dbo.ShipmentAdditionalCloudDatas AdditionalData    ON AdditionalData.Id = P.Id " +
-                             $"LEFT OUTER JOIN dbo.ShipmentPickUpDeliveries ShipmentDeliveries    ON ShipmentDeliveries.ShipmentId = P.Id "+
+                             $"LEFT OUTER JOIN dbo.ShipmentMasterDatas ForwardingMaster    ON ForwardingMaster.Id = C.MasterShipmentDataId " +
+                             $"LEFT OUTER JOIN dbo.ShipmentComputedFields ForwardingComputed    ON ForwardingComputed.Id = C.Id " +
+                             $"LEFT OUTER JOIN dbo.ShipmentAdditionalCloudDatas AdditionalData    ON AdditionalData.Id = C.Id " +
+                             $"LEFT OUTER JOIN dbo.ShipmentPickUpDeliveries ShipmentDeliveries    ON ShipmentDeliveries.ShipmentId = C.Id " +
                              $"LEFT OUTER JOIN dbo.Cards CarrierCard    ON CarrierCard.Id = ShipmentDeliveries.CarrierId " +
                              $"LEFT OUTER JOIN dbo.Cards ConsigneeCard    ON ConsigneeCard.Id = C.ConsigneeId " +
                              $"LEFT OUTER JOIN dbo.Cards ShipperCard    ON ShipperCard.Id = C.ShipperId";
@@ -108,7 +109,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
                 whereConditions.Add(datePeriodCondition);
             }
 
-            var whereScript = " WHERE " + string.Join(" AND ", whereConditions);
+            var whereScript = " WHERE C.ShipmentLevelCode = 'A' AND " + string.Join(" AND ", whereConditions);
 
 
 
@@ -294,6 +295,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
                 "NULL as AssginedToCustomsAgentDate," +
                 "NULL as AssignedToTruckerDate," +
                 "NULL as ExceptionDate," +
+                "NULL as FromWarehouseEstimationDate," +
                 "NULL as ContainersNumbers," +
                 "SHO.OrderNumber as ShipmentNumber," +
 
@@ -337,11 +339,14 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
 
                 "'O' as EntityType," +
                 "CreateDate as CreateDateTime," +
-                "UpdateDate as AutomaticLastUpdateDate," +
+                "(case when AutomaticLastUpdateDate is null then UpdateDate when AutomaticLastUpdateDate is not null then AutomaticLastUpdateDate end) as AutomaticLastUpdateDate," +
                 "PickupActualDateTime as PickupDate," +
-                "PickupEstimatedDateTime as PickupEstimationDate";
+                "PickupEstimatedDateTime as PickupEstimationDate," +
+                "OnHandNumber as FromWarehouseNotes," +
+                "OnHandDate as FromWarehouseDate";
 
-            var selectScript = $"SELECT {shipmentOrderFields} , {cargoTrackingShipmentDefaultFields} ";
+
+             var selectScript = $"SELECT {shipmentOrderFields} , {cargoTrackingShipmentDefaultFields} ";
 
             var fromScript = $"FROM dbo.ShipmentOrders SHO ";
 
@@ -351,7 +356,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
             {
                 LastUpdate = ServiceHelper.GetTableLastUpdate(cargoTrackingDataBaseArgs.BuildCargoArgs.Table.Main_CargoTracking_TableName, cargoTrackingDataBaseArgs.BuildCargoArgs.DestinationConnectionString);
 
-                string lastUpdateCondition = $" (SHO.UpdateDate > '{LastUpdate}')";
+                string lastUpdateCondition = $" (SHO.AutomaticLastUpdateDate > '{LastUpdate}')";
                 whereConditions.Add(lastUpdateCondition);
             }
             else

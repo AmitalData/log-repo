@@ -41,5 +41,6 @@ namespace Logitude.BL.ShipmentsModel.EntityAMs
 
         public CodeProperties Consignee { get; set; }
 
+
     }
 }

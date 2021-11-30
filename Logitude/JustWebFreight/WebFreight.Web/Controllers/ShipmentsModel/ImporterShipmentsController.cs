@@ -1081,6 +1081,10 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
             {
                 entityPM.CustomerReference2 = entityAM.CustomerReference2;
             }
+            if (!string.IsNullOrEmpty(entityAM.CustomerReference3))
+            {
+                entityPM.CustomerReference3 = entityAM.CustomerReference3;
+            }
             entityPM.GrossWeight = entityAM.Weight;
             entityPM.NumberOfContainers = entityAM.Quantity;
             entityPM.NumberOfPackages = entityAM.Quantity;

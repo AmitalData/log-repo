@@ -1,4 +1,5 @@
 ﻿using Logitude.CargoTracking.BL.CloseTables;
+using Logitude.CargoTracking.BL.CargoTrackingServices.HelperClasses;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTrackingSetLogic
 {
-    public class CargoTrackingShipmentsOrderLogicService
+    public class CargoTrackingShipmentsOrderLogicService : ShareTableLogic
     {
         private const string InlandTransportMode = "I";
         private const string OceanTransportMode = "O";
@@ -17,11 +18,24 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
         private const string OceanShipmentType = "FCLD";
         private const string AirShipmentType = "AIR";
         private const string ShipmentOrderEntityType = "O";
+        private const string CreateDate = "CreateDate";
+        private const string PickupActualDateTime = "PickupActualDateTime";
+        private const string BookingConfirmationDate = "BookingConfirmationDate";
+        private const string PickupEstimatedDateTime = "PickupEstimatedDateTime";
+        private const string DepartureEstimationDate = "ETD";
+        private const string DepartureDate = "ATD";
+        private const string ArrivalEstimationDate = "ETA";
+        private const string ArrivalDate = "ATA";
+
+
+
+
+
         public static List<FieldMap> fieldsMap = new List<FieldMap>()
         {
             new FieldMap("Tenant", "Tenant"),
             new FieldMap("EntityId", "Id"),
-            new FieldMap("ForwardingShipmentHeaderId", "ShipmentId"), 
+            new FieldMap("ForwardingShipmentHeaderId", "ShipmentId"),
             new FieldMap("CustomerId", "CustomerId"),
             new FieldMap("TransportModeId", "TransportModeId"),
             new FieldMap("Master", "Master"),
@@ -31,35 +45,36 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
             new FieldMap("ToPortId", "DestinationPortId"),
             new FieldMap("ShipperId", "ShipperId"),
             new FieldMap("ConsigneeId", "ConsigneeId"),
-            new FieldMap("CreateDate", "CreateDate"),
+            new FieldMap("CreateDate", CreateDate),
             new FieldMap("SecurityKey", "SecurityKey"),
             new FieldMap("ShipperName", "CasualImporterName"),
             new FieldMap("CustomerReference", "CustomerReferences"),
             new FieldMap("DirectionId", "DirectionId"),
             new FieldMap("ShipmentLevelCode", "ShipmentLevelCode"),
-            new FieldMap("PickupDate", "PickupActualDateTime"),
-            new FieldMap("BookingDate", "BookingConfirmationDate"),
-            new FieldMap("PickupEstimationDate", "PickupEstimatedDateTime"),
-            new FieldMap("DepartureEstimationDate", "ETD"),
-            new FieldMap("DepartureDate", "ATD"),
-            new FieldMap("ArrivalEstimationDate", "ETA"),
-            new FieldMap("ArrivalDate", "ATA"),
+            new FieldMap("PickupDate", PickupActualDateTime),
+            new FieldMap("BookingDate", BookingConfirmationDate),
+            new FieldMap("PickupEstimationDate", PickupEstimatedDateTime),
+            new FieldMap("DepartureEstimationDate", DepartureEstimationDate),
+            new FieldMap("DepartureDate", DepartureDate),
+            new FieldMap("ArrivalEstimationDate", ArrivalEstimationDate),
+            new FieldMap("ArrivalDate", ArrivalDate),
             new FieldMap("PoNumber", "PoNumber"),
-
+            new FieldMap("FromWarehouseDate", "OnHandDate"),
+            new FieldMap("FromWarehouseNotes", "OnHandNumber"),
 
         };
 
-     
-        public static void SetTableLogic(DataRow tableRow)
+
+        public static void SetTableLogic(SetTableLogicArgs args)
         {
-            SetFixedValueFields(tableRow);
-            MapTableFields(tableRow);
-            SetMilestonesDoneFields(tableRow);
-            SetShipmentTypeCode(tableRow);
-            SetMainEntity(tableRow);
-            SetPreviousForwardingShipmentHeader(tableRow);
-            SetCurrentMilestone(tableRow);
-            SetExceptionDescription(tableRow);
+            SetFixedValueFields(args.TableRow);
+            MapTableFields(args);
+            SetMilestonesDoneFields(args.TableRow);
+            SetShipmentTypeCode(args.TableRow);
+            SetMainEntity(args.TableRow);
+            SetPreviousForwardingShipmentHeader(args.TableRow);
+            SetCurrentMilestone(args);
+            SetExceptionDescription(args.TableRow);
         }
 
         private static void SetFixedValueFields(DataRow tableRow)
@@ -69,11 +84,12 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
 
         private static void SetMilestonesDoneFields(DataRow tableRow)
         {
-            tableRow.SetField("PickupDone", !IsFieldNullOrEmpty(tableRow, "PickupActualDateTime"));
-            tableRow.SetField("BookingDone", !IsFieldNullOrEmpty(tableRow, "BookingConfirmationDate"));
+            tableRow.SetField("PickupDone", !IsFieldNullOrEmpty(tableRow, "PickupDate"));
+            tableRow.SetField("BookingDone", !IsFieldNullOrEmpty(tableRow, "BookingDate"));
             tableRow.SetField("CreateDone", !IsFieldNullOrEmpty(tableRow, "CreateDate"));
-            tableRow.SetField("DepartureDone", !IsFieldNullOrEmpty(tableRow, "ATD"));
-            tableRow.SetField("ArrivalDone", !IsFieldNullOrEmpty(tableRow, "ATA"));
+            tableRow.SetField("DepartureDone", !IsFieldNullOrEmpty(tableRow, "DepartureDate"));
+            tableRow.SetField("ArrivalDone", !IsFieldNullOrEmpty(tableRow, "ArrivalDate"));
+            tableRow.SetField("FromWarehouseDone", !IsFieldNullOrEmpty(tableRow, "FromWarehouseDate"));
 
 
         }
@@ -81,48 +97,85 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
         {
             tableRow.SetField("IsMainRecord", IsFieldNullOrEmpty(tableRow, "ForwardingShipmentHeaderId"));
         }
-        private static void SetCurrentMilestone(DataRow tableRow)
+        private static void SetCurrentMilestone(SetTableLogicArgs args)
         {
-            if (!IsFieldNullOrEmpty(tableRow, "ArrivalDone") && !tableRow["ArrivalDone"].Equals("False"))
+            var tableRow = args.TableRow;
+            var currentMilestoneArgs = new CheckCurrentMilestoneArgs(tableRow);
+            foreach (var milestone in args.Milestones)
             {
-                tableRow.SetField("CurrentMilestoneCode", CargoTrackingMilestoneValues.Arrival);
-                tableRow.SetField("CurrentMilestoneDate", tableRow["ArrivalDate"]);
+                currentMilestoneArgs.milestone = milestone;
+                CheckCurrentMilestone(currentMilestoneArgs, args);
+                
+            }
 
-            }
-            else if (!IsFieldNullOrEmpty(tableRow, "DepartureDone") && !tableRow["DepartureDone"].Equals("False"))
-            {
-       
-
-                tableRow.SetField("CurrentMilestoneCode", CargoTrackingMilestoneValues.Departure);
-                tableRow.SetField("CurrentMilestoneDate", tableRow["DepartureDate"]);
-
-            }
-            else if (!IsFieldNullOrEmpty(tableRow, "PickupDone") && !tableRow["PickupDone"].Equals("False"))
-            {
-                tableRow.SetField("CurrentMilestoneCode", CargoTrackingMilestoneValues.Pickup);
-                tableRow.SetField("CurrentMilestoneDate", tableRow["PickupDate"]);
-            }
-            else if (!IsFieldNullOrEmpty(tableRow, "BookingDone") && !tableRow["BookingDone"].Equals("False"))
-            {
-                tableRow.SetField("CurrentMilestoneCode", CargoTrackingMilestoneValues.Booking);
-                tableRow.SetField("CurrentMilestoneDate", tableRow["BookingDate"]);
-            }
-            else if (!IsFieldNullOrEmpty(tableRow, "CreateDone") && !tableRow["CreateDone"].Equals("False"))
-            {
-                tableRow.SetField("CurrentMilestoneCode", CargoTrackingMilestoneValues.Created);
-                tableRow.SetField("CurrentMilestoneDate", tableRow["CreateDate"]);
-            }
 
         }
+
+        private static void CheckCurrentMilestone(CheckCurrentMilestoneArgs currentMilestoneArgs, SetTableLogicArgs args)
+        {
+            var tenant = (int)currentMilestoneArgs.tableRow["Tenant"];
+            if (!CheckIfUserHasAccessToMilestone(args.NotPermittedMilestones, currentMilestoneArgs.milestone.Code, tenant))
+                return;
+
+            switch (currentMilestoneArgs.milestone.Code)
+            {
+                case CargoTrackingMilestoneValues.Created:
+                    if (!IsFieldNullOrEmpty(currentMilestoneArgs.tableRow, "CreateDone") && !currentMilestoneArgs.tableRow["CreatedDone"].Equals("False"))
+                    {
+                        currentMilestoneArgs.date = currentMilestoneArgs.tableRow["CreateDate"];
+                        CheckMilestone(currentMilestoneArgs);
+                    }
+                    break;
+                case CargoTrackingMilestoneValues.Booking:
+                    if (!IsFieldNullOrEmpty(currentMilestoneArgs.tableRow, "BookingDone") && !currentMilestoneArgs.tableRow["BookingDone"].Equals("False"))
+                    {
+                        currentMilestoneArgs.date = currentMilestoneArgs.tableRow["BookingDate"];
+                        CheckMilestone(currentMilestoneArgs);
+                    }
+                    break;
+                case CargoTrackingMilestoneValues.Pickup:
+                    if (!IsFieldNullOrEmpty(currentMilestoneArgs.tableRow, "PickupDone") && !currentMilestoneArgs.tableRow["PickupDone"].Equals("False"))
+                    {
+                        currentMilestoneArgs.date = currentMilestoneArgs.tableRow["PickupDate"];
+                        CheckMilestone(currentMilestoneArgs);
+                    }
+                    break;
+                case CargoTrackingMilestoneValues.FromWarehouse:
+                    if (!IsFieldNullOrEmpty(currentMilestoneArgs.tableRow, "FromWarehouseDone") && !currentMilestoneArgs.tableRow["FromWarehouseDone"].Equals("False"))
+                    {
+                        currentMilestoneArgs.date = currentMilestoneArgs.tableRow["FromWarehouseDate"];
+                        CheckMilestone(currentMilestoneArgs);
+                    }
+                    break;
+                case CargoTrackingMilestoneValues.Departure:
+                    if (!IsFieldNullOrEmpty(currentMilestoneArgs.tableRow, "DepartureDone") && !currentMilestoneArgs.tableRow["DepartureDone"].Equals("False"))
+                    {
+                        currentMilestoneArgs.date = currentMilestoneArgs.tableRow["DepartureDate"];
+                        CheckMilestone(currentMilestoneArgs);
+                    }
+                    break;
+                case CargoTrackingMilestoneValues.Arrival:
+                    if (!IsFieldNullOrEmpty(currentMilestoneArgs.tableRow, "ArrivalDone") && !currentMilestoneArgs.tableRow["ArrivalDone"].Equals("False"))
+                    {
+                        currentMilestoneArgs.date = currentMilestoneArgs.tableRow["ArrivalDate"];
+                        CheckMilestone(currentMilestoneArgs);
+                    }
+                    break;
+
+                default:
+                    break;
+            }
+        }
+
         private static void SetExceptionDescription(DataRow tableRow)
         {
-            var exceptionDate = !IsFieldNullOrEmpty(tableRow, "LastExceptionDate") ? tableRow["LastExceptionDate"]?.ToString(): null;
+            var exceptionDate = !IsFieldNullOrEmpty(tableRow, "LastExceptionDate") ? tableRow["LastExceptionDate"]?.ToString() : null;
             var exceptionDescription = !IsFieldNullOrEmpty(tableRow, "LastExceptionDescription") ? "," + tableRow["LastExceptionDescription"] : null;
-            tableRow.SetField("CurrentMilestoneExceptions", string.IsNullOrWhiteSpace(exceptionDate) ? exceptionDescription : exceptionDate +"," + tableRow["LastExceptionDescription"]);
+            tableRow.SetField("CurrentMilestoneExceptions", string.IsNullOrWhiteSpace(exceptionDate) ? exceptionDescription : exceptionDate + "," + tableRow["LastExceptionDescription"]);
         }
         private static void SetPreviousForwardingShipmentHeader(DataRow tableRow)
         {
-            if(!IsFieldNullOrEmpty(tableRow, "ForwardingShipmentHeaderId"))
+            if (!IsFieldNullOrEmpty(tableRow, "ForwardingShipmentHeaderId"))
                 tableRow.SetField("PrevForwardingShipmentId", tableRow["ForwardingShipmentHeaderId"]);
         }
         private static void SetShipmentTypeCode(DataRow tableRow)
@@ -142,12 +195,89 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
             return null;
         }
 
-        private static void MapTableFields(DataRow tableRow)
+        private static void MapTableFields(SetTableLogicArgs args)
         {
+            var tableRow = args.TableRow;
             foreach (var field in fieldsMap)
             {
-                tableRow.SetField(field.CargoTrackingFieldName, tableRow[field.OriginalFieldName]);
+                SetField(field, tableRow, args);
+
+
             }
+        }
+
+        private static void SetField(FieldMap field, DataRow tableRow, SetTableLogicArgs args)
+        {
+            switch (field.OriginalFieldName)
+            {
+                case CreateDate:
+                    SetCreateDate(field, tableRow, args);
+                    break;
+                case PickupActualDateTime:
+                case PickupEstimatedDateTime:
+                    SetPickupDates(field, tableRow, args);
+                    break;
+                case BookingConfirmationDate:
+                    SetBookingConfirmationDate(field, tableRow, args);
+                    break;
+                case DepartureDate:
+                case DepartureEstimationDate:
+                    SetDepartureDates(field, tableRow, args);
+                    break;
+                case ArrivalDate:
+                case ArrivalEstimationDate:
+                    SetArrivalDates(field, tableRow, args);
+                    break;
+                default:
+                    tableRow.SetField(field.CargoTrackingFieldName, tableRow[field.OriginalFieldName]);
+                    break;
+            }
+        }
+
+        private static void SetArrivalDates(FieldMap field, DataRow tableRow, SetTableLogicArgs args)
+        {
+            var tenant = (int)tableRow["Tenant"];
+            if (CheckIfUserHasAccessToMilestone(args.NotPermittedMilestones, CargoTrackingMilestoneValues.Arrival, tenant))
+                tableRow.SetField(field.CargoTrackingFieldName, tableRow[field.OriginalFieldName]);
+            else
+                tableRow.SetField(field.CargoTrackingFieldName, (DBNull)null);
+        }
+
+        private static void SetDepartureDates(FieldMap field, DataRow tableRow, SetTableLogicArgs args)
+        {
+            var tenant = (int)tableRow["Tenant"];
+            if (CheckIfUserHasAccessToMilestone(args.NotPermittedMilestones, CargoTrackingMilestoneValues.Departure, tenant))
+                tableRow.SetField(field.CargoTrackingFieldName, tableRow[field.OriginalFieldName]);
+            else
+                tableRow.SetField(field.CargoTrackingFieldName, (DBNull)null);
+        }
+
+        private static void SetBookingConfirmationDate(FieldMap field, DataRow tableRow, SetTableLogicArgs args)
+        {
+            var tenant = (int)tableRow["Tenant"];
+            if (CheckIfUserHasAccessToMilestone(args.NotPermittedMilestones, CargoTrackingMilestoneValues.Booking, tenant))
+                tableRow.SetField(field.CargoTrackingFieldName, tableRow[field.OriginalFieldName]);
+            else
+                tableRow.SetField(field.CargoTrackingFieldName, (DBNull)null);
+        }
+
+        private static void SetPickupDates(FieldMap field, DataRow tableRow, SetTableLogicArgs args)
+        {
+            var tenant = (int)tableRow["Tenant"];
+            if (CheckIfUserHasAccessToMilestone(args.NotPermittedMilestones, CargoTrackingMilestoneValues.Pickup, tenant))
+                tableRow.SetField(field.CargoTrackingFieldName, tableRow[field.OriginalFieldName]);
+            else
+                tableRow.SetField(field.CargoTrackingFieldName, (DBNull)null);
+        }
+
+        private static void SetCreateDate(FieldMap field, DataRow tableRow, SetTableLogicArgs args)
+        {
+            var tenant = (int)tableRow["Tenant"];
+            if (CheckIfUserHasAccessToMilestone(args.NotPermittedMilestones, CargoTrackingMilestoneValues.Created, tenant))
+                tableRow.SetField(field.CargoTrackingFieldName, tableRow[field.OriginalFieldName]);
+            else
+                tableRow.SetField(field.CargoTrackingFieldName, (DBNull)null);
+
         }
 
         private void AddFullFields()

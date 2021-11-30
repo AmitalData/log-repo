@@ -34,10 +34,14 @@ Feature: AR Invoice Auto Credit
             | VATType             | Zero        |
         When create invoice
         Then the invoice should create successfully
+        And the status value should be "Draft"
+        And the details screen fields shouldn't be dim
 
     Scenario: Approve AR invoice
         When approve invoice
         Then the invoice should approve successfully
+        And the status value should be "Unpaid"
+        And the details screen fields should be disabled
 
     Scenario: Auto credit AR invoice
         When auto credit invoice

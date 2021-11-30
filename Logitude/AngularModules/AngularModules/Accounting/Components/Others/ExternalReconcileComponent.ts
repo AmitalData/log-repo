@@ -41,6 +41,7 @@ import {ExternalReconciliationExtendedListService, ExternalAutoReconcileServiceA
 import { retry } from 'rxjs/operators';
 import { ExternalReconciliationOpService } from '../../Services/ExtendedPMs/ExternalReconciliationOpService';
 import { BankTransferPaymentArguments } from 'Invoice/DataContracts/BankTransferPaymentArguments';
+import { PageLineModel } from '../NewEntity/AddEditRecoExPageComponent';
 
 
 
@@ -48,6 +49,7 @@ import { BankTransferPaymentArguments } from 'Invoice/DataContracts/BankTransfer
 const BankTransferPaymentMethodCode = "BT";
 const NewARPaymentWindowWidth = 900;
 const NewARPaymentWindowHeight = 570;
+const CrossYearConfirmationDialogWidth = 390;
 @Component({
     selector: 'ExternalReconcileComponent',
     moduleId: './Accounting/Components/Others/',
@@ -292,12 +294,105 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
     {
         var errors: string[] = this.ValidateReconciliation();
 
-        if (errors.length == 0) {
+
+
+        if (errors.length == 0)
+        {
             var reconciliation = this.CreateReconciliation();
-            this.SubmitChanges(reconciliation);
+
+            const hasCrossYearLines = this.CheckIfHasCrossYearLines();
+
+            if (hasCrossYearLines) {
+                this.ShowCrossYearConfirmationDialog(reconciliation);
+            } else {
+                this.SubmitChanges(reconciliation);
+            }
+
         }
         else
             this.ValidationErrorsList = errors;
+    }
+
+    private ShowCrossYearConfirmationDialog(reconciliation: ExternalReconciliationPM)
+    {
+        var confirmWindow = new ConfirmWindow();
+        confirmWindow.Width = CrossYearConfirmationDialogWidth;
+        confirmWindow.Show(TextCodeTranslator.Translate("ExternalReconciliation.O.CrossYearConfirmMsg"));
+        confirmWindow.WindowClosed.subscribe((event: any) =>
+        {
+            if (confirmWindow.Yes)
+                this.SubmitChanges(reconciliation);
+        });
+    }
+
+    private CheckIfHasCrossYearLines()
+    {
+        const ledgerYears = this.GetLedgerTransactionsYearsCount();
+        const pageLinesYears = this.GetExternalPagesLinesYearsCount();
+
+        const bothLinesSelected = this.ExtPageSelectedLines.Length > 0 && this.TransactionSelectedLines.Length > 0;
+        const ledgerHasDifferentYears = ledgerYears > 1;
+        const pageLinesHasDifferentYears = pageLinesYears > 1;
+        const hasSingleDifferentYears = this.CheckIfHasSingleDifferentYears(ledgerYears, pageLinesYears);
+
+        return bothLinesSelected &&
+            (ledgerHasDifferentYears || pageLinesHasDifferentYears || hasSingleDifferentYears);
+    }
+
+    private CheckIfHasSingleDifferentYears(ledgerYears: number, pageLinesYears: number)
+    {
+        let transactionsGroupedByYears = this.GetTransactionsYears();
+        let pageLinesGroupedByYears = this.GetExternalPageLinesYears();
+
+        const hasSingleDifferentYears =
+            ledgerYears == 1 && pageLinesYears == 1
+            && Object.keys(transactionsGroupedByYears)[0] != Object.keys(pageLinesGroupedByYears)[0];
+
+        return hasSingleDifferentYears;
+    }
+
+    private GetLedgerTransactionsYearsCount()
+    {
+        let linesGroupedByYears = this.GetTransactionsYears();
+
+        return this.countObjectKeys(linesGroupedByYears);
+    }
+
+    private GetTransactionsYears()
+    {
+        return this.TransactionSelectedLines.Collection
+            .reduce((result, current: TransactionLineModel) =>
+            {
+                const year = new Date(current.LedgerTransactionPM.AccountingDate).getFullYear();
+                result[year] = (result[year] || 0) + 1;
+                return result;
+            }, Object.create(null));
+    }
+
+    private countObjectKeys(object: any)
+    {
+        var groupCount = 0;
+        for (const key in object)
+                groupCount ++;
+        return groupCount;
+    }
+
+    private GetExternalPagesLinesYearsCount()
+    {
+        let pageLinesGroupedByYears = this.GetExternalPageLinesYears();
+
+        return this.countObjectKeys(pageLinesGroupedByYears);
+    }
+
+    private GetExternalPageLinesYears()
+    {
+        return this.ExtPageSelectedLines.Collection
+            .reduce((result, current: PageLineModel) =>
+            {
+                const year = new Date(current.ReferenceDate).getFullYear();
+                result[year] = (result[year] || 0) + 1;
+                return result;
+            }, Object.create(null));
     }
 
     private ValidateReconciliation()

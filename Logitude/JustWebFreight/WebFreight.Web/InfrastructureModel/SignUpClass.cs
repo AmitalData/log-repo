@@ -48,6 +48,7 @@ using Simplog.Data.ShipmentsModel.Repositories;
 using Logitude.BL.ShipmentsModel.EntityQueries;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using WebFreight.Web.Helpers.SignUp;
+using Logitude.BL.DataContracts;
 
 namespace WebFreight.Web.InfrastructureModel
 {
@@ -2707,6 +2708,8 @@ namespace WebFreight.Web.InfrastructureModel
 
                 portRepository.Add(newPort);
                 portRepository.SubmitChanges();
+                RunStoredProcedureClass.UpdatePortSearcsFields(newPort.Id, newPort.Tenant);
+
             }
 
             #region Carriers

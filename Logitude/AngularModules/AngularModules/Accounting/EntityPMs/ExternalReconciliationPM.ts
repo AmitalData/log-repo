@@ -129,6 +129,11 @@ export class ExternalReconciliationPM {
     public set AccountLocalName(newValue: string) { if (this.accountLocalName != newValue) { this.accountLocalName = newValue; this.MarkAsDirty("AccountLocalName"); } }
        
 	 
+    private crossYearReconcile: boolean;
+    public get CrossYearReconcile() { return this.crossYearReconcile; }
+    public set CrossYearReconcile(newValue: boolean) { if (this.crossYearReconcile != newValue) { this.crossYearReconcile = newValue; this.MarkAsDirty("CrossYearReconcile"); } }
+       
+	 
 
     public OldEntityPM: ExternalReconciliationPM;
 		

@@ -40,21 +40,21 @@ using Simplog.Data.InvoiceModel;
         }
 
 		
-		public CreditCardType GetCreditCardTypeById(string Id,int Tenant,string ComputingPartnerName = "")
+		public CreditCardType GetCreditCardTypeById(string Id,int Tenant,  string ComputingPartnerName = "")
         { 
 		    try
             {
-
+				 
 				
-				var temp = query.GetSinglePM(Id,Tenant);				
+				var temp = query.GetSinglePM(Id, Tenant);				
 				 if (temp == null)
                     throw new ApplicationException("CreditCardType with Id " + Id + " doesn't exist");
 
 				return CreditCardTypeDataMapping(temp,Tenant,ComputingPartnerName);
 			}
+
             catch (Exception ex)
             {
-
                 throw ex;
             }
         }

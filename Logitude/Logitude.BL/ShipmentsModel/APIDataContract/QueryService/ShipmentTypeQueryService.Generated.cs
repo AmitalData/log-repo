@@ -36,21 +36,21 @@ using Simplog.Data.ShipmentsModel;
         }
 
 		
-		public ShipmentType GetShipmentTypeById(string Id,int Tenant,string ComputingPartnerName = "")
+		public ShipmentType GetShipmentTypeById(string Id,int Tenant,  string ComputingPartnerName = "")
         { 
 		    try
             {
-
+				 
 				
-				var temp = query.GetSinglePM(Id,Tenant);				
+				var temp = query.GetSinglePM(Id, Tenant);				
 				 if (temp == null)
                     throw new ApplicationException("ShipmentType with Id " + Id + " doesn't exist");
 
 				return ShipmentTypeDataMapping(temp,Tenant,ComputingPartnerName);
 			}
+
             catch (Exception ex)
             {
-
                 throw ex;
             }
         }

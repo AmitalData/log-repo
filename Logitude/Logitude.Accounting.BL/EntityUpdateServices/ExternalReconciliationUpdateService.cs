@@ -55,14 +55,32 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             {
 
                 List<LedgerTransactionPM> reconciliationLedgerTransactions = GetLedgerTransactionsOfExternalReconcile(externalRecoPM);
+                List<ReconcileExternalPageLinePM> reconciliationExternalPagesLines = GetExternalPageLinesOfExternalReconcile(externalRecoPM);
 
                 SetTransactionsAsExternallyReconciled(externalRecoPM.Tenant, reconciliationLedgerTransactions);
                 SetExtenalPageAsReconciled(externalRecoPM);
 
                 RedeemARPaymentCheques(reconciliationLedgerTransactions);
-                RedeemPaymentCheques(reconciliationLedgerTransactions);                
+                RedeemPaymentCheques(reconciliationLedgerTransactions);
 
+                externalRecoPM.CrossYearReconcile = CheckCrossYearReconcile(reconciliationLedgerTransactions, reconciliationExternalPagesLines);
             }
+        }
+
+        private bool CheckCrossYearReconcile(List<LedgerTransactionPM> reconciliationLedgerTransactions, List<ReconcileExternalPageLinePM> reconciliationExternalPagesLines)
+        {
+            var ledgerGroupedByYears = reconciliationLedgerTransactions.GroupBy(ledger => ledger.AccountingDate.Year).ToList();
+            var pageLinesGroupedByYears = reconciliationExternalPagesLines.GroupBy(pageLine => pageLine.ReferenceDate.Year).ToList();
+
+            var bothLinesSelected = pageLinesGroupedByYears.Count() > 0 && ledgerGroupedByYears.Count() > 0;
+
+            var ledgerHasDifferentYears = ledgerGroupedByYears.Count() > 1;
+            var pageLinesHasDifferentYears = pageLinesGroupedByYears.Count() > 1;
+            var hasSingleDifferentYears = ledgerGroupedByYears.Count() == 1 && pageLinesGroupedByYears.Count() == 1
+                                            && ledgerGroupedByYears.First().Key != pageLinesGroupedByYears.First().Key;
+
+
+            return bothLinesSelected && (ledgerHasDifferentYears || pageLinesHasDifferentYears || hasSingleDifferentYears);
         }
 
         private void SetExtenalPageAsReconciled(ExternalReconciliationPM externalRecoPM)

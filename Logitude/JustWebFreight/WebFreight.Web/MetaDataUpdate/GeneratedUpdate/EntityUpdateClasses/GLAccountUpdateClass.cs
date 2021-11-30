@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class GLAccountUpdateClass
    {  		
-		public const string HashString = "bdf5560e7061098b59869244ab5b7d6a";
+		public const string HashString = "f8503324f1928bb8cf9djjjb085679d26ad";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -12596,6 +12596,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode GLAccountTextCode_GLAccountONotIncludedInTax = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.NotIncludedInTax", DefaultText = "Not included in any Tax Report",LocalDefaultText = @"לא דווחו", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode GLAccountTextCode_GLAccountOTotalObligo = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.TotalObligo", DefaultText = "Total Obligo",LocalDefaultText = @"אובליגו", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode GLAccountTextCode_GLAccountsOCustomerGLaccountDefinedSplit = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.CustomerGLaccountDefinedSplit", DefaultText = "The customer GLaccount is already defined as a split by currency Account",LocalDefaultText = @"לא ניתן להוסיף את כרטיס פיצול זה מכיוון שהוא מוגדר ככרטיס ראש", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

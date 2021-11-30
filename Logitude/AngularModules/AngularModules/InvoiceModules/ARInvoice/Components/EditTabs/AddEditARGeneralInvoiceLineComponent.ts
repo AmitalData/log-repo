@@ -8,9 +8,10 @@ import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeT
 import {Cloner} from '../../../../Infrastructure/Utilities/Cloner';
 import {ApiQueryFilters} from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
 import {VatTypesValidator} from '../../../../Infrastructure/Validators/VatTypesValidator';
+import { ColumnsWidths } from 'Infrastructure/Components/LogitudeComponents/LogLovV2Component';
 
 @Component({
-    
+
     templateUrl: './AddEditARGeneralInvoiceLineComponent.html',
 })
 
@@ -20,7 +21,25 @@ export class AddEditARGeneralInvoiceLineComponent {
     public DataContext: ARInvoiceLineItem;
     public ValidationErrorsList: string[] = [];
     private CurrentSession = SessionLocator.SelectedSession;
+    ColumnsWidths: ColumnsWidths[] = [];
+
     constructor() {
+        if (SessionLocator.TenantPM.AccountingActivated) {
+            this.FillChargesTypesCustomLOVColumnsWidths();
+        }
+    }
+
+
+    FillChargesTypesCustomLOVColumnsWidths()
+    {
+        this.ColumnsWidths = [
+            { ColumnName: 'Code', Width: 80 },
+            { ColumnName: 'EnglishName', Width: 180 },
+            { ColumnName: 'LocalName', Width: 200 },
+            { ColumnName: 'MeasurementShortName', Width: 80 },
+            { ColumnName: 'ChargesGroupName', Width: 80 },
+            { ColumnName: 'VatTypeName', Width: 80 }
+        ];
     }
 
     SetDataContext(dataContext: ARInvoiceLineItem) {
@@ -52,7 +71,7 @@ export class AddEditARGeneralInvoiceLineComponent {
         this.CurrentSession.CloseCurrentWindow();
     }
 
-   
+
     get ForiegnCurrencyId() { return this.EntityPM.ForiegnCurrencyId; }
     set ForiegnCurrencyId(newValue: string) {
         if (this.EntityPM.ForiegnCurrencyId != newValue) {
@@ -109,7 +128,7 @@ export class AddEditARGeneralInvoiceLineComponent {
         else {
             var errors_new = [];
             errors.forEach(item => {
-                
+
                 if (item.indexOf("%ForiegnCurrencyCode") > -1) {
                     errors_new.push(item.replace("%ForiegnCurrencyCode", this.DataContext.ForiegnCurrencyCode));
                 }

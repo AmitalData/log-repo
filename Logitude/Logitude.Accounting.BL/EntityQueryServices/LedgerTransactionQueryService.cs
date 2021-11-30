@@ -616,13 +616,12 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
             return transactions;
         }
-        public List<LedgerTransactionPM> GetTransactionBySourceId(string AccountId, int tenant)
+        public List<LedgerTransactionPM> GetTransactionBySourceEntity(string entityId,string sourceTypeCode, int tenant)
         {
-            List<LedgerTransaction> ledgerTransactionPOCOs = null;
-            ledgerTransactionPOCOs = repository.GetLast10TransactionsForAccount(AccountId, tenant);
-            List<LedgerTransactionPM> pms = ledgerTransactionPOCOs.Select(poco => GetEntityPM(poco)).ToList();
-            return pms;
+            List<LedgerTransaction> transactions = repository.GetTransactionsBySourceId(entityId, sourceTypeCode, tenant);
+            return transactions.Select(poco => GetEntityPM(poco)).ToList();
         }
+
 
         public List<LedgerTransactionPM> GetReconciledInvoicesTransactionsForARPayment(string arpaymentId, string billToGLAccountId, int tenant)
         {

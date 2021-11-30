@@ -110,5 +110,6 @@ export class TenantList {
 		SharedLogisMasterMessageLink: boolean;
 		IsQuotesRequestActivatedInShared: boolean;
 		IsCargoTrackWebAccessActivated: boolean;
+		AutomaticallyCloseDays: number;
 	
 }

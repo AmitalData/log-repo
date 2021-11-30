@@ -115,7 +115,9 @@ export class OceanInsightsSettingsComponent extends BaseComponent implements OnI
         }
         else {
 
-            myList = mySourceList.filter(d => (d.Code && d.Code.toLowerCase().indexOf(this.mySearchText.toLowerCase()) > -1) || (d.EnglishName && d.EnglishName.toLowerCase().indexOf(this.mySearchText.toLowerCase()) > -1));
+            myList = mySourceList.filter(d => (d.Code && d.Code.toLowerCase().indexOf(this.mySearchText.toLowerCase()) > -1)
+                || (d.SCACCode && d.SCACCode.toLowerCase().indexOf(this.mySearchText.toLowerCase()) > -1)
+                || (d.EnglishName && d.EnglishName.toLowerCase().indexOf(this.mySearchText.toLowerCase()) > -1));
         }
 
         myList = this.SortItemSource(myList);
@@ -263,6 +265,16 @@ export class ShippingLineItem extends BaseComponent {
 
         else {
             return this.entityPM.Code;
+        }
+    }
+
+    public get SCACCode() {
+        if (SessionLocator.Tenant == 0) {
+            return this.entityPM_TenantZero.SCACCode;
+        }
+
+        else {
+            return this.entityPM.SCACCode;
         }
     }
 

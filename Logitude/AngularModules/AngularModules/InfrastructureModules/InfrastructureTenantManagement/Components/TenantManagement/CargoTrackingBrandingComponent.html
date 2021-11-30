@@ -349,9 +349,55 @@
                             <div></div>
                         </td>
                     </tr>
-
-                    <tr>
+                    <!-- Activated for Declaration Approval -->
+                    <tr style="vertical-align:top;height:33px">
                         <td style="width:8px">
+                            <div></div>
+                        </td>
+                        <td style="width:200px;">
+                            <LogLabel [ObjectFieldName]="'ActivatedforDeclarationApprove'" [ObjectTableName]="'TenantManagement'"
+                                      [DataContext]="EntityPM"></LogLabel>
+                        </td>
+                        <td style="text-align:left">
+                            <CheckBox [IsEnabled]="true" (Checked)="ActivatedforDeclarationApproveChange($event)"
+                                      [IsChecked]="ActivatedforDeclarationApprove"></CheckBox>
+                        </td>
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+                    <tr style="height:10px">
+                        <td colspan="3">
+                            <div></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <!-- Declaration Message -->
+                    <tr style="vertical-align:top;height:100px">
+                        <td style="width:8px">
+                            <div></div>
+                        </td>
+                        <td style="width:200px;">
+                            <LogLabel [ObjectFieldName]="'DeclarationMessage'" [ObjectTableName]="'TenantManagement'"
+                                      [DataContext]="EntityPM"></LogLabel>
+                        </td>
+
+                        <td style="width: 250px;height:50px;">
+                            <div class="MediaFill">
+                                <LogTextBox [RowsCount]="5" [ObjectFieldName]="'DeclarationMessage'" [Text]="DeclarationMessage" [ObjectTableName]="'TenantManagement'" [InputType]="'ntext'" [DataContext]="DataContext" [IsMultiline]="true"  [class.disabled]="!ActivatedforDeclarationApprove"></LogTextBox>
+                            </div>
+                        </td>
+                    <td>
+                        <div></div>
+                    </td>
+                    </tr>
+                    <tr style="height:10px">
+                        <td colspan="3">
+                            <div></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width:18px;height:30px">
                             <div></div>
                         </td>
                         <td style="width:180px;height:22px; vertical-align:top">
@@ -390,7 +436,7 @@
 
                         <td style="vertical-align:top">
                             <div style="width:160px;height:100px">
-                                <ImageComponent [KeepOriginalSize]="true" [ImageResizeHeight]="83" 
+                                <ImageComponent [KeepOriginalSize]="true" [ImageResizeHeight]="83"
                                                 [class.disabled]="!EnableBranding" [HeightImage]="'95px'" [ImageId]="ComapnylogoId"
                                                 [EntityId]="EntityId" [EntityName]="'TenantManagement'" [Extension]="'png'"
                                                 (UploadCompleted)="ComapnylogoUploadedCompleted($event)"

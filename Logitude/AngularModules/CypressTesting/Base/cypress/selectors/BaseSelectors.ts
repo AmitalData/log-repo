@@ -12,6 +12,8 @@ export class BaseSelectors extends RegexSelectors {
     public static readonly FullAccountingVendorsTab = "#FAVND"
     public static readonly TariffMenu = "#GeneralMHTariffModule";
     public static readonly ShippingLine = "#MaintenanceItemMTSL"
+    public static readonly TabHolder = ".TabHolder";
+  
     //#endregion
     //#region CRM
     public static readonly CRMCustomers = "#CRMCUS"
@@ -56,8 +58,8 @@ export class BaseSelectors extends RegexSelectors {
     public static readonly ConfrimApproved = '#ConfrimApproved';
     public static readonly SettingsButton = '#Settings';
     public static readonly EditButton = '#Edit';
-
     //#endregion
+
     //#region Contains
     public static readonly ContainsApplytoall = 'Apply to all';
     public static readonly ContainsOK = 'OK';
@@ -118,6 +120,7 @@ export class BaseSelectors extends RegexSelectors {
     public static readonly LoggedUser = "#LoggedUser"
     public static readonly DefaultMenuItem = ".DefaultMenuItem"
     public static readonly LogCellTemplate = ".LogCellTemplate"
+    public static readonly NoDataText = ".NoDataText"
     //#endregion
 
     public static readonly FirstElementInList = 'ul > li';
@@ -164,6 +167,7 @@ export class BaseSelectors extends RegexSelectors {
     public static readonly ul = "ul";
     public static readonly li = "li";
     public static readonly ValidationSummaryBlock = ".ValidationSummary table tr td";
+    public static readonly ValidationSummary = ".ValidationSummary";
     public static readonly DropDownListItem = ".DropDownListItem";
     public static readonly DropDownList = ".DropDownList"
     public static readonly Value = ".Value";
@@ -177,6 +181,7 @@ export class BaseSelectors extends RegexSelectors {
     //#endregion
     public static readonly OrangeInfo = ".OrangeInfo"
     public static readonly SingleError = ".SingleError"
+    public static readonly ErrorsList = "#errorsList"
     public static readonly HeaderScreen = ".HeaderScreen"
     public static readonly HeaderScreenLable = ".HeaderScreenLable"
     public static readonly tr = "tr"

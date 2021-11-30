@@ -362,7 +362,7 @@
                                                                     {{row.Label}}
                                                                 </td>
 
-                                                                <td   *ngIf="row.HideField == false" class="HeaderScreenValue" [style.height.px]="HeaderScreenRowHeight">
+                                                                <td  attr.data-cy="{{'Header_' + row.Label}}"  *ngIf="row.HideField == false" class="HeaderScreenValue" [style.height.px]="HeaderScreenRowHeight">
                                                                     <div [style.height.px]="HeaderScreenRowHeight" [style.line-height.px]="HeaderScreenRowHeight" style="width: 100%; position: relative;" *ngIf="EntityPM">
                                                                         <ObjectFieldTemplate [ObjectTable]="ObjectTable" [ObjectField]="row.ObjectField" [Entity]="EntityPM" [IsHeaderScreenTemplate]="true"></ObjectFieldTemplate>
                                                                     </div>

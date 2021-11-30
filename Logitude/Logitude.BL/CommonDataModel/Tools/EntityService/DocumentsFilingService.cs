@@ -880,7 +880,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             entityRepository.SubmitChanges();
 
             this.OpenPODDocumentUploderQueue(theEntityPm);
-            this.OpenSendingQBODocumentsQueue(theEntityPm);
+            //this.OpenSendingQBODocumentsQueue(theEntityPm);
 
             RunDocumentPopulateAutomaticDatesService(theEntityPm);
             
@@ -946,9 +946,28 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 return;
 
             DocumentPopulateAutomaticDateUpdateService documentPopulateAutomaticDateUpdateService = new DocumentPopulateAutomaticDateUpdateService();
-            var OTName = ObjectTableRepository.GetSingleObjectTable(Poco.ObjectTableId, tenant, false);
-            string objectTableName = OTName != null ? OTName.Name : "";
-            documentPopulateAutomaticDateUpdateService.Update(new DocumentPopulateAutomaticDateArgs() { EntityId = theEntityPm.EntityId, ObjectTableName = objectTableName, DocumentTypeCode = theEntityPm.DocumentTypeCode, ProcessType = "Upload", Tenant = theEntityPm.Tenant });
+            DocumentTypeRepository documentTypeRepository = new DocumentTypeRepository(theEntityPm.Tenant);
+            DocumentType documentType = documentTypeRepository.GetSingleDocumentTypeByCode(theEntityPm.DocumentTypeCode, theEntityPm.Tenant);
+            string objectTableName = GetDocumentObjectTableName(documentType);
+            string childEntityId = GetDocumentChildEntityId(theEntityPm, documentType);
+            documentPopulateAutomaticDateUpdateService.Update(new DocumentPopulateAutomaticDateArgs() { EntityId = theEntityPm.EntityId, ObjectTableName = objectTableName, DocumentTypeCode = theEntityPm.DocumentTypeCode, ProcessType = "Upload", Tenant = theEntityPm.Tenant, ChildEntityId = childEntityId });
+        }
+
+        private string GetDocumentObjectTableName(DocumentType documentType)
+        {
+            var objectTable = ObjectTableRepository.GetSingleObjectTable(documentType?.ObjectTableId, tenant, false);
+            string documentObjectTableName = objectTable != null ? objectTable.Name : "";
+            
+            return documentObjectTableName;
+        }
+
+        private static string GetDocumentChildEntityId(DocumentsFilingPM theEntityPm, DocumentType documentType)
+        {
+            if (documentType == null) return "";
+            if (string.IsNullOrEmpty(documentType.ObjectTableId)) return "";
+            if (documentType.ObjectTableId == theEntityPm.ObjectTableId) return "";
+
+            return theEntityPm.ChildEntityId;
         }
 
         private string GetEntityDocumentsSearchFields()

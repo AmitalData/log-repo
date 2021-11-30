@@ -40,21 +40,21 @@ using Simplog.Data.CommonDataModel;
         }
 
 		
-		public CustomerOpenFilesAmount GetCustomerOpenFilesAmountByCustomerId(string CustomerId,int Tenant,string ComputingPartnerName = "")
+		public CustomerOpenFilesAmount GetCustomerOpenFilesAmountByCustomerId(string CustomerId,int Tenant,  string ComputingPartnerName = "")
         { 
 		    try
             {
-
+				 
 				
-				var temp = query.GetSinglePMByCustomerId(CustomerId,Tenant);				
+				var temp = query.GetSinglePMByCustomerId(CustomerId, Tenant);				
 				 if (temp == null)
                     throw new ApplicationException("CustomerOpenFilesAmount with CustomerId " + CustomerId + " doesn't exist");
 
 				return CustomerOpenFilesAmountDataMapping(temp,Tenant,ComputingPartnerName);
 			}
+
             catch (Exception ex)
             {
-
                 throw ex;
             }
         }
@@ -85,7 +85,7 @@ using Simplog.Data.CommonDataModel;
 				   					var temp = new CustomerOpenFilesAmountPM();
 					if (!string.IsNullOrEmpty(MyEntity.CustomerId))
 					{
-						temp = query.GetSinglePMByCustomerId(MyEntity.CustomerId, Tenant);
+						temp = query.GetSinglePMByCustomerId(MyEntity.CustomerId, Tenant  );
 					} 					   
 					if(temp == null)
 					{   

@@ -26,7 +26,7 @@ import { timeInterval } from 'rxjs/operators';
 
 export class ApplicationTimersManager {
 
-     
+
     logService: ErrorsLogPMService;
     performanceLogService: PerformanceLogService;
 
@@ -45,7 +45,7 @@ export class ApplicationTimersManager {
         this.userLastLoginPMService = new UserLastLoginPMService();
         this.performanceLogService = new PerformanceLogService();
         //this.signalRGeneralService = new SignalRGeneralService();
-       
+
     }
 
     public StartApplicationTimers() {
@@ -105,7 +105,7 @@ export class ApplicationTimersManager {
 
 
             //Observable.Interval(TimeSpan.FromSeconds(1.0));
-            //var timerId = setTimeout(this.AddErrorLogs, 2000)  
+            //var timerId = setTimeout(this.AddErrorLogs, 2000)
             // setInterval(SaveErrorLogs, delay);//60000
 
             //this.signalRGeneralService.messageReceived.subscribe((ms: ChannelEvent) => {
@@ -134,7 +134,7 @@ export class ApplicationTimersManager {
         return interval(period).pipe(timeInterval());
     }
 
-    
+
 
 
 
@@ -259,7 +259,7 @@ export class ApplicationTimersManager {
 
             }
         }
-        
+
         catch (e) { console.error(e); }
     }
 
@@ -271,7 +271,7 @@ export class ApplicationTimersManager {
             this.logitudeApplicationService.GetCurrenctUserValidity().subscribe((res: ServiceResponse) => {
 
                 var response: ServiceResponse = res;
-                 
+
 
                 if (!response.HasError) {
                     var myResult = response.Result;
@@ -289,7 +289,7 @@ export class ApplicationTimersManager {
                                 }
 
                                 if (myResult.ErrorCode == "SUPG") {
-                                    errorMessage = "The site is upgrading right now and you will be logged out , sorry for disturbing you!"; 
+                                    errorMessage = "The site is upgrading right now and you will be logged out , sorry for disturbing you!";
 
                                     if (this.IsUpgradingEnd) {
                                         isShowMessage = false;
@@ -297,7 +297,7 @@ export class ApplicationTimersManager {
                                         this.IsUpgradingEnd = true;
                                     }
                                 }
-                                
+
                                 if (isShowMessage) {
                                     var messageWindow: MessageWindow = new MessageWindow();
                                     messageWindow.Width = 450;
@@ -328,7 +328,7 @@ export class ApplicationTimersManager {
     OnSignoutClicked() {
         SessionLocator.HomeComponent.SignoutClicked();
     }
-    
+
     private AddErrorLogs() {
         try {
             for (var key in sessionStorage) {
@@ -338,7 +338,7 @@ export class ApplicationTimersManager {
                     var errorLog: ErrorLogPM = JSON.parse(logJson);
 
                     this.logService.insert(errorLog).subscribe((response: ServiceResponse) => {
-                      
+
                         window.sessionStorage.removeItem(["ErrorLogs", response.Result.Id]);
 
                     }, error=> {
@@ -396,7 +396,7 @@ export class ApplicationTimersManager {
         catch (e) { console.error(e); }
     }
 
-    
+
 
 
 //    private AtomicLong lastTick = new AtomicLong(0L);
@@ -414,7 +414,7 @@ export class ApplicationTimersManager {
 //         timerObs.un
 //     }
 
-         
+
 //    //if (subscription != null && !subscription.isUnsubscribed()) {
 //    //    System.out.println("stopped");
 //    //    subscription.unsubscribe();

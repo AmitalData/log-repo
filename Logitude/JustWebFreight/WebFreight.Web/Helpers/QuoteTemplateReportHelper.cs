@@ -2765,7 +2765,7 @@ namespace Logitude.BL.Helpers
                         string containerTypePrintAs = packageType.PrintAs;
                         string Name = quotePM.PackageType1Quantity + " x " + containerTypePrintAs;
 
-                        allContainersHeaderColumns.Add("PRICEBYCONTAINERS", BuildTableColumn(Name, quotetemplateTextDesignPMHeader, quoteTemplateTableDesignPM, "Header", null, setting.RightToLeft, true));
+                        allContainersHeaderColumns.Add("PRICEBYCONTAINERS1", BuildTableColumn(Name, quotetemplateTextDesignPMHeader, quoteTemplateTableDesignPM, "Header", null, setting.RightToLeft, true));
                     }
 
                     if (quotePM.PackageType2Id != null)
@@ -2774,7 +2774,7 @@ namespace Logitude.BL.Helpers
                         string containerTypePrintAs = packageType.PrintAs;
                         string Name = quotePM.PackageType2Quantity + " x " + containerTypePrintAs;
 
-                        allContainersHeaderColumns.Add("PRICEBYCONTAINERS", BuildTableColumn(Name, quotetemplateTextDesignPMHeader, quoteTemplateTableDesignPM, "Header", null, setting.RightToLeft, true));
+                        allContainersHeaderColumns.Add("PRICEBYCONTAINERS2", BuildTableColumn(Name, quotetemplateTextDesignPMHeader, quoteTemplateTableDesignPM, "Header", null, setting.RightToLeft, true));
                     }
 
                     if (quotePM.PackageType3Id != null)
@@ -2783,7 +2783,7 @@ namespace Logitude.BL.Helpers
                         string containerTypePrintAs = packageType.PrintAs;
                         string Name = quotePM.PackageType3Quantity + " x " + containerTypePrintAs;
 
-                        allContainersHeaderColumns.Add("PRICEBYCONTAINERS", BuildTableColumn(Name, quotetemplateTextDesignPMHeader, quoteTemplateTableDesignPM, "Header", null, setting.RightToLeft, true));
+                        allContainersHeaderColumns.Add("PRICEBYCONTAINERS3", BuildTableColumn(Name, quotetemplateTextDesignPMHeader, quoteTemplateTableDesignPM, "Header", null, setting.RightToLeft, true));
                     }
 
                     if (quotePM.PackageType4Id != null)
@@ -2792,7 +2792,7 @@ namespace Logitude.BL.Helpers
                         string containerTypePrintAs = packageType.PrintAs;
                         string Name = quotePM.PackageType4Quantity + " x " + containerTypePrintAs;
 
-                        allContainersHeaderColumns.Add("PRICEBYCONTAINERS", BuildTableColumn(Name, quotetemplateTextDesignPMHeader, quoteTemplateTableDesignPM, "Header", null, setting.RightToLeft, true));
+                        allContainersHeaderColumns.Add("PRICEBYCONTAINERS4", BuildTableColumn(Name, quotetemplateTextDesignPMHeader, quoteTemplateTableDesignPM, "Header", null, setting.RightToLeft, true));
                     }
 
                     if (quotePM.PackageType5Id != null)
@@ -2801,7 +2801,7 @@ namespace Logitude.BL.Helpers
                         string containerTypePrintAs = packageType.PrintAs;
                         string Name = quotePM.PackageType5Quantity + " x " + containerTypePrintAs;
 
-                        allContainersHeaderColumns.Add("PRICEBYCONTAINERS", BuildTableColumn(Name, quotetemplateTextDesignPMHeader, quoteTemplateTableDesignPM, "Header", null, setting.RightToLeft, true));
+                        allContainersHeaderColumns.Add("PRICEBYCONTAINERS5", BuildTableColumn(Name, quotetemplateTextDesignPMHeader, quoteTemplateTableDesignPM, "Header", null, setting.RightToLeft, true));
                     }
                 }
 
@@ -2863,13 +2863,19 @@ namespace Logitude.BL.Helpers
             IEnumerable<PricesFieldSettings> allQuoteTemplatePricesFieldInUseOrderByIndexAsc = quoteTemplatePricesFieldSettingData.Where(PricesPackagesTableSetting => PricesPackagesTableSetting.InUse).OrderBy(PricesPackagesTableSetting => PricesPackagesTableSetting.Index);
             allQuoteTemplatePricesFieldInUseOrderByIndexAsc.ToList().ForEach(PricesPackagesTableSetting =>
             {
-                allHeaderColumns.Where(PackageTableSetting => PackageTableSetting.Key == PricesPackagesTableSetting.Code).ToList().ForEach(PackageTableSetting =>
+                allHeaderColumns.Where(PackageTableSetting => GetPackageTableSettingKey(PackageTableSetting) == PricesPackagesTableSetting.Code).ToList().ForEach(PackageTableSetting =>
                 {
                     HtmlTemplateWithAllHeaderColumns.Append(PackageTableSetting.Value);
                 });
             });
 
             return HtmlTemplateWithAllHeaderColumns;
+        }
+
+        private static string GetPackageTableSettingKey(KeyValuePair<string, string> PackageTableSetting)
+        {
+            if(PackageTableSetting.Key.StartsWith("PRICEBYCONTAINERS")) return "PRICEBYCONTAINERS";
+            return PackageTableSetting.Key;
         }
 
         private string GetHeaderColumn(string textCode, StringBuilder HtmlTemplate, QuoteTemplateSettingPM setting, QuoteTemplateTextDesignPM quotetemplateTextDesignPMHeader, QuoteTemplateTableDesignPM quoteTemplateTableDesignPM, string pricingSectionType, List<QuoteTemplateTextCodePM> textcodes)
@@ -3245,7 +3251,7 @@ namespace Logitude.BL.Helpers
             string translateInclueLable = GetTranslateInclueLable(quoteTemplateBuildArges.QuoteTemplateTextCodePMLists, pricingSectionType);
 
             PricingTableRowDetailsArgs pricingTableRowDetailsArgs = new PricingTableRowDetailsArgs() {QuoteTemplateSettingPM = setting, HeaderDesign = quoteTemplateTextDesignLines, TableDesign = quotetemplatetableDesignPM , PricingSectionType = pricingSectionType};
-
+            bool isRoutingRates = quoteTemplateBuildArges.QuoteTemplatePM != null && quoteTemplateBuildArges.QuoteTemplatePM.TemplateTypeCode == "P";
 
             Dictionary<string, string> allTableRows;
 
@@ -3421,6 +3427,10 @@ namespace Logitude.BL.Helpers
                                     double value = (double)chargePM.SaleTotalAmount;
                                     fixedPrice = value.ToString("N") + " " + GetChargeCurrencyCode(quotePM, chargePM);
                                 }
+                                else if (isRoutingRates && chargePM.SaleUnitPrice != null)
+                                {
+                                    fixedPrice = ((double)chargePM.SaleUnitPrice).ToString("N") + " " + GetChargeCurrencyCode(quotePM, chargePM);
+                                }
                             }
                             if (included) fixedPrice = translateInclueLable;
 
@@ -3449,7 +3459,7 @@ namespace Logitude.BL.Helpers
 
                                 if (included) saleContainerType1UnitPrice = translateInclueLable;
 
-                                allTableRows.Add("PRICEBYCONTAINERS", AddTableRows(new PricingTableRowDetailsArgs() { Value = saleContainerType1UnitPrice, RowDataType = "FieldPrice", QuoteTemplateSettingPM = setting, HeaderDesign = quoteTemplateTextDesignLines, TableDesign = quotetemplatetableDesignPM, PricingSectionType = pricingSectionType }));
+                                allTableRows.Add("PRICEBYCONTAINERS1", AddTableRows(new PricingTableRowDetailsArgs() { Value = saleContainerType1UnitPrice, RowDataType = "FieldPrice", QuoteTemplateSettingPM = setting, HeaderDesign = quoteTemplateTextDesignLines, TableDesign = quotetemplatetableDesignPM, PricingSectionType = pricingSectionType }));
                             }
 
                         }
@@ -3469,7 +3479,7 @@ namespace Logitude.BL.Helpers
                                 }
                                 if (included) saleContainerType2UnitPrice = translateInclueLable;
 
-                                allTableRows.Add("PRICEBYCONTAINERS", AddTableRows(new PricingTableRowDetailsArgs() { Value = saleContainerType2UnitPrice, RowDataType = "FieldPrice", QuoteTemplateSettingPM = setting, HeaderDesign = quoteTemplateTextDesignLines, TableDesign = quotetemplatetableDesignPM, PricingSectionType = pricingSectionType }));
+                                allTableRows.Add("PRICEBYCONTAINERS2", AddTableRows(new PricingTableRowDetailsArgs() { Value = saleContainerType2UnitPrice, RowDataType = "FieldPrice", QuoteTemplateSettingPM = setting, HeaderDesign = quoteTemplateTextDesignLines, TableDesign = quotetemplatetableDesignPM, PricingSectionType = pricingSectionType }));
 
                             }
                         }
@@ -3489,7 +3499,7 @@ namespace Logitude.BL.Helpers
                                 }
                                 if (included) saleContainerType3UnitPrice = translateInclueLable;
 
-                                allTableRows.Add("PRICEBYCONTAINERS", AddTableRows(new PricingTableRowDetailsArgs() { Value = saleContainerType3UnitPrice, RowDataType = "FieldPrice", QuoteTemplateSettingPM = setting, HeaderDesign = quoteTemplateTextDesignLines, TableDesign = quotetemplatetableDesignPM, PricingSectionType = pricingSectionType }));
+                                allTableRows.Add("PRICEBYCONTAINERS3", AddTableRows(new PricingTableRowDetailsArgs() { Value = saleContainerType3UnitPrice, RowDataType = "FieldPrice", QuoteTemplateSettingPM = setting, HeaderDesign = quoteTemplateTextDesignLines, TableDesign = quotetemplatetableDesignPM, PricingSectionType = pricingSectionType }));
 
                             }
                         }
@@ -3507,7 +3517,7 @@ namespace Logitude.BL.Helpers
                                     saleContainerType4UnitPrice = value.ToString("N") + " " + GetChargeCurrencyCode(quotePM, chargePM);
                                 }
                                 if (included) saleContainerType4UnitPrice = translateInclueLable;
-                                allTableRows.Add("PRICEBYCONTAINERS", AddTableRows(new PricingTableRowDetailsArgs() { Value = saleContainerType4UnitPrice, RowDataType = "FieldPrice", QuoteTemplateSettingPM = setting, HeaderDesign = quoteTemplateTextDesignLines, TableDesign = quotetemplatetableDesignPM, PricingSectionType = pricingSectionType }));
+                                allTableRows.Add("PRICEBYCONTAINERS4", AddTableRows(new PricingTableRowDetailsArgs() { Value = saleContainerType4UnitPrice, RowDataType = "FieldPrice", QuoteTemplateSettingPM = setting, HeaderDesign = quoteTemplateTextDesignLines, TableDesign = quotetemplatetableDesignPM, PricingSectionType = pricingSectionType }));
 
                             }
                         }
@@ -3525,7 +3535,7 @@ namespace Logitude.BL.Helpers
                                     saleContainerType5UnitPrice = value.ToString("N") + " " + GetChargeCurrencyCode(quotePM, chargePM);
                                 }
                                 if (included) saleContainerType5UnitPrice = translateInclueLable;
-                                allTableRows.Add("PRICEBYCONTAINERS", AddTableRows(new PricingTableRowDetailsArgs() { Value = saleContainerType5UnitPrice, RowDataType = "FieldPrice", QuoteTemplateSettingPM = setting, HeaderDesign = quoteTemplateTextDesignLines, TableDesign = quotetemplatetableDesignPM, PricingSectionType = pricingSectionType }));
+                                allTableRows.Add("PRICEBYCONTAINERS5", AddTableRows(new PricingTableRowDetailsArgs() { Value = saleContainerType5UnitPrice, RowDataType = "FieldPrice", QuoteTemplateSettingPM = setting, HeaderDesign = quoteTemplateTextDesignLines, TableDesign = quotetemplatetableDesignPM, PricingSectionType = pricingSectionType }));
 
                             }
                         }
@@ -3603,7 +3613,7 @@ namespace Logitude.BL.Helpers
                         }
                     }
 
-                    HtmlTemplate = BuildHtmlTemplateWithAllColumns(HtmlTemplate, setting.QuoteTemplateSettingData.PricesPackagesTableSettings, allTableRows);
+                    HtmlTemplate = BuildHtmlTemplateWithAllColumns(HtmlTemplate, setting.QuoteTemplateSettingData.PricesContainersTableSettings, allTableRows);
                 }
 
                 HtmlTemplate.Append("</tr>");

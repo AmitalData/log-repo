@@ -246,8 +246,21 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     IsClosed = entityPoco.IsClosed,
                     ClosedDate = entityPoco.ClosedDate,
 
+                    MasterEntityId = entityPoco.ShipmentId,
+                    CustomerContactId = entityPoco.CustomerCard?.PrimaryContactId,
+                    HandlerContactId = entityPoco.Handler?.Contact?.Id,
+                    ConsigneeContactId = entityPoco.Shipment?.ConsigneeContactId,
+                    ShipperContactId = entityPoco.Shipment?.ShipperContactId,
+                    ShipperNotExporterContactId = entityPoco.Shipment?.ShipperNotExporterContactId,
+                    FreightForwarderContactId = entityPoco.Shipment?.FreightForwarderContactId,
+                    StatusId = entityPoco.StatusId, 
                 };
 
+                if(entityPoco.EntityStatus != null)
+                {
+                    result.StatusName = entityPoco.EntityStatus.Name;
+                    result.StatusWeight = entityPoco.EntityStatus.StatusWeight;
+                }
                 MapCustomFields(result, entityPoco);
             }
 
@@ -275,6 +288,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     .Include("ShipmentTransshipment1ToPort").Include("ShipmentTransshipment1FromPort").Include("ShipmentMainCarriageToPort").Include("ShipmentMainCarriageFromPort")
                     .Include("ShipmentPreCarriageToPort").Include("ShipmentPreCarriageFromPort").Include("ShipmentEntityStatus").Include("TerminalCard").Include("TerminalCardAddress")
                     .Include("ShipmentOriginAgent").Include("ShipmentDestinationAgent").Include("ShipmentType").Include("CustomerCard").Include("Handler")
+                    .Include("EntityStatus")
                     where a.Id == id && a.Tenant == tenant
                     select new ContainerPM()
                     {
@@ -422,7 +436,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         FreeDays = a.FreeDays,
                         LastFreeDayDate = a.LastFreeDayDate,
                         ShipmentStatusId = a.ShipmentStatusId,
-                        ShipmentStatusName = a.ShipmentEntityStatus != null ? a.ShipmentEntityStatus.Name: null,
+                        ShipmentStatusName = a.ShipmentEntityStatus != null ? a.ShipmentEntityStatus.Name : null,
                         EmptyPickupLocationPortId = a.EmptyPickupLocationPortId,
                         DeliveryLocationPortId = a.DeliveryLocationPortId,
                         EmptyReturnLocationPortId = a.EmptyReturnLocationPortId,
@@ -482,15 +496,24 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         OPClosed = a.OPClosed,
                         ContainersCount = a.ContainersCount,
                         HandlerId = a.HandlerId,
-                        HandlerName = a.Handler != null ? (a.Handler.Contact != null? a.Handler.Contact.EnglishName:"") : "",
+                        HandlerName = a.Handler != null ? (a.Handler.Contact != null ? a.Handler.Contact.EnglishName : "") : "",
                         CustomerId = a.CustomerId,
-                        CustomerName = a.CustomerCard != null ? a.CustomerCard.EnglishName: "",
+                        CustomerName = a.CustomerCard != null ? a.CustomerCard.EnglishName : "",
                         ShipmentCreateDate = a.ShipmentCreateDate,
                         PODReceivedOnDate = a.PODReceivedOnDate,
                         IsAutomaticUpdates = a.IsAutomaticUpdates,
                         IsClosed = a.IsClosed,
                         ClosedDate = a.ClosedDate,
-
+                        MasterEntityId = a.ShipmentId,
+                        CustomerContactId = a.CustomerCard == null ? null : a.CustomerCard.PrimaryContactId,
+                        HandlerContactId = (a.Handler == null || a.Handler.Contact == null) ? null : a.Handler.Contact.Id,
+                        ConsigneeContactId = a.Shipment == null ? null : a.Shipment.ConsigneeContactId,
+                        ShipperContactId = a.Shipment == null ? null : a.Shipment.ShipperContactId,
+                        ShipperNotExporterContactId = a.Shipment == null ? null : a.Shipment.ShipperNotExporterContactId,
+                        FreightForwarderContactId = a.Shipment == null ? null : a.Shipment.FreightForwarderContactId,
+                        StatusId = a.StatusId,
+                        StatusName = a.EntityStatus != null? a.EntityStatus.Name: null,
+                        StatusWeight = a.EntityStatus != null ? a.EntityStatus.StatusWeight: 0,
                     }).ToList();
         }
 
@@ -500,7 +523,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     Include("ShipmentTransshipment3ToPort").Include("ShipmentTransshipment3FromPort").Include("ShipmentTransshipment2ToPort").Include("ShipmentTransshipment2FromPort")
                     .Include("ShipmentTransshipment1ToPort").Include("ShipmentTransshipment1FromPort").Include("ShipmentMainCarriageToPort").Include("ShipmentMainCarriageFromPort")
                     .Include("ShipmentPreCarriageToPort").Include("ShipmentPreCarriageFromPort").Include("ShipmentPreCarriageFromPort").Include("ShipmentEntityStatus").Include("TerminalCard")
-                    .Include("ShipmentOriginAgent").Include("ShipmentDestinationAgent").Include("ShipmentType").Include("CustomerCard").Include("Handler")
+                    .Include("ShipmentOriginAgent").Include("ShipmentDestinationAgent").Include("ShipmentType").Include("CustomerCard").Include("Handler").Include("EntityStatus")
                                                select new ContainerList()
                                                {
                                                    Id = entity.Id,
@@ -725,6 +748,9 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                    IsAutomaticUpdates = entity.IsAutomaticUpdates,
                                                    IsClosed = entity.IsClosed,
                                                    ClosedDate = entity.ClosedDate,
+                                                   StatusName = entity.EntityStatus != null ? entity.EntityStatus.Name : null,
+                                                   StatusWeight = entity.EntityStatus != null ? entity.EntityStatus.StatusWeight : 0,
+                                                   StatusId = entity.StatusId
                                                };
             return result;
         }
@@ -947,6 +973,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     IsAutomaticUpdates = container.IsAutomaticUpdates,
                     IsClosed = container.IsClosed,
                     ClosedDate = container.ClosedDate,
+                    StatusId = container.StatusId,
                 };
                 MapCustomFields(containerPM, container);
             }
@@ -1176,6 +1203,14 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     IsAutomaticUpdates = entityPoco.IsAutomaticUpdates,
                     IsClosed = entityPoco.IsClosed,
                     ClosedDate = entityPoco.ClosedDate,
+                    MasterEntityId = entityPoco.ShipmentId,
+                    CustomerContactId = entityPoco.CustomerCard?.PrimaryContactId,
+                    HandlerContactId = entityPoco.Handler?.Contact?.Id,
+                    ConsigneeContactId = entityPoco.Shipment?.ConsigneeContactId,
+                    ShipperContactId = entityPoco.Shipment?.ShipperContactId,
+                    ShipperNotExporterContactId = entityPoco.Shipment?.ShipperNotExporterContactId,
+                    FreightForwarderContactId = entityPoco.Shipment?.FreightForwarderContactId,
+                    StatusId = entityPoco.StatusId,
                 };
             }
 

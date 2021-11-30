@@ -26,13 +26,15 @@ using Logitude.Infrastructure.Data.Repsitories;
 using Logitude.Infrastructure.Data.EntityPOCOs;
 using WebFreight.Web.ExternalAPIs.ExternalAPIsHelpers;
 using Simplog.Data.Helpers;
+using Logitude.BL.InfrastructureModel.APIDataContract.ApiV1;
+using Logitude.BL.ShipmentsModel.EntityQueries;
 using Logitude.BL.CommonDataModel.APIDataContract.QueryService;
 
 namespace WebFreight.Web.ExternalAPIs.V1
 {
     public class DirectController : ApiController
     {
-        public HttpResponseMessage GetSingleDirect(string id)
+        public HttpResponseMessage GetSingleDirect(string id, string include)
         {
             try
             {
@@ -42,7 +44,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 SecurityUtility.AuthenticateAPICall(authToken.Tenant);
                 DirectQueryService Service = new DirectQueryService(tenant);
                 ServiceResponse response = new ServiceResponse();
-                Direct Result = Service.GetDirectById(id, tenant);
+                Direct Result = Service.GetDirectById(id, tenant, include);
                 string xmlstring = LogitudeXmlSerializer.SerializeObjectToXmlString(Result);
                 return Request.CreateResponse(HttpStatusCode.OK, Result);
             }
@@ -54,7 +56,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
             }
         }
 
-        public HttpResponseMessage GetSingleDirectByNumber(string number)
+        public HttpResponseMessage GetSingleDirectByNumber(string number, string include)
         {
             try
             {
@@ -64,7 +66,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 SecurityUtility.AuthenticateAPICall(authToken.Tenant);
                 DirectQueryService Service = new DirectQueryService(tenant);
                 ServiceResponse response = new ServiceResponse();
-                Direct Result = Service.GetDirectByShipmentNumber(number, tenant);                
+                Direct Result = Service.GetDirectByShipmentNumber(number, tenant, include);                
                 return Request.CreateResponse(HttpStatusCode.OK, Result);
             }
             catch (Exception ex)
@@ -207,7 +209,13 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         ShipmentService service = new ShipmentService(MyContext, entityPM, SecurityUtility.GetAuthenticatedUser());
                         service.Create();
 
-                        var result = mappingService.GetDirectById(entityPM.Id, authToken.Tenant);
+                        if (entity.AddManualEvents != null && entity.AddManualEvents.Count > 0)
+                        {
+                            EventQueryService eventQueryService = new EventQueryService(authToken.Tenant);                            
+                            eventQueryService.CreateShipmentTraceEvents(entityPM, entity.AddManualEvents, true, computingPartnerCode);
+                        }
+
+                        var result = mappingService.GetDirectById(entityPM.Id, authToken.Tenant, null);
                         APIHelper.AddCommunicationLog("D", entity, result, "Shipment", entityPM.Id, "Direct API", authToken.Tenant);
                         scope.Complete();
                         return Request.CreateResponse(HttpStatusCode.OK, result);
@@ -238,7 +246,11 @@ namespace WebFreight.Web.ExternalAPIs.V1
                     string token = HttpContext.Current.Request.Headers["Token"];
                     AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                     SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-
+                    string computingPartnerCode = "";
+                    if (!string.IsNullOrEmpty(entity.ComputingPartnerCode))
+                    {
+                        computingPartnerCode = entity.ComputingPartnerCode;
+                    }
                     if (entity.TransportMode != null && entity.TransportMode.Code == "A")
                     {
                         this.ValidateMasterNumberAndCarrier(entity);
@@ -249,10 +261,10 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         IShipmentsContext MyContext = ShipmentsContext.GetContext(authToken.Tenant);
                         DirectQueryService mappingService = new DirectQueryService(authToken.Tenant);
 
-                        APIUnassignedDataHandler apiUnassignedDataHandler = new APIUnassignedDataHandler(authToken.Tenant, "");
+                        APIUnassignedDataHandler apiUnassignedDataHandler = new APIUnassignedDataHandler(authToken.Tenant, computingPartnerCode);
                         entity = apiUnassignedDataHandler.HandleUnassignedDirectShipmentData(entity);
 
-                        ShipmentPM directPM = mappingService.DirectDataMappingAndValidatin(entity, authToken.Tenant, "", true);
+                        ShipmentPM directPM = mappingService.DirectDataMappingAndValidatin(entity, authToken.Tenant, computingPartnerCode, true);
 
                         if (directPM != null)
                         {
@@ -294,11 +306,17 @@ namespace WebFreight.Web.ExternalAPIs.V1
 
                             ShipmentService service = new ShipmentService(MyContext, directPM, SecurityUtility.GetAuthenticatedUser());
                             service.Update(true);
+
+                            if (entity.AddManualEvents != null && entity.AddManualEvents.Count > 0)
+                            {
+                                EventQueryService eventQueryService = new EventQueryService(authToken.Tenant);
+                                eventQueryService.CreateShipmentTraceEvents(directPM, entity.AddManualEvents, true, "");
+                            }
                         }
 
                         MyContext = ShipmentsContext.GetContext(authToken.Tenant);
                         mappingService = new DirectQueryService(authToken.Tenant);
-                        var result = mappingService.GetDirectById(directPM.Id, authToken.Tenant);
+                        var result = mappingService.GetDirectById(directPM.Id, authToken.Tenant, null);
                         APIHelper.AddCommunicationLog("D", entity, result, "Shipment", directPM.Id, "Direct API", authToken.Tenant);
                         return Request.CreateResponse(HttpStatusCode.OK, result);
                     }
@@ -436,6 +454,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
             if (!string.IsNullOrEmpty(entityPM.CustomerId))
             {
                 if (!IsSentCustomerAShipmentPatrner(entityPM))
+
                 {
                     throw new ApplicationException("The sent customer is not one of the sent partners");
                 }
@@ -729,15 +748,15 @@ namespace WebFreight.Web.ExternalAPIs.V1
             {
                 return true;
             }
-            if (entityPM.CustomerId == entityPM.ConsigneeId)
+            else if (entityPM.CustomerId == entityPM.ConsigneeId)
             {
                 return true;
             }
-            if (entityPM.CustomerId == entityPM.ShipperNotExporterId)
+            else if (entityPM.CustomerId == entityPM.ShipperNotExporterId)
             {
                 return true;
             }
-            if (entityPM.CustomerId == entityPM.AgentId)
+            else if (entityPM.CustomerId == entityPM.AgentId)
             {
                 return true;
             }
@@ -745,11 +764,11 @@ namespace WebFreight.Web.ExternalAPIs.V1
             {
                 return true;
             }
-            if (entityPM.CustomerId == entityPM.ReleasingAgentId)
+            else if (entityPM.CustomerId == entityPM.ReleasingAgentId)
             {
                 return true;
             }
-            if (entityPM.CustomerId == entityPM.FreightForwarderId)
+            else if (entityPM.CustomerId == entityPM.FreightForwarderId)
             {
                 return true;
             }
@@ -758,6 +777,10 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 return true;
             }
             if (entityPM.CustomerId == entityPM.ConsigneeNotImporterId)
+            {
+                return true;
+            }
+            else if (entityPM.CustomerId == entityPM.Notify1Id)
             {
                 return true;
             }

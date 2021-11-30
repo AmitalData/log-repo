@@ -40,21 +40,21 @@ using Simplog.Data.InvoiceModel;
         }
 
 		
-		public ARPayment GetARPaymentById(string Id,int Tenant,string ComputingPartnerName = "")
+		public ARPayment GetARPaymentById(string Id,int Tenant,  string ComputingPartnerName = "")
         { 
 		    try
             {
-
+				 
 				
-				var temp = query.GetSinglePM(Id,Tenant);				
+				var temp = query.GetSinglePM(Id, Tenant);				
 				 if (temp == null)
                     throw new ApplicationException("ARPayment with Id " + Id + " doesn't exist");
 
 				return ARPaymentDataMapping(temp,Tenant,ComputingPartnerName);
 			}
+
             catch (Exception ex)
             {
-
                 throw ex;
             }
         }

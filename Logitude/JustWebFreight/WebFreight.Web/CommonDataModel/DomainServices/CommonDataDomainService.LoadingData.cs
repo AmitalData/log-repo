@@ -12,6 +12,7 @@ using WebFreight.Web.InfrastructureModel;
 using Logitude.Server.Tools.Counters;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Logitude.Server.Tools.Helpers;
 
 namespace WebFreight.Web.CommonDataModel.DomainServices
 {
@@ -98,7 +99,9 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
 
                             if (newPort.Code.Length == 3 && newPort.EnglishName.Length >= 1 && country != null)
                             {
+                                UpdatePortSearchFieldService.Update(newPort);
                                 portRepository.Add(newPort);
+
                             }
                         }
                         else
@@ -112,6 +115,8 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
                                 oldport.IsOcean = true;
                                 oldport.IsInland = true;
                                 oldport.EnglishName = portName;
+                                UpdatePortSearchFieldService.Update(oldport);
+
                             }
                             portRepository.Update(oldport);
                         }
@@ -195,6 +200,7 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
 
                         if (newPort.Code.Length == 3 && newPort.EnglishName.Length >= 1 && country != null)
                         {
+                            UpdatePortSearchFieldService.Update(newPort);
                             portRepository.Add(newPort);
                         }
                         count++;
@@ -786,6 +792,7 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
 
                             if (newPort.Code.Length == 3 && newPort.EnglishName.Length >= 1 && country != null)
                             {
+                                UpdatePortSearchFieldService.Update(newPort);
                                 portRepository.Add(newPort);
                             }
                         }
@@ -800,7 +807,10 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
                                 oldport.IsOcean = true;
                                 oldport.IsInland = true;
                                 oldport.EnglishName = portEnglishName;
+                                UpdatePortSearchFieldService.Update(oldport);
+
                             }
+
                             portRepository.Update(oldport);
                         }
                     }

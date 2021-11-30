@@ -34,3 +34,13 @@ Then("the AP Payment should approve successfully", () => {
     APPaymentActions.AssertApproveAPPayment()
 });
 //#endregion
+
+//#region Void AR Payment
+When("void AP Payment", () => {
+    APPaymentActions.VoidAPPayment()
+});
+
+Then("the AP Payment should void successfully", () => {
+    APPaymentActions.AssertVoidAPPayment()
+});
+//#endregion

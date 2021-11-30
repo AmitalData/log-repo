@@ -478,12 +478,12 @@ namespace Logitude.CargoTracking.Def.EntityPMs
 			
 		 }
 	   }
-	  private DateTime createDate ;
+	  private DateTime? createDate ;
 	  	  
        
 	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
 	   [DataMember]
-       public DateTime CreateDate  
+       public DateTime? CreateDate  
 	   {
 	    
 	     get
@@ -494,7 +494,7 @@ namespace Logitude.CargoTracking.Def.EntityPMs
 		 {
 		   if(createDate != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CreateDate",OldValue=createDate,NewValue=value,PropertyType="DateTime"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CreateDate",OldValue=createDate,NewValue=value,PropertyType="DateTime?"};
 		    NotifyPropertyChanged(values);
 		   createDate=value;
 		   }

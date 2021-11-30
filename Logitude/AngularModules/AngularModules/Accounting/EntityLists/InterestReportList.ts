@@ -51,6 +51,11 @@ export class InterestReportList {
 	Category3LocalName: string;
 	Category4LocalName: string;
 	Category5LocalName: string;
+	Category1Id: string;
+	Category2Id: string;
+	Category3Id: string;
+	Category4Id: string;
+	Category5Id: string;
 	
 }
  

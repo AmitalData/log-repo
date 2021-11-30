@@ -20,6 +20,7 @@ using System.Windows.Forms;
 using Simplog.Server.Infrastructure.Helpers;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using System.IO;
+using Logitude.Server.Tools.Helpers;
 
 namespace Logitude.Update
 {
@@ -243,6 +244,8 @@ namespace Logitude.Update
 
 
                     };
+                    UpdatePortSearchFieldService.Update(NewPort);
+
                     AmitalPortsRepository.Add(NewPort);
                 }
 
@@ -974,6 +977,8 @@ namespace Logitude.Update
 
 
                     };
+                    UpdatePortSearchFieldService.Update(NewPort);
+
                     AmitalPortsRepository.Add(NewPort);
                 }
 

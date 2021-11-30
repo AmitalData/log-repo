@@ -29,11 +29,6 @@ namespace RestClientApplication
             this.actionCombo.Items.Add("Accept");
             this.actionCombo.Items.Add("Decline");
             this.actionCombo.Items.Add("Cancel");
-
-            this.apiCombo.Items.Add("Vendor");
-            this.apiCombo.Items.Add("CargoTrackingShipmentDetails");
-
-
         }
 
         private void BuildOperationComboBox()
@@ -207,22 +202,19 @@ namespace RestClientApplication
             actionCombo.Visible = false;
             ActionLabel.Visible = false;
             string requestText = "";
+
             txtParameter.Visible = false;
             lblParameter.Visible = false;
 
             txtParameter2.Visible = false;
             lblParameter2.Visible = false;
-            textBox1.Visible = false;
-            label10.Visible = false;
-            label11.Visible = false;
-            textBox2.Visible = false;
-            label12.Visible = false;
-            textBox3.Visible = false;
-            textBox7.Visible = false;
-            textBox4.Visible = false;
-            label16.Visible = false;
 
-            panel1.Visible = false;
+            txtParameter3.Visible = false;
+            lblParameter3.Visible = false;
+
+            txtParameter4.Visible = false;
+            lblParameter4.Visible = false;
+
             switch (apiCombo.SelectedItem)
             {
                 #region House
@@ -262,7 +254,6 @@ namespace RestClientApplication
                 #region Direct
                 case "Direct":
                     {
-
                         if (operationCombo.SelectedIndex == 2)
                         {
                             lblParameter.Text = "Number";
@@ -276,7 +267,6 @@ namespace RestClientApplication
                         }
 
                         apiName = "direct";
-
                         requestText = responseParameters.XMLRequestText["PostDirect"];
                         break;
                     }
@@ -347,7 +337,7 @@ namespace RestClientApplication
                 #region ARInvoice
                 case "ARInvoice":
                     {
-                        textBox4.Visible = true;
+                        txtParameter.Visible = true;
                         lblParameter.Visible = true;
                         lblParameter.Text = "Id:";
 
@@ -360,16 +350,20 @@ namespace RestClientApplication
                     }
                 #endregion
 
-
-
                 case "GLAccount":
                     {
-                        textBox1.Visible = true;
-                        label10.Visible = true;
-                        label11.Visible = true;
-                        textBox2.Visible = true;
-                        label12.Visible = true;
-                        textBox3.Visible = true;
+                        lblParameter.Text = "Id";
+                        lblParameter.Visible = true;
+                        txtParameter.Visible = true;
+
+                        lblParameter2.Text = "Internal Number";
+                        lblParameter2.Visible = true;
+                        txtParameter2.Visible = true;
+
+                        lblParameter3.Text = "Display Number";
+                        lblParameter3.Visible = true;
+                        txtParameter3.Visible = true;
+
                         apiName = "GLAccount";
                         XmlDocument xmldoc = new XmlDocument();
 
@@ -383,26 +377,42 @@ namespace RestClientApplication
 
                 case "Journal":
                     {
-                        textBox4.Visible = true;
+                        txtParameter.Visible = true;
                         lblParameter.Visible = true;
                         lblParameter.Text = "Id:";
 
                         txtParameter2.Visible = true;
                         lblParameter2.Visible = true;
                         lblParameter2.Text = "Number:";
-                        panel1.Visible = true;
-                        //txtParameter2.Visible = true;
-                        //lblParameter2.Visible = true;
+
+                        txtParameter3.Visible = true;
+                        lblParameter3.Visible = true;
+                        lblParameter3.Text = "External No:";
+
+                        txtParameter4.Visible = true;
+                        lblParameter4.Visible = true;
+                        lblParameter4.Text = "External System:";
+
                         apiName = "Journal";
 
                         break;
                     }
 
-
-
                 #region Master
                 case "Master":
                     {
+                        if (operationCombo.SelectedIndex == 2)
+                        {
+                            lblParameter.Text = "Number";
+                            lblParameter2.Text = "Id";
+
+                            txtParameter.Visible = true;
+                            lblParameter.Visible = true;
+
+                            txtParameter2.Visible = true;
+                            lblParameter2.Visible = true;
+                        }
+
                         apiName = "master";
                         requestText = responseParameters.XMLRequestText["PostMaster"];
                         break;
@@ -431,7 +441,7 @@ namespace RestClientApplication
                 #region ARPayment
                 case "ARPayment":
                     {
-                        textBox4.Visible = true;
+                        txtParameter.Visible = true;
                         lblParameter.Visible = true;
                         lblParameter.Text = "Id:";
 
@@ -457,22 +467,21 @@ namespace RestClientApplication
                 #region APInvoice
                 case "APInvoice":
                     {
-                        textBox4.Visible = true;
+                        txtParameter.Visible = true;
                         lblParameter.Visible = true;
                         lblParameter.Text = "Id:";
 
                         txtParameter2.Visible = true;
                         lblParameter2.Visible = true;
                         lblParameter2.Text = "Number:";
-                        label16.Visible = true;
-                        label16.Text = "External ID:";
-                        textBox7.Visible = true;
+                        lblParameter3.Visible = true;
+                        lblParameter3.Text = "External ID:";
+                        txtParameter3.Visible = true;
                         apiName = "APInvoice";
 
                         break;
                     }
                 #endregion
-
 
                 #region ARInvoiceAdditionalData
                 case "ARInvoice Additional Data":
@@ -481,7 +490,6 @@ namespace RestClientApplication
                         break;
                     }
                 #endregion
-
 
                 #region CustomerOpenFilesAmount
                 case "Customer Open Files Amount":
@@ -499,7 +507,7 @@ namespace RestClientApplication
 
                         lblParameter.Text = "External ID:";
                         lblParameter.Visible = true;
-                        textBox4.Visible = true;
+                        txtParameter.Visible = true;
                         apiName = "APInvoiceCancellation";
                         break;
                     }
@@ -570,9 +578,7 @@ namespace RestClientApplication
                 using (var client = new HttpClient())
                 {
                     client.Timeout = new TimeSpan(0, 10, 0); // 10 minutes
-
                     client.DefaultRequestHeaders.Add("Token", Token);
-                    //client.DefaultRequestHeaders.Add("WorkerRoleName", "development");
 
                     var content = new StringContent(txtRequestBody.Text, Encoding.UTF8, txtRequestContentType.Text);
                     HttpResponseMessage response = new HttpResponseMessage();
@@ -589,36 +595,58 @@ namespace RestClientApplication
                     {
                         client.DefaultRequestHeaders.Add("Accept", "application/xml");
 
-                        if (!string.IsNullOrEmpty(txtParameter.Text))
+                        if(apiName == "direct" || apiName == "house" || apiName == "master")
                         {
-                            response = await client.GetAsync(txtServerUrl.Text + "/" + api + "?number=" + txtParameter.Text);
+                            string url = "";
+                            if (!string.IsNullOrEmpty(txtParameter.Text))
+                            {
+                                 url = txtServerUrl.Text + "/" + api + "?number=" + txtParameter.Text + "&include=";                                
+                            }
+
+                            else
+                            {
+                                 url = txtServerUrl.Text + "/" + api + "?id=" + txtParameter2.Text + "&include=";                                
+                            }
+
+                            if (IncludeEventsCheckBox.Checked)
+                            {
+                                url += "eventlist";
+                            }
+
+                            response = await client.GetAsync(url);
                         }
+
                         else
                         {
-
-                            if (apiName == "GLAccount")
+                            if (!string.IsNullOrEmpty(txtParameter.Text))
                             {
-                                response = await client.GetAsync(txtServerUrl.Text + "/" + api + "?id=" + textBox1.Text + "&DisplayNumber=" + textBox2.Text + "&InternalNumber=" + textBox3.Text);
-                            }
-                            else if (apiName == "ARInvoice" || apiName == "ARPayment")
-                            {
-                                response = await client.GetAsync(txtServerUrl.Text + "/" + api + "?id=" + textBox4.Text + "&number=" + txtParameter2.Text);
-                            }
-                            else if (apiName == "APInvoice")
-                            {
-
-                                response = await client.GetAsync(txtServerUrl.Text + "/" + api + "?id=" + textBox4.Text + "&number=" + txtParameter2.Text + "&externalId=" + textBox7.Text + "&internalNumber=" + null);
-                            }
-                            else if (apiName == "Journal")
-                            {
-                                response = await client.GetAsync(txtServerUrl.Text + "/" + api + "?id=" + textBox4.Text + "&number=" + txtParameter2.Text + "&externalNo=" + textBox6.Text + "&externalSystem=" + textBox5.Text);
+                                response = await client.GetAsync(txtServerUrl.Text + "/" + api + "?number=" + txtParameter.Text);
                             }
                             else
-                                response = await client.GetAsync(txtServerUrl.Text + "/" + api + "?id=" + txtParameter2.Text);
+                            {
+                                if (apiName == "GLAccount")
+                                {
+                                    response = await client.GetAsync(txtServerUrl.Text + "/" + api + "?id=" + txtParameter.Text + "&DisplayNumber=" + txtParameter3.Text + "&InternalNumber=" + txtParameter2.Text);
+                                }
+                                else if (apiName == "ARInvoice" || apiName == "ARPayment")
+                                {
+                                    response = await client.GetAsync(txtServerUrl.Text + "/" + api + "?id=" + txtParameter.Text + "&number=" + txtParameter2.Text);
+                                }
+                                else if (apiName == "APInvoice")
+                                {
 
+                                    response = await client.GetAsync(txtServerUrl.Text + "/" + api + "?id=" + txtParameter.Text + "&number=" + txtParameter2.Text + "&externalId=" + txtParameter3.Text + "&internalNumber=" + null);
+                                }
+                                else if (apiName == "Journal")
+                                {
+                                    response = await client.GetAsync(txtServerUrl.Text + "/" + api + "?id=" + txtParameter.Text + "&number=" + txtParameter2.Text + "&externalNo=" + txtParameter3.Text + "&externalSystem=" + txtParameter4.Text);
+                                }
+                                else
+                                {
+                                    response = await client.GetAsync(txtServerUrl.Text + "/" + api + "?id=" + txtParameter2.Text);
+                                }
+                            }
                         }
-
-
                     }
 
                     else if (operationCombo.SelectedIndex == 3)
@@ -626,7 +654,7 @@ namespace RestClientApplication
                         if (apiName == "APInvoiceCancellation")
                         {
                             client.DefaultRequestHeaders.Add("Accept", "application/xml");
-                            response = await client.GetAsync(txtServerUrl.Text + "/" + api + "?externalId=" + textBox4.Text);
+                            response = await client.GetAsync(txtServerUrl.Text + "/" + api + "?externalId=" + txtParameter.Text);
 
                         }
                         else
@@ -648,11 +676,7 @@ namespace RestClientApplication
                         var resultData2 = response.Content.ReadAsStringAsync().Result;
                         this.SetXmlBrouserXml(resultData2);
                     }
-
-                    //isSendButtonEnabled = true;
                 }
-
-                //this.ChangeFormState();
             }
 
             else
@@ -895,22 +919,11 @@ namespace RestClientApplication
         private void button3_Click(object sender, EventArgs e)
         {
             txtRequestBody.Text = Clipboard.GetText();
-
         }
 
         private void btnConnect_Click(object sender, EventArgs e)
         {
-
             this.LoginWithCredentials();
-        }
-        private void groupBox2_Enter(object sender, EventArgs e)
-        {
-
-        }
-
-        private void groupBox3_Enter(object sender, EventArgs e)
-        {
-
         }
     }
 }

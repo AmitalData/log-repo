@@ -128,21 +128,25 @@ namespace Logitude.Accounting.BL.Utils
                         FullAccountingSettingQueryService settingQuery = new FullAccountingSettingQueryService(tenant);
                         //JournalUpdateService(context);
                         JournalUpdateService journalUpdateService = new JournalUpdateService(context, new Dictionary<string, IContext>(), tenant);
-                        string diffAccountId = "";
-                        FullAccountingSettingPM setting = settingQuery.GetSingleFullAccountingSetting(tenant);
-                        if (setting != null)
-                        {
-                            diffAccountId = setting.ExchangeRateDiffGLAccountId;
-                        }
-                        if (String.IsNullOrEmpty(diffAccountId))
-                        {
-//                          string errorMessage = TranslateTextsClass.Translate("Revaluations.Q.DiffAccountNotDefined", tenant);
-                            string errorMessage = TranslateTextsClassTranslate("Revaluations.Q.DiffAccountNotDefined", 0, useLocal);
-                            throw new Exception(errorMessage);
-                        }
                         RevaluationList revaluation = revaluationListQueryService.GetSingle(id);
                         if (revaluation != null && revaluation.RevaluationDate != null)
                         {
+                            string revaluationDiffAccountId = revaluation.RevaluationsGLAccountId;
+                            if (String.IsNullOrEmpty(revaluationDiffAccountId))
+                            {
+                                string diffAccountId = "";
+                                FullAccountingSettingPM setting = settingQuery.GetSingleFullAccountingSetting(tenant);
+                                if (setting != null)
+                                {
+                                    diffAccountId = setting.ExchangeRateDiffGLAccountId;
+                                }
+                                if (String.IsNullOrEmpty(diffAccountId))
+                                {
+                                    string errorMessage = TranslateTextsClassTranslate("Revaluations.Q.DiffAccountNotDefined", 0, useLocal);
+                                    throw new Exception(errorMessage);
+                                }
+                                revaluationDiffAccountId = diffAccountId;
+                            }
                             List<GLAccountPM> gLAccountPMList = gLAccountQueryService.GetByRevaluationEnabled_OtherParams(revaluation.RevaluationEnabled, null, revaluation.ChartOfAccountsId, null, revaluation.GLAccountId, accountingCurrencyId, tenant);
                             if (gLAccountPMList != null)
                             {
@@ -151,7 +155,7 @@ namespace Logitude.Accounting.BL.Utils
                                 foreach (GLAccountPM gLAccountPM in gLAccountPMList)
                                 {
                                     RunOneAccount(gLAccountPM, gLAccountQueryService, journalUpdateService, ratesTableQuery, revaluation.RevaluationDate,
-                                                    accountingCurrencyId, diffAccountId, ratesList, lineList, revaluation, scope);
+                                                    accountingCurrencyId, revaluationDiffAccountId, ratesList, lineList, revaluation, scope);
                                 }
                                 if (lineList.Count > 0)
                                 {

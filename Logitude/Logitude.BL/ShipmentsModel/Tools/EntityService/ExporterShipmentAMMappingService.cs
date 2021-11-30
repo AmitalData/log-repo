@@ -32,7 +32,25 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             MapShipmentShipper(newAExporterShipmentAM);
             MapShipmentCustomer(newAExporterShipmentAM);
             MapShipmentPorts(shipmentPM, newAExporterShipmentAM);
+            MapPartners(newAExporterShipmentAM);
+
             return newAExporterShipmentAM;
+        }
+
+        private void MapPartners(NewAExporterShipmentAM newAExporterShipmentAM)
+        {
+            newAExporterShipmentAM.Agent = GetCard(shipmentPM.AgentId);
+            newAExporterShipmentAM.Consignee = GetCard(shipmentPM.ConsigneeId);
+        }
+
+        private CodeProperties GetCard(string cardId)
+        {
+            Card card = cardsReporistory.GetSingleCard(cardId, shipmentPM.Tenant);
+            return new CodeProperties()
+            {
+                Code = card != null ? card.Code : "",
+            };
+
         }
 
         private HybridPartnerPM GetHybridPartner()
@@ -52,9 +70,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 DirectionId = shipmentPM.DirectionId,
                 CustomerShipmentNumber = shipmentPM.ShipmentNumber,
                 ShipmentTypeId = shipmentPM.ShipmentTypeId,
-                ConsigneeName = shipmentPM.ShipperName,
+                ConsigneeName = shipmentPM.ConsigneeName,
                 InvoiceReference = shipmentPM.PrivateLabelInvoiceNumber,
-                CustomerReference = shipmentPM.CustomerReference1,
+                CustomerReference = !string.IsNullOrEmpty(shipmentPM.CustomerReference3) ? shipmentPM.CustomerReference3 : shipmentPM.CustomerReference1,
                 IncludePickup = shipmentPM.PrivateLabelIncludePickup,
                 IncludeDelivery = shipmentPM.PrivateLabelIncludeDelivery,
                 DangerousGoods = shipmentPM.IsDangerous,

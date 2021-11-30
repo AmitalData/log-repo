@@ -398,6 +398,16 @@ export class MaintenanceComponent {
                 item.ObjectTableName = "Quote Settings";
                 this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
             }
+
+            if (FeatureLocator.HasFeaturePermession("General", "General.Features.ContainerSettings")) {
+                var item = new MenusTablePM();
+                item.CategoryTypeCode = "CMS";
+                item.Icon = "Settings"
+                item.Code = "ContainerSettings";
+                item.ObjectTableName = "Container Settings";
+                this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
+            }
+            
          
             var item1 = new MenusTablePM();
             item1.CategoryTypeCode = "CMS";
@@ -1414,6 +1424,15 @@ export class MaintenanceComponent {
                     logitudeWindow.Show('./QuoteModules/QuoteOthers/Components/Maintenance/QuoteSettingsComponent');
                     break;
                 }
+
+                case "ContainerSettings": {
+                    var logitudeWindow = new LogitudeWindow();
+                    logitudeWindow.Height = 400;
+                    logitudeWindow.Title = "Container Settings";
+                    logitudeWindow.Show('./ShipmentModules/ShipmentOthers/Components/ContainerSetting/ContainerSettingsComponent');
+                    break;
+                }
+
                 case "INTTRA_S": {
                     var logitudeWindow = new LogitudeWindow();
                     logitudeWindow.Width = 960;

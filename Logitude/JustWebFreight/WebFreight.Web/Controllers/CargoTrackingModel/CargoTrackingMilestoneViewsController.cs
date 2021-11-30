@@ -54,10 +54,10 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
             try
             {
                 ICargoTrackingContext MyContext = CargoTrackingContext.GetContext(tenant);
-                CargoTrackingMilestoneListQueryService cargoTrackingMilestoneQuery = new CargoTrackingMilestoneListQueryService(MyContext);
+                CargoTrackingMilestoneQueryService cargoTrackingMilestoneQuery = new CargoTrackingMilestoneQueryService(MyContext);
 
                 List<CargoTrackingMilestoneList> result = cargoTrackingMilestoneQuery.GetList(tenant);
-
+                result = result.OrderBy(e => e.Weight).ToList();
                 return Request.CreateResponse(HttpStatusCode.OK, result);
             }
             catch (Exception ex)

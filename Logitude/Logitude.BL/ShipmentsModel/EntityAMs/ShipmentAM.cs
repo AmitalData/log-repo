@@ -83,6 +83,7 @@ namespace Logitude.BL.ShipmentsModel.EntityAMs
         public string ForwardingPartnerId { get; set; }
         public string ForwardingPartnerTenant { get; set; }
         public CodeProperties Agent { get; set; }
+        public string CustomerReference3 { get; set; }
 
 
         /*

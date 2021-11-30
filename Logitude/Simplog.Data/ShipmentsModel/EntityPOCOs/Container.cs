@@ -38,6 +38,8 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public DateTime? MainCarriageATD { get; set; }
         public DateTime? DischargeDate { get; set; }
         public string ShipmentId { get; set; }
+        [ForeignKey("ShipmentId")]
+        public virtual Shipment Shipment { get; set; }
         public DateTime? EstimatedEmptyPickupDate { get; set; }
         public DateTime? ActualEmptyPickupDate { get; set; }
         public string DepartureLocation { get; set; }
@@ -304,5 +306,8 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public bool IsAutomaticUpdates { get; set; }
         public bool IsClosed { get; set; }
         public DateTime? ClosedDate { get; set; }
+        [ForeignKey("StatusId")]
+        public virtual EntityStatus EntityStatus { get; set; }
+        public string StatusId { get; set; }
     }
 }

@@ -52,6 +52,7 @@ using Logitude.TariffModule.Data.EntityListQueryServices;
 using Logitude.TariffModule.BL.Helpers;
 using Simplog.Data.ShipmentsModel.Repositories;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
+using Logitude.BL.DataContracts;
 
 namespace WebFreight.Web.Controllers.WebDomainControllers
 {
@@ -1862,7 +1863,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
             portRepository.Add(newPort);
             portRepository.SubmitChanges();
-
+            RunStoredProcedureClass.UpdatePortSearcsFields(newPort.Id, newPort.Tenant);
             TableLastUpdateClass.UpdateTableHistory(tenant, "Port");
 
             return newPort;

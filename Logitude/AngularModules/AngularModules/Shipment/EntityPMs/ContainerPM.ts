@@ -1136,6 +1136,61 @@ export class ContainerPM {
     public set ClosedDate(newValue: Date) { if (this.closedDate != newValue) { this.closedDate = newValue; this.MarkAsDirty("ClosedDate"); } }
        
 	 
+    private isUpdateByAutomation: boolean;
+    public get IsUpdateByAutomation() { return this.isUpdateByAutomation; }
+    public set IsUpdateByAutomation(newValue: boolean) { if (this.isUpdateByAutomation != newValue) { this.isUpdateByAutomation = newValue; this.MarkAsDirty("IsUpdateByAutomation"); } }
+       
+	 
+    private masterEntityId: string;
+    public get MasterEntityId() { return this.masterEntityId; }
+    public set MasterEntityId(newValue: string) { if (this.masterEntityId != newValue) { this.masterEntityId = newValue; this.MarkAsDirty("MasterEntityId"); } }
+       
+	 
+    private customerContactId: string;
+    public get CustomerContactId() { return this.customerContactId; }
+    public set CustomerContactId(newValue: string) { if (this.customerContactId != newValue) { this.customerContactId = newValue; this.MarkAsDirty("CustomerContactId"); } }
+       
+	 
+    private handlerContactId: string;
+    public get HandlerContactId() { return this.handlerContactId; }
+    public set HandlerContactId(newValue: string) { if (this.handlerContactId != newValue) { this.handlerContactId = newValue; this.MarkAsDirty("HandlerContactId"); } }
+       
+	 
+    private consigneeContactId: string;
+    public get ConsigneeContactId() { return this.consigneeContactId; }
+    public set ConsigneeContactId(newValue: string) { if (this.consigneeContactId != newValue) { this.consigneeContactId = newValue; this.MarkAsDirty("ConsigneeContactId"); } }
+       
+	 
+    private shipperContactId: string;
+    public get ShipperContactId() { return this.shipperContactId; }
+    public set ShipperContactId(newValue: string) { if (this.shipperContactId != newValue) { this.shipperContactId = newValue; this.MarkAsDirty("ShipperContactId"); } }
+       
+	 
+    private shipperNotExporterContactId: string;
+    public get ShipperNotExporterContactId() { return this.shipperNotExporterContactId; }
+    public set ShipperNotExporterContactId(newValue: string) { if (this.shipperNotExporterContactId != newValue) { this.shipperNotExporterContactId = newValue; this.MarkAsDirty("ShipperNotExporterContactId"); } }
+       
+	 
+    private freightForwarderContactId: string;
+    public get FreightForwarderContactId() { return this.freightForwarderContactId; }
+    public set FreightForwarderContactId(newValue: string) { if (this.freightForwarderContactId != newValue) { this.freightForwarderContactId = newValue; this.MarkAsDirty("FreightForwarderContactId"); } }
+       
+	 
+    private statusId: string;
+    public get StatusId() { return this.statusId; }
+    public set StatusId(newValue: string) { if (this.statusId != newValue) { this.statusId = newValue; this.MarkAsDirty("StatusId"); } }
+       
+	 
+    private statusName: string;
+    public get StatusName() { return this.statusName; }
+    public set StatusName(newValue: string) { if (this.statusName != newValue) { this.statusName = newValue; this.MarkAsDirty("StatusName"); } }
+       
+	 
+    private statusWeight: number;
+    public get StatusWeight() { return this.statusWeight; }
+    public set StatusWeight(newValue: number) { if (this.statusWeight != newValue) { this.statusWeight = newValue; this.MarkAsDirty("StatusWeight"); } }
+       
+	 
 
     public OldEntityPM: ContainerPM;
 		

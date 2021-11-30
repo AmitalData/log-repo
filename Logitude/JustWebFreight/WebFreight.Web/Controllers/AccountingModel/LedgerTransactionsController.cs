@@ -49,16 +49,8 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 List<LedgerTransactionList> ledgerTransactions = new List<LedgerTransactionList>();
                 if (LTBFilter.UseTaxreportFilter)
                 {
-                    if (LTBFilter.TaxreportId != null)
-                    {
-                        ledgerTransactions = GetLedgerTransactinByTaxReportId(LTBFilter, tenant);
-
-                    }
-
-                    else if (LTBFilter.NotIncludedInAnyTaxReport)
-                    {
-                        ledgerTransactions = GetLedgerTransactinNotIncludedInAnyTaxReport(LTBFilter, tenant);
-                    }
+                   
+                        ledgerTransactions = GetLedgerTransactinByTaxReportId(LTBFilter);
 
                     ledgerTransactions.ForEach(rec =>
                     {
@@ -74,13 +66,14 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                  
 
                 ServiceResponse response = new ServiceResponse();
-                if (filters.GetCount)
-                {
-                    response.Count = LTBFilter.DateTypeCode == "4"? ledgerTransactions.Count() : ledgerTransactionBalanceService.Response.TotalRowCount.Value;
-                }
+               
                 if(LTBFilter.CurrencyId != null && ledgerTransactions.Count>0)
                 {
                     ledgerTransactions = ledgerTransactions.Where(d => d.CurrencyId == LTBFilter.CurrencyId).ToList();
+                }
+                if (filters.GetCount)
+                {
+                    response.Count = LTBFilter.DateTypeCode == "4" ? ledgerTransactions.Count() : ledgerTransactionBalanceService.Response.TotalRowCount.Value;
                 }
                 response.Result = LTBFilter.DateTypeCode == "4" ? ledgerTransactions : ledgerTransactionBalanceService.Response.MyLedgerTransactionList;
                 response.TookMS = LTBFilter.DateTypeCode != "4" ? ledgerTransactionBalanceService.Response.TookMS: 0;
@@ -96,18 +89,13 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 
         }
        
-        private List<LedgerTransactionList> GetLedgerTransactinByTaxReportId(LedgerTransactionBalanceFilter LTBFilter, int tenant)
+        private List<LedgerTransactionList> GetLedgerTransactinByTaxReportId(LedgerTransactionBalanceFilter LTBFilter)
         {
             IAccountingContext accountingContext = AccountingContext.GetContext(LTBFilter.Tenant);
             LedgerTransactionListQueryService ledgerTransactionListQueryService = new LedgerTransactionListQueryService(accountingContext);
-           return ledgerTransactionListQueryService.GetReportLinesLedgerTransactions(LTBFilter.TaxreportId, tenant, LTBFilter.GLAccountId);                 
+           return ledgerTransactionListQueryService.GetReportLinesLedgerTransactions(LTBFilter);                 
         }
-        private List<LedgerTransactionList> GetLedgerTransactinNotIncludedInAnyTaxReport(LedgerTransactionBalanceFilter LTBFilter, int tenant)
-        {
-            IAccountingContext accountingContext = AccountingContext.GetContext(LTBFilter.Tenant);
-            LedgerTransactionListQueryService ledgerTransactionListQueryService = new LedgerTransactionListQueryService(accountingContext);
-            return ledgerTransactionListQueryService.GetReportLinesLedgerTransactions(null, tenant, LTBFilter.GLAccountId);
-        }
+       
         public HttpResponseMessage GetTransactionsCurrencies(string AccountId)
         {
             try

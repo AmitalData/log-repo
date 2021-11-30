@@ -148,7 +148,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
 
                         IAccountingContext MyContext = AccountingContext.GetContext(tenant);
                         GLAccountQueryService mappingService = new GLAccountQueryService(tenant);
-                        GLAccountPM entityPM = mappingService.GLAccountDataMappingAndValidatin(entity, tenant);
+                        GLAccountPM entityPM = mappingService.GLAccountDataMappingAndValidatinForExternalAPI(entity, tenant);
 
                         if (entity.Parent != null)
                         {

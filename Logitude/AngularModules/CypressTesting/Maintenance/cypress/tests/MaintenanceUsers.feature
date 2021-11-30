@@ -1,6 +1,7 @@
-@all @dev
+@all @devsmoke
 Feature: User Create, Search and Edit from Maintenance
     The user creates a User, searches for and edits it from the Maintenance Module.
+    and Log in with inactive user.
 
     Scenario: Create new User
         Given the user logged in and open "Users" in maintenance menu
@@ -34,3 +35,9 @@ Feature: User Create, Search and Edit from Maintenance
         Then the following event should appear in events tab
             | Event        | Notes            |
             | User Updated | User Inactivated |
+
+    Scenario: Log in with inactive user
+        Given the user logged in with the inactive user
+        And change old password "123" to new password "!Cypress1"
+        And re login
+        Then an error message with "Your account has been deactivated!" should appear

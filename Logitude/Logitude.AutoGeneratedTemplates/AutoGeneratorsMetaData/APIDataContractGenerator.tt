@@ -207,25 +207,41 @@ using <#=myspacestring#>
 			
 			 if(IsKey == "true" && IsComposition == "false"){ #>
 
-		public <#=DCName #> Get<#=DCName #>By<#=FieldName#>(<#=type#> <#=FieldName#>,int Tenant,string ComputingPartnerName = "")
+		public <#=DCName #> Get<#=DCName #>By<#=FieldName#>(<#=type#> <#=FieldName#>,int Tenant, <#+if(ObjectTableName == "Shipment"){#>string include,<#+}#> string ComputingPartnerName = "")
         { 
 		    try
             {
-
+				<#+if(ObjectTableName == "Shipment"){#>
 				<#+if(FieldName != "Id" && IsClosed != "true"){#>
 
-				var temp = query.GetSinglePMBy<#=FieldName#>(<#=FieldName#>,Tenant);<#+}else{#>
+				var temp = query.GetSinglePMBy<#=FieldName#>(<#=FieldName#>, Tenant, include);<#+}else{#>
 
-				var temp = query.GetSinglePM(<#=FieldName#>,Tenant);<#+}#>
-				
+				var temp = query.GetSinglePM(<#=FieldName#>, Tenant, include);<#+}#><#+}
+
+
+				else if(ObjectTableName == "EventType"){#>
+				<#+if(FieldName != "Id" && IsClosed != "true"){#>
+
+				var temp = query.GetSinglePMBy<#=FieldName#>(<#=FieldName#>, Tenant, true);<#+}else{#>
+
+				var temp = query.GetSinglePM(<#=FieldName#>, Tenant);<#+}#><#+}
+
+				else{#> 
+				<#+if(FieldName != "Id" && IsClosed != "true"){#>
+
+				var temp = query.GetSinglePMBy<#=FieldName#>(<#=FieldName#>, Tenant);<#+}else{#>
+
+				var temp = query.GetSinglePM(<#=FieldName#>, Tenant);<#+}#>
+				<#+}#>
+
 				 if (temp == null)
                     throw new ApplicationException("<#=ObjectTableName#> with <#=FieldName#> " + <#=FieldName#> + " doesn't exist");
 
 				return <#=DCName #>DataMapping(temp,Tenant,ComputingPartnerName);
 			}
+
             catch (Exception ex)
             {
-
                 throw ex;
             }
         }
@@ -395,7 +411,7 @@ using <#=myspacestring#>
 
 					if (!string.IsNullOrEmpty(<#+if(IsComposition == "true"){#>item<#+}else{#>MyEntity<#+}#>.<#=DCFieldName#>))
 					{
-						temp = query.GetSinglePM<#+if(IsClosed == "false"){#>By<#=FieldName#><#+}#>(<#+if(IsComposition == "true"){#>item<#+}else{#>MyEntity<#+}#>.<#=DCFieldName#><#+if(IsClosed == "false"){#>, Tenant<#+}#>);
+						temp = query.GetSinglePM<#+if(IsClosed == "false"){#>By<#=FieldName#><#+}#>(<#+if(IsComposition == "true"){#>item<#+}else{#>MyEntity<#+}#>.<#=DCFieldName#><#+if(IsClosed == "false"){#>, Tenant<#+if(ObjectTableName == "EventType"){#>, true<#+}#>  <#+}#>);
 					} <#+}
 					if(IsCompositKey == "true" && IsSpecialField == "false" &&  Keys != null && Keys.Count > 0 && HasCompositKey == "true"){
 					  MyErrorField = KeysAsParam;#>
@@ -418,7 +434,7 @@ using <#=myspacestring#>
 						{
 						  throw new ApplicationException("<#=ObjectTableName#> with Partner Code " + <#+if(IsComposition == "true"){#>item<#+}else{#>MyEntity<#+}#>.<#=DCFieldName#> + " doesn't match any record");
 						}
-						temp = query.GetSinglePM<#+if(IsClosed == "false"){#>By<#=FieldName#><#+}#>(MyCode<#+if(IsClosed == "false"){#>, Tenant<#+}#>);
+						temp = query.GetSinglePM<#+if(IsClosed == "false"){#>By<#=FieldName#><#+}#>(MyCode<#+if(IsClosed == "false"){#>, Tenant<#+if(ObjectTableName == "EventType"){#>, true<#+}#> <#+}#>);
 						
 						
 					}

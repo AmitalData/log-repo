@@ -179,6 +179,8 @@
       <LastGenOutput>ControllersGenerator.cs</LastGenOutput>
       <LastOutputs>.\ControllersGenerator.cs</LastOutputs>
     </Content>
+    <None Include="DBOthers\CommonDataModel\Procedures\usp_UpdatePortSearchFieldsFunction.dxml" />
+    <None Include="DBOthers\CommonDataModel\Procedures\usp_UpdateShippingLineSearchFieldsFunction.dxml" />
     <None Include="DBOthers\CommonDataModel\Triggers\TriggerOnCreate_AutomaticLastUpdateDateVatTypes.dxml" />
     <None Include="DBOthers\CommonDataModel\Triggers\Trigger_AutomaticLastUpdateDateVatTypes.dxml" />
     <None Include="DBOthers\ShipmentsModel\Triggers\TriggerOnCreate_AutomaticLastUpdateDateShipmentSubTypes.dxml" />
@@ -188,10 +190,13 @@
     <None Include="DBScripts\CommonModel\202111101034_UpdateUsersSecurityLevelWithNullValues.sxml" />
     <None Include="DBScripts\CommonModel\202109021051_AddDefaultValueForSecurityLevel.sxml" />
     <None Include="DBScripts\CommonModel\202109021049_UpdateUsersSecurityLevel.sxml" />
+    <None Include="DBScripts\CommonModel\UpdatePortsSearchFields.sxml" />
+    <None Include="DBScripts\CommonModel\UpdateShippingLinesSearchFields.sxml" />
     <None Include="DBScripts\GlobalModel\202110271507_AddMultiEntityUpdateWR.sxml" />
     <None Include="DBScripts\GlobalModel\AddCollaborationToolContainerWRsBatchService.sxml" />
     <None Include="DBScripts\CommonModel\UpdateAutomaticLastUpdateDateOnVatType.sxml" />
     <None Include="DBScripts\GlobalModel\AddUpdatePortTimeZoneWRBatchService.sxml" />
+    <None Include="DBScripts\GlobalModel\DeleteTenantManagmentPrivateLabelsConstraint.sxml" />
     <None Include="DBScripts\GlobalModel\PODImageConverterServiceBatchService.sxml" />
     <None Include="DBScripts\GlobalModel\AddCollaborationToolContainerWRsBatchService.sxml" />
     <None Include="DBScripts\InfrastructureModel\202111081530_FillEntityStatusTypes.sxml" />

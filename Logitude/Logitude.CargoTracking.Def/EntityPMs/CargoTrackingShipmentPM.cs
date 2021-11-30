@@ -153,14 +153,21 @@ namespace Logitude.CargoTracking.Def.EntityPMs
         public string Type { get; set; }
         public string Address { get; set; }
         public string PhoneNumber { get; set; }
+        public string Mobile { get; set; }
         public string FaxNumber { get; set; }
+        public string Email { get; set; }
         public bool ShowDetails { get; set; } = false;
     }
     public class Milestone
     {
-        public int Id { get; set; }
+        public int Id
+        {
+            get { return Weight; }
+        }
+        public int Weight { get; set; }
         public string Code { get; set; }
         public string Name { get; set; }
+        public string LocalName { get; set; }
         public string Notes { get; set; }
         public DateTime? Date { get; set; }
         public DateTime? EstimationDate { get; set; }

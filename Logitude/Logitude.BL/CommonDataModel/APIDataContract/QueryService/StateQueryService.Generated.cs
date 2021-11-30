@@ -40,21 +40,21 @@ using Simplog.Data.CommonDataModel;
         }
 
 		
-		public State GetStateById(string Id,int Tenant,string ComputingPartnerName = "")
+		public State GetStateById(string Id,int Tenant,  string ComputingPartnerName = "")
         { 
 		    try
             {
-
+				 
 				
-				var temp = query.GetSinglePM(Id,Tenant);				
+				var temp = query.GetSinglePM(Id, Tenant);				
 				 if (temp == null)
                     throw new ApplicationException("State with Id " + Id + " doesn't exist");
 
 				return StateDataMapping(temp,Tenant,ComputingPartnerName);
 			}
+
             catch (Exception ex)
             {
-
                 throw ex;
             }
         }

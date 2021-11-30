@@ -8,6 +8,7 @@ using System.Runtime.Serialization;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.Server.Tools;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
+using Logitude.BL.InfrastructureModel.EntityPMs;
 
 namespace Logitude.BL.ShipmentsModel.EntityPMs
 {
@@ -2781,6 +2782,8 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string UnassignedShipperAddressId { get; set; }
         public string UnassignedConsigneeAddressId { get; set; }
         public bool HasUnassignedData { get; set; }
+        public List<TraceEventPM> EventList { get; set; }
+        public List<TraceEventPM> AddManualEvents { get; set; }
     }
 
     public class TransshipmentLeg
@@ -2799,8 +2802,6 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public DateTime? ETD { get; set; }
         public DateTime? ETA { get; set; }
         public DateTime? ATD { get; set; }
-        public DateTime? ATA { get; set; }        
-
-
+        public DateTime? ATA { get; set; }
     }
 }

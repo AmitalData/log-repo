@@ -1,4 +1,5 @@
-﻿using Logitude.BL.Helpers;
+﻿using Logitude.BL.DataContracts;
+using Logitude.BL.Helpers;
 using Logitude.Infrastructure.Data;
 using Logitude.Infrastructure.Data.EntityPOCOs;
 using Logitude.Server.Tools.Counters;
@@ -830,6 +831,7 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
             portRepository.Add(newPort);
             portRepository.SubmitChanges();
 
+            RunStoredProcedureClass.UpdatePortSearcsFields(newPort.Id, newPort.Tenant);
             TableLastUpdateClass.UpdateTableHistory(tenant, "Port");
 
             return newPort;

@@ -67,6 +67,8 @@ namespace Logitude.Accounting.Data.EntityPOCOs
 	    public string BranchId { get; set; }
 	      
         public virtual Branch Branch { get; set; }
+        [Column("InDepositingProgress")]
+	    public bool InDepositingProgress { get; set; }
     }
 }
 	 

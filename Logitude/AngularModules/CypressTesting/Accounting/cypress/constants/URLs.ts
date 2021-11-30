@@ -13,4 +13,7 @@ export class AccountingURLs {
     public static readonly VatTypePercentageCall = "**/GetVatTypePercentagePMByDate?**"
     public static readonly EntityResourceAccountingPeriod="**/EntityResource?objectTableName=AccountingPeriod&**"
     public static readonly PerformancelogsPostLogsList="**/performancelogs/PostLogsList"
+    public static readonly DocumentTypeTemplateExtended="**/DocumentTypeTemplateExtended/getdocumenttypetemplatelistsfordocumenttype/**"
+    public static readonly DocumentTypeExtended="**/DocumentTypeExtended/getsingledocumenttype/**"
+    public static readonly DocumentTypeCustomField="**/DocumentTypeCustomField/**"
 }

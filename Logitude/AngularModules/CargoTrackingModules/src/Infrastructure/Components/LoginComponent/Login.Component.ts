@@ -1,7 +1,8 @@
 import { Location } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouteReuseStrategy } from '@angular/router';
 import { AuthService } from 'src/app/auth.service';
+import { CustomRouteReuseStrategy } from 'src/app/custom-route-reuse-strategy.service';
 import { CargoTrackingBrandingData } from 'src/CargoTracking/DataContracts/CargoTrackingBrandingData';
 import { ServiceResponse } from 'src/CargoTracking/DataContracts/ServiceResponse';
 import { CargoTrackingBrandingDataExtendedService } from 'src/CargoTracking/Services/Others/CargoTrackingBrandingDataExtendedService';
@@ -38,6 +39,7 @@ export class LoginComponent implements OnInit {
     public BackGroundImg: string;
 
     constructor(private router: Router,
+        public routeReuseStrategy:RouteReuseStrategy,
         private route: ActivatedRoute,
         private loginExtendedService: LoginExtendedService,
         private commonDataExtendedService: CommonDataExtendedService,
@@ -81,7 +83,10 @@ export class LoginComponent implements OnInit {
     ngOnInit() {
         this.initComponent();
     }
-
+    
+    clearRouteReuseStrategy() {
+        (this.routeReuseStrategy as CustomRouteReuseStrategy).clear();
+    }
     private initComponent() {
         // document.body.style.background = "#fff";
     }
@@ -94,6 +99,8 @@ export class LoginComponent implements OnInit {
     }
 
     public LogInClicked() {
+        this.clearRouteReuseStrategy();
+
         this.ShowbusyIndicator = true;
         this.errorMessage = "";
         const isCargoTrackingSite = this.IsCargoTrackingDomain();

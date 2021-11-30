@@ -196,6 +196,8 @@ export class GeneralSendComponent implements OnInit, AfterViewInit {
         filter.Cc = this.Cc ? this.Cc : ""; 
         filter.Bcc = this.Bcc ? this.Bcc : ""; 
         filter.Attachments = "";
+        filter.ChildObjectTableId = this.ChildObjectTableId;
+        filter.ChildEntityId = this.ChildEntityId;
 
 
         if (!filter.ToEmail) {

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Logitude.CargoTracking.Data.EntityLists;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
@@ -23,8 +24,9 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.HelperClasses
         public CargoTrackingUpdateDataBaseArgs CargoTrackingUpdateDataBaseArgs { get; set; }
         public DataTable SelectedDataTable { get; set; }
         public string CoulmnForCusstomMapping { get; set; }
+        public List<CargoTrackingMilestoneList> Milestones { get; internal set; }
 
-
-
+        // first key = tenant , second key = milestone code , value = milestone code
+        public Dictionary<int, Dictionary<string, string>> MilestonesNotPermitted { get; internal set; }
     }
 }

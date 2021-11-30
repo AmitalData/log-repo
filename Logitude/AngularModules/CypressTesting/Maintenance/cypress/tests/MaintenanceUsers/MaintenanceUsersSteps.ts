@@ -6,6 +6,8 @@ import { UserDetails } from "../../models/UserDetails";
 import { UsersSelectors } from "../../selectors/UsersSelectors";
 import { EventTypeDetails } from "../../../../Base/cypress/models/EventTypeDetails";
 import * as BaseActions from "../../../../Base/cypress/actions/Actions"
+import * as BaseAssertion from "../../../../Base/cypress/actions/Assertion"
+import { BaseSelectors } from "../../../../Base/cypress/selectors/BaseSelectors";
 
 //#region Create new User
 Given("the user logged in and open {string} in maintenance menu", (maintenanceItemName) => {
@@ -70,5 +72,25 @@ Given("inactive the user", () => {
 Then("the following event should appear in events tab", (dataTable) => {
     let eventDetailsList = Assists.CreateSet<EventTypeDetails>(dataTable);
     BaseActions.ValidateEventsTab(eventDetailsList, UsersSelectors.EventsTab);
+});
+//#endregion
+
+//#region Log in with inactive user
+Given("the user logged in with the inactive user", () => {
+    UserActions.Login("123")
+});
+
+Given("change old password {string} to new password {string}", (oldPassword, newPassword) => {
+    UserActions.ResetPassword(oldPassword, newPassword)
+});
+
+Given("re login", () => {
+    cy.wait(5000)
+    cy.FillLogTextBox(UsersSelectors.Password, "!Cypress1")
+    cy.Click(UsersSelectors.cmdLogin, null)
+});
+
+Then("an error message with {string} should appear", (messageError) => {
+    BaseAssertion.AssertElementContain(BaseSelectors.ErrorsList, messageError)
 });
 //#endregion

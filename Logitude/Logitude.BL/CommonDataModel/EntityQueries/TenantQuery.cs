@@ -173,6 +173,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                 FTLRatio = a.FTLRatio,
                                                 LTLRatio = a.LTLRatio,
                                                 IsQuotesRequestActivatedInShared = a.IsQuotesRequestActivatedInShared,
+                                                AutomaticallyCloseDays = a.AutomaticallyCloseDays,
                                             });
 
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -353,7 +354,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         FTLRatio = tt.FTLRatio,
                         LTLRatio = tt.LTLRatio,
                         IsQuotesRequestActivatedInShared = tt.IsQuotesRequestActivatedInShared,
-
+                        AutomaticallyCloseDays = tt.AutomaticallyCloseDays,
                     };
 
                     using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -524,7 +525,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     FTLRatio = tt.FTLRatio,
                     LTLRatio = tt.LTLRatio,
                     IsQuotesRequestActivatedInShared = tt.IsQuotesRequestActivatedInShared,
-
+                    AutomaticallyCloseDays = tt.AutomaticallyCloseDays,
                 };
 
                 using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -677,6 +678,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            FTLRatio = a.FTLRatio,
                                            LTLRatio = a.LTLRatio,
                                            IsQuotesRequestActivatedInShared = a.IsQuotesRequestActivatedInShared,
+                                           AutomaticallyCloseDays = a.AutomaticallyCloseDays,
 
                                        }).FirstOrDefault();
 
@@ -826,6 +828,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                        FTLRatio = a.FTLRatio,
                                        LTLRatio = a.LTLRatio,
                                        IsQuotesRequestActivatedInShared = a.IsQuotesRequestActivatedInShared,
+                                       AutomaticallyCloseDays = a.AutomaticallyCloseDays,
 
                                    }).FirstOrDefault();
 
@@ -987,6 +990,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                FTLRatio = a.FTLRatio,
                                                LTLRatio = a.LTLRatio,
                                                IsQuotesRequestActivatedInShared = a.IsQuotesRequestActivatedInShared,
+                                               AutomaticallyCloseDays = a.AutomaticallyCloseDays,
 
                                            }).FirstOrDefault();
 
@@ -1150,6 +1154,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            FTLRatio = a.FTLRatio,
                                            LTLRatio = a.LTLRatio,
                                            IsQuotesRequestActivatedInShared = a.IsQuotesRequestActivatedInShared,
+                                           AutomaticallyCloseDays = a.AutomaticallyCloseDays,
 
                                        }).FirstOrDefault();
 
@@ -1301,6 +1306,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                        FTLRatio = a.FTLRatio,
                                        LTLRatio = a.LTLRatio,
                                        IsQuotesRequestActivatedInShared = a.IsQuotesRequestActivatedInShared,
+                                       AutomaticallyCloseDays = a.AutomaticallyCloseDays,
 
                                    }).FirstOrDefault();
                 if (tenant != null)
@@ -1471,6 +1477,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     FTLRatio = myPOCO.FTLRatio,
                     LTLRatio = myPOCO.LTLRatio,
                     IsQuotesRequestActivatedInShared = myPOCO.IsQuotesRequestActivatedInShared,
+                    AutomaticallyCloseDays = myPOCO.AutomaticallyCloseDays,
 
                 };
 
@@ -1592,7 +1599,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                 HideFCLAllIn = a.HideFCLAllIn,
                                                 SharedLogisMasterMessageLink = a.SharedLogisMasterMessageLink,
                                                 IsQuotesRequestActivatedInShared = a.IsQuotesRequestActivatedInShared,
-
+                                                AutomaticallyCloseDays = a.AutomaticallyCloseDays,
                                             };
             return result;
         }

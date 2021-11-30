@@ -78,6 +78,7 @@ namespace Logitude.ShipmentOrderModule.BL.EntityDataMappings
 	         OnHandDate, 
 	         IsOperationalClosed, 
 	         OnHandNumber,
+	         AutomaticLastUpdateDate
 	      }
 
 

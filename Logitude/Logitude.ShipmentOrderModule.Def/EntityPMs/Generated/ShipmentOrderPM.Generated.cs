@@ -1722,6 +1722,7 @@ namespace Logitude.ShipmentOrderModule.Def.EntityPMs
 			
 		 }
 	   }
+
 	  private DateTime? onHandDate ;
 	  	  
        
@@ -1791,6 +1792,7 @@ namespace Logitude.ShipmentOrderModule.Def.EntityPMs
 			
 		 }
 	   }
+
    }
    
 }

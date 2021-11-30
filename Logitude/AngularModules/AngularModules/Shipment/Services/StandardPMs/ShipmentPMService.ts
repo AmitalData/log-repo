@@ -271,16 +271,16 @@ export class ShipmentPMService {
             })
         */
     }
-    GetByCustomerReference1(CustomerReference1: string, IsForwarderShipment: boolean = true) {
+    GetByCustomerReferences1or3(CustomerReference: string, IsForwarderShipment: boolean = true) {
 
         var callTime = new Date();
 
         return defer(() => {
-            return this._http.get(this._apiUrl + '/GetByCustomerReference1?CustomerReference1=' + CustomerReference1 + '&IsForwarderShipment=' + IsForwarderShipment, ServiceHelper.GetHttpFullHeaders()).pipe(
+            return this._http.get(this._apiUrl + '/GetByCustomerReferences1or3?CustomerReference=' + CustomerReference + '&IsForwarderShipment=' + IsForwarderShipment, ServiceHelper.GetHttpFullHeaders()).pipe(
                 map((response: HttpResponse<any>) => {
 
                 var servertime = response.headers.get('ServerExecutionTime');
-                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "Shipment", "GetByCustomerReference1", CustomerReference1);
+                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "Shipment", "GetByCustomerReferences1or3", CustomerReference);
 
                     var pm = response.body;
                 var entity: ShipmentPM;
@@ -308,16 +308,16 @@ export class ShipmentPMService {
             })
         */
     }
-    GetByCustomerReference1ForUpdate(CustomerReference1: string, ShipmentId:string,IsForwarderShipment: boolean = true) {
+    GetByCustomerReferences1or3ForUpdate(CustomerReference: string, ShipmentId:string,IsForwarderShipment: boolean = true) {
 
         //var key = PerformanceLogger.AddLogTime();
         var callTime = new Date();
         return defer(() => {
-            return this._http.get(this._apiUrl + '/GetByCustomerReference1ForUpdate?CustomerReference1=' + CustomerReference1 + '&ShipmentId=' + ShipmentId + '&IsForwarderShipment=' + IsForwarderShipment, ServiceHelper.GetHttpFullHeaders()).pipe(
+            return this._http.get(this._apiUrl + '/GetByCustomerReferences1or3ForUpdate?CustomerReference1=' + CustomerReference + '&ShipmentId=' + ShipmentId + '&IsForwarderShipment=' + IsForwarderShipment, ServiceHelper.GetHttpFullHeaders()).pipe(
                 map((response: HttpResponse<any>) => {
 
                 var servertime = response.headers.get('ServerExecutionTime');
-                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "Shipment", "GetByCustomerReference1ForUpdate", CustomerReference1);
+                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "Shipment", "GetByCustomerReferences1or3ForUpdate", CustomerReference);
 
                 var pm = response.body;
                 var entity: ShipmentPM;

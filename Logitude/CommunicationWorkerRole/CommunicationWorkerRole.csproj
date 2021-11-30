@@ -392,13 +392,11 @@
     <Compile Include="QBODocumnetsUploaderWR.cs" />
     <Compile Include="PODDocumnetUploaderWR.cs" />
     <Compile Include="PODImageConverterWorkerRole.cs" />
-
     <Compile Include="MultiEntityUpdateWorkerRole.cs" />
+    <Compile Include="Services\ContainerSchedulerTaskService.cs" />
     <Compile Include="Services\MultiEntityUpdateService.cs" />
-
-
+    <Compile Include="Tasks\ContainerAutomaticallyClosingTask.cs" />
     <Compile Include="UpdatePortTimeZoneWR.cs" />
-
     <Compile Include="WebHookCommunicationWorkerRole.cs" />
     <Compile Include="Service References\LoginServiceReference\Reference.cs">
       <AutoGen>True</AutoGen>
@@ -767,6 +765,10 @@
     <ProjectReference Include="..\Logitude.BookingLib.Data\Logitude.BookingLib.Data.csproj">
       <Project>{147a706d-221a-4fd1-8f27-c12e4ab276cf}</Project>
       <Name>Logitude.BookingLib.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logitude.CargoTracking.BL\Logitude.CargoTracking.BL.csproj">
+      <Project>{6b7fb227-28d2-45b8-b079-2e2f4251510d}</Project>
+      <Name>Logitude.CargoTracking.BL</Name>
     </ProjectReference>
     <ProjectReference Include="..\Logitude.CargoTracking.Data\Logitude.CargoTracking.Data.csproj">
       <Project>{7281A115-2213-41A3-A39A-22476F5A8DB8}</Project>

@@ -17,7 +17,7 @@ Feature: Create New Surcharge Cost Tariff
     Scenario: Create new ocean LCL surcharge cost
         Given an ocean LCL surcharge cost with the following details
             | Name   | TestOceanLCLSurchargeCost |
-            | Seller | MAEU                      |
+            | Seller | MSCU                      |
         And add the following surcharges
             | Name                     |
             | Bunker Adjustment Factor |
@@ -28,7 +28,7 @@ Feature: Create New Surcharge Cost Tariff
     Scenario: Create new ocean FCL surcharge cost
         Given an ocean FCL surcharge cost with the following details
             | Name   | TestOceanFCLSurchargeCost |
-            | Seller | MAEU                      |
+            | Seller | MSCU                      |
         And add the following surcharges
             | Name                     |
             | Bunker Adjustment Factor |

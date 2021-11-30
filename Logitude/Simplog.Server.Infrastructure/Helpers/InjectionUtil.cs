@@ -151,6 +151,10 @@ namespace Simplog.Server.Infrastructure.Helpers
         {
              _EntityUpdateReflectorService().UpdateEntity(entityPM, entityName, tenant);
         }
+        public void UpdateEntity(UpdateEntityArgs updateEntityArgs)
+        {
+            _EntityUpdateReflectorService().UpdateEntity(updateEntityArgs);
+        }
         public object GetEntity(EntityGetReflector entityGetReflector)
         {
             return entityGetReflectorService().GetEntity(entityGetReflector);
@@ -177,11 +181,18 @@ namespace Simplog.Server.Infrastructure.Helpers
         object GetEntity(string entityName, string entityId, int tenant);
 
     }
-
+    public class UpdateEntityArgs
+    {
+        public object EntityPM { get; set; }
+        public string EntityName { get; set; }
+        public int Tenant { get; set; }
+        public string LoggedUserEmail { get; set; }
+    }
 
     public interface IEntityUpdateReflectorService
     {
         void UpdateEntity(object entityPM, string entityName, int tenant);
+        void UpdateEntity(UpdateEntityArgs updateEntityArgs);
     }
 
     public interface IEntityGetReflectorService

@@ -17,7 +17,7 @@ namespace Logitude.CargoTracking.Data.EntityLists
        [DataMember]
        public string SearchFields  { get; set; }
        [DataMember]
-       public DateTime ShipmentDate  { get; set; }
+       public DateTime? ShipmentDate  { get; set; }
 
        [Key]
        [DataMember]

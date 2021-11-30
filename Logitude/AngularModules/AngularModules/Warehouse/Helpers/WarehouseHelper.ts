@@ -22,6 +22,7 @@ import { PartnersDomainService } from '../../Common/Services/PartnersDomainServi
 import { WarehouseStoragePricingPM } from '../../Common/EntityPMs/WarehouseStoragePricingPM';
 import { ShipmentStoragePricingPM } from '../../Shipment/EntityPMs/ShipmentStoragePricingPM';
 import { CardList } from '../../Common/EntityLists/CardList';
+import { ShipmentTool } from 'Shipment/Tools';
 
 export class WarehouseHelper {
     validator: ClassLevelValidator;
@@ -36,7 +37,7 @@ export class WarehouseHelper {
     SetShipmentWarehouseLeg(shipmentPM: ShipmentPM, warehouseEntity: any, type: string) {
         if (shipmentPM && warehouseEntity && !AppTool.IsNullOrEmpty(type)) {
 
-            if (AppTool.IsNullOrEmpty(shipmentPM.WarehouseLegWarehouseId)) {
+            if (AppTool.IsNullOrEmpty(shipmentPM.WarehouseLegWarehouseId) && !ShipmentTool.IsInlandDomestic(shipmentPM)) {
                 if (shipmentPM.DirectionId != "C" && (shipmentPM.ShipmentLevelCode == "D" || shipmentPM.ShipmentLevelCode == "H")) {
                     shipmentPM.WarehouseLegWarehouseId = warehouseEntity.WarehouseId;
                     this.SetIsCFSWarehouseProperities(shipmentPM, warehouseEntity.WarehouseId);

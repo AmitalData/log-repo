@@ -179,7 +179,7 @@ h1 {
     box-shadow: 0px 0px 8px 0px #00000030;
 }
 
-    .slider .card + .active {
+    .slider .card.active {
         background: var(--MainColor);
         color: white;
     }

@@ -125,6 +125,10 @@
     <Reference Include="Intuit.Ipp.WebHooksService, Version=7.5.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\IppDotNetSdkForQuickBooksApiV3.7.5.0\lib\Intuit.Ipp.WebHooksService.dll</HintPath>
     </Reference>
+    <Reference Include="Logitude.Accounting.BL, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\JustWebFreight\WebFreight.Web\bin\Logitude.Accounting.BL.dll</HintPath>
+    </Reference>
     <Reference Include="Logitude.CRM.BL, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\LogitudeOldDlls.1.0.0\lib\Net40\Logitude.CRM.BL.dll</HintPath>
     </Reference>
@@ -293,11 +297,13 @@
     <Compile Include="CommonDataModel\APIDataContract\QueryService\PaymentTermQueryService.Generated.cs" />
     <Compile Include="CommonDataModel\APIDataContract\QueryService\ShipmentCardQueryService.Generated.cs" />
     <Compile Include="CommonDataModel\APIDataContract\QueryService\APIUnassignedDataHandler.cs" />
+    <Compile Include="CommonDataModel\APIDataContract\QueryService\ShipmentOrderPortQueryService.Generated.cs" />
     <Compile Include="CommonDataModel\APIDataContract\QueryService\UserQueryService.cs" />
     <Compile Include="CommonDataModel\APIDataContract\QueryService\VatTypeQueryService.cs" />
     <Compile Include="CommonDataModel\APIDataContract\QueryService\VendorQueryService.cs" />
     <Compile Include="CommonDataModel\APIDataContract\QueryService\VendorQueryService.Generated.cs" />
     <Compile Include="CommonDataModel\APIDataContract\QueryService\VesselQueryService.Generated.cs" />
+    <Compile Include="CommonDataModel\APIDataContract\ShipmentOrderPort.Generated.cs" />
     <Compile Include="CommonDataModel\APIDataContract\Vendor.Generated.cs" />
     <Compile Include="CommonDataModel\APIDataContract\Vessel.Generated.cs" />
     <Compile Include="CommonDataModel\Args\CustomReferenceDocumentsMetaDataType.cs" />
@@ -452,6 +458,7 @@
     <Compile Include="CommonDataModel\EntityQueries\WarehouseStoragePricingQuery.cs" />
     <Compile Include="CommonDataModel\EntityQueries\WarehouseWeightMeasurementQuery.cs" />
     <Compile Include="CommonDataModel\EntityQueries\WarehouseWeightRoundingQuery.cs" />
+    <Compile Include="CommonDataModel\Helpers\BatchTaskNames.cs" />
     <Compile Include="CommonDataModel\Tools\DataMapping\CardSearchMapping.cs" />
     <Compile Include="CommonDataModel\Tools\DataMapping\CarrierAreasPortMapping.cs" />
     <Compile Include="CommonDataModel\Tools\DataMapping\CarrierAreaMapping.cs" />
@@ -504,17 +511,23 @@
     <Compile Include="DataContracts\ExportDocumentArgs.cs" />
     <Compile Include="DataContracts\QuoteDashboardArguments.cs" />
     <Compile Include="ExternalService\IEntityAutomationMappingPMFields.cs" />
+    <Compile Include="Helpers\AddManualTraceEventsHelper.cs" />
     <Compile Include="Helpers\ContainerStatusesHelper.cs" />
     <Compile Include="Helpers\ObjectFieldPropertyGetter.cs" />
     <Compile Include="Helpers\PayablesLinesVatAmounts.cs" />
     <Compile Include="InfrastructureModel\APIDataContract\EntityStatus.Generated.cs" />
     <Compile Include="InfrastructureModel\APIDataContract\EventsTypes.cs" />
+    <Compile Include="InfrastructureModel\APIDataContract\EventType.Generated.cs" />
     <Compile Include="InfrastructureModel\APIDataContract\EventTypeDetails.Generated.cs" />
-    <Compile Include="InfrastructureModel\APIDataContract\EventTypeQueryService.cs" />
+    <Compile Include="InfrastructureModel\APIDataContract\QueryService\EventTypeDetailsQueryService.cs" />
     <Compile Include="InfrastructureModel\APIDataContract\QueryService\EntityStatusQueryService.Generated.cs" />
     <Compile Include="InfrastructureModel\APIDataContract\Messages\RatesUpdateService.cs" />
     <Compile Include="InfrastructureModel\APIDataContract\QueryService\EventTypeDetailsQueryService.Generated.cs" />
+    <Compile Include="InfrastructureModel\APIDataContract\QueryService\EventTypeQueryService.Generated.cs" />
+    <Compile Include="InfrastructureModel\APIDataContract\QueryService\EventQueryService.cs" />
+    <Compile Include="InfrastructureModel\APIDataContract\QueryService\EventQueryService.Generated.cs" />
     <Compile Include="InfrastructureModel\APIDataContract\RatesUpdate.cs" />
+    <Compile Include="InfrastructureModel\APIDataContract\Event.Generated.cs" />
     <Compile Include="InfrastructureModel\CloseTables\DetailsClassesGenerated\EntityStatusTypeDetails.Generated.cs" />
     <Compile Include="InfrastructureModel\CloseTables\EnumGenerated\EntityStatusTypeStruct.Generated.cs" />
     <Compile Include="InfrastructureModel\DataContracts\MultiEntityUpdateData.cs" />
@@ -2944,7 +2957,14 @@
     <Compile Include="ShipmentsModel\Tools\TraceEvents\ShipmentTracing.ShipmentSubType.cs" />
     <Compile Include="ShipmentsModel\Tools\TraceEvents\SpecialServicesTypeTracing.cs" />
     <Compile Include="ShipmentsModel\Tools\Validating\IEntityValidator.cs" />
+    <Compile Include="ShipmentsModel\Tools\Validating\ShipmentWarehouseLegsValidator.cs" />
+    <Compile Include="ShipmentsModel\Tools\Validating\ShipmentMasterValidator.cs" />
+    <Compile Include="ShipmentsModel\Tools\Validating\ShipmentCustomsValidator.cs" />
+    <Compile Include="ShipmentsModel\Tools\Validating\ShipmentMainCarriageLegsValidator.cs" />
+    <Compile Include="ShipmentsModel\Tools\Validating\ShipmentHouseValidator.cs" />
+    <Compile Include="ShipmentsModel\Tools\Validating\ShipmentDirectValidator.cs" />
     <Compile Include="ShipmentsModel\Tools\Validating\ShipmentReceivableValidator.cs" />
+    <Compile Include="ShipmentsModel\Tools\Validating\ShipmentBaseValidator.cs" />
     <Compile Include="ShipmentsModel\Tools\Validating\ShipmentValidating.cs" />
     <Compile Include="Validators\ClassLevelValidator.cs" />
     <Compile Include="Validators\ClassLevelValidator.Shared.cs" />

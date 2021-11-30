@@ -29,6 +29,8 @@ namespace Logitude.CargoTracking.Data.EntityPOCOs
 	    public string LocalName { get; set; }
         [Column("Inactive")]
 	    public bool Inactive { get; set; }
+        [Column("Weight")]
+	    public int? Weight { get; set; }
     }
 }
 	 

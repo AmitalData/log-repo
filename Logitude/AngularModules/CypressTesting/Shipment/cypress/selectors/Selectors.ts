@@ -30,6 +30,9 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly APInvoiceStatus = "[data-cy='StatusValue']";
   public static readonly ARInvoiceStatus = "[id^='ARInvoiceHeaderStatusName']";
   public static readonly RoutingStatus = "[data-cy='ShipmentStatusValue']";
+  public static readonly UnexpectedPackageGreyImage = "img[src='./Images/CellIcons/Package_gray.png'"
+  public static readonly ARPaymentStatus = "[data-cy='Header_Status']";
+ 
   
   //#endregion
 

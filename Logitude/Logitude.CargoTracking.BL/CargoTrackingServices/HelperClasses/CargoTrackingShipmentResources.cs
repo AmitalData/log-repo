@@ -10,8 +10,11 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.HelperClasses
     public class CargoTrackingShipmentResources
     {
         public string CustomsDeclarationNumber { get; set; }
+        public string OrderPONumber { get; set; }
+        public string OrderBookingConfirmationNumber { get; set; }
         public CargoTrackingShipmentResources Child { get; set; }
         public CargoTrackingShipment CargoTrackingShipment { get; set; }
+        public DateTime ShipmentCreateDate { get; set; }
 
         
     }

@@ -512,7 +512,14 @@ export class APPaymentPM {
     public get ExternalPaymentNotes() { return this.externalPaymentNotes; }
     public set ExternalPaymentNotes(newValue: string) { if (this.externalPaymentNotes != newValue) { this.externalPaymentNotes = newValue; this.MarkAsDirty("ExternalPaymentNotes"); } }
        
-	 
+    private reconcileInternalTransIds : string;
+    public get ReconcileInternalTransIds() : string {
+        return this.reconcileInternalTransIds;
+    }
+    public set ReconcileInternalTransIds(v : string) {
+        this.reconcileInternalTransIds = v;
+        this.MarkAsDirty("ReconcileInternalTransIds");
+    }
 
     public OldEntityPM: APPaymentPM;
 		
@@ -540,4 +547,4 @@ export class APPaymentPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

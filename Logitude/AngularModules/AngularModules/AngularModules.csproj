@@ -328,6 +328,7 @@
     <Content Include="Infrastructure\Components\MultiUpdateComponent\MultiEntityUpdateBaseComponent.html" />
     <Content Include="Infrastructure\Components\MultiUpdateComponent\MultiEntityUpdateErrorHandlerComponent.html" />
     <Content Include="Infrastructure\Components\MultiUpdateComponent\MultiUpdateComponent.html" />
+    <Content Include="InvoiceModules\APInvoice\Components\EditTabs\APInvoiceGeneralTabComponent.html" />
     <Content Include="InvoiceModules\ARPayment\Components\Other\ARPaymentMultiChequesComponent.html" />
     <Content Include="SharedLogistics\Components\CargoTrackingMilestonesPermissiosComponent.html" />
     <Content Include="ShipmentModules\ShipmentAWB\Components\AWBWizard\Packages\AWBAddEditCommodityComponent.html" />
@@ -2021,6 +2022,7 @@
     <TypeScriptCompile Include="Infrastructure\Utilities\SystemEnvironmentService.ts" />
     <TypeScriptCompile Include="Infrastructure\Validators\EventTypeValidator.ts" />
     <TypeScriptCompile Include="InvoiceModules\APInvoice\Components\EditTabs\APInvoiceAuditTabComponent.ts" />
+    <TypeScriptCompile Include="InvoiceModules\APInvoice\Components\EditTabs\APInvoiceGeneralTabComponent.ts" />
     <TypeScriptCompile Include="InvoiceModules\APInvoice\Components\Others\APInvoiceTotalVATOnlyComponent.ts" />
     <TypeScriptCompile Include="InvoiceModules\APInvoice\ModuleAPInvoice.ts" />
     <TypeScriptCompile Include="InvoiceModules\APPayment\Components\EditTabs\APPaymentCancelationDetailsComponent.ts" />
@@ -7555,6 +7557,7 @@
     <TypeScriptCompile Include="Shipment\EntityLists\ShipmentCustomsTransmissionList.ts" />
     <TypeScriptCompile Include="Shipment\EntityLists\ShipmentSubTypeList.ts" />
     <TypeScriptCompile Include="Shipment\EntityPMCustomCode\ContainerPMCustomCode.ts" />
+    <TypeScriptCompile Include="Shipment\EntityPMInitServices\ContainerPMInitService.ts" />
     <TypeScriptCompile Include="Shipment\EntityPMInitServices\ShipmentSubTypePMInitService.ts" />
     <TypeScriptCompile Include="Shipment\EntityPMs\ContainerFollowUpPM.ts" />
     <TypeScriptCompile Include="Shipment\EntityPMs\ContainerPM.ts" />

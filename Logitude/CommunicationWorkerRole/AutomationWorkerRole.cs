@@ -803,6 +803,20 @@ namespace CommunicationWorkerRole
                 ShipmentService service = new ShipmentService(objectContext, shipmentPM, email);
                 service.Update(true);
             }
+
+            else if(tableName == "Container")
+            {
+                UpdateContainer(theEntity);
+            }
+        }
+
+        private static void UpdateContainer(object theEntity)
+        {
+            ContainerPM containerPM = (ContainerPM)theEntity;
+            IShipmentsContext shipmentsContext = ShipmentsContext.GetContext(0);
+            ContainerService service = new ContainerService(shipmentsContext, containerPM.Tenant);
+            containerPM.IsUpdateByAutomation = true;
+            service.Update(containerPM);
         }
 
         public void SubmitChanges()

@@ -52,6 +52,8 @@ namespace Logitude.Accounting.Data.EntityMapping
             this.Property(t => t.AccountId).HasColumnName("AccountId").IsRequired().HasMaxLength(15).IsUnicode(false);
 
             this.Property(t => t.BranchId).HasColumnName("BranchId").IsRequired().HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.InDepositingProgress).HasColumnName("InDepositingProgress");
         }
     }
 }

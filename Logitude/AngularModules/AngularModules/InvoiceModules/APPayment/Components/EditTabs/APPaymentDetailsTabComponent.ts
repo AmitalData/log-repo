@@ -33,6 +33,7 @@ import { FullAccountingSettingPMService } from '../../../../Accounting/Services/
 import { PaymentChequeExtendedPMService } from '../../../../Accounting/Services/ExtendedPMs/PaymentChequeExtendedPMService';
 import { GLAccountListService } from '../../../../Accounting/Services/StandardLists/GLAccountListService';
 import { GLAccountList } from '../../../../Accounting/EntityLists/GLAccountList';
+import { ThrowStmt } from '@angular/compiler';
 
 @Component({
     
@@ -54,6 +55,7 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
     public PaymentChequeActivated: boolean = true;
     public IsMultiCurrency: boolean = false;
     public LocalCurrencyCode = "";
+    public ReconcileInternalTransIds: string;
     private CurrentSession = SessionLocator.SelectedSession;
     public fullAccountingSettingPMService: FullAccountingSettingPMService = new FullAccountingSettingPMService();
     PaymentChequePMService: PaymentChequeExtendedPMService = new PaymentChequeExtendedPMService();
@@ -72,6 +74,8 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
         this.IsFullAccounting = SessionLocator.TenantPM.AccountingActivated;
         this.InitializeBillToLov()
         this.EntityPM = entityArgs.EntityPM;
+        this.ReconcileInternalTransIds = this.EntityPM.ReconcileInternalTransIds;
+        console.log('ayed', entityArgs)
         this.ItemsSource = new ObservableCollection([]);
         this.EnableNegativeOffsetAPPayments = ObjectsLocator.AccountingSettingPM.EnableNegativeOffsetAPPayments;
         this.GetFullAccountingSettings();
@@ -179,6 +183,7 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
     private SessionEvent: any = null;
     private SaveCompletedEvent: any = null;
     private LoadCompletedEvent: any = null;
+    private BackCompletedEvent: any = null;
     private Listen() {
         if (this.entityArgs.EditComponent != null) {
 
@@ -188,9 +193,10 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
                     this.ComputeOpenAmount();
                 }
             });
-
+            let isSaveCompleted = false;
             this.SaveCompletedEvent = this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                 if (isSaveSuccess) {
+                    isSaveCompleted = isSaveSuccess;
                     this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
                     this.EntityPM = this.entityArgs.EditComponent.EntityPM;
                     this.RefreshScreen();
@@ -200,6 +206,17 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
                     this.ApplyRequestedCommand();
                 }
             });
+
+            this.BackCompletedEvent = this.entityArgs.EditComponent.BackCompleted.subscribe((isBackCompleted: boolean) => {
+                if (isBackCompleted && isSaveCompleted && this.entityArgs.EditComponent.EntityPM.StatusCode == "AD") {
+                    if(this.ReconcileInternalTransIds){
+                        const paymentNo = this.entityArgs.EditComponent.EntityPM.PaymentNo;
+                        this.CurrentSession.FireEvent({Name: "InternalReconcileAPPaymentCreated", PaymentNumber: paymentNo});
+                    }
+                }
+            });
+            
+            
 
             this.LoadCompletedEvent = this.entityArgs.EditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                 if (isLoadSuccess) {
@@ -407,6 +424,13 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
 
     // BuildScreenData
     private BuildScreenData() {
+        if(this.EntityPM.ReconcileInternalTransIds) {
+            this.VendorId = this.EntityPM.VendorId;
+            this.AmountInPaymentCurrency = this.EntityPM.AmountInPaymentCurrency;
+            this.UIProperties.SetEnabled("VendorId", this.ObjectTableName, false);
+            this.UIProperties.SetEnabled("VendorAddressId", this.ObjectTableName, false);
+            this.UIProperties.SetEnabled("AmountInPaymentCurrency", this.ObjectTableName, false);
+        }
         if (AppTool.IsNullOrEmpty(this.EntityPM.StatusCode) || this.EntityPM.StatusCode == "DR") {
             this.LoadCurrencyRates();
         }
@@ -725,7 +749,7 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
     }
     set VendorId(value: string) {
         if (this.EntityPM != null) {
-            if (this.EntityPM.VendorId != value) {
+            if (this.EntityPM.VendorId != value || this.EntityPM.ReconcileInternalTransIds) {
                 this.EntityPM.VendorId = value;
                 this.UIProperties.SetEnabled("PaymentCurrencyId", this.ObjectTableName, true);
                 this.PaymentCurrencyId = null;
@@ -1343,7 +1367,7 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
 
     get AmountInPaymentCurrency() { return this.EntityPM.AmountInPaymentCurrency; }
     set AmountInPaymentCurrency(value: number) {
-        if (this.EntityPM.AmountInPaymentCurrency != value) {
+        if (this.EntityPM.AmountInPaymentCurrency != value || this.EntityPM.ReconcileInternalTransIds) {
             this.EntityPM.AmountInPaymentCurrency = AppTool.Round(value, 2);
             this.ComputeLocalAmount();
             this.UpdateSummary();
@@ -1517,11 +1541,11 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
     private RequestedCommandCode: string = null;
     private RequestedCommandParam: string = null;
     ApplyRequestedCommand() {
-        if (this.RequestedCommandCode == "ViewInvoice") {
+        // if (this.RequestedCommandCode == "ViewInvoice") {
             SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                 .then(cmpRef => {
                     cmpRef.instance.ComponentRef = cmpRef;
-                    cmpRef.instance.Run({ EntityId: this.RequestedCommandParam, ObjectTableName: 'APInvoice' });
+                    cmpRef.instance.Run({ EntityId: this.RequestedCommandParam, ObjectTableName: 'APPayment' });
 
                     this.RequestedCommandParam = null;
 
@@ -1545,7 +1569,7 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
                         }
                     });
                 });
-        }
+        // }
 
         this.RequestedCommandCode = null;
     }
@@ -1758,6 +1782,10 @@ export class APPaymentInvoiceArgs extends BaseComponent {
 
 
             }
+        }
+
+        if(this.trigger.EntityPM.ReconcileInternalTransIds) {
+            this.CheckBoxEnabled = false;
         }
     }
     SetUIProperties_CurrencyMatched() {

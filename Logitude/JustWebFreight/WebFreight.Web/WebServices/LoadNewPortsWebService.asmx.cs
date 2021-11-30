@@ -5,6 +5,7 @@ using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Logitude.Server.Tools.Counters;
+using Logitude.Server.Tools.Helpers;
 
 namespace WebFreight.Web.WebServices
 {
@@ -95,7 +96,7 @@ namespace WebFreight.Web.WebServices
                             {
                                 newPort.CountryId = country.Id;
                                 newPort.Country = country;
-
+                                UpdatePortSearchFieldService.Update(newPort);
                                 portRepository.Add(newPort);
                             }
                         }

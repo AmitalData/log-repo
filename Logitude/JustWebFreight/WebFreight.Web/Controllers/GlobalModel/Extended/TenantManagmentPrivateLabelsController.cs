@@ -57,10 +57,6 @@ namespace WebFreight.Web.Controllers.GlobalModel.Extended
 
             try
             {
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-           
                 PrivateLabelsBrandingDataService privateLabelsBrandingDataService = new PrivateLabelsBrandingDataService();
                 PrivateLabelsBrandingData brandingData = privateLabelsBrandingDataService.GePrivateLabelsBrandingDataByUrl(BrandingDataRequest);
                 ServiceResponse response = new ServiceResponse();

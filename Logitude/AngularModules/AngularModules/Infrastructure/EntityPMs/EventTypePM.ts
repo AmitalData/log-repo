@@ -175,6 +175,11 @@ export class EventTypePM {
     public set IsStatusNotModified(newValue: boolean) { if (this.isStatusNotModified != newValue) { this.isStatusNotModified = newValue; this.MarkAsDirty("IsStatusNotModified"); } }
        
 	 
+    private partnerCode: string;
+    public get PartnerCode() { return this.partnerCode; }
+    public set PartnerCode(newValue: string) { if (this.partnerCode != newValue) { this.partnerCode = newValue; this.MarkAsDirty("PartnerCode"); } }
+       
+	 
 
     public OldEntityPM: EventTypePM;
 		

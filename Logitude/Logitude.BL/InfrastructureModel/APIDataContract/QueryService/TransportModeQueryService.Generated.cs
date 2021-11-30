@@ -36,21 +36,21 @@ using Simplog.Data.InfrastructureModel;
         }
 
 		
-		public TransportMode GetTransportModeById(string Id,int Tenant,string ComputingPartnerName = "")
+		public TransportMode GetTransportModeById(string Id,int Tenant,  string ComputingPartnerName = "")
         { 
 		    try
             {
-
+				 
 				
-				var temp = query.GetSinglePM(Id,Tenant);				
+				var temp = query.GetSinglePM(Id, Tenant);				
 				 if (temp == null)
                     throw new ApplicationException("TransportMode with Id " + Id + " doesn't exist");
 
 				return TransportModeDataMapping(temp,Tenant,ComputingPartnerName);
 			}
+
             catch (Exception ex)
             {
-
                 throw ex;
             }
         }

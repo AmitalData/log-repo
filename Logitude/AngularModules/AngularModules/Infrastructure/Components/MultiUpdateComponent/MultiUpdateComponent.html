@@ -54,7 +54,7 @@
     <tr style="height:10px;">
         <td></td>
     </tr>
-
+    
 
     <tr style="height: 10px;" *ngIf="SelectedItemsCountText">
         <td>
@@ -63,7 +63,7 @@
                     <td style="width:200px">
                         <div style="width: 228px;text-align:center;  height:22px;" class="DisbleBox">
                             <div style="margin-right:5px;margin-left:-2px;float:left;width:16px;">
-                                <CheckBox [IsChecked]="IsAllRecordSelected" (Checked)="IsAllRecordSelected = $event ">
+                                <CheckBox [IsChecked]="IsAllRecordSelected" (Checked)="IsAllRecordSelectedChange($event,true)">
                                 </CheckBox>
                             </div>
                             <div style="width:175px;margin-top:1px;">
@@ -100,9 +100,8 @@
                                     [columns]="columns" [autoLoad]="true" [rows]="items"
                                     (AfterViewInitCompleted)="GridAfterViewInitCompleted($event)"
                                     (CountReady)="onCountReady($event)" [EnableRowHoverVisibility]="true"
-                                    (CheckBoxChecked)="onCheckBoxChecked($event)"
-                                    [IsAllRecordsChecked]="IsAllRecordSelected" (AllRecordsReady)="AllRecordsReady($event)"
-                                    [CheckboxProp]="'Id'">
+                                    (AllRecordsReady)="AllRecordsReady($event)"
+                                    [CheckboxProp]="'Id'" [SearchFieldchangeevent]="SearchFieldchangeevent">
                                 </logitude-grid>
                             </div>
                         </td>

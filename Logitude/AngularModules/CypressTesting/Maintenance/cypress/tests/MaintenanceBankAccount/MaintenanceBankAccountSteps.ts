@@ -8,32 +8,37 @@ import { MaintenanceSelectors } from "../../selectors/Selectors";
 import { BankAccountSelectors } from "../../selectors/BankAccountSelectors";
 import { Constants } from '../../../cypress/constants/Constants'
 import * as BaseActions from "../../../../Base/cypress/actions/Actions"
-
+import { BaseSelectors } from "../../../../Base/cypress/selectors/BaseSelectors";
+import * as BaseAssertion from "../../../../Base/cypress/actions/Assertion"
 
 let bankAccountDetails: BankAccountDetails
 
-
-//#region Create new bank account
+//#region Assert create bank account
 Given("the user logged in and open {string} in maintenance menu", (maintenanceItemName) => {
     cy.Login()
     Actions.OpenMaintenanceItemFromMaintenanceMenu(maintenanceItemName, MaintenanceSelectors.MaintenanceItemBankAccount)
-});
-
-Given("a bank account with the following details", (dataTable) => {
-    bankAccountDetails = Assists.CreateInstance<BankAccountDetails>(dataTable, true);
     Actions.OpenNewWizard(Constants.BankAccount);
-    BankAccountActions.FillBankAccountDetails(bankAccountDetails)
 });
 
 When("create bank account", () => {
     BankAccountActions.CreateBankAccount();
 });
 
+Then("a validation error message with {string} should appear", (validationMessage) => {
+    BaseAssertion.AssertElementContain(BaseSelectors.ValidationSummary, validationMessage)
+});
+//#endregion
+
+//#region Create new bank account
+Given("a bank account with the following details", (dataTable) => {
+    bankAccountDetails = Assists.CreateInstance<BankAccountDetails>(dataTable, true);
+    BankAccountActions.FillBankAccountDetails(bankAccountDetails)
+});
+
 Then("the bank account should create successfully", () => {
     BankAccountActions.AssertCreateBankAccount()
 });
 //#endregion
-
 
 //#region Search for the bank account by code
 When("search bank account", () => {
@@ -45,7 +50,6 @@ Then("the bank account should appear successfully", () => {
 });
 //#endregion
 
-
 //#region Open the bank account
 When("open bank account", () => {
     BankAccountActions.OpenBankAccount();
@@ -54,14 +58,11 @@ When("open bank account", () => {
 Then("the bank account should open successfully", () => {
     BankAccountActions.AssertOpenBankAccount();
 });
-
 //#endregion
 
 //#region Edit the bank account
-Given("the user fill the following bank account type details", (dataTable) => {
-    bankAccountDetails = Assists.CreateInstance<BankAccountDetails>(dataTable, true);
-    let LocalName = bankAccountDetails.LocalName
-    BankAccountActions.FillBankAccountLocalName(LocalName)
+Given("the user fill {string} as a local name value", (localName) => {
+    BankAccountActions.FillBankAccountLocalName(localName)
 });
 
 Given("the user activate bank account", () => {
@@ -82,7 +83,7 @@ Then("following event should appear in events tab", (dataTable) => {
 });
 
 When("save and close bank account", () => {
-    BankAccountActions.CloseSaveBankAccount(); 
+    BankAccountActions.CloseSaveBankAccount();
 });
 
 Then("the bank account should close successfully", () => {

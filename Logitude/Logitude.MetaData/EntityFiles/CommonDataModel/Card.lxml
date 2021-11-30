@@ -9474,7 +9474,7 @@
         IsCompositKey="false"
         IsUpdateAllowed="false" />
       <DCField
-        DCFieldName="&quot;LogitudeCode&quot;"
+        DCFieldName="&quot;Code&quot;"
         FieldName="&quot;Code&quot;"
         IsKey="false"
         IsManualMapping="false"

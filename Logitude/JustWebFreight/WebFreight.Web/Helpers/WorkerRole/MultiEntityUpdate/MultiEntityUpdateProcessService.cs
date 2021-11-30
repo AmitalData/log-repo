@@ -1,8 +1,11 @@
 ﻿using Logitude.BL.InfrastructureModel.DataContracts;
 using Logitude.BL.InfrastructureModel.EntityPMs;
+using Logitude.BL.ShipmentsModel.Tools.Validating;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.EntityChanges.AutomationResult;
 using Logitude.Server.Tools.QueueService;
+using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.Helpers;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
@@ -119,8 +122,30 @@ namespace WebFreight.Web.Helpers.WorkerRole.MultiEntityUpdate
                 SetNewValueToEntityPM(multiEntityUpdateData, entityPM, item);
             }
 
-            InjectionUtil.Instance.UpdateEntity(entityPM, multiEntityUpdateData.ObjectTableName, (int)tenant);
+            ShipmentBaseValidator.ValidateUpdate(entityPM); //For now, untill move this to shipment service
+            UpdateEntityArgs updateEntityArgs = GetUpdateEntityArgs(entityPM);
+            InjectionUtil.Instance.UpdateEntity(updateEntityArgs);
             UpdateMultiEntityDataEntity(multiEntityUpdateDataEntity, null);
+        }
+
+        private UpdateEntityArgs GetUpdateEntityArgs(object entityPM)
+        {
+            return new UpdateEntityArgs
+            {
+                EntityPM = entityPM,
+                EntityName = multiEntityUpdateData.ObjectTableName,
+                Tenant = (int)tenant,
+                LoggedUserEmail = GetLoggedUserEmail()
+            };
+        }
+
+        private string GetLoggedUserEmail()
+        {
+            string loggedUserId = multiEntityUpdateData.UserId;
+            ContactRepository contactRep = new ContactRepository(tenant);
+            Contact contact = contactRep.GetSingleContact(loggedUserId, tenant);
+
+            return contact != null ? contact.Email : "";
         }
 
         private void SetNewValueToEntityPM(MultiEntityUpdateData multiEntityUpdateData, object entityPM, AutomationSetValue item)

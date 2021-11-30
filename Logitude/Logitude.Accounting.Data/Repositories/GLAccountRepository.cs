@@ -505,7 +505,7 @@ namespace Logitude.Accounting.Data.Repositories
             ICardGLAccountDataViewContext cardGLAccountDataViewContext = CardGLAccountDataViewContext.GetContext(tenant);
 
             var query = from a in cardGLAccountDataViewContext.CardGLAccountDataViews
-                        where a.Tenant == tenant && a.AccountTypeCode == accountTypeCode
+                        where a.Tenant == tenant && a.AccountTypeCode == accountTypeCode && a.CountryCode == "IL"
                         select a;
             return query.Where(r => !String.IsNullOrEmpty(r.VatNumber)
             //     && !String.IsNullOrEmpty(r.DeductionFileNumber) // ironically - see 140210 

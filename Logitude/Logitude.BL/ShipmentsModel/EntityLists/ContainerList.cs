@@ -233,5 +233,9 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public bool IsAutomaticUpdates { get; set; }
         public bool IsClosed { get; set; }
         public DateTime? ClosedDate { get; set; }
+
+        public string StatusId { get; set; }
+        public string StatusName { get; set; }
+        public int StatusWeight { get; set; }
     }
 }

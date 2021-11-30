@@ -40,40 +40,40 @@ using Simplog.Data.CommonDataModel;
         }
 
 		
-		public Card GetCardById(string Id,int Tenant,string ComputingPartnerName = "")
+		public Card GetCardById(string Id,int Tenant,  string ComputingPartnerName = "")
         { 
 		    try
             {
-
+				 
 				
-				var temp = query.GetSinglePM(Id,Tenant);				
+				var temp = query.GetSinglePM(Id, Tenant);				
 				 if (temp == null)
                     throw new ApplicationException("Card with Id " + Id + " doesn't exist");
 
 				return CardDataMapping(temp,Tenant,ComputingPartnerName);
 			}
+
             catch (Exception ex)
             {
-
                 throw ex;
             }
         }
 		
-		public Card GetCardByCode(string Code,int Tenant,string ComputingPartnerName = "")
+		public Card GetCardByCode(string Code,int Tenant,  string ComputingPartnerName = "")
         { 
 		    try
             {
-
+				 
 				
-				var temp = query.GetSinglePMByCode(Code,Tenant);				
+				var temp = query.GetSinglePMByCode(Code, Tenant);				
 				 if (temp == null)
                     throw new ApplicationException("Card with Code " + Code + " doesn't exist");
 
 				return CardDataMapping(temp,Tenant,ComputingPartnerName);
 			}
+
             catch (Exception ex)
             {
-
                 throw ex;
             }
         }
@@ -126,7 +126,7 @@ using Simplog.Data.CommonDataModel;
 					
 					if (!string.IsNullOrEmpty(MyEntity.Code))
 					{
-						temp = query.GetSinglePMByCode(MyEntity.Code, Tenant);
+						temp = query.GetSinglePMByCode(MyEntity.Code, Tenant  );
 					} 
 					if (!string.IsNullOrEmpty(MyEntity.PartnerCode))
 					{
@@ -138,7 +138,7 @@ using Simplog.Data.CommonDataModel;
 						{
 						  throw new ApplicationException("Card with Partner Code " + MyEntity.PartnerCode + " doesn't match any record");
 						}
-						temp = query.GetSinglePMByCode(MyCode, Tenant);
+						temp = query.GetSinglePMByCode(MyCode, Tenant );
 						
 						
 					}

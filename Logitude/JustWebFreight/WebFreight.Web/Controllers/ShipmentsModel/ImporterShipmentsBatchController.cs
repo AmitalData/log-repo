@@ -852,6 +852,10 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
             {
                 entityPM.CustomerReference2 = entityAM.CustomerReference2;
             }
+            if (!string.IsNullOrEmpty(entityAM.CustomerReference3))
+            {
+                entityPM.CustomerReference3 = entityAM.CustomerReference3;
+            }
             if (!string.IsNullOrEmpty(entityAM.Master))
             {
                 entityPM.Master = entityAM.Master;
@@ -866,6 +870,10 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
             if (!string.IsNullOrEmpty(entityAM.ShipperName))
             {
                 entityPM.ShipperName = entityAM.ShipperName;
+            }
+            if (!string.IsNullOrEmpty(entityAM.ConsigneeName))
+            {
+                entityPM.ConsigneeName = entityAM.ConsigneeName;
             }
             if (!string.IsNullOrEmpty(entityAM.CarrierTransportDocumentNumber))
             {

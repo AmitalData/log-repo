@@ -388,6 +388,22 @@ namespace Logitude.Infrastructure.BL
                 Code = "ULE", 
                 SearchFields = "ULE,Same User Login Enabled", 
 			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "AFO", 
+                Name = "Advanced Filters Options", 
+                SearchFields = "AFO,Advanced Filters Options,Enable New Option for Date Advanced Filters", 
+                Description = "Enable New Option for Date Advanced Filters", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "QBT", 
+                Name = "QBO Tax Id Calculations", 
+                SearchFields = "QBT,QBO Tax Id Calculations", 
+                Description = "QBO Tax Id Calculations", 
+			});
 			
             return all;
        }

@@ -2,7 +2,6 @@ import * as Actions from "../../actions/Actions";
 import { Given, When, Then, And } from "cypress-cucumber-preprocessor/steps";
 import { ShipmentDetails } from "../../models/ShipmentDetails";
 import { ShipmentSelectors } from "../../selectors/Selectors";
-import { PayableDetails } from "cypress/models/PayableDetails"
 import * as BaseAssertion from "../../../../Base/cypress/actions/Assertion"
 import { RequestAliases } from "../../../../Base/cypress/constants/RequestAliases";
 import { PackagesDetails } from 'cypress/models/PackagesDetails';
@@ -94,7 +93,7 @@ Given("a payable with {string} as a charges type", (chargesType) => {
   cy.FillLogLov(ShipmentSelectors.ShipmentPayableChargesType, chargesType, true);
 });
 
-Then("the Quantity should should has {string} as a value", (quantityValue) => {
+Then("the quantity should has {string} as a value", (quantityValue) => {
   BaseAssertion.AssertElementHaveValue(ShipmentSelectors.ShipmentPayableQuantity, quantityValue)
 });
 //#endregion

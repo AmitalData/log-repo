@@ -177,6 +177,9 @@ namespace Logitude.ShipmentOrderModule.BL.ShipmentOrderServices.DBTablesCopy.Gen
 "  <Column Name='OnHandNumber' Type='varchar' Size='15'>"+
 "    <Constraints Nullable='true' />"+
 "  </Column>"+
+"  <Column Name='AutomaticLastUpdateDate' Type='datetime'>"+
+"    <Constraints Nullable='true' />"+
+"  </Column>"+
 "  <Relation ForeignKeyColumn='CreatedByUserId' ReferencedTable='Users' ReferencedColumn='Id' ReferencedTableSchema='dbo' />"+
 "  <Relation ForeignKeyColumn='UpdatedByUserId' ReferencedTable='Users' ReferencedColumn='Id' ReferencedTableSchema='dbo' />"+
 "  <Relation ForeignKeyColumn='TransportModeId' ReferencedTable='TransportModes' ReferencedColumn='Id' ReferencedTableSchema='dbo' />"+
