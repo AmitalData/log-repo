@@ -5454,6 +5454,7 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
+
   <field
     Id="&quot;9450805b-568d-48d0-9c87-43b4e1c57387&quot;"
     FieldName="&quot;OnHandDate&quot;"
@@ -5741,6 +5742,7 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
+  <Query
   <Query
     Code="&quot;ALSO&quot;"
     TextCode="&quot;All Shipment Orders&quot;"
@@ -6601,7 +6603,7 @@
         IsKey="false"
         IsManualMapping="false"
         IsMulti="false"
-        FieldsDataType="&quot;Port&quot;"
+        FieldsDataType="&quot;ShipmentOrderPort&quot;"
         IsNullable="false"
         IsSpecialField="false"
         IsCustomType="true"
@@ -6617,7 +6619,7 @@
         IsKey="false"
         IsManualMapping="false"
         IsMulti="false"
-        FieldsDataType="&quot;Port&quot;"
+        FieldsDataType="&quot;ShipmentOrderPort&quot;"
         IsNullable="false"
         IsSpecialField="false"
         IsCustomType="true"
@@ -6633,7 +6635,7 @@
         IsKey="false"
         IsManualMapping="false"
         IsMulti="false"
-        FieldsDataType="&quot;Port&quot;"
+        FieldsDataType="&quot;ShipmentOrderPort&quot;"
         IsNullable="false"
         IsSpecialField="false"
         IsCustomType="true"
