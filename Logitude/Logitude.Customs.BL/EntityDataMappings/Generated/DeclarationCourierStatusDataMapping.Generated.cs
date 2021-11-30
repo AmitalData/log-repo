@@ -118,7 +118,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         TruckerId, 
 	         DistributionArea, 
 	         CrateNumber, 
-	         TruckerName,
+	         TruckerName, 
+	         CargoDescription,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
