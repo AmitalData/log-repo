@@ -2,14 +2,14 @@
 using Logitude.Accounting.BL.EntityQueryServices;
 using Logitude.Accounting.BL.EntityUpdateServices;
 using Logitude.Accounting.Data;
+using Logitude.Accounting.Data.Enums;
 using Logitude.Accounting.Data.Repositories;
 using Logitude.Accounting.Def.EntityPMs;
 using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using AccountingEntityValues = Logitude.Accounting.BL.CloseTables.AccountingEntityValues;
 
 namespace Logitude.Accounting.BL.CoreBL.InterestTrans
 {
@@ -22,45 +22,60 @@ namespace Logitude.Accounting.BL.CoreBL.InterestTrans
             {
                 return;
             }
-            if (regularJournal.AccountingEntityCode != "1")//1	פקודת יומן	Journal
+            if (regularJournal.AccountingEntityCode != AccountingEntityValues.Journal 
+                && regularJournal.AccountingEntityCode != AccountingEntityValues.Adjustment)
             {
                 return;
             }
-
-            var repoInterestTransactionFastFetch = new InterestTransactionRepository(regularJournal.Tenant);
-            var AlreadyExist = repoInterestTransactionFastFetch.AlreadyExist("3",//3 - “Journal”
-                regularJournal.Id,
-                regularJournal.Tenant
-                );
-            if (AlreadyExist)
-            {
-                throw new Exception($"AlreadyExist InterestTransaction 4 regularJournal {regularJournal.Id}  - journal repushed ?!?!");
-            }
-            var allInterestTransactions = new List<InterestTransactionPM>();
-            if (regularJournal.ExternalSystem == "AMITAL" && !string.IsNullOrWhiteSpace(regularJournal.ExternalNo))//Task 62801: ריבית - מיפוי תנועות - למפות רק פקודות שאינן חיצוניות - R5
-            {
-                var pmFullAccountingSetting = FullAccountingSettingQueryService.Get(regularJournal.Tenant);
-                if (pmFullAccountingSetting==null && pmFullAccountingSetting.AccountingActivationDate.HasValue)
+            string interestEntityType = GetInterestEntityType(regularJournal);
+            if (interestEntityType != null) {
+                var repoInterestTransactionFastFetch = new InterestTransactionRepository(regularJournal.Tenant);
+                var AlreadyExist = repoInterestTransactionFastFetch.AlreadyExist(interestEntityType,//3 - “Journal”
+                    regularJournal.Id,
+                    regularJournal.Tenant
+                    );
+                if (AlreadyExist)
                 {
-                    allInterestTransactions = GetInterestTransactionListExternal(regularJournal, pmFullAccountingSetting.AccountingActivationDate.GetValueOrDefault());
+                    throw new Exception($"AlreadyExist InterestTransaction 4 regularJournal {regularJournal.Id}  - journal repushed ?!?!");
+                }
+                var allInterestTransactions = new List<InterestTransactionPM>();
+                if (regularJournal.ExternalSystem == "AMITAL" && !string.IsNullOrWhiteSpace(regularJournal.ExternalNo))//Task 62801: ריבית - מיפוי תנועות - למפות רק פקודות שאינן חיצוניות - R5
+                {
+                    var pmFullAccountingSetting = FullAccountingSettingQueryService.Get(regularJournal.Tenant);
+                    if (pmFullAccountingSetting == null && pmFullAccountingSetting.AccountingActivationDate.HasValue)
+                    {
+                        allInterestTransactions = GetInterestTransactionListExternal(regularJournal, pmFullAccountingSetting.AccountingActivationDate.GetValueOrDefault(), interestEntityType);
+
+                    }
 
                 }
-                
+                else
+                {
+                    allInterestTransactions = GetInterestTransactionListRegular(regularJournal, interestEntityType);
+                }
+                if (allInterestTransactions.Count == 0)
+                {
+                    return;
+                }
+                IAccountingContext context = AccountingContext.GetContext(regularJournal.Tenant);
+                var service = new InterestTransactionUpdateService(context, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), regularJournal.Tenant);
+                service.UpdateMulti(allInterestTransactions.ToList(), new List<InterestTransactionPM>(), regularJournal, true);
             }
-            else
-            {
-                allInterestTransactions = GetInterestTransactionListRegular(regularJournal);
-            }
-            if (allInterestTransactions.Count==0)
-            {
-                return;
-            } 
-            IAccountingContext context = AccountingContext.GetContext(regularJournal.Tenant);
-            var service = new InterestTransactionUpdateService(context, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), regularJournal.Tenant);
-            service.UpdateMulti(allInterestTransactions.ToList(), new List<InterestTransactionPM>(), regularJournal, true);
         }
 
-        private static List<InterestTransactionPM> GetInterestTransactionListRegular(JournalPM regularJournal)
+        private string GetInterestEntityType(JournalPM journal)
+        {
+            if (journal.AccountingEntityCode == AccountingEntityValues.Journal)
+            {
+                return InterestEntityTypes.Journal;
+            }
+            else if (journal.AccountingEntityCode == AccountingEntityValues.Adjustment) {
+                return InterestEntityTypes.OpenBalance;
+            }
+            return null;
+        }
+
+        private static List<InterestTransactionPM> GetInterestTransactionListRegular(JournalPM regularJournal, string interestEntityType)
         {
             var CreditAccountIdS = regularJournal.JournalLines
                 .Where(r => r.ActionTypeCodeEnum == MyJournalActionTypeEnum.Credit || r.ActionTypeCodeEnum == MyJournalActionTypeEnum.DebitAndCredit /*|| r.ActionTypeCodeEnum == MyJournalActionTypeEnum.DebitCreditAndVatdeduction*/)
@@ -89,7 +104,7 @@ namespace Logitude.Accounting.BL.CoreBL.InterestTrans
              new InterestTransactionPM()
              {
                  GLAccountId = r.CreditAccountId,
-                 InterestEntityTypeCode = "3",//3 - “Journal”
+                 InterestEntityTypeCode = interestEntityType,
                  EntityId = regularJournal.Id,
                  OriginalEntityLineNumber = r.Line,
                  LocalAmount = (decimal)r.LocalAmount * -1,//Credit = 1,
@@ -110,7 +125,7 @@ namespace Logitude.Accounting.BL.CoreBL.InterestTrans
              new InterestTransactionPM()
              {
                  GLAccountId = r.DebitAccountId,
-                 InterestEntityTypeCode = "3",//3 - “Journal”
+                 InterestEntityTypeCode = interestEntityType,
                  EntityId = regularJournal.Id,
                  OriginalEntityLineNumber = r.Line,
                  LocalAmount = (decimal)r.LocalAmount,
@@ -127,7 +142,7 @@ namespace Logitude.Accounting.BL.CoreBL.InterestTrans
         }
 
 
-        private static List<InterestTransactionPM> GetInterestTransactionListExternal(JournalPM externalJournal,DateTime AccountingActivationDate)
+        private static List<InterestTransactionPM> GetInterestTransactionListExternal(JournalPM externalJournal,DateTime AccountingActivationDate, string interestEntityType)
         {
 
             var creditJournalLines = externalJournal.JournalLines
@@ -154,7 +169,7 @@ namespace Logitude.Accounting.BL.CoreBL.InterestTrans
              new InterestTransactionPM()
              {
                  GLAccountId = r.CreditAccountId,
-                 InterestEntityTypeCode = "3",//3 - “Journal”
+                 InterestEntityTypeCode = interestEntityType,
                  EntityId = externalJournal.Id,
                  OriginalEntityLineNumber = r.Line,
                  LocalAmount = (decimal)r.LocalAmount * -1,//Credit = 1,
