@@ -8,7 +8,7 @@
     }
 
     .packages-row {
-        button {
+        p-button button {
             height: 28px !important;
             text-align: center;
             padding: 0 !important;
@@ -40,6 +40,10 @@
                 font-size: 12px;
             }
         }
+    }
+
+    p-autocomplete .p-autocomplete {
+            height: 30px !important;
     }
 }
 

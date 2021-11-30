@@ -15,5 +15,8 @@
     </p-autoComplete>
 
     <i *ngIf='searchIcon && !dropIcon' class='pi pi-search' (click)='openSearchDialog()'></i>
+    <i *ngIf='outSearchIcon' class='pi pi-chevron-down out-search-icon' (click)='openDdl($event, autoComplete)'></i>
 
 </div>
+
+<div class="error-msg value-not-exist" *ngIf='formGroup.controls[controlName].errors?.notIdentityValue'>value not exist</div>

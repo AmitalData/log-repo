@@ -44,7 +44,7 @@ export class NewQuotePartnerComponent extends BaseComponent implements OnInit, A
     contact: new FormControl(),
     notes: new FormControl(),
     reference1: new FormControl(),
-    reference2: new FormControl(),
+    // reference2: new FormControl(),
   })
 
   get secondPartner(): string {
@@ -106,9 +106,9 @@ export class NewQuotePartnerComponent extends BaseComponent implements OnInit, A
     if (this.EntityPM[this.capitalizeType + 'Reference1'] != null) {
       this.partnerform.controls.reference1.setValue(this.EntityPM[this.capitalizeType + 'Reference1']);
     }
-    if (this.EntityPM[this.capitalizeType + 'Reference2'] != null) {
-      this.partnerform.controls.reference2.setValue(this.EntityPM[this.capitalizeType + 'Reference2']);
-    }
+    // if (this.EntityPM[this.capitalizeType + 'Reference2'] != null) {
+    //   this.partnerform.controls.reference2.setValue(this.EntityPM[this.capitalizeType + 'Reference2']);
+    // }
 
     if (this.EntityPM[this.capitalizeType + 'Note'] != null) {
       this.partnerform.controls.ConsigneeNote.setValue(this.EntityPM[this.capitalizeType + 'Note']);
@@ -171,9 +171,9 @@ export class NewQuotePartnerComponent extends BaseComponent implements OnInit, A
   private subscribeCtrls() {
     this.partnerform.controls.notes.valueChanges.subscribe(newVal => this.EntityPM[this.capitalizeType + 'Note'] = newVal);
     this.partnerform.controls.reference1.valueChanges.subscribe(newVal => this.EntityPM[this.capitalizeType + 'Reference1'] = newVal);
-    this.partnerform.controls.reference2.valueChanges.subscribe(newVal => this.EntityPM[this.capitalizeType + 'Reference2'] = newVal);
-    this.formGroup.controls.direction.valueChanges.subscribe((val: DirectionList) =>
-      this.isHidden = !((val?.Name === 'Import' && this.type === 'consignee') || (val?.Name === 'Export' && this.type === 'shipper')));
+    // this.partnerform.controls.reference2.valueChanges.subscribe(newVal => this.EntityPM[this.capitalizeType + 'Reference2'] = newVal);
+    // this.formGroup.controls.direction.valueChanges.subscribe((val: DirectionList) =>
+      // this.isHidden = !((val?.Name === 'Import' && this.type === 'consignee') || (val?.Name === 'Export' && this.type === 'shipper')));
   }
 
   private async setAddress(partner: CardList): Promise<void> {
