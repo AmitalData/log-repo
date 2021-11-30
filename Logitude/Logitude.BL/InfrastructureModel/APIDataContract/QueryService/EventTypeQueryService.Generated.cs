@@ -84,16 +84,7 @@ using Simplog.Data.InfrastructureModel;
 				   var temp = new EventType(); 
 				   temp.Id = MyEntityPM.Id;
 				   temp.Code = MyEntityPM.Code;
-				   temp.EnglishName = MyEntityPM.EnglishName; 
-
-			  
-				   if(MyEntityPM.EntityStatusId != null)
-				   {
-					   EntityStatusQueryService EntityStatusService0 = new EntityStatusQueryService(Tenant);
-					   					   temp.EntityStatus = EntityStatusService0.GetEntityStatusById(MyEntityPM.EntityStatusId,Tenant,ComputingPartnerName); 
-			       
-					   				   }
-				   
+				   temp.EnglishName = MyEntityPM.EnglishName;
 				   temp.IsManualEntry = MyEntityPM.IsManualEntry;
 				   ComputingPartnerTranslationHelper helper = new ComputingPartnerTranslationHelper(Tenant); 
 				   temp.PartnerCode = helper.GetComputingPartnerCodeTranslation(MyEntityPM.Code,ComputingPartnerName,"EventType");  					
@@ -178,27 +169,6 @@ using Simplog.Data.InfrastructureModel;
 
 										}  
 
-					
-					EntityStatusQueryService EntityStatusEntityStatusService = new EntityStatusQueryService(Tenant);
-					if(MyEntity.EntityStatus != null)
-					{
-						var myEntityStatusPM = EntityStatusEntityStatusService.EntityStatusDataMappingAndValidatin(MyEntity.EntityStatus,Tenant,ComputingPartnerName,IsUpdate);
-						
-						if(myEntityStatusPM != null)
-						{ 
-
-						 
-							if(!IsUpdate)
-							{								//throw new ApplicationException("EntityStatus Can't be update"); 
-								temp.EntityStatusId = myEntityStatusPM.Id;
-						  
-							}  
-
-							
-						} 
-
-					}
-			
 					
                     
 					if(!IsUpdate)// && (MyEntity.IsManualEntry != temp.IsManualEntry))

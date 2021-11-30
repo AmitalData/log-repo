@@ -46,7 +46,6 @@ namespace Logitude.BL.InfrastructureModel.APIDataContract.ApiV1
         {
             Event traceEvent = new Event()
             {
-                Id = traceEventPM.Id,
                 EventDateTime = traceEventPM.EventDateTime,
                 LogDateTime = traceEventPM.LogDateTime,
                 Notes = traceEventPM.Notes,
