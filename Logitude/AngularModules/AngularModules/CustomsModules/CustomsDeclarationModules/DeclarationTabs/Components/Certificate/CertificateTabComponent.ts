@@ -314,7 +314,7 @@ export class CertificateTabComponent extends BaseComponent implements OnInit {
     UpdateAllCertificateWithoutResponse() {
 
         this.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("Customs.General.O.Loading"));
-        this.multiCertificatesService.UpdateAllCertificateWithoutResponse(this.DeclarationPM.Id).subscribe((response: ServiceResponse) => {
+        this.multiCertificatesService.UpdateAllCertificateWithoutResponse(this.DeclarationPM.Id, this.DeclarationPM.CustomFileNo).subscribe((response: ServiceResponse) => {
             this.CurrentSession.StopBusyIndicator();
             if (response.HasError) {
                 let messageWindow = new MessageWindow();
@@ -323,10 +323,10 @@ export class CertificateTabComponent extends BaseComponent implements OnInit {
             else {
                 let messageWindow = new MessageWindow();
                 messageWindow.RTL = true;
-                let message = "עידכון בוצע בהצלחה, " + response.Result+" אישורים עודכנו ";
+                let message = response.Result;
                 messageWindow.Show(message);
 
-                this.ReloadCertificateTickets(false);
+                //this.ReloadCertificateTickets(false);
             }
         });
     }

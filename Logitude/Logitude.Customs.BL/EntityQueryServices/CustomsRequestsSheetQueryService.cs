@@ -318,7 +318,8 @@ namespace Logitude.Customs.BL.EntityQueryServices
 "UCBCMSS", //שינוי אתר איחסון לבלדר
 "UCB9999", // ניתוח מחדש
 "8326", // שאילתא לתצהיר יבואן
-"DCAMU" // multi update 
+"DCAMU", // multi update 
+"DCAUAC" // multi update 
 
 
             };
