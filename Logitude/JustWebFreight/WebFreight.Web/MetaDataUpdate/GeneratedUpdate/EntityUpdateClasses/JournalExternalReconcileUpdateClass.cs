@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class JournalExternalReconcileUpdateClass
    {  		
-		public const string HashString = "4cb77620ae87983afa473eaa49bd5168";
+		public const string HashString = "93226a490e44ae0c6dfcb15fae23259a";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -120,7 +120,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "דפי בנק תנעות להתאמה",
 			      				    DefaultText =  "Journal External Reconcile With Transactions ID",
-			      				    Code =  "699f",
+			      				    Code =  "bbac",
 			      				    Name =  "JournalExternalReconcile Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Accounting",
