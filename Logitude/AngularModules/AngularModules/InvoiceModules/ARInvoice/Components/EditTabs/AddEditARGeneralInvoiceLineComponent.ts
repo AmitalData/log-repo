@@ -34,7 +34,7 @@ export class AddEditARGeneralInvoiceLineComponent {
     {
         this.ColumnsWidths = [
             { ColumnName: 'Code', Width: 80 },
-            { ColumnName: 'EnglishName', Width: 180 },
+            { ColumnName: 'EnglishName', Width: 200 },
             { ColumnName: 'LocalName', Width: 200 },
             { ColumnName: 'MeasurementShortName', Width: 80 },
             { ColumnName: 'ChargesGroupName', Width: 80 },
