@@ -226,6 +226,20 @@
                                         <span [ngStyle]="{color: Entity.ShipmentStatusName | StringToColorPipe}">{{FieldValue}}</span>
                                     </div>
                                 </div>
+
+                                <div *ngIf="!IsHeaderScreenTemplate && FieldName == 'StatusName'" class="TemplateTrimming">
+                                    <div class="TemplateTrimmingChild">
+                                        <span  [ngStyle]="{color: Entity.StatusName | StringToColorPipe}">{{FieldValue}}</span>
+                                    </div>
+                                </div>
+
+                                <div *ngIf="IsHeaderScreenTemplate && FieldName == 'StatusName'" class="TemplateTrimming">
+                                    <div class="TemplateTrimmingChild">
+                                        <span [ngStyle]="{color: FieldValue | StringToColorPipe}">{{FieldValue}}</span>
+                                    </div>
+                                </div>
+
+
                             </div>
                         </td>
                     </tr>

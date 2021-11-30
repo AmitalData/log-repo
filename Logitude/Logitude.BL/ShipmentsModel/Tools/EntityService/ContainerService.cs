@@ -6,6 +6,8 @@ using Logitude.Server.Tools.EntityChanges;
 using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.QueueService;
 using Simplog.Data.Helpers;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Data.ShipmentsModel;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Simplog.Data.ShipmentsModel.Repositories;
@@ -37,8 +39,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             this.containerPm.Id = IdCounter.GetNumber("Container", tenant).ToString();
             this.containerPoco = new Container { Id = this.containerPm.Id, Tenant = this.containerPm.Tenant };
             RunAutomation("OnCreate", entityPM);
-            ContainerTracing.Trace(entityPM, containerPoco, isNewEntity);
+            ContainerTracing containerTracing = new ContainerTracing(entityPM, containerPoco, isNewEntity);
+            containerTracing.Trace();
             ShipmentMapping.MapContainer(entityPM, containerPoco, isNewEntity);
+            this.GetForeignFields_Status(entityPM, containerPoco);
             entityRepository.Add(containerPoco);
             entityRepository.SubmitChanges();
             AddShipmentUpdateKafkaQueueMessage("CToolContainerCreate");
@@ -51,15 +55,30 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             containerPm.UpdateDate = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
             this.containerPoco = entityRepository.GetSingleContainer(entityPM.Id, tenant);
             this.MapContainerClosedDate(entityPM, containerPoco);
-            ContainerTracing.Trace(entityPM, containerPoco, isNewEntity);
+            ContainerTracing containerTracing = new ContainerTracing(entityPM, containerPoco, isNewEntity);
+            containerTracing.Trace();
             if (!entityPM.IsUpdateByAutomation)
             {
                 RunAutomation("OnUpdate", entityPM);
             }
             ShipmentMapping.MapContainer(entityPM, containerPoco, isNewEntity);
+            this.GetForeignFields_Status(entityPM, containerPoco);
             entityRepository.Update(containerPoco);
             entityRepository.SubmitChanges();
             AddShipmentUpdateKafkaQueueMessage("CToolContainerUpdate");
+        }
+        private void GetForeignFields_Status(ContainerPM entityPM, Container entityPoco)
+        {
+            entityPM.StatusName = null;
+            if (entityPoco.StatusId != null)
+            {
+                return;
+            }
+            EntityStatus iEntityStatus = EntityStatusRepository.GetSingleEntityStatus(entityPoco.StatusId, entityPoco.Tenant, true);
+            if (iEntityStatus != null)
+            {
+                entityPM.StatusName = iEntityStatus.Name;
+            }
         }
 
         private void MapContainerClosedDate(ContainerPM containerPM, Container container)
@@ -101,7 +120,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         {
             this.containerPm = entityPM;
             this.containerPoco = entityRepository.GetSingleContainer(entityPM.Id, tenant);
-            ContainerTracing.Trace(entityPM, containerPoco, isNewEntity);
+            ContainerTracing containerTracing = new ContainerTracing(entityPM, containerPoco, isNewEntity);
+            containerTracing.Trace();
             entityRepository.Remove(containerPoco);
             entityRepository.SubmitChanges();
         }

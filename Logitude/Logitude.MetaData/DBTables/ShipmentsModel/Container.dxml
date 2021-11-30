@@ -1314,6 +1314,13 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="StatusId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="CreatedByUserId"
     ReferencedTable="Users"
@@ -1493,6 +1500,11 @@
   <Relation
     ForeignKeyColumn="ShipmentTypeId"
     ReferencedTable="ShipmentTypes"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="StatusId"
+    ReferencedTable="EntityStatus"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
 </Table>
