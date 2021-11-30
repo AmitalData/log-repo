@@ -45,6 +45,7 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
     
     public string ICAO { get; set; }
     
+	[XmlAttribute]
     public bool AllowUnassignedEntry { get; set; }
 
     public  string  ComputingPartnerCode { get; set; }

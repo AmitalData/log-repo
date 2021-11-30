@@ -11333,6 +11333,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         ApprovedCargoReadyDate = view.ApprovedCargoReadyDate,
                         HandlerUserId = view.HandlerUserId,
                         HandlerUserName = view.HandlerUserName,
+                        HasUnassignedData = view.HasUnassignedData,
                     };
 
                     list.LongMaster = EntityFieldsHelper.GetLongMasterField(view);
@@ -12582,6 +12583,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                ContainersNumbersandTypesArray = f.ContainersNumbersandTypesArray,
                                CustomerContactEmail = f.CustomerContactEmail,
                                CustomerContactName = f.CustomerContactName,
+                               HasUnassignedData = f.HasUnassignedData,
                            };
             return myResult;
         }
@@ -12959,6 +12961,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     IsAccrualsApproved = f.IsAccrualsApproved,
                     CustomerContactEmail = f.CustomerContactEmail,
                     CustomerContactName = f.CustomerContactName,
+                    HasUnassignedData = f.HasUnassignedData,
                 };
 
                 List<ObjectField> customFields = ObjectFieldRepository.GetCustomObjectFieldsByObjectTableName("Shipment", tenant).ToList();
@@ -13233,6 +13236,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     ApprovedCargoReadyDate = f.ApprovedCargoReadyDate,
                     HandlerUserId = f.HandlerUserId,
                     HandlerUserName = f.HandlerUserName,
+                    HasUnassignedData = f.HasUnassignedData,
                 };
 
                 List<ObjectField> customFields = ObjectFieldRepository.GetCustomObjectFieldsByObjectTableName("Shipment", tenant).ToList();

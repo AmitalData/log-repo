@@ -165,7 +165,6 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
     public List<Event> EventList { get; set; }
     
     public List<Event> AddManualEvents { get; set; }
-
     
     public Address UnassignedShipperAddress { get; set; }
     

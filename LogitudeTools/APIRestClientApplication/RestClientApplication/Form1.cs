@@ -9,6 +9,7 @@ using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml;
@@ -722,6 +723,7 @@ namespace RestClientApplication
         {
             try
             {
+                xmlString = this.DeleteAllowUnassignedEntryFromXML(xmlString);
                 System.Xml.Xsl.XslCompiledTransform xTrans = new System.Xml.Xsl.XslCompiledTransform();
                 StringReader sr = new StringReader(xmlString);
                 XmlReader xReader = XmlReader.Create(sr);
@@ -737,6 +739,15 @@ namespace RestClientApplication
             {
                 throw ex;
             }
+        }
+
+        private string DeleteAllowUnassignedEntryFromXML(string xmlString)
+        {
+            string newXmlString = "";
+            newXmlString = xmlString.Replace("AllowUnassignedEntry=\"true\"", "");
+            newXmlString = newXmlString.Replace("AllowUnassignedEntry=\"false\"", "");
+
+            return newXmlString;
         }
 
         private void txtCredentialsPrimary_TextChanged(object sender, EventArgs e)

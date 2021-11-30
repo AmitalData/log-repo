@@ -185,6 +185,7 @@
     <None Include="DBOthers\CommonDataModel\Triggers\Trigger_AutomaticLastUpdateDateVatTypes.dxml" />
     <None Include="DBOthers\ShipmentsModel\Triggers\TriggerOnCreate_AutomaticLastUpdateDateShipmentSubTypes.dxml" />
     <None Include="DBOthers\ShipmentsModel\Triggers\Trigger_AutomaticLastUpdateDateShipmentSubTypes.dxml" />
+    <None Include="DBScripts\CommonModel\202111301830_UpdateContainerEntityStatusesNames.sxml" />
     <None Include="DBScripts\CommonModel\202111122000_QBODocumnetsUploaderWR.sxml" />
     <None Include="DBScripts\CommonModel\202111011306_PODDocumentWR.sxml" />
     <None Include="DBScripts\CommonModel\202111101034_UpdateUsersSecurityLevelWithNullValues.sxml" />
@@ -199,6 +200,7 @@
     <None Include="DBScripts\GlobalModel\DeleteTenantManagmentPrivateLabelsConstraint.sxml" />
     <None Include="DBScripts\GlobalModel\PODImageConverterServiceBatchService.sxml" />
     <None Include="DBScripts\GlobalModel\AddCollaborationToolContainerWRsBatchService.sxml" />
+    <None Include="DBScripts\InfrastructureModel\202111301850_UpdateContainerEntityStatuesNames.sxml" />
     <None Include="DBScripts\InfrastructureModel\202111081530_FillEntityStatusTypes.sxml" />
     <None Include="DBScripts\InvoiceModel\202111041254_FillARPaymentBankTranferFromARPayment.sxml" />
     <None Include="DBScripts\InvoiceModel\202109051322_FillARInvoiceShipmentsDataBackward.sxml" />

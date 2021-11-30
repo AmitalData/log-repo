@@ -422,8 +422,7 @@ using Simplog.Data.ShipmentsModel;
 					 temp.AddManualEvents = EventService28.EventCustomDataMapping(MyEntityPM,MyEntityPM.AddManualEvents,Tenant,ComputingPartnerName);
 				}
 
-							 					
-				    
+							  
 
 			  
 				   if(MyEntityPM.UnassignedShipperAddressId != null)
@@ -1350,11 +1349,11 @@ using Simplog.Data.ShipmentsModel;
 
 					if(MyEntity.EventList != null && MyEntity.EventList.Count > 0)
 					{
-						EventQueryService EventService28 = new EventQueryService(Tenant);
+						EventQueryService EventService30 = new EventQueryService(Tenant);
 						  
 						if(!IsUpdate)
 						{								//throw new ApplicationException("EventList Can't be update"); 
-								temp.EventList = EventService28.EventCustomDataMappingAndValidatin(MyEntity,MyEntity.EventList,Tenant,ComputingPartnerName);
+								temp.EventList = EventService30.EventCustomDataMappingAndValidatin(MyEntity,MyEntity.EventList,Tenant,ComputingPartnerName);
 
 					 
 						}  
@@ -1366,19 +1365,19 @@ using Simplog.Data.ShipmentsModel;
 
 					if(MyEntity.AddManualEvents != null && MyEntity.AddManualEvents.Count > 0)
 					{
-						EventQueryService EventService28 = new EventQueryService(Tenant);
+						EventQueryService EventService30 = new EventQueryService(Tenant);
 						  
 						if(!IsUpdate)
 						{								//throw new ApplicationException("AddManualEvents Can't be update"); 
-								temp.AddManualEvents = EventService28.EventCustomDataMappingAndValidatin(MyEntity,MyEntity.AddManualEvents,Tenant,ComputingPartnerName);
+								temp.AddManualEvents = EventService30.EventCustomDataMappingAndValidatin(MyEntity,MyEntity.AddManualEvents,Tenant,ComputingPartnerName);
 
 					 
 						}  
 
 						
 					}
-			
-					
+
+								 
 					AddressQueryService UnassignedShipperAddressAddressService = new AddressQueryService(Tenant);
 					if(MyEntity.UnassignedShipperAddress != null)
 					{
