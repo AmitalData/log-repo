@@ -1044,7 +1044,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                     select new { itmcr };
                         */
                         var list = itemCrRepo.GetMulti(crkeys);
-                       item.itm.GITITEMCRs = list;
+                  //     item.itm.GITITEMCRs = list;
 
                     }
 
