@@ -171,6 +171,7 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
     private CurrentSession = SessionLocator.SelectedSession;
     entityResourceService: EntityResourceService = new EntityResourceService();
     IsShowSendInterfaceResult: boolean = false;
+    IsShowEventCreationResult: boolean = false;
     IsShowCreateTaskResult: boolean = false;
     IsTenantZero: boolean = false;
     private quoteTemplateListService: QuoteTemplateListService;
@@ -197,6 +198,9 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
             this.IsShowCreateTaskResult = true;
         }
 
+        if (SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "AEV")[0]) {
+            this.IsShowEventCreationResult = true;
+        }
     }
 
     ngOnInit() {
@@ -1018,6 +1022,10 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
 
                  if (this.IsShowCreateTaskResult) {
                     this.ResultCodeList.push(new ResultCode("Create Task in Collaboration Tool", "CREATETASK"));
+                }
+
+                if(this.IsShowEventCreationResult){
+                    this.ResultCodeList.push(new ResultCode("Event Creation", "EVENTCREATION"));
                 }
             }
 
