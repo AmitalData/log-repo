@@ -704,23 +704,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
         }
         private DateTime? GetFinalETA()
         {
-            DateTime? myResult = entityPM.MainCarriageETA;
-
-            if (entityPM.Transshipment1ToPortId != null)
-            {
-                if (entityPM.Transshipment1ETA != null)
-                {
-                    myResult = entityPM.Transshipment1ETA;
-                }
-            }
-
-            if (entityPM.Transshipment2ToPortId != null)
-            {
-                if (entityPM.Transshipment2ETA != null)
-                {
-                    myResult = entityPM.Transshipment2ETA;
-                }
-            }
+            //DateTime? myResult = entityPM.MainCarriageETA;
+            DateTime? myResult = null;
 
             if (entityPM.Transshipment3ToPortId != null)
             {
@@ -729,7 +714,28 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                     myResult = entityPM.Transshipment3ETA;
                 }
             }
+            else
+            if (entityPM.Transshipment2ToPortId != null)
+            {
+                if (entityPM.Transshipment2ETA != null)
+                {
+                    myResult = entityPM.Transshipment2ETA;
+                }
+            }
+            else 
+            if (entityPM.Transshipment1ToPortId != null)
+            {
+                if (entityPM.Transshipment1ETA != null)
+                {
+                    myResult = entityPM.Transshipment1ETA;
+                }
+            }
+            else
+            {
+                myResult = entityPM.MainCarriageETA;
 
+            }
+           
             return myResult;
         }
 
