@@ -10,14 +10,11 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         [Key]
         public string Id { get; set; }
         public int Tenant { get; set; }
-
-        [ForeignKey("ShipmentId")]
         public string ShipmentId { get; set; }
         public string FieldName { get; set; }
         public string ReceivedCode { get; set; }
         public string ReceivedData { get; set; }
         public string ReplacedDataId  { get; set; }
         public ChangeSetOperation ChangeSetOp { get; set; }
-        public virtual Shipment Shipment { get; set; }
     }
 }
