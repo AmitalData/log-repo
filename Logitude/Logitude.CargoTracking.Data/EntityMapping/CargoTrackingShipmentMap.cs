@@ -81,7 +81,7 @@ namespace Logitude.CargoTracking.Data.EntityMapping
 
             this.Property(t => t.FromWarehouseEstimationDate).HasColumnName("FromWarehouseEstimationDate");
 
-            this.Property(t => t.FromWarehouseNotes).HasColumnName("FromWarehouseNotes").HasMaxLength(500).IsUnicode(true);
+            this.Property(t => t.FromWarehouseNotes).HasColumnName("FromWarehouseNotes").IsMaxLength().IsUnicode(true);
 
             this.Property(t => t.DepartureDone).HasColumnName("DepartureDone");
 
@@ -101,7 +101,7 @@ namespace Logitude.CargoTracking.Data.EntityMapping
 
             this.Property(t => t.ToWarehouseEstimationDate).HasColumnName("ToWarehouseEstimationDate");
 
-            this.Property(t => t.ToWarehouseNotes).HasColumnName("ToWarehouseNotes").HasMaxLength(500).IsUnicode(true);
+            this.Property(t => t.ToWarehouseNotes).HasColumnName("ToWarehouseNotes").IsMaxLength().IsUnicode(true);
 
             this.Property(t => t.CustomsPaymentDone).HasColumnName("CustomsPaymentDone");
 
@@ -147,7 +147,7 @@ namespace Logitude.CargoTracking.Data.EntityMapping
 
             this.Property(t => t.AssignedTruckerEstimationDate).HasColumnName("AssignedTruckerEstimationDate");
 
-            this.Property(t => t.AssignedTruckerNotes).HasColumnName("AssignedTruckerNotes").HasMaxLength(32).IsUnicode(true);
+            this.Property(t => t.AssignedTruckerNotes).HasColumnName("AssignedTruckerNotes").IsMaxLength().IsUnicode(true);
 
             this.Property(t => t.AssignedCustomsAgentDone).HasColumnName("AssignedCustomsAgentDone");
 
@@ -155,9 +155,9 @@ namespace Logitude.CargoTracking.Data.EntityMapping
 
             this.Property(t => t.AssignedCustomsAgentEstDate).HasColumnName("AssignedCustomsAgentEstDate");
 
-            this.Property(t => t.AssignedCustomsAgentNotes).HasColumnName("AssignedCustomsAgentNotes").HasMaxLength(32).IsUnicode(true);
+            this.Property(t => t.AssignedCustomsAgentNotes).HasColumnName("AssignedCustomsAgentNotes").IsMaxLength().IsUnicode(true);
 
-            this.Property(t => t.AssignedCustomsAgentExcReason).HasColumnName("AssignedCustomsAgentExcReason").HasMaxLength(32).IsUnicode(true);
+            this.Property(t => t.AssignedCustomsAgentExcReason).HasColumnName("AssignedCustomsAgentExcReason").IsMaxLength().IsUnicode(true);
 
             this.Property(t => t.DeliveryDone).HasColumnName("DeliveryDone");
 
@@ -165,7 +165,7 @@ namespace Logitude.CargoTracking.Data.EntityMapping
 
             this.Property(t => t.DeliveryEstimationDate).HasColumnName("DeliveryEstimationDate");
 
-            this.Property(t => t.DeliveryNotes).HasColumnName("DeliveryNotes").HasMaxLength(32).IsUnicode(true);
+            this.Property(t => t.DeliveryNotes).HasColumnName("DeliveryNotes").IsMaxLength().IsUnicode(true);
 
             this.Property(t => t.DeliveryExceptionReason).HasColumnName("DeliveryExceptionReason").HasMaxLength(32).IsUnicode(true);
 
@@ -187,13 +187,13 @@ namespace Logitude.CargoTracking.Data.EntityMapping
 
             this.Property(t => t.GoodsClassificationEstDate).HasColumnName("GoodsClassificationEstDate");
 
-            this.Property(t => t.GoodsClassificationNotes).HasColumnName("GoodsClassificationNotes").HasMaxLength(2000).IsUnicode(true);
+            this.Property(t => t.GoodsClassificationNotes).HasColumnName("GoodsClassificationNotes").IsMaxLength().IsUnicode(true);
 
             this.Property(t => t.DocumentInspectionDate).HasColumnName("DocumentInspectionDate");
 
             this.Property(t => t.DocumentInspectionEstDate).HasColumnName("DocumentInspectionEstDate");
 
-            this.Property(t => t.DocumentInspectionNotes).HasColumnName("DocumentInspectionNotes").HasMaxLength(2000).IsUnicode(true);
+            this.Property(t => t.DocumentInspectionNotes).HasColumnName("DocumentInspectionNotes").IsMaxLength().IsUnicode(true);
 
             this.Property(t => t.DocumentInspectionDone).HasColumnName("DocumentInspectionDone");
 
@@ -203,7 +203,7 @@ namespace Logitude.CargoTracking.Data.EntityMapping
 
             this.Property(t => t.GatepassArrivedEstDate).HasColumnName("GatepassArrivedEstDate");
 
-            this.Property(t => t.GatepassArrivedNotes).HasColumnName("GatepassArrivedNotes").HasMaxLength(2000).IsUnicode(true);
+            this.Property(t => t.GatepassArrivedNotes).HasColumnName("GatepassArrivedNotes").IsMaxLength().IsUnicode(true);
 
             this.Property(t => t.GatepassArrivedDone).HasColumnName("GatepassArrivedDone");
 
@@ -219,9 +219,9 @@ namespace Logitude.CargoTracking.Data.EntityMapping
 
             this.Property(t => t.BookingEstimationDate).HasColumnName("BookingEstimationDate");
 
-            this.Property(t => t.BookingNotes).HasColumnName("BookingNotes").HasMaxLength(32).IsUnicode(true);
+            this.Property(t => t.BookingNotes).HasColumnName("BookingNotes").IsMaxLength().IsUnicode(true);
 
-            this.Property(t => t.BookingExceptionReason).HasColumnName("BookingExceptionReason").HasMaxLength(32).IsUnicode(true);
+            this.Property(t => t.BookingExceptionReason).HasColumnName("BookingExceptionReason").IsMaxLength().IsUnicode(true);
 
             this.Property(t => t.PaymentRequiredDone).HasColumnName("PaymentRequiredDone");
 
@@ -229,7 +229,7 @@ namespace Logitude.CargoTracking.Data.EntityMapping
 
             this.Property(t => t.PaymentRequiredDate).HasColumnName("PaymentRequiredDate");
 
-            this.Property(t => t.PaymentRequiredNotes).HasColumnName("PaymentRequiredNotes").HasMaxLength(32).IsUnicode(true);
+            this.Property(t => t.PaymentRequiredNotes).HasColumnName("PaymentRequiredNotes").IsMaxLength().IsUnicode(true);
 
             this.Property(t => t.PaymentReceivedDone).HasColumnName("PaymentReceivedDone");
 
@@ -237,7 +237,7 @@ namespace Logitude.CargoTracking.Data.EntityMapping
 
             this.Property(t => t.PaymentReceivedDate).HasColumnName("PaymentReceivedDate");
 
-            this.Property(t => t.PaymentReceivedNotes).HasColumnName("PaymentReceivedNotes").HasMaxLength(32).IsUnicode(true);
+            this.Property(t => t.PaymentReceivedNotes).HasColumnName("PaymentReceivedNotes").IsMaxLength().IsUnicode(true);
 
             this.Property(t => t.PoNumber).HasColumnName("PoNumber").HasMaxLength(50).IsUnicode(false);
 
