@@ -184,10 +184,10 @@
 
                        
 
-                        <td *ngIf="!IsReferantObjectTable" style="max-width:600px;">
+                        <td *ngIf="!HasCustomsFilterMenu" style="max-width:600px;">
                             <div LocationDirective Code="MNH"></div>
                         </td>
-                        <td *ngIf="IsReferantObjectTable" style="max-width:600px;">
+                        <td *ngIf="HasCustomsFilterMenu" style="max-width:600px;">
                             <div></div>
                         </td>
                         <td *ngIf="HasActionBar()" style="width: 10px;"></td>
@@ -326,7 +326,7 @@
                             <div></div>
                         </td>
 
-                        <td *ngIf="IsReferantObjectTable" style="width: 650px; left:50PX;">
+                        <td *ngIf="HasCustomsFilterMenu" style="width: 650px; left:50PX;">
                             <div LocationDirective Code="MNH"></div>
                         </td>
                         <td style="width: 1px;" *ngIf="IsNavigateButtonVisible">
