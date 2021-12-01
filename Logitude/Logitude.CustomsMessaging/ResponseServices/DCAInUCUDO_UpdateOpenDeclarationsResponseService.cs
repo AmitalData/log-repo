@@ -43,6 +43,22 @@ namespace Logitude.CustomsMessaging.ResponseServices
             return this.MyResponseData;
         }
 
+        public override void OnRequestFail(UpdateOpenDeclarationsResponseContentHeader customResponse, UpdateOpenDeclarationsRequestParams requestParams)
+        {
+            FreeMyLock(customResponse, requestParams);
+
+        }
+
+        private static void FreeMyLock(UpdateOpenDeclarationsResponseContentHeader customResponse, UpdateOpenDeclarationsRequestParams requestParams)
+        {
+            //string GeneralKey = $"UCUDO:{customResponse.EntityId}";
+            string GeneralKey = CommDecService.GetGeneralLockKey(customResponse.EntityId);
+            var concurrentKiller1 = new ConcurrentKiller();
+            concurrentKiller1.FreeLock(GeneralKey, requestParams.Tenant);
+
+
+        }
+
         public override void Update(UpdateOpenDeclarationsResponseContentHeader customResponse, UpdateOpenDeclarationsRequestParams requestParams)
         {
             this.MyResponseData = new INF_MSG_GenericResponseData();
@@ -94,7 +110,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
                        // courierMasterRepository.SubmitChanges();
                     }
 
-              
+                FreeMyLock(customResponse, requestParams);
+
 
                 this.MyResponseData.ApplicationID = customFileNo;
                      this.MyResponseData.HasException = false;
