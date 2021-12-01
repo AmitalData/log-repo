@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class PhysicalCheckUpdateClass
    {  		
-		public const string HashString = "da94a7fd0cae61b1ed0606fe889be18d";
+		public const string HashString = "aa0c7743a2468513875c87bc9eb23d83";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -3121,8 +3121,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "MyCloseCheckBox",
 					  						DefaultText =  "סימון לסגירה גורפת",
+					  						FullLocalDefaultText =  "סימון לסגירה גורפת",
 					  						ListFieldLable =  "MyCloseCheckBoxListLable",
 					  						ListLableDefaultText =  "MyCloseCheckBox",
+					  						ListLocalDefaultText =  "סימון לסגירה גורפת",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
