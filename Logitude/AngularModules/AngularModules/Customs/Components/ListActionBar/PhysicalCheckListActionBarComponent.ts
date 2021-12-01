@@ -16,13 +16,13 @@ import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceRe
 
 @Component({
     templateUrl: './PhysicalCheckListActionBarComponent.html',
+    providers: [],
 })
 
 export class PhysicalCheckListActionBarComponent
     extends BaseComponent
     implements AfterViewInit {
 
-    public itmImportDeclarationReferantDatas: boolean = false;
     private _PhysicalCheckWebService: PhysicalCheckWebService = new PhysicalCheckWebService;
 
     private CurrentSession = SessionLocator.SelectedSession;
@@ -37,16 +37,19 @@ export class PhysicalCheckListActionBarComponent
 
 
     ngAfterViewInit() {
-        this._physicalChecksCloseSharedDataService.IsDisplayButtonClose = (this._physicalChecksCloseSharedDataService._SelectedItems.Collection.length > 0);
+        //this._physicalChecksCloseSharedDataService.IsDisplayButtonClose = (this._physicalChecksCloseSharedDataService._SelectedItems.Collection.length > 0);
+    }
+
+    
+    get count() {
+        return this._physicalChecksCloseSharedDataService._SelectedItems.Collection.length.toString()
+
     }
 
     
 
-
-    
-
   
-    CloseMarkChecks(eventM) {
+    CloseMarkChecks() {
         var checkList = this._physicalChecksCloseSharedDataService._SelectedItems.Collection.join(',');
         this._PhysicalCheckWebService.PostCloseMarkPhysicalChecks(checkList, this.EntityPM.Tenant)
             .subscribe((myResponse: ServiceResponse) => {

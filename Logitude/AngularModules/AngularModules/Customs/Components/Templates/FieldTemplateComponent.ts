@@ -24,7 +24,7 @@ import { PhysicalChecksCloseSharedDataService } from '../../Services/DataChange/
 @Component({
 
     templateUrl: './FieldTemplateComponent.html',
-    providers: [ListComponentArgs,PhysicalChecksCloseSharedDataService],
+    providers: [ListComponentArgs],
 })
 
 export class FieldTemplateComponent {
@@ -43,7 +43,7 @@ export class FieldTemplateComponent {
     private _ListComponentArgs: ListComponentArgs;
     @ViewChild('SpotLight', { read: ViewContainerRef, static: false }) SpotLightViewContainerRef: ViewContainerRef;
     RowIndex: any;
-    constructor(private CD: ChangeDetectorRef, private entityResourceService: EntityResourceService, public _physicalChecksCloseSharedDataService: PhysicalChecksCloseSharedDataService) {
+    constructor(private CD: ChangeDetectorRef, private entityResourceService: EntityResourceService, private _physicalChecksCloseSharedDataService: PhysicalChecksCloseSharedDataService) {
         if (SessionLocator.SelectedSession.CurrentListComponent != null) {
             this._ListComponentArgs = SessionLocator.SelectedSession.CurrentListComponent._ListComponentArgs;
         } else {
