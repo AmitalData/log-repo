@@ -19,6 +19,7 @@ import { PriceCheckDetailsPipe } from './price-check-details/price-check-details
 import { IconSrcPipe } from './icon-src/icon-src.pipe';
 import { IconCurrencyPipe } from './icon-currency/icon-currency.pipe';
 import { ProductTypeListService } from 'Common/Services/StandardLists/ProductTypeListService';
+import { PriceCheckUnifreightService } from './price-check-unifreight/price-check-unifreight.service';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import { ProductTypeListService } from 'Common/Services/StandardLists/ProductTyp
     PriceCheckDataService,
     ChargesTypeListService,
     ProductTypeListService,
+    PriceCheckUnifreightService,
   ],
   imports: [
     CommonModule,

@@ -1,12 +1,14 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { FormArray, FormControl } from '@angular/forms';
+import { ChangeDetectorRef, Component, isDevMode, OnInit } from '@angular/core';
+import { FormArray, FormControl, FormGroup } from '@angular/forms';
 import { ChargesTypeList } from 'Common/EntityLists/ChargesTypeList';
 import { ProductTypeList } from 'Common/EntityLists/ProductTypeList';
 import { ConfirmationService } from 'primeng/api';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ScrollPanel } from 'primeng/scrollpanel';
+import { QuoteOPPM } from 'QuoteOPM/EntityPMs/QuoteOPPM';
 import { PriceCheckDataService } from './price-check-data/price-check-data.service';
-import { PriceChekRootResponse, Offer } from './price-check.service';
+import { PriceCheckUnifreightService } from './price-check-unifreight/price-check-unifreight.service';
+import { Offer, PriceChekRootResponse } from './price-check.type';
 
 @Component({
   selector: 'app-price-check',
@@ -14,18 +16,14 @@ import { PriceChekRootResponse, Offer } from './price-check.service';
   styleUrls: ['./price-check.component.scss']
 })
 export class PriceCheckComponent implements OnInit {
+  filterForm: FormGroup = new FormGroup({})
   checkBoxs: FormArray = new FormArray([])
-  selectedFilter: string = ''
   offers: Offer[] = [];
-  offersFilterd: Offer[] = [];
   cahargesTypes: ChargesTypeList[] = [];
   productTypeList: ProductTypeList[] = [];
+  quote: QuoteOPPM = null as any;
 
-  filters: { filter: string, alias: string }[] = [
-    { filter: 'Fastest', alias: 'Quickest' },
-    { filter: 'Cheapest', alias: 'Cheapest' },
-    { filter: 'DirectFlight', alias: 'Direct' },
-  ]
+  filters: string[] = [ 'Quickest', 'Cheapest', 'Direct']
 
   summaryItems: { text: string, keyName: any }[] = [
     { text: 'Cost', keyName: 'TotalCost' },
@@ -37,25 +35,34 @@ export class PriceCheckComponent implements OnInit {
     private config: DynamicDialogConfig,
     private confirmationService: ConfirmationService,
     private priceCheckDataS: PriceCheckDataService,
+    private unifreight: PriceCheckUnifreightService,
     private ref: DynamicDialogRef,
     private cdr: ChangeDetectorRef,
   ) { }
 
   async ngOnInit(): Promise<void> {
-    Promise.all([this.initPricesDetails(), this.initProductType()])
-    this.initData();
+    this.quote = this.config.data;
+
+    this.initPricesDetails()
+    this.initProductType()
+    this.getPrices()
+    
+    this.initFilterFrom();
   }
 
-  private initData() {
-    this.offers = (this.config.data as PriceChekRootResponse).PriceChekResponse.Offers.Offer;
-    this.offersFilterd = this.offers;
+  initFilterFrom() {
+    this.filters.forEach(filter => this.filterForm.addControl(filter, new FormControl()))
+  }
+
+  private async getPrices() {
+    const prices: PriceChekRootResponse = /* isDevMode() ? await this.unifreight.getPricesTest(this.quote, this.filterForm.value) : */ await this.unifreight.getPrices(this.quote, this.filterForm.value);
+
+    this.offers = prices.PriceChekResponse.Offers.Offer;
     this.updateCheckBoxFormArray();
-    // console.log(this.config.data)
-    // console.log(this.offers)
   }
 
   private updateCheckBoxFormArray() {
-    this.checkBoxs = new FormArray(Array.from({ length: this.offersFilterd.length }, (v, i) => new FormControl(false)))
+    this.checkBoxs = new FormArray(Array.from({ length: this.offers.length }, (v, i) => new FormControl(false)))
   }
 
   private async initPricesDetails() {
@@ -66,11 +73,10 @@ export class PriceCheckComponent implements OnInit {
     this.productTypeList = await this.priceCheckDataS.getProducteType()
   }
 
-  setFilter(filterType: string) {
-    this.selectedFilter = filterType;
+  setFilter(filterName: string) {
+    this.filterForm.controls[filterName].setValue(!this.filterForm.value[filterName]);
 
-    this.offersFilterd = this.offers.filter((offer: Offer) => offer.Result.Summary[filterType] === 'True')
-    this.updateCheckBoxFormArray();
+    this.getPrices();
   }
 
   sendData() {
@@ -90,10 +96,9 @@ export class PriceCheckComponent implements OnInit {
   }
 
   scrollExtend(isHidden: boolean, s: ScrollPanel) {
-    if(isHidden) return;
+    if (isHidden) return;
     s.refresh();
     this.cdr.detectChanges()
     s.scrollTop(s.contentViewChild.nativeElement.scrollTop + 250)
-    console.log(s.contentViewChild.nativeElement.scrollTop, s.contentViewChild.nativeElement.scrollHeight, s)
   }
 }
