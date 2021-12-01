@@ -54,6 +54,7 @@ import { DocumentTypeCopyPMExtendedService } from '../../../../Common/Services/E
 import { DocumentCopiesViewModel } from '../../../../InfrastructureModules/InfrastructureDocuments/Components/DocumentComponent/DocsOut/ViewModel/DocumentCopiesViewModel';
 import { AutomationCreateTask } from '../../../DataContracts/AutomationCreateTask';
 import { QuoteTemplateListService } from '../../../../Quote/Services/StandardLists/QuoteTemplateListService';
+import { AutomationEvent } from 'Infrastructure/DataContracts/AutomationEvent';
 
 
 @Component({
@@ -67,6 +68,7 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
     _documentTypeListService: DocumentTypeListService;
     AutomationSetSLAValue: AutomationSetSLAValue = new AutomationSetSLAValue();
     AutomationFollowUp: AutomationFollowUp = new AutomationFollowUp();
+    AutomationEvent: AutomationEvent = new AutomationEvent();
     AutomationQueuedTask: AutomationQueuedTask = new AutomationQueuedTask();
 
     AutomationSendInterface: AutomationSendInterface = new AutomationSendInterface();
@@ -148,6 +150,7 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
     EventDocFollowUpTypeLists: EventTypeList[] = [];
     EventFollowUpTypeLists: EventTypeList[] = [];
     FollowUpTypeSelected: EventTypeList;
+    EventTypeSelected: EventTypeList;
 
     FollowUpOwnerObjectFieldLists: ObjectFieldPM[] = [];
     FollowUpDateObjectFieldLists: ObjectFieldPM[] = [];
@@ -175,6 +178,8 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
     IsShowCreateTaskResult: boolean = false;
     IsTenantZero: boolean = false;
     private quoteTemplateListService: QuoteTemplateListService;
+    EventTypes: EventTypeList[];
+    
     constructor(public _automationResultEmailRecipientExtendedService:
 
         AutomationResultEmailRecipientExtendedService, public _documentTypeTemplatePMExtendedService: DocumentTypeTemplatePMExtendedService, public documentTypeCopyPMExtendedService: DocumentTypeCopyPMExtendedService, public _automationExtendedPMService: AutomationExtendedPMService, public _automationHistoryExtendedPMService: AutomationHistoryExtendedPMService, private cd: ChangeDetectorRef, public entityArgs: EntityArgs) {
@@ -212,6 +217,7 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
     SLAHeaderSelected: SLAHeaderList;
     SLAHeaderLists: SLAHeaderList[];
     IsLoadEventFollowUp: boolean = false;
+    IsLoadEvent: boolean = false;
     IsLoadSLAHeaders: boolean = false;
     IsAutomationResultEmailAllActiveUsers: boolean = false;
     AutomationItemClass: any;
@@ -251,6 +257,8 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
 
                 this.IsLoadEventFollowUp = true;
             });
+
+            this.GetEventTypes();
 
             if (this.ObjectTableName == "Ticket") {
                 var sLAHeaderListService = new SLAHeaderListService();
@@ -293,6 +301,22 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
             }
         });
 
+    }
+    
+    GetEventTypes() {
+        var myService = new EventTypeListService();
+        myService.getAll().subscribe((myResponse: ServiceResponse) => {
+            if (myResponse.HasError) {
+                return;
+            }
+            var lists: EventTypeList[] = myResponse.Result;
+            this.EventTypes = lists.filter(f => f.ObjectTableId == this.ObjectTableId && f.InActive == false && f.IsManualEntry == true);
+            
+            if (!AppTool.IsNullOrEmpty(this.AutomationFollowUp.EventTypeId)) {
+                this.EventTypeSelected = this.EventTypes.filter(d => d.Id == this.AutomationEvent.EventTypeId)[0];
+            }
+            this.IsLoadEvent = true;
+        });
     }
 
 
@@ -1077,6 +1101,18 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
                 this.FollowUpOwnerId = this.AutomationFollowUp.OwnerFieldType == "Specific" ? this.AutomationFollowUp.OwnerValue : "";
                 this.DateValue = this.AutomationFollowUp.DateValue;
                 this.FollowUpNote = this.AutomationFollowUp.NoteValue;
+            }
+
+            if (this.EventTypes && this.IsLoadEvent && this.ResultCodeSelected.Code == "EVENTCREATION") {
+                this.AutomationEvent.EventTypeId = this.AutomatedBackupClass.AutomationEvent.EventTypeId;
+                this.AutomationEvent.NoteValue = this.AutomatedBackupClass.AutomationEvent.NoteValue;
+                this.AutomationEvent.ObjectTableName = this.AutomatedBackupClass.AutomationEvent.ObjectTableName;
+                this.AutomationEvent.DateEscalationActionTimeIndicatorCode = this.FollowDateEscalationActionTimeIndicatorCode = this.AutomatedBackupClass.AutomationEvent.DateEscalationActionTimeIndicatorCode;
+                this.AutomationEvent.DateEscalationTime = this.FollowDateEscalationTime = this.AutomatedBackupClass.AutomationEvent.DateEscalationTime;
+
+                if (!AppTool.IsNullOrEmpty(this.AutomationFollowUp.EventTypeId)) {
+                    this.EventTypeSelected = this.EventTypes.filter(d => d.Id == this.AutomationEvent.EventTypeId)[0];
+                }
             }
 
             if (this.ResultCodeSelected.Code == "QUEUE" && this.AutomatedBackupClass.AutomationQueuedTask) {
@@ -2284,6 +2320,13 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
             this.AutomationFollowUp.EventTypeId = value.Id;
         }
     }
+
+    //Automation Event   
+    EventTypeComboBoxChanged(value: any) {
+        if (value) {
+            this.AutomationEvent.EventTypeId = value.Id;
+        }
+    }    
     
     //Owner
     FollowUpOwnerObjectFieldComboBoxChanged(item: any) {

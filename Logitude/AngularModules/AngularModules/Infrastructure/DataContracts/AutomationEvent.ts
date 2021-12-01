@@ -1,0 +1,18 @@
+import {Injectable} from '@angular/core';
+
+@Injectable()
+export class AutomationEvent {
+    public EventTypeId : string;
+    public NoteValue: string;
+    public ObjectTableName: string;
+    public DateEscalationActionTimeIndicatorCode: string;
+    public DateEscalationTime: number;
+    //public DocumentTypeLists: AutomationEventList[];
+}
+
+
+// export class AutomationEventList {
+//     public Id: string;
+//     public Name: string;
+//     public Area: string;
+// }

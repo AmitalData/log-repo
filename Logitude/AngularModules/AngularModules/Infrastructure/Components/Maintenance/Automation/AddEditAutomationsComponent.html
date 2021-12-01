@@ -1337,6 +1337,93 @@
                                                                             </tr>
                                                                             <!-------------------->
 
+                                                                            <!-- Event creation-->
+                                                                            <tr style="width:100%" *ngIf="ResultCodeSelected.Code =='EVENTCREATION'">
+                                                                                <td colspan="2">
+                                                                                    <table style="margin-top:-12px">
+
+                                                                                        <tr style="height:100%">
+                                                                                            <td>
+                                                                                                <div style="height:100%">
+                                                                                                    <table style="height:100%">
+                                                                                                        <!--Event Type-->
+                                                                                                        <tr style="height:20px;">
+                                                                                                            <td style="width:10px">
+                                                                                                                <div style="width:10px"></div>
+                                                                                                            </td>
+
+                                                                                                            <td style="width:120px;">
+                                                                                                                <p style="font-size:11px;color:#6E7172;width:100px">Event Type</p>
+
+                                                                                                            </td>
+
+
+
+                                                                                                            <td>
+                                                                                                                <div style="text-align:left;width:270px;">
+                                                                                                                    <ComboBox style="width:270px;" (SelectedItemChanged)="EventTypeComboBoxChanged($event)" [ItemsSource]="EventTypes" [SelectedItem]="EventTypeSelected" [Binding]="'EnglishName'"></ComboBox>
+                                                                                                                </div>
+
+                                                                                                            </td>
+
+
+                                                                                                        </tr>
+
+                                                                                                        <tr style="height:10px;">
+                                                                                                            <td colspan="3">
+                                                                                                                <div style="height:10px"> </div>
+                                                                                                            </td>
+                                                                                                        </tr>
+                                                                                                        <!--Notes-->
+
+                                                                                                        <tr style="height:70px;">
+
+                                                                                                            <td style="width:10px">
+                                                                                                                <div style="width:10px"></div>
+                                                                                                            </td>
+
+                                                                                                            <td style="width:100px;vertical-align:top">
+                                                                                                                <p style="font-size:11px;color:#6E7172;width:100px;vertical-align:top">Notes</p>
+
+                                                                                                            </td>
+
+                                                                                                            <td>
+                                                                                                                <div style="text-align:left;width:270px;height:70px;">
+                                                                                                                    <LogTextBox style="width:270px;height:70px"
+                                                                                                                                [ObjectFieldName]="'FollowUpNote'"
+                                                                                                                                [Text]="FollowUpNote"
+                                                                                                                                [DataContext]="DataContext"
+                                                                                                                                [HideColumns]="true"
+                                                                                                                                [HideLastColumn]="true"
+                                                                                                                                [IsMultiline]="true">
+                                                                                                                    </LogTextBox>
+                                                                                                                </div>
+
+
+                                                                                                            </td>
+
+
+
+                                                                                                        </tr>
+
+
+
+
+                                                                                                        <tr style="height:100%;">
+                                                                                                            <td colspan="3">
+                                                                                                                <div style="height:100%"> </div>
+                                                                                                            </td>
+                                                                                                        </tr>
+                                                                                                    </table>
+                                                                                                </div>
+                                                                                            </td>
+
+                                                                                        </tr>
+
+                                                                                    </table>
+
+                                                                                </td>
+                                                                            </tr>                                                                            
                                                                             <tr style="height:5px;">
                                                                                 <td colspan="2">
                                                                                     <div style="height:5px"></div>
