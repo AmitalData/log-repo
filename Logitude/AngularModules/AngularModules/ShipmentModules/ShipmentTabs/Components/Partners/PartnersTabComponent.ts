@@ -22,6 +22,7 @@ import {AddEditPartnerArgs} from '../../../../Shipment/Args';
 import { ShipmentTool, ShipmentGenerator} from '../../../../Shipment/Tools';
 import { ContactInputTemplateArgs } from '../../../../CommonModules/CommonPartners/Components/Templates/ContactInputTemplate';
 import { CurrencyRatesService, LastRate } from '../../../../Common/Services/CurrencyRatesService';
+import { ShipmentUnassignedFieldPM } from '../../../../Shipment/EntityPMs/ShipmentUnassignedFieldPM';
 
 @Component({    
     templateUrl: './PartnersTabComponent.html',
@@ -266,6 +267,9 @@ export class PartnersTabComponent implements OnInit, OnDestroy {
             if (s == "OK") {
                 this.BuildItemsCollection();
                 this.SetAddButtonsIsDisabled();
+                this.UpdateShipmentUnassignedFields(myPartnerItem.Code);
+                this.ComputeHasUnassignedField();
+                this.CurrentSession.FireEvent("ShipmentUnassignedDataChanged");
             }
         });
     }
@@ -332,6 +336,36 @@ export class PartnersTabComponent implements OnInit, OnDestroy {
         }
 
         this.OnCustomerChanged();
+    }
+    UpdateShipmentUnassignedFields(partnerCode) {
+        if (this.EntityPM.HasUnassignedData) {
+            var fieldName: string;
+            var replacedId: string;
+
+            if (partnerCode == "SHIPR") {
+                fieldName = "Shipper";
+                replacedId = this.EntityPM.ShipperId;
+            }
+            else if (partnerCode == "CONSI") {
+                fieldName = "Consignee";
+                replacedId = this.EntityPM.ConsigneeId;
+            }
+
+            if (fieldName) {
+                var unassignedField: ShipmentUnassignedFieldPM = this.EntityPM.ShipmentUnassignedFields.filter(d => d.FieldName == fieldName)[0];
+                if (unassignedField) {
+                    unassignedField.ReplacedDataId = replacedId;
+                }
+            }
+        }
+    }
+    private ComputeHasUnassignedField() {
+        this.EntityPM.HasUnassignedData = false;
+
+        var myList: ShipmentUnassignedFieldPM[] = this.EntityPM.ShipmentUnassignedFields.filter(s => AppTool.IsNullOrEmpty(s.ReplacedDataId));
+        if (myList.length > 0) {
+            this.EntityPM.HasUnassignedData = true;
+        }
     }
 
     public UpdateSalesmanId: string = null;

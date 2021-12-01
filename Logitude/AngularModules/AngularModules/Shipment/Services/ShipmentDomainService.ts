@@ -16,6 +16,7 @@ import { CustomsTransferHeaderPMService } from './StandardPMs/CustomsTransferHea
 import { ShipmentTool } from '../Tools';
 import { BaseService } from '../../Abstractions/Services/BaseService';
 import { Observable } from 'rxjs';
+import { AddressPM } from '../../Common/EntityPMs/AddressPM';
 
 @Injectable()
 
@@ -1010,6 +1011,22 @@ export class ShipmentDomainService extends BaseService  {
             }), catchError(ServiceHelper.HandleServiceError));
         });
     }
+
+    LoadAddresseFromUnassignedXML(shipmentId: string, fieldName: string) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+
+        var url = this._apiUrl + '/GetAddressFromUnassignedXML?shipmentId=' + shipmentId + "&fieldName=" + fieldName;
+
+        return defer(() => {
+            return this._httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var result = response;
+                var serviceResponse = new ServiceResponse();
+                serviceResponse.Result = result;
+                return serviceResponse;
+            }), catchError(ServiceHelper.HandleServiceError));
+        });
+    }   
 }
 
 export class ShipmentsSummary {

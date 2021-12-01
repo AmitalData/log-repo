@@ -341,6 +341,7 @@ namespace Simplog.Data.ShipmentsModel
             modelBuilder.Configurations.Add(new ShipmentProductItemMap());
             modelBuilder.Configurations.Add(new ContainerStatusMap());
             modelBuilder.Configurations.Add(new ContainerStatusSourceMap());
+            modelBuilder.Configurations.Add(new ShipmentUnassignedFieldMap());
 
             base.OnModelCreating(modelBuilder);
         }
@@ -410,6 +411,7 @@ namespace Simplog.Data.ShipmentsModel
         public IDbSet<ShipmentSubType> ShipmentSubTypes { get; set; }
         public IDbSet<ShipmentStoragePricing> ShipmentStoragePricings { get; set; }
         public IDbSet<ShipmentProductItem> ShipmentProductItems { get; set; }
+        public IDbSet<ShipmentUnassignedField> ShipmentUnassignedFields { get; set; }
         public IDbSet<Container> Containers { get; set; }
         public IDbSet<ContainerStatus> ContainerStatuses { get; set; }
         public IDbSet<ContainerStatusSource> ContainerStatusSources { get; set; }
