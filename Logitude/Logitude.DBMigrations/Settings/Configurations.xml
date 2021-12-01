@@ -1,7 +1,7 @@
 <Configurations>
 
   <!--General Configurations-->
-  <Config Name="DBConfigFileName" Value="Master.DBConfig.config" />
+  <Config Name="DBConfigFileName" Value="2021.R5.DBConfig.config" />
   <Config Name="AOTScriptsExecutionTimeOut" Value="30" />
   <Config Name="AOTCreateIndexWithOnline" Value="true" />
   
