@@ -3,7 +3,9 @@ import { Injectable} from '@angular/core';
 import { ObservableCollection } from '../../../Infrastructure/Utilities/ObservableCollection';
 
 
-@Injectable()
+@Injectable({
+    providedIn: 'root',
+})
 export class PhysicalChecksCloseSharedDataService {
     public _SelectedItems: ObservableCollection = new ObservableCollection([]);
     public IsDisplayButtonClose: boolean = false;
