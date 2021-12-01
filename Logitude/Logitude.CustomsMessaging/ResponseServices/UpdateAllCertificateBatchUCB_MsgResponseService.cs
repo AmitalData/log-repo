@@ -41,19 +41,36 @@ namespace Logitude.CustomsMessaging.ResponseServices
         {
             var customContext = CustomContext.GetContext(requestParams.Tenant);
             this.MyResponseData = new INF_MSG_GenericResponseData();
-            SupplierInvioceItemCertificatUpdateService updateService = new SupplierInvioceItemCertificatUpdateService(customContext);
-
-            var count = updateService.UpdateAllCertificateWithoutResponse(customResponse.Declarationid, requestParams.Tenant);
-
+            long lCUSTOMFILENO;
+            if (!long.TryParse(customResponse.CustomFileNo, out lCUSTOMFILENO))
+            {
+                throw new BusinessErrorException("DeclarationCustomFileNo could not convert to long ");
+            }
+            var myCCUFILEMRepository = new CCUFILEMRepository(requestParams.Tenant);
+            var ccufilem = myCCUFILEMRepository.GetFILENOByCUSTOMFILENO(lCUSTOMFILENO);
+            var myCCUQUELOCKRepository = new CCUQUELOCKRepository(requestParams.Tenant);
+            var isUpdate = true;
+            try
+            {
+                var cculock = myCCUQUELOCKRepository.GetSingleGeneralLockNOWAIT("CCUFILEM", ccufilem.ToString());
+            }
+            catch (System.Exception)
+            {
+                LogMessagingUtil.Instance.AppendLine($"GetSingleGeneralLockNOWAIT(CCUFILEM, {customResponse.CustomFileNo}) ==> Already Lock => try later (*5) ");
+                isUpdate = false;
+            }
             this.MyRequestSheetParam = this.MyRequestSheetParam ?? new RequestSheetParam();
             this.MyRequestSheetParam.RequestDescription = requestParams.RequestName;
             this.MyRequestSheetParam.CustomFileNo = customResponse.CustomFileNo;
             this.MyRequestSheetParam.ObjectTableId1 = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
-            this.MyResponseData.UserMessage = "עודכנו "+ count+ " אישורים";
             this.MyResponseData.Succeeded = true;
-            this.MyResponseData.ApplicationID= customResponse.Declarationid;
-                
-            
+            this.MyResponseData.ApplicationID = customResponse.Declarationid;
+            if (isUpdate)
+            {
+                SupplierInvioceItemCertificatUpdateService updateService = new SupplierInvioceItemCertificatUpdateService(customContext);
+                var count = updateService.UpdateAllCertificateWithoutResponse(customResponse.Declarationid, requestParams.Tenant);
+                this.MyResponseData.UserMessage = "עודכנו " + count + " אישורים";
+            }
 
         }
 
