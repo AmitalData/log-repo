@@ -210,6 +210,20 @@ export class SendInterfaceResultComponent extends BaseComponent implements OnIni
         });
     }
 
+    ShowAdvancedDetails() {
+        var windowArgs: any = {};
+        windowArgs.AdvancedAutomationSendInterfaceDetails = this.automationSendInterface.AdvancedAutomationSendInterfaceDetails;
+
+        var logWindow = new LogitudeWindow();
+        logWindow.Width = 600;
+        logWindow.Height = 450;
+        logWindow.Title = "Advanced Details";
+        logWindow.WindowArgs = windowArgs;
+        logWindow.Show("./Infrastructure/Components/Maintenance/Automation/AutomationResult/AdvancedAutomationSendInterfaceDetailsComponent");
+        logWindow.WindowClosed.subscribe((message: any) => {
+            if (message == "Changed") this.automationSendInterface.IsChanged = true
+        });
+    }
 
     AddComputingPartner() {
         var windowArgs: any = {};

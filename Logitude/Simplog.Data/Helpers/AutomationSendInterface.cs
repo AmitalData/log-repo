@@ -30,7 +30,10 @@ namespace Simplog.Data.Helpers
 
             [DataMember]
             public WebHookAutomationDetails WebHookDetails { get; set; }
-        }
+
+            [DataMember]
+            public AdvancedAutomationSendInterfaceDetails AdvancedAutomationSendInterfaceDetails { get; set; }
+    }
 
 
         [DataContract(Namespace = "")]
@@ -54,5 +57,11 @@ namespace Simplog.Data.Helpers
             public string URL { get; set; }
 
         }
-    
+
+        [DataContract(Namespace = "")]
+        public class AdvancedAutomationSendInterfaceDetails
+        {
+            [DataMember]
+            public bool IncludeEvents { get; set; }
+        }
 }

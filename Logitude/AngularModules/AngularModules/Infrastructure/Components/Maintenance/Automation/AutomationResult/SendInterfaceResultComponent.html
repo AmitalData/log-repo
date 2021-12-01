@@ -57,10 +57,13 @@
                                                             <p style="font-size:12px;color:#6E7172"> Format</p>
                                                         </td>
 
-                                                        <td>
+                                                        <td style="width:230px;">
                                                             <div style="text-align:left;width:202px;">
                                                                 <ComboBox style="width:200px;" (SelectedItemChanged)="SendFormatSelected = $event" [ItemsSource]="SendFormatLists" [SelectedItem]="SendFormatSelected" [Binding]="'Name'"> </ComboBox>
                                                             </div>
+                                                        </td>
+                                                        <td style="width:70px">
+                                                            <a *ngIf="SendViaSelected && SendViaSelected.Code == 'FTP' && SendInterfaceSelected.Code == 'ShipmentAPI'" class="Link" style="font-size:13px;" (click)="ShowAdvancedDetails()"> Advanced Details</a>
                                                         </td>
                                                     </tr>
                                                 </table>
