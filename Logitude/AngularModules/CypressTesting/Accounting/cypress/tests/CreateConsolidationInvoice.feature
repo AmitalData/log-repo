@@ -92,7 +92,7 @@ Feature: Create Consolidation Invoice
             | VATNo               | Zero        |
             | Branch              | Main Office |
         When create consolidation invoice
-        And the consolidation invoice should create successfully
+        Then the consolidation invoice should create successfully
         And status value as "Draft"
         
     Scenario: Connect Constituent to the consildation invoice

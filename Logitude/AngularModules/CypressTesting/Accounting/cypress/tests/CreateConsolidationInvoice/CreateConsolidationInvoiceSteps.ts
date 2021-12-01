@@ -200,7 +200,7 @@ Then ("status value as {string}", (statusValue) => {
 });
 //#endregion
 //#startregoin
-When("user is in the Constituent workspace", () => {
+Given("user is in the Constituent workspace", () => {
   cy.Click(ShipmentSelectors.HouseHyperLink,"CNS" ,true)
 });
 Then("the status of Constituent invoice is {string}",(statusValue) => {
