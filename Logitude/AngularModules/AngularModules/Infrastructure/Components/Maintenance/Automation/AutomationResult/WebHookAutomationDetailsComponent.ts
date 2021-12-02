@@ -14,6 +14,7 @@ export class WebHookAutomationDetailsComponent extends BaseComponent {
     public DataContext: any;
     public WebHookAutomationDetails: WebHookAutomationDetails;
     public ObjectTableName: string = "WebHookAutomationDetails";
+    ValidationErrorsList: string[];
 
     AuthenticationTypes: Operator[] = [];
 
@@ -32,24 +33,19 @@ export class WebHookAutomationDetailsComponent extends BaseComponent {
     SetWindowArgs(args: any) {
         this.WebHookAutomationDetails = args.WebHookDetails;
         if (this.WebHookAutomationDetails) {
-            this.URL = this.WebHookAutomationDetails.URL;
-            this.AuthenticationTypeSelected = this.AuthenticationTypes.filter(d => d.Code == this.WebHookAutomationDetails.AuthenticationType)[0];
-            this.BasicAuthUserName = this.WebHookAutomationDetails.BasicAuthUserName;
-            this.BasicAuthPassword = this.WebHookAutomationDetails.BasicAuthPassword;
+            this.FillWebHookDetails();
         }
-
     }
 
-    ValidationErrorsList: string[];
-    SaveButtonClicked() {
-        this.ValidationErrorsList = [];
-        if (AppTool.IsNullOrEmpty(this.URL))
-            this.ValidationErrorsList.push("WebHook URL is required.");
-        if (this.AuthenticationTypeSelected?.Code == "BASICAUTHENTICATION" && AppTool.IsNullOrEmpty(this.BasicAuthUserName))
-            this.ValidationErrorsList.push("Basic Authentication User Name is required.");
-        if (this.AuthenticationTypeSelected?.Code == "BASICAUTHENTICATION" && AppTool.IsNullOrEmpty(this.BasicAuthPassword))
-            this.ValidationErrorsList.push("Basic Authentication Password is required.");
+    private FillWebHookDetails() {
+        this.URL = this.WebHookAutomationDetails.URL;
+        this.AuthenticationTypeSelected = this.AuthenticationTypes.filter(d => d.Code == this.WebHookAutomationDetails.AuthenticationType)[0];
+        this.BasicAuthUserName = this.WebHookAutomationDetails.BasicAuthUserName;
+        this.BasicAuthPassword = this.WebHookAutomationDetails.BasicAuthPassword;
+    }
 
+    SaveButtonClicked() {
+        this.ValidateDetails();
         if (this.ValidationErrorsList.length != 0) return;
 
         this.WebHookAutomationDetails.URL = this.URL;
@@ -57,6 +53,17 @@ export class WebHookAutomationDetailsComponent extends BaseComponent {
         this.WebHookAutomationDetails.BasicAuthUserName = this.BasicAuthUserName;
         this.WebHookAutomationDetails.BasicAuthPassword = this.BasicAuthPassword;
         this.CurrentSession.CurrentWindow.Close("Changed");
+    }
+
+    private ValidateDetails() {
+        this.ValidationErrorsList = [];
+
+        if (AppTool.IsNullOrEmpty(this.URL))
+            this.ValidationErrorsList.push("WebHook URL is required.");
+        if (this.AuthenticationTypeSelected?.Code == "BASICAUTHENTICATION" && AppTool.IsNullOrEmpty(this.BasicAuthUserName))
+            this.ValidationErrorsList.push("Basic Authentication User Name is required.");
+        if (this.AuthenticationTypeSelected?.Code == "BASICAUTHENTICATION" && AppTool.IsNullOrEmpty(this.BasicAuthPassword))
+            this.ValidationErrorsList.push("Basic Authentication Password is required.");
     }
 
     CloseButtonClicked() {
