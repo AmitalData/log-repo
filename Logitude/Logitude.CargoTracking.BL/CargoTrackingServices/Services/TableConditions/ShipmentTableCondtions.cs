@@ -284,7 +284,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
             var shipmentTableStructure = new CargoTrackingShipmentTableStructure();
             string shipmentOrderColumns = shipmentTableStructure.GetShipmentOrderFields();
             var shipmentOrderFields = string.Join(",", shipmentOrderColumns);
-            
+            shipmentOrderFields = " SHO." + shipmentOrderFields.Replace(",", " ,C.");
             var cargoTrackingShipmentDefaultFields =
                 "NULL as FirstPickupETD," +
                 "NULL as WarehouseLegActualEntryDate," +
@@ -323,13 +323,23 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
                 " '' as ForwarderShipmentNumber," +
                 " '' as ForwardingShipmentLevelCode," +
                 " '' as CustomsDeclarationNumber," +
-                " CasualImporterName as ShipperName," +
+                $@" (
+                    case 
+                    when DirectionId = 'I' and ShipperCard.EnglishName is not null then ShipperCard.EnglishName 
+                    when DirectionId = 'I' and ShipperCard.EnglishName is null then CasualSupplierName  
+                    end
+                    )as ShipperName," +
                 " '' as MasterShipmentDataId," +
                 " '' as FromPortId," +
                 " '' as ToPortId," +
                 " '' as CustomConnectToShipment," +
                 " '' as CustomFileId," +
-                " '' as ConsigneeName," +
+                $@" (
+                    case 
+                    when DirectionId = 'E' and ConsigneeCard.EnglishName is not null then ConsigneeCard.EnglishName 
+                    when DirectionId = 'E' and ConsigneeCard.EnglishName is null then CasualImporterName  
+                    end
+                    ) as ConsigneeName," +
                 " '' as CustomerReference1," +
                 " '' as CustomerReference2," +
                 " '' as WarehouseLegRemarks," +
@@ -348,7 +358,10 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
 
              var selectScript = $"SELECT {shipmentOrderFields} , {cargoTrackingShipmentDefaultFields} ";
 
-            var fromScript = $"FROM dbo.ShipmentOrders SHO ";
+            var fromScript = $@"FROM dbo.ShipmentOrders SHO 
+                                left join Cards ConsigneeCard on SHO.ConsigneeId = ConsigneeCard.id
+                                left join Cards ShipperCard on SHO.ConsigneeId = ShipperCard.id
+                                ";
 
             List<string> whereConditions = new List<string>();
 
