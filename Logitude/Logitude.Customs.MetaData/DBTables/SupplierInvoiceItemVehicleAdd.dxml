@@ -43,7 +43,7 @@
   <Column
     Name="RichbitNumber"
     Type="varchar"
-    Size="10">
+    Size="12">
     <Constraints
       Nullable="true" />
   </Column>

@@ -49,6 +49,12 @@ namespace Logitude.Customs.Data.Repsitories
                 return true;
             }
         }
+       /* public List<CourierPendingReason> GetByDecdeclarationId(string declarationId,int tenant)
+        {
+            var status = (from a in context.CourierPendingReasons
+                          where a.dec == code && a.Tenant == tenant
+                          select a).;
+        }*/
 
     }
 

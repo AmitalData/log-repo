@@ -316,6 +316,20 @@ export class CourierWorksheetListTemplate {
         this.ButtonClick(null);
     }
 
+    DeclarationsStatusRequestMethod() {
+        let customsRequestMenuService = new CustomsRequestMenuService();
+        let my = {
+            "DeclarationNumber": this._CourierWorksheet.DeclarationNumber,
+            "CustomsFile": this._CourierWorksheet.CustomFileNo,
+            "DeclarationId": this._CourierWorksheet.DeclarationId,
+        };
+        customsRequestMenuService.WindowClosed.subscribe(
+            (myarg) => { this.CD.detectChanges();
+            }
+        );
+        customsRequestMenuService.ShowModalAsEditMenuAction("8250", my);
+    }
+
     _IsSplitButtonMenuFilterReady: boolean = false;
     PrepareSplitButtonMenuFilter() {
         this._IsSplitButtonMenuFilterReady = false;

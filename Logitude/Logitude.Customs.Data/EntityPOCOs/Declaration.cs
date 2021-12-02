@@ -316,6 +316,8 @@ namespace Logitude.Customs.Data.EntityPOCOs
         public virtual DeclarationStatusType CourierSuspention { get; set; }
         [Column("DepositionStatusCode")]
 	    public string DepositionStatusCode { get; set; }
+        [Column("CargoDescription")]
+	    public string CargoDescription { get; set; }
         [Column("IsPaymentProtested")]
 	    public bool IsPaymentProtested { get; set; }
         [Column("AmendmentRequestNumber")]

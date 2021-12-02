@@ -75,17 +75,11 @@ using Logitude.CargoTracking.Data.Repositories;
 using Logitude.CargoTracking.BL;
 using Logitude.CargoTracking.Data.EntityPOCOs;
 
-//using Amital.QuoteOPM.BL.CLoseTable;
-using Amital.QuoteOPM.Data.Repsitories;
-using Amital.QuoteOPM.Data.EntityPOCOs;
-using Amital.QuoteOPM.BL;
-
-
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CourierMasterUpdateClass
    {  		
-		public const string HashString = "6dbdcee7105c3eff957ee6309a943de9";
+		public const string HashString = "23060f874d41a5fd0212cf076f35729f";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -125,7 +119,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    NewWizardControlName =  "NewCourierComponent",
-			      				    LocalDefaultText =  " בלדר ראשי",
+			      				    LocalDefaultText =  "בלדר ראשי",
 			      				    DefaultText =  "Courier Master",
 			      				    Code =  "dcc9",
 			      				    Name =  "Customs.CourierMaster Query Group",
@@ -3988,6 +3982,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		   Feature CourierMasterFeature_SendDeclaration902 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SendDeclaration902", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = CourierMasterObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.CourierMaster.Features.SendDeclaration902", NameTextCodeDefaultText = @"Send Declaration After Deleting Pending 902" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CourierMasterObjectTable);
 
 		   Feature CourierMasterFeature_StatusDeclarationOldVersion = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "StatusDeclarationOldVersion", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = CourierMasterObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.CourierMaster.Features.StatusDeclarationOldVersion", NameTextCodeDefaultText = @"Status Declaration Old Version" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CourierMasterObjectTable);
+
+		   Feature CourierMasterFeature_ExportMasterExtended = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ExportMasterExtended", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = CourierMasterObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.CourierMaster.Features.ExportCourierMasterExtended", NameTextCodeDefaultText = @"יצא לאקסל מורכב" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CourierMasterObjectTable);
 
    
 	    

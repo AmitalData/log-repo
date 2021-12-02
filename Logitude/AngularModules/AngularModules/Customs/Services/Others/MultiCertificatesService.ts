@@ -357,12 +357,12 @@ export class MultiCertificatesService {
 
     }
 
-    UpdateAllCertificateWithoutResponse(declarationId: string) {
+    UpdateAllCertificateWithoutResponse(declarationId: string, customFileNo: string) {
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
 
         return defer(() => {
-            var callURL = this._apiUrl + '/GetUpdateAllCertificateWithoutResponse?' + 'declarationId=' + declarationId;
+            var callURL = this._apiUrl + '/GetUpdateAllCertificateWithoutResponse?' + 'declarationId=' + declarationId + '&customFileNo=' + customFileNo;
 
             return this._http.get(callURL, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 

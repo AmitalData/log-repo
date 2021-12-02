@@ -318,6 +318,7 @@
 
     <Content Include="CustomsModules\CustomsReferant\Components\ReferantExceptionReason\AddEditExceptionReasonComponent.html" />
     <Content Include="CustomsModules\CustomsReferant\Components\ReferantWorkspaces\ReferantWorkspaceComponent.html" />
+    <Content Include="Customs\Components\ListActionBar\PhysicalCheckListActionBarComponent.html" />
     <Content Include="Images\LoginScreen\LogBoxLogo.png" />
     <Content Include="Images\PrivateLabel\MainImage.png" />
     <Content Include="Images\PrivateLabel\LogBoxLogo.png" />
@@ -577,6 +578,7 @@
     <Content Include="CustomsModules\InvoiceQueue\Components\InvoiceQueueComponent.html" />
     <Content Include="CustomsModules\CustomsReferant\Components\FiltersMenu\DeclarationReferantDataFiltersMenuComponent.html" />
     <Content Include="Customs\Components\ListActionBar\DeclarationReferantDataListActionBarComponent.html" />
+    <TypeScriptCompile Include="Customs\Components\ListActionBar\PhysicalCheckListActionBarComponent.ts" />
     <TypeScriptCompile Include="Customs\Components\ListActionBar\DeclarationReferantDataListActionBarComponent.ts" />
     <Content Include="Customs\Components\ListTemplates\CourierWorksheetListTemplate.html" />
     <Content Include="CustomsModules\CustomsListTemplates\Components\CourierWorksheetListTemplate.html" />
@@ -1635,6 +1637,7 @@
     <TypeScriptCompile Include="Customs\MetaDataServices\HeaderScreenServices\DeclarationHeaderScreenService.ts" />
     <TypeScriptCompile Include="Customs\MetaDataServices\MenuButtonServices\DeclarationMenuButtonService.ts" />
     <TypeScriptCompile Include="Customs\MetaDataServices\TabsServices\DeclarationTabsService.ts" />
+    <TypeScriptCompile Include="Customs\Services\DataChange\PhysicalChecksCloseSharedDataService.ts" />
     <TypeScriptCompile Include="Customs\Services\DataChange\DeclarationAmendmentSharedDataService.ts" />
     <TypeScriptCompile Include="Customs\Services\DataChange\SpotlightSharedDataService.ts" />
     <TypeScriptCompile Include="Customs\Services\DataChange\CustomsCollateralAnswerSharedDataService.ts" />

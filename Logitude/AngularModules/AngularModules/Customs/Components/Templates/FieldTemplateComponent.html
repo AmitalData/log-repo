@@ -527,7 +527,23 @@
                 <div *ngIf="FieldName == 'LimitDate'" style="position:relative;width:100%; height: 100%;">
                     {{Entity[FieldName] | DateTimePipe:'DT'}}
                 </div>
+                <div *ngIf="FieldName == 'MyCloseCheckBox'" style="text-align:right" (click)="EditMyCloseCheckBox($event)">
+                    <input class="CenterCenter" style="box-shadow:none ;width: 16px; height:16px; text-align:center"
+                           type="checkbox"  />
+                </div>
+                <!--<div *ngIf="FieldName == 'MyCloseCheckBox'" style="position:relative;width:100%; height: 100%;" (click)="EditMyCloseCheckBox()">
 
+                    <div *ngIf="!IsHeaderScreenTemplate" style="display: inline; position: absolute;right: 50%;">-->
+
+                        <!--<div *ngIf="Entity['MyCloseCheckBox']==true">
+                <img class="CenterCenter" style="width:20px;height:20px;margin-top:6px" title="Yes" src="./Images/CheckBoxIcon.png" />
+            </div>
+            <div *ngIf="Entity['MyCloseCheckBox']==false">
+                <img class="CenterCenter" style="width:20px;height:20px;margin-top:6px" src="./Images/Referant/Unactive_Favorite.png" />
+
+            </div>-->
+                    <!--</div>
+                </div>-->
                 <!-- IsClosed -->
                 <div *ngIf="FieldName == 'IsClosed'" style="position:relative;width:100%; height: 100%;">
                     <div *ngIf="IsHeaderScreenTemplate">

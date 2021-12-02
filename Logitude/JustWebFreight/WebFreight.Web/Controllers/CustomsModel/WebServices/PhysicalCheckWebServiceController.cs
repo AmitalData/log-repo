@@ -113,6 +113,41 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
 
         }
 
+        public HttpResponseMessage PostCloseMarkedPhysicalChecks(string physicalCheckIds, int tenant)
+        {
+            try
+            {
+                var ids = physicalCheckIds.Split(',').ToList();
+                foreach (var physicalCheckId in ids)
+                {
+                    PhysicalCheckQueryService physicalCheckQueryService = new PhysicalCheckQueryService(tenant);
+                    PhysicalCheckPM physicalCheckPM = physicalCheckQueryService.GetSingle(physicalCheckId, false, false);
+                    if (physicalCheckPM != null)
+                    {
+                        physicalCheckPM.ChangeSetOp = ChangeSetOperation.Update;
+                        physicalCheckPM.IsClosed = true;
+                        var myEventContextTagModel = new EventContextTagModel()
+                        {
+                            CallProccessID = EventContextTagModel.ProccessEnum.CH_NG_196_MSG7_CargoExitFromCheckSiteResponseServiceUpdate,
+                            EventCode = "PCE",
+                            EventRemarks = "Limit date: " + physicalCheckPM.LimitDate + ", Destination type: " + physicalCheckPM.StorageSiteName,
+                            FUStatusCode = "PCE",
+                            FUStatusRemarks = "Limit date: " + physicalCheckPM.LimitDate + ", Destination type: " + physicalCheckPM.StorageSiteName,
+                        };
+
+                        ICustomContext dbContext = CustomContext.GetContext(tenant);
+                        PhysicalCheckUpdateService updateService = new PhysicalCheckUpdateService(dbContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), tenant);
+                        updateService.Update(physicalCheckPM, true);
+                    }
+                }
+                return Request.CreateResponse(HttpStatusCode.OK, "");
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
 
     }
 }

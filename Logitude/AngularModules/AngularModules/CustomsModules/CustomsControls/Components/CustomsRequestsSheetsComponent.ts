@@ -23,6 +23,8 @@ import { CustomsRequestsSheetWebService } from '../../../Customs/Services/WebSer
 import { List } from '../../../Infrastructure/DataContracts/Dashboard/List';
 import { CustomsSettingListService } from 'Customs/Services/StandardLists/CustomsSettingListService';
 import { ServiceResponse } from 'Infrastructure/DataContracts/ServiceResponse';
+import { interval, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 //////////////////////////////////////////////////////////////////
 
@@ -38,6 +40,8 @@ import { ServiceResponse } from 'Infrastructure/DataContracts/ServiceResponse';
 export class CustomsRequestsSheetsComponent
     extends BaseComponent
     implements OnInit, AfterViewInit, OnDestroy {
+    private ngUnsubscribe = new Subject();
+
     private _entityResourceService: EntityResourceService = new EntityResourceService();
     _Id: string = Guid.newGuid();
 
@@ -171,7 +175,8 @@ export class CustomsRequestsSheetsComponent
         console.log("CustomsRequestsSheetsComponent:ngOnDestroy");
         this.entityArgs = null;
         this._CD = null;
-
+        this.ngUnsubscribe.next();
+        this.ngUnsubscribe.complete();
     }
     InitScreen() {
         //this.CurrentSession.StartBusyIndicator("");
@@ -186,7 +191,8 @@ export class CustomsRequestsSheetsComponent
                     this._entityListService = new EntityListService();
                     this.BuildColumns();
 
-                    this.GetStatistics();
+                    interval(1000 * 3).pipe(takeUntil(this.ngUnsubscribe)).subscribe(() => this.GetStatistics());
+
                     //alert(TextCodeTranslator.Translate("Customs.CustomsRequestsSheet.F.RequestDescription"));
                     this._MySearchText = TextCodeTranslator.Translate("Customs.Notification.O.Search");
 
@@ -235,11 +241,12 @@ export class CustomsRequestsSheetsComponent
     customsRequestsSheetSummary = new Array<CustomsRequestsSheetSummary>();
     IsTherecustomsRequestsSheetSummary = false;
     SumRequests = 0;
+    
     GetStatistics() {
         this.customsSettingListService.getSingleFromCache(SessionLocator.Tenant.toString()).subscribe((response: ServiceResponse) => {
             var customsSetting = response.Result;
             if (!AppTool.IsNullOrEmpty(customsSetting) && customsSetting.CompanyType == "B") {
-                this.StatisticsVisibility = true;
+                this.StatisticsVisibility = !this.CurrentSession?.CurrentEditComponent?.EntityPM;;
                 var service = new CustomsRequestsSheetWebService();
                 var statistics = service.GetStatistics().subscribe((response: any) => {
                     if (response.Result != null) {
