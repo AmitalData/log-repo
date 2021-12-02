@@ -323,6 +323,7 @@
     <Content Include="Infrastructure\Components\LoginComponent\CustomLoginComponents\HybridLabels\Components\HybridLoginProcessComponent.css" />
     <Content Include="Infrastructure\Components\LoginComponent\CustomLoginComponents\HybridLabels\Components\HybridLoginProcessComponent.html" />
     <Content Include="Infrastructure\Components\Maintenance\Automation\AutomationConditionsDetailsComponent.html" />
+    <Content Include="Infrastructure\Components\Maintenance\Automation\AutomationResult\AdvancedAutomationSendInterfaceDetailsComponent.html" />
     <Content Include="Infrastructure\Components\Maintenance\Automation\AutomationResult\CreateTaskResultComponent.html" />
     <Content Include="Infrastructure\Components\Maintenance\Automation\AutomationsConditionsViewDetailsComponent.html" />
     <Content Include="Infrastructure\Components\MultiUpdateComponent\MultiEntityUpdateBaseComponent.html" />
@@ -1853,6 +1854,7 @@
     <TypeScriptCompile Include="Infrastructure\Components\LogitudeComponents\AdvancedDatePickerResolverComponent.ts" />
     <TypeScriptCompile Include="Infrastructure\Components\LogitudeCustomComponents\LastSuccessfulLoginComponent.ts" />
     <TypeScriptCompile Include="Infrastructure\Components\Maintenance\Automation\AutomationConditionsDetailsComponent.ts" />
+    <TypeScriptCompile Include="Infrastructure\Components\Maintenance\Automation\AutomationResult\AdvancedAutomationSendInterfaceDetailsComponent.ts" />
     <TypeScriptCompile Include="Infrastructure\Components\Maintenance\Automation\AutomationResult\CreateTaskResultComponent.ts" />
     <TypeScriptCompile Include="Infrastructure\Components\Maintenance\Automation\AutomationResult\FTPAutomationDetailsComponent.ts" />
     <TypeScriptCompile Include="Infrastructure\Components\Maintenance\Automation\AutomationResult\SendDocumentResultComponent.ts" />
