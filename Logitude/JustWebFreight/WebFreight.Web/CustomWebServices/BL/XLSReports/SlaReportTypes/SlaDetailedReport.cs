@@ -30,7 +30,7 @@ namespace WebFreight.Web.CustomWebServices.BL.XLSReports.SlaReportTypes
             DeclarationQueryService declarationQueryService = new DeclarationQueryService(this.tenant);
             var toDateTime = DateTime.Parse(toDate);
             var fromDateTime = DateTime.Parse(fromDate);
-            var OpenCourierMasters = courierMasterQueryService.AllCourierMastersWithLandingDateBetweenTwoDates(tenant, fromDateTime, toDateTime,integratorCode);
+            var OpenCourierMasters = courierMasterQueryService.AllCourierMastersWithLandingDateBetweenTwoDates(tenant, fromDateTime, toDateTime, integratorCode);
             var qs = new DeclarationCourierStatusQueryService(context);
             var GGGHDAYRepository = new GGGHDAYRepository(this.tenant);
             this.holidayList = GGGHDAYRepository.All();
@@ -75,16 +75,16 @@ namespace WebFreight.Web.CustomWebServices.BL.XLSReports.SlaReportTypes
             }
             return "";
         }
-        private DetailedReportData GetSlaDaysForDecId(string decId, DateTime? landingDate, DeclarationCourierStatusQueryService qs,DetailedReportData report)
+        private DetailedReportData GetSlaDaysForDecId(string decId, DateTime? landingDate, DeclarationCourierStatusQueryService qs, DetailedReportData report)
         {
             DeclarationCourierStatusPM decStatus = qs.GetSingle(decId, false, false);
             int SlaDays = 0;
             if (decStatus != null)
             {
-                if (decStatus.TerminalReleaseDate.HasValue)
+                report.TerminalReleaseDate = decStatus.TerminalReleaseDate?.ToShortDateString();
+                if (decStatus.Delivered && decStatus.LastMileStatusDate.HasValue)
                 {
-                    report.TerminalReleaseDate = decStatus.TerminalReleaseDate?.ToShortDateString();
-                    double daysBetween = (decStatus.TerminalReleaseDate.Value - landingDate.Value).TotalDays;
+                    double daysBetween = (decStatus.LastMileStatusDate.Value - landingDate.Value).TotalDays;
                     if (daysBetween > 0)
                     {
                         DateTime day = (DateTime)(landingDate?.Date);
@@ -99,10 +99,8 @@ namespace WebFreight.Web.CustomWebServices.BL.XLSReports.SlaReportTypes
                         }
                     }
                 }
-                if (decStatus.Delivered)
-                {
-                    report.LastMileDate = decStatus.LastMileStatusDate?.ToShortDateString();
-                }
+                report.LastMileDate = decStatus.LastMileStatusDate?.ToShortDateString();
+
                 report.CourierHawb = decStatus.CourierHawb;
             }
             report.Sla = SlaDays.ToString();
