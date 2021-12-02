@@ -1025,7 +1025,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
     GetSlice(text: string, numberOfCharacter) {
 
         var result = text
-        if (text.length > numberOfCharacter) {
+        if (text?.length > numberOfCharacter) {
             result = text.slice(0, numberOfCharacter) + "..."
         }
         return result;

@@ -684,7 +684,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
 
                 IShipmentsContext objectContext = ShipmentsContext.GetContext(entityPM.Tenant);
                 ShipmentService service = new ShipmentService(objectContext, entityPM, SecurityUtility.GetAuthenticatedUser());
-                service.SetChangeSet(entityPM.ShipmentPackages, new List<ShipmentOrderPackagePM>(), new List<ShipmentPickUpPM>(), new List<ShipmentDeliveryPM>(), entityPM.ShipmentReceivables, entityPM.ShipmentPayables, new List<ShipmentFollowUpPM>(), new List<ShipmentAWBPrintOnlyPM>(), new List<ConsoleShipmentPM>(), new List<ShipmentCarrierStatusPM>(), new List<AWBOCIPM>(), new List<ShipmentCommodityPM>(), new List<ShipmentAssemblyPM>(), new List<ShipmentStoragePricingPM>(),new List<ShipmentProductItemPM>());
+                service.SetChangeSet(entityPM.ShipmentPackages, new List<ShipmentOrderPackagePM>(), new List<ShipmentPickUpPM>(), new List<ShipmentDeliveryPM>(), entityPM.ShipmentReceivables, entityPM.ShipmentPayables, new List<ShipmentFollowUpPM>(), new List<ShipmentAWBPrintOnlyPM>(), new List<ConsoleShipmentPM>(), new List<ShipmentCarrierStatusPM>(), new List<AWBOCIPM>(), new List<ShipmentCommodityPM>(), new List<ShipmentAssemblyPM>(), new List<ShipmentStoragePricingPM>(),new List<ShipmentProductItemPM>(), new List<ShipmentUnassignedFieldPM>());
                 service.Update();
                 //query = new ShipmentQuery(shipmentPM.Tenant);
                 //var shipmentPM2 = query.GetSinglePM(shipmentPM.Id, shipmentPM.Tenant);

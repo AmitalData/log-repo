@@ -39,6 +39,7 @@ import { ShipmenDirectionConvertComponent } from './Components/MenuButtons/Shipm
 import { CustomsTransferHeaderHelperComponent } from './Components/Helpers/CustomsTransferHeaderHelperComponent';
 import { ContainerHelperComponent } from './Components/Helpers/ContainerHelperComponent';
 import { SupplierConsigneeListTemplate } from './Components/ListTemplates/SupplierConsigneeListTemplate';
+import { UpdateUnassigedDataComponent } from './Components/UnassigedData/UpdateUnassigedDataComponent';
 
 export const Components =
     [
@@ -80,7 +81,8 @@ export const Components =
         AnalyzeChampXMLComponent,
         ShipmenDirectionConvertComponent,
         CustomsTransferHeaderHelperComponent,
-        SupplierConsigneeListTemplate
+        SupplierConsigneeListTemplate,
+        UpdateUnassigedDataComponent
     ];
 
 export const ControlsComponents =
@@ -134,7 +136,7 @@ export class ModuleDeclarations {
             case "ShipmenDirectionConvertComponent": { myResult = ShipmenDirectionConvertComponent; break; }
             case "CustomsTransferHeaderHelperComponent": { myResult = CustomsTransferHeaderHelperComponent; break; }
             case "SupplierConsigneeListTemplate": { myResult = SupplierConsigneeListTemplate; break; } 
-                  
+            case "UpdateUnassigedDataComponent": { myResult = UpdateUnassigedDataComponent; break; }      
         }
 
         return myResult;

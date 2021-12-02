@@ -1,14 +1,11 @@
 ﻿using System;
 using System.Linq;
-using System.Web;
 using System.Collections.Generic;
-using Logitude.BL.Helpers;
 using Logitude.BL.CommonDataModel.EntityPMs;
-using Logitude.BL.CommonDataModel.EntityLists;
-using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
+using Logitude.BL.CommonDataModel.EntityLists;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 
 namespace Logitude.BL.CommonDataModel.EntityQueries
 {
@@ -18,7 +15,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
         public WeightUnitQuery()
         {
-            repository = new WeightUnitRepository(); 
+            repository = new WeightUnitRepository();
         }
 
         public WeightUnitQuery(int tenant)
@@ -82,5 +79,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                 };
             return result;
         }
+
     }
 }

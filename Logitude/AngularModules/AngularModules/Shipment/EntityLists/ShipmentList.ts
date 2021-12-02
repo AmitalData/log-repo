@@ -486,5 +486,6 @@ export class ShipmentList {
 		CustomerContactName: string;
 		CustomerContactEmail: string;
 		PODReceivedDate: Date;
+		HasUnassignedData: boolean;
 	
 }

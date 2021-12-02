@@ -65,6 +65,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
                 initializer.ShipmentAssembliesChangeSet = initializer.EntityPM.ShipmentAssemblies;
                 initializer.ShipmentStoragePricingsChangeSet = initializer.EntityPM.ShipmentStoragePricings;
                 initializer.ShipmentProductItemsChangeSet = initializer.EntityPM.ShipmentProductItems;
+                initializer.ShipmentUnassignedFieldChangeSet = initializer.EntityPM.ShipmentUnassignedFields;
             }
         }
     }

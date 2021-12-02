@@ -464,6 +464,7 @@ namespace Simplog.Data.CommonDataModel
             modelBuilder.Configurations.Add(new CargoTenantMilestoneDefinitionMap());
             modelBuilder.Configurations.Add(new DWHEnvironmentSettingMap());
             modelBuilder.Configurations.Add(new PortTimeZoneMap());
+            modelBuilder.Configurations.Add(new UnassignedEntityMap());
 
 
             base.OnModelCreating(modelBuilder);
@@ -1037,6 +1038,7 @@ namespace Simplog.Data.CommonDataModel
         public IDbSet<DWHEnvironmentSetting> DWHEnvironmentSettings { get; set; }
 
         public IDbSet<PortTimeZone> PortTimeZones { get; set; }
+        public IDbSet<UnassignedEntity> UnassignedEntitys { get; set; }
 
 
         public DbConnection GetConnection()
