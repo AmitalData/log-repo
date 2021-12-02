@@ -3,13 +3,13 @@
   <Sql Version="1">
   </Sql>
 
-  <Oracle Version="1">
+  <Oracle Version="3">
     <![CDATA[
-update declarations set cargodescription =
+EXECUTE IMMEDIATE 'update declarations set cargodescription =
 (select cargodescription from CONSIGNMENTS
 where declarationid= declarations.id and CONSIGNMENTS.CONSIGNMENTnumber=1
    
- )
+ )';
 
     ]]>
   </Oracle>
