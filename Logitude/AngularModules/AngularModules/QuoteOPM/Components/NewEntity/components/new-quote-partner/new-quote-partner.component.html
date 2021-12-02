@@ -12,10 +12,10 @@
     <!-- <app-btn-menu-plus [ddl]='ddl'></app-btn-menu-plus> -->
   </div>
   <div class="icon-wrapper">
-    <i [class]='"pi pi-angle-" + (isHidden ?  "down" : "up")' (click)='isHidden  = !isHidden'></i>
+    <i [class]='"pi pi-angle-" + ((isHidden | async) ?  "down" : "up")' (click)='toggle()'></i>
   </div>
 </div>
-<div [hidden]='isHidden' class="accordion-contect">
+<div [hidden]='(isHidden | async)' class="accordion-contect">
 
   <div class="grid p-fluid content-in-section" [formGroup]='partnerform'>
     <div class="col-12 p-field">
