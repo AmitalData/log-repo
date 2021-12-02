@@ -56,6 +56,12 @@ namespace Simplog.Data.Helpers
             [DataMember]
             public string URL { get; set; }
 
+            [DataMember]
+            public string AuthenticationType { get; set; }
+            [DataMember]
+            public string BasicAuthUserName { get; set; }
+            [DataMember]
+            public string BasicAuthPassword { get; set; }
         }
 
         [DataContract(Namespace = "")]
@@ -63,5 +69,5 @@ namespace Simplog.Data.Helpers
         {
             [DataMember]
             public bool IncludeEvents { get; set; }
-        }
+    }
 }

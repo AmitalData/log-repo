@@ -112,11 +112,23 @@ namespace WebFreight.Web.Helpers.AutomationModel
         private string GetWebHookCommunicationLogSettingAsJosnString()
         {
             WebHookCommunicationLogSettings webHookCommunicationLogSettings = new WebHookCommunicationLogSettings();
-            webHookCommunicationLogSettings.URL = webHookDetails.URL;
-            webHookCommunicationLogSettings.Filename = string.IsNullOrEmpty(documentFileName) ? GetDocumentFileName():documentFileName;
+            webHookCommunicationLogSettings.URL = GetWebHookURL();
+            webHookCommunicationLogSettings.Filename = string.IsNullOrEmpty(documentFileName) ? GetDocumentFileName() : documentFileName;
             string result = JsonConvert.SerializeObject(webHookCommunicationLogSettings);
 
             return result;
+        }
+
+        private string GetWebHookURL()
+        {
+            if (webHookDetails.AuthenticationType == "BASICAUTHENTICATION")
+                return GetWebHookBasicAuthenticationURL();
+            return webHookDetails.URL;
+        }
+
+        private string GetWebHookBasicAuthenticationURL()
+        {
+            return "https://" + webHookDetails.BasicAuthUserName + ":" + webHookDetails.BasicAuthPassword + "@" + webHookDetails.URL.Replace("https://", "");
         }
 
         private string GetDocumentFileName()
