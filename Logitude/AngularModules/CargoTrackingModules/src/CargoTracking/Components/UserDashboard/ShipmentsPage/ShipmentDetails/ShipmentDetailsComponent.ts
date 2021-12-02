@@ -89,12 +89,15 @@ export class ShipmentDetailsComponent implements OnInit,AfterViewInit
     {
         return this._tenant || CargoTrackingBrandingData.Tenant;
     }
+    get ShowDeclarationApproval()
+    {
+        const isCustomShipment = this.cargoTrackingShipmentPM.EntityType == this.EntityType_Customs;
+        return isCustomShipment
+            && this.cargoTrackingShipmentPM.ActivatedForDeclarationApprove
+            && this.cargoTrackingShipmentPM.IsImporterApprovalRequried;
+    }
     constructor(private router: Router,
         private route: ActivatedRoute,
-        private searchService: CargoTrackingSearchService,
-        private cargoTrackingPortService: CargoTrackingPortService,
-        private cargoTrackingShipmentService: CargoTrackingShipmentService,
-        private cargoTrackingShipmentOrderService: CargoTrackingShipmentOrderService,
         private cargoTrackingShipmentExtendedService: CargoTrackingShipmentExtendedService,
         private brandingService: CargoTrackingBrandingDataExtendedService,
         private documentDownloadService: DocumentDownloadService,

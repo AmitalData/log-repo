@@ -10,6 +10,9 @@ using Logitude.ShipmentOrderModule.BL.EntityQueryServices;
 using Logitude.ShipmentOrderModule.Def.EntityPMs;
 using System.Collections.Generic;
 using System.Linq;
+using Logitude.BL.GlobalModel.EntityQueries;
+using Logitude.BL.GlobalModel.EntityPMs;
+using Simplog.Data.ShipmentsModel.EntityPOCOs;
 
 namespace Logitude.CargoTracking.BL.EntityQueryServices
 {
@@ -34,7 +37,12 @@ namespace Logitude.CargoTracking.BL.EntityQueryServices
             BuildShipmentMilstones(milestoneDictionary);
             SetMilestonesStatus();
             SetRoutePortsCodes(cargoShipmentPM);
+            SetTenantFields();
+            SetShipmentCloudDataFields();
         }
+
+
+
         private void BuildShipmentMilstones(Dictionary<string, CargoTrackingMilestoneList> milestoneDictionary)
         {
             var cargoTrackingMilestoneBuilder = new CargoTrackingMilestoneBuilder();
@@ -94,9 +102,7 @@ namespace Logitude.CargoTracking.BL.EntityQueryServices
         {
             CargoTrackingShipmenPartnersCardsBuilder partnerCardsBuilder = new CargoTrackingShipmenPartnersCardsBuilder(shipmentOrderPM, shipmentPM, cargoShipmentPM);
             cargoShipmentPM.PartnerCards = partnerCardsBuilder.BuildPartnerCards();
-        }
-
-        
+        }        
 
         private void SetRoutePortsCodes(CargoTrackingShipmentPM cargoShipmentPM)
         {
@@ -105,6 +111,33 @@ namespace Logitude.CargoTracking.BL.EntityQueryServices
 
             cargoShipmentPM.RouteFromPortCode = fromPort?.Code;
             cargoShipmentPM.RouteToPortCode = toPort?.Code;
+        }
+
+        private void SetTenantFields()
+        {
+            TenantManagementPM tenantManagment = GetTenantManagement(cargoShipmentPM.Tenant);
+            cargoShipmentPM.ActivatedForDeclarationApprove = tenantManagment?.ActivatedforDeclarationApprove ?? false;
+            cargoShipmentPM.TenantDeclarationMessage = tenantManagment?.DeclarationMessage;
+        }
+
+        private void SetShipmentCloudDataFields()
+        {
+            ShipmentAdditionalCloudData cloudData = GetShipmentCloud(cargoShipmentPM);
+            cargoShipmentPM.IsImporterApprovalRequried = cloudData?.IsImporterApprovalRequried ?? false;
+        }
+
+        private ShipmentAdditionalCloudData GetShipmentCloud(CargoTrackingShipmentPM cargoShipmentPM)
+        {
+            ShipmentQuery shipmentQuery = new ShipmentQuery(cargoShipmentPM.Tenant);
+            var cloudData = shipmentQuery.GetShipmentAdditionalCloudData(cargoShipmentPM.EntityId, cargoShipmentPM.Tenant);
+            return cloudData;
+        }
+
+        private TenantManagementPM GetTenantManagement(int tenant)
+        {
+            TenantManagementQuery tenantManagementQuery = new TenantManagementQuery(tenant);
+            var tenantManagment = tenantManagementQuery.GetTenantManagementPM(tenant);
+            return tenantManagment;
         }
         private CargoTrackingPortPM GetCargoPort(string id)
         {

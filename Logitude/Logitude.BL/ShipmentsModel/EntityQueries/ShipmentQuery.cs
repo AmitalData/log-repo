@@ -13975,6 +13975,13 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             
         }
 
+        public ShipmentAdditionalCloudData GetShipmentAdditionalCloudData(string shipmentId, int tenant)
+        {
+            Shipment shipment = repository.GetShipmentForCargoTracking(shipmentId, tenant);
+
+            return shipment?.ShipmentAdditionalCloudData;
+        }
+
         private CargoTrackingShipmentCustomsData BuildCargoTrackingShipmentCustomsData(ShipmentAdditionalCloudCustomData cloudCustomData, int tenant)
         {
             return new CargoTrackingShipmentCustomsData()
