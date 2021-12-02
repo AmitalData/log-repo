@@ -32,9 +32,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
 {
     public class ShipmentMasterValidator
     {
-        public static void ValidateUpdate(ShipmentPM shipmentPM)
+        public static void ValidateUpdate(ShipmentPM shipmentPM, ShipmentPM oldShipmentPM)
         {
-            if (shipmentPM.IsOperationalClosed)
+            if (oldShipmentPM.IsOperationalClosed)
                 throw new ApplicationException("Can't update operationally closed shipments");
 
             if (shipmentPM.IsCancelled)
@@ -44,6 +44,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
             shipmentMainCarriageLegsValidator.ValidateMainCarriageLegs();
             shipmentMainCarriageLegsValidator.ValidateRoutingsSeriesDates();
             shipmentMainCarriageLegsValidator.ValidateActualDates();
+
+            ShipmentAccountingValidator shipmentAccountingValidator = new ShipmentAccountingValidator(shipmentPM);
+            shipmentAccountingValidator.ValidateAccountingClosed();
         }
     }
 }

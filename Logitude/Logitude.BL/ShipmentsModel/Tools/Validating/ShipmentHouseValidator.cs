@@ -31,9 +31,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
 {
     public class ShipmentHouseValidator
     {
-        public static void ValidateUpdate(ShipmentPM shipmentPM)
+        public static void ValidateUpdate(ShipmentPM shipmentPM, ShipmentPM oldShipmentPM)
         {
-            if (shipmentPM.IsOperationalClosed) throw new ApplicationException("Can't update operationally closed shipments");
+            if (oldShipmentPM.IsOperationalClosed) throw new ApplicationException("Can't update operationally closed shipments");
             if (shipmentPM.IsCancelled) throw new ApplicationException("Can't update cancelled shipments");
             if (!string.IsNullOrEmpty(shipmentPM.MasterShipmentDataId)) throw new ApplicationException("Can't update house connected to master");
 

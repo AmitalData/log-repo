@@ -31,18 +31,19 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
 {
     public class ShipmentBaseValidator
     {
-        public static void ValidateUpdate(object entityPM)
+        public static void ValidateUpdate(object entityPM, object oldEntityPM)
         {
             ShipmentPM shipmentPM = (ShipmentPM)entityPM;
+            ShipmentPM oldShipmentPM = (ShipmentPM)oldEntityPM;
             string shipmentLevelCode = shipmentPM.ShipmentLevelCode;
 
             switch (shipmentLevelCode)
             {
-                case "D": ShipmentDirectValidator.ValidateUpdate(shipmentPM);
+                case "D": ShipmentDirectValidator.ValidateUpdate(shipmentPM, oldShipmentPM);
                     break;
-                case "H": ShipmentHouseValidator.ValidateUpdate(shipmentPM);
+                case "H": ShipmentHouseValidator.ValidateUpdate(shipmentPM, oldShipmentPM);
                     break;
-                case "C": ShipmentMasterValidator.ValidateUpdate(shipmentPM);
+                case "C": ShipmentMasterValidator.ValidateUpdate(shipmentPM, oldShipmentPM);
                     break;
                 case "A": ShipmentCustomsValidator.ValidateUpdate(shipmentPM);
                     break;
