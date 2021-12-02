@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, isDevMode, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, isDevMode, OnInit, ViewChild } from '@angular/core';
 import { FormArray, FormControl, FormGroup } from '@angular/forms';
 import { ChargesTypeList } from 'Common/EntityLists/ChargesTypeList';
 import { ProductTypeList } from 'Common/EntityLists/ProductTypeList';
@@ -23,7 +23,7 @@ export class PriceCheckComponent implements OnInit {
   productTypeList: ProductTypeList[] = [];
   quote: QuoteOPPM = null as any;
 
-  filters: string[] = [ 'Quickest', 'Cheapest', 'Direct']
+  filters: string[] = ['Quickest', 'Cheapest', 'Direct']
 
   summaryItems: { text: string, keyName: any }[] = [
     { text: 'Cost', keyName: 'TotalCost' },
@@ -46,7 +46,7 @@ export class PriceCheckComponent implements OnInit {
     this.initPricesDetails()
     this.initProductType()
     this.getPrices()
-    
+
     this.initFilterFrom();
   }
 
@@ -95,10 +95,20 @@ export class PriceCheckComponent implements OnInit {
     this.ref.close();
   }
 
-  scrollExtend(isHidden: boolean, s: ScrollPanel) {
+  scrollExtend(isHidden: boolean, s: ScrollPanel, offerContainer: HTMLElement) {
     if (isHidden) return;
+
     s.refresh();
     this.cdr.detectChanges()
-    s.scrollTop(s.contentViewChild.nativeElement.scrollTop + 250)
+
+    const scrollTopContainr: number = s.contentViewChild.nativeElement.scrollTop;
+    const scrollTopElement: number = offerContainer.offsetTop;
+    const scrollTopScreen: number = scrollTopElement - scrollTopContainr;
+
+    const screen: number = s.containerViewChild.nativeElement.clientHeight;
+    const offer: number = offerContainer.clientHeight;
+    
+    if (scrollTopScreen < 0  || screen < offer + scrollTopScreen)
+      s.scrollTop(scrollTopContainr + scrollTopScreen)
   }
 }

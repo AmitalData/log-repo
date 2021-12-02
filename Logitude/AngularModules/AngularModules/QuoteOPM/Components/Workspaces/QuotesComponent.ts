@@ -32,9 +32,9 @@ declare var makeChart, FunnelClick, ResetItemFunnel;
 
 export class QuotesComponent extends BaseComponent {
     ngOnInit() {
-        // if(isDevMode()){
-        //     this.priceCheckS.open(new QuoteOPPM());
-        // }
+        if (isDevMode()) {
+            this.priceCheckS.open(new QuoteOPPM());
+        }
     }
 
     public DataContext = this;
@@ -717,7 +717,7 @@ export class QuotesComponent extends BaseComponent {
         logWindow.Title = TextCodeTranslator.Translate("Quote.S.NewQuote.CreateNewQuote");
         oldWizard ? logWindow.Show('./QuoteOPM/Components/NewEntity/NewQuoteComponentOld') : logWindow.Show('./QuoteOPM/Components/NewEntity/NewQuoteComponent');
 
-        logWindow.WindowClosed.subscribe((quote: QuoteOPPM)  => {
+        logWindow.WindowClosed.subscribe((quote: QuoteOPPM) => {
             if (quote) {
                 this.LoadAllScreenData();
                 this.priceCheckS.open(quote);
