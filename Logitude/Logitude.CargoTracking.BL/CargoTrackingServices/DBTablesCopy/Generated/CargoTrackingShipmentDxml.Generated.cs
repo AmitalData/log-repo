@@ -225,7 +225,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.DBTablesCopy.Generated
 "  <Column Name='DeliveryNotes' Type='nvarchar' Size='-1'>"+
 "    <Constraints Nullable='true' />"+
 "  </Column>"+
-"  <Column Name='DeliveryExceptionReason' Type='nvarchar' Size='32'>"+
+"  <Column Name='DeliveryExceptionReason' Type='nvarchar' Size='-1'>"+
 "    <Constraints Nullable='true' />"+
 "  </Column>"+
 "  <Column Name='GrossWeightUnitCode' Type='varchar' Size='3'>"+
@@ -237,7 +237,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.DBTablesCopy.Generated
 "  <Column Name='ShipmentTypeCode' Type='varchar' Size='5'>"+
 "    <Constraints Nullable='true' />"+
 "  </Column>"+
-"  <Column Name='CurrentMilestoneExceptions' Type='nvarchar' Size='500'>"+
+"  <Column Name='CurrentMilestoneExceptions' Type='nvarchar' Size='-1'>"+
 "    <Constraints Nullable='true' />"+
 "  </Column>"+
 "  <Column Name='ForwardingHouse' Type='nvarchar' Size='200'>"+

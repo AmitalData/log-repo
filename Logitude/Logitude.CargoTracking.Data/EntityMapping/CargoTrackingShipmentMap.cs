@@ -167,7 +167,7 @@ namespace Logitude.CargoTracking.Data.EntityMapping
 
             this.Property(t => t.DeliveryNotes).HasColumnName("DeliveryNotes").IsMaxLength().IsUnicode(true);
 
-            this.Property(t => t.DeliveryExceptionReason).HasColumnName("DeliveryExceptionReason").HasMaxLength(32).IsUnicode(true);
+            this.Property(t => t.DeliveryExceptionReason).HasColumnName("DeliveryExceptionReason").IsMaxLength().IsUnicode(true);
 
             this.Property(t => t.GrossWeightUnitCode).HasColumnName("GrossWeightUnitCode").HasMaxLength(3).IsUnicode(false);
 
@@ -175,7 +175,7 @@ namespace Logitude.CargoTracking.Data.EntityMapping
 
             this.Property(t => t.ShipmentTypeCode).HasColumnName("ShipmentTypeCode").HasMaxLength(5).IsUnicode(false);
 
-            this.Property(t => t.CurrentMilestoneExceptions).HasColumnName("CurrentMilestoneExceptions").HasMaxLength(500).IsUnicode(true);
+            this.Property(t => t.CurrentMilestoneExceptions).HasColumnName("CurrentMilestoneExceptions").IsMaxLength().IsUnicode(true);
 
             this.Property(t => t.ForwardingHouse).HasColumnName("ForwardingHouse").HasMaxLength(200).IsUnicode(true);
 

@@ -469,7 +469,7 @@
   <Column
     Name="DeliveryExceptionReason"
     Type="nvarchar"
-    Size="32">
+    Size="-1">
     <Constraints
       Nullable="true" />
   </Column>
@@ -497,7 +497,7 @@
   <Column
     Name="CurrentMilestoneExceptions"
     Type="nvarchar"
-    Size="500">
+    Size="-1">
     <Constraints
       Nullable="true" />
   </Column>
