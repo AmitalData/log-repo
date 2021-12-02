@@ -35,6 +35,9 @@ import { NewQuoteDataService } from "./Services/new-quote-data/new-quote-data.se
 import { NewQuoteValidateEntityService } from "./Services/new-quote-validate-entity/new-quote-validate-entity.service";
 import { LogtuideTableDataService } from "./components/autocomplate-table/logtuide-table-data.service";
 import { HighlightPipeModule } from "Infrastructure/Pipes/highlight-pipe/highlight-pipe.module";
+import { NewQuoteHandleLinkedDataService } from "./Services/new-quote-handle-linked-data/new-quote-handle-linked-data.service";
+import { NewQuoteFocusErrorService } from "./Services/new-quote-focus-error/new-quote-focus-error.service";
+import { NewQuoteDataShareService } from "./Services/new-quote-data-share/new-quote-data-share.service";
 
 @NgModule({
     imports: [  
@@ -82,6 +85,9 @@ import { HighlightPipeModule } from "Infrastructure/Pipes/highlight-pipe/highlig
         MessageService,
         DialogsService,
         NewQuoteValidateEntityService,
+        NewQuoteDataShareService,
+        NewQuoteFocusErrorService,
+        NewQuoteHandleLinkedDataService,
     ],
     exports:
     [

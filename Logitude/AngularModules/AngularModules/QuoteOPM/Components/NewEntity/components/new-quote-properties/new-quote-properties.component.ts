@@ -1,8 +1,11 @@
-import { AfterViewInit, Component, Input, OnInit, SimpleChanges } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, Input, OnInit, SimpleChanges } from '@angular/core';
 import { FormGroup, FormControl, FormArray, Validators } from '@angular/forms';
 import { ApiQueryFilters } from 'Infrastructure/DataContracts/ApiQueryFilters';
 import { MessageService } from 'primeng/api';
 import { QuoteOPPM } from 'QuoteOPM/EntityPMs/QuoteOPPM';
+import { BehaviorSubject, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+import { NewQuoteDataShareService } from '../../Services/new-quote-data-share/new-quote-data-share.service';
 import { Carrier, Incoterm, NewQuoteDataService, Port, SpecialService } from '../../Services/new-quote-data/new-quote-data.service';
 
 @Component({
@@ -17,13 +20,15 @@ export class NewQuotePropertiesComponent implements OnInit, AfterViewInit {
   fromPortList: Port[] = []
   toPortList: Port[] = []
   specialServiceList: SpecialService[] = []
-  mainCarriageCarrierFunc:(filter: ApiQueryFilters) => Promise<any[]> = null as any;
+  mainCarriageCarrierFunc: (filter: ApiQueryFilters) => Promise<any[]> = null as any;
   incotermList: Incoterm[] = []
   transportModeId: string = '';
   directionId: string = '';
   carrierColumns: any = {}
   formArray: FormArray = new FormArray([this.propForm]);
-  index: number = 0;
+  indexTabs: BehaviorSubject<number> = null as any;
+  activeTab: number = 0;
+  destroyObservable: Subject<void> = new Subject<void>();  
 
   get propForm(): FormGroup {
     return new FormGroup({
@@ -32,8 +37,6 @@ export class NewQuotePropertiesComponent implements OnInit, AfterViewInit {
       specialService: new FormControl(),
       mainCarriageCarrier: new FormControl(),
       incoterm: new FormControl(),
-      // delivery: new FormGroup({}),
-      // pickup: new FormGroup({}),
     })
   }
 
@@ -44,6 +47,8 @@ export class NewQuotePropertiesComponent implements OnInit, AfterViewInit {
   constructor(
     private newQuoteDataService: NewQuoteDataService,
     private messageService: MessageService,
+    private dataShareService: NewQuoteDataShareService,
+    private cdr: ChangeDetectorRef,
   ) { }
 
   ngAfterViewInit(): void {
@@ -60,15 +65,21 @@ export class NewQuotePropertiesComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
+    this.subscribeIndexTab();
     this.getIncoterms()
     this.resetForm();
   }
 
+  private subscribeIndexTab() {
+    this.indexTabs = this.dataShareService.indexPropertyTab;
+    this.indexTabs.pipe(takeUntil(this.destroyObservable)).subscribe(x => this.activeTab = x);
+  }
+
   resetForm() {
-    this.newQuoteDataService.$resetForm.subscribe(()=>{
-      this.formArray.clear() 
-      this.formArray. push(this.propForm);
-      this.index = 0
+    this.newQuoteDataService.$resetForm.subscribe(() => {
+      this.formArray.clear()
+      this.formArray.push(this.propForm);
+      this.indexTabs.next(0);
     })
   }
 
@@ -115,7 +126,7 @@ export class NewQuotePropertiesComponent implements OnInit, AfterViewInit {
     const filters = new ApiQueryFilters();
     filters.PageIndex = 0;
     filters.PageSize = 100;
-    
+
     this.carrierColumns = this.directionId === "E" ? { AIRLINE_ID: 'Code' } : { VENDOR_ID: 'Code' }
     this.carrierColumns = { ...this.carrierColumns, ...{ Name: 'Name', Prefix: 'Prefix' } }
 
@@ -128,18 +139,24 @@ export class NewQuotePropertiesComponent implements OnInit, AfterViewInit {
 
   addProperty() {
     if (this.formArray.valid) {
-      this.index = this.formArray.length;
       this.formArray.push(this.propForm)
+      this.cdr.detectChanges()
+      this.indexTabs.next(this.formArray.length - 1);
     } else
       this.messageService.add({ severity: 'error', summary: 'Property not add', detail: 'Not all the field in Quote Properties were entered/filled' })
   }
 
   removeProperty(e: { originalEvent: PointerEvent, index: number }) {
-    this.index = 0
+    this.indexTabs.next(0);
     this.formArray.removeAt(e.index)
   }
 
   sortArray(arr: any[], prop: string): any[] {
     return arr.sort((a, b) => (a[prop] > b[prop]) ? 1 : ((b[prop] > a[prop]) ? -1 : 0))
+  }
+
+  ngOnDestroy() {
+    this.destroyObservable.next()
+    this.destroyObservable.complete()
   }
 }

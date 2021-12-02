@@ -1,6 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { ChargesTypeList } from 'Common/EntityLists/ChargesTypeList';
-import { Offer, Service } from '../price-check.service';
+import { Offer, Service } from '../price-check.type';
 
 @Pipe({
   name: 'priceCheckDetails'

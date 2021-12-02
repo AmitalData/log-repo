@@ -19,7 +19,7 @@
         <div class="col-3 p-fluid values-col">
             <label>Package Type</label>
             <div class="p-field" *ngFor='let i of [1,2,3,4]'>
-                <div class="error-msg" [ngClass]='{"invalid": formGroup.controls["quantityType" + i].invalid}'>
+                <div class="error-msg" [ngClass]='{"invalid": formGroup.controls["quantityType" + i].invalid && !formGroup.controls["quantityType" + i].errors?.notIdentityValue}'>
                     Quantity Type {{i}} is required
                 </div>
                 <app-autocomplate-table [columnsShow]="{Code:'Code',EnglishName:'English Name'}" [data]='packageTypes'
