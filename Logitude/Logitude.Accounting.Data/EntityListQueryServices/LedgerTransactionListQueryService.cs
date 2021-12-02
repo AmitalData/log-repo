@@ -1641,12 +1641,15 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 
             IQueryable<LedgerTransaction> ledgerTransactionQuery = (from trans in context.LedgerTransactions
                                                                     join jrn in context.Journals on trans.JournalId equals jrn.Id
+                                                                    join gla in context.GLAccounts on trans.OppositeAccountId equals gla.Id
+                                                                    join coa in context.ChartOfAccounts on gla.ChartOfAccountsId equals coa.Id
                                                                     where
                                                                         jrn.ExternalSystem != null
                                                                     && trans.AccountId == accountId
                                                                     && trans.Tenant == tenant
                                                                     && trans.DueDate > today
                                                                     && trans.LocalAmountCredit != 0
+                                                                    && coa.TypeCode == ChartOfAccountsTypes.Banks
                                                                     select trans);
 
             IQueryable<LedgerTransactionList> ledgerTransactionListQuery = GetIqueryableList(ledgerTransactionQuery);
