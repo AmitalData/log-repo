@@ -33,7 +33,6 @@ using Logitude.Accounting.Data.Repositories;
 using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.BL.InvoiceModel.EntityOtherServices;
 using Logitude.BL.InvoiceModel.EntityQueries;
-using Logitude.Accounting.BL.EntityQueryServiceExt;
 
 namespace Logitude.BL.InvoiceModel.Tools.EntityService
 {
@@ -1316,8 +1315,9 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         private static List<LedgerTransactionPM> GetReconcileTransactions(APPaymentPM theEntityPm)
         {
             List<string> transactionsIds = theEntityPm.ReconcileInternalTransIds.Split(',').ToList();
-            LedgerTransactionQueryServiceExt ledgerTransactionQueryServiceExt = ContainerAccessor.Container.Resolve(typeof(LedgerTransactionQueryServiceExt), "LedgerTransactionQueryServiceExt", new ParameterOverride("", 1)) as LedgerTransactionQueryServiceExt;
-            List<LedgerTransactionPM> recoTransactions = ledgerTransactionQueryServiceExt.GetLedgerTransactionPMsByIdList(transactionsIds, theEntityPm.Tenant);
+            ILedgerTransactionQueryService ledgerTransactionQuery = ContainerAccessor.Container.Resolve(typeof(ILedgerTransactionQueryService), "LedgerTransactionQueryServiceExt", new ParameterOverride("", 1)) as ILedgerTransactionQueryService;
+            
+            List<LedgerTransactionPM> recoTransactions = ledgerTransactionQuery.GetLedgerTransactionPMsByIdList(transactionsIds, theEntityPm.Tenant);
             return recoTransactions;
         }
 
