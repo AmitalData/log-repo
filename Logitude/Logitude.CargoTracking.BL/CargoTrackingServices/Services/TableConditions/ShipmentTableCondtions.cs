@@ -284,7 +284,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
             var shipmentTableStructure = new CargoTrackingShipmentTableStructure();
             string shipmentOrderColumns = shipmentTableStructure.GetShipmentOrderFields();
             var shipmentOrderFields = string.Join(",", shipmentOrderColumns);
-            shipmentOrderFields = " SHO." + shipmentOrderFields.Replace(",", " ,C.");
+            shipmentOrderFields = " SHO." + shipmentOrderFields.Replace(",", " ,SHO.");
             var cargoTrackingShipmentDefaultFields =
                 "NULL as FirstPickupETD," +
                 "NULL as WarehouseLegActualEntryDate," +
@@ -348,8 +348,8 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
                 " '' as ExceptionDescription," +
 
                 "'O' as EntityType," +
-                "CreateDate as CreateDateTime," +
-                "(case when AutomaticLastUpdateDate is null then UpdateDate when AutomaticLastUpdateDate is not null then AutomaticLastUpdateDate end) as AutomaticLastUpdateDate," +
+                "SHO.CreateDate as CreateDateTime," +
+                "(case when SHO.AutomaticLastUpdateDate is null then SHO.UpdateDate when SHO.AutomaticLastUpdateDate is not null then SHO.AutomaticLastUpdateDate end) as AutomaticLastUpdateDate," +
                 "PickupActualDateTime as PickupDate," +
                 "PickupEstimatedDateTime as PickupEstimationDate," +
                 "OnHandNumber as FromWarehouseNotes," +
@@ -360,7 +360,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
 
             var fromScript = $@"FROM dbo.ShipmentOrders SHO 
                                 left join Cards ConsigneeCard on SHO.ConsigneeId = ConsigneeCard.id
-                                left join Cards ShipperCard on SHO.ConsigneeId = ShipperCard.id
+                                left join Cards ShipperCard on SHO.ShipperId = ShipperCard.id
                                 ";
 
             List<string> whereConditions = new List<string>();
