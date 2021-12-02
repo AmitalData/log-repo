@@ -563,7 +563,6 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
                 try
                 {
                     MapCargoTrackingDate(bulkCopy, bulkDataPreperation, isFromInnerCargoTrackingTable);
-                    SubstringDeliveryNotesFieldValue(bulkDataPreperation, isFromInnerCargoTrackingTable);
                     SqlBulkCopyWriteData(bulkCopy, bulkDataPreperation, isFromInnerCargoTrackingTable);
                 }
                 catch (Exception exception)
