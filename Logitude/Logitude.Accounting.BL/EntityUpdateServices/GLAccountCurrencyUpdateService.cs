@@ -58,8 +58,10 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         }
         private void CheckIfTheSplitGLAccountIsACustomerGLAccount(string glaccountId, GLAccountPM parentPM)
         {
+            ContactPM contact = GetLoggedContact(parentPM.Tenant);
+            bool showLocals = !contact.DontShowLocal;
             if (parentPM.IsMultiCurrency == true && glaccountId == parentPM.CustomerGLAccountId)
-                throw new ApplicationException(new ValidationResult(TextCodesTranslator.TranslateText("GLAccounts.O.CustomerGLaccountDefinedSplit", parentPM.Tenant)).ErrorMessage);
+                throw new ApplicationException(new ValidationResult(TextCodesTranslator.TranslateText("GLAccounts.O.CustomerGLaccountDefinedSplit", parentPM.Tenant, showLocals)).ErrorMessage);
         }
         private void CreateGLAccountCurrencyEvents(GLAccountCurrencyPM entityPM)
         {
