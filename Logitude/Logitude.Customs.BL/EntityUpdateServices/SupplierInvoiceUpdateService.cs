@@ -48,6 +48,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         private CourierMasterPM _CourierMasterPM;
         private DeclarationCourierStatusPM currentDeclarationCourierStatusPM;
 
+
         public bool IsProcedureCurrentCodeChanged { get; set; }
 
         public bool Multi_LastSIWillUpdateCCU { get; set; }//שינוי בלוגיקה לבניית CCU בעקבות משוב להצהרה/הגשה - פניה 303319  אבל במצב הראשון - אין צורך לשמור ולבנות CCU אחרי כל שמירה של כל חשבון ספק. מספיק לבנות את CCU פעם אחת בסיום כל השמירות.

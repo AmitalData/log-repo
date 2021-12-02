@@ -97,7 +97,7 @@ export class PhysicalCheckSearchReasultTabComponent
     }
 
 
-    get CheckAnwserStatus() { return this.EntityPM.CheckAnwserStatus == 1 ? "תוצאות בדיקה התקבלו במכס" : ""; }
+    get CheckAnwserStatus() { return this.EntityPM.CheckAnwserStatus == 1 ? "תוצםות בדיקה התקבלו במכס" : ""; }
     
 
     _InputParam: EntityArgs;
@@ -147,7 +147,7 @@ export class PhysicalCheckSearchReasultTabComponent
          this.CurrentSession.StartBusyIndicator("");
         this.physicalCheckPMService.update(this.EntityPM).subscribe((response: any) => {
             if (AppTool.IsNullOrEmpty(this.EntityPM.SearchResult)) {
-                 this.ValidationErrors.push("תוצאת הבדיקה שדה חובה");
+                 this.ValidationErrors.push("תוצםת הבדיקה שדה חובה");
 
                 var windowArgs: any = {};
                 windowArgs.Errors = this.ValidationErrors;
@@ -183,7 +183,7 @@ export class PhysicalCheckSearchReasultTabComponent
             params.ResponseName = "מענה לבדיקה פיזית - תשובה"
             CustomMessageProgressComponent
                 .ShowProgressBar(this.CurrentSession,  params.PBId,
-                    "שליחת תוצאות בדיקה", false)
+                    "שליחת תוצםות בדיקה", false)
                 .then((res) => {
                     this.ResponseData = res;
                 }

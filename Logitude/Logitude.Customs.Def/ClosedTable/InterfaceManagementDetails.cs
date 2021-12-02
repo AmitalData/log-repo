@@ -2780,6 +2780,25 @@ namespace Logitude.Customs.Def.ClosedTable
             all.Add(new InterfaceManagementDetails()
             {
                 //TML ==>https://www.abbreviations.com/abbreviation/terminal
+                Code = "ClosePending",
+
+                ///DCAInUniCourierBatchSend_MsgMessagingService
+                InOut = InOutEnum.I.ToString(),
+                Description = "סגירה גורפת ל-Pending",
+                DcaPrefixName = "UnifreightCourierBatchTerminal_ClosePending_Out.",
+                DefaultSendOptionsCode = null,
+                DefaultPriority = 5,
+                AllowRestore = true,
+
+                Active = true,
+                SendAsDual = false,
+                ResponseInterfaceCode = "",
+                //  NeedSignature = false
+                InterfaceType = "B",
+            });
+            all.Add(new InterfaceManagementDetails()
+            {
+                //TML ==>https://www.abbreviations.com/abbreviation/terminal
                 Code = "DCAMU",
 
                 ///DCAInUniCourierBatchSend_MsgMessagingService
@@ -2796,7 +2815,20 @@ namespace Logitude.Customs.Def.ClosedTable
                 //  NeedSignature = false
                 InterfaceType = "C",
             });
-
+            all.Add(new InterfaceManagementDetails()
+            {
+                Code = "DCAUAC",
+                InOut = InOutEnum.I.ToString(),
+                Description = "עדכון פטור 92 גורף",
+                DcaPrefixName = "DCAUAC_OUT",
+                DefaultSendOptionsCode = null,
+                DefaultPriority = 5,
+                AllowRestore = true,
+                Active = true,
+                SendAsDual = false,
+                ResponseInterfaceCode = "",
+                InterfaceType = "C",
+            });
             //CLAIM_5005_ContinuousRequestOnClaimFileMessagingService
             all.Add(new InterfaceManagementDetails()
             {

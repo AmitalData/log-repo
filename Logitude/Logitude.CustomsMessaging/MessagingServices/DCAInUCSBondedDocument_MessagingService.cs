@@ -146,8 +146,16 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
 
             LogMessagingUtil.Instance.AppendLine("Build !!!Requestsheet  with Interface Type  = UCBUCBNDCD  !!!");
-            
 
+            CustomsDocumentQueryService customsDocumentQueryService = new CustomsDocumentQueryService(documentsFilingPM.Tenant);
+            var customDoc = customsDocumentQueryService.GetSingle(documentsFilingPM.Id, false, false);
+
+            if(customDoc != null && !string.IsNullOrEmpty( customDoc.CustomsDocId))
+            {
+                LogMessagingUtil.Instance.AppendLine("קיים סימוכין מכס");
+                return "קיים סימוכין מכס";
+
+            }
 
             string uniComm = null;
             string fileName = null;

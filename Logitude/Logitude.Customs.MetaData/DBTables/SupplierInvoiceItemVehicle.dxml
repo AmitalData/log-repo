@@ -56,7 +56,7 @@
   <Column
     Name="RichbitFileNumber"
     Type="varchar"
-    Size="10">
+    Size="12">
     <Constraints
       Nullable="true" />
   </Column>
@@ -80,7 +80,7 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="IdentifierID"   
+    Name="IdentifierID"
     Type="nvarchar"
     Size="35">
     <Constraints

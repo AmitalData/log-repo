@@ -108,7 +108,7 @@ namespace WebFreight.Web.CustomWebServices.BL.XLSReports.SlaReportTypes
 
         private string ConvertToProzent(double d)
         {
-                return (d.ToString() + "%");
+            return (d.ToString() + "%");
         }
 
         private int GetSlaDaysForDecId(string decId, DateTime? landingDate, DeclarationCourierStatusQueryService qs)
@@ -117,9 +117,9 @@ namespace WebFreight.Web.CustomWebServices.BL.XLSReports.SlaReportTypes
             int SlaDays = 0;
             if (decStatus != null)
             {
-                if (decStatus.TerminalReleaseDate.HasValue)
+                if (decStatus.Delivered && decStatus.LastMileStatusDate.HasValue)
                 {
-                    double daysBetween = (decStatus.TerminalReleaseDate.Value - landingDate.Value).TotalDays;
+                    double daysBetween = (decStatus.LastMileStatusDate.Value - landingDate.Value).TotalDays;
                     if (daysBetween > 0)
                     {
                         DateTime day = (DateTime)(landingDate?.Date);

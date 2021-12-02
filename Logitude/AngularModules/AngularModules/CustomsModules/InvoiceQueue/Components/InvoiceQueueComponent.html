@@ -243,12 +243,13 @@
         white-space: nowrap;
         vertical-align: bottom;
     }
+
     .cut-text-label {
         width: 100px;
         text-overflow: ellipsis;
         overflow: hidden;
         white-space: nowrap;
-        vertical-align:bottom;
+        vertical-align: bottom;
     }
 </style>
 
@@ -280,7 +281,6 @@
                 <button style="text-align:right" (click)="ShowDA()">DA</button>
                 <button style="text-align:right" (click)="ShowDelivery()">הובלות יבשתיות</button>
                 <button style="text-align:right" (click)="ShowImportFile()">תיק שילוח</button>
-                <button style="text-align:right" (click)="ShowConnectedFiling()">מסמכים</button>
             </div>
         </div>
     </div>
@@ -356,7 +356,7 @@
                 <span class="Counter cut-text" data-toggle="tooltip" data-placement="bottom" title="{{declaration.StorageSiteName}}" style="font-size: 18px;">
                     {{declaration.StorageSiteName}}
                 </span>
-           
+
 
             </td>
             <td></td>
@@ -368,7 +368,7 @@
                     תנאי מכר:
                 </span>
 
-                <span _ngcontent-c14="" class="Counter cut-text"  data-toggle="tooltip" data-placement="bottom" title="{{  declaration.SupplierInvoices[0].IncotermCode}}" style="font-size: 18px;" *ngIf="declaration.SupplierInvoices && declaration.SupplierInvoices[0]">
+                <span _ngcontent-c14="" class="Counter cut-text" data-toggle="tooltip" data-placement="bottom" title="{{  declaration.SupplierInvoices[0].IncotermCode}}" style="font-size: 18px;" *ngIf="declaration.SupplierInvoices && declaration.SupplierInvoices[0]">
                     {{   declaration.SupplierInvoices[0].IncotermCode}}
                 </span>
                 <br />
@@ -380,7 +380,7 @@
                     משלח:
                 </span>
 
-                <span _ngcontent-c14="" class="Counter cut-text "  data-toggle="tooltip" data-placement="bottom" title="{{GeneralDetails.Forwarder}}" style="font-size: 18px;" *ngIf="GeneralDetails">
+                <span _ngcontent-c14="" class="Counter cut-text " data-toggle="tooltip" data-placement="bottom" title="{{GeneralDetails.Forwarder}}" style="font-size: 18px;" *ngIf="GeneralDetails">
                     {{   GeneralDetails.Forwarder}}
                 </span>
                 <br />
@@ -392,10 +392,37 @@
                 </span>
 
                 <span _ngcontent-c14="" class="Counter cut-text" data-toggle="tooltip" data-placement="bottom" title="{{GeneralDetails.TypeOfDelivery}}" style="font-size: 18px;" *ngIf="GeneralDetails">
-                    {{   GeneralDetails.TypeOfDelivery}}
+                    {{   GeneralDetails.TypeOfDelivery}} 
                 </span>
                 <br />
             </td>
+            <td></td>
+            <td>
+                <span _ngcontent-c14="" class="Counter cut-text-label" style="font-size: 18px; color: #1B90CB;">
+                    סוג תהליך:
+                </span>
+
+
+                <span _ngcontent-c14="" class="Counter cut-text" data-toggle="tooltip" data-placement="bottom" title="{{declaration.ProcedureCurrentName}}" style="font-size: 18px;">
+
+                    {{declaration.ProcedureCurrentName}}
+                </span>
+
+            </td>
+            <td></td>
+            <td>
+                <span _ngcontent-c14="" class="Counter cut-text-label" style="font-size: 18px; color: #1B90CB;">
+                    תיאור טובין:
+                </span>
+
+
+                <span _ngcontent-c14="" class="Counter cut-text" data-toggle="tooltip" data-placement="bottom" title="{{declaration.Consignments[0]?.CargoDescription}}" style="font-size: 18px;">
+
+                    {{declaration.Consignments[0]?.CargoDescription}}
+                </span>
+
+            </td>
+            <td></td>
             <td></td>
             <!--<td style="position: relative; vertical-align:top;">
                 <ul style="direction:rtl; left:90%;">
@@ -409,7 +436,7 @@
                     </li>
                 </ul>
             </td>-->
-            
+
         </tr>
         <tr *ngIf="IsPaymentDateGreaterThanInvoiceDate">
             <td colspan="12" style="right:55%">

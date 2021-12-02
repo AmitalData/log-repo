@@ -356,7 +356,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
                // var entityAmend = declarationQueryService.GetAcceptDeclarationAmendment(entityPM.Id, entityPM.Tenant);
 
-                if (entityPM.IsConnectedToUnifreight && !(!string.IsNullOrEmpty( entityPM.AmendmentMessage) && string.IsNullOrEmpty(entityPM.DeclarationNumber)))
+                if (entityPM.IsConnectedToUnifreight && !( entityPM.PaymentDate.HasValue && string.IsNullOrEmpty(entityPM.DeclarationNumber)))
                 {
                     UpdateUnifreight(entityPM);
                 }
@@ -382,6 +382,10 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     {
                         entityPM.CourierHAWB = consignment.ManifestNumber;
                     }
+
+
+                    entityPM.CargoDescription = consignment.CargoDescription;
+
 
                     DeliverySiteTypeQueryService deliverySiteTypeQueryService = new DeliverySiteTypeQueryService(entityPM.Tenant);
                     DeliverySiteTypePM deliverySiteType = deliverySiteTypeQueryService.GetSingle(entityPM.StorageSiteCode, false, true);
