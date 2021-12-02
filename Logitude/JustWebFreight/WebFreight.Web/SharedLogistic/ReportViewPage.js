@@ -198,6 +198,7 @@ function SharedLogisticReportFilters() {
     this.QuerySection = "SharedLogisticShipment";
     this.SortDirectin = "Descending",
     this.QueryCode = "Shipment.SharedLogisticShipment",
+    this.Tenant = $.CurrentTenant,
     this.QueryFilterItems = BuildQueryFilterItems();
 
 
