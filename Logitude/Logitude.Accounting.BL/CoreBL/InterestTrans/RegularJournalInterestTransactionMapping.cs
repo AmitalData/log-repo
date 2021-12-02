@@ -70,7 +70,7 @@ namespace Logitude.Accounting.BL.CoreBL.InterestTrans
                 return InterestEntityTypes.Journal;
             }
             else if (journal.AccountingEntityCode == AccountingEntityValues.Adjustment) {
-                return InterestEntityTypes.OpenBalance;
+                return InterestEntityTypes.Adjustments;
             }
             return null;
         }
