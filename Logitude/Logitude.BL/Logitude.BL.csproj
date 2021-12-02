@@ -125,10 +125,6 @@
     <Reference Include="Intuit.Ipp.WebHooksService, Version=7.5.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\IppDotNetSdkForQuickBooksApiV3.7.5.0\lib\Intuit.Ipp.WebHooksService.dll</HintPath>
     </Reference>
-    <Reference Include="Logitude.Accounting.BL, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\JustWebFreight\WebFreight.Web\bin\Logitude.Accounting.BL.dll</HintPath>
-    </Reference>
     <Reference Include="Logitude.CRM.BL, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\LogitudeOldDlls.1.0.0\lib\Net40\Logitude.CRM.BL.dll</HintPath>
     </Reference>
