@@ -1991,7 +1991,7 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
 
     private ValidateWebHookDetails(webHookDetials) {
         if (!webHookDetials || (webHookDetials && AppTool.IsNullOrEmpty(webHookDetials.URL))) {
-            this.ValidationErrorsList.push("WebHook URL is required. Please contact your administrator.");
+            this.ValidationErrorsList.push("WebHook Details are missing. Please contact your administrator.");
         }
     }
 

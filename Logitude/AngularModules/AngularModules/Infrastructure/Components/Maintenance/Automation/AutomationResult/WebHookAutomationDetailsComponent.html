@@ -1,0 +1,91 @@
+<style>
+    .FormFieldRow {
+        height: 30px;
+    }
+</style>
+
+<table>
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+        <td>
+            <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <div class="MediaFill">
+                <table *ngIf="WebHookAutomationDetails">
+                    <tr class="FormFieldRow">
+                        <td style="width:130px;vertical-align:central">
+                            <LogLabel [Text]="'WebHook URL'" [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td style="width:250px;">
+                            <div style="height: 100%; width: 100%;">
+                                <LogTextBox [ObjectFieldName]="'URL'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                            </div>
+                        </td>
+                        <td></td>
+                    </tr>
+                    <tr class="FormFieldRow">
+                        <td style="width:130px;vertical-align:central">
+                            <LogLabel [Text]="'Authentication Type'" [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td style="width:250px;">
+                            <div style="height: 100%; width: 215px;">
+                                <ComboBox (SelectedItemChanged)="AuthenticationTypeSelected = $event" [ItemsSource]="AuthenticationTypes" [SelectedItem]="AuthenticationTypeSelected" [Binding]="'Name'"> </ComboBox>
+                            </div>
+                        </td>
+                        <td></td>
+                    </tr>
+                    <tr *ngIf="AuthenticationTypeSelected && AuthenticationTypeSelected.Code == 'BASICAUTHENTICATION'" class="FormFieldRow">
+                        <td style="width:130px;vertical-align:central">
+                            <LogLabel [Text]="'User Name'" [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td style="width:250px;">
+                            <div style="height: 100%; width: 100%;">
+                                <LogTextBox [ObjectFieldName]="'BasicAuthUserName'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                            </div>
+                        </td>
+                        <td></td>
+                    </tr>
+                    <tr *ngIf="AuthenticationTypeSelected && AuthenticationTypeSelected.Code == 'BASICAUTHENTICATION'" class="FormFieldRow">
+                        <td style="width:130px;vertical-align:central">
+                            <LogLabel [Text]="'Password'" [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td style="width:250px;">
+                            <div style="height: 100%; width: 100%;">
+                                <LogTextBox [ObjectFieldName]="'BasicAuthPassword'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                            </div>
+                        </td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td colspan="3"> </td>
+                    </tr>
+                </table>
+            </div>
+        </td>
+    </tr>
+    <tr style="height: 32px;">
+        <td style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="Button" (click)="CloseButtonClicked()">Cancel</button>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="RedButton" (click)="SaveButtonClicked()">Ok</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>

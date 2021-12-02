@@ -188,6 +188,7 @@ import { SendInterfaceResultComponent } from './Components/Maintenance/Automatio
 import { FTPAutomationDetailsComponent } from './Components/Maintenance/Automation/AutomationResult/FTPAutomationDetailsComponent';
 import { ToolTipFloatDirective } from './Utilities/RTLDirectives/ToolTipFloatDirective';
 import { SendDocumentResultComponent } from './Components/Maintenance/Automation/AutomationResult/SendDocumentResultComponent';
+import { WebHookAutomationDetailsComponent } from './Components/Maintenance/Automation/AutomationResult/WebHookAutomationDetailsComponent';
 
 import { PrivateLabelLoginProcessComponent } from './Components/LoginComponent/PrivateLabelComponents/PrivateLabelLoginProcessComponent';
 import { AutomationsConditionsViewDetailsComponent } from './Components/Maintenance/Automation/AutomationsConditionsViewDetailsComponent';
@@ -317,6 +318,7 @@ export const ControlsComponents =
         AuditAutomationTabComponent,
         AutomationsConditionsViewDetailsComponent,
         CreateTaskResultComponent,
+        WebHookAutomationDetailsComponent,
     ];
 export const Components =
     [
@@ -513,6 +515,7 @@ export class ModuleDeclarations {
             case 'SendDocumentResultComponent': { myResult = SendDocumentResultComponent; break; } 
             case 'PrivateLabelLoginProcessComponent': { myResult = PrivateLabelLoginProcessComponent; break; } 
             case 'CreateTaskResultComponent': { myResult = CreateTaskResultComponent; break; }
+            case 'WebHookAutomationDetailsComponent': { myResult = WebHookAutomationDetailsComponent; break; }
 
             case 'MultiUpdateComponent': { myResult = MultiUpdateComponent; break; }
             case 'MultiEntityUpdateBaseComponent': { myResult = MultiEntityUpdateBaseComponent; break; }

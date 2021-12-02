@@ -324,6 +324,7 @@
     <Content Include="Infrastructure\Components\LoginComponent\CustomLoginComponents\HybridLabels\Components\HybridLoginProcessComponent.html" />
     <Content Include="Infrastructure\Components\Maintenance\Automation\AutomationConditionsDetailsComponent.html" />
     <Content Include="Infrastructure\Components\Maintenance\Automation\AutomationResult\CreateTaskResultComponent.html" />
+    <Content Include="Infrastructure\Components\Maintenance\Automation\AutomationResult\WebHookAutomationDetailsComponent.html" />
     <Content Include="Infrastructure\Components\Maintenance\Automation\AutomationsConditionsViewDetailsComponent.html" />
     <Content Include="Infrastructure\Components\MultiUpdateComponent\MultiEntityUpdateBaseComponent.html" />
     <Content Include="Infrastructure\Components\MultiUpdateComponent\MultiEntityUpdateErrorHandlerComponent.html" />
@@ -1859,6 +1860,7 @@
     <TypeScriptCompile Include="Infrastructure\Components\LogitudeCustomComponents\LastSuccessfulLoginComponent.ts" />
     <TypeScriptCompile Include="Infrastructure\Components\Maintenance\Automation\AutomationConditionsDetailsComponent.ts" />
     <TypeScriptCompile Include="Infrastructure\Components\Maintenance\Automation\AutomationResult\CreateTaskResultComponent.ts" />
+    <TypeScriptCompile Include="Infrastructure\Components\Maintenance\Automation\AutomationResult\WebHookAutomationDetailsComponent.ts" />
     <TypeScriptCompile Include="Infrastructure\Components\Maintenance\Automation\AutomationResult\FTPAutomationDetailsComponent.ts" />
     <TypeScriptCompile Include="Infrastructure\Components\Maintenance\Automation\AutomationResult\SendDocumentResultComponent.ts" />
     <TypeScriptCompile Include="Infrastructure\Components\Maintenance\Automation\AutomationResult\SendInterfaceResultComponent.ts" />
