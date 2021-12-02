@@ -405,9 +405,12 @@ namespace Logitude.BL.InvoiceModel.Tools
                     QBOBill.PrivateNote = notes;
 
                     System.Collections.Generic.List<Line> lineList = new List<Line>();
+
+                    APInvoiceLineRepository APRepo = new APInvoiceLineRepository(this.objectContext);
+                    APInvoiceLineQuery APQuery = new APInvoiceLineQuery(APRepo);
                     List<APInvoiceLinePM> lines = new List<APInvoiceLinePM>();
-                    lines = invoice.InvoiceLines.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete).ToList();
-                 
+                    lines = APQuery.GetInvoiceLinesByInvoiceId(invoice.Id, tenant);
+
                     for (int i = 0; i < lines.Count; i++)
                     {
                         Line line = new Line();
