@@ -117,7 +117,7 @@ namespace WebFreight.Web.Helpers.WorkerRole.MultiEntityUpdate
         private void UpdateEntityPM(object entityPM, MultiEntityUpdateDataEntity multiEntityUpdateDataEntity)
         {
             if (multiEntityUpdateDataEntity.StatusCode == "D") return;
-            object oldEntityPM = entityPM;
+            object oldEntityPM = MultiEntityUpdateCloner.CloneEntity(entityPM);
             foreach (AutomationSetValue item in multiEntityUpdateData.SetValueLists)
             {
                 SetNewValueToEntityPM(multiEntityUpdateData, entityPM, item);
