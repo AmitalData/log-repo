@@ -65,7 +65,7 @@ export class ShipmentDetailsComponent implements OnInit,AfterViewInit
     ForwardingEntityType: string = "F";
     OrderEntityType: string = "O";
     RoutingPagersWidth : number = 100;
-    RoutingMobilePagersWidth : number = 150;
+    RoutingMobilePagersWidth : number = 60;
     MaxWidthForMobileScreenForRouting: number = 470;
     RoutingMobileMarginLeft: number = 55;
 
@@ -351,28 +351,33 @@ export class ShipmentDetailsComponent implements OnInit,AfterViewInit
         var sliderWrapperWidth = this.RoutingSliderWrapperElement.nativeElement.offsetWidth;
         var count = this.CalculateRoutingSliderVisibleCardsWidth(screenwidth, sliderWrapperWidth);
 
-        this.routingSliderVisibleCardsWidth = count * this.routingSliderCardWidth;
+        //this.routingSliderVisibleCardsWidth = this.routingSliderVisibleCardsCount * this.routingSliderCardWidth;
         this.routingSliderMarginCardCount = 0;
         this.routingSliderMarginLeft =  0;
 
     }
 
     private CalculateRoutingSliderVisibleCardsWidth(screenwidth: number, sliderWrapperWidth: any) {
-        if (screenwidth > this.MaxWidthForMobileScreenForRouting)
-            var count = this.CalculateVisibleSliderCardsCountForWeb(sliderWrapperWidth);
+        if (screenwidth > this.MaxWidthForMobileScreenForRouting) {
+            this.CalculateVisibleSliderCardsCountForWeb(sliderWrapperWidth);
+        }
 
-        if (screenwidth <= this.MaxWidthForMobileScreenForRouting)
-            var mobileCount = this.CalculateVisibleSliderCardsCountForMobile(sliderWrapperWidth, this.RoutingMobilePagersWidth, this.routingSliderMobileCardWidth);
-        this.routingSliderVisibleCardsCount = count == undefined ? mobileCount : count;
-        return count;
+        if (screenwidth <= this.MaxWidthForMobileScreenForRouting) {
+            this.CalculateVisibleSliderCardsCountForMobile(sliderWrapperWidth);
+        }
     }
 
     private CalculateVisibleSliderCardsCountForWeb(sliderWrapperWidth: any) {
-        return Math.floor((sliderWrapperWidth - this.RoutingPagersWidth) / this.routingSliderCardWidth);
+        this.routingSliderVisibleCardsCount = (sliderWrapperWidth - this.RoutingPagersWidth) / this.routingSliderCardWidth;
+        this.routingSliderVisibleCardsWidth = this.routingSliderVisibleCardsCount * this.routingSliderCardWidth;
+
     }
 
-    private CalculateVisibleSliderCardsCountForMobile(sliderWrapperWidth: number, mobilePagersWidth: number, sliderMobileCardWidth: number ) {
-        return Math.floor((sliderWrapperWidth - mobilePagersWidth) / sliderMobileCardWidth);
+    private CalculateVisibleSliderCardsCountForMobile(sliderWrapperWidth: number) {
+        this.routingSliderCardWidth = 300;
+        this.RoutingMobilePagersWidth = sliderWrapperWidth - this.routingSliderCardWidth;
+        this.routingSliderVisibleCardsWidth = 300;
+        this.routingSliderVisibleCardsCount = (sliderWrapperWidth - this.RoutingMobilePagersWidth) / this.routingSliderCardWidth;
     }
 
 
@@ -559,7 +564,7 @@ export class ShipmentDetailsComponent implements OnInit,AfterViewInit
     routingSliderMarginLeft: number = 0;
     routingSliderMarginCardCount: number = 0;
     routingSliderCardWidth: number = 200;
-    routingSliderMobileCardWidth: number = 320;
+    routingSliderMobileCardWidth: number = 180;
     routingSliderVisibleCardsCount: number = 1;
     routingSliderVisibleCardsWidth: number = 0;
 
