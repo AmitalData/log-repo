@@ -10,7 +10,7 @@
    declare @OBLType as varchar(25)
    declare @Department as int
    declare @Branch as int
-   declare @ShipmentNumber as varchar(15)
+   declare @ShipmentNumber as varchar(20)
    declare @House as varchar(20)
    declare @Master as varchar(30)
    declare @AirlinePrefix as varchar(3)
@@ -802,7 +802,7 @@
 	  @CustomAgentImportAddress ,@CustomAgentImportContact ,@Notify1Address ,@Notify1Contact ,
 	  @Notify2Address ,@Notify2Contact ,@FreightForwarderAddress ,@FreightForwarderContact ,
 	  @ConsigneeNotImporterAddress ,@ConsigneeNotImporterContact ,@CustomClearancePointAddress ,@CustomClearancePointContact ,
-	  @ColoaderAddress ,@ColoaderContact ,@ConsolidatorAddress ,@ConsolidatorContact ,@IsInlandDomesticShipment, @IsStandalonePickupDelivery,@ShipmentSubType, @PODReceivedDate,dbo.GetDateFormateAsNumber(@ComputedMainCarriageATA)
+	  @ColoaderAddress ,@ColoaderContact ,@ConsolidatorAddress ,@ConsolidatorContact ,@IsInlandDomesticShipment, @IsStandalonePickupDelivery,@ShipmentSubType, @PODReceivedDate,@ComputedMainCarriageATA
 	  	  )
 	END TRY 
 BEGIN CATCH  
