@@ -232,5 +232,7 @@ export class ContainerList {
 		StatusId: string;
 		StatusName: string;
 		StatusWeight: number;
+		CancelledDate: Date;
+		IsCancelled: boolean;
 	
 }

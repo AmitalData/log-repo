@@ -254,6 +254,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     ShipperNotExporterContactId = entityPoco.Shipment?.ShipperNotExporterContactId,
                     FreightForwarderContactId = entityPoco.Shipment?.FreightForwarderContactId,
                     StatusId = entityPoco.StatusId, 
+                    IsCancelled = entityPoco.IsCancelled,
+                    CancelledDate = entityPoco.CancelledDate,
                 };
 
                 if(entityPoco.EntityStatus != null)
@@ -514,6 +516,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         StatusId = a.StatusId,
                         StatusName = a.EntityStatus != null? a.EntityStatus.Name: null,
                         StatusWeight = a.EntityStatus != null ? a.EntityStatus.StatusWeight: 0,
+                        IsCancelled = a.IsCancelled,
+                        CancelledDate = a.CancelledDate,
                     }).ToList();
         }
 
@@ -750,7 +754,9 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                    ClosedDate = entity.ClosedDate,
                                                    StatusName = entity.EntityStatus != null ? entity.EntityStatus.Name : null,
                                                    StatusWeight = entity.EntityStatus != null ? entity.EntityStatus.StatusWeight : 0,
-                                                   StatusId = entity.StatusId
+                                                   StatusId = entity.StatusId,
+                                                   IsCancelled = entity.IsCancelled,
+                                                   CancelledDate = entity.CancelledDate,
                                                };
             return result;
         }
@@ -974,6 +980,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     IsClosed = container.IsClosed,
                     ClosedDate = container.ClosedDate,
                     StatusId = container.StatusId,
+                    IsCancelled = container.IsCancelled,
+                    CancelledDate = container.CancelledDate,
                 };
                 MapCustomFields(containerPM, container);
             }
@@ -1211,6 +1219,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     ShipperNotExporterContactId = entityPoco.Shipment?.ShipperNotExporterContactId,
                     FreightForwarderContactId = entityPoco.Shipment?.FreightForwarderContactId,
                     StatusId = entityPoco.StatusId,
+                    IsCancelled = entityPoco.IsCancelled,
+                    CancelledDate = entityPoco.CancelledDate,
                 };
             }
 
