@@ -800,7 +800,7 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
     }
 
     GetDifferenceAmount() {
-        return this.LTBSummery.EndBalanceLocal - this.GetOpenBalanceAmount();
+        return this.LTBSummery.EndBalanceLocal - this.LTBSummery.StartBalanceLocal;
     }
     //#endregion
 
