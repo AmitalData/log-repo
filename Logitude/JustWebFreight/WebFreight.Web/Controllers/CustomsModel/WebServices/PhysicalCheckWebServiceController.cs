@@ -71,27 +71,30 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
         {
             try
             {
-                var ids = physicalCheckIds.Split(',').ToList();
-                foreach (var physicalCheckId in ids)
+                if (!string.IsNullOrWhiteSpace(physicalCheckIds))
                 {
-                    PhysicalCheckQueryService physicalCheckQueryService = new PhysicalCheckQueryService(tenant);
-                    PhysicalCheckPM physicalCheckPM = physicalCheckQueryService.GetSingle(physicalCheckId, false, false);
-                    if (physicalCheckPM != null)
+                    var ids = physicalCheckIds.Split(',').ToList();
+                    foreach (var physicalCheckId in ids)
                     {
-                        physicalCheckPM.ChangeSetOp = ChangeSetOperation.Update;
-                        physicalCheckPM.IsClosed = true;
-                        var myEventContextTagModel = new EventContextTagModel()
+                        PhysicalCheckQueryService physicalCheckQueryService = new PhysicalCheckQueryService(tenant);
+                        PhysicalCheckPM physicalCheckPM = physicalCheckQueryService.GetSingle(physicalCheckId, false, false);
+                        if (physicalCheckPM != null)
                         {
-                            CallProccessID = EventContextTagModel.ProccessEnum.CH_NG_196_MSG7_CargoExitFromCheckSiteResponseServiceUpdate,
-                            EventCode = "PCE",
-                            EventRemarks = "Limit date: " + physicalCheckPM.LimitDate + ", Destination type: " + physicalCheckPM.StorageSiteName,
-                            FUStatusCode = "PCE",
-                            FUStatusRemarks = "Limit date: " + physicalCheckPM.LimitDate + ", Destination type: " + physicalCheckPM.StorageSiteName,
-                        };
+                            physicalCheckPM.ChangeSetOp = ChangeSetOperation.Update;
+                            physicalCheckPM.IsClosed = true;
+                            var myEventContextTagModel = new EventContextTagModel()
+                            {
+                                CallProccessID = EventContextTagModel.ProccessEnum.CH_NG_196_MSG7_CargoExitFromCheckSiteResponseServiceUpdate,
+                                EventCode = "PCE",
+                                EventRemarks = "Limit date: " + physicalCheckPM.LimitDate + ", Destination type: " + physicalCheckPM.StorageSiteName,
+                                FUStatusCode = "PCE",
+                                FUStatusRemarks = "Limit date: " + physicalCheckPM.LimitDate + ", Destination type: " + physicalCheckPM.StorageSiteName,
+                            };
 
-                        ICustomContext dbContext = CustomContext.GetContext(tenant);
-                        PhysicalCheckUpdateService updateService = new PhysicalCheckUpdateService(dbContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), tenant);
-                        updateService.Update(physicalCheckPM, true);
+                            ICustomContext dbContext = CustomContext.GetContext(tenant);
+                            PhysicalCheckUpdateService updateService = new PhysicalCheckUpdateService(dbContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), tenant);
+                            updateService.Update(physicalCheckPM, true);
+                        }
                     }
                 }
                 return Request.CreateResponse(HttpStatusCode.OK, "");
