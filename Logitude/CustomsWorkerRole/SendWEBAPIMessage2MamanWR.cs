@@ -241,7 +241,7 @@ Insert into BATCHSERVICESDEFINITIONMODS (CODE,INACTIVE,NUMBEROFTHREADS) values (
 
         private void SentWAPIComm(bool forceRetryFromTester=false)
         {
-            if (forceRetryFromTester ||_ReceivedBrokeredMessage.RetryNumber < 2)
+            if (forceRetryFromTester ||_ReceivedBrokeredMessage.RetryNumber < 5)
             {
                 LastActivity = DateTime.UtcNow;
                 LogMessagingUtil.Instance.Append("DoAction(PostWebAPI)..");
