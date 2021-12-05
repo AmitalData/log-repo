@@ -851,6 +851,38 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 
                 UpdateTrucker();
 
+                if (currentDeclarationCourierStatusPM == null)
+                {
+                    DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(_context);
+                    currentDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(_MyDeclarationPM.Id, true, false);
+                }
+                if (currentDeclarationCourierStatusPM != null && currentDeclarationCourierStatusPM.LastMileServiceType != _AmitalCustomsFile.LastMileServiceType)
+                {
+                    currentDeclarationCourierStatusPM.LastMileServiceType = _AmitalCustomsFile.LastMileServiceType;
+                    if (currentDeclarationCourierStatusPM.ChangeSetOp != ChangeSetOperation.Update) currentDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
+                    AppendLogLine("try to update Last Mile Service Type " + currentDeclarationCourierStatusPM.LastMileServiceType + " to declarationCourierStatus for DeclarationPM.Id: " + _MyDeclarationPM.Id);
+                }
+                if (currentDeclarationCourierStatusPM.ChangeSetOp == ChangeSetOperation.Update)
+                {
+                    try
+                    {
+                        DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(_context, new Dictionary<string, IContext>(), _MyDeclarationPM.Tenant);
+                        declarationCourierStatusUpdateService.Update(currentDeclarationCourierStatusPM, true);
+
+                    }
+                    catch (DbEntityValidationException ex)
+                    {
+                        var FormatedException = ExceptionFormatUtil.GetFormated(ex);
+                        AppendLogLine("ProccessRequest():Exception " + FormatedException.ToString() + Environment.NewLine + "---------------------------------------------");
+                        return;
+                    }
+                    catch (Exception e)
+                    {
+                        AppendLogLine("ProccessRequest():Exception " + e.ToString() + Environment.NewLine + "---------------------------------------------");
+                        return;
+                    }
+                }
+
                 if (String.IsNullOrWhiteSpace(_MyDeclarationPM.Id))
                 {
                     MyGenericResponseObj.StatusType = GenericResponseObj.StatusEnum.BusinessError;
