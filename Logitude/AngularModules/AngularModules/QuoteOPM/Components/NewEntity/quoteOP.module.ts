@@ -37,6 +37,9 @@ import { LogtuideTableDataService } from "./components/autocomplate-table/logtui
 import { HighlightPipeModule } from "Infrastructure/Pipes/highlight-pipe/highlight-pipe.module";
 import { TenantListService } from "Common/Services/StandardLists/TenantListService";
 import { NewQuoteUnitsService } from "./Services/new-quote-units/new-quote-units.service";
+import { NewQuoteHandleLinkedDataService } from "./Services/new-quote-handle-linked-data/new-quote-handle-linked-data.service";
+import { NewQuoteFocusErrorService } from "./Services/new-quote-focus-error/new-quote-focus-error.service";
+import { NewQuoteDataShareService } from "./Services/new-quote-data-share/new-quote-data-share.service";
 
 @NgModule({
     imports: [  
@@ -86,6 +89,9 @@ import { NewQuoteUnitsService } from "./Services/new-quote-units/new-quote-units
         NewQuoteValidateEntityService,
         TenantListService,
         NewQuoteUnitsService,
+        NewQuoteDataShareService,
+        NewQuoteFocusErrorService,
+        NewQuoteHandleLinkedDataService,
     ],
     exports:
     [

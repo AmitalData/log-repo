@@ -1,8 +1,8 @@
 <div [formGroup]='formGroup' class="container">
   <div formArrayName="properties">
-    <p-tabView (onClose)="removeProperty($event)">
+    <p-tabView (onClose)="removeProperty($event)" [(activeIndex)]="activeTab">
       <p-tabPanel *ngFor='let x of properties.controls; let i = index' [closable]='properties.controls.length > 1'
-        [selected]='i ==index' [formGroupName]="i">
+        [formGroupName]="i">
         <ng-template pTemplate="header">
           <span
             *ngIf='!(x.value.fromPort?.Code || x.value.toPort?.Code || x.value.mainCarriageCarrier?.AIRLINE_ID || x.value.incoterm?.PTERMID)'>Quote
@@ -24,24 +24,28 @@
 
           <div class="col-4 p-fluid">
             <div class="p-field">
-              <div class="error-msg" [ngClass]='{"invalid": x.controls["fromPort"].invalid}'>{{'QuoteOP.S.NewQuote.' +
+              <div class="error-msg"
+                [ngClass]='{"invalid": x.controls.fromPort.invalid && !x.controls.fromPort.errors?.notIdentityValue}'>
+                {{'QuoteOP.S.NewQuote.' +
                 (formGroup.value.transportMode?.Id === 'A' ? 'Gateway': 'LoadingPort') | TextCodeTranslationPipe}}
                 field is required</div>
               <app-autocomplate-table [columnsShow]="{Code:'Code', Name: 'Name',CountryName:'CountryName'}"
                 [data]='toPortList' [fieldShow]='"Name"' [searchIcon]='true'
                 [label]="'QuoteOP.S.NewQuote.' + (formGroup.value.transportMode?.Id === 'A' ? 'Gateway': 'LoadingPort') | TextCodeTranslationPipe"
-                [controlName]='"fromPort"' [formGroup]='x'>
+                [controlName]='"fromPort"' [formGroup]='x' id='fromPort'>
               </app-autocomplate-table>
             </div>
 
             <div class="p-field">
-              <div class="error-msg" [ngClass]='{"invalid": x.controls["toPort"].invalid}'>{{'QuoteOP.S.NewQuote.' +
+              <div class="error-msg"
+                [ngClass]='{"invalid": x.controls.toPort.invalid && !x.controls.toPort.errors?.notIdentityValue}'>
+                {{'QuoteOP.S.NewQuote.' +
                 (formGroup.value.transportMode?.Id === 'A' ? 'Destination': 'DischargePort') | TextCodeTranslationPipe}}
                 field is required</div>
               <app-autocomplate-table [columnsShow]="{Code:'Code', Name: 'Name',CountryName:'CountryName'}"
                 [data]='fromPortList' [fieldShow]='"Name"' [searchIcon]='true'
                 [label]="'QuoteOP.S.NewQuote.' + (formGroup.value.transportMode?.Id === 'A' ? 'Destination': 'DischargePort') | TextCodeTranslationPipe"
-                [controlName]='"toPort"' [formGroup]='x'>
+                [controlName]='"toPort"' [formGroup]='x'  id='toPort'>
               </app-autocomplate-table>
             </div>
 

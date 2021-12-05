@@ -1,22 +1,18 @@
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { AfterViewInit, ChangeDetectorRef, Component, Input, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AddressList } from 'Common/EntityLists/AddressList';
 import { CardList } from 'Common/EntityLists/CardList';
 import { ContactList } from 'Common/EntityLists/ContactList';
-import { CardPM } from 'Common/EntityPMs/CardPM';
 import { ContactListService } from 'Common/Services/StandardLists/ContactListService';
 import { CardPMService } from 'Common/Services/StandardPMs/CardPMService';
-import { ContactPMService } from 'Common/Services/StandardPMs/ContactPMService';
-import { any } from 'cypress/types/bluebird';
 import { BaseComponent } from 'Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { EntityArgs } from 'Infrastructure/DataContracts/EntityArgs';
-import { DirectionList } from 'Infrastructure/EntityLists/DirectionList';
 import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator';
 import { MenuItem } from 'primeng/api';
 import { QuoteOPPM } from 'QuoteOPM/EntityPMs/QuoteOPPM';
-import { filter } from 'rxjs/operators';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { DialogsService, PartnerType } from '../../Services/dialogs/dialogs.service';
+import { NewQuoteDataShareService } from '../../Services/new-quote-data-share/new-quote-data-share.service';
 import { NewQuoteDataService } from '../../Services/new-quote-data/new-quote-data.service';
 
 @Component({
@@ -27,7 +23,7 @@ import { NewQuoteDataService } from '../../Services/new-quote-data/new-quote-dat
 export class NewQuotePartnerComponent extends BaseComponent implements OnInit, AfterViewInit {
   @Input() formGroup: FormGroup = null as any;
   @Input() EntityPM: QuoteOPPM = null as any;
-  @Input() type: 'shipper' | 'consignee';
+  @Input() type: 'shipper' | 'consignee' = null as any;
 
   cardsList: CardList[] = []
   contactsList: ContactList[] = []
@@ -37,8 +33,8 @@ export class NewQuotePartnerComponent extends BaseComponent implements OnInit, A
   ConsigneeContact: any;
   ShipperId: any;
   ConsigneeId: any;
-  isHidden: boolean = true;
   isSubscribePartner: boolean = false;;
+  isHidden: BehaviorSubject<boolean>;
 
   partnerform: FormGroup = new FormGroup({
     partner: new FormControl(null, Validators.required),
@@ -65,8 +61,18 @@ export class NewQuotePartnerComponent extends BaseComponent implements OnInit, A
     private dialogsService: DialogsService,
     public entityArgs: EntityArgs,
     private cdr: ChangeDetectorRef,
+    private dataShareService: NewQuoteDataShareService,
   ) {
     super();
+  }
+  
+  ngOnInit(): void {
+    this.isHidden = this.dataShareService.partnersHidden[this.type as any];
+
+    this.initCards();
+    this.partnerform.controls.notes.disable();
+    this.initDdl();
+    this.resetForm()
   }
 
   ngAfterViewInit(): void {
@@ -112,13 +118,6 @@ export class NewQuotePartnerComponent extends BaseComponent implements OnInit, A
     if (this.EntityPM[this.capitalizeType + 'Note'] != null) {
       this.partnerform.controls.ConsigneeNote.setValue(this.EntityPM[this.capitalizeType + 'Note']);
     }
-  }
-
-  ngOnInit(): void {
-    this.initCards();
-    this.partnerform.controls.notes.disable();
-    this.initDdl();
-    this.resetForm()
   }
 
   resetForm() {
@@ -213,5 +212,9 @@ export class NewQuotePartnerComponent extends BaseComponent implements OnInit, A
 
   addContact() {
     this.dialogsService.addContact(this.partnerform.controls.partner.value.Id, this.partnerType)
+  }
+
+  toggle() {
+    this.isHidden.next(!this.isHidden.value)
   }
 }
