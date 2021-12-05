@@ -1173,6 +1173,9 @@ insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,Is
 declare @Fact_ARInvoicesPartnerNewId varchar(15)
 execute usp_GetNextTableIdValue @Fact_ARInvoicesPartnerNewId OUTPUT,'DWObjectField' 
 insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,DimensionTableCode,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,OriginalObjectFieldCode,DontDisplayInView,IsMultipleSelection) Values(@Fact_ARInvoicesPartnerNewId,0,'Fact_ARInvoices','[Partner]','Partner','Dimension','false',0,15,'DIM_Partners','false','false','true','InvoicePartners','false','false','false','ARInvoice.PartnerId','false','false')  
+declare @Fact_ARInvoicesRegionalTaxPercentageNewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_ARInvoicesRegionalTaxPercentageNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,OriginalObjectFieldCode,DontDisplayInView,IsMultipleSelection) Values(@Fact_ARInvoicesRegionalTaxPercentageNewId,0,'Fact_ARInvoices','[Regional Tax Percentage]','Regional Tax Percentage','Decimal','false',0,0,'false','false','true','Money','false','false','false','ARInvoice.RegionalTaxPercentage','false','false')  
 ------------------------------------------------------------------------------------
 declare @Fact_ChargesNewId varchar(15)
 execute usp_GetNextTableIdValue @Fact_ChargesNewId OUTPUT,'DWObjectTable' 
