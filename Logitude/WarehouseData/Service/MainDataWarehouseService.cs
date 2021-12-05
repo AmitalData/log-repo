@@ -130,6 +130,8 @@ namespace WarehouseData.Helper
         {
         
             finalDataWarehouseService.FinishBuildingDataWarehouse(connectionString, destinationConnectionString, tableLists);
+            ExecuteScript("Others", "AddAdditionalIndexesToFactTables", destinationConnectionString);
+
         }
 
 

@@ -369,6 +369,7 @@
     <Content Include="WarehouseScript\IncrementalWarehouse\UpdateVesselDimensionTable.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="WarehouseScript\Others\AddAdditionalIndexesToFactTables.sql" />
     <Content Include="WarehouseScript\Others\Day 04_New [Wesam] AddTriggerToColumnAutomaticLastUpdate.sql" />
     <Content Include="WarehouseScript\Others\Day 04 [Abed] AddTriggerToColumnAutomaticLastUpdate.sql" />
     <Content Include="WarehouseScript\Others\Day 01[Abed] AddColumnAutomaticLastUpdateDate.sql" />
