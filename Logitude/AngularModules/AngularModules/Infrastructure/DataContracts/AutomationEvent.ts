@@ -5,14 +5,5 @@ export class AutomationEvent {
     public EventTypeId : string;
     public NoteValue: string;
     public ObjectTableName: string;
-    public DateEscalationActionTimeIndicatorCode: string;
-    public DateEscalationTime: number;
-    //public DocumentTypeLists: AutomationEventList[];
+    public ObjectTableId: string;
 }
-
-
-// export class AutomationEventList {
-//     public Id: string;
-//     public Name: string;
-//     public Area: string;
-// }

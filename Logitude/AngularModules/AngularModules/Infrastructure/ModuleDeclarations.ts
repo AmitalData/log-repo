@@ -193,6 +193,7 @@ import { PrivateLabelLoginProcessComponent } from './Components/LoginComponent/P
 import { AutomationsConditionsViewDetailsComponent } from './Components/Maintenance/Automation/AutomationsConditionsViewDetailsComponent';
 import { AutomationConditionsDetailsComponent } from './Components/Maintenance/Automation/AutomationConditionsDetailsComponent';
 import { CreateTaskResultComponent } from './Components/Maintenance/Automation/AutomationResult/CreateTaskResultComponent';
+import { EventCreationResultComponent } from './Components/Maintenance/Automation/AutomationResult/EventCreationResultComponent';
  
  
 
@@ -317,6 +318,7 @@ export const ControlsComponents =
         AuditAutomationTabComponent,
         AutomationsConditionsViewDetailsComponent,
         CreateTaskResultComponent,
+        EventCreationResultComponent,
     ];
 export const Components =
     [
@@ -513,6 +515,7 @@ export class ModuleDeclarations {
             case 'SendDocumentResultComponent': { myResult = SendDocumentResultComponent; break; } 
             case 'PrivateLabelLoginProcessComponent': { myResult = PrivateLabelLoginProcessComponent; break; } 
             case 'CreateTaskResultComponent': { myResult = CreateTaskResultComponent; break; }
+            case 'EventCreationResultComponent': { myResult = EventCreationResultComponent; break; }
 
             case 'MultiUpdateComponent': { myResult = MultiUpdateComponent; break; }
             case 'MultiEntityUpdateBaseComponent': { myResult = MultiEntityUpdateBaseComponent; break; }

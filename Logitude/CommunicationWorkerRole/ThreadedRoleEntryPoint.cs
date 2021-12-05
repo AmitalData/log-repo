@@ -47,6 +47,7 @@ using WebFreight.Web.Helpers;
 using Simplog.Server.Infrastructure.DataContracts;
 using Logitude.Customs.BL.Messaging.Amital;
 using Simplog.Server.Infrastructure.Interfaces;
+using Logitude.Server.Tools.Interfaces;
 
 namespace CommunicationWorkerRole
 {
@@ -228,6 +229,7 @@ namespace CommunicationWorkerRole
             ContainerAccessor.InitContainer();
             ContainerAccessor.RegisterTypeFactory<IRulesValidator, RulesValidator>("RulesValidator", new RulesValidator());
             ContainerAccessor.RegisterTypeFactory<IQuoteTemplateReportHelper, QuoteTemplateReportHelper>("QuoteTemplateReportHelper", new QuoteTemplateReportHelper());
+            ContainerAccessor.RegisterTypeFactory<IAddManualTraceEventsHelper, AddManualTraceEventsHelper>("AddManualTraceEventsHelper", new AddManualTraceEventsHelper());
 
             LoggedContactResolver.RegisterLoggedContactUtil();
             DateTimeUtilResolver.RegisterDateTimeUtil();
