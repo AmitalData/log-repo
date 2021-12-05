@@ -121,7 +121,8 @@ import {AddEditAutomationsComponent} from './Components/Maintenance/Automation/A
 import { ChooseSpecificUserComponent } from './Components/Maintenance/Automation/ChooseSpecificUserComponent';
 import {DelayAutomationconditionsComponent} from './Components/Maintenance/Automation/DelayAutomationconditionsComponent';
 import {ViewAutomationHistoryComponent} from './Components/Maintenance/Automation/ViewAutomationHistoryComponent';
-import {AuditAutomationTabComponent} from './Components/Maintenance/Automation/AuditAutomationTabComponent';
+import { AuditAutomationTabComponent } from './Components/Maintenance/Automation/AuditAutomationTabComponent';
+import { OnUpdateDocumentAutomationsSettingsComponent } from './Components/Maintenance/Automation/OnUpdateDocumentAutomationsSettingsComponent';
 
 
 import {SelectDocumentTypesComponent} from './Components/Maintenance/Automation/SelectDocumentTypesComponent';
@@ -351,7 +352,7 @@ export const Components =
         ChooseSpecificUserComponent,
         DelayAutomationconditionsComponent,
         ViewAutomationHistoryComponent,
-
+        OnUpdateDocumentAutomationsSettingsComponent,
 
         NewViewComponent,
         Export2ExcelControl,
@@ -450,7 +451,7 @@ export class ModuleDeclarations {
             case 'DelayAutomationconditionsComponent': { myResult = DelayAutomationconditionsComponent; break; }
             case 'ViewAutomationHistoryComponent': { myResult = ViewAutomationHistoryComponent; break; }
             case 'AutomationConditionsDetailsComponent': { myResult = AutomationConditionsDetailsComponent; break; }
-                 
+            case 'OnUpdateDocumentAutomationsSettingsComponent': { myResult = OnUpdateDocumentAutomationsSettingsComponent; break; }
 
             case 'NewViewComponent': { myResult = NewViewComponent; break; }
             case 'Export2ExcelControl': { myResult = Export2ExcelControl; break; }

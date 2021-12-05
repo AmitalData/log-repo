@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class AutomationUpdateClass
    {  		
-		public const string HashString = "f85c79caef2dd1bef06f63673b917b6a";
+		public const string HashString = "c9208c83c8e1787a2e454903a6afa612";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -119,7 +119,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Automation",
-			      				    Code =  "5681",
+			      				    Code =  "8998",
 			      				    Name =  "Automation",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Common",
