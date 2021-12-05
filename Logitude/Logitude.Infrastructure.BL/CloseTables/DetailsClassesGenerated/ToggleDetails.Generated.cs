@@ -404,6 +404,14 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "QBT,QBO Tax Id Calculations", 
                 Description = "QBO Tax Id Calculations", 
 			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "OPS", 
+                Name = "Operational Status", 
+                SearchFields = "OPS,Operational Status", 
+                Description = "Operational Status", 
+			});
 			
             return all;
        }

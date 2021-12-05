@@ -1141,7 +1141,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                 EntityStatus entityStatus = allEntityStatuses.Where(d => d.Id == newEventType.EntityStatusId).FirstOrDefault();
                 if(entityStatus != null)
                 {
-                    if (entityStatus.EntityStatusTypeCode == "O")
+                    if (FeatureToggleHelper.HasFeatureToggle("OPS", tenant) && entityStatus.EntityStatusTypeCode == "O")
                     {
                         if (string.IsNullOrEmpty(args.OldOperationalStatusId))
                         {
@@ -1624,7 +1624,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                         }
                     }
 
-                    else if (entityPM.OperationalStatusId == traceEvent.EventType.EntityStatusId)
+                    else if (FeatureToggleHelper.HasFeatureToggle("OPS", tenant) && entityPM.OperationalStatusId == traceEvent.EventType.EntityStatusId)
                     {
                         RecomputeOperationalStatusAfterDelete(traceEventList, entityPM, shipment, external, shipmentsContext);
                     }

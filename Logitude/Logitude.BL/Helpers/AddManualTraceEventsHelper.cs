@@ -114,7 +114,7 @@ namespace Logitude.BL.Helpers
                         EntityStatus entityStatus = entityStatusRepository.GetSingleEntityStatus( eventType.EntityStatusId, tenant);  
                         if(entityStatus != null)
                         {
-                            if(entityStatus.EntityStatusTypeCode == "O")
+                            if(FeatureToggleHelper.HasFeatureToggle("OPS", tenant) && entityStatus.EntityStatusTypeCode == "O")
                             {
                                 if (string.IsNullOrEmpty(entityPM.OperationalStatusId))
                                 {
