@@ -185,7 +185,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CustomMapping
             item.ShipmentLevelCode = row.OrderShipmentLevelCode;
             //item.ForwardingShipmentNumber = row.OrderForwardingShipmentNumber;
             item.BookingDate = row.OrderBookingDate;
-            item.BookingNotes = "Booking Conf. Num: " + row.OrderBookingConfirmationNumber;
+            item.BookingNotes = row.OrderBookingConfirmationNumber;
         }
         private void FillForwardingFeilds(CargoTrackingShipment item, CargoTrackingShipmentQueryResult row)
         {

@@ -939,7 +939,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
             updateCargoTrackingRecords.MilestoneList = cargoTrackingShipmentsService.GetMilestones(updateCargoTrackingRecords.CargoTrackingUpdateDataBaseArgs.BuildCargoArgs.DestinationConnectionString);
             updateCargoTrackingRecords.MilestonesNotPermitted = cargoTrackingShipmentsService.GetAllNotPermittedMilestones(updateCargoTrackingRecords.CargoTrackingUpdateDataBaseArgs.BuildCargoArgs.SourceConnectionString);
 
-            if (true)
+            if (false)
             {
                 BuildShipmentsNew(updateCargoTrackingRecords);
             }
