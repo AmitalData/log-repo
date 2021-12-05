@@ -1,11 +1,11 @@
 :host ::ng-deep {
     .p-tabview {
-        ul {
+        > ul {
             background: none;
             border: none;
             padding-left: 28px;
 
-            li {
+            > li {
                 margin-right: 20px;
                 cursor: pointer;
                 position: relative;
@@ -21,7 +21,7 @@
                         font-size: 12px;
                         font-weight: 600;
                         z-index: 2;
-                    }             
+                    }
 
                     .airplane {
                         background-image: url(assets/icons/airplane-black.png);
@@ -93,7 +93,7 @@
                 a {
                     z-index: 1;
                 }
-                    
+
                 .pi-times:before {
                     content: "\e90b";
                     position: absolute;
@@ -109,7 +109,6 @@
                     font-size: 7px;
                 }
 
-                
                 .airplane {
                     background-image: url(assets/icons/airplane-blue.png) !important;
                 }
@@ -180,7 +179,7 @@ hr {
 //     padding: 7px 0px;
 //     border: 1px solid #ced4da;
 //     border-radius: 3px;
-//     margin-top: 19px;    
+//     margin-top: 19px;
 
 //     h4 {
 //         display: inline;
@@ -191,7 +190,7 @@ hr {
 //     .pi {
 //         float: right;
 //         color: #1084dc;
-//         margin-right: 7px;        
+//         margin-right: 7px;
 //     }
 
 //     .pi-angle-down:before {
@@ -204,7 +203,7 @@ hr {
 // }
 
 .app-new-quote-address {
-    margin-top:20px;
+    margin-top: 20px;
     display: block;
 }
 
