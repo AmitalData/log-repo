@@ -32,9 +32,9 @@ declare var makeChart, FunnelClick, ResetItemFunnel;
 
 export class QuotesComponent extends BaseComponent {
     ngOnInit() {
-        if (isDevMode()) {
-            this.priceCheckS.open(new QuoteOPPM());
-        }
+        // if (isDevMode()) {
+        //     this.priceCheckS.open(new QuoteOPPM());
+        // }
     }
 
     public DataContext = this;
