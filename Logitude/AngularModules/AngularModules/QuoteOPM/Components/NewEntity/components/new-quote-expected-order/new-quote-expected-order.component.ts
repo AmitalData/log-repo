@@ -4,12 +4,12 @@ import { TenantList } from 'Common/EntityLists/TenantList';
 import { TransportModeList } from 'Infrastructure/EntityLists/TransportModeList';
 import { requiredOneFromMultiValidator } from 'Infrastructure/Validators/requiredOneFromMultiValidator';
 import { MessageService } from 'primeng/api';
-import { QuoteOPPackagePM } from 'QuoteOPM/EntityPMs/QuoteOPPackagePM';
 import { QuoteOPPM } from 'QuoteOPM/EntityPMs/QuoteOPPM';
 import { filter, pairwise, startWith } from 'rxjs/operators';
 import { ShipmentTypeList } from 'Shipment/EntityLists/ShipmentTypeList';
 import { PackageTypeList } from '../../../../../Common/EntityLists/PackageTypeList';
 import { NewQuoteDataService } from '../../Services/new-quote-data/new-quote-data.service';
+import { NewQuoteUnitsService } from '../../Services/new-quote-units/new-quote-units.service';
 
 @Component({
   selector: 'app-new-quote-expected-order',
@@ -25,8 +25,9 @@ export class NewQuoteExpectedOrderComponent implements OnInit, AfterViewInit {
   totalQuantity: number = 0;
   totalGrossWeight: number = 0.00;
   totalVolume: number = 0.00;
+  billableWeight: number = 0.0;
   isSeaFcl: boolean = true;
-  tenant: TenantList= null as any;
+  tenant: TenantList = null as any;
 
   get propForm(): FormGroup {
     const a: any = { b: null };
@@ -48,6 +49,7 @@ export class NewQuoteExpectedOrderComponent implements OnInit, AfterViewInit {
   constructor(
     private newQuoteDataService: NewQuoteDataService,
     private msg: MessageService,
+    private unitsService: NewQuoteUnitsService,
     private cdr: ChangeDetectorRef,
   ) { }
 
@@ -59,18 +61,19 @@ export class NewQuoteExpectedOrderComponent implements OnInit, AfterViewInit {
     this.resetForm();
   }
 
-  async initTenantsData(){
-    this.tenant =  await this.newQuoteDataService.getTenantsData();
+  async initTenantsData() {
+    this.tenant = await this.newQuoteDataService.getTenantsData();
     console.log(this.tenant)
   }
 
   resetForm() {
     this.newQuoteDataService.$resetForm.subscribe(() => {
+      this.totalQuantity = this.totalGrossWeight = this.totalVolume = this.billableWeight = 0;
       this.formArray.clear();
       this.addPackage();
 
       ['quantity', 'quantityType'].forEach(ctrl =>
-        [1, 2, 3, 4].forEach(i=> this.formGroup.controls[ctrl + i].reset()))
+        [1, 2, 3, 4].forEach(i => this.formGroup.controls[ctrl + i].reset()))
     })
   }
 
@@ -170,7 +173,7 @@ export class NewQuoteExpectedOrderComponent implements OnInit, AfterViewInit {
     if (this.formArray.invalid) {
       let msg: string = 'Volume or Gross Weight fields required';
 
-      if(this.formArray.controls.some(ctrl=> (<FormGroup>ctrl).controls.packageType.errors.notIdentityValue))
+      if (this.formArray.controls.some(ctrl => (<FormGroup>ctrl).controls.packageType.errors.notIdentityValue))
         msg = 'value in package type not exist';
       else if (this.formArray.length === 1)
         msg = 'Please insert data to the first package';
@@ -203,7 +206,10 @@ export class NewQuoteExpectedOrderComponent implements OnInit, AfterViewInit {
   }
 
   calcVolume(form: FormGroup) {
-    const val = form.controls.Ldimension.value * form.controls.Wdimension.value * form.controls.Hdimension.value / 1000000;
+    const vu = this.unitsService.getVolumeUnit(this.tenant.VolumeUnitCode);
+    const du = this.unitsService.getDimensionsUnit(this.tenant.DimensionsUnitCode);
+
+    const val = form.controls.Ldimension.value * form.controls.Wdimension.value * form.controls.Hdimension.value * du ** 3 / (vu * 1000000);
 
     if (val)
       form.controls.volume.setValue(val)
@@ -238,16 +244,43 @@ export class NewQuoteExpectedOrderComponent implements OnInit, AfterViewInit {
   calcTotalQuantity(prev_quantity: number, current_quantity: number) {
     this.totalQuantity = this.totalQuantity - prev_quantity + current_quantity;
     this.EntityPM.NumberOfPackages = this.totalQuantity;
-    this.EntityPM.ChargeableWeight = this.totalQuantity;
   }
 
   calcTotalGrossWeight(prev_quantity: number, current_quantity: number) {
+
     this.totalGrossWeight = this.totalGrossWeight - prev_quantity + current_quantity;
     this.EntityPM.GrossWeight = this.totalGrossWeight;
+    this.calcChargeableWeight()
   }
 
   calcTotalVolume(prev_quantity: number, current_quantity: number) {
     this.totalVolume = this.totalVolume - prev_quantity + current_quantity;
     this.EntityPM.Volume = this.totalVolume;
+    this.calcChargeableWeight()
+  }
+
+  calcChargeableWeight() {
+    const factor = this.formGroup.value.transportMode?.Id === 'A' ? 1000 / 6 : 1000
+    const gu: number = this.unitsService.getWeightUnit(this.tenant?.GrossWeightUnitCode, 'GrossWeightUnitCode');
+    const vu: number = this.unitsService.getVolumeUnit(this.tenant?.VolumeUnitCode);
+    const bu: number = this.formGroup.value.transportMode?.Id === 'A' ?
+      this.unitsService.getWeightUnit(this.tenant?.ChargeableWeightUnitCode, 'ChargeableWeightUnitCode') :
+      this.unitsService.getWeightUnit(this.tenant?.WeightMeasurementUnitCode, 'WeightMeasurementUnitCode');
+
+    let bulk: number = 0;
+
+
+    this.formArray.controls.forEach((propertyForm: FormGroup, i: number) => {
+      let volume: number = propertyForm.controls.volume.value / vu * factor / bu;
+      let grossWeight: number = propertyForm.controls.grossWeight.value * gu / bu;
+
+      if (!volume && grossWeight)
+        bulk += grossWeight;
+      else if (volume) {
+        bulk += grossWeight > volume ? grossWeight : volume;
+      }
+    });
+
+    this.EntityPM.ChargeableWeight = this.billableWeight = bulk;
   }
 }
