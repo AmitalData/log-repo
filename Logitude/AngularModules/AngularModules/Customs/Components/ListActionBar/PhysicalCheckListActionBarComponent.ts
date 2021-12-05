@@ -24,7 +24,7 @@ export class PhysicalCheckListActionBarComponent
     implements AfterViewInit {
 
     private _PhysicalCheckWebService: PhysicalCheckWebService = new PhysicalCheckWebService;
-
+ 
     private CurrentSession = SessionLocator.SelectedSession;
     public DataContext: PhysicalCheckListActionBarComponent = this;
     public ObjectTableName: string = "Customs.PhysicalCheck";
@@ -37,7 +37,12 @@ export class PhysicalCheckListActionBarComponent
 
 
     ngAfterViewInit() {
-        //this._physicalChecksCloseSharedDataService.IsDisplayButtonClose = (this._physicalChecksCloseSharedDataService._SelectedItems.Collection.length > 0);
+        SessionLocator.SelectedSession.CurrentListComponent.onRefershQueryEvent.subscribe(data => {
+            this._physicalChecksCloseSharedDataService._SelectedItems.Clear();
+            this._physicalChecksCloseSharedDataService.IsDisplayButtonClose = false;
+
+        });
+
     }
 
     
@@ -51,14 +56,22 @@ export class PhysicalCheckListActionBarComponent
   
     CloseMarkChecks() {
         var checkList = this._physicalChecksCloseSharedDataService._SelectedItems.Collection.join(',');
-        this._PhysicalCheckWebService.PostCloseMarkPhysicalChecks(checkList, this.EntityPM.Tenant)
+        debugger;
+        this._PhysicalCheckWebService.PostCloseMarkPhysicalChecks(checkList, SessionLocator.Tenant)
             .subscribe((myResponse: ServiceResponse) => {
                 if (!myResponse.HasError) {
-                    this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
                     let messageWindow = new MessageWindow();
                     messageWindow.Width = 300;
                     messageWindow.Height = 180;
-                    messageWindow.Show("הבדיקה נסגרה בהצלחה");//TextCodeTranslator.Translate("Customs.PhysicalCheck.O.ClosePhysicalCheck"));
+                    messageWindow.Show("הבדיקות נסגרו בהצלחה");
+                    this.CurrentSession.CurrentListComponent.RefreshBtnClick();
+                }
+                else {
+                    let messageWindow = new MessageWindow();
+                    messageWindow.Width = 300;
+                    messageWindow.ShowErrorIcon = true;
+                    messageWindow.Height = 180;
+                    messageWindow.Show("נכשל");
                 }
             });
       
