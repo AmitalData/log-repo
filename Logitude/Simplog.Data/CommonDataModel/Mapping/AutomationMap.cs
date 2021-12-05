@@ -46,7 +46,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
 
             this.Property(t => t.Type)
                  .IsRequired()
-                .HasMaxLength(10)
+                .HasMaxLength(20)
                 .IsUnicode(false);
 
             this.Property(t => t.TemplateId)

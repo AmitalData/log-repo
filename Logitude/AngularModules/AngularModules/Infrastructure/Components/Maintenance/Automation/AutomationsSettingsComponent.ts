@@ -29,6 +29,7 @@ import { ServiceHelper } from 'Infrastructure/Utilities/ServiceHelper';
 export class AutomationsSettingsComponent implements OnInit {
 
     IsShowTabUpdate: boolean = false;
+    IsShowTabDocumentUpdate: boolean = false;
     private _entityResourceService: EntityResourceService = new EntityResourceService();
     private objectFieldPMExtendedService: ObjectFieldPMExtendedService;
     
@@ -44,6 +45,7 @@ export class AutomationsSettingsComponent implements OnInit {
     ScheduleAutomationList: AutomationItemViewModel[] = [];
     OnUpdateAutomationList: AutomationItemViewModel[] = [];
     OnCreateAutomationList: AutomationItemViewModel[] = [];
+    OnDocumentUpdateAutomationList: AutomationItemViewModel[] = [];
 
     OnCreateAutomationListSelected: AutomationItemViewModel;
     OnUpdateAutomationListSelected: AutomationItemViewModel;
@@ -51,6 +53,7 @@ export class AutomationsSettingsComponent implements OnInit {
     OnCreateAutomationTabTitle: string;
     OnUpdateAutomationTabTitle: string;
     ScheduleAutomationTabTitle: string;
+    OnDocumentUpdateAutomationTabTitle: string;
 
     IsAddAtomationEnable: boolean = false;
     OnUpdateTabVisibility: boolean = false;
@@ -176,6 +179,7 @@ export class AutomationsSettingsComponent implements OnInit {
             this.ScheduleTabVisibility = true;
             this.OnUpdateTabVisibility = true;
             this.IsShowTabUpdate = true;
+            this.IsShowTabDocumentUpdate = true;
         }
 
     }
@@ -205,6 +209,7 @@ export class AutomationsSettingsComponent implements OnInit {
 
                 this.RefreshAutomationList("OnCreate");
                 this.RefreshAutomationList("OnUpdate");
+                this.RefreshAutomationList("OnDocumentUpdate");
                 this.CurrentSession.StopBusyIndicator();
             }
         });
@@ -266,8 +271,17 @@ export class AutomationsSettingsComponent implements OnInit {
         this.AutomationItemClass = args.AutomationItemClass;
     }
 
+    onAddAutomation(event) {
+        this.AddAutomation(event.type);
+    }
 
+    onEditAutomation(event) {
+        this.EditAutomation(event.type, event.item);
+    }
 
+    onRefreshAutomation(event) {
+        this.RefreshAutomationList(event.automationListType, event.IsInCludeInActive)
+    }
 
     AddAutomation(type: string) {
         var newEntity: AutomationPM = new AutomationPM();
@@ -341,7 +355,7 @@ export class AutomationsSettingsComponent implements OnInit {
 
 
 
-    RefreshAutomationList(automationListType: string) {
+    RefreshAutomationList(automationListType: string, IsInCludeInActive: boolean = false) {
 
         if (automationListType == "OnCreate") {
 
@@ -356,6 +370,14 @@ export class AutomationsSettingsComponent implements OnInit {
             else this.OnUpdateAutomationList = this.AutomationList.filter(d => d.EntityPM.Type == "OnUpdate" && d.EntityPM.Inactive == false);
 
             this.OnUpdateAutomationList = this.OnUpdateAutomationList.sort((a, b) => { return a.Order - b.Order });
+
+        }
+        else if (automationListType == "OnDocumentUpdate") {
+
+            if (IsInCludeInActive) this.OnDocumentUpdateAutomationList = this.AutomationList.filter(d => d.EntityPM.Type == "OnDocumentUpdate");
+            else this.OnDocumentUpdateAutomationList = this.AutomationList.filter(d => d.EntityPM.Type == "OnDocumentUpdate" && d.EntityPM.Inactive == false);
+
+            this.OnDocumentUpdateAutomationList = this.OnDocumentUpdateAutomationList.sort((a, b) => { return a.Order - b.Order });
 
         }
         //else if (automationListType == "Schedule") {
@@ -383,7 +405,7 @@ export class AutomationsSettingsComponent implements OnInit {
           this.OnCreateAutomationTabTitle = "On Create (" + this.OnCreateAutomationList.length.toString() + ")";
           this.OnUpdateAutomationTabTitle = "On Update (" + this.OnUpdateAutomationList.length.toString() + ")";
           this.ScheduleAutomationTabTitle = "Schedule (" + this.ScheduleAutomationList.length.toString() + ")";
-
+          this.OnDocumentUpdateAutomationTabTitle = "On Document Update (" + this.OnDocumentUpdateAutomationList.length.toString() + ")";
 
      }
 
@@ -455,7 +477,7 @@ export class AutomationsSettingsComponent implements OnInit {
                         this.OnUpdateAutomationList.splice(i, 0, upColumn);
                     }
             }
-     
+   
         }
   
     }

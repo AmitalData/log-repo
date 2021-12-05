@@ -1,4 +1,4 @@
-﻿
+
 
 <table>
 
@@ -19,6 +19,15 @@
 
                                     <div style="width:100px;text-align:center;font-size:11px;color:black" class="InnerChild">
                                         <span>{{OnUpdateAutomationTabTitle}}</span>
+                                    </div>
+                                </div>
+                            </li>
+
+                            <li *ngIf="IsShowTabDocumentUpdate" [class.Selected]="SelectedTabCode == 'DUP'" (click)="SelectedTabCode = 'DUP'">
+                                <div class="InnerChild" style="color:black;width:160px">
+
+                                    <div style="width:160px;text-align:center;font-size:11px;color:black" class="InnerChild">
+                                        <span>{{OnDocumentUpdateAutomationTabTitle}}</span>
                                     </div>
                                 </div>
                             </li>
@@ -420,6 +429,12 @@
                                 </table>
                             </div>
 
+                        </div>
+
+
+                        <!--   Tab 3-->
+                        <div class="MediaFillRelative" *ngIf="IsShowTabDocumentUpdate" [hidden]="SelectedTabCode != 'DUP'">
+                            <OnUpdateDocumentAutomationsSettings [OnDocumentUpdateAutomationList]="OnDocumentUpdateAutomationList" (AddAutomation)="onAddAutomation($event)" (EditAutomation)="onEditAutomation($event)" (RefreshAutomation)="onRefreshAutomation($event)"></OnUpdateDocumentAutomationsSettings>
                         </div>
 
                     </div>
