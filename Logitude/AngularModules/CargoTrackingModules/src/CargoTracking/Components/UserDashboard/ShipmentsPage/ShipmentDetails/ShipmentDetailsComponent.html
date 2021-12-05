@@ -178,6 +178,7 @@
 
     </div>
 
+    <!-- Declaration Approval -->
     <panel *ngIf="ShowDeclarationApproval" [ShowWhitePanelOnMobile]="true">
 
         <div body class="declaration-approval">
@@ -185,8 +186,8 @@
             <div class="declaration-approval-message">{{cargoTrackingShipmentPM.TenantDeclarationMessage}}</div>
 
             <div class="declaration-approval-toolbar">
-                <button class="declaration-approval-toolbar-button__green animate">Approve</button>
-                <button class="declaration-approval-toolbar-button__red animate">Deny</button>
+                <button class="declaration-approval-toolbar-button__red animate" (click)="DenyDeclaration()">אושר</button>
+                <button class="declaration-approval-toolbar-button__green animate" (click)="ApproveDeclaration()">אושר</button>
             </div>
         </div>
 
@@ -261,21 +262,22 @@
 
     </div>
 
-    <div *ngIf="!ShowDeclarationApproval" style="order: 1;" class="PanelsNavigator">
+    <!-- Panels Navigator -->
+    <div style="order: 1;" class="PanelsNavigator">
         <div class="panels-wrapper">
-            <button [class.active]="selectedNavButton=='Overview'"
+            <button *ngIf="!ShowDeclarationApproval"  [class.active]="selectedNavButton=='Overview'"
                     (click)="PanelsNavigatorClicked('Overview')">
                 <span class="hide-mobile">{{OverviewPanelTitle }}</span>
                 <span class="mobile-only">Overview</span>
             </button>
-            <button [class.active]="selectedNavButton=='Cargo'" (click)="PanelsNavigatorClicked('Cargo')">
+            <button  *ngIf="!ShowDeclarationApproval" [class.active]="selectedNavButton=='Cargo'" (click)="PanelsNavigatorClicked('Cargo')">
                 Cargo
             </button>
             <button *ngIf="cargoTrackingShipmentPM.EntityType != 'O'" [class.active]="selectedNavButton=='CustomsDataPanel'"
                     (click)="PanelsNavigatorClicked('CustomsDataPanel')">
                 Customs
             </button>
-            <button [class.active]="selectedNavButton=='RoutingPanel'"
+            <button *ngIf="!ShowDeclarationApproval"  [class.active]="selectedNavButton=='RoutingPanel'"
                     (click)="PanelsNavigatorClicked('RoutingPanel')">
                 Routing
             </button>
@@ -283,7 +285,7 @@
                     (click)="PanelsNavigatorClicked('DocumentsPanel')">
                 Documents
             </button>
-            <button [class.active]="selectedNavButton=='PartnersPanel'"
+            <button  *ngIf="!ShowDeclarationApproval" [class.active]="selectedNavButton=='PartnersPanel'"
                     (click)="PanelsNavigatorClicked('PartnersPanel')">
                 Partners
             </button>
@@ -291,6 +293,7 @@
     </div>
 
 
+    <!-- PANELS -->
     <panel *ngIf="!ShowDeclarationApproval" style="order: 3;margin-top: 10px" [Title]="OverviewPanelTitle" [ShowWhitePanelOnMobile]="true" [Name]="'Overview'">
 
         <div body>
@@ -443,7 +446,6 @@ cargoTrackingShipmentPM.ArrivalDate |
 
     </panel>
 
-
     <panel *ngIf="!ShowDeclarationApproval" style="order: 4;" [Title]="'Cargo Info'" [Name]="'Cargo'" [HaveDetailsSection]=" cargoTrackingShipmentPM.EntityType != 'O'"
            [ShowWhitePanelOnMobile]="true"
 
@@ -579,7 +581,7 @@ package.ShipperSeal == null ? package.CarrierSeal :
     </panel>
 
     <panel  *ngIf="cargoTrackingShipmentPM.EntityType != 'O'" style="order: 5;" [Title]="'Customs Data'" [Name]="'CustomsDataPanel'" [HaveDetailsSection]="true"
-           [ShowWhitePanelOnMobile]="true" [DetailsTitle]="'Tax Details'">
+           [AlwaysExpanded]="true" [ShowWhitePanelOnMobile]="true" [DetailsTitle]="'Tax Details'">
 
         <div body>
             <div class="no-data-available" *ngIf="!this.cargoTrackingShipmentPM.CustomsData">Customs data is not available yet</div>
@@ -984,5 +986,6 @@ package.ShipperSeal == null ? package.CarrierSeal :
 
     </panel>
 
+    <br>
 
 </div>

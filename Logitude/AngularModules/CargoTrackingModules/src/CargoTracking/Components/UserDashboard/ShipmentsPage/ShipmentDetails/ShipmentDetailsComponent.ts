@@ -708,6 +708,32 @@ export class ShipmentDetailsComponent implements OnInit,AfterViewInit
     ChangeShowDetailsSectionValue(newValue) {
         this.ShowDetailsSection = newValue;
     }
+
+    DenyDeclaration(){
+        const dialogRef = this.dialog.open(MessageWindowComponent, {
+            data: {
+                title: 'Decline',
+                description: 'Please write down decline reason',
+                showOkButton: true,
+                showCancelButton: true,
+                showTextBox: true,
+            }
+        });
+
+        dialogRef.afterClosed().subscribe(windowArgs => {
+            const button = windowArgs?.button;
+            if(button == 'ok'){
+            }
+        });
+    }
+    ApproveDeclaration(){
+        const dialogRef = this.dialog.open(MessageWindowComponent, {
+            data: {
+                description: 'Approved Successfully',
+                showOkButton: true
+            }
+        });
+    }
 }
 
 
