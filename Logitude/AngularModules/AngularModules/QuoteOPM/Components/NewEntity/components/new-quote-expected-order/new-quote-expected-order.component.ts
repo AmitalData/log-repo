@@ -260,12 +260,14 @@ export class NewQuoteExpectedOrderComponent implements OnInit, AfterViewInit {
   }
 
   calcChargeableWeight() {
+    if(!this.tenant) return;
+
     const factor = this.formGroup.value.transportMode?.Id === 'A' ? 1000 / 6 : 1000
-    const gu: number = this.unitsService.getWeightUnit(this.tenant?.GrossWeightUnitCode, 'GrossWeightUnitCode');
-    const vu: number = this.unitsService.getVolumeUnit(this.tenant?.VolumeUnitCode);
+    const gu: number = this.unitsService.getWeightUnit(this.tenant.GrossWeightUnitCode, 'GrossWeightUnitCode');
+    const vu: number = this.unitsService.getVolumeUnit(this.tenant.VolumeUnitCode);
     const bu: number = this.formGroup.value.transportMode?.Id === 'A' ?
-      this.unitsService.getWeightUnit(this.tenant?.ChargeableWeightUnitCode, 'ChargeableWeightUnitCode') :
-      this.unitsService.getWeightUnit(this.tenant?.WeightMeasurementUnitCode, 'WeightMeasurementUnitCode');
+      this.unitsService.getWeightUnit(this.tenant.ChargeableWeightUnitCode, 'ChargeableWeightUnitCode') :
+      this.unitsService.getWeightUnit(this.tenant.WeightMeasurementUnitCode, 'WeightMeasurementUnitCode');
 
     let bulk: number = 0;
 

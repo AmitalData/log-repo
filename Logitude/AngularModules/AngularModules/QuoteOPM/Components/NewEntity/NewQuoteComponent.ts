@@ -33,11 +33,11 @@ export class NewQuoteComponent {
     ) { }
 
     async ngOnInit() {
+        this.CreateNewQuote();
+
         this.dataShareService.EntityPM = this.EntityPM;
         this.dataShareService.newQuoteRef = this.elmRef;
         this.dataShareService.formGroup = this.formGroup;
-
-        this.CreateNewQuote();
     }
 
     async create() {
