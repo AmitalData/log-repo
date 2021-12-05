@@ -5066,7 +5066,21 @@ export class ShipmentPM {
     public get HouseMasterNewConcurrencyGUID() { return this.houseMasterNewConcurrencyGUID; }
     public set HouseMasterNewConcurrencyGUID(newValue: string) { if (this.houseMasterNewConcurrencyGUID != newValue) { this.houseMasterNewConcurrencyGUID = newValue; this.MarkAsDirty("HouseMasterNewConcurrencyGUID"); } }
 
+    private billingStatusId: string;
+    public get BillingStatusId() { return this.billingStatusId; }
+    public set BillingStatusId(newValue: string) { if (this.billingStatusId != newValue) { this.billingStatusId = newValue; this.MarkAsDirty("BillingStatusId"); } }
 
+    private operationalStatusId: string;
+    public get OperationalStatusId() { return this.operationalStatusId; }
+    public set OperationalStatusId(newValue: string) { if (this.operationalStatusId != newValue) { this.operationalStatusId = newValue; this.MarkAsDirty("OperationalStatusId"); } }
+
+    private operationalStatusName: string;
+    public get OperationalStatusName() { return this.operationalStatusName; }
+    public set OperationalStatusName(newValue: string) { if (this.operationalStatusName != newValue) { this.operationalStatusName = newValue; this.MarkAsDirty("OperationalStatusName"); } }
+
+    private billingStatusName: string;
+    public get BillingStatusName() { return this.billingStatusName; }
+    public set BillingStatusName(newValue: string) { if (this.billingStatusName != newValue) { this.billingStatusName = newValue; this.MarkAsDirty("BillingStatusName"); } }
 
 
     public OldEntityPM: ShipmentPM;

@@ -195,6 +195,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
                 MapShipmentStatus(entityPM, entityPoco, entityMasterData);
             }
 
+            if (entityPM.IsOperationalStatusChange)
+            {
+                MapShipmentOperationalStatus(entityPM, entityPoco, entityMasterData);
+            }
+
             TenantRepository tenantRepository = new TenantRepository(entityPM.Tenant);
             Tenant currentTenant = tenantRepository.GetSingleTenant(entityPM.Tenant);
 
@@ -518,7 +523,19 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
 
             entityPM.IsStatusChange = false;
         }
+        private static void MapShipmentOperationalStatus(ShipmentPM entityPM, Shipment entityPoco, ShipmentMasterData entityMasterData)
+        {
+            entityPoco.OperationalStatusId = entityPM.OperationalStatusId;           
+            if (entityMasterData != null)
+            {
+                if (entityPM.ShipmentLevelCode == "D" || entityPM.ShipmentLevelCode == "C")
+                {
+                    entityMasterData.OperationalStatusId = entityPM.OperationalStatusId;
+                }
+            }
 
+            entityPM.IsOperationalStatusChange = false;
+        }
         private static void ValidateMAWBStackField(Shipment entityPoco, ShipmentMasterData entityMasterData)
         {
             if (entityMasterData != null)

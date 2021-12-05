@@ -33,7 +33,6 @@ using Logitude.Accounting.Data.Repositories;
 using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.BL.InvoiceModel.EntityOtherServices;
 using Logitude.BL.InvoiceModel.EntityQueries;
-using Logitude.Accounting.BL.EntityQueryServices;
 
 namespace Logitude.BL.InvoiceModel.Tools.EntityService
 {
@@ -1315,10 +1314,12 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
         private static List<LedgerTransactionPM> GetReconcileTransactions(APPaymentPM theEntityPm)
         {
-            List<string> transactionsIds = theEntityPm.ReconcileInternalTransIds.Split(',').ToList();
-            LedgerTransactionQueryService transactionQueryService = new LedgerTransactionQueryService(theEntityPm.Tenant);
-            List<LedgerTransactionPM> recoTransactions = transactionQueryService.GetLedgerTransactionPMsByIdList(transactionsIds, theEntityPm.Tenant);
-            return recoTransactions;
+            //List<string> transactionsIds = theEntityPm.ReconcileInternalTransIds.Split(',').ToList();
+            //LedgerTransactionQueryService transactionQueryService = new LedgerTransactionQueryService(theEntityPm.Tenant);
+            //List<LedgerTransactionPM> recoTransactions = transactionQueryService.GetLedgerTransactionPMsByIdList(transactionsIds, theEntityPm.Tenant);
+            //return recoTransactions;
+
+            return new List<LedgerTransactionPM>();
         }
 
         private void CreateAPPaymentJournal(APPaymentPM paymentPM, Tenant tenantPOCO)

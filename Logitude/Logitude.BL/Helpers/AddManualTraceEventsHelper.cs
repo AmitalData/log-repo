@@ -105,52 +105,86 @@ namespace Logitude.BL.Helpers
             if (entityPM != null)
             {
                 EventTypeRepository eventTypeRep = new EventTypeRepository(webFreightContext);
+                EntityStatusRepository entityStatusRepository = new EntityStatusRepository(webFreightContext);
                 EventType eventType = eventTypeRep.GetSingleEventType(eventTypeId, tenant);
                 if (eventType != null)
                 {
                     if (!string.IsNullOrEmpty(eventType.EntityStatusId))
                     {
-                        #region
-                        if (string.IsNullOrEmpty(entityPM.StatusId))
+                        EntityStatus entityStatus = entityStatusRepository.GetSingleEntityStatus( eventType.EntityStatusId, tenant);  
+                        if(entityStatus != null)
                         {
-                            EntityStatus newStatus = EntityStatusRepository.GetSingleEntityStatus(eventType.EntityStatusId, tenant, true);
-                            entityPM.StatusId = eventType.EntityStatusId;
-                            entityPM.StatusDate = newTraceEvent.EventDateTime;
-                            entityPM.StatusLocation = null;
-                            entityPM.LastStatusLogDate = TenantServerConfigration.GetCurrentDateTime(tenant);
-                            entityPM.IsStatusChange = true;
-                            myResult.StatusChanged = true;
-                            myResult.EntityId = entityPM.Id;
-                            myResult.StatusId = entityPM.StatusId;
-                            myResult.StatusName = newStatus.Name;
-                            myResult.StatusDate = entityPM.StatusDate;
-                            myResult.StatusLocation = entityPM.StatusLocation;
-                            myResult.LastStatusLogDate = entityPM.LastStatusLogDate;
-                        }
-
-                        else
-                        {
-                            string oldStatusId = entityPM.StatusId;
-                            string newStatusId = eventType.EntityStatusId;
-                            EntityStatus oldStatus = EntityStatusRepository.GetSingleEntityStatus(oldStatusId, tenant, true);
-                            EntityStatus newStatus = EntityStatusRepository.GetSingleEntityStatus(newStatusId, tenant, true);
-                            if (newStatus.StatusWeight >= oldStatus.StatusWeight)
+                            if(entityStatus.EntityStatusTypeCode == "O")
                             {
-                                entityPM.StatusId = newStatusId;
-                                entityPM.StatusDate = newTraceEvent.EventDateTime;
-                                entityPM.StatusLocation = null;
-                                entityPM.LastStatusLogDate = TenantServerConfigration.GetCurrentDateTime(tenant);
-                                entityPM.IsStatusChange = true;
-                                myResult.StatusChanged = true;
-                                myResult.EntityId = entityPM.Id;
-                                myResult.StatusId = entityPM.StatusId;
-                                myResult.StatusName = newStatus.Name;
-                                myResult.StatusDate = entityPM.StatusDate;
-                                myResult.StatusLocation = entityPM.StatusLocation;
-                                myResult.LastStatusLogDate = entityPM.LastStatusLogDate;
+                                if (string.IsNullOrEmpty(entityPM.OperationalStatusId))
+                                {
+                                    entityPM.OperationalStatusId = eventType.EntityStatusId;
+                                    entityPM.IsOperationalStatusChange = true;
+                                    myResult.StatusChanged = true;
+                                    myResult.EntityId = entityPM.Id;
+                                    myResult.OperationalStatusId = entityPM.OperationalStatusId;
+                                }
+
+                                else
+                                {
+                                    string oldStatusId = entityPM.OperationalStatusId;
+                                    string newStatusId = eventType.EntityStatusId;
+                                    EntityStatus oldStatus = EntityStatusRepository.GetSingleEntityStatus(oldStatusId, tenant, true);
+                                    EntityStatus newStatus = EntityStatusRepository.GetSingleEntityStatus(newStatusId, tenant, true);
+                                    if (newStatus.StatusWeight >= oldStatus.StatusWeight)
+                                    {
+                                        entityPM.OperationalStatusId = newStatusId;                                       
+                                        entityPM.IsOperationalStatusChange = true;
+                                        myResult.StatusChanged = true;
+                                        myResult.EntityId = entityPM.Id;
+                                        myResult.OperationalStatusId = entityPM.OperationalStatusId;
+                                    }
+                                }
+                            }
+
+                            else
+                            {
+                                if (string.IsNullOrEmpty(entityPM.StatusId))
+                                {
+                                    EntityStatus newStatus = EntityStatusRepository.GetSingleEntityStatus(eventType.EntityStatusId, tenant, true);
+                                    entityPM.StatusId = eventType.EntityStatusId;
+                                    entityPM.StatusDate = newTraceEvent.EventDateTime;
+                                    entityPM.StatusLocation = null;
+                                    entityPM.LastStatusLogDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+                                    entityPM.IsStatusChange = true;
+                                    myResult.StatusChanged = true;
+                                    myResult.EntityId = entityPM.Id;
+                                    myResult.StatusId = entityPM.StatusId;
+                                    myResult.StatusName = newStatus.Name;
+                                    myResult.StatusDate = entityPM.StatusDate;
+                                    myResult.StatusLocation = entityPM.StatusLocation;
+                                    myResult.LastStatusLogDate = entityPM.LastStatusLogDate;
+                                }
+
+                                else
+                                {
+                                    string oldStatusId = entityPM.StatusId;
+                                    string newStatusId = eventType.EntityStatusId;
+                                    EntityStatus oldStatus = EntityStatusRepository.GetSingleEntityStatus(oldStatusId, tenant, true);
+                                    EntityStatus newStatus = EntityStatusRepository.GetSingleEntityStatus(newStatusId, tenant, true);
+                                    if (newStatus.StatusWeight >= oldStatus.StatusWeight)
+                                    {
+                                        entityPM.StatusId = newStatusId;
+                                        entityPM.StatusDate = newTraceEvent.EventDateTime;
+                                        entityPM.StatusLocation = null;
+                                        entityPM.LastStatusLogDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+                                        entityPM.IsStatusChange = true;
+                                        myResult.StatusChanged = true;
+                                        myResult.EntityId = entityPM.Id;
+                                        myResult.StatusId = entityPM.StatusId;
+                                        myResult.StatusName = newStatus.Name;
+                                        myResult.StatusDate = entityPM.StatusDate;
+                                        myResult.StatusLocation = entityPM.StatusLocation;
+                                        myResult.LastStatusLogDate = entityPM.LastStatusLogDate;
+                                    }
+                                }
                             }
                         }
-                        #endregion
                     }
 
                     if (eventType.Code == "EXCE")
@@ -267,6 +301,7 @@ namespace Logitude.BL.Helpers
         public bool StatusChanged { get; set; }
         public DateTime? LogDateTime { get; set; }
         public string StatusId { get; set; }
+        public string OperationalStatusId { get; set; }
         public string StatusName { get; set; }
         public string StatusLocation { get; set; }
         public DateTime? StatusDate { get; set; }
