@@ -863,7 +863,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                     if (currentDeclarationCourierStatusPM.ChangeSetOp != ChangeSetOperation.Update) currentDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
                     AppendLogLine("try to update Last Mile Service Type " + currentDeclarationCourierStatusPM.LastMileServiceType + " to declarationCourierStatus for DeclarationPM.Id: " + _MyDeclarationPM.Id);
                 }
-                if (currentDeclarationCourierStatusPM.ChangeSetOp == ChangeSetOperation.Update)
+                if (currentDeclarationCourierStatusPM != null && currentDeclarationCourierStatusPM.ChangeSetOp == ChangeSetOperation.Update)
                 {
                     try
                     {
