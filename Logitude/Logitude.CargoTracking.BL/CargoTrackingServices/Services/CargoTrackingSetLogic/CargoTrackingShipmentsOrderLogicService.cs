@@ -21,6 +21,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
         private const string CreateDate = "CreateDate";
         private const string PickupActualDateTime = "PickupActualDateTime";
         private const string BookingConfirmationDate = "BookingConfirmationDate";
+        private const string BookingConfirmationNumber = "BookingConfirmationNumber";
         private const string PickupEstimatedDateTime = "PickupEstimatedDateTime";
         private const string DepartureEstimationDate = "ETD";
         private const string DepartureDate = "ATD";
@@ -61,6 +62,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
             new FieldMap("PoNumber", "PoNumber"),
             new FieldMap("FromWarehouseDate", "OnHandDate"),
             new FieldMap("FromWarehouseNotes", "OnHandNumber"),
+            new FieldMap("BookingNotes", "BookingConfirmationNumber"),
 
         };
 
@@ -220,6 +222,9 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
                 case BookingConfirmationDate:
                     SetBookingConfirmationDate(field, tableRow, args);
                     break;
+                case BookingConfirmationNumber:
+                    SetBookingNotes(field, tableRow, args);
+                    break;
                 case DepartureDate:
                 case DepartureEstimationDate:
                     SetDepartureDates(field, tableRow, args);
@@ -232,6 +237,15 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
                     tableRow.SetField(field.CargoTrackingFieldName, tableRow[field.OriginalFieldName]);
                     break;
             }
+        }
+
+        private static void SetBookingNotes(FieldMap field, DataRow tableRow, SetTableLogicArgs args)
+        {
+            var tenant = (int)tableRow["Tenant"];
+            if (CheckIfUserHasAccessToMilestone(args.NotPermittedMilestones, CargoTrackingMilestoneValues.Booking, tenant))
+                tableRow.SetField(field.CargoTrackingFieldName, tableRow[field.OriginalFieldName]);
+            else
+                tableRow.SetField(field.CargoTrackingFieldName, (DBNull)null);
         }
 
         private static void SetArrivalDates(FieldMap field, DataRow tableRow, SetTableLogicArgs args)
@@ -256,7 +270,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
         {
             var tenant = (int)tableRow["Tenant"];
             if (CheckIfUserHasAccessToMilestone(args.NotPermittedMilestones, CargoTrackingMilestoneValues.Booking, tenant))
-                tableRow.SetField(field.CargoTrackingFieldName, tableRow[field.OriginalFieldName]);
+                tableRow.SetField(field.CargoTrackingFieldName, "Booking Conf. Num: "+ tableRow[field.OriginalFieldName]);
             else
                 tableRow.SetField(field.CargoTrackingFieldName, (DBNull)null);
         }
