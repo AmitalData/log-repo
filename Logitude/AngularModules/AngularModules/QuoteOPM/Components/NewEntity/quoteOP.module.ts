@@ -35,6 +35,7 @@ import { NewQuoteDataService } from "./Services/new-quote-data/new-quote-data.se
 import { NewQuoteValidateEntityService } from "./Services/new-quote-validate-entity/new-quote-validate-entity.service";
 import { LogtuideTableDataService } from "./components/autocomplate-table/logtuide-table-data.service";
 import { HighlightPipeModule } from "Infrastructure/Pipes/highlight-pipe/highlight-pipe.module";
+import { TenantListService } from "Common/Services/StandardLists/TenantListService";
 
 @NgModule({
     imports: [  
@@ -82,6 +83,7 @@ import { HighlightPipeModule } from "Infrastructure/Pipes/highlight-pipe/highlig
         MessageService,
         DialogsService,
         NewQuoteValidateEntityService,
+        TenantListService,
     ],
     exports:
     [

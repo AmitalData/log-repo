@@ -1,5 +1,6 @@
 import { Component, Input, OnInit, SimpleChanges, AfterViewInit, ChangeDetectorRef } from '@angular/core';
 import { FormGroup, FormControl, FormArray, Validators } from '@angular/forms';
+import { TenantList } from 'Common/EntityLists/TenantList';
 import { TransportModeList } from 'Infrastructure/EntityLists/TransportModeList';
 import { requiredOneFromMultiValidator } from 'Infrastructure/Validators/requiredOneFromMultiValidator';
 import { MessageService } from 'primeng/api';
@@ -25,6 +26,7 @@ export class NewQuoteExpectedOrderComponent implements OnInit, AfterViewInit {
   totalGrossWeight: number = 0.00;
   totalVolume: number = 0.00;
   isSeaFcl: boolean = true;
+  tenant: TenantList= null as any;
 
   get propForm(): FormGroup {
     const a: any = { b: null };
@@ -50,21 +52,25 @@ export class NewQuoteExpectedOrderComponent implements OnInit, AfterViewInit {
   ) { }
 
   ngOnInit(): void {
+    this.initTenantsData();
     this.getPackageTypes();
     this.onTransportAndShipmentChange();
 
     this.resetForm();
   }
 
+  async initTenantsData(){
+    this.tenant =  await this.newQuoteDataService.getTenantsData();
+    console.log(this.tenant)
+  }
+
   resetForm() {
     this.newQuoteDataService.$resetForm.subscribe(() => {
       this.formArray.clear();
       this.addPackage();
-      // this.formArray.updateValueAndValidity();
 
       ['quantity', 'quantityType'].forEach(ctrl =>
         [1, 2, 3, 4].forEach(i=> this.formGroup.controls[ctrl + i].reset()))
-
     })
   }
 
@@ -197,7 +203,7 @@ export class NewQuoteExpectedOrderComponent implements OnInit, AfterViewInit {
   }
 
   calcVolume(form: FormGroup) {
-    const val = form.controls.Ldimension.value * form.controls.Wdimension.value * form.controls.Hdimension.value;
+    const val = form.controls.Ldimension.value * form.controls.Wdimension.value * form.controls.Hdimension.value / 1000000;
 
     if (val)
       form.controls.volume.setValue(val)

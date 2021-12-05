@@ -22,6 +22,10 @@ import { ShipmentTypeListService } from 'Shipment/Services/StandardLists/Shipmen
 import { PackageTypeList } from 'Common/EntityLists/PackageTypeList';
 import { LogtuideTableDataService } from '../../components/autocomplate-table/logtuide-table-data.service';
 import { Subject } from 'rxjs';
+import { TenantPMService } from 'Common/Services/StandardPMs/TenantPMService';
+import { SessionLocator } from 'Infrastructure/Utilities/SessionLocator';
+import { TenantList } from 'Common/EntityLists/TenantList';
+import { TenantListService } from 'Common/Services/StandardLists/TenantListService';
 
 @Injectable()
 export class NewQuoteDataService {
@@ -32,7 +36,12 @@ export class NewQuoteDataService {
     private entityListService: EntityListService,
     private newQuoteOPWebService: NewQuoteOPWebService,
     private logtuideTableDataService: LogtuideTableDataService,
+    private tanentsService: TenantListService,
   ) { }
+
+  async getTenantsData(): Promise<TenantList> {
+    return this.logtuideTableDataService.getDataFromService(this.tanentsService.getSingle(SessionLocator.TenantPM.Id)) as any;
+  }
 
   async getDirectionList(): Promise<DirectionList[]> {
     return this.logtuideTableDataService.getDataFromService(new DirectionListService().getAllFromCache());
