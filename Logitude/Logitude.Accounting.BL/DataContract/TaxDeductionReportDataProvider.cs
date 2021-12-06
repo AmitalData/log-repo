@@ -408,14 +408,13 @@ namespace Logitude.Accounting.BL.DataContract
         private string GetVendorIdByMainAccount(string accountId)
         {
             GLAccountList account = transactionsOppositGLAccounts.Where(d => d.Id == accountId).FirstOrDefault(); 
-            if (account == null || account.IsMultiCurrency == true) return null;         
-            return GetVendorIdForSingleCurrencyAccount(account);
-
+            if (account == null || account.IsMultiCurrency == true) return null;
+            return GetVendorIdForSingleCurrencyAccount(account.Id);
 
         }
-        private string GetVendorIdForSingleCurrencyAccount(GLAccountList account)
+        private string GetVendorIdForSingleCurrencyAccount(string accountId)
         {
-            GLAccountCurrency accountCurrency = accountCurrencies.Where(d => d.GLAccountId == account.Id).FirstOrDefault();
+            GLAccountCurrency accountCurrency = accountCurrencies.Where(d => d.GLAccountId == accountId).FirstOrDefault();
             if (accountCurrency == null)
             {
                 return null;
@@ -476,8 +475,8 @@ namespace Logitude.Accounting.BL.DataContract
 
                 if (gLAccount != null)
                 {
-                    List<CardList> selectedVendors = FillSelectedVendosList(vendors, item.VendorId);
-                //    List<CardList> selectedVendors = vendors.Where(d => d.GLAccountId == item.VendorId).Distinct().ToList();
+                    List<CardList> selectedVendors = GetSelectedVendorsList(vendors, item.VendorId);
+                    //    List<CardList> selectedVendors = vendors.Where(d => d.GLAccountId == item.VendorId).Distinct().ToList();
                     ValidateGLAccountVendors(selectedVendors, gLAccount);
                     groupedbyVendor = SetGLAccountFields(gLAccount, groupedbyVendor);
                     groupedbyVendor = SetVendorVatNumberAndAddress(selectedVendors, groupedbyVendor);
@@ -549,7 +548,9 @@ namespace Logitude.Accounting.BL.DataContract
             }
             if (groupedbyVendor.VATNumber == null)
             {
-                taxDeductionReport.ErrorMessage = taxDeductionReport.ErrorMessage + Environment.NewLine + (selectedVendors.Count>1? " Vendor GLAccount " + groupedbyVendor.DisplayNumber + " is connected to more than one Operational Vendor Card and none of them contain a VAT number" + cardsCodes : TextCodesTranslator.TranslateText("TaxDeductionReport.O.CardWithoutVatNumber", Tenant) + ", " + TextCodesTranslator.TranslateText("Card.F.Code", Tenant) + ":" + selectedVendors[0].Code) ;
+                groupedbyVendor.VATNumber = GetVendorVatNumberFromMainAccount(groupedbyVendor);
+                if (groupedbyVendor.VATNumber == null)
+                    taxDeductionReport.ErrorMessage = taxDeductionReport.ErrorMessage + Environment.NewLine + (selectedVendors.Count>1? " Vendor GLAccount " + groupedbyVendor.DisplayNumber + " is connected to more than one Operational Vendor Card and none of them contain a VAT number" + cardsCodes : TextCodesTranslator.TranslateText("TaxDeductionReport.O.CardWithoutVatNumber", Tenant) + ", " + TextCodesTranslator.TranslateText("Card.F.Code", Tenant) + ":" + selectedVendors[0].Code) ;
             }
             if (groupedbyVendor.VendorAddress == null && groupedbyVendor.VendorCity == null)
             {
@@ -568,7 +569,29 @@ namespace Logitude.Accounting.BL.DataContract
 
         }
 
-        private List<CardList> FillSelectedVendosList(List<CardList> vendors, string accountId)
+        private List<CardList> GetSelectedVendorsList(List<CardList> vendors, string accountId)
+        {
+            List<CardList> selectedVendors = new List<CardList>();
+            bool hasConnectedVendors = vendors.Where(d => d.GLAccountId == accountId).Any();
+            if (hasConnectedVendors)
+            {
+                selectedVendors = FillAccountVendorsList(vendors, accountId);
+            }
+            else
+            {
+                string mainAccountId = GetVendorIdForSingleCurrencyAccount(accountId);
+                selectedVendors = FillAccountVendorsList(vendors, mainAccountId);
+            }
+            return selectedVendors;
+        }
+        private string GetVendorVatNumberFromMainAccount(ByVendorList groupedbyVendor)
+        {
+            string mainAccountId = GetVendorIdForSingleCurrencyAccount(groupedbyVendor.VendorId);
+            var vendorWithVatNumber = vendors.Where(d => d.GLAccountId == mainAccountId && d.VatNumber != null).FirstOrDefault();
+            return vendorWithVatNumber != null ? vendorWithVatNumber.VatNumber : null;
+
+        }
+        private List<CardList> FillAccountVendorsList(List<CardList> vendors, string accountId)
         {
             List<CardList> selectedVendors = new List<CardList>();
             foreach (CardList vendor in vendors)
