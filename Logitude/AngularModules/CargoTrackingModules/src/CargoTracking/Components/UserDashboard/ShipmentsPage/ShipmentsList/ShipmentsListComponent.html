@@ -50,7 +50,7 @@
                         (SelectionChanged)="SelectionChangedHandler($event)"> </multiple-selection>
                     <multiple-selection #shipmentMoreFiltersMultipleSelection class="multipe-select"
                         [MultipleSelectionList]="ToggleFilters.slice(6,9)" [Title]="'More Filters'"
-                        (SelectionChanged)="SelectionChangedHandler($event)">
+                        (SelectionChanged)="SelectionMoreFilterChangedHandler($event)">
                     </multiple-selection>
                 </div>
                 <div>
@@ -78,12 +78,6 @@
                     </div>
                 </div>
             </div>
-
-
-            <!-- <div class="has-exception-checkbox-filter">
-                <CheckBox (ValueChanged)="OnHasExceptionChanged($event)" [Text]="'Exceptions Only'"
-                    [Value]="hasException"></CheckBox>
-            </div> -->
 
         </div>
 
@@ -568,7 +562,7 @@
 
 
                     <div class="checkbox-filteritem"
-                        *ngFor="let item of ToggleFilters.slice(0, 0).concat(ToggleFilters.slice(3,ToggleFilters.length))">
+                        *ngFor="let item of ToggleFilters.slice(0, 0).concat(ToggleFilters.slice(3,6))">
                         <CheckBox [Value]="selectedShipmentTypesFilter.includes(item)" [Text]="item.Name"
                             (ValueChanged)="OnShipmentTypeFilterChanged($event, item)"></CheckBox>
                     </div>

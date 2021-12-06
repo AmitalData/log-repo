@@ -495,7 +495,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
         this.SetMilestonesFilter(shipmentFilters);
         this.SetTransportModeFilters(shipmentFilters);
         this.SetDirectionFilters(shipmentFilters);
-        this.SetMoreFilters(shipmentFilters);
+        //this.SetMoreFilters(shipmentFilters);
         return shipmentFilters;
     }
     SetMoreFilters(shipmentFilters: CargoTrackingShipmentFilters) {
@@ -767,8 +767,8 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
         new ToggleFilter('A', 'Air', 'shipmentType'),
         new ToggleFilter('I', 'Land', 'shipmentType'),
         new ToggleFilter('O', 'Ocean', 'shipmentType'),
-        new ToggleFilter(MoreFilterCodes.OrdersOnly, 'Orders Only', 'moreFilter'),
         new ToggleFilter(MoreFilterCodes.ExceptionOnly, 'Exception Only', 'moreFilter'),
+        new ToggleFilter(MoreFilterCodes.OrdersOnly, 'Orders Only', 'moreFilter'),
         new ToggleFilter(MoreFilterCodes.EstimatedArrivalOnly, 'Estimated Arrival Only', 'moreFilter')
     ];
 
@@ -881,6 +881,24 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
         RootContext.ShipmentsScrollPosition = 0;
         this.LoadScreenData();
 
+    }
+    SelectionMoreFilterChangedHandler(event){
+        switch (event) {
+            case MoreFilterCodes.ExceptionOnly: {
+                this.hasException = this.hasExceptionAdvancedFilter = !this.hasException;
+                break;
+            }
+            case MoreFilterCodes.OrdersOnly: {
+                this.ordersOnly = this.OrdersOnlyAdvancedFilter = !this.ordersOnly;
+                break;
+            }
+            case MoreFilterCodes.EstimatedArrivalOnly: {
+                this.estimatedArrivalOnly = this.EstimatedArrivalOnlyAdvancedFilter = !this.estimatedArrivalOnly;
+                break;
+            }
+
+        }
+        this.LoadScreenData();
     }
     ClearFilters() {
         this.SelectedFilters = [];
@@ -1117,23 +1135,6 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
         }
     }
 
-    // moreFilterMobileChange(filter:MoreFilterCodes){
-    //     switch (filter) {
-    //         case MoreFilterCodes.ExceptionOnly:{
-    //             this.hasException = this.hasExceptionAdvancedFilter = false;
-    //             break;
-    //         }
-    //         case MoreFilterCodes.OrdersOnly:{
-    //             this.ordersOnly = this.OrdersOnlyAdvancedFilter = false;
-    //             break;
-    //         }
-    //         case MoreFilterCodes.EstimatedArrivalOnly:{
-    //             this.estimatedArrivalOnly = this.EstimatedArrivalOnlyAdvancedFilter = false;
-    //             break;
-    //         }  
-
-    //     }
-    // }
 }
 
 export class ToggleFilter {
