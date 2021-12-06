@@ -82,6 +82,7 @@ export class ListComponent implements OnInit, AfterViewInit {
     LayoutDirection: string = 'ltr';
     customsSettingListService: CustomsSettingListService = new CustomsSettingListService();
     public HasCustomsFilterMenu: boolean = false;
+    public IsPhysicalCheckObjectTable: boolean = false;
 
     @ViewChild(LogGridComponent) MyLogGridComponent: LogGridComponent = null;
     @ViewChild(LogGridComponentV2) MyLogGridComponentV2: LogGridComponentV2 = null;
@@ -108,6 +109,7 @@ export class ListComponent implements OnInit, AfterViewInit {
     CurrentQueryFilters: ApiQueryFilters;
     AdvanceFilters: ApiQueryFilters;
     @Output() onQueryChangeEvent = new EventEmitter();
+    @Output() onRefershQueryEvent = new EventEmitter();
     @Output() onSelectedQueryChangeEvent = new EventEmitter();
     onOpenFilterAreaClick() {
         this.IsAdvancedSearchOpened = true;
@@ -662,6 +664,9 @@ export class ListComponent implements OnInit, AfterViewInit {
         if (this.ObjectTableName == "Customs.DeclarationReferantData" || this.ObjectTableName == "Customs.DeclarationCargoSplit") {
             this.HasCustomsFilterMenu = true;
         }
+         if (this.ObjectTableName == "Customs.PhysicalCheck") {
+            this.IsPhysicalCheckObjectTable = true;
+        }
         if (this.ObjectTableName == "Customs.ExportStorge" || this.ObjectTableName == "QuoteOP") {
 
             this.LayoutDirection = "ltr";
@@ -873,7 +878,13 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
 
                 else {
                     this.isLoaderReady = true;
-                    this.LoadedActionBar("MNA", "ListActionBar");
+                    if (this.ObjectTable.Name == "Customs.PhysicalCheck") {
+                        this.LoadedActionBar("MNO", "ListActionBar");
+
+                    }
+                    else {
+                        this.LoadedActionBar("MNA", "ListActionBar");
+                    }
                     if (this.ObjectTable.HasFiltersMenu) {
 
                         let myLocation: LocationDirective = this.AllLocations.toArray().filter(d => d.Code == "MNH")[0];
@@ -2610,7 +2621,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
     }
     private SetNewEntityLabel() {
         if (this.HaveFeatureNewExportDeclararion()) {
-            this.NewEntityButtonLabel = "הצהרת יצוא חדשה"
+            this.NewEntityButtonLabel = "הצהרת יצום חדשה"
         } else
         if (this.listArgs.NewButtonLabel != null) {
             this.NewEntityButtonLabel = this.listArgs.NewButtonLabel;
@@ -2868,7 +2879,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
     }
     RunNewExportDeclaration() {
         var logWindow = new LogitudeWindow();
-        logWindow.Title = "פתיחת הצהרת יצוא חדשה";
+        logWindow.Title = "פתיחת הצהרת יצום חדשה";
         logWindow.Width = 800;
         logWindow.Height = 500;
         logWindow.NewWizardArgs = { IsNewEntity: true };
@@ -3316,6 +3327,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
     }
 
     DoRefresh() {
+        debugger;
         this.MyScrollTop = 0;
         this.MySelectedRowIndex = null;
         this.CurrentQueryFilters = new ApiQueryFilters();//this.listArgs.Filters;
@@ -3431,6 +3443,8 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                 });
             }
             this.onQueryChangeEvent.emit({ QueryCode: this.SelectedQueryCode, Filters: this.CurrentQueryFilters, Reload: false });
+            this.onRefershQueryEvent.emit({ QueryCode: this.SelectedQueryCode, Filters: this.CurrentQueryFilters, Reload: false });
+
             //     else {
             //         this.onQueryChangeEvent.emit({ QueryId: this.SelectedQueryId, Filters: this.CurrentQueryFilters });
             //     }
