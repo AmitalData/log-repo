@@ -159,26 +159,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
         }
         private void HandleEventStatus(EventStatusTracerArgs args)
         {
-            HandleAddedManuallyEvent(args);
             ComputeEventStatus(args);
         }
-        private void HandleAddedManuallyEvent(EventStatusTracerArgs args)
-        {
-            if (args.IsAddedManually)
-            {
-                if (!string.IsNullOrEmpty(args.NewStatusId) && !string.IsNullOrEmpty(args.OldStatusId))
-                {
-                    EntityStatus newStatus = EntityStatusRepository.GetSingleEntityStatus(args.NewStatusId, tenant, true);
-                    EntityStatus oldStatus = EntityStatusRepository.GetSingleEntityStatus(args.OldStatusId, tenant, true);
-
-                    Contact user = ContactRepository.GetSingleContact(eventUserId, tenant, true);
-                    if (newStatus != null)
-                    {
-                        args.Notes = "Status was changed manually from " + oldStatus.Name + " to " + newStatus.Name + " by " + (user != null ? user.EnglishName : "");
-                    }
-                }
-            }
-        }
+    
         private void ComputeEventStatus(EventStatusTracerArgs args)
         {
             if (args.IsAddedManually)
@@ -257,64 +240,73 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                 return;
             }
 
+            this.UpdateAllTraceEventsToDelete(deletedEventType);
+            TraceEvent previousEvent = this.GetPreviousEventAfterDeletion(deletedEventType);
+            this.SetContainerStatusesFields(previousEvent);
+        }
+        
+        private void UpdateAllTraceEventsToDelete(EventType deletedEventType)
+        {
             List<TraceEvent> AllEventTraces = this.traceEventRepository.GetAllTraceEventsByEventType(containerPM.Id, deletedEventType.Id, tenant).ToList();
-            if (AllEventTraces.Count > 0)
+            if (AllEventTraces == null || (AllEventTraces?.Count == 0))
             {
-                foreach (TraceEvent iTraceEvent in AllEventTraces)
+                return;
+            }
+            foreach (TraceEvent iTraceEvent in AllEventTraces)
+            {
+                iTraceEvent.Deleted = true;
+                traceEventRepository.Update(iTraceEvent);
+            }
+
+            traceEventRepository.SubmitChanges();
+        }
+        private TraceEvent GetPreviousEventAfterDeletion(EventType deletedEventType)
+        {
+            if (string.IsNullOrEmpty(deletedEventType.EntityStatusId))
+            {
+                return null;
+            }
+            TraceEvent previousEvent = null;
+
+            List<TraceEvent> iTraceEventList = (from a in objectContext.TraceEvent.Include("EventType").Include("EventType.EntityStatus")
+                                                where a.Tenant == tenant
+                                                && a.EntityId == containerPM.Id
+                                                && a.ObjectTableId == objectTableId
+                                                && a.EventType.EntityStatus != null
+                                                && a.Deleted == false
+                                                select a).ToList();
+
+            foreach (TraceEvent e in iTraceEventList)
+            {
+                if (previousEvent == null)
                 {
-                    iTraceEvent.Deleted = true;
-                    traceEventRepository.Update(iTraceEvent);
+                    previousEvent = e;
                 }
-
-                traceEventRepository.SubmitChanges();
-
-                if (!string.IsNullOrEmpty(deletedEventType.EntityStatusId))
+                else
                 {
-                    TraceEvent previousEvent = null;
-
-                    List<TraceEvent> iTraceEventList = (from a in objectContext.TraceEvent.Include("EventType").Include("EventType.EntityStatus")
-                                                        where a.Tenant == tenant
-                                                        && a.EntityId == containerPM.Id
-                                                        && a.ObjectTableId == objectTableId
-                                                        && a.EventType.EntityStatus != null
-                                                        && a.Deleted == false
-                                                        select a).ToList();
-
-                    foreach (TraceEvent e in iTraceEventList)
+                    if (e.EventType.EntityStatus.StatusWeight > previousEvent.EventType.EntityStatus.StatusWeight)
                     {
-                        if (!e.Deleted)
-                        {
-                            if (e.EventType.EntityStatus != null)
-                            {
-                                if (previousEvent == null)
-                                {
-                                    previousEvent = e;
-                                }
-
-                                else
-                                {
-                                    if (e.EventType.EntityStatus.StatusWeight > previousEvent.EventType.EntityStatus.StatusWeight)
-                                    {
-                                        previousEvent = e;
-                                    }
-                                }
-                            }
-                        }
+                        previousEvent = e;
                     }
-
-                    if (previousEvent != null)
-                    {
-                        containerPM.StatusId = previousEvent.EventType.EntityStatusId;
-                    }
-                    else
-                    {
-                        EventType firstEventType = allEventTypes.Where(d => d.Code == "COOR").FirstOrDefault();
-                        containerPM.StatusId = firstEventType.EntityStatusId;
-                    }
-                    container.StatusId = containerPM.StatusId;
                 }
             }
+
+            return previousEvent;
         }
+        private void SetContainerStatusesFields(TraceEvent previousEvent)
+        {
+            if (previousEvent != null)
+            {
+                containerPM.StatusId = previousEvent.EventType.EntityStatusId;
+            }
+            else
+            {
+                EventType firstEventType = allEventTypes.Where(d => d.Code == "COOR").FirstOrDefault();
+                containerPM.StatusId = firstEventType.EntityStatusId;
+            }
+            container.StatusId = containerPM.StatusId;
+        }
+
         public void Trace()
         {
             GetLoggedUser();
@@ -567,7 +559,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
         }
         private void TraceActualPODDeparture()
         {
-            if (containerPM.ActualPODDeparture != null)
+            if (containerPM.ActualPODDeparture != null && container.ActualPODDeparture == null)
             {
                 this.CreateTraceEvent("GTOT", containerPM.ActualPODDeparture);
             }
@@ -594,7 +586,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
         }
         private void TraceShipmentOnCarriageATA()
         {
-            if (containerPM.ShipmentOnCarriageATA != null)
+            if (containerPM.ShipmentOnCarriageATA != null && container.ShipmentOnCarriageATA == null)
             {
                 this.CreateTraceEvent("DPWH", containerPM.ShipmentOnCarriageATA);
             }
@@ -621,7 +613,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
         }
         private void TraceShipmentOnCarriageATD()
         {
-            if (containerPM.ShipmentOnCarriageATD != null)
+            if (containerPM.ShipmentOnCarriageATD != null && container.ShipmentOnCarriageATD == null)
             {
                 this.CreateTraceEvent("ARWH", containerPM.ShipmentOnCarriageATD);
             }
@@ -648,7 +640,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
         }
         private void TraceShipmentMainCarriageATA()
         {
-            if (containerPM.ShipmentMainCarriageATA != null)
+            if (containerPM.ShipmentMainCarriageATA != null && container.ShipmentMainCarriageATA == null)
             {
                 this.CreateTraceEvent("ARPD", containerPM.ShipmentMainCarriageATA);
             }
@@ -675,7 +667,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
         }
         private void TraceShipmentMainCarriageATD()
         {
-            if (containerPM.ShipmentMainCarriageATD != null)
+            if (containerPM.ShipmentMainCarriageATD != null && container.ShipmentMainCarriageATD == null)
             {
                 this.CreateTraceEvent("POLD", containerPM.ShipmentMainCarriageATD);
             }
@@ -702,7 +694,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
         }
         private void TraceShipmentPreCarriageATA()
         {
-            if (containerPM.ShipmentPreCarriageATA != null)
+            if (containerPM.ShipmentPreCarriageATA != null && container.ShipmentPreCarriageATA == null)
             {
                 this.CreateTraceEvent("PCAV", containerPM.ShipmentPreCarriageATA);
             }
@@ -717,14 +709,18 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
             {
                 this.CreateTraceEvent("PCDP", containerPM.ActualOriginPickup);
             }
+            else if (containerPM.ShipmentPreCarriageATD != null && container.ShipmentPreCarriageATD == null && containerPM.ActualOriginPickup == null)
+            {
+                this.CreateTraceEvent("PCDP", containerPM.ShipmentPreCarriageATD);
+            }
             else if (containerPM.ActualOriginPickup == null && container.ActualOriginPickup != null)
             {
                 this.DeleteTraceEvent("PCDP");
                 this.TraceShipmentPreCarriageATD();
             }
-            else
+            else if (containerPM.ShipmentPreCarriageATD == null && container.ShipmentPreCarriageATD != null)
             {
-                this.TraceShipmentPreCarriageATD();
+                this.DeleteTraceEvent("PCDP");
             }
         }
         private void TraceShipmentPreCarriageATD()
@@ -732,10 +728,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
             if (containerPM.ShipmentPreCarriageATD != null)
             {
                 this.CreateTraceEvent("PCDP", containerPM.ShipmentPreCarriageATD);
-            }
-            else if (containerPM.ShipmentPreCarriageATD == null && container.ShipmentPreCarriageATD != null)
-            {
-                this.DeleteTraceEvent("PCDP");
             }
         }
     }
