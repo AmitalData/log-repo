@@ -17306,7 +17306,7 @@
     ObjectTableName="&quot;Container&quot;"
     QuerySection="&quot;Container&quot;"
     SystemLevel="true"
-    IsAddNewEntity="true"
+    IsAddNewEntity="false"
     IsPackagable="true"
     DefaultSortName="&quot;CreateDate&quot;"
     DefaultSortDirection="&quot;Desending&quot;"

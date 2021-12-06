@@ -45,7 +45,15 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
                 }
             }
 
-            queryableData = queryableData.Where(d => d.IsClosed == showIsClosed && d.IsCancelled == showIsCancelled);
+            if (showIsCancelled)
+            {
+                queryableData = queryableData.Where(d => d.IsCancelled == showIsCancelled);
+            }
+            else if (showIsClosed)
+            {
+                queryableData= queryableData.Where(d => d.IsClosed == showIsClosed && d.IsCancelled == showIsCancelled);
+            }
+
             return queryableData;
         }
     }
