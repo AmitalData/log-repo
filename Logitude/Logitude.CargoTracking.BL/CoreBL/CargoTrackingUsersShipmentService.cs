@@ -54,6 +54,9 @@ namespace Logitude.CargoTracking.BL.CoreBL
             counter.Import = shipmentsIQuerable.Count(d => d.DirectionId == "I" || d.DirectionId == "C");
             counter.Export = shipmentsIQuerable.Count(d => d.DirectionId == "E");
             counter.Drop = shipmentsIQuerable.Count(d => d.DirectionId == "R");
+            counter.HasException = shipmentsIQuerable.Count(d => d.CurrentMilestoneExceptions != null);
+            counter.OrdersOnly = shipmentsIQuerable.Count(d => d.EntityType == "O");
+            counter.EstimatedArrivalOnly = shipmentsIQuerable.Count(d => d.ArrivalEstimationDate != null && d.ArrivalDate == null);
 
             return counter;
         }
@@ -78,5 +81,8 @@ namespace Logitude.CargoTracking.BL.CoreBL
         public int Land { get; set; }
         public int Sea { get; set; }
         public int Drop { get; set; }
+        public int HasException { get; set; }
+        public int OrdersOnly { get; set; }
+        public int EstimatedArrivalOnly { get; set; }
     }
 }

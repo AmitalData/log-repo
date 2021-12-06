@@ -14,6 +14,7 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
 
     public partial class CargoTrackingShipmentListQueryService
     {
+        const string OrderType = "O";
         private IQueryable<CargoTrackingShipmentList> GetIqueryableList(IQueryable<CargoTrackingShipment> iQueryable)
         {
             IQueryable<CargoTrackingPortList> ports = GetPorts();
@@ -616,8 +617,7 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
             shipments = FilterByMileStones(shipmentFilters, shipments);
             shipments = FilterTransportMode(shipmentFilters, shipments);
             shipments = FilterDirections(shipmentFilters, shipments);
-            shipments = FilterShipmentsWhichHaveExceptions(shipmentFilters, shipments);
-
+            shipments = FilterShipmentsWhichMoreFilter(shipmentFilters, shipments);
             return shipments;
         }
 
@@ -648,10 +648,14 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
             return shipments;
         }
 
-        private static IQueryable<CargoTrackingShipmentList> FilterShipmentsWhichHaveExceptions(CargoTrackingShipmentFilters shipmentFilters, IQueryable<CargoTrackingShipmentList> shipments)
+        private static IQueryable<CargoTrackingShipmentList> FilterShipmentsWhichMoreFilter(CargoTrackingShipmentFilters shipmentFilters, IQueryable<CargoTrackingShipmentList> shipments)
         {
             if (shipmentFilters.HasException)
                 shipments = shipments.Where(d => d.CurrentMilestoneExceptions != null);
+            if (shipmentFilters.OrdersOnly)
+                shipments = shipments.Where(d => d.EntityType == OrderType);
+            if (shipmentFilters.EstimatedArrivalOnly)
+                shipments = shipments.Where(d => d.ArrivalEstimationDate != null && d.ArrivalDate == null);
             return shipments;
         }
 
