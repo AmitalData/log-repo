@@ -44,7 +44,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
         {
             if (this.ShouldUpdateContainers())
             {
-                this.HandelCancelationShipment();
                 this.HandelShipmentMasterDataFieldsChanges();
                 this.HandelShipmentPackagesChangeSets();
                 this.SendAutomaticallyOceanOnsightsRequest();
@@ -52,6 +51,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
                 this.HandelShipmentDeliveriesChangeSets();
                 this.HandelDeletedShipmentPickUpsChangeSets();
                 this.HandelDeletedShipmentDeliveriesChangeSets();
+                this.HandelCancelationShipment();
             }
         }
         private void HandelCancelationShipment()
@@ -258,7 +258,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
 
         private void CreateContainer(ShipmentPackagePM shipmentPackage)
         {
-            var container = containerQuery.GetCancelledContainerByShipmentId(initializer.EntityPM.Id, initializer.EntityPM.Tenant);
+            var container = containerQuery.GetCancelledContainerByShipmentId(initializer.EntityPM.Id, shipmentPackage.ContainerNumber, initializer.EntityPM.Tenant);
             if (container != null)
             {
                 this.ActivateCancelledContainer(container, shipmentPackage);
@@ -423,6 +423,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
             if (container != null)
             {
                 container.IsCancelled = true;
+                container.ShipmentPackagesId = null;
                 container.CancelledDate = TenantServerConfigration.GetCurrentDateTime(this.initializer.Tenant);
                 containerService.Update(container);
             }

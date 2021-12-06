@@ -105,10 +105,10 @@ namespace Simplog.Data.ShipmentsModel.Repositories
                    select container;
         }
 
-        public Container GetCancelledContainerByShipmentId(string shipmentId, int tenant)
+        public Container GetCancelledContainerByShipmentId(string shipmentId,string containerNumber, int tenant)
         {
-            return (from container in context.Containers
-                    where container.Tenant == tenant && container.ShipmentId == shipmentId && container.IsCancelled == true
+            return (from container in context.Containers 
+                    where container.ContainerNumber == containerNumber && container.Tenant == tenant && container.ShipmentId == shipmentId && container.IsCancelled
                     select container).FirstOrDefault();
         }
     }
