@@ -590,7 +590,7 @@ namespace CommunicationWorkerRole
             StorageDataArgs storageDataArgs = new StorageDataArgs() { FileName = (entityChange.Id + entityChange.EntityId + "Entity"), FolderName = "Others", Tenant = entityChange.Tenant };
             byte[] objectData = StorageDataService.ReadFileFromStorage(storageDataArgs);
             ShipmentPM shipmentPM = LogitudeXmlSerializer.DeserializeObject<ShipmentPM>(objectData);
-            SendInterfaceDataContractService sendInterfaceDataContractService = new SendInterfaceDataContractService(shipmentPM, automationSendInterface.ComputingPartnerId, entityChange.Tenant);
+            SendInterfaceDataContractService sendInterfaceDataContractService = new SendInterfaceDataContractService(shipmentPM, automationSendInterface, entityChange.Tenant);
             string documentId = sendInterfaceDataContractService.GetDataContractDocumentId(automationSendInterface.Format);
             return documentId;
         }

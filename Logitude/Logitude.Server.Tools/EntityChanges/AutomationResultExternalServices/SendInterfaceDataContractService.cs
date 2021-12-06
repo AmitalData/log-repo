@@ -22,13 +22,25 @@ namespace Logitude.Server.Tools.EntityChanges.Service
         private DocumentRepository documentRepository = null;
         private string sendInterfaceDataContractFileName = string.Empty;
 
-        public SendInterfaceDataContractService(object entityPM,  string computingPartnerId , int tenant)
+        public SendInterfaceDataContractService(object entityPM,  AutomationSendInterface automationSendInterface, int tenant)
         {
             this.tenant = tenant;
-            string computingPartnerCode = GetComputingPartnerCode(tenant, computingPartnerId);
+            string computingPartnerCode = GetComputingPartnerCode(tenant, automationSendInterface.ComputingPartnerId);
+            if (IsShouldBeRemoveEventList(automationSendInterface)) SetPropertyValueToEntity("EventList", entityPM, null);
             sendInterfaceDataContractFileName = GetDataContractFileName(entityPM);
             sendInterfaceDataContractObject = GetDataContractObject(entityPM, computingPartnerCode);
             documentRepository = new DocumentRepository(tenant);
+        }
+
+        private bool IsShouldBeRemoveEventList(AutomationSendInterface automationSendInterface)
+        {
+            return !(bool)automationSendInterface.AdvancedAutomationSendInterfaceDetails?.IncludeEvents;
+        }
+
+        private void SetPropertyValueToEntity(string fieldName, object entity, object fieldValue)
+        {
+            PropertyInfo propInfo = entity.GetType().GetProperty(fieldName);
+            if (propInfo != null) propInfo.SetValue(entity, fieldValue, null);
         }
 
         public string GetDataContractDocumentId(string format)

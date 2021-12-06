@@ -1164,6 +1164,7 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
         this.AutomationSendInterface.InterfaceName = this.AutomatedBackupClass.AutomationSendInterface.InterfaceName;
         this.AutomationSendInterface.SendVia = this.AutomatedBackupClass.AutomationSendInterface.SendVia;
         this.AutomationSendInterface.WebHookDetails = this.AutomatedBackupClass.AutomationSendInterface.WebHookDetails;
+        this.AutomationSendInterface.AdvancedAutomationSendInterfaceDetails = this.AutomatedBackupClass.AutomationSendInterface.AdvancedAutomationSendInterfaceDetails;
 
 
     }
@@ -2318,7 +2319,7 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
 
 
 
-
+    
     LoadSendInterfaceResultComponent(resultCode:string) {
 
         if (this.AllLocations && this.AllLocations.length > 0) {
