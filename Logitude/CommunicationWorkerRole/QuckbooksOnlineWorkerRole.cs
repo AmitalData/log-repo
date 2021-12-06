@@ -35,6 +35,7 @@ using System.Text;
 using System.Threading;
 using System.Transactions;
 using System.Xml.Serialization;
+using Simplog.Data.InfrastructureModel.Repositories;
 
 namespace CommunicationWorkerRole
 {
@@ -973,6 +974,8 @@ namespace CommunicationWorkerRole
                             service.APPaymentQuickbooksValidating(paymentPM, true, false, payment, this.Invoicecontext, this.Commoncontext, false, true);
                         }
                     }
+
+                    this.HandelSendAPInvoiceAttachments(Id, tenant);
                 }
 
                 else if (type == "ARPayment" || type == "ARPaymentVoid")
@@ -1204,5 +1207,59 @@ namespace CommunicationWorkerRole
             AccountingSettingPM entityPM = query.GetSingleAccountingSettingPMById(int.Parse(tenant));
             return GetServiceContextAuth2(tenant, entityPM, mySetting);
         }
+
+        private void HandelSendAPInvoiceAttachments(string invoiceId, int tenant)
+        {
+            if (string.IsNullOrEmpty(invoiceId))
+                return;
+
+            DocumentsFiling documentsFiling = this.GetDocumentFilings(invoiceId, tenant);
+
+            if (documentsFiling == null)
+                return;
+
+            this.OpenSendingQBODocumentsQueue(documentsFiling);
+        }
+
+        private DocumentsFiling GetDocumentFilings(string invoiceId, int tenant)
+        {
+            ObjectTableRepository objectTableRepository = new ObjectTableRepository(tenant);
+            string shipmentObjectTableId = GetObjectTableIdByName("Shipment", tenant, objectTableRepository);
+            string apInvoiceObjectTableId = GetObjectTableIdByName("APInvoice", tenant, objectTableRepository);
+            string documentCode = "APDNCN";
+
+            var documentsFiling = (from a in Commoncontext.DocumentsFilings.Include("DocumentType")
+                                   where a.Tenant == tenant && (a.EntityId == invoiceId || a.ChildEntityId == invoiceId)
+                                   && (a.ObjectTableId == shipmentObjectTableId || a.ObjectTableId == apInvoiceObjectTableId)
+                                   && a.IsDeleted == false && (a.IsTransferdToQBO == null || a.IsTransferdToQBO == false)
+                                   && (a.DocumentType != null && a.DocumentType.Code == documentCode)
+                                   select a).FirstOrDefault();
+
+            return documentsFiling;
+        }
+
+        private string GetObjectTableIdByName(string objectTableName, int tenant, ObjectTableRepository objectTableRepository)
+        {
+            var objectTable = objectTableRepository.GetObjectTableByName(objectTableName, tenant, true);
+            if (objectTable == null)
+                return "";
+
+            return objectTable.Id;
+        }
+
+        private void OpenSendingQBODocumentsQueue(DocumentsFiling documentFiling)
+        {
+            if (documentFiling == null)
+            {
+                return;
+            }
+
+            IQueueService queueservice = new DbQueueService();
+            queueservice.InitializeQueue("QBODocumnetsUploaderQueue", documentFiling.Tenant);
+            queueservice.Send(new Dictionary<string, string>() { { "EntityId", documentFiling.Id }, { "Tenant", documentFiling.Tenant.ToString() },
+                                                                 { "DocumentCode",  "APDNCN" }, { "IsDocumentUploaded", true.ToString() },
+                                                                 { "IsDocumentDeleted", false.ToString() } }, documentFiling.Tenant, null, null, null, null);
+        }
+
     }
 }
