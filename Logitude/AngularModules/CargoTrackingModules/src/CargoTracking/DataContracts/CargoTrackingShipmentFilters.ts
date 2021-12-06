@@ -12,4 +12,6 @@ export class CargoTrackingShipmentFilters
     public SortFieldName: string;
     public SelectedInvitedCustomers: any[];
     public HasException: boolean = false;
+    public OrdersOnly: boolean = false;
+    public EstimatedArrivalOnly: boolean = false;
 }
