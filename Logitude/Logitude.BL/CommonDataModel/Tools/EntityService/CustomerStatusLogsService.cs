@@ -38,8 +38,8 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 new Parameter { Order = 2, Value = customerPM.LogBoxActivated.ToString() },
                 new Parameter { Order = 3, Value = customerPM.IsPrivateLabelCustomer.ToString() },
                 new Parameter { Order = 4, Value = customerPM.CustomerTenant.ToString() },
-                new Parameter { Order = 5, Value = customerTenantAccessCards.IsExportActivated.ToString() },
-                new Parameter { Order = 6, Value = customerTenantAccessCards.IsCustomsActivated.ToString() },
+                new Parameter { Order = 5, Value = customerTenantAccessCards?.IsExportActivated.ToString() },
+                new Parameter { Order = 6, Value = customerTenantAccessCards?.IsCustomsActivated.ToString() },
             }
             });
 
