@@ -1208,7 +1208,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
                         if (string.IsNullOrEmpty(loggedUserId))
                         {
-                            string loggedUserEmail = HttpContext.Current.User.Identity.Name;
+                            string loggedUserEmail = (HttpContext.Current!=null && HttpContext.Current.User!=null && HttpContext.Current.User.Identity!=null) ? HttpContext.Current.User.Identity.Name :"";
                             if (string.IsNullOrEmpty(loggedUserEmail))
                             {
                                 loggedUserEmail = "system@tenant" + extDocPM.Tenant + ".com";
