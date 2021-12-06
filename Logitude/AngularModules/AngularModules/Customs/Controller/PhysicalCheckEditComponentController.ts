@@ -32,6 +32,7 @@ export class PhysicalCheckEditComponentController implements IEditComponentContr
     }
     OnReloadEntityPM(): Promise<any> {
         return new Promise((resolve, reject) => {
+            resolve();
             return;
         });   }
     OnCloseEditControl(onCallBack?: () => void): void {
