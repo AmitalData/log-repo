@@ -840,6 +840,7 @@ namespace CommunicationWorkerRole
                                                             VolumeUnitCode = Shipment.VolumeUnitCode,
                                                             ForwardingPartnerTenant = Shipment.ForwardingPartnerId,
                                                             Notes = Shipment.Notes,
+                                                            IsDangerouseOfGoods = Shipment.OrderIsDangerouseGoods,
 
                                                             Agent = new CodeProperties()
                                                             {
