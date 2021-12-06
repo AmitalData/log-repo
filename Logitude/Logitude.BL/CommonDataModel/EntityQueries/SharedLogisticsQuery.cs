@@ -24,19 +24,26 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                 string[] test = systemURL.Split('/');
                 url = systemURL.Replace("/" + test[test.Length - 1], "");
             }
-            string cargoTrackingPath = url + "/cargo-tracking/login";
+            string cargoTrackingPath = GetCargoTrackingUrlPath(url);
             return new SharedLogisticsPM()
             {
-                SystemURL = "<a style=" + styleLink + " href='" + systemURL + "'" + ">" + url  + "</a>",
+                SystemURL = "<a style=" + styleLink + " href='" + systemURL + "'" + ">" + url + "</a>",
                 InvitationEmail = "[InvitationEmail]",
-                InvitationPassword ="[InvitationPassword]",
+                InvitationPassword = "[InvitationPassword]",
                 IOSAppLink = "<a style=" + styleLink + " href='" + LogitudeSettings.IOSAppLink + "'" + "><img  width='120' height='40' src='cid:AppleStore' /></a>",
                 AndroidAppLink = "<a style=" + styleLink + " href='" + LogitudeSettings.AndroidAppLink + "'" + "><img  width='120' height='40' src='cid:GooglePlay' /></a>",
-                ResetPasswordURL = "<a style=" + styleLink + " href='" + url + "[ResetPasswordURL]" + "'" + ">Reset my Password</a>", 
+                ResetPasswordURL = "<a style=" + styleLink + " href='" + url + "[ResetPasswordURL]" + "'" + ">Reset my Password</a>",
                 InviteeName = "[InviteeName]",
                 URLprivateCargoTracking = "<a style=" + styleLink + " href='" + cargoTrackingPath + "'" + ">" + cargoTrackingPath + "</a>",
             };
         }
 
+        private static string GetCargoTrackingUrlPath(string url)
+        {
+            string cargoURL = url;
+            cargoURL = cargoURL.Replace("https://", "");
+            string cargoTrackingPath = "https://" + cargoURL.Split('/')[0] + "/CargoTracking/cargo-tracking/login";
+            return cargoTrackingPath;
+        }
     }
 }
