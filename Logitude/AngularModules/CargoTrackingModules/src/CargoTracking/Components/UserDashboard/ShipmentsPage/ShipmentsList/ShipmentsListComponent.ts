@@ -793,7 +793,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
             x.Count = this.setCounterForMultipleSelect(x);
             return x;
         });
-        
+
         this.changeDetector.detectChanges();
     }
 
@@ -812,11 +812,11 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
             return this.ShipmentsCounter.Land;
         } else if (toggleFilter.Code == 'O') {
             return this.ShipmentsCounter.Sea;
-        }else if (toggleFilter.Code == MoreFilterCodes.ExceptionOnly) {
+        } else if (toggleFilter.Code == MoreFilterCodes.ExceptionOnly) {
             return this.ShipmentsCounter.HasException;
-        }else if (toggleFilter.Code == MoreFilterCodes.OrdersOnly) {
+        } else if (toggleFilter.Code == MoreFilterCodes.OrdersOnly) {
             return this.ShipmentsCounter.OrdersOnly;
-        }else if (toggleFilter.Code == MoreFilterCodes.EstimatedArrivalOnly) {
+        } else if (toggleFilter.Code == MoreFilterCodes.EstimatedArrivalOnly) {
             return this.ShipmentsCounter.EstimatedArrivalOnly;
         }
     }
@@ -863,18 +863,18 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
         else if (filter.FilterName == 'moreFilter') {
             this.shipmentMoreFiltersMultipleSelection.DeselectFilter(filter.Code);
             switch (filter.Code) {
-                case MoreFilterCodes.ExceptionOnly:{
+                case MoreFilterCodes.ExceptionOnly: {
                     this.hasException = this.hasExceptionAdvancedFilter = false;
                     break;
                 }
-                case MoreFilterCodes.OrdersOnly:{
+                case MoreFilterCodes.OrdersOnly: {
                     this.ordersOnly = this.OrdersOnlyAdvancedFilter = false;
                     break;
                 }
-                case MoreFilterCodes.EstimatedArrivalOnly:{
+                case MoreFilterCodes.EstimatedArrivalOnly: {
                     this.estimatedArrivalOnly = this.EstimatedArrivalOnlyAdvancedFilter = false;
                     break;
-                }  
+                }
 
             }
         }
@@ -888,9 +888,9 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
         this.shipmentTypeMultipleSelection.ClearFilters();
         this.shipmentDirectionMultipleSelection.ClearFilters();
         this.shipmentMoreFiltersMultipleSelection.ClearFilters();
-        this.hasException = false;
-        this.ordersOnly = false;
-        this.estimatedArrivalOnly = false;
+        this.hasException = this.hasExceptionAdvancedFilter = false;
+        this.ordersOnly = this.OrdersOnlyAdvancedFilter = false;
+        this.estimatedArrivalOnly = this.EstimatedArrivalOnlyAdvancedFilter = false;
         this.LoadScreenData();
     }
 
@@ -1190,7 +1190,7 @@ export class CargoTrackingShipmentsCounter {
     Air: number = 0;
     Land: number = 0;
     Sea: number = 0;
-    HasException : number = 0;
+    HasException: number = 0;
     OrdersOnly: number = 0;
     EstimatedArrivalOnly: number = 0;
 }
