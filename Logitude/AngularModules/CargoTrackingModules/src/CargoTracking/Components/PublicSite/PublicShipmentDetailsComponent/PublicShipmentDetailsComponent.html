@@ -229,7 +229,7 @@
                                 <div class="tick"> <img src="./assets/images/icons/tick.png" alt=""> </div>
                                 <div class="caption" style="width: 205px;">{{item.Name}}</div>
                                 <div class="date" style="width: 130px;">{{item.Date | date: 'dd/MM/yyyy, HH:mm' | dateTimeFormat}}</div>
-                                <div class="desc" style="width: calc(100% - 450px); padding: 0;" [attr.title]="item.Notes">
+                                <div class="desc" style="width: calc(100% - 450px); padding: 0;" >
                                     <custom-label>{{item.Notes}}</custom-label>
                                 </div>
                             </ng-container>
