@@ -1541,11 +1541,11 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
     private RequestedCommandCode: string = null;
     private RequestedCommandParam: string = null;
     ApplyRequestedCommand() {
-        // if (this.RequestedCommandCode == "ViewInvoice") {
+        if (this.RequestedCommandCode == "ViewInvoice") {
             SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                 .then(cmpRef => {
                     cmpRef.instance.ComponentRef = cmpRef;
-                    cmpRef.instance.Run({ EntityId: this.RequestedCommandParam, ObjectTableName: 'APPayment' });
+                    cmpRef.instance.Run({ EntityId: this.RequestedCommandParam, ObjectTableName: 'APInvoice' });
 
                     this.RequestedCommandParam = null;
 
@@ -1569,7 +1569,7 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
                         }
                     });
                 });
-        // }
+        }
 
         this.RequestedCommandCode = null;
     }
