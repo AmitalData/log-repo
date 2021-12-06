@@ -39,7 +39,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Toggle&quot;"
-  Code="&quot;fa6e&quot;"
+  Code="&quot;73df&quot;"
   Name="&quot; Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;Name&quot;"
@@ -632,6 +632,11 @@
       Name="&quot;QBO Tax Id Calculations&quot;"
       SearchFields="&quot;QBT,QBO Tax Id Calculations&quot;"
       Description="&quot;QBO Tax Id Calculations&quot;" />
+    <Record
+      Code="&quot;AEV&quot;"
+      Name="&quot;Automation Event Creation&quot;"
+      SearchFields="&quot;AEV,Automation Event Creation&quot;"
+      Description="&quot;Automation Event Creation&quot;" />
   </Records>
   <DataContracts />
   <AdditionalTextCodes />

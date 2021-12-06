@@ -404,6 +404,14 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "QBT,QBO Tax Id Calculations", 
                 Description = "QBO Tax Id Calculations", 
 			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "AEV", 
+                Name = "Automation Event Creation", 
+                SearchFields = "AEV,Automation Event Creation", 
+                Description = "Automation Event Creation", 
+			});
 			
             return all;
        }

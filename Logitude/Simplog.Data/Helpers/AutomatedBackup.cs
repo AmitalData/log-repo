@@ -57,7 +57,10 @@ namespace Simplog.Data.Helpers
         public string DocumentCopyId { get; set; }
 
         [DataMember]
-        public AutomationFollowUp AutomationFollowUp { get; set; }
+        public AutomationFollowUp AutomationFollowUp { get; set; }  
+
+        [DataMember]
+        public AutomationEvent AutomationEvent { get; set; }
 
         [DataMember]
         public AutomationQueuedTask AutomationQueuedTask { get; set; }
