@@ -165,10 +165,10 @@ namespace CommunicationWorkerRole
             return cardPM;
         }
 
-        private ContactPM GetContactById(int Tenant, string Id)
+        private ExtendedContactPM GetContactById(int Tenant, string Id)
         {
             ContactQuery contactQuery = new ContactQuery(Tenant);
-            ContactPM contactPM = contactQuery.GetSinglePM(Id, Tenant);
+            ExtendedContactPM contactPM = contactQuery.GetSingleExtendedContactPMsByTenant(Id, Tenant);
             return contactPM;
         }
 
