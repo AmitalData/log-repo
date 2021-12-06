@@ -89,7 +89,7 @@
 
                                                                 <table style="width:170px;height:22px;margin-left:8px;display:inline;">
                                                                     <tr *ngIf="isPrivateLabel == true">
-                                                                        <td style="width:130px;vertical-align:top"> 
+                                                                        <td style="width:130px;vertical-align:top">
                                                                             You can now define what document types will create a digital sign task for you -
                                                                         </td>
                                                                         <td style="width:40px;vertical-align:top">
@@ -175,10 +175,10 @@
                                                 <div></div>
                                             </td>
                                             <td style="width: 63px; vertical-align: middle; position:relative;">
-                                                <DirectionsFilter *ngIf="ShowDirectionFilters && !isLogbox" [HideExport]="isLogbox || !IsExportActivated" [ShowCustomFilter]="isLogbox|| IsImportActivated" [HideImportDomistic]="isLogbox|| isPrivateLabel" [HideAMANACFilters]="true" [SelectedValue]="SelectedDirectionFilter" (SelectedValueChanged)="SelectedDirectionFilter = $event"></DirectionsFilter>
+                                                <DirectionsFilter *ngIf="ShowDirectionFilters  && !isLogbox" [HideExport]="isLogbox || !IsExportActivated" [ShowCustomFilter]="isLogbox|| IsCustomsActivated" [HideImportDomistic]="isLogbox|| isPrivateLabel" [HideAMANACFilters]="true" [SelectedValue]="SelectedDirectionFilter" (SelectedValueChanged)="SelectedDirectionFilter = $event"></DirectionsFilter>
                                             </td>
 
-                                            <td *ngIf="ToggleIsExportShipments" style="width: 7px;">
+                                            <td style="width: 7px;">
                                                 <div></div>
                                             </td>
 
@@ -300,10 +300,10 @@
                                     <tr>
                                         <td>
                                             <div style="height: Calc(100% - 1px);background-color:white;border-radius: 0 0 0 7px;">
-                                                <logitude-grid GridWidth="100%" GridHeight="100%" [ObjectTable]="'Shipment'" [IgnoreRowHoverVisibilityQueryName]="true" [ShowArrow]="true" [dataSource]="DataSource" [MenuHeaderchangeevent]="MenuHeaderchangeevent" (rowSelectedEvent)="onRowSelected($event)" [SelectedRow]="SelectedRow"
-                                                               [columns]="columns" [autoLoad]="false" [rows]="items" [CustomColumnsReady]="CustomColumnsReady" [SelectFirstRow]="true" (FirstRowSelected)="OnFirstRowSelected($event)"
-                                                               [SearchFieldchangeevent]="SearchFieldchangeevent" [EnableRowHoverVisibility]="true" [RowHoverVisibilityQueryName]="SelectedFilter" (AfterViewInitCompleted)="GridAfterViewInitCompleted($event)" [HoverTemplateIndex]="HoverTemplateIndex">
-                                                </logitude-grid>
+                                                <logitude-grid-v2 GridWidth="100%" GridHeight="100%" [ObjectTable]="'Shipment'" [IgnoreRowHoverVisibilityQueryName]="true" [ShowArrow]="true" [dataSource]="DataSource" [MenuHeaderchangeevent]="MenuHeaderchangeevent" (rowSelectedEvent)="onRowSelected($event)" [SelectedRow]="SelectedRow"
+                                                                  [columns]="columns" [autoLoad]="false" [rows]="items" [CustomColumnsReady]="CustomColumnsReady" [SelectFirstRow]="true" (FirstRowSelected)="OnFirstRowSelected($event)"
+                                                                  [SearchFieldchangeevent]="SearchFieldchangeevent" [EnableRowHoverVisibility]="true" [RowHoverVisibilityQueryName]="SelectedFilter" (AfterViewInitCompleted)="GridAfterViewInitCompleted($event)" [HoverTemplateIndex]="HoverTemplateIndex">
+                                                </logitude-grid-v2>
                                             </div>
                                         </td>
                                     </tr>
@@ -312,7 +312,7 @@
 
                             <td style="width: 35%; min-width: 415px; vertical-align: top;">
                                 <div class="MediaFill">
-                                    <LogBoxDocuments [ShipmentSelectedEvent]="ShipmentSelectedEvent" [OnImporterShipmentsFilterChanged]="OnImporterShipmentsFilterChanged" [SearchText]="SearchFilter" (ArchiveDone)="ArchiveDone($event)"></LogBoxDocuments>
+                                    <LogBoxDocuments [IsExportActivated]="IsExportActivated" [ShipmentSelectedEvent]="ShipmentSelectedEvent" [OnImporterShipmentsFilterChanged]="OnImporterShipmentsFilterChanged" [SearchText]="SearchFilter" (ArchiveDone)="ArchiveDone($event)"></LogBoxDocuments>
                                 </div>
                             </td>
                         </tr>
