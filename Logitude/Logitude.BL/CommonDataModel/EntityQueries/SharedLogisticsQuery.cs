@@ -24,7 +24,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                 string[] test = systemURL.Split('/');
                 url = systemURL.Replace("/" + test[test.Length - 1], "");
             }
-            string cargoTrackingPath = url + "/cargo-tracking/login";
+            string cargoTrackingPath = "https://" + url.Split('/')[0] + "/CargoTracking/cargo-tracking/login";
             return new SharedLogisticsPM()
             {
                 SystemURL = "<a style=" + styleLink + " href='" + systemURL + "'" + ">" + url  + "</a>",
