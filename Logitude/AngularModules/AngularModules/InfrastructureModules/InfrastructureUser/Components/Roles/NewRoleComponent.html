@@ -1,4 +1,4 @@
-﻿
+
 <table>
     <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
         <td>
@@ -23,7 +23,8 @@
                                 [DataContext]="DataContext"
                                 [LookUpTableName]="'Role'"
                                 [DependencyFilter1Value]="false"
-                                [DependencyFilter2Value]="true">
+                                [DependencyFilter2Value]="true"
+                                [QueryFilterItems]="ParentRoleQueryFilters">
                         </LogLov>
                     </td>
 
