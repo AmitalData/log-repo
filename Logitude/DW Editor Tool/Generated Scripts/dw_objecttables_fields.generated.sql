@@ -1173,6 +1173,9 @@ insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,Is
 declare @Fact_ARInvoicesPartnerNewId varchar(15)
 execute usp_GetNextTableIdValue @Fact_ARInvoicesPartnerNewId OUTPUT,'DWObjectField' 
 insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,DimensionTableCode,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,OriginalObjectFieldCode,DontDisplayInView,IsMultipleSelection) Values(@Fact_ARInvoicesPartnerNewId,0,'Fact_ARInvoices','[Partner]','Partner','Dimension','false',0,15,'DIM_Partners','false','false','true','InvoicePartners','false','false','false','ARInvoice.PartnerId','false','false')  
+declare @Fact_ARInvoicesRegionalTaxPercentageNewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_ARInvoicesRegionalTaxPercentageNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,OriginalObjectFieldCode,DontDisplayInView,IsMultipleSelection) Values(@Fact_ARInvoicesRegionalTaxPercentageNewId,0,'Fact_ARInvoices','[Regional Tax Percentage]','Regional Tax Percentage','Decimal','false',0,0,'false','false','true','Money','false','false','false','ARInvoice.RegionalTaxPercentage','false','false')  
 ------------------------------------------------------------------------------------
 declare @Fact_ChargesNewId varchar(15)
 execute usp_GetNextTableIdValue @Fact_ChargesNewId OUTPUT,'DWObjectTable' 
@@ -2831,3 +2834,6 @@ insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,Is
 declare @Fact_ShipmentsPODReceivedDateNewId varchar(15)
 execute usp_GetNextTableIdValue @Fact_ShipmentsPODReceivedDateNewId OUTPUT,'DWObjectField' 
 insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,OriginalObjectFieldCode,DontDisplayInView,IsMultipleSelection,RecordType) Values(@Fact_ShipmentsPODReceivedDateNewId,0,'Fact_Shipments','[POD Received Date]','POD Received Date','DateTime','false',0,0,'false','false','true','KPI','false','false','false','Shipment.PODReceivedDate','false','false','Shipment')  
+declare @Fact_ShipmentsMainCarriageFinalDestinationATANewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_ShipmentsMainCarriageFinalDestinationATANewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,Category2,HideTree,CannotFilter,IsCustom,OriginalObjectFieldCode,DontDisplayInView,IsMultipleSelection,RecordType) Values(@Fact_ShipmentsMainCarriageFinalDestinationATANewId,0,'Fact_Shipments','[Main Carriage Final Destination ATA]','Main Carriage ATA','DateTime','false',0,0,'false','false','true','Routings','Dates','false','false','false','Master.MainCarriageFinalDestinationATA','false','false','Shipment,Master')  
