@@ -178,9 +178,10 @@ namespace CommunicationWorkerRole
             if (settingsData != null)
             {
                 string webHookURL = settingsData.URL;
+                WebHookAuthorization webHookAuthorization = settingsData.WebHookAuthorization;
                 string fileName = (!string.IsNullOrEmpty(settingsData.Filename) ? settingsData.Filename : document.Id) + "." + document.Extension;
 
-                WebHookService webHookService = new WebHookService(webHookURL);
+                WebHookService webHookService = new WebHookService(webHookURL, webHookAuthorization);
 
                 string responseMessage = webHookService.Upload(fileName, fileDataWithBodyWord);
                 waitingCommunicationLog.Logs += Environment.NewLine + DateTime.Now.ToString() + " : " + responseMessage;

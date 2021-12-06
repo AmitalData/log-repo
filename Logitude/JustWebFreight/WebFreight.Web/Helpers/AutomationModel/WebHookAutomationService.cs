@@ -2,6 +2,7 @@
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.QueueService;
+using Logitude.Server.Tools.WebHook;
 using Newtonsoft.Json;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
@@ -111,19 +112,21 @@ namespace WebFreight.Web.Helpers.AutomationModel
 
         private string GetWebHookCommunicationLogSettingAsJosnString()
         {
-            WebHookCommunicationLogSettings webHookCommunicationLogSettings = new WebHookCommunicationLogSettings();
-            webHookCommunicationLogSettings.URL = GetWebHookURL();
-            webHookCommunicationLogSettings.Filename = string.IsNullOrEmpty(documentFileName) ? GetDocumentFileName() : documentFileName;
+            WebHookAuthorization webHookAuthorization = new WebHookAuthorization
+            {
+                AuthorizationType = webHookDetails.AuthenticationType,
+                BasicUserName = webHookDetails.BasicAuthUserName,
+                BasicPassword = webHookDetails.BasicAuthPassword
+            };
+            WebHookCommunicationLogSettings webHookCommunicationLogSettings = new WebHookCommunicationLogSettings
+            {
+                URL = webHookDetails.URL,
+                Filename = string.IsNullOrEmpty(documentFileName) ? GetDocumentFileName() : documentFileName,
+                WebHookAuthorization = webHookAuthorization
+            };
             string result = JsonConvert.SerializeObject(webHookCommunicationLogSettings);
 
             return result;
-        }
-
-        private string GetWebHookURL()
-        {
-            if (webHookDetails.AuthenticationType == "BASICAUTHENTICATION")
-                return GetWebHookBasicAuthenticationURL();
-            return webHookDetails.URL;
         }
 
         private string GetWebHookBasicAuthenticationURL()
@@ -161,5 +164,6 @@ namespace WebFreight.Web.Helpers.AutomationModel
     {
         public string URL { get; set; }
         public string Filename { get; set; }
+        public WebHookAuthorization WebHookAuthorization { get; set; }
     }
 }
