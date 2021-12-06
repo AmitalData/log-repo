@@ -7,18 +7,18 @@ using System.Collections.Generic;
 
 namespace Logitude.BL.CommonDataModel.Tools.EntityService
 {
-    public class CustomerStatusLogsService
+    public class CustomerStatusQueueService
     {
         CustomerTenantAccessCardRepository customerTenantAccessCardRepository;
         public Customer customer;
         private CustomerPM customerPM;
-        public CustomerStatusLogsService(CustomerTenantAccessCardRepository customerTenantAccessCardRepository, Customer customer,CustomerPM customerPM)
+        public CustomerStatusQueueService(CustomerTenantAccessCardRepository customerTenantAccessCardRepository, Customer customer,CustomerPM customerPM)
         { 
             this.customerTenantAccessCardRepository = customerTenantAccessCardRepository;
             this.customer = customer;
             this.customerPM = customerPM;
         }
-        public List<QueueTask> CreateCustomerStatusLogs()
+        public List<QueueTask> CreateQueueTasks()
         {
             CustomerTenantAccessCard customerTenantAccessCards = customerTenantAccessCardRepository.GetByCustomerId(customerPM.Id, customerPM.Tenant);
             return GetCustomerStatusLogsParameters(customerTenantAccessCards);

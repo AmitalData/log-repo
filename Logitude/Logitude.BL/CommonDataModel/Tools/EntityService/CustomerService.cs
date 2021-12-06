@@ -587,10 +587,10 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                     };
 
                     CustomerPM mappedpm = CustomerHybridMapping.MapEntityToHybrid(entityPM);
-                    string xmlstring = LogitudeXmlSerializer.SerializeObjectToXmlString(mappedpm); 
+                    string xmlstring = LogitudeXmlSerializer.SerializeObjectToXmlString(mappedpm);
 
-                    CustomerStatusLogsService customerStatusLogsService = new CustomerStatusLogsService(customerTenantAccessCardRepository, entityPOCO, entityPM);
-                    List<QueueTask> tasks = customerStatusLogsService.CreateCustomerStatusLogs();
+                    CustomerStatusQueueService customerStatusLogsService = new CustomerStatusQueueService(customerTenantAccessCardRepository, entityPOCO, entityPM);
+                    List<QueueTask> tasks = customerStatusLogsService.CreateQueueTasks();
 
 
                     logParams.ByteData = LogitudeXmlSerializer.SerializeObject(tasks);
