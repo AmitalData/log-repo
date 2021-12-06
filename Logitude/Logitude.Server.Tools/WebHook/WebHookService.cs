@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Net;
+using System.Text;
 
 namespace Logitude.Server.Tools.WebHook
 {
@@ -8,9 +9,11 @@ namespace Logitude.Server.Tools.WebHook
 	{
 		private string url = null;
 		WebRequest webHookWebRequest;
-		public WebHookService(string uRL)
+		WebHookAuthorization webHookAuthorization;
+		public WebHookService(string uRL, WebHookAuthorization webHookAuth)
 		{
 			url = uRL;
+			webHookAuthorization = webHookAuth;
 		}
 
 		public string Upload(string remoteFile, byte[] fileData)
@@ -19,6 +22,8 @@ namespace Logitude.Server.Tools.WebHook
 			try
             {
                 webHookWebRequest = WebRequest.Create(url);
+				if(webHookAuthorization.AuthorizationType == "BASICAUTHENTICATION")
+                    AddBasicAuthenticationToWebRequestHeaders();
                 FillWebRequestParameters(fileData);
                 Stream dataStream = webHookWebRequest.GetRequestStream();
                 dataStream.Write(fileData, 0, fileData.Length);
@@ -37,6 +42,13 @@ namespace Logitude.Server.Tools.WebHook
 
 			return responseMessage;
 		}
+
+        private void AddBasicAuthenticationToWebRequestHeaders()
+        {
+            string basicAuthCredidentials = webHookAuthorization.BasicUserName + ":" + webHookAuthorization.BasicPassword;
+            string base64Credidentials = Convert.ToBase64String(Encoding.Default.GetBytes(basicAuthCredidentials));
+            webHookWebRequest.Headers["Authorization"] = "Basic " + base64Credidentials;
+        }
 
         private void FillWebRequestParameters(byte[] fileData)
         {
@@ -76,5 +88,12 @@ namespace Logitude.Server.Tools.WebHook
 			}
 			return urlDomain;
 		}
+	}
+
+	public class WebHookAuthorization
+	{
+		public string AuthorizationType { get; set; }
+		public string BasicUserName { get; set; }
+		public string BasicPassword { get; set; }
 	}
 }
