@@ -136,10 +136,10 @@ export class NewQuotePartnerComponent extends BaseComponent implements OnInit, A
     if (!this.formGroup.contains(this.type)) {
       this.addFormControls();
       this.subscribeCtrls();
+      this.subscribePartner();
     }
 
     if (this.formGroup.contains(this.secondPartner) && !this.isSubscribePartner) {
-      this.subscribePartner();
       this.setValidatorBySecondPrtner();
     }
   }

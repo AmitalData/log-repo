@@ -143,8 +143,8 @@ export class AutocomplateTableComponent {
     const ctrl: AbstractControl = this.formGroup.controls[this.controlName];
     const val: any = ctrl.value;
 
-    if (!this.data?.includes(val))
-    this.setNotIdentityValueValidator()
+    if (val && !this.data?.includes(val) && !this.selected?.includes(val))
+      this.setNotIdentityValueValidator()
     else {
       this.setDefaultValidator()
       this.onSelect.emit(val)
