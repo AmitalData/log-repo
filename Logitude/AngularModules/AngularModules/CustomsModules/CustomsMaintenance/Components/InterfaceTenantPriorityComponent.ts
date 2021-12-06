@@ -66,7 +66,12 @@ export class InterfaceTenantPriorityComponent
     Loaded: boolean = false;
     public InterfaceTypeList: CodeNameClass[];
     ngOnInit() {
-      
+        this.InterfaceTypeList = [];
+        this.InterfaceTypeList.push(new CodeNameClass("", "הכל"));
+        this.InterfaceTypeList.push(new CodeNameClass("C", "עמילות"));
+        this.InterfaceTypeList.push(new CodeNameClass("B", "בלדרות"));
+        this.SelectedInterfaceType = this.InterfaceTypeList[0];
+
         //ערכים NULL==הכל, C==רק עמילות, B==רק בלדרות
         this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe(response => {
             this._entityResourceService.getEntityResourceByTableName("Customs.InterfaceTenantDefinition").subscribe((response: any) => {
@@ -92,13 +97,14 @@ export class InterfaceTenantPriorityComponent
                     .GetSingleInterfaceManagementwithDefinition
                     (this._TenantInterfaceManagementList.Code, SessionLocator.Tenant)
                     .subscribe((rsp: any) => {
+                        this.CurrentSession.StopBusyIndicator();
                         this.entityPM = rsp.Result;
                         if (!AppTool.IsNullOrEmpty(this.entityPM.InterfaceType)) {
                             this.SelectedInterfaceType = this.InterfaceTypeList.filter(r => r.Code == this.entityPM.InterfaceType)[0];
                         }
                         this.ValidScreen()
-                        this.CurrentSession.StopBusyIndicator();
-                    });
+                        
+                    },);
 
             });
         });

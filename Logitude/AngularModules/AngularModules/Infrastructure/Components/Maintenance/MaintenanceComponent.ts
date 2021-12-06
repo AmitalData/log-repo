@@ -805,13 +805,13 @@ export class MaintenanceComponent {
                     break;
                 }
                 case "MTIM": {
-                    if (SessionLocator.LoggedUserPM.IsCustomerCare)
+                    ///if (SessionLocator.LoggedUserPM.IsCustomerCare)
                         this.InterfaceManageentMethod(item);
-                    else {
-                        let messageWindow = new MessageWindow()
-                        messageWindow.Show("Logged User Is not Customer Care ");
-                        return;
-                    }
+                    //else {
+                    //    let messageWindow = new MessageWindow()
+                    //    messageWindow.Show("Logged User Is not Customer Care ");
+                    //    return;
+                    //}
                     break;
                 }
                 ///case "MCPA": { this.CustomsAutonomyKeywordMethod(item); break; }
