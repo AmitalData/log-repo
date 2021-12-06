@@ -64,9 +64,9 @@
         <div class="col-12 packages-row dimensions-labels">
             <div class="quantity">Quantity</div>
             <div class="package-type">Package Type</div>
-            <div class="dimensions-label">Dimensions(L-W-H)</div>
-            <div class="volume">Volume</div>
-            <div class="gross-weight">Gross Weight</div>
+            <div class="dimensions-label">Dimensions({{tenant?.DimensionsUnitCode}})</div>
+            <div class="volume">Volume ({{tenant?.VolumeUnitCode}})</div>
+            <div class="gross-weight">Gross Weight ({{tenant?.GrossWeightUnitCode}})</div>
             <div class="button-label"></div>
         </div>
 
@@ -131,17 +131,17 @@
                 <div class="p-field col-5 p-fluid summery-item">
                     <br />
                     <h4>{{(totalGrossWeight).toFixed(2)}}</h4>
-                    <label>Gross Weight (KG)</label>
+                    <label>Gross Weight ({{tenant?.GrossWeightUnitCode}})</label>
                 </div>
                 <div class="p-field col-5 p-fluid summery-item">
                     <br />
                     <h4>{{totalVolume.toFixed(3)}}</h4>
-                    <label>Volume (CBM)</label>
+                    <label>Volume ({{tenant?.VolumeUnitCode}})</label>
                 </div>
                 <div class="p-field col-5 p-fluid summery-item summery-chargeable">
                     <br />
-                    <h4>{{(totalGrossWeight).toFixed(2)}}</h4>
-                    <label>Chargeable Weight (MT)</label>
+                    <h4>{{(billableWeight).toFixed(2)}}</h4>
+                    <label>{{formGroup.value.transportMode?.Id === 'A' ? 'Chargeable Weight (' + tenant?.GrossWeightUnitCode + ')' : 'Wt / Msr (' + tenant?.WeightMeasurementUnitCode + ')'}}</label>
                 </div>
             </div>
         </div>

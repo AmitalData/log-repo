@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Script DBType="Main" Module="Customs">
-  <Sql Version="1">
-  </Sql>
+	<Sql Version="1">
+	</Sql>
 
-  <Oracle Version="3">
-    <![CDATA[
+	<Oracle Version="3">
+		<![CDATA[
 EXECUTE IMMEDIATE 'update declarations set cargodescription =
 (select cargodescription from CONSIGNMENTS
 where declarationid= declarations.id and CONSIGNMENTS.CONSIGNMENTnumber=1
@@ -12,5 +12,5 @@ where declarationid= declarations.id and CONSIGNMENTS.CONSIGNMENTnumber=1
  )';
 
     ]]>
-  </Oracle>
+	</Oracle>
 </Script>
