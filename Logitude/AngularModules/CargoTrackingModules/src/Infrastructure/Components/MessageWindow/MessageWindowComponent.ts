@@ -15,6 +15,7 @@ export class MessageWindowComponent {
     showOkButton: boolean = false;
     showCancelButton: boolean = false;
     showTextBox: boolean = false;
+    showMultilineTextBox: boolean = false;
 
 
     private _TextBoxValue : string;
@@ -34,6 +35,7 @@ export class MessageWindowComponent {
         this.showOkButton = data?.showOkButton;
         this.showCancelButton = data?.showCancelButton;
         this.showTextBox = data?.showTextBox;
+        this.showMultilineTextBox = data?.showMultilineTextBox;
         this.title = data?.title != null ? data?.title : this.title;
     }
 

@@ -19,6 +19,8 @@ import { CargoTrackingShipmentMappedPM } from 'src/CargoTracking/DataContracts/C
 import { CargoTrackingBrandingDataExtendedService } from 'src/CargoTracking/Services/Others/CargoTrackingBrandingDataExtendedService';
 import { ServiceHelper } from 'src/CargoTracking/Utilities/ServiceHelper';
 import { ServiceResponse } from 'src/CargoTracking/DataContracts/ServiceResponse';
+import { DeclarationApprovalArgs } from 'src/CargoTracking/DataContracts/DeclarationApprovalArgs';
+import { RootContext } from 'src/CargoTracking/Utilities/RootContext';
 
 const mobileScreenMaxWidth = 470;
 @Component({
@@ -98,6 +100,7 @@ export class ShipmentDetailsComponent implements OnInit,AfterViewInit
     }
     constructor(private router: Router,
         private route: ActivatedRoute,
+        private cargoTrackingShipmentService: CargoTrackingShipmentService,
         private cargoTrackingShipmentExtendedService: CargoTrackingShipmentExtendedService,
         private brandingService: CargoTrackingBrandingDataExtendedService,
         private documentDownloadService: DocumentDownloadService,
@@ -709,28 +712,102 @@ export class ShipmentDetailsComponent implements OnInit,AfterViewInit
         this.ShowDetailsSection = newValue;
     }
 
+    ApproveDeclaration()
+    {
+        RootContext.StartBusyIndicatorLoading();
+
+        const args = this.BuildDeclarationApprovalArguments();
+        this.cargoTrackingShipmentExtendedService.PostDeclarationApprovalResponse(args)
+            .subscribe(
+
+                res => { this.ShowDeclarationApprovedMessage(); RootContext.StopBusyIndicator();},
+                err => { this.ShowFailureMessage(err); RootContext.StopBusyIndicator();}
+            );
+
+    }
+
     DenyDeclaration(){
-        const dialogRef = this.dialog.open(MessageWindowComponent, {
+
+        const denyConfirmMessage = this.ShowDeclarationDeclineConfirmMessage();
+        denyConfirmMessage.afterClosed().subscribe(windowArgs => {
+            const button = windowArgs?.button;
+            if(button == 'ok'){
+                this.SendDeclarationDeclineRequest(windowArgs.textValue);
+            }
+        });
+    }
+
+    private ShowDeclarationDeclineConfirmMessage()
+    {
+        return this.dialog.open(MessageWindowComponent, {
             data: {
                 title: 'Decline',
                 description: 'Please write down decline reason',
                 showOkButton: true,
                 showCancelButton: true,
-                showTextBox: true,
-            }
-        });
-
-        dialogRef.afterClosed().subscribe(windowArgs => {
-            const button = windowArgs?.button;
-            if(button == 'ok'){
+                showMultilineTextBox: true,
             }
         });
     }
-    ApproveDeclaration(){
-        const dialogRef = this.dialog.open(MessageWindowComponent, {
+
+    private SendDeclarationDeclineRequest(denyMessage: string)
+    {
+        RootContext.StartBusyIndicatorLoading();
+
+        const args = this.BuildDeclarationDeclineArguments(denyMessage);
+        this.cargoTrackingShipmentExtendedService.PostDeclarationApprovalResponse(args)
+            .subscribe(arg =>
+            {
+                RootContext.StopBusyIndicator();
+
+                this.dialog.open(MessageWindowComponent, {
+                    data: {
+                        description: 'Declaration Declined',
+                        showOkButton: true
+                    }
+                });
+            }, (error) =>
+            {
+                RootContext.StopBusyIndicator();
+                this.ShowFailureMessage(error);
+            });
+    }
+
+    private BuildDeclarationDeclineArguments(denyMessage: string)
+    {
+        let args = new DeclarationApprovalArgs();
+        args.Tenant = Number(this.tenant);
+        args.Denied = true;
+        args.ShipmentSecurityKey = this.SecurityKey;
+        args.DenyReason = denyMessage;
+        return args;
+    }
+
+    private BuildDeclarationApprovalArguments()
+    {
+        let args = new DeclarationApprovalArgs();
+        args.Tenant = Number(this.tenant);
+        args.Approved = true;
+        args.ShipmentSecurityKey = this.SecurityKey;
+        return args;
+    }
+
+    private ShowDeclarationApprovedMessage()
+    {
+        return this.dialog.open(MessageWindowComponent, {
             data: {
                 description: 'Approved Successfully',
                 showOkButton: true
+            }
+        });
+    }
+
+    private ShowFailureMessage(error: any)
+    {
+        this.dialog.open(MessageWindowComponent, {
+            data: {
+                title: 'Failed',
+                description: error || 'Something went bad'
             }
         });
     }

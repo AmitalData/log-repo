@@ -13,7 +13,7 @@
     user-select: none;
     margin: 0 5px;
 }
-input{
+.input-text{
     padding: 10px 10px;
     background: #ebebeb;
     border-radius: 4px;
