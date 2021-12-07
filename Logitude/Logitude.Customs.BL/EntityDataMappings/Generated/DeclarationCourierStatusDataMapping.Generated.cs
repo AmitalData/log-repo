@@ -121,7 +121,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         DistributionArea, 
 	         CrateNumber, 
 	         TruckerName, 
-	         CargoDescription,
+	         CargoDescription, 
 	         TerminalReleaseDate, 
 	         LastMileServiceType,
 	      }
