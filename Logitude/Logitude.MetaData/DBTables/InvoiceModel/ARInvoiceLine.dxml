@@ -125,7 +125,7 @@
   <Column
     Name="Notes"
     Type="nvarchar"
-    Size="500">
+    Size="1000">
     <Constraints
       Nullable="true" />
   </Column>
