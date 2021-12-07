@@ -1,0 +1,5 @@
+Warning: Missing Index In DXML File Report.dxml, The Found Index On DB Is IX_FeatureId, The Index Should Added To The DXML File
+Warning: Missing Index In DXML File ObjectTable.dxml, The Found Index On DB Is IX_FK_DescriptionObjectTableTextCode, The Index Should Added To The DXML File
+Warning: Missing Index In DXML File ObjectTable.dxml, The Found Index On DB Is IX_FK_ScreenObjectTable, The Index Should Added To The DXML File
+Warning: Missing Index In DXML File ObjectTable.dxml, The Found Index On DB Is IX_NewButtonTextCodeId, The Index Should Added To The DXML File
+Warning: Missing Index In DXML File ShipmentComputedFields.dxml, The Found Index On DB Is IX_ShipmentComputedFields_AutomaticLastUpdateDate, The Index Should Added To The DXML File
