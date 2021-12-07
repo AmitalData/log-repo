@@ -111,6 +111,7 @@ export class AutomationItemViewModel {
             else if (entityPM.ResultCode == "QUEUE") this.ResultName = "Queued Task";
             else if (entityPM.ResultCode == "SENDINTERFACE") this.ResultName = "Send Interface";
             else if (entityPM.ResultCode == "CREATETASK") this.ResultName = "Create Task";
+            else if (entityPM.ResultCode == "ONUPDATEDOCUMENT") this.ResultName = "On Update Document";
 
         }
 

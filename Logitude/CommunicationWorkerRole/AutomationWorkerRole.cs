@@ -301,6 +301,14 @@ namespace CommunicationWorkerRole
                                 }
                                 #endregion
 
+                                #region Event
+                                else if (automation.ResultCode == "ONUPDATEDOCUMENT")
+                                {
+                                    OnUpdateDocumentAutomation(objectTable);
+                                }
+                                #endregion
+
+
                                 #region E-mail
                                 if (automation.ResultCode == "EMAIL")
                                 {
@@ -519,6 +527,11 @@ namespace CommunicationWorkerRole
                     Thread.Sleep(60000);
                 }
             }
+        }
+
+        private void OnUpdateDocumentAutomation(ObjectTable objectTable)
+        {
+          
         }
 
         private void ApplyAuomationSendInterfaceFTP(EntityChange entityChange, AutomationSendInterface automationSendInterface, string documentId)

@@ -42,6 +42,8 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public string SendInterfaceAutomationSsucceedXml { get; set; }
         public string SendDocumentAutomationFailedXml { get; set; }
         public string SendDocumentAutomationSsucceedXml { get; set; }
+        public string OnUpdateDocumentAutomationFailedXml { get; set; }
+        public string OnUpdateDocumentAutomationSsucceedXml { get; set; }
 
         public DateTime? CheckStartDate { get; set; }
         public DateTime? DoneDate { get; set; }

@@ -123,6 +123,7 @@ import {DelayAutomationconditionsComponent} from './Components/Maintenance/Autom
 import {ViewAutomationHistoryComponent} from './Components/Maintenance/Automation/ViewAutomationHistoryComponent';
 import { AuditAutomationTabComponent } from './Components/Maintenance/Automation/AuditAutomationTabComponent';
 import { OnUpdateDocumentAutomationsSettingsComponent } from './Components/Maintenance/Automation/OnUpdateDocumentAutomationsSettingsComponent';
+import { DocumentAttachmentsComponent } from './Components/Maintenance/Automation/DocumentAttachmentsComponent';
 
 
 import {SelectDocumentTypesComponent} from './Components/Maintenance/Automation/SelectDocumentTypesComponent';
@@ -189,6 +190,7 @@ import { SendInterfaceResultComponent } from './Components/Maintenance/Automatio
 import { FTPAutomationDetailsComponent } from './Components/Maintenance/Automation/AutomationResult/FTPAutomationDetailsComponent';
 import { ToolTipFloatDirective } from './Utilities/RTLDirectives/ToolTipFloatDirective';
 import { SendDocumentResultComponent } from './Components/Maintenance/Automation/AutomationResult/SendDocumentResultComponent';
+import { OnUpdateDocumentResultComponent } from './Components/Maintenance/Automation/AutomationResult/OnUpdateDocumentResultComponent';
 
 import { PrivateLabelLoginProcessComponent } from './Components/LoginComponent/PrivateLabelComponents/PrivateLabelLoginProcessComponent';
 import { AutomationsConditionsViewDetailsComponent } from './Components/Maintenance/Automation/AutomationsConditionsViewDetailsComponent';
@@ -318,6 +320,7 @@ export const ControlsComponents =
         AuditAutomationTabComponent,
         AutomationsConditionsViewDetailsComponent,
         CreateTaskResultComponent,
+        OnUpdateDocumentResultComponent,
     ];
 export const Components =
     [
@@ -349,6 +352,7 @@ export const Components =
         DelayAutomationconditionsComponent,
         ViewAutomationHistoryComponent,
         OnUpdateDocumentAutomationsSettingsComponent,
+        DocumentAttachmentsComponent,
 
         NewViewComponent,
         Export2ExcelControl,
@@ -448,6 +452,7 @@ export class ModuleDeclarations {
             case 'ViewAutomationHistoryComponent': { myResult = ViewAutomationHistoryComponent; break; }
             case 'AutomationConditionsDetailsComponent': { myResult = AutomationConditionsDetailsComponent; break; }
             case 'OnUpdateDocumentAutomationsSettingsComponent': { myResult = OnUpdateDocumentAutomationsSettingsComponent; break; }
+            case 'DocumentAttachmentsComponent': { myResult = DocumentAttachmentsComponent; break;}
 
             case 'NewViewComponent': { myResult = NewViewComponent; break; }
             case 'Export2ExcelControl': { myResult = Export2ExcelControl; break; }
@@ -514,6 +519,7 @@ export class ModuleDeclarations {
             case 'SendDocumentResultComponent': { myResult = SendDocumentResultComponent; break; } 
             case 'PrivateLabelLoginProcessComponent': { myResult = PrivateLabelLoginProcessComponent; break; } 
             case 'CreateTaskResultComponent': { myResult = CreateTaskResultComponent; break; }
+            case 'OnUpdateDocumentResultComponent': { myResult = OnUpdateDocumentResultComponent; break; } 
 
             case 'MultiUpdateComponent': { myResult = MultiUpdateComponent; break; }
             case 'MultiEntityUpdateBaseComponent': { myResult = MultiEntityUpdateBaseComponent; break; }

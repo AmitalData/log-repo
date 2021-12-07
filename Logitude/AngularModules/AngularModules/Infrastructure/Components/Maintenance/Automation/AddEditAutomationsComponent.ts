@@ -13,7 +13,8 @@ import {ObjectFieldPM} from '../../../../Infrastructure/EntityPMs/ObjectFieldPM'
 import {AutomatedBackup,AutomationSetSLAValue} from '../../../../Infrastructure/DataContracts/AutomatedBackup';
 import {AutomationSendInterface} from '../../../../Infrastructure/DataContracts/AutomationSendInterface';
 import {AutomationSendDocument} from '../../../../Infrastructure/DataContracts/AutomationSendDocument';
-import {AutomationSetValue} from '../../../../Infrastructure/DataContracts/AutomationSetValue';
+import {AutomationOnUpdateDocument} from '../../../../Infrastructure/DataContracts/AutomationOnUpdateDocument';
+import { AutomationSetValue } from '../../../../Infrastructure/DataContracts/AutomationSetValue';
 import {EventTypeArgs} from '../../../../Infrastructure/DataContracts/EventTypeArgs';
 import {AutomationFollowUp} from '../../../../Infrastructure/DataContracts/AutomationFollowUp';
 import {EventTypeList} from '../../../../Infrastructure/EntityLists/EventTypeList';
@@ -74,6 +75,7 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
     AutomationCreateTask: AutomationCreateTask = new AutomationCreateTask();
 
     AutomationSendDocument: AutomationSendDocument = new AutomationSendDocument();
+    AutomationOnUpdateDocument: AutomationOnUpdateDocument = new AutomationOnUpdateDocument();
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
     ObjectFieldsLists: ObjectFieldPM[] = [];
     AllowedinAutomationConditionsFieldLists: ObjectFieldPM[] = [];
@@ -280,7 +282,7 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
                     this.AutomatedBackupClass.Delaytime = 0;
                     this.AutomatedBackupClass.DelaytimeOp = null;
                     this.AutomatedBackupClass.SelectedDelaytimeFieldCode = null;
-                    this.AutomatedBackupClass.ResultCode = "EMAIL";
+                    this.AutomatedBackupClass.ResultCode = this.CurrentEntityPM.Type == "OnDocumentUpdate" ? "ONUPDATEDOCUMENT" : "EMAIL";
                     this.Start();
                 }
                 else {
@@ -1007,7 +1009,7 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
                 this.ResultCodeList.push(new ResultCode("Docs Out F/U Creation", "DOCOUTFOLLOWUP"));
                 this.ResultCodeList.push(new ResultCode("Docs In F/U Creation", "DOCINFOLLOWUP"));
                 this.ResultCodeList.push(new ResultCode("Set Fields Value", "FIELDSET"));
-
+                
                 if (FeatureLocator.HasFeaturePermession("General", "General.Features.BusinessProcessQueue")) {
                     this.ResultCodeList.push(new ResultCode("Queued Task", "QUEUE"));
                 }
@@ -1018,6 +1020,10 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
 
                  if (this.IsShowCreateTaskResult) {
                     this.ResultCodeList.push(new ResultCode("Create Task in Collaboration Tool", "CREATETASK"));
+                }
+
+                if (this.CurrentEntityPM.Type == "OnDocumentUpdate") {
+                    this.FillOnDocumentUpdateResults();
                 }
             }
 
@@ -1143,6 +1149,10 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
                 this.MapAutomationSendDocument();
             }
 
+            if (this.AutomatedBackupClass.AutomationOnUpdateDocument && this.ResultCodeSelected.Code == "ONUPDATEDOCUMENT") {
+                this.MapAutomationOnUpdateDocument();
+            }
+
             if (this.AutomatedBackupClass.AutomationCreateTask && this.ResultCodeSelected.Code == "CREATETASK") {
                 this.MapAutomationCreateTask();
             }
@@ -1154,6 +1164,11 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
         }
 
         this.IsLoadingComplete = true;
+    }
+
+    FillOnDocumentUpdateResults() {
+        this.ResultCodeList = [];
+        this.ResultCodeList.push(new ResultCode("Send Document", "ONUPDATEDOCUMENT"));
     }
 
     MapAutomationSendInterface() {
@@ -1186,6 +1201,13 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
 
     }
 
+    MapAutomationOnUpdateDocument() {
+        this.AutomationOnUpdateDocument.ComputingPartnerId = this.AutomatedBackupClass.AutomationOnUpdateDocument.ComputingPartnerId;
+        this.AutomationOnUpdateDocument.FTPDetails = this.AutomatedBackupClass.AutomationOnUpdateDocument.FTPDetails;
+        this.AutomationOnUpdateDocument.SendVia = this.AutomatedBackupClass.AutomationOnUpdateDocument.SendVia;
+        this.AutomationOnUpdateDocument.DocumentTypeLists = this.AutomatedBackupClass.AutomationOnUpdateDocument.DocumentTypeLists;
+    }
+
     RunAuomationResultComponent(resultCode: string) {
         switch (resultCode) {
             case "SENDINTERFACE":
@@ -1196,6 +1218,9 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
                 break;
             case "CREATETASK":
                 this.LoadCreateTaskResultComponent(resultCode);
+                break;
+            case "ONUPDATEDOCUMENT":
+                this.LoadOnUpdateDocumentResultComponent(resultCode);
                 break;
         }
     }
@@ -1210,7 +1235,7 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
 
     CheckIfAutomationResultHasLocations(resultCode: string) {
 
-        return (resultCode == "SENDINTERFACE" || resultCode == "SENDDOCUMENT" || resultCode == "CREATETASK") ? true:false;
+        return (resultCode == "SENDINTERFACE" || resultCode == "SENDDOCUMENT" || resultCode == "CREATETASK" || resultCode == "ONUPDATEDOCUMENT") ? true:false;
 
     }
 
@@ -1781,6 +1806,10 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
             this.ValidationErrorsList.push("Please add at least one condation");
         }
 
+        if (this.CurrentEntityPM.Type == "OnDocumentUpdate") {
+            this.ValidateOnDocumentUpdate();
+        }
+
         if (this.CurrentEntityPM.ResultCode == "FIELDSET" && (!this.AutomationSetValueLists || (this.AutomationSetValueLists && this.AutomationSetValueLists.length == 0))) {
             this.ValidationErrorsList.push("Please add at least one set Value");
         }
@@ -1935,6 +1964,18 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
         }
     }
  
+    ValidateOnDocumentUpdate() {
+        if (this.AutomationCondationAndList.length == 0 && this.AutomationCondationOrList.length == 0 && this.CurrentEntityPM.Type == "OnDocumentUpdate") {
+            this.ValidationErrorsList.push("Please add at least one condation");
+        }
+        if (this.CurrentEntityPM.ResultCode == "ONUPDATEDOCUMENT" && (!this.AutomationOnUpdateDocument || (this.AutomationOnUpdateDocument && !this.AutomationOnUpdateDocument.DocumentTypeLists) || (this.AutomationOnUpdateDocument && this.AutomationOnUpdateDocument.DocumentTypeLists && this.AutomationOnUpdateDocument.DocumentTypeLists.length == 0))) {
+            this.ValidationErrorsList.push("Please add at least one Document");
+        }
+        if (this.CurrentEntityPM.ResultCode == "ONUPDATEDOCUMENT" && this.AutomationOnUpdateDocument.SendVia == "FTP") {
+            this.ValidateFTPDetails(this.AutomationOnUpdateDocument.FTPDetails);
+        }
+    }
+
     private AutomationSetValueValidation(item: AutomationSetValueViewModel) {
         if (AppTool.IsNullOrEmpty(item.CurrentEntityPM.Value)) {
             this.ValidationErrorsList.push(item.SelectedCustomField.FullNameTextCodeDefaultText + " field is required");
@@ -1977,7 +2018,8 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
     private IsEntityConditionsChanged(isFollowUp) {
         return (this.IsChangeCondition || this.IsChangeSetValue ||
             this.IsChangeAutomation) || (isFollowUp && this.CheckIfAutomationFollowUpChange()) ||
-            this.CheckIfAutomationSendDocumentChange() || this.CheckIfAutomationSendInterFaceChange() ||
+            this.CheckIfAutomationSendDocumentChange() || this.CheckIfAutomationOnUpdateDocumentChange() ||
+            this.CheckIfAutomationSendInterFaceChange() ||
             (this.CurrentEntityPM.ResultCode == "SETSLA" && this.CheckIfAutomationSetSLAValueChange()) ||
             (this.CurrentEntityPM.ResultCode == "QUEUE" && this.CheckIfAutomationQueuedTaskChange() ||
             (this.CurrentEntityPM.ResultCode == "CREATETASK" && this.CheckIfAutomationCreateTaskChange()));
@@ -2017,6 +2059,14 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
         var isChange = false;
         if (this.AutomatedBackupClass.AutomationSendDocument) {
             isChange = this.AutomatedBackupClass.AutomationSendDocument.IsChanged;
+        }
+        return isChange;
+    }
+
+    CheckIfAutomationOnUpdateDocumentChange() {
+        var isChange = false;
+        if (this.AutomatedBackupClass.AutomationOnUpdateDocument) {
+            isChange = this.AutomatedBackupClass.AutomationOnUpdateDocument.IsChanged;
         }
         return isChange;
     }
@@ -2191,6 +2241,7 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
         automatedBackup.ReportTemplateId = this.CurrentEntityPM.ResultCode == "EMAIL" ? this.AutomatedBackupClass.ReportTemplateId : null;
         automatedBackup.DocumentCopyId = this.CurrentEntityPM.ResultCode == "EMAIL" ? this.AutomatedBackupClass.DocumentCopyId : null;
         automatedBackup.AutomationCreateTask = this.CurrentEntityPM.ResultCode == "CREATETASK" ? this.AutomationCreateTask : null;
+        automatedBackup.AutomationOnUpdateDocument = this.CurrentEntityPM.ResultCode == "ONUPDATEDOCUMENT" ? this.AutomationOnUpdateDocument : null;
 
 
         automatedBackup.AutomationFollowUp = this.IsFollowUp() ? this.AutomationFollowUp : null;
@@ -2364,6 +2415,14 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
         }
     }
 
+    LoadOnUpdateDocumentResultComponent(resultCode: string) {
+        if (!this.AllLocations || (this.AllLocations && this.AllLocations.length <= 0)) return;
+        let myGeneratedComponentLocation: LocationDirective = this.AllLocations.toArray().filter(d => d.Code == resultCode)[0];
+        if (myGeneratedComponentLocation == null) return;
+        myGeneratedComponentLocation.viewContainerRef.clear();
+        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/Maintenance/Automation/AutomationResult/OnUpdateDocumentResultComponent', myGeneratedComponentLocation.viewContainerRef)
+            .then(cmpRef => { cmpRef.instance.Run(this.AutomationOnUpdateDocument, this.ObjectTableId); });
+    }
 
 
 

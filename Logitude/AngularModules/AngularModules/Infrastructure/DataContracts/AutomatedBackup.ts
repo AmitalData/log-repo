@@ -7,6 +7,7 @@ import {AutomationQueuedTask} from './AutomationQueuedTask';
 import {AutomationSendInterface} from './AutomationSendInterface';
 import {AutomationSendDocument} from './AutomationSendDocument';
 import { AutomationCreateTask } from './AutomationCreateTask';
+import { AutomationOnUpdateDocument } from './AutomationOnUpdateDocument';
 
 @Injectable() 
 
@@ -37,6 +38,7 @@ export class AutomatedBackup {
     AutomationSendInterface: AutomationSendInterface;
     AutomationSendDocument: AutomationSendDocument;
     AutomationCreateTask: AutomationCreateTask;
+    AutomationOnUpdateDocument: AutomationOnUpdateDocument;
 
 }
 

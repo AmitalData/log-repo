@@ -242,6 +242,7 @@
     <Compile Include="CloseTablesClasses\FillCloseTable.cs" />
     <Compile Include="CloseTablesClasses\ICloseTable.cs" />
     <Compile Include="Communications.cs" />
+    <Compile Include="EntityChanges\AutomationResult\AutomationOnUpdateDocumentService.cs" />
     <Compile Include="Helpers\UpdatePortSearchFieldService.cs" />
     <Compile Include="KafkaConfigurations\KakaMessageTypes.cs" />
     <Compile Include="ContainerAccessor.cs" />
