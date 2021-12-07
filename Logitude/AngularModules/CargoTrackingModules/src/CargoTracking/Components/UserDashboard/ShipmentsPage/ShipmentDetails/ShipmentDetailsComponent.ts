@@ -19,6 +19,7 @@ import { CargoTrackingShipmentMappedPM } from 'src/CargoTracking/DataContracts/C
 import { CargoTrackingBrandingDataExtendedService } from 'src/CargoTracking/Services/Others/CargoTrackingBrandingDataExtendedService';
 import { ServiceHelper } from 'src/CargoTracking/Utilities/ServiceHelper';
 import { ServiceResponse } from 'src/CargoTracking/DataContracts/ServiceResponse';
+import { MilestoneCodes } from 'src/CargoTracking/Constants/MilestoneCodes';
 
 const mobileScreenMaxWidth = 470;
 @Component({
@@ -500,6 +501,8 @@ export class ShipmentDetailsComponent implements OnInit,AfterViewInit
                 newCard.HasWarning = milstone.IsCurrent && CurrentMilestoneExceptions != null;
                 newCard.WarningMessage = newCard.HasWarning ? CurrentMilestoneExceptions.substring(CurrentMilestoneExceptions.indexOf(',')+1,) : null;
                 newCard.WarningDate = newCard.HasWarning ? this.datePipe.transform(CurrentMilestoneExceptions?.split(',')[0], 'dd/MM/yyyy, HH:mm'): null;
+                if(milstone.Code == MilestoneCodes.BookingNote )
+                    newCard.Description = "BK#: "+ newCard.Description;
                 return newCard;
             });
         this.SetNoMilstonesFound();
