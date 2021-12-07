@@ -381,7 +381,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
             ForwarderPartnerId: this.isPrivateLabel && !this.IsDSV ? SessionLocator.PrivateLableSettings.HybridPartnerId : '',
             DirectionOperator : 'Equal',
         };
-        if (this.isLogbox && !shipmentsQueriesCountsArgs.DirectionId) this.SetDirectionFilter(shipmentsQueriesCountsArgs);
+        if (this.isLogbox) this.SetDirectionFilter(shipmentsQueriesCountsArgs);
 
         if (this.isPrivateLabel) this.SetPrivateLabelDirectionFilters(shipmentsQueriesCountsArgs);
 

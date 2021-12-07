@@ -921,11 +921,15 @@ export class RulesValidator {
             else {
                 fieldCurrentValue = FieldValueResolver.GetFieldStringValue(fieldPM, fieldCurrentValue);
                 conditionValue = condfield.Value;
-                if (fieldCurrentValue)
-                    fieldCurrentValue = fieldCurrentValue.toLowerCase();
+                if (fieldCurrentValue) {
 
-                if (conditionValue)
+                    if (typeof fieldCurrentValue == "boolean") fieldCurrentValue = fieldCurrentValue.toString();
+                    fieldCurrentValue = fieldCurrentValue.toLowerCase();
+                }
+
+                if (conditionValue) {
                     conditionValue = conditionValue.toLowerCase();
+                }
             }
 
             validcondition = this.IsValidCondition(condfield, validcondition, fieldCurrentValue, conditionValue);

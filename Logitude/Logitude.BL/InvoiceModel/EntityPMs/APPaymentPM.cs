@@ -1,4 +1,5 @@
-﻿using Simplog.Server.Infrastructure.DataContracts;
+﻿using Logitude.Accounting.Def.EntityPMs;
+using Simplog.Server.Infrastructure.DataContracts;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -197,7 +198,7 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string ExternalPaymentNotes { get; set; }
-        public string ReconcileInternalTransIds { get; set; }
+        public List<LedgerTransactionPM> ReconcileInternalTrans { get; set; }
         
     }
 }

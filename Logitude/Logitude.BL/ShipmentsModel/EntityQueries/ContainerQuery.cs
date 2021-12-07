@@ -197,7 +197,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     ShipmentPickupETD = entityPoco.ShipmentPickupETD,
                     ShipmentPickupATA = entityPoco.ShipmentPickupATA,
                     ShipmentPickupATD = entityPoco.ShipmentPickupATD,
-                    ShipmentPreCarriageETA = entityPoco.ShipmentPickupATD,
+                    ShipmentPreCarriageETA = entityPoco.ShipmentPreCarriageETA,
                     ShipmentPreCarriageETD = entityPoco.ShipmentPreCarriageETD,
                     ShipmentPreCarriageATA = entityPoco.ShipmentPreCarriageATA,
                     ShipmentPreCarriageATD = entityPoco.ShipmentPreCarriageATD,

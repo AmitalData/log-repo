@@ -40,6 +40,8 @@ namespace Logitude.CargoTracking.Def.DataContracts
         public string SortDescending { get; set; }
         public string SortFieldName { get; set; }
         public bool HasException { get; set; }
+        public bool OrdersOnly { get; set; }
+        public bool EstimatedArrivalOnly { get; set; }
 
     }
 }

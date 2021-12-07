@@ -34,6 +34,7 @@ import { PaymentChequeExtendedPMService } from '../../../../Accounting/Services/
 import { GLAccountListService } from '../../../../Accounting/Services/StandardLists/GLAccountListService';
 import { GLAccountList } from '../../../../Accounting/EntityLists/GLAccountList';
 import { ThrowStmt } from '@angular/compiler';
+import { LedgerTransactionPM } from 'Accounting/EntityPMs/LedgerTransactionPM';
 
 @Component({
     
@@ -55,7 +56,7 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
     public PaymentChequeActivated: boolean = true;
     public IsMultiCurrency: boolean = false;
     public LocalCurrencyCode = "";
-    public ReconcileInternalTransIds: string;
+    ReconcileInternalTrans:LedgerTransactionPM[];
     private CurrentSession = SessionLocator.SelectedSession;
     public fullAccountingSettingPMService: FullAccountingSettingPMService = new FullAccountingSettingPMService();
     PaymentChequePMService: PaymentChequeExtendedPMService = new PaymentChequeExtendedPMService();
@@ -74,7 +75,7 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
         this.IsFullAccounting = SessionLocator.TenantPM.AccountingActivated;
         this.InitializeBillToLov()
         this.EntityPM = entityArgs.EntityPM;
-        this.ReconcileInternalTransIds = this.EntityPM.ReconcileInternalTransIds;
+        this.ReconcileInternalTrans = this.EntityPM.ReconcileInternalTrans;
         console.log('ayed', entityArgs)
         this.ItemsSource = new ObservableCollection([]);
         this.EnableNegativeOffsetAPPayments = ObjectsLocator.AccountingSettingPM.EnableNegativeOffsetAPPayments;
@@ -209,7 +210,7 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
 
             this.BackCompletedEvent = this.entityArgs.EditComponent.BackCompleted.subscribe((isBackCompleted: boolean) => {
                 if (isBackCompleted && isSaveCompleted && this.entityArgs.EditComponent.EntityPM.StatusCode == "AD") {
-                    if(this.ReconcileInternalTransIds){
+                    if(this.ReconcileInternalTrans){
                         const paymentNo = this.entityArgs.EditComponent.EntityPM.PaymentNo;
                         this.CurrentSession.FireEvent({Name: "InternalReconcileAPPaymentCreated", PaymentNumber: paymentNo});
                     }
@@ -424,7 +425,7 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
 
     // BuildScreenData
     private BuildScreenData() {
-        if(this.EntityPM.ReconcileInternalTransIds) {
+        if(this.EntityPM.ReconcileInternalTrans) {
             this.VendorId = this.EntityPM.VendorId;
             this.AmountInPaymentCurrency = this.EntityPM.AmountInPaymentCurrency;
             this.UIProperties.SetEnabled("VendorId", this.ObjectTableName, false);
@@ -749,7 +750,7 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
     }
     set VendorId(value: string) {
         if (this.EntityPM != null) {
-            if (this.EntityPM.VendorId != value || this.EntityPM.ReconcileInternalTransIds) {
+            if (this.EntityPM.VendorId != value || this.EntityPM.ReconcileInternalTrans) {
                 this.EntityPM.VendorId = value;
                 this.UIProperties.SetEnabled("PaymentCurrencyId", this.ObjectTableName, true);
                 this.PaymentCurrencyId = null;
@@ -1367,7 +1368,7 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
 
     get AmountInPaymentCurrency() { return this.EntityPM.AmountInPaymentCurrency; }
     set AmountInPaymentCurrency(value: number) {
-        if (this.EntityPM.AmountInPaymentCurrency != value || this.EntityPM.ReconcileInternalTransIds) {
+        if (this.EntityPM.AmountInPaymentCurrency != value || this.EntityPM.ReconcileInternalTrans) {
             this.EntityPM.AmountInPaymentCurrency = AppTool.Round(value, 2);
             this.ComputeLocalAmount();
             this.UpdateSummary();
@@ -1541,11 +1542,11 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
     private RequestedCommandCode: string = null;
     private RequestedCommandParam: string = null;
     ApplyRequestedCommand() {
-        // if (this.RequestedCommandCode == "ViewInvoice") {
+        if (this.RequestedCommandCode == "ViewInvoice") {
             SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                 .then(cmpRef => {
                     cmpRef.instance.ComponentRef = cmpRef;
-                    cmpRef.instance.Run({ EntityId: this.RequestedCommandParam, ObjectTableName: 'APPayment' });
+                    cmpRef.instance.Run({ EntityId: this.RequestedCommandParam, ObjectTableName: 'APInvoice' });
 
                     this.RequestedCommandParam = null;
 
@@ -1569,7 +1570,7 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
                         }
                     });
                 });
-        // }
+        }
 
         this.RequestedCommandCode = null;
     }
@@ -1784,7 +1785,7 @@ export class APPaymentInvoiceArgs extends BaseComponent {
             }
         }
 
-        if(this.trigger.EntityPM.ReconcileInternalTransIds) {
+        if(this.trigger.EntityPM.ReconcileInternalTrans) {
             this.CheckBoxEnabled = false;
         }
     }
