@@ -1,13 +1,15 @@
-import {Component, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
+import { Component, OnInit,OnDestroy, ViewChild, ViewContainerRef} from '@angular/core';
 import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import { APInvoicePM } from '../../../../Invoice/EntityPMs/APInvoicePM';
+import { AppTool } from '../../../../Infrastructure/Tools';
+import { InvoiceTool } from '../../../../Invoice/Tools';
 
 @Component({    
     templateUrl: './APInvoiceGeneralTabComponent.html',
 })
-export class APInvoiceGeneralTabComponent extends BaseComponent implements OnInit {
+export class APInvoiceGeneralTabComponent extends BaseComponent implements OnInit , OnDestroy  {
     public EntityPM: APInvoicePM;
     public ObjectTableName: string = "APInvoice";
     public LabelColumnWidth: number = 100;
@@ -24,6 +26,8 @@ export class APInvoiceGeneralTabComponent extends BaseComponent implements OnIni
 
         this.EntityPM = entityArgs.EntityPM;
         this.RunComponent();
+        this.SetUIProperties();
+        this.Listen();
     }
 
     IsQBOAccountingSystem() {
@@ -70,10 +74,43 @@ export class APInvoiceGeneralTabComponent extends BaseComponent implements OnIni
             });
     }
 
+    private SaveCompletedEvent: any = null;
+    private LoadCompletedEvent: any = null;
+    private Listen() {
+        if (this.entityArgs.EditComponent != null) {
+
+            this.SaveCompletedEvent = this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+                if (isSaveSuccess) {
+                    this.EntityPM = this.entityArgs.EditComponent.EntityPM;
+                    this.SetUIProperties();
+                }
+            });
+
+            this.LoadCompletedEvent = this.entityArgs.EditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
+                if (isLoadSuccess) {
+                    this.EntityPM = this.entityArgs.EditComponent.EntityPM;
+                    this.SetUIProperties();
+                }
+            });
+        }
+    }
+    ngOnDestroy() {
+        AppTool.KillEventEmitter(this.SaveCompletedEvent);
+        AppTool.KillEventEmitter(this.LoadCompletedEvent);
+    }
+
     get GlobalTaxCalculation() { return this.EntityPM.GlobalTaxCalculation; }
     set GlobalTaxCalculation(newValue: string) {
         if (this.EntityPM.GlobalTaxCalculation != newValue) {
             this.EntityPM.GlobalTaxCalculation = newValue;
+        }
+    }
+
+    SetUIProperties() {
+        this.UIProperties.SetEnabled("GlobalTaxCalculation", this.ObjectTableName, false);
+        var isAllowedEdit = InvoiceTool.IsEditingAPInvoiceEnabled(this.EntityPM);
+        if (isAllowedEdit && this.EntityPM.TransferStatusCode != "TR") {
+            this.UIProperties.SetEnabled("GlobalTaxCalculation", this.ObjectTableName, true);
         }
     }
 }
