@@ -2146,7 +2146,7 @@
     <TextCode
       Code="&quot;Customs.General.O.EditInterfaceManagement&quot;"
       DefaultText="&quot;Edit Interface Management&quot;"
-      LocalDefaultText="&quot;ניהול ממשק עריכה&quot;"
+      LocalDefaultText="&quot;ניהול בקשות מכס עריכה&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>
