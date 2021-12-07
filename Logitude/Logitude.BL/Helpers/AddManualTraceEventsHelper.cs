@@ -138,10 +138,10 @@ namespace Logitude.BL.Helpers
                 {
                     if (!string.IsNullOrEmpty(eventType.EntityStatusId))
                     {
-                        EntityStatus entityStatus = entityStatusRepository.GetSingleEntityStatus( eventType.EntityStatusId, tenant);  
-                        if(entityStatus != null)
+                        EntityStatus entityStatus = entityStatusRepository.GetSingleEntityStatus(eventType.EntityStatusId, tenant);
+                        if (entityStatus != null)
                         {
-                            if(FeatureToggleHelper.HasFeatureToggle("OPS", tenant) && entityStatus.EntityStatusTypeCode == "O")
+                            if (FeatureToggleHelper.HasFeatureToggle("OPS", tenant) && entityStatus.EntityStatusTypeCode == "O")
                             {
                                 if (string.IsNullOrEmpty(entityPM.OperationalStatusId))
                                 {
@@ -160,7 +160,7 @@ namespace Logitude.BL.Helpers
                                     EntityStatus newStatus = EntityStatusRepository.GetSingleEntityStatus(newStatusId, tenant, true);
                                     if (newStatus.StatusWeight >= oldStatus.StatusWeight)
                                     {
-                                        entityPM.OperationalStatusId = newStatusId;                                       
+                                        entityPM.OperationalStatusId = newStatusId;
                                         entityPM.IsOperationalStatusChange = true;
                                         myResult.StatusChanged = true;
                                         myResult.EntityId = entityPM.Id;
@@ -308,6 +308,12 @@ namespace Logitude.BL.Helpers
                 entityPM.LastSharedEventDate = null;
             }
         }
+
+        Server.Tools.Models.NewTraceEventResult IAddManualTraceEventsHelper.Trace(TraceEventsServiceArgs args, string loggedUserEmail)
+        {
+            throw new NotImplementedException();
+        }
+    }
 
     public class NewTraceEventResult
     {

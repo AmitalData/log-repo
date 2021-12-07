@@ -174,8 +174,8 @@ namespace Logitude.BL.InfrastructureModel.APIDataContract.ApiV1
                 bool isExists = this.IsTraceEventAdded(traceEvent, shipmentEvents);
 
                 if (!isExists)
-                {                    
-                    NewTraceEventResult myResult = addManualTraceEventsHelper.Trace(new TraceEventsServiceArgs()
+                {
+                    Helpers.NewTraceEventResult myResult = addManualTraceEventsHelper.Trace(new TraceEventsServiceArgs()
                     {
                         EntityId = shipmentPM.Id,
                         ObjectTableId = ObjectTableRepository.GetObjectTableByName("Shipment"),
