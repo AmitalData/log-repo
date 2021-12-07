@@ -111,23 +111,23 @@ export class NewQuoteDataService {
   }
 
   async getPorts(directionId: string, transportModed: string, filter: ApiQueryFilters): Promise<Port[]> {
-    const res: ServiceResponse = await this.newQuoteOPWebService.GetPortsItemsList(directionId, transportModed, filter).toPromise();
+    const res: ServiceResponse = await this.newQuoteOPWebService.GetPorts(directionId, transportModed, filter).toPromise();
     return res.Result.body as Port[];
   }
 
   async getCarrierses(directionId: string, transportModed: string, filter: ApiQueryFilters): Promise<Carrier[]> {
-    const res: ServiceResponse = await this.newQuoteOPWebService.GetCarriersItemsList(directionId, transportModed, filter).toPromise();
+    const res: ServiceResponse = await this.newQuoteOPWebService.GetCarriers(directionId, transportModed, filter).toPromise();
     return res.Result.body as Carrier[];
   }
 
-  async getSpecialServices(directionId: string, transportModed: string): Promise<SpecialService[]> {
-    const res: ServiceResponse = await this.newQuoteOPWebService.GetSpecialServiceItemsList(directionId, transportModed, '', 100, false).toPromise();
-    return res.Result as SpecialService[];
+  async getSpecialServices(directionId: string, transportModed: string, filter: ApiQueryFilters): Promise<SpecialService[]> {
+    const res: ServiceResponse = await this.newQuoteOPWebService.GetSpecialService(directionId, transportModed, filter).toPromise();
+    return res.Result.body as SpecialService[];
   }
 
-  async getIncoterms(): Promise<Incoterm[]> {
-    const res: ServiceResponse = await this.newQuoteOPWebService.GetETBPAYTRitemList('', '', 100, false).toPromise();
-    return res.Result as Incoterm[];
+  async getIncoterms(filter: ApiQueryFilters): Promise<Incoterm[]> {
+    const res: ServiceResponse = await this.newQuoteOPWebService.GetIncoterm(filter).toPromise();
+    return res.Result.body as Incoterm[];
   }
 
   async getCityTable(countryId: string = null): Promise<CountryCityList[]> {
