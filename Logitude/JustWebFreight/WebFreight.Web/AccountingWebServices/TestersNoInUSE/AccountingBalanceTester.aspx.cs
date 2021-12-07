@@ -228,7 +228,7 @@ namespace WebFreight.Web.AccountingWebServices.Testers
                     param.includeAccoutingDateLTransaction,
                     
                     param.verbose,
-                    false);
+                    false,false);
                 var SerializeObjectByte = LogitudeXmlSerializer.SerializeObject<List<CurrencySum>>(ac.AccountBalance.Totals);
                 //ac.AccountBalance.Totals
 
