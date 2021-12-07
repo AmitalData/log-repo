@@ -220,6 +220,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             container.IsClosed = containerPM.IsClosed;
             container.ClosedDate = containerPM.ClosedDate;
             container.StatusId = containerPM.StatusId;
+            container.IsCancelled = containerPM.IsCancelled;
+            container.CancelledDate = containerPM.CancelledDate;
 
             BuildSearchField(containerPM, container);
         }

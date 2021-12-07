@@ -1321,6 +1321,18 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="IsCancelled"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="CancelledDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="CreatedByUserId"
     ReferencedTable="Users"

@@ -51,7 +51,36 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
                 this.HandelShipmentDeliveriesChangeSets();
                 this.HandelDeletedShipmentPickUpsChangeSets();
                 this.HandelDeletedShipmentDeliveriesChangeSets();
+                this.HandelCancelationShipment();
             }
+        }
+        private void HandelCancelationShipment()
+        {
+            if (this.initializer.EntityPM.IsCancelled != this.initializer.EntityPOCO.IsCancelled)
+            {
+                this.UpdateShipmentContainers(this.initializer.EntityPM.IsCancelled);
+            }
+        }
+
+        private void UpdateShipmentContainers(bool isCancelled)
+        {
+            List<ContainerPM> containers = GetShipmentContainers(this.initializer.EntityPM);
+            foreach (ContainerPM containerPM in containers)
+            {
+                this.MapContainerCancelledFields(containerPM, isCancelled);
+            }
+        }
+
+        private void MapContainerCancelledFields(ContainerPM containerPM, bool isCancelled)
+        {
+            containerPM.IsCancelled = isCancelled;
+            containerPM.CancelledDate = null;
+            if (isCancelled == true)
+            {
+                containerPM.CancelledDate = TenantServerConfigration.GetCurrentDateTime(this.initializer.Tenant);
+            }
+
+            containerService.Update(containerPM);
         }
 
         private void HandelShipmentMasterDataFieldsChanges()
@@ -224,8 +253,29 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
                                                 select a).Any();
             return isOceanInsightFeatureToggleExist;
         }
-        
+
         private void CreateContainer(ShipmentPackagePM shipmentPackage)
+        {
+            var container = containerQuery.GetCancelledContainerByShipmentId(initializer.EntityPM.Id, shipmentPackage.ContainerNumber, initializer.EntityPM.Tenant);
+            if (container != null)
+            {
+                this.ActivateCancelledContainer(container, shipmentPackage);
+            }
+            else
+            {
+                this.CreateNewContainer(shipmentPackage);
+            }
+        }
+        private void ActivateCancelledContainer(ContainerPM container, ShipmentPackagePM shipmentPackage)
+        {
+            container.ShipmentPackagesId = shipmentPackage.Id;
+            container.IsCancelled = false;
+            container.CancelledDate = null;
+            MapContainerPMFields(container, shipmentPackage, false);
+            containerService.Update(container);
+            UpdateShipmentPackage(container.Id, shipmentPackage.Id);
+        }
+        private void CreateNewContainer(ShipmentPackagePM shipmentPackage)
         {
             if (string.IsNullOrEmpty(shipmentPackage.ContainerEntityId))
             {
@@ -239,7 +289,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
                 UpdateContainer(shipmentPackage);
             }
         }
-
         private void UpdateContainer(ShipmentPackagePM shipmentPackage)
         {
             var container = CheckIfContainerExists(shipmentPackage);
@@ -316,6 +365,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
             container.OPClosed = this.initializer.EntityPM != null ? this.initializer.EntityPM.IsOperationalClosed : false;
             container.ShipmentTypeId = this.initializer.EntityPM?.ShipmentTypeId;
             container.PODReceivedOnDate = this.initializer.EntityPM?.PODReceivedDate;
+
             this.MapContainerFieldsFromShipmentPickup(container);
             this.MapContainerFieldsFromShipmentDelivery(container);
         }
@@ -371,7 +421,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
             var container = CheckIfContainerExists(shipmentPackage);
             if (container != null)
             {
-                containerService.Delete(container);
+                container.IsCancelled = true;
+                container.ShipmentPackagesId = null;
+                container.CancelledDate = TenantServerConfigration.GetCurrentDateTime(this.initializer.Tenant);
+                containerService.Update(container);
             }
         }
 
