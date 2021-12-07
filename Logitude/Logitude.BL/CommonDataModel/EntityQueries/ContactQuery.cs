@@ -747,7 +747,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
                             if (contactPassword != null)
                             {
-                                contact.IsUser = globalContact.IsUser;
+                                contact.IsUser = globalContact != null ? globalContact.IsUser: false;
                                 contact.HasPassword = true;
                                 contact.IsLocked = contactPassword.IsLocked;
                                 contact.MustChangePassword = contactPassword.MustChangePassword;
