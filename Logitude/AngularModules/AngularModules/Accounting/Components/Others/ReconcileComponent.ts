@@ -1724,7 +1724,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
 
     NewAPPaymentMethod() {
         var newApPaymentPM: APPaymentPM = new APPaymentPM();
-        newApPaymentPM.ReconcileInternalTransIds = this.GetSelectedPageLinesIds();
+        newApPaymentPM.ReconcileInternalTrans = this.GetSelectedPageLines();
         newApPaymentPM.StatusCode = "DR";
         newApPaymentPM.StatusName = "Draft";
         console.log('this.GLAccountPM', this.GLAccountPM);
@@ -1755,9 +1755,9 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
         });
     }
 
-    private GetSelectedPageLinesIds()
+    private GetSelectedPageLines(): LedgerTransactionPM[]
     {
-        return this.SelectedLines.Collection.map(line => line.Id).join(',');
+        return this.SelectedLines.Collection.map(x => x.LedgerTransactionPM as LedgerTransactionPM);
     }
 
     public GetInternalReconcileAPPaymentAlertMessage(){
