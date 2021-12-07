@@ -224,9 +224,9 @@ namespace Logitude.Accounting.BL.CoreBL
                         }
 
                     }
-                    if (SumOpenTransactions && _ListOfAccountId.Count()==1)
+                    if (SumOpenTransactions)
                     {
-                        AccountBalance.StartTotalOpenAmount=  myLedgerTransactionQueryService.TotalOpenTransactionAmount(accountId: _ListOfAccountId.First(), _Tenant);
+                        AccountBalance.TotalOpenTransactionAmount =  myLedgerTransactionQueryService.TotalOpenTransactionAmount(accountId: _GLAccountId, _Tenant);
 
                     }
 
@@ -350,7 +350,7 @@ namespace Logitude.Accounting.BL.CoreBL
         public List<string> YearTransferLedgerTransactionIds { get; internal set; }
         public string OpenAmountCurrencyId { get; set; }
         public decimal StartTotalOpenAmount { get; set; }
-        public decimal SumOpenTransactions { get; set; }
+        public decimal TotalOpenTransactionAmount { get; set; }
         
 
         internal List<CallBackBalance> GetCallBackBalanceOfCurrency(string currencyId)
