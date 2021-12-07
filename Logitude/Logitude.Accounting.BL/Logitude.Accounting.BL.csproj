@@ -811,6 +811,7 @@
     <Compile Include="InterestEntityQueryServices\InterestQueryServises\InterestInterestReportQueryService.cs" />
     <Compile Include="InterestEntityQueryServices\InterestQueryServises\InterestARPaymentQueryService.cs" />
     <Compile Include="InterestEntityQueryServices\InterestQueryServises\InterestARInvoiceQueryService.cs" />
+    <Compile Include="InterestEntityQueryServices\InterestQueryServises\InterestAdjustmentQueryService.cs" />
     <Compile Include="InterestEntityQueryServices\InterestQueryServises\InterestJournalQueryService.cs" />
     <Compile Include="InterestService\HelperClasses\InterestReportArguments.cs" />
     <Compile Include="InterestService\InterestReportService.CS" />
