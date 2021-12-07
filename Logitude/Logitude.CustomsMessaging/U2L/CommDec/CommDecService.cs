@@ -892,6 +892,7 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                     {
                         if (currentDeclarationCourierStatusPM.ChangeSetOp != ChangeSetOperation.Update) currentDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
                         currentDeclarationCourierStatusPM.ShopId = shopId;
+                        this.IsProcedureCurrentCodeChanged = true;
                     }
                 }
             }
