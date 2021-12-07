@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class InterfaceManagementUpdateClass
    {  		
-		public const string HashString = "dd435a07fd48d076c6e45ae9fa92c549";
+		public const string HashString = "53302108c67c38be625ac64d15b030c8";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -1910,7 +1910,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   TextCode InterfaceManagementTextCode_CustomsGeneralONewInterfaceManagement = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.NewInterfaceManagement", DefaultText = "New Interface Management",LocalDefaultText = @"ממשק ניהול חדש", ObjectTableId = InterfaceManagementObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode InterfaceManagementTextCode_CustomsGeneralOEditInterfaceManagement = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.EditInterfaceManagement", DefaultText = "Edit Interface Management",LocalDefaultText = @"ניהול ממשק עריכה", ObjectTableId = InterfaceManagementObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode InterfaceManagementTextCode_CustomsGeneralOEditInterfaceManagement = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.EditInterfaceManagement", DefaultText = "Edit Interface Management",LocalDefaultText = @"ניהול בקשות מכס עריכה", ObjectTableId = InterfaceManagementObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
