@@ -406,6 +406,16 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             }
         }
 
+        internal decimal TotalOpenTransactionAmount(string accountId, int tenant)
+        {
+            var totalOpenTransactionAmount =
+            this.repository.GetAll(tenant)
+                .Where(rec => rec.AccountId == accountId)
+                .Where(r => r.IsReconciled == false)
+                .Sum(r => r.OpenAmount);
+            return totalOpenTransactionAmount;
+        }
+
         private static void ProblemWithEqualAccIDCreditDebit(IQueryable<JournalLineLedgerDTO> qLedgerTrans, IQueryable<JournalLineLedgerDTO> qJLAll)
         {
             var qDiffProblemWithEqualAccIDCreditDebit = (

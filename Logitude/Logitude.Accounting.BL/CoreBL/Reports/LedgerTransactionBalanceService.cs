@@ -608,7 +608,7 @@ AccountBalanceM endAccountBalanceService)
                 _Param.DateTypeCode,To,
                 _Param.CheckHaveAccountingQueued,
                 includeAccoutingDateLTransaction, false,
-                false);
+                false, false);
             var endAccountBalance = endAccountBalanceService.AccountBalance;
             return endAccountBalance;
         }
@@ -628,7 +628,7 @@ AccountBalanceM endAccountBalanceService)
                 _Param.DateTypeCode /*GLAccountTotalDateTypeValues.Accountingdate*/,_Param.From,
                 _Param.CheckHaveAccountingQueued,
                 includeAccoutingDateLTransaction, false,
-                _Param.ClacOpenReconciledAmount_OnlyWithout_IncludeRelatedCurrenciesAccount_IncludeChildAccounts);
+                _Param.ClacOpenReconciledAmount_OnlyWithout_IncludeRelatedCurrenciesAccount_IncludeChildAccounts, false);
             var startAccountBalance = startAccountBalanceService.AccountBalance;
             return startAccountBalance;
         }
