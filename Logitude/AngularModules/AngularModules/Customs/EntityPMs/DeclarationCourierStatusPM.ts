@@ -378,10 +378,18 @@ export class DeclarationCourierStatusPM {
     public get TruckerName() { return this.truckerName; }
     public set TruckerName(newValue: string) { if (this.truckerName != newValue) { this.truckerName = newValue; this.MarkAsDirty("TruckerName"); } }
        
-	 
+
     private cargoDescription: string;
     public get CargoDescription() { return this.cargoDescription; }
     public set CargoDescription(newValue: string) { if (this.cargoDescription != newValue) { this.cargoDescription = newValue; this.MarkAsDirty("CargoDescription"); } }
+    private terminalReleaseDate: Date;
+    public get TerminalReleaseDate() { return this.terminalReleaseDate; }
+    public set TerminalReleaseDate(newValue: Date) { if (this.terminalReleaseDate != newValue) { this.terminalReleaseDate = newValue; this.MarkAsDirty("TerminalReleaseDate"); } }
+       
+	 
+    private lastMileServiceType: string;
+    public get LastMileServiceType() { return this.lastMileServiceType; }
+    public set LastMileServiceType(newValue: string) { if (this.lastMileServiceType != newValue) { this.lastMileServiceType = newValue; this.MarkAsDirty("LastMileServiceType"); } }
        
 	 
 
@@ -412,4 +420,4 @@ export class DeclarationCourierStatusPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}
