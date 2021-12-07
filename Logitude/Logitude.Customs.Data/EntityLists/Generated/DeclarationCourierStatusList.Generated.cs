@@ -170,6 +170,8 @@ namespace Logitude.Customs.Data.EntityLists
        public bool IsAmendment  { get; set; }
        [DataMember]
        public string DeclarationStorageSiteCode  { get; set; }
+       [DataMember]
+       public string CargoDescription  { get; set; }
    }
 
 }

@@ -118,6 +118,14 @@ namespace Logitude.Customs.BL.Messaging.U2L.DeclarationDocuments
 
                                     if (customsDocumentPM!= null && String.IsNullOrWhiteSpace(customsDocumentPM.CustomsDocId) && customsDocumentPM.DocumentStatusCode!="7")
                                     {
+
+                                        customsDocumentPM.ChangeSetOp = ChangeSetOperation.Update;
+                                        customsDocumentPM.IsSendToQueue = false;
+                                        myCustomsDocumentUpdateService.AddPerfectCustomsDocumentMetaDataValues(customsDocumentPM);
+                                        myCustomsDocumentUpdateService.Update(customsDocumentPM, true);
+
+
+
                                         customsDocumentPM.IsSendToQueue = true;
                                         myCustomsDocumentUpdateService.IgnoreSendFailure = true;
                                         AppendLogLine("myCustomsDocumentUpdateService.Update:IsSendToQueue = true");
