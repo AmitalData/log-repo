@@ -51,6 +51,7 @@ import { CargoTrackingShipmentExtendedService } from 'src/CargoTracking/Services
 import { SharedService } from 'src/CargoTracking/Services/Others/SharedService';
 import { CustomLabelComponent } from 'src/Infrastructure/Components/CustomLabel/CustomLabel.component';
 import {MatTooltipModule} from '@angular/material/tooltip';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 export function getBaseUrl() {
     return document.getElementsByTagName('base')[0].href;
@@ -106,6 +107,7 @@ export function getBaseUrl() {
         MatIconModule,
         FormsModule, HttpClientModule, NoopAnimationsModule,
         MatTooltipModule,
+        MatSlideToggleModule
     ],
     providers: [
         CargoTrackingSearchService,
