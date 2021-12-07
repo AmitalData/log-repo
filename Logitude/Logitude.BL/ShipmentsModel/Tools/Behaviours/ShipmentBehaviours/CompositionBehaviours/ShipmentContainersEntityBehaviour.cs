@@ -74,14 +74,12 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
         private void MapContainerCancelledFields(ContainerPM containerPM, bool isCancelled)
         {
             containerPM.IsCancelled = isCancelled;
+            containerPM.CancelledDate = null;
             if (isCancelled == true)
             {
                 containerPM.CancelledDate = TenantServerConfigration.GetCurrentDateTime(this.initializer.Tenant);
             }
-            else
-            {
-                containerPM.CancelledDate = null;
-            }
+
             containerService.Update(containerPM);
         }
 
@@ -275,6 +273,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
             container.CancelledDate = null;
             MapContainerPMFields(container, shipmentPackage, false);
             containerService.Update(container);
+            UpdateShipmentPackage(container.Id, shipmentPackage.Id);
         }
         private void CreateNewContainer(ShipmentPackagePM shipmentPackage)
         {
