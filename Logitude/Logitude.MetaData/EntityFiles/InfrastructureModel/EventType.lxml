@@ -3006,21 +3006,6 @@
         IsCompositKey="false"
         IsUpdateAllowed="false" />
       <DCField
-        DCFieldName="&quot;IsManualEntry&quot;"
-        FieldName="&quot;IsManualEntry&quot;"
-        IsKey="false"
-        IsManualMapping="false"
-        IsMulti="false"
-        FieldsDataType="&quot;Boolean&quot;"
-        IsNullable="false"
-        IsSpecialField="false"
-        IsCustomType="false"
-        IsAttribute="false"
-        IgnoreCustomTypeCheck="false"
-        IsCloseField="false"
-        IsCompositKey="false"
-        IsUpdateAllowed="false" />
-      <DCField
         DCFieldName="&quot;PartnerCode&quot;"
         FieldName="&quot;Code&quot;"
         IsKey="false"
