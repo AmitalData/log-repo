@@ -202,6 +202,8 @@ export class NewQuoteExpectedOrderComponent implements OnInit, AfterViewInit {
       this.calcTotalVolume(remove_Volume, 0);
 
       this.formArray.removeAt(index);
+
+      this.calcChargeableWeight();
     }
   }
 
@@ -260,7 +262,7 @@ export class NewQuoteExpectedOrderComponent implements OnInit, AfterViewInit {
   }
 
   calcChargeableWeight() {
-    if(!this.tenant) return;
+    if (!this.tenant) return;
 
     const factor = this.formGroup.value.transportMode?.Id === 'A' ? 1000 / 6 : 1000
     const gu: number = this.unitsService.getWeightUnit(this.tenant.GrossWeightUnitCode, 'GrossWeightUnitCode');
@@ -283,6 +285,10 @@ export class NewQuoteExpectedOrderComponent implements OnInit, AfterViewInit {
       }
     });
 
-    this.EntityPM.ChargeableWeight = this.billableWeight = bulk;
+    this.EntityPM.ChargeableWeight = this.billableWeight = this.roundHalf(bulk);
+  }
+
+  roundHalf(num: number): number {
+    return Math.ceil(num * 2) / 2;
   }
 }

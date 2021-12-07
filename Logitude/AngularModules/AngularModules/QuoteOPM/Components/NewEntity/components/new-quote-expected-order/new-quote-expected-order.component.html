@@ -87,15 +87,15 @@
                     </div>
 
                     <div class="dimensions">
-                        <p-inputNumber placeholder="L" formControlName='Ldimension' id="volume" mode="decimal">
+                        <p-inputNumber placeholder="L" formControlName='Ldimension' id="volume" mode="decimal" [minFractionDigits]="1" [maxFractionDigits]="1">
                         </p-inputNumber>
                     </div>
                     <div class="dimensions">
-                        <p-inputNumber placeholder="W" formControlName='Wdimension' id="volume" mode="decimal">
+                        <p-inputNumber placeholder="W" formControlName='Wdimension' id="volume" mode="decimal" [minFractionDigits]="1" [maxFractionDigits]="1">
                         </p-inputNumber>
                     </div>
                     <div class="dimensions">
-                        <p-inputNumber placeholder="H" formControlName='Hdimension' id="volume" mode="decimal">
+                        <p-inputNumber placeholder="H" formControlName='Hdimension' id="volume" mode="decimal" [minFractionDigits]="1" [maxFractionDigits]="1">
                         </p-inputNumber>
                     </div>
 
@@ -103,13 +103,13 @@
                         <div class="error-msg" [ngClass]='{"invalid": x.controls["volume"].invalid}'>
                             Volume or Gross Weight fields required</div>
                         <p-inputNumber formControlName='volume' id="volume" mode="decimal" [useGrouping]="false"
-                            [minFractionDigits]="2" [maxFractionDigits]="2">
+                            [minFractionDigits]="3" [maxFractionDigits]="3">
                         </p-inputNumber>
                     </div>
 
                     <div class="gross-weight">
                         <p-inputNumber formControlName='grossWeight' id="grossWeight" mode="decimal"
-                            [useGrouping]="false" [minFractionDigits]="2" [maxFractionDigits]="2">
+                            [useGrouping]="false" [minFractionDigits]="1" [maxFractionDigits]="1">
                         </p-inputNumber>
                     </div>
 
@@ -130,7 +130,7 @@
                 </div>
                 <div class="p-field col-5 p-fluid summery-item">
                     <br />
-                    <h4>{{(totalGrossWeight).toFixed(2)}}</h4>
+                    <h4>{{(totalGrossWeight).toFixed(1)}}</h4>
                     <label>Gross Weight ({{tenant?.GrossWeightUnitCode}})</label>
                 </div>
                 <div class="p-field col-5 p-fluid summery-item">
@@ -140,7 +140,7 @@
                 </div>
                 <div class="p-field col-5 p-fluid summery-item summery-chargeable">
                     <br />
-                    <h4>{{(billableWeight).toFixed(2)}}</h4>
+                    <h4>{{(billableWeight).toFixed(1)}}</h4>
                     <label>{{formGroup.value.transportMode?.Id === 'A' ? 'Chargeable Weight (' + tenant?.GrossWeightUnitCode + ')' : 'Wt / Msr (' + tenant?.WeightMeasurementUnitCode + ')'}}</label>
                 </div>
             </div>

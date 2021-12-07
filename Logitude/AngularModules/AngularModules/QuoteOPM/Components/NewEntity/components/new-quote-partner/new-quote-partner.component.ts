@@ -62,17 +62,18 @@ export class NewQuotePartnerComponent extends BaseComponent implements OnInit, A
     public entityArgs: EntityArgs,
     private cdr: ChangeDetectorRef,
     private dataShareService: NewQuoteDataShareService,
-  ) {
-    super();
-  }
-  
-  ngOnInit(): void {
-    this.isHidden = this.dataShareService.partnersHidden[this.type as any];
-
-    this.initCards();
-    this.partnerform.controls.notes.disable();
-    this.initDdl();
-    this.resetForm()
+    ) {
+      super();
+    }
+    
+    ngOnInit(): void {
+      this.isHidden = this.dataShareService.partnersHidden[this.type as any];
+      
+      this.initCards();
+      this.partnerform.controls.notes.disable();
+      this.initDdl();
+      this.resetForm()
+      this.subscribeSecondPartner();
   }
 
   ngAfterViewInit(): void {
@@ -139,9 +140,16 @@ export class NewQuotePartnerComponent extends BaseComponent implements OnInit, A
       this.subscribePartner();
     }
 
-    if (this.formGroup.contains(this.secondPartner) && !this.isSubscribePartner) {
-      this.setValidatorBySecondPrtner();
-    }
+  }
+
+  private async subscribeSecondPartner() {
+    const s = this.formGroup.valueChanges.subscribe(()=>{
+      if (this.formGroup.contains(this.secondPartner) && !this.isSubscribePartner) {
+        this.isSubscribePartner = true;
+        this.setValidatorBySecondPrtner();
+        s.unsubscribe()
+      }
+    })
   }
 
   private async initCards() {
@@ -153,8 +161,6 @@ export class NewQuotePartnerComponent extends BaseComponent implements OnInit, A
   }
 
   private subscribePartner() {
-    this.isSubscribePartner = true;
-
     this.partnerform.controls.partner.valueChanges.subscribe((partner: CardList) => {
       if (partner != null) {
         this.partnerform.controls.contact.reset();
