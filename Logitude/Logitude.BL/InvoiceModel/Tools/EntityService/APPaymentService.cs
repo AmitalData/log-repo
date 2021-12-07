@@ -1311,14 +1311,6 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             }).ToList();
         }
 
-        //private static List<LedgerTransactionPM> GetReconcileTransactions(APPaymentPM theEntityPm)
-        //{
-        //    List<string> transactionsIds = theEntityPm.ReconcileInternalTrans.Select(x => x.Id).ToList();
-        //    ILedgerTransactionQueryService ledgerTransactionQuery = ContainerAccessor.Container.Resolve(typeof(ILedgerTransactionQueryService), "LedgerTransactionQueryServiceExt", new ParameterOverride("", 1)) as ILedgerTransactionQueryService;
-
-        //    List<LedgerTransactionPM> recoTransactions = ledgerTransactionQuery.GetLedgerTransactionPMsByIdList(transactionsIds, theEntityPm.Tenant);
-        //    return recoTransactions;
-        //}
 
         private void CreateAPPaymentJournal(APPaymentPM paymentPM, Tenant tenantPOCO)
         {

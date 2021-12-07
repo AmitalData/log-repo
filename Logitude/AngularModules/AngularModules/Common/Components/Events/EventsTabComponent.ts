@@ -299,6 +299,7 @@ export class EventsTabComponent implements OnDestroy {
                     if (myResponse != null) {
                         if (!myResponse.HasError) {
                             this.LoadData();
+                            this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
                         }
                     }
                 });
