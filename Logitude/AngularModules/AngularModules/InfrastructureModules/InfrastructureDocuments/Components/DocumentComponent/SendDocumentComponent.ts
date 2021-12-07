@@ -795,7 +795,9 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
                             this.Subject = this.SelectedInternalDocument.CurrentDocument.DocumentTypeSubject != null ? this.SelectedInternalDocument.CurrentDocument.DocumentTypeSubject : this.SelectedInternalDocument.CurrentDocument.DocumentTypeName;
                         }
 
-
+                        if (this.SelectedInternalDocument && !AppTool.IsNullOrEmpty(this.SelectedInternalDocument.ToSpecificeEmail)) {
+                            this.ToEmail = (this.ToEmail ? this.ToEmail+";" : "") + this.SelectedInternalDocument.ToSpecificeEmail;
+                        }
 
                         this.ReloadFroalaEditor();
 
