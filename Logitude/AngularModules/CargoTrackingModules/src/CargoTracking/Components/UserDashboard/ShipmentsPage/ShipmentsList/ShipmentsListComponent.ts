@@ -553,18 +553,21 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
         RootContext.ShipmentsScrollPosition = 0;
         this.hasException = event;
         this.hasExceptionAdvancedFilter = event;
+        this.shipmentMoreFiltersMultipleSelection.DeselectFilter(MoreFilterCodes.ExceptionOnly);
         this.LoadScreenData();
     }
     OnOrdersOnlyChanged(event) {
         RootContext.ShipmentsScrollPosition = 0;
         this.ordersOnly = event;
         this.OrdersOnlyAdvancedFilter = event;
+        this.shipmentMoreFiltersMultipleSelection.DeselectFilter(MoreFilterCodes.OrdersOnly);
         this.LoadScreenData();
     }
     OnEstimatedArrivalOnlyChanged(event) {
         RootContext.ShipmentsScrollPosition = 0;
         this.estimatedArrivalOnly = event;
         this.EstimatedArrivalOnlyAdvancedFilter = event;
+        this.shipmentMoreFiltersMultipleSelection.DeselectFilter(MoreFilterCodes.EstimatedArrivalOnly);
         this.LoadScreenData();
     }
 
