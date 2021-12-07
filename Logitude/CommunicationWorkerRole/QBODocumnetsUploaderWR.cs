@@ -57,7 +57,6 @@ namespace CommunicationWorkerRole
                     catch (Exception exception)
                     {
                         ExceptionHandler.HandleException(exception, DateTime.Now, 0, null, "QBO Documnet Uploader execution log queue worker role start", null, null);
-                        parmeters.QueueService.CompleteAsFailed();
                         Thread.Sleep(new TimeSpan(0, 0, 1));
                     }
                 }
