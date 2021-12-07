@@ -262,47 +262,56 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
         }
         private TraceEvent GetPreviousEventAfterDeletion(EventType deletedEventType)
         {
+            TraceEvent previousEvent = null;
             if (string.IsNullOrEmpty(deletedEventType.EntityStatusId))
             {
                 return null;
             }
-            TraceEvent previousEvent = null;
-
-            List<TraceEvent> iTraceEventList = (from a in objectContext.TraceEvent.Include("EventType").Include("EventType.EntityStatus")
-                                                where a.Tenant == tenant
-                                                && a.EntityId == containerPM.Id
-                                                && a.ObjectTableId == objectTableId
-                                                && a.EventType.EntityStatus != null
-                                                && a.Deleted == false
-                                                select a).ToList();
-
-            foreach (TraceEvent e in iTraceEventList)
+            List<TraceEvent> traceEvents =  this.GetTraceEventList();
+            foreach (TraceEvent traceEvent in traceEvents)
             {
-                if (previousEvent == null)
+                previousEvent = this.HandlePreviousEvent(traceEvent);
+            }
+            return previousEvent;
+        }
+        private List<TraceEvent> GetTraceEventList()
+        {
+            var traceEvents = (from a in objectContext.TraceEvent.Include("EventType").Include("EventType.EntityStatus")
+                               where a.Tenant == tenant
+                               && a.EntityId == containerPM.Id
+                               && a.ObjectTableId == objectTableId
+                               && a.EventType.EntityStatus != null
+                               && a.Deleted == false
+                               select a).ToList();
+
+            return traceEvents;
+        }
+
+        private TraceEvent HandlePreviousEvent(TraceEvent traceEvent)
+        {
+            TraceEvent previousEvent = null;
+            if (previousEvent == null)
+            {
+                previousEvent = traceEvent;
+            }
+            else
+            {
+                if (traceEvent.EventType.EntityStatus.StatusWeight > previousEvent.EventType.EntityStatus.StatusWeight)
                 {
-                    previousEvent = e;
-                }
-                else
-                {
-                    if (e.EventType.EntityStatus.StatusWeight > previousEvent.EventType.EntityStatus.StatusWeight)
-                    {
-                        previousEvent = e;
-                    }
+                    previousEvent = traceEvent;
                 }
             }
 
             return previousEvent;
         }
+
         private void SetContainerStatusesFields(TraceEvent previousEvent)
         {
+            EventType firstEventType = allEventTypes.Where(d => d.Code == "COOR").FirstOrDefault();
+            containerPM.StatusId = firstEventType.EntityStatusId;
             if (previousEvent != null)
             {
                 containerPM.StatusId = previousEvent.EventType.EntityStatusId;
-            }
-            else
-            {
-                EventType firstEventType = allEventTypes.Where(d => d.Code == "COOR").FirstOrDefault();
-                containerPM.StatusId = firstEventType.EntityStatusId;
             }
             container.StatusId = containerPM.StatusId;
         }
