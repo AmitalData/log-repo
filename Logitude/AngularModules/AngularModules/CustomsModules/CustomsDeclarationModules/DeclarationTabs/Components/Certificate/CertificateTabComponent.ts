@@ -65,6 +65,7 @@ export class CertificateTabComponent extends BaseComponent implements OnInit {
 
     SelectedItemsCountText: string;
     SelectedItemsCount: number;IsDisplayMessage: boolean;
+   public TaxExemptCode92: boolean=true;
 ;
     public IsVisible: boolean;
     showTemplate: boolean = false;
@@ -74,6 +75,12 @@ export class CertificateTabComponent extends BaseComponent implements OnInit {
     constructor(public entityArgs: EntityArgs, public CD: ChangeDetectorRef, private EntityResourceService: EntityResourceService, public declarationExtendedListService: DeclarationExtendedListService) {
         super();
         this.SelectedItemsCount = 0;
+
+        var taxExemptCode92Feature = FeatureLocator.HasFeaturePermession("Customs.Declaration", "TaxExemptCode92");
+        if (taxExemptCode92Feature) {
+            this.TaxExemptCode92 = false;
+        }
+
         this.CurrentSession.SubscriptionAdd(
             this.CurrentSession.CurrentEditComponent.SubscriptionAdd(
                 this.CurrentSession.PseventRowSelectEvent.subscribe((res) => {
@@ -99,7 +106,7 @@ export class CertificateTabComponent extends BaseComponent implements OnInit {
         this.DisplayOnlyCheck();
 
         this.CheckDeclarationInvoices();
-
+     
         //  this.GetCertificates(null);
 
         //this.CurrentSession.SelectItemEvent.subscribe((res) => {
