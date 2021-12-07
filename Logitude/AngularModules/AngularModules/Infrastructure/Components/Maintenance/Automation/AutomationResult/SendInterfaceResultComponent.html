@@ -113,45 +113,28 @@
                                                 <table>
                                                     <tr>
                                                         <!--<td class="CellStretched" style="width:80px;vertical-align:central" >
-                                                        <p style="font-size:12px;color:#6E7172" > FTP Folder</p >
-                                                        </td >
+    <p style="font-size:12px;color:#6E7172" > FTP Folder</p >
+    </td >
 
-                                                        <td style="width:202px" >
-                                                        <div style="text-align:left;width:202px;" >
-                                                        <ComboBox [IsDisabled] ="!IsCustomerCare" style="width:200px;" (SelectedItemChanged)="FTPFolderSelected = $event" [ItemsSource]="FTPFolderLists" [SelectedItem]="FTPFolderSelected" [Binding]="'Name'" > </ComboBox >
-                                                        </div >
-                                                        </td >
-                                                        <td style="width:8px" > </td >
-                                                        <td class="CellStretched" style="width:25px; min-width:25px; max-width:25px; position: relative;vertical-align:central" >
+    <td style="width:202px" >
+    <div style="text-align:left;width:202px;" >
+    <ComboBox [IsDisabled] ="!IsCustomerCare" style="width:200px;" (SelectedItemChanged)="FTPFolderSelected = $event" [ItemsSource]="FTPFolderLists" [SelectedItem]="FTPFolderSelected" [Binding]="'Name'" > </ComboBox >
+    </div >
+    </td >
+    <td style="width:8px" > </td >
+    <td class="CellStretched" style="width:25px; min-width:25px; max-width:25px; position: relative;vertical-align:central" >
 
-                                                        <IconButton [IsEnabled]="IsCustomerCare" [Name]="'Add'" [IsSmall]="true" (click)="AddFTPFolder()" > </IconButton >j
 
-                                                        </td >
-                                                        <td style="width:10px" > </td >-->
+    <IconButton [IsEnabled]="IsCustomerCare" [Name]="'Add'" [IsSmall]="true" (click)="AddFTPFolder()" > </IconButton >
 
-                                                        <td style="width:70px">
-                                                            <a *ngIf="SendViaSelected && SendViaSelected.Code == 'FTP'" [class.HyperlinkDisabled]="!IsCustomerCare" class="Link" style="font-size:13px;" (click)="ShowFTPDetails()"> FTP Details</a>
+    </td >
+    <td style="width:10px" > </td >-->
+
+                                                        <td *ngIf="SendViaSelected && SendViaSelected.Code == 'FTP'" style="width:70px">
+                                                            <a [class.HyperlinkDisabled]="!IsCustomerCare" class="Link" style="font-size:13px;" (click)="ShowFTPDetails()"> FTP Details</a>
                                                         </td>
-                                                        <td *ngIf="IsCustomerCare && SendViaSelected && SendViaSelected.Code == 'WEBHOOK'">
-                                                            <div>
-                                                                <table>
-                                                                    <tr>
-                                                                        <td class="CellStretched" style="width:35px;vertical-align:central">
-                                                                            <p style="font-size:12px;color:#6E7172"> URL</p>
-                                                                        </td>
-
-                                                                        <td>
-                                                                            <div style="text-align:left;width:330px;">
-                                                                                <LogTextBox [ObjectFieldName]="'WebHookURL'"
-                                                                                            [NoObjectField]="true"
-                                                                                            [Text]="WebHookURL"
-                                                                                            [DataContext]="DataContext">
-                                                                                </LogTextBox>
-                                                                            </div>
-                                                                        </td>
-                                                                    </tr>
-                                                                </table>
-                                                            </div>
+                                                        <td *ngIf="IsCustomerCare && SendViaSelected && SendViaSelected.Code == 'WEBHOOK'" style="width:70px">
+                                                            <a [class.HyperlinkDisabled]="!IsCustomerCare" class="Link" style="font-size:13px;" (click)="ShowWebHookDetails()"> WebHook Details</a>
                                                         </td>
                                                         <td> </td>
                                                     </tr>

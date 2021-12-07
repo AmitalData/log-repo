@@ -32,6 +32,9 @@ export class FTPAutomationDetails {
 
 export class WebHookAutomationDetails {
     public URL: string;
+    public AuthenticationType: string;
+    public BasicAuthUserName: string;
+    public BasicAuthPassword: string;
 }
 
 export class AdvancedAutomationSendInterfaceDetails {
