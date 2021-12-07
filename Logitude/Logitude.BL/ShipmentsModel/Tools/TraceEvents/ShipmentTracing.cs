@@ -1044,86 +1044,142 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
 
                         if (!string.IsNullOrEmpty(eventType.EntityStatusId))
                         {
-                            TraceEvent previousEvent = null;
-
-                            List<TraceEvent> iTraceEventList = (from a in objectContext.TraceEvent.Include("EventType").Include("EventType.EntityStatus")
-                                                                where a.Tenant == tenant
-                                                                && a.EntityId == entityPM.Id
-                                                                && a.ObjectTableId == objectTableId
-                                                                && a.EventType.EntityStatus != null
-                                                                && a.Deleted == false
-                                                                select a).ToList();
-
-                            foreach (TraceEvent e in iTraceEventList)
+                            if (entityPM.StatusId == eventType.EntityStatusId)
                             {
-                                if (!e.Deleted)
-                                {
-                                    if (e.EventType.EntityStatus != null)
-                                    {
-                                        if (previousEvent == null)
-                                        {
-                                            previousEvent = e;
-                                        }
+                                TraceEvent previousEvent = null;
 
-                                        else
+                                List<TraceEvent> iTraceEventList = (from a in objectContext.TraceEvent.Include("EventType").Include("EventType.EntityStatus")
+                                                                    where a.Tenant == tenant
+                                                                    && a.EntityId == entityPM.Id
+                                                                    && a.ObjectTableId == objectTableId
+                                                                    && a.EventType.EntityStatus != null
+                                                                    && a.Deleted == false
+                                                                    select a).ToList();
+
+                                foreach (TraceEvent e in iTraceEventList)
+                                {
+                                    if (!e.Deleted)
+                                    {
+                                        if (e.EventType.EntityStatus != null)
                                         {
-                                            if (e.EventType.EntityStatus.StatusWeight > previousEvent.EventType.EntityStatus.StatusWeight)
+                                            if (previousEvent == null)
                                             {
                                                 previousEvent = e;
+                                            }
+
+                                            else
+                                            {
+                                                if (e.EventType.EntityStatus.StatusWeight > previousEvent.EventType.EntityStatus.StatusWeight)
+                                                {
+                                                    previousEvent = e;
+                                                }
                                             }
                                         }
                                     }
                                 }
-                            }
 
-                            if (previousEvent != null)
-                            {
-                                entityPM.StatusId = previousEvent.EventType.EntityStatusId;
-                                entityPM.StatusDate = previousEvent.EventDateTime;
-                                entityPM.LastStatusLogDate = previousEvent.EventDateTime;
-
-                                switch (previousEvent.EventType.Code)
+                                if (previousEvent != null)
                                 {
-                                    case "PICD":
-                                    case "PCAR":
-                                    case "DELD":
-                                    case "DLAR":
-                                    case "RCS":
-                                    case "PIOD":
-                                    case "PIAR":
-                                    case "DEAR":
-                                        {
-                                            entityPM.StatusLocation = previousEvent.Location;
-                                            break;
-                                        }
+                                    entityPM.StatusId = previousEvent.EventType.EntityStatusId;
+                                    entityPM.StatusDate = previousEvent.EventDateTime;
+                                    entityPM.LastStatusLogDate = previousEvent.EventDateTime;
 
-                                    default:
-                                        {
-                                            entityPM.StatusLocation = GetStatusLocation(new EventStatusTracerArgs() { EventTypeCode = previousEvent.EventType.Code });
-                                            break;
-                                        }
+                                    switch (previousEvent.EventType.Code)
+                                    {
+                                        case "PICD":
+                                        case "PCAR":
+                                        case "DELD":
+                                        case "DLAR":
+                                        case "RCS":
+                                        case "PIOD":
+                                        case "PIAR":
+                                        case "DEAR":
+                                            {
+                                                entityPM.StatusLocation = previousEvent.Location;
+                                                break;
+                                            }
+
+                                        default:
+                                            {
+                                                entityPM.StatusLocation = GetStatusLocation(new EventStatusTracerArgs() { EventTypeCode = previousEvent.EventType.Code });
+                                                break;
+                                            }
+                                    }
+                                }
+
+                                else
+                                {
+                                    EventType firstEventType = allEventTypes.Where(d => d.Code == "ORDR").FirstOrDefault();
+                                    entityPM.StatusId = firstEventType.EntityStatusId;
+                                    entityPM.StatusDate = entityPM.CreateDateTime;
+                                    entityPM.LastStatusLogDate = entityPM.CreateDateTime;
+                                    entityPM.StatusLocation = null;
+                                }
+
+                                entityPoco.StatusId = entityPM.StatusId;
+                                entityPoco.StatusDate = entityPM.StatusDate;
+                                entityPoco.StatusLocation = entityPM.StatusLocation;
+                                entityPoco.LastStatusLogDate = entityPM.LastStatusLogDate;
+
+                                if (entityPM.ShipmentLevelCode == "D" || entityPM.ShipmentLevelCode == "C")
+                                {
+                                    entityMasterData.StatusId = entityPM.StatusId;
+                                    entityMasterData.StatusDate = entityPM.StatusDate;
+                                    entityMasterData.StatusLocation = entityPM.StatusLocation;
                                 }
                             }
 
-                            else
+                            else if (FeatureToggleHelper.HasFeatureToggle("OPS", tenant) && entityPM.OperationalStatusId == eventType.EntityStatusId)
                             {
-                                EventType firstEventType = allEventTypes.Where(d => d.Code == "ORDR").FirstOrDefault();
-                                entityPM.StatusId = firstEventType.EntityStatusId;
-                                entityPM.StatusDate = entityPM.CreateDateTime;
-                                entityPM.LastStatusLogDate = entityPM.CreateDateTime;
-                                entityPM.StatusLocation = null;
-                            }
+                                List<TraceEvent> iTraceEventList = (from a in objectContext.TraceEvent.Include("EventType").Include("EventType.EntityStatus")
+                                                                    where a.Tenant == tenant
+                                                                    && a.EntityId == entityPM.Id
+                                                                    && a.ObjectTableId == objectTableId
+                                                                    && a.EventType.EntityStatus != null
+                                                                    && a.EventType.EntityStatus.EntityStatusTypeCode == "O"
+                                                                    && a.Deleted == false
+                                                                    select a).ToList();
 
-                            entityPoco.StatusId = entityPM.StatusId;
-                            entityPoco.StatusDate = entityPM.StatusDate;
-                            entityPoco.StatusLocation = entityPM.StatusLocation;
-                            entityPoco.LastStatusLogDate = entityPM.LastStatusLogDate;
+                                TraceEvent previousEvent = null;
 
-                            if (entityPM.ShipmentLevelCode == "D" || entityPM.ShipmentLevelCode == "C")
-                            {
-                                entityMasterData.StatusId = entityPM.StatusId;
-                                entityMasterData.StatusDate = entityPM.StatusDate;
-                                entityMasterData.StatusLocation = entityPM.StatusLocation;
+                                foreach (TraceEvent e in iTraceEventList)
+                                {
+                                    if (!e.Deleted)
+                                    {
+                                        if (e.EventType.EntityStatus != null)
+                                        {
+                                            if (previousEvent == null)
+                                            {
+                                                previousEvent = e;
+                                            }
+
+                                            else
+                                            {
+                                                if (e.EventType.EntityStatus.StatusWeight > previousEvent.EventType.EntityStatus.StatusWeight)
+                                                {
+                                                    previousEvent = e;
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+
+                                if (previousEvent != null)
+                                {
+                                    entityPM.OperationalStatusId = previousEvent.EventType.EntityStatusId;
+                                }
+
+                                else
+                                {
+                                    entityPM.OperationalStatusId = null;
+                                }
+
+                                entityPoco.OperationalStatusId = entityPM.OperationalStatusId;
+
+                                if (entityPM.ShipmentLevelCode == "D" || entityPM.ShipmentLevelCode == "C")
+                                {
+                                    entityMasterData.OperationalStatusId = entityPM.OperationalStatusId;
+                                }
                             }
                         }
                     }
@@ -1668,9 +1724,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
 
             else
             {
-                //EntityStatusRepository entityStatusRep = new EntityStatusRepository(entityPM.Tenant);
-                //EntityStatus orderStatus = entityStatusRep.GetSingleEntityStatusByCode("SHOR", entityPM.Tenant);
-                //entityPM.StatusId = orderStatus.Id;
                 entityPM.OperationalStatusId = null;
             }
 
