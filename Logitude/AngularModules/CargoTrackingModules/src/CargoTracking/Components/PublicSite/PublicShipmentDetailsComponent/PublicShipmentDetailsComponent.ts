@@ -8,6 +8,7 @@ import { AppHelper } from 'src/CargoTracking/Utilities/AppHelper';
 import { CargoTrackingMilestoneService } from 'src/CargoTracking/Services/Others/CargoTrackingMilestoneService';
 import { CargoTrackingMilestoneList } from 'src/CargoTracking/EntityLists/CargoTrackingMilestoneList';
 import { CargoTrackingMilestones } from 'src/CargoTracking/DataContracts/CargoTrackingMilestones';
+import { MilestoneCodes } from 'src/CargoTracking/Constants/MilestoneCodes';
 
 const shipmentOrderEntityType = 'O';
 @Component({
@@ -262,7 +263,6 @@ export class PublicShipmentDetailsComponent implements OnInit
         if (this.AllMilestoneFields) {
             this.AllMilestoneFields.forEach(S =>
             {
-
                 if (S.IsEstimation) {
 
                     this.FuturesMilestoneFields.push(S);
@@ -280,6 +280,10 @@ export class PublicShipmentDetailsComponent implements OnInit
 
                     this.CurrentMilestoneField = S;
                 }
+                if(S.Code ==  MilestoneCodes.BookingNote){
+                    S.Notes = 'Booking Conf. Num: '+ S.Notes;
+                }
+
             });
         }
 

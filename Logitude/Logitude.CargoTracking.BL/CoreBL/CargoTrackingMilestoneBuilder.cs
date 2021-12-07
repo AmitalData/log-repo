@@ -77,7 +77,7 @@ namespace Logitude.CargoTracking.BL.CoreBL
                 Date = shipment.BookingDate,
                 EstimationDate = shipment.BookingEstimationDate,
                 Done = shipment.BookingDone,
-                Notes = null,
+                Notes = shipment.BookingNotes,
                 IsCurrent = false,
                 IsEstimation = shipment.BookingDate == null && shipment.BookingEstimationDate != null
             });
