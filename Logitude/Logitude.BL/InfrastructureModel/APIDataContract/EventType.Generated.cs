@@ -28,8 +28,6 @@ namespace Logitude.BL.InfrastructureModel.APIDataContract.ApiV1
     
     public string EnglishName { get; set; }
     
-    public bool IsManualEntry { get; set; }
-    
 	[XmlAttribute]
     public string PartnerCode { get; set; }
 
