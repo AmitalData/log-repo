@@ -232,7 +232,7 @@ namespace LogitudeTransferData
                 {
                     foreach (T PM in PMs)
                     {
-                        
+
                         counter++;
                         var serializedContact = JsonConvert.SerializeObject(PM, Formatting.Indented);
                         var deliveryReport = producer.ProduceAsync(KafkaTopics.LookupsTopic, new Message<long, string> { Key = kakaMessageTypes, Value = serializedContact }).GetAwaiter().GetResult();
