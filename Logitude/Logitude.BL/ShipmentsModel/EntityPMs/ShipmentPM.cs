@@ -2442,7 +2442,7 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public bool IsShipmentComputedFieldChange { get; set; }
         public bool IsShipmentAdditionalCloudDataChange { get; set; }
         public bool IsStatusChange { get; set; }
-
+        public bool IsOperationalStatusChange { get; set; }
 
         public string PackagesTypesNames { get; set; }
         public string PackagesTypesPrintAs { get; set; }
@@ -2772,7 +2772,9 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string ShipperNotExporterReference1 { get; set; }
         public string ShipperNotExporterReference2 { get; set; }
         public string OperationalStatusId { get; set; }
+        public string OperationalStatusName { get; set; }
         public string BillingStatusId { get; set; }
+
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string AccountingClosedByUserId { get; set; }
         public string HouseMasterConcurrencyGUID { get; set; }

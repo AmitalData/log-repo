@@ -412,6 +412,14 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "AEV,Automation Event Creation", 
                 Description = "Automation Event Creation", 
 			});
+
+            all.Add(new ToggleDetails()
+            {    
+                Code = "OPS", 
+                Name = "Operational Status", 
+                SearchFields = "OPS,Operational Status", 
+                Description = "Operational Status", 
+			});
 			
             return all;
        }

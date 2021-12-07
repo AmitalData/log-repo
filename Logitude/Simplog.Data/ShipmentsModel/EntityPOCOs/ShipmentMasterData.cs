@@ -247,5 +247,11 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
 
         [ForeignKey("InlandDomesticToCountryId")]
         public virtual Country InlandDomesticToCountry { get; set; }
+
+        public string OperationalStatusId { get; set; }
+        public string BillingStatusId { get; set; }
+
+        public virtual EntityStatus OperationalStatus { get; set; }
+        public virtual EntityStatus BillingStatus { get; set; }
     }
 }
