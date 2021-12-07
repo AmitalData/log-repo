@@ -1213,15 +1213,15 @@ namespace CommunicationWorkerRole
             if (string.IsNullOrEmpty(invoiceId))
                 return;
 
-            DocumentsFiling documentsFiling = this.GetDocumentFilings(invoiceId, tenant);
+            DocumentsFiling documentsFiling = this.GetAPInvoiceDocumentFilings(invoiceId, tenant);
 
             if (documentsFiling == null)
                 return;
 
-            this.OpenSendingQBODocumentsQueue(documentsFiling);
+            this.SendQueueOfEntityDocumnetsToQuickbooks(documentsFiling);
         }
 
-        private DocumentsFiling GetDocumentFilings(string invoiceId, int tenant)
+        private DocumentsFiling GetAPInvoiceDocumentFilings(string invoiceId, int tenant)
         {
             ObjectTableRepository objectTableRepository = new ObjectTableRepository(tenant);
             string shipmentObjectTableId = GetObjectTableIdByName("Shipment", tenant, objectTableRepository);
@@ -1247,7 +1247,7 @@ namespace CommunicationWorkerRole
             return objectTable.Id;
         }
 
-        private void OpenSendingQBODocumentsQueue(DocumentsFiling documentFiling)
+        private void SendQueueOfEntityDocumnetsToQuickbooks(DocumentsFiling documentFiling)
         {
             if (documentFiling == null)
             {

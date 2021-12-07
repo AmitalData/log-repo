@@ -111,7 +111,7 @@ namespace CommunicationWorkerRole
             parmeters.CommLogRepository = new CommunicationLogRepository(parmeters.CommonContext);
             parmeters.ContactQuery = new ContactQuery(parmeters.Tenant);
             parmeters.ContentTypes = GetQBOContentTypes();
-            this.InitializeLoggedContactAndTenant();
+            this.GetLoggedContactAndTenant();
             this.GetAPInvoiceObjectTableIdByName();
         }
 
@@ -139,7 +139,7 @@ namespace CommunicationWorkerRole
             return contentTypes;
         }
 
-        private void InitializeLoggedContactAndTenant()
+        private void GetLoggedContactAndTenant()
         {
             string email = "system@tenant" + parmeters.Tenant + ".com";
             parmeters.LoggedContact = parmeters.ContactQuery.GetContactByNameAndTenant(email, parmeters.Tenant, true);
@@ -201,8 +201,8 @@ namespace CommunicationWorkerRole
             {
                 return;
             }
-            var documentsFilings = this.GetDocumentFilings(documentFiling);
-            this.HadelSendingDocumentsFilingsToQBO(documentsFilings);
+            var documentsFilings = this.GetAPInvoiceDocumentFilings(documentFiling);
+            this.HandleSendingDocumentsFilingsToQBO(documentsFilings);
         }
 
         private bool IsShipmentOrAPInvoiceObjectTable(ObjectTable objectTable)
@@ -263,7 +263,7 @@ namespace CommunicationWorkerRole
             return true;
         }
 
-        private List<DocumentsFiling> GetDocumentFilings(DocumentsFilingPM documentFiling)
+        private List<DocumentsFiling> GetAPInvoiceDocumentFilings(DocumentsFilingPM documentFiling)
         {
             var documentsFilings = (from a in parmeters.CommonContext.DocumentsFilings.Include("DocumentType")
                                     where a.Tenant == parmeters.Tenant && a.EntityId == documentFiling.EntityId
@@ -275,7 +275,7 @@ namespace CommunicationWorkerRole
             return documentsFilings;
         }
 
-        private void HadelSendingDocumentsFilingsToQBO(List<DocumentsFiling> documentsFilings)
+        private void HandleSendingDocumentsFilingsToQBO(List<DocumentsFiling> documentsFilings)
         {
             if (!IsInvoiceHaveDocumentsFilings(documentsFilings))
             {
@@ -393,7 +393,8 @@ namespace CommunicationWorkerRole
             }
             else
             {
-                UpdateCommunicationLogAsFiled(null);
+                Exception ex = null;
+                UpdateCommunicationLogAsFiled(ex);
             }
         }
 
@@ -466,15 +467,19 @@ namespace CommunicationWorkerRole
         private void UpdateQBORefreshToken(dynamic response, AccountingSettingPM entityPM)
         {
             entityPM.RefreshToken = response.RefreshToken;
-            ICommonDataContext MyContext = CommonDataContext.GetContext(entityPM.Id);
-            AccountingSetting accountingSetting = MyContext.AccountingSettings.Where(p => p.Id == entityPM.Id).FirstOrDefault();
+            AccountingSetting accountingSetting = parmeters.CommonContext.AccountingSettings.Where(p => p.Id == entityPM.Id).FirstOrDefault();
             if (accountingSetting != null)
             {
-                accountingSetting.RefreshToken = response.RefreshToken;
-                MyContext.AccountingSettings.Attach(accountingSetting);
-                MyContext.SetAsModified(accountingSetting);
-                MyContext.SaveChanges();
+                this.UpdateAccountingSettings(response, accountingSetting);
             }
+        }
+
+        private void UpdateAccountingSettings(dynamic response, AccountingSetting accountingSetting)
+        {
+            accountingSetting.RefreshToken = response.RefreshToken;
+            parmeters.CommonContext.AccountingSettings.Attach(accountingSetting);
+            parmeters.CommonContext.SetAsModified(accountingSetting);
+            parmeters.CommonContext.SaveChanges();
         }
 
         private Attachable GetQBOAttachableObject()
@@ -492,12 +497,18 @@ namespace CommunicationWorkerRole
 
         private string GetContentType(Document document, DocumentsFiling documentFiling)
         {
+
             if (!parmeters.ContentTypes.ContainsKey(document.Extension.ToLower()))
             {
-                UpdateDocument(documentFiling, false);
-                throw new Exception(document.Extension + " files are not supported in the QBO Attachments API");
+                this.HandleNotSupportedTypesInQBOAttachments(document, documentFiling);
             }
             return (parmeters.ContentTypes[document.Extension.ToLower()]);
+        }
+
+        private void HandleNotSupportedTypesInQBOAttachments(Document document, DocumentsFiling documentFiling)
+        {
+            UpdateDocument(documentFiling, false);
+            throw new Exception(document.Extension + " files are not supported in the QBO Attachments API");
         }
 
         private void UpdateDocument(DocumentsFiling documentFiling, bool isTransferdToQBO)
@@ -519,7 +530,7 @@ namespace CommunicationWorkerRole
             parmeters.CommLogRepository.SubmitChanges();
         }
 
-        private void UpdateCommunicationLogAsFiled(Exception exc)
+        private void UpdateCommunicationLogAsFiled(Exception exception)
         {
             CommunicationLog waitingCommLog = parmeters.CommLogRepository.GetSingleCommunicationLog(parmeters.CommunicationLogId, parmeters.Tenant);
             waitingCommLog.CommunicationStatusTypeCode = "F";
@@ -527,16 +538,16 @@ namespace CommunicationWorkerRole
             waitingCommLog.DoneDateUTC = DateTime.UtcNow;
             waitingCommLog.LastStatusDate = TenantServerConfigration.GetCurrentDateTime(parmeters.Tenant);
             waitingCommLog.LastStatusDateUTC = DateTime.UtcNow;
-            waitingCommLog.ExceptionMessage = exc == null ? "Faild to Send Attachment " : exc.Message;
+            waitingCommLog.ExceptionMessage = exception == null ? "Faild to Send Attachment " : exception.Message;
             parmeters.CommLogRepository.Update(waitingCommLog);
             parmeters.CommLogRepository.SubmitChanges();
         }
 
 
-        private void HandelException(Exception ex)
+        private void HandelException(Exception exception)
         {
-            ExceptionHandler.HandleException(ex, DateTime.Now, parmeters.Tenant, "", "QBO Documnet Uploader code WorkerRole Run Method", "", null);
-            UpdateCommunicationLogAsFiled(ex);
+            ExceptionHandler.HandleException(exception, DateTime.Now, parmeters.Tenant, "", "QBO Documnet Uploader code WorkerRole Run Method", "", null);
+            UpdateCommunicationLogAsFiled(exception);
             parmeters.QueueService.CompleteAsFailed();
             Thread.Sleep(10000);
         }
