@@ -35,6 +35,9 @@ using Logitude.CargoTracking.Data.EntityLists;
 using Logitude.CargoTracking.BL.EntityUpdateServices;
 using Logitude.CargoTracking.Data.EntityListQueryServices;
 using Logitude.CargoTracking.BL.EntityQueryServices;
+using Simplog.Data.ShipmentsModel.EntityPOCOs;
+using Simplog.Data.ShipmentsModel.Repositories;
+using Simplog.Data.Helpers;
 
 namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 {
@@ -48,7 +51,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
         {
             try
             {
-                int tenant  = GetAuthinticatedTenant();
+                int tenant = GetAuthinticatedTenant();
 
                 CargoTrackingShipmentQueryService cargoTrackingShipmentQuery = new CargoTrackingShipmentQueryService(tenant);
                 CargoTrackingShipmentPM cargoTrackingShipmentPM = cargoTrackingShipmentQuery.GetSinglePMById(entityId, tenant);
@@ -66,7 +69,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
         {
             try
             {
-               
+
 
                 CargoTrackingShipmentQueryService cargoTrackingShipmentQuery = new CargoTrackingShipmentQueryService(tenant);
                 CargoTrackingShipmentPM cargoTrackingShipmentPM = cargoTrackingShipmentQuery.GetSinglePMBySecurityKey(securityKey, tenant);
@@ -83,7 +86,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
         {
             try
             {
-                
+
 
                 CargoTrackingShipmentQueryService cargoTrackingShipmentQuery = new CargoTrackingShipmentQueryService(tenant);
                 CargoTrackingShipmentPM cargoTrackingShipmentPM = cargoTrackingShipmentQuery.GetMainShipmentByShipmentSecurityKey(securityKey, tenant);
@@ -96,8 +99,31 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
             }
 
         }
+        public HttpResponseMessage PostDeclarationApprovalResponse(DeclarationApprovalArgs declarationApprovalArgs)
+        {
 
-        private static int GetAuthinticatedTenant()
+            using (var scope = new TransactionScope(TransactionScopeOption.Required,
+                                     new TransactionOptions { IsolationLevel = IsolationLevel.ReadUncommitted }))
+            {
+                try
+                {
+                    CargoTrackingShipmentsDeclarationApprovalService declarationApprovalService = new CargoTrackingShipmentsDeclarationApprovalService();
+                    declarationApprovalService.HandleDeclarationApproval(declarationApprovalArgs);
+
+                    scope.Complete();
+
+                    return Request.CreateResponse(HttpStatusCode.OK);
+                }
+                catch (Exception ex)
+                {
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+                }
+            }
+
+
+        }
+
+        private int GetAuthinticatedTenant()
         {
             string logKey = PerformanceLogger.LogCurrentTime();
             string token = HttpContext.Current.Request.Headers["Token"];
@@ -106,4 +132,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
             return authToken.Tenant;
         }
     }
+
+
+
 }
