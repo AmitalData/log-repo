@@ -543,192 +543,157 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
         }
         private void TracGatedOut()
         {
-            if (containerPM.ActualOnCarriageDeparture != null && container.ActualOnCarriageDeparture == null)
+            if ((containerPM.ActualOnCarriageDeparture != null && container.ActualOnCarriageDeparture == null)&& containerPM.ActualPODDeparture == null)
             {
+                this.DeleteTraceEvent("GTOT");
                 this.CreateTraceEvent("GTOT", containerPM.ActualOnCarriageDeparture);
             }
-            else if (containerPM.ActualOnCarriageDeparture == null && container.ActualOnCarriageDeparture != null)
+            else if ((containerPM.ActualOnCarriageDeparture == null && container.ActualOnCarriageDeparture != null)&& containerPM.ActualPODDeparture == null)
             {
                 this.DeleteTraceEvent("GTOT");
-                this.TraceActualPODDeparture();
             }
-            else
+            else if ((containerPM.ActualPODDeparture != null && container.ActualPODDeparture == null)&& containerPM.ActualOnCarriageDeparture == null)
             {
-                this.TraceActualPODDeparture();
-            }
-        }
-        private void TraceActualPODDeparture()
-        {
-            if (containerPM.ActualPODDeparture != null && container.ActualPODDeparture == null)
-            {
+                this.DeleteTraceEvent("GTOT");
                 this.CreateTraceEvent("GTOT", containerPM.ActualPODDeparture);
             }
-            else if (containerPM.ActualPODDeparture == null && container.ActualPODDeparture != null)
+            else if ((containerPM.ActualPODDeparture == null && container.ActualPODDeparture != null)&& containerPM.ActualOnCarriageDeparture == null)
             {
                 this.DeleteTraceEvent("GTOT");
             }
         }
+
         private void TracOnCarriageArrived()
         {
-            if (containerPM.ActualLIFArrival != null && container.ActualLIFArrival == null)
+            if ((containerPM.ActualLIFArrival != null && container.ActualLIFArrival == null) && containerPM.ShipmentOnCarriageATA == null)
             {
+                this.DeleteTraceEvent("DPWH");
                 this.CreateTraceEvent("DPWH", containerPM.ActualLIFArrival);
             }
-            else if (containerPM.ActualLIFArrival == null && container.ActualLIFArrival != null)
+            else if ((containerPM.ActualLIFArrival == null && container.ActualLIFArrival != null) && containerPM.ShipmentOnCarriageATA == null)
             {
                 this.DeleteTraceEvent("DPWH");
-                this.TraceShipmentOnCarriageATA();
             }
-            else
+            else if ((containerPM.ShipmentOnCarriageATA != null && container.ShipmentOnCarriageATA == null) && containerPM.ActualLIFArrival == null)
             {
-                this.TraceShipmentOnCarriageATA();
-            }
-        }
-        private void TraceShipmentOnCarriageATA()
-        {
-            if (containerPM.ShipmentOnCarriageATA != null && container.ShipmentOnCarriageATA == null)
-            {
+                this.DeleteTraceEvent("DPWH");
                 this.CreateTraceEvent("DPWH", containerPM.ShipmentOnCarriageATA);
             }
-            else if (containerPM.ShipmentOnCarriageATA == null && container.ShipmentOnCarriageATA != null)
+            else if ((containerPM.ShipmentOnCarriageATA == null && container.ShipmentOnCarriageATA != null) && containerPM.ActualLIFArrival == null)
             {
                 this.DeleteTraceEvent("DPWH");
             }
         }
+        
         private void TracOnCarriageDeparted()
         {
-            if (containerPM.ActualLIFArrival != null && container.ShipmentOnCarriageATD == null)
-            {
-                this.CreateTraceEvent("ARWH", containerPM.ActualLIFArrival);
-            }
-            else if (containerPM.ShipmentOnCarriageATD == null && container.ShipmentOnCarriageATD != null)
+            if ((containerPM.ActualOnCarriageDeparture != null && container.ActualOnCarriageDeparture == null) && containerPM.ShipmentOnCarriageATD == null)
             {
                 this.DeleteTraceEvent("ARWH");
-                this.TraceShipmentOnCarriageATD();
+                this.CreateTraceEvent("ARWH", containerPM.ActualOnCarriageDeparture);
             }
-            else
+            else if ((containerPM.ActualOnCarriageDeparture == null && container.ActualOnCarriageDeparture != null) && containerPM.ShipmentOnCarriageATD == null)
             {
-                this.TraceShipmentOnCarriageATD();
+                this.DeleteTraceEvent("ARWH");
             }
-        }
-        private void TraceShipmentOnCarriageATD()
-        {
-            if (containerPM.ShipmentOnCarriageATD != null && container.ShipmentOnCarriageATD == null)
+            else if ((containerPM.ShipmentOnCarriageATD != null && container.ShipmentOnCarriageATD == null) && containerPM.ActualOnCarriageDeparture == null)
             {
+                this.DeleteTraceEvent("ARWH");
                 this.CreateTraceEvent("ARWH", containerPM.ShipmentOnCarriageATD);
             }
-            else if (containerPM.ShipmentOnCarriageATD == null && container.ShipmentOnCarriageATD != null)
+            else if ((containerPM.ShipmentOnCarriageATD == null && container.ShipmentOnCarriageATD != null) && containerPM.ActualOnCarriageDeparture == null)
             {
                 this.DeleteTraceEvent("ARWH");
             }
         }
+
         private void TracArrivedPOD()
         {
-            if (containerPM.ActualPODVesselArrival != null && container.ActualPODVesselArrival == null)
+            if ((containerPM.ActualPODVesselArrival != null && container.ActualPODVesselArrival == null) && containerPM.ShipmentMainCarriageATA == null)
             {
+                this.DeleteTraceEvent("ARPD");
                 this.CreateTraceEvent("ARPD", containerPM.ActualPODVesselArrival);
             }
-            else if (containerPM.ActualPODVesselArrival == null && container.ActualPODVesselArrival != null)
+            else if ((containerPM.ActualPODVesselArrival == null && container.ActualPODVesselArrival != null) && containerPM.ShipmentMainCarriageATA == null)
             {
                 this.DeleteTraceEvent("ARPD");
-                this.TraceShipmentMainCarriageATA();
             }
-            else
+            else if ((containerPM.ShipmentMainCarriageATA != null && container.ShipmentMainCarriageATA == null) && containerPM.ActualPODVesselArrival == null)
             {
-                this.TraceShipmentMainCarriageATA();
-            }
-        }
-        private void TraceShipmentMainCarriageATA()
-        {
-            if (containerPM.ShipmentMainCarriageATA != null && container.ShipmentMainCarriageATA == null)
-            {
+                this.DeleteTraceEvent("ARPD");
                 this.CreateTraceEvent("ARPD", containerPM.ShipmentMainCarriageATA);
             }
-            else if (containerPM.ShipmentMainCarriageATA == null && container.ShipmentMainCarriageATA != null)
+            else if ((containerPM.ShipmentMainCarriageATA == null && container.ShipmentMainCarriageATA != null) && containerPM.ActualPODVesselArrival == null)
             {
                 this.DeleteTraceEvent("ARPD");
             }
         }
+        
         private void TracDepartedPOD()
         {
-            if (containerPM.ActualPOLVesselDeparture != null && container.ActualPOLVesselDeparture == null)
+            if ((containerPM.ActualPOLVesselDeparture != null && container.ActualPOLVesselDeparture == null) && containerPM.ShipmentMainCarriageATD == null)
             {
+                this.DeleteTraceEvent("POLD");
                 this.CreateTraceEvent("POLD", containerPM.ActualPOLVesselDeparture);
             }
-            else if (containerPM.ActualPOLVesselDeparture == null && container.ActualPOLVesselDeparture != null)
+            else if ((containerPM.ActualPOLVesselDeparture == null && container.ActualPOLVesselDeparture != null) && containerPM.ShipmentMainCarriageATD == null)
             {
                 this.DeleteTraceEvent("POLD");
-                this.TraceShipmentMainCarriageATD();
             }
-            else
+            else if ((containerPM.ShipmentMainCarriageATD != null && container.ShipmentMainCarriageATD == null) && containerPM.ActualPOLVesselDeparture == null)
             {
-                this.TraceShipmentMainCarriageATD();
-            }
-        }
-        private void TraceShipmentMainCarriageATD()
-        {
-            if (containerPM.ShipmentMainCarriageATD != null && container.ShipmentMainCarriageATD == null)
-            {
+                this.DeleteTraceEvent("POLD");
                 this.CreateTraceEvent("POLD", containerPM.ShipmentMainCarriageATD);
             }
-            else if (containerPM.ShipmentMainCarriageATD == null && container.ShipmentMainCarriageATD != null)
+            else if ((containerPM.ShipmentMainCarriageATD == null && container.ShipmentMainCarriageATD != null) && containerPM.ActualPOLVesselDeparture == null)
             {
                 this.DeleteTraceEvent("POLD");
             }
         }
+       
         private void TracPreCarriageArrived()
         {
-            if (containerPM.ActualPOLArrival != null && container.ActualPOLArrival == null)
+            if ((containerPM.ActualPOLArrival != null && container.ActualPOLArrival == null) && containerPM.ShipmentPreCarriageATA == null)
             {
+                this.DeleteTraceEvent("PCAV");
                 this.CreateTraceEvent("PCAV", containerPM.ActualPOLArrival);
             }
-            else if (containerPM.ActualPOLArrival == null && container.ActualPOLArrival != null)
+            else if ((containerPM.ActualPOLArrival == null && container.ActualPOLArrival != null) && containerPM.ShipmentPreCarriageATA == null)
             {
                 this.DeleteTraceEvent("PCAV");
-                this.TraceShipmentPreCarriageATA();
             }
-            else
+            else if((containerPM.ShipmentPreCarriageATA != null && container.ShipmentPreCarriageATA == null) && containerPM.ActualPOLArrival == null)
             {
-                this.TraceShipmentPreCarriageATA();
-            }
-        }
-        private void TraceShipmentPreCarriageATA()
-        {
-            if (containerPM.ShipmentPreCarriageATA != null && container.ShipmentPreCarriageATA == null)
-            {
+                this.DeleteTraceEvent("PCAV");
                 this.CreateTraceEvent("PCAV", containerPM.ShipmentPreCarriageATA);
             }
-            else if (containerPM.ShipmentPreCarriageATA == null && container.ShipmentPreCarriageATA != null)
+            else if ((containerPM.ShipmentPreCarriageATA == null && container.ShipmentPreCarriageATA != null) && containerPM.ActualPOLArrival == null)
             {
                 this.DeleteTraceEvent("PCAV");
             }
         }
+       
         private void TracPreCarriageDeparted()
         {
-            if (containerPM.ActualOriginPickup != null && container.ActualOriginPickup == null)
+            if ((containerPM.ActualOriginPickup != null && container.ActualOriginPickup == null) && containerPM.ShipmentPreCarriageATD == null)
             {
+                this.DeleteTraceEvent("PCDP");
                 this.CreateTraceEvent("PCDP", containerPM.ActualOriginPickup);
             }
-            else if (containerPM.ShipmentPreCarriageATD != null && container.ShipmentPreCarriageATD == null && containerPM.ActualOriginPickup == null)
-            {
-                this.CreateTraceEvent("PCDP", containerPM.ShipmentPreCarriageATD);
-            }
-            else if (containerPM.ActualOriginPickup == null && container.ActualOriginPickup != null)
+            else if ((containerPM.ActualOriginPickup == null && container.ActualOriginPickup != null) && containerPM.ShipmentPreCarriageATD == null)
             {
                 this.DeleteTraceEvent("PCDP");
-                this.TraceShipmentPreCarriageATD();
             }
-            else if (containerPM.ShipmentPreCarriageATD == null && container.ShipmentPreCarriageATD != null)
+            else if ((containerPM.ShipmentPreCarriageATD != null && container.ShipmentPreCarriageATD == null) && containerPM.ActualOriginPickup == null)
+            {
+                this.DeleteTraceEvent("PCDP");
+                this.CreateTraceEvent("PCDP", containerPM.ShipmentPreCarriageATD);
+            }
+            else if ((containerPM.ShipmentPreCarriageATD == null && container.ShipmentPreCarriageATD != null) && containerPM.ActualOriginPickup == null)
             {
                 this.DeleteTraceEvent("PCDP");
             }
         }
-        private void TraceShipmentPreCarriageATD()
-        {
-            if (containerPM.ShipmentPreCarriageATD != null)
-            {
-                this.CreateTraceEvent("PCDP", containerPM.ShipmentPreCarriageATD);
-            }
-        }
+       
     }
 }
