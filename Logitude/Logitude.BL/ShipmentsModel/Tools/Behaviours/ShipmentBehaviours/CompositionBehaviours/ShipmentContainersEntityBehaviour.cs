@@ -26,12 +26,14 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
         private IShipmentsContext shipmentsContext;
         private ContainerService containerService;
         private ContainerQuery containerQuery;
+        private ContainerRepository containerRepository;
         public void Handle(IServiceInitializer initializer)
         {
             this.initializer = (ShipmentServiceInitializer)initializer;
             this.shipmentsContext = this.initializer.ShipmentContext;
             this.containerService = new ContainerService(this.shipmentsContext, this.initializer.Tenant);
-            this.containerQuery = new ContainerQuery(this.initializer.Tenant);
+            this.containerRepository = new ContainerRepository(this.shipmentsContext);
+            this.containerQuery = new ContainerQuery(containerRepository);
             this.HandleBehaviour();
         }
 
