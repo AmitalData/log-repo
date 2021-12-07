@@ -61,9 +61,9 @@ export class WebHookAutomationDetailsComponent extends BaseComponent {
         if (AppTool.IsNullOrEmpty(this.URL))
             this.ValidationErrorsList.push("WebHook URL is required.");
         if (this.AuthenticationTypeSelected?.Code == "BASICAUTHENTICATION" && AppTool.IsNullOrEmpty(this.BasicAuthUserName))
-            this.ValidationErrorsList.push("Basic Authentication User Name is required.");
+            this.ValidationErrorsList.push("User Name is required.");
         if (this.AuthenticationTypeSelected?.Code == "BASICAUTHENTICATION" && AppTool.IsNullOrEmpty(this.BasicAuthPassword))
-            this.ValidationErrorsList.push("Basic Authentication Password is required.");
+            this.ValidationErrorsList.push("Password is required.");
     }
 
     CloseButtonClicked() {
