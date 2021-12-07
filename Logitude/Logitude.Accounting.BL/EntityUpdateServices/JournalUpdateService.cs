@@ -502,13 +502,6 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
         }
 
-        
-     
-        
-
-         
-
-
         protected override void AfterUpdating(JournalPM entityPM, EntityPM entityParentPM)
         {
             string journalOldStatusCode = oldsJournalStatus();
@@ -516,6 +509,10 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             try
             {
 
+                if (entityPM.JournalLines.Any() && entityPM.ExternalSystem != null)
+                {
+                    CalTotFutureOpenCheques(entityPM);
+                }
 
                 if (entityPM.StatusCodeEnum == JournalStatusTypePM.StatusCodeEnum.Approved  //== "2") //Pending Approval  
                     && string.IsNullOrWhiteSpace(entityPM.QueueId))
@@ -544,6 +541,25 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             CreateJournalAdditionalDataWhenApprovingJournal(entityPM);
 
 
+        }
+
+        private void CalTotFutureOpenCheques(JournalPM entityPM)
+        {
+            foreach (var journalLine in entityPM.JournalLines)
+            {
+                var card = GetBillToByGLAccountId(entityPM.Tenant, journalLine.CreditAccountId);
+                if (card != null)
+                {
+                    GLAccountChequesTotalCalculator chequesTotalCalculator = new GLAccountChequesTotalCalculator(entityPM.Tenant);
+                    chequesTotalCalculator.RecalculateChequesTotalForBillToAccount(card.Id);
+                }
+            }
+        }
+        private Card GetBillToByGLAccountId(int tenant, string glAccountId)
+        {
+            CardRepository cardRepo = new CardRepository(tenant);
+            var card = cardRepo.GetCardByGLAccountId(glAccountId, tenant);
+            return card;
         }
         private void CreateJournalAdditionalDataWhenApprovingJournal(JournalPM journal)
         {
