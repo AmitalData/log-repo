@@ -340,7 +340,6 @@ namespace CommunicationWorkerRole
                 LoggingEntityReference = parmeters.APInvoice?.InternalNumber,
                 Subject = "QBO Attachments Upload",
                 FolderName = "QBO",
-                QueueName = parmeters.QueueName,
                 AdditionalFields = communicationLogAdditionalFields,
                 ByteData = new byte[] { }
 

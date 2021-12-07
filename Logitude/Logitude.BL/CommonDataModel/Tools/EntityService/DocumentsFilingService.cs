@@ -1561,7 +1561,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             {
                 return false;
             }
-            if (!(objectTable.Name == "APInvoice"))
+            if (!((objectTable.Name == "APInvoice") || objectTable.Name == "Shipment"))
             {
                 return false;
             }
