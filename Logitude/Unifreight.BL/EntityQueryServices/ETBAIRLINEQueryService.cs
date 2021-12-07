@@ -22,7 +22,6 @@ namespace Unifreight.BL.EntityQueryServices
     {
         private AmitalContext MainContext;
 
-
         public ETBAIRLINEQueryService(AmitalContext context)
         {
             MainContext = context;
@@ -40,108 +39,71 @@ namespace Unifreight.BL.EntityQueryServices
         {
             return new ETBAIRLINEKeys() { AIRLINEID = entityPOCO.AIRLINEID };
         }
+  
         public List<Carriers> GetList(QueryOperations queryOperations)
         {
-            GenericFilter filter = new GenericFilter();
-            GenericSort sortClass = new GenericSort();
             var ETBAIRLINEquery = (from a in MainContext.ETBAIRLINEs
-                                   select a);
-            var cols = new Dictionary<string, string>()
-            {
-                { "Name", "NAMEENG" },
-                { "AIRLINE_ID", "AIRLINEID" },
-                { "Prefix", "AIRLINENUM" },
-            };
-
+                                   select a);            
 
             foreach (var item in queryOperations.QueryFilterItems)
             {
+                string val = item.FieldValue.ToString().ToLower();
+
                 switch (item.FieldName)
                 {
                     case "Name":
-                        ETBAIRLINEquery = ETBAIRLINEquery.Where(o => o.NAMEENG.ToLower().Contains(item.FieldValue.ToString().ToLower()));
+                        ETBAIRLINEquery = ETBAIRLINEquery.Where(o => o.NAMEENG.ToLower().Contains(val));
                         break;
                     case "AIRLINE_ID":
-                        ETBAIRLINEquery = ETBAIRLINEquery.Where(o => o.AIRLINEID.ToLower().Contains(item.FieldValue.ToString().ToLower()));
+                        ETBAIRLINEquery = ETBAIRLINEquery.Where(o => o.AIRLINEID.ToLower().Contains(val));
                         break;
                     case "Prefix":
-                        ETBAIRLINEquery = ETBAIRLINEquery.Where(o => o.AIRLINENUM.ToLower().Contains(item.FieldValue.ToString().ToLower()));
+                        ETBAIRLINEquery = ETBAIRLINEquery.Where(o => o.AIRLINENUM.ToLower().Contains(val));
                         break;
                     case "SearchFields":
-                        ETBAIRLINEquery = ETBAIRLINEquery.Where(o => o.SEARCHENG.ToLower().Contains(item.FieldValue.ToString().ToLower()));
+                        ETBAIRLINEquery = ETBAIRLINEquery.Where(o => o.SEARCHENG.ToLower().Contains(val));
                         break;
                 }
             }
 
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
+                bool asc = queryOperations.SortDirectin.ToLower() == "ascending";
+
                 switch (queryOperations.SortByColumnName)
                 {
                     case "Name":
-                        if (cols.ContainsKey(queryOperations.SortByColumnName) && queryOperations.SortDirectin.ToLower() == "ascending")
-                        {
-                            ETBAIRLINEquery = ETBAIRLINEquery.OrderBy(o => o.NAMEENG);
-                        }
-                        else
-                        {
-                            ETBAIRLINEquery = ETBAIRLINEquery.OrderByDescending(o => o.NAMEENG);
-                        }
+                        ETBAIRLINEquery = asc ? ETBAIRLINEquery.OrderBy(o => o.NAMEENG) : ETBAIRLINEquery.OrderByDescending(o => o.NAMEENG);
                         break;
+
                     case "AIRLINE_ID":
-                        if (cols.ContainsKey(queryOperations.SortByColumnName) && queryOperations.SortDirectin.ToLower() == "ascending")
-                        {
-                            ETBAIRLINEquery = ETBAIRLINEquery.OrderBy(o => o.AIRLINEID);
-                        }
-                        else
-                        {
-                            ETBAIRLINEquery = ETBAIRLINEquery.OrderByDescending(o => o.AIRLINEID);
-                        }
+                        ETBAIRLINEquery = asc ? ETBAIRLINEquery.OrderBy(o => o.AIRLINEID) : ETBAIRLINEquery.OrderByDescending(o => o.AIRLINEID);
                         break;
+
                     case "Prefix":
-                        if (cols.ContainsKey(queryOperations.SortByColumnName) && queryOperations.SortDirectin.ToLower() == "ascending")
-                        {
-                            ETBAIRLINEquery = ETBAIRLINEquery.OrderBy(o => o.AIRLINENUM);
-                        }
-                        else
-                        {
-                            ETBAIRLINEquery = ETBAIRLINEquery.OrderByDescending(o => o.AIRLINENUM);
-                        }
+                        ETBAIRLINEquery = asc ? ETBAIRLINEquery.OrderBy(o => o.AIRLINENUM) : ETBAIRLINEquery.OrderByDescending(o => o.AIRLINENUM);
                         break;
+
                     case "SearchFields":
-                        if (cols.ContainsKey(queryOperations.SortByColumnName) && queryOperations.SortDirectin.ToLower() == "ascending")
-                        {
-                            ETBAIRLINEquery = ETBAIRLINEquery.OrderBy(o => o.SEARCHENG);
-                        }
-                        else
-                        {
-                            ETBAIRLINEquery = ETBAIRLINEquery.OrderByDescending(o => o.SEARCHENG);
-                        }
+                        ETBAIRLINEquery = asc ? ETBAIRLINEquery.OrderBy(o => o.SEARCHENG) : ETBAIRLINEquery.OrderByDescending(o => o.SEARCHENG);
                         break;
                 }
-                
             }
             else
+                ETBAIRLINEquery = ETBAIRLINEquery.OrderBy(o => o.NAMEENG);
+
+            var res = ETBAIRLINEquery.Select(o => new Carriers
             {
-                ETBAIRLINEquery = ETBAIRLINEquery.OrderBy(o=>o.NAMEENG);
-            }
-            var res=ETBAIRLINEquery.Select(o => new Carriers
-            {
-                 Name = o.NAMEENG,
-                 AIRLINE_ID = o.AIRLINEID,
-                 Prefix = o.AIRLINENUM,
-             });
+                Name = o.NAMEENG,
+                AIRLINE_ID = o.AIRLINEID,
+                Prefix = o.AIRLINENUM,
+            });
+
             res = res.Skip(queryOperations.PageIndex * queryOperations.PageSize);
             res = res.Take(queryOperations.PageSize);
-            
+
             List<Carriers> carrier = res.ToList();
             return carrier;
         }
-       
-
     }
 }
-
-
-
-
-

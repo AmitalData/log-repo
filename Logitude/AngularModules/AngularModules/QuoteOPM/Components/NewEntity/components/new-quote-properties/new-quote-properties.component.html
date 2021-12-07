@@ -30,7 +30,7 @@
                 (formGroup.value.transportMode?.Id === 'A' ? 'Gateway': 'LoadingPort') | TextCodeTranslationPipe}}
                 field is required</div>
               <app-autocomplate-table [columnsShow]="{Code:'Code', Name: 'Name',CountryName:'CountryName'}"
-                [data]='toPortList' [fieldShow]='"Name"' [searchIcon]='true'
+              [getDataFunc]='portsFunc' [virtualScroll]='true' [columnsFilter]='["SearchFields"]' [fieldShow]='"Name"' [searchIcon]='true'
                 [label]="'QuoteOP.S.NewQuote.' + (formGroup.value.transportMode?.Id === 'A' ? 'Gateway': 'LoadingPort') | TextCodeTranslationPipe"
                 [controlName]='"fromPort"' [formGroup]='x' id='fromPort'>
               </app-autocomplate-table>
@@ -43,7 +43,8 @@
                 (formGroup.value.transportMode?.Id === 'A' ? 'Destination': 'DischargePort') | TextCodeTranslationPipe}}
                 field is required</div>
               <app-autocomplate-table [columnsShow]="{Code:'Code', Name: 'Name',CountryName:'CountryName'}"
-                [data]='fromPortList' [fieldShow]='"Name"' [searchIcon]='true'
+              [getDataFunc]='portsFunc' [virtualScroll]='true' [columnsFilter]='["SearchFields"]'
+                [fieldShow]='"Name"' [searchIcon]='true'
                 [label]="'QuoteOP.S.NewQuote.' + (formGroup.value.transportMode?.Id === 'A' ? 'Destination': 'DischargePort') | TextCodeTranslationPipe"
                 [controlName]='"toPort"' [formGroup]='x'  id='toPort'>
               </app-autocomplate-table>

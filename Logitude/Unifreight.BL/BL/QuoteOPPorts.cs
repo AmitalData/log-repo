@@ -6,14 +6,13 @@ using System.Text;
 using System.Threading.Tasks;
 using Unifreight.BL.EntityQueryServices;
 using Unifreight.Data.AmitalModel;
-using Unifreight.Data.AmitalModel.Repsitories;
 
 namespace Unifreight.BL.BL
 {
-    public class QuoteOpCarriers
+    public class QuoteOPPorts
     {
         int tenant;
-        public QuoteOpCarriers(int tenant)
+        public QuoteOPPorts(int tenant)
         {
             this.tenant = tenant;
         }
@@ -29,35 +28,36 @@ namespace Unifreight.BL.BL
             }
             return tenantAmitalContext;
         }
-        public List<Carriers> GetCarriersItemsList(string DIRECTIONID, string TRANSPORTMODEID, QueryOperations queryOperations)
+        public List<Ports> GetPortsItemsList(string DIRECTIONID, string TRANSPORTMODEID, QueryOperations queryOperations)
         {
 
             if (DIRECTIONID == "E" && TRANSPORTMODEID == "A")
             {
-                var queryservice = new ETBAIRLINEQueryService(GetAmitalContext(tenant));
-                var ETBAIRLINEList = queryservice.GetList(queryOperations);
-                return ETBAIRLINEList;
+                var queryservice = new ETBPORTQueryService(GetAmitalContext(tenant));
+                var ETBPORTList = queryservice.GetList(queryOperations);
+                return ETBPORTList;
             }
             else if (DIRECTIONID == "E" && TRANSPORTMODEID == "O")
             {
-                var queryservice = new MTBCARRQueryService(GetAmitalContext(tenant));
+                var queryservice = new ETBPORTQueryService(GetAmitalContext(tenant));
+                //var queryservice = new MTBCARRQueryService(GetAmitalContext(tenant));
                 var MTBCARRList = queryservice.GetList(queryOperations);
                 return MTBCARRList;
             }
             else if (DIRECTIONID == "I")
             {
-                var queryservice = new ETBVENDQueryService(GetAmitalContext(tenant));
-                var ETBVENDList = queryservice.GetList(queryOperations, TRANSPORTMODEID);
+                var queryservice = new ETBPORTQueryService(GetAmitalContext(tenant));
+                //var queryservice = new ETBVENDQueryService(GetAmitalContext(tenant));
+                var ETBVENDList = queryservice.GetList(queryOperations);
                 return ETBVENDList;
             }
             return null;
         }
-        public class Carriers
+        public class Ports
         {
             public string Name;
-            public string AIRLINE_ID;
-            public string Prefix;
-            public string VENDOR_ID;
+            public string Code;
+            public string CountryName;
         }
     }
 }

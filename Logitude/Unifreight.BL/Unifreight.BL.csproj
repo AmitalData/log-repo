@@ -69,6 +69,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BL\QuoteOpCarriers.cs" />
+    <Compile Include="BL\QuoteOPPorts.cs" />
     <Compile Include="ClosedTables\AutonomyDetails.cs" />
     <Compile Include="ClosedTables\SegmentsDetails.cs" />
     <Compile Include="EntityDataMappings\ATBPTILDataMapping.cs">

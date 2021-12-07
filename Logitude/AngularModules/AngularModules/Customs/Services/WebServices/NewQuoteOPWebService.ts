@@ -19,7 +19,7 @@ export class NewQuoteOPWebService {
     /*example :-  var service = new DeclarationWebService();  PTERMID=code
     service.GetETBPAYTRtemList(this.PTERMID , this.costSearchText, 30, true).subscribe((res: ServiceResponse) => {
     });*/
-    GetETBPAYTRitemList(PTERMID: string, search: string, top: number, isSearchNULLVendor: boolean):Observable<ServiceResponse> {
+    GetETBPAYTRitemList(PTERMID: string, search: string, top: number, isSearchNULLVendor: boolean): Observable<ServiceResponse> {
 
         return defer(() => {
 
@@ -43,53 +43,53 @@ export class NewQuoteOPWebService {
         });
     }
     GetCarriersItemsList(DIRECTIONID: string, TRANSPORTMODEID: string, filters: ApiQueryFilters) {
-        var callTime = new Date();       
-		var urlparameters = "/GetCarriersItemsList/?DIRECTIONID=" + DIRECTIONID
-        + "&TRANSPORTMODEID=" + TRANSPORTMODEID;
+        var callTime = new Date();
+        var urlparameters = "/GetCarriersItemsList/?DIRECTIONID=" + DIRECTIONID
+            + "&TRANSPORTMODEID=" + TRANSPORTMODEID;
         var mykeys = Object.keys(filters);
         var addtionalFiltersValues = null;
 
         for (var i in mykeys) {
-			var propName = mykeys[i];
-			var propValue = filters[propName];
-			var ignoreFilter = ((propName.indexOf("Operator") > 0 && propValue == "Equals") || propName == "AdditionalFilters");
+            var propName = mykeys[i];
+            var propValue = filters[propName];
+            var ignoreFilter = ((propName.indexOf("Operator") > 0 && propValue == "Equals") || propName == "AdditionalFilters");
 
             if (urlparameters != "?") {
                 urlparameters = urlparameters.concat('&');
             }
 
-			if (!ignoreFilter) {
-				propValue = encodeURIComponent(propValue);
-				urlparameters = urlparameters.concat(propName.concat('=').concat(propValue));
-			}
+            if (!ignoreFilter) {
+                propValue = encodeURIComponent(propValue);
+                urlparameters = urlparameters.concat(propName.concat('=').concat(propValue));
+            }
 
-			if (propName == "AdditionalFilters" && propValue.length > 0) {
-				addtionalFiltersValues = JSON.stringify(propValue);
-			}
+            if (propName == "AdditionalFilters" && propValue.length > 0) {
+                addtionalFiltersValues = JSON.stringify(propValue);
+            }
         }
 
         if (addtionalFiltersValues) {
             urlparameters = urlparameters.concat("&AdditionalFilters=").concat(addtionalFiltersValues);
         }
 
-		var callUrl = this._apiUrl.concat(urlparameters);
-        		
-		return defer(() => {
+        var callUrl = this._apiUrl.concat(urlparameters);
+
+        return defer(() => {
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
             authHeader.append('Content-Type', 'application/json');
-			return this._http.get(callUrl, ServiceHelper.GetHttpFullHeaders())
-				.pipe(
-					map(response => {
+            return this._http.get(callUrl, ServiceHelper.GetHttpFullHeaders())
+                .pipe(
+                    map(response => {
 
-                    var serviceResponse: ServiceResponse = new ServiceResponse();
-                    serviceResponse.Result = response;
-                    return serviceResponse;
-                }),
+                        var serviceResponse: ServiceResponse = new ServiceResponse();
+                        serviceResponse.Result = response;
+                        return serviceResponse;
+                    }),
 
-                catchError(ServiceHelper.HandleServiceError));
-    });
-}
+                    catchError(ServiceHelper.HandleServiceError));
+        });
+    }
     GetSpecialServiceItemsList(DIRECTIONID: string, TRANSPORTMODEID: string, search: string, top: number, isSearchNULLVendor: boolean) {
 
         return defer(() => {
@@ -114,28 +114,55 @@ export class NewQuoteOPWebService {
                 }), catchError(ServiceHelper.HandleServiceError));
         });
     }
-    GetPortsItemsList(DIRECTIONID: string, TRANSPORTMODEID: string, search: string, top: number, isSearchNULLVendor: boolean) {
+    
+    GetPortsItemsList(DIRECTIONID: string, TRANSPORTMODEID: string, filters: ApiQueryFilters) {
+        let urlparameters: string = `/ports/?DIRECTIONID=${DIRECTIONID}&TRANSPORTMODEID=${TRANSPORTMODEID}`;
+        urlparameters = this.addFilterToUri(filters, urlparameters);
+        let callUrl: string = this._apiUrl.concat(urlparameters);
 
+        return this.sendGetHttp(callUrl);
+    }
+
+    private sendGetHttp(callUrl: string) {
         return defer(() => {
-
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
             authHeader.append('Content-Type', 'application/json');
+            return this._http.get(callUrl, ServiceHelper.GetHttpFullHeaders())
+                .pipe(
+                    map(response => {
 
-            var serviceResponse: ServiceResponse;
-            serviceResponse = new ServiceResponse();
+                        var serviceResponse: ServiceResponse = new ServiceResponse();
+                        serviceResponse.Result = response;
+                        return serviceResponse;
+                    }),
 
-            return this._http.get(this._apiUrl + "/GetPortsItemsList/?DIRECTIONID=" + DIRECTIONID
-                + "&TRANSPORTMODEID=" + TRANSPORTMODEID
-                + "&search=" + search
-                + "&top=" + top
-                + "&searchNULLVendor=" + isSearchNULLVendor
-                , ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-
-                    var serviceResponse: ServiceResponse = new ServiceResponse();
-                    serviceResponse.Result = response;
-                    return serviceResponse;
-                }), catchError(ServiceHelper.HandleServiceError));
+                    catchError(ServiceHelper.HandleServiceError));
         });
+    }
+
+    private addFilterToUri(filters: ApiQueryFilters, urlparameters: string): string {
+        const mykeys: string[] = Object.keys(filters);
+        let addtionalFiltersValues: string = '';
+
+        for (var i in mykeys) {
+            const propName: string = mykeys[i];
+            let propValue = filters[propName];
+            const ignoreFilter: boolean = ((propName.indexOf("Operator") > 0 && propValue == "Equals") || propName == "AdditionalFilters");
+
+            if (urlparameters != "?") 
+                urlparameters += '&';            
+
+            if (!ignoreFilter)
+                urlparameters += propName + '=' +  encodeURIComponent(propValue);
+
+            if (propName == "AdditionalFilters" && propValue.length > 0) 
+                addtionalFiltersValues = JSON.stringify(propValue);            
+        }
+
+        if (addtionalFiltersValues) 
+            urlparameters = urlparameters.concat("&AdditionalFilters=").concat(addtionalFiltersValues);
+        
+        return urlparameters;
     }
 }

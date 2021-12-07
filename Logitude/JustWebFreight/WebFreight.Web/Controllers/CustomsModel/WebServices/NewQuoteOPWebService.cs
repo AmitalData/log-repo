@@ -99,18 +99,8 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
         {
             try
             {
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                int tenant = authToken.Tenant;
+                int tenant = GetTenant();
 
-                QueryOperations queryOperations = new QueryOperations()
-                {
-                    PageIndex = filters.PageIndex,
-                    PageSize = filters.PageSize,
-                    SortDirectin = filters.SortDirection,
-                    SortByColumnName = filters.SortBy,
-                    
-                };
                 List<ObjectField> objectFields = new List<ObjectField>
                 {
                     new ObjectField() { FieldName = "Name",DataTypeCode="Text" },
@@ -118,43 +108,95 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                     new ObjectField() { FieldName = "VENDOR_ID",DataTypeCode="Text" },
                     new ObjectField() { FieldName = "Prefix",DataTypeCode="Text" }
                 };
-                if (!string.IsNullOrEmpty(filters.AdditionalFilters))
-                {
-                    JavaScriptSerializer JsonConvert = new JavaScriptSerializer();
-                    var filters_list = JsonConvert.Deserialize<List<QueryFilterItem>>(filters.AdditionalFilters);
 
-                    foreach (QueryFilterItem filter in filters_list)
-                    {
-                        ObjectField field = objectFields.FirstOrDefault(f => f.FieldName == filter.FieldName);
-                        if (field != null)
-                        {
-                            string valuestring1 = filter.FieldValue != null ? filter.FieldValue.ToString() : null;
-                            object value1 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring1);
-
-                            string valuestring2 = filter.FieldValue2 != null ? filter.FieldValue2.ToString() : null;
-                            object value2 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring2);
-
-                            //queryOperations.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList);
-                            queryOperations.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList, field.IsCustom, field.DataTypeCode);
-
-                        }
-                        else
-                        {
-                            queryOperations.SetFilter(filter.FieldName, filter.FieldValue, filter.IsCustom, filter.Operator, filter.FieldValue2, filter.DisplayInList);
-                        }
-                    }
-                }
+                QueryOperations queryOperations = InitFilter(filters, objectFields);
                 var quoteOpCarriers = new QuoteOpCarriers(tenant);
-                var carriersList=quoteOpCarriers.GetCarriersItemsList(DIRECTIONID,TRANSPORTMODEID,queryOperations);
-                return Request.CreateResponse(HttpStatusCode.OK, carriersList);
+                var carriersList = quoteOpCarriers.GetCarriersItemsList(DIRECTIONID, TRANSPORTMODEID, queryOperations);
 
-               
+                return Request.CreateResponse(HttpStatusCode.OK, carriersList);
             }
             catch (Exception ex)
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
+
+        [HttpGet]
+        public HttpResponseMessage Ports(string DIRECTIONID, string TRANSPORTMODEID, [FromUri] ApiQueryFilters filters)
+        {
+            try
+            {
+                int tenant = GetTenant();
+            
+                List<ObjectField> objectFields = new List<ObjectField>
+                {
+                    new ObjectField() { FieldName = "Code",DataTypeCode="Text" },
+                    new ObjectField() { FieldName = "Name",DataTypeCode="Text" },
+                    new ObjectField() { FieldName = "CountryName",DataTypeCode="Text" }
+                };
+
+                QueryOperations queryOperations = InitFilter(filters, objectFields);
+                var quoteOPPorts = new QuoteOPPorts(tenant);
+                var carriersList = quoteOPPorts.GetPortsItemsList(DIRECTIONID, TRANSPORTMODEID, queryOperations);
+
+                return Request.CreateResponse(HttpStatusCode.OK, carriersList);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+
+
+        private static int GetTenant()
+        {
+            string token = HttpContext.Current.Request.Headers["Token"];
+            AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+            int tenant = authToken.Tenant;
+            return tenant;
+        }
+
+        private static QueryOperations InitFilter(ApiQueryFilters filters, List<ObjectField> objectFields)
+        {
+            QueryOperations queryOperations = new QueryOperations()
+            {
+                PageIndex = filters.PageIndex,
+                PageSize = filters.PageSize,
+                SortDirectin = filters.SortDirection,
+                SortByColumnName = filters.SortBy,
+            };
+
+            if (!string.IsNullOrEmpty(filters.AdditionalFilters))
+            {
+                JavaScriptSerializer JsonConvert = new JavaScriptSerializer();
+                var filters_list = JsonConvert.Deserialize<List<QueryFilterItem>>(filters.AdditionalFilters);
+
+                foreach (QueryFilterItem filter in filters_list)
+                {
+                    ObjectField field = objectFields.FirstOrDefault(f => f.FieldName == filter.FieldName);
+                    if (field != null)
+                    {
+                        string valuestring1 = filter.FieldValue != null ? filter.FieldValue.ToString() : null;
+                        object value1 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring1);
+
+                        string valuestring2 = filter.FieldValue2 != null ? filter.FieldValue2.ToString() : null;
+                        object value2 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring2);
+
+                        //queryOperations.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList);
+                        queryOperations.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList, field.IsCustom, field.DataTypeCode);
+
+                    }
+                    else
+                    {
+                        queryOperations.SetFilter(filter.FieldName, filter.FieldValue, filter.IsCustom, filter.Operator, filter.FieldValue2, filter.DisplayInList);
+                    }
+                }
+            }
+
+            return queryOperations;
+        }
+
         public HttpResponseMessage GetSpecialServiceItemsList(string DIRECTIONID, string TRANSPORTMODEID, string search, int top, bool searchNULLVendor = true)
         {
             try
