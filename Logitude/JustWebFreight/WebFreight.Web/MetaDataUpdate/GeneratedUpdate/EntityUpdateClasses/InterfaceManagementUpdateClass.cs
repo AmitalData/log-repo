@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class InterfaceManagementUpdateClass
    {  		
-		public const string HashString = "f2951ef24abb9716d53a5380c586a4a6";
+		public const string HashString = "dd435a07fd48d076c6e45ae9fa92c549";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -126,7 +126,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    HasDynamicHeader =  false,
 			      				    ObjectTableTypeCode =  "BR",
 			      				    MaxNumberOfCustomFields =  0,
-			      				    LocalDefaultText =  "ממשק ניהול",
+			      				    LocalDefaultText =  "ניהול בקשות מכס",
 			      				    DefaultText =  "Interface Management",
 			      				    Code =  "6059",
 			      				    Name =  "Customs.InterfaceManagement Query Group",

@@ -4923,7 +4923,7 @@
     <TextCode
       Code="&quot;Customs.General.O.InterfaceManagement&quot;"
       DefaultText="&quot;Interface Managements&quot;"
-      LocalDefaultText="&quot;ממשק ניהול&quot;"
+      LocalDefaultText="&quot;ניהול בקשות מכס&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
