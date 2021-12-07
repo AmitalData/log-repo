@@ -145,7 +145,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
         }
         //http://localhost:9996/api/glaccountviews/GetCheckBalanceByAccountDisplayNumber?tenant=10&accountDisplayNumber=104355&totalDateType=1&theDate=2020-07-31T00:00:00.000&IncludeRelatedCurrenciesAccount=true&SumOpenTransactions=true
         public HttpResponseMessage GetCheckBalanceByAccountDisplayNumber(int tenant, string accountDisplayNumber, string totalDateType, DateTime theDate
-            , bool IncludeRelatedCurrenciesAccount, bool SumOpenTransactions)
+            , bool IncludeRelatedCurrenciesAccount, bool SumOpenTransactions = false)
             
         {///
             try
