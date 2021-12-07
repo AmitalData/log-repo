@@ -1191,6 +1191,16 @@ export class ContainerPM {
     public set StatusWeight(newValue: number) { if (this.statusWeight != newValue) { this.statusWeight = newValue; this.MarkAsDirty("StatusWeight"); } }
        
 	 
+    private cancelledDate: Date;
+    public get CancelledDate() { return this.cancelledDate; }
+    public set CancelledDate(newValue: Date) { if (this.cancelledDate != newValue) { this.cancelledDate = newValue; this.MarkAsDirty("CancelledDate"); } }
+       
+	 
+    private isCancelled: boolean;
+    public get IsCancelled() { return this.isCancelled; }
+    public set IsCancelled(newValue: boolean) { if (this.isCancelled != newValue) { this.isCancelled = newValue; this.MarkAsDirty("IsCancelled"); } }
+       
+	 
 
     public OldEntityPM: ContainerPM;
 		

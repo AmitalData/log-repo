@@ -318,5 +318,7 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string StatusId { get; set; }
         public string StatusName { get; set; }
         public int StatusWeight { get; set; }
+        public DateTime? CancelledDate { get; set; }
+        public bool IsCancelled { get; set; }
     }
 }

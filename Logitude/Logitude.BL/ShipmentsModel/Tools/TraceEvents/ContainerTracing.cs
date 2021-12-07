@@ -340,6 +340,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
             TracDepartedPOD();
             TracPreCarriageArrived();
             TracPreCarriageDeparted();
+            TraceCancelledEvent();
         }
         private void GetLoggedUser()
         {
@@ -703,6 +704,18 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                 this.DeleteTraceEvent("PCDP");
             }
         }
-       
+
+        private void TraceCancelledEvent()
+        {
+            if (container.IsCancelled && !containerPM.IsCancelled)
+            {
+                this.CreateTraceEvent("RACO", containerPM.UpdateDate);
+            }
+            if (!container.IsCancelled && containerPM.IsCancelled)
+            {
+                this.CreateTraceEvent("CCCO", containerPM.CancelledDate);
+            }
+        }
+
     }
 }
