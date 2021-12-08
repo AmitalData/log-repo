@@ -188,7 +188,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
 
             }
 
-            SyncShipmentMilstones(bulkDataPreperation);
+            //SyncShipmentMilstones(bulkDataPreperation);
         }
 
         private static void CreatePreOldShipmentsTable(BulkDataPreperation bulkDataPreperation)
@@ -895,8 +895,14 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
                     BuildShipments(updateCargoTrackingRecords);
 
                     var updatedShipmentsCount = updateCargoTrackingRecords.NumberRecordUpdated;
-                    //if(updatedShipmentsCount > 0)
-                    //    syncService.SyncShipmentMilstones(cargoTrackingDataBaseArgs.BuildCargoArgs);
+                    BulkDataPreperation bulkDataPreperation = InitializeBulkDataPreperation(cargoTrackingDataBaseArgs);
+                    bulkDataPreperation.MainDataTable = new DataTable();
+                    bulkDataPreperation.Milestones = updateCargoTrackingRecords.MilestoneList;
+                    bulkDataPreperation.MilestonesNotPermitted = updateCargoTrackingRecords.MilestonesNotPermitted;
+
+                    SyncShipmentMilstones(bulkDataPreperation);
+                    //if(updatedShipmentsCount > 0) 
+                    //syncService.SyncShipmentMilstones(cargoTrackingDataBaseArgs.BuildCargoArgs);
                 }
                 _recordUpdated.NumberOfRecordUpdated = updateCargoTrackingRecords.NumberRecordUpdated;
                 _recordUpdated.NumberOfRecordUpdated2 = updateCargoTrackingRecords.NumberRecordUpdated2;
