@@ -184,8 +184,14 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
                 System.Type type11 = typeof(AutomationCreateTask);
                 System.Type type12 = typeof(AdvancedAutomationSendInterfaceDetails);
                 System.Type type13 = typeof(AutomationEvent);
+                System.Type type14 = typeof(AutomationOnUpdateDocument);
+                System.Type type15 = typeof(OnUpdateDocumentTypeAttachment);
 
-                System.Type[] types = new System.Type[13];
+
+
+
+
+                System.Type[] types = new System.Type[15];
 
                 types[0] = type1;
                 types[1] = type2;
@@ -201,6 +207,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
                 types[10] = type11;
                 types[11] = type12;
                 types[12] = type13;
+                types[13] = type14;
+                types[14] = type15;
 
                 entityPM.AutomationXML = LogitudeXmlSerializer.SerializeObjectToElementString(entityPM.AutomatedDataBackup, types);
             }

@@ -195,6 +195,22 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+      Name="OnUpdateDocumentAutomationFailedXml"
+      ShortName="OnUpdateDocumentFailedXml"
+      Type="nvarchar"
+      Size="-1">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="OnUpdateDocumentAutomationSsucceedXml"
+    ShortName="OnUpdateDocumentSsucceedXml"
+    Type="nvarchar"
+    Size="-1">
+    <Constraints
+      Nullable="true" />
+  </Column>
  
     <Column
       Name="CreateTaskAutomationFailedXml"

@@ -72,6 +72,7 @@ namespace Logitude.Server.Tools.EntityChanges
             result.Add(new AutomationSendDocumentResultService());
             result.Add(new AutomationCreateTaskService());
             result.Add(new AutomationEventCreationService());
+            result.Add(new AutomationOnUpdateDocumentService());
             return result;
         }
 
@@ -138,6 +139,7 @@ namespace Logitude.Server.Tools.EntityChanges
             entityChange.SendDocumentAutomationFailedXml = EntityChangesAutomationsFailedList.Where(d => d.ResultCode == "SENDDOCUMENT").ToList().Count > 0 ? LogitudeXmlSerializer.SerializeObjectToXmlString(EntityChangesAutomationsFailedList.Where(d => d.ResultCode == "SENDDOCUMENT").ToList()) : "";
             entityChange.CreateTaskAutomationFailedXml = EntityChangesAutomationsFailedList.Where(d => d.ResultCode == "Create Task").ToList().Count > 0 ? LogitudeXmlSerializer.SerializeObjectToXmlString(EntityChangesAutomationsFailedList.Where(d => d.ResultCode == "Create Task").ToList()) : "";
             entityChange.EventAutomationFailedXml = EntityChangesAutomationsFailedList.Where(d => d.ResultCode == "Event Creation").ToList().Count > 0 ? LogitudeXmlSerializer.SerializeObjectToXmlString(EntityChangesAutomationsFailedList.Where(d => d.ResultCode == "Event Creation").ToList()) : "";
+            entityChange.OnUpdateDocumentAutomationFailedXml = EntityChangesAutomationsFailedList.Where(d => d.ResultCode == "ONUPDATEDOCUMENT").ToList().Count > 0 ? LogitudeXmlSerializer.SerializeObjectToXmlString(EntityChangesAutomationsFailedList.Where(d => d.ResultCode == "ONUPDATEDOCUMENT").ToList()) : "";
 
 
             entityChange.SetAutomationSsucceedXml = EntityChangesAutomationsSsucceedList.Where(d => d.ResultCode == "Set Fields Value").ToList().Count > 0 ? LogitudeXmlSerializer.SerializeObjectToXmlString(EntityChangesAutomationsSsucceedList.Where(d => d.ResultCode == "Set Fields Value").ToList()) : "";
@@ -146,8 +148,10 @@ namespace Logitude.Server.Tools.EntityChanges
             entityChange.QueuedTaskAutomationSsucceedXml = EntityChangesAutomationsSsucceedList.Where(d => d.ResultCode == "QUEUE").ToList().Count > 0 ? LogitudeXmlSerializer.SerializeObjectToXmlString(EntityChangesAutomationsSsucceedList.Where(d => d.ResultCode == "QUEUE").ToList()) : "";
             entityChange.SendInterfaceAutomationSsucceedXml = EntityChangesAutomationsSsucceedList.Where(d => d.ResultCode == "SENDINTERFACE").ToList().Count > 0 ? LogitudeXmlSerializer.SerializeObjectToXmlString(EntityChangesAutomationsSsucceedList.Where(d => d.ResultCode == "SENDINTERFACE").ToList()) : "";
             entityChange.SendDocumentAutomationSsucceedXml = EntityChangesAutomationsSsucceedList.Where(d => d.ResultCode == "SENDDOCUMENT").ToList().Count > 0 ? LogitudeXmlSerializer.SerializeObjectToXmlString(EntityChangesAutomationsSsucceedList.Where(d => d.ResultCode == "SENDDOCUMENT").ToList()) : "";
-            entityChange.CreateTaskAutomationSsucceedXml = EntityChangesAutomationsSsucceedList.Where(d => d.ResultCode == "Create Task").ToList().Count > 0 ? LogitudeXmlSerializer.SerializeObjectToXmlString(EntityChangesAutomationsSsucceedList.Where(d => d.ResultCode == "Create Task").ToList()) : "";
+            entityChange.CreateTaskAutomationSsucceedXml = EntityChangesAutomationsSsucceedList.Where(d => d.ResultCode == "Create Task").ToList().Count > 0 ? LogitudeXmlSerializer.SerializeObjectToXmlString(EntityChangesAutomationsSsucceedList.Where(d => d.ResultCode == "Create Task").ToList()) : ""; 
             entityChange.EventAutomationSsucceedXml = EntityChangesAutomationsSsucceedList.Where(d => d.ResultCode == "Event Creation").ToList().Count > 0 ? LogitudeXmlSerializer.SerializeObjectToXmlString(EntityChangesAutomationsSsucceedList.Where(d => d.ResultCode == "Event Creation").ToList()) : "";
+            entityChange.OnUpdateDocumentAutomationSsucceedXml = EntityChangesAutomationsSsucceedList.Where(d => d.ResultCode == "ONUPDATEDOCUMENT").ToList().Count > 0 ? LogitudeXmlSerializer.SerializeObjectToXmlString(EntityChangesAutomationsSsucceedList.Where(d => d.ResultCode == "ONUPDATEDOCUMENT").ToList()) : "";
+
 
         }
 

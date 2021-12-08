@@ -125,6 +125,13 @@ namespace Simplog.Data.CommonDataModel.Mapping
                 .IsMaxLength()
                 .IsUnicode(true);
 
+            this.Property(t => t.OnUpdateDocumentAutomationFailedXml)
+                .IsMaxLength()
+                .IsUnicode(true);
+
+            this.Property(t => t.OnUpdateDocumentAutomationSsucceedXml)
+                .IsMaxLength()
+                .IsUnicode(true);
 
 
 
@@ -162,6 +169,8 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.SendInterfaceAutomationSsucceedXml).HasColumnName("SendInterfaceAutomationSsucceedXml");
             this.Property(t => t.SendDocumentAutomationFailedXml).HasColumnName("SendDocumentAutomationFailedXml");
             this.Property(t => t.SendDocumentAutomationSsucceedXml).HasColumnName("SendDocumentAutomationSsucceedXml");
+            this.Property(t => t.OnUpdateDocumentAutomationFailedXml).HasColumnName("OnUpdateDocumentAutomationFailedXml");
+            this.Property(t => t.OnUpdateDocumentAutomationSsucceedXml).HasColumnName("OnUpdateDocumentAutomationSsucceedXml");
 
 
 

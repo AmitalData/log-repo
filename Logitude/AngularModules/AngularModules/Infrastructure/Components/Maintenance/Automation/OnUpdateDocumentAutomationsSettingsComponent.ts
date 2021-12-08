@@ -38,7 +38,7 @@ export class OnUpdateDocumentAutomationsSettingsComponent extends BaseComponent 
     }
 
     AddDocumentUpdateAutomation() {
-        this.AddAutomation.emit(({ type: 'OnDUpdate'}));
+        this.AddAutomation.emit(({ type: 'OnDocumentUpdate'}));
     }
 
     EditDocumentUpdateAutomation(item) {

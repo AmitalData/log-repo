@@ -122,6 +122,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                              CreateTaskAutomationSsucceedXml = a.CreateTaskAutomationSsucceedXml,
                              EventAutomationFailedXml = a.EventAutomationFailedXml,
                              EventAutomationSsucceedXml = a.EventAutomationSsucceedXml,
+                             OnUpdateDocumentAutomationFailedXml = a.OnUpdateDocumentAutomationFailedXml,
+                             OnUpdateDocumentAutomationSsucceedXml = a.OnUpdateDocumentAutomationSsucceedXml,
+
                          }).FirstOrDefault();
             return query;
         }

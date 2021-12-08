@@ -326,6 +326,8 @@
     <Content Include="Infrastructure\Components\Maintenance\Automation\AutomationResult\AdvancedAutomationSendInterfaceDetailsComponent.html" />
     <Content Include="Infrastructure\Components\Maintenance\Automation\AutomationResult\CreateTaskResultComponent.html" />
     <Content Include="Infrastructure\Components\Maintenance\Automation\AutomationResult\WebHookAutomationDetailsComponent.html" />
+    <Content Include="Infrastructure\Components\Maintenance\Automation\DocumentAttachmentsComponent.html" />
+    <Content Include="Infrastructure\Components\Maintenance\Automation\AutomationResult\OnUpdateDocumentResultComponent.html" />
     <Content Include="Infrastructure\Components\Maintenance\Automation\AutomationsConditionsViewDetailsComponent.html" />
     <Content Include="Infrastructure\Components\Maintenance\Automation\OnUpdateDocumentAutomationsSettingsComponent.html" />
     <Content Include="Infrastructure\Components\MultiUpdateComponent\MultiEntityUpdateBaseComponent.html" />
@@ -1865,6 +1867,8 @@
     <TypeScriptCompile Include="Infrastructure\Components\Maintenance\Automation\AutomationResult\CreateTaskResultComponent.ts" />
     <TypeScriptCompile Include="Infrastructure\Components\Maintenance\Automation\AutomationResult\WebHookAutomationDetailsComponent.ts" />
     <TypeScriptCompile Include="Infrastructure\Components\Maintenance\Automation\AutomationResult\FTPAutomationDetailsComponent.ts" />
+    <TypeScriptCompile Include="Infrastructure\Components\Maintenance\Automation\DocumentAttachmentsComponent.ts" />
+    <TypeScriptCompile Include="Infrastructure\Components\Maintenance\Automation\AutomationResult\OnUpdateDocumentResultComponent.ts" />
     <TypeScriptCompile Include="Infrastructure\Components\Maintenance\Automation\AutomationResult\SendDocumentResultComponent.ts" />
     <TypeScriptCompile Include="Infrastructure\Components\Maintenance\Automation\AutomationResult\SendInterfaceResultComponent.ts" />
     <TypeScriptCompile Include="Infrastructure\Components\Maintenance\Automation\AutomationsConditionsViewDetailsComponent.ts" />
@@ -1890,6 +1894,7 @@
     <TypeScriptCompile Include="Infrastructure\DataContracts\AutomationEventTypeArgs.ts" />
     <TypeScriptCompile Include="Infrastructure\DataContracts\AutomationFollowUp.ts" />
     <TypeScriptCompile Include="Infrastructure\DataContracts\AutomationQueuedTask.ts" />
+    <TypeScriptCompile Include="Infrastructure\DataContracts\AutomationOnUpdateDocument.ts" />
     <TypeScriptCompile Include="Infrastructure\DataContracts\AutomationSendDocument.ts" />
     <TypeScriptCompile Include="Infrastructure\DataContracts\AutomationSendInterface.ts" />
     <TypeScriptCompile Include="Infrastructure\DataContracts\AutomationSetValue.ts" />

@@ -158,6 +158,7 @@ namespace WebFreight.Web.Helpers
                 entityChangeAutomation = entityChangeAutomation.Concat(GetEntityChangeAutomationLists(entityChangePM.SendDocumentAutomationSsucceedXml, entityChangePM.SendDocumentAutomationFailedXml)).ToList();
                 entityChangeAutomation = entityChangeAutomation.Concat(GetEntityChangeAutomationLists(entityChangePM.CreateTaskAutomationSsucceedXml, entityChangePM.CreateTaskAutomationFailedXml)).ToList();
                 entityChangeAutomation = entityChangeAutomation.Concat(GetEntityChangeAutomationLists(entityChangePM.EventAutomationSsucceedXml, entityChangePM.EventAutomationFailedXml)).ToList();
+                entityChangeAutomation = entityChangeAutomation.Concat(GetEntityChangeAutomationLists(entityChangePM.OnUpdateDocumentAutomationSsucceedXml, entityChangePM.OnUpdateDocumentAutomationFailedXml)).ToList();
 
                 entityChangeAutomation = entityChangeAutomation.OrderByDescending(d => d.CreateDate).ToList();
 

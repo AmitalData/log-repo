@@ -179,11 +179,18 @@ export class AutomationsSettingsComponent implements OnInit {
             this.ScheduleTabVisibility = true;
             this.OnUpdateTabVisibility = true;
             this.IsShowTabUpdate = true;
-            this.IsShowTabDocumentUpdate = true;
         }
+
+        this.ShowTabDocumentUpdate();
 
     }
 
+
+    ShowTabDocumentUpdate() {
+        if (this.ObjectTableName == "Shipment" || this.ObjectTableName == "Master") {
+            this.IsShowTabDocumentUpdate = true;
+        }
+    }
 
     LoadAutomationsList() {
 
@@ -296,7 +303,7 @@ export class AutomationsSettingsComponent implements OnInit {
         newEntity.Description = "";
         newEntity.Version = 1,
         newEntity.Inactive = false;
-        newEntity.ResultCode = "EMAIL";
+        newEntity.ResultCode = type == "OnDocumentUpdate" ? "ONUPDATEDOCUMENT" : "EMAIL";
         newEntity.DocumentTypeId = "";
         newEntity.TemplateId = "";
         newEntity.Id = "";

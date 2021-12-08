@@ -301,6 +301,14 @@ namespace CommunicationWorkerRole
                                 }
                                 #endregion
 
+                                #region Event
+                                else if (automation.ResultCode == "ONUPDATEDOCUMENT")
+                                {
+                                    OnUpdateDocumentAutomation(objectTable);
+                                }
+                                #endregion
+
+
                                 #region E-mail
                                 if (automation.ResultCode == "EMAIL")
                                 {
@@ -555,10 +563,16 @@ namespace CommunicationWorkerRole
             automationEventCreationArguments.EntityChange.EventAutomationFailedXml = automationEventCreationArguments.EntityChangesAutomationsLists.Where(d => !d.IsConditionTrue).ToList().Count > 0 ? LogitudeXmlSerializer.SerializeObjectToXmlString(automationEventCreationArguments.EntityChangesAutomationsLists.Where(d => !d.IsConditionTrue).ToList()) : "";
         }
 
+
         private static void ApplyEventCreationAutomation(AutomationEventCreationArguments automationEventCreationArguments)
         {
             new AutomationEventCreationService().CreateEvent(automationEventCreationArguments);
             MarkEntityChangeExecutedRecord(automationEventCreationArguments.EntityChange, automationEventCreationArguments.EntityChangeAutomation, automationEventCreationArguments.EntityChangesAutomationsLists);
+        }
+
+        private void OnUpdateDocumentAutomation(ObjectTable objectTable)
+        {
+          
         }
 
         private void ApplyAuomationSendInterfaceFTP(EntityChange entityChange, AutomationSendInterface automationSendInterface, string documentId)

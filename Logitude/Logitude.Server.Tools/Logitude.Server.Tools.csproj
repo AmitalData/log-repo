@@ -245,6 +245,7 @@
     <Compile Include="EntityChanges\AutomationResult\AutomationEventCreationService.cs" />
     <Compile Include="Helpers\UpdatePortSearchFieldService.cs" />
     <Compile Include="Interfaces\IAddManualTraceEventsHelper.cs" />
+    <Compile Include="EntityChanges\AutomationResult\AutomationOnUpdateDocumentService.cs" />
     <Compile Include="KafkaConfigurations\KakaMessageTypes.cs" />
     <Compile Include="ContainerAccessor.cs" />
     <Compile Include="Contracts\GenericResponse.cs">
