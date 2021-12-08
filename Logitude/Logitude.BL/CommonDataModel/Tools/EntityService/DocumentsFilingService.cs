@@ -880,7 +880,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             entityRepository.SubmitChanges();
 
             this.OpenPODDocumentUploderQueue(theEntityPm);
-            //this.OpenSendingQBODocumentsQueue(theEntityPm);
+            this.SendQueueOfEntityDocumnetsToQuickbooks(theEntityPm);
 
             RunDocumentPopulateAutomaticDatesService(theEntityPm);
             
@@ -926,7 +926,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                                                                   documentFiling.Tenant, null, null, null, null);
         }
 
-        private void OpenSendingQBODocumentsQueue(DocumentsFilingPM documentFiling)
+        private void SendQueueOfEntityDocumnetsToQuickbooks(DocumentsFilingPM documentFiling)
         {
             if (!IsAPDNCNDocumentUploaded(documentFiling))
             {
@@ -1561,7 +1561,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             {
                 return false;
             }
-            if (!(objectTable.Name == "APInvoice"))
+            if (!((objectTable.Name == "APInvoice") || objectTable.Name == "Shipment"))
             {
                 return false;
             }
