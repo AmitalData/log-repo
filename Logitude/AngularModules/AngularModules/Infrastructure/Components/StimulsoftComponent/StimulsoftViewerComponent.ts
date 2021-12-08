@@ -154,7 +154,7 @@ export class StimulsoftViewerComponent implements OnInit {
         if (AppTool.IsNullOrEmpty(templateType))
             return;
         this.TemplateType = templateType;
-        document.getElementById("templateType").innerHTML = templateType == "E" ? "Excel Template" : "Stimulsoft Template";
+        document.getElementById("templateType").innerHTML = templateType == "E" ? "Excel Template" : "PDF Template";
     }
 
 
