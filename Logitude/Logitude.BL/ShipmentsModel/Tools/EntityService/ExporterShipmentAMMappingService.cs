@@ -82,6 +82,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 Volume = shipmentPM.BookingVolume,
                 Incoterm = shipmentPM.IncotermCode,
                 Notes = shipmentPM.Notes,
+                IsDangerouseOfGoods = shipmentPM.OrderIsDangerouseGoods
             };
         }
         private static void MapExportShipmentPackages(ShipmentPM ForwarderShipment, NewAExporterShipmentAM newAExporterShipmentAM)

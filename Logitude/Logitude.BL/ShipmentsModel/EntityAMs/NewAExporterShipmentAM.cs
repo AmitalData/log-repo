@@ -37,6 +37,7 @@ namespace Logitude.BL.ShipmentsModel.EntityAMs
         //public bool SendUpdatesToAgentEnabled { get; set; }
 
         public string Notes { get; set; }
+        public bool IsDangerouseOfGoods { get; set; }
         public CodeProperties Agent { get; set; }
 
         public CodeProperties Consignee { get; set; }

@@ -337,6 +337,7 @@ namespace CommunicationWorkerRole
                                                     Quantity = ForwarderShipment.PackagesQuantity,
                                                     Weight = ForwarderShipment.GrossWeight,
                                                     SendUpdatesToAgentEnabled = ForwarderShipment.SendUpdatesToAgentEnabled,
+                                                    IsDangerouseOfGoods = ForwarderShipment.OrderIsDangerouseGoods,
                                                     Customer = new CodeProperties()
                                                     {
                                                         Code = CustomerCode
