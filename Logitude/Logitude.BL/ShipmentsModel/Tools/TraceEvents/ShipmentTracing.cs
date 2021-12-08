@@ -1050,6 +1050,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
 
                         if (!string.IsNullOrEmpty(eventType.EntityStatusId))
                         {
+
                             if (entityPM.StatusId == eventType.EntityStatusId)
                             {
                                 TraceEvent previousEvent = null;
@@ -1061,6 +1062,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                                                                     && a.EventType.EntityStatus != null
                                                                     && a.Deleted == false
                                                                     select a).ToList();
+                                
+                                if (FeatureToggleHelper.HasFeatureToggle("OPS", tenant))
+                                {
+                                    iTraceEventList = iTraceEventList.Where(d => d.EventType.EntityStatus.EntityStatusTypeCode != "O").ToList();
+                                }
 
                                 foreach (TraceEvent e in iTraceEventList)
                                 {
@@ -1619,11 +1625,19 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
 
                 if (!string.IsNullOrEmpty(traceEvent.EventType.EntityStatusId))
                 {
+                    List<TraceEvent> operationalEvents = traceEventList.Where(d => d.EventType != null && d.EventType.EntityStatus != null && d.EventType.EntityStatus.EntityStatusTypeCode == "O").ToList();
+                    List<TraceEvent> nonOperationalEvents = traceEventList;
+
+                    if(FeatureToggleHelper.HasFeatureToggle("OPS", tenant))
+                    {
+                        nonOperationalEvents = traceEventList.Where(d => d.EventType != null && d.EventType.EntityStatus != null && d.EventType.EntityStatus.EntityStatusTypeCode != "O").ToList();
+                    }
+
                     if (entityPM.StatusId == traceEvent.EventType.EntityStatusId)
                     {
                         TraceEvent previousEvent = null;
 
-                        foreach (TraceEvent e in traceEventList)
+                        foreach (TraceEvent e in nonOperationalEvents)
                         {
                             if (!e.Deleted)
                             {
@@ -1688,7 +1702,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
 
                     else if (FeatureToggleHelper.HasFeatureToggle("OPS", tenant) && entityPM.OperationalStatusId == traceEvent.EventType.EntityStatusId)
                     {
-                        RecomputeOperationalStatusAfterDelete(traceEventList, entityPM, shipment, external, shipmentsContext);
+                        RecomputeOperationalStatusAfterDelete(operationalEvents, entityPM, shipment, external, shipmentsContext);
                     }
                 }
 
@@ -1697,11 +1711,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                 RunStoredProcedureClass.UpdateShipmentStatus(shipment.Id, shipment.Tenant);
             }
         }
-        private static void RecomputeOperationalStatusAfterDelete(List<TraceEvent> traceEventList, ShipmentPM entityPM, Shipment shipment, bool external, IShipmentsContext shipmentsContext)
+        private static void RecomputeOperationalStatusAfterDelete(List<TraceEvent> operationalEvents, ShipmentPM entityPM, Shipment shipment, bool external, IShipmentsContext shipmentsContext)
         {
             TraceEvent previousEvent = null;
 
-            foreach (TraceEvent e in traceEventList.Where(d => d.EventType != null && d.EventType.EntityStatus != null && d.EventType.EntityStatus.EntityStatusTypeCode == "O"))
+            foreach (TraceEvent e in operationalEvents)
             {
                 if (!e.Deleted)
                 {
