@@ -43,7 +43,12 @@ namespace WebFreight.Web.ExternalAPIs.ExternalAPIsHelpers
 
             this.ValidateReceivables();
             this.ValidatePayables();
-            this.ValidatePorts();
+
+            if (!IsInlandDomesticShipment())
+            {
+                this.ValidatePorts();
+            }
+
             this.ValidateEvents();
         }
 

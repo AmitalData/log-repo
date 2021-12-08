@@ -51,9 +51,14 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
                 temp.NewConcurrencyGUID = Guid.NewGuid().ToString();
                 temp.Tenant = Tenant;
                 temp.ShipmentLevelCode = "D";
-                temp.MainCarriageFromPortId = temp.FromPortId;
-                temp.MainCarriageToPortId = temp.ToPortId;
-                temp.FinalDistenationPortId = temp.ToPortId;
+
+                if (!IsInlandDomesticShipment(temp))
+                {
+                    temp.MainCarriageFromPortId = temp.FromPortId;
+                    temp.MainCarriageToPortId = temp.ToPortId;
+                    temp.FinalDistenationPortId = temp.ToPortId;
+                }
+
                 temp.MainCarriageFinalDestinationPortId = temp.ToPortId;
                 temp.FHLStatusCode = "NSEN";
                 temp.FWBStatusCode = "NSEN";
@@ -236,7 +241,10 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
                 throw ex;
             }
         }
-        
+        private bool IsInlandDomesticShipment(ShipmentPM entityPM)
+        {
+            return entityPM.DirectionId == "D" && entityPM.TransportModeId == "I";
+        }
         private double? GetRatio(string directionId, string transportModeId, string shipmentTypeId, string countryCode)
         {
             double? myResult = null;
