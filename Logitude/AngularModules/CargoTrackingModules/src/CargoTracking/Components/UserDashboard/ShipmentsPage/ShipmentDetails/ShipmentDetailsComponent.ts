@@ -507,7 +507,7 @@ export class ShipmentDetailsComponent implements OnInit,AfterViewInit
                 newCard.HasWarning = milstone.IsCurrent && CurrentMilestoneExceptions != null;
                 newCard.WarningMessage = newCard.HasWarning ? CurrentMilestoneExceptions.substring(CurrentMilestoneExceptions.indexOf(',')+1,) : null;
                 newCard.WarningDate = newCard.HasWarning ? this.datePipe.transform(CurrentMilestoneExceptions?.split(',')[0], 'dd/MM/yyyy, HH:mm'): null;
-                if(milstone.Code == MilestoneCodes.BookingNote )
+                if(milstone.Code == MilestoneCodes.BookingNote && newCard.Description)
                     newCard.Description = "BK#: "+ newCard.Description;
                 return newCard;
             });
