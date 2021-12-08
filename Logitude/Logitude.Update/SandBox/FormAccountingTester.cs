@@ -276,5 +276,22 @@ namespace Logitude.Update.SandBox
             var fixJournaRecolService = new FixJournaRecolService();
             fixJournaRecolService.FixByJournalNumber(JournalNumber, Tenant);
         }
+
+        private void yearlyFixControlToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var batchYearlyFIXService = new BatchYearlyFIXService(
+                new Infrastructure.BL.EntityPMs.BatchTaskExecutionPM()
+                {
+                     PrametersXml = 
+@"<?xml version=""1.0"" encoding=""utf-16""?>
+<BatchYearlyFIXParams xmlns:xsd=""http://www.w3.org/2001/XMLSchema"" xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"">
+  <Tenant>4</Tenant>
+  <Year>2021</Year>
+  <MyFixType>ReverseEngineerTotalByMonthServiceControl</MyFixType>
+</BatchYearlyFIXParams>"
+                });
+            batchYearlyFIXService.Execute();
+
+        }
     }
 }
