@@ -104,11 +104,13 @@ export class PriceCheckComponent implements OnInit {
     const scrollTopContainr: number = s.contentViewChild.nativeElement.scrollTop;
     const scrollTopElement: number = offerContainer.offsetTop;
     const scrollTopScreen: number = scrollTopElement - scrollTopContainr;
-
+    
     const screen: number = s.containerViewChild.nativeElement.clientHeight;
     const offer: number = offerContainer.clientHeight;
     
-    if (scrollTopScreen < 0  || screen < offer + scrollTopScreen)
+    console.log('scrollTopContainr:', scrollTopContainr, 'scrollTopElement:', scrollTopElement, 'scrollTopScreen:', scrollTopScreen, 'screen:', screen, 'offer:', offer)
+    
+    if (scrollTopScreen < 0 || screen < offer + scrollTopScreen)
       s.scrollTop(scrollTopContainr + scrollTopScreen)
   }
 }

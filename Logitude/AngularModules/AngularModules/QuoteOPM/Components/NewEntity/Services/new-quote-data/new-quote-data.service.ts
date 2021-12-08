@@ -22,17 +22,26 @@ import { ShipmentTypeListService } from 'Shipment/Services/StandardLists/Shipmen
 import { PackageTypeList } from 'Common/EntityLists/PackageTypeList';
 import { LogtuideTableDataService } from '../../components/autocomplate-table/logtuide-table-data.service';
 import { Subject } from 'rxjs';
+import { TenantPMService } from 'Common/Services/StandardPMs/TenantPMService';
+import { SessionLocator } from 'Infrastructure/Utilities/SessionLocator';
+import { TenantList } from 'Common/EntityLists/TenantList';
+import { TenantListService } from 'Common/Services/StandardLists/TenantListService';
 
 @Injectable()
 export class NewQuoteDataService {
-  $resetForm= new Subject();
+  $resetForm = new Subject();
   addressService: AddressService = new AddressService();
 
   constructor(
     private entityListService: EntityListService,
     private newQuoteOPWebService: NewQuoteOPWebService,
     private logtuideTableDataService: LogtuideTableDataService,
+    private tanentsService: TenantListService,
   ) { }
+
+  async getTenantsData(): Promise<TenantList> {
+    return this.logtuideTableDataService.getDataFromService(this.tanentsService.getSingle(SessionLocator.TenantPM.Id)) as any;
+  }
 
   async getDirectionList(): Promise<DirectionList[]> {
     return this.logtuideTableDataService.getDataFromService(new DirectionListService().getAllFromCache());
@@ -85,38 +94,40 @@ export class NewQuoteDataService {
         .subscribe((resp: any) => resolve(resp.Result));
     });
   }
-    async getPackageTypeTable(): Promise<PackageTypeList[]> {
-        const filters = new ApiQueryFilters();
-        //filters.addAdditionalFilter('InActive', false, null, null, "Equals", false, false, false, null, false, false);
-        filters.SortDirection = "Ascending";
-        // filters.PageIndex = 0;
-        // filters.PageSize = 50;
-        filters.GetAll = true;
-        return new Promise<PackageTypeList[]>(async (resolve, reject) => {
-            const resService: any = await this.entityListService.getByFilters('PackageType', filters).then();
 
-            resService.pipe(filterIsNotNull(), take(1))
-                .subscribe((resp: any) => resolve(resp.Result));
-        });
-    }
-  async getPorts(directionId: string, transportModed: string): Promise<Port[]> {
-    const res: ServiceResponse = await this.newQuoteOPWebService.GetPortsItemsList(directionId, transportModed, '', 100, false).toPromise();
-    return res.Result as Port[];
+  async getPackageTypeTable(): Promise<PackageTypeList[]> {
+    const filters = new ApiQueryFilters();
+    //filters.addAdditionalFilter('InActive', false, null, null, "Equals", false, false, false, null, false, false);
+    filters.SortDirection = "Ascending";
+    // filters.PageIndex = 0;
+    // filters.PageSize = 50;
+    filters.GetAll = true;
+    return new Promise<PackageTypeList[]>(async (resolve, reject) => {
+      const resService: any = await this.entityListService.getByFilters('PackageType', filters).then();
+
+      resService.pipe(filterIsNotNull(), take(1))
+        .subscribe((resp: any) => resolve(resp.Result));
+    });
+  }
+
+  async getPorts(directionId: string, transportModed: string, filter: ApiQueryFilters): Promise<Port[]> {
+    const res: ServiceResponse = await this.newQuoteOPWebService.GetPorts(directionId, transportModed, filter).toPromise();
+    return res.Result.body as Port[];
   }
 
   async getCarrierses(directionId: string, transportModed: string, filter: ApiQueryFilters): Promise<Carrier[]> {
-    const res: ServiceResponse = await this.newQuoteOPWebService.GetCarriersItemsList(directionId, transportModed, filter).toPromise();
+    const res: ServiceResponse = await this.newQuoteOPWebService.GetCarriers(directionId, transportModed, filter).toPromise();
     return res.Result.body as Carrier[];
   }
 
-  async getSpecialServices(directionId: string, transportModed: string): Promise<SpecialService[]> {
-    const res: ServiceResponse = await this.newQuoteOPWebService.GetSpecialServiceItemsList(directionId, transportModed, '', 100, false).toPromise();
-    return res.Result as SpecialService[];
+  async getSpecialServices(directionId: string, transportModed: string, filter: ApiQueryFilters): Promise<SpecialService[]> {
+    const res: ServiceResponse = await this.newQuoteOPWebService.GetSpecialService(directionId, transportModed, filter).toPromise();
+    return res.Result.body as SpecialService[];
   }
 
-  async getIncoterms(): Promise<Incoterm[]> {
-    const res: ServiceResponse = await this.newQuoteOPWebService.GetETBPAYTRitemList('', '', 100, false).toPromise();
-    return res.Result as Incoterm[];
+  async getIncoterms(filter: ApiQueryFilters): Promise<Incoterm[]> {
+    const res: ServiceResponse = await this.newQuoteOPWebService.GetIncoterm(filter).toPromise();
+    return res.Result.body as Incoterm[];
   }
 
   async getCityTable(countryId: string = null): Promise<CountryCityList[]> {

@@ -33,6 +33,7 @@ export class NewQuotePartnerComponent extends BaseComponent implements OnInit, A
   ConsigneeContact: any;
   ShipperId: any;
   ConsigneeId: any;
+  isSubscribePartner: boolean = false;;
   isHidden: BehaviorSubject<boolean>;
 
   partnerform: FormGroup = new FormGroup({
@@ -61,22 +62,21 @@ export class NewQuotePartnerComponent extends BaseComponent implements OnInit, A
     public entityArgs: EntityArgs,
     private cdr: ChangeDetectorRef,
     private dataShareService: NewQuoteDataShareService,
-  ) {
-    super();
-  }
-  
-  ngOnInit(): void {
-    this.isHidden = this.dataShareService.partnersHidden[this.type as any];
-
-    this.initCards();
-    this.partnerform.controls.notes.disable();
-    this.initDdl();
-    this.resetForm()
+    ) {
+      super();
+    }
+    
+    ngOnInit(): void {
+      this.isHidden = this.dataShareService.partnersHidden[this.type as any];
+      
+      this.initCards();
+      this.partnerform.controls.notes.disable();
+      this.initDdl();
+      this.resetForm()
+      this.subscribeSecondPartner();
   }
 
   ngAfterViewInit(): void {
-    this.setValidatorBySecondPrtner();
-
     if (this.EntityPM != null && this.EntityPM.Id != null) {
       this.setPartners();
     }
@@ -85,7 +85,7 @@ export class NewQuotePartnerComponent extends BaseComponent implements OnInit, A
   private setValidatorBySecondPrtner() {
     (this.formGroup.controls[this.secondPartner] as FormGroup).controls.partner.valueChanges.subscribe((value: CardList) => {
       const validator = value ? null : Validators.required;
-      if(this.partnerform.controls.partner.validator != validator) {
+      if (this.partnerform.controls.partner.validator != validator) {
         this.partnerform.controls.partner.setValidators(validator);
         this.partnerform.controls.partner.updateValueAndValidity();
       }
@@ -122,7 +122,7 @@ export class NewQuotePartnerComponent extends BaseComponent implements OnInit, A
   }
 
   resetForm() {
-    this.newQuoteDataService.$resetForm.subscribe(()=>{
+    this.newQuoteDataService.$resetForm.subscribe(() => {
       // ['notes', 'reference1', 'reference2', 'partner'].forEach(ctrl => this.formGroup.controls[ctrl]?.setValue(null))
       this.partnerform.reset()
       this.setAddress(null as any);
@@ -136,9 +136,20 @@ export class NewQuotePartnerComponent extends BaseComponent implements OnInit, A
   ngOnChanges(changes: SimpleChanges) {
     if (!this.formGroup.contains(this.type)) {
       this.addFormControls();
-      this.subscribePartner();
       this.subscribeCtrls();
+      this.subscribePartner();
     }
+
+  }
+
+  private async subscribeSecondPartner() {
+    const s = this.formGroup.valueChanges.subscribe(()=>{
+      if (this.formGroup.contains(this.secondPartner) && !this.isSubscribePartner) {
+        this.isSubscribePartner = true;
+        this.setValidatorBySecondPrtner();
+        s.unsubscribe()
+      }
+    })
   }
 
   private async initCards() {
@@ -172,7 +183,7 @@ export class NewQuotePartnerComponent extends BaseComponent implements OnInit, A
     this.partnerform.controls.reference1.valueChanges.subscribe(newVal => this.EntityPM[this.capitalizeType + 'Reference1'] = newVal);
     // this.partnerform.controls.reference2.valueChanges.subscribe(newVal => this.EntityPM[this.capitalizeType + 'Reference2'] = newVal);
     // this.formGroup.controls.direction.valueChanges.subscribe((val: DirectionList) =>
-      // this.isHidden = !((val?.Name === 'Import' && this.type === 'consignee') || (val?.Name === 'Export' && this.type === 'shipper')));
+    // this.isHidden = !((val?.Name === 'Import' && this.type === 'consignee') || (val?.Name === 'Export' && this.type === 'shipper')));
   }
 
   private async setAddress(partner: CardList): Promise<void> {

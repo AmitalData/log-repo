@@ -18,7 +18,7 @@ import { NewQuoteValidateEntityService } from "./Services/new-quote-validate-ent
     styleUrls: ['./NewQuoteComponent.scss'],
 })
 export class NewQuoteComponent {
-    EntityPM: QuoteOPPM = new QuoteOPPM();
+    EntityPM: QuoteOPPM;
     formGroup:FormGroup = new FormGroup({});
     isSubmit: boolean = false;
 
@@ -33,11 +33,11 @@ export class NewQuoteComponent {
     ) { }
 
     async ngOnInit() {
+        this.CreateNewQuote();
+
         this.dataShareService.EntityPM = this.EntityPM;
         this.dataShareService.newQuoteRef = this.elmRef;
         this.dataShareService.formGroup = this.formGroup;
-
-        this.CreateNewQuote();
     }
 
     async create() {
@@ -61,11 +61,11 @@ export class NewQuoteComponent {
 
             this.newQuoteDataService.creatingNewQuote(this.EntityPM)
                 .then(() => SessionLocator.SelectedSession.CloseCurrentWindowEmit(this.EntityPM))
-                .catch((err: string[]) => this.msg.add({ severity: 'error', summary: 'Create new quote failed', detail: err.join(', ') }))
+                .catch((err: string[]) => this.msg.add({ severity: 'error', summary: 'Create new quote failed', detail: err?.join(', ') }))
                 .finally(() => currentWindow.StopBusyIndicator())
 
         } catch(err) {
-            this.msg.add({ severity: 'error', summary: 'Create new quote failed', detail: err.join(', ') });
+            this.msg.add({ severity: 'error', summary: 'Create new quote failed', detail: err?.join(', ') });
             currentWindow.StopBusyIndicator()
         }
     }

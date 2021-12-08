@@ -11,11 +11,15 @@ using Unifreight.Data.AmitalModel.Repsitories;
 using Unifreight.BL.EntityDataMappings;
 using Unifreight.BL.EntityPMs.UGenerated;
 using Unifreight.Data.AmitalModel.EntityPOCOs;
+using Simplog.Server.Infrastructure.DataContracts;
+using static Unifreight.BL.BL.QuoteOPPorts;
 
 namespace Unifreight.BL.EntityQueryServices
 {
     public class ETBPORTQueryService : EntityQueryService<ETBPORT, ETBPORTKeys, ETBPORTPM, object, ETBPORTKeys>
     {
+        private AmitalContext MainContext;
+
         public ETBPORTQueryService(AmitalContext context)
         {
             MainContext = context;

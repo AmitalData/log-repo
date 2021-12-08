@@ -38,13 +38,13 @@ namespace Unifreight.BL.BL
                 var ETBAIRLINEList = queryservice.GetList(queryOperations);
                 return ETBAIRLINEList;
             }
-            if (DIRECTIONID == "E" && TRANSPORTMODEID == "O")
+            else if (DIRECTIONID == "E" && TRANSPORTMODEID == "O")
             {
                 var queryservice = new MTBCARRQueryService(GetAmitalContext(tenant));
                 var MTBCARRList = queryservice.GetList(queryOperations);
                 return MTBCARRList;
             }
-            if (DIRECTIONID == "I")
+            else if (DIRECTIONID == "I")
             {
                 var queryservice = new ETBVENDQueryService(GetAmitalContext(tenant));
                 var ETBVENDList = queryservice.GetList(queryOperations, TRANSPORTMODEID);

@@ -99,10 +99,14 @@ export class GenericTableComponent implements OnInit {
     this.dialogRef.close(e)
   }
 
-  private alignRow() {
-    let elements = this.elem.nativeElement.querySelectorAll('.p-datatable-scrollable-body')[0];
+   private async alignRow() {
+    let scrollBarElement = this.getScrollBarElement();
+    while(!scrollBarElement){
+      await new Promise(r => setTimeout(r, 100));
+      scrollBarElement = this.getScrollBarElement();
+    }
 
-    fromEvent(elements, 'scroll')
+    fromEvent(scrollBarElement, 'scroll')
       .pipe(debounceTime(100))
       .subscribe((e: any) => {
         const div = e.target as HTMLDivElement;
@@ -110,6 +114,10 @@ export class GenericTableComponent implements OnInit {
         if (diff > 2 && diff < 39)
           div.scrollBy(0, 41 - diff + 1);
       });
+  }
+
+  private getScrollBarElement() {
+    return this.elem.nativeElement.querySelectorAll('.p-datatable-scrollable-body')[0];
   }
 }
 

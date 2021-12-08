@@ -1318,7 +1318,7 @@ namespace Logitude.CustomsMessaging.RequestServices
                 //}
             }
 
-            var itemCrQueryService = new Unifreight.BL.EntityQueryServices.GITITEMCRQueryService(_AmitalContext);
+            var itemCrQueryService = new Unifreight.BL.EntityQueryServices.GITITEMCRQueryService(AmitalContext.GetContext(supplierInvoiceItemPM.Tenant));
             List<Unifreight.BL.EntityPMs.GITITEMCRPM> itemCrList = itemCrQueryService.GetMulti(supplierInvoiceItemPM.ItemCode,true);
             //Get supplier Item Certificate - From SupplierInvioceItemsCertificates Table
             foreach (var CertificateItem in supplierInvoiceItemPM.SupplierInvioceItemCertificats.OrderBy(x=>x.SequenceNumeric))

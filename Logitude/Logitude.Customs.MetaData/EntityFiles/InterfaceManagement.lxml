@@ -37,7 +37,7 @@
   HasDynamicHeader="false"
   ObjectTableTypeCode="&quot;BR&quot;"
   MaxNumberOfCustomFields="0"
-  LocalDefaultText="&quot;ממשק ניהול&quot;"
+  LocalDefaultText="&quot;ניהול בקשות מכס&quot;"
   DefaultText="&quot;Interface Management&quot;"
   Code="&quot;6059&quot;"
   Name="&quot;Customs.InterfaceManagement Query Group&quot;"
@@ -2102,7 +2102,7 @@
       ShortView="true"
       EventTypeCategoryCode="&quot;OPE&quot;"
       IsAgentView="false"
-      IsCustomerView="false"
+      IsCustomerView="false" 
       IsSharedLogisticsEnabled="false"
       AllowedInAutomation="false"
       ManualActivatedFollowUp="false"
@@ -2146,7 +2146,7 @@
     <TextCode
       Code="&quot;Customs.General.O.EditInterfaceManagement&quot;"
       DefaultText="&quot;Edit Interface Management&quot;"
-      LocalDefaultText="&quot;ניהול ממשק עריכה&quot;"
+      LocalDefaultText="&quot;ניהול בקשות מכס עריכה&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>

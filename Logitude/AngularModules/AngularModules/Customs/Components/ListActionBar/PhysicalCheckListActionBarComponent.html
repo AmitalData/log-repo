@@ -123,7 +123,7 @@
         
 
         <td style="width: 115px; float:left">
-               <button *ngIf="_physicalChecksCloseSharedDataService.IsDisplayButtonClose" class="Button" style="text-align:center" (click)="CloseMarkChecks()" >{{'סגירת בדיקות (' + count + ')'}}</button>
+               <button [disabled]="!_physicalChecksCloseSharedDataService.IsDisplayButtonClose" class="Button" style="text-align:center" (click)="CloseMarkChecks()" >{{'סגירת בדיקות (' + count + ')'}}</button>
         </td>
     </tr>
 </table>
