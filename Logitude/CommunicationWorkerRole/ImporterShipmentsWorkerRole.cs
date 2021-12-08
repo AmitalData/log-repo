@@ -602,6 +602,7 @@ namespace CommunicationWorkerRole
                                                             DimensionsUnitCode = Shipment.DimensionsUnitCode,
                                                             VolumeUnitCode = Shipment.VolumeUnitCode,
                                                             ForwardingPartnerTenant = Shipment.ForwardingPartnerId,
+                                                            IsDangerouseOfGoods = Shipment.OrderIsDangerouseGoods,
                                                             Agent = new CodeProperties()
                                                             {
                                                                 Code = AgentCode
@@ -840,6 +841,7 @@ namespace CommunicationWorkerRole
                                                             VolumeUnitCode = Shipment.VolumeUnitCode,
                                                             ForwardingPartnerTenant = Shipment.ForwardingPartnerId,
                                                             Notes = Shipment.Notes,
+                                                            IsDangerouseOfGoods = Shipment.OrderIsDangerouseGoods,
 
                                                             Agent = new CodeProperties()
                                                             {
