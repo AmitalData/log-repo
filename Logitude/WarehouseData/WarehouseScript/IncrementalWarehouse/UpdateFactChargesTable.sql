@@ -173,7 +173,7 @@
         left JOIN dw_ARInvoiceLines  ON dw_ShipmentReceivables.Id = dw_ARInvoiceLines.ReceivableId
         left JOIN dw_ARInvoices  ON dw_ARInvoiceLines.ARInvoiceId = dw_ARInvoices.Id
         left JOIN DIM_Partners billToPartners ON dw_ARInvoices.BillToId = billToPartners.Id
-		where dw_Shipments.AutomaticLastUpdateDate > @LastUpdateDate and  dw_Shipments.IsCancelled = 0  and dw_ARInvoices.Id != '-1' and dw_ShipmentReceivables.ShipmentReceivableParentId is null  and dw_Shipments.ShipmentLevelCode in ('H','D','C') and dw_Shipments.IsStandalonePickupDelivery = 0   and ( (dw_ShipmentReceivables.TotalAmountLocal is not null and dw_ShipmentReceivables.TotalAmountLocal !=0) or (dw_ShipmentReceivables.AmountInProfitCurrency is not null and dw_ShipmentReceivables.AmountInProfitCurrency !=0) )
+		where dw_Shipments.AutomaticLastUpdateDate > @LastUpdateDate and  dw_Shipments.IsCancelled = 0  and dw_ShipmentReceivables.ShipmentReceivableParentId is null  and dw_Shipments.ShipmentLevelCode in ('H','D','C') and dw_Shipments.IsStandalonePickupDelivery = 0   and ( (dw_ShipmentReceivables.TotalAmountLocal is not null and dw_ShipmentReceivables.TotalAmountLocal !=0) or (dw_ShipmentReceivables.AmountInProfitCurrency is not null and dw_ShipmentReceivables.AmountInProfitCurrency !=0) )
 		union 
 		
 
@@ -187,7 +187,7 @@
         left JOIN dw_ARInvoiceLines  ON masterReceivables.Id = dw_ARInvoiceLines.ReceivableId
         left JOIN dw_ARInvoices  ON dw_ARInvoiceLines.ARInvoiceId = dw_ARInvoices.Id
         left JOIN DIM_Partners billToPartners ON dw_ARInvoices.BillToId = billToPartners.Id
-		where dw_Shipments.AutomaticLastUpdateDate > @LastUpdateDate and  dw_Shipments.IsCancelled = 0 and dw_ARInvoices.Id != '-1' and dw_ShipmentReceivables.ShipmentReceivableParentId is not null  and dw_Shipments.ShipmentLevelCode in ('H','D','C') and dw_Shipments.IsStandalonePickupDelivery = 0   and ( (dw_ShipmentReceivables.TotalAmountLocal is not null and dw_ShipmentReceivables.TotalAmountLocal !=0) or (dw_ShipmentReceivables.AmountInProfitCurrency is not null and dw_ShipmentReceivables.AmountInProfitCurrency !=0) )
+		where dw_Shipments.AutomaticLastUpdateDate > @LastUpdateDate and  dw_Shipments.IsCancelled = 0 and  dw_ShipmentReceivables.ShipmentReceivableParentId is not null  and dw_Shipments.ShipmentLevelCode in ('H','D','C') and dw_Shipments.IsStandalonePickupDelivery = 0   and ( (dw_ShipmentReceivables.TotalAmountLocal is not null and dw_ShipmentReceivables.TotalAmountLocal !=0) or (dw_ShipmentReceivables.AmountInProfitCurrency is not null and dw_ShipmentReceivables.AmountInProfitCurrency !=0) )
 		union 
 
 
