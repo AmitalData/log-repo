@@ -469,12 +469,12 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
         {
             if (containerPM.ActualTransshipment2VesselArrival != null && container.ActualTransshipment2VesselArrival == null)
             {
-                this.CreateTraceEvent("T1AV", containerPM.ActualTransshipment2VesselArrival);
+                this.CreateTraceEvent("T2AV", containerPM.ActualTransshipment2VesselArrival);
             }
 
             else if (containerPM.ActualTransshipment2VesselArrival == null && container.ActualTransshipment2VesselArrival != null)
             {
-                this.DeleteTraceEvent("T1AV");
+                this.DeleteTraceEvent("T2AV");
             }
         }
         private void TracTransshipment2Departed()
