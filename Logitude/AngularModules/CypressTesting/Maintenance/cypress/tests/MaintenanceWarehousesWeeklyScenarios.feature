@@ -1,4 +1,4 @@
-@stable @weekly @all @release
+@stable @weekly @release
 Feature: Warehouses Create, Search and Edit from Maintenance
     The user creates a warehouse, searches for and edits it from the Maintenance Module.
 

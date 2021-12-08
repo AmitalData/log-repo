@@ -1,4 +1,4 @@
-@devsmoke @dev @all
+@devsmoke
 Feature: Shipment View
     The user open shipment view, add new view, search for column, save query, edit added view and delete view
 

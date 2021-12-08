@@ -1,4 +1,4 @@
-@stable @weekly @all @release
+@release @stable @weekly
 Feature: Department Create, Search and Edit from Maintenance
     The user creates a department, searches for and edits it from the Maintenance Module.
 

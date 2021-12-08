@@ -1,4 +1,4 @@
-@dev @Release
+@release
 Feature: Shipment Master House Connection Routing Tab
     The user creates a Master Export Air shipment, creates a House Export Air shipment from within the Master shipment.
     Add pre/on carriage on master and pre/on forwarding on house and assert that Pre/On carriage are dim in house level

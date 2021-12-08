@@ -1,4 +1,4 @@
-@Release @stable @all
+@release @stable
 Feature: Create Shipments
   The user creates a direct export air shipment, direct import ocean shipment,
   direct domestic inland shipment and direct Drop Air shipment.

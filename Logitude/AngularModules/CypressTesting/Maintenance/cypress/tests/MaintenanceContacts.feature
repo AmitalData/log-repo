@@ -1,4 +1,4 @@
-@release @all @stable 
+@release @stable 
 Feature: Contact Create, Edit, Save and Anonymize in Maintenance Module
     The user creates a contact, search for, edits, saves and anonymizes it from the Maintenance Module.
 

@@ -1,4 +1,4 @@
-@smoke @smoke2 @stable @all 
+@smoke @smoke2 @stable
 Feature:  Operation Accounting Close and Reopen Direct Export Air Shipment
  The user creates a Direct Export Air Shipment, operationally closes the shipment, 
  closes accounting, reopens accounting and operationally reopens the shipment.

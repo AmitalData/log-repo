@@ -1,4 +1,4 @@
-@release @all @stable @daily
+@stable @daily
 Feature: Credit Card Type fake Create and Edit in Maintenance Module
     The user creates a Credit Card Type fake create, then selects a different credit card type,
     edits it and activates or inactivates it from the Maintenance module.

@@ -1,4 +1,4 @@
-@devrelease @FeatureToggle
+@release @FeatureToggle
 Feature: Download Excel in Tariff
     The user will create new Ocean LCL freight cost tariff and then downloads the excel file.
 

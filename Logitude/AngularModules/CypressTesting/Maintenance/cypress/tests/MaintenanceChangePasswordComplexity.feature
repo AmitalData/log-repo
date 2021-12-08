@@ -1,4 +1,4 @@
-@release @all @stable
+@release @stable
 Feature: Change Password Complexity
     The user enters different combinations in the Change Password screen from the Maintenance Module
 

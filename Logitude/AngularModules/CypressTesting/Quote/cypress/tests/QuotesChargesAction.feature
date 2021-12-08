@@ -1,4 +1,4 @@
-@release @all @stable @smoke @smoke3
+@release @stable @smoke @smoke3
 Feature: Create Quote, Delete all charges and add charge
     The user creates a quote, delete all charges and add charge
 

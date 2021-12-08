@@ -1,4 +1,4 @@
-@release @all @stable 
+@release @stable 
 Feature: Update customers settings from Maintenance 
 
     The user enables phone, fax and address 1 fields to be mandatory when creating an active customer 

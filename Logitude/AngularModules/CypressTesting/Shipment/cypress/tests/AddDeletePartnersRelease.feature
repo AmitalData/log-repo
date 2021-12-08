@@ -1,4 +1,4 @@
-@Release @all
+@release
 Feature: Add Delete partners
   The user creates a Direct Export Air shipment, add partners and delete partners it.
 

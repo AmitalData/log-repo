@@ -1,4 +1,4 @@
-@stable @all @smoke @smoke3
+@release @stable @smoke @smoke3
 Feature: Appointment Create, Search, and Edit from CRM
     The user creates a appointment, searches for and edits it from the CRM Module.
 

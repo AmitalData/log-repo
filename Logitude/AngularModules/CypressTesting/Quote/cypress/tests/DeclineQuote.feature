@@ -1,4 +1,4 @@
-@release @all @smoke @smoke3
+@release @smoke @smoke3
 Feature: Decline Quote
     The user creates a quote, Decline quote and assert quote appears in all quotes queries with Declined stage
 

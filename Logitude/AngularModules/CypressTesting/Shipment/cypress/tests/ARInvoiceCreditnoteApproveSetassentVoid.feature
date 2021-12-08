@@ -1,4 +1,4 @@
-@smoke @smoke1 @stable @all
+@smoke @smoke1 @stable
 Feature: AR Invoice Credit Note Approve, Set as Sent and Void
     The user creates a Direct Export Air shipment, creates receivable, creates AR Invoice,
     creates and approves credit note, sets credit note as sent and voids the credit note.

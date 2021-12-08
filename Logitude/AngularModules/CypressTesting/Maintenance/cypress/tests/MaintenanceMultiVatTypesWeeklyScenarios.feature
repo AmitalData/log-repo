@@ -1,4 +1,4 @@
-@stable @weekly @all @release
+@release @stable @weekly
 Feature: Multi Vat Type Create, Search and Edit from Maintenance
     The user creates a multi vat type, searches for and edits it from the Maintenance Module.
 

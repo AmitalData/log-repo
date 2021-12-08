@@ -1,4 +1,4 @@
-@dev @all
+@release
 Feature: Shipment Master House Connection Build Packages
     The user creates a Master Export Air shipment, creates a House Export Air shipment from within the Master shipment,
     build packages from inside the house shipment (include air case(packages), ocean/inland case (containers + packages))
