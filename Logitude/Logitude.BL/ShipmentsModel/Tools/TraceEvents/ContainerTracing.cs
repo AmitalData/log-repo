@@ -41,6 +41,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
         string eventUserId = null;
         string customerCareUserEmail = null;
         EventType eventType;
+        TraceEvent previousEvent = null;
         public ContainerTracing(ContainerPM containerPM, Container container, bool isNewEntity)
         {
             this.containerPM = containerPM;
@@ -241,8 +242,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
             }
 
             this.UpdateAllTraceEventsToDelete(deletedEventType);
-            TraceEvent previousEvent = this.GetPreviousEventAfterDeletion(deletedEventType);
-            this.SetContainerStatusesFields(previousEvent);
+            this.GetPreviousEventAfterDeletion(deletedEventType);
+            this.SetContainerStatusesFields();
         }
         
         private void UpdateAllTraceEventsToDelete(EventType deletedEventType)
@@ -260,19 +261,18 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
 
             traceEventRepository.SubmitChanges();
         }
-        private TraceEvent GetPreviousEventAfterDeletion(EventType deletedEventType)
+        private void GetPreviousEventAfterDeletion(EventType deletedEventType)
         {
-            TraceEvent previousEvent = null;
             if (string.IsNullOrEmpty(deletedEventType.EntityStatusId))
             {
-                return null;
+                return;
             }
             List<TraceEvent> traceEvents =  this.GetTraceEventList();
+            this.previousEvent = null;
             foreach (TraceEvent traceEvent in traceEvents)
             {
-                previousEvent = this.HandlePreviousEvent(traceEvent);
+                this.HandlePreviousEvent(traceEvent);
             }
-            return previousEvent;
         }
         private List<TraceEvent> GetTraceEventList()
         {
@@ -287,9 +287,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
             return traceEvents;
         }
 
-        private TraceEvent HandlePreviousEvent(TraceEvent traceEvent)
+        private void HandlePreviousEvent(TraceEvent traceEvent)
         {
-            TraceEvent previousEvent = null;
+            
             if (previousEvent == null)
             {
                 previousEvent = traceEvent;
@@ -301,11 +301,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                     previousEvent = traceEvent;
                 }
             }
-
-            return previousEvent;
         }
 
-        private void SetContainerStatusesFields(TraceEvent previousEvent)
+        private void SetContainerStatusesFields()
         {
             EventType firstEventType = allEventTypes.Where(d => d.Code == "COOR").FirstOrDefault();
             containerPM.StatusId = firstEventType.EntityStatusId;
@@ -472,12 +470,12 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
         {
             if (containerPM.ActualTransshipment2VesselArrival != null && container.ActualTransshipment2VesselArrival == null)
             {
-                this.CreateTraceEvent("T1AV", containerPM.ActualTransshipment2VesselArrival);
+                this.CreateTraceEvent("T2AV", containerPM.ActualTransshipment2VesselArrival);
             }
 
             else if (containerPM.ActualTransshipment2VesselArrival == null && container.ActualTransshipment2VesselArrival != null)
             {
-                this.DeleteTraceEvent("T1AV");
+                this.DeleteTraceEvent("T2AV");
             }
         }
         private void TracTransshipment2Departed()
