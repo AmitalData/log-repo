@@ -1,4 +1,4 @@
-@release @all @stable @daily
+@stable @daily
 Feature: Shipping Agent fake Create and Edit in Maintenance Module
     The user creates a shipping agent fake create and edit another one from the Maintenance Module.
 

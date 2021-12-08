@@ -1,4 +1,4 @@
-@release @all @stable @daily
+@stable @daily
 Feature: Special Services Type fake Create and Edit in Maintenance Module
     The user creates a Special Services Type fake create and edit another one from the Maintenance Module.
 

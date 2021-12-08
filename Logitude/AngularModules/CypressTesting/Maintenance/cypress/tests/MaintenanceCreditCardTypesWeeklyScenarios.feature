@@ -1,4 +1,4 @@
-@release @all @stable @weekly
+@release @stable @weekly
 Feature:Credit Card Type Create and Edit it in Maintenance Module
     The user creates a credit card type and edits it from the Maintenance Module.
 

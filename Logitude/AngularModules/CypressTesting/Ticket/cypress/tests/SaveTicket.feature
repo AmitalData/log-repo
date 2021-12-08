@@ -1,4 +1,4 @@
-@smoke @smoke2 @release @stable @all
+@smoke @smoke2 @release @stable
 Feature: Save Ticket Test
     This file will create ticket then test the following
     Save as close , as open and as resolved

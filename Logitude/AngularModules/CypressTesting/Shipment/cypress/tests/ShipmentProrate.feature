@@ -1,4 +1,4 @@
-@devsmoke @stable @all
+@devsmoke @stable
 Feature: Shipment Prorate
     The user creates a Master Export Air shipment, creates a House Export Air shipment from withing the Master shipment,
     add package, create another house, add package, generate packages in master from houses, add payable in master

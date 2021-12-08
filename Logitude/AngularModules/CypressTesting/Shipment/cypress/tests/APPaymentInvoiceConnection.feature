@@ -1,4 +1,4 @@
-@devsmoke @release @all
+@devsmoke @release
 Feature: AP Payment Invoice Connection
     The user creates a vendor, creates a Direct Export Air shipment, adds payable, creates AP Invoice,
     approves the AP Invoice, create APPayment, connect the APPayment with the invoice and disconnect them

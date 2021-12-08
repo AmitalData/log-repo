@@ -1,4 +1,4 @@
-@release  @FeatureToggle 
+@release @FeatureToggle 
 Feature: Storage Calculations Chargeable Weight, Rounding and Receivable Correction
 
     The user sets up a warehouse with storage charges, creates a Direct Import Ocean FCL shipment,

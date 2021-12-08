@@ -1,4 +1,4 @@
-@release @all @dev
+@release
 Feature: Edit Company Address Settings from Maintenance
     The user edits the Company Address Settings from Maintenance Module
 

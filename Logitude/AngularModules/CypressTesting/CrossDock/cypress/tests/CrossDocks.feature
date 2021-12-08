@@ -1,6 +1,5 @@
-@release @stable @all
+@release @stable
 Feature: Cross Docks Entries and Releases
-
     The user creates a shipment, adds a cross dock entry, modifies it, cancels it,
     create a new entry, creates a cross dock release, modifies it, cancels it,
     creates a new cross dock release and creates a delivery.

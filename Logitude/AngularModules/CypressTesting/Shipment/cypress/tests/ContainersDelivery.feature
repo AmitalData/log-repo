@@ -1,4 +1,4 @@
-@release @stable @all
+@release @stable
 Feature: Containers Delivery
     The user creates a Direct Import Ocean FCL shipment, adds a container, modifies the dates of the shipment,
     adds deliveries for the container that will show as legs in the Routings tab and reflect the different stages of In Transit,

@@ -1,4 +1,4 @@
-@release @all @dev 
+@release
 Feature: Edit, Print and Send Quotation
     The user creates a quote, prints it, edits it, and sends it to a customer.
 

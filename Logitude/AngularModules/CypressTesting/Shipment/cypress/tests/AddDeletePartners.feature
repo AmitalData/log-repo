@@ -1,4 +1,4 @@
-@smoke @smoke1 @stable @all
+@smoke @smoke1 @stable
 Feature: Add Delete partners
   The user creates a Direct Export Air shipment, add partners and delete partners it.
 

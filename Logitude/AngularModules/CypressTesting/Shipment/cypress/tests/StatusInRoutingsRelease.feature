@@ -1,4 +1,4 @@
-@Release @all
+@release
 Feature: Status in Routings Tab
     The user creates a direct export air shipment, update routing tab,Add Expected Departure date for the pickup,
     add Actual Departure date for the pickup,add Actual Arrival date for the pickup,

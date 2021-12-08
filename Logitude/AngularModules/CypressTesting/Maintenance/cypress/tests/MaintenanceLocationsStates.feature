@@ -1,4 +1,4 @@
-@release @stable @all
+@release @stable
 Feature: Create State, Inactivate and activate it from Maintenance
     The user creates a State, Inactivates it,
     selects it to edit and activates it from the Maintenance module.
