@@ -238,7 +238,7 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
             this.AutomationItemClass = this.DataViewModel.AutomationItemClass;
             this.BuildQueuedTaskFilters();
             this.FillTimeUnits();
-            
+
             var myService = new EventTypeListService();
             myService.getAllFromCache().subscribe((myResponse: ServiceResponse) => {
                 if (!myResponse.HasError) {
@@ -1966,6 +1966,9 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
     private SetAutomationEvent() {
         if (AppTool.IsNullOrEmpty(this.AutomationEvent.EventTypeId)) {
             this.ValidationErrorsList.push("Event Type field is required");
+        }
+        if (!AppTool.IsNullOrEmpty(this.AutomationEvent.NoteValue) && this.AutomationEvent.NoteValue.length >= 4000) {
+            this.ValidationErrorsList.push("Notes Field must be less than 4000");
         }
     }
 

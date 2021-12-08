@@ -61,7 +61,7 @@ namespace Logitude.BL.Helpers
             newTraceEvent.EventDateTime = args.EventDate != null ? args.EventDate.Value : TenantServerConfigration.GetCurrentDateTime(tenant);
             newTraceEvent.EntityId = args.EntityId;
             newTraceEvent.Deleted = false;
-            newTraceEvent.IsAddedManually = !args.IsAutomation;
+            newTraceEvent.IsAddedManually = true;
             traceEventRepository.Add(newTraceEvent);
             traceEventRepository.SubmitChanges();
             newTraceEventResult.LogDateTime = newTraceEvent.LogDateTime;
