@@ -34,8 +34,15 @@ namespace Logitude.Accounting.BL.CoreBL
     public class CashbookService
     {
         List<string> allowedChequesStatuses = new List<string>() { ARPaymentChequeStatusValues.InCashbook, ARPaymentChequeStatusValues.ReturnedFromBank };
-
-        public string RecalculateCashbookTotals(int tenant)
+        public void RecalculateCashbookTotal(string cashbookId, int tenant)
+        {
+            CashBookPM cashbook = GetCashbook(cashbookId, tenant);
+           
+            decimal calculatedTotal = CalculateCashbookTotal(cashbook);
+            if (calculatedTotal != cashbook.TotalAmount)
+                UpdateCashbookPMTotal(cashbook, calculatedTotal);
+        }
+        public string RecalculateCashbooksTotals(int tenant)
         {
             int updatedCount = 0;
             List<CashBookPM> chequeCashbooks = GetChequeCashbooks(tenant);
@@ -73,7 +80,23 @@ namespace Logitude.Accounting.BL.CoreBL
             filteredCashbookLines = filteredCashbookLines.Where(d => d.IsDeposited == false).ToList();
             return filteredCashbookLines;
         }
+        
+        private void SubmitCashbook(CashBookPM cashbook)
+        {
+            cashbook.ChangeSetOp = ChangeSetOperation.Update;
+            cashbook.IsTotalUpdatedByCC = true; ;
 
+            IAccountingContext context = AccountingContext.GetContext(cashbook.Tenant);
+            var cashBookUpdateService = new CashBookUpdateService(context, new Dictionary<string, IContext>(), cashbook.Tenant);
+            cashBookUpdateService.Update(cashbook, true);
+        }
+        private void UpdateCashbookPMTotal(CashBookPM cashbook, decimal total)
+        {
+            cashbook.IsTotalUpdatedByCC = true;
+            cashbook.TotalAmount = total;
+
+            SubmitCashbook(cashbook);
+        }
         private static void UpdateCashbookTotal(int tenant, CashBookPM cashbook, decimal total)
         {
             CashBookRepository repo = new CashBookRepository(tenant);
@@ -90,6 +113,11 @@ namespace Logitude.Accounting.BL.CoreBL
             List<CashBookPM> cashbooksList = query.GetAll(tenant);
             cashbooksList = cashbooksList.Where(d => d.CashBookTypeCode == CashBookTypeValues.Cheques).ToList();
             return cashbooksList;
+        }
+        private CashBookPM GetCashbook(string cashbookId, int tenant)
+        {
+            CashBookQueryService query = new CashBookQueryService(tenant);
+            return query.GetSingle(cashbookId, true, false);
         }
     }
 }

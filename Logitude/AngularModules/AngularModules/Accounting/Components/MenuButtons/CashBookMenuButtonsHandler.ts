@@ -72,6 +72,22 @@ export class CashBookMenuButtonsHandler {
                                 }
                                 break;
                             }
+                            case "RecalculateTotals":
+                            {
+
+                                const chequeCashbookTypeCode = '2';
+                                const isCustomerCare = SessionLocator.LoggedUserPM.IsCustomerCare;
+                                if(isCustomerCare && this.EntityPM.CashBookTypeCode == chequeCashbookTypeCode){
+                                    button.IsHidden = false;
+                                }else{
+                                    button.IsHidden = true;
+                                }
+
+                                if (this.EntityPM.Inactive == true) {
+                                    button.IsDisabled = true;
+                                }
+                                break;
+                            }
                     }
                 }
             }
@@ -107,6 +123,12 @@ export class CashBookMenuButtonsHandler {
                         break;
                     }
 
+                case "RecalculateTotals":
+                    {
+                        this.RecalculateCashbookTotals();
+                        break;
+                    }
+
             }
         } else {
             this.entityArgs.EditComponent.ValidationErrorsList = [];
@@ -134,6 +156,23 @@ export class CashBookMenuButtonsHandler {
 
         }
 
+    }
+
+    RecalculateCashbookTotals(){
+
+        this.StartBusyIndicator('Recalculating totals...');
+        this._CashBookExtendedPMService.RecalculateCashbookTotal(this.EntityPM.Id)
+        .subscribe((response: ServiceResponse) =>
+        {
+            if (!response.HasError) {
+                this.ShowMessage("Total recalculated successfully");
+                this.StopBusyIndicator();
+            }
+            else {
+                this.ShowErrorMessage(response);
+                this.StopBusyIndicator();
+            }
+        });
     }
 
 
@@ -204,8 +243,23 @@ export class CashBookMenuButtonsHandler {
     private StopBusyIndicator() {
         this.CurrentSession.StopBusyIndicator();
     }
-}
 
+    ShowErrorMessage(response: ServiceResponse)
+    {
+        const messageWindow = new MessageWindow();
+        messageWindow.Show("Update Total Failed, please check browser console");
+        console.error(response.ErrorsArray);
+    }
+
+    ShowMessage(message: string)
+    {
+        const messageWindow = new MessageWindow();
+        messageWindow.Show(message);
+
+    }
+}
 export class Args {
     CashBookId: string;
 }
+
+

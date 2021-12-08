@@ -3336,7 +3336,7 @@ User/Pass",
                 }
 
                 CashbookService cashbookService = new CashbookService();
-                string res = cashbookService.RecalculateCashbookTotals(Convert.ToInt16(textBox1.Text));
+                string res = cashbookService.RecalculateCashbooksTotals(Convert.ToInt16(textBox1.Text));
 
                 SetControlPropertyValue(RecalculateCashbookLbl, "Text", "Done, updated: " + res);
 

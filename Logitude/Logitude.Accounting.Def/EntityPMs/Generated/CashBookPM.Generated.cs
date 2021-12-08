@@ -630,6 +630,29 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
+	  private bool isTotalUpdatedByCC ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsTotalUpdatedByCC  
+	   {
+	    
+	     get
+		{
+		   return isTotalUpdatedByCC;
+		 }
+		 set
+		 {
+		   if(isTotalUpdatedByCC != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsTotalUpdatedByCC",OldValue=isTotalUpdatedByCC,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isTotalUpdatedByCC=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

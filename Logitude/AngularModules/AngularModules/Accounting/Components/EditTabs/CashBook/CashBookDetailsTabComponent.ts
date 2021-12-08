@@ -17,7 +17,12 @@ import {ObservableCollection} from '../../../../Infrastructure/Utilities/Observa
 import { EntityListService } from '../../../../Infrastructure/Services/EntityListService';
 import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import { CashbookChequesCounter } from '../../../DataContracts/CashbookChequesCounter';
+import { LogitudeWindow } from 'Controls/Windows/LogitudeWindow';
 
+const CashbookTotalUpdateWindow = "Adjust Cashbook Total";
+const CashbookUpdateTotalWindowWidth = 400;
+const CashbookUpdateTotalWindowHeight = 180;
+const CashCashbookTypeCode = '1';
 @Component({
 
     templateUrl: './CashBookDetailsTabComponent.html',
@@ -52,6 +57,10 @@ export class CashBookDetailsTabComponent extends BaseComponent implements OnInit
 
 
         this.SetUIProperties();
+    }
+
+    get ShowAdjustTotalButton(){
+        return SessionLocator?.LoggedUserPM?.IsCustomerCare;
     }
 
     ngOnInit() {
@@ -263,6 +272,7 @@ export class CashBookDetailsTabComponent extends BaseComponent implements OnInit
 
 
 
+
     private SaveCompletedEvent: any = null;
     private LoadCompletedEvent: any = null;
     Listen() {
@@ -434,6 +444,22 @@ export class CashBookDetailsTabComponent extends BaseComponent implements OnInit
                 }
             });
 
+    }
+
+    RecalculateCashbookTotals(){
+        if(this.EntityPM.CashBookTypeCode == CashCashbookTypeCode)
+            this.ShowCashbookTotalUpdateWindow();
+    }
+
+    private ShowCashbookTotalUpdateWindow()
+    {
+        var logitudeWindow = new LogitudeWindow();
+        logitudeWindow.Width = CashbookUpdateTotalWindowWidth;
+        logitudeWindow.Height = CashbookUpdateTotalWindowHeight;
+        logitudeWindow.Title = CashbookTotalUpdateWindow;
+        logitudeWindow.WindowArgs = { CashbookPM: this.EntityPM };
+        logitudeWindow.Show('./Accounting/Components/EditTabs/CashBook/CashbookTotalAdjustWindow');
+        logitudeWindow.WindowClosed.subscribe(() => this.ReloadData() );
     }
 
 }

@@ -274,7 +274,9 @@
                     <tr *ngIf="EntityPM.CashBookTypeCode == '1'" style="height: 50px;">
                         <td>
                             <div>
-                                {{'Accounting.General.O.Totals' | TextCodeTranslationPipe}}:  <div style="font-size: 13px; font-weight: bold; color:#04c655;" [class.red]="TotalSum<=0">{{TotalSum | NumbersPipe:'N3'}} {{EntityPM.CurrencySign}}</div>
+                                {{'Accounting.General.O.Totals' | TextCodeTranslationPipe}}:
+                                <div style="font-size: 13px; font-weight: bold; color:#04c655;" [class.red]="TotalSum<=0">{{TotalSum | NumbersPipe:'N3'}} {{EntityPM.CurrencySign}}</div>
+                                <div *ngIf="ShowAdjustTotalButton"><button class="Button" style="margin: 0 5px;width: 150px;" (click)="RecalculateCashbookTotals()">{{'CashBook.O.UpdateTotalsButton'|TextCodeTranslationPipe}}</button></div>
                             </div>
                         </td>
                     </tr>
