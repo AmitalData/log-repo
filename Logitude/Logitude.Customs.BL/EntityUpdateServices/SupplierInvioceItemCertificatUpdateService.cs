@@ -882,14 +882,16 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 using (OracleConnection con = new OracleConnection(strConnString))
                 {
                     string resetOther = "";
-                    if (!LogChangesService.IsLogEnable(SIICerExemptionHD379305))
-                    {
-                        resetOther= " , SIIC.CertificateNumber = '', SIIC.CustomsAttachmentID = '' ";
-                    }
-                    
-                   string cmd = @"Update SupplierInvioceItemCertificats SIIC 
+                    //if (!LogChangesService.IsLogEnable(SIICerExemptionHD379305))
+                    //{
+                    //    resetOther= " , SIIC.CertificateNumber = '', SIIC.CustomsAttachmentID = '' ";
+                    //}
+                    //                                  " + resetOther + @"    
+
+
+
+                    string cmd = @"Update SupplierInvioceItemCertificats SIIC 
                                   set SIIC.AttachmentTypeCode = '4', SIIC.CertificateExemptionTypeCode = '92' 
-                                  " + resetOther + @"    
                                   where SIIC.DeclarationId ='" + declarationId + "' and SIIC.InvoiceCounterKey || ' ' || SIIC.LineNumber || ' ' || SIIC.ItemCertificateCounterKey  in (" + whereInCertificateKeys + ") ";
 
                     string cmd1 = @"

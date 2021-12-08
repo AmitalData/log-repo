@@ -652,7 +652,7 @@ INNER JOIN Customs.SupplierInvoices ON Customs.SupplierInvoiceItems.DeclarationI
             return (from a in context.SupplierInvioceItemCertificats
                     join s in context.SupplierInvoiceItems on new { DeclarationId = a.DeclarationId, LineNumber = a.LineNumber, CounterKey = a.InvoiceCounterKey } equals new { DeclarationId = s.DeclarationId, LineNumber = s.LineNumber, CounterKey = s.CounterKey }
                     where a.DeclarationId == declarationId && !s.IsParent && a.Tenant == tenant &&
-                    (string.IsNullOrEmpty(a.AttachmentTypeCode) || (string.IsNullOrEmpty(a.CertificateExemptionTypeCode) && string.IsNullOrEmpty(a.CertificateNumber)))
+                    (string.IsNullOrEmpty(a.AttachmentTypeCode) &&  (string.IsNullOrEmpty(a.CertificateExemptionTypeCode) && string.IsNullOrEmpty(a.CertificateNumber)))
                     select a).ToList();
         }
     }
