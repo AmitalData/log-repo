@@ -52,7 +52,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         TerminalReleaseDate, 
 	         LastMileServiceType, 
 	         ShopId,
-
 	      }
 
 
@@ -127,7 +126,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         LastMileServiceType, 
 	         ShopId, 
 	         CargoDescription,
-
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -271,8 +269,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
 				entityPOCO.TerminalReleaseDate = entityPM.TerminalReleaseDate;
 			}
 			
-
-
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LastMileServiceType))
             {
 				entityPOCO.LastMileServiceType = entityPM.LastMileServiceType;
@@ -430,15 +426,14 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.LastMileServiceType))
             {
 					entityPM.LastMileServiceType = entityPOCO.LastMileServiceType;
-  }
+            }
+
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ShopId))
             {
 					entityPM.ShopId = entityPOCO.ShopId;
             }
 
 		}
- 
-		 
 
 		public void PMToOldPM(DeclarationCourierStatusPM entityPM, DeclarationCourierStatusPM oldEntityPM)
         {
@@ -578,13 +573,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
             {
                 oldEntityPM.TerminalReleaseDate = entityPM.TerminalReleaseDate;
             }
- 
+			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LastMileServiceType))
             {
                 oldEntityPM.LastMileServiceType = entityPM.LastMileServiceType;
-             }
-			
- 		 
+            }
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ShopId))
             {
@@ -592,8 +585,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
             }
 			
 		}
- 
- 
+
 	    public void EncodeBase64NVARCHARFields(DeclarationCourierStatusPM entityPM)
         {
             if (String.IsNullOrWhiteSpace(entityPM.EncodeBase64NVARCHARFieldsBy)) 

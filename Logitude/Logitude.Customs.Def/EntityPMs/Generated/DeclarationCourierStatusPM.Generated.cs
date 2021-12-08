@@ -1619,52 +1619,6 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-	  private DateTime? terminalReleaseDate ;
-	  	  
-       
-	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
-	   [DataMember]
-       public DateTime? TerminalReleaseDate  
-	   {
-	    
-	     get
-		{
-		   return terminalReleaseDate;
-		 }
-		 set
-		 {
-		   if(terminalReleaseDate != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TerminalReleaseDate",OldValue=terminalReleaseDate,NewValue=value,PropertyType="DateTime?"};
-		    NotifyPropertyChanged(values);
-		   terminalReleaseDate=value;
-		   }
-			
-		 }
-	   }
-	  private string lastMileServiceType ;
-	  	  
-       
-	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string LastMileServiceType  
-	   {
-	    
-	     get
-		{
-		   return lastMileServiceType;
-		 }
-		 set
-		 {
-		   if(lastMileServiceType != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="LastMileServiceType",OldValue=lastMileServiceType,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   lastMileServiceType=value;
-		   }
-			
-		 }
-	   }
    }
    
 }
