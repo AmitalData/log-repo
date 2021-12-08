@@ -184,8 +184,8 @@ namespace Logitude.Accounting.BL.CoreBL
 
         private void CalTotFutureOpenCheques(List<LedgerTransactionPM> ledgerTrasnctions)
         {
-            foreach (var trasnction in ledgerTrasnctions.Where(x => x.DueDate > GetCurrentDate(_Tenant)
-                            && x.LocalAmountCredit != 0))
+            foreach (var trasnction in ledgerTrasnctions.Where(trasnction => trasnction.DueDate > GetCurrentDate(_Tenant)
+                            && trasnction.LocalAmountCredit != 0))
             {
                 var card = GetBillToByGLAccountId(_Tenant, trasnction.AccountId);
                 if (card != null)
@@ -204,9 +204,9 @@ namespace Logitude.Accounting.BL.CoreBL
 
         private static DateTime GetCurrentDate(int tenant)
         {
-            DateTime _today = TenantServerConfigration.GetCurrentDateTime(tenant);
-            _today = new DateTime(_today.Year, _today.Month, _today.Day, 11, 59, 59);
-            return _today;
+            DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+            todayDate = new DateTime(todayDate.Year, todayDate.Month, todayDate.Day, 11, 59, 59);
+            return todayDate;
         }
         private void AccountingStreamingInNewSerializableTransaction(MyActions actions, List<LedgerTransactionPM> myLedgerTransactionsWithCounters, List<GLAccountAgingDataPM> gLAccountAgingDataPMs)
         {
