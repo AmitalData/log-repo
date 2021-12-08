@@ -1,9 +1,23 @@
 <h1 style="margin-bottom: 0px;" mat-dialog-title>
     {{title}}
 </h1>
-<div mat-dialog-content style="text-align:end" >
+<div *ngIf="date" mat-dialog-content style="text-align:end">
     {{date}}
 </div>
-<div></div>
-<div style="white-space: pre-wrap;"  mat-dialog-content>{{description}}</div>
 
+<div style="white-space: pre-wrap;" mat-dialog-content>{{description}}</div>
+
+<div *ngIf="showTextBox" mat-dialog-content>
+    <input class="input-text" type="text" [(ngModel)]="TextBoxValue" />
+</div>
+
+<div *ngIf="showMultilineTextBox" mat-dialog-content>
+    <textarea class="input-text" row="3" [(ngModel)]="TextBoxValue" ></textarea>
+</div>
+
+
+<div mat-dialog-actions *ngIf="showOkButton||showCancelButton" class="toolbar">
+    <button class="animate" *ngIf="showOkButton" mat-button (click)="OkButtonClicked()">Ok</button>
+    <button class="animate" *ngIf="showCancelButton" mat-button (click)="CancelButtonClicked()"
+        mat-dialog-close>Cancel</button>
+</div>

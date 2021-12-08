@@ -290,3 +290,7 @@ h3 {
 .word-break-all{
     word-break: break-all;
 }
+
+button.animate:active {
+    transform: scale(0.96);
+}

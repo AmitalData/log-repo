@@ -152,6 +152,7 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
                                                                DescriptionOfGoods = shipment.DescriptionOfGoods,
                                                                ATAETASortingField = shipment.ArrivalDate != null ? shipment.ArrivalDate : shipment.ArrivalEstimationDate,
                                                                ATDETDSortingField = shipment.DepartureDate != null ? shipment.DepartureDate : shipment.DepartureEstimationDate
+                                                               
                                                            });
             return query;
         }

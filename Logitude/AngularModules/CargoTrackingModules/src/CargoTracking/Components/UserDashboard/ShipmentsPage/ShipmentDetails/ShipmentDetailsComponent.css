@@ -856,12 +856,45 @@ h1 {
 .auto-overflow{
     overflow: auto;
 }
+.declaration-approval-message{
+    white-space: pre-line;
+    text-align: right;
+    font-weight: 600;
+}
+.declaration-approval-toolbar{
+    padding: 20px 0px 15px 0;
+}
+.declaration-approval-toolbar button{
+    border: none;
+    padding: 7px 25px;
+    box-sizing: border-box;
+    color: white;
+    border-radius: 5px;
+    margin: 0 5px;
+    cursor: pointer;
+    user-select: none;
+}
+.declaration-approval-toolbar-button__green{
+    background: #17a36f;
+}
+.declaration-approval-toolbar-button__red{
+    background: #dd8840;
+}
+
+
 
 @media screen and (max-width: 479px) {
 
     .special-padding{
         padding: 50px 10px 0 10px;
         box-sizing: border-box;
+    }
+
+    .declaration-approval{
+        padding: 15px 10px;
+    }
+    .declaration-approval-toolbar {
+        padding: 20px 0px 0 0;
     }
 
 }

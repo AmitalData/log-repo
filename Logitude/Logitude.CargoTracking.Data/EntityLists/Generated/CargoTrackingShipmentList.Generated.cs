@@ -279,6 +279,12 @@ namespace Logitude.CargoTracking.Data.EntityLists
        [DataMember]
        public DateTime? SupplyDateTime  { get; set; }
        [DataMember]
+       public bool ActivatedForDeclarationApprove  { get; set; }
+       [DataMember]
+       public bool IsImporterApprovalRequried  { get; set; }
+       [DataMember]
+       public string TenantDeclarationMessage  { get; set; }
+       [DataMember]
        public DateTime? ATAETASortingField  { get; set; }
        [DataMember]
        public DateTime? ATDETDSortingField  { get; set; }

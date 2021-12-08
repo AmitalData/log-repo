@@ -198,7 +198,7 @@ namespace WebFreight.Web.WebPages
                     Dictionary<string, byte[]> CompressedArray = new Dictionary<string, byte[]>();
                     bool DocumentsExistance = false;
                     var ItemNum = 0;
-                    documents = documents.Where(x => x.HasFile && x.DirectionCode == "I").ToList();
+                    documents = documents.Where(x => x.HasFile).ToList();
                     foreach (DocumentsFilingPM document in documents)
                     {
                         if (document.DirectionCode == "O" && document.DoucmentTypeTemplateFormatCode == "M")

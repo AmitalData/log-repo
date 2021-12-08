@@ -18,7 +18,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Logitude.CargoTracking.BL.CoreBL;
-
+using Simplog.Data.ShipmentsModel.EntityPOCOs;
 
 namespace Logitude.CargoTracking.BL.EntityQueryServices
 {
@@ -63,6 +63,13 @@ namespace Logitude.CargoTracking.BL.EntityQueryServices
             cargoShipmentMapper.MapCargoTrackingShipmentFields(cargoShipmentPM, milestoneDictionary);
 
             return cargoShipmentPM;
+        }
+
+        public ShipmentAdditionalCloudData GetShipmentCloudData(string shipmentId, int tenant)
+        {
+            ShipmentQuery shipmentQuery = new ShipmentQuery(tenant);
+            var cloudData = shipmentQuery.GetShipmentAdditionalCloudData(shipmentId, tenant);
+            return cloudData;
         }
 
         private CargoTrackingShipmentPM GetMainShipmentWithoutMapping(string securityKey, int tenant)
