@@ -1,7 +1,8 @@
 ﻿<Script DBType="Main" Module="Shipment" AOT="true" TargetTableName="CommunicationLogs">
-  <Sql Version="1">
+  <Sql Version="6">
     <![CDATA[
-  
+	
+	
 declare @ObjectTableId as VARCHAR(15)   set @ObjectTableId = (select id from ObjectTables where Name = 'Shipment')
 
   declare @Id as varchar(15)
