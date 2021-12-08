@@ -266,8 +266,8 @@ namespace Amital.QuoteOPM.BL.EntityDataMappings
 
             if (!string.IsNullOrEmpty(entityPOCO.IncotermId))
             {
-                IncotermRepository incotermRepository = new IncotermRepository(entityPOCO.Tenant);
-                Incoterm incoterm = incotermRepository.GetSingleIncoterm(entityPOCO.IncotermId, entityPOCO.Tenant);//no cache !!! ??
+                //IncotermRepository incotermRepository = new IncotermRepository(entityPOCO.Tenant);
+                Incoterm incoterm = IncotermRepository.GetSingleFromCache(entityPOCO.IncotermId, entityPOCO.Tenant);
                 if (incoterm != null)
                 {
                     myIncotermCode = incoterm.Code;
