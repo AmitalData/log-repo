@@ -143,10 +143,10 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-        //http://localhost:9996/api/glaccountviews/GetCheckBalanceByAccountDisplayNumber?tenant=10&accountDisplayNumber=104355&totalDateType=1&theDate=2020-07-31T00:00:00.000&IncludeRelatedCurrenciesAccount=true
+        //http://localhost:9996/api/glaccountviews/GetCheckBalanceByAccountDisplayNumber?tenant=10&accountDisplayNumber=104355&totalDateType=1&theDate=2020-07-31T00:00:00.000&IncludeRelatedCurrenciesAccount=true&SumOpenTransactions=true
         public HttpResponseMessage GetCheckBalanceByAccountDisplayNumber(int tenant, string accountDisplayNumber, string totalDateType, DateTime theDate
-            , bool IncludeRelatedCurrenciesAccount
-            )
+            , bool IncludeRelatedCurrenciesAccount, bool SumOpenTransactions = false)
+            
         {///
             try
             {
@@ -171,7 +171,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 ac.CalculateBalance(
                     openBalancePlease_ReCalcYearTransfer,
                     totalDateType, theDate,false, true, false,
-                    false);
+                    false, SumOpenTransactions);
 
                 ac.AccountBalance.LogMessage = null;
 
@@ -254,7 +254,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 ac.ReSetAccountList(false, false);
                 bool openBalancePlease_ReCalcYearTransfer = true;//Yaron said this is Default !!!
                 ac.CalculateBalance(openBalancePlease_ReCalcYearTransfer, totalDateType, theDate, false, true, false
-                    ,false);
+                    ,false,false);
 
                 ac.AccountBalance.LogMessage = null;
 
