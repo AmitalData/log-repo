@@ -1,4 +1,4 @@
-@release @all @smoke
+@release @smoke1
 Feature: Shipper-Consignee Create, Search and Edit from Maintenance
     The user creates a Shipper-Consignee, searches for and edits it from the Maintenance Module.
 
