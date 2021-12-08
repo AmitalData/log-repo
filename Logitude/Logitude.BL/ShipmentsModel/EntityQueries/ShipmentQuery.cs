@@ -2628,7 +2628,10 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
 
             this.MapAnalyzerConcurrencyFields(shipmentPM);
-            this.MapMainCarriageLegsForAPI(shipmentPM);
+            if (!isInlandDomesticShipment)
+            {
+                this.MapMainCarriageLegsForAPI(shipmentPM);
+            }
 
             ShipmentPM returnShipment = BranchPermitionsFilter.AddUserBranchRestrictionFilters(new QueryOperations(), shipmentPM, tenant);
             returnShipment = ProductPermitionsFilter.AddUserProductRestrictionFilters(new QueryOperations(), shipmentPM, tenant);
