@@ -1,6 +1,6 @@
 ﻿<Script DBType="Main" Module="Shipment" AOT="true" TargetTableName="CommunicationLogs">
   <Sql Version="6">
-    <![CDATA[d
+    <![CDATA[
   
 declare @ObjectTableId as VARCHAR(15)   set @ObjectTableId = (select id from ObjectTables where Name = 'Shipment')
 
