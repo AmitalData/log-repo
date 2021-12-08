@@ -174,7 +174,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     //if (!_ExecAsSP)
                     {
                         FillIdCountersUseNewDBTransaction(myLedgerTransactionsWithCounters);
-                        CalTotFutureOpenCheques(myLedgerTransactionsWithCounters);
+                        CalculateTotalFutureOpenChequesForCreditGlAccount(myLedgerTransactionsWithCounters);
                     }
                 }
                 //scope.Complete();//Please do not commit !!!!
@@ -182,7 +182,7 @@ namespace Logitude.Accounting.BL.CoreBL
             return null;
         }
 
-        private void CalTotFutureOpenCheques(List<LedgerTransactionPM> ledgerTrasnctions)
+        private void CalculateTotalFutureOpenChequesForCreditGlAccount(List<LedgerTransactionPM> ledgerTrasnctions)
         {
             foreach (var trasnction in ledgerTrasnctions.Where(trasnction => trasnction.DueDate > GetCurrentDate(_Tenant)
                             && trasnction.LocalAmountCredit != 0))
