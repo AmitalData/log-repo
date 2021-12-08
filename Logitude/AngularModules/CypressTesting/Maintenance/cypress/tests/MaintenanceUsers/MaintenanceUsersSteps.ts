@@ -56,6 +56,7 @@ Given("a {string} as note", (notes) => {
 });
 
 When("save the User", () => {
+    cy.wait(3000)
     UserActions.UpdateUser()
 });
 
