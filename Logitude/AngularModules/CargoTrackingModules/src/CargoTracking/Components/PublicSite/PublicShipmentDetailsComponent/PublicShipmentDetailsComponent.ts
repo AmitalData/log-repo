@@ -280,7 +280,7 @@ export class PublicShipmentDetailsComponent implements OnInit
 
                     this.CurrentMilestoneField = S;
                 }
-                if(S.Code ==  MilestoneCodes.BookingNote){
+                if(S.Code ==  MilestoneCodes.BookingNote && S.Notes){
                     S.Notes = 'Booking Conf. Num: '+ S.Notes;
                 }
 
