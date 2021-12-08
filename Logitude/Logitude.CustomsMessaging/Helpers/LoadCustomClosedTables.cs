@@ -1172,6 +1172,10 @@ INSERT INTO   CustomsDocumentStatusTypes (     CODE, ENGLISHNAME, LOCALNAME,SEAR
             InsertClosedTableRecord(releaseMessageTypeInitiatorTable, ReleaseMessageTypeInitiatorObjectTable, customsClosedTables, customsClosedTableRepository);
             addedClosedTables.Add(releaseMessageTypeInitiatorTable);
 
+            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData TradeAgreementProtocolTable = closedSystemTables.Where(d => d.id == "23900").FirstOrDefault();
+            ObjectTable TradeAgreementProtocolObjectTable = objectTableRepository.GetObjectTableByName("Customs.TradeAgreementProtocol", 0, false);
+            InsertClosedTableRecord(TradeAgreementProtocolTable, TradeAgreementProtocolObjectTable, customsClosedTables, customsClosedTableRepository);
+            addedClosedTables.Add(TradeAgreementProtocolTable);
             //SYSTBL_NG_9001_MSG_SystemTablesResponseTableData collateralAnswerStatusTable = closedSystemTables.Where(d => d.id == "1553").FirstOrDefault();
             //ObjectTable collateralAnswerStatusObjectTable = objectTableRepository.GetObjectTableByName("Customs.CollateralAnswerStatus", 0, false);
             //InsertClosedTableRecord(collateralAnswerStatusTable, collateralAnswerStatusObjectTable, customsClosedTables, customsClosedTableRepository);

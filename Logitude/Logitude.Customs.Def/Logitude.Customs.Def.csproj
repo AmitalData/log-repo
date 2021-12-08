@@ -120,6 +120,7 @@
     <Compile Include="EntityPMs\Generated\SupplierInvoicePaymentPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\SupplierInvoiceUCRPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\SupplierPartyTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\TradeAgreementProtocolPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\TransactionNatureTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\TransportMeansTypePM.Generated.cs" />
     <Compile Include="EntityPMs\ContainerTypePM.cs" />
