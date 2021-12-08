@@ -196,10 +196,7 @@ namespace Logitude.BL.Helpers
                 headerHtmlString = ResolveHtmlData(correctTenant, htmlEditorHelper, headerHtmlString, quotePM, template, userId, ref objectTabelRepository, ref objectTable);
                 HtmlToPdfElement headerHtml = new HtmlToPdfElement(0, 0, 0, 0, headerHtmlString, null, 2040, 0);
                 pdfConverter.PdfHeaderOptions.AddElement(headerHtml);
-                pdfConverter.PdfHeaderOptions.HeaderHeight = 1;
-                pdfConverter.PdfHeaderOptions.HeaderHeight = setting.PageHeaderAreaHeight * 29;
-
-
+                pdfConverter.PdfHeaderOptions.HeaderHeight = setting.PageHeaderAreaHeight * 27.375f;
             }
 
 
@@ -275,6 +272,11 @@ namespace Logitude.BL.Helpers
             bodyHtmlString = htmlDocument.DocumentNode.InnerHtml;
             bodyHtmlString = ResolveHtmlData(correctTenant, htmlEditorHelper, bodyHtmlString, quotePM, template, userId, ref objectTabelRepository, ref objectTable);
 
+            if (!headerSection.IsExcluded)
+            {
+                bodyHtmlString = RemoveHeaderBodySpace(bodyHtmlString);
+            }
+
             pdfData = pdfConverter.ConvertHtml(bodyHtmlString, null);
             if (quotePM.Id != "10697")
             {
@@ -285,6 +287,13 @@ namespace Logitude.BL.Helpers
             return pdfData;
         }
 
+        private string RemoveHeaderBodySpace(string bodyHtmlString)
+        {
+            if (string.IsNullOrEmpty(bodyHtmlString))
+                return bodyHtmlString;
+
+            return "<div style=\"margin-top:-7px; padding-bottom:7px;\">" + bodyHtmlString + "</div>";
+        }
 
         private TextElement GetTextElementProperitiesForQuotetemplateTextDesign(QuoteTemplateTextDesignPM quotetemplateTextDesignPMPageNumbering, float heightFooter)
         {
