@@ -35,6 +35,8 @@ export class WebHookAutomationDetailsComponent extends BaseComponent {
         if (this.WebHookAutomationDetails) {
             this.FillWebHookDetails();
         }
+        if (!this.AuthenticationTypeSelected)
+            this.AuthenticationTypeSelected = this.AuthenticationTypes.filter(d => d.Code == "NONE")[0];
     }
 
     private FillWebHookDetails() {
