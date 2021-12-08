@@ -1,0 +1,246 @@
+<style type="text/css">    
+    .GreenAddButtonDisabled {
+        pointer-events: none;
+    }
+
+    .GreenAddButton:hover {
+        background: url('./Images/Buttons/AddGreenSolid.png') center center;
+        background-size: contain;
+    }
+
+    .GreenAddButton {
+        width: 12px;
+        height: 12px;
+        background: url('./Images/Buttons/AddGreenBrush.png') center center;
+        background-size: contain;
+        cursor: pointer;
+    }
+</style>
+
+<table>
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+        <td>
+            <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <div class="ScrollViewer" style="padding: 10px; padding-top: 5px; top: 3px; right: 3px; bottom: 3px;">
+                <div class="ScrollContent">
+                    <table>
+                        <tr>
+                            <td>
+                                <table class="FixedTable">
+                                    <tr>
+                                        <td>
+                                            <fieldset class="MediaFill GroupBox">
+                                                <legend>
+                                                    <span>Unassiged Data</span>
+                                                </legend>
+
+                                                <div style="width: 100%; margin-top: -5px;">
+                                                    <table>
+                                                        <tr class="FormFieldRow" *ngIf="IsShipperVisible">
+                                                            <td style="width:70px;" class="Label">Shipper</td>
+                                                            <td style="width:220px;">
+                                                                <LogTextBox [ObjectFieldName]="'ShipperName'"
+                                                                            [Text]="ShipperName"
+                                                                            [ObjectTableName]="ObjectTableName"
+                                                                            [DataContext]="DataContext"
+                                                                            [HideLastColumn]="true"></LogTextBox>
+                                                            </td>
+                                                            <td>
+                                                                <div></div>
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr class="FormFieldRow" style="height: 80px;"  *ngIf="IsShipperVisible">
+                                                            <td style="width:70px;">
+                                                                <div></div>
+                                                            </td>
+
+                                                            <td style="width:256px;">
+                                                                <AddressTemplate [Address]="ShipperAddressList" [Right]="18"></AddressTemplate>
+                                                            </td>
+
+                                                            <td>
+                                                                <div></div>
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr class="FormFieldRow" *ngIf="IsConsigneeVisible">
+                                                            <td style="width:70px;" class="Label">Consignee</td>
+                                                            <td style="width:220px;">
+                                                                <LogTextBox [ObjectFieldName]="'ConsigneeName'"
+                                                                            [Text]="ConsigneeName"
+                                                                            [ObjectTableName]="ObjectTableName"
+                                                                            [DataContext]="DataContext"
+                                                                            [HideLastColumn]="true"></LogTextBox>
+                                                            </td>
+                                                            <td>
+                                                                <div></div>
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr class="FormFieldRow" style="height: 80px;" *ngIf="IsConsigneeVisible">
+                                                            <td style="width:70px;">
+                                                                <div></div>
+                                                            </td>
+
+                                                            <td style="width:256px;">
+                                                                <AddressTemplate [Address]="ConsigneeAddressList" [Right]="18"></AddressTemplate>
+                                                            </td>
+
+                                                            <td>
+                                                                <div></div>
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td>
+                                                                <div></div>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </div>
+                                            </fieldset>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+
+                            <td style="width:20px;">
+                                <div></div>
+                            </td>
+
+                            <td>
+                                <table class="FixedTable">
+                                    <tr>
+                                        <td>
+                                            <fieldset class="MediaFill GroupBox">
+                                                <legend>
+                                                    <span>Updated Data</span>
+                                                </legend>
+
+                                                <div style="width: 100%; margin-top: -5px;">
+                                                    <table>
+                                                        <tr class="FormFieldRow"  *ngIf="IsShipperVisible">
+                                                            <td style="width:70px;" class="Label">Shipper</td>
+                                                            <td style="width:248px;">
+                                                                <LogLov [ObjectFieldName]="'UpdatedShipperId'"
+                                                                        [SelectedValue]="UpdatedShipperId"
+                                                                        [ObjectTableName]="ObjectTableName"
+                                                                        [NoObjectField]="true"
+                                                                        [DataContext]="DataContext"
+                                                                        [LookUpTableName]="'Card'"
+                                                                        [DisplayMemberPath]="'EnglishName'"
+                                                                        [DependencyFilter1Value]="CardDependencyProperty1"
+                                                                        [DependencyFilter1IsList]="CardDependencyProperty1IsList"
+                                                                        [HideLastColumn]="true">
+                                                                </LogLov>
+                                                            </td>
+                                                            <td>
+                                                                <div class="MediaFill">
+                                                                    <div class="LeftCenter" style="width: 12px; height: 12px; left:3px;">
+                                                                        <div class="GreenAddButton" (mousedown)="AddPartnerClicked('Shipper')"></div>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr class="FormFieldRow" style="height: 80px;" *ngIf="IsShipperVisible">
+                                                            <td style="width:70px;">
+                                                                <div></div>
+                                                            </td>
+
+                                                            <td style="width:248px;">
+                                                                <AddressTemplate [Address]="UpdatedShipperAddressList" [Right]="18"></AddressTemplate>
+                                                            </td>
+
+                                                            <td>
+                                                                <div></div>
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr class="FormFieldRow" *ngIf="IsConsigneeVisible">
+                                                            <td style="width:70px;" class="Label">Consignee</td>
+                                                            <td style="width:248px;">
+                                                                <LogLov [ObjectFieldName]="'UpdatedConsigneeId'"
+                                                                        [SelectedValue]="UpdatedConsigneeId"
+                                                                        [ObjectTableName]="ObjectTableName"
+                                                                        [NoObjectField]="true"
+                                                                        [DataContext]="DataContext"
+                                                                        [LookUpTableName]="'Card'"
+                                                                        [DisplayMemberPath]="'EnglishName'"
+                                                                        [DependencyFilter1Value]="CardDependencyProperty1"
+                                                                        [DependencyFilter1IsList]="CardDependencyProperty1IsList"
+                                                                        [HideLastColumn]="true">
+                                                                </LogLov>
+                                                            </td>
+                                                            <td>
+                                                                <div class="MediaFill">
+                                                                    <div class="LeftCenter" style="width: 12px; height: 12px; left:3px;">
+                                                                        <div class="GreenAddButton" (mousedown)="AddPartnerClicked('Consignee')"></div>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr class="FormFieldRow" style="height: 80px;" *ngIf="IsConsigneeVisible">
+                                                            <td style="width:70px;">
+                                                                <div></div>
+                                                            </td>
+
+                                                            <td style="width:248px;">
+                                                                <AddressTemplate [Address]="UpdatedConsigneeAddressList" [Right]="18"></AddressTemplate>
+                                                            </td>
+
+                                                            <td>
+                                                                <div></div>
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td>
+                                                                <div></div>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </div>
+                                            </fieldset>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </td>
+    </tr>
+
+    <tr style="height: 32px;">
+        <td style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="Button" id="{{'CancelDangerousBtn' | IdGeneratorPipe}}" (click)="CancelButtonClicked()">Cancel</button>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="RedButton" id="{{'OkDangerousBtn' | IdGeneratorPipe}}" (click)="UpdateButtonClicked()">Update Data</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>

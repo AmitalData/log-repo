@@ -1,3 +1,5 @@
+import { AddressList } from '../Common/EntityLists/AddressList';
+
 export class ListComponentArgs {
     public QueryCode: string;
     public ObjectTableName: string;
@@ -27,6 +29,7 @@ export class NewEntityArgs {
     public DefaultValues: string = null;
     public QueryNameTextCode: string = null;
     public ShowContactPart: boolean = false;
+    public Address: AddressList;
 }
 export class UserArgs {
     public BackButtonText: string;

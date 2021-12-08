@@ -30,7 +30,7 @@ export class CellTooltip implements OnInit, AfterViewInit {
         var idIndex = this.CurrentSession.GetNewId("Tooltip");
         this.TooltipId = "Tooltip_" + idIndex;
         this.TooltipButtonId = "TooltipButton_" + idIndex;
-        this.TooltipContentId = "TooltipContent_" + idIndex; 
+        this.TooltipContentId = "TooltipContent_" + idIndex;
     }
 
     ngOnInit() {
@@ -82,6 +82,7 @@ export class CellTooltip implements OnInit, AfterViewInit {
     }
 
     mouseover() {
+        this.IsMouseOver = true;
         if (!this.IsOnClick) {
             var item = document.getElementById(this.TooltipId);
             var itemRect = item.getBoundingClientRect();
@@ -100,8 +101,11 @@ export class CellTooltip implements OnInit, AfterViewInit {
     }
 
     mouseleave() {
+        this.IsMouseOver = false;
         if (!this.IsOnClick) {
-            document.getElementById(this.TooltipContentId).style.visibility = "hidden";
+            setTimeout(() => {
+                document.getElementById(this.TooltipContentId).style.visibility = "hidden";
+            },500)
         }
     }
 

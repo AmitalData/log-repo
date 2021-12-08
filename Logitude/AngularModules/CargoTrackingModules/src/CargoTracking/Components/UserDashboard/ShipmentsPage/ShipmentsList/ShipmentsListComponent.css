@@ -394,7 +394,7 @@ h1{
     }
 
     .search-bar form{
-        margin-top: 12px;
+        margin-top: 3px;
     }
 
     .toolbar{
@@ -906,4 +906,16 @@ h1{
     display: block !important;
     font-family:"Open Sans", Arial;
     font-size:14px
+}
+
+.flex-row-space-between{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.more-filter-toggle{
+    color: black;
+    font-weight: normal;
+    padding-top: 5px;
+    text-transform: capitalize;
 }

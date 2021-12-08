@@ -22,6 +22,8 @@ import {AddEditPartnerArgs} from '../../../../Shipment/Args';
 import { ShipmentTool, ShipmentGenerator} from '../../../../Shipment/Tools';
 import { ContactInputTemplateArgs } from '../../../../CommonModules/CommonPartners/Components/Templates/ContactInputTemplate';
 import { CurrencyRatesService, LastRate } from '../../../../Common/Services/CurrencyRatesService';
+import { ShipmentUnassignedFieldPM } from '../../../../Shipment/EntityPMs/ShipmentUnassignedFieldPM';
+import { FeatureLocator } from '../../../../Infrastructure/Utilities/FeatureLocator';
 
 @Component({    
     templateUrl: './PartnersTabComponent.html',
@@ -33,9 +35,21 @@ export class PartnersTabComponent implements OnInit, OnDestroy {
     public ItemsCollection: PartnerItem[];
     private CurrentSession = SessionLocator.SelectedSession;
     public AllRates: LastRate[] = [];
+    public IsUnassigedValidationVisible: boolean = false;
     constructor(public entityArgs: EntityArgs) {
         this.EntityPM = this.entityArgs.EntityPM;
         this.ObjectTableName = this.entityArgs.ObjectTableName;
+
+        this.IsUnassigedValidationVisible = false;
+
+        if (this.EntityPM.HasUnassignedData && FeatureLocator.HasFeaturePermession("Shipment", "UpdateUnassignedData")) {
+            var myList: ShipmentUnassignedFieldPM[] = this.EntityPM.ShipmentUnassignedFields.filter(s => AppTool.IsNullOrEmpty(s.ReplacedDataId));
+
+            if (myList.length > 0) {
+                this.IsUnassigedValidationVisible = true;
+            }
+        }
+
         this.InitializeServices();
         this.Listen();
     }
@@ -49,6 +63,10 @@ export class PartnersTabComponent implements OnInit, OnDestroy {
 
             this.SessionEvent = this.CurrentSession.SessionEvent.subscribe(s => {
                 if (s == "AWBWizardClosed") {
+                    this.UpdateScreen();
+                }
+
+                else if (s == "ShipmentUnassignedDataChanged") {
                     this.UpdateScreen();
                 }
             });
@@ -333,6 +351,36 @@ export class PartnersTabComponent implements OnInit, OnDestroy {
 
         this.OnCustomerChanged();
     }
+    //UpdateShipmentUnassignedFields(partnerCode) {
+    //    if (this.EntityPM.HasUnassignedData) {
+    //        var fieldName: string;
+    //        var replacedId: string;
+
+    //        if (partnerCode == "SHIPR") {
+    //            fieldName = "Shipper";
+    //            replacedId = this.EntityPM.ShipperId;
+    //        }
+    //        else if (partnerCode == "CONSI") {
+    //            fieldName = "Consignee";
+    //            replacedId = this.EntityPM.ConsigneeId;
+    //        }
+
+    //        if (fieldName) {
+    //            var unassignedField: ShipmentUnassignedFieldPM = this.EntityPM.ShipmentUnassignedFields.filter(d => d.FieldName == fieldName)[0];
+    //            if (unassignedField) {
+    //                unassignedField.ReplacedDataId = replacedId;
+    //            }
+    //        }
+    //    }
+    //}
+    //private ComputeHasUnassignedField() {
+    //    this.EntityPM.HasUnassignedData = false;
+
+    //    var myList: ShipmentUnassignedFieldPM[] = this.EntityPM.ShipmentUnassignedFields.filter(s => AppTool.IsNullOrEmpty(s.ReplacedDataId));
+    //    if (myList.length > 0) {
+    //        this.EntityPM.HasUnassignedData = true;
+    //    }
+    //}
 
     public UpdateSalesmanId: string = null;
     public UpdateSalesmanName: string = null;
@@ -449,6 +497,9 @@ export class PartnerItem extends BaseComponent {
     public ObjectTableName: string = "Shipment";
     public IsInlandDomestic: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
+    public IsPartnerUnassigned: boolean = false;
+    public IsEditPartnerEnabled: boolean = false;
+    public PartnerHeaderClassName: string = "Title";
     constructor(public fatherComponent: PartnersTabComponent, typeCode: string) {
         super();
         this.EntityPM = fatherComponent.EntityPM;
@@ -458,6 +509,9 @@ export class PartnerItem extends BaseComponent {
         this.SetRemoveButtonVisibility();
         this.GetPartnerAddress();
         this.GetPartnerContact();
+        this.SetIsPartnerUnassigned();
+        this.SetEditPartnerEnabled();
+
         if (this.EntityPM != null) {
            this.IsInlandDomestic = this.EntityPM.TransportModeId == "I" && this.EntityPM.DirectionId == "D" ? true : false;
         }
@@ -506,6 +560,45 @@ export class PartnerItem extends BaseComponent {
         }
 
         this.PartnerTypeName = TextCodeTranslator.Translate("Shipment.F." + this.FullCode + "Id");
+    }
+
+    SetIsPartnerUnassigned() {
+        this.IsPartnerUnassigned = false;
+
+        if (this.fatherComponent.IsUnassigedValidationVisible) {
+            switch (this.Code) {
+                case "SHIPR": {
+                    if (this.EntityPM.ShipmentUnassignedFields.filter(d => d.FieldName == "Shipper" && AppTool.IsNullOrEmpty(d.ReplacedDataId)).length > 0) {
+                        this.IsPartnerUnassigned = true;
+                        this.PartnerHeaderClassName = "Unassigned";
+                    }
+                    break
+                }
+
+                case "CONSI": {
+                    if (this.EntityPM.ShipmentUnassignedFields.filter(d => d.FieldName == "Consignee" && AppTool.IsNullOrEmpty(d.ReplacedDataId)).length > 0) {
+                        this.IsPartnerUnassigned = true;
+                        this.PartnerHeaderClassName = "Unassigned";
+                    }
+                    break
+                }
+            }
+        }
+    }
+
+    SetEditPartnerEnabled() {
+        this.IsEditPartnerEnabled = SessionLocator.TenantPM.IsHybrid ? false : true;
+
+        switch (this.Code) {
+            case "CONSI":
+            case "SHIPR":
+                {
+                    if (this.IsPartnerUnassigned) {
+                        this.IsEditPartnerEnabled = false;
+                    }
+                    break
+                }
+        }
     }
 
     get CardDependencyProperty1() {

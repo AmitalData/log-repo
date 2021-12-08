@@ -142,7 +142,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     if (item.GLAccountLocalName != null)
                     {
                         if (item.GLAccountLocalName.Length > 22) item.GLAccountLocalName = item.GLAccountLocalName.Substring(0, 22);
-                        myStringBuilder.AppendFormat(item.GLAccountLocalName.PadLeft(22, ' '));
+                        myStringBuilder.AppendFormat(item.GLAccountLocalName.ToUpper().PadLeft(22, ' '));
                     }
 
                     else

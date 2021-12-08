@@ -3577,7 +3577,8 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
             this.EntityPM.ShipperId = !value ? null : this.SourceEntityPM.ShipperId;
             this.ShipperAddressId = !value ? null : this.SourceEntityPM.ShipperAddressId;
             this.ShipperContactId = !value ? null : this.SourceEntityPM.ShipperContactId;
-
+            this.EntityPM.ShipperReference1 = !value ? null : this.SourceEntityPM.ShipperReference1;
+            this.EntityPM.ShipperReference2 = !value ? null : this.SourceEntityPM.ShipperReference2;
             this.SetUIProperties_Shipper();
 
             if (this.EntityPM.ShipperId) {
@@ -3616,8 +3617,8 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
             this.isCopyConsignee = value;
 
             this.EntityPM.ConsigneeId = !value ? null : this.SourceEntityPM.ConsigneeId;
-            //this.EntityPM.ConsigneeReference1 = !value ? null : this.SourceEntityPM.ConsigneeReference1;
-            //this.EntityPM.ConsigneeReference2 = !value ? null : this.SourceEntityPM.ConsigneeReference2;
+            this.EntityPM.ConsigneeReference1 = !value ? null : this.SourceEntityPM.ConsigneeReference1;
+            this.EntityPM.ConsigneeReference2 = !value ? null : this.SourceEntityPM.ConsigneeReference2;
             this.ConsigneeAddressId = !value ? null : this.SourceEntityPM.ConsigneeAddressId;
             this.ConsigneeContactId = !value ? null : this.SourceEntityPM.ConsigneeContactId;
 
@@ -3661,8 +3662,8 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
             this.EntityPM.AgentNote = !value ? null : this.SourceEntityPM.AgentNote;
             this.EntityPM.AgentAddressId = !value ? null : this.SourceEntityPM.AgentAddressId;
             this.EntityPM.AgentContactId = !value ? null : this.SourceEntityPM.AgentContactId;
-            //this.EntityPM.AgentReference1 = !value ? null : this.SourceEntityPM.AgentReference1;
-            //this.EntityPM.AgentReference2 = !value ? null : this.SourceEntityPM.AgentReference2;
+            this.EntityPM.AgentReference1 = !value ? null : this.SourceEntityPM.AgentReference1;
+            this.EntityPM.AgentReference2 = !value ? null : this.SourceEntityPM.AgentReference2;
         }
     }
 

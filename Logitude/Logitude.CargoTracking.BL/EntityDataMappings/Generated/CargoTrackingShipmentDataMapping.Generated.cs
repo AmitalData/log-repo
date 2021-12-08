@@ -260,7 +260,10 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 	         PaymentReceivedNotes, 
 	         PoNumber, 
 	         DescriptionOfGoods, 
-	         SupplyDateTime,
+	         SupplyDateTime, 
+	         ActivatedForDeclarationApprove, 
+	         IsImporterApprovalRequried, 
+	         TenantDeclarationMessage,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();

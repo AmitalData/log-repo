@@ -649,5 +649,8 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string HandlerUserName { get; set; }
         public string ShipperNotExporterReference1 { get; set; }
         public string ShipperNotExporterReference2 { get; set; }
+        public bool HasUnassignedData { get; set; }
+        public string OperationalStatusId { get; set; }
+        public string OperationalStatusName { get; set; }
     }
 }

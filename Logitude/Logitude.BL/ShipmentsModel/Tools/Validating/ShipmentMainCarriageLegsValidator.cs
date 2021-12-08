@@ -39,13 +39,12 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
         private AirlineRepository airlineRepository;
         public ShipmentMainCarriageLegsValidator(ShipmentPM shipment)
         {
-            ICommonDataContext commonContext = CommonDataContext.GetContext(tenant);
+            this.shipmentPM = shipment;
+            this.tenant = shipment.Tenant;
+            ICommonDataContext commonContext = CommonDataContext.GetContext(this.tenant);
             portRepository = new PortRepository(commonContext);
             cardRepository = new CardRepository(commonContext);
             airlineRepository = new AirlineRepository(commonContext);
-
-            this.shipmentPM = shipment;
-            this.tenant = shipment.Tenant;
         }
         public void ValidateMainCarriageLegs()
         {

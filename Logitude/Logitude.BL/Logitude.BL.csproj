@@ -125,10 +125,6 @@
     <Reference Include="Intuit.Ipp.WebHooksService, Version=7.5.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\IppDotNetSdkForQuickBooksApiV3.7.5.0\lib\Intuit.Ipp.WebHooksService.dll</HintPath>
     </Reference>
-    <Reference Include="Logitude.Accounting.BL, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\JustWebFreight\WebFreight.Web\bin\Logitude.Accounting.BL.dll</HintPath>
-    </Reference>
     <Reference Include="Logitude.CRM.BL, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\LogitudeOldDlls.1.0.0\lib\Net40\Logitude.CRM.BL.dll</HintPath>
     </Reference>
@@ -296,6 +292,7 @@
     <Compile Include="CommonDataModel\APIDataContract\QueryService\LastMileDetailsQueryService.Generated.cs" />
     <Compile Include="CommonDataModel\APIDataContract\QueryService\PaymentTermQueryService.Generated.cs" />
     <Compile Include="CommonDataModel\APIDataContract\QueryService\ShipmentCardQueryService.Generated.cs" />
+    <Compile Include="CommonDataModel\APIDataContract\QueryService\APIUnassignedDataHandler.cs" />
     <Compile Include="CommonDataModel\APIDataContract\QueryService\ShipmentOrderPortQueryService.Generated.cs" />
     <Compile Include="CommonDataModel\APIDataContract\QueryService\UserQueryService.cs" />
     <Compile Include="CommonDataModel\APIDataContract\QueryService\VatTypeQueryService.cs" />
@@ -388,18 +385,22 @@
     <Compile Include="CommonDataModel\EntityLists\PortTimeZoneList.cs" />
     <Compile Include="CommonDataModel\EntityLists\ProductItemList.cs" />
     <Compile Include="CommonDataModel\EntityLists\ReportExecutionLogList.cs" />
+    <Compile Include="CommonDataModel\EntityLists\UnassignedEntityList.cs" />
     <Compile Include="CommonDataModel\EntityPMs\AddressTypePM.cs" />
     <Compile Include="CommonDataModel\EntityPMs\CommunicationLogExtendedArgs.cs" />
+    <Compile Include="CommonDataModel\EntityPMs\ExtendedContactPM.cs" />
     <Compile Include="CommonDataModel\EntityPMs\PortTimeZonePM.cs" />
     <Compile Include="CommonDataModel\EntityPMs\ReportExecutionLogPM.cs" />
     <Compile Include="CommonDataModel\EntityPMs\HTSCodePM.cs" />
     <Compile Include="CommonDataModel\EntityPMs\ProductItemPM.cs" />
     <Compile Include="CommonDataModel\EntityPMs\CargoTenantMilestoneDefinitionPM.cs" />
+    <Compile Include="CommonDataModel\EntityPMs\UnassignedEntityPM.cs" />
     <Compile Include="CommonDataModel\EntityQueries\CargoTenantMilestoneDefinitionQuery.cs" />
     <Compile Include="CommonDataModel\EntityQueries\HTSCodeQuery.cs" />
     <Compile Include="CommonDataModel\EntityQueries\PortTimeZoneQuery.cs" />
     <Compile Include="CommonDataModel\EntityQueries\ProductItemQuery.cs" />
     <Compile Include="CommonDataModel\EntityQueries\ReportExecutionLogQuery.cs" />
+    <Compile Include="CommonDataModel\EntityQueries\UnassignedEntityQuery.cs" />
     <Compile Include="CommonDataModel\ExternalService\CommunicationLogExtendedService.cs" />
     <Compile Include="CommonDataModel\ExternalService\CustomerDataSearchService.cs" />
     <Compile Include="CommonDataModel\CustomFilters\CustomsShipperCustomFilter.cs" />
@@ -473,14 +474,17 @@
     <Compile Include="CommonDataModel\Tools\DataMapping\AccountingPartnerMapping.cs" />
     <Compile Include="CommonDataModel\Tools\DataMapping\TermsofUseMapping.cs" />
     <Compile Include="CommonDataModel\Tools\DataMapping\UserLastSettingsMapping.cs" />
+    <Compile Include="CommonDataModel\Tools\DataMapping\UnassignedEntityMapping.cs" />
     <Compile Include="CommonDataModel\Tools\DataMapping\WarehouseStoragePricingMapping.cs" />
     <Compile Include="CommonDataModel\Tools\EntityService\CardSearchService.cs" />
     <Compile Include="CommonDataModel\Tools\EntityService\CarrierAreaService.cs" />
     <Compile Include="CommonDataModel\Tools\EntityService\CargoTenantMilestoneDefinitionService.cs" />
     <Compile Include="CommonDataModel\Tools\EntityService\CustomerOpenFilesAmountService.cs" />
+    <Compile Include="CommonDataModel\Tools\EntityService\CustomerStatusQueueService.cs" />
     <Compile Include="CommonDataModel\Tools\EntityService\DocumentsExecutionLogService.cs" />
     <Compile Include="CommonDataModel\Tools\EntityService\GLAccountCardDataService.cs" />
     <Compile Include="CommonDataModel\Tools\EntityService\HorseService.cs" />
+    <Compile Include="CommonDataModel\Tools\EntityService\UnassignedEntityService.cs" />
     <Compile Include="CommonDataModel\Tools\EntityService\NumberOfUsersService.cs" />
     <Compile Include="CommonDataModel\Tools\EntityService\HTSCodeService.cs" />
     <Compile Include="CommonDataModel\Tools\EntityService\PortTimeZoneService.cs" />
@@ -2797,6 +2801,7 @@
     <Compile Include="ShipmentsModel\EntityPMs\ShipmentSubTypePM.cs" />
     <Compile Include="ShipmentsModel\EntityPMs\ShipmentTypePM.cs" />
     <Compile Include="ShipmentsModel\EntityPMs\SpecialServicesTypePM.cs" />
+    <Compile Include="ShipmentsModel\EntityPMs\ShipmentUnassignedFieldPM.cs" />
     <Compile Include="ShipmentsModel\EntityPMs\UserIdNumberRequestPM.cs" />
     <Compile Include="ShipmentsModel\EntityQueries\AccountingInformationIdentifierQuery.cs" />
     <Compile Include="ShipmentsModel\EntityQueries\AWBAdditionalHandlingInfoQuery.cs" />
@@ -2858,6 +2863,7 @@
     <Compile Include="ShipmentsModel\EntityQueries\ShipmentPickUpDeliveryQuery.cs" />
     <Compile Include="ShipmentsModel\EntityQueries\ShipmentPickUpQuery.cs" />
     <Compile Include="ShipmentsModel\EntityQueries\ShipmentPreperationIntegrationVariables.cs" />
+    <Compile Include="ShipmentsModel\EntityQueries\ShipmentUnassignedFieldQuery.cs" />
     <Compile Include="ShipmentsModel\EntityQueries\ShipmentProductItemQuery.cs" />
     <Compile Include="ShipmentsModel\EntityQueries\ShipmentQuery.cs" />
     <Compile Include="ShipmentsModel\EntityQueries\ShipmentReceivableLineStatusQuery.cs" />
@@ -2898,6 +2904,7 @@
     <Compile Include="ShipmentsModel\Tools\DataMapping\OceanInsightsRequestsCountMapping.cs" />
     <Compile Include="ShipmentsModel\Tools\DataMapping\ShipmentMapping.Concurrency.cs" />
     <Compile Include="ShipmentsModel\Tools\DataMapping\ShipmentMapping.Container.cs" />
+    <Compile Include="ShipmentsModel\Tools\DataMapping\ShipmentMapping.ShipmentUnassignedField.cs" />
     <Compile Include="ShipmentsModel\Tools\DataMapping\ShipmentMapping.ShipmentCustomsTransmission.cs" />
     <Compile Include="ShipmentsModel\Tools\DataMapping\ShipmentMapping.ShipmentStoragePricing.cs" />
     <Compile Include="ShipmentsModel\Tools\DataMapping\ShipmentMapping.ShipmentSubType.cs" />
@@ -2948,6 +2955,7 @@
     <Compile Include="ShipmentsModel\Tools\TraceEvents\ShipmentTracing.ShipmentSubType.cs" />
     <Compile Include="ShipmentsModel\Tools\TraceEvents\SpecialServicesTypeTracing.cs" />
     <Compile Include="ShipmentsModel\Tools\Validating\IEntityValidator.cs" />
+    <Compile Include="ShipmentsModel\Tools\Validating\ShipmentAccountingValidator.cs" />
     <Compile Include="ShipmentsModel\Tools\Validating\ShipmentWarehouseLegsValidator.cs" />
     <Compile Include="ShipmentsModel\Tools\Validating\ShipmentMasterValidator.cs" />
     <Compile Include="ShipmentsModel\Tools\Validating\ShipmentCustomsValidator.cs" />

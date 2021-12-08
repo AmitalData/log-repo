@@ -1186,6 +1186,7 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
         this.AutomationSendInterface.InterfaceName = this.AutomatedBackupClass.AutomationSendInterface.InterfaceName;
         this.AutomationSendInterface.SendVia = this.AutomatedBackupClass.AutomationSendInterface.SendVia;
         this.AutomationSendInterface.WebHookDetails = this.AutomatedBackupClass.AutomationSendInterface.WebHookDetails;
+        this.AutomationSendInterface.AdvancedAutomationSendInterfaceDetails = this.AutomatedBackupClass.AutomationSendInterface.AdvancedAutomationSendInterfaceDetails;
 
 
     }
@@ -2028,7 +2029,7 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
 
     private ValidateWebHookDetails(webHookDetials) {
         if (!webHookDetials || (webHookDetials && AppTool.IsNullOrEmpty(webHookDetials.URL))) {
-            this.ValidationErrorsList.push("WebHook URL is required. Please contact your administrator.");
+            this.ValidationErrorsList.push("WebHook Details are missing. Please contact your administrator.");
         }
     }
 
@@ -2357,7 +2358,8 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
 
 
 
-    LoadSendInterfaceResultComponent(resultCode: string) {
+    
+    LoadSendInterfaceResultComponent(resultCode:string) {
 
         if (this.AllLocations && this.AllLocations.length > 0) {
             let myGeneratedComponentLocation: LocationDirective = this.AllLocations.toArray().filter(d => d.Code == resultCode)[0];

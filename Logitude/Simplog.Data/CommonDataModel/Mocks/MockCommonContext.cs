@@ -2798,13 +2798,11 @@ namespace Simplog.Data.CommonDataModel.Mocks
         public IDbSet<WarehouseStoragePricing> WarehouseStoragePricings { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public IDbSet<CardSearch> CardSearches { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public IDbSet<Horse> Horses { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-
-
         public IDbSet<DWHEnvironmentSetting> DWHEnvironmentSettings { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-
         public IDbSet<PortTimeZone> PortTimeZones => throw new NotImplementedException();
+        public IDbSet<UnassignedEntity> UnassignedEntitys => throw new NotImplementedException();
 
-
+        IDbSet<UnassignedEntity> ICommonDataContext.UnassignedEntitys { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
 
 

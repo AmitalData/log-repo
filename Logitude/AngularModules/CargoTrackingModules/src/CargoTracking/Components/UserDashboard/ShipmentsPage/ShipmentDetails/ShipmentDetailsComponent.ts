@@ -19,6 +19,9 @@ import { CargoTrackingShipmentMappedPM } from 'src/CargoTracking/DataContracts/C
 import { CargoTrackingBrandingDataExtendedService } from 'src/CargoTracking/Services/Others/CargoTrackingBrandingDataExtendedService';
 import { ServiceHelper } from 'src/CargoTracking/Utilities/ServiceHelper';
 import { ServiceResponse } from 'src/CargoTracking/DataContracts/ServiceResponse';
+import { DeclarationApprovalArgs } from 'src/CargoTracking/DataContracts/DeclarationApprovalArgs';
+import { RootContext } from 'src/CargoTracking/Utilities/RootContext';
+import { MilestoneCodes } from 'src/CargoTracking/Constants/MilestoneCodes';
 
 const mobileScreenMaxWidth = 470;
 @Component({
@@ -65,7 +68,7 @@ export class ShipmentDetailsComponent implements OnInit,AfterViewInit
     ForwardingEntityType: string = "F";
     OrderEntityType: string = "O";
     RoutingPagersWidth : number = 100;
-    RoutingMobilePagersWidth : number = 150;
+    RoutingMobilePagersWidth : number = 60;
     MaxWidthForMobileScreenForRouting: number = 470;
     RoutingMobileMarginLeft: number = 55;
 
@@ -89,12 +92,16 @@ export class ShipmentDetailsComponent implements OnInit,AfterViewInit
     {
         return this._tenant || CargoTrackingBrandingData.Tenant;
     }
+    get ShowDeclarationApproval()
+    {
+        const isCustomShipment = this.cargoTrackingShipmentPM.EntityType == this.EntityType_Customs;
+        return isCustomShipment
+            && this.cargoTrackingShipmentPM.ActivatedForDeclarationApprove
+            && this.cargoTrackingShipmentPM.IsImporterApprovalRequried;
+    }
     constructor(private router: Router,
         private route: ActivatedRoute,
-        private searchService: CargoTrackingSearchService,
-        private cargoTrackingPortService: CargoTrackingPortService,
         private cargoTrackingShipmentService: CargoTrackingShipmentService,
-        private cargoTrackingShipmentOrderService: CargoTrackingShipmentOrderService,
         private cargoTrackingShipmentExtendedService: CargoTrackingShipmentExtendedService,
         private brandingService: CargoTrackingBrandingDataExtendedService,
         private documentDownloadService: DocumentDownloadService,
@@ -351,28 +358,33 @@ export class ShipmentDetailsComponent implements OnInit,AfterViewInit
         var sliderWrapperWidth = this.RoutingSliderWrapperElement.nativeElement.offsetWidth;
         var count = this.CalculateRoutingSliderVisibleCardsWidth(screenwidth, sliderWrapperWidth);
 
-        this.routingSliderVisibleCardsWidth = count * this.routingSliderCardWidth;
+        //this.routingSliderVisibleCardsWidth = this.routingSliderVisibleCardsCount * this.routingSliderCardWidth;
         this.routingSliderMarginCardCount = 0;
         this.routingSliderMarginLeft =  0;
 
     }
 
     private CalculateRoutingSliderVisibleCardsWidth(screenwidth: number, sliderWrapperWidth: any) {
-        if (screenwidth > this.MaxWidthForMobileScreenForRouting)
-            var count = this.CalculateVisibleSliderCardsCountForWeb(sliderWrapperWidth);
+        if (screenwidth > this.MaxWidthForMobileScreenForRouting) {
+            this.CalculateVisibleSliderCardsCountForWeb(sliderWrapperWidth);
+        }
 
-        if (screenwidth <= this.MaxWidthForMobileScreenForRouting)
-            var mobileCount = this.CalculateVisibleSliderCardsCountForMobile(sliderWrapperWidth, this.RoutingMobilePagersWidth, this.routingSliderMobileCardWidth);
-        this.routingSliderVisibleCardsCount = count == undefined ? mobileCount : count;
-        return count;
+        if (screenwidth <= this.MaxWidthForMobileScreenForRouting) {
+            this.CalculateVisibleSliderCardsCountForMobile(sliderWrapperWidth);
+        }
     }
 
     private CalculateVisibleSliderCardsCountForWeb(sliderWrapperWidth: any) {
-        return Math.floor((sliderWrapperWidth - this.RoutingPagersWidth) / this.routingSliderCardWidth);
+        this.routingSliderVisibleCardsCount = (sliderWrapperWidth - this.RoutingPagersWidth) / this.routingSliderCardWidth;
+        this.routingSliderVisibleCardsWidth = this.routingSliderVisibleCardsCount * this.routingSliderCardWidth;
+
     }
 
-    private CalculateVisibleSliderCardsCountForMobile(sliderWrapperWidth: number, mobilePagersWidth: number, sliderMobileCardWidth: number ) {
-        return Math.floor((sliderWrapperWidth - mobilePagersWidth) / sliderMobileCardWidth);
+    private CalculateVisibleSliderCardsCountForMobile(sliderWrapperWidth: number) {
+        this.routingSliderCardWidth = 300;
+        this.RoutingMobilePagersWidth = sliderWrapperWidth - this.routingSliderCardWidth;
+        this.routingSliderVisibleCardsWidth = 300;
+        this.routingSliderVisibleCardsCount = (sliderWrapperWidth - this.RoutingMobilePagersWidth) / this.routingSliderCardWidth;
     }
 
 
@@ -495,6 +507,8 @@ export class ShipmentDetailsComponent implements OnInit,AfterViewInit
                 newCard.HasWarning = milstone.IsCurrent && CurrentMilestoneExceptions != null;
                 newCard.WarningMessage = newCard.HasWarning ? CurrentMilestoneExceptions.substring(CurrentMilestoneExceptions.indexOf(',')+1,) : null;
                 newCard.WarningDate = newCard.HasWarning ? this.datePipe.transform(CurrentMilestoneExceptions?.split(',')[0], 'dd/MM/yyyy, HH:mm'): null;
+                if(milstone.Code == MilestoneCodes.BookingNote )
+                    newCard.Description = "BK#: "+ newCard.Description;
                 return newCard;
             });
         this.SetNoMilstonesFound();
@@ -559,7 +573,7 @@ export class ShipmentDetailsComponent implements OnInit,AfterViewInit
     routingSliderMarginLeft: number = 0;
     routingSliderMarginCardCount: number = 0;
     routingSliderCardWidth: number = 200;
-    routingSliderMobileCardWidth: number = 320;
+    routingSliderMobileCardWidth: number = 180;
     routingSliderVisibleCardsCount: number = 1;
     routingSliderVisibleCardsWidth: number = 0;
 
@@ -704,6 +718,106 @@ export class ShipmentDetailsComponent implements OnInit,AfterViewInit
 
     ChangeShowDetailsSectionValue(newValue) {
         this.ShowDetailsSection = newValue;
+    }
+
+    ApproveDeclaration()
+    {
+        RootContext.StartBusyIndicatorLoading();
+
+        const args = this.BuildDeclarationApprovalArguments();
+        this.cargoTrackingShipmentExtendedService.PostDeclarationApprovalResponse(args)
+            .subscribe(
+
+                res => { this.ShowDeclarationApprovedMessage(); RootContext.StopBusyIndicator();},
+                err => { this.ShowFailureMessage(err); RootContext.StopBusyIndicator();}
+            );
+
+    }
+
+    DenyDeclaration(){
+
+        const denyConfirmMessage = this.ShowDeclarationDeclineConfirmMessage();
+        denyConfirmMessage.afterClosed().subscribe(windowArgs => {
+            const button = windowArgs?.button;
+            if(button == 'ok'){
+                this.SendDeclarationDeclineRequest(windowArgs.textValue);
+            }
+        });
+    }
+
+    private ShowDeclarationDeclineConfirmMessage()
+    {
+        return this.dialog.open(MessageWindowComponent, {
+            data: {
+                title: 'Decline',
+                description: 'Please write down decline reason',
+                showOkButton: true,
+                showCancelButton: true,
+                showMultilineTextBox: true,
+            }
+        });
+    }
+
+    private SendDeclarationDeclineRequest(denyMessage: string)
+    {
+        RootContext.StartBusyIndicatorLoading();
+
+        const args = this.BuildDeclarationDeclineArguments(denyMessage);
+        this.cargoTrackingShipmentExtendedService.PostDeclarationApprovalResponse(args)
+            .subscribe(arg =>
+            {
+                RootContext.StopBusyIndicator();
+
+                this.dialog.open(MessageWindowComponent, {
+                    data: {
+                        description: 'Declaration Declined',
+                        showOkButton: true
+                    }
+                });
+            }, (error) =>
+            {
+                RootContext.StopBusyIndicator();
+                this.ShowFailureMessage(error);
+            });
+    }
+
+    private BuildDeclarationDeclineArguments(denyMessage: string)
+    {
+        let args = new DeclarationApprovalArgs();
+        args.Tenant = Number(this.tenant);
+        args.Denied = true;
+        args.ShipmentSecurityKey = this.SecurityKey;
+        args.DenyReason = denyMessage;
+        return args;
+    }
+
+    private BuildDeclarationApprovalArguments()
+    {
+        let args = new DeclarationApprovalArgs();
+        args.Tenant = Number(this.tenant);
+        args.Approved = true;
+        args.ShipmentSecurityKey = this.SecurityKey;
+        return args;
+    }
+
+    private ShowDeclarationApprovedMessage()
+    {
+        return this.dialog.open(MessageWindowComponent, {
+            data: {
+                description: 'Approved Successfully',
+                showOkButton: true
+            }
+        });
+    }
+
+    private ShowFailureMessage(error: any)
+    {
+        this.dialog.open(MessageWindowComponent, {
+            data: {
+                title: 'Failed',
+                description: error || 'Something went bad'
+            }
+        });
     }
 }
 

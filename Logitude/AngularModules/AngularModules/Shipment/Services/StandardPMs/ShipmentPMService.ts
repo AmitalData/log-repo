@@ -34,6 +34,7 @@ import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFil
 import { PickUpDeliveryPackageHarmonizePM } from '../../EntityPMs/PickUpDeliveryPackageHarmonizePM';
 import { CommodityPackagePM } from '../../EntityPMs/CommodityPackagePM';
 import { ShipmentProductItemPM } from '../../EntityPMs/ShipmentProductItemPM';
+import { ShipmentUnassignedFieldPM } from '../../EntityPMs/ShipmentUnassignedFieldPM';
 
 @Injectable()
 
@@ -505,6 +506,7 @@ export class ShipmentPMService {
         this.MapShipmentAssemblies(entityPM, jsonPM, mapParent);
         this.MapShipmentStoragePricings(entityPM, jsonPM, mapParent);
         this.MapShipmentProductItems(entityPM, jsonPM, mapParent);
+        this.MapShipmentUnassignedFields(entityPM, jsonPM, mapParent);
 
         entityPM.IsDirty = false;
         if (mapParent) {
@@ -655,6 +657,11 @@ export class ShipmentPMService {
             entityPM.OldEntityPM.ShipmentProductItems = [];
             for (var item in entityPM.ShipmentProductItems) {
                 entityPM.OldEntityPM.ShipmentProductItems.push(this.clone(entityPM.ShipmentProductItems[item]));
+            }
+
+            entityPM.OldEntityPM.ShipmentUnassignedFields = [];
+            for (var item in entityPM.ShipmentUnassignedFields) {
+                entityPM.OldEntityPM.ShipmentUnassignedFields.push(this.clone(entityPM.ShipmentUnassignedFields[item]));
             }
         }
 
@@ -2523,6 +2530,78 @@ export class ShipmentPMService {
                     if (oldProductItems[pack]) {
                         oldProductItems[pack].ChangeSetOp = "Delete";
                         entityPM.ShipmentProductItems.push(oldProductItems[pack]);
+                    }
+                }
+            }
+        }
+    }
+
+    MapShipmentUnassignedFields(entityPM: ShipmentPM, jsonPM: any, mapParent: boolean = true) {
+        var oldProductItems: ShipmentUnassignedFieldPM[] = [];
+        if (entityPM.OldEntityPM && !mapParent) {
+            oldProductItems = entityPM.OldEntityPM.ShipmentUnassignedFields;
+        }
+
+        entityPM.ShipmentUnassignedFields = new Array<ShipmentUnassignedFieldPM>();
+
+        for (var pack in jsonPM.ShipmentUnassignedFields) {
+
+            var itemJson = jsonPM.ShipmentUnassignedFields[pack];
+            if (mapParent && (itemJson.ChangeSetOp == "Delete" || itemJson.ChangeSetOp == 3)) {
+                continue;
+            }
+            var itemPM: ShipmentUnassignedFieldPM;
+            if (mapParent) { // get mapping
+                itemPM = new ShipmentUnassignedFieldPM(entityPM);
+
+            }
+            else {// update mapping
+
+                itemPM = new ShipmentUnassignedFieldPM(null);
+
+
+            }
+            var pmKeys = Object.keys(itemJson);
+            for (var key in pmKeys) {
+
+                if ((!mapParent && pmKeys[key] === "entityParentPM") || pmKeys[key] === "UIProperties") {
+                    continue;
+                }
+                var property = pmKeys[key];
+                itemPM[property] = itemJson[property];
+            }
+
+            if (mapParent) {
+                itemPM.OldEntityPM = this.clone(itemPM);
+                itemPM.UniqueKey = Guid.newGuid();
+                itemPM.ChangeSetOp = "None";
+                itemJson.ChangeSetOp = "None";
+            }
+            else {
+
+                if (itemPM.UniqueKey) {
+
+                    if (itemJson.IsDirty)
+                        itemPM.ChangeSetOp = "Update";
+                }
+                else {
+                    itemPM.ChangeSetOp = "Insert";
+                }
+
+                itemPM.OldEntityPM = null;
+            }
+            itemPM.IsDirty = false;
+            entityPM.ShipmentUnassignedFields.push(itemPM);
+
+        }
+
+        if (oldProductItems) {
+
+            for (var pack in oldProductItems) {
+                if (entityPM.ShipmentUnassignedFields.filter(p => p.UniqueKey === oldProductItems[pack].UniqueKey).length === 0) {
+                    if (oldProductItems[pack]) {
+                        oldProductItems[pack].ChangeSetOp = "Delete";
+                        entityPM.ShipmentUnassignedFields.push(oldProductItems[pack]);
                     }
                 }
             }

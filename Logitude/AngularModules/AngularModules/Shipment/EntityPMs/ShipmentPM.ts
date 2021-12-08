@@ -20,6 +20,7 @@ import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldCl
 import { ShipmentAssemblyPM } from './ShipmentAssemblyPM';
 import { ShipmentStoragePricingPM } from './ShipmentStoragePricingPM';
 import { ShipmentProductItemPM } from './ShipmentProductItemPM';
+import { ShipmentUnassignedFieldPM } from './ShipmentUnassignedFieldPM';
 
 export class ShipmentPM {
     public UIProperties: UIProperties;
@@ -4146,6 +4147,9 @@ export class ShipmentPM {
     public get RequestedFlightDate() { return this.requestedFlightDate; }
     public set RequestedFlightDate(newValue: Date) { if (this.requestedFlightDate != newValue) { this.requestedFlightDate = newValue; this.MarkAsDirty(); } }
 
+    private hasUnassignedData: boolean;
+    public get HasUnassignedData() { return this.hasUnassignedData; }
+    public set HasUnassignedData(newValue: boolean) { if (this.hasUnassignedData != newValue) { this.hasUnassignedData = newValue; this.MarkAsDirty("HasUnassignedData"); } }
 
 
     private notify1Reference: string;
@@ -5062,7 +5066,21 @@ export class ShipmentPM {
     public get HouseMasterNewConcurrencyGUID() { return this.houseMasterNewConcurrencyGUID; }
     public set HouseMasterNewConcurrencyGUID(newValue: string) { if (this.houseMasterNewConcurrencyGUID != newValue) { this.houseMasterNewConcurrencyGUID = newValue; this.MarkAsDirty("HouseMasterNewConcurrencyGUID"); } }
 
+    private billingStatusId: string;
+    public get BillingStatusId() { return this.billingStatusId; }
+    public set BillingStatusId(newValue: string) { if (this.billingStatusId != newValue) { this.billingStatusId = newValue; this.MarkAsDirty("BillingStatusId"); } }
 
+    private operationalStatusId: string;
+    public get OperationalStatusId() { return this.operationalStatusId; }
+    public set OperationalStatusId(newValue: string) { if (this.operationalStatusId != newValue) { this.operationalStatusId = newValue; this.MarkAsDirty("OperationalStatusId"); } }
+
+    private operationalStatusName: string;
+    public get OperationalStatusName() { return this.operationalStatusName; }
+    public set OperationalStatusName(newValue: string) { if (this.operationalStatusName != newValue) { this.operationalStatusName = newValue; this.MarkAsDirty("OperationalStatusName"); } }
+
+    private billingStatusName: string;
+    public get BillingStatusName() { return this.billingStatusName; }
+    public set BillingStatusName(newValue: string) { if (this.billingStatusName != newValue) { this.billingStatusName = newValue; this.MarkAsDirty("BillingStatusName"); } }
 
 
     public OldEntityPM: ShipmentPM;
@@ -5527,6 +5545,39 @@ export class ShipmentPM {
             var index = this.ShipmentProductItems.indexOf(item);
             if (index > -1) {
                 this.ShipmentProductItems.splice(index, 1);
+                this.MarkAsDirty();
+            }
+        }
+    }
+
+    private shipmentUnassignedFields: ShipmentUnassignedFieldPM[];
+    get ShipmentUnassignedFields() {
+        if (this.shipmentUnassignedFields == null) {
+            this.shipmentUnassignedFields = [];
+        }
+
+        return this.shipmentUnassignedFields;
+    }
+    set ShipmentUnassignedFields(newValue: ShipmentUnassignedFieldPM[]) {
+        if (this.shipmentUnassignedFields != newValue) {
+            this.shipmentUnassignedFields = newValue;
+        }
+    }
+    public AddShipmentUnassignedField(item: ShipmentUnassignedFieldPM) {
+        if (item != null) {
+            var index = this.shipmentUnassignedFields.indexOf(item);
+            if (index == -1) {
+                item.EntityParentPM = this;
+                this.shipmentUnassignedFields.push(item);
+                this.MarkAsDirty();
+            }
+        }
+    }
+    public RemoveShipmentUnassignedFields(item: ShipmentUnassignedFieldPM) {
+        if (item != null) {
+            var index = this.shipmentUnassignedFields.indexOf(item);
+            if (index > -1) {
+                this.shipmentUnassignedFields.splice(index, 1);
                 this.MarkAsDirty();
             }
         }

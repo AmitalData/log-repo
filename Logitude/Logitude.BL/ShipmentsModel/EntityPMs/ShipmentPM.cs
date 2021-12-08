@@ -2442,7 +2442,7 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public bool IsShipmentComputedFieldChange { get; set; }
         public bool IsShipmentAdditionalCloudDataChange { get; set; }
         public bool IsStatusChange { get; set; }
-
+        public bool IsOperationalStatusChange { get; set; }
 
         public string PackagesTypesNames { get; set; }
         public string PackagesTypesPrintAs { get; set; }
@@ -2690,6 +2690,30 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
             }
         }
 
+        private List<ShipmentUnassignedFieldPM> shipmentUnassignedFields;
+        [Include]
+        [Association("ShipmentUnassignedFields", "Id", "ShipmentId")]
+        [Composition]
+        public virtual List<ShipmentUnassignedFieldPM> ShipmentUnassignedFields
+        {
+            get
+            {
+
+                if (this.shipmentUnassignedFields == null)
+                {
+                    shipmentUnassignedFields = new List<ShipmentUnassignedFieldPM>();
+                }
+                return this.shipmentUnassignedFields;
+            }
+            set
+            {
+                if (value != null)
+                {
+                    shipmentUnassignedFields = value;
+                }
+            }
+        }
+
         // Standalone shipment
         public bool IsStandalonePickupDelivery { get; set; }
         public string StandalonePickupDeliveryId { get; set; }
@@ -2748,13 +2772,18 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string ShipperNotExporterReference1 { get; set; }
         public string ShipperNotExporterReference2 { get; set; }
         public string OperationalStatusId { get; set; }
+        public string OperationalStatusName { get; set; }
         public string BillingStatusId { get; set; }
+
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string AccountingClosedByUserId { get; set; }
         public string HouseMasterConcurrencyGUID { get; set; }
         public string HouseMasterNewConcurrencyGUID { get; set; }
         public bool IsPODReceived { get; set; }
         public DateTime? PODReceivedDate { get; set; }
+        public string UnassignedShipperAddressId { get; set; }
+        public string UnassignedConsigneeAddressId { get; set; }
+        public bool HasUnassignedData { get; set; }
         public List<TraceEventPM> EventList { get; set; }
         public List<TraceEventPM> AddManualEvents { get; set; }
     }

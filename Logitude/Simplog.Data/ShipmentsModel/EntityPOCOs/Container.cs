@@ -309,5 +309,7 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         [ForeignKey("StatusId")]
         public virtual EntityStatus EntityStatus { get; set; }
         public string StatusId { get; set; }
+        public DateTime? CancelledDate { get; set; }
+        public bool IsCancelled { get; set; }
     }
 }

@@ -808,6 +808,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.ParentShipmentType).HasColumnName("ParentShipmentType");
             this.Property(t => t.BillingStatusId).HasColumnName("BillingStatusId");
             this.Property(t => t.OperationalStatusId).HasColumnName("OperationalStatusId");
+            this.Property(t => t.HasUnassignedData).HasColumnName("HasUnassignedData");
 
             if (dbms == "oracle")
             {

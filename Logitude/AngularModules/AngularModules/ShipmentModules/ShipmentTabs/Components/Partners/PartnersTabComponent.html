@@ -23,6 +23,10 @@
         white-space: nowrap;
     }
 
+    .Unassigned {
+        background: rgba(247, 227, 227, 1);
+    }
+
     .PartnerTemplateRow, .PartnerTemplateRow td, .PartnerTemplateRow td div, .PartnerTemplateRow td span {
         color: #6E7172;
         font-size: 10px;
@@ -150,7 +154,7 @@
                                             <div class="MediaFill">
                                                 <div class="BoxItemContent">
                                                     <table class="FixedTable">
-                                                        <tr class="Title" style="height: 25px;">
+                                                        <tr [attr.class]="item.PartnerHeaderClassName" style="height: 25px;">
                                                             <td>
                                                                 <table>
                                                                     <tr>
@@ -169,7 +173,7 @@
                                                                         </td>
 
                                                                         <td style="width: 18px;">
-                                                                            <IconButton [ExternalId]="'-'+item.FullCode" *ngIf="!EntityPM.IsManifestSentToAgent || item.Code !='AGENT'" [Name]="'Edit'" [IsSmall]="true" [IsEnabled]="!IsEditDisabled" (click)="EditPartner(item)"></IconButton>
+                                                                            <IconButton [ExternalId]="'-'+item.FullCode" *ngIf="!EntityPM.IsManifestSentToAgent || item.Code !='AGENT'" [Name]="'Edit'" [IsSmall]="true" [IsEnabled]="item.IsEditPartnerEnabled" (click)="EditPartner(item)"></IconButton>
                                                                             <IconButton  [ExternalId]="'-'+item.FullCode" *ngIf="item.Code=='AGENT' && EntityPM.IsManifestSentToAgent" [Name]="'Edit'" [IsSmall]="true" [IsEnabled]="false" (click)="EditPartner(item)"></IconButton>
                                                                         </td>
 

@@ -323,7 +323,9 @@
     <Content Include="Infrastructure\Components\LoginComponent\CustomLoginComponents\HybridLabels\Components\HybridLoginProcessComponent.css" />
     <Content Include="Infrastructure\Components\LoginComponent\CustomLoginComponents\HybridLabels\Components\HybridLoginProcessComponent.html" />
     <Content Include="Infrastructure\Components\Maintenance\Automation\AutomationConditionsDetailsComponent.html" />
+    <Content Include="Infrastructure\Components\Maintenance\Automation\AutomationResult\AdvancedAutomationSendInterfaceDetailsComponent.html" />
     <Content Include="Infrastructure\Components\Maintenance\Automation\AutomationResult\CreateTaskResultComponent.html" />
+    <Content Include="Infrastructure\Components\Maintenance\Automation\AutomationResult\WebHookAutomationDetailsComponent.html" />
     <Content Include="Infrastructure\Components\Maintenance\Automation\AutomationsConditionsViewDetailsComponent.html" />
     <Content Include="Infrastructure\Components\MultiUpdateComponent\MultiEntityUpdateBaseComponent.html" />
     <Content Include="Infrastructure\Components\MultiUpdateComponent\MultiEntityUpdateErrorHandlerComponent.html" />
@@ -348,6 +350,7 @@
     <Content Include="ShipmentModules\ShipmentLogBox\Components\Logbox\ApprovePaymentBaseComponent.html" />
     <Content Include="ShipmentModules\ShipmentLogBox\Components\Logbox\PrivateLabelApprovePaymentComponent.html" />
     <Content Include="Shipment\Components\Helpers\ContainerHelperComponent.html" />
+    <Content Include="Shipment\Components\UnassigedData\UpdateUnassigedDataComponent.html" />
     <Content Include="TasksApp\Components\TasksAppComponent.html" />
     <Content Include="TasksApp\Scripts\tasks-app.js" />
     <Content Include="_Resources\css\PrimeWebComponent.css" />
@@ -382,6 +385,7 @@
     <TypeScriptCompile Include="Common\EntityLists\PortTimeZoneList.ts" />
     <TypeScriptCompile Include="Common\EntityLists\ProductItemList.ts" />
     <TypeScriptCompile Include="Common\EntityLists\ReportExecutionLogList.ts" />
+    <TypeScriptCompile Include="Common\EntityLists\UnassignedEntityList.ts" />
     <TypeScriptCompile Include="Common\EntityPMInitServices\PortTimeZonePMInitService.ts" />
     <TypeScriptCompile Include="Common\EntityPMInitServices\ReportExecutionLogPMInitService.ts" />
     <TypeScriptCompile Include="Common\EntityPMInitServices\ShippingLinePMInitService.ts" />
@@ -389,6 +393,7 @@
     <TypeScriptCompile Include="Common\EntityPMs\PortTimeZonePM.ts" />
     <TypeScriptCompile Include="Common\EntityPMs\ProductItemPM.ts" />
     <TypeScriptCompile Include="Common\EntityPMs\ReportExecutionLogPM.ts" />
+    <TypeScriptCompile Include="Common\EntityPMs\UnassignedEntityPM.ts" />
     <TypeScriptCompile Include="Common\Services\DocumentServices\DocumentFileService.ts" />
     <TypeScriptCompile Include="Common\Services\ExtendedPMs\CarrierAreaExtendedPMService.ts" />
     <TypeScriptCompile Include="Common\Services\ExtendedPMs\ShippingLineExtendedPMService.ts" />
@@ -397,6 +402,7 @@
     <TypeScriptCompile Include="Common\Services\StandardLists\ReportExecutionLogListService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardPMs\PortTimeZonePMService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardPMs\ReportExecutionLogPMService.ts" />
+    <TypeScriptCompile Include="Common\Services\StandardPMs\UnassignedEntityPMService.ts" />
     <TypeScriptCompile Include="Common\Tools.ts" />
     <TypeScriptCompile Include="Common\Validators\CustomerValidator.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsCourier\Components\CourierWorkSheet\GetUnloadPortCodeComponent.ts" />
@@ -1854,7 +1860,9 @@
     <TypeScriptCompile Include="Infrastructure\Components\LogitudeComponents\AdvancedDatePickerResolverComponent.ts" />
     <TypeScriptCompile Include="Infrastructure\Components\LogitudeCustomComponents\LastSuccessfulLoginComponent.ts" />
     <TypeScriptCompile Include="Infrastructure\Components\Maintenance\Automation\AutomationConditionsDetailsComponent.ts" />
+    <TypeScriptCompile Include="Infrastructure\Components\Maintenance\Automation\AutomationResult\AdvancedAutomationSendInterfaceDetailsComponent.ts" />
     <TypeScriptCompile Include="Infrastructure\Components\Maintenance\Automation\AutomationResult\CreateTaskResultComponent.ts" />
+    <TypeScriptCompile Include="Infrastructure\Components\Maintenance\Automation\AutomationResult\WebHookAutomationDetailsComponent.ts" />
     <TypeScriptCompile Include="Infrastructure\Components\Maintenance\Automation\AutomationResult\FTPAutomationDetailsComponent.ts" />
     <TypeScriptCompile Include="Infrastructure\Components\Maintenance\Automation\AutomationResult\SendDocumentResultComponent.ts" />
     <TypeScriptCompile Include="Infrastructure\Components\Maintenance\Automation\AutomationResult\SendInterfaceResultComponent.ts" />
@@ -7530,6 +7538,7 @@
     <TypeScriptCompile Include="Shipment\Components\SplitShipment\SplitShipmentComponent.ts" />
     <TypeScriptCompile Include="Shipment\Components\Spotlight\SpotLightDateComponent.ts" />
     <TypeScriptCompile Include="Shipment\Components\TabsBuilder\ShipmentTabsBuilder.ts" />
+    <TypeScriptCompile Include="Shipment\Components\UnassigedData\UpdateUnassigedDataComponent.ts" />
     <TypeScriptCompile Include="Shipment\Components\Workspaces\AMANACComponent.ts" />
     <TypeScriptCompile Include="Shipment\Components\Workspaces\ContainersFUsComponent.ts" />
     <TypeScriptCompile Include="Shipment\DataContract\LogboxShipmentExportExcelArgs.ts" />
@@ -7570,6 +7579,7 @@
     <TypeScriptCompile Include="Shipment\EntityPMs\ShipmentProductItemPM.ts" />
     <TypeScriptCompile Include="Shipment\EntityPMs\ShipmentStoragePricingPM.ts" />
     <TypeScriptCompile Include="Shipment\EntityPMs\ShipmentSubTypePM.ts" />
+    <TypeScriptCompile Include="Shipment\EntityPMs\ShipmentUnassignedFieldPM.ts" />
     <TypeScriptCompile Include="Shipment\MetaDataServices\HeaderScreenServices\ShipmentHeaderScreenService.ts" />
     <TypeScriptCompile Include="Shipment\MetaDataServices\MenuButtonServices\ShipmentMenuButtonService.ts" />
     <TypeScriptCompile Include="Shipment\MetaDataServices\TabsServices\ShipmentTabsService.ts" />

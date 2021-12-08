@@ -96,7 +96,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.DBTablesCopy.Generated
 "  <Column Name='FromWarehouseEstimationDate' Type='datetime'>"+
 "    <Constraints Nullable='true' />"+
 "  </Column>"+
-"  <Column Name='FromWarehouseNotes' Type='nvarchar' Size='500'>"+
+"  <Column Name='FromWarehouseNotes' Type='nvarchar' Size='-1'>"+
 "    <Constraints Nullable='true' />"+
 "  </Column>"+
 "  <Column Name='DepartureDone' Type='bit'>"+
@@ -126,7 +126,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.DBTablesCopy.Generated
 "  <Column Name='ToWarehouseEstimationDate' Type='datetime'>"+
 "    <Constraints Nullable='true' />"+
 "  </Column>"+
-"  <Column Name='ToWarehouseNotes' Type='nvarchar' Size='500'>"+
+"  <Column Name='ToWarehouseNotes' Type='nvarchar' Size='-1'>"+
 "    <Constraints Nullable='true' />"+
 "  </Column>"+
 "  <Column Name='CustomsPaymentDone' Type='bit'>"+
@@ -195,7 +195,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.DBTablesCopy.Generated
 "  <Column Name='AssignedTruckerEstimationDate' Type='datetime'>"+
 "    <Constraints Nullable='true' />"+
 "  </Column>"+
-"  <Column Name='AssignedTruckerNotes' Type='nvarchar' Size='32'>"+
+"  <Column Name='AssignedTruckerNotes' Type='nvarchar' Size='-1'>"+
 "    <Constraints Nullable='true' />"+
 "  </Column>"+
 "  <Column Name='AssignedCustomsAgentDone' Type='bit'>"+
@@ -207,10 +207,10 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.DBTablesCopy.Generated
 "  <Column Name='AssignedCustomsAgentEstDate' Type='datetime'>"+
 "    <Constraints Nullable='true' />"+
 "  </Column>"+
-"  <Column Name='AssignedCustomsAgentNotes' Type='nvarchar' Size='32'>"+
+"  <Column Name='AssignedCustomsAgentNotes' Type='nvarchar' Size='-1'>"+
 "    <Constraints Nullable='true' />"+
 "  </Column>"+
-"  <Column Name='AssignedCustomsAgentExcReason' Type='nvarchar' Size='32'>"+
+"  <Column Name='AssignedCustomsAgentExcReason' Type='nvarchar' Size='-1'>"+
 "    <Constraints Nullable='true' />"+
 "  </Column>"+
 "  <Column Name='DeliveryDone' Type='bit'>"+
@@ -222,10 +222,10 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.DBTablesCopy.Generated
 "  <Column Name='DeliveryEstimationDate' Type='datetime'>"+
 "    <Constraints Nullable='true' />"+
 "  </Column>"+
-"  <Column Name='DeliveryNotes' Type='nvarchar' Size='32'>"+
+"  <Column Name='DeliveryNotes' Type='nvarchar' Size='-1'>"+
 "    <Constraints Nullable='true' />"+
 "  </Column>"+
-"  <Column Name='DeliveryExceptionReason' Type='nvarchar' Size='32'>"+
+"  <Column Name='DeliveryExceptionReason' Type='nvarchar' Size='-1'>"+
 "    <Constraints Nullable='true' />"+
 "  </Column>"+
 "  <Column Name='GrossWeightUnitCode' Type='varchar' Size='3'>"+
@@ -237,7 +237,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.DBTablesCopy.Generated
 "  <Column Name='ShipmentTypeCode' Type='varchar' Size='5'>"+
 "    <Constraints Nullable='true' />"+
 "  </Column>"+
-"  <Column Name='CurrentMilestoneExceptions' Type='nvarchar' Size='500'>"+
+"  <Column Name='CurrentMilestoneExceptions' Type='nvarchar' Size='-1'>"+
 "    <Constraints Nullable='true' />"+
 "  </Column>"+
 "  <Column Name='ForwardingHouse' Type='nvarchar' Size='200'>"+
@@ -255,7 +255,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.DBTablesCopy.Generated
 "  <Column Name='GoodsClassificationEstDate' Type='datetime'>"+
 "    <Constraints Nullable='true' />"+
 "  </Column>"+
-"  <Column Name='GoodsClassificationNotes' Type='nvarchar' Size='2000'>"+
+"  <Column Name='GoodsClassificationNotes' Type='nvarchar' Size='-1'>"+
 "    <Constraints Nullable='true' />"+
 "  </Column>"+
 "  <Column Name='DocumentInspectionDate' Type='datetime'>"+
@@ -264,7 +264,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.DBTablesCopy.Generated
 "  <Column Name='DocumentInspectionEstDate' Type='datetime'>"+
 "    <Constraints Nullable='true' />"+
 "  </Column>"+
-"  <Column Name='DocumentInspectionNotes' Type='nvarchar' Size='2000'>"+
+"  <Column Name='DocumentInspectionNotes' Type='nvarchar' Size='-1'>"+
 "    <Constraints Nullable='true' />"+
 "  </Column>"+
 "  <Column Name='DocumentInspectionDone' Type='bit'>"+
@@ -279,7 +279,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.DBTablesCopy.Generated
 "  <Column Name='GatepassArrivedEstDate' Type='datetime'>"+
 "    <Constraints Nullable='true' />"+
 "  </Column>"+
-"  <Column Name='GatepassArrivedNotes' Type='nvarchar' Size='2000'>"+
+"  <Column Name='GatepassArrivedNotes' Type='nvarchar' Size='-1'>"+
 "    <Constraints Nullable='true' />"+
 "  </Column>"+
 "  <Column Name='GatepassArrivedDone' Type='bit'>"+
@@ -303,10 +303,10 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.DBTablesCopy.Generated
 "  <Column Name='BookingEstimationDate' Type='datetime'>"+
 "    <Constraints Nullable='true' />"+
 "  </Column>"+
-"  <Column Name='BookingNotes' Type='nvarchar' Size='32'>"+
+"  <Column Name='BookingNotes' Type='nvarchar' Size='-1'>"+
 "    <Constraints Nullable='true' />"+
 "  </Column>"+
-"  <Column Name='BookingExceptionReason' Type='nvarchar' Size='32'>"+
+"  <Column Name='BookingExceptionReason' Type='nvarchar' Size='-1'>"+
 "    <Constraints Nullable='true' />"+
 "  </Column>"+
 "  <Column Name='PaymentRequiredDone' Type='bit'>"+
@@ -318,7 +318,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.DBTablesCopy.Generated
 "  <Column Name='PaymentRequiredDate' Type='datetime'>"+
 "    <Constraints Nullable='true' />"+
 "  </Column>"+
-"  <Column Name='PaymentRequiredNotes' Type='nvarchar' Size='32'>"+
+"  <Column Name='PaymentRequiredNotes' Type='nvarchar' Size='-1'>"+
 "    <Constraints Nullable='true' />"+
 "  </Column>"+
 "  <Column Name='PaymentReceivedDone' Type='bit'>"+
@@ -330,7 +330,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.DBTablesCopy.Generated
 "  <Column Name='PaymentReceivedDate' Type='datetime'>"+
 "    <Constraints Nullable='true' />"+
 "  </Column>"+
-"  <Column Name='PaymentReceivedNotes' Type='nvarchar' Size='32'>"+
+"  <Column Name='PaymentReceivedNotes' Type='nvarchar' Size='-1'>"+
 "    <Constraints Nullable='true' />"+
 "  </Column>"+
 "  <Column Name='PoNumber' Type='varchar' Size='50'>"+

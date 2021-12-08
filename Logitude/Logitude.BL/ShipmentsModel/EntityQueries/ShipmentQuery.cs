@@ -1787,6 +1787,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.WeightRoundingCode = shipment.WeightRoundingCode;
             shipmentPM.IsCFSWarehouse = shipment.IsCFSWarehouse;
             shipmentPM.IsCFSWarehouseChanged = shipment.IsCFSWarehouseChanged;
+            shipmentPM.HasUnassignedData = shipment.HasUnassignedData;
 
             if (!string.IsNullOrEmpty(shipment.WarehouseLegWarehouseId))
             {
@@ -1877,6 +1878,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 shipmentPM.StatusName = shipment.EntityStatus.Name;
                 shipmentPM.StatusWeight = shipment.EntityStatus.StatusWeight;
             }
+
             shipmentPM.OriginShipmentId = shipment.OriginShipmentId;
             shipmentPM.FBLIsFromStock = shipment.FBLIsFromStock;
             shipmentPM.StatusId = shipment.StatusId;
@@ -1887,6 +1889,16 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.ProfitExchangeRate = shipment.ProfitExchangeRate;
             shipmentPM.BillingStatusId = shipment.BillingStatusId;
             shipmentPM.OperationalStatusId = shipment.OperationalStatusId;
+            if (!string.IsNullOrEmpty(shipmentPM.OperationalStatusId))
+            {
+                EntityStatusRepository entityStatusRepository = new EntityStatusRepository(tenant);
+                EntityStatus entityStatus = entityStatusRepository.GetSingleEntityStatus(shipmentPM.OperationalStatusId, tenant);
+                if(entityStatus != null)
+                {
+                    shipmentPM.OperationalStatusName = entityStatus.Name;
+                }
+            }
+
 
             if (shipmentPM.ProfitCurrencyId != null)
             {
@@ -1921,6 +1933,13 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                             shipmentPM.StatusDate = masterData.StatusDate;
                             shipmentPM.StatusLocation = masterData.StatusLocation;
                         }
+                    }
+
+                    if (!string.IsNullOrEmpty(masterData.OperationalStatusId))
+                    {
+                        string statusName = null;
+                        shipmentPM.OperationalStatusId = EntityStatusHelper.GetHighestStatusId(shipment.OperationalStatusId, masterData.OperationalStatusId, shipment.Tenant, ref statusName);
+                        shipmentPM.OperationalStatusName = statusName;
                     }
                 }
             }
@@ -2273,6 +2292,12 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 ShipmentProductItemQuery shipmentProductItemQuery = new ShipmentProductItemQuery(shipmentProductItemRepository);
 
                 shipmentPM.ShipmentProductItems = shipmentProductItemQuery.GetShipmentProductItems(shipment.Id, shipment.Tenant);
+                #endregion
+
+                #region ShipmentUnassignedFields
+                ShipmentUnassignedFieldRepository shipmentUnassignedFieldRepository = new ShipmentUnassignedFieldRepository(tenant);
+                ShipmentUnassignedFieldQuery shipmentUnassignedFieldQuery = new ShipmentUnassignedFieldQuery(shipmentUnassignedFieldRepository);
+                shipmentPM.ShipmentUnassignedFields = shipmentUnassignedFieldQuery.GetShipmentUnassignedFields(shipment.Id, shipment.Tenant);
                 #endregion
             }
 
@@ -2696,7 +2721,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 });
             }
         }
-        private void MapEventsListForAPI(ShipmentPM shipmentPM)
+        public void MapEventsListForAPI(ShipmentPM shipmentPM)
         {
             shipmentPM.EventList = this.GetShipmentTraceEvents(shipmentPM).OrderBy(d => d.LogDateTime).ToList();
         }
@@ -3644,48 +3669,29 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.ComputedStatusDate = shipment.ComputedStatusDate;
             shipmentPM.ForeignPartnerCountryCode = shipment.ForeignPartnerCountryCode;
             shipmentPM.ComputedStatusId = shipment.ComputedStatusId;
-
             shipmentPM.TransportModeId = shipment.TransportModeId;
-
             shipmentPM.TransportModeName = transportmode.Name;
             shipmentPM.DirectionName = direction.Name;
             shipmentPM.ForeignPartnerCountryCode = shipment.ForeignPartnerCountryCode;
-
-            /* Bills*/
             shipmentPM.House = shipment.House;
-
-
-            /* Ayman */
             shipmentPM.Id = shipment.Id;
-
-
             shipment.FreelancerId = shipment.FreelancerId;
             shipment.FreelancerAddressId = shipment.FreelancerAddressId;
             shipment.FreelancerContactId = shipment.FreelancerContactId;
-
             shipmentPM.ChargeableWeightInKG = shipment.ChargeableWeightInKG;
             shipmentPM.GrossWeightEdited = shipment.GrossWeightEdited;
-
             shipmentPM.VolumeUnitCode = shipment.VolumeUnitCode;
             shipmentPM.CurrentUserId = shipment.CurrentUserId;
-
             shipmentPM.DirectionId = shipment.DirectionId;
             shipmentPM.AccountManagerUserId = shipment.AccountManagerUserId;
             shipmentPM.GrossWeightInKG = shipment.GrossWeightInKG;
             shipmentPM.GrossWeightPerStorageDays = shipment.GrossWeightPerStorageDays;
-
             shipmentPM.GrossWeight = shipment.GrossWeight;
             shipmentPM.ChargeableWeight = shipment.ChargeableWeight;
             shipmentPM.GrossWeightPerTon = shipment.GrossWeightPerTon;
-
             shipmentPM.CreateDateTime = shipment.CreateDateTime;
-
-
             shipmentPM.ShipmentNumber = shipment.ShipmentNumber;
             shipmentPM.ShipmentTypeId = shipment.ShipmentTypeId;
-
-
-
             shipmentPM.ExceptionDescription = shipment.ExceptionDescription;
             shipmentPM.ExceptionResolvedDescription = shipment.ExceptionResolvedDescription;
             shipmentPM.LastExceptionDescription = shipment.LastExceptionDescription;
@@ -3705,24 +3711,15 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             str = string.IsNullOrEmpty(str) ? shipmentLevel.Name : str + " " + shipmentLevel.Name;
 
             shipmentPM.Tenant = shipment.Tenant;
-
-
-
             shipmentPM.DimensionsUnitCode = shipment.DimensionsUnitCode;
             shipmentPM.GrossWeightUnitCode = shipment.GrossWeightUnitCode;
             shipmentPM.ChargeableWeightUnitCode = shipment.ChargeableWeightUnitCode;
-
             shipmentPM.Volume = shipment.Volume;
-
             shipmentPM.VolumetricWeight = shipment.VolumetricWeight;
-
             shipmentPM.NumberOfPackages = shipment.NumberOfPackages;
             shipmentPM.NumberOfContainers = shipment.NumberOfContainers;
-
             shipmentPM.StatusName = status.Name;
-
             shipmentPM.ShipmentLevelCode = shipment.ShipmentLevelCode;
-
             shipmentPM.NumberOfFollowUps = shipment.NumberOfFollowUps;
             #endregion
 
@@ -3756,6 +3753,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             }
 
             shipmentPM.IsHTSMissing = shipment.IsHTSMissing;
+            shipmentPM.HasUnassignedData = shipment.HasUnassignedData;
             shipmentPM.IsStandalonePickupDelivery = shipment.IsStandalonePickupDelivery;
             shipmentPM.StandalonePickupDeliveryId = shipment.StandalonePickupDeliveryId;
             shipmentPM.ForwarderStandaloneShipmentId = shipment.ForwarderStandaloneShipmentId;
@@ -3901,6 +3899,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.PODReceivedDate = shipment.PODReceivedDate;
             shipmentPM.IsPODReceived = shipment.IsPODReceived;
             shipmentPM.IsHTSMissing = shipment.IsHTSMissing;
+            shipmentPM.HasUnassignedData = shipment.HasUnassignedData;
             shipmentPM.IsStandalonePickupDelivery = shipment.IsStandalonePickupDelivery;
             shipmentPM.ParentShipmentDirectionId = shipment.ParentShipmentDirectionId;
             shipmentPM.ParentShipmentNumber = shipment.ParentShipmentNumber;
@@ -11324,6 +11323,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         ApprovedCargoReadyDate = view.ApprovedCargoReadyDate,
                         HandlerUserId = view.HandlerUserId,
                         HandlerUserName = view.HandlerUserName,
+                        HasUnassignedData = view.HasUnassignedData,
                     };
 
                     list.LongMaster = EntityFieldsHelper.GetLongMasterField(view);
@@ -11994,6 +11994,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                          ParentShipmentNumber = s.ParentShipmentNumber,
                                                          ParentShipmentType = s.ParentShipmentType,
                                                          IsHTSMissing = s.IsHTSMissing,
+                                                         HasUnassignedData = s.HasUnassignedData,
                                                      };
 
             return shipmentsList;
@@ -12572,6 +12573,9 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                ContainersNumbersandTypesArray = f.ContainersNumbersandTypesArray,
                                CustomerContactEmail = f.CustomerContactEmail,
                                CustomerContactName = f.CustomerContactName,
+                               HasUnassignedData = f.HasUnassignedData,
+                               OperationalStatusId = f.OperationalStatusId,
+                               OperationalStatusName = f.OperationalStatusName,
                            };
             return myResult;
         }
@@ -12949,6 +12953,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     IsAccrualsApproved = f.IsAccrualsApproved,
                     CustomerContactEmail = f.CustomerContactEmail,
                     CustomerContactName = f.CustomerContactName,
+                    HasUnassignedData = f.HasUnassignedData,
+                    OperationalStatusName = f.OperationalStatusName,
                 };
 
                 List<ObjectField> customFields = ObjectFieldRepository.GetCustomObjectFieldsByObjectTableName("Shipment", tenant).ToList();
@@ -13223,6 +13229,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     ApprovedCargoReadyDate = f.ApprovedCargoReadyDate,
                     HandlerUserId = f.HandlerUserId,
                     HandlerUserName = f.HandlerUserName,
+                    HasUnassignedData = f.HasUnassignedData,
+                    OperationalStatusName = f.OperationalStatusName,
                 };
 
                 List<ObjectField> customFields = ObjectFieldRepository.GetCustomObjectFieldsByObjectTableName("Shipment", tenant).ToList();
@@ -13959,6 +13967,13 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
             return shipmentCustomsData;
             
+        }
+
+        public ShipmentAdditionalCloudData GetShipmentAdditionalCloudData(string shipmentId, int tenant)
+        {
+            Shipment shipment = repository.GetShipmentForCargoTracking(shipmentId, tenant);
+
+            return shipment?.ShipmentAdditionalCloudData;
         }
 
         private CargoTrackingShipmentCustomsData BuildCargoTrackingShipmentCustomsData(ShipmentAdditionalCloudCustomData cloudCustomData, int tenant)

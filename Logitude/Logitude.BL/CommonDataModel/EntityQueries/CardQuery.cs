@@ -2380,6 +2380,21 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
             return cards;
         }
+
+        public bool IsCardExisitByCardId(string cardId,int tenant)
+        {
+            bool isCardExisit = (from a in repository.context.Cards
+                                 where a.Tenant == tenant && a.Id == cardId 
+                                 select a).Any();
+            return isCardExisit;
+        }
+        public bool IsCardExisitByCardCode(string code, int tenant)
+        {
+            var cardId = repository.GetCardIdByCode(code, tenant);
+            bool isCardExisit = cardId == null ? false : true;
+
+            return isCardExisit;
+        }
     }
 
     public class ShortPartnersDetails

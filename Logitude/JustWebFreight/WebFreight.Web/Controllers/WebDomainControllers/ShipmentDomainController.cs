@@ -1,4 +1,5 @@
-﻿using Logitude.BL.CommonDataModel.EntityPMs;
+﻿using Logitude.BL.CommonDataModel.EntityLists;
+using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.DataContracts;
 using Logitude.BL.Helpers;
@@ -18,21 +19,16 @@ using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.StorageService;
-using Logitude.WarehouseLib.BL.EntityQueryServices;
 using Logitude.WarehouseLib.Data;
-using Logitude.WarehouseLib.Data.EntityLists;
 using Logitude.WarehouseLib.Data.EntityPOCOs;
 using Logitude.WarehouseLib.Data.Repositories;
 using Logitude.XSD.Artemus;
 using Microsoft.Practices.Unity;
-using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
-using Simplog.Data.InvoiceModel;
-using Simplog.Data.InvoiceModel.Repositories;
 using Simplog.Data.QuoteModel;
 using Simplog.Data.QuoteModel.EntityPOCOs;
 using Simplog.Data.QuoteModel.Repositories;
@@ -59,6 +55,7 @@ using System.Transactions;
 using System.Web;
 using System.Web.Http;
 using System.Web.Script.Serialization;
+using System.Xml.Serialization;
 using WebFreight.Web.Helpers;
 using WebFreight.Web.Helpers.APIHelpers;
 using WebFreight.Web.Security;
@@ -3149,6 +3146,92 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
+        }
+
+        private CountryRepository countryRepository;
+        private StateRepository stateRepository;
+        private int myTenant;
+        public HttpResponseMessage GetAddressFromUnassignedXML(string shipmentId, string fieldName)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                myTenant = authToken.Tenant;
+                SecurityUtility.AuthenticationOnTenant(myTenant);
+                countryRepository = new CountryRepository(myTenant);
+                stateRepository = new StateRepository(myTenant);
+
+                IQueryable<ShipmentUnassignedField> shipmentUnassignedFields = this.GetShipmentUnassignedField(shipmentId);
+                ShipmentUnassignedField myUnassignedField = shipmentUnassignedFields.Where(d => d.FieldName == fieldName).FirstOrDefault();
+
+                AddressList myResult = null;
+                if (!string.IsNullOrEmpty(myUnassignedField.ReceivedData))
+                {
+                    Logitude.BL.CommonDataModel.APIDataContract.ApiV1.Address address = LogitudeXmlSerializer.DeserializeObject<Logitude.BL.CommonDataModel.APIDataContract.ApiV1.Address>(myUnassignedField.ReceivedData);
+                    myResult = this.CreateAddressList(address);
+                }
+
+                return Request.CreateResponse(HttpStatusCode.OK, myResult);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+        private IQueryable<ShipmentUnassignedField> GetShipmentUnassignedField(string shipmentId)
+        {
+            ShipmentUnassignedFieldRepository shipmentUnassignedFieldRepository = new ShipmentUnassignedFieldRepository(myTenant);
+            return shipmentUnassignedFieldRepository.GetShipmentUnassignedFieldsByShipmentId(shipmentId, myTenant);
+        }
+        private AddressList CreateAddressList(Logitude.BL.CommonDataModel.APIDataContract.ApiV1.Address address)
+        {
+            string countryId = this.GetCountryId(address);
+            string stateId = this.GetStateId(address);
+
+            return new AddressList()
+            {
+                Name = address.Name,
+                City = address.City,
+                CountryId = countryId,
+                CountryCode = address.Country == null ? null : address.Country.Code,
+                StateId = stateId,
+                Address1 = address.Address1,
+                Address2 = address.Address2,
+                ZipCode = address.ZipCode,
+                PhoneNumber = address.PhoneNumber,
+                FaxNumber = address.FaxNumber,
+            };
+        }
+        private string GetCountryId(Logitude.BL.CommonDataModel.APIDataContract.ApiV1.Address address)
+        {
+            if(address.Country == null)
+            {
+                return null;
+            }
+
+            Country country = countryRepository.GetSingleCountryByCode(address.Country.Code, myTenant);
+            if(country == null)
+            {
+                return null;
+            }
+
+            return country.Id;
+        }
+        private string GetStateId(Logitude.BL.CommonDataModel.APIDataContract.ApiV1.Address address)
+        {
+            if (address.State == null)
+            {
+                return null;
+            }
+
+            State state = stateRepository.GetSingleStateByCode(address.State.Code, myTenant);
+            if (state == null)
+            {
+                return null;
+            }
+
+            return state.Id;
         }
     }
 }

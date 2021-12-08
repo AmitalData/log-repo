@@ -775,6 +775,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                 EntityId = entityPM.Id,
                 ObjectTableName = objectTableName,
                 OldStatusId = entityPoco.StatusId,
+                OldOperationalStatusId = entityPoco.OperationalStatusId,
                 EventTypeCode = eventTypeCode,
             });
         }
@@ -787,6 +788,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                 EntityId = entityPM.Id,
                 ObjectTableName = objectTableName,
                 OldStatusId = entityPoco.StatusId,
+                OldOperationalStatusId = entityPoco.OperationalStatusId,
                 EventTypeCode = eventTypeCode,
                 Notes = eventNotes,
             });
@@ -800,6 +802,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                 EntityId = entityPM.Id,
                 ObjectTableName = objectTableName,
                 OldStatusId = entityPoco.StatusId,
+                OldOperationalStatusId = entityPoco.OperationalStatusId,
                 EventTypeCode = eventTypeCode,
                 EventDateTime = eventDateTime,
             });
@@ -813,6 +816,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                 EntityId = entityPM.Id,
                 ObjectTableName = objectTableName,
                 OldStatusId = entityPoco.StatusId,
+                OldOperationalStatusId = entityPoco.OperationalStatusId,
                 EventTypeCode = eventTypeCode,
                 EventDateTime = eventDateTime,
                 Notes = eventNotes,
@@ -834,6 +838,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                 EntityId = entityPM.Id,
                 ObjectTableName = objectTableName,
                 OldStatusId = entityPoco.StatusId,
+                OldOperationalStatusId = entityPoco.OperationalStatusId,
                 EventTypeCode = eventTypeCode,
                 EventDateTime = eventDateTime,
                 PickUp = myPickUp,
@@ -856,6 +861,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                 EntityId = entityPM.Id,
                 ObjectTableName = objectTableName,
                 OldStatusId = entityPoco.StatusId,
+                OldOperationalStatusId = entityPoco.OperationalStatusId,
                 EventTypeCode = eventTypeCode,
                 EventDateTime = eventDateTime,
                 Delivery = myDelivery,
@@ -883,7 +889,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                 else
                 {
                     EventType eventType = allEventTypes.Where(d => d.Code == args.EventTypeCode).FirstOrDefault();
-
                     if (eventType == null)
                     {
                         throw new Exception("Event Type is not recognized:" + args.EventTypeCode);
@@ -996,16 +1001,12 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                         if (eventType.IsCustomerView)
                         {
                             ContactsUnseenEntitiesHelper.AddUnseenEntityRecord(myTraceEvent.Id, tenant);
-
                             ComputeLastSharedEvent(entityPM);
                         }
 
-
                         if (!string.IsNullOrEmpty(eventType.CustomField))
                         {
-
                             EventCustomFieldUpdateService.UpdateEventCustomFieldValue(new UpdateEventCustomFieldArgs() { CustomField = eventType.CustomField, EventDateTime = myTraceEvent.EventDateTime, Entity = entityPM, EntityId = args.EntityId, ObjectTableName = args.ObjectTableName, Tenant = args.Tenant });
-
                         }
                     }
                 }
@@ -1043,75 +1044,198 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
 
                         if (!string.IsNullOrEmpty(eventType.EntityStatusId))
                         {
-                            TraceEvent previousEvent = null;
-
-                            List<TraceEvent> iTraceEventList = (from a in objectContext.TraceEvent.Include("EventType").Include("EventType.EntityStatus")
-                                                                where a.Tenant == tenant
-                                                                && a.EntityId == entityPM.Id
-                                                                && a.ObjectTableId == objectTableId
-                                                                && a.EventType.EntityStatus != null
-                                                                && a.Deleted == false
-                                                                select a).ToList();
-
-                            foreach (TraceEvent e in iTraceEventList)
+                            if (entityPM.StatusId == eventType.EntityStatusId)
                             {
-                                if (!e.Deleted)
-                                {
-                                    if (e.EventType.EntityStatus != null)
-                                    {
-                                        if (previousEvent == null)
-                                        {
-                                            previousEvent = e;
-                                        }
+                                TraceEvent previousEvent = null;
 
-                                        else
+                                List<TraceEvent> iTraceEventList = (from a in objectContext.TraceEvent.Include("EventType").Include("EventType.EntityStatus")
+                                                                    where a.Tenant == tenant
+                                                                    && a.EntityId == entityPM.Id
+                                                                    && a.ObjectTableId == objectTableId
+                                                                    && a.EventType.EntityStatus != null
+                                                                    && a.Deleted == false
+                                                                    select a).ToList();
+
+                                foreach (TraceEvent e in iTraceEventList)
+                                {
+                                    if (!e.Deleted)
+                                    {
+                                        if (e.EventType.EntityStatus != null)
                                         {
-                                            if (e.EventType.EntityStatus.StatusWeight > previousEvent.EventType.EntityStatus.StatusWeight)
+                                            if (previousEvent == null)
                                             {
                                                 previousEvent = e;
+                                            }
+
+                                            else
+                                            {
+                                                if (e.EventType.EntityStatus.StatusWeight > previousEvent.EventType.EntityStatus.StatusWeight)
+                                                {
+                                                    previousEvent = e;
+                                                }
                                             }
                                         }
                                     }
                                 }
-                            }
 
-                            if (previousEvent != null)
-                            {
-                                entityPM.StatusId = previousEvent.EventType.EntityStatusId;
-                                entityPM.StatusDate = previousEvent.EventDateTime;
-                                entityPM.LastStatusLogDate = previousEvent.EventDateTime;
-
-                                switch (previousEvent.EventType.Code)
+                                if (previousEvent != null)
                                 {
-                                    case "PICD":
-                                    case "PCAR":
-                                    case "DELD":
-                                    case "DLAR":
-                                    case "RCS":
-                                    case "PIOD":
-                                    case "PIAR":
-                                    case "DEAR":
-                                        {
-                                            entityPM.StatusLocation = previousEvent.Location;
-                                            break;
-                                        }
+                                    entityPM.StatusId = previousEvent.EventType.EntityStatusId;
+                                    entityPM.StatusDate = previousEvent.EventDateTime;
+                                    entityPM.LastStatusLogDate = previousEvent.EventDateTime;
 
-                                    default:
-                                        {
-                                            entityPM.StatusLocation = GetStatusLocation(new EventStatusTracerArgs() { EventTypeCode = previousEvent.EventType.Code });
-                                            break;
-                                        }
+                                    switch (previousEvent.EventType.Code)
+                                    {
+                                        case "PICD":
+                                        case "PCAR":
+                                        case "DELD":
+                                        case "DLAR":
+                                        case "RCS":
+                                        case "PIOD":
+                                        case "PIAR":
+                                        case "DEAR":
+                                            {
+                                                entityPM.StatusLocation = previousEvent.Location;
+                                                break;
+                                            }
+
+                                        default:
+                                            {
+                                                entityPM.StatusLocation = GetStatusLocation(new EventStatusTracerArgs() { EventTypeCode = previousEvent.EventType.Code });
+                                                break;
+                                            }
+                                    }
+                                }
+
+                                else
+                                {
+                                    EventType firstEventType = allEventTypes.Where(d => d.Code == "ORDR").FirstOrDefault();
+                                    entityPM.StatusId = firstEventType.EntityStatusId;
+                                    entityPM.StatusDate = entityPM.CreateDateTime;
+                                    entityPM.LastStatusLogDate = entityPM.CreateDateTime;
+                                    entityPM.StatusLocation = null;
+                                }
+
+                                entityPoco.StatusId = entityPM.StatusId;
+                                entityPoco.StatusDate = entityPM.StatusDate;
+                                entityPoco.StatusLocation = entityPM.StatusLocation;
+                                entityPoco.LastStatusLogDate = entityPM.LastStatusLogDate;
+
+                                if (entityPM.ShipmentLevelCode == "D" || entityPM.ShipmentLevelCode == "C")
+                                {
+                                    entityMasterData.StatusId = entityPM.StatusId;
+                                    entityMasterData.StatusDate = entityPM.StatusDate;
+                                    entityMasterData.StatusLocation = entityPM.StatusLocation;
                                 }
                             }
 
-                            else
+                            else if (FeatureToggleHelper.HasFeatureToggle("OPS", tenant) && entityPM.OperationalStatusId == eventType.EntityStatusId)
                             {
-                                EventType firstEventType = allEventTypes.Where(d => d.Code == "ORDR").FirstOrDefault();
-                                entityPM.StatusId = firstEventType.EntityStatusId;
-                                entityPM.StatusDate = entityPM.CreateDateTime;
-                                entityPM.LastStatusLogDate = entityPM.CreateDateTime;
-                                entityPM.StatusLocation = null;
+                                List<TraceEvent> iTraceEventList = (from a in objectContext.TraceEvent.Include("EventType").Include("EventType.EntityStatus")
+                                                                    where a.Tenant == tenant
+                                                                    && a.EntityId == entityPM.Id
+                                                                    && a.ObjectTableId == objectTableId
+                                                                    && a.EventType.EntityStatus != null
+                                                                    && a.EventType.EntityStatus.EntityStatusTypeCode == "O"
+                                                                    && a.Deleted == false
+                                                                    select a).ToList();
+
+                                TraceEvent previousEvent = null;
+
+                                foreach (TraceEvent e in iTraceEventList)
+                                {
+                                    if (!e.Deleted)
+                                    {
+                                        if (e.EventType.EntityStatus != null)
+                                        {
+                                            if (previousEvent == null)
+                                            {
+                                                previousEvent = e;
+                                            }
+
+                                            else
+                                            {
+                                                if (e.EventType.EntityStatus.StatusWeight > previousEvent.EventType.EntityStatus.StatusWeight)
+                                                {
+                                                    previousEvent = e;
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+
+                                if (previousEvent != null)
+                                {
+                                    entityPM.OperationalStatusId = previousEvent.EventType.EntityStatusId;
+                                }
+
+                                else
+                                {
+                                    entityPM.OperationalStatusId = null;
+                                }
+
+                                entityPoco.OperationalStatusId = entityPM.OperationalStatusId;
+
+                                if (entityPM.ShipmentLevelCode == "D" || entityPM.ShipmentLevelCode == "C")
+                                {
+                                    entityMasterData.OperationalStatusId = entityPM.OperationalStatusId;
+                                }
                             }
+                        }
+                    }
+                }
+            }
+        }
+        private void ComputeEventStatus(EventStatusTracerArgs args)
+        {
+            EventType newEventType = allEventTypes.Where(d => d.Code == args.EventTypeCode).FirstOrDefault();
+
+            if (!string.IsNullOrEmpty(newEventType.EntityStatusId))
+            {
+                args.StatusLocation = GetStatusLocation(args);
+
+                EntityStatus entityStatus = allEntityStatuses.Where(d => d.Id == newEventType.EntityStatusId).FirstOrDefault();
+                if(entityStatus != null)
+                {
+                    if (FeatureToggleHelper.HasFeatureToggle("OPS", tenant) && entityStatus.EntityStatusTypeCode == "O")
+                    {
+                        if (string.IsNullOrEmpty(args.OldOperationalStatusId))
+                        {
+                            entityPM.OperationalStatusId = newEventType.EntityStatusId;
+                            entityPoco.OperationalStatusId = entityPM.OperationalStatusId;
+
+                            if (entityPM.ShipmentLevelCode == "D" || entityPM.ShipmentLevelCode == "C")
+                            {
+                                entityMasterData.OperationalStatusId = entityPM.OperationalStatusId;
+                            }
+                        }
+
+                        else
+                        {
+                            EntityStatus newEntityStatus = allEntityStatuses.Where(d => d.Id == newEventType.EntityStatusId).FirstOrDefault();
+                            EntityStatus oldEntityStatus = allEntityStatuses.Where(d => d.Id == args.OldOperationalStatusId).FirstOrDefault();
+
+                            if (newEntityStatus.StatusWeight >= oldEntityStatus.StatusWeight)
+                            {
+                                entityPM.OperationalStatusId = newEventType.EntityStatusId;
+                                entityPoco.OperationalStatusId = entityPM.OperationalStatusId;
+
+                                if (entityPM.ShipmentLevelCode == "D" || entityPM.ShipmentLevelCode == "C")
+                                {
+                                    entityMasterData.OperationalStatusId = entityPM.OperationalStatusId;
+                                }
+                            }
+                        }
+                    }
+
+                    else
+                    {
+                        if (string.IsNullOrEmpty(args.OldStatusId))
+                        {
+                            entityPM.StatusId = newEventType.EntityStatusId;
+                            entityPM.StatusDate = args.EventDateTime;
+                            entityPM.StatusLocation = args.StatusLocation;
+                            entityPM.LastStatusLogDate = TenantServerConfigration.GetCurrentDateTime(tenant);
 
                             entityPoco.StatusId = entityPM.StatusId;
                             entityPoco.StatusDate = entityPM.StatusDate;
@@ -1125,63 +1249,34 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                                 entityMasterData.StatusLocation = entityPM.StatusLocation;
                             }
                         }
-                    }
-                }
-            }
-        }
-        private void ComputeEventStatus(EventStatusTracerArgs args)
-        {
-            EventType newEventType = allEventTypes.Where(d => d.Code == args.EventTypeCode).FirstOrDefault();
 
-            if (newEventType.EntityStatusId != null)
-            {
-                args.StatusLocation = GetStatusLocation(args);
-
-                if (string.IsNullOrEmpty(args.OldStatusId))
-                {
-                    entityPM.StatusId = newEventType.EntityStatusId;
-                    entityPM.StatusDate = args.EventDateTime;
-                    entityPM.StatusLocation = args.StatusLocation;
-                    entityPM.LastStatusLogDate = TenantServerConfigration.GetCurrentDateTime(tenant);
-
-                    entityPoco.StatusId = entityPM.StatusId;
-                    entityPoco.StatusDate = entityPM.StatusDate;
-                    entityPoco.StatusLocation = entityPM.StatusLocation;
-                    entityPoco.LastStatusLogDate = entityPM.LastStatusLogDate;
-
-                    if (entityPM.ShipmentLevelCode == "D" || entityPM.ShipmentLevelCode == "C")
-                    {
-                        entityMasterData.StatusId = entityPM.StatusId;
-                        entityMasterData.StatusDate = entityPM.StatusDate;
-                        entityMasterData.StatusLocation = entityPM.StatusLocation;
-                    }
-                }
-
-                else
-                {
-                    EntityStatus newEntityStatus = allEntityStatuses.Where(d => d.Id == newEventType.EntityStatusId).FirstOrDefault();
-                    EntityStatus oldEntityStatus = allEntityStatuses.Where(d => d.Id == args.OldStatusId).FirstOrDefault();
-
-                    if (newEntityStatus.StatusWeight >= oldEntityStatus.StatusWeight)
-                    {
-                        entityPM.StatusId = newEventType.EntityStatusId;
-                        entityPM.StatusDate = args.EventDateTime;
-                        entityPM.StatusLocation = args.StatusLocation;
-                        entityPM.LastStatusLogDate = TenantServerConfigration.GetCurrentDateTime(tenant);
-
-                        entityPoco.StatusId = entityPM.StatusId;
-                        entityPoco.StatusDate = entityPM.StatusDate;
-                        entityPoco.StatusLocation = entityPM.StatusLocation;
-                        entityPoco.LastStatusLogDate = entityPM.LastStatusLogDate;
-
-                        if (entityPM.ShipmentLevelCode == "D" || entityPM.ShipmentLevelCode == "C")
+                        else
                         {
-                            entityMasterData.StatusId = entityPM.StatusId;
-                            entityMasterData.StatusDate = entityPM.StatusDate;
-                            entityMasterData.StatusLocation = entityPM.StatusLocation;
+                            EntityStatus newEntityStatus = allEntityStatuses.Where(d => d.Id == newEventType.EntityStatusId).FirstOrDefault();
+                            EntityStatus oldEntityStatus = allEntityStatuses.Where(d => d.Id == args.OldStatusId).FirstOrDefault();
+
+                            if (newEntityStatus.StatusWeight >= oldEntityStatus.StatusWeight)
+                            {
+                                entityPM.StatusId = newEventType.EntityStatusId;
+                                entityPM.StatusDate = args.EventDateTime;
+                                entityPM.StatusLocation = args.StatusLocation;
+                                entityPM.LastStatusLogDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+
+                                entityPoco.StatusId = entityPM.StatusId;
+                                entityPoco.StatusDate = entityPM.StatusDate;
+                                entityPoco.StatusLocation = entityPM.StatusLocation;
+                                entityPoco.LastStatusLogDate = entityPM.LastStatusLogDate;
+
+                                if (entityPM.ShipmentLevelCode == "D" || entityPM.ShipmentLevelCode == "C")
+                                {
+                                    entityMasterData.StatusId = entityPM.StatusId;
+                                    entityMasterData.StatusDate = entityPM.StatusDate;
+                                    entityMasterData.StatusLocation = entityPM.StatusLocation;
+                                }
+                            }
                         }
                     }
-                }
+                }                
             }
 
             else
@@ -1584,14 +1679,69 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                             }
                         }
                     }
+
+                    else if (FeatureToggleHelper.HasFeatureToggle("OPS", tenant) && entityPM.OperationalStatusId == traceEvent.EventType.EntityStatusId)
+                    {
+                        RecomputeOperationalStatusAfterDelete(traceEventList, entityPM, shipment, external, shipmentsContext);
+                    }
                 }
 
                 shipmentRepository.Update(shipment);
                 shipmentRepository.SubmitChanges();
                 RunStoredProcedureClass.UpdateShipmentStatus(shipment.Id, shipment.Tenant);
+            }
+        }
+        private static void RecomputeOperationalStatusAfterDelete(List<TraceEvent> traceEventList, ShipmentPM entityPM, Shipment shipment, bool external, IShipmentsContext shipmentsContext)
+        {
+            TraceEvent previousEvent = null;
 
+            foreach (TraceEvent e in traceEventList.Where(d => d.EventType != null && d.EventType.EntityStatus != null && d.EventType.EntityStatus.EntityStatusTypeCode == "O"))
+            {
+                if (!e.Deleted)
+                {
+                    if (e.EventType.EntityStatus != null)
+                    {
+                        if (previousEvent == null)
+                        {
+                            previousEvent = e;
+                        }
 
+                        else
+                        {
+                            if (e.EventType.EntityStatus.StatusWeight > previousEvent.EventType.EntityStatus.StatusWeight)
+                            {
+                                previousEvent = e;
+                            }
+                        }
+                    }
+                }
+            }
 
+            if (previousEvent != null)
+            {
+                entityPM.OperationalStatusId = previousEvent.EventType.EntityStatusId;
+            }
+
+            else
+            {
+                entityPM.OperationalStatusId = null;
+            }
+
+            if (external)
+            {
+                shipment.OperationalStatusId = entityPM.OperationalStatusId;
+
+                if (shipment.ShipmentLevelCode != "H")
+                {
+                    ShipmentMasterDataRepository shipmentMasterDataRepository = new ShipmentMasterDataRepository(shipmentsContext);
+                    ShipmentMasterData masterData = shipmentMasterDataRepository.GetSingleMasterData(shipment.Id);
+                    if (masterData != null)
+                    {
+                        masterData.OperationalStatusId = shipment.OperationalStatusId;
+                        shipmentMasterDataRepository.Update(masterData);
+                        shipmentMasterDataRepository.SubmitChanges();
+                    }
+                }
             }
         }
         public static void DeleteShipmentTraceEventForHybrid(ShipmentPM entityPM, string traceEventId, int tenant)
@@ -1927,6 +2077,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
         public string StatusLocation { get; set; }
         public string NewStatusId { get; set; }
         public string OldStatusId { get; set; }
+        public string OldOperationalStatusId { get; set; }
         public ShipmentPickUpPM PickUp { get; set; }
         public ShipmentDeliveryPM Delivery { get; set; }
         public bool IsFromShipmentAPI { get; set; }

@@ -632,11 +632,19 @@
       Name="&quot;QBO Tax Id Calculations&quot;"
       SearchFields="&quot;QBT,QBO Tax Id Calculations&quot;"
       Description="&quot;QBO Tax Id Calculations&quot;" />
+
     <Record
       Code="&quot;AEV&quot;"
       Name="&quot;Automation Event Creation&quot;"
       SearchFields="&quot;AEV,Automation Event Creation&quot;"
       Description="&quot;Automation Event Creation&quot;" />
+
+    <Record
+      Code="&quot;OPS&quot;"
+      Name="&quot;Operational Status&quot;"
+      SearchFields="&quot;OPS,Operational Status&quot;"
+      Description="&quot;Operational Status&quot;" />
+
   </Records>
   <DataContracts />
   <AdditionalTextCodes />

@@ -338,6 +338,46 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             return contacts;
         }
 
+        public List<ExtendedContactPM> GetExtendedContactPMsByTenant(int tenant)
+        {
+            List<ExtendedContactPM> contacts = (from Contact in repository.context.Contacts.Include("User")
+                                                where Contact.Tenant == tenant && Contact.UserType == "R"
+                                                join CardContact in repository.context.CardContacts
+                                                on Contact.Id equals CardContact.ContactId
+                                                into CardContacts
+                                                select new ExtendedContactPM()
+                                                {
+                                                    Id = Contact.Id,
+                                                    Tenant = Contact.Tenant,
+                                                    EnglishName = Contact.EnglishName,
+                                                    Email = Contact.Email,
+                                                    UserRoles = Contact.User != null ? Contact.User.UserRoles : null,
+                                                    CardId = CardContacts.FirstOrDefault() != null ? CardContacts.FirstOrDefault().CardId : null
+                                                }).ToList();
+
+            return contacts;
+        }
+
+        public ExtendedContactPM GetSingleExtendedContactPMsByTenant(string id, int tenant)
+        {
+            ExtendedContactPM contact = (from Contact in repository.context.Contacts.Include("User")
+                                         where Contact.Tenant == tenant && Contact.UserType == "R" && Contact.Id == id
+                                         join CardContact in repository.context.CardContacts
+                                         on Contact.Id equals CardContact.ContactId
+                                         into CardContacts
+                                         select new ExtendedContactPM()
+                                         {
+                                             Id = Contact.Id,
+                                             Tenant = Contact.Tenant,
+                                             EnglishName = Contact.EnglishName,
+                                             Email = Contact.Email,
+                                             UserRoles = Contact.User != null ? Contact.User.UserRoles : null,
+                                             CardId = CardContacts.FirstOrDefault() != null ? CardContacts.FirstOrDefault().CardId : null
+                                         }).FirstOrDefault();
+
+            return contact;
+        }
+
         public List<ContactPM> GetContactsByEmail(string email, int tenant)
         {
             email = email.ToLower();
@@ -707,7 +747,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
                             if (contactPassword != null)
                             {
-                                contact.IsUser = globalContact.IsUser;
+                                contact.IsUser = globalContact != null ? globalContact.IsUser: false;
                                 contact.HasPassword = true;
                                 contact.IsLocked = contactPassword.IsLocked;
                                 contact.MustChangePassword = contactPassword.MustChangePassword;

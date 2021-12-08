@@ -1,0 +1,50 @@
+<style>
+    .FormFieldRow {
+        height: 30px;
+    }
+</style>
+
+<table>
+    <tr>
+        <td>
+            <div class="MediaFill">
+                <table *ngIf="AdvancedAutomationSendInterfaceDetails">
+                    <tr class="FormFieldRow">
+                        <td style="width:130px;vertical-align:central">
+                            <LogLabel [Text]="'Include Events Types'" [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td style="width:250px;">
+                            <div style="height: 100%; width: 100%;">
+                                <LogCheckBox [ObjectFieldName]="'IncludeEvents'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                            </div>
+                        </td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td colspan="3"> </td>
+                    </tr>
+                </table>
+            </div>
+        </td>
+    </tr>
+    <tr style="height: 32px;">
+        <td style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+                    <td style="width: 57px;">
+                        <button class="Button" (click)="CloseButtonClicked()">Cancel</button>
+                    </td>
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+                    <td style="width: 57px;">
+                        <button class="RedButton" (click)="SaveButtonClicked()">Ok</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>

@@ -46,9 +46,9 @@ namespace LogitudeTransferData
         private void button1_Click(object sender, EventArgs e)
         {
             var tenant = int.Parse(textBox1.Text);
-            List<ContactPM> contactPMs = GetAllContacts(tenant);
+            List<ExtendedContactPM> contactPMs = GetAllContacts(tenant);
 
-            ProduceKafkaMessages<ContactPM>(contactPMs, KakaMessageTypes.Contact);
+            ProduceKafkaMessages<ExtendedContactPM>(contactPMs, KakaMessageTypes.Contact);
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -199,10 +199,10 @@ namespace LogitudeTransferData
             return cardPMs;
         }
 
-        private List<ContactPM> GetAllContacts(int tenant)
+        private List<ExtendedContactPM> GetAllContacts(int tenant)
         {
             ContactQuery contactQuery = new ContactQuery(tenant);
-            List<ContactPM> contactPMs = contactQuery.GetContactPMsWithoutPassWordsByTenant(tenant);
+            List<ExtendedContactPM> contactPMs = contactQuery.GetExtendedContactPMsByTenant(tenant);
             return contactPMs;
         }
 
@@ -232,10 +232,10 @@ namespace LogitudeTransferData
                 {
                     foreach (T PM in PMs)
                     {
+
                         counter++;
                         var serializedContact = JsonConvert.SerializeObject(PM, Formatting.Indented);
-                        var deliveryReport = producer.ProduceAsync(KafkaTopics.LookupsTopic, new Message<long, string> { Key = kakaMessageTypes, Value = serializedContact });
-                        deliveryReport.Wait();
+                        var deliveryReport = producer.ProduceAsync(KafkaTopics.LookupsTopic, new Message<long, string> { Key = kakaMessageTypes, Value = serializedContact }).GetAwaiter().GetResult();
                         Console.WriteLine($"Upsert Lookup: {counter}");
                     }
                 }

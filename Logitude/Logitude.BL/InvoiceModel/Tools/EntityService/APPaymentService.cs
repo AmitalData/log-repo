@@ -33,7 +33,6 @@ using Logitude.Accounting.Data.Repositories;
 using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.BL.InvoiceModel.EntityOtherServices;
 using Logitude.BL.InvoiceModel.EntityQueries;
-using Logitude.Accounting.BL.EntityQueryServices;
 
 namespace Logitude.BL.InvoiceModel.Tools.EntityService
 {
@@ -1291,11 +1290,10 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         {
             
 
-            if (theEntityPm.ReconcileInternalTransIds == null)
+            if (theEntityPm.ReconcileInternalTrans == null)
                 return;
-            var ledgerTransactions = GetReconcileTransactions(theEntityPm);
 
-            journal.JournalReconciles = GetInternalJournalReconciles(ledgerTransactions, journal);
+            journal.JournalReconciles = GetInternalJournalReconciles(theEntityPm.ReconcileInternalTrans, journal);
         }
 
         private static List<JournalReconcilePM> GetInternalJournalReconciles(List<LedgerTransactionPM> ledgerTransactions, JournalPM journal) {
@@ -1308,18 +1306,11 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 Line = JournalInternalReconcileLine++,
                 LedgerTransactionId = transaction.Id,
                 CurrencyId = transaction.OpenAmountCurrencyId,
-                ReconciliationAmount = transaction.OpenAmount,
-                IsPartial = false
+                ReconciliationAmount = transaction.AmountToReconcile,
+                IsPartial = transaction.OpenAmount != transaction.AmountToReconcile
             }).ToList();
         }
 
-        private static List<LedgerTransactionPM> GetReconcileTransactions(APPaymentPM theEntityPm)
-        {
-            List<string> transactionsIds = theEntityPm.ReconcileInternalTransIds.Split(',').ToList();
-            LedgerTransactionQueryService transactionQueryService = new LedgerTransactionQueryService(theEntityPm.Tenant);
-            List<LedgerTransactionPM> recoTransactions = transactionQueryService.GetLedgerTransactionPMsByIdList(transactionsIds, theEntityPm.Tenant);
-            return recoTransactions;
-        }
 
         private void CreateAPPaymentJournal(APPaymentPM paymentPM, Tenant tenantPOCO)
         {
