@@ -326,9 +326,8 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
         }
 
         if (!AppTool.IsNullOrEmpty(this.SelectedInternalDocument.ToSpecificeEmail)) {
-            this.ToEmail = (this.ToEmail ? ";" :"") + this.SelectedInternalDocument.ToSpecificeEmail;
+            this.ToEmail = this.SelectedInternalDocument.ToSpecificeEmail;
         }
-
 
         this.ChildEntityId = this.SelectedInternalDocument.ChildEntityId ? this.SelectedInternalDocument.ChildEntityId : "";
         this.ChildObjectTableId = this.SelectedInternalDocument.ChildObjectTableId ? this.SelectedInternalDocument.ChildObjectTableId : "";
