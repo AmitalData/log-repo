@@ -12,6 +12,7 @@ namespace Logitude.Server.Tools.Models
         public bool StatusChanged { get; set; }
         public DateTime? LogDateTime { get; set; }
         public string StatusId { get; set; }
+        public string OperationalStatusId { get; set; }
         public string StatusName { get; set; }
         public string StatusLocation { get; set; }
         public DateTime? StatusDate { get; set; }

@@ -76,7 +76,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     SecurityUtility.AuthenticationOnTenant(tenant);
 
                     AddManualTraceEventsHelper addManualTraceEventsHelper = new AddManualTraceEventsHelper(tenant);
-                    Logitude.BL.Helpers.NewTraceEventResult myResult = addManualTraceEventsHelper.Trace(args, loggedUserEmail);
+                    NewTraceEventResult myResult = addManualTraceEventsHelper.Trace(args, loggedUserEmail);
                     
                     scope.Complete();
                     return Request.CreateResponse(HttpStatusCode.OK, myResult);
