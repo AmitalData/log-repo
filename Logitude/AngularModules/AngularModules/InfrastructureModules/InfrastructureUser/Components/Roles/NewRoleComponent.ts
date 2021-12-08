@@ -29,7 +29,9 @@ export class NewRoleComponent extends BaseComponent {
     constructor(private entityResourceService: EntityResourceService) {
         super();
         this.InitializeServices();
-        this.BuildQueryFilters();
+        if (SessionLocator.Tenant != 0) {
+            this.BuildQueryFilters();
+        }
     }
 
     private myRolePMService: RolePMService;
