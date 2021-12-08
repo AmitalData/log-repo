@@ -377,11 +377,10 @@
 
                                     <!-- Create Date-->
                                     <tr class="FormFieldRow">
-                                        <td>
+                                        <td style="width:153px;">
                                             <LogLabel [ObjectFieldName]="'CreateDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="'Ticket.F.CreateDate'"></LogLabel>
                                         </td>
-
-                                        <td>
+                                        <td style="width:235px;">
                                             <LogDatePicker [ObjectFieldName]="'CreateDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
                                         </td>
 
@@ -464,7 +463,7 @@
                                                     [DataContext]="DataContext"
                                                     [LookUpTableName]="'User'"
                                                     [DependencyFilter2Value]="EmployeeGroupId"
-                                                    [HideAdd]="true" [HideEdit]="true"  [HideColumns]="true">
+                                                    [HideAdd]="true" [HideEdit]="true" [HideColumns]="true">
                                             </LogLov>
                                         </td>
 
@@ -480,7 +479,7 @@
                                         </td>
                                         <td>
                                             <div>
-                                                <EmailSearchTextBox  [DontInCludeInactive]="true"  [IsDisabled]="!IsTicketEditEnabled" [EmailsText]="CCs" (EmailsTextChanged)="CCs = $event"></EmailSearchTextBox>
+                                                <EmailSearchTextBox [DontInCludeInactive]="true" [IsDisabled]="!IsTicketEditEnabled" [EmailsText]="CCs" (EmailsTextChanged)="CCs = $event"></EmailSearchTextBox>
                                             </div>
                                         </td>
 
@@ -496,7 +495,7 @@
                                         </td>
                                         <td>
                                             <div>
-                                                <EmailSearchTextBox  [DontInCludeInactive]="true"  [IsDisabled]="!IsTicketEditEnabled" [EmailsText]="InternalUsers" [IsUsersList]="true" (EmailsTextChanged)="InternalUsers = $event"></EmailSearchTextBox>
+                                                <EmailSearchTextBox [DontInCludeInactive]="true" [IsDisabled]="!IsTicketEditEnabled" [EmailsText]="InternalUsers" [IsUsersList]="true" (EmailsTextChanged)="InternalUsers = $event"></EmailSearchTextBox>
                                             </div>
                                         </td>
 
