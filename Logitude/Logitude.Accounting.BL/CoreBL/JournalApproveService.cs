@@ -33,6 +33,7 @@ using Logitude.Accounting.BL.CoreBL.ReverseEngineer;
 using Logitude.Server.Tools;
 using System.Web;
 using Logitude.Accounting.BL.CoreBL.Reports.Aging;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 
 namespace Logitude.Accounting.BL.CoreBL
 {
@@ -173,6 +174,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     //if (!_ExecAsSP)
                     {
                         FillIdCountersUseNewDBTransaction(myLedgerTransactionsWithCounters);
+                        CalculateTotalFutureOpenChequesForCreditGlAccount(myLedgerTransactionsWithCounters);
                     }
                 }
                 //scope.Complete();//Please do not commit !!!!
@@ -180,7 +182,32 @@ namespace Logitude.Accounting.BL.CoreBL
             return null;
         }
 
+        private void CalculateTotalFutureOpenChequesForCreditGlAccount(List<LedgerTransactionPM> ledgerTrasnctions)
+        {
+            foreach (var trasnction in ledgerTrasnctions.Where(trasnction => trasnction.DueDate > GetCurrentDate(_Tenant)
+                            && trasnction.LocalAmountCredit != 0))
+            {
+                var card = GetBillToByGLAccountId(_Tenant, trasnction.AccountId);
+                if (card != null)
+                {
+                    GLAccountChequesTotalCalculator chequesTotalCalculator = new GLAccountChequesTotalCalculator(_Tenant);
+                    chequesTotalCalculator.RecalculateChequesTotalForBillToAccount(card.Id);
+                }
+            }
+        }
+        private Card GetBillToByGLAccountId(int tenant, string glAccountId)
+        {
+            CardRepository cardRepo = new CardRepository(tenant);
+            var card = cardRepo.GetCardByGLAccountId(glAccountId, tenant);
+            return card;
+        }
 
+        private static DateTime GetCurrentDate(int tenant)
+        {
+            DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+            todayDate = new DateTime(todayDate.Year, todayDate.Month, todayDate.Day, 11, 59, 59);
+            return todayDate;
+        }
         private void AccountingStreamingInNewSerializableTransaction(MyActions actions, List<LedgerTransactionPM> myLedgerTransactionsWithCounters, List<GLAccountAgingDataPM> gLAccountAgingDataPMs)
         {
             /// orian 300000 trans in a month >> 1 journal 6 transaction no more then 6 GLAccountTotalByMonths >  in a secound 
