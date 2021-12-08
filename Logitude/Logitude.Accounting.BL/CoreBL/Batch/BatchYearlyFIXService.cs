@@ -18,6 +18,12 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
     {
         public BatchYearlyFIXService(BatchTaskExecutionPM batchTaskExecution) : base(batchTaskExecution) { }
 
+        public void TestIt(BatchTaskExecutionPM batchTaskExecution)
+        {
+           
+            base.BatchTaskExecution=batchTaskExecution;
+            RunCode();
+        }
         public override void RunCode()
         {
             string xmlParameters = BatchTaskExecution.PrametersXml;
@@ -37,8 +43,22 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
                     DateTime dateTime = new DateTime(parameterArgs.Year, month, 1);
                     switch (parameterArgs.MyFixType)
                     {
+                        case "ReverseEngineerTotalByMonthServiceControl":
+                            {
+                                try
+                                {
+                                    var s = new ReverseEngineerTotalByMonth_ControlAccountService(dateTime, parameterArgs.Tenant, null);
+                                    s.FixDbIntegrityFromLedgeToTotal(/*param.ChangeSupplier2Customer*/);
+                                }
+                                catch (Exception E) when (E.Message == ReverseEngineerTotalByMonth_ControlAccountService.const_isokNothingDone)
+                                {
+
+                                    Debug.WriteLine("const_isokNothingDone");
+                                    //throw;
+                                }
+                                break;
+                            }
                         case "ReverseEngineerTotalByMonthService":
-                        default:
                             {
                                 try
                                 {
@@ -53,6 +73,11 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
                                 }
                                 break;
                             }
+                            default:
+                            {
+                                throw new ArgumentOutOfRangeException("");
+                            }
+                            break;
                     }
                 }
             }

@@ -40,9 +40,10 @@
             this.tESTADHOKToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.miscToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loadBigJournalFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.fixJourbalToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.adHookToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.agingFixRepoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.fixJourbalToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.yearlyFixControlToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -134,7 +135,8 @@
             // 
             this.mupsOpenReconcileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.loadFileToolStripMenuItem,
-            this.tESTADHOKToolStripMenuItem});
+            this.tESTADHOKToolStripMenuItem,
+            this.yearlyFixControlToolStripMenuItem});
             this.mupsOpenReconcileToolStripMenuItem.Name = "mupsOpenReconcileToolStripMenuItem";
             this.mupsOpenReconcileToolStripMenuItem.Size = new System.Drawing.Size(129, 20);
             this.mupsOpenReconcileToolStripMenuItem.Text = "MupsOpenReconcile";
@@ -142,14 +144,14 @@
             // loadFileToolStripMenuItem
             // 
             this.loadFileToolStripMenuItem.Name = "loadFileToolStripMenuItem";
-            this.loadFileToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
+            this.loadFileToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.loadFileToolStripMenuItem.Text = "LoadFile";
             this.loadFileToolStripMenuItem.Click += new System.EventHandler(this.loadFileToolStripMenuItem_Click);
             // 
             // tESTADHOKToolStripMenuItem
             // 
             this.tESTADHOKToolStripMenuItem.Name = "tESTADHOKToolStripMenuItem";
-            this.tESTADHOKToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
+            this.tESTADHOKToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.tESTADHOKToolStripMenuItem.Text = "TESTADHOK";
             this.tESTADHOKToolStripMenuItem.Click += new System.EventHandler(this.tESTADHOKToolStripMenuItem_Click);
             // 
@@ -169,6 +171,13 @@
             this.loadBigJournalFileToolStripMenuItem.Text = "LoadBigJournalFile";
             this.loadBigJournalFileToolStripMenuItem.Click += new System.EventHandler(this.loadBigJournalFileToolStripMenuItem_Click);
             // 
+            // fixJourbalToolStripMenuItem
+            // 
+            this.fixJourbalToolStripMenuItem.Name = "fixJourbalToolStripMenuItem";
+            this.fixJourbalToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.fixJourbalToolStripMenuItem.Text = "FixJournal";
+            this.fixJourbalToolStripMenuItem.Click += new System.EventHandler(this.fixJournalToolStripMenuItem_Click);
+            // 
             // adHookToolStripMenuItem
             // 
             this.adHookToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -180,16 +189,16 @@
             // agingFixRepoToolStripMenuItem
             // 
             this.agingFixRepoToolStripMenuItem.Name = "agingFixRepoToolStripMenuItem";
-            this.agingFixRepoToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
+            this.agingFixRepoToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
             this.agingFixRepoToolStripMenuItem.Text = "AgingFixRepo";
             this.agingFixRepoToolStripMenuItem.Click += new System.EventHandler(this.agingFixRepoToolStripMenuItem_Click);
             // 
-            // fixJourbalToolStripMenuItem
+            // yearlyFixControlToolStripMenuItem
             // 
-            this.fixJourbalToolStripMenuItem.Name = "fixJourbalToolStripMenuItem";
-            this.fixJourbalToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.fixJourbalToolStripMenuItem.Text = "FixJournal";
-            this.fixJourbalToolStripMenuItem.Click += new System.EventHandler(this.fixJournalToolStripMenuItem_Click);
+            this.yearlyFixControlToolStripMenuItem.Name = "yearlyFixControlToolStripMenuItem";
+            this.yearlyFixControlToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.yearlyFixControlToolStripMenuItem.Text = "YearlyFixControl";
+            this.yearlyFixControlToolStripMenuItem.Click += new System.EventHandler(this.yearlyFixControlToolStripMenuItem_Click);
             // 
             // FormAccountingTester
             // 
@@ -229,5 +238,6 @@
         private System.Windows.Forms.ToolStripMenuItem miscToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem loadBigJournalFileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem fixJourbalToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem yearlyFixControlToolStripMenuItem;
     }
 }
