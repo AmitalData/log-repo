@@ -180,6 +180,7 @@
     <Compile Include="CloseTables\DetailsClassesGenerated\SecurityClearenceTypeCodeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\StuffingSiteTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\SupplierPartyTypeDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\TradeAgreementProtocolDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\TransactionNatureTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DeclaraionDetails.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\TransportMeansTypeDetails.Generated.cs" />
@@ -858,6 +859,7 @@
     <Compile Include="EntityDataMappings\Generated\TermsOfSaleTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\TPGFileTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\TradeAgreementDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\TradeAgreementProtocolDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\TradeLevyExamptTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\TransactionNatureTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\TransferCargoMethodTypeDataMapping.Generated.cs" />
@@ -1026,6 +1028,7 @@
     <Compile Include="EntityDataMappings\TermsOfSaleTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\TPGFileTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\TradeAgreementDataMapping.cs" />
+    <Compile Include="EntityDataMappings\TradeAgreementProtocolDataMapping.cs" />
     <Compile Include="EntityDataMappings\TradeLevyExamptTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\TransactionNatureTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\TransferCargoMethodTypeDataMapping.cs" />
@@ -1101,6 +1104,7 @@
     <Compile Include="EntityQueryServices\Generated\SupplierInvoiceUCRQueryService.cs" />
     <Compile Include="EntityQueryServices\Generated\SupplierInvoicePaymentQueryService.cs" />
     <Compile Include="EntityQueryServices\Generated\SupplierPartyTypeQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\TradeAgreementProtocolQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\TransportMeansTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\ContainerTypeQueryService.cs" />
     <Compile Include="EntityQueryServices\CertificateExemptionTypeQueryService.cs" />
@@ -1648,6 +1652,7 @@
     <Compile Include="EntityUpdateServices\Generated\SupplierInvoicePaymentUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\SupplierInvoiceUCRUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\SupplierPartyTypeUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\TradeAgreementProtocolUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\TransactionNatureTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\TransportMeansTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\ContainerTypeUpdateService.cs" />
