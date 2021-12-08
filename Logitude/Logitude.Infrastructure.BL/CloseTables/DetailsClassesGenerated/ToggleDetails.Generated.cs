@@ -420,6 +420,7 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "OPS,Operational Status", 
                 Description = "Operational Status", 
 			});
+
 			
             return all;
        }
