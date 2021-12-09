@@ -46,6 +46,9 @@ namespace Logitude.Server.Tools.EntityChanges.AutomationResult
             DateTime dateBefore = DateTime.Now;
             EntityChangeAutomation entityChangesAutomation = CreateEntityChangeAutomation(automation);
             ValidateAutomationResultClass validateResult = CreateValidateAutomationResultClass(automation, entityChangesAutomation);
+            if (!validateResult.IsAutomationValid)
+                return;
+
             if (validateResult.Type != "Delayed")
             {
                 CreateEvent(new AutomationEventCreationArguments(automationResultArgs.EntityChange, entityChangesAutomation, dateBefore, automationResultArgs.MainEntityChangeService.EntityChangesAutomationsSsucceedList, automation));
