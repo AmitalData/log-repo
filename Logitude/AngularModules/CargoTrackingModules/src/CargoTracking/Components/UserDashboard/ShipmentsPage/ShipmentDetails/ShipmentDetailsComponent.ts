@@ -672,16 +672,9 @@ export class ShipmentDetailsComponent implements OnInit,AfterViewInit
         this.documentDownloadService.ExternalDownloadPage(securityId,this.tenant);
     }
 
-    InternalDownloadDocument(documentId: string, documentTypeName: string) {
+    DownloadDocument(documentId: string, documentTypeName: string) {
         if (documentId)
             this.documentDownloadService.DownloadPage(documentId, this.cargoTrackingShipmentPM.ShipmentNumber + '-' + documentTypeName);
-    }
-
-    DownloadDocument(item) {
-        if (this.isSharedLink)
-            this.ExternalDownloadDocument(item.SecurityId);
-        else
-            this.InternalDownloadDocument(item.DocumentId, item.DocumentTypeName);
     }
 
     DownloadAllClick(entityId: string, securityKey: string) {
