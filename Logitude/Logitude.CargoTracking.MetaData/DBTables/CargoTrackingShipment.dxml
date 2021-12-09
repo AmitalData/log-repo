@@ -735,6 +735,8 @@
     Columns="Tenant,SecurityKey" />
   <Index
     Columns="CustomerId" />
+<Index
+    Columns="CustomsShipmentHeaderId" />
   <UniqueConstraint
     Columns="EntityType,EntityId,Tenant" />
 </Table>
