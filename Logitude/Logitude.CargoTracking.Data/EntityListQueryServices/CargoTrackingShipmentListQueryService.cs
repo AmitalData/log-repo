@@ -151,7 +151,18 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
                                                                SupplyDateTime = shipment.SupplyDateTime,
                                                                DescriptionOfGoods = shipment.DescriptionOfGoods,
                                                                ATAETASortingField = shipment.ArrivalDate != null ? shipment.ArrivalDate : shipment.ArrivalEstimationDate,
-                                                               ATDETDSortingField = shipment.DepartureDate != null ? shipment.DepartureDate : shipment.DepartureEstimationDate
+                                                               ATDETDSortingField = shipment.DepartureDate != null ? shipment.DepartureDate : shipment.DepartureEstimationDate,
+                                                               ATAETASortingField = shipment.ArrivalDate != null ? shipment.ArrivalDate: shipment.ArrivalEstimationDate,
+                                                               ATDETDSortingField = shipment.DepartureDate != null ? shipment.DepartureDate : shipment.DepartureEstimationDate,
+                                                               CreatedDone = shipment.CreatedDone,
+                                                               DeliveredDone = shipment.DeliveredDone,
+                                                               DeliveryDone = shipment.DeliveryDone,
+                                                               FromWarehouseDone = shipment.FromWarehouseDone,
+                                                               ToWarehouseDone = shipment.ToWarehouseDone,
+                                                               CustomsClearanceDate = shipment.CustomsClearanceDate,
+                                                               DeclarationDate = shipment.DeclarationDate,
+                                                               WarehouseLegActualEntryDate = shipment.WarehouseLegActualEntryDate,
+                                                               WarehouseLegExpectedEntryDate = shipment.WarehouseLegExpectedEntryDate,
                                                                
                                                            });
             return query;

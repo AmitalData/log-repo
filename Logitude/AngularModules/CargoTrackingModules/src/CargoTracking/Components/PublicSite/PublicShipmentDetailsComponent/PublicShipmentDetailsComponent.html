@@ -111,7 +111,7 @@
                             <div class="label">Created</div>
                             <div class="details">{{Shipment.CreateDate | date: 'dd/MM/yyyy'}}</div>
                         </div>
-                        <div class="middle" *ngIf="InProgressShipment || Delivered">
+                        <div class="middle" *ngIf="InProgressShipment ">
                             <!--<img class="path " [attr.src]="GetModeIcon()" alt=" " />-->
                             <svg *ngIf="Shipment.CurrentMilestoneCode != '2'" width="47px" height="24px" viewBox="0 0 39 24" version="1.1"
                                  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -175,10 +175,11 @@
                             </svg>
 
                             <div class="label" *ngIf="!Delivered && AssignedTruckerDone">{{currentMilestoneName||'In Progress'}}</div>
-                            <div class="details" *ngIf="!Delivered && AssignedTruckerDone">{{Date | date: 'dd/MM/yyyy'}}</div>
+                            
 
                             <div *ngIf="!Delivered && !AssignedTruckerDone" class="label dim">Delivered</div>
                             <div *ngIf="Delivered" class="label">Delivered</div>
+                            <div class="details" *ngIf="Delivered || (!Delivered && AssignedTruckerDone)">{{Date | date: 'dd/MM/yyyy'}}</div>
                             <!-- <div class="details">details</div> -->
                         </div>
                     </div>
@@ -189,7 +190,7 @@
 
                         <div class="dot start"></div>
                         <div class="dot middle" [class.outline]="InProgressShipment" [class.colored]="Delivered"
-                            *ngIf="InProgressShipment || Delivered"></div>
+                            *ngIf="InProgressShipment "></div>
                         <div class="dot end gray" [class.colored]="Delivered || AssignedTruckerDone"></div>
                     </div>
 
