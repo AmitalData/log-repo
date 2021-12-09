@@ -402,9 +402,13 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
             if (s && s.Name == "InternalReconcileAPPaymentCreated") {
                 this.createdPaymentNumber = s.PaymentNumber;
                 this.showInternalReconcileAPPaymentAlert = true;
-                this.onQueryChangeEvent.emit({ Filters: new ApiQueryFilters() });
+                // this.onQueryChangeEvent.emit({ Filters: new ApiQueryFilters() });
                 this.isAllSelected= false;
+                setTimeout(() => {
+                    this.onQueryChangeEvent.emit({ Filters: new ApiQueryFilters() });
+                       }, 500);
             }
+            
         });
     }
 
@@ -1381,7 +1385,8 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
                 //    }, 5000);
 
                 //});
-
+                
+                this.onQueryChangeEvent.emit({ Filters: new ApiQueryFilters() });
                 if(_callback){
                     this.RecoPM = _callback.reconciliationPM;
                 }
