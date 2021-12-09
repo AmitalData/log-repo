@@ -683,21 +683,21 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
        
         private void TracPreCarriageDeparted()
         {
-            if ((containerPM.ActualOriginPickup != null && container.ActualOriginPickup == null) && containerPM.ShipmentPreCarriageATD == null)
+            if ((containerPM.PreCarriageATD != null && container.PreCarriageATD == null) && containerPM.ShipmentPreCarriageATD == null)
             {
                 this.DeleteTraceEvent("PCDP");
-                this.CreateTraceEvent("PCDP", containerPM.ActualOriginPickup);
+                this.CreateTraceEvent("PCDP", containerPM.PreCarriageATD);
             }
-            else if ((containerPM.ActualOriginPickup == null && container.ActualOriginPickup != null) && containerPM.ShipmentPreCarriageATD == null)
+            else if ((containerPM.PreCarriageATD == null && container.PreCarriageATD != null) && containerPM.ShipmentPreCarriageATD == null)
             {
                 this.DeleteTraceEvent("PCDP");
             }
-            else if ((containerPM.ShipmentPreCarriageATD != null && container.ShipmentPreCarriageATD == null) && containerPM.ActualOriginPickup == null)
+            else if ((containerPM.ShipmentPreCarriageATD != null && container.ShipmentPreCarriageATD == null) && containerPM.PreCarriageATD == null)
             {
                 this.DeleteTraceEvent("PCDP");
                 this.CreateTraceEvent("PCDP", containerPM.ShipmentPreCarriageATD);
             }
-            else if ((containerPM.ShipmentPreCarriageATD == null && container.ShipmentPreCarriageATD != null) && containerPM.ActualOriginPickup == null)
+            else if ((containerPM.ShipmentPreCarriageATD == null && container.ShipmentPreCarriageATD != null) && containerPM.PreCarriageATD == null)
             {
                 this.DeleteTraceEvent("PCDP");
             }

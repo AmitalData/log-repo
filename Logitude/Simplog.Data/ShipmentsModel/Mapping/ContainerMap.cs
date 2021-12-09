@@ -86,9 +86,9 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.ShipmentOnCarriageToId).HasColumnName("ShipmentOnCarriageToId");
             this.Property(t => t.ShipmentLastDeliveryFrom).HasColumnName("ShipmentLastDeliveryFrom");
             this.Property(t => t.ShipmentLastDeliveryTo).HasColumnName("ShipmentLastDeliveryTo");
-            this.Property(t => t.OriginLocation).HasColumnName("OriginLocation");
-            this.Property(t => t.EstimatedOriginPickup).HasColumnName("EstimatedOriginPickup");
-            this.Property(t => t.ActualOriginPickup).HasColumnName("ActualOriginPickup");//
+            this.Property(t => t.PreCarriageLocation).HasColumnName("PreCarriageLocation");
+            this.Property(t => t.PreCarriageETD).HasColumnName("PreCarriageETD");
+            this.Property(t => t.PreCarriageATD).HasColumnName("PreCarriageATD");//
             this.Property(t => t.POLLocation).HasColumnName("POLLocation");
             this.Property(t => t.EstimatedPOLArrival).HasColumnName("EstimatedPOLArrival");
             this.Property(t => t.ActualPOLArrival).HasColumnName("ActualPOLArrival");
@@ -156,9 +156,9 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.ActualPODDischarge).HasColumnName("ActualPODDischarge");
             this.Property(t => t.EstimatedPODDeparture).HasColumnName("EstimatedPODDeparture");
             this.Property(t => t.ActualPODDeparture).HasColumnName("ActualPODDeparture");
-            this.Property(t => t.DeliveryLocation).HasColumnName("DeliveryLocation");
-            this.Property(t => t.EstimatedDelivery).HasColumnName("EstimatedDelivery");
-            this.Property(t => t.ActualDelivery).HasColumnName("ActualDelivery");
+            this.Property(t => t.OnCarriageLocation).HasColumnName("OnCarriageLocation");
+            this.Property(t => t.OnCarriageETD).HasColumnName("OnCarriageETD");
+            this.Property(t => t.OnCarriageATD).HasColumnName("OnCarriageATD");
             this.Property(t => t.LIFLocation).HasColumnName("LIFLocation");
             this.Property(t => t.EstimatedLIFArrival).HasColumnName("EstimatedLIFArrival");
             this.Property(t => t.ActualLIFArrival).HasColumnName("ActualLIFArrival");
@@ -250,6 +250,18 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.HasOptional(t => t.ShipmentTransshipment3ToPort).WithMany().HasForeignKey(d => d.ShipmentTransshipment3ToId); 
             this.HasOptional(t => t.ShipmentOnCarriageFromPort).WithMany().HasForeignKey(d => d.ShipmentOnCarriageFromId);
             this.HasOptional(t => t.ShipmentOnCarriageToPort).WithMany().HasForeignKey(d => d.ShipmentOnCarriageToId);
+            this.HasOptional(t => t.PreCarriageLocationPort).WithMany().HasForeignKey(d => d.PreCarriageLocationPortId);
+            this.HasOptional(t => t.OnCarriageLocationPort).WithMany().HasForeignKey(d => d.OnCarriageLocationPortId);
+            this.HasOptional(t => t.EmptyPickupLocationPort).WithMany().HasForeignKey(d => d.EmptyPickupLocationPortId);
+            this.HasOptional(t => t.EmptyReturnLocationPort).WithMany().HasForeignKey(d => d.EmptyReturnLocationPortId);
+            this.HasOptional(t => t.AvailabilityLocationPort).WithMany().HasForeignKey(d => d.AvailabilityLocationPortId);
+            this.HasOptional(t => t.LIFLocationPort).WithMany().HasForeignKey(d => d.LIFLocationPortId);
+            this.HasOptional(t => t.POLLocationPort).WithMany().HasForeignKey(d => d.POLLocationPortId);
+            this.HasOptional(t => t.PODLocationPort).WithMany().HasForeignKey(d => d.PODLocationPortId);
+            this.HasOptional(t => t.Transshipment1LocationPort).WithMany().HasForeignKey(d => d.Transshipment1LocationPortId);
+            this.HasOptional(t => t.Transshipment2LocationPort).WithMany().HasForeignKey(d => d.Transshipment2LocationPortId);
+            this.HasOptional(t => t.Transshipment3LocationPort).WithMany().HasForeignKey(d => d.Transshipment3LocationPortId);
+            this.HasOptional(t => t.Transshipment4LocationPort).WithMany().HasForeignKey(d => d.Transshipment4LocationPortId);
             this.HasOptional(t => t.ShipmentEntityStatus).WithMany().HasForeignKey(d => d.ShipmentStatusId);
             this.HasOptional(t => t.TerminalCard).WithMany().HasForeignKey(d => d.TerminalId);
             this.HasOptional(t => t.TerminalCardAddress).WithMany().HasForeignKey(d => d.TerminalAddressId);
