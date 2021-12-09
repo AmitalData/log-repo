@@ -242,7 +242,9 @@
     <Compile Include="CloseTablesClasses\FillCloseTable.cs" />
     <Compile Include="CloseTablesClasses\ICloseTable.cs" />
     <Compile Include="Communications.cs" />
+    <Compile Include="EntityChanges\AutomationResult\AutomationEventCreationService.cs" />
     <Compile Include="Helpers\UpdatePortSearchFieldService.cs" />
+    <Compile Include="Interfaces\IAddManualTraceEventsHelper.cs" />
     <Compile Include="KafkaConfigurations\KakaMessageTypes.cs" />
     <Compile Include="ContainerAccessor.cs" />
     <Compile Include="Contracts\GenericResponse.cs">
@@ -351,6 +353,8 @@
     <Compile Include="Mocks\MockIdCounterUtil.cs" />
     <Compile Include="Mocks\MockTranslateTextsClassUtil.cs" />
     <Compile Include="Models\AmitalRestrictOwnerModel.cs" />
+    <Compile Include="Models\NewTraceEventResult.cs" />
+    <Compile Include="Models\TraceEventsServiceArgs.cs" />
     <Compile Include="MyRegularExpressionAttribute.Shared.cs" />
     <Compile Include="QueueService\AzureQueueService.cs" />
     <Compile Include="QueueService\ConcurrentQueueService.cs" />
