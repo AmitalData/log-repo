@@ -404,6 +404,14 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "QBT,QBO Tax Id Calculations", 
                 Description = "QBO Tax Id Calculations", 
 			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "ODA", 
+                Name = "On Update Document Automation Tab", 
+                SearchFields = "ODA,On Update Document Automation Tab", 
+                Description = "On Update Document Automation Tab", 
+			});
 			
             return all;
        }

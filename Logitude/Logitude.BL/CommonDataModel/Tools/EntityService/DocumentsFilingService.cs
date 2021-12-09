@@ -42,6 +42,7 @@ using Logitude.BL.ShipmentsModel.Tools.EntityService;
 using Logitude.BL.Security;
 using Simplog.Server.Infrastructure.Helpers;
 using Logitude.Customs.Def.EntityQueryServicesExt;
+using Logitude.Server.Tools.EntityChanges;
 
 namespace Logitude.BL.CommonDataModel.Tools.EntityService
 {
@@ -365,6 +366,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             entityRepository.SubmitChanges();
 
             RunDocumentPopulateAutomaticDatesService(theEntityPm);
+            RunAutomation(theEntityPm, "OnDocumentUpdate");
             ///move after adding (was Devart.Data.Oracle.OracleException: ORA-02291: אילוץ כלילות (AMINET_MAIN.FK_N1103284768) הופר - מפתח אב לא נמצא )
             if (!tenantPM.IsDocumentsArchive && LogitudeSettings.DeploymentStage != "Simplog")
             {
@@ -883,7 +885,8 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             //this.OpenSendingQBODocumentsQueue(theEntityPm);
 
             RunDocumentPopulateAutomaticDatesService(theEntityPm);
-            
+            RunAutomation(theEntityPm, "OnDocumentUpdate");
+
             if (!tenantPM.IsDocumentsArchive && !entityPM.DontAddToQueue)
             {
                 AddToTasksQueue(theEntityPm, isNewEntity, null);
@@ -951,6 +954,19 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             string objectTableName = GetDocumentObjectTableName(documentType);
             string childEntityId = GetDocumentChildEntityId(theEntityPm, documentType);
             documentPopulateAutomaticDateUpdateService.Update(new DocumentPopulateAutomaticDateArgs() { EntityId = theEntityPm.EntityId, ObjectTableName = objectTableName, DocumentTypeCode = theEntityPm.DocumentTypeCode, ProcessType = "Upload", Tenant = theEntityPm.Tenant, ChildEntityId = childEntityId });
+        }
+
+        private void RunAutomation(DocumentsFilingPM theEntityPm, string automationType)
+        {
+            if (!theEntityPm.IsUoloadedField)
+                return;
+
+            GeneralEntityChangeService generalEntityChangeService = new GeneralEntityChangeService();
+            bool isHaveAutomation = generalEntityChangeService.CheckIfEntityHaveAutomation(theEntityPm.ObjectTableName, automationType, theEntityPm.Tenant);
+            if (!isHaveAutomation) return;
+
+            MainEntityChangeService mainEntityChangeService = new MainEntityChangeService(new EntityChangeArgs() { ProcessType = automationType, ObjectTableName = theEntityPm.ObjectTableName, EntityId = theEntityPm.EntityId, Tenant = theEntityPm.Tenant, StartDate = DateTime.Now, ExtraDetails = new OnUpdateDocumentResult { Type = "Upload", DocumentId = theEntityPm.DocumentId } });
+            mainEntityChangeService.AddEntityChange();
         }
 
         private string GetDocumentObjectTableName(DocumentType documentType)

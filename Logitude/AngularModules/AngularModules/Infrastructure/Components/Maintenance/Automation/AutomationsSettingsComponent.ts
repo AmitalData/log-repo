@@ -187,7 +187,8 @@ export class AutomationsSettingsComponent implements OnInit {
 
 
     ShowTabDocumentUpdate() {
-        if (this.ObjectTableName == "Shipment" || this.ObjectTableName == "Master") {
+        const onUpdateDocumentFeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "ODA")[0];
+        if (onUpdateDocumentFeatureToggle != null &&(this.ObjectTableName == "Shipment" || this.ObjectTableName == "Master")) {
             this.IsShowTabDocumentUpdate = true;
         }
     }

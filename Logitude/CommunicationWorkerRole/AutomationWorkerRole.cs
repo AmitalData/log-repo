@@ -19,6 +19,7 @@ using Logitude.CRM.Data.EntityPOCOs;
 using Logitude.CRM.Data.Repsitories;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
+using Logitude.Server.Tools.EntityChanges;
 using Logitude.Server.Tools.EntityChanges.AutomationResult;
 using Logitude.Server.Tools.EntityChanges.Service;
 using Logitude.Server.Tools.Helpers;
@@ -65,6 +66,7 @@ namespace CommunicationWorkerRole
         string entityId = string.Empty;
         int AutomationCount = 0;
         string type = string.Empty;
+        string ExtraDetails = string.Empty;
         bool executedImmediately = false;
 
         public AutomationWorkerRole(string tenant)
@@ -113,7 +115,7 @@ namespace CommunicationWorkerRole
                                 automationId = response.MessageValues["AutomationId"].ToString();
                                 entityId = response.MessageValues["EntityId"];
                                 executedImmediately = response.MessageValues["ExecutedImmediately"] != null ? bool.Parse(response.MessageValues["ExecutedImmediately"].ToString()) : false ;
-
+                                ExtraDetails = response.MessageValues.ContainsKey("ExtraDetails") ? response.MessageValues["ExtraDetails"] : "";
                                 string tenant = response.MessageValues["Tenant"].ToString();
 
                                 Tenant = int.Parse(tenant);
@@ -301,7 +303,7 @@ namespace CommunicationWorkerRole
                                 }
                                 #endregion
 
-                                #region Event
+                                #region On Update Document
                                 else if (automation.ResultCode == "ONUPDATEDOCUMENT")
                                 {
                                     OnUpdateDocumentAutomation(objectTable);
@@ -531,7 +533,7 @@ namespace CommunicationWorkerRole
 
         private void OnUpdateDocumentAutomation(ObjectTable objectTable)
         {
-          
+
         }
 
         private void ApplyAuomationSendInterfaceFTP(EntityChange entityChange, AutomationSendInterface automationSendInterface, string documentId)

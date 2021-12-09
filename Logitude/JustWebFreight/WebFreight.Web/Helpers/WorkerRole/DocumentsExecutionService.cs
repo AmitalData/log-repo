@@ -18,6 +18,7 @@ using Logitude.BL.CommonDataModel.Tools.EntityService;
 using Logitude.BL.DataContracts;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Logitude.Server.Tools.EntityChanges;
 
 namespace WebFreight.Web.Helpers.WorkerRoleHelpers
 {
@@ -78,6 +79,8 @@ namespace WebFreight.Web.Helpers.WorkerRoleHelpers
                 UpdateDocumentOut(exportDocumentArgs);
                 DocumentPopulateAutomaticDateUpdateService documentPopulateAutomaticDateUpdateService = new DocumentPopulateAutomaticDateUpdateService();
                 documentPopulateAutomaticDateUpdateService.Update(new DocumentPopulateAutomaticDateArgs() { EntityId = exportDocumentArgs.EntityId, ObjectTableName = exportDocumentArgs.ObjectTableName, ChildObjectTableId = exportDocumentArgs.ChildObjectTableId, ChildEntityId = exportDocumentArgs.ChildEntityId, DocumentTypeCode = exportDocumentArgs.CurrentDocumentTypeCode, ProcessType = "Print", Tenant = exportDocumentArgs.Tenant });
+                
+                RunAutomation(exportDocumentArgs, "OnDocumentUpdate");
 
                 UpdateDocumentsExecutionLog(new DocumentsExecutionLogArgs() {StatusCode = "D", DoneDate = DateTime.Now });
                 queueService.Complete();
@@ -87,6 +90,16 @@ namespace WebFreight.Web.Helpers.WorkerRoleHelpers
                 UpdateDocumentsExecutionLog(new DocumentsExecutionLogArgs() { Exception = new Exception("RequestXML is null"), DoneDate = DateTime.Now, StartDate = startDate, StatusCode = "F" });
                 queueService.Complete();
             }
+        }
+
+        private void RunAutomation(ExportDocumentArgs exportDocumentArgs, string automationType)
+        {
+            GeneralEntityChangeService generalEntityChangeService = new GeneralEntityChangeService();
+            bool isHaveAutomation = generalEntityChangeService.CheckIfEntityHaveAutomation(exportDocumentArgs.ObjectTableName, automationType, exportDocumentArgs.Tenant);
+            if (!isHaveAutomation) return;
+
+            MainEntityChangeService mainEntityChangeService = new MainEntityChangeService(new EntityChangeArgs() { ProcessType = automationType, ObjectTableName = exportDocumentArgs.ObjectTableName, EntityId = exportDocumentArgs.EntityId, Tenant = exportDocumentArgs.Tenant, StartDate = DateTime.Now, ExtraDetails = new OnUpdateDocumentResult { Type = "Print", DocumentTypeCopyIds = exportDocumentArgs.DocumentTypeCopyIdsList } });
+            mainEntityChangeService.AddEntityChange();
         }
 
         private void UpdateDocumentOut(ExportDocumentArgs exportDocumentArgs)

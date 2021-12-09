@@ -19,6 +19,7 @@ namespace Logitude.Server.Tools.EntityChanges.AutomationResult
     public class AutomationOnUpdateDocumentService : GeneralAutomationResultService, IAutomationResultService
     {
         private AutomationResultArgs automationResultArgs { get; set; }
+        private List<Automation> onUpdateDocumentAutomations = new List<Automation>();
         private int tenant;
         private EntityChange entityChange;
         public bool DependencyOnLastEntityUpdate { get { return false; } }
@@ -29,10 +30,20 @@ namespace Logitude.Server.Tools.EntityChanges.AutomationResult
             this.automationResultArgs = automationResultArgs;
             this.entityChange = automationResultArgs.EntityChange;
             this.tenant = this.entityChange.Tenant;
+            this.onUpdateDocumentAutomations = automationResultArgs.AutomationLists.Where(d => d.ResultCode == ResultCode).ToList();
+            if (onUpdateDocumentAutomations.Count > 0)
+            {
+                this.ExecuteOnUpdateDocumentAutomations();
+            }
         }
 
         private void ExecuteOnUpdateDocumentAutomations()
         {
+            foreach (Automation automation in onUpdateDocumentAutomations)
+            {
+                AddAutomationQueue(new AutomationQueueArgs() { EntityChangeId = entityChange.Id, AutomationId = automation.Id, AutomationType = automationResultArgs.EntityChangeArgs.ProcessType, EntityId = entityChange.EntityId, Tenant = automation.Tenant, ExtraDetails = automationResultArgs.ExtraDetails, ExecutedImmediately = true });
+            }
         }
+
     }
 }
