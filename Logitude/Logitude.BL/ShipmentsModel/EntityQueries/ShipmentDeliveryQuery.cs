@@ -322,6 +322,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                      CarrierId = entityPOCO.CarrierId,
                                                      CarrierCode = entityPOCO.CarrierCard == null ? null : entityPOCO.CarrierCard.Code,
                                                      CarrierName = entityPOCO.CarrierCard == null ? null : entityPOCO.CarrierCard.EnglishName,
+                                                     CarrierTypeName = entityPOCO.CarrierCard == null || entityPOCO.CarrierCard.PartnerType == null ? null : entityPOCO.CarrierCard.PartnerType.Name,
                                                      CarrierLocalName = entityPOCO.CarrierCard == null ? null : entityPOCO.CarrierCard.LocalName != null ? entityPOCO.CarrierCard.LocalName: entityPOCO.CarrierCard.EnglishName,
                                                      CarrierWebSite = entityPOCO.CarrierCard == null ? null : entityPOCO.CarrierCard.Website,
                                                      CarrierNumber = entityPOCO.CarrierNumber,                                                     
