@@ -290,7 +290,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
         }    
         public List<ShipmentPickUpPM> GetShipmentPickUpPMsByTenantAndShipment(string shipmentId, int tenant)
         {
-            List<ShipmentPickUpPM> dataList = (from entityPOCO in repository.context.ShipmentPickUpDeliveries.Include("FromPort").Include("ToPort").Include("CarrierCard").Include("TransportMode")
+            List<ShipmentPickUpPM> dataList = (from entityPOCO in repository.context.ShipmentPickUpDeliveries.Include("FromPort").Include("ToPort").Include("CarrierCard.PartnerType").Include("TransportMode")
                                                where entityPOCO.ShipmentId == shipmentId && entityPOCO.Tenant == tenant && entityPOCO.PickUpDeliveryTypeCode == "PICK"
                                                select new ShipmentPickUpPM()
                                                {
@@ -311,6 +311,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                    CarrierName = entityPOCO.CarrierCard == null ? null : entityPOCO.CarrierCard.EnglishName,
                                                    CarrierLocalName = entityPOCO.CarrierCard == null ? null : entityPOCO.CarrierCard.LocalName != null ? entityPOCO.CarrierCard.LocalName : entityPOCO.CarrierCard.EnglishName,
                                                    CarrierWebSite = entityPOCO.CarrierCard == null ? null : entityPOCO.CarrierCard.Website,
+                                                   CarrierTypeName = entityPOCO.CarrierCard == null || entityPOCO.CarrierCard.PartnerType == null ? null : entityPOCO.CarrierCard.PartnerType.Name,
                                                    CarrierNumber = entityPOCO.CarrierNumber,
                                                    PickUpDeliveryTypeCode = entityPOCO.PickUpDeliveryTypeCode,
                                                    FullResponsibility = entityPOCO.FullResponsibility,

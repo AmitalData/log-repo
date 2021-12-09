@@ -207,6 +207,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     {
                         shipmentPM.MainCarriageCarrierCode = cardObject.Code;
                         shipmentPM.MainCarriageCarrierName = cardObject.EnglishName;
+                        shipmentPM.MainCarriageCarrierTypeName = cardObject?.PartnerType?.Name;
                         shipmentPM.MainCarriageCarrierWebSite = cardObject.Website;
 
                         Address address = addressRepository.GetSingleAddressByCardIdAndTypeId(cardObject.Id, "M", tenant);
@@ -506,6 +507,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     shipmentPM.Transshipment1ToPortId = masterData.Transshipment1ToPortId;
                     shipmentPM.Transshipment1CarrierId = masterData.Transshipment1CarrierId;
                     shipmentPM.Transshipment1CarrierNumber = masterData.Transshipment1CarrierNumber;
+                    shipmentPM.Transshipment1CarrierTypeName = masterData.Transshipment1CarrierCard?.PartnerType?.Name;
 
                     if (!string.IsNullOrEmpty(shipmentPM.Transshipment1FromPortId))
                     {
@@ -557,6 +559,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     shipmentPM.Transshipment2ToPortId = masterData.Transshipment2ToPortId;
                     shipmentPM.Transshipment2CarrierId = masterData.Transshipment2CarrierId;
                     shipmentPM.Transshipment2CarrierNumber = masterData.Transshipment2CarrierNumber;
+                    shipmentPM.Transshipment2CarrierTypeName = masterData.Transshipment2CarrierCard?.PartnerType?.Name;
 
                     if (!string.IsNullOrEmpty(shipmentPM.Transshipment2FromPortId))
                     {
@@ -608,6 +611,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     shipmentPM.Transshipment3ToPortId = masterData.Transshipment3ToPortId;
                     shipmentPM.Transshipment3CarrierId = masterData.Transshipment3CarrierId;
                     shipmentPM.Transshipment3CarrierNumber = masterData.Transshipment3CarrierNumber;
+                    shipmentPM.Transshipment3CarrierTypeName = masterData.Transshipment3CarrierCard?.PartnerType?.Name;
 
                     if (!string.IsNullOrEmpty(shipmentPM.Transshipment3FromPortId))
                     {
@@ -2655,6 +2659,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 CarrierId = shipmentPM.MainCarriageCarrierId,
                 CarrierNumber = shipmentPM.MainCarriageCarrierNumber,
                 CarrierName = shipmentPM.MainCarriageCarrierName,
+                CarrierTypeName = shipmentPM.MainCarriageCarrierTypeName,
                 MasterNumber = shipmentPM.Master,
             });
 
@@ -2676,6 +2681,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     CarrierNumber = shipmentPM.Transshipment1CarrierNumber,
                     CarrierName = shipmentPM.Transshipment1CarrierName,
                     MasterNumber = shipmentPM.Transshipment1AdditionalMAWBOBLBL,
+                    CarrierTypeName = shipmentPM.Transshipment1CarrierTypeName,
                 });
             }
 
@@ -2697,6 +2703,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     CarrierNumber = shipmentPM.Transshipment2CarrierNumber,
                     CarrierName = shipmentPM.Transshipment2CarrierName,
                     MasterNumber = shipmentPM.Transshipment2AdditionalMAWBOBLBL,
+                    CarrierTypeName = shipmentPM.Transshipment2CarrierTypeName,
+
                 });
             }
 
@@ -2718,6 +2726,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     CarrierNumber = shipmentPM.Transshipment3CarrierNumber,
                     CarrierName = shipmentPM.Transshipment3CarrierName,
                     MasterNumber = shipmentPM.Transshipment3AdditionalMAWBOBLBL,
+                    CarrierTypeName = shipmentPM.Transshipment3CarrierTypeName,
+
                 });
             }
         }
@@ -13840,8 +13850,14 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             var shipmentPM = new ShipmentPM();
 
             ShipmentMasterData masterData = (from a in repository.context.ShipmentMasterDatas
+
                                              where a.Id == shipment.MasterShipmentDataId
-                                             select a).FirstOrDefault();
+                                             select a)
+                                             .Include("Transshipment1CarrierCard.PartnerType")
+                                             .Include("Transshipment2CarrierCard.PartnerType")
+                                             .Include("Transshipment3CarrierCard.PartnerType")
+                                             .Include("MainCarriageCarrierCard.PartnerType")
+                                             .FirstOrDefault();
 
             MapShipmentToShipmentPM(shipmentPM, shipment, null, masterData, false);
 
