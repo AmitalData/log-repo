@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {AppTool} from '../../../../Infrastructure/Tools';
 import {ARInvoiceLinePM} from '../../../../Invoice/EntityPMs/ARInvoiceLinePM';
 import {ARInvoiceLineItem} from './ARInvoiceDetailsTabGeneral';
@@ -15,7 +15,7 @@ import { ColumnsWidths } from 'Infrastructure/Components/LogitudeComponents/LogL
     templateUrl: './AddEditARGeneralInvoiceLineComponent.html',
 })
 
-export class AddEditARGeneralInvoiceLineComponent {
+export class AddEditARGeneralInvoiceLineComponent implements OnInit{
     public EntityPM: ARInvoiceLinePM = null;
     public ObjectTableName = "ARInvoiceLine";
     public DataContext: ARInvoiceLineItem;
@@ -28,7 +28,14 @@ export class AddEditARGeneralInvoiceLineComponent {
             this.FillChargesTypesCustomLOVColumnsWidths();
         }
     }
+    ngOnInit(): void {
+        this.SetDefaultValues(); 
+    }
 
+    SetDefaultValues() {
+        this.Quantity = this.EntityPM.Quantity != null ? this.EntityPM.Quantity : 1;
+        this.ForiegnCurrencyId = this.EntityPM.ForiegnCurrencyId?.length != 0 ? this.EntityPM.ForiegnCurrencyId : SessionLocator.TenantPM.CurrencyId;
+    }
 
     FillChargesTypesCustomLOVColumnsWidths()
     {
@@ -71,7 +78,12 @@ export class AddEditARGeneralInvoiceLineComponent {
         this.CurrentSession.CloseCurrentWindow();
     }
 
-
+    get Quantity() { return this.EntityPM.Quantity; }
+    set Quantity(newValue: number) {
+        if (this.EntityPM.Quantity != newValue) {
+            this.EntityPM.Quantity = newValue;
+        }
+    }
     get ForiegnCurrencyId() { return this.EntityPM.ForiegnCurrencyId; }
     set ForiegnCurrencyId(newValue: string) {
         if (this.EntityPM.ForiegnCurrencyId != newValue) {
