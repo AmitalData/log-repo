@@ -91462,7 +91462,7 @@
     DependencyFilter1IsList="false"
     DependencyFilter2IsList="false"
     DependencyFilter3IsList="false"
-    ValidForQuerySection1="&quot;&quot;"
+    ValidForQuerySection1="&quot;Shipment&quot;"
     ValidForQuerySection2="&quot;&quot;"
     IsRestrictable="false"
     DisplayInEntityVariables="true"
