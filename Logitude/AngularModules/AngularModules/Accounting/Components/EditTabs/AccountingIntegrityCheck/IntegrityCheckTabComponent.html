@@ -75,7 +75,7 @@
                                     </td>
                                     <td style="width: 40px;vertical-align: top" [style.text-align]="isRTL ? 'right' : 'left'">
                                         <div>
-                                            <button style="display: inline-block;width:100px;" class="Button" (click)="ViewResultXMLButtonClicked()">View</button>
+                                            <button [disabled]="entityPM.StatusCode != '3'" style="display: inline-block;width:100px;" class="Button" (click)="ViewResultXMLButtonClicked()">View</button>
                                         </div>
                                     </td>
                                     <td>
