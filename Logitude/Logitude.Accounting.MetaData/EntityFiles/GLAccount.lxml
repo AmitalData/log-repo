@@ -17575,6 +17575,12 @@
       LocalDefaultText="&quot;לא ניתן להוסיף את כרטיס פיצול זה מכיוון שהוא מוגדר ככרטיס ראש&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;GLAccounts.O.NegativePostponedChequesCommission&quot;"
+      DefaultText="&quot;Please enter positive values only in the postponed cheques commission&quot;"
+      LocalDefaultText="&quot;Please enter positive values only in the postponed cheques commission&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature
