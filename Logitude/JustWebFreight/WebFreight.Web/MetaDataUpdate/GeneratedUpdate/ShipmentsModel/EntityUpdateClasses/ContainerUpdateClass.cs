@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 {
    public class ContainerUpdateClass
    {  		
-		public const string HashString = "b76834bf95a953290e0ff88438d90730";
+		public const string HashString = "d22dd4cc0dc53966f0a7ed805158b438";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -2722,7 +2722,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "OriginLocation",
+					 						FieldName =  "PreCarriageLocation",
 					  						ObjectTableName =  "Container",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -2741,8 +2741,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "OriginLocation",
-					  						ListPropertyPath =  "OriginLocation",
+					  						PMPropertyPath =  "PreCarriageLocation",
+					  						ListPropertyPath =  "PreCarriageLocation",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
@@ -2760,10 +2760,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayInDocumentReferences =  false,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "OriginLocation",
-					  						DefaultText =  "Origin Location",
-					  						ListFieldLable =  "OriginLocationListLable",
-					  						ListLableDefaultText =  "Origin Location",
+					  						FullFieldLable =  "PreCarriageLocation",
+					  						DefaultText =  "PreCarriage Location",
+					  						ListFieldLable =  "PreCarriageLocationListLable",
+					  						ListLableDefaultText =  "PreCarriage Location",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -2782,7 +2782,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "EstimatedOriginPickup",
+					 						FieldName =  "PreCarriageETD",
 					  						ObjectTableName =  "Container",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -2801,8 +2801,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "EstimatedOriginPickup",
-					  						ListPropertyPath =  "EstimatedOriginPickup",
+					  						PMPropertyPath =  "PreCarriageETD",
+					  						ListPropertyPath =  "PreCarriageETD",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
@@ -2820,10 +2820,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayInDocumentReferences =  false,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "EstimatedOriginPickup",
-					  						DefaultText =  "Estimated Origin Pickup",
-					  						ListFieldLable =  "EstimatedOriginPickupListLable",
-					  						ListLableDefaultText =  "Estimated Origin Pickup",
+					  						FullFieldLable =  "PreCarriageETD",
+					  						DefaultText =  "PreCarriage ETD",
+					  						ListFieldLable =  "PreCarriageETDListLable",
+					  						ListLableDefaultText =  "PreCarriage ETD",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -2842,7 +2842,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "ActualOriginPickup",
+					 						FieldName =  "PreCarriageATD",
 					  						ObjectTableName =  "Container",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -2861,8 +2861,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "ActualOriginPickup",
-					  						ListPropertyPath =  "ActualOriginPickup",
+					  						PMPropertyPath =  "PreCarriageATD",
+					  						ListPropertyPath =  "PreCarriageATD",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
@@ -2880,10 +2880,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayInDocumentReferences =  false,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "ActualOriginPickup",
-					  						DefaultText =  "Actual Origin Pickup",
-					  						ListFieldLable =  "ActualOriginPickupListLable",
-					  						ListLableDefaultText =  "Actual Origin Pickup",
+					  						FullFieldLable =  "PreCarriageATD",
+					  						DefaultText =  "PreCarriage ATD",
+					  						ListFieldLable =  "PreCarriageATDListLable",
+					  						ListLableDefaultText =  "PreCarriage ATD",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -6562,7 +6562,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "DeliveryLocation",
+					 						FieldName =  "OnCarriageLocation",
 					  						ObjectTableName =  "Container",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -6581,8 +6581,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "DeliveryLocation",
-					  						ListPropertyPath =  "DeliveryLocation",
+					  						PMPropertyPath =  "OnCarriageLocation",
+					  						ListPropertyPath =  "OnCarriageLocation",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
@@ -6600,10 +6600,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayInDocumentReferences =  false,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "DeliveryLocation",
-					  						DefaultText =  "Delivery Location",
-					  						ListFieldLable =  "DeliveryLocationListLable",
-					  						ListLableDefaultText =  "Delivery Location",
+					  						FullFieldLable =  "OnCarriageLocation",
+					  						DefaultText =  "OnCarriage Location",
+					  						ListFieldLable =  "OnCarriageLocationListLable",
+					  						ListLableDefaultText =  "OnCarriage Location",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -6622,7 +6622,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "EstimatedDelivery",
+					 						FieldName =  "OnCarriageETD",
 					  						ObjectTableName =  "Container",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -6641,8 +6641,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "EstimatedDelivery",
-					  						ListPropertyPath =  "EstimatedDelivery",
+					  						PMPropertyPath =  "OnCarriageETD",
+					  						ListPropertyPath =  "OnCarriageETD",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
@@ -6660,10 +6660,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayInDocumentReferences =  false,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "EstimatedDelivery",
-					  						DefaultText =  "Estimated Delivery",
-					  						ListFieldLable =  "EstimatedDeliveryListLable",
-					  						ListLableDefaultText =  "Estimated Delivery",
+					  						FullFieldLable =  "OnCarriageETD",
+					  						DefaultText =  "OnCarriage ETD",
+					  						ListFieldLable =  "OnCarriageETDListLable",
+					  						ListLableDefaultText =  "OnCarriage ETD",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -6682,7 +6682,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "ActualDelivery",
+					 						FieldName =  "OnCarriageATD",
 					  						ObjectTableName =  "Container",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -6701,8 +6701,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "ActualDelivery",
-					  						ListPropertyPath =  "ActualDelivery",
+					  						PMPropertyPath =  "OnCarriageATD",
+					  						ListPropertyPath =  "OnCarriageATD",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
@@ -6720,10 +6720,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayInDocumentReferences =  false,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "ActualDelivery",
-					  						DefaultText =  "Actual Delivery",
-					  						ListFieldLable =  "ActualDeliveryListLable",
-					  						ListLableDefaultText =  "Actual Delivery",
+					  						FullFieldLable =  "OnCarriageATD",
+					  						DefaultText =  "OnCarriage ATD",
+					  						ListFieldLable =  "OnCarriageATDListLable",
+					  						ListLableDefaultText =  "OnCarriage ATD",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -8717,7 +8717,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "DeliveryLocationPortId",
+					 						FieldName =  "OnCarriageLocationPortId",
 					  						ObjectTableName =  "Container",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Port",
@@ -8737,8 +8737,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "DeliveryLocationPortId",
-					  						ListPropertyPath =  "DeliveryLocationPortId",
+					  						PMPropertyPath =  "OnCarriageLocationPortId",
+					  						ListPropertyPath =  "OnCarriageLocationPortId",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
@@ -8756,8 +8756,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayInDocumentReferences =  false,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "DeliveryLocationPortId",
-					  						DefaultText =  "Delivery Location",
+					  						FullFieldLable =  "OnCarriageLocationPortId",
+					  						DefaultText =  "OnCarriage Location",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -8894,7 +8894,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "OriginLocationPortId",
+					 						FieldName =  "PreCarriageLocationPortId",
 					  						ObjectTableName =  "Container",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Port",
@@ -8914,8 +8914,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "OriginLocationPortId",
-					  						ListPropertyPath =  "OriginLocationPortId",
+					  						PMPropertyPath =  "PreCarriageLocationPortId",
+					  						ListPropertyPath =  "PreCarriageLocationPortId",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
@@ -8933,8 +8933,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayInDocumentReferences =  false,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "OriginLocationPortId",
-					  						DefaultText =  "Origin Location",
+					  						FullFieldLable =  "PreCarriageLocationPortId",
+					  						DefaultText =  "PreCarriage Location",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,

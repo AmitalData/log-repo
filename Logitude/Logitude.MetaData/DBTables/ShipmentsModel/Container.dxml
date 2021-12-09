@@ -314,20 +314,23 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="OriginLocation"
+    Name="PreCarriageLocation"
+    OldNames="OriginLocation"
     Type="varchar"
     Size="10">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
-    Name="EstimatedOriginPickup"
+    Name="PreCarriageETD"
+    OldNames="EstimatedOriginPickup"
     Type="datetime">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
-    Name="ActualOriginPickup"
+    Name="PreCarriageATD"
+    OldNames="ActualOriginPickup"
     Type="datetime">
     <Constraints
       Nullable="true" />
@@ -716,20 +719,23 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="DeliveryLocation"
+    Name="OnCarriageLocation"
+    OldNames="DeliveryLocation"
     Type="varchar"
     Size="10">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
-    Name="EstimatedDelivery"
+    Name="OnCarriageETD"
+    OldNames="EstimatedDelivery"
     Type="datetime">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
-    Name="ActualDelivery"
+    Name="OnCarriageATD"
+    OldNames="ActualDelivery"
     Type="datetime">
     <Constraints
       Nullable="true" />
@@ -864,7 +870,8 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="DeliveryLocationPortId"
+    Name="OnCarriageLocationPortId"
+    OldNames="DeliveryLocationPortId"
     Type="varchar"
     Size="15">
     <Constraints
@@ -885,7 +892,8 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="OriginLocationPortId"
+    Name="PreCarriageLocationPortId"
+    OldNames="OriginLocationPortId"
     Type="varchar"
     Size="15">
     <Constraints
@@ -1425,7 +1433,7 @@
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Relation
-    ForeignKeyColumn="DeliveryLocationPortId"
+    ForeignKeyColumn="OnCarriageLocationPortId"
     ReferencedTable="Ports"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
@@ -1440,7 +1448,7 @@
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Relation
-    ForeignKeyColumn="OriginLocationPortId"
+    ForeignKeyColumn="PreCarriageLocationPortId"
     ReferencedTable="Ports"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
