@@ -111,7 +111,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
             ExcuteSqlScript(buildCargoArgs, sql);
 
 
-            sql = DisconnectShipments(buildCargoArgs);
+            //sql = DisconnectShipments(buildCargoArgs);
             //ExcuteSqlScriptForSourceDatabase(cargoArgs, sql);
         }
 
