@@ -717,7 +717,9 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
             if(this.EntityPM.BankTransferPaymentArguments){
                 if(this.EntityPM.BankTransferPaymentArguments.ValueDate)
                     this.UIProperties.SetEnabled("ValueDate", this.ObjectTableName, false);
-                this.UIProperties.SetEnabled("BankAccountId", this.ObjectTableName, false);
+
+                if(this.EntityPM.BankAccountId)
+                    this.UIProperties.SetEnabled("BankAccountId", this.ObjectTableName, false);
                 this.UIProperties.SetEnabled("BankTransferAmount", this.ObjectTableName, false);
             }
 
