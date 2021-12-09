@@ -420,6 +420,16 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "OPS,Operational Status", 
                 Description = "Operational Status", 
 			});
+			 
+
+            all.Add(new ToggleDetails()
+            {    
+                Code = "CAU", 
+                Name = "Container Automation", 
+                Description = "Container Automation", 
+                SearchFields = "CAU,Container Automation", 
+			});
+			
 
 			
             return all;

@@ -39,7 +39,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Toggle&quot;"
-  Code="&quot;73df&quot;"
+  Code="&quot;62bb&quot;"
   Name="&quot; Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;Name&quot;"
@@ -644,6 +644,11 @@
       Name="&quot;Operational Status&quot;"
       SearchFields="&quot;OPS,Operational Status&quot;"
       Description="&quot;Operational Status&quot;" />
+    <Record
+      Code="&quot;CAU&quot;"
+      Name="&quot;Container Automation&quot;"
+      Description="&quot;Container Automation&quot;"
+      SearchFields="&quot;CAU,Container Automation&quot;" />
 
   </Records>
   <DataContracts />
