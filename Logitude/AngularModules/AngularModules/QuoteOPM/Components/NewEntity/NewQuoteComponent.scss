@@ -1,0 +1,284 @@
+::ng-deep {
+    .LogitudeWindow {
+        background: var(--surface-200) !important;
+        
+        // .LogitudeWindow-header-top-margin {
+        //     height: 15px !important;
+        // }
+
+        // .LogitudeWindow-bottom-margin {
+        //     height: 8px !important;
+        // }
+    }
+
+    .right-side::-webkit-scrollbar {
+        border-radius: 20px;
+        width: 8px;
+        background-color: #b7b7b7;
+    }
+    
+    .right-side::-webkit-scrollbar-thumb {
+        border-radius: 10px;
+        background-color: white;
+        border: 2.5px solid #b7b7b7;
+    }
+    
+}
+
+:host ::ng-deep {
+    .error-msg {
+        color:red;    
+        position: absolute;    
+        display: none;
+        font-size: 11px;
+    }
+
+    .error-msg.value-not-exist,
+    .ng-submitted .error-msg.invalid {        
+        display: block;
+    }
+
+    button,
+    textarea,
+    input {
+        border-radius: 7px;
+    }
+
+    .p-field {
+        margin-bottom: 1em !important;
+        position: relative;
+    }
+
+    .root-header-text {
+        font-size: 20px;
+        font-weight: bold;
+    }
+
+    .sub-header {
+        padding: 9px 11px;
+        font-size: 17px;
+        font-weight: bold;
+        // margin-bottom: 20px;
+        // padding-bottom: 15px;
+        border-bottom: 1px solid var(--surface-200);
+    }
+
+    .sub-header-short-line {
+        padding: 27px 0;
+        margin: 0 27px;
+    }
+
+    .p-field {
+        margin-bottom: 2px !important;
+
+        app-autocomplate-table label,
+        label {
+            top: 8px;
+            z-index: 1;
+            position: relative;
+            background: white;
+            left: 14px;
+            padding: 0 5px;
+        }
+
+        label {
+            top: 12px;
+        }
+
+        .p-checkbox-label {
+            top: 0;
+        }
+    }
+
+    .text-style,
+    label {
+        color: #676a6c;
+        font-weight: bold;
+    }
+
+    app-autocomplate-table label,
+    .simple-text {
+        font-size: 13px;
+    }
+
+    .col-4,
+    .col-6 {
+        padding: 1.5rem;
+    }
+
+    .ng-submitted {
+        p-calendar.ng-invalid > span {
+            border: 1px solid #f44336;
+            border-radius: 7px;
+        }
+
+        p-inputnumber.ng-invalid input,
+        p-autocomplete.ng-invalid input,
+        input.ng-invalid {            
+            border-color: #f44336;
+        }
+    }
+
+    span.p-button-icon.pi.pi-calendar:before {
+        display: none;
+    }
+
+    span.p-button-icon.pi.pi-calendar {
+        width: 15px;
+        height: 100%;
+        background-image: url(assets/icons/calendar.svg);
+        background-size: 100% 100%;
+        -o-background-size: 100% 100%;
+        -webkit-background-size: 100% 100%;
+        background-size: cover;
+    }
+
+    .ng-submitted p-autocomplete.ng-invalid input,
+    .ng-submitted p-autocomplete.ng-invalid .p-autocomplete-dropdown,
+    .ng-submitted .ng-invalid {
+        border-color: #f44336;
+    }
+
+    app-accordion {
+        display: block;
+        padding: 12px 0;
+
+        .accordion-contect {
+            border-top: 1px solid var(--surface-200);
+        }
+
+        h4 {
+            font-size: 17px;
+            font-weight: bold;
+        }
+
+        .accordion-container > i.pi-angle-down {
+            margin-right: 18px !important;
+            margin-top: 6px;
+            // margin-left: 7px;
+            color: #1084dc;
+        }
+    }
+}
+
+:host {
+    display: block;
+    height: 100%;
+    background-color: var(--surface-200);
+    font-family: -apple-system, BlinkMacSystemFont, “Segoe UI”, Roboto, Helvetica, Arial, sans-serif,
+        “Apple Color Emoji”, “Segoe UI Emoji”, “Segoe UI Symbol”;
+}
+
+.container {
+    height: calc(100% - 126px);
+    margin: 0px;
+    margin-top: 2px;
+    display: flex;
+}
+
+.section {
+    background: var(--surface-0);
+    margin-bottom: 20px;
+    border-radius: 14px;
+}
+
+.right-side > .section:last-of-type {
+    margin-bottom: 0px;
+}
+
+.section-btn {
+    border-radius: 0;
+    text-align: right;
+    padding: 12px;
+    margin-top: 15px;
+    border-radius: 0px 0px  14px 14px;
+    background: white;
+    
+    button {
+        margin-left: 20px;
+    }
+}
+
+.partners {
+    margin-top: 10px;
+    display: flex;
+
+    .section {
+        flex: 1;
+        background-color: inherit;
+    }
+
+    .section:first-of-type {
+        margin-right: 10px;
+    }
+
+    .section:last-of-type {
+        margin-left: 10px;
+    }
+}
+
+.root-header {
+    margin-bottom: 2px;
+    padding: 13px 20px;
+    border-radius: 14px 14px 0 0;
+
+    h2 {
+        font-size: 18px;
+    }
+}
+
+hr {
+    border-top: 2px dashed #e2f0fb;
+    margin: 10px 30px 35px;
+}
+
+.left-side {
+    border-radius: 0px;
+    margin-bottom: 1px;
+    padding-left: 0;
+    padding-right: 0;
+    flex: 1;
+}
+
+.right-side {
+    padding-left: 13px;
+    padding-right: 14px;
+    // padding-top: 15px;
+    overflow-x: hidden;
+    height: 100%;
+    position: relative;
+    flex: 6;
+}
+
+.disabled {
+    pointer-events: none;
+    opacity: 0.5;
+    // background: #ccc;
+}
+
+.accordion-container {
+    padding: 7px 0px;
+    border: 1px solid #ced4da;
+    border-radius: 3px;
+    margin-top: 19px;
+
+    h4 {
+        display: inline;
+        margin-left: 19px;
+        position: relative;
+    }
+
+    .pi {
+        float: right;
+        color: #1084dc;
+        margin-right: 7px;
+    }
+
+    .pi-angle-down:before {
+        content: "\e902";
+    }
+}
+
+.accordion-contect {
+    margin-top: 20px;
+}

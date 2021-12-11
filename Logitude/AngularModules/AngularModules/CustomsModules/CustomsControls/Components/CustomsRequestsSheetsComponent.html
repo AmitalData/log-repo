@@ -1,469 +1,508 @@
 <style>
-    .tbl1Label{
-        width:130px;
+    .tbl1Label {
+        width: 130px;
     }
-    .tbl1Col0{
-        width:3px;
+
+    .tbl1Col0 {
+        width: 3px;
     }
-    .tbl1Col1{
-         padding-right: 15px;
+
+    .tbl1Col1 {
+        padding-right: 15px;
     }
-    .tbl1Col1Time{
-         padding-right: 15px;
+
+    .tbl1Col1Time {
+        padding-right: 15px;
     }
-    .tbl1LastCol{
-        width:3px;
+
+    .tbl1LastCol {
+        width: 3px;
     }
-    .tbl2Label{
-        width:130px;
+
+    .tbl2Label {
+        width: 130px;
     }
-    .tbl3Label{
-        width:150px;
+
+    .tbl3Label {
+        width: 150px;
     }
-    .my-checkbox-class{
-       
-        color:rgb(138, 138, 92);
+
+    .my-checkbox-class {
+        color: rgb(138, 138, 92);
     }
+
+    .StatisticsTable-td {
+        vertical-align: top;
+    }
+    
+    .StatisticsTable-td > div {
+        margin-top: 6px;
+    }
+
+    .Statistics {
+        text-align: right;
+    }
+
+    .StatisticsTable {
+        border-collapse: collapse;
+        table-layout: fixed;
+    }
+
+        .StatisticsTable tbody {
+            overflow: auto;
+            width: 100%;
+            height: 90px;
+            display: block
+        }
+        .StatisticsTable thead th {
+            border: 1px solid #DADADA;
+            text-indent: 5px;
+            cursor: pointer;
+            background: linear-gradient( 180deg, rgba(247, 247, 247, 1) 0%, rgba(245, 245, 245, 1) 52.38%, rgba(238, 238, 238, 1) 72.96%, rgba(226, 226, 226, 1) 87.88%, rgba(209, 209, 209, 1) 100%);
+            color: #1B90CB;
+        }
 </style>
 
 <table *ngIf="_TranslationLoaded ||  false" style="padding-top: 10px;width:100%">
-    
-        <tr *ngIf="entityArgs.ObjectTableName" class="FormFieldRow">
-            <!-- id from EditControl then padding !!!!-->
-            <td colspan="7"></td>
-        </tr>
-        <tr *ngIf="FiltersSectionVisibility">
-            <td>
-                <table  style="padding-top: 10px;width:1020px">
-                    <tr>
-                        <td style="width:400px;">
-                            <table>
-                                <tr class="FormFieldRow">
-                                    <td class="tbl1Label">
-                                        <!--Customs.CustomsExchangeRate.F.DateTo-->
-                                        <!--Customs.Notification.O.CreateDateFrom-->
-                                        <LogLabel [NoObjectField]="true"
-                                                  [ObjectFieldName]="'FromRequestCreateDate'"
-                                                  [ObjectTableName]="ObjectTableName"
-                                                  [DataContext]="DataContext"
-                                                  [TextCode]="'Customs.Notification.O.CreateDateFrom'"></LogLabel>
-                                    </td>
-                                    <td class="tbl1Col0" ></td>
-                                    <!--style="width: 180px; padding-right: 15px;"-->
-                                    <td class="tbl1Col1">
+
+    <tr *ngIf="entityArgs.ObjectTableName" class="FormFieldRow">
+        <!-- id from EditControl then padding !!!!-->
+        <td colspan="7"></td>
+    </tr>
+    <tr *ngIf="FiltersSectionVisibility">
+        <td width="80%">
+            <table style="padding-top: 10px;width:1020px">
+                <tr>
+                    <td style="width:400px;">
+                        <table>
+                            <tr class="FormFieldRow">
+                                <td class="tbl1Label">
+                                    <!--Customs.CustomsExchangeRate.F.DateTo-->
+                                    <!--Customs.Notification.O.CreateDateFrom-->
+                                    <LogLabel [NoObjectField]="true"
+                                              [ObjectFieldName]="'FromRequestCreateDate'"
+                                              [ObjectTableName]="ObjectTableName"
+                                              [DataContext]="DataContext"
+                                              [TextCode]="'Customs.Notification.O.CreateDateFrom'"></LogLabel>
+                                </td>
+                                <td class="tbl1Col0"></td>
+                                <!--style="width: 180px; padding-right: 15px;"-->
+                                <td class="tbl1Col1">
 
 
-                                        <LogDatePicker [NoObjectField]="true"
-                                                       [ObjectFieldName]="'FromRequestCreateDate'"
-                                                       [ObjectTableName]="ObjectTableName"
-                                                       [InputType]="'date'"
-                                                       [DataContext]="DataContext"
-                                                       [HideColumns]="true"></LogDatePicker>
+                                    <LogDatePicker [NoObjectField]="true"
+                                                   [ObjectFieldName]="'FromRequestCreateDate'"
+                                                   [ObjectTableName]="ObjectTableName"
+                                                   [InputType]="'date'"
+                                                   [DataContext]="DataContext"
+                                                   [HideColumns]="true"></LogDatePicker>
 
-                                    </td>
+                                </td>
 
-                                    <td class="tbl1Col1Time">
-
-
-                                        <LogDatePicker [NoObjectField]="true"
-                                                       [ObjectFieldName]="'FromRequestTime'"
-                                                       [ObjectTableName]="ObjectTableName"
-                                                       [InputType]="'time'" [DataContext]="DataContext"
-                                                       [TimeMode]="24"
-                                                       [HideColumns]="true"></LogDatePicker>
-
-                                    </td>
-
-                                    <td class="tbl1LastCol"><div></div></td>
-
-                                </tr>
-
-                                <tr class="FormFieldRow">
-                                    <td class="tbl1Label">
-                                        <LogLabel [NoObjectField]="true"
-                                                  [ObjectFieldName]="'ToRequestCreateDate'"
-                                                  [ObjectTableName]="ObjectTableName"
-                                                  [DataContext]="DataContext"
-                                                  [TextCode]="'Customs.Notification.O.CreateDateTo'"></LogLabel>
-                                    </td>
-                                    <td class="tbl1Col0" ></td>
-
-                                    <td class="tbl1Col1">
+                                <td class="tbl1Col1Time">
 
 
-                                        <LogDatePicker [NoObjectField]="true"
-                                                       [ObjectFieldName]="'ToRequestCreateDate'"
-                                                       [ObjectTableName]="ObjectTableName"
-                                                       [InputType]="'date'" [DataContext]="DataContext"
-                                                       [HideColumns]="true"></LogDatePicker>
+                                    <LogDatePicker [NoObjectField]="true"
+                                                   [ObjectFieldName]="'FromRequestTime'"
+                                                   [ObjectTableName]="ObjectTableName"
+                                                   [InputType]="'time'" [DataContext]="DataContext"
+                                                   [TimeMode]="24"
+                                                   [HideColumns]="true"></LogDatePicker>
 
-                                    </td>
+                                </td>
 
-                                    <td class="tbl1Col1Time">
+                                <td class="tbl1LastCol"><div></div></td>
 
+                            </tr>
 
-                                        <LogDatePicker [NoObjectField]="true"
-                                                       [ObjectFieldName]="'ToRequestTime'"
-                                                       [ObjectTableName]="ObjectTableName"
-                                                       [InputType]="'time'" [DataContext]="DataContext"
-                                                       [TimeMode]="24"
-                                                       [HideColumns]="true"></LogDatePicker>
+                            <tr class="FormFieldRow">
+                                <td class="tbl1Label">
+                                    <LogLabel [NoObjectField]="true"
+                                              [ObjectFieldName]="'ToRequestCreateDate'"
+                                              [ObjectTableName]="ObjectTableName"
+                                              [DataContext]="DataContext"
+                                              [TextCode]="'Customs.Notification.O.CreateDateTo'"></LogLabel>
+                                </td>
+                                <td class="tbl1Col0"></td>
 
-                                    </td>
-
-                                    <td class="tbl1LastCol"><div></div></td>
-
-                                </tr>
-
-
-                                <tr class="FormFieldRow">
-                                    <td class="tbl1Label">
-                                        <LogLabel [NoObjectField]="true"
-                                                  [ObjectFieldName]="'MyRequestOnly'"
-                                                  [ObjectTableName]="ObjectTableName"
-                                                  [DataContext]="DataContext"
-                                                  [TextCode]="'Customs.Notification.O.MyRequestOnly'">
-
-                                        </LogLabel>
-                                    </td>
-                                    <td class="tbl1Col0" ></td>
-                                    <!--style="width: 180px; padding-right: 15px;text-align:left"-->
-                                    <td class="tbl1Col1">
+                                <td class="tbl1Col1">
 
 
+                                    <LogDatePicker [NoObjectField]="true"
+                                                   [ObjectFieldName]="'ToRequestCreateDate'"
+                                                   [ObjectTableName]="ObjectTableName"
+                                                   [InputType]="'date'" [DataContext]="DataContext"
+                                                   [HideColumns]="true"></LogDatePicker>
 
-                                        <LogCheckBox [NoObjectField]="true"
-                                                     [ObjectFieldName]="'MyRequestOnly'"
-                                                     [ObjectTableName]="ObjectTableName"
-                                                     [DataContext]="DataContext"></LogCheckBox>
-                                    </td>
+                                </td>
 
-                                    <td><div></div></td>
-
-                                    <td class="tbl1LastCol"><div></div></td>
-
-                                </tr>
+                                <td class="tbl1Col1Time">
 
 
-                                <tr class="FormFieldRow">
-                                    <td class="tbl1Label">
-                                        <LogLabel [ObjectFieldName]="'CorrelationId'"
-                                                  [ObjectTableName]="ObjectTableName"
-                                                  [DataContext]="DataContext">
+                                    <LogDatePicker [NoObjectField]="true"
+                                                   [ObjectFieldName]="'ToRequestTime'"
+                                                   [ObjectTableName]="ObjectTableName"
+                                                   [InputType]="'time'" [DataContext]="DataContext"
+                                                   [TimeMode]="24"
+                                                   [HideColumns]="true"></LogDatePicker>
 
-                                        </LogLabel>
-                                    </td>
-                                    <td class="tbl1Col0" ></td>
+                                </td>
 
-                                    <td colspan="2" style="padding-right: 15px;text-align:left">
+                                <td class="tbl1LastCol"><div></div></td>
 
-
-                                        <LogTextBox [ObjectFieldName]="'CorrelationId'"
-                                                    [InputType]="'text'"
-                                                    [DataContext]="DataContext"
-                                                    [ObjectTableName]="ObjectTableName"
-                                                    [HideColumns]="true"></LogTextBox>
+                            </tr>
 
 
-                                    </td>
+                            <tr class="FormFieldRow">
+                                <td class="tbl1Label">
+                                    <LogLabel [NoObjectField]="true"
+                                              [ObjectFieldName]="'MyRequestOnly'"
+                                              [ObjectTableName]="ObjectTableName"
+                                              [DataContext]="DataContext"
+                                              [TextCode]="'Customs.Notification.O.MyRequestOnly'">
+
+                                    </LogLabel>
+                                </td>
+                                <td class="tbl1Col0"></td>
+                                <!--style="width: 180px; padding-right: 15px;text-align:left"-->
+                                <td class="tbl1Col1">
 
 
 
-                                    <td class="tbl1LastCol"><div></div></td>
+                                    <LogCheckBox [NoObjectField]="true"
+                                                 [ObjectFieldName]="'MyRequestOnly'"
+                                                 [ObjectTableName]="ObjectTableName"
+                                                 [DataContext]="DataContext"></LogCheckBox>
+                                </td>
 
-                                </tr>
+                                <td><div></div></td>
 
+                                <td class="tbl1LastCol"><div></div></td>
 
-                            </table>
-
-                        </td>
-
-
-
-                        <td style="width:350px;padding-right:15px;">
-                            <table>
-
-                                <tr class="FormFieldRow">
-                                    <td class="tbl2Label">
-                                        <LogLabel [ObjectFieldName]="'CustomFileNo'"
-                                                  [ObjectTableName]="ObjectTableName"
-                                                  [DataContext]="DataContext">
-
-                                        </LogLabel>
-                                    </td>
-                                    <td style="width:10px"></td>
-
-                                    <td style="width: 200px; padding-right: 15px;text-align:left">
+                            </tr>
 
 
-                                        <LogTextBox [ObjectFieldName]="'CustomFileNo'"
-                                                    [InputType]="'text'"
-                                                    [DataContext]="DataContext"
-                                                    [ObjectTableName]="ObjectTableName"
-                                                    [HideColumns]="true"></LogTextBox>
+                            <tr class="FormFieldRow">
+                                <td class="tbl1Label">
+                                    <LogLabel [ObjectFieldName]="'CorrelationId'"
+                                              [ObjectTableName]="ObjectTableName"
+                                              [DataContext]="DataContext">
+
+                                    </LogLabel>
+                                </td>
+                                <td class="tbl1Col0"></td>
+
+                                <td colspan="2" style="padding-right: 15px;text-align:left">
 
 
-                                    </td>
-
-                                    <td style="width: 10px; padding-right: 15px;"></td>
-
-                                    <td><div></div></td>
-
-                                </tr>
-
-                                <tr class="FormFieldRow">
-                                    <td class="tbl2Label">
-                                        <LogLabel [ObjectFieldName]="'InterfaceTypeCode'"
-                                                  [ObjectTableName]="ObjectTableName"
-                                                  [DataContext]="DataContext">
-
-                                        </LogLabel>
-                                    </td>
-                                    <td style="width:10px"></td>
-
-                                    <td style="width: 200px; padding-right: 15px;text-align:left">
-
-                                        <LogLov [ObjectFieldName]="'InterfaceTypeCode'"
-                                                [ObjectTableName]="ObjectTableName"
+                                    <LogTextBox [ObjectFieldName]="'CorrelationId'"
+                                                [InputType]="'text'"
                                                 [DataContext]="DataContext"
-                                                [HideColumns]="true"
-                                                [LookUpTableName]="'Customs.InterfaceManagement'"
-                                                [DisplayMemberPath]="'Description'">
-                                        </LogLov>
-                                    </td>
+                                                [ObjectTableName]="ObjectTableName"
+                                                [HideColumns]="true"></LogTextBox>
 
-                                    <td style="width: 10px; padding-right: 15px;"></td>
 
-                                    <td><div></div></td>
-
-                                </tr>
-
-                                <tr class="FormFieldRow">
-                                    <td class="tbl2Label">
-                                        <LogLabel [ObjectFieldName]="'SearchFields'"
-                                                  [ObjectTableName]="ObjectTableName"
-                                                  [DataContext]="DataContext">
-
-                                        </LogLabel>
-                                    </td>
-                                    <td style="width:10px"></td>
-
-                                    <td style="width: 200px; padding-right: 15px;text-align:left">
-
-                                        <SearchTextBox [ObjectTableName]="ObjectTableName"
-                                                       [PlaceHolder]="_MySearchText"
-                                                       (SearchTextChangeEvent)="SearchFields =$event">
-
-                                        </SearchTextBox>
+                                </td>
 
 
 
-                                    </td>
+                                <td class="tbl1LastCol"><div></div></td>
 
-                                    <td style="width: 10px; padding-right: 15px;"></td>
-
-                                    <td><div></div></td>
-
-                                </tr>
+                            </tr>
 
 
-                                <tr class="FormFieldRow">
-                                    <td class="tbl2Label">
-                                        <LogLabel [ObjectFieldName]="'EntityReference'"
-                                                  [ObjectTableName]="ObjectTableName"
-                                                  [DataContext]="DataContext">
+                        </table>
 
-                                        </LogLabel>
-                                    </td>
-                                    <td style="width:10px"></td>
-
-                                    <td style="width: 200px; padding-right: 15px;text-align:left">
-
-                                        <LogTextBox [ObjectFieldName]="'EntityReference'"
-                                                    [InputType]="'text'"
-                                                    [DataContext]="DataContext"
-                                                    [ObjectTableName]="ObjectTableName"
-                                                    [HideColumns]="true"></LogTextBox>
-
-
-                                    </td>
-
-                                    <td style="width: 10px; padding-right: 15px;"></td>
-
-                                    <td><div></div></td>
-
-                                </tr>
-
-                            </table>
-
-                        </td>
-
-
-                        <td style="width:370px;">
-                            <table>
-
-                                <tr class="FormFieldRow">
-                                    <td class="tbl3Label">
-                                        <LogLabel [ObjectFieldName]="'RequestStatusCode'"
-                                                  [ObjectTableName]="ObjectTableName"
-                                                  [DataContext]="DataContext">
-
-                                        </LogLabel>
-                                    </td>
-                                    <td style="width:10px"></td>
-
-                                    <td style="width: 200px; padding-right: 15px;text-align:left">
-                                        <dropdown-button [Dropdownbutton_TextCode]="'Customs.RequestSheet.O.AddRemove'">
-                                            <div class="class-dropdown-content">
-                                                <div style="width:170px" [ngStyle]="{'height': selectStatusesHeight}">
-                                                    <table>
-                                                        <tr style="height:5px;"><td><div></div></td></tr>
-
-                                                        <tr class="FormFieldRow" *ngIf="!isReAnAnalysis">
-                                                            <td>
-                                                                <div style="margin-right:5px;">
-                                                                    <CheckBox style="margin-right:5px;float:right;"
-                                                                              [IsChecked]="AllCRSSChecked" (Checked)="AllCRSSChecked = $event "></CheckBox>
-                                                                    <span [class.my-checkbox-class]="AllCRSSChecked"
-                                                                          style="margin-right:5px;float:right;">{{'Customs.RequestSheet.O.All'  | TextCodeTranslationPipe }}</span>
-
-                                                                </div>
-                                                            </td>
+                    </td>
 
 
 
-                                                        </tr>
+                    <td style="width:350px;padding-right:15px;">
+                        <table>
 
-                                                        <tr class="FormFieldRow"
-                                                            *ngFor="let customsRequestsSheetStatusListVM of _AllCustomsRequestsSheetStatusListVM; let i=index;">
-                                                            <td>
-                                                                <div style="margin-right:5px;">
-                                                                    <CheckBox style="margin-right:5px;float:right;"
-                                                                              [IsChecked]="customsRequestsSheetStatusListVM.IsChecked && !isReAnAnalysis"
-                                                                              (Checked)="customsRequestsSheetStatusListVM.IsChecked = $event;AllCRSSChecked = false"></CheckBox>
-                                                                    <span [class.my-checkbox-class]="customsRequestsSheetStatusListVM.IsChecked"
-                                                                          style="margin-right:5px;float:right;">{{customsRequestsSheetStatusListVM.MyItem.LocalName}}</span>
+                            <tr class="FormFieldRow">
+                                <td class="tbl2Label">
+                                    <LogLabel [ObjectFieldName]="'CustomFileNo'"
+                                              [ObjectTableName]="ObjectTableName"
+                                              [DataContext]="DataContext">
 
-                                                                </div>
-                                                            </td>
+                                    </LogLabel>
+                                </td>
+                                <td style="width:10px"></td>
 
+                                <td style="width: 200px; padding-right: 15px;text-align:left">
 
 
-                                                        </tr>
-                                                        <tr><td><div></div></td></tr>
-                                                    </table>
-                                                </div>
+                                    <LogTextBox [ObjectFieldName]="'CustomFileNo'"
+                                                [InputType]="'text'"
+                                                [DataContext]="DataContext"
+                                                [ObjectTableName]="ObjectTableName"
+                                                [HideColumns]="true"></LogTextBox>
+
+
+                                </td>
+
+                                <td style="width: 10px; padding-right: 15px;"></td>
+
+                                <td><div></div></td>
+
+                            </tr>
+
+                            <tr class="FormFieldRow">
+                                <td class="tbl2Label">
+                                    <LogLabel [ObjectFieldName]="'InterfaceTypeCode'"
+                                              [ObjectTableName]="ObjectTableName"
+                                              [DataContext]="DataContext">
+
+                                    </LogLabel>
+                                </td>
+                                <td style="width:10px"></td>
+
+                                <td style="width: 200px; padding-right: 15px;text-align:left">
+
+                                    <LogLov [ObjectFieldName]="'InterfaceTypeCode'"
+                                            [ObjectTableName]="ObjectTableName"
+                                            [DataContext]="DataContext"
+                                            [HideColumns]="true"
+                                            [LookUpTableName]="'Customs.InterfaceManagement'"
+                                            [DisplayMemberPath]="'Description'">
+                                    </LogLov>
+                                </td>
+
+                                <td style="width: 10px; padding-right: 15px;"></td>
+
+                                <td><div></div></td>
+
+                            </tr>
+
+                            <tr class="FormFieldRow">
+                                <td class="tbl2Label">
+                                    <LogLabel [ObjectFieldName]="'SearchFields'"
+                                              [ObjectTableName]="ObjectTableName"
+                                              [DataContext]="DataContext">
+
+                                    </LogLabel>
+                                </td>
+                                <td style="width:10px"></td>
+
+                                <td style="width: 200px; padding-right: 15px;text-align:left">
+
+                                    <SearchTextBox [ObjectTableName]="ObjectTableName"
+                                                   [PlaceHolder]="_MySearchText"
+                                                   (SearchTextChangeEvent)="SearchFields =$event">
+
+                                    </SearchTextBox>
+
+
+
+                                </td>
+
+                                <td style="width: 10px; padding-right: 15px;"></td>
+
+                                <td><div></div></td>
+
+                            </tr>
+
+
+                            <tr class="FormFieldRow">
+                                <td class="tbl2Label">
+                                    <LogLabel [ObjectFieldName]="'EntityReference'"
+                                              [ObjectTableName]="ObjectTableName"
+                                              [DataContext]="DataContext">
+
+                                    </LogLabel>
+                                </td>
+                                <td style="width:10px"></td>
+
+                                <td style="width: 200px; padding-right: 15px;text-align:left">
+
+                                    <LogTextBox [ObjectFieldName]="'EntityReference'"
+                                                [InputType]="'text'"
+                                                [DataContext]="DataContext"
+                                                [ObjectTableName]="ObjectTableName"
+                                                [HideColumns]="true"></LogTextBox>
+
+
+                                </td>
+
+                                <td style="width: 10px; padding-right: 15px;"></td>
+
+                                <td><div></div></td>
+
+                            </tr>
+
+                        </table>
+
+                    </td>
+
+
+                    <td style="width:370px;">
+                        <table>
+
+                            <tr class="FormFieldRow">
+                                <td class="tbl3Label">
+                                    <LogLabel [ObjectFieldName]="'RequestStatusCode'"
+                                              [ObjectTableName]="ObjectTableName"
+                                              [DataContext]="DataContext">
+
+                                    </LogLabel>
+                                </td>
+                                <td style="width:10px"></td>
+
+                                <td style="width: 200px; padding-right: 15px;text-align:left">
+                                    <dropdown-button [Dropdownbutton_TextCode]="'Customs.RequestSheet.O.AddRemove'">
+                                        <div class="class-dropdown-content">
+                                            <div style="width:170px" [ngStyle]="{'height': selectStatusesHeight}">
+                                                <table>
+                                                    <tr style="height:5px;"><td><div></div></td></tr>
+
+                                                    <tr class="FormFieldRow" *ngIf="!isReAnAnalysis">
+                                                        <td>
+                                                            <div style="margin-right:5px;">
+                                                                <CheckBox style="margin-right:5px;float:right;"
+                                                                          [IsChecked]="AllCRSSChecked" (Checked)="AllCRSSChecked = $event "></CheckBox>
+                                                                <span [class.my-checkbox-class]="AllCRSSChecked"
+                                                                      style="margin-right:5px;float:right;">{{'Customs.RequestSheet.O.All'  | TextCodeTranslationPipe }}</span>
+
+                                                            </div>
+                                                        </td>
+
+
+
+                                                    </tr>
+
+                                                    <tr class="FormFieldRow"
+                                                        *ngFor="let customsRequestsSheetStatusListVM of _AllCustomsRequestsSheetStatusListVM; let i=index;">
+                                                        <td>
+                                                            <div style="margin-right:5px;">
+                                                                <CheckBox style="margin-right:5px;float:right;"
+                                                                          [IsChecked]="customsRequestsSheetStatusListVM.IsChecked && !isReAnAnalysis"
+                                                                          (Checked)="customsRequestsSheetStatusListVM.IsChecked = $event;AllCRSSChecked = false"></CheckBox>
+                                                                <span [class.my-checkbox-class]="customsRequestsSheetStatusListVM.IsChecked"
+                                                                      style="margin-right:5px;float:right;">{{customsRequestsSheetStatusListVM.MyItem.LocalName}}</span>
+
+                                                            </div>
+                                                        </td>
+
+
+
+                                                    </tr>
+                                                    <tr><td><div></div></td></tr>
+                                                </table>
                                             </div>
-                                        </dropdown-button>
-
-
-
-                                    </td>
-
-                                    <td style="width: 150px; padding-right: 15px;"></td>
-
-                                    <td>
-                                        <div>
-
-
                                         </div>
-                                    </td>
-
-                                </tr>
-
-                                <tr class="FormFieldRow">
-                                    <td class="tbl3Label">
-                                        <LogLabel [ObjectFieldName]="'IsRestored'"
-                                                  [ObjectTableName]="ObjectTableName"
-                                                  [DataContext]="DataContext">
-
-                                        </LogLabel>
-                                    </td>
-                                    <td style="width:10px"></td>
-
-                                    <td style="width: 200px; padding-right: 15px;text-align:left">
-                                        <CheckBox (Checked)="IsRestored = $event" [IsChecked]="IsRestored"></CheckBox>
-
-                                    </td>
-
-                                    <td style="width: 150px; padding-right: 15px;"></td>
-
-                                    <td><div></div></td>
-
-                                </tr>
-
-                                <tr class="FormFieldRow">
-                                    <td class="tbl3Label">
-                                        <LogLabel [ObjectFieldName]="'IsDCA'"
-                                                  [ObjectTableName]="ObjectTableName"
-                                                  [DataContext]="DataContext">
-
-                                        </LogLabel>
-                                    </td>
-                                    <td style="width:10px"></td>
-
-                                    <td style="width: 200px; padding-right: 15px;text-align:left">
-
-                                        <ul class="FiltersMenu" style="width: 165px; vertical-align: middle; position:relative;">
-                                            <li (click)="_SelectedDCAValue ='ALL';" style="width:55px;" [class.SelectedFilter]="_SelectedDCAValue === 'ALL'">
-                                                {{'Customs.General.O.All' | TextCodeTranslationPipe }}
-                                            </li>
-                                            <li (click)="_SelectedDCAValue ='DCA';" style="width:55px;" [class.SelectedFilter]="_SelectedDCAValue === 'DCA'">
-                                                {{'Customs.RequestSheet.O.DCA' | TextCodeTranslationPipe }}
-                                            </li>
-                                            <li (click)="_SelectedDCAValue ='!DCA';" style="width:55px;" [class.SelectedFilter]="_SelectedDCAValue === '!DCA'">
-
-                                                {{'Customs.RequestSheet.O.Regular' | TextCodeTranslationPipe }}
-                                            </li>
-                                        </ul>
+                                    </dropdown-button>
 
 
 
-                                    </td>
+                                </td>
 
-                                    <td style="width: 150px; padding-right: 15px;"></td>
+                                <td style="width: 150px; padding-right: 15px;"></td>
 
-                                    <td><div>
-                                        </div></td>
-
-                                </tr>
+                                <td>
+                                    <div>
 
 
+                                    </div>
+                                </td>
+
+                            </tr>
+
+                            <tr class="FormFieldRow">
+                                <td class="tbl3Label">
+                                    <LogLabel [ObjectFieldName]="'IsRestored'"
+                                              [ObjectTableName]="ObjectTableName"
+                                              [DataContext]="DataContext">
+
+                                    </LogLabel>
+                                </td>
+                                <td style="width:10px"></td>
+
+                                <td style="width: 200px; padding-right: 15px;text-align:left">
+                                    <CheckBox (Checked)="IsRestored = $event" [IsChecked]="IsRestored"></CheckBox>
+
+                                </td>
+
+                                <td style="width: 150px; padding-right: 15px;"></td>
+
+                                <td><div></div></td>
+
+                            </tr>
+
+                            <tr class="FormFieldRow">
+                                <td class="tbl3Label">
+                                    <LogLabel [ObjectFieldName]="'IsDCA'"
+                                              [ObjectTableName]="ObjectTableName"
+                                              [DataContext]="DataContext">
+
+                                    </LogLabel>
+                                </td>
+                                <td style="width:10px"></td>
+
+                                <td style="width: 200px; padding-right: 15px;text-align:left">
+
+                                    <ul class="FiltersMenu" style="width: 165px; vertical-align: middle; position:relative;">
+                                        <li (click)="_SelectedDCAValue ='ALL';" style="width:55px;" [class.SelectedFilter]="_SelectedDCAValue === 'ALL'">
+                                            {{'Customs.General.O.All' | TextCodeTranslationPipe }}
+                                        </li>
+                                        <li (click)="_SelectedDCAValue ='DCA';" style="width:55px;" [class.SelectedFilter]="_SelectedDCAValue === 'DCA'">
+                                            {{'Customs.RequestSheet.O.DCA' | TextCodeTranslationPipe }}
+                                        </li>
+                                        <li (click)="_SelectedDCAValue ='!DCA';" style="width:55px;" [class.SelectedFilter]="_SelectedDCAValue === '!DCA'">
+
+                                            {{'Customs.RequestSheet.O.Regular' | TextCodeTranslationPipe }}
+                                        </li>
+                                    </ul>
+
+
+
+                                </td>
+
+                                <td style="width: 150px; padding-right: 15px;"></td>
+
+                                <td>
+                                    <div>
+                                    </div>
+                                </td>
+
+                            </tr>
+
+
+                            <tr class="FormFieldRow">
+                                <td style="width: 150px"></td>
+                                <td style="width:10px"></td>
+
+                                <td style="width: 200px; padding-right: 15px;text-align:left"></td>
+
+                                <td style="width: 150px; padding-right: 15px;"></td>
+
+                                <td><div></div></td>
+
+                            </tr>
+
+                        </table>
+                    </td>
+                    <td><div></div></td>
+
+                </tr>
+                <tr *ngIf="RefreshButtonVisibility"
+                    class="FormFieldRow">
+
+
+
+
+
+
+                    <td style="width:400px;"><div></div></td>
+                    <td style="width:350px;padding-right:15px;"><div></div></td>
+                    <td style="width:370px;">
+                        <table>
+                            <tbody>
                                 <tr class="FormFieldRow">
                                     <td style="width: 150px"></td>
                                     <td style="width:10px"></td>
 
-                                    <td style="width: 200px; padding-right: 15px;text-align:left"></td>
-
-                                    <td style="width: 150px; padding-right: 15px;"></td>
-
-                                    <td><div></div></td>
-
-                                </tr>
-
-                            </table>
-                        </td>
-                        <td><div></div></td>
-
-                    </tr>
-                    <tr *ngIf="RefreshButtonVisibility"
-                        class="FormFieldRow">
-
-
- 
-
-
-
-                        <td style="width:400px;"><div></div></td>
-                        <td style="width:350px;padding-right:15px;"><div></div></td>
-                        <td style="width:370px;">
-                            <table>
-                                 <tbody>
-                                <tr class="FormFieldRow">
-                                    <td style="width: 150px"></td>
-                                    <td style="width:10px"></td>
-
-                                    <td style="width: 200px;" >
+                                    <td style="width: 200px;">
                                         <button class="GreenButton"
                                                 style="width:90px;"
                                                 [disabled]="!IsSearchButtonEnabled"
@@ -472,14 +511,14 @@
                                         </button>
                                     </td>
 
-                             
+
 
                                 </tr>
                                 <tr>
                                     <td style="width: 150px"></td>
                                     <td style="width: 150px; padding-right: 15px;">
-                                        <button *ngIf="isReAnAnalysis"  class="Button" 
-                                                style="width:90px;"  [disabled]="!IsSearchButtonEnabled"
+                                        <button *ngIf="isReAnAnalysis" class="Button"
+                                                style="width:90px;" [disabled]="!IsSearchButtonEnabled"
                                                 (click)="ReAnalysisByFilters()">
                                             נתח מחדש
                                         </button>
@@ -487,63 +526,91 @@
 
                                     <td>
                                         <div>
-                                            <button style="width:90px;"  class="Button" 
-                                                    *ngIf="isReAnAnalysis"  [disabled]="!IsSearchButtonEnabled"
+                                            <button style="width:90px;" class="Button"
+                                                    *ngIf="isReAnAnalysis" [disabled]="!IsSearchButtonEnabled"
                                                     (click)="CancelByFilters()">
-                                               ביטול בקשות
+                                                ביטול בקשות
                                             </button>
                                         </div>
                                     </td>
                                 </tr>
-                            </table>
+                        </table>
 
 
-                        <td><div></div></td>
-                    </tr>
+                    <td><div></div></td>
+                </tr>
+            </table>
+        </td>
+        <td *ngIf="StatisticsVisibility" class="StatisticsTable-td">
+            <div style="width:80%">
+                <table class="StatisticsTable">
+                    <thead style="width: 100%; display:table;">
+                        <tr>
+                            <th style="width:50%" class="Statistics"><h2>סוג בקשה</h2></th>
+                            <th style="width:50%" class="Statistics"><h2 style="width: calc(100% - 30px)">כמות</h2></th>
+                        </tr>
+                    </thead>
+                    <tbody *ngIf="IsTherecustomsRequestsSheetSummary">
+                        <tr style="display: table; width: 100%; table-layout: fixed; height: 20px; border-bottom:1px solid #A7A9AC;" *ngFor="let item of customsRequestsSheetSummary">
+                            <td class="Statistics">{{item.InterfaceTypeName}}</td>
+                            <td class="Statistics">{{item.count}}</td>
+                        </tr>
+                    </tbody>
+                    <tbody *ngIf="!IsTherecustomsRequestsSheetSummary">
+                        <tr> <td> <div></div> </td> <td> <div></div></td></tr>
+                    </tbody>
+                    <tfoot  [ngStyle]="{'width':this.customsRequestsSheetSummary.length > 4 ?  'calc(100% - 18px)' : '100%' }" style="display: table;">
+                        <tr>
+                            <td style="width:50%" class="Statistics"></td>
+                            <td style="width:50% " class="Statistics">
+                                <span *ngIf="SumRequests > 0">{{SumRequests}}</span>
+                            </td>
+                        </tr>
+                    </tfoot>
                 </table>
-            </td>
-
-        </tr>
-
-
- 
-
-        <tr style="width:150px" >
-            <td>
-                <table>
-                    <tr>
-                        <td colspan="7"  class="TabTitleRow" style="padding-right:5px"> {{Title}} </td>
+            </div>
+        </td>
+    </tr>
 
 
-                        <td style="width: 21px;padding-left:5px"  *ngIf="!FiltersSectionVisibility">
-                            <IconButton [Name]="'Refresh'" (click)="RefreshButtonClicked()"></IconButton>
-                        </td>
-                    </tr>
-                </table>
-            </td>
-
-        </tr>
-        <tr >
-            <td colspan="7" style="height: 100%;width:100%; padding: 5px;">
 
 
-                <div class="GeneratedGridContainer" style="padding:5px">
-                    <logitude-grid GridWidth="100%" GridHeight="100%"
-                                   [ObjectTable]="ObjectTableName"
-                                   [dataSource]="DataSource"
-                                   (FirstRowSelected)="OnFirstRowSelected"
-                                   (rowSelectedEvent)="OnrowSelectedEvent"
-                                   (ColumnResisedevent)="OnColumnResisedevent"
-                                   (AfterViewInitCompleted)="ViewInitCompleted($event)"
-                                   [MenuHeaderchangeevent]="MenuHeaderchangeevent"
-                                   [columns]="columns"
-                                   [QueryChangeEvent]="onQueryChangeEvent"
-                                   [IsCustomTemplate]="true">
-                    </logitude-grid>
-                </div>
+    <tr style="width:150px">
+        <td>
+            <table>
+                <tr>
+                    <td colspan="7" class="TabTitleRow" style="padding-right:5px"> {{Title}} </td>
 
-            </td>
 
-        </tr>
+                    <td style="width: 21px;padding-left:5px" *ngIf="!FiltersSectionVisibility">
+                        <IconButton [Name]="'Refresh'" (click)="RefreshButtonClicked()"></IconButton>
+                    </td>
+                </tr>
+            </table>
+        </td>
 
-    </table>
+    </tr>
+    <tr>
+        <td colspan="7" style="height: 100%;width:100%; padding: 5px;">
+
+
+            <div class="GeneratedGridContainer" style="padding:5px">
+                <logitude-grid GridWidth="100%" GridHeight="100%"
+                               [ObjectTable]="ObjectTableName"
+                               [dataSource]="DataSource"
+                               (FirstRowSelected)="OnFirstRowSelected"
+                               (rowSelectedEvent)="OnrowSelectedEvent"
+                               (ColumnResisedevent)="OnColumnResisedevent"
+                               (AfterViewInitCompleted)="ViewInitCompleted($event)"
+                               [MenuHeaderchangeevent]="MenuHeaderchangeevent"
+                               [columns]="columns"
+                               [QueryChangeEvent]="onQueryChangeEvent"
+                               [IsCustomTemplate]="true">
+                </logitude-grid>
+            </div>
+
+        </td>
+
+    </tr>
+
+</table>

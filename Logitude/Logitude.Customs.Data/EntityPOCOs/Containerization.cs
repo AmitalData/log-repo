@@ -36,11 +36,11 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string ContainerizationStatus { get; set; }
 	      
         public virtual ContainerizationStatusCode ContainerizationStatusCode { get; set; }
-        [ForeignKey("DeclarationStatusType")]
+        [ForeignKey("ContainerizationHataraStatus")]
         [Column("HataraStatus")]
 	    public string HataraStatus { get; set; }
 	      
-        public virtual DeclarationStatusType DeclarationStatusType { get; set; }
+        public virtual ContainerizationHataraStatus ContainerizationHataraStatus { get; set; }
         [ForeignKey("NDMessageActionCode")]
         [Column("OperationMode")]
 	    public string OperationMode { get; set; }
@@ -49,9 +49,9 @@ namespace Logitude.Customs.Data.EntityPOCOs
         [Column("IsChange")]
 	    public bool IsChange { get; set; }
         [Column("IsMultiCustomers")]
-	    public bool IsMultiCustomers { get; set; }
+	    public string IsMultiCustomers { get; set; }
         [Column("IsMultiExportFiles")]
-	    public bool IsMultiExportFiles { get; set; }
+	    public bool? IsMultiExportFiles { get; set; }
     }
 }
 	 

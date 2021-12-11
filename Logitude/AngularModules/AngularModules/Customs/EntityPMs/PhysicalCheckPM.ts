@@ -244,6 +244,31 @@ export class PhysicalCheckPM {
     public set EndDate(newValue: Date) { if (this.endDate != newValue) { this.endDate = newValue; this.MarkAsDirty("EndDate"); } }
        
 	 
+    private searchResult: string;
+    public get SearchResult() { return this.searchResult; }
+    public set SearchResult(newValue: string) { if (this.searchResult != newValue) { this.searchResult = newValue; this.MarkAsDirty("SearchResult"); } }
+       
+	 
+    private sealNumber: string;
+    public get SealNumber() { return this.sealNumber; }
+    public set SealNumber(newValue: string) { if (this.sealNumber != newValue) { this.sealNumber = newValue; this.MarkAsDirty("SealNumber"); } }
+       
+	 
+    private checkAuthorityAttenderTypeID: string;
+    public get CheckAuthorityAttenderTypeID() { return this.checkAuthorityAttenderTypeID; }
+    public set CheckAuthorityAttenderTypeID(newValue: string) { if (this.checkAuthorityAttenderTypeID != newValue) { this.checkAuthorityAttenderTypeID = newValue; this.MarkAsDirty("CheckAuthorityAttenderTypeID"); } }
+       
+	 
+    private checkAuthorityAttenderTypeName: string;
+    public get CheckAuthorityAttenderTypeName() { return this.checkAuthorityAttenderTypeName; }
+    public set CheckAuthorityAttenderTypeName(newValue: string) { if (this.checkAuthorityAttenderTypeName != newValue) { this.checkAuthorityAttenderTypeName = newValue; this.MarkAsDirty("CheckAuthorityAttenderTypeName"); } }
+       
+	 
+    private checkAnwserStatus: number;
+    public get CheckAnwserStatus() { return this.checkAnwserStatus; }
+    public set CheckAnwserStatus(newValue: number) { if (this.checkAnwserStatus != newValue) { this.checkAnwserStatus = newValue; this.MarkAsDirty("CheckAnwserStatus"); } }
+       
+	 
 
     public OldEntityPM: PhysicalCheckPM;
 		

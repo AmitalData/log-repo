@@ -36,7 +36,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   NewWizardControlName="&quot;NewCourierComponent&quot;"
-  LocalDefaultText="&quot;בלדר ראשי&quot;"
+  LocalDefaultText="&quot; בלדר ראשי&quot;"
   DefaultText="&quot;Courier Master&quot;"
   Code="&quot;dcc9&quot;"
   Name="&quot;Customs.CourierMaster Query Group&quot;"
@@ -5481,6 +5481,24 @@
       FeatureTypeCode="&quot;ACT&quot;"
       FeatureTextCodeCode="&quot;Customs.CourierMaster.Features.SendDeclaration902&quot;"
       FeatureDefaultText="&quot;Send Declaration After Deleting Pending 902&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;StatusDeclarationOldVersion&quot;"
+      FeatureTypeCode="&quot;ACT&quot;"
+      FeatureTextCodeCode="&quot;Customs.CourierMaster.Features.StatusDeclarationOldVersion&quot;"
+      FeatureDefaultText="&quot;Status Declaration Old Version&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;ExportMasterExtended&quot;"
+      FeatureTypeCode="&quot;ACT&quot;"
+      FeatureTextCodeCode="&quot;Customs.CourierMaster.Features.ExportCourierMasterExtended&quot;"
+      FeatureDefaultText="&quot;יצא לאקסל מורכב&quot;"
       IsPackagable="true"
       IsOld="false"
       IsCoreFeature="false"

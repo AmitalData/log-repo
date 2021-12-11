@@ -1,0 +1,113 @@
+<div [formGroup]='formGroup' class="container">
+  <div formArrayName="properties">
+    <p-tabView (onClose)="removeProperty($event)" [(activeIndex)]="activeTab">
+      <p-tabPanel *ngFor='let x of properties.controls; let i = index' [closable]='properties.controls.length > 1'
+        [formGroupName]="i">
+        <ng-template pTemplate="header">
+          <span
+            *ngIf='!(x.value.fromPort?.Code || x.value.toPort?.Code || x.value.mainCarriageCarrier?.AIRLINE_ID || x.value.incoterm?.PTERMID)'>Quote
+            properties</span>
+          <span *ngIf='x.value.fromPort?.Code'>{{x.value.fromPort?.Code}}</span>
+          <div
+            *ngIf='x.value.fromPort?.Code || x.value.toPort?.Code || x.value.mainCarriageCarrier?.AIRLINE_ID || x.value.incoterm?.PTERMID'
+            [class]="'transport-img ' + (formGroup.value.transportMode?.Id === 'I' ? 'inland' : formGroup.value.transportMode?.Id === 'O' ? 'ocean' : 'airplane')"
+            alt="type transport"></div>
+          <span *ngIf='x.value.toPort?.Code'>{{x.value.toPort?.Code}}</span>
+          <span *ngIf='x.value.toPort?.Code && x.value.mainCarriageCarrier?.AIRLINE_ID'>,</span>
+          <span *ngIf='x.value.mainCarriageCarrier?.AIRLINE_ID'>{{x.value.mainCarriageCarrier?.AIRLINE_ID}}</span>
+          <span
+            *ngIf='x.value.incoterm?.PTERMID && (x.value.mainCarriageCarrier?.AIRLINE_ID || x.value.toPort?.Code)'>,</span>
+          <span *ngIf='x.value.incoterm?.PTERMID'>{{x.value.incoterm?.PTERMID}}</span>
+        </ng-template>
+        <h3 class="sub-header">Quote Properties</h3>
+        <div class="grid content-in-section">
+
+          <div class="col-4 p-fluid">
+            <div class="p-field">
+              <div class="error-msg"
+                [ngClass]='{"invalid": x.controls.fromPort.invalid && !x.controls.fromPort.errors?.notIdentityValue}'>
+                {{'QuoteOP.S.NewQuote.' +
+                (formGroup.value.transportMode?.Id === 'A' ? 'Gateway': 'LoadingPort') | TextCodeTranslationPipe}}
+                field is required</div>
+              <app-autocomplate-table [columnsShow]="{Code:'Code', Name: 'Name',CountryName:'CountryName'}"
+                [getDataFunc]='portsFunc' [virtualScroll]='true' [columnsFilter]='["SearchFields"]' [fieldShow]='"Name"'
+                [searchIcon]='true'
+                [label]="'QuoteOP.S.NewQuote.' + (formGroup.value.transportMode?.Id === 'A' ? 'Gateway': 'LoadingPort') | TextCodeTranslationPipe"
+                [controlName]='"fromPort"' [formGroup]='x' id='fromPort'>
+              </app-autocomplate-table>
+            </div>
+
+            <div class="p-field">
+              <div class="error-msg"
+                [ngClass]='{"invalid": x.controls.toPort.invalid && !x.controls.toPort.errors?.notIdentityValue}'>
+                {{'QuoteOP.S.NewQuote.' +
+                (formGroup.value.transportMode?.Id === 'A' ? 'Destination': 'DischargePort') | TextCodeTranslationPipe}}
+                field is required</div>
+              <app-autocomplate-table [columnsShow]="{Code:'Code', Name: 'Name',CountryName:'CountryName'}"
+                [getDataFunc]='portsFunc' [virtualScroll]='true' [columnsFilter]='["SearchFields"]' [fieldShow]='"Name"'
+                [searchIcon]='true'
+                [label]="'QuoteOP.S.NewQuote.' + (formGroup.value.transportMode?.Id === 'A' ? 'Destination': 'DischargePort') | TextCodeTranslationPipe"
+                [controlName]='"toPort"' [formGroup]='x' id='toPort'>
+              </app-autocomplate-table>
+            </div>
+
+            <app-new-quote-address [type]="'pickup'" [propertyForm]='x' [qouteForm]='formGroup' [EntityPM]='EntityPM'>
+            </app-new-quote-address>
+            <!-- <div class="p-field">
+              <div class="p-field accordion-container">
+                <h4 class="text-style simple-text">{{"QuoteOP.S.NewQuote.Pickup" | TextCodeTranslationPipe}}</h4>
+                <i [class]="'pi pi-angle-' + (pickup.hidden ? 'down': 'right')"
+                <i class='pi pi-angle-down' (click)='pickup.hidden = !pickup.hidden'></i>
+                <div #pickup hidden class="accordion-contect">
+                </div>
+              </div>
+            </div> -->
+          </div>
+
+          <div class="col-4 p-fluid">
+            <div class="p-field">
+              <app-autocomplate-table [columnsShow]="carrierColumns" [getDataFunc]='mainCarriageCarrierFunc'
+                [virtualScroll]='true' [columnsFilter]='["SearchFields"]' [fieldShow]='"Name"' [searchIcon]='true'
+                [label]="'QuoteOP.S.NewQuote.' + (formGroup.value.transportMode?.Id === 'A' ? 'Airline': 'Shippingline') | TextCodeTranslationPipe"
+                [controlName]='"mainCarriageCarrier"' [formGroup]='x'>
+              </app-autocomplate-table>
+            </div>
+
+            <div class="p-field">
+              <app-autocomplate-table [columnsShow]="{PTERMID:'Code', Name: 'Name'}" [getDataFunc]='incotermFunc'
+                [virtualScroll]='true' [fieldShow]='"Name"' [label]="'Incoterm'" [controlName]='"incoterm"' [columnsFilter]='["SearchFields"]'
+                [formGroup]='x' [dropIcon]='true'>
+              </app-autocomplate-table>
+            </div>
+
+            <app-new-quote-address [type]="'delivery'" [propertyForm]='x' [qouteForm]='formGroup' [EntityPM]='EntityPM'>
+            </app-new-quote-address>
+            <!-- <div class="p-field">
+              <div class="p-field accordion-container">
+                <h4 class="text-style simple-text">{{"QuoteOP.S.NewQuote.Delivery" | TextCodeTranslationPipe}}</h4>
+                <i class='pi pi-angle-down' (click)='delivery.hidden = !delivery.hidden'></i>
+                <i [class]="'pi pi-angle-' + (delivery.hidden ? 'down': 'right')"
+                  (click)='delivery.hidden = !delivery.hidden'></i>
+                <div #delivery hidden class="accordion-contect">
+                </div>
+              </div>
+            </div> -->
+          </div>
+
+          <div class="col-4 p-fluid">
+            <div class="p-field">
+              <app-autocomplate-table [columnsShow]="{SERVLEVEL_ID:'Code', Name: 'Name'}"
+                [getDataFunc]='specialServiceFunc' [virtualScroll]='true' [fieldShow]='"Name"'
+                [columnsFilter]='["SearchFields"]'
+                [label]="'Special Services Type'" [controlName]='"specialService"' [formGroup]='x' [searchIcon]='true'>
+              </app-autocomplate-table>
+            </div>
+          </div>
+
+        </div>
+      </p-tabPanel>
+    </p-tabView>
+    <i class="pi pi-plus" (click)='addProperty()'></i>
+    <hr>
+  </div>
+</div>

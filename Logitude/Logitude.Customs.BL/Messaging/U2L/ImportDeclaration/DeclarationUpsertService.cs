@@ -40,8 +40,8 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
     public class DeclarationUpsertService : UnifreightGenericService
     {
         private LOGICUSTFILE _LOGICUSTFILE;
-        private LogitudeCustomsFile _AmitalCustomsFile;
-        private Def.EntityPMs.DeclarationPM _MyDeclarationPM;
+        public LogitudeCustomsFile _AmitalCustomsFile;
+        public Def.EntityPMs.DeclarationPM _MyDeclarationPM;
         private ICustomContext _context;
         private CourierMasterPM _CourierMasterPM;
         private CourierDeclarationPM _CourierDeclarationPM;
@@ -319,6 +319,11 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                     MyGenericResponseObj.StatusType = GenericResponseObj.StatusEnum.BusinessError;
                     MyGenericResponseObj.Message = "CustomerId " + _AmitalCustomsFile.CustomerId + " could not translate (is must )";
                     return;
+                }
+                if (!String.IsNullOrWhiteSpace(_AmitalCustomsFile.Direction))
+                {
+                    this._MyDeclarationPM.Direction = _AmitalCustomsFile.Direction;
+                    if (this._MyDeclarationPM.Direction == "E" && string.IsNullOrWhiteSpace(this._MyDeclarationPM.AgentRoleCode)) this._MyDeclarationPM.AgentRoleCode = "A";
                 }
                 if (mode == "UpdateNotEmpty" || this._MyDeclarationPM.CustomerId != DBcustomer) // moran 12.7.15 - Task 14510 - insert into 'if'
                 {
@@ -713,7 +718,8 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                     _MyDeclarationPM.IsDiamondDeclaration = true;
                 }
 
-                UpdateTrucker();
+
+              //  UpdateTrucker();
 
                 if (string.IsNullOrWhiteSpace(_AmitalCustomsFile.IsCourierDeclaration) || (!string.IsNullOrWhiteSpace(_AmitalCustomsFile.IsCourierDeclaration) && _AmitalCustomsFile.IsCourierDeclaration.ToLower() != "true"))
                 {
@@ -846,6 +852,41 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 
 #endif
 
+                }
+
+
+                UpdateTrucker();
+
+                if (currentDeclarationCourierStatusPM == null)
+                {
+                    DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(_context);
+                    currentDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(_MyDeclarationPM.Id, true, false);
+                }
+                if (currentDeclarationCourierStatusPM != null && currentDeclarationCourierStatusPM.LastMileServiceType != _AmitalCustomsFile.LastMileServiceType)
+                {
+                    currentDeclarationCourierStatusPM.LastMileServiceType = _AmitalCustomsFile.LastMileServiceType;
+                    if (currentDeclarationCourierStatusPM.ChangeSetOp != ChangeSetOperation.Update) currentDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
+                    AppendLogLine("try to update Last Mile Service Type " + currentDeclarationCourierStatusPM.LastMileServiceType + " to declarationCourierStatus for DeclarationPM.Id: " + _MyDeclarationPM.Id);
+                }
+                if (currentDeclarationCourierStatusPM != null && currentDeclarationCourierStatusPM.ChangeSetOp == ChangeSetOperation.Update)
+                {
+                    try
+                    {
+                        DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(_context, new Dictionary<string, IContext>(), _MyDeclarationPM.Tenant);
+                        declarationCourierStatusUpdateService.Update(currentDeclarationCourierStatusPM, true);
+
+                    }
+                    catch (DbEntityValidationException ex)
+                    {
+                        var FormatedException = ExceptionFormatUtil.GetFormated(ex);
+                        AppendLogLine("ProccessRequest():Exception " + FormatedException.ToString() + Environment.NewLine + "---------------------------------------------");
+                        return;
+                    }
+                    catch (Exception e)
+                    {
+                        AppendLogLine("ProccessRequest():Exception " + e.ToString() + Environment.NewLine + "---------------------------------------------");
+                        return;
+                    }
                 }
 
                 if (String.IsNullOrWhiteSpace(_MyDeclarationPM.Id))
@@ -1576,8 +1617,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
             //dus._MyDeclarationPM.Id;
         }
 
-
-        private void UpdateTrucker()
+        public void UpdateTrucker()
         {
             if (currentDeclarationCourierStatusPM == null)
             {

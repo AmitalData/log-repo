@@ -101,17 +101,39 @@
     <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="RabbitMQ.Client, Version=6.0.0.0, Culture=neutral, PublicKeyToken=89e7d7c5feba84ce, processorArchitecture=MSIL">
+      <HintPath>..\packages\RabbitMQ.Client.6.2.2\lib\net461\RabbitMQ.Client.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
+    </Reference>
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Memory, Version=4.0.1.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Memory.4.5.4\lib\net461\System.Memory.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.5.3\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.ServiceModel.DomainServices.Server, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Spatial, Version=5.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Spatial.5.7.0\lib\net40\System.Spatial.dll</HintPath>
       <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Threading.Channels, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Threading.Channels.4.7.1\lib\net461\System.Threading.Channels.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.4\lib\net461\System.Threading.Tasks.Extensions.dll</HintPath>
     </Reference>
     <Reference Include="System.Transactions" />
     <Reference Include="System.Xml.Linq" />
@@ -143,6 +165,8 @@
     <Compile Include="CustomsBook\CustomsItemImport.cs" />
     <Compile Include="CustomsBook\PropertiesDetailsHistoryImport.cs" />
     <Compile Include="Dca\DcaDirect9200TenantService.cs" />
+    <Compile Include="Dca\DedicatedCourierDCAService.cs" />
+    <Compile Include="Dca\RemoveOldOrphanedFilesFromBackupService.cs" />
     <Compile Include="FakeMessagingServices\Courier\Fake_1770_MN_MSG1_MANIFESTResponse.cs" />
     <Compile Include="FakeMessagingServices\DCASincroService.cs" />
     <Compile Include="FakeMessagingServices\Fake_2754_MSG10004_ImportDeclarationResponse.cs" />
@@ -174,6 +198,10 @@
     <Compile Include="Helpers\ClosedTable\Update1308CustomsShip.cs" />
     <Compile Include="Helpers\ClosedTable\Update1416ModificationAndDiscountType.cs" />
     <Compile Include="MessagingServices\DCAInDF_NG_5118_MSG14004_ImportDeclarationCancellationReplyMsg.cs" />
+    <Compile Include="MessagingServices\DCAInUCB2715SendNow_MsgMessagingService.cs" />
+    <Compile Include="MessagingServices\DCAInUCBUpdateAllCertificateWithoutResponse_MsgMessagingService.cs" />
+    <Compile Include="MessagingServices\DCAInUCBMultiUpdate_MsgMessagingService.cs" />
+    <Compile Include="MessagingServices\DCAInUCBClosePending_MsgMessagingService.cs" />
     <Compile Include="MessagingServices\DCAInUCSBondedDocument_MessagingService.cs" />
     <Compile Include="MessagingServices\DCAInDE_NG_5108_DecisionMessageMessagingService.cs" />
     <Compile Include="Dca\DCAMoveIncomeFileToDirService.cs" />
@@ -242,6 +270,7 @@
     <Compile Include="MessagingServices\MN_MSG8370_CargoSplitMessagingService.cs" />
     <Compile Include="MessagingServices\MN_NG_9022_CourierBOLQueryMessagingService.cs" />
     <Compile Include="MessagingServices\SaveDF_MSG5002_DeclarationCancellationRequestMsgService.cs" />
+    <Compile Include="MessagingServices\SaveCH_MSG_195_SearchResultsMessagingService.cs" />
     <Compile Include="MessagingServices\SE_6001_SealUpdateMessagingService.cs" />
     <Compile Include="MessagingServices\ST_MSG05_StorageEntranceUnloadingMassagingService.cs" />
     <Compile Include="MessagingServices\TPG_NG_8244_ClaimFileFilterParamMessagingService.cs" />
@@ -294,6 +323,8 @@
     <Compile Include="MessagingServices\Unifreight_L2US01_US2L01_SivugMessagingService.cs" />
     <Compile Include="MessagingServices\VE_8326_ImporterDeclarationMessagingService.cs" />
     <Compile Include="MessagingServices\VP_NG_2690_VehicleInMessagingService.cs" />
+    <Compile Include="RabbitMQ\RabbitmqConnection.cs" />
+    <Compile Include="RabbitMQ\RabbitmqHelper.cs" />
     <Compile Include="RequestServices\CBC_NG_8361_MSG01_CustomsBookInRequestService.cs" />
     <Compile Include="RequestServices\CB_NG_8316_CustomItemLegalDemandsRequestService.cs" />
     <Compile Include="RequestServices\CLAIM_2340_ClaimRequestRequestService.cs" />
@@ -312,6 +343,7 @@
     <Compile Include="RequestServices\MN_MSG8370_CargoSplitRequestService.cs" />
     <Compile Include="RequestServices\MN_NG_9022_CourierBOLQueryRequestService.cs" />
     <Compile Include="RequestServices\SaveDF_MSG5002_DeclarationCancellationRequestMsgRequestService.cs" />
+    <Compile Include="RequestServices\SaveCH_MSG_195_SearchResultsRequestService .cs" />
     <Compile Include="RequestServices\SE_6001_SealUpdateRequestService.cs" />
     <Compile Include="RequestServices\ST_MSG05_StorageEntranceUnloadingRequestService.cs" />
     <Compile Include="RequestServices\TPG_NG_8244_ClaimFileFilterParamRequestService.cs" />
@@ -353,9 +385,15 @@
     <Compile Include="ResponseServices\DF_NG_2757_MSG10004_ExportDeclarationResponseService.cs" />
     <Compile Include="ResponseServices\DF_NG_5117_ImportDeclerationAmendmentReplyResponseService.cs" />
     <Compile Include="ResponseServices\DF_NG_5118_MSG14004_ImportDeclarationCancellationReplyMsgResponseService.cs" />
+    <Compile Include="ResponseServices\MultiUpdateBatchUCBCMSS_MsgResponseService.cs" />
+    <Compile Include="ResponseServices\UpdateAllCertificateBatchUCB_MsgResponseService.cs" />
     <Compile Include="ResponseServices\SaveCC_MSG2450_ContainerizationMessageResponseService.cs" />
     <Compile Include="ResponseServices\SaveDF_MSG5002_DeclarationCancellationRequestMsgResponseService.cs" />
     <Compile Include="ResponseServices\DCAInUCUW2L_OpenDeclarationsByIntegratorInterfaceResponseService.cs" />
+    <Compile Include="ResponseServices\UniCourierBatchSend2715SendNow_MsgResponseService.cs" />
+    <Compile Include="ResponseServices\UniCourierBatchSendClosePending_MsgResponseService.cs" />
+    <Compile Include="ResponseServices\UniCourierBatchSendUCBCMSS_MsgResponseService.cs" />
+    <Compile Include="ResponseServices\SaveCH_MSG_195_SearchResultsResponseService.cs" />
     <Compile Include="ResponseServices\UniCustomBatchSend2715Bonded_MsgResponseService.cs" />
     <Compile Include="ResponseServices\DeclarationErrorPointer\DeclarationCorrectionsPointerService.cs" />
     <Compile Include="ResponseServices\DEPO_NG_2753_MSG4_DepositBankAccountToRefundUpdateRequestResponseService.cs" />
@@ -481,7 +519,6 @@
     <Compile Include="ResponseServices\UniCourierBatchSend2750_MsgResponseService.cs" />
     <Compile Include="ResponseServices\UniCourierBatchSend2755_MsgResponseService.cs" />
     <Compile Include="ResponseServices\UniCourierBatchSend8250_MsgResponseService.cs" />
-    <Compile Include="ResponseServices\UniCourierBatchSendUCBCMSS_MsgResponseService.cs" />
     <Compile Include="ResponseServices\UniCourierBatchSendUCBCTML_MsgResponseService.cs" />
     <Compile Include="ResponseServices\UniCourierBatchSendUCBUD2LT_MsgResponseService.cs" />
     <Compile Include="ResponseServices\UniCustomTableZip_MsgResponseService.cs" />

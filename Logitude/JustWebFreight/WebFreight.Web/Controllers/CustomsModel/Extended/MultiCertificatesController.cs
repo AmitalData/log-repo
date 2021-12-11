@@ -21,6 +21,7 @@ using System.Web.Script.Serialization;
 using WebFreight.Web.DataContracts;
 using WebFreight.Web.Helpers;
 using WebFreight.Web.Security;
+using Logitude.CustomsMessaging.MessagingServices;
 
 namespace WebFreight.Web.Controllers.CustomsModel.Extended
 {
@@ -401,7 +402,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
             }
         }
 
-        public HttpResponseMessage GetUpdateAllCertificateWithoutResponse(string declarationId) // entity  string declarationId, string invoiceNumber, string attachmentTypeCode, string certificateNumber, string resConfirmationTypeCode, string certificateExemptionTypeCode, string reqConfirmationTypeCode)
+        public HttpResponseMessage GetUpdateAllCertificateWithoutResponse(string declarationId,string customFileNo)
         {
             try
             {
@@ -412,14 +413,14 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 SecurityUtility.AuthenticationOnTenant(tenant);
 
                 ICustomContext customContext = CustomContext.GetContext(authToken.Tenant);
-                SupplierInvioceItemCertificatQueryService queryService = new SupplierInvioceItemCertificatQueryService(customContext);
-                SupplierInvioceItemCertificatUpdateService updateService = new SupplierInvioceItemCertificatUpdateService(customContext);
+                //SupplierInvioceItemCertificatUpdateService updateService = new SupplierInvioceItemCertificatUpdateService(customContext);
 
+                //var count = updateService.UpdateAllCertificateWithoutResponse(declarationId, tenant);
 
-                var count = updateService.UpdateAllCertificateWithoutResponse(declarationId, tenant);
+                var messagingService = new DCAInUCBUpdateAllCertificateWithoutResponse_MsgMessagingService();
+                var sts = messagingService.CreateCRS(tenant, null, declarationId, customFileNo);
 
-
-                return Request.CreateResponse(HttpStatusCode.OK, count);
+                return Request.CreateResponse(HttpStatusCode.OK, sts);
             }
 
             catch (Exception ex)

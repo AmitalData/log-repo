@@ -48,7 +48,10 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         Delivered, 
 	         TruckerId, 
 	         DistributionArea, 
-	         CrateNumber,
+	         CrateNumber, 
+	         TerminalReleaseDate, 
+	         LastMileServiceType, 
+	         ShopId,
 	      }
 
 
@@ -118,7 +121,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         TruckerId, 
 	         DistributionArea, 
 	         CrateNumber, 
-	         TruckerName,
+	         TruckerName, 
+	         TerminalReleaseDate, 
+	         LastMileServiceType, 
+	         ShopId, 
+	         CargoDescription,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -255,6 +262,21 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CrateNumber))
             {
 				entityPOCO.CrateNumber = entityPM.CrateNumber;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TerminalReleaseDate))
+            {
+				entityPOCO.TerminalReleaseDate = entityPM.TerminalReleaseDate;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LastMileServiceType))
+            {
+				entityPOCO.LastMileServiceType = entityPM.LastMileServiceType;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ShopId))
+            {
+				entityPOCO.ShopId = entityPM.ShopId;
 			}
 			}
 
@@ -396,6 +418,21 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.CrateNumber = entityPOCO.CrateNumber;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.TerminalReleaseDate))
+            {
+					entityPM.TerminalReleaseDate = entityPOCO.TerminalReleaseDate;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.LastMileServiceType))
+            {
+					entityPM.LastMileServiceType = entityPOCO.LastMileServiceType;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ShopId))
+            {
+					entityPM.ShopId = entityPOCO.ShopId;
+            }
+
 		}
 
 		public void PMToOldPM(DeclarationCourierStatusPM entityPM, DeclarationCourierStatusPM oldEntityPM)
@@ -532,6 +569,21 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 oldEntityPM.CrateNumber = entityPM.CrateNumber;
             }
 			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TerminalReleaseDate))
+            {
+                oldEntityPM.TerminalReleaseDate = entityPM.TerminalReleaseDate;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LastMileServiceType))
+            {
+                oldEntityPM.LastMileServiceType = entityPM.LastMileServiceType;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ShopId))
+            {
+                oldEntityPM.ShopId = entityPM.ShopId;
+            }
+			
 		}
 
 	    public void EncodeBase64NVARCHARFields(DeclarationCourierStatusPM entityPM)
@@ -560,6 +612,10 @@ namespace Logitude.Customs.BL.EntityDataMappings
             if (!String.IsNullOrWhiteSpace(entityPM.DistributionArea)) //T4 find type == nText 
             {
                 entityPM.DistributionArea = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.DistributionArea));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.LastMileServiceType)) //T4 find type == nText 
+            {
+                entityPM.LastMileServiceType = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.LastMileServiceType));
             }
             entityPM.EncodeBase64NVARCHARFieldsBy=null;
 		}

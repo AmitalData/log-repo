@@ -43,6 +43,9 @@ using System.Xml;
 using System.IO;
 using Logitude.CustomsMessaging.ResponseServices;
 using Logitude.Customs.BL.TraceEvents;
+using Unifreight.BL.EntityPMs;
+using SupplierInvoicePM = Logitude.Customs.Def.EntityPMs.SupplierInvoicePM;
+using Simplog.Data.InfrastructureModel.Repositories;
 
 namespace WebFreight.Web.Controllers.CustomsModel.WebServices
 {
@@ -388,6 +391,10 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
             }
         }
 
+
+ 
+
+
         public HttpResponseMessage PostNewAmendmentDeclaration(GenericRequestParams requestParams)
         {
 
@@ -412,6 +419,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                 }
                 else
                 {
+
                     DF_MSG10000_ImportDeclarationRequestService _dF_MSG10000_ImportDeclarationRequestService = new DF_MSG10000_ImportDeclarationRequestService();
                     var request = _dF_MSG10000_ImportDeclarationRequestService.GetRequest(requestParams);
                     string error = "";
@@ -875,6 +883,64 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
             }
         }
 
+        public HttpResponseMessage GetGTBPTYPEItemList(string application, string search, int top, bool searchNULLVendor = true)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+
+                if (search != null && (search.ToLower() == "undefined" || search.ToLower() == "null"))
+                {
+                    search = null;
+                }
+
+                if (application != null && (application.ToLower() == "undefined" || application.ToLower() == "null"))
+                {
+                    application = null;
+                }
+
+                #region get data from Unifri
+
+                CustomsSettingQueryService settingService = new CustomsSettingQueryService(tenant);
+                CustomsSettingPM setting = settingService.GetSettingByTenantN(tenant);
+
+                if (setting.IsConnectedToUniFreight)
+                {
+                    var TarifsRepo = new GTBPTYPERepository(GetAmitalContext(tenant));
+                    var q =
+                    from itm in TarifsRepo
+                        .GetAll().Where(rec => rec.APPLICATION == application).Select(o => new
+                        {
+                            Name=o.NAMEENG,
+                            PriceType=o.PRICETYPE,
+                            application = o.APPLICATION,
+                        })
+                    select new { itm };
+
+                    if (!string.IsNullOrWhiteSpace(search))
+                    {
+                        search = search.ToUpper();
+                        q = q.Where(rec => rec.itm.PriceType.Contains(search));
+                    }
+                    q = q.Distinct();
+                    q = q.Take(top);
+
+                    var TarifList = q.ToList();
+                    #endregion
+                   
+                    return Request.CreateResponse(HttpStatusCode.OK, TarifList);
+                }
+                return Request.CreateResponse(HttpStatusCode.OK);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+
         public HttpResponseMessage GetGITITEMPartnersItemListByItemCode(string vendorId, string customerCode, string itemCode, int top, bool searchNULLVendor = true)
         {
             try
@@ -929,7 +995,9 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                             SearchFields = rec.SEARCHENG,
                             OriginCountryCode = rec.ORIGINCOUNTRY,
                             InvoiceQuantityType = rec.UNITID,
+                            TariffID = rec.TARIFFID,
                         })
+
                     select new { itm };
                     if (!string.IsNullOrWhiteSpace(customerCode))
                     {
@@ -957,7 +1025,40 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                     q = q.Take(top);
 
                     var aynList = q.ToList();
+                   
+                    var itemCrRepo = new GITITEMCRRepository(GetAmitalContext(tenant));
+                    foreach (var item in aynList)
+                    {
+                        var crkeys = new Unifreight.Data.AmitalModel.EntityKeys.GITITEMKeys() { COUNTER = item.itm.Id };
+                        /*
+                        var aq =
+                    from itmcr in itemCrRepo
+                        .GetMulti(crkeys)
+                        .Select(rec => new GITITEMCR()
+                        {
+                            COUNTER = rec.COUNTER,
+                            REMARKS = rec.REMARKS,
+                            REQCERT = rec.REQCERT,
+                            
+                        })
+                    select new { itmcr };
+                        */
+                        var list = itemCrRepo.GetMulti(crkeys);
+                  //     item.itm.GITITEMCRs = list;
+
+                    }
+
+                    /*
+                    var aq =
+                    from itmcr in itemCrRepo
+                        .GetMulti(aynList.Select(r => r.itm.Id)
+                        );
+                        
+                    select new { itmcr };
+                    */
                     var l = aynList.Select(rec => GetCustomsPartnersItemList(rec.itm, cardDetails, tenant)).ToList();
+
+                    
 
                     #endregion
 
@@ -2097,4 +2198,14 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
 
     }
 
+    internal class CustomsPartnersItemCRList
+    {
+        public CustomsPartnersItemCRList()
+        {
+        }
+
+        public string Id { get; set; }
+        public string REMARKS { get; set; }
+        public string REQCERT { get; set; }
+    }
 }

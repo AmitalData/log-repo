@@ -186,7 +186,27 @@
   <Column
     Name="CrateNumber"
     Type="varchar"
-    Size="10">
+    Size="30">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="TerminalReleaseDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="LastMileServiceType"
+    Type="nvarchar"
+    Size="4">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ShopId"
+    Type="varchar"
+    Size="15">
     <Constraints
       Nullable="true" />
   </Column>
@@ -208,6 +228,11 @@
   <Relation
     ForeignKeyColumn="TruckerId"
     ReferencedTable="Truckers"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="ShopId"
+    ReferencedTable="Cards"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Index

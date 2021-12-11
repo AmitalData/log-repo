@@ -160,6 +160,36 @@ namespace Amital.QuoteOPM.Data.EntityMapping
             this.Property(t => t.IsRegionalTax).HasColumnName("IsRegionalTax");
 
             this.Property(t => t.TariffLineId).HasColumnName("TariffLineId").HasMaxLength(20).IsUnicode(false);
+
+            this.Property(t => t.TariffCostNo).HasColumnName("TariffCostNo").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.TariffSaleNo).HasColumnName("TariffSaleNo").HasMaxLength(15).IsUnicode(false);
+
+            dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
+            if (dbms == "oracle")
+            {
+              this.Property(t => t.TariffCostXML).HasMaxLength(2000);
+			}
+            else
+            {
+              this.Property(t => t.TariffCostXML).HasMaxLength(5000);
+			}
+
+
+            this.Property(t => t.TariffCostXML).HasColumnName("TariffCostXML").IsUnicode(true);
+
+            dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
+            if (dbms == "oracle")
+            {
+              this.Property(t => t.TariffSaleXML).HasMaxLength(2000);
+			}
+            else
+            {
+              this.Property(t => t.TariffSaleXML).HasMaxLength(5000);
+			}
+
+
+            this.Property(t => t.TariffSaleXML).HasColumnName("TariffSaleXML").IsUnicode(true);
         }
     }
 }

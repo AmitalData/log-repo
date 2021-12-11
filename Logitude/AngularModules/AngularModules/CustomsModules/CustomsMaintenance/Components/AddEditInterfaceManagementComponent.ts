@@ -175,6 +175,8 @@ export class AddEditInterfaceManagementComponent
     get AllowRestore() { return this.entityPM != null ? this.entityPM.AllowRestore : false; }
     set AllowRestore(value) { this.entityPM.AllowRestore = value; }
 
+    get UseRabbitMQ() { return this.entityPM != null ? this.entityPM.UseRabbitMQ : false; }
+    set UseRabbitMQ(value) { this.entityPM.UseRabbitMQ = value; }
 
 
     get Description() { return this.entityPM != null ? this.entityPM.Description : null; }
@@ -230,6 +232,10 @@ export class AddEditInterfaceManagementComponent
         if (IsNew) {
             return;
         }
+        this.ValidateSuperUser();
+        if (this.ValidationErrorsList.length > 0) {
+            return;
+        }
         
         this._InterfaceManagementPMExtendService.PutInterfaceManagementPM(this.entityPM)
             .subscribe((resp:any) => {
@@ -241,5 +247,15 @@ export class AddEditInterfaceManagementComponent
                 this.CancelButtonClicked();
 
             });
+    }
+
+    private ValidateSuperUser() {
+        this.ValidationErrorsList = [];
+        if (this.TenantPriority > 99) {//super user
+            this.ValidationErrorsList.push("עדיפות מוגבלת ל 99")
+        }
+        if (this.TenantPriority <1) {
+            this.ValidationErrorsList.push("עדיפות מוגבלת מ 1")
+        }
     }
 }

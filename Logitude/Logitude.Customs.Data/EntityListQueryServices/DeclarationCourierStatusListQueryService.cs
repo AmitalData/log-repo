@@ -181,14 +181,16 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                                   MasterGatewayPortCode = cm.GatewayPortCode,
                                                                   MasterEstimatedArrivalDate = cm.EstimatedArrivalDate,
                                                                   MasterStorageSiteCode = cm.StorageSiteCode,
+                                                                  DeclarationStorageSiteCode = d.StorageSiteCode,
                                                                   MasterHAWB = cm.HAWB,
+                                                                  TerminalReleaseDate=a.TerminalReleaseDate,
                                                                   CustomFileNo = d.CustomFileNo,
                                                                   TruckerId = a.Trucker.Card.Code,
                                                                   CrateNumber = a.CrateNumber,
                                                                   TruckerName = a.Trucker.Card.LocalName,
                                                                   AmendmentDontDisplayInList= d.AmendmentDontDisplayInList , 
-                                                                  IsAmendment  = d.IsAmendment==true? true :false
-
+                                                                  IsAmendment  = d.IsAmendment==true? true :false ,
+                                                                CargoDescription= d.CargoDescription                                                               
                                                               });
 
 

@@ -710,6 +710,13 @@
       Nullable="true" />
   </Column>
   <Column
+    Name="CargoDescription"
+    Type="nvarchar"
+    Size="256">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
     Name="IsPaymentProtested"
     Type="bit">
     <Constraints

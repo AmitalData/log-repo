@@ -20,7 +20,7 @@ using Unifreight.Data.AmitalModel;
 
 namespace Logitude.Customs.BL.TraceEvents
 {
-    internal class UnifreightFUStatusTaskService
+    public class UnifreightFUStatusTaskService
     {
         private AmitalContext _AmitalContext;
         private string _UnifreightUserId;
@@ -206,6 +206,7 @@ namespace Logitude.Customs.BL.TraceEvents
                 status_DateTime = statusDateTime,
                 //status_save = "no_fail",
                 comments = comments,
+                OwnerUnifreightUserCode = myUnifreightFUStatusParam.OwnerUnifreightUserCode
             };
 
             var myAmitalStatusTracerModel = new AmitalEventTracerModel();
@@ -280,6 +281,7 @@ namespace Logitude.Customs.BL.TraceEvents
         public string Entname { get; set; }
         public string PrimaryNum { get; set; }
 
+        public string OwnerUnifreightUserCode { get; set; }//= "MEHES" / "MAMAN" / "SWISS"  / "OVERSEAS" ;
         internal bool IsValid()
         {
             if (string.IsNullOrWhiteSpace(StatusCode))
@@ -298,5 +300,13 @@ namespace Logitude.Customs.BL.TraceEvents
             return true;
 
         }
+    }
+    public sealed class FUOwnerUnifreightUserCode
+    {
+        public const string MEHES = "MEHES";
+        public const string MAMAN = "MAMAN";
+        public const string SWISS = "SWISS";
+        public const string OVERSEAS = "OVERSEAS";
+
     }
 }

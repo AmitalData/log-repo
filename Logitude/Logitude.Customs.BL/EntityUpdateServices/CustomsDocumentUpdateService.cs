@@ -54,8 +54,12 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         //לאחר ממשק UD2LT - קישור מסמך לטיקט, אם התיק הינו תיק בלדרות יש לבצע העלאה של המסמך למכס - מסר קלוט צרופה
         public void AddPerfectCustomsDocumentMetaDataValues(CustomsDocumentPM entityPM)
         {
+            LogitudeSettings.HandleLogMe("start  MetaData:" + entityPM.ExternalAttachmentId, false, "MetaData", stopLogAt);
+
             if (entityPM.CustomsDocumentMetaDataValues.Count == 0)
             {
+                LogitudeSettings.HandleLogMe("if (entityPM.CustomsDocumentMetaDataValues.Count == 0)" + entityPM.ExternalAttachmentId, false, "MetaData", stopLogAt);
+
                 var customContext = CustomContext.GetContext(entityPM.Tenant);
                 var customDocumentTypeMetaDataQuery = new CustomDocumentTypeMetaDataQueryService(customContext);
                 var CustomDocumentTypeMetaData = customDocumentTypeMetaDataQuery.GetCustomDocumentTypeMetaDataByType(entityPM.DocumentTypeCode);
@@ -68,7 +72,10 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     MetaDataValue = null,
                 }).ToList();
 
+                LogitudeSettings.HandleLogMe("before AutoSetOriginalDocumentTrue" + entityPM.ExternalAttachmentId, false, "MetaData", stopLogAt);
                 AutoSetOriginalDocumentTrue(entityPM);
+                LogitudeSettings.HandleLogMe("after AutoSetOriginalDocumentTrue" + entityPM.ExternalAttachmentId, false, "MetaData", stopLogAt);
+
                 this._AddPerfectCustomsDocumentMetaDataValues_IsMetaDataReady = true;
             }
 
@@ -84,6 +91,10 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
         private void AutoSetOriginalDocumentTrue(CustomsDocumentPM entityPM)
         {
+            DateTime stopLogAt = new DateTime(2021, 12, 29);
+
+            LogitudeSettings.HandleLogMe("start AutoSetOriginalDocumentTrue" + entityPM.ExternalAttachmentId, false, "MetaData", stopLogAt);
+
             ICustomContext context = MainContext as CustomContext;
             CustomDocumentTypeQueryService docTypeQuery = new CustomDocumentTypeQueryService(context);
             CustomDocumentTypePM docType = docTypeQuery.GetSingle(entityPM.DocumentTypeCode, false, false);
@@ -91,22 +102,30 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             ICommonDataContext commonContext = CommonDataContext.GetContext(entityPM.Tenant);
             var myDocumentsFilingService = new DocumentsFilingService(commonContext, entityPM.Tenant);
 
-            DateTime stopLogAt = new DateTime(2020, 05, 05);
             Debug.WriteLine("AutoSetMetaDataValue");
             string logData = "";
 
             foreach (CustomsDocumentMetaDataValuePM val in entityPM.CustomsDocumentMetaDataValues)
             {
+                LogitudeSettings.HandleLogMe(" loop " + entityPM.ExternalAttachmentId, false, "MetaData", stopLogAt);
+
                 if (docType != null && docType.AutoSetOriginalDocumentTrue && val.MetaDataTypeCode == "87" && val.ChangeSetOp == ChangeSetOperation.Insert)
                 {
+                    LogitudeSettings.HandleLogMe(" if (docType != null && docType.AutoSetOriginalDocumentTrue && val.MetaDataTypeCode == '87' && val.ChangeSetOp == ChangeSetOperation.Insert) " + entityPM.ExternalAttachmentId, false, "MetaData", stopLogAt);
+
                     val.MetaDataValue = "True";
                 }
 
                 if (string.IsNullOrWhiteSpace(val.MetaDataValue))
                 {
+                    LogitudeSettings.HandleLogMe("if (string.IsNullOrWhiteSpace(val.MetaDataValue))" + entityPM.ExternalAttachmentId, false, "MetaData", stopLogAt);
+
+
                     MyDocumentMetaDataValues = myDocumentsFilingService.GetDocumentsFilingMetaDataValueByFilingIdAndCode(entityPM.DocumentsFilingId, val.MetaDataTypeCode);
                     if (MyDocumentMetaDataValues != null && !string.IsNullOrWhiteSpace(MyDocumentMetaDataValues.MetaDataValue))
                     {
+                        LogitudeSettings.HandleLogMe("if (MyDocumentMetaDataValues != null && !string.IsNullOrWhiteSpace(MyDocumentMetaDataValues.MetaDataValue))" + entityPM.ExternalAttachmentId, false, "MetaData", stopLogAt);
+
                         val.MetaDataValue = MyDocumentMetaDataValues.MetaDataValue;
                         if (val.ChangeSetOp != ChangeSetOperation.Insert) val.ChangeSetOp = ChangeSetOperation.Update;
                     }
@@ -118,6 +137,8 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 }
 
             }
+            LogitudeSettings.HandleLogMe( "log- " + logData + entityPM.ExternalAttachmentId, false, "MetaData", stopLogAt);
+
             LogitudeSettings.HandleLogMe("AutoSetMetaDataValue" + logData, false, "AutoSetMetaDataValue", stopLogAt);
         }
 
@@ -164,10 +185,18 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             Communications.AddCommunicationLog(logParams);
         }
 
+
+        DateTime stopLogAt = new DateTime(2021, 12, 29);
+
+
         protected override void OnUpdating(CustomsDocumentPM entityPM, CustomsDocument entityPOCO)
         {
             try
             {
+
+                LogitudeSettings.HandleLogMe("start update :" + entityPM.ExternalAttachmentId, false, "SENDTOMEHES", stopLogAt);
+
+
                 if (entityPM.IsPartOfDeclaration != entityPOCO.IsPartOfDeclaration)
                 {
                     string documentsFilingId = entityPM.DocumentsFilingId ?? EntityPOCO.DocumentsFilingId;
@@ -204,7 +233,12 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     !string.IsNullOrWhiteSpace(entityPM.DocumentRemarks) &&
                     entityPM.DocumentRemarks.Contains(LoadTestSendMessageToQueue) &&
                         entityPM.DocumentVersion == entityPOCO.DocumentVersion + 1);
+
+                LogitudeSettings.HandleLogMe("before try send update :" + entityPM.ExternalAttachmentId, false, "SENDTOMEHES", stopLogAt);
+
                 TrySendMessageToQueue(entityPM, forceDueLoadTest);
+                LogitudeSettings.HandleLogMe("after try send update :" + entityPM.ExternalAttachmentId, false, "SENDTOMEHES", stopLogAt);
+
                 base.OnUpdating(entityPM, entityPOCO);
                 if (entityPM.DocumentStatusCode == "7")
                 {
@@ -487,8 +521,11 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
             if (entityPM.DocumentStatusCode != "7" && entityPM.IsSendToQueue)
             {
+                LogitudeSettings.HandleLogMe("  try send update if (entityPM.DocumentStatusCode != '7' && entityPM.IsSendToQueue):" + entityPM.ExternalAttachmentId, false, "SENDTOMEHES", stopLogAt);
+
                 if (entityPM.IsMetaDataReady)
                 {
+                    LogitudeSettings.HandleLogMe("if (entityPM.IsMetaDataReady):" + entityPM.ExternalAttachmentId, false, "SENDTOMEHES", stopLogAt);
 
                     send = true;
                     //using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -504,11 +541,16 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 && string.IsNullOrWhiteSpace(entityPM.CustomsDocId))
             // Send automatically if from Collateral screen
             {
+
+                LogitudeSettings.HandleLogMe("!string.IsNullOrWhiteSpace(entityPM.CollateralId):" + entityPM.ExternalAttachmentId, false, "SENDTOMEHES", stopLogAt);
+
                 send = true;
             }
 
             if (send || forceDueLoadTest)
             {
+                LogitudeSettings.HandleLogMe("if (send || forceDueLoadTest):" + entityPM.ExternalAttachmentId, false, "SENDTOMEHES", stopLogAt);
+
                 if (SendMessageToQueue(entityPM, forceDueLoadTest))
                 {
                     if (forceDueLoadTest)
@@ -555,6 +597,11 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     LogMessagingUtil.Instance.AppendLine("DocumentTypeCode is null ,disconnect - dont sent 2 mehes ");
                     return send;
                 }
+
+
+                LogitudeSettings.HandleLogMe("start send:" + entityPM.ExternalAttachmentId, false, "SENDTOMEHES", stopLogAt);
+
+
                 var currentCustomsDocumentsTicketId = entityPM.CurrentCustomsDocumentsTicketId;
 
                 ICommonDataContext commonContext = CommonDataContext.GetContext(entityPM.Tenant); //this.currentContext 
@@ -606,6 +653,12 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 //    throw new Exception("CustomsDocument must conncted to declaration "); ////task10676  yaron said it must be conncted to declaration !!
 
                 //}
+
+                //get field from interfaceManagment
+
+                var interfaceManagementQueryService = new InterfaceManagementQueryService(customContext);
+                var time = interfaceManagementQueryService.GetSingle("2715", false,true)?.SendTime;
+                var date = entityPM.IsCustomSendTime && !string.IsNullOrEmpty(time) ? DateTime.Today.Add(TimeSpan.Parse(time)) : (DateTime?)null;
                 var requestParams = new Logitude.CustomsMessaging.Common.RequestParams.D_NG_2715_MSG22002_AddAGlobalScannedAttachmentToEntityRequestParam()
                 {
                      MainInterfaceCode="2715",
@@ -618,7 +671,10 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     LoggingEntityId = declarationId,
                     LoggingObjectTableId2 = ObjectTableRepository.GetObjectTableByName("Customs.CustomsDocument"),//task10676 
                     LoggingEntityId2 = entityPM.DocumentsFilingId,
-                };
+                    FutureSendDateTime = date,
+                    RequestVIAChangeDue = date.HasValue ?string.Concat("נרשמה בקשה מתוזמנת לשעה ", date.GetValueOrDefault().ToShortTimeString()) : ""
+
+            };
                 if (String.IsNullOrWhiteSpace(declarationId) && !String.IsNullOrWhiteSpace(entityPM.ClaimId))
                 {
                     requestParams.LoggingObjectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Claim");
@@ -705,16 +761,22 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
                 try
                 {
+                    LogitudeSettings.HandleLogMe("start send2:" + entityPM.ExternalAttachmentId, false, "SENDTOMEHES", stopLogAt);
+
                     SBQMessageService.CreateSheetSBQMessage<Logitude.CustomsMessaging.Common.RequestParams.D_NG_2715_MSG22002_AddAGlobalScannedAttachmentToEntityRequestParam>(requestParams
-                        , false
+                        , false,requestParams.FutureSendDateTime
                         );
                     send = true;
                     Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine("send 2715 ");
                 }
                 catch (CustomsRequestsSheetDomainModelServiceException myCustomsRequestsSheetServiceException)
                 {
+                    LogitudeSettings.HandleLogMe("catch (CustomsRequestsSheetDomainModelServiceException myCustomsRequestsSheetServiceException)" + entityPM.ExternalAttachmentId, false, "SENDTOMEHES", stopLogAt);
+
                     if (myCustomsRequestsSheetServiceException.Where == CustomsRequestsSheetDomainModelServiceException.WhereEnum.SameRequestInProgress)
                     {
+                        LogitudeSettings.HandleLogMe("2715 RequestInProgress stop create a new one !! " + entityPM.ExternalAttachmentId, false, "SENDTOMEHES", stopLogAt);
+
                         Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine("2715 RequestInProgress stop create a new one !! " + myCustomsRequestsSheetServiceException.Message);
                         return send;
                     }
@@ -727,8 +789,12 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             }
             catch (Exception e)
             {
+
+                LogitudeSettings.HandleLogMe("send failed : " +e.Message + entityPM.ExternalAttachmentId, false, "SENDTOMEHES", stopLogAt);
                 if (!IgnoreSendFailure)
                 {
+                    LogitudeSettings.HandleLogMe("שליחת מסמך למכס נכשל : " + e.Message + entityPM.ExternalAttachmentId, false, "SENDTOMEHES", stopLogAt);
+
                     e.ChangeExceptionMessage(@"שליחת מסמך למכס נכשל" + Environment.NewLine);
                     throw e;
                 }

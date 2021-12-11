@@ -383,7 +383,7 @@ export class SessionComponent {
             this.CurrentWindow.Resize(width);
         }
     }
-    public CloseCurrentWindowEmit(emit: string) {
+    public CloseCurrentWindowEmit(emit: any) {
         if (this.CurrentWindow != null) {
             this.CurrentWindow.Close(emit);
         }

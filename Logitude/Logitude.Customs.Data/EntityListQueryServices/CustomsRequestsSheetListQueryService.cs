@@ -1,4 +1,4 @@
-	using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
@@ -13,13 +13,14 @@ using System.Xml.Serialization;
 
 using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Data.EntityLists;
+using Logitude.Customs.Data.DataContracts;
 
 namespace Logitude.Customs.Data.EntityListQueryServices
-{ 
+{
 
     public partial class CustomsRequestsSheetListQueryService
     {
-	    private IQueryable<CustomsRequestsSheetList> GetIqueryableList(IQueryable<CustomsRequestsSheet> iQueryable)
+        private IQueryable<CustomsRequestsSheetList> GetIqueryableList(IQueryable<CustomsRequestsSheet> iQueryable)
         {
             IQueryable<CustomsRequestsSheetList> query = (from a in iQueryable
                                                           select new CustomsRequestsSheetList()
@@ -50,14 +51,37 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
                                                           });
             return query;
-		}
+        }
 
         private IQueryable<CustomsRequestsSheet> ApplyCustomFilters(QueryOperations queryOperations, IQueryable<CustomsRequestsSheet> iQueryable, int tenant)
         {
             return iQueryable;
-		}
-	}
+        }
+        public List<CustomsRequestsSheetSummary> GetStatistics(int tenant)
+        {
+            var lastweek = DateTime.Now.Date.AddDays(-7);
+            IQueryable<CustomsRequestsSheetList> query = (from a in context.CustomsRequestsSheets
+                                                          where a.Tenant == tenant && (a.RequestStatusCode == "5" || a.RequestStatusCode == "1" ||
+                                                          a.RequestStatusCode == "2" || a.RequestStatusCode == "21")
+                                                          && a.RequestCreateDate >= lastweek
+                                                          select new CustomsRequestsSheetList()
+                                                          {
+                                                              InterfaceTypeCode = a.InterfaceTypeCode,
+                                                              InterfaceTypeName = a.InterfaceManagement != null ? a.InterfaceManagement.Description : null,
+                                                          });
+
+
+            var qGroupIt = query.GroupBy(q => q.InterfaceTypeName).Select(g => new CustomsRequestsSheetSummary
+            {
+                Id = new Guid(),
+                count = g.Select(x => x.InterfaceTypeCode).Count(),
+                InterfaceTypeName = g.Key
+            }).ToList();
+            return qGroupIt;
+        }
+
+
+    }
 
 
 }
-	

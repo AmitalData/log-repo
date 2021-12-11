@@ -17,8 +17,13 @@ namespace Amital.QuoteOPM.Data.Repsitories
         
 		public List<QuoteOPDocumentVersion> GetMulti(EntityKeyFields entityKeys)
         {
-            
-			throw new NotImplementedException();
+
+            QuoteOPKeys quoteOPKeys = entityKeys as QuoteOPKeys;
+
+            return (from a in context.QuoteOPDocumentVersions
+                    where a.QuoteOPId == quoteOPKeys.Id
+                    select a)
+                    .ToList();
         }
         public IQueryable<QuoteOPDocumentVersion> GetQuoteDocumentVersionsByQuoteId(string quoteId, int tenant)
         {

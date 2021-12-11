@@ -32,6 +32,10 @@ namespace Amital.QuoteOPM.Data.EntityLists
        public int TariffVersion  { get; set; }
        [DataMember]
        public string TariffLineId  { get; set; }
+       [DataMember]
+       public string TariffCostNo  { get; set; }
+       [DataMember]
+       public string TariffSaleNo  { get; set; }
    }
 
 }

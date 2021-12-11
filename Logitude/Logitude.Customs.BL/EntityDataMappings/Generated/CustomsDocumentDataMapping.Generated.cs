@@ -68,7 +68,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         ForceRemoveCustomsDocId, 
 	         CollateralId, 
 	         IsDigitallySigned, 
-	         SignersList,
+	         SignersList, 
+	         IsCustomSendTime,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();

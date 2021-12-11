@@ -245,6 +245,12 @@
     <Compile Include="JournalsReapprovalTool.Designer.cs">
       <DependentUpon>JournalsReapprovalTool.cs</DependentUpon>
     </Compile>
+    <Compile Include="MappUnifreightTables.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MappUnifreightTables.Designer.cs">
+      <DependentUpon>MappUnifreightTables.cs</DependentUpon>
+    </Compile>
     <Compile Include="PatchDistribution\PatchDistributionForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -315,6 +321,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="JournalsReapprovalTool.resx">
       <DependentUpon>JournalsReapprovalTool.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MappUnifreightTables.resx">
+      <DependentUpon>MappUnifreightTables.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PatchDistribution\PatchDistributionForm.resx">
       <DependentUpon>PatchDistributionForm.cs</DependentUpon>
@@ -452,6 +461,10 @@
     <ProjectReference Include="..\Simplog.Server.Infrastructure\Simplog.Server.Infrastructure.csproj">
       <Project>{acc2ea9e-e150-4099-8aa1-66326ab14be8}</Project>
       <Name>Simplog.Server.Infrastructure</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Unifreight.Data\Unifreight.Data.csproj">
+      <Project>{40F07800-11E8-4FBA-9FC2-FD6C8D11E3EF}</Project>
+      <Name>Unifreight.Data</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

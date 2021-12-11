@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Script DBType="Main" Module="Customs" >
+  <Sql Version="1">
+  </Sql>
+
+  <Oracle Version="1">
+    <![CDATA[
+EXECUTE IMMEDIATE ' alter table CONTAINERIZATIONS add ISMULTICUSTOMERS1 NVARCHAR2(100)';
+EXECUTE IMMEDIATE 'update CONTAINERIZATIONS set ISMULTICUSTOMERS1=ISMULTICUSTOMERS';
+EXECUTE IMMEDIATE 'commit';
+EXECUTE IMMEDIATE 'alter table CONTAINERIZATIONS drop column ISMULTICUSTOMERS';
+EXECUTE IMMEDIATE 'alter table CONTAINERIZATIONS rename column ISMULTICUSTOMERS1 to ISMULTICUSTOMERS';
+    ]]>
+  </Oracle>
+</Script>

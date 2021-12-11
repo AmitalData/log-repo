@@ -86,6 +86,8 @@ namespace Amital.QuoteOPM.Data
 	
             modelBuilder.Configurations.Add(new QuoteOPPriceStepsMap());
 	
+            modelBuilder.Configurations.Add(new QuoteOPPropertiesMap());
+	
             modelBuilder.Configurations.Add(new QuoteOPRatingMap());
 	
             modelBuilder.Configurations.Add(new QuoteOPSettingMap());
@@ -435,6 +437,11 @@ namespace Amital.QuoteOPM.Data
 	 
 	 }
 		 public IDbSet<QuoteOPPriceSteps> QuoteOPPriceSteps 
+	 {
+	      get; set;
+	 
+	 }
+		 public IDbSet<QuoteOPProperties> QuoteOPPropertiess 
 	 {
 	      get; set;
 	 

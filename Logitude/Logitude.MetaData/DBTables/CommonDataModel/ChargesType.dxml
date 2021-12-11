@@ -366,7 +366,7 @@
   <Column
     Name="QuoteGroupSectionID"
     Type="varchar"
-    Size="15">
+    Size="1">
     <Constraints
       Nullable="true" />
   </Column>
@@ -423,7 +423,7 @@
   <Relation
     ForeignKeyColumn="QuoteGroupSectionID"
     ReferencedTable="QuoteGroupSections"
-    ReferencedColumn="Id"
+    ReferencedColumn="Code"
     ReferencedTableSchema="dbo" />
   <Index
     Columns="Tenant" />

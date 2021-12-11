@@ -9,7 +9,7 @@ export class ApiQueryFilters {
     public PageIndex: number;
     public PageSize: number;
     public SortBy: string;
-    public SortDirection: string;
+    public SortDirection: 'Decending' | 'Ascending' | string;
     public GetCount: boolean;
     public Tenant: number;
     public AdditionalFilters: FilterItem[] = [];

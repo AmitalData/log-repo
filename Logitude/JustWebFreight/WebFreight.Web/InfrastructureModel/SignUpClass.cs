@@ -156,6 +156,7 @@ namespace WebFreight.Web.InfrastructureModel
         private static AdditionalServiceQuery additionalServiceQuery;
         private static OpportunityClosingReasonQueryService closingReasonQuery;
         private static CustomsRequiredFieldRepository customsRequiredFieldRepository;
+        private static DocumentTypeCustomsDataRepository documentTypeCustomsDataRepository;
         private static QuoteClosingReasonQuery quoteClosingReasonQuery;
         private static ShipmentSubTypeQuery shipmentSubTypeQuery;
 
@@ -201,6 +202,13 @@ namespace WebFreight.Web.InfrastructureModel
             get { return customsRequiredFieldRepository; }
             set { customsRequiredFieldRepository = value; }
         }
+   
+        public static DocumentTypeCustomsDataRepository DocumentTypeCustomsDataRepository
+        {
+            get { return documentTypeCustomsDataRepository; }
+            set { documentTypeCustomsDataRepository = value; }
+        }
+
 
         static FullAccountingSettingRepository fullAccountingSettingsRepository;
         static BankCodeRepository bankCodeRepository;
@@ -262,6 +270,7 @@ namespace WebFreight.Web.InfrastructureModel
             quoteStageRepository = new QuoteStageRepository(theTenant);
             opportunityTypeRepository = new OpportunityTypeRepository(theTenant);
             customsRequiredFieldRepository = new Logitude.Customs.Data.Repsitories.CustomsRequiredFieldRepository(theTenant);
+            documentTypeCustomsDataRepository = new Logitude.Customs.Data.Repsitories.DocumentTypeCustomsDataRepository(theTenant);
             documentsMetaDataTypeRepository = new DocumentsMetaDataTypeRepository(theTenant);
             PaymentMethodRepository = new Simplog.Data.InvoiceModel.Repositories.AccountingPaymentMethodRepository(theTenant);
             quoteClosingReasonRepository = new QuoteClosingReasonRepository(theTenant);
@@ -356,6 +365,7 @@ namespace WebFreight.Web.InfrastructureModel
                 List<QuoteStage> tenantZeroQuoteStages;
                 List<OpportunityType> tenantZeroOpportunityTypes;
                 List<CustomsRequiredField> tenantZeroCustomsRequiredFields = null;
+                List<DocumentTypeCustomsData> tenantZeroDocumentTypeCustomsDatas = null;
                 List<DocumentsMetaDataType> tenantZeroDocumentsMetaDataType = null;
                 List<Simplog.Data.InvoiceModel.EntityPOCOs.AccountingPaymentMethod> tenantZeroPaymentMethods=null;
                 List<BankCode> tenantZeroBankCodes = null;
@@ -428,6 +438,7 @@ namespace WebFreight.Web.InfrastructureModel
                     if (setting.WorkEnvironment == "customs")
                     {
                         tenantZeroCustomsRequiredFields = CustomsRequiredFieldRepository.GetAll(0).ToList();
+                        tenantZeroDocumentTypeCustomsDatas = DocumentTypeCustomsDataRepository.GetAll(0).ToList();
                     }
 
                     #endregion
@@ -511,6 +522,8 @@ namespace WebFreight.Web.InfrastructureModel
                 if (setting.WorkEnvironment == "customs")
                 {
                     AddCustomsRequiredFields(tenant, customsRequiredFieldRepository, tenantZeroCustomsRequiredFields);
+                    AddDocumentType(tenant, documentTypeRepository, tenantZeroDocumentTypes);
+                    AddDocumentTypeCustomsData(tenant, documentTypeCustomsDataRepository, tenantZeroDocumentTypeCustomsDatas);
                 }
                 else
                 {
@@ -1043,12 +1056,92 @@ namespace WebFreight.Web.InfrastructureModel
                     ObjectfieldId = field.ObjectfieldId,
                     ObjectfieldCode = field.ObjectfieldCode,
                     ObjectTableId = field.ObjectTableId,
+                    IsImport=field.IsImport,
+                    IsExport=field.IsExport,
                     Tenant = tenant,
                 };
                 customsRequiredFieldRepository.Add(newField);
             }
 
             customsRequiredFieldRepository.SubmitChanges();
+        }
+
+        private static void AddDocumentType(int tenant, Simplog.Data.CommonDataModel.Repositories.DocumentTypeRepository documentTypeRepository, List<DocumentTypePM> tenantZeroDocumentTypes)
+        {
+            foreach (DocumentTypePM field in tenantZeroDocumentTypes)
+            {
+
+                DocumentType newField = new DocumentType()
+                {
+                    Id = IdCounter.GetNumber("DocumentType", tenant).ToString(),
+                    Code = field.Code,
+                    Tenant = tenant,
+                    IsAir = field.IsAir,
+                    IsDocIn = field.IsDocIn,
+                    IsDocOut = field.IsDocOut,
+                    IsInland = field.IsInland,
+                    IsOcean = field.IsOcean,
+                    Name = field.Name,
+                    Notes = field.Notes,
+                    InActive = field.InActive,
+                    SearchFields = field.SearchFields,
+                    ObjectTableId = field.ObjectTableId,
+                    Subject = field.Subject,
+                    DocumentTypeDefaultHTMLTemplateId = field.DocumentTypeDefaultHTMLTemplateId,
+                    DocumentTypeDefaultReportTemplateId = field.DocumentTypeDefaultReportTemplateId,
+                    TemplateFormatCode = field.TemplateFormatCode,
+                    DocumentTypeDefaultEditorTool = field.DocumentTypeDefaultEditorTool,
+                    IsMaster = field.IsMaster,
+                    IsDirect = field.IsDirect,
+                    IsHouse = field.IsHouse,
+                    CustomControl = field.CustomControl,
+                    AgentRoleId = field.AgentRoleId,
+                    CustomerRoleId = field.CustomerRoleId,
+                    IsAgentView = field.IsAgentView,
+                    IsCustomerView = field.IsCustomerView,
+                    IsReadOnly = field.IsReadOnly,
+                    LimitedPrintCopyId = field.LimitedPrintCopyId,
+                    IsDocumentOneTimePrintLimited = field.IsDocumentOneTimePrintLimited,
+                    IsCopiedAtSignup = field.IsCopiedAtSignup,
+                    IsEnabledForCustomers = field.IsEnabledForCustomers,
+                    CountryCode = field.CountryCode,
+                    DocumentTypeCategoryCode = field.DocumentTypeCategoryCode,
+                    OrderBy = field.OrderBy,
+                    FileName = field.FileName,
+                    IsAgentSharedInDirect = field.IsAgentSharedInDirect,
+                    IsAgentSharedInHouse = field.IsAgentSharedInHouse,
+                    IsAgentSharedInMaster = field.IsAgentSharedInMaster,
+                    SharedDocumentTypeCopyId = field.SharedDocumentTypeCopyId,
+                    IsAirDigitalSignRequired = field.IsAirDigitalSignRequired,
+                    IsOceanDigitalSignRequired = field.IsOceanDigitalSignRequired,
+                    IsInlandDigitalSignRequired = field.IsInlandDigitalSignRequired,
+                    IsSystemAdditionalPrintingFields = field.IsSystemAdditionalPrintingFields,
+                    PrintingFieldsScreenCode = field.PrintingFieldsScreenCode,
+                    AddedManually = field.AddedManually,
+                    OnPrintPopulateDateFieldName = field.OnPrintPopulateDateFieldName,
+                    OnSendPopulateDateFieldName = field.OnSendPopulateDateFieldName,
+                    OnUploadPopulateDateFieldName = field.OnUploadPopulateDateFieldName,
+                };
+                documentTypeRepository.Add(newField);
+            }
+
+            documentTypeRepository.SubmitChanges();
+        }
+
+        private static void AddDocumentTypeCustomsData(int tenant, Logitude.Customs.Data.Repsitories.DocumentTypeCustomsDataRepository documentTypeCustomsDataRepository, List<DocumentTypeCustomsData> tenantZeroDocumentTypeCustomsDatas)
+        {
+            foreach (DocumentTypeCustomsData field in tenantZeroDocumentTypeCustomsDatas)
+            {
+                DocumentTypeCustomsData newField = new DocumentTypeCustomsData()
+                {
+                    Tenant = tenant,
+                    DocumentTypeId=field.DocumentTypeId,
+                    CustomsDoucumentTypeCode = field.CustomsDoucumentTypeCode,
+                };
+                documentTypeCustomsDataRepository.Add(newField);
+            }
+
+            documentTypeCustomsDataRepository.SubmitChanges();
         }
         private static void AddBankCodes(int tenant, BankCodeRepository bankCodeRepository, List<BankCode> tenantZeroBankCode)
         {

@@ -259,6 +259,11 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
                         break;
 
+                    case SheetStatusEnum.Created:
+                        {
+                            _CustomsRequestsSheetService.ReCreateNow();
+                        }
+                        break;
                     default:
                         throw new Exception("SheetStatus  not Valid");
                         break;

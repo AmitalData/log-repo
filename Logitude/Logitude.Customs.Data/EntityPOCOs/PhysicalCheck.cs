@@ -110,6 +110,22 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public bool NoEscortRequired { get; set; }
         [Column("VehicleChassisNumber")]
 	    public string VehicleChassisNumber { get; set; }
+        [ForeignKey("SearchResultType")]
+        [Column("SearchResult")]
+	    public string SearchResult { get; set; }
+	      
+        public virtual PhysicalCheckSearchResultType SearchResultType { get; set; }
+        [Column("SealNumber")]
+	    public string SealNumber { get; set; }
+        [ForeignKey("CheckAuthorityAttenderType")]
+        [Column("CheckAuthorityAttenderTypeID")]
+	    public string CheckAuthorityAttenderTypeID { get; set; }
+	      
+        public virtual Authority CheckAuthorityAttenderType { get; set; }
+        [Column("CheckAuthorityAttenderTypeName")]
+	    public string CheckAuthorityAttenderTypeName { get; set; }
+        [Column("CheckAnwserStatus")]
+	    public int? CheckAnwserStatus { get; set; }
     }
 }
 	 

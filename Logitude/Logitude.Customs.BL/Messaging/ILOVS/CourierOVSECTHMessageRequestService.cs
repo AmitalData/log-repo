@@ -24,6 +24,7 @@ using Unifreight.Data.AmitalModel;
 using Simplog.Data.CommonDataModel;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 
 namespace Logitude.Customs.BL.Messaging.ILOVS
 {
@@ -153,8 +154,17 @@ namespace Logitude.Customs.BL.Messaging.ILOVS
             DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(context);
             DeclarationCourierStatusPM currentDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(myDeclarationPM.Id, true, false);
             if(currentDeclarationCourierStatusPM != null && !String.IsNullOrWhiteSpace(currentDeclarationCourierStatusPM.CrateNumber))crateNumber = currentDeclarationCourierStatusPM.CrateNumber;
+            string distributionCompanyVat = "";
+            if (!string.IsNullOrWhiteSpace(currentDeclarationCourierStatusPM.TruckerId))
+            {
+                CardRepository cardRep = new CardRepository(myDeclarationPM.Tenant);
+                Card card = cardRep.GetSingleCardCache(currentDeclarationCourierStatusPM.TruckerId, myDeclarationPM.Tenant);
+                if (card != null)
+                {
+                    distributionCompanyVat = card.VatNumber;
+                }
+            }
 
- 
             //string importerVat = "";
             //if (!String.IsNullOrWhiteSpace(myDeclarationPM.ImporterId))
             //{
@@ -194,8 +204,8 @@ namespace Logitude.Customs.BL.Messaging.ILOVS
                 Description = myDeclarationPM.Consignments.DefaultIfEmpty(new ConsignmentPM()).First().CargoDescription ?? "",
                 ImporterName = myDeclarationPM.ImporterName ?? "",
                 ImporterAddress = myDeclarationPM.ImporterAddress ?? "",
-                DistributionLine = "",
-                DistributionCompanyVat = "",
+                DistributionLine = string.IsNullOrEmpty(currentDeclarationCourierStatusPM.DistributionArea) ? "כללי" : currentDeclarationCourierStatusPM.DistributionArea,
+                DistributionCompanyVat = distributionCompanyVat,
 
 
                 DeclarationNumber = myDeclarationPM.DeclarationNumber??"",

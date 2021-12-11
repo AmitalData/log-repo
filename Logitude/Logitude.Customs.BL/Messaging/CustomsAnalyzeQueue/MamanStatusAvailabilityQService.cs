@@ -94,7 +94,7 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
                     return res;
                 }
 
-
+                Boolean updateTerminalReleaseDate = false;
                 var qsDeclarationQueryService = new DeclarationQueryService(_CommunicationLog.Tenant);
 
                 _DeclarationPM = qsDeclarationQueryService.GetSingle(theDecId, true, false);
@@ -120,7 +120,8 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
                                 PrimaryNum = _DeclarationPM.CustomFileNo,
                                 Mode = UnifreightEventMode.@new,
                                 StatusCode = "SMG",
-                                EventDateTime = mySTBMessage.EventTime
+                                EventDateTime = mySTBMessage.EventTime,
+                                OwnerUnifreightUserCode = FUOwnerUnifreightUserCode.MAMAN
                             });
                         }
                         break;
@@ -132,8 +133,11 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
                                 PrimaryNum = _DeclarationPM.CustomFileNo,
                                 Mode = UnifreightEventMode.@new,
                                 StatusCode = "OMN",
-                                EventDateTime = mySTBMessage.EventTime
+                                EventDateTime = mySTBMessage.EventTime,
+                                OwnerUnifreightUserCode = FUOwnerUnifreightUserCode.MAMAN
+
                             });
+                            updateTerminalReleaseDate = true;
                         }
                         break;
                     default:
@@ -146,7 +150,7 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
                         break;
                 }
 
-                UpadteTerminalSuspentionNumber(mySTBMessage, theDecId);
+                UpadteTerminalSuspentionNumber(mySTBMessage, theDecId,updateTerminalReleaseDate);
 
             }
 
@@ -162,13 +166,17 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
             return res;
         }
 
-        private void UpadteTerminalSuspentionNumber(STBMessage mySTBMessage, string theDecId)
+        private void UpadteTerminalSuspentionNumber(STBMessage mySTBMessage, string theDecId,Boolean updateTerminalReleaseDate)
         {
             var customContext = CustomContext.GetContext(_CommunicationLog.Tenant);
             var declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(_CommunicationLog.Tenant);
             var currentDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(theDecId, true, false);
             var declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(customContext, new Dictionary<string, IContext>(), _CommunicationLog.Tenant);
             currentDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
+            if (updateTerminalReleaseDate)
+            {
+                currentDeclarationCourierStatusPM.TerminalReleaseDate = mySTBMessage.EventTime;
+            }
             currentDeclarationCourierStatusPM.TerminalSuspentionNumber = mySTBMessage.FormNo;
             declarationCourierStatusUpdateService.Update(currentDeclarationCourierStatusPM, true);
         }

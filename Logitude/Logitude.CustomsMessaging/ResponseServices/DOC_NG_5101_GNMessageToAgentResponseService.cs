@@ -91,7 +91,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     notificationDefinitionCode = "5101N";
                     assigneToNotificationTypeCode = "I";
                     notificationDescription = "הודעה לסוכן";
-                    if (customResponse.MessageToAgent.RelatedEntity.entityType == 1055)
+                    if (customResponse.MessageToAgent.RelatedEntity.entityType == 1055 || customResponse.MessageToAgent.RelatedEntity.entityType == 11188)
                     {
                         notificationDeclaration = customResponse.MessageToAgent.RelatedEntity.entityIdKey1;
                         notificationDescription = notificationDescription + " בגין הצהרה מספר " + notificationDeclaration; //eitan h 4/3/15 task 11572
@@ -282,7 +282,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         case 29:
                             notificationDefinitionCode = "5101R";
                             assigneToNotificationTypeCode = "I";
-                            if (customResponse.MessageToAgent.RelatedEntity.entityType == 1055)
+                            if (customResponse.MessageToAgent.RelatedEntity.entityType == 1055 || customResponse.MessageToAgent.RelatedEntity.entityType == 11188)
                             {
                                 notificationDeclaration = customResponse.MessageToAgent.RelatedEntity.entityIdKey1;
                                 notificationDescription = "התכתבות בגין מסמך נדרש הצהרה מספר " + notificationDeclaration; 
@@ -295,7 +295,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         case 30:
                             notificationDefinitionCode = "5101A";
                             assigneToNotificationTypeCode = "I";
-                            if (customResponse.MessageToAgent.RelatedEntity.entityType == 1055)
+                            if (customResponse.MessageToAgent.RelatedEntity.entityType == 1055 || customResponse.MessageToAgent.RelatedEntity.entityType == 11188)
                             {
                                 notificationDeclaration = customResponse.MessageToAgent.RelatedEntity.entityIdKey1;
                                 notificationDescription = "התכתבות בגין דחיית פיצול מטען הצהרה מספר " + notificationDeclaration;
@@ -308,7 +308,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         case 31:
                             notificationDefinitionCode = "5101E";
                             assigneToNotificationTypeCode = "I";
-                            if (customResponse.MessageToAgent.RelatedEntity.entityType == 1055)
+                            if (customResponse.MessageToAgent.RelatedEntity.entityType == 1055 || customResponse.MessageToAgent.RelatedEntity.entityType == 11188)
                             {
                                 notificationDeclaration = customResponse.MessageToAgent.RelatedEntity.entityIdKey1;
                                 notificationDescription = "התכתבות בגין כופר חוקיות הצהרה מספר " + notificationDeclaration;
@@ -337,7 +337,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 notificationDescription = notificationDescription + "\n" + customResponse.MessageToAgent.msgString.Replace("00:00:00", "");
             }
 
-            if (customResponse.MessageToAgent.RelatedEntity.entityType == 1055 || customResponse.MessageToAgent.RelatedEntity.entityType == 1015)
+            if (customResponse.MessageToAgent.RelatedEntity.entityType == 1055 || customResponse.MessageToAgent.RelatedEntity.entityType == 11188 || customResponse.MessageToAgent.RelatedEntity.entityType == 1015)
             {
                 notificationDeclaration = customResponse.MessageToAgent.RelatedEntity.entityIdKey1;
                 LogMessagingUtil.Instance.AppendLine("NotificationDeclaration = " + notificationDeclaration);
@@ -408,7 +408,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             notificationDefinitionCode = null;
                             break;
                         case 8:
-                        case 9:
+                        //case 9:
                         case 16:
                             this._MyDeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
                             this._MyDeclarationPM.CourierCustomStatusCode = "2";

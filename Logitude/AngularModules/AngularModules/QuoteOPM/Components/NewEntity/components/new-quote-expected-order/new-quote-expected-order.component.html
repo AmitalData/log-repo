@@ -1,0 +1,163 @@
+<div *ngIf="isSeaFcl" class="is-sea-fcl-section">
+    <h3 class="sub-header">
+        {{'QuoteOP.S.NewQuote.ExpectedOrderDetails' | TextCodeTranslationPipe}}
+    </h3>
+
+    <div class="grid content-in-section" [formGroup]='formGroup'>
+        <div class="col-2 p-fluid values-col">
+            <label>Quantity</label>
+            <div class="p-field" *ngFor='let i of [1,2,3,4]'>
+                <div class="error-msg" [ngClass]='{"invalid": formGroup.controls["quantity" + i].invalid}'>
+                    Quantity {{i}} is required
+                </div>
+                <p-inputNumber [formControlName]='"quantity" + i' mode="decimal" [useGrouping]="false">
+                </p-inputNumber>
+            </div>
+        </div>
+        <!--<p-dropdown [disabled]="!formGroup.controls.quantity1?.value"
+                    inputId="packageType1" formControlName='quantityType1' [options]="packageTypes" placeholder="Select" optionLabel="name"></p-dropdown>-->
+        <div class="col-3 p-fluid values-col">
+            <label>Package Type</label>
+            <div class="p-field" *ngFor='let i of [1,2,3,4]'>
+                <div class="error-msg" [ngClass]='{"invalid": formGroup.controls["quantityType" + i].invalid && !formGroup.controls["quantityType" + i].errors?.notIdentityValue}'>
+                    Quantity Type {{i}} is required
+                </div>
+                <app-autocomplate-table [columnsShow]="{Code:'Code',EnglishName:'English Name'}" [data]='packageTypes'
+                    [dropIcon]='true' [placeholder]='"Select"' [fieldShow]='"EnglishName"'
+                    [controlName]='"quantityType" + i' [formGroup]='formGroup'>
+                </app-autocomplate-table>
+            </div>
+        </div>
+        <div class="col-0.5 p-fluid"></div>
+
+        <div class="col-7 p-fluid additional-data-section">
+            <div class="p-field col-align">
+                <p-checkbox formControlName='isDangerous' [binary]="true"></p-checkbox>
+                <span class="checkbox-text">Dangerous Goods</span>
+            </div>
+            <div class="p-field description-of-goods">
+                <label for="descriptionOfGoods">Description of Goods</label>
+                <textarea formControlName='descriptionOfGoods' id="descriptionOfGoods" pInputTextarea
+                    [rows]="4"></textarea>
+            </div>
+
+            <div class="p-field">
+                <label for="notes">Notes</label>
+                <textarea formControlName='notes' id="notes" pInputTextarea [rows]="4"></textarea>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="!isSeaFcl" class="not-sea-fcl-section">
+
+    <h3 class="sub-header">
+        {{'QuoteOP.S.NewQuote.ExpectedOrderDetails' | TextCodeTranslationPipe}}
+        <p-button (onClick)="addPackage()"
+            [style]="{'float':'right', 'color': '#2196F3','background-color': 'white', 'bottom': '3px', 'padding': '4px 7px !important'}"
+            label="Add Package"></p-button>
+    </h3>
+
+    <h5 class="dimensions-header">Fill Dimensions</h5>
+
+    <div class="grid content-in-section" [formGroup]='formGroup'>
+        <div class="col-12 packages-row dimensions-labels">
+            <div class="quantity">Quantity</div>
+            <div class="package-type">Package Type</div>
+            <div class="dimensions-label">Dimensions({{tenant?.DimensionsUnitCode}})</div>
+            <div class="volume">Volume ({{tenant?.VolumeUnitCode}})</div>
+            <div class="gross-weight">Gross Weight ({{tenant?.GrossWeightUnitCode}})</div>
+            <div class="button-label"></div>
+        </div>
+
+        <div class="col-12 p-fluid" formArrayName="packages">
+            <div *ngFor='let x of packages.controls; let i = index' [formGroupName]="i" class="packages-row-container">
+                <div class="packages-row" [formGroup]='x'>
+
+                    <div class="quantity">
+                        <p-inputNumber formControlName="quantity" mode="decimal">
+                        </p-inputNumber>
+                    </div>
+
+                    <div class="package-type">
+                        <app-autocomplate-table [columnsShow]="{Code:'Code',EnglishName:'English Name'}"
+                            [data]='packageTypes' [dropIcon]='true' [placeholder]='"Select"' [fieldShow]='"EnglishName"'
+                            controlName='packageType' [formGroup]='x'>
+                        </app-autocomplate-table>
+                    </div>
+
+                    <div class="dimensions">
+                        <p-inputNumber placeholder="L" formControlName='Ldimension' id="volume" mode="decimal" [minFractionDigits]="1" [maxFractionDigits]="1">
+                        </p-inputNumber>
+                    </div>
+                    <div class="dimensions">
+                        <p-inputNumber placeholder="W" formControlName='Wdimension' id="volume" mode="decimal" [minFractionDigits]="1" [maxFractionDigits]="1">
+                        </p-inputNumber>
+                    </div>
+                    <div class="dimensions">
+                        <p-inputNumber placeholder="H" formControlName='Hdimension' id="volume" mode="decimal" [minFractionDigits]="1" [maxFractionDigits]="1">
+                        </p-inputNumber>
+                    </div>
+
+                    <div class="volume">
+                        <div class="error-msg" [ngClass]='{"invalid": x.controls["volume"].invalid}'>
+                            Volume or Gross Weight fields required</div>
+                        <p-inputNumber formControlName='volume' id="volume" mode="decimal" [useGrouping]="false"
+                            [minFractionDigits]="3" [maxFractionDigits]="3">
+                        </p-inputNumber>
+                    </div>
+
+                    <div class="gross-weight">
+                        <p-inputNumber formControlName='grossWeight' id="grossWeight" mode="decimal"
+                            [useGrouping]="false" [minFractionDigits]="1" [maxFractionDigits]="1">
+                        </p-inputNumber>
+                    </div>
+
+                    <p-button label="x" (click)="removePackage(i)" [disabled]="packages.controls.length < 2"></p-button>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-6 p-fluid">
+            <div class="grid summery">
+                <div class="col-10 p-fluid summery-header">
+                    <h4>Summary</h4>
+                </div>
+                <div class="p-field col-5 p-fluid summery-item">
+                    <br />
+                    <h4>{{totalQuantity}}</h4>
+                    <label>Number of Packages</label>
+                </div>
+                <div class="p-field col-5 p-fluid summery-item">
+                    <br />
+                    <h4>{{(totalGrossWeight).toFixed(1)}}</h4>
+                    <label>Gross Weight ({{tenant?.GrossWeightUnitCode}})</label>
+                </div>
+                <div class="p-field col-5 p-fluid summery-item">
+                    <br />
+                    <h4>{{totalVolume.toFixed(3)}}</h4>
+                    <label>Volume ({{tenant?.VolumeUnitCode}})</label>
+                </div>
+                <div class="p-field col-5 p-fluid summery-item summery-chargeable">
+                    <br />
+                    <h4>{{(billableWeight).toFixed(1)}}</h4>
+                    <label>{{formGroup.value.transportMode?.Id === 'A' ? 'Chargeable Weight (' + tenant?.GrossWeightUnitCode + ')' : 'Wt / Msr (' + tenant?.WeightMeasurementUnitCode + ')'}}</label>
+                </div>
+            </div>
+        </div>
+        <div class="col-6 p-fluid additional-data-section">
+            <p-checkbox formControlName='isDangerous' [binary]="true" label='Dangerous Goods'></p-checkbox>
+
+            <div class="p-field description-wrapper">
+                <label for="descriptionOfGoods">Description of Goods</label>
+                <textarea formControlName='descriptionOfGoods' id="descriptionOfGoods" pInputTextarea
+                    [rows]="4"></textarea>
+            </div>
+
+            <div class="p-field notes-wrapper">
+                <label for="notes">Notes</label>
+                <textarea formControlName='notes' id="notes" pInputTextarea [rows]="4"></textarea>
+            </div>
+        </div>
+    </div>
+</div>

@@ -333,7 +333,7 @@
     FullFieldLable="&quot;PackageTypeId&quot;"
     DefaultText="&quot;Package Type&quot;"
     IsNullable="false"
-    IsForeignKey="true"
+    IsForeignKey="false"
     ForeignEntity="PackageType"
     DontBuildRelationOnDB="false"
     NavigationPropertyName="PackageType"

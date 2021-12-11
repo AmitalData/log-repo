@@ -37,7 +37,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;CustomsGeneral&quot;"
-  Code="&quot;dea9&quot;"
+  Code="&quot;5b0a&quot;"
   Name="&quot;CustomsGeneral&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
@@ -4923,7 +4923,7 @@
     <TextCode
       Code="&quot;Customs.General.O.InterfaceManagement&quot;"
       DefaultText="&quot;Interface Managements&quot;"
-      LocalDefaultText="&quot;ממשק ניהול&quot;"
+      LocalDefaultText="&quot;ניהול בקשות מכס&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
@@ -5264,6 +5264,24 @@
       DefaultText="&quot;Declaration was already paid , can’t send&quot;"
       LocalDefaultText="&quot;הצהרה כבר הוגשה&quot;"
       TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.General.O.ExportTaxationDateTime&quot;"
+      DefaultText="&quot;Taxes date&quot;"
+      LocalDefaultText="&quot;בדיקת תאריך חישוב &quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.General.O.ExportTaxationDateTimeNT&quot;"
+      DefaultText="&quot;Taxes date is different from today , continue ?&quot;"
+      LocalDefaultText="&quot;תאריך חישוב שונה מהיום , האם לעדכן לתאריך של היום?&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.MH.CustomsReports&quot;"
+      DefaultText="&quot;CustomsReports&quot;"
+      LocalDefaultText="&quot;דוחות&quot;"
+      TextCodeTypeCode="&quot;MH&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>

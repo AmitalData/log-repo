@@ -1738,7 +1738,7 @@ export class EditComponent implements OnDestroy {
     }
     EditComponentController: IEditComponentController;
     GetControllerByTableName(objectTableName: string) {
-        var notDefault = ["Declaration", "Vehicle"];
+        var notDefault = ["Declaration", "Vehicle","PhysicalCheck"];
         var table = window.ObjectTables.filter(d => d.Name === objectTableName)[0];
         if (objectTableName.indexOf('Customs.') > -1) {
             objectTableName = objectTableName.split('.')[1];

@@ -19,11 +19,8 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	 string dbms;
 
         [Key]
-        [ForeignKey("ExportStorge")]
         [Column("Id")]
 	    public string Id { get; set; }
-	      
-        public virtual ExportStorge ExportStorge { get; set; }
         [Column("Tenant")]
 	    public int Tenant { get; set; }
         [Column("StorageNo")]

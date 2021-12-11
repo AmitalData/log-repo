@@ -101,6 +101,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
 
             entityGITITEMPM.ORIGINCOUNTRY = entityPM.ORIGINCOUNTRY;
             entityGITITEMPM.UNITID = entityPM.UNITID;
+            entityGITITEMPM.TARIFFID = entityPM.TARIFFID;
 
             return entityGITITEMPM;
         }

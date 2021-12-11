@@ -41,6 +41,7 @@ export class InterfaceManagementComponent implements OnInit {
     onQueryChangeEvent = new EventEmitter();
 
     private _entityListService: EntityListService;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         this._entityListService = new EntityListService();
         this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe((response:any) => {
@@ -230,6 +231,7 @@ export class InterfaceManagementComponent implements OnInit {
     onRowSelected(selected) {
         let item: InterfaceManagementList = selected.rowData;
         let window = new LogitudeWindow();
+        let /*const*/ allowed = SessionLocator.LoggedUserPM.IsCustomerCare || (SessionLocator.LoggedUserPM.Code == "amital" || SessionLocator.LoggedUserPM.Code.startsWith("amital.")) ? true : false;
         
 
         let windowTitle = TextCodeTranslator.Translate("Customs.General.O.EditInterfaceManagement");
@@ -240,7 +242,14 @@ export class InterfaceManagementComponent implements OnInit {
         logWindow.Title = windowTitle;
         logWindow.IsShowCloseButton = true;
         //logWindow.Show('./Customs/Components/Maintenance/AddEditInterfaceManagementComponent');
-        logWindow.Show('./CustomsModules/CustomsMaintenance/Components/AddEditInterfaceManagementComponent');
+        if (allowed) {
+            logWindow.Show('./CustomsModules/CustomsMaintenance/Components/AddEditInterfaceManagementComponent');
+        } else {
+            logWindow.Width = 400;
+            logWindow.Height = 250;
+            logWindow.Show('./CustomsModules/CustomsMaintenance/Components/InterfaceTenantPriorityComponent');
+        }
+        
 
     }
     RefreshBtnClick() {

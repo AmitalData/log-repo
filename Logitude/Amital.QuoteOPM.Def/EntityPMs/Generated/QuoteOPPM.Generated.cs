@@ -526,6 +526,52 @@ namespace Amital.QuoteOPM.Def.EntityPMs
 			
 		 }
 	   }
+	  private string fromAddressId ;
+	  	  
+       
+	   [CustomValidation(typeof(QuoteOPMValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string FromAddressId  
+	   {
+	    
+	     get
+		{
+		   return fromAddressId;
+		 }
+		 set
+		 {
+		   if(fromAddressId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="FromAddressId",OldValue=fromAddressId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   fromAddressId=value;
+		   }
+			
+		 }
+	   }
+	  private string toAddressId ;
+	  	  
+       
+	   [CustomValidation(typeof(QuoteOPMValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ToAddressId  
+	   {
+	    
+	     get
+		{
+		   return toAddressId;
+		 }
+		 set
+		 {
+		   if(toAddressId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ToAddressId",OldValue=toAddressId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   toAddressId=value;
+		   }
+			
+		 }
+	   }
 	  private string opportunityId ;
 	  	  
        
@@ -6762,7 +6808,40 @@ namespace Amital.QuoteOPM.Def.EntityPMs
 			
 		 }
 	   }
-   }
+
+	   private List<QuoteOPPropertiesPM> quoteProperties;
+	 
+		     
+	   [Include]
+	   [Association("QuoteOPProperties", "Id","QuoteID")]
+	   [DataMember]
+	   public virtual List<QuoteOPPropertiesPM> QuoteProperties  
+	   {
+	        get
+             {
+                 if (quoteProperties == null)
+                 {
+                     quoteProperties = new List<QuoteOPPropertiesPM>();
+                 }
+                 return quoteProperties;
+              }
+             set { quoteProperties = value; }
+	    }
+		   
+	   private List<QuoteOPPropertiesPM>  deletedQuoteProperties;
+	   public virtual List<QuoteOPPropertiesPM> DeletedQuoteProperties  
+	   {
+	        get
+             {
+                 if ( deletedQuoteProperties == null)
+                 {
+                      deletedQuoteProperties = new List<QuoteOPPropertiesPM>();
+                 }
+                 return  deletedQuoteProperties;
+              }
+             set {  deletedQuoteProperties = value; }
+	    }
+	     }
    
 }
 	 

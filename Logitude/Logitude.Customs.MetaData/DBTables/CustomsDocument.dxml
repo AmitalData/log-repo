@@ -2,20 +2,19 @@
 <Table
   Name="CustomsDocuments"
   Schema="Customs"
-  DBType="Main"
-  Module="Customs">
+  DBType="Main">
+  <Column
+    Name="Tenant"
+    Type="int">
+    <Constraints
+      Nullable="false" />
+  </Column>
   <Column
     Name="DocumentsFilingId"
     Type="varchar"
     Size="40">
     <Constraints
       PrimaryKey="true"
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="Tenant"
-    Type="int">
-    <Constraints
       Nullable="false" />
   </Column>
   <Column

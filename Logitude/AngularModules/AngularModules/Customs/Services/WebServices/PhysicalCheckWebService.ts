@@ -20,6 +20,32 @@ export class PhysicalCheckWebService {
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/PhysicalCheckWebService';
     }
 
+    SendSearchResults(genericRequestParams: GenericRequestParams) {
+        return defer(() => {
+
+            var authHeader = new Headers();
+            authHeader.append('Token', SessionInfo.Token);
+            authHeader.append('Content-Type', 'application/json');
+
+            var serviceResponse: ServiceResponse;
+            serviceResponse = new ServiceResponse();
+            var params = JSON.stringify(genericRequestParams);
+            return this._http.post(
+                this._apiUrl + '/SendSearchResults/',
+                JSON.stringify(genericRequestParams),
+                ServiceHelper.GetHttpHeaders()).pipe(map((res: any) => {
+
+                    serviceResponse.Result = res;
+
+                    return serviceResponse;
+
+                }), catchError(ServiceHelper.HandleServiceError));
+        }
+
+        );
+    }
+
+
     GetPhysicalCheckByDeclarationIdLists(declarationId: string, tenant: number) {
         return defer(() => {
             var authHeader = new Headers();
@@ -52,6 +78,23 @@ export class PhysicalCheckWebService {
                 serviceResponse.Result = res;
                 return serviceResponse;
             }),catchError(ServiceHelper.HandleServiceError));
+        }
+        );
+    }
+    PostCloseMarkPhysicalChecks(physicalCheckIds: string, tenant: number) {
+        return defer(() => {
+
+            var authHeader = new Headers();
+            authHeader.append('Token', SessionInfo.Token);
+            authHeader.append('Content-Type', 'application/json');
+            var serviceResponse: ServiceResponse = new ServiceResponse();
+
+            return this._http.post(this._apiUrl + "/PostCloseMarkedPhysicalChecks/?physicalCheckIds=" + physicalCheckIds + "&tenant=" + tenant, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+
+                var res = response;
+                serviceResponse.Result = res;
+                return serviceResponse;
+            }), catchError(ServiceHelper.HandleServiceError));
         }
         );
     }

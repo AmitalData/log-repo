@@ -10,19 +10,19 @@ import {ApproveBuildShipmentComponent} from './Components/MenuButtons/ApproveBui
 import {QuoteEventNotesComponent} from './Components/MenuButtons/QuoteEventNotesComponent';
 
 import { QuoteSaleCurrencyTypeComponent } from './Components/Shared/QuoteSaleCurrencyTypeComponent';
+import { NewQuoteComponentOld } from './Components/NewEntity/NewQuoteComponent.old';
 
-export const Components =
-    [
+export const Components = [
         FieldTemplateComponent,
         QuotesComponent,
         NewQuoteComponent,
+        NewQuoteComponentOld,
         QuoteDimensionsComponent,
         NewQuoteAddEditDimensionsComponent,        
         QuoteOPShortTitleComponent,
         QuoteOPHelperComponent, 
         QuoteOPFiltersMenuComponent,  
         ApproveBuildShipmentComponent,
-
         QuoteEventNotesComponent,
     ];
 
@@ -40,6 +40,7 @@ export class ModuleDeclarations {
             case "FieldTemplateComponent": { myResult = FieldTemplateComponent; break; }
             case "QuotesComponent": { myResult = QuotesComponent; break; }
             case "NewQuoteComponent": { myResult = NewQuoteComponent; break; }
+            case "NewQuoteComponentOld": { myResult = NewQuoteComponentOld; break; }
             case "QuoteDimensionsComponent": { myResult = QuoteDimensionsComponent; break; }
             case "NewQuoteAddEditDimensionsComponent": { myResult = NewQuoteAddEditDimensionsComponent; break; }            
             case "QuoteOPShortTitleComponent": { myResult = QuoteOPShortTitleComponent; break; } 

@@ -59,7 +59,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 var myDeclarationPaymentQueryService = new DeclarationPaymentQueryService(_MyDeclarationPM.Tenant);
                 var declarationPaymentPM = myDeclarationPaymentQueryService.GetSingle(_MyDeclarationPM.Id, true, false);
 
-                if (declarationPaymentPM.AutomaticPayment == 1)
+                if (declarationPaymentPM.AutomaticPayment == 1 || requestParams.LoggingEntityReference == "AutoPayment")
                 {
 
 
@@ -71,7 +71,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         Entname = "CFIFILEM",
                         PrimaryNum = _MyDeclarationPM.CustomFileNo,
                     };
-                    if (customResponse.ResponseContentHeader!= null && customResponse.ResponseContentHeader.Exception!= null && customResponse.ResponseContentHeader.Exception.Count()>0)
+                    if (customResponse.ResponseContentHeader != null && customResponse.ResponseContentHeader.Exception != null && customResponse.ResponseContentHeader.Exception.Count() > 0)
                     {
                         MyUnifreightEventParam.EventRemarks = customResponse.ResponseContentHeader.Exception[0].ExeptionDescription;
 
@@ -88,11 +88,30 @@ namespace Logitude.CustomsMessaging.ResponseServices
                        requestParams.LoggingUserId,
                         MyUnifreightEventParam);
 
+                    UpdateManualPayment(requestParams, customContext);
+
                 }
             }
             base.OnRequestFail(customResponse, requestParams);
         }
 
+        private void UpdateManualPayment(GenericRequestParams requestParams, ICustomContext customContext)
+        {
+            if (requestParams.LoggingEntityReference == "AutoPayment")
+            {
+                DeclarationReferantDataQueryService declarationReferantDataQueryService = new DeclarationReferantDataQueryService(_MyDeclarationPM.Tenant);
+                DeclarationReferantDataUpdateService updateService = new DeclarationReferantDataUpdateService(customContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), _MyDeclarationPM.Tenant);
+
+                var decRef = declarationReferantDataQueryService.GetSingle(_MyDeclarationPM.Id, false, false);
+
+                if (decRef != null)
+                {
+                    decRef.ChangeSetOp = ChangeSetOperation.Update;
+                      decRef.IsManualPayment = true;
+                    updateService.Update(decRef, true);
+                }
+            }
+        }
 
         public override void Update(DF_NG_2754_MSG10004_ImportDeclarationResponse customResponse, GenericRequestParams requestParams)
         {
@@ -126,6 +145,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         EventRemarks = "Declaration Future Payment ",
                     };
                     this._MyDeclarationPM.CurrentContextTag = myInsertEventContextTagModel;
+
 
                     //Update ErrosXml field
                     var declarationException = new UnifreightIIG.Common.ImportDeclarationServiceReference.Exception();
@@ -161,7 +181,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 var myDeclarationPaymentQueryService = new DeclarationPaymentQueryService(_MyDeclarationPM.Tenant);
                 var declarationPaymentPM = myDeclarationPaymentQueryService.GetSingle(_MyDeclarationPM.Id, true, false);
 
-                if (declarationPaymentPM.AutomaticPayment == 1)
+                if (declarationPaymentPM.AutomaticPayment == 1 || requestParams.LoggingEntityReference == "AutoPayment")
                 {
 
 
@@ -180,7 +200,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         _MyDeclarationPM.Tenant,
                        requestParams.LoggingUserId,
                         MyUnifreightEventParam);
+                    UpdateManualPayment(requestParams, context);
 
+       
+                  
                 }
             }
             else 
@@ -192,23 +215,60 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 if (declarationPaymentPM.AutomaticPayment == 1)
                 {
 
-
-                    var MyUnifreightEventParam = new UnifreightEventParam()
+                    if (customResponse.DeclarationPaymentDetails == null)
                     {
-                        Code = "APAY",
-                        Mode = UnifreightEventMode.@new,
-                        EventDateTime = DateTime.Now,
-                        Entname = "CFIFILEM",
-                        PrimaryNum = _MyDeclarationPM.CustomFileNo,
-                        EventRemarks = "",
-                    };
-                    LogMessagingUtil.Instance.AppendLine("MyUnifreightEventParam = " + MyUnifreightEventParam ?? "NULL");
-                    var myOpenUnifreighTask = new UnifreightEventTaskService();
-                    myOpenUnifreighTask.UpsertEventLE2U(
-                        _MyDeclarationPM.Tenant,
-                       requestParams.LoggingUserId,
-                        MyUnifreightEventParam);
+                        var error = "";
+                    if (customResponse.Response != null && customResponse.Response.Error != null  && customResponse.Response.Error.Count()>0)
+                        {
+                        foreach (var item in customResponse.Response.Error) {
+                            if (item.ValidationCode.listVersionID == "1") // שגאיה
+                            {
+                                    error += item.ValidationCode.name + " " ;
 
+                                
+                            }
+                        }
+                        }
+                        var MyUnifreightEventParam = new UnifreightEventParam()
+                        {
+                            Code = "APAYF",
+                            Mode = UnifreightEventMode.@new,
+                            EventDateTime = DateTime.Now,
+                            Entname = "CFIFILEM",
+                            PrimaryNum = _MyDeclarationPM.CustomFileNo,
+                            EventRemarks = error,
+                        };
+                        LogMessagingUtil.Instance.AppendLine("MyUnifreightEventParam = " + MyUnifreightEventParam ?? "NULL");
+                        var myOpenUnifreighTask = new UnifreightEventTaskService();
+                        myOpenUnifreighTask.UpsertEventLE2U(
+                            _MyDeclarationPM.Tenant,
+                           requestParams.LoggingUserId,
+                            MyUnifreightEventParam);
+
+
+
+                    }
+                    else {
+
+
+
+                        var MyUnifreightEventParam = new UnifreightEventParam()
+                        {
+                            Code = "APAY",
+                            Mode = UnifreightEventMode.@new,
+                            EventDateTime = DateTime.Now,
+                            Entname = "CFIFILEM",
+                            PrimaryNum = _MyDeclarationPM.CustomFileNo,
+                            EventRemarks = "",
+                        };
+                        LogMessagingUtil.Instance.AppendLine("MyUnifreightEventParam = " + MyUnifreightEventParam ?? "NULL");
+                        var myOpenUnifreighTask = new UnifreightEventTaskService();
+                        myOpenUnifreighTask.UpsertEventLE2U(
+                            _MyDeclarationPM.Tenant,
+                           requestParams.LoggingUserId,
+                            MyUnifreightEventParam);
+
+                    }
                 }
 
             }

@@ -2493,6 +2493,98 @@ namespace Amital.QuoteOPM.Def.EntityPMs
 			
 		 }
 	   }
+	  private string tariffCostNo ;
+	  	  
+       
+	   [CustomValidation(typeof(QuoteOPMValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string TariffCostNo  
+	   {
+	    
+	     get
+		{
+		   return tariffCostNo;
+		 }
+		 set
+		 {
+		   if(tariffCostNo != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TariffCostNo",OldValue=tariffCostNo,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   tariffCostNo=value;
+		   }
+			
+		 }
+	   }
+	  private string tariffSaleNo ;
+	  	  
+       
+	   [CustomValidation(typeof(QuoteOPMValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string TariffSaleNo  
+	   {
+	    
+	     get
+		{
+		   return tariffSaleNo;
+		 }
+		 set
+		 {
+		   if(tariffSaleNo != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TariffSaleNo",OldValue=tariffSaleNo,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   tariffSaleNo=value;
+		   }
+			
+		 }
+	   }
+	  private string tariffCostXML ;
+	  	  
+       
+	   [CustomValidation(typeof(QuoteOPMValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string TariffCostXML  
+	   {
+	    
+	     get
+		{
+		   return tariffCostXML;
+		 }
+		 set
+		 {
+		   if(tariffCostXML != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TariffCostXML",OldValue=tariffCostXML,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   tariffCostXML=value;
+		   }
+			
+		 }
+	   }
+	  private string tariffSaleXML ;
+	  	  
+       
+	   [CustomValidation(typeof(QuoteOPMValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string TariffSaleXML  
+	   {
+	    
+	     get
+		{
+		   return tariffSaleXML;
+		 }
+		 set
+		 {
+		   if(tariffSaleXML != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TariffSaleXML",OldValue=tariffSaleXML,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   tariffSaleXML=value;
+		   }
+			
+		 }
+	   }
    }
    
 }
