@@ -884,7 +884,7 @@ namespace Logitude.CustomsMessaging.RequestServices
             if (entityClosingDeclaration != null)
             {
                 var closingDetails = new DeclarationDMExtensionsDeclarationClosingDetails();
-                closingDetails.FinalShipID = new SeaTransportationIDType { Value = entityClosingDeclaration.FinalShipCode } ;
+                closingDetails.FinalShipID = new SeaTransportationIDType { Value = entityClosingDeclaration.FinalShipCode };
                 closingDetails.FinalLoadingSite = new FinalLoadingSiteIDType { Value = entityClosingDeclaration.FinalLoadingSite };
                 if (entityClosingDeclaration.LoadingDateTime.HasValue)
                 {
@@ -892,11 +892,11 @@ namespace Logitude.CustomsMessaging.RequestServices
                 }
                 closingDetails.FinalTransportContractDocument = new DeclarationDMExtensionsDeclarationClosingDetailsFinalTransportContractDocument
                 {
-                    FirstCargoID = new TransportContractDocumentIdentificationIDType { Value = entityClosingDeclaration.FinalManifestNumber},
-                    TypeCode = new TransportContractDocumentTypeCodeType {  Value = entityClosingDeclaration.FinalCargoTypeCode},
-                    SecondCargoID= new SecondCargoIDType {  Value= entityClosingDeclaration.FinalSecondCargoId},
-                    ThirdCargoID=new ThirdCargoIDType {  Value = entityClosingDeclaration.FinalThirdCargoId}
-                    
+                    FirstCargoID = new TransportContractDocumentIdentificationIDType { Value = entityClosingDeclaration.FinalManifestNumber },
+                    TypeCode = new TransportContractDocumentTypeCodeType { Value = entityClosingDeclaration.FinalCargoTypeCode },
+                    SecondCargoID = new SecondCargoIDType { Value = entityClosingDeclaration.FinalSecondCargoId },
+                    ThirdCargoID = new ThirdCargoIDType { Value = entityClosingDeclaration.FinalThirdCargoId }
+
                 };
                 return closingDetails;
             }
@@ -1210,6 +1210,10 @@ namespace Logitude.CustomsMessaging.RequestServices
                 ///valid <PrefarenceDocumentType xsi:nil="true"/>
                 DMExtensions.PreferenceDocumentType = new DeclarationGoodsShipmentInvoiceDMExtensionsPreferenceDocumentType() { Value = supplierInvoicePM.PreferenceDocumentTypeCode };
             }
+
+            if (!string.IsNullOrWhiteSpace(supplierInvoicePM.DutyRegimeProtocolCode_))
+                DMExtensions.DutyRegimeProtocolCode = new DeclarationGoodsShipmentInvoiceDMExtensionsDutyRegimeProtocolCode() { Value = supplierInvoicePM.DutyRegimeProtocolCode_ };
+
             //DMExtensions.PaymentType = SetCodeTypeValue<DeclarationGoodsShipmentInvoiceDMExtensionsPaymentType>(supplierInvoicePM.PaymentTypeCode); // new DeclarationGoodsShipmentInvoiceDMExtensionsPaymentType() { Value = supplierInvoicePM.PaymentTypeCode };
             //DMExtensions.InvoiceAmount = new InvoiceAmountType() { Value = supplierInvoicePM.InvoiceAmount.HasValue ? supplierInvoicePM.InvoiceAmount.Value : 0 };
             //DMExtensions.InvoiceAmount = new InvoiceAmountType() {currencyIDSpecified=true,  currencyID = entityPM.USD, Value = supplierInvoicePM.InvoiceAmount.HasValue ? supplierInvoicePM.InvoiceAmount.Value : 0 };
@@ -1253,7 +1257,7 @@ namespace Logitude.CustomsMessaging.RequestServices
             DMExtensions.BuyerDetails.Address = supplierInvoicePM.BuyerAddress;
             DMExtensions.BuyerDetails.IssueLocation = SetCodeTypeValue<DeclarationGoodsShipmentInvoiceDMExtensionsBuyerDetailsIssueLocation>(supplierInvoicePM.BuyerCountryCode);
             DMExtensions.BuyerDetails.RoleCode = SetCodeTypeValue<DeclarationGoodsShipmentInvoiceDMExtensionsBuyerDetailsRoleCode>(supplierInvoicePM.BuyerRoleCode);
-            DMExtensions.CustomsValuation= GetcustomsValuation(supplierInvoicePM).ToArray();
+            DMExtensions.CustomsValuation = GetcustomsValuation(supplierInvoicePM).ToArray();
             return DMExtensions;
         }
 
@@ -1509,7 +1513,7 @@ namespace Logitude.CustomsMessaging.RequestServices
                     //    Value = "SSO"
                     //}
                     // moran 12.4.16 - Bug 20650 -->
-                    //DMExtensions = new DeclarationGoodsShipmentGovernmentAgencyGoodsItemCommodityClassificationDMExtensions()
+                    DMExtensions = GetGoodsItemCommodityClassificationDMExtensions(supplierInvoiceItemPM)
                     //{
                     //    DangerousGoodsPackingRequirementsGroupCode = SetCodeTypeValue<DeclarationGoodsShipmentGovernmentAgencyGoodsItemCommodityClassificationDMExtensionsDangerousGoodsPackingRequirementsGroupCode>(supplierInvoiceItemPM.DangerousPackingGroupTypeCode)
                     //}
@@ -1541,7 +1545,7 @@ namespace Logitude.CustomsMessaging.RequestServices
                      //},
                         IdentificationTypeCode = SetCodeTypeValue < ClassificationIdentificationTypeCodeType>(supplierInvoiceItemPM.ClassificationTypeCode),
                         DangerousGoodsStatement = GetDangerousGoodsStatement(supplierInvoiceItemPM.SuppInvoiceItemsAbachStatements),
-                      //  TaxExemptCode =SetCodeTypeValue < DeclarationGoodsShipmentGovernmentAgencyGoodsItemCommodityClassificationTaxExemptCode>(supplierInvoiceItemPM.TaxExemptCode),
+                      //  TaxExemptCode =SetCodeTypeValue < DeclarationGoodsShipmentGovernmentAgencyGoodsItemCommodityClassificationTaxExemptCode>(supplierInvoiceItemPM.TaxExemptCode),                     
                         ProductName = GetGetDeclarationGoodsShipmentGovernmentAgencyGoodsItemCommodityDMExtensionsProductName(supplierInvoiceItemPM),
                         ProductIdentification =  GetGetDeclarationGoodsShipmentGovernmentAgencyGoodsItemCommodityDMExtensionsProductIdentification(supplierInvoiceItemPM),
                         SerialNumbers= GetGetDeclarationGoodsShipmentGovernmentAgencyGoodsItemCommodityDMExtensionsSerialNumbers(supplierInvoiceItemPM),
@@ -1553,8 +1557,16 @@ namespace Logitude.CustomsMessaging.RequestServices
                 };
             }
 
-
             return declarationGoodsItemCommodity;
+        }
+
+        private DeclarationGoodsShipmentGovernmentAgencyGoodsItemCommodityClassificationDMExtensions GetGoodsItemCommodityClassificationDMExtensions(SupplierInvoiceItemPM supplierInvoiceItemPM)
+        {
+            var DMExtensions = new DeclarationGoodsShipmentGovernmentAgencyGoodsItemCommodityClassificationDMExtensions();
+            if (!string.IsNullOrEmpty(supplierInvoiceItemPM.DutyRegimeProtocolCode))
+                DMExtensions.DutyRegimeProtocolCode = new DeclarationGoodsShipmentGovernmentAgencyGoodsItemCommodityClassificationDMExtensionsDutyRegimeProtocolCode() { Value = supplierInvoiceItemPM.DutyRegimeProtocolCode };
+
+            return DMExtensions;
         }
 
         private DeclarationGoodsShipmentGovernmentAgencyGoodsItemCommodityClassificationDangerousGoodsStatement[] GetDangerousGoodsStatement(List<SuppInvoiceItemsAbachStatementPM> suppInvoiceItemsAbachStatements)
@@ -2053,7 +2065,7 @@ namespace Logitude.CustomsMessaging.RequestServices
                                                                                                                   //ID = SetIDTypeValue<TransportContractDocumentIdentificationIDType>("123456"), // new TransportContractDocumentIdentificationIDType() { Value = consignmentPM.ManifestNumber }, HARD CODED
                 DMExtensions = new DeclarationGoodsShipmentExportConsignmentTransportContractDocumentDMExtensions()
                 {
-                  
+
                     SecondCargoID = SetIDTypeValue<SecondCargoIDType>(consignmentPM.SecondCargoID), // new SecondCargoIDType() { Value = consignmentPM.SecondCargoID },
                     ThirdCargoID = SetIDTypeValue<ThirdCargoIDType>(consignmentPM.ThirdCargoID) // new ThirdCargoIDType() { Value = consignmentPM.ThirdCargoID }
                 }

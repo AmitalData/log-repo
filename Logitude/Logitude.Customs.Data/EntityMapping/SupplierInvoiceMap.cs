@@ -98,6 +98,8 @@ namespace Logitude.Customs.Data.EntityMapping
             this.Property(t => t.ItemFOBAmountForeign).HasColumnName("ItemFOBAmountForeign").HasPrecision(16, 2);
 
             this.Property(t => t.ItemFOBAmountNIS).HasColumnName("ItemFOBAmountNIS").HasPrecision(16, 2);
+
+            this.Property(t => t.DutyRegimeProtocolCode_).HasColumnName("DutyRegimeProtocolCode_").HasMaxLength(3).IsUnicode(false);
         }
     }
 }

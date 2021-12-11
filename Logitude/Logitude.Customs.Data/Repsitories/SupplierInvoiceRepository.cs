@@ -48,10 +48,11 @@ namespace Logitude.Customs.Data.Repsitories
 
         public List<SupplierInvoice> GetSupplierInvoicesForDeclaration(string declarationId, int tenant)
         {
-            return (from a in context.SupplierInvoices
-                    where a.DeclarationId == declarationId
-                    orderby a.SequenceNumeric 
-                    select a).ToList();
+            var q = (from a in context.SupplierInvoices
+                     where a.DeclarationId == declarationId
+                     orderby a.SequenceNumeric
+                     select a);
+            return q.ToList();
         }
 
         public IQueryable<SupplierInvoice> GetSupplierInvoicesQueryForDeclaration(string declarationId, int tenant)

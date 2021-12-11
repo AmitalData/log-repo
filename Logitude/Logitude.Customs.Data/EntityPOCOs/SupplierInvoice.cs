@@ -144,6 +144,11 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public decimal? ItemFOBAmountForeign { get; set; }
         [Column("ItemFOBAmountNIS")]
 	    public decimal? ItemFOBAmountNIS { get; set; }
+        [ForeignKey("TradeAgreementProtocol")]
+        [Column("DutyRegimeProtocolCode_")]
+	    public string DutyRegimeProtocolCode_ { get; set; }
+	      
+        public virtual TradeAgreementProtocol TradeAgreementProtocol { get; set; }
     }
 }
 	 
