@@ -59,8 +59,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         BuyerRoleCode, 
 	         PartyRelationshipCode, 
 	         ItemFOBAmountForeign, 
-	         ItemFOBAmountNIS, 
-	         DutyRegimeProtocolCode_,
+	         ItemFOBAmountNIS,
 	      }
 
 
@@ -123,8 +122,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         ItemFOBAmountNIS, 
 	         InsruanceCurrencyTypeCodeName, 
 	         ExportFreightAmount, 
-	         ExportInsuranceAmount, 
-	         DutyRegimeProtocolCode_,
+	         ExportInsuranceAmount,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -311,11 +309,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ItemFOBAmountNIS))
             {
 				entityPOCO.ItemFOBAmountNIS = entityPM.ItemFOBAmountNIS;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DutyRegimeProtocolCode_))
-            {
-				entityPOCO.DutyRegimeProtocolCode_ = entityPM.DutyRegimeProtocolCode_;
 			}
 			}
 
@@ -512,11 +505,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.ItemFOBAmountNIS = entityPOCO.ItemFOBAmountNIS;
             }
 
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.DutyRegimeProtocolCode_))
-            {
-					entityPM.DutyRegimeProtocolCode_ = entityPOCO.DutyRegimeProtocolCode_;
-            }
-
 		}
 
 		public void PMToOldPM(SupplierInvoicePM entityPM, SupplierInvoicePM oldEntityPM)
@@ -701,11 +689,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ItemFOBAmountNIS))
             {
                 oldEntityPM.ItemFOBAmountNIS = entityPM.ItemFOBAmountNIS;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DutyRegimeProtocolCode_))
-            {
-                oldEntityPM.DutyRegimeProtocolCode_ = entityPM.DutyRegimeProtocolCode_;
             }
 			
 		}

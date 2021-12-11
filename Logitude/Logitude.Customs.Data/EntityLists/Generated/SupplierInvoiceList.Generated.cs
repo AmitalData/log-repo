@@ -112,8 +112,6 @@ namespace Logitude.Customs.Data.EntityLists
        public decimal? ItemFOBAmountForeign  { get; set; }
        [DataMember]
        public decimal? ItemFOBAmountNIS  { get; set; }
-       [DataMember]
-       public string DutyRegimeProtocolCode_  { get; set; }
    }
 
 }

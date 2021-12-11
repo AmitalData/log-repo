@@ -1508,29 +1508,6 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-	  private string dutyRegimeProtocolCode_ ;
-	  	  
-       
-	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string DutyRegimeProtocolCode_  
-	   {
-	    
-	     get
-		{
-		   return dutyRegimeProtocolCode_;
-		 }
-		 set
-		 {
-		   if(dutyRegimeProtocolCode_ != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DutyRegimeProtocolCode_",OldValue=dutyRegimeProtocolCode_,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   dutyRegimeProtocolCode_=value;
-		   }
-			
-		 }
-	   }
    }
    
 }
