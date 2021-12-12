@@ -26,6 +26,7 @@ import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
 import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
 import { EntityStatusExtendedListService } from '../../../../Infrastructure/Services/ExtendedLists/EntityStatusExtendedListService';
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
+import { MixPanelLocator } from 'Common/MixPanel/MixPanelLocator';
 
 @Component({
 
@@ -231,6 +232,7 @@ export class AddEditPrivateLabelShipmentComponent extends BaseComponent implemen
                             EntityPm.CancellSignRequest = false;
                             this._LogBoxSignatureClientService.GetSignRequestReceived(EntityPm).subscribe((Result: any) => {
                                 ServiceLocator.SendTotangoUserActivity("LogBox", "Sign Document");
+                                MixPanelLocator.Action({ ProjectName:"LogBox", ActionName: "Sign Document" });
                                 if (Result.Result != null && Result.Result.HasError) {
                                     this.CurrentSession.CurrentWindow.StopBusyIndicator();
                                     this.messageWindow.Width = 300;
@@ -262,6 +264,7 @@ export class AddEditPrivateLabelShipmentComponent extends BaseComponent implemen
                     EntityPm.CancellSignRequest = false;
                     this._LogBoxSignatureClientService.GetSignRequestReceived(EntityPm).subscribe((Result: any) => {
                         ServiceLocator.SendTotangoUserActivity("LogBox", "Sign Document");
+                        MixPanelLocator.Action({ ProjectName:"LogBox", ActionName: "Sign Document" });
                         if (Result.Result != null && Result.Result.HasError) {
                             this.CurrentSession.CurrentWindow.StopBusyIndicator();
                             this.messageWindow.Width = 300;
@@ -972,6 +975,7 @@ export class AddEditPrivateLabelShipmentComponent extends BaseComponent implemen
                 this._ShipmentPMService.insert(this.EntityPM).subscribe((myResult: any) => {
                     if (!myResult.HasError) {
                         ServiceLocator.SendTotangoUserActivity("LogBox", "New Shipment");
+                        this.NewShipmentMixPanelLocator(this.EntityPM);
                         this.CurrentSession.CurrentWindow.StopBusyIndicator();
                         if (!this.IsDSVTenant) {
                             //  this.ConnectDocumentsFilings(myResult.Result.Id);
@@ -1018,6 +1022,21 @@ export class AddEditPrivateLabelShipmentComponent extends BaseComponent implemen
         else {
             this.isSaveClicked = false;
             this.CurrentSession.CurrentWindow.StopBusyIndicator();
+        }
+    }
+    
+    NewShipmentMixPanelLocator(shipmentPm: ShipmentPM) {
+        if (shipmentPm.DirectionId == "C") {
+            MixPanelLocator.Action({ ProjectName: "LogBox", ActionName: "New Customs Shipment" });
+            return;
+        }
+        if (shipmentPm.DirectionId == "E" && shipmentPm.TransportModeId == "A") {
+            MixPanelLocator.Action({ ProjectName: "LogBox", ActionName: "New Air Export Shipment" });
+            return;
+        }
+        if (shipmentPm.DirectionId == "E" && shipmentPm.TransportModeId == "O") {
+            MixPanelLocator.Action({ ProjectName: "LogBox", ActionName: "New Ocean Export Shipment" });
+            return;
         }
     }
 

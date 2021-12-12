@@ -33,6 +33,7 @@ declare var attachmentUploader, OpenFileUploader, ResultAsArray: any;
 import {DownloadManager} from '../../../../Infrastructure/Utilities/DownloadManager';
 import {CommonDomainService} from'../../../../Common/Services/CommonDomainService'; 
 import {EntityResourceService} from '../../../../Infrastructure/Services/EntityResourceService';
+import { MixPanelLocator } from 'Common/MixPanel/MixPanelLocator';
 
 @Component({
     selector: 'AddEditImporterDocument',
@@ -696,7 +697,7 @@ export class AddEditImporterDocumentComponent implements OnInit {
 
         var file: any = attachmentUploader(this.UploadFileId);
         if (file) {
-
+            this.EntityPm?.IsRequested == true ? MixPanelLocator.Action({ ProjectName:"LogBox", ActionName: "Upload document to a requested document" }) : MixPanelLocator.Action({ ProjectName:"LogBox", ActionName: "Upload New Document" });
             this.IsOkButtonClicked = false;
             if (this.EntityPm.IsSharedWithCustomer == true && this.EntityPm.IsRequested == true) {
 
@@ -1051,6 +1052,7 @@ export class AddEditImporterDocumentComponent implements OnInit {
                                 EntityPm.CancellSignRequest = false;
                                 this._LogBoxSignatureClientService.GetSignRequestReceived(EntityPm).subscribe((Result:any) => {
                                     ServiceLocator.SendTotangoUserActivity("LogBox", "Sign Document");
+                                    MixPanelLocator.Action({ ProjectName:"LogBox", ActionName: "Sign Document" });
                                     if (Result.Result != null && Result.Result.HasError) {
                                         //this.RunSignBusyIndicator(false, EntityPm.Id);
                                         this.EntityPm.SignRequestByUserEmail = null;
@@ -1085,6 +1087,7 @@ export class AddEditImporterDocumentComponent implements OnInit {
                         EntityPm.CancellSignRequest = false;
                         this._LogBoxSignatureClientService.GetSignRequestReceived(EntityPm).subscribe((Result:any) => {
                             ServiceLocator.SendTotangoUserActivity("LogBox", "Sign Document");
+                            MixPanelLocator.Action({ ProjectName:"LogBox", ActionName: "Sign Document" });
                             if (Result.Result != null && Result.Result.HasError) {
                                 //this.RunSignBusyIndicator(false, EntityPm.Id);
                                 this.EntityPm.SignRequestByUserEmail = null;

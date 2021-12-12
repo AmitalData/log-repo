@@ -1,7 +1,7 @@
 import { ShipmentArchiveFilter } from '../../../../Controls/ShipmentArchiveFilter';
 import { TransportsFilter } from '../../../../Controls/TransportsFilter';
 import { Component, Output, EventEmitter, OnInit, AfterViewInit } from '@angular/core';
-import { ApiQueryFilters, FilterItem} from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
+import { ApiQueryFilters, FilterItem } from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
 import { SearchTextBox } from '../../../../Controls/SearchTextBox';
 import { IconButton } from '../../../../Controls/IconButton';
 import { LogGridComponent } from '../../../../Infrastructure/Components/LogitudeComponents/LogGridComponent/LogGridComponent'
@@ -19,12 +19,13 @@ import { ShipmentAdditionalCloudDataService } from '../../../../Shipment/Service
 import { UserLastSettingsPM } from '../../../../Common/EntityPMs/UserLastSettingsPM';
 import { UserLastSettingsPMService } from '../../../../Common/Services/StandardPMs/UserLastSettingsPMService';
 import { UserLastSettingsExtendedPMService } from '../../../../Common/Services/ExtendedPMs/UserLastSettingsExtendedPMService';
-import { QueryColumnPM} from '../../../../Infrastructure/EntityPMs/QueryColumnPM';
+import { QueryColumnPM } from '../../../../Infrastructure/EntityPMs/QueryColumnPM';
 import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import { LogboxShipmentExportExcelArgs } from '../../../../Shipment/DataContract/LogboxShipmentExportExcelArgs';
 import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
 import { SystemEnvironmentService } from '../../../../Infrastructure/Utilities/SystemEnvironmentService';
 import { CustomerTenantAccessRequestExtendedPMService } from '../../../../Common/Services/ExtendedPMs/CustomerTenantAccessRequestExtendedPMService';
+import { MixPanelLocator } from 'Common/MixPanel/MixPanelLocator';
 
 @Component({
     templateUrl: './LogBoxMainComponent.html',
@@ -280,6 +281,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
             console.log("2");
             this.SaveUserLastSettings("SelectedTransportFilter", this.mySelectedTransportFilter);
             ServiceLocator.SendTotangoUserActivity("LogBox", "Transportation type filter changed");
+            MixPanelLocator.Action({ ProjectName:"LogBox", ActionName: "Transportation filter" });
         }
     }
 
@@ -304,12 +306,13 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
             console.log("4");
             this.SaveUserLastSettings("SelectedArchiveFilter", this.mySelectedArchiveFilter);
             ServiceLocator.SendTotangoUserActivity("LogBox", "Open/Close filter changed");
+            MixPanelLocator.Action({ ProjectName:"LogBox", ActionName: "Open/Close filter" });
 
         }
     }
 
     SaveUserLastSettings(FilterName: string, FilterValue: string) {
-        this._UserLastSettingsExtendedPMService.getsingleByUserIdFilterName(SessionLocator.LoggedUserId, FilterName).subscribe((Result:any) => {
+        this._UserLastSettingsExtendedPMService.getsingleByUserIdFilterName(SessionLocator.LoggedUserId, FilterName).subscribe((Result: any) => {
             if (!Result.HasError && Result.Result == null) {
                 this.upsertUserLastSettings(FilterName, FilterValue);
             }
@@ -339,7 +342,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
 
     setUserLastSettings() {
         const nameSpace = "ShipmentModules.ShipmentLogBox.LogBoxMainComponent";
-        this._UserLastSettingsExtendedPMService.getallByUserIdNameSpace(SessionLocator.LoggedUserId, nameSpace).subscribe((Result:any) => {
+        this._UserLastSettingsExtendedPMService.getallByUserIdNameSpace(SessionLocator.LoggedUserId, nameSpace).subscribe((Result: any) => {
             if (!Result.HasError && Result.Result != null) {
                 var myFiltersSettings = Result.Result;
                 var myArchiveFilter = myFiltersSettings.filter(a => a.FilterName == 'SelectedArchiveFilter');
@@ -371,7 +374,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
     @Output() SearchFieldchangeevent = new EventEmitter();
 
     LoadQueriesCounts() {
-        const shipmentsQueriesCountsArgs: ShipmentsQueriesCountsArgs  = {
+        const shipmentsQueriesCountsArgs: ShipmentsQueriesCountsArgs = {
             Tenant: SessionLocator.Tenant,
             TransportModeId: this.SelectedTransportFilter == "All" ? "" : this.SelectedTransportFilter,
             DirectionId: this.SelectedDirectionFilter == "All" ? "" : this.SelectedDirectionFilter,
@@ -379,7 +382,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
             ServiceContextUser: SessionLocator.LoggedUserId,
             TypeCode: this.SelectedArchiveFilter == "All" ? "" : this.SelectedArchiveFilter,
             ForwarderPartnerId: this.isPrivateLabel && !this.IsDSV ? SessionLocator.PrivateLableSettings.HybridPartnerId : '',
-            DirectionOperator : 'Equal',
+            DirectionOperator: 'Equal',
         };
 
         if (this.isLogbox) this.SetDirectionFilter(shipmentsQueriesCountsArgs);
@@ -473,7 +476,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
             this.RequestedCount = myResult.RequestedDocsCount > 1000 ? "1000+" : myResult.RequestedDocsCount.toString();
     }
 
-    GetQueryColumn(fieldName: string, dataTypeCode: string, displayText:string) {
+    GetQueryColumn(fieldName: string, dataTypeCode: string, displayText: string) {
         let queryColum: QueryColumnPM = new QueryColumnPM();
         queryColum.ObjectFieldDataTypeCode = dataTypeCode;
         queryColum.ObjectFieldName = fieldName;
@@ -794,7 +797,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
         this.RecentImg = Selected == "Recent" ? "./Images/LogBox/RecentW.png" : "./Images/LogBox/Recent.png";
         const isRecentSelected = Selected == "Recent";
         const isRequestedSelected = Selected == "Recent" ? false : Selected == this.RequestedDocsLable;
-        this.OnImporterShipmentsFilterChanged.emit({ IsRecentSelected: isRecentSelected, IsRequestedSelected: isRequestedSelected});
+        this.OnImporterShipmentsFilterChanged.emit({ IsRecentSelected: isRecentSelected, IsRequestedSelected: isRequestedSelected });
         this.LoadImporterShipments();
         console.log("7");
     }
@@ -1008,6 +1011,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
     }
 
     btnExcelCLicked() {
+        MixPanelLocator.Action({ ProjectName:"LogBox", ActionName: "Export shipment query to excel" });
         let windowArgs: any = {};
         windowArgs.ExportExcelArgs = this.GetExportToExcelArgs();
         windowArgs.tenant = SessionLocator.Tenant;
@@ -1092,6 +1096,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
             this.SearchFilter = temp;
             this.LoadImporterShipments();
             ServiceLocator.SendTotangoUserActivity("LogBox", "SearchFields filter changed");
+            MixPanelLocator.Action({ ProjectName:"LogBox", ActionName: "Free text search" });
         }
     }
 
@@ -1128,7 +1133,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
         SessionLocator.LoggedUserPM.ShowLogBoxToolTip = true;
         let myPM = SessionLocator.LoggedUserPM;
         this.DontShowLogboxToolTip = true;
-        this.myUserPMService.update(myPM).subscribe((myResult:any) => {
+        this.myUserPMService.update(myPM).subscribe((myResult: any) => {
 
         });
     }

@@ -14,6 +14,7 @@ import {QueryPM} from '../../../Infrastructure/EntityPMs/QueryPM';
 import {ObjectsLocator} from '../../Locators/ObjectsLocator';
 import {ServiceLocator} from '../../Locators/ServiceLocator';
 import { retry } from 'rxjs/operators';
+import { MixPanelLocator } from 'Common/MixPanel/MixPanelLocator';
 
 @Component({
     
@@ -313,6 +314,7 @@ export class MainMenuComponent {
                     }
 
                     case "General.MH.FilingInbox": {
+                        MixPanelLocator.Action({ ProjectName:"LogBox", ActionName: "Filing Inbox" });
                         myComponentPath = "./CommonModules/CommonFilingInbox/Components/FilingInboxWorkspaceComponent";
                         break;
                     }
@@ -640,6 +642,7 @@ export class MainMenuComponent {
 
                     case "General.MH.Depositions": {
                         ServiceLocator.SendTotangoUserActivity("Customs Shipper", "List View");
+                        MixPanelLocator.Action({ ProjectName:"LogBox", ActionName: "Deposition Query" });
                         var listArgs = this.GetNewListComponentArgs();
                         listArgs.QueryCode = "AllDepositionsQuery";
                         listArgs.ObjectTableName = "CustomsShipper";

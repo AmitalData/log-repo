@@ -31,6 +31,7 @@ import {EntityStatusExtendedListService} from '../../../../Infrastructure/Servic
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import { HttpClient } from '@angular/common/http';
 import { SystemEnvironmentService } from '../../../../Infrastructure/Utilities/SystemEnvironmentService';
+import { MixPanelLocator } from 'Common/MixPanel/MixPanelLocator';
 
 @Component({
     selector: 'LogBoxDocuments',
@@ -378,6 +379,7 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
                             //this._documentsFilingPMService.update(EntityPm).subscribe((myResult:any) => {
                             this._LogBoxSignatureClientService.GetSignRequestReceived(EntityPm).subscribe((Result:any) => {
                                 ServiceLocator.SendTotangoUserActivity("LogBox", "Sign Document");
+                                MixPanelLocator.Action({ ProjectName:"LogBox", ActionName: "Sign Document" });
                                 if (Result.Result != null && Result.Result.HasError) {
                                     this.RunSignBusyIndicator(false, EntityPm.Id);
                                     this.messageWindow.Width = 300;
@@ -421,6 +423,7 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
                     //this._documentsFilingPMService.update(EntityPm).subscribe((myResult:any) => {
                     this._LogBoxSignatureClientService.GetSignRequestReceived(EntityPm).subscribe((Result:any) => {
                         ServiceLocator.SendTotangoUserActivity("LogBox", "Sign Document");
+                        MixPanelLocator.Action({ ProjectName:"LogBox", ActionName: "Sign Document" });
                         if (Result.Result != null && Result.Result.HasError) {
                             this.RunSignBusyIndicator(false, EntityPm.Id);
                             this.messageWindow.Width = 300;
@@ -716,6 +719,7 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
     DownloadDocumentFile(item) {
         this.IsDeleteClicked = true;
         ServiceLocator.SendTotangoUserActivity("LogBox", "Document Viewed");
+        MixPanelLocator.Action({ ProjectName:"LogBox", ActionName: "Download Document" });
         //this._ImageLibraryService.DownloadFile(item.DocumentId, item.FileExtension, item.Folder, SessionLocator.Tenant).subscribe((res:any) => {
             var EntityNumber = "";
             if (this.SelectedShipment != null) {

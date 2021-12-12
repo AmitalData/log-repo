@@ -7,6 +7,7 @@ import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {ConfirmWindow} from '../../../Controls/Windows/ConfirmWindow';
 import {DocumentsFilingExtendedPMService} from '../../../Common/Services/ExtendedPMs/DocumentsFilingExtendedPMService';
 import { AppTool } from '../../../Infrastructure/Tools';
+import { MixPanelLocator } from 'Common/MixPanel/MixPanelLocator';
 
 @Component({
 
@@ -78,6 +79,7 @@ export class EditShipmentButtonListTemplate {
         this.CurrentSession.StartBusyIndicator("Loading ...");
         this._ShipmentPMService.get(this.rowData.Id).subscribe((myResult:any) => {
             if (!myResult.HasError) {
+                MixPanelLocator.Action({ ProjectName:"LogBox", ActionName: "Edit Shipment" });
                 this.CurrentSession.StopBusyIndicator();
                 var newWindow = new LogitudeWindow();
                 newWindow.Width = 600;

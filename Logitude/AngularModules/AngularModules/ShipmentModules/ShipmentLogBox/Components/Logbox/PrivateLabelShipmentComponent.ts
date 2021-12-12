@@ -36,6 +36,7 @@ import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
 import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
 import { EntityStatusExtendedListService } from '../../../../Infrastructure/Services/ExtendedLists/EntityStatusExtendedListService';
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
+import { MixPanelLocator } from 'Common/MixPanel/MixPanelLocator';
 
 @Component({
 
@@ -241,6 +242,7 @@ export class AddEditPrivateLabelShipmentComponent extends BaseComponent implemen
                             EntityPm.CancellSignRequest = false;
                             this._LogBoxSignatureClientService.GetSignRequestReceived(EntityPm).subscribe((Result: any) => {
                                 ServiceLocator.SendTotangoUserActivity("LogBox", "Sign Document");
+                                MixPanelLocator.Action({ ProjectName:"LogBox", ActionName: "Sign Document" });
                                 if (Result.Result != null && Result.Result.HasError) {
                                     this.CurrentSession.CurrentWindow.StopBusyIndicator();
                                     this.messageWindow.Width = 300;
@@ -272,6 +274,7 @@ export class AddEditPrivateLabelShipmentComponent extends BaseComponent implemen
                     EntityPm.CancellSignRequest = false;
                     this._LogBoxSignatureClientService.GetSignRequestReceived(EntityPm).subscribe((Result: any) => {
                         ServiceLocator.SendTotangoUserActivity("LogBox", "Sign Document");
+                        MixPanelLocator.Action({ ProjectName:"LogBox", ActionName: "Sign Document" });
                         if (Result.Result != null && Result.Result.HasError) {
                             this.CurrentSession.CurrentWindow.StopBusyIndicator();
                             this.messageWindow.Width = 300;
