@@ -17,12 +17,15 @@ import {DocumentTypeList} from '../../Common/EntityLists/DocumentTypeList';
 import {AppTool, DateTool} from '../../Infrastructure/Tools';
 import {DocumentOutPMService} from '../../Common/Services/ExtendedPMs/DocumentOutPMService';
 import {DocsOutDataViewModel} from '../../InfrastructureModules/InfrastructureDocuments/Components/DocumentComponent/DocsOut/ViewModel/DocsOutDataViewModel';
+import { ARInvoicePMService } from '../../Invoice/Services/StandardPMs/ARInvoicePMService';
+import { ARInvoicePM } from '../../Invoice/EntityPMs/ARInvoicePM';
 
 
 export class GeneralPrintHelper {
     public ObjectTableName: string;
     public CurrentObjectTableId: string;
     ChildObjectTableId: string;
+    ChildObjectTableName: string;
 
     public DocumentTypeCode: string;
     public ChildEntityId: string;
@@ -49,10 +52,13 @@ export class GeneralPrintHelper {
         this.ChildObjectTableId = childObjectTableId == "null" || !childObjectTableId ? "" : childObjectTableId;
         this.ChildReference = childReference == "null" || !childReference ? "" : childReference;
 
+        if (!AppTool.IsNullOrEmpty(this.ChildObjectTableId)) {
+            this.ChildObjectTableName = window.ObjectTables.filter(d => d.Id == this.ChildObjectTableId)[0].Name;
+        }
+
         this.documentTypePMService = new DocumentTypePMExtendedService();
         this.documentOutPMService = new DocumentOutPMService();
         var documentTypeListService = new DocumentTypeListService();
-
 
         var apiQueryFilters: ApiQueryFilters = new ApiQueryFilters();
         apiQueryFilters.GetAll = true;
@@ -69,7 +75,6 @@ export class GeneralPrintHelper {
 
                     }
                     else this.ShowMessage("Document type of code " + this.DocumentTypeCode + " has no default template");
-
                 }
 
                 else {
@@ -81,19 +86,12 @@ export class GeneralPrintHelper {
                     }
 
                     else this.ShowMessage("Document type of code " + this.DocumentTypeCode + " not exists");
-
-                }
-            
-
+                } 
             }
         });
-
-
     }
 
-
     ShowPrintControl() {
-
         if (this.IsLoadPrintControl && !this.IsStartPrint) {
             this.IsStartPrint = true;
             this.CurrentSession.StartBusyIndicatorLoading();
@@ -101,7 +99,6 @@ export class GeneralPrintHelper {
                 var pmResponse: ServiceResponse = res;
                 if (!pmResponse.HasError) {
                     var myResult = pmResponse.Result;
-
                     this.documentOutPM = myResult;
 
                     if (!this.documentOutPM) {
@@ -113,8 +110,8 @@ export class GeneralPrintHelper {
                                     this.documentOutPM = myResult;
                                     this.LoadDocumentTypePm();
                                 }
-
                             }
+
                             else {
                                 this.CurrentSession.StopBusyIndicator();
                                 this.IsStartPrint = false;
@@ -123,29 +120,20 @@ export class GeneralPrintHelper {
                         });
                     }
                     else {
-
-
                         this.LoadDocumentTypePm();
                     }
-
                 }
+
                 else {
                     this.IsStartPrint = false;
                     this.CurrentSession.StopBusyIndicator();
                 }
-
             });
-
         }
-
     }
 
     LoadDocumentTypePm() {
-
-
         this.documentTypePMService.getSingleDocumentType(this.documentTypeList.Id, this.documentOutPM.Id, SessionInfo.LoggedUserTenant).subscribe((res:any) => {
-
-
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
                 var myResult = pmResponse.Result;
@@ -153,48 +141,92 @@ export class GeneralPrintHelper {
                     this.documentTypePM = myResult;
                     this.LoadPrintControl();
                 }
-
             }
+
             else {
                 this.CurrentSession.StopBusyIndicator();
                 this.IsStartPrint = false;
             }
-
-
-        });
-                            
+        });                            
     }
-
 
     LoadPrintControl() {
-        
-           this.IsStartPrint = false;
+        this.IsStartPrint = false;
+        this.CurrentSession.StopBusyIndicator();
+        var documentOutPmLists = new Array<DocumentOutPM>();
+        documentOutPmLists.push(this.documentOutPM);
+        var SelectedInternalDocument = new DocsOutDataViewModel(this.documentTypePM, this.EntityId, this.documentOutPM.ChildEntityId, this.CurrentObjectTableId, this.ChildObjectTableId, this.documentOutPM.ChildEntityReference,
+            documentOutPmLists, null, null, null);
 
-            this.CurrentSession.StopBusyIndicator();
-           var documentOutPmLists = new Array<DocumentOutPM>();
-            //this.documentOutPM.NeedsRebuild = true;
-           documentOutPmLists.push(this.documentOutPM);
-           var SelectedInternalDocument = new DocsOutDataViewModel(this.documentTypePM, this.EntityId, this.documentOutPM.ChildEntityId, this.CurrentObjectTableId, this.ChildObjectTableId, this.documentOutPM.ChildEntityReference,
-               documentOutPmLists, null, null, null);
+        SelectedInternalDocument.IsNotFromDocsOutListOpenPrintControl = true;
+        SelectedInternalDocument.IsAWBWizard = false;
+        var logitudeWindow = new LogitudeWindow();
+        logitudeWindow.Width = 760;
 
-           SelectedInternalDocument.IsNotFromDocsOutListOpenPrintControl = true;
-            SelectedInternalDocument.IsAWBWizard = false;
-            var logitudeWindow = new LogitudeWindow();
-            logitudeWindow.Width = 760;
+        var heightwindwo: number = this.documentOutPM.IssuedDate ? 552 : 502;
+        logitudeWindow.Height = heightwindwo;
+        logitudeWindow.DataContext = SelectedInternalDocument;
+        logitudeWindow.Title = "Print " + this.documentTypePM.Name;
+        logitudeWindow.Show('./InfrastructureModules/InfrastructureDocuments/Components/DocumentComponent/PrintDocumentComponent');
+        logitudeWindow.WindowClosed.subscribe(($event: any) => {
+            if (this.CurrentSession.CurrentEditComponent) {
+                if (this.ChildObjectTableName == "ARInvoice" || this.ObjectTableName == "ARInvoice") {
+                    this.UpdateInvoicePrintProperties();
+                }
 
-            var heightwindwo: number = this.documentOutPM.IssuedDate ? 552 : 502; 
-            logitudeWindow.Height = heightwindwo;
-            logitudeWindow.DataContext = SelectedInternalDocument;
-            logitudeWindow.Title = "Print " + this.documentTypePM.Name;
-            logitudeWindow.Show('./InfrastructureModules/InfrastructureDocuments/Components/DocumentComponent/PrintDocumentComponent');
-            logitudeWindow.WindowClosed.subscribe(($event: any) => {
-                if (this.CurrentSession.CurrentEditComponent) {
+                else {
                     this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
                 }
-            });
-       
+            }
+        });
     }
 
+    private UpdateInvoicePrintProperties() {
+        var invoiceId: string;
+        if (this.ChildObjectTableName == "ARInvoice") {
+            invoiceId = this.ChildEntityId;
+        }
+        else if (this.ObjectTableName == "ARInvoice") {
+            invoiceId = this.EntityId;
+        }
+
+        if (!AppTool.IsNullOrEmpty(invoiceId)) {
+            var service: ARInvoicePMService = new ARInvoicePMService();
+            service.get(invoiceId).subscribe((res: any) => {
+                var pmResponse: ServiceResponse = res;
+                if (!pmResponse.HasError) {
+                    var invoice: ARInvoicePM = pmResponse.Result;
+                    if (invoice) {
+                        invoice.PrintByUserId = invoice.IssuedByUserId;
+                        invoice.PrintDate = DateTool.GetCurrentDateAsUtc();
+
+                        switch (invoice.StatusCode) {
+                            case "AD":
+                            case "VD":
+                            case "PD":
+                            case "PP":
+                            case "AR":
+                            case "AC":
+                                {
+                                    if (invoice.IsFromInterestBatchInvoice == false) {
+                                        invoice.IsPrinted = true;
+                                    }
+
+                                    break;
+                                }
+                        }
+
+                        service.update(invoice).subscribe((res: any) => {
+                            var pmResponse: ServiceResponse = res;
+                            if (!pmResponse.HasError) {
+                                this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                            }
+                        });
+                    }
+                }
+            });
+        }
+    }
 
     public ShowMessage(message: string, title: string = "") {
 
@@ -205,11 +237,4 @@ export class GeneralPrintHelper {
             messageWindow.Title = title;
         }
     }
-
-
-
-
-
-
-
 }
