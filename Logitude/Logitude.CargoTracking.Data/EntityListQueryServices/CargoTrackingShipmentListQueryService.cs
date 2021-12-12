@@ -662,15 +662,12 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
 
         private static IQueryable<CargoTrackingShipmentList> FilterShipmentsWhichMoreFilter(CargoTrackingShipmentFilters shipmentFilters, IQueryable<CargoTrackingShipmentList> shipments)
         {
-            if (shipmentFilters.HasException || shipmentFilters.OrdersOnly || shipmentFilters.EstimatedArrivalOnly)
-            {
-                shipments = shipments.Where(d =>
-                                (shipmentFilters.HasException && d.CurrentMilestoneExceptions != null)
-                                || (shipmentFilters.OrdersOnly && d.EntityType == OrderType)
-                                || (shipmentFilters.EstimatedArrivalOnly && d.ArrivalEstimationDate != null && d.ArrivalDate == null)
-                                );
-            }
-
+            if (shipmentFilters.HasException)
+                shipments = shipments.Where(d => d.CurrentMilestoneExceptions != null);
+            if (shipmentFilters.OrdersOnly)
+                shipments = shipments.Where(d => d.EntityType == OrderType);
+            if (shipmentFilters.EstimatedArrivalOnly)
+                shipments = shipments.Where(d => d.ArrivalEstimationDate != null && d.ArrivalDate == null);
             return shipments;
         }
 
