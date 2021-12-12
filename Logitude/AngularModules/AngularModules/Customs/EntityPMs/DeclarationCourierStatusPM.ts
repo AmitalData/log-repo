@@ -379,6 +379,11 @@ export class DeclarationCourierStatusPM {
     public set TruckerName(newValue: string) { if (this.truckerName != newValue) { this.truckerName = newValue; this.MarkAsDirty("TruckerName"); } }
        
 	 
+    private shopId: string;
+    public get ShopId() { return this.shopId; }
+    public set ShopId(newValue: string) { if (this.shopId != newValue) { this.shopId = newValue; this.MarkAsDirty("ShopId"); } }
+       
+	 
     private cargoDescription: string;
     public get CargoDescription() { return this.cargoDescription; }
     public set CargoDescription(newValue: string) { if (this.cargoDescription != newValue) { this.cargoDescription = newValue; this.MarkAsDirty("CargoDescription"); } }
