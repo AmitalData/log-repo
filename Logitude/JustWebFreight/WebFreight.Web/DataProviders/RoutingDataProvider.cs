@@ -53,7 +53,7 @@ namespace WebFreight.Web.DataProviders
         private void GetPreForwardingData()
         {
             this.PreForwardingFrom = shipmentPM.PreForwardingFromPortCode;
-            this.PreForwardingTo = shipmentPM.PreForwardingFromPortCode;
+            this.PreForwardingTo = shipmentPM.PreForwardingToPortCode;
             this.PreForwardingETD = shipmentPM.PreForwardingETD;
             this.PreForwardingETA = shipmentPM.PreForwardingETA;
             this.PreForwardingATD = shipmentPM.PreForwardingATD;
