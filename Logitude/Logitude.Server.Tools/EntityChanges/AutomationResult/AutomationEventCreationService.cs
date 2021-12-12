@@ -47,7 +47,10 @@ namespace Logitude.Server.Tools.EntityChanges.AutomationResult
             EntityChangeAutomation entityChangesAutomation = CreateEntityChangeAutomation(automation);
             ValidateAutomationResultClass validateResult = CreateValidateAutomationResultClass(automation, entityChangesAutomation);
             if (!validateResult.IsAutomationValid)
+            {
+                HandleAutomationFailure(dateBefore, entityChangesAutomation);
                 return;
+            }
 
             if (validateResult.Type != "Delayed")
             {
@@ -56,6 +59,13 @@ namespace Logitude.Server.Tools.EntityChanges.AutomationResult
             }
             DelaytimeDetails delaytimeDetails = new DelaytimeDetails() { Type = validateResult.Type, Delaytime = validateResult.Delaytime, DelaytimeIndicator = validateResult.DelaytimeIndicator, DelaytimeOp = validateResult.DelaytimeOp, SelectedDelaytimeFieldCode = validateResult.SelectedDelaytimeFieldCode };
             AddAutomationQueue(new AutomationQueueArgs() { EntityChangeId = automationResultArgs.EntityChange.Id, AutomationId = automation.Id, AutomationType = automationResultArgs.EntityChangeArgs.ProcessType, EntityId = automationResultArgs.EntityChange.EntityId, Tenant = automation.Tenant, AutomationDelayTime = GetAutomationDelayTime(delaytimeDetails, automationResultArgs.AutomationFieldLists, automationResultArgs.EntityChange.Tenant) });
+        }
+
+        private void HandleAutomationFailure(DateTime dateBefore, EntityChangeAutomation entityChangesAutomation)
+        {
+            entityChangesAutomation.DoneDate = TenantServerConfigration.GetCurrentDateTime(automationResultArgs.EntityChangeArgs.Tenant);
+            automationResultArgs.MainEntityChangeService.EntityChangesAutomationsFailedList.Add(entityChangesAutomation);
+            entityChangesAutomation.ExecutionTime = (int)((DateTime.Now.Ticks - dateBefore.Ticks) / TimeSpan.TicksPerMillisecond);
         }
 
         public void CreateEvent(AutomationEventCreationArguments automationEventCreationArguments)
