@@ -199,7 +199,7 @@
   <Column
     Name="FromWarehouseNotes"
     Type="nvarchar"
-    Size="500">
+    Size="-1">
     <Constraints
       Nullable="true" />
   </Column>
@@ -260,7 +260,7 @@
   <Column
     Name="ToWarehouseNotes"
     Type="nvarchar"
-    Size="500">
+    Size="-1">
     <Constraints
       Nullable="true" />
   </Column>
@@ -405,7 +405,7 @@
   <Column
     Name="AssignedTruckerNotes"
     Type="nvarchar"
-    Size="32">
+    Size="-1">
     <Constraints
       Nullable="true" />
   </Column>
@@ -430,14 +430,14 @@
   <Column
     Name="AssignedCustomsAgentNotes"
     Type="nvarchar"
-    Size="32">
+    Size="-1">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
     Name="AssignedCustomsAgentExcReason"
     Type="nvarchar"
-    Size="32">
+    Size="-1">
     <Constraints
       Nullable="true" />
   </Column>
@@ -462,14 +462,14 @@
   <Column
     Name="DeliveryNotes"
     Type="nvarchar"
-    Size="32">
+    Size="-1">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
     Name="DeliveryExceptionReason"
     Type="nvarchar"
-    Size="32">
+    Size="-1">
     <Constraints
       Nullable="true" />
   </Column>
@@ -497,7 +497,7 @@
   <Column
     Name="CurrentMilestoneExceptions"
     Type="nvarchar"
-    Size="500">
+    Size="-1">
     <Constraints
       Nullable="true" />
   </Column>
@@ -537,7 +537,7 @@
   <Column
     Name="GoodsClassificationNotes"
     Type="nvarchar"
-    Size="2000">
+    Size="-1">
     <Constraints
       Nullable="true" />
   </Column>
@@ -556,7 +556,7 @@
   <Column
     Name="DocumentInspectionNotes"
     Type="nvarchar"
-    Size="2000">
+    Size="-1">
     <Constraints
       Nullable="true" />
   </Column>
@@ -587,7 +587,7 @@
   <Column
     Name="GatepassArrivedNotes"
     Type="nvarchar"
-    Size="2000">
+    Size="-1">
     <Constraints
       Nullable="true" />
   </Column>
@@ -638,14 +638,14 @@
   <Column
     Name="BookingNotes"
     Type="nvarchar"
-    Size="32">
+    Size="-1">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
     Name="BookingExceptionReason"
     Type="nvarchar"
-    Size="32">
+    Size="-1">
     <Constraints
       Nullable="true" />
   </Column>
@@ -670,7 +670,7 @@
   <Column
     Name="PaymentRequiredNotes"
     Type="nvarchar"
-    Size="32">
+    Size="-1">
     <Constraints
       Nullable="true" />
   </Column>
@@ -695,7 +695,7 @@
   <Column
     Name="PaymentReceivedNotes"
     Type="nvarchar"
-    Size="32">
+    Size="-1">
     <Constraints
       Nullable="true" />
   </Column>
@@ -735,6 +735,8 @@
     Columns="Tenant,SecurityKey" />
   <Index
     Columns="CustomerId" />
+<Index
+    Columns="CustomsShipmentHeaderId" />
   <UniqueConstraint
     Columns="EntityType,EntityId,Tenant" />
 </Table>

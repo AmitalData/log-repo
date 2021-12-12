@@ -588,6 +588,7 @@
     <Compile Include="CommonDataModel\Repositories\WarehouseWeightMeasurementRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\WarehouseWeightRoundingRepository.cs" />
     <Compile Include="Helpers\AutomationCreateTask.cs" />
+    <Compile Include="Helpers\AutomationEvent.cs" />
     <Compile Include="Helpers\AutomationFollowUp.cs" />
     <Compile Include="Helpers\AutomationQueuedTask.cs" />
     <Compile Include="Helpers\AutomationSendDocument.cs" />

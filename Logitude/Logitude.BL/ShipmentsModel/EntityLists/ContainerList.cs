@@ -67,8 +67,8 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public string ShipmentOnCarriageTo { get; set; }
         public string ShipmentLastDeliveryFrom { get; set; }
         public string ShipmentLastDeliveryTo { get; set; }
-        public DateTime? EstimatedOriginPickup { get; set; }
-        public DateTime? ActualOriginPickup { get; set; }
+        public DateTime? PreCarriageETD { get; set; }
+        public DateTime? PreCarriageATD { get; set; }
         public DateTime? EstimatedPOLArrival { get; set; }
         public DateTime? ActualPOLArrival { get; set; }
         public DateTime? EstimatedPOLLoaded { get; set; }
@@ -124,8 +124,8 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public DateTime? ActualPODDischarge { get; set; }
         public DateTime? EstimatedPODDeparture { get; set; }
         public DateTime? ActualPODDeparture { get; set; }
-        public DateTime? EstimatedDelivery { get; set; }
-        public DateTime? ActualDelivery { get; set; }
+        public DateTime? OnCarriageETD { get; set; }
+        public DateTime? OnCarriageATD { get; set; }
         public DateTime? EstimatedLIFArrival { get; set; }
         public DateTime? ActualLIFArrival { get; set; }
         public DateTime? EstimatedOnCarriageDeparture { get; set; }
@@ -144,10 +144,10 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public string ShipmentStatusId { get; set; }
         public string ShipmentStatusName { get; set; }
         public string EmptyPickupLocation { get; set; }
-        public string DeliveryLocation { get; set; }
+        public string OnCarriageLocation { get; set; }
         public string EmptyReturnLocation { get; set; }
         public string AvailabilityLocation { get; set; }
-        public string OriginLocation { get; set; }
+        public string PreCarriageLocation { get; set; }
         public string LIFLocation { get; set; }
         public string POLLocation { get; set; }
         public string PODLocation { get; set; }
@@ -156,10 +156,10 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public string Transshipment3Location { get; set; }
         public string Transshipment4Location { get; set; }
         public string EmptyPickupLocationPortId { get; set; }
-        public string DeliveryLocationPortId { get; set; }
+        public string OnCarriageLocationPortId { get; set; }
         public string EmptyReturnLocationPortId { get; set; }
         public string AvailabilityLocationPortId { get; set; }
-        public string OriginLocationPortId { get; set; }
+        public string PreCarriageLocationPortId { get; set; }
         public string LIFLocationPortId { get; set; }
         public string POLLocationPortId { get; set; }
         public string PODLocationPortId { get; set; }
@@ -237,5 +237,7 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public string StatusId { get; set; }
         public string StatusName { get; set; }
         public int StatusWeight { get; set; }
+        public DateTime? CancelledDate { get; set; }
+        public bool IsCancelled { get; set; }
     }
 }

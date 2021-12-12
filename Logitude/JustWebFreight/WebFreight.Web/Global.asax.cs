@@ -49,6 +49,7 @@ using Logitude.Customs.BL.PatchDistribution;
 using Logitude.Customs.BL.PatchDistribution.Patches;
 using Simplog.Server.Infrastructure.Interfaces;
 using Microsoft.Practices.Unity;
+using Logitude.Server.Tools.Interfaces;
 
 namespace WebFreight.Web
 {
@@ -138,6 +139,7 @@ namespace WebFreight.Web
             ContainerAccessor.InitContainer();
             ContainerAccessor.RegisterTypeFactory<IRulesValidator, RulesValidator>("RulesValidator", new RulesValidator());
             ContainerAccessor.RegisterTypeFactory<IQuoteTemplateReportHelper, QuoteTemplateReportHelper>("QuoteTemplateReportHelper", new QuoteTemplateReportHelper());
+            ContainerAccessor.RegisterTypeFactory<IAddManualTraceEventsHelper, AddManualTraceEventsHelper>("AddManualTraceEventsHelper", new AddManualTraceEventsHelper());
 
             LoggedContactResolver.RegisterLoggedContactUtil();
             DateTimeUtilResolver.RegisterDateTimeUtil();

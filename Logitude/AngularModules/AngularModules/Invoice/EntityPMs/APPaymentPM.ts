@@ -15,6 +15,7 @@ import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
 import {Output, EventEmitter}  from '@angular/core';
 import {PropertyChangedArgs} from '../../Infrastructure/EventEmitterArgs/PropertyChangedArgs';
 import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass';
+import { LedgerTransactionPM } from 'Accounting/EntityPMs/LedgerTransactionPM';
 
 
 export class APPaymentPM {
@@ -512,13 +513,13 @@ export class APPaymentPM {
     public get ExternalPaymentNotes() { return this.externalPaymentNotes; }
     public set ExternalPaymentNotes(newValue: string) { if (this.externalPaymentNotes != newValue) { this.externalPaymentNotes = newValue; this.MarkAsDirty("ExternalPaymentNotes"); } }
        
-    private reconcileInternalTransIds : string;
-    public get ReconcileInternalTransIds() : string {
-        return this.reconcileInternalTransIds;
+    private reconcileInternalTrans : LedgerTransactionPM[];
+    public get ReconcileInternalTrans() : LedgerTransactionPM[] {
+        return this.reconcileInternalTrans;
     }
-    public set ReconcileInternalTransIds(v : string) {
-        this.reconcileInternalTransIds = v;
-        this.MarkAsDirty("ReconcileInternalTransIds");
+    public set ReconcileInternalTrans(v : LedgerTransactionPM[]) {
+        this.reconcileInternalTrans = v;
+        this.MarkAsDirty("ReconcileInternalTrans");
     }
 
     public OldEntityPM: APPaymentPM;

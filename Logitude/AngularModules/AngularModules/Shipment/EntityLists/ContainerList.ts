@@ -64,8 +64,8 @@ export class ContainerList {
 		ShipmentOnCarriageTo: string;
 		ShipmentLastDeliveryFrom: string;
 		ShipmentLastDeliveryTo: string;
-		EstimatedOriginPickup: Date;
-		ActualOriginPickup: Date;
+		PreCarriageETD: Date;
+		PreCarriageATD: Date;
 		EstimatedPOLArrival: Date;
 		ActualPOLArrival: Date;
 		EstimatedPOLLoaded: Date;
@@ -121,8 +121,8 @@ export class ContainerList {
 		ActualPODDischarge: Date;
 		EstimatedPODDeparture: Date;
 		ActualPODDeparture: Date;
-		EstimatedDelivery: Date;
-		ActualDelivery: Date;
+		OnCarriageETD: Date;
+		OnCarriageATD: Date;
 		EstimatedLIFArrival: Date;
 		ActualLIFArrival: Date;
 		EstimatedOnCarriageDeparture: Date;
@@ -141,10 +141,10 @@ export class ContainerList {
 		ShipmentStatusId: string;
 		ShipmentStatusName: string;
 		EmptyPickupLocation: string;
-		DeliveryLocation: string;
+		OnCarriageLocation: string;
 		EmptyReturnLocation: string;
 		AvailabilityLocation: string;
-		OriginLocation: string;
+		PreCarriageLocation: string;
 		LIFLocation: string;
 		POLLocation: string;
 		PODLocation: string;
@@ -153,10 +153,10 @@ export class ContainerList {
 		Transshipment3Location: string;
 		Transshipment4Location: string;
 		EmptyPickupLocationPortId: string;
-		DeliveryLocationPortId: string;
+		OnCarriageLocationPortId: string;
 		EmptyReturnLocationPortId: string;
 		AvailabilityLocationPortId: string;
-		OriginLocationPortId: string;
+		PreCarriageLocationPortId: string;
 		LIFLocationPortId: string;
 		POLLocationPortId: string;
 		PODLocationPortId: string;
@@ -232,5 +232,7 @@ export class ContainerList {
 		StatusId: string;
 		StatusName: string;
 		StatusWeight: number;
+		CancelledDate: Date;
+		IsCancelled: boolean;
 	
 }

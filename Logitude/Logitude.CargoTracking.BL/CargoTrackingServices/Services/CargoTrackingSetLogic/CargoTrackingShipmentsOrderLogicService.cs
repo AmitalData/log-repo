@@ -21,6 +21,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
         private const string CreateDate = "CreateDate";
         private const string PickupActualDateTime = "PickupActualDateTime";
         private const string BookingConfirmationDate = "BookingConfirmationDate";
+        private const string BookingConfirmationNumber = "BookingConfirmationNumber";
         private const string PickupEstimatedDateTime = "PickupEstimatedDateTime";
         private const string DepartureEstimationDate = "ETD";
         private const string DepartureDate = "ATD";
@@ -62,6 +63,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
             new FieldMap("PoNumber", "PoNumber"),
             new FieldMap("FromWarehouseDate", "OnHandDate"),
             new FieldMap("FromWarehouseNotes", "OnHandNumber"),
+            new FieldMap("BookingNotes", BookingConfirmationNumber),
 
         };
 
@@ -218,6 +220,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
                 case PickupEstimatedDateTime:
                     SetPickupDates(field, tableRow, args);
                     break;
+                case BookingConfirmationNumber:
                 case BookingConfirmationDate:
                     SetBookingConfirmationDate(field, tableRow, args);
                     break;
@@ -234,6 +237,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
                     break;
             }
         }
+
 
         private static void SetArrivalDates(FieldMap field, DataRow tableRow, SetTableLogicArgs args)
         {

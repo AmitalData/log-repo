@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "ng serve --port 8000",
     "start-secondary": "ng serve --port 8000",
     "postinstall": "ngcc",
     "build:Old": "ng build --base-href /CargoTracking/ --prod && start dist\\CargoTracking",

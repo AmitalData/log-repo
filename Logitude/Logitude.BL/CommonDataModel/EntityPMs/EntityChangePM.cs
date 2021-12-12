@@ -50,5 +50,8 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
 
         public string CreateTaskAutomationFailedXml { get; set; }
         public string CreateTaskAutomationSsucceedXml { get; set; }
+
+        public string EventAutomationFailedXml { get; set; }
+        public string EventAutomationSsucceedXml { get; set; }
     }
 }

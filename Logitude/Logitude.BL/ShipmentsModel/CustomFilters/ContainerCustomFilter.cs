@@ -20,6 +20,7 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
         {
             List<QueryFilterItem> queryFilters = operations.QueryFilterItems;
             bool showIsClosed = false;
+            bool showIsCancelled = false;
             foreach (QueryFilterItem item in queryFilters)
             {
                 if (item.IsCustom)
@@ -32,10 +33,27 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
                             showIsClosed = true;
                         }
                     }
+
+                    if (item.FieldName == "IsCancelled")
+                    {
+                        bool value = Convert.ToBoolean(item.FieldValue);
+                        if (value)
+                        {
+                            showIsCancelled = true;
+                        }
+                    }
                 }
             }
 
-            queryableData = queryableData.Where(d => d.IsClosed == showIsClosed);
+            if (showIsCancelled)
+            {
+                queryableData = queryableData.Where(d => d.IsCancelled == showIsCancelled);
+            }
+            else if (showIsClosed)
+            {
+                queryableData= queryableData.Where(d => d.IsClosed == showIsClosed && d.IsCancelled == showIsCancelled);
+            }
+
             return queryableData;
         }
     }

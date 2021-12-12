@@ -201,8 +201,10 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
 
     //#region Properties
 
-    public get EnableCreateBankTransferPaymentButton() : boolean {
-        return this.CreateBankTransferButtonFeatureEnabled && this.ExtPageSelectedLines.Length > 0;
+    public get EnableCreateBankTransferPaymentButton(): boolean {
+        return this.CreateBankTransferButtonFeatureEnabled
+            && this.ExtPageSelectedLines.Length > 0
+            && this.ObjectTableName != 'GLAccount';
     }
 
     //#endregion

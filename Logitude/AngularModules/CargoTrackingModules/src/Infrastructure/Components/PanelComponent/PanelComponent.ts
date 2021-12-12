@@ -20,6 +20,7 @@ export class PanelComponent implements OnInit
     @Input() Title: string = "";
     @Input() TransparentBackground: boolean = false;
     @Input() InputDetailsSectionToggleEvent: EventEmitter<any> = new EventEmitter();
+    @Input() AlwaysExpanded: boolean = false;
     @Output() OutputDetailsSectionToggleEvent = new EventEmitter<boolean>();
 
     constructor() { }
@@ -43,6 +44,10 @@ export class PanelComponent implements OnInit
     {
         var width = window.innerWidth;
         if (width < 470 && this.HaveDetailsSection) {
+            this.ShowDetailsSection = true;
+        }
+
+        if(this.AlwaysExpanded){
             this.ShowDetailsSection = true;
         }
     }

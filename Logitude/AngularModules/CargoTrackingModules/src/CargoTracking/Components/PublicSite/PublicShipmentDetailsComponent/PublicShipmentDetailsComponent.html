@@ -205,7 +205,9 @@
                                 <div class="tick"> </div>
                                 <div class="caption" style="width: 205px;">{{item.Name}}</div>
                                 <div class="date" style="width: 130px;">{{item.EstimationDate | date: 'dd/MM/yyyy, HH:mm' | dateTimeFormat}}</div>
-                                <div class="desc" style="width: calc(100% - 450px); padding: 0;" [attr.title]="item.Notes">{{item.Notes}} </div>
+                                <div class="desc" style="width: calc(100% - 450px); padding: 0;" [attr.title]="item.Notes">
+                                    <custom-label *ngIf="item.Notes">{{item.Notes}}</custom-label>
+                                </div>
                             </ng-container>
                         </li>
                     </ul>
@@ -217,7 +219,9 @@
                                 <div class="tick"> </div>
                                 <div class="caption" style="width: 205px;">{{CurrentMilestoneField.Name}}</div>
                                 <div class="date" style="width: 130px;">{{CurrentMilestoneField.Date | date: 'dd/MM/yyyy, HH:mm' | dateTimeFormat}}</div>
-                                <div class="desc" style="width: calc(100% - 450px); padding: 0;" [attr.title]="CurrentMilestoneField.Notes">{{CurrentMilestoneField.Notes}}</div>
+                                <div class="desc" style="width: calc(100% - 450px); padding: 0;" [attr.title]="CurrentMilestoneField.Notes">
+                                    <custom-label *ngIf="CurrentMilestoneField.Notes">{{CurrentMilestoneField.Notes}}</custom-label>
+                                </div>
                             </ng-container>
                         </li>
                     </ul>
@@ -229,7 +233,9 @@
                                 <div class="tick"> <img src="./assets/images/icons/tick.png" alt=""> </div>
                                 <div class="caption" style="width: 205px;">{{item.Name}}</div>
                                 <div class="date" style="width: 130px;">{{item.Date | date: 'dd/MM/yyyy, HH:mm' | dateTimeFormat}}</div>
-                                <div class="desc" style="width: calc(100% - 450px); padding: 0;" [attr.title]="item.Notes">{{item.Notes}}</div>
+                                <div class="desc" style="width: calc(100% - 450px); padding: 0;" >
+                                    <custom-label *ngIf="item.Notes">{{item.Notes}}</custom-label>
+                                </div>
                             </ng-container>
                         </li>
                     </ul>

@@ -7,7 +7,7 @@
             <a *ngIf="HeaderLinkText" (click)="HeaderLinkClicked()" href="javascript:;">{{HeaderLinkText}}</a>
         </div>
         <div class="buttons hide-mobile">
-            <button *ngIf="HaveDetailsSection" (click)="ShowMoreDetails()">{{ShowDetailsSection?'Show less':'Show more'}}</button>
+            <button *ngIf="HaveDetailsSection && !AlwaysExpanded" (click)="ShowMoreDetails()">{{ShowDetailsSection?'Show less':'Show more'}}</button>
         </div>
     </div>
 

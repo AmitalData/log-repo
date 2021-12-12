@@ -75,6 +75,10 @@ export class UpdateUnassigedDataComponent extends BaseComponent {
         this.UIProperties.SetEnabled("ConsigneeName", this.ObjectTableName, false);
     }
 
+    private RefreshPartnerTab() {
+        this.CurrentSession.FireEvent("ShipmentUnassignedDataChanged");
+    }
+
     private SetCardDependency() {
         this.CardDependencyProperty1 = "CS";
         this.CardDependencyProperty1IsList = false;
@@ -348,6 +352,7 @@ export class UpdateUnassigedDataComponent extends BaseComponent {
             }
 
             this.ComputeHasUnassignedField();
+            this.RefreshPartnerTab();
             this.CurrentSession.CloseCurrentWindowEmit("ok");
         }
     }

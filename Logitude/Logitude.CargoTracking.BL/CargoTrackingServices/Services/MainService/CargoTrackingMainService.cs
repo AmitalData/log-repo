@@ -188,7 +188,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
 
             }
 
-            SyncShipmentMilstones(bulkDataPreperation);
+            //SyncShipmentMilstones(bulkDataPreperation);
         }
 
         private static void CreatePreOldShipmentsTable(BulkDataPreperation bulkDataPreperation)
@@ -563,7 +563,6 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
                 try
                 {
                     MapCargoTrackingDate(bulkCopy, bulkDataPreperation, isFromInnerCargoTrackingTable);
-                    SubstringDeliveryNotesFieldValue(bulkDataPreperation, isFromInnerCargoTrackingTable);
                     SqlBulkCopyWriteData(bulkCopy, bulkDataPreperation, isFromInnerCargoTrackingTable);
                 }
                 catch (Exception exception)
@@ -580,21 +579,6 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
 
         }
 
-        private void SubstringDeliveryNotesFieldValue(BulkDataPreperation bulkDataPreperation, bool isFromInnerCargoTrackingTable)
-        {
-            if (bulkDataPreperation.CargoTrackingTable.CargoTracking_TableName == "CargoTrackingShipments" && !isFromInnerCargoTrackingTable)
-            {
-
-                foreach (DataRow row in bulkDataPreperation.SelectedDataTable.Rows)
-                {
-                    if (row["DeliveryNotes"] != null && row["DeliveryNotes"].GetType() != typeof(DBNull))
-                    {
-                        var value = row["DeliveryNotes"].ToString();
-                        row["DeliveryNotes"] = value.Length > 32 ? value.Substring(0, 31) : value;
-                    }
-                }
-            }
-        }
 
         private void SetErrorLog(Exception exception, BulkDataPreperation bulkDataPreperation)
         {
@@ -911,8 +895,14 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
                     BuildShipments(updateCargoTrackingRecords);
 
                     var updatedShipmentsCount = updateCargoTrackingRecords.NumberRecordUpdated;
-                    //if(updatedShipmentsCount > 0)
-                    //    syncService.SyncShipmentMilstones(cargoTrackingDataBaseArgs.BuildCargoArgs);
+                    BulkDataPreperation bulkDataPreperation = InitializeBulkDataPreperation(cargoTrackingDataBaseArgs);
+                    bulkDataPreperation.MainDataTable = new DataTable();
+                    bulkDataPreperation.Milestones = updateCargoTrackingRecords.MilestoneList;
+                    bulkDataPreperation.MilestonesNotPermitted = updateCargoTrackingRecords.MilestonesNotPermitted;
+
+                    SyncShipmentMilstones(bulkDataPreperation);
+                    //if(updatedShipmentsCount > 0) 
+                    //syncService.SyncShipmentMilstones(cargoTrackingDataBaseArgs.BuildCargoArgs);
                 }
                 _recordUpdated.NumberOfRecordUpdated = updateCargoTrackingRecords.NumberRecordUpdated;
                 _recordUpdated.NumberOfRecordUpdated2 = updateCargoTrackingRecords.NumberRecordUpdated2;

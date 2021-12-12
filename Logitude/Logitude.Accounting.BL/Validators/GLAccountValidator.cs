@@ -45,7 +45,11 @@ namespace Logitude.Accounting.BL.Validators
             {
                 return new ValidationResult(TextCodesTranslator.TranslateText("GLAccounts.O.AccountTypeCodeMissing", myGLAccountPM.Tenant, showLocals));
             }
-            
+            if (myGLAccountPM.PostponedChequesCommission < 0)
+            {
+                return new ValidationResult(TextCodesTranslator.TranslateText("GLAccounts.O.NegativePostponedChequesCommission ", myGLAccountPM.Tenant, showLocals));
+            }
+
             if (myGLAccountPM.IsMultiCurrency != true && String.IsNullOrWhiteSpace(myGLAccountPM.CurrencyId))
             {
                 return new ValidationResult(TextCodesTranslator.TranslateText("GLAccounts.O.CurrencyOrMulti", myGLAccountPM.Tenant, showLocals));

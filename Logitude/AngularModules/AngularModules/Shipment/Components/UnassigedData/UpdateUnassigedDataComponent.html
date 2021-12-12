@@ -166,9 +166,10 @@
                                                         <tr class="FormFieldRow" *ngIf="IsConsigneeVisible">
                                                             <td style="width:70px;" class="Label">Consignee</td>
                                                             <td style="width:248px;">
-                                                                <LogLov [ObjectFieldName]="'ConsigneeId'"
+                                                                <LogLov [ObjectFieldName]="'UpdatedConsigneeId'"
                                                                         [SelectedValue]="UpdatedConsigneeId"
                                                                         [ObjectTableName]="ObjectTableName"
+                                                                        [NoObjectField]="true"
                                                                         [DataContext]="DataContext"
                                                                         [LookUpTableName]="'Card'"
                                                                         [DisplayMemberPath]="'EnglishName'"

@@ -619,6 +619,21 @@ export class CargoTrackingShipmentMappedPM {
     public get SupplyDateTime() { return this.supplyDateTime; }
     public set SupplyDateTime(newValue: Date) { if (this.supplyDateTime != newValue) { this.supplyDateTime = newValue; this.MarkAsDirty("SupplyDateTime"); } }
 
+    private activatedForDeclarationApprove: boolean;
+    public get ActivatedForDeclarationApprove() { return this.activatedForDeclarationApprove; }
+    public set ActivatedForDeclarationApprove(newValue: boolean) { if (this.activatedForDeclarationApprove != newValue) { this.activatedForDeclarationApprove = newValue; this.MarkAsDirty("ActivatedForDeclarationApprove"); } }
+
+
+    private isImporterApprovalRequried: boolean;
+    public get IsImporterApprovalRequried() { return this.isImporterApprovalRequried; }
+    public set IsImporterApprovalRequried(newValue: boolean) { if (this.isImporterApprovalRequried != newValue) { this.isImporterApprovalRequried = newValue; this.MarkAsDirty("IsImporterApprovalRequried"); } }
+
+
+    private tenantDeclarationMessage: string;
+    public get TenantDeclarationMessage() { return this.tenantDeclarationMessage; }
+    public set TenantDeclarationMessage(newValue: string) { if (this.tenantDeclarationMessage != newValue) { this.tenantDeclarationMessage = newValue; this.MarkAsDirty("TenantDeclarationMessage"); } }
+
+
 
 
 

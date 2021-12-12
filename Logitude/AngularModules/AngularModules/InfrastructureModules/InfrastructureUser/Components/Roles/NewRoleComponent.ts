@@ -11,9 +11,9 @@ import { ServiceResponse } from '../../../../Infrastructure/DataContracts/Servic
 import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
 import { ConfirmWindow } from '../../../../Controls/Windows/ConfirmWindow';
+import { ApiQueryFilters } from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
 
 @Component({
-
     templateUrl: './NewRoleComponent.html',
 })
 
@@ -25,9 +25,13 @@ export class NewRoleComponent extends BaseComponent {
     public IsResourcesReady: boolean = false;
     public IsNewEntity: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
+    public ParentRoleQueryFilters: ApiQueryFilters;
     constructor(private entityResourceService: EntityResourceService) {
         super();
         this.InitializeServices();
+        if (SessionLocator.Tenant != 0) {
+            this.BuildQueryFilters();
+        }
     }
 
     private myRolePMService: RolePMService;
@@ -35,6 +39,11 @@ export class NewRoleComponent extends BaseComponent {
     InitializeServices() {
         this.myRolePMService = new RolePMService();
         this.myRoleListService = new RoleListService();
+    }
+
+    private BuildQueryFilters() {
+        this.ParentRoleQueryFilters = new ApiQueryFilters();
+        this.ParentRoleQueryFilters.addAdditionalFilter("Code", "CUCA", null, null, "Exclude", false, false, false, "string", false, true, true);
     }
 
     SetWindowArgs(args: any) {

@@ -117,12 +117,13 @@ namespace WebFreight.Web.Helpers.WorkerRole.MultiEntityUpdate
         private void UpdateEntityPM(object entityPM, MultiEntityUpdateDataEntity multiEntityUpdateDataEntity)
         {
             if (multiEntityUpdateDataEntity.StatusCode == "D") return;
+            object oldEntityPM = MultiEntityUpdateCloner.CloneEntity(entityPM);
             foreach (AutomationSetValue item in multiEntityUpdateData.SetValueLists)
             {
                 SetNewValueToEntityPM(multiEntityUpdateData, entityPM, item);
             }
 
-            ShipmentBaseValidator.ValidateUpdate(entityPM); //For now, untill move this to shipment service
+            ShipmentBaseValidator.ValidateUpdate(entityPM, oldEntityPM); //For now, untill move this to shipment service
             UpdateEntityArgs updateEntityArgs = GetUpdateEntityArgs(entityPM);
             InjectionUtil.Instance.UpdateEntity(updateEntityArgs);
             UpdateMultiEntityDataEntity(multiEntityUpdateDataEntity, null);

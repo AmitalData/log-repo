@@ -68,11 +68,6 @@ export class ShipmentUnassignedFieldPM {
     public set ChangeSetOp(newValue: string) { if (this.changeSetOp != newValue) { this.changeSetOp = newValue; this.MarkAsDirty("ChangeSetOp"); } }
        
 	 
-    private shipment: string;
-    public get Shipment() { return this.shipment; }
-    public set Shipment(newValue: string) { if (this.shipment != newValue) { this.shipment = newValue; this.MarkAsDirty("Shipment"); } }
-       
-	 
 
     public OldEntityPM: ShipmentUnassignedFieldPM;
 	    

@@ -38,9 +38,9 @@ export class ShipmentShortTitleComponent {
             });
 
             this.SessionEvent = this.CurrentSession.SessionEvent.subscribe(s => {
-                if (s == "ShipmentUnassignedDataChanged") {
-                    this.ComputeUnassigedValidationVisibility();
-                }
+                //if (s == "ShipmentUnassignedDataChanged") {
+                //    this.ComputeUnassigedValidationVisibility();
+                //}
             });
         }
     }

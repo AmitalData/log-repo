@@ -575,6 +575,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
             entityPM.ChargeableWeightUnitCode = "KG";
             entityPM.VolumeUnitCode = "CBF";
             entityPM.Notes = entityAM.Notes;
+            entityPM.OrderIsDangerouseGoods = entityAM.IsDangerouseOfGoods;
             if (!string.IsNullOrEmpty(entityAM.ForwardingPartnerTenant))
             {
                 int ForwardingPartnerTenant = int.Parse(entityAM.ForwardingPartnerTenant);

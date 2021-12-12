@@ -1409,9 +1409,8 @@ on record.JournalId equals j.Id
                     join m in context.JournalAdditionalDatas on new { a.JournalId, a.JournalLineNumber } equals new { m.JournalId, m.JournalLineNumber }
 
                     where (m.TaxReportId != null )
-                            && a.DocumentDate <= endOfTaxReportDate && (j.StatusCode != JournalStatuses.Voided || (j.StatusCode == JournalStatuses.Voided && a.DocumentDate.Month != taxReportMonth.Value.Month ) ) 
-                            && (j.OriginalJournalId == null || (j.OriginalJournalId != null && a.DocumentDate.Month != taxReportMonth.Value.Month))
-
+                            && a.DocumentDate <= endOfTaxReportDate 
+                           
                             && a.Tenant == ledgerTransactionBalanceFilter.Tenant
                             && a.LocalAmountDebit != 0
                            && a.AccountId== ledgerTransactionBalanceFilter.GLAccountId
@@ -1447,8 +1446,7 @@ on record.JournalId equals j.Id
                                                         where (ledger.OppositeAccountId != setting.VATOutputGLAccountId || ledger.OppositeAccountId == null)
                                                        && ledger.Tenant == ledgerTransactionBalanceFilter.Tenant
                                                       && ledger.LocalAmountDebit != 0
-                                                      && ledger.AccountId == setting.VATInputsGLAccountId &&journal.StatusCode != JournalStatuses.Voided 
-                                                      && journal.OriginalJournalId == null
+                                                      && ledger.AccountId == setting.VATInputsGLAccountId 
                                                       && (taxreport.StatusCode != VatReportStatuses.Transmitted || additional.TaxReportId == null)
                                                       
                                                         select ledger).Distinct();

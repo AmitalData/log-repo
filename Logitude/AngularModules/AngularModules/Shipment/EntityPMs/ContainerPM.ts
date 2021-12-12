@@ -311,14 +311,14 @@ export class ContainerPM {
     public set ShipmentLastDeliveryTo(newValue: string) { if (this.shipmentLastDeliveryTo != newValue) { this.shipmentLastDeliveryTo = newValue; this.MarkAsDirty("ShipmentLastDeliveryTo"); } }
        
 	 
-    private estimatedOriginPickup: Date;
-    public get EstimatedOriginPickup() { return this.estimatedOriginPickup; }
-    public set EstimatedOriginPickup(newValue: Date) { if (this.estimatedOriginPickup != newValue) { this.estimatedOriginPickup = newValue; this.MarkAsDirty("EstimatedOriginPickup"); } }
+    private preCarriageETD: Date;
+    public get PreCarriageETD() { return this.preCarriageETD; }
+    public set PreCarriageETD(newValue: Date) { if (this.preCarriageETD != newValue) { this.preCarriageETD = newValue; this.MarkAsDirty("PreCarriageETD"); } }
        
 	 
-    private actualOriginPickup: Date;
-    public get ActualOriginPickup() { return this.actualOriginPickup; }
-    public set ActualOriginPickup(newValue: Date) { if (this.actualOriginPickup != newValue) { this.actualOriginPickup = newValue; this.MarkAsDirty("ActualOriginPickup"); } }
+    private preCarriageATD: Date;
+    public get PreCarriageATD() { return this.preCarriageATD; }
+    public set PreCarriageATD(newValue: Date) { if (this.preCarriageATD != newValue) { this.preCarriageATD = newValue; this.MarkAsDirty("PreCarriageATD"); } }
        
 	 
     private estimatedPOLArrival: Date;
@@ -596,14 +596,14 @@ export class ContainerPM {
     public set ActualPODDeparture(newValue: Date) { if (this.actualPODDeparture != newValue) { this.actualPODDeparture = newValue; this.MarkAsDirty("ActualPODDeparture"); } }
        
 	 
-    private estimatedDelivery: Date;
-    public get EstimatedDelivery() { return this.estimatedDelivery; }
-    public set EstimatedDelivery(newValue: Date) { if (this.estimatedDelivery != newValue) { this.estimatedDelivery = newValue; this.MarkAsDirty("EstimatedDelivery"); } }
+    private onCarriageETD: Date;
+    public get OnCarriageETD() { return this.onCarriageETD; }
+    public set OnCarriageETD(newValue: Date) { if (this.onCarriageETD != newValue) { this.onCarriageETD = newValue; this.MarkAsDirty("OnCarriageETD"); } }
        
 	 
-    private actualDelivery: Date;
-    public get ActualDelivery() { return this.actualDelivery; }
-    public set ActualDelivery(newValue: Date) { if (this.actualDelivery != newValue) { this.actualDelivery = newValue; this.MarkAsDirty("ActualDelivery"); } }
+    private onCarriageATD: Date;
+    public get OnCarriageATD() { return this.onCarriageATD; }
+    public set OnCarriageATD(newValue: Date) { if (this.onCarriageATD != newValue) { this.onCarriageATD = newValue; this.MarkAsDirty("OnCarriageATD"); } }
        
 	 
     private estimatedLIFArrival: Date;
@@ -696,9 +696,9 @@ export class ContainerPM {
     public set EmptyPickupLocation(newValue: string) { if (this.emptyPickupLocation != newValue) { this.emptyPickupLocation = newValue; this.MarkAsDirty("EmptyPickupLocation"); } }
        
 	 
-    private deliveryLocation: string;
-    public get DeliveryLocation() { return this.deliveryLocation; }
-    public set DeliveryLocation(newValue: string) { if (this.deliveryLocation != newValue) { this.deliveryLocation = newValue; this.MarkAsDirty("DeliveryLocation"); } }
+    private onCarriageLocation: string;
+    public get OnCarriageLocation() { return this.onCarriageLocation; }
+    public set OnCarriageLocation(newValue: string) { if (this.onCarriageLocation != newValue) { this.onCarriageLocation = newValue; this.MarkAsDirty("OnCarriageLocation"); } }
        
 	 
     private emptyReturnLocation: string;
@@ -711,9 +711,9 @@ export class ContainerPM {
     public set AvailabilityLocation(newValue: string) { if (this.availabilityLocation != newValue) { this.availabilityLocation = newValue; this.MarkAsDirty("AvailabilityLocation"); } }
        
 	 
-    private originLocation: string;
-    public get OriginLocation() { return this.originLocation; }
-    public set OriginLocation(newValue: string) { if (this.originLocation != newValue) { this.originLocation = newValue; this.MarkAsDirty("OriginLocation"); } }
+    private preCarriageLocation: string;
+    public get PreCarriageLocation() { return this.preCarriageLocation; }
+    public set PreCarriageLocation(newValue: string) { if (this.preCarriageLocation != newValue) { this.preCarriageLocation = newValue; this.MarkAsDirty("PreCarriageLocation"); } }
        
 	 
     private lIFLocation: string;
@@ -756,9 +756,9 @@ export class ContainerPM {
     public set EmptyPickupLocationPortId(newValue: string) { if (this.emptyPickupLocationPortId != newValue) { this.emptyPickupLocationPortId = newValue; this.MarkAsDirty("EmptyPickupLocationPortId"); } }
        
 	 
-    private deliveryLocationPortId: string;
-    public get DeliveryLocationPortId() { return this.deliveryLocationPortId; }
-    public set DeliveryLocationPortId(newValue: string) { if (this.deliveryLocationPortId != newValue) { this.deliveryLocationPortId = newValue; this.MarkAsDirty("DeliveryLocationPortId"); } }
+    private onCarriageLocationPortId: string;
+    public get OnCarriageLocationPortId() { return this.onCarriageLocationPortId; }
+    public set OnCarriageLocationPortId(newValue: string) { if (this.onCarriageLocationPortId != newValue) { this.onCarriageLocationPortId = newValue; this.MarkAsDirty("OnCarriageLocationPortId"); } }
        
 	 
     private emptyReturnLocationPortId: string;
@@ -771,9 +771,9 @@ export class ContainerPM {
     public set AvailabilityLocationPortId(newValue: string) { if (this.availabilityLocationPortId != newValue) { this.availabilityLocationPortId = newValue; this.MarkAsDirty("AvailabilityLocationPortId"); } }
        
 	 
-    private originLocationPortId: string;
-    public get OriginLocationPortId() { return this.originLocationPortId; }
-    public set OriginLocationPortId(newValue: string) { if (this.originLocationPortId != newValue) { this.originLocationPortId = newValue; this.MarkAsDirty("OriginLocationPortId"); } }
+    private preCarriageLocationPortId: string;
+    public get PreCarriageLocationPortId() { return this.preCarriageLocationPortId; }
+    public set PreCarriageLocationPortId(newValue: string) { if (this.preCarriageLocationPortId != newValue) { this.preCarriageLocationPortId = newValue; this.MarkAsDirty("PreCarriageLocationPortId"); } }
        
 	 
     private lIFLocationPortId: string;
@@ -1189,6 +1189,16 @@ export class ContainerPM {
     private statusWeight: number;
     public get StatusWeight() { return this.statusWeight; }
     public set StatusWeight(newValue: number) { if (this.statusWeight != newValue) { this.statusWeight = newValue; this.MarkAsDirty("StatusWeight"); } }
+       
+	 
+    private cancelledDate: Date;
+    public get CancelledDate() { return this.cancelledDate; }
+    public set CancelledDate(newValue: Date) { if (this.cancelledDate != newValue) { this.cancelledDate = newValue; this.MarkAsDirty("CancelledDate"); } }
+       
+	 
+    private isCancelled: boolean;
+    public get IsCancelled() { return this.isCancelled; }
+    public set IsCancelled(newValue: boolean) { if (this.isCancelled != newValue) { this.isCancelled = newValue; this.MarkAsDirty("IsCancelled"); } }
        
 	 
 
