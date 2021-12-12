@@ -1211,8 +1211,8 @@ namespace Logitude.CustomsMessaging.RequestServices
                 DMExtensions.PreferenceDocumentType = new DeclarationGoodsShipmentInvoiceDMExtensionsPreferenceDocumentType() { Value = supplierInvoicePM.PreferenceDocumentTypeCode };
             }
 
-            //if (!string.IsNullOrWhiteSpace(supplierInvoicePM.DutyRegimeProtocolCode_))
-            //    DMExtensions.DutyRegimeProtocolCode = new DeclarationGoodsShipmentInvoiceDMExtensionsDutyRegimeProtocolCode() { Value = supplierInvoicePM.DutyRegimeProtocolCode_ };
+            if (!string.IsNullOrWhiteSpace(supplierInvoicePM.DutyRegimeProtocolCode))
+                DMExtensions.DutyRegimeProtocolCode = new DeclarationGoodsShipmentInvoiceDMExtensionsDutyRegimeProtocolCode() { Value = supplierInvoicePM.DutyRegimeProtocolCode };
 
             //DMExtensions.PaymentType = SetCodeTypeValue<DeclarationGoodsShipmentInvoiceDMExtensionsPaymentType>(supplierInvoicePM.PaymentTypeCode); // new DeclarationGoodsShipmentInvoiceDMExtensionsPaymentType() { Value = supplierInvoicePM.PaymentTypeCode };
             //DMExtensions.InvoiceAmount = new InvoiceAmountType() { Value = supplierInvoicePM.InvoiceAmount.HasValue ? supplierInvoicePM.InvoiceAmount.Value : 0 };

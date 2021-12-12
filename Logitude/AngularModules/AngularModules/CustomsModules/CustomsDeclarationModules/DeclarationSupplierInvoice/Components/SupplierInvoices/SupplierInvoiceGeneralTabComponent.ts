@@ -59,7 +59,7 @@ import { ModificationAndDiscountTypeList } from '../../../../../Customs/EntityLi
 import { ModificationAndDiscountTypeListService } from '../../../../../Customs/Services/StandardLists/ModificationAndDiscountTypeListService';
 import { any } from 'cypress/types/bluebird';
 import { CurrencyTypeListService } from '../../../../../Customs/Services/StandardLists/CurrencyTypeListService';
-import { GITITEMCR } from '../../../../../Customs/EntityPMs/Extended/GITITEMCR';
+import { GITITEMCR } from 'Customs/EntityPMs/Extended/GITITEMCR';
 import { SupplierInvioceItemCertificatPM } from '../../../../../Customs/EntityPMs/SupplierInvioceItemCertificatPM';
 import { MultiCertificateUpdateComponent } from '../../../../../CustomsModules/CustomsDeclarationModules/DeclarationSupplierInvoice/Components/SupplierInvoices/MultiCertificateUpdate/MultiCertificateUpdateComponent';
 
@@ -909,6 +909,12 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
         this.EntityPM.BuyerCountryCode = newValue;
     }
 
+    public get DutyRegimeProtocolCode() { return this.EntityPM ? this.EntityPM.DutyRegimeProtocolCode : null; }
+    public set DutyRegimeProtocolCode(newValue: string) {
+
+        this.EntityPM.DutyRegimeProtocolCode = newValue;
+    }
+ 
     public get BuyerRoleCode() { return this.EntityPM ? this.EntityPM.BuyerRoleCode : null; }
     public set BuyerRoleCode(newValue: string) {
 
