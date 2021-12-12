@@ -230,10 +230,12 @@ namespace WebFreight.Web.App_Code
         private void RunAutomation(SendHtmlFilter filter, string documentId, string automationType)
         {
             GeneralEntityChangeService generalEntityChangeService = new GeneralEntityChangeService();
-            bool isHaveAutomation = generalEntityChangeService.CheckIfEntityHaveAutomation(filter.ObjectTableName, automationType, filter.Tenant);
+            EntityDetails entityDetails = generalEntityChangeService.GetEntityDetails(filter.EntityId, filter.ObjectTableName, filter.Tenant);
+
+            bool isHaveAutomation = generalEntityChangeService.CheckIfEntityHaveAutomation(entityDetails.CombinedObjectTableName, automationType, filter.Tenant);
             if (!isHaveAutomation) return;
 
-            MainEntityChangeService mainEntityChangeService = new MainEntityChangeService(new EntityChangeArgs() { ProcessType = automationType, ObjectTableName = filter.ObjectTableName, EntityId = filter.EntityId, Tenant = filter.Tenant, StartDate = DateTime.Now, ExtraDetails = new OnUpdateDocumentResult { Type = "Send", DocumentId = documentId } });
+            MainEntityChangeService mainEntityChangeService = new MainEntityChangeService(new EntityChangeArgs() { ProcessType = automationType, ObjectTableName = entityDetails.ObjectTableName, EntityId = filter.EntityId, Tenant = filter.Tenant, StartDate = DateTime.Now, ExtraDetails = new OnUpdateDocumentResult { Type = "Send", DocumentId = documentId, DocumentTypeId = filter.DocumentTypeId }, OtherObjectTableName = entityDetails.OtherObjectTableName });
             mainEntityChangeService.AddEntityChange();
         }
 

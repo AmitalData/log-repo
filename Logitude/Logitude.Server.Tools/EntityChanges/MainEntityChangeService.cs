@@ -273,6 +273,7 @@ namespace Logitude.Server.Tools.EntityChanges
         public string Type { get; set; }
         public string DocumentId { get; set; }
         public List<string> DocumentTypeCopyIds { get; set; }
+        public string DocumentTypeId { get; set; }
     }
 
 

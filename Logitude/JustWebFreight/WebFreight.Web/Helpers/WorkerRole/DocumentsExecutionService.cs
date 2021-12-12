@@ -95,10 +95,12 @@ namespace WebFreight.Web.Helpers.WorkerRoleHelpers
         private void RunAutomation(ExportDocumentArgs exportDocumentArgs, string automationType)
         {
             GeneralEntityChangeService generalEntityChangeService = new GeneralEntityChangeService();
-            bool isHaveAutomation = generalEntityChangeService.CheckIfEntityHaveAutomation(exportDocumentArgs.ObjectTableName, automationType, exportDocumentArgs.Tenant);
+            EntityDetails entityDetails = generalEntityChangeService.GetEntityDetails(exportDocumentArgs.EntityId, exportDocumentArgs.ObjectTableName, exportDocumentArgs.Tenant);
+
+            bool isHaveAutomation = generalEntityChangeService.CheckIfEntityHaveAutomation(entityDetails.CombinedObjectTableName, automationType, exportDocumentArgs.Tenant);
             if (!isHaveAutomation) return;
 
-            MainEntityChangeService mainEntityChangeService = new MainEntityChangeService(new EntityChangeArgs() { ProcessType = automationType, ObjectTableName = exportDocumentArgs.ObjectTableName, EntityId = exportDocumentArgs.EntityId, Tenant = exportDocumentArgs.Tenant, StartDate = DateTime.Now, ExtraDetails = new OnUpdateDocumentResult { Type = "Print", DocumentTypeCopyIds = exportDocumentArgs.DocumentTypeCopyIdsList } });
+            MainEntityChangeService mainEntityChangeService = new MainEntityChangeService(new EntityChangeArgs() { ProcessType = automationType, ObjectTableName = entityDetails.ObjectTableName, EntityId = exportDocumentArgs.EntityId, Tenant = exportDocumentArgs.Tenant, StartDate = DateTime.Now, ExtraDetails = new OnUpdateDocumentResult { Type = "Print", DocumentTypeCopyIds = exportDocumentArgs.DocumentTypeCopyIdsList }, OtherObjectTableName = entityDetails.OtherObjectTableName });
             mainEntityChangeService.AddEntityChange();
         }
 

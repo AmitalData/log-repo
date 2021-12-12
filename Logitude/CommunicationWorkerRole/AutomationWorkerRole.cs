@@ -306,7 +306,7 @@ namespace CommunicationWorkerRole
                                 #region On Update Document
                                 else if (automation.ResultCode == "ONUPDATEDOCUMENT")
                                 {
-                                    OnUpdateDocumentAutomation(objectTable);
+                                    ExecuteOnUpdateDocument(new OnUpdateDocumentArgs { EntityChange = entityChange, DateBefore = dateBefore, ValidateResult = validateResult, AutomatedBackup = automatedBackup, Tenant = Tenant, EntityId = entityId, ExtraDetails = ExtraDetails }, entityChangesAutomation, entityChangesAutomationsLists);
                                 }
                                 #endregion
 
@@ -531,9 +531,10 @@ namespace CommunicationWorkerRole
             }
         }
 
-        private void OnUpdateDocumentAutomation(ObjectTable objectTable)
+        private void ExecuteOnUpdateDocument(OnUpdateDocumentArgs onUpdateDocumentArgs, EntityChangeAutomation entityChangesAutomation, List<EntityChangeAutomation> entityChangesAutomationsLists)
         {
-
+            OnUpdateDocumentService onUpdateDocumentService = new OnUpdateDocumentService(onUpdateDocumentArgs, entityChangesAutomation, entityChangesAutomationsLists);
+            onUpdateDocumentService.Execute();
         }
 
         private void ApplyAuomationSendInterfaceFTP(EntityChange entityChange, AutomationSendInterface automationSendInterface, string documentId)

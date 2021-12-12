@@ -962,10 +962,12 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 return;
 
             GeneralEntityChangeService generalEntityChangeService = new GeneralEntityChangeService();
-            bool isHaveAutomation = generalEntityChangeService.CheckIfEntityHaveAutomation(theEntityPm.ObjectTableName, automationType, theEntityPm.Tenant);
+            EntityDetails entityDetails = generalEntityChangeService.GetEntityDetails(theEntityPm.EntityId, theEntityPm.ObjectTableName, theEntityPm.Tenant);
+            
+            bool isHaveAutomation = generalEntityChangeService.CheckIfEntityHaveAutomation(entityDetails.CombinedObjectTableName, automationType, theEntityPm.Tenant);
             if (!isHaveAutomation) return;
 
-            MainEntityChangeService mainEntityChangeService = new MainEntityChangeService(new EntityChangeArgs() { ProcessType = automationType, ObjectTableName = theEntityPm.ObjectTableName, EntityId = theEntityPm.EntityId, Tenant = theEntityPm.Tenant, StartDate = DateTime.Now, ExtraDetails = new OnUpdateDocumentResult { Type = "Upload", DocumentId = theEntityPm.DocumentId } });
+            MainEntityChangeService mainEntityChangeService = new MainEntityChangeService(new EntityChangeArgs() { ProcessType = automationType, ObjectTableName = entityDetails.ObjectTableName, EntityId = theEntityPm.EntityId, Tenant = theEntityPm.Tenant, StartDate = DateTime.Now, ExtraDetails = new OnUpdateDocumentResult { Type = "Upload", DocumentId = theEntityPm.DocumentId, DocumentTypeId = theEntityPm.DocumentTypeId }, OtherObjectTableName = entityDetails.OtherObjectTableName });
             mainEntityChangeService.AddEntityChange();
         }
 

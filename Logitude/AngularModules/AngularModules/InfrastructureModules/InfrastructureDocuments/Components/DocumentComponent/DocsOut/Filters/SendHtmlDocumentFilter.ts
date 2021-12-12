@@ -14,6 +14,7 @@ export class SendHtmlDocumentFilter {
     HtmlPlainString: string;
     ExportQuotationsToIntegratedSystem: boolean;
     DocumentTypeCode: string;
+    DocumentTypeId: string;
     EntityId: string;
     CustomerId: string;
     EventTypeCode: string;
