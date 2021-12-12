@@ -668,7 +668,7 @@
                                     [class.liItemSelected]="(item&&SelectedItemKey)?(item[KeyPropertyPath] === SelectedItemKey?true:false):false"
                                     (mouseover)="OnLiMouseOver($event)"
                                     (mouseleave)="OnLiMouseLeave($event)" [attr.name]="item[DisplayMemberPath]"
-                                    [class.InActive]="item.InActive">
+                                    [class.InActive]="item.InActive || item.Inactive">
 
                                     <!-- the style was like this but because of bug 48807 i changed it height:20px; font-size:10px; width:100%; position:relative; display: table;-->
 
