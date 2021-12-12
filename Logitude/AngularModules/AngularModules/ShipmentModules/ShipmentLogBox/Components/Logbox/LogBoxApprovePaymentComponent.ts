@@ -36,6 +36,7 @@ import { ServiceResponse } from '../../../../Infrastructure/DataContracts/Servic
 import { HybridPartnerPMService } from '../../../../Common/Services/StandardPMs/HybridPartnerPMService';
 
 import { DownloadManager } from '../../../../Infrastructure/Utilities/DownloadManager';
+import { MixPanelLocator } from 'Common/MixPanel/MixPanelLocator';
 @Component({
 
     templateUrl: './LogBoxApprovePaymentComponent.html'
@@ -222,6 +223,7 @@ export class LogBoxApprovePaymentComponent extends BaseComponent implements OnIn
                 entity.DenyReason = "";
                 this._ShipmentAdditionalCloudDataService.update(entity).subscribe((AdditionalResult: any) => {
                     ServiceLocator.SendTotangoUserActivity("LogBox", "Approve Declaration");
+                    MixPanelLocator.Action({ ProjectName:"LogBox", ActionName: "Approve Declaration" });
                     this.DimApproveButton = true;
                     var today = new Date();
                     var d = today.getDate();

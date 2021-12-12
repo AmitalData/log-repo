@@ -22,6 +22,7 @@ import {EntityStatusExtendedListService} from '../../../../Infrastructure/Servic
 import {MessageWindow} from '../../../../Controls/Windows/MessageWindow';
 import {ConfirmWindow} from '../../../../Controls/Windows/ConfirmWindow'; 
 import { SystemEnvironmentService } from '../../../../Infrastructure/Utilities/SystemEnvironmentService';
+import { MixPanelLocator } from 'Common/MixPanel/MixPanelLocator';
 
 @Component({
     
@@ -536,6 +537,7 @@ export class MultiArchiveShipmentsComponent extends BaseComponent implements OnI
                 this.StartBusyIndicator("Archiving " + TenSelectedRecords.length + "/" + this.SelectedRecords.length  + " ...");
                 this._ShipmentPMService.ArchiveShipments(TenSelectedRecords).subscribe((myResult:any) => {
                     if (!myResult.HasError) {
+                        MixPanelLocator.Action({ ProjectName:"LogBox", ActionName: "Archive Shipment" });
                         if ((this.ArchivedRecordNumber + 10) > this.SelectedRecords.length) {
                             this.ArchivedRecordNumber = this.SelectedRecords.length;
                         }

@@ -33,6 +33,7 @@ import {DocumentTypeMetaDataExtendedService} from '../../../../Common/Services/E
 import {ServiceLocator} from '../../../../Infrastructure/Locators/ServiceLocator';
 
 import {DownloadManager} from '../../../../Infrastructure/Utilities/DownloadManager';
+import { MixPanelLocator } from 'Common/MixPanel/MixPanelLocator';
 @Component({
     
     templateUrl: './DSVApprovePaymentComponent.html'
@@ -230,6 +231,7 @@ export class DSVApprovePaymentComponent extends BaseComponent implements OnInit,
         entity.DenyReason = "";
         this._ShipmentAdditionalCloudDataService.update(entity).subscribe((AdditionalResult: any) => {
             ServiceLocator.SendTotangoUserActivity("LogBox", "Approve Declaration");
+            MixPanelLocator.Action({ ProjectName:"LogBox", ActionName: "Approve Declaration" });
             this.DimApproveButton = true;
             var today = new Date();
             var d = today.getDate();
