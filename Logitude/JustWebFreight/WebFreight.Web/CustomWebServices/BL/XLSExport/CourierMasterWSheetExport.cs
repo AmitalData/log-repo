@@ -298,9 +298,9 @@ namespace WebFreight.Web.CustomWebServices.BL.XLSExport
                     newrow[1] = r.MasterHAWB;
                     newrow[2] = r.MasterGrossMassMeasure;
                     newrow[3] = r.MasterPackageQuantity;
-                    newrow[4] = r.MasterCreateDateTime;
+                    newrow[4] = ((object)r.MasterCreateDateTime) ?? DBNull.Value;
                     newrow[5] = r.MasterGatewayPortCode;
-                    newrow[6] = r.MasterEstimatedArrivalDate;
+                    newrow[6] = ((object)r.MasterEstimatedArrivalDate) ?? DBNull.Value;
                     newrow[7] = r.DeclarationStorageSiteCode;
                     newrow[8] = r.CourierHawb;
                     newrow[9] = r.ProcedureCurrentName;
