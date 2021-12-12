@@ -736,6 +736,7 @@ namespace WebFreight.Web.ReportsWebServices
                     {
                         invoicedataprovider.DeliveryETD = myLastDelivery.ETD;
                         invoicedataprovider.DeliveryAddress = myServicHelper.GetPickUpAddress(myLastDelivery);
+                        invoicedataprovider.LastDeliveryATD = myLastDelivery.ATD;
                     }
 
                     #region LoadingPlace
@@ -837,6 +838,8 @@ namespace WebFreight.Web.ReportsWebServices
                         {
                             invoicedataprovider.FinalDestination = lastDelivery.ToAddressCity + " " + lastDelivery.ToAddressCountryCode;
                         }
+
+                        invoicedataprovider.LastDeliveryATD = lastDelivery.ATD;
                     }
 
                     if (pickup != null)
@@ -3764,6 +3767,7 @@ namespace WebFreight.Web.ReportsWebServices
 
                                     if (myDelivery != null)
                                     {
+                                        myRecord.LastDeliveryATD = myDelivery.ATD;
                                         ShipmentPickUpDeliveryPackageRepository rep = new ShipmentPickUpDeliveryPackageRepository(tenant);
                                         List<ShipmentPickUpDeliveryPackage> deliveryPackages = rep.GetPackagesByDeliveryId(myDelivery.Id, tenant).ToList();
 
