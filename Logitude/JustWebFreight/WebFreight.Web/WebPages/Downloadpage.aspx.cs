@@ -347,6 +347,10 @@ namespace WebFreight.Web.WebPages
                                     CheckDocumentViewAccessForCargoTracking(filename, requestArea);
                                     _DatainByte = up.DownloadFile(filename, documentExtension, "", (int)tenant, isTenantZero);
                                 }
+                                else if (string.IsNullOrEmpty(documentExtension) && !string.IsNullOrEmpty(filename))
+                                { 
+                                    _DatainByte = up.DownloadFile(filename, documentExtension, "", (int)tenant, isTenantZero);
+                                }
                                 else isValid = false;
                             }
                         }
@@ -377,9 +381,9 @@ namespace WebFreight.Web.WebPages
                             }
                             documentExtension = "html";
                         }
-                        string documentName = (!string.IsNullOrEmpty(CustomName) ? CustomName : filename) + "." + documentExtension;
+                        string documentName = (!string.IsNullOrEmpty(CustomName) ? CustomName : filename) + (!string.IsNullOrEmpty(documentExtension) ? ".":"") + documentExtension;
 
-                        if (!string.IsNullOrEmpty(documentName)) documentName = documentName.Replace(" ", "");
+                        if (!string.IsNullOrEmpty(documentName)) documentName = documentName.Replace(" ", ""); 
 
                         // _DatainByte = sender as byte[];
                         HttpContext.Current.Response.Clear();
