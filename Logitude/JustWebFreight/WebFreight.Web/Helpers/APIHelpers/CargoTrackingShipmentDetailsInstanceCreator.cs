@@ -77,9 +77,15 @@ namespace WebFreight.Web.Helpers.APIHelpers
                 IsCustomerIDNumberRequired = shipment.IsUserIDNumberRequired,
                 LastMileDetails = GetCardConnectedToShipment(shipment),
                 ShipmentMilestones = GetShipmentMilestones(cargoTrackingShipment),
+                ShipmentExceptions = cargoTrackingShipment.CurrentMilestoneExceptions != null ?  GetShipmentExceptions(cargoTrackingShipment) : null,
             };
         }
 
+        private ShipmentExceptions GetShipmentExceptions(CargoTrackingShipmentList cargoTrackingShipment)
+        {
+            return new ShipmentExceptions { Exception = cargoTrackingShipment.CurrentMilestoneExceptions };
+        }
+  
         private CargoTrackingShipmentList GetCargoTrackingShipmentByShipmentId(string shipmentId)
         {
             CargoTrackingShipmentListQueryService cargoTrackingService = new CargoTrackingShipmentListQueryService(MyContext);
