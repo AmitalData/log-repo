@@ -1527,6 +1527,29 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private string shopId ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ShopId  
+	   {
+	    
+	     get
+		{
+		   return shopId;
+		 }
+		 set
+		 {
+		   if(shopId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ShopId",OldValue=shopId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   shopId=value;
+		   }
+			
+		 }
+	   }
 	  private string cargoDescription ;
 	  	  
        
@@ -1592,29 +1615,6 @@ namespace Logitude.Customs.Def.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="LastMileServiceType",OldValue=lastMileServiceType,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   lastMileServiceType=value;
-		   }
-			
-		 }
-	   }
-	  private string shopId ;
-	  	  
-       
-	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ShopId  
-	   {
-	    
-	     get
-		{
-		   return shopId;
-		 }
-		 set
-		 {
-		   if(shopId != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ShopId",OldValue=shopId,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   shopId=value;
 		   }
 			
 		 }
