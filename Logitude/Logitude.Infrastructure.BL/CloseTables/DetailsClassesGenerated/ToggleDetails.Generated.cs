@@ -421,6 +421,7 @@ namespace Logitude.Infrastructure.BL
                 Description = "Operational Status", 
 			});
 			 
+
             all.Add(new ToggleDetails()
             {    
                 Code = "CAU", 
@@ -429,6 +430,7 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "CAU,Container Automation", 
 			});
 			
+
 			
             return all;
        }
