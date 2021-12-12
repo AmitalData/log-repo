@@ -486,14 +486,20 @@ IsStart(rec.InterfaceManagement.DcaPrefixName4, myFileName)
             string currMessagingService = GetMainMessagingService(messageDCA);
             if (!ContainerAccessor.Container.IsRegistered<IMessagingServiceInterfaceType>(currMessagingService))
             {
-                
-                Debug.WriteLine("DCA MessagingSheetWR: SaveMessageToAnalyzeQueueN():!ContainerAccessor.Container.IsRegistered :analyzeClass = " + currMessagingService);
-                Debug.WriteLine("Due infinite errors i cancel writing log");
-
-                if (DateTime.Now.Subtract(_LastErrordateTime) > TimeSpan.FromMinutes(10))
+                try
                 {
-                    _LastErrordateTime = DateTime.Now;
-                    Logger.LogMe("NO MAIN Code (response 2754 of 2750 !!!) - currMessagingService : " + currMessagingService + " Is not Registered in ContainerAccessor.Container,    Due infinite errors i cancel writing log", true, "DCANotIsRegistered");
+                    Debug.WriteLine("DCA MessagingSheetWR: SaveMessageToAnalyzeQueueN():!ContainerAccessor.Container.IsRegistered :analyzeClass = " + currMessagingService);
+                    Debug.WriteLine("Due infinite errors i cancel writing log");
+
+                    if (DateTime.Now.Subtract(_LastErrordateTime) > TimeSpan.FromMinutes(10))
+                    {
+                        _LastErrordateTime = DateTime.Now;
+                        Logger.LogMe("NO MAIN Code (response 2754 of 2750 !!!) - currMessagingService : " + currMessagingService + " Is not Registered in ContainerAccessor.Container,    Due infinite errors i cancel writing log", true, "DCANotIsRegistered");
+                    }
+                }
+                catch
+                {
+
                 }
                 return;
                 //ExceptionHandler.HandleException(null, DateTime.Now, 0, "", "WorkerRole", "DCA MessagingSheetWR: SaveMessageToAnalyzeQueueN():!ContainerAccessor.Container.IsRegistered :analyzeClass=" + currMessagingService);
