@@ -2852,7 +2852,6 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
     OnSelectedItemChanged(selectedRow: SupplierInvoiceItemLine) {
         console.log("OnSelectedItemChanged > ", selectedRow);
         selectedRow.entityPM.DocumentFilingId = this.DocumentFilingId;
-        debugger;
         if (selectedRow.entityPM.OcrHeight != 0 && !AppTool.IsNullOrEmpty(selectedRow.entityPM.OcrHeight) && selectedRow.entityPM.OcrPageNumber != 0 && !AppTool.IsNullOrEmpty(selectedRow.entityPM.OcrPageNumber) && selectedRow.entityPM.OcrTop != 0 && !AppTool.IsNullOrEmpty(selectedRow.entityPM.OcrTop)) {
             DeclarationEventManager.DeclarationSplitDocumentItemSelection.emit(selectedRow.entityPM);
 
@@ -3205,6 +3204,9 @@ export class SupplierInvoiceItemLine extends BaseComponent {
 
     public get TradeAgreementName() { return this.entityPM.TradeAgreementName; }
     public set TradeAgreementName(newValue: string) { this.entityPM.TradeAgreementName = newValue; }
+
+    public get DutyRegimeProtocolCode() { return this.entityPM.DutyRegimeProtocolCode; }
+    public set DutyRegimeProtocolCode(newValue: string) { this.entityPM.DutyRegimeProtocolCode = newValue; }
 
 
     public get InvoiceQuantity() { return this.entityPM.InvoiceQuantity; }

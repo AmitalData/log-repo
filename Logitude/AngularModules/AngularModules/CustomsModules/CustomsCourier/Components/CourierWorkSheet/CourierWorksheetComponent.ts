@@ -1969,7 +1969,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
             if (!AppTool.IsNullOrEmpty(currentScreenCode)) {
 
                 if (objectTableName == "Customs.Declaration") {
-                    debugger;
+                    
                     if (currentScreenCode == "DEGC" && selected.IsAmendment == true) currentScreenCode = "DCCR";
 
                     SessionLocator.SelectedSession.CurrentWindow.SuppressBusyIndicator = true;

@@ -172,7 +172,7 @@ export class FieldTemplateComponent {
 
     }
     EditMyCloseCheckBox(eventM) {
-        debugger;
+        
         this._ListComponentArgs.SuppressOnRowSelectedField = true;
         
 
