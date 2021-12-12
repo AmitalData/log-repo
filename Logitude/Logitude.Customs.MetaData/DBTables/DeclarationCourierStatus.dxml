@@ -190,6 +190,19 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="TerminalReleaseDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="LastMileServiceType"
+    Type="nvarchar"
+    Size="4">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="DeclarationId"
     ReferencedTable="Declarations"

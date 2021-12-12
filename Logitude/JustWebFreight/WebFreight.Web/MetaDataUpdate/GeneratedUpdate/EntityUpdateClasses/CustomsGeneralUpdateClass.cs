@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CustomsGeneralUpdateClass
    {  		
-		public const string HashString = "9bc6cfa88620930365e0ea7d3b8d39da";
+		public const string HashString = "3b56dea2cc0c0d33676c90418381fa19";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -119,7 +119,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "CustomsGeneral",
-			      				    Code =  "d068",
+			      				    Code =  "5b0a",
 			      				    Name =  "CustomsGeneral",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -1916,7 +1916,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   TextCode CustomsGeneralTextCode_CustomsCouriersVatTHEvents = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CouriersVat.TH.Events", DefaultText = "Events",LocalDefaultText = @"אירועים", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode CustomsGeneralTextCode_CustomsGeneralOInterfaceManagement = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.InterfaceManagement", DefaultText = "Interface Managements",LocalDefaultText = @"ממשק ניהול", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode CustomsGeneralTextCode_CustomsGeneralOInterfaceManagement = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.InterfaceManagement", DefaultText = "Interface Managements",LocalDefaultText = @"ניהול בקשות מכס", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode CustomsGeneralTextCode_CustomsInterfaceManagementOSystemDefinitions = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.InterfaceManagement.O.SystemDefinitions", DefaultText = "System Definitions",LocalDefaultText = @"הגדרות מערכת", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
@@ -2025,6 +2025,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode CustomsGeneralTextCode_CustomsDeclarationTHCalcDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.TH.CalcDate", DefaultText = "Calculated Date",LocalDefaultText = @"תאריך חישוב", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode CustomsGeneralTextCode_CustomsDeclarationOCancelRequestSent = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.CancelRequestSent", DefaultText = "Cancel Request was sent",LocalDefaultText = @"נשלח מסר ביטול הצהרה - ממתין לטיפול", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CustomsGeneralTextCode_GeneralMHCustomsReports = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MH.CustomsReports", DefaultText = "CustomsReports",LocalDefaultText = @"דוחות", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

@@ -119,6 +119,7 @@
     <Compile Include="EntityDataMappings\CFIMSVLINEDataMapping.cs" />
     <Compile Include="EntityDataMappings\CFIMSVPAGEDataMapping.cs" />
     <Compile Include="EntityDataMappings\CFIMSVREMDataMapping.cs" />
+    <Compile Include="EntityDataMappings\GGGHDAYDataMapping.cs" />
     <Compile Include="EntityDataMappings\GGGQCDataMapping.cs" />
     <Compile Include="EntityDataMappings\YTBTABLEDataMapping.cs" />
     <Compile Include="EntityPMs\GGGQPM.cs" />
@@ -256,6 +257,7 @@
     <Compile Include="EntityPMs\UGenerated\GDMENTITYPM.cs" />
     <Compile Include="EntityPMs\UGenerated\GDMFILINGPM.cs" />
     <Compile Include="EntityPMs\UGenerated\GDMREFPMcs.cs" />
+    <Compile Include="EntityPMs\UGenerated\GGGHDAYPM.cs" />
     <Compile Include="EntityPMs\UGenerated\GGGQCPM.cs" />
     <Compile Include="EntityPMs\UGenerated\GITITEMPM.cs" />
     <Compile Include="EntityPMs\UGenerated\GNDADRPM.cs" />

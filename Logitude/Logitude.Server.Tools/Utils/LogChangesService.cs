@@ -117,7 +117,7 @@ namespace Logitude.Server.Tools.Utils
         }
 
 
-        private static bool IsLogEnable(string appSettingKeyValueIsLogUntilDateyyyyMMdd)
+        public static bool IsLogEnable(string appSettingKeyValueIsLogUntilDateyyyyMMdd)
         {
             try
             {
