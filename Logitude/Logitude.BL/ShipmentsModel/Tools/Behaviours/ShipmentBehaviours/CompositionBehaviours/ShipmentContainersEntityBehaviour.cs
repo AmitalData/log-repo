@@ -1,4 +1,6 @@
-﻿using Logitude.BL.Helpers;
+﻿using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.Helpers;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.EntityQueries;
 using Logitude.BL.ShipmentsModel.Tools.EntityService;
@@ -401,10 +403,33 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
                 {
                     return true;
                 }
-            }
 
+                if (!string.IsNullOrEmpty(this.initializer.EntityPM.Master) && this.initializer.IsFirstFourDigitsOfMasterNumberAreLetters() && this.IsShippingLineSendingByContainer())
+                {
+                    return true;
+                }
+            }
             return false;
         }
+
+        private bool IsShippingLineSendingByContainer()
+        {
+            var shipmentShippingLine = this.GetShipmentShippingLine();
+ 
+            if (shipmentShippingLine == null)
+                return false; 
+            if (!shipmentShippingLine.IsSendingByContainer)
+                return false;
+            return true; 
+        }
+
+        private ShippingLinePM GetShipmentShippingLine()
+        {
+            var shippingLineQuery = new ShippingLineQuery(this.initializer.Tenant);
+            var shipmentShippingLine = shippingLineQuery.GetSinglePMByIdAndTenant(this.initializer.EntityPM?.MainCarriageCarrierId, this.initializer.Tenant);
+            return shipmentShippingLine;
+        }
+
         private void SendAutomaticallyOceanOnsightsRequestByContainer(string containerId)
         {
             if (FeatureToggleHelper.HasFeatureToggle("AOI", this.initializer.Tenant))
