@@ -477,6 +477,29 @@
     </QueryColumns>
     <QueryFilters />
   </Query>
+  <Query
+    Code="&quot;TradeAgreementProtocol1&quot;"
+    TextCode="&quot;TradeAgreementProtocol1&quot;"
+    LocalTextCode="&quot;1פרוטוקול הסכם סחר&quot;"
+    QueryGroupCode="&quot;4658&quot;"
+    IndexOrder="1"
+    ObjectTableName="&quot;Customs.TradeAgreementProtocol&quot;"
+    QuerySection="&quot;Customs.TradeAgreementProtocol&quot;"
+    SystemLevel="true"
+    IsAddNewEntity="false"
+    IsPackagable="true"
+    DefaultSortName="&quot;Code&quot;"
+    DefaultSortDirection="&quot;Ascending&quot;"
+    IsSpellChecked="false">
+    <QueryColumns>
+      <QueryColumn
+        QueryCode="&quot;TradeAgreementProtocol1&quot;"
+        IndexOrder="0"
+        ObjectFieldName="&quot;Code&quot;"
+        ColumnWidth="100" />
+    </QueryColumns>
+    <QueryFilters />
+  </Query>
   <Screen
     Name="&quot;Customs.TradeAgreementProtocolHeaderScreen&quot;"
     ObjectTableName="&quot;Customs.TradeAgreementProtocol&quot;"
