@@ -232,6 +232,15 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 }
                 
                 TempCustomer.IsLogBox = true;
+
+                CustomerTenantAccessCardQuery customerTenantAccessCardQuery = new CustomerTenantAccessCardQuery(tenant);
+                bool ishascard = customerTenantAccessCardQuery.IsCustomerTenantAccessHasCards(entityPM.Id);
+                if (!ishascard)
+                {
+                    InitializeCustomerTenantAccessQueue(itemPM);
+
+                }
+
                 var contactRepository = new ContactRepository(objectContext);
                 var Contact = contactRepository.GetSingleContactByEmailAndTenant(serviceContextUser, itemPoco.Tenant);
                 CustomerService CustomerService = new CustomerService(ObjectContext, TempCustomer, Contact.Id);
@@ -257,13 +266,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             try
             {
                 
-                CustomerTenantAccessCardQuery customerTenantAccessCardQuery = new CustomerTenantAccessCardQuery(tenant);
-                bool ishascard = customerTenantAccessCardQuery.IsCustomerTenantAccessHasCards(entityPM.Id);
-                if (!ishascard)
-                {
-                    InitializeCustomerTenantAccessQueue(itemPM);
-
-                }
+             
 
                 if (BuildBatch)
                 {
@@ -316,10 +319,12 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             customerTenantAccessCardRepository.Update(itemPoco);
             customerTenantAccessCardRepository.SubmitChanges();
 
-            InitializeCustomerTenantAccessQueue(itemPM);
+          
              
             if (itemPM.StatusTypeCode == "A")
             {
+                InitializeCustomerTenantAccessQueue(itemPM);
+
                 CustomerQuery CustomerQuery = new CustomerQuery(itemPM.Tenant);
                 var TempCustomer = CustomerQuery.GetSinglePMForLogBox(itemPM.CustomerId, itemPM.Tenant);
                 if (this.entityPM.IsPrivateLabelCustomer == true)
@@ -352,7 +357,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 var contactRepository = new ContactRepository(objectContext);
                 var Contact = contactRepository.GetSingleContactByEmailAndTenant(serviceContextUser, itemPM.Tenant);
                 TempCustomer.CustomerTenant = this.entityPM.CustomerTenant;
-                TempCustomer.AddLogboxCustomerQueue = true;
+                //TempCustomer.AddLogboxCustomerQueue = true;
                 CustomerService CustomerService = new CustomerService(ObjectContext, TempCustomer, Contact.Id);
                 CustomerService.Update();
                 TempCustomer.AddLogboxCustomerQueue = false;
