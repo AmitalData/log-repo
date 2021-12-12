@@ -16,6 +16,11 @@ import {EntityArgs} from '../../../Infrastructure/DataContracts/EntityArgs';
 import {TextCodeTranslator} from '../../../Infrastructure/Utilities/TextCodeTranslator';
 import {ObjectsLocator} from '../../../Infrastructure/Locators/ObjectsLocator';
 
+const cashCashbookTypeCode = '1';
+const CashbookTotalUpdateWindow = "Adjust Cashbook Total";
+const CashbookUpdateTotalWindowWidth = 400;
+const CashbookUpdateTotalWindowHeight = 180;
+
 export class CashBookMenuButtonsHandler {
     public EntityPM: CashBookPM;
     public entityArgs: EntityArgs
@@ -74,18 +79,8 @@ export class CashBookMenuButtonsHandler {
                             }
                             case "RecalculateTotals":
                             {
-
-                                const chequeCashbookTypeCode = '2';
-                                const isCustomerCare = SessionLocator.LoggedUserPM.IsCustomerCare;
-                                if(isCustomerCare && this.EntityPM.CashBookTypeCode == chequeCashbookTypeCode){
-                                    button.IsHidden = false;
-                                }else{
-                                    button.IsHidden = true;
-                                }
-
-                                if (this.EntityPM.Inactive == true) {
-                                    button.IsDisabled = true;
-                                }
+                                button.IsHidden = !SessionLocator.LoggedUserPM.IsCustomerCare;
+                                button.IsDisabled = this.EntityPM.Inactive;
                                 break;
                             }
                     }
@@ -160,21 +155,42 @@ export class CashBookMenuButtonsHandler {
 
     RecalculateCashbookTotals(){
 
-        this.StartBusyIndicator('Recalculating totals...');
-        this._CashBookExtendedPMService.RecalculateCashbookTotal(this.EntityPM.Id)
-        .subscribe((response: ServiceResponse) =>
-        {
-            if (!response.HasError) {
-                this.ShowMessage("Total recalculated successfully");
-                this.StopBusyIndicator();
-            }
-            else {
-                this.ShowErrorMessage(response);
-                this.StopBusyIndicator();
-            }
-        });
+        if(this.EntityPM.CashBookTypeCode == cashCashbookTypeCode){
+            this.ShowCashbookTotalUpdateWindow();
+        }else{
+            this.RecalculateTotalOfChequesCashbook();
+        }
+
     }
 
+    private ShowCashbookTotalUpdateWindow()
+    {
+        var logitudeWindow = new LogitudeWindow();
+        logitudeWindow.Width = CashbookUpdateTotalWindowWidth;
+        logitudeWindow.Height = CashbookUpdateTotalWindowHeight;
+        logitudeWindow.Title = CashbookTotalUpdateWindow;
+        logitudeWindow.WindowArgs = { CashbookPM: this.EntityPM };
+        logitudeWindow.Show('./Accounting/Components/EditTabs/CashBook/CashbookTotalAdjustWindow');
+        logitudeWindow.WindowClosed.subscribe(() => {} );
+    }
+
+
+    private RecalculateTotalOfChequesCashbook()
+    {
+        this.StartBusyIndicator('Recalculating totals...');
+        this._CashBookExtendedPMService.RecalculateCashbookTotal(this.EntityPM.Id)
+            .subscribe((response: ServiceResponse) =>
+            {
+                if (!response.HasError) {
+                    this.ShowMessage("Total recalculated successfully");
+                    this.StopBusyIndicator();
+                }
+                else {
+                    this.ShowErrorMessage(response);
+                    this.StopBusyIndicator();
+                }
+            });
+    }
 
     private RunNewDepositForCashCashbook()
     {

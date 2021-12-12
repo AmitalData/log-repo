@@ -49,35 +49,53 @@ export class CashbookTotalAdjustWindow extends BaseComponent implements OnInit {
     }
 
 
+    private _Amount : number;
     public get Amount() : number {
-        return this.CashbookPM.TotalAmount;
+        return this._Amount;
     }
-    public set Amount(value : number) {
-        this.CashbookPM.TotalAmount = value;
+    public set Amount(v : number) {
+        this._Amount = v;
     }
+
 
 
     OkButtonClicked() {
+        this.UpdateCashbook();
+        this.SubmitCashbook();
+    }
 
-        this.CurrentSession.CurrentWindow.StartBusyIndicator("Updating Total");
-        this.CashbookPM.IsTotalUpdatedByCC = true;
+    private SubmitCashbook()
+    {
+        this.CurrentSession.CurrentWindow.StartBusyIndicator("Updating Total...");
         this.cashBookPMService.update(this.CashbookPM)
             .subscribe((myResponse: ServiceResponse) =>
             {
                 if (myResponse != null) {
                     if (!myResponse.HasError) {
                         if (myResponse.Result != undefined && myResponse.Result != null) {
-                                this.CurrentSession.CloseCurrentWindow();
+                            this.CurrentSession.CloseCurrentWindow();
 
                         }
                         else {
                             const messageWindow = new MessageWindow();
-                            messageWindow.Show("Error happened while updating totals")
+                            messageWindow.Show("Error happened while updating totals");
                             this.CurrentSession.CurrentWindow.StopBusyIndicator();
                         }
                     }
                 }
             });
+    }
+
+    private UpdateCashbook()
+    {
+        this.CashbookPM.IsTotalUpdatedByCC = true;
+        this.CashbookPM.TotalAmount = this.Amount || 0;
+    }
+
+    private ResetAmountIfNull()
+    {
+        if (this.Amount == null)
+            this.Amount = 0;
     }
 
     CancelButtonClicked() {
