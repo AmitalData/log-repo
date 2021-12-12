@@ -277,6 +277,13 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="DutyRegimeProtocolCode"
+    Type="varchar"
+    Size="3">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="DeclarationId"
     ReferencedTable="Declarations"
@@ -355,6 +362,11 @@
   <Relation
     ForeignKeyColumn="PartyRelationshipCode"
     ReferencedTable="PartyRelationshipTypes"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="DutyRegimeProtocolCode"
+    ReferencedTable="TradeAgreementProtocols"
     ReferencedColumn="Code"
     ReferencedTableSchema="Customs" />
 </Table>

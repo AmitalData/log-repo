@@ -484,6 +484,11 @@ export class SupplierInvoicePM {
     public set ExportInsuranceAmount(newValue: string) { if (this.exportInsuranceAmount != newValue) { this.exportInsuranceAmount = newValue; this.MarkAsDirty("ExportInsuranceAmount"); } }
        
 	 
+    private dutyRegimeProtocolCode: string;
+    public get DutyRegimeProtocolCode() { return this.dutyRegimeProtocolCode; }
+    public set DutyRegimeProtocolCode(newValue: string) { if (this.dutyRegimeProtocolCode != newValue) { this.dutyRegimeProtocolCode = newValue; this.MarkAsDirty("DutyRegimeProtocolCode"); } }
+       
+	 
 
     public OldEntityPM: SupplierInvoicePM;
 		
