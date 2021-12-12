@@ -657,7 +657,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 CreateDate = TenantServerConfigration.GetCurrentDateTime(tenant),
                 UpdatedByUserId = loggedUser.Id,
                 UpdateDate = TenantServerConfigration.GetCurrentDateTime(tenant),
-                FileExtension = "txt",
+                FileExtension = "",
                 SecurityId = "100",
                 FileName = name,
             };
