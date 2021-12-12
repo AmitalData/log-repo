@@ -325,7 +325,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
         private List<string> GetTaxReportLinesJournalIds(TaxReportList taxReport, string inputOrOutput)
         {
           return  (from a in context.TaxReportLines
-             where a.TaxReportId == taxReport.Id && a.Tenant == taxReport.Tenant && a.OutputOrInput == inputOrOutput && (a.TransmitStatusCode != TansmitStatuses.NotForTransmitAtAll ||  a.TransmitStatusCode != TansmitStatuses.NotForTransmitInThisReport)
+             where a.TaxReportId == taxReport.Id && a.Tenant == taxReport.Tenant && a.OutputOrInput == inputOrOutput && (a.TransmitStatusCode != TansmitStatuses.NotForTransmitAtAll &&  a.TransmitStatusCode != TansmitStatuses.NotForTransmitInThisReport)
                    select a.JournalId).ToList();
         }
         private TaxReportList GetTaxReport(string Id, int tenant)
