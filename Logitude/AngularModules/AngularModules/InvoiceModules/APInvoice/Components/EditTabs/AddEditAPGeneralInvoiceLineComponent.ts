@@ -8,7 +8,7 @@ import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeT
 import {VatTypesValidator} from '../../../../Infrastructure/Validators/VatTypesValidator';
 import {Cloner} from '../../../../Infrastructure/Utilities/Cloner';
 import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator';
-
+import { ColumnsWidths } from 'Infrastructure/Components/LogitudeComponents/LogLovV2Component';
 @Component({
     
     templateUrl: './AddEditAPGeneralInvoiceLineComponent.html',
@@ -22,13 +22,32 @@ export class AddEditAPGeneralInvoiceLineComponent {
     public EnableMultiRateAPInvoices: boolean = false;
     public isRTL: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
+    ColumnsWidths: ColumnsWidths[] = [];
     constructor() {
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");       
 
         if (SessionLocator.AccountingSettingPM) {
             this.EnableMultiRateAPInvoices = SessionLocator.AccountingSettingPM.EnableMultiRateAPInvoices;
         }
+
+        if (SessionLocator.TenantPM.AccountingActivated) {
+            this.FillChargesTypesCustomLOVColumnsWidths();
+        }
     }
+
+    FillChargesTypesCustomLOVColumnsWidths()
+    {
+        this.ColumnsWidths = [
+            { ColumnName: 'Code', Width: 80 },
+            { ColumnName: 'EnglishName', Width: 180 },
+            { ColumnName: 'LocalName', Width: 200 },
+            { ColumnName: 'MeasurementShortName', Width: 80 },
+            { ColumnName: 'ChargesGroupName', Width: 80 },
+            { ColumnName: 'VatTypeName', Width: 80 }
+        ];
+    }
+
+
 
     SetDataContext(dataContext: APInvoiceLineItem) {
         this.EntityPM = dataContext.EntityPM;
