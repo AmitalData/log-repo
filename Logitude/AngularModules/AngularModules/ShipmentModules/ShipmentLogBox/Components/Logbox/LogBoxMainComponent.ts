@@ -37,6 +37,8 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
     public LogoURL: string = ""
     public MainColor: string = "#1B90CB";
     public SecondaryColor: string = "transparent";
+    public QueryFiltersHighlightColor: string = "transparent";
+
     public IsDSV: boolean = false;
     public preventSelect: boolean = false;
     public DontShowLogboxToolTip: boolean = false;
@@ -64,6 +66,16 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
   
     public isLogbox: boolean = SystemEnvironmentService.IsLogBox();
 
+    public PT = {
+        "ShortName": true,
+        "LongName": false
+    }
+
+    public Testclass = {
+        color: "red",
+        'background-color': null
+    }
+ 
     constructor(private _entityListService: EntityListService) {
         this.InitializeServices();
         this.LoadEntityResource("Shipment"); 
@@ -80,6 +92,34 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
         this.customerTenantAccessRequestExtendedPMService = new CustomerTenantAccessRequestExtendedPMService();
     }
 
+
+    onMouseEnter() {
+        var element = document.getElementById('test');
+        if (element) {
+            element.style.backgroundColor = "blue";//SessionLocator.PrivateLableSettings.QueryFiltersHighlightColor;
+        }
+        //var elem = document.getElementById(Ship.Ship.Id);
+        //if (elem) {
+        //    elem.style.visibility = Ship.Action == "A" ? "visible" : "hidden";
+        //}
+
+        //this.Testclass = {
+        //    color: "red",
+        //    'background-color': SessionLocator.PrivateLableSettings.QueryFiltersHighlightColor
+        //}
+    }
+
+    onMouseLeave(test) {
+        var element = document.getElementById('test');
+        if (element) {
+            if (test == this.SelectedFilter) {
+                element.style.backgroundColor = "pink";
+            } else {
+                element.style.backgroundColor = null;
+            }
+            //SessionLocator.PrivateLableSettings.QueryFiltersHighlightColor;
+        }
+    }
 
     ngOnInit() {
         this.DontShowLogboxToolTip = SessionLocator.LoggedUserPM.ShowLogBoxToolTip;
@@ -133,6 +173,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
             this.LogoURL = "data:image/JPEG;base64," + SessionLocator.PrivateLableSettings.MainLogo;
             this.MainColor = SessionLocator.PrivateLableSettings.MainColor;
             this.SecondaryColor = SessionLocator.PrivateLableSettings.SecondaryColor;
+            this.QueryFiltersHighlightColor = SessionLocator.PrivateLableSettings.QueryFiltersHighlightColor;
             this.SelectedFilter = this.AgentShipmentsLabel;
             this.setAgentLabelClass(AgentName);
             this.AgentShipmentsLabel = this.getAgentShipmentsLabel(AgentName);
@@ -787,6 +828,11 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
     }
 
     MenuFiltersClicked(Selected) {
+        //var element = document.getElementById('test');
+        //if (element) {
+        //    element.style.backgroundColor = "green";//SessionLocator.PrivateLableSettings.QueryFiltersHighlightColor;
+        //}
+
         this.SelectedFilter = Selected;
         this.SelectedRow = null;
         this.RecentImg = Selected == "Recent" ? "./Images/LogBox/RecentW.png" : "./Images/LogBox/Recent.png";

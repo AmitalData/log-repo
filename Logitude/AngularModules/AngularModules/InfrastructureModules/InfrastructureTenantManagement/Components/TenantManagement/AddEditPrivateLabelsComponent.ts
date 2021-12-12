@@ -44,6 +44,11 @@ export class AddEditPrivateLabelsComponent extends BaseComponent implements OnIn
     mainColorOpacity: number = 100;
     private mainColorCode: string;
     wrongMainColor: boolean = false;
+
+    queryFiltersHighlightColorOpacity: number = 100;
+    private queryFiltersHighlightColorCode: string;
+    wrongQueryFiltersHighlightColor: boolean = false;
+
     secondaryColorOpacity: number = 100;
     private secondaryColorCode: string;
     wrongSecondaryColor: boolean = false;
@@ -78,6 +83,9 @@ export class AddEditPrivateLabelsComponent extends BaseComponent implements OnIn
 
     @ViewChildren(LocationDirective) public AllLocations: LocationDirective; 
     private CurrentSession = SessionLocator.SelectedSession;
+
+     
+
 
     constructor() {
         super();
@@ -265,8 +273,10 @@ export class AddEditPrivateLabelsComponent extends BaseComponent implements OnIn
         this.setMainColor();
         this.setSecondaryColor();
         this.setMainTabHighlightColor();
-        this.setDocumentTypeHighlightColor(); 
+        this.setDocumentTypeHighlightColor();
+        this.SetQueryFiltersHighlightColor();
     }
+
 
     private setDocumentTypeHighlightColor() {
         if (this.EntityPM.DocumentTypeHighlightColor) {
@@ -293,6 +303,13 @@ export class AddEditPrivateLabelsComponent extends BaseComponent implements OnIn
         if (this.EntityPM.MainColor) {
             this.mainColorOpacity = this.GetOpacityFromRGBA(this.EntityPM.MainColor);
             this.mainColorCode = this.ConvertRGBAToHexColor(this.EntityPM.MainColor);
+        }
+    }
+
+    private SetQueryFiltersHighlightColor() {
+        if (this.EntityPM.QueryFiltersHighlightColor) {
+            this.queryFiltersHighlightColorOpacity = this.GetOpacityFromRGBA(this.EntityPM.QueryFiltersHighlightColor);
+            this.queryFiltersHighlightColorCode = this.ConvertRGBAToHexColor(this.EntityPM.QueryFiltersHighlightColor);
         }
     }
 
@@ -341,6 +358,14 @@ export class AddEditPrivateLabelsComponent extends BaseComponent implements OnIn
         }
     }
 
+    get QueryFiltersHighlightColorOpacity() {
+        return this.queryFiltersHighlightColorOpacity;
+    }
+    set QueryFiltersHighlightColorOpacity(value: number) {
+        this.queryFiltersHighlightColorOpacity = value;
+        this.UpdateEntityQueryFiltersHighlightColor();
+    }
+
     get MainColorOpacity() {
         return this.mainColorOpacity;
     }
@@ -365,6 +390,9 @@ export class AddEditPrivateLabelsComponent extends BaseComponent implements OnIn
         this.UpdateEntityDocumentTypeHighlightColor();
     }
 
+    private UpdateEntityQueryFiltersHighlightColor() {
+        this.EntityQueryFiltersHighlightColor = this.ConvertHexToRGBColor(this.QueryFiltersHighlightColorCode, this.QueryFiltersHighlightColorOpacity);
+    }
 
     private UpdateEntityMainColor() {
         this.EntityMainColor = this.ConvertHexToRGBColor(this.MainColorCode, this.MainColorOpacity);
@@ -401,6 +429,16 @@ export class AddEditPrivateLabelsComponent extends BaseComponent implements OnIn
     }
 
 
+     
+
+    public get QueryFiltersHighlightColorCode(): string {
+        return this.queryFiltersHighlightColorCode;
+    }
+    public set QueryFiltersHighlightColorCode(hexColor: string) {
+        this.queryFiltersHighlightColorCode = hexColor;
+        this.ValidatequeryFiltersHighlightColorCode(hexColor);
+        this.UpdateEntityQueryFiltersHighlightColor();
+    }
 
 
     public get MainColorCode(): string {
@@ -466,6 +504,15 @@ export class AddEditPrivateLabelsComponent extends BaseComponent implements OnIn
       //  this.UpdateEditComponentValidationErrors();
     }
 
+    private ValidatequeryFiltersHighlightColorCode(hexColor: string) {
+        if (!this.ValidateHexCode(hexColor, "QueryFiltersHighlightColorCode"))
+            this.wrongQueryFiltersHighlightColor = true;
+        else
+            this.wrongQueryFiltersHighlightColor = false;
+
+        //  this.UpdateEditComponentValidationErrors();
+    }
+
     private UpdateEditComponentValidationErrors() {
         if (this.wrongMainColor ) {
             SessionLocator.SelectedSession.CurrentEditComponent.IsEditValid = false;
@@ -474,6 +521,14 @@ export class AddEditPrivateLabelsComponent extends BaseComponent implements OnIn
             SessionLocator.SelectedSession.CurrentEditComponent.IsEditValid = true;
             SessionLocator.SelectedSession.CurrentEditComponent.ValidationErrorsList = [];
         }
+    }
+
+    get EntityQueryFiltersHighlightColor() {
+        return this.EntityPM.QueryFiltersHighlightColor;
+    }
+    set EntityQueryFiltersHighlightColor(value: string) {
+        this.EntityPM.QueryFiltersHighlightColor = value;
+
     }
 
     get EntityMainColor() {
@@ -845,7 +900,17 @@ export class AddEditPrivateLabelsComponent extends BaseComponent implements OnIn
              this.EntityPM.SmallLogo = value;
          }
      }
-   
+
+    get QueryFiltersHighlightColor() {
+        return this.EntityPM.QueryFiltersHighlightColor;
+    }
+
+    set QueryFiltersHighlightColor(value: string) {
+        if (value != this.EntityPM.QueryFiltersHighlightColor) {
+            this.EntityPM.QueryFiltersHighlightColor = value;
+        }
+    }
+
     get MainColor() {
         return this.EntityPM.MainColor;
     }
@@ -959,7 +1024,9 @@ export class AddEditPrivateLabelsComponent extends BaseComponent implements OnIn
         if (this.wrongMainTabHighlightColor) {
             errors.push("Please Enter Valid Main Tab Highlight Color");
         }
-
+        if (this.wrongQueryFiltersHighlightColor) {
+            errors.push("Please Enter Valid Query Filters Highlight Color");
+        }
 
         if (this.wrongDocumentTypeHighlightColor) {
             errors.push("Please Enter Valid Document Type Highlight Color");
