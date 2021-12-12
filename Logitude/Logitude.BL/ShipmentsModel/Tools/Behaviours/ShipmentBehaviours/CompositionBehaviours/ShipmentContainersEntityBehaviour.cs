@@ -417,7 +417,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
             var shipmentShippingLine = this.GetShipmentShippingLine();
  
             if (shipmentShippingLine == null)
-                return false; 
+                return false;
+            if (shipmentShippingLine.IsSendingByBillOfLading == true)
+                return false;
             if (!shipmentShippingLine.IsSendingByContainer)
                 return false;
             return true; 
