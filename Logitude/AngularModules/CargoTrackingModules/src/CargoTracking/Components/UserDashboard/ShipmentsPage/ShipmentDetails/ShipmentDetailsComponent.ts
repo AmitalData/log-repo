@@ -750,7 +750,7 @@ export class ShipmentDetailsComponent implements OnInit,AfterViewInit
         return this.dialog.open(MessageWindowComponent, {
             data: {
                 title: 'Decline',
-                description: 'Please write down decline reason',
+                description: 'Please write down the decline reason',
                 showOkButton: true,
                 showCancelButton: true,
                 showMultilineTextBox: true,
