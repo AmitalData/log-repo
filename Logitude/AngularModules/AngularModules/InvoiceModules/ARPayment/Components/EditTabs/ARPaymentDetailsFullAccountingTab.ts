@@ -872,6 +872,9 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
 				this.BankFieldsVisibile = false;
 			}
 			this.BankAccountIdVisibility = true;
+
+            this.UIProperties.SetValidity("BranchId", this.ObjectTableName, true, "");
+            this.UIProperties.SetRequired("BranchId", this.ObjectTableName, false);
 		}
 		else {
 			this.UIProperties.SetVisibility("BankAccountId", this.ObjectTableName, false);
