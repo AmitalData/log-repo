@@ -33,7 +33,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 {
     public partial class LedgerTransactionsController : ApiController
     {
-     
+        decimal CumulativeLocalAmount = 0;
         [HttpGet]
         public HttpResponseMessage GetLedgerTransactionsByFilters([FromUri] ApiQueryFilters filters)
         {
@@ -47,6 +47,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 IAccountingContext  accountingContext = AccountingContext.GetContext(LTBFilter.Tenant);
                 var ledgerTransactionBalanceService = new LedgerTransactionBalanceService(accountingContext, LTBFilter);
                 List<LedgerTransactionList> ledgerTransactions = new List<LedgerTransactionList>();
+                
                 if (LTBFilter.UseTaxreportFilter)
                 {
                    
@@ -54,7 +55,8 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 
                     ledgerTransactions.ForEach(rec =>
                     {
-                        ledgerTransactionBalanceService.MapLedgerTransactionLine(rec, ledgerTransactionHelper, false);
+                            rec.CumulativeLocalAmount = SetCumulativeLocalAmount(rec);                      
+                            ledgerTransactionBalanceService.MapLedgerTransactionLine(rec, ledgerTransactionHelper, false);
                     });
                 }
                
@@ -88,12 +90,21 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
             }
 
         }
-       
+
+        private decimal SetCumulativeLocalAmount(LedgerTransactionList ledger)
+        {
+            decimal LocalAmountDebit = ledger.LocalAmountDebit;
+            decimal LocalAmountCredit = ledger.LocalAmountCredit;
+            CumulativeLocalAmount += (LocalAmountDebit - LocalAmountCredit);
+            return CumulativeLocalAmount;
+        }
+
+
         private List<LedgerTransactionList> GetLedgerTransactinByTaxReportId(LedgerTransactionBalanceFilter LTBFilter)
         {
             IAccountingContext accountingContext = AccountingContext.GetContext(LTBFilter.Tenant);
             LedgerTransactionListQueryService ledgerTransactionListQueryService = new LedgerTransactionListQueryService(accountingContext);
-           return ledgerTransactionListQueryService.GetReportLinesLedgerTransactions(LTBFilter);                 
+           return ledgerTransactionListQueryService.GetReportLinesLedgerTransactions(LTBFilter).OrderByDescending(d=> d.AccountingDate).ToList();                 
         }
        
         public HttpResponseMessage GetTransactionsCurrencies(string AccountId)
