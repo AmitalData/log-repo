@@ -109,7 +109,7 @@ export class ApplicationTimersManager {
             // setInterval(SaveErrorLogs, delay);//60000
 
             //this.signalRGeneralService.messageReceived.subscribe((ms: ChannelEvent) => {
-            //    debugger;
+            //    
 
 
             //});

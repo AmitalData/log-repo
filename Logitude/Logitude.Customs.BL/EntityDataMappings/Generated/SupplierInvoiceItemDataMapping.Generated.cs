@@ -78,7 +78,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         TransactionNatureCode, 
 	         ClaimReasonCode, 
 	         ItemFOBAmountForeign, 
-	         ItemFOBAmountNIS,
+	         ItemFOBAmountNIS, 
+	         DutyRegimeProtocolCode,
 	      }
 
 
@@ -156,7 +157,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         ItemFOBAmountForeign, 
 	         ItemFOBAmountNIS, 
 	         ClassificationCodeSource, 
-	         DocumentFilingId,
+	         DocumentFilingId, 
+	         DutyRegimeProtocolCode,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -433,6 +435,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ItemFOBAmountNIS))
             {
 				entityPOCO.ItemFOBAmountNIS = entityPM.ItemFOBAmountNIS;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DutyRegimeProtocolCode))
+            {
+				entityPOCO.DutyRegimeProtocolCode = entityPM.DutyRegimeProtocolCode;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -726,6 +733,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.ItemFOBAmountNIS = entityPOCO.ItemFOBAmountNIS;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.DutyRegimeProtocolCode))
+            {
+					entityPM.DutyRegimeProtocolCode = entityPOCO.DutyRegimeProtocolCode;
+            }
+
 		}
 
 		public void PMToOldPM(SupplierInvoiceItemPM entityPM, SupplierInvoiceItemPM oldEntityPM)
@@ -1000,6 +1012,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ItemFOBAmountNIS))
             {
                 oldEntityPM.ItemFOBAmountNIS = entityPM.ItemFOBAmountNIS;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DutyRegimeProtocolCode))
+            {
+                oldEntityPM.DutyRegimeProtocolCode = entityPM.DutyRegimeProtocolCode;
             }
 			
 		}

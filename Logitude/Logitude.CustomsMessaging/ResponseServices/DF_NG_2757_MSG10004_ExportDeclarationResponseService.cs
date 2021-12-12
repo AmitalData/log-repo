@@ -611,6 +611,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
             }
             _MyDeclarationPM.DeclarationStatusTypeCode = customResponse.Response.Status[0].NameCode.Value;
+
+            if (customResponse.Response.Declaration.DMExtensions.ExpenseLoadingFactorDetails != null)
+                _MyDeclarationPM.LoadingFactor = customResponse.Response.Declaration.DMExtensions.ExpenseLoadingFactorDetails.FirstOrDefault()?.ExpenseLoadingFactor.Value;
+
             if (customResponse.Response.Declaration.DMExtensions.CustomsValueComponent.TotalFOBNISAmount != null)
                 _MyDeclarationPM.FOBValueNIS = Math.Round(customResponse.Response.Declaration.DMExtensions.CustomsValueComponent.TotalFOBNISAmount.Value, 2);
             if (customResponse.Response.Declaration.DMExtensions.CustomsValueComponent.TotalFOBUSDAmount != null)
