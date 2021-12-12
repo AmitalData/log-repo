@@ -427,4 +427,4 @@ export class DeclarationCourierStatusPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}
