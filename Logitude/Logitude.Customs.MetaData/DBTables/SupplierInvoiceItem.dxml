@@ -400,7 +400,7 @@
     Name="ItemFOBAmountForeign"
     Type="decimal"
     Precision="16"
-    Scale="2">   
+    Scale="2">
     <Constraints
       Nullable="true" />
   </Column>
@@ -409,6 +409,13 @@
     Type="decimal"
     Precision="16"
     Scale="2">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="DutyRegimeProtocolCode"
+    Type="varchar"
+    Size="3">
     <Constraints
       Nullable="true" />
   </Column>
@@ -490,6 +497,11 @@
   <Relation
     ForeignKeyColumn="ClaimReasonCode"
     ReferencedTable="ClaimReasonTypes"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="DutyRegimeProtocolCode"
+    ReferencedTable="TradeAgreementProtocols"
     ReferencedColumn="Code"
     ReferencedTableSchema="Customs" />
 </Table>

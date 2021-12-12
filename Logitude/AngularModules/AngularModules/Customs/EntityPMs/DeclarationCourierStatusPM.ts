@@ -388,7 +388,7 @@ export class DeclarationCourierStatusPM {
     public get ShopId() { return this.shopId; }
     public set ShopId(newValue: string) { if (this.shopId != newValue) { this.shopId = newValue; this.MarkAsDirty("ShopId"); } }
        
-	 	 
+	 
     private lastMileServiceType: string;
     public get LastMileServiceType() { return this.lastMileServiceType; }
     public set LastMileServiceType(newValue: string) { if (this.lastMileServiceType != newValue) { this.lastMileServiceType = newValue; this.MarkAsDirty("LastMileServiceType"); } }
