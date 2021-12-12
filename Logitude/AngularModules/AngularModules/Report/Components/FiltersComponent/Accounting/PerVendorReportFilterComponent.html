@@ -1,0 +1,169 @@
+<style>
+    .FiltersMenu li {
+        /* width: fit-content !important; */
+        width: 70px;
+        padding: 0 7px;
+        border-width: 1px;
+        margin-right: -1px;
+        /*background: #f7f7f7;*/
+    }
+
+        .FiltersMenu li:hover {
+            opacity: 0.9;
+        }
+
+    .greenButton {
+        outline: none;
+        text-align: right;
+        font-size: 11px;
+        color: #45494A;
+        width: 100%;
+        height: 22px;
+        line-height: 21px;
+        border: 1px solid #EDC093;
+        border-radius: 3px;
+        -moz-border-radius: 3px;
+        -webkit-border-radius: 3px;
+        position: relative;
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        background: -moz-linear-gradient(20% 0% -90deg,rgba(255, 255, 255, 1) 0%,rgb(0, 255, 33) 70%);
+        background: -webkit-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgb(106, 190, 163) 70%);
+        background: -webkit-gradient(linear,20% 0%,50% 70%,color-stop(0,rgba(255, 255, 255, 1) ),color-stop(1,rgba(237, 192, 147, 1) ));
+        background: -o-linear-gradient(-90deg, rgba(255, 255, 255, 1) 20%, rgb(106, 190, 163) 70%);
+        background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgb(106, 190, 163) 70%);
+        -moz-box-shadow: 0px 0px 6px 0px green;
+        -moz-box-shadow: 0px 0px 6px 0px green;
+        text-shadow: 1px 1px white;
+    }
+
+        .greenButton:hover {
+            background: -moz-linear-gradient(50% 0% -90deg,rgba(255, 255, 255, 1) 0%,rgb(0, 255, 33) 100%);
+            background: -webkit-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgb(106, 190, 163) 100%);
+            background: -webkit-gradient(linear,50% 0%,50% 100%,color-stop(0,rgba(255, 255, 255, 1) ),color-stop(1,rgba(237, 192, 147, 1) ));
+            background: -o-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgb(106, 190, 163) 100%);
+            background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgb(106, 190, 163) 100%);
+        }
+
+        .greenButton:active {
+            -webkit-box-shadow: 0px 0px 5px 1px rgba(0,148,118,1);
+            -moz-box-shadow: 0px 0px 5px 1px rgba(0,148,118,1);
+            box-shadow: 0px 0px 5px 1px rgba(0,148,118,1);
+        }
+
+    .FiltersMenuDisabled {
+        background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(186, 206, 227, 1) 100%);
+        opacity: 1;
+    }
+</style>
+<table *ngIf="isReady">
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+        <td colspan="5">
+            <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+        </td>
+    </tr>
+    <tr style="height: 32px;">
+        <td style="width:10px"></td>
+        <td colspan="3" style="color:#1B90CB; font-size:15px; line-height: 15px;">{{'Accounting.General.O.FilterBy' | TextCodeTranslationPipe}}</td>
+
+        <td></td>
+
+    </tr>
+    <tr>
+
+        <td style="width:10px"></td>
+        <td colspan="3">
+            <ul float-start class="FiltersMenu" [class.aboodRTLFilterMenu]="isRTL">
+                <li float-start id="Vendor" (click)="VendorFilterItemClicked('Vendor')"
+                    [class.SelectedFilter]="VendorFilterSelectedValue === 'Vendor'">
+                    {{'GLAccount.O.Vendor' | TextCodeTranslationPipe}}
+                </li>
+                <li float-start id="All"
+                    (click)="VendorFilterItemClicked('All')"
+                    [class.SelectedFilter]="VendorFilterSelectedValue === 'All'">
+                    {{'GLAccounts.Q.AllVendors' | TextCodeTranslationPipe}}
+                </li>
+            </ul>
+        </td>
+        <td></td>
+    </tr>
+
+
+    <tr style="height:10px"></tr>
+
+    <tr style="height: 32px;">
+        <td style="width:10px"></td>
+        <td class="Label" [style.text-align]="isRTL? 'right': 'left'" style="width: 150px;">
+            {{'GLAccount.O.Vendor' | TextCodeTranslationPipe}}:
+        </td>
+        <td style="width:10px"></td>
+        <td style="width:190px;">
+            <LogLov [ObjectFieldName]="'VendorId'"
+                    [SelectedValue]="VendorId"
+                     (SelectedItemChanged)="Vendor = $event"
+                    [ObjectTableName]="ObjectTableName"
+                    [DataContext]="DataContext"
+                    [LookUpTableName]="'Card'"
+                    [DependencyFilter1Value]="VendorDependencyFilter1Value">
+            </LogLov>
+
+            <!--<LogLov [ObjectFieldName]="'VendorId'"
+                    [NoObjectField]="true"
+                    [ObjectTableName]="'Card'"
+                    [DataContext]="DataContext"
+                    [LookUpTableName]="'Card'"
+                    [QueryFilterItems]="CardFilterItems"
+                     [SelectedValue]="VendorId"
+                     [DependencyFilter1Value]="VendorDependencyFilter1Value"
+                    (SelectedItemChanged)="Vendor = $event"
+                    >
+            </LogLov>-->
+        </td>
+        <td></td>
+
+    </tr>
+    <tr style="height: 32px;">
+        <td style="width:10px"></td>
+        <td class="Label" [style.text-align]="isRTL? 'right': 'left'" style="width: 150px;">
+            {{'Accounting.O.FromDate' | TextCodeTranslationPipe}}:
+        </td>
+        <td style="width:10px"></td>
+        <td style="width:150px;">
+            <LogDatePicker [NoObjectField]="true" [ObjectTableName]="ObjectTableName" [HideColumns]="false" [ObjectFieldName]="'FromDate'" [DataContext]="DataContext"></LogDatePicker>
+        </td>
+        <td></td>
+
+    </tr>
+    <tr style="height: 32px;">
+        <td style="width:10px"></td>
+        <td class="Label" [style.text-align]="isRTL? 'right': 'left'" style="width: 150px;">
+            {{'Accounting.General.O.ToDate' | TextCodeTranslationPipe}}
+        </td>
+        <td style="width:10px"></td>
+        <td style="width:150px;">
+            <LogDatePicker [NoObjectField]="true" [ObjectTableName]="ObjectTableName" [HideColumns]="false" [ObjectFieldName]="'ToDate'" [DataContext]="DataContext"></LogDatePicker>
+        </td>
+        <td></td>
+
+    </tr>
+    <tr style="height: 32px;">
+        <td colspan="5">
+            <table>
+                <tr>
+                    <td [style.width]="isRTL? '440px': '370px'"></td>
+                    <td style="width:90px;text-align:left">
+                        <button (click)="RunButtonClicked()" class="greenButton" style="width:90px;height:22px;border:1px solid green;border-radius:3px;">
+                            <div style="color:black;  text-align:center;vertical-align:central;font-size:12px;">{{'Accounting.General.O.Run' | TextCodeTranslationPipe}}</div>
+                        </button>
+
+                    </td>
+                    <td></td>
+
+                </tr>
+
+            </table>
+
+        </td>
+    </tr>
+</table>

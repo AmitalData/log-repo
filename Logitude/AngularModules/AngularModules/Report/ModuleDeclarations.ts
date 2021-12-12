@@ -57,6 +57,7 @@ import { DetailedShipmentChargesAnalysisComponent } from './Components/FiltersCo
 import { VendorChargesAnalysisFilterComponent } from './Components/FiltersComponent/Accounting/VendorChargesAnalysisFilterComponent';
 import { AutomationTestReportFilterComponent } from './Components/FilterReportComponent/AutomationTestReportFilterComponent';
 import { ExternalReconciliationLinesReportFilterControl } from './Components/FilterReportComponent/ExternalReconciliationLinesReportFilterControl';
+import { PerVendorReportFilterComponent } from './Components/FiltersComponent/Accounting/PerVendorReportFilterComponent';
 
 // Quotes
 import {QuotesFilterComponent} from './Components/FilterReportComponent/QuotesFilterComponent';
@@ -174,7 +175,9 @@ export const Components =
         UserDefinedReportFilterControl,
         LogitudeCRMReportFilterComponent,
         ExcelReportTemplateComponent,
-        DataProviderFieldsNestedList
+        DataProviderFieldsNestedList,
+        PerVendorReportFilterComponent
+
     ];
 
 export class ModuleDeclarations {
@@ -260,6 +263,8 @@ export class ModuleDeclarations {
             case "UserDefinedReportFilterControl": { myResult = UserDefinedReportFilterControl; break; }
             case "LogitudeCRMReportFilterComponent": { myResult = LogitudeCRMReportFilterComponent; break; }
             case "ExcelReportTemplateComponent": { myResult = ExcelReportTemplateComponent; break; }
+            case "PerVendorReportFilterComponent": { myResult = PerVendorReportFilterComponent; break; }
+
         }
 
         return myResult;
