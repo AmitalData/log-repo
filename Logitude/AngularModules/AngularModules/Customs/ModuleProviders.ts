@@ -425,6 +425,7 @@ import { ClientsPoaListService } from './Services/StandardLists/ClientsPoaListSe
 import { BuyerRoleTypeListService } from './Services/StandardLists/BuyerRoleTypeListService';
 import { AmedmentTypeListService } from './Services/StandardLists/AmedmentTypeListService';
 import { CustomsRequestsSheetWebService } from './Services/WebServices/CustomsRequestsSheetWebService';
+import { TradeAgreementProtocolListService } from './Services/StandardLists/TradeAgreementProtocolListService';
 
 
 export class ModuleProviders {
@@ -777,6 +778,7 @@ export class ModuleProviders {
             case "ReferantTeamPMService": { myResult = new ReferantTeamPMService(); break; }
             case "ExportStorgePMService": { myResult = new ExportStorgePMService(); break; }
             case "ContainerizationPMService": { myResult = new ContainerizationPMService(); break; }
+            case "TradeAgreementProtocolListService": { myResult = new TradeAgreementProtocolListService(); break; }
 
             //#endregion
 
