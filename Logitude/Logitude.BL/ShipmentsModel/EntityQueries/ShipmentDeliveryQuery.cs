@@ -572,22 +572,43 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
             return dataList;
         }
-
         private void GetPickUpDeliveryIndexes(ShipmentDeliveryPM item, string shipmentNumber)
         {
-            if (!string.IsNullOrEmpty(shipmentNumber))
+            if (string.IsNullOrEmpty(shipmentNumber))
             {
-                string actualickupdeliveryNumber = item.PickUpDeliveryNumber.Replace(shipmentNumber + "/", "");
-                string[] numberArray = actualickupdeliveryNumber.Split('/');
-
-                item.PickUpDeliveryIndex = Convert.ToInt32(numberArray[0]);
-                if (numberArray.Length > 1)
-                {
-                    item.ChildIndex = Convert.ToInt32(numberArray[1]);
-                }
+                return;
+            }
+            int slashesCount = item.PickUpDeliveryNumber.Count(t => t == '/');
+            if (slashesCount <= 2)
+            {
+                GetPickUpDeliveryIndexesForTwoSlashes(item);
+            }
+            else
+            {
+                GetPickUpDeliveryIndexesForMultipleSlashes(item, shipmentNumber);
             }
         }
+        private void GetPickUpDeliveryIndexesForTwoSlashes(ShipmentDeliveryPM item)
+        {
+            string[] numberArray = item.PickUpDeliveryNumber.Split('/');
 
+            item.PickUpDeliveryIndex = Convert.ToInt32(numberArray[1]);
+            if (numberArray.Length > 2)
+            {
+                item.ChildIndex = Convert.ToInt32(numberArray[2]);
+            }
+        }
+        private void GetPickUpDeliveryIndexesForMultipleSlashes(ShipmentDeliveryPM item, string shipmentNumber)
+        {
+            string actualickupdeliveryNumber = item.PickUpDeliveryNumber.Replace(shipmentNumber + "/", "");
+            string[] numberArray = actualickupdeliveryNumber.Split('/');
+            item.PickUpDeliveryIndex = Convert.ToInt32(numberArray[0]);
+            if (numberArray.Length > 1)
+            {
+                item.ChildIndex = Convert.ToInt32(numberArray[1]);
+            }
+        }
+    
         public List<ShipmentDeliveryPM> GetShipmentDeliveryByTenant(int tenant)
         {
             List<ShipmentDeliveryPM> dataList = (from entity in repository.context.ShipmentPickUpDeliveries.Include("FromPort").Include("ToPort").Include("CarrierCard").Include("Shipment").Include("Shipment.ShipmentMasterData").Include("Shipment.AgentCard").Include("Shipment.ShipmentMasterData.MainCarriageCarrierCard")
