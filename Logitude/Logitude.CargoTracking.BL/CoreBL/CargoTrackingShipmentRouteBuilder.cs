@@ -310,7 +310,7 @@ namespace Logitude.CargoTracking.BL.EntityQueryServices
             if (pickup.PickUpDeliveryFromTypeCode == PortTypeCode)
                 return pickup.FromPortCode;
             if (pickup.PickUpDeliveryFromTypeCode == PartnerTypeCode)
-                return pickup.FromLocation.Split(' ')[0];
+                return pickup.FromLocation?.Split(' ')[0];
             return pickup.FromAddressCountryCode;
         }
         private string GetFromPortLabelFromPickup(ShipmentDeliveryPM delivery)
@@ -318,13 +318,13 @@ namespace Logitude.CargoTracking.BL.EntityQueryServices
             if (delivery.PickUpDeliveryFromTypeCode == PortTypeCode)
                 return delivery.FromPortCode;
             if (delivery.PickUpDeliveryFromTypeCode == PartnerTypeCode)
-                return delivery.FromLocation.Split(' ')[0];
+                return delivery.FromLocation?.Split(' ')[0];
             return delivery.FromAddressCountryCode;
         }
         private string GetToolTipFromPortLabelFromPickup(ShipmentPickUpPM pickup)
         {
             if (pickup.PickUpDeliveryFromTypeCode == PartnerTypeCode)
-                return "Partner: \n" + pickup.FromLocation.Split('\r')[0];
+                return "Partner: \n" + pickup.FromLocation?.Split('\r')[0];
             if (pickup.PickUpDeliveryFromTypeCode == "CASL")
                 return "Address: \n" + (pickup.FromAddressCity_Dummy != null ? pickup.FromAddressCity_Dummy + ',' : "") + pickup.FromAddressCountryName;
             return null;
@@ -332,7 +332,7 @@ namespace Logitude.CargoTracking.BL.EntityQueryServices
         private string GetToolTipToPortLabelFromPickup(ShipmentPickUpPM pickup)
         {
             if (pickup.PickUpDeliveryToTypeCode == PartnerTypeCode)
-                return "Partner: \n" + pickup.ToLocation.Split('\r')[0];
+                return "Partner: \n" + pickup.ToLocation?.Split('\r')[0];
             if (pickup.PickUpDeliveryToTypeCode == "CASL")
                 return "Address: \n" + (pickup.ToAddressCity_Dummy != null ? pickup.ToAddressCity_Dummy + ',' : "") + pickup.ToAddressCountryName;
             return null;
@@ -342,7 +342,7 @@ namespace Logitude.CargoTracking.BL.EntityQueryServices
             if (pickup.PickUpDeliveryToTypeCode == PortTypeCode)
                 return pickup.ToPortCode;
             if (pickup.PickUpDeliveryToTypeCode == PartnerTypeCode)
-                return pickup.ToLocation.Split(' ')[0];
+                return pickup.ToLocation?.Split(' ')[0];
             return pickup.ToAddressCountryCode;
         }
         private string GetToPortLabelFromPickup(ShipmentDeliveryPM delivery)
@@ -350,7 +350,7 @@ namespace Logitude.CargoTracking.BL.EntityQueryServices
             if (delivery.PickUpDeliveryToTypeCode == PortTypeCode)
                 return delivery.ToPortCode;
             if (delivery.PickUpDeliveryToTypeCode == PartnerTypeCode)
-                return delivery.ToLocation.Split(' ')[0];
+                return delivery.ToLocation?.Split(' ')[0];
             return delivery.ToAddressCountryCode;
         }
     }
