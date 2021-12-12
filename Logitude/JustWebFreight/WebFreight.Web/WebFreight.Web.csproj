@@ -2687,6 +2687,7 @@
     <Compile Include="Helpers\MixPanel\MixPanelActionsEvent.cs" />
     <Compile Include="Helpers\MixPanel\IMixPanelActionsService.cs" />
     <Compile Include="Helpers\MixPanel\MixPanelActionsService.cs" />
+    <Compile Include="Helpers\MixPanel\MixPanelFactory.cs" />
     <Compile Include="Helpers\PODMobileDocumentsFilingService.cs" />
     <Compile Include="Helpers\PrivateLabelsBrandingDataService.cs" />
     <Compile Include="Helpers\QuotesRequestService.cs" />

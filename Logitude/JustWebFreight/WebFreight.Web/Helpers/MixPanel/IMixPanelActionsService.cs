@@ -5,6 +5,6 @@ namespace WebFreight.Web.Helpers.MixPanel
     public interface IMixPanelActionsService
     {
         string ProjectToken { get; }
-        MixPanelEvent BuildMixPanelEvent(MixPanelActionsEvent mixPanelActionsEvent);
+        MixPanelEvent BuildEvent(MixPanelActionsEvent mixPanelActionsEvent);
     }
 }

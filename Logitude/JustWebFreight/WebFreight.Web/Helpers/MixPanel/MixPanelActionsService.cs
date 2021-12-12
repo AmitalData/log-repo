@@ -1,5 +1,4 @@
 ﻿using Logitude.BL.CommonDataModel.Tools.MixPanelTracker;
-using WebFreight.Web.Helpers.MixPanel.events;
 
 namespace WebFreight.Web.Helpers.MixPanel
 {
@@ -15,19 +14,10 @@ namespace WebFreight.Web.Helpers.MixPanel
 
         public void Build(MixPanelActionsEvent mixPanelActionsEvent)
         {
-            MixPanelFactory(mixPanelActionsEvent.ProjectName);
+            mixPanelEvent = MixPanelFactory.Create(mixPanelActionsEvent.ProjectName, tenant);
             MixPanelEventTracker eventTracker = new MixPanelEventTracker(mixPanelEvent.ProjectToken, mixPanelActionsEvent.Email, tenant);
-            eventTracker.TrackEvent(mixPanelEvent.BuildMixPanelEvent(mixPanelActionsEvent));
-        }
-
-        private void MixPanelFactory(string projectName)
-        {
-            if (projectName == "LogBox")
-            {
-                mixPanelEvent = new LogBoxActionsEvent(tenant);
-            }
+            eventTracker.TrackEvent(mixPanelEvent.BuildEvent(mixPanelActionsEvent));
         }
     }
-
 
 }

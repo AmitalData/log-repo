@@ -17,7 +17,7 @@ namespace WebFreight.Web.Helpers.MixPanel.events
 
         public string ProjectToken { get { return "6da04c25721c3a0269bab184d35fbc1a"; } }
 
-        public MixPanelEvent BuildMixPanelEvent(MixPanelActionsEvent mixPanelActionsEvent)
+        public MixPanelEvent BuildEvent(MixPanelActionsEvent mixPanelActionsEvent)
         {
             string workEnvironment = GetWorkEnvironment(tenant);
 
