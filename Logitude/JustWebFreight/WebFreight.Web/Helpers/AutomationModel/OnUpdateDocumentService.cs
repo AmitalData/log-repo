@@ -23,15 +23,15 @@ namespace WebFreight.Web.Helpers.AutomationModel
 {
     public class OnUpdateDocumentService
     {
-        OnUpdateDocumentArgs onUpdateDocumentArgs = null;
-        EntityChangeAutomation entityChangesAutomation = null;
-        List<EntityChangeAutomation> entityChangesAutomationsLists = null;
-        DocumentRepository documentRepository = null;
-        AutomationOnUpdateDocument automationOnUpdateDocumentResult = null;
-        int tenant;
-        string entityId;
-        string extraDetails = string.Empty;
-        bool IsValidDocumentSelectionAutomation = false;
+        private OnUpdateDocumentArgs onUpdateDocumentArgs = null;
+        private EntityChangeAutomation entityChangesAutomation = null;
+        private List<EntityChangeAutomation> entityChangesAutomationsLists = null;
+        private DocumentRepository documentRepository = null;
+        private AutomationOnUpdateDocument automationOnUpdateDocumentResult = null;
+        private int tenant;
+        private string entityId;
+        private string extraDetails = string.Empty;
+        private bool IsValidDocumentSelectionAutomation = false;
         private List<string> documentsIds = null;
         public OnUpdateDocumentService(OnUpdateDocumentArgs onUpdateDocumentArgs, EntityChangeAutomation entityChangesAutomation, List<EntityChangeAutomation> entityChangesAutomationsLists)
         {
@@ -66,7 +66,7 @@ namespace WebFreight.Web.Helpers.AutomationModel
         {
             OnUpdateDocumentDetails onUpdateDocumentDetails = LogitudeXmlSerializer.DeserializeObject<OnUpdateDocumentDetails>(extraDetails);
             
-            List<string> documentsIds = GetAutomationSelectedDocuments(onUpdateDocumentDetails);
+            documentsIds = GetAutomationSelectedDocuments(onUpdateDocumentDetails);
             documentsIds.ForEach(documentId => {
                 SendDocumentViaFTP(new OnUpdateDocumentFTPArgs { AutomationOnUpdateDocument = automationOnUpdateDocumentResult, DocumentId = documentId, ObjectTableId = onUpdateDocumentArgs.EntityChange.ObjectTableId });
             });
