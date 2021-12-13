@@ -293,6 +293,7 @@ export class PartnersTabComponent implements OnInit, OnDestroy {
             confirmWindow.Show(TextCodeTranslator.Translate("Shipment.M.DeleteThisPartner"));
             confirmWindow.WindowClosed.subscribe((event: any) => {
                 if (confirmWindow.Yes) {
+                    this.DeleteUassignedPartners(myPartnerItem.Code);
                     if (myPartnerItem.IsCustomer) {
                         this.SetDefaultCustomer();
                     }
@@ -313,6 +314,27 @@ export class PartnersTabComponent implements OnInit, OnDestroy {
             });
         }
     }
+
+    DeleteUassignedPartners(code: string) {
+        if (!["CONSI", "SHIPR"].includes(code))
+            return;
+
+        if (code == "SHIPR") {
+            this.RemoveUnassignedPartner("Shipper");
+        }
+
+        if (code == "CONSI") {
+            this.RemoveUnassignedPartner("Consignee");
+        }
+    }
+
+    RemoveUnassignedPartner(fieldName : string ) {
+        var shipperUnassigned = this.EntityPM.ShipmentUnassignedFields.find(x => x.FieldName == fieldName);
+        if (shipperUnassigned != null) {
+            this.EntityPM.RemoveShipmentUnassignedFields(shipperUnassigned);
+        }
+    }
+    
     SetDefaultCustomer() {
         if (this.EntityPM.ShipmentLevelCode == "C") {
             this.EntityPM.CustomerId = null;
