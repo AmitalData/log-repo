@@ -1025,11 +1025,15 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             MethodHelper.AddToSearchFields(ref mySearchFields, paymentPM.StatusCode);
             MethodHelper.AddToSearchFields(ref mySearchFields, paymentPM.AccountingPaymentMethodCode);
             MethodHelper.AddToSearchFields(ref mySearchFields, paymentPM.PrintNotes);
-            if (paymentPM.ARPaymentBankTranfers.Any())
+            
+            if (paymentPM.AccountingPaymentMethodCode == BankTransferARPaymentAccountingMethod && paymentPM.ARPaymentBankTranfers.Count() == 0)
+                MethodHelper.AddToSearchFields(ref mySearchFields, paymentPM.ChequeOrPaymentRef);
+            else if (paymentPM.ARPaymentBankTranfers.Count() > 0)
             {
                 var bankTransfersReferences = String.Join(",", paymentPM.ARPaymentBankTranfers.Select(x => x.PaymentRef));
                 MethodHelper.AddToSearchFields(ref mySearchFields, bankTransfersReferences);
             }
+
             #region Cheque
             if (paymentPM.ARPaymentChequeReplicas.Any())
             {
