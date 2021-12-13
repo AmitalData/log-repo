@@ -244,7 +244,10 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
 
                         list.ForEach(item => {
                             BankAccountPM bankAccount = bankAccountQuery.GetByFirstOrDefault(item.BankAccountId, tenant);
-                            item.BankAccount = new BankAccountLightPM { Id = bankAccount.Id, LocalName = bankAccount.LocalName, EnglishName = bankAccount.EnglishName, BankAccountNumber=bankAccount.AccountNumber };
+                            if (bankAccount != null)
+                            {
+                                item.BankAccount = new BankAccountLightPM { Id = bankAccount.Id, LocalName = bankAccount.LocalName, EnglishName = bankAccount.EnglishName, BankAccountNumber = bankAccount.AccountNumber };
+                            }
                             item.BankAccountNumber = item.BankAccount!= null ? item.BankAccount.BankAccountNumber : null;
                         });
             return list;
