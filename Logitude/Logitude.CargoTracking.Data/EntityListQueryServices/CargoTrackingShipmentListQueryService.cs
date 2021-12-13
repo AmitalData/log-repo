@@ -420,6 +420,7 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
                 EntityType = shipment.EntityType,
                 CurrentMilestoneCode = shipment.CurrentMilestoneCode,
                 CurrentMilestoneDate = shipment.CurrentMilestoneDate,
+                CurrentMilestoneExceptions = shipment.CurrentMilestoneExceptions,
                 CustomerId = shipment.CustomerId,
                 TransportModeId = shipment.TransportModeId,
                 Master = shipment.Master,

@@ -64,6 +64,7 @@
   <ItemGroup>
     <Compile Include="APIDataContract\CargoTrackingShipment.Generated.cs" />
     <Compile Include="APIDataContract\CargoTrackingShipmentDetails.cs" />
+    <Compile Include="APIDataContract\ShipmentExceptions.cs" />
     <Compile Include="APIDataContract\MilestoneData.cs" />
     <Compile Include="APIDataContract\QueryService\CargoTrackingShipmentQueryService.Generated.cs" />
     <Compile Include="APIDataContract\QueryService\TransportModeQueryService.Generated.cs" />
