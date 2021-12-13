@@ -294,18 +294,18 @@
                                                 <tr>
                                                     <td style="width: 130px;">
                                                         <div style="margin-bottom:10px;margin-top:20px;border-right:1px solid #cccccc;">
-                                                            <div id="test" (mouseenter)="onMouseEnter()" (mouseleave)="onMouseLeave(AgentShipmentsLabel)" class="MenuFilters"  (click)="MenuFiltersClicked(AgentShipmentsLabel)" [ngStyle]="QueryFiltersHighlightColor != null && (SelectedFilter == AgentShipmentsLabel) ? {'background-color': QueryFiltersHighlightColor} : {}" [ngClass]="{'QueryFiltersHighlightColor': (SelectedFilter == AgentShipmentsLabel) && this.isPrivateLabel,
-                                                                   'LogboxMenuFilters': !this.isPrivateLabel, 'PrivateLabelMenuFilters Testclass': this.isPrivateLabel}" [class.Selected]="(SelectedFilter == AgentShipmentsLabel) && !this.isPrivateLabel">
-                                                                <div class="MenuFiltersCount">{{AgentShipmentsCount}}</div>
-                                                                <div [ngClass]="AgentLabelClass">{{AgentShipmentsLabel}}</div>
+                                                            <div (mouseenter)="onMouseEnter(AgentShipmentsLabel, 'agent')" (mouseleave)="onMouseLeave(AgentShipmentsLabel, 'agent')"  id="agent" class="MenuFilters" (click)="MenuFiltersClicked(AgentShipmentsLabel,'agent')" [ngStyle]="QueryFiltersHighlightColor != null && (SelectedFilter == AgentShipmentsLabel) ? {'background-color': QueryFiltersHighlightColor} : {}" [ngClass]="{'QueryFiltersHighlightColor': (SelectedFilter == AgentShipmentsLabel) && this.HasQueryFiltersHighlightColor,
+                                                                   'LogboxMenuFilters': !this.HasQueryFiltersHighlightColor, 'PrivateLabelMenuFilters Testclass': this.HasQueryFiltersHighlightColor}" [class.Selected]="(SelectedFilter == AgentShipmentsLabel) && !this.HasQueryFiltersHighlightColor">
+                                                                <div  class="MenuFiltersCount">{{AgentShipmentsCount}}</div>
+                                                                <div   [ngClass]="AgentLabelClass">{{AgentShipmentsLabel}}</div>
                                                             </div>
                                                         </div>
                                                     </td>
                                                     <td style="width: 130px;">
                                                         <div style="margin-bottom:10px;margin-top:20px;border-right:1px solid #cccccc;">
-                                                            <div class="MenuFilters" (click)="MenuFiltersClicked('My Shipments')" [ngStyle]="QueryFiltersHighlightColor != null && (SelectedFilter == 'My Shipments')? {'background-color': QueryFiltersHighlightColor} : {}" [ngClass]="{'QueryFiltersHighlightColor': (SelectedFilter == 'My Shipments') && this.isPrivateLabel,
-                                                                 'LogboxMenuFilters': !this.isPrivateLabel,  'PrivateLabelMenuFilters Testclass': this.isPrivateLabel}"
-                                                                 [class.Selected]="(SelectedFilter == 'My Shipments') && !this.isPrivateLabel">
+                                                            <div class="MenuFilters" (mouseenter)="onMouseEnter('My Shipments', 'myShipment')" (mouseleave)="onMouseLeave('My Shipments', 'myShipment')" id="myShipment" (click)="MenuFiltersClicked('My Shipments','myShipment')" [ngStyle]="QueryFiltersHighlightColor != null && (SelectedFilter == 'My Shipments')? {'background-color': QueryFiltersHighlightColor} : {}" [ngClass]="{'QueryFiltersHighlightColor': (SelectedFilter == 'My Shipments') && this.HasQueryFiltersHighlightColor,
+                                                                 'LogboxMenuFilters': !this.HasQueryFiltersHighlightColor,  'PrivateLabelMenuFilters Testclass': this.HasQueryFiltersHighlightColor}"
+                                                                 [class.Selected]="(SelectedFilter == 'My Shipments') && !this.HasQueryFiltersHighlightColor">
                                                                 <div class="MenuFiltersCount">{{MyShipmentsCount}}</div>
                                                                 <div class="MenuFiltersName">My Shipments</div>
                                                             </div>
@@ -313,8 +313,8 @@
                                                     </td>
                                                     <td style="width: 130px;">
                                                         <div style="margin-bottom:10px;margin-top:20px;border-right:1px solid #cccccc;">
-                                                            <div class="MenuFilters" (click)="MenuFiltersClicked('Recent')" [ngStyle]="QueryFiltersHighlightColor != null && (SelectedFilter == 'Recent') ? {'background-color': QueryFiltersHighlightColor} : {}" [ngClass]="{'QueryFiltersHighlightColor': (SelectedFilter == 'Recent') && this.isPrivateLabel,
-                                                                   'LogboxMenuFilters': !this.isPrivateLabel,  'PrivateLabelMenuFilters Testclass': this.isPrivateLabel}" [class.Selected]="(SelectedFilter == 'Recent') && !this.isPrivateLabel">
+                                                            <div class="MenuFilters" (mouseenter)="onMouseEnter('Recent', 'recent')" (mouseleave)="onMouseLeave('Recent', 'recent')" id="recent"  (click)="MenuFiltersClicked('Recent','recent')" [ngStyle]="QueryFiltersHighlightColor != null && (SelectedFilter == 'Recent') ? {'background-color': QueryFiltersHighlightColor} : {}" [ngClass]="{'QueryFiltersHighlightColor': (SelectedFilter == 'Recent') && this.HasQueryFiltersHighlightColor,
+                                                                   'LogboxMenuFilters': !this.HasQueryFiltersHighlightColor,  'PrivateLabelMenuFilters Testclass': this.HasQueryFiltersHighlightColor}" [class.Selected]="(SelectedFilter == 'Recent') && !this.HasQueryFiltersHighlightColor">
                                                                 <img src="{{RecentImg}}" />
                                                                 <div style="margin-top:3px;" class="MenuFiltersName">Recent</div>
                                                             </div>
@@ -322,8 +322,8 @@
                                                     </td>
                                                     <td style="width: 130px;">
                                                         <div style="margin-bottom:10px;margin-top:20px;border-right:1px solid #cccccc;">
-                                                            <div class="MenuFilters" (click)="MenuFiltersClicked(RequestedDocsLable)" [ngStyle]="QueryFiltersHighlightColor != null && (SelectedFilter == RequestedDocsLable) ? {'background-color': QueryFiltersHighlightColor} : {}" [class.Selected]="(SelectedFilter == RequestedDocsLable) && !this.isPrivateLabel"
-                                                                 [ngClass]="{'PrivateLabelMenuFilters Testclass':  this.isPrivateLabel,'LogboxMenuFilters': !this.isPrivateLabel, 'QueryFiltersHighlightColor': (SelectedFilter == RequestedDocsLable) && this.isPrivateLabel }">
+                                                            <div class="MenuFilters"  id="requested" (mouseenter)="onMouseEnter(RequestedDocsLable, 'requested')" (mouseleave)="onMouseLeave(RequestedDocsLable, 'requested')" (click)="MenuFiltersClicked(RequestedDocsLable,'requested')" [ngStyle]="QueryFiltersHighlightColor != null && (SelectedFilter == RequestedDocsLable) ? {'background-color': QueryFiltersHighlightColor} : {}" [class.Selected]="(SelectedFilter == RequestedDocsLable) && !this.HasQueryFiltersHighlightColor"
+                                                                 [ngClass]="{'PrivateLabelMenuFilters':  this.HasQueryFiltersHighlightColor,'LogboxMenuFilters': !this.HasQueryFiltersHighlightColor, 'QueryFiltersHighlightColor': (SelectedFilter == RequestedDocsLable) && this.HasQueryFiltersHighlightColor }">
                                                                 <div class="MenuFiltersCount" [class.MenuFiltersCustom]="RequestedDocsLable == 'Action Required'">{{RequestedCount}}</div>
                                                                 <div class="MenuFiltersName">{{RequestedDocsLable}}</div>
                                                             </div>
@@ -331,8 +331,8 @@
                                                     </td>
                                                     <td style="width: 130px;">
                                                         <div style="margin-bottom:10px;margin-top:20px;border-right:1px solid #cccccc;">
-                                                            <div class="MenuFilters" (click)="MenuFiltersClicked('All Shipments')" [ngStyle]="QueryFiltersHighlightColor != null && (SelectedFilter == 'All Shipments') ? {'background-color': QueryFiltersHighlightColor} : {}" [class.Selected]="(SelectedFilter == 'All Shipments') && !this.isPrivateLabel"
-                                                                 [ngClass]="{'PLText':this.isPrivateLabel ,'PrivateLabelMenuFilters Testclass':  this.isPrivateLabel,'LogboxMenuFilters': !this.isPrivateLabel,  'QueryFiltersHighlightColor': (SelectedFilter == 'All Shipments') && this.isPrivateLabel }">
+                                                            <div class="MenuFilters" id="allShipments" (mouseenter)="onMouseEnter('All Shipments', 'allShipments')" (mouseleave)="onMouseLeave('All Shipments', 'allShipments')"  (click)="MenuFiltersClicked('All Shipments','allShipments')" [ngStyle]="QueryFiltersHighlightColor != null && (SelectedFilter == 'All Shipments') ? {'background-color': QueryFiltersHighlightColor} : {}" [class.Selected]="(SelectedFilter == 'All Shipments') && !this.HasQueryFiltersHighlightColor"
+                                                                 [ngClass]="{'PLText':this.HasQueryFiltersHighlightColor ,'PrivateLabelMenuFilters Testclass':  this.HasQueryFiltersHighlightColor,'LogboxMenuFilters': !this.HasQueryFiltersHighlightColor,  'QueryFiltersHighlightColor': (SelectedFilter == 'All Shipments') && this.HasQueryFiltersHighlightColor }">
                                                                 <div class="MenuFiltersCount">{{AllShipmentsCount}}</div>
                                                                 <div class="MenuFiltersName">All Shipments</div>
                                                             </div>

@@ -66,15 +66,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
   
     public isLogbox: boolean = SystemEnvironmentService.IsLogBox();
 
-    public PT = {
-        "ShortName": true,
-        "LongName": false
-    }
-
-    public Testclass = {
-        color: "red",
-        'background-color': null
-    }
+    public HasQueryFiltersHighlightColor: boolean = false;
  
     constructor(private _entityListService: EntityListService) {
         this.InitializeServices();
@@ -92,35 +84,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
         this.customerTenantAccessRequestExtendedPMService = new CustomerTenantAccessRequestExtendedPMService();
     }
 
-
-    onMouseEnter() {
-        var element = document.getElementById('test');
-        if (element) {
-            element.style.backgroundColor = "blue";//SessionLocator.PrivateLableSettings.QueryFiltersHighlightColor;
-        }
-        //var elem = document.getElementById(Ship.Ship.Id);
-        //if (elem) {
-        //    elem.style.visibility = Ship.Action == "A" ? "visible" : "hidden";
-        //}
-
-        //this.Testclass = {
-        //    color: "red",
-        //    'background-color': SessionLocator.PrivateLableSettings.QueryFiltersHighlightColor
-        //}
-    }
-
-    onMouseLeave(test) {
-        var element = document.getElementById('test');
-        if (element) {
-            if (test == this.SelectedFilter) {
-                element.style.backgroundColor = "pink";
-            } else {
-                element.style.backgroundColor = null;
-            }
-            //SessionLocator.PrivateLableSettings.QueryFiltersHighlightColor;
-        }
-    }
-
+ 
     ngOnInit() {
         this.DontShowLogboxToolTip = SessionLocator.LoggedUserPM.ShowLogBoxToolTip;
         this.ShowDirectionFilters = SessionLocator.PrivateLableSettings ? false : true;
@@ -174,6 +138,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
             this.MainColor = SessionLocator.PrivateLableSettings.MainColor;
             this.SecondaryColor = SessionLocator.PrivateLableSettings.SecondaryColor;
             this.QueryFiltersHighlightColor = SessionLocator.PrivateLableSettings.QueryFiltersHighlightColor;
+            if (this.QueryFiltersHighlightColor) this.HasQueryFiltersHighlightColor = true;
             this.SelectedFilter = this.AgentShipmentsLabel;
             this.setAgentLabelClass(AgentName);
             this.AgentShipmentsLabel = this.getAgentShipmentsLabel(AgentName);
@@ -826,12 +791,45 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
 
         return logboxShipmentExportExcelArgs;
     }
+ 
 
-    MenuFiltersClicked(Selected) {
-        //var element = document.getElementById('test');
-        //if (element) {
-        //    element.style.backgroundColor = "green";//SessionLocator.PrivateLableSettings.QueryFiltersHighlightColor;
-        //}
+    onMouseEnter(label, id) {
+        if (!this.HasQueryFiltersHighlightColor) return;
+        var element = document.getElementById(id);
+        if (element && (label == this.SelectedFilter)) {
+            this.SetQueryFilterOptions(element, "1"); 
+        } else if (element) { 
+            this.SetQueryFilterOptions(element, "0.5"); 
+        }
+
+    }
+
+    onMouseLeave(label, id) {
+        if (!this.HasQueryFiltersHighlightColor) return;
+        var element = document.getElementById(id);
+        if (element) {
+            if (label == this.SelectedFilter) {
+                this.SetQueryFilterOptions(element, "1");
+            } else{
+                this.ClearQuereFilter(element);
+            }
+        }
+    }
+    private ClearQuereFilter(element: HTMLElement) {
+        element.style.backgroundColor = null;
+        element.style.opacity = "1";
+    }
+
+    private SetQueryFilterOptions(element: HTMLElement, opacity: string) {
+        element.style.backgroundColor = SessionLocator.PrivateLableSettings.QueryFiltersHighlightColor;
+        element.style.opacity = opacity;
+    }
+
+
+
+    MenuFiltersClicked(Selected, id) {
+
+        this.SetQueryFiltersColor(id, Selected);
 
         this.SelectedFilter = Selected;
         this.SelectedRow = null;
@@ -843,9 +841,19 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
         console.log("7");
     }
 
+    private SetQueryFiltersColor(id: any, Selected: any) {
+        var element = document.getElementById(id);
+        if (this.HasQueryFiltersHighlightColor && element && (Selected == this.AgentShipmentsLabel)) {
+            element.style.backgroundColor = SessionLocator.PrivateLableSettings.QueryFiltersHighlightColor;
+            element.style.opacity = "1";
+        }
+    }
+
+
     SelectedRow: any;
     SelectedRowIndex: any;
     RowSelectedTimerToken: any;
+  
     onRowSelected(CurrentRow) {
         if (this.RowSelectedTimerToken) {
             clearTimeout(this.RowSelectedTimerToken);
