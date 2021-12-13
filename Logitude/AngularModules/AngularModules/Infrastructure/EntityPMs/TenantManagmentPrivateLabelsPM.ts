@@ -145,6 +145,11 @@ export class TenantManagmentPrivateLabelsPM {
     public set IsCustomsActivated(newValue: boolean) { if (this.isCustomsActivated != newValue) { this.isCustomsActivated = newValue; this.MarkAsDirty("IsCustomsActivated"); } }
        
 	 
+    private queryFiltersHighlightColor: string;
+    public get QueryFiltersHighlightColor() { return this.queryFiltersHighlightColor; }
+    public set QueryFiltersHighlightColor(newValue: string) { if (this.queryFiltersHighlightColor != newValue) { this.queryFiltersHighlightColor = newValue; this.MarkAsDirty("QueryFiltersHighlightColor"); } }
+       
+	 
 
     public OldEntityPM: TenantManagmentPrivateLabelsPM;
 		
