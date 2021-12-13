@@ -788,8 +788,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         {
             try
             {
-                //SecurityUtility.AuthenticationOnTenant(tenant);
-                //SecurityUtility.CheckContactFeature("Shipment", "READ", tenant); 
+               SecurityUtility.AuthenticationOnTenant(tenant);
+               SecurityUtility.CheckContactFeature("Shipment", "READ", tenant); 
                 
                 IShipmentsContext myContext = ShipmentsContext.GetContext(tenant);
                 ShipmentConsoleShipmentQuery shipmentConsoleShipmentQuery = new ShipmentConsoleShipmentQuery(myContext);
@@ -1804,7 +1804,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 {
                     string token = HttpContext.Current.Request.Headers["Token"];
                     AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-
+                    SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                     IShipmentsContext iContext = ShipmentsContext.GetContext(0);
                     ShipmentRepository iShipmentRepository = new ShipmentRepository(iContext);
                     ShipmentQuery iShipmentQuery = new ShipmentQuery(iShipmentRepository);
