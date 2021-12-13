@@ -295,7 +295,7 @@
                                                     <td style="width: 130px;">
                                                         <div style="margin-bottom:10px;margin-top:20px;border-right:1px solid #cccccc;">
                                                             <div (mouseenter)="onMouseEnter(AgentShipmentsLabel, 'agent')" (mouseleave)="onMouseLeave(AgentShipmentsLabel, 'agent')"  id="agent" class="MenuFilters" (click)="MenuFiltersClicked(AgentShipmentsLabel,'agent')" [ngStyle]="QueryFiltersHighlightColor != null && (SelectedFilter == AgentShipmentsLabel) ? {'background-color': QueryFiltersHighlightColor} : {}" [ngClass]="{'QueryFiltersHighlightColor': (SelectedFilter == AgentShipmentsLabel) && this.HasQueryFiltersHighlightColor,
-                                                                   'LogboxMenuFilters': !this.HasQueryFiltersHighlightColor, 'PrivateLabelMenuFilters Testclass': this.HasQueryFiltersHighlightColor}" [class.Selected]="(SelectedFilter == AgentShipmentsLabel) && !this.HasQueryFiltersHighlightColor">
+                                                                   'LogboxMenuFilters': !this.HasQueryFiltersHighlightColor, 'PrivateLabelMenuFilters': this.HasQueryFiltersHighlightColor}" [class.Selected]="(SelectedFilter == AgentShipmentsLabel) && !this.HasQueryFiltersHighlightColor">
                                                                 <div  class="MenuFiltersCount">{{AgentShipmentsCount}}</div>
                                                                 <div   [ngClass]="AgentLabelClass">{{AgentShipmentsLabel}}</div>
                                                             </div>
@@ -304,7 +304,7 @@
                                                     <td style="width: 130px;">
                                                         <div style="margin-bottom:10px;margin-top:20px;border-right:1px solid #cccccc;">
                                                             <div class="MenuFilters" (mouseenter)="onMouseEnter('My Shipments', 'myShipment')" (mouseleave)="onMouseLeave('My Shipments', 'myShipment')" id="myShipment" (click)="MenuFiltersClicked('My Shipments','myShipment')" [ngStyle]="QueryFiltersHighlightColor != null && (SelectedFilter == 'My Shipments')? {'background-color': QueryFiltersHighlightColor} : {}" [ngClass]="{'QueryFiltersHighlightColor': (SelectedFilter == 'My Shipments') && this.HasQueryFiltersHighlightColor,
-                                                                 'LogboxMenuFilters': !this.HasQueryFiltersHighlightColor,  'PrivateLabelMenuFilters Testclass': this.HasQueryFiltersHighlightColor}"
+                                                                 'LogboxMenuFilters': !this.HasQueryFiltersHighlightColor,  'PrivateLabelMenuFilters': this.HasQueryFiltersHighlightColor}"
                                                                  [class.Selected]="(SelectedFilter == 'My Shipments') && !this.HasQueryFiltersHighlightColor">
                                                                 <div class="MenuFiltersCount">{{MyShipmentsCount}}</div>
                                                                 <div class="MenuFiltersName">My Shipments</div>
@@ -314,7 +314,7 @@
                                                     <td style="width: 130px;">
                                                         <div style="margin-bottom:10px;margin-top:20px;border-right:1px solid #cccccc;">
                                                             <div class="MenuFilters" (mouseenter)="onMouseEnter('Recent', 'recent')" (mouseleave)="onMouseLeave('Recent', 'recent')" id="recent"  (click)="MenuFiltersClicked('Recent','recent')" [ngStyle]="QueryFiltersHighlightColor != null && (SelectedFilter == 'Recent') ? {'background-color': QueryFiltersHighlightColor} : {}" [ngClass]="{'QueryFiltersHighlightColor': (SelectedFilter == 'Recent') && this.HasQueryFiltersHighlightColor,
-                                                                   'LogboxMenuFilters': !this.HasQueryFiltersHighlightColor,  'PrivateLabelMenuFilters Testclass': this.HasQueryFiltersHighlightColor}" [class.Selected]="(SelectedFilter == 'Recent') && !this.HasQueryFiltersHighlightColor">
+                                                                   'LogboxMenuFilters': !this.HasQueryFiltersHighlightColor,  'PrivateLabelMenuFilters': this.HasQueryFiltersHighlightColor}" [class.Selected]="(SelectedFilter == 'Recent') && !this.HasQueryFiltersHighlightColor">
                                                                 <img src="{{RecentImg}}" />
                                                                 <div style="margin-top:3px;" class="MenuFiltersName">Recent</div>
                                                             </div>
@@ -332,7 +332,7 @@
                                                     <td style="width: 130px;">
                                                         <div style="margin-bottom:10px;margin-top:20px;border-right:1px solid #cccccc;">
                                                             <div class="MenuFilters" id="allShipments" (mouseenter)="onMouseEnter('All Shipments', 'allShipments')" (mouseleave)="onMouseLeave('All Shipments', 'allShipments')"  (click)="MenuFiltersClicked('All Shipments','allShipments')" [ngStyle]="QueryFiltersHighlightColor != null && (SelectedFilter == 'All Shipments') ? {'background-color': QueryFiltersHighlightColor} : {}" [class.Selected]="(SelectedFilter == 'All Shipments') && !this.HasQueryFiltersHighlightColor"
-                                                                 [ngClass]="{'PLText':this.HasQueryFiltersHighlightColor ,'PrivateLabelMenuFilters Testclass':  this.HasQueryFiltersHighlightColor,'LogboxMenuFilters': !this.HasQueryFiltersHighlightColor,  'QueryFiltersHighlightColor': (SelectedFilter == 'All Shipments') && this.HasQueryFiltersHighlightColor }">
+                                                                 [ngClass]="{'PLText':this.HasQueryFiltersHighlightColor ,'PrivateLabelMenuFilters':  this.HasQueryFiltersHighlightColor,'LogboxMenuFilters': !this.HasQueryFiltersHighlightColor,  'QueryFiltersHighlightColor': (SelectedFilter == 'All Shipments') && this.HasQueryFiltersHighlightColor }">
                                                                 <div class="MenuFiltersCount">{{AllShipmentsCount}}</div>
                                                                 <div class="MenuFiltersName">All Shipments</div>
                                                             </div>
