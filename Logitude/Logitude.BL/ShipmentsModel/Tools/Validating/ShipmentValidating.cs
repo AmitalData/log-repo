@@ -1286,7 +1286,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
                 myCard = cardRepository.GetSingleCard(entityPM.CustomAgentExportId, entityPM.Tenant);
                 if (myCard != null)
                 {
-                    if (myCard.PartnerTypeId != "CG")
+                    if (myCard.PartnerTypeId != "CG" && myCard.PartnerTypeId != "AG")
                     {
                         throw new ApplicationException("Customs agent export partner type should be customs agent");
                     }
@@ -1298,7 +1298,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
                 myCard = cardRepository.GetSingleCard(entityPM.CustomAgentImportId, entityPM.Tenant);
                 if (myCard != null)
                 {
-                    if (myCard.PartnerTypeId != "CG")
+                    if (myCard.PartnerTypeId != "CG" && myCard.PartnerTypeId != "AG")
                     {
                         throw new ApplicationException("Customs agent import partner type should be customs agent");
                     }
