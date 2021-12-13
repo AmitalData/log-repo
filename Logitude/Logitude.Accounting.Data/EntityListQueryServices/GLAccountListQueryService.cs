@@ -629,6 +629,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                         ChartOfAccountsName = a.ChartOfAccountsEnglishName != null ? a.ChartOfAccountsEnglishName : null, //ChartOfAccountsLocalName
 
                         DeductionFileNumber = a.DeductionFileNumber,
+                        ExcludeFromDeductionReport = a.ExcludeFromDeductionReport,
 
                         // Card
                         SalesmanUserId = a.SalesmanUserId    ,
