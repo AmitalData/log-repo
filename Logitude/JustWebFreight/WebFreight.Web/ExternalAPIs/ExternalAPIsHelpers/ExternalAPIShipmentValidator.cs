@@ -592,9 +592,25 @@ namespace WebFreight.Web.ExternalAPIs.ExternalAPIsHelpers
             if (string.IsNullOrEmpty(shipmentPM.PreCarriageToPortId) || string.IsNullOrEmpty(shipmentPM.PreCarriageFromPortId))
                 return;
 
-            if(shipmentPM.PreCarriageToPortId != shipmentPM.MainCarriageFromPortId)
+            string mainCarriageFromPortId = GetMainCarriageFromPortId();
+            if (shipmentPM.PreCarriageToPortId != mainCarriageFromPortId)
                 throw new ApplicationException("PreCarriageToPort Must Be Same As MainCarriageFromPort");
         }
+
+        private string GetMainCarriageFromPortId()
+        {
+            if (!string.IsNullOrEmpty(shipmentPM.MainCarriageFromPortId))
+                return shipmentPM.MainCarriageFromPortId;
+
+            if(shipmentPM.MainCarriageLegs.Count > 0)
+            {
+                var mainCarriageLeg = shipmentPM.MainCarriageLegs.FirstOrDefault();
+                return mainCarriageLeg?.FromPortId;
+            }
+
+            return "";
+        }
+
         private void ValidateOnCarrageFromPortField()
         {
             if (string.IsNullOrEmpty(shipmentPM.OnCarriageFromPortId) || string.IsNullOrEmpty(shipmentPM.OnCarriageFromPortId))
