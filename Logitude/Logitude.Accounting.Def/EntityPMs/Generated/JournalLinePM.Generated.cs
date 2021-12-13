@@ -873,6 +873,52 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
+	  private string creditAccountCOACode ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CreditAccountCOACode  
+	   {
+	    
+	     get
+		{
+		   return creditAccountCOACode;
+		 }
+		 set
+		 {
+		   if(creditAccountCOACode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CreditAccountCOACode",OldValue=creditAccountCOACode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   creditAccountCOACode=value;
+		   }
+			
+		 }
+	   }
+	  private string debitAccountCOACode ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string DebitAccountCOACode  
+	   {
+	    
+	     get
+		{
+		   return debitAccountCOACode;
+		 }
+		 set
+		 {
+		   if(debitAccountCOACode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DebitAccountCOACode",OldValue=debitAccountCOACode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   debitAccountCOACode=value;
+		   }
+			
+		 }
+	   }
    }
    
 }
