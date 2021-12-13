@@ -159,7 +159,8 @@ namespace Logitude.Accounting.Data.Repositories
                     Inactive = a.Inactive,
                     ReconcileMethodCode = a.ReconcileMethodCode,
                     ChartOfAccountsTypeCode = a.ChartOfAccountsTypeCode,
-
+                    CardsDataId = a.CardsDataId,
+                    CardsData = a.GLAccountCardsData,
                     ControlAccountId = a.ControlAccountId,
 
                     AutomaticReconcileId = a.AutomaticReconcileId,
@@ -1164,6 +1165,9 @@ namespace Logitude.Accounting.Data.Repositories
         public string InternalNumber { get;  set;  }
         public string AccountTypeCode { get;  set;  }
         public string DisplayNumber { get;  set;  }
+        public string CardsDataId { get; set; }
+        public GLAccountCardsData CardsData { get; set; }
+
         public string EnglishName { get;  set;  }
         public string LocalName { get;  set;  }
         public string SearchFields { get;  set;  }

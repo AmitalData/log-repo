@@ -472,9 +472,9 @@ namespace WebFreight.Web.AccountingModel.DomainServices
                 // Customers GLAccounts
                 result.ActiveCustomersCount = iQueryable_Data.Where(d => d.AccountTypeCode == "2" && d.Inactive == false).Count();
                 result.InactiveCustomersCount = iQueryable_Data.Where(d => d.AccountTypeCode == "2" && d.Inactive == true).Count();
-                List<string> glaccountIds = GetGlaccountIdsThatConnectedCardCollectorAsLoggedUser(tenant);
+                var allCustomers = iQueryable_Data.Where(d => d.AccountTypeCode == "2");
+                result.CollectorsCount = GetGlaccountsThatConnectedCardCollectorAsLoggedUser(tenant, allCustomers);
 
-                result.CollectorsCount = iQueryable_Data.Where(d => d.AccountTypeCode == "2" && glaccountIds.Contains(d.Id)).Count();
                 result.DebitorsCount = iQueryable_Data.Where(d => d.AccountTypeCode == "2" && d.LocalBalanceInDue > 0).Count();
                 result.AllCustomersCount = iQueryable_Data.Where(d => d.AccountTypeCode == "2").Count();
 
@@ -490,13 +490,10 @@ namespace WebFreight.Web.AccountingModel.DomainServices
             return result;
         }
 
-        private List<string> GetGlaccountIdsThatConnectedCardCollectorAsLoggedUser(int tenant)
+        private int GetGlaccountsThatConnectedCardCollectorAsLoggedUser(int tenant, IQueryable<GLAccountAndMoreDTO> allCustomers)
         {
             var loggedUserId = GetLoggedUser(tenant).Id;
-            accountingContext = AccountingContext.GetContext(tenant);
-            var glaccountIds = (from a in accountingContext.Cards
-                                where a.CollectorId == loggedUserId
-                                select a.GLAccountId).ToList();
+            var glaccountIds = allCustomers.Include("CardsData").Where(e => e.CardsData.CollectorUserId == loggedUserId).Count();
             return glaccountIds;
         }
 
