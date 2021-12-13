@@ -116,7 +116,7 @@ namespace Logitude.Server.Tools.EntityChanges
             if (objectTableName != "Shipment") return new EntityDetails { EntityPM = entityPM, ObjectTableName = objectTableName, CombinedObjectTableName = objectTableName };
 
             string shipmentTableName = GetShipmentTableName(entityPM);
-            if (shipmentTableName != "MasterAndHouse") return new EntityDetails { EntityPM = entityPM, ObjectTableName = objectTableName, CombinedObjectTableName = objectTableName };
+            if (shipmentTableName != "MasterAndHouse") return new EntityDetails { EntityPM = entityPM, ObjectTableName = shipmentTableName, CombinedObjectTableName = objectTableName };
 
             return new EntityDetails { EntityPM = entityPM, ObjectTableName = "Master", OtherObjectTableName = "Shipment", CombinedObjectTableName = shipmentTableName };
         }
