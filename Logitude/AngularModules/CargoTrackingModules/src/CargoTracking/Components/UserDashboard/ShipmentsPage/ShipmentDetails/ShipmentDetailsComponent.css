@@ -468,7 +468,7 @@ h1 {
     }
 
     .route-description {
-        max-width: 140px;
+        max-width: 130px;
     }
 }
 
@@ -625,7 +625,7 @@ h1 {
     }
 
     .route-description {
-        max-width: 150px;
+        max-width: 130px;
     }
 }
 @media screen and (max-width: 479px){
