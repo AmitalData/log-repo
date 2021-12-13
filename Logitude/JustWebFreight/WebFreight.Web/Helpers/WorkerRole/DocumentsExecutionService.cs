@@ -69,18 +69,20 @@ namespace WebFreight.Web.Helpers.WorkerRoleHelpers
             ExportDocumentArgs exportDocumentArgs = !string.IsNullOrEmpty(documentsExecutionLog.RequestXML) ? LogitudeXmlSerializer.DeserializeObject<ExportDocumentArgs>(documentsExecutionLog.RequestXML) : null;
             if (exportDocumentArgs != null)
             {
+                Dictionary<string, string> documentTypeCopiesDetails = new Dictionary<string, string>();
                 string authenticatedUserEmail = GetContactEmailByContactId(exportDocumentArgs.LoggedContactId, exportDocumentArgs.Tenant);
                 Parallel.ForEach(exportDocumentArgs.DocumentTypeCopyIdsList, (documentTypeCopyId) =>
                 {
                     AuthenticationUtil.AuthenticatedUserEmail = authenticatedUserEmail;
                     ExportDocumentHelper exportDocumentHelper = new ExportDocumentHelper();
                     string result = exportDocumentHelper.ExportDocument2Pdf(exportDocumentArgs, documentTypeCopyId);
+                    documentTypeCopiesDetails.Add(documentTypeCopyId, result);
                 });
                 UpdateDocumentOut(exportDocumentArgs);
                 DocumentPopulateAutomaticDateUpdateService documentPopulateAutomaticDateUpdateService = new DocumentPopulateAutomaticDateUpdateService();
                 documentPopulateAutomaticDateUpdateService.Update(new DocumentPopulateAutomaticDateArgs() { EntityId = exportDocumentArgs.EntityId, ObjectTableName = exportDocumentArgs.ObjectTableName, ChildObjectTableId = exportDocumentArgs.ChildObjectTableId, ChildEntityId = exportDocumentArgs.ChildEntityId, DocumentTypeCode = exportDocumentArgs.CurrentDocumentTypeCode, ProcessType = "Print", Tenant = exportDocumentArgs.Tenant });
                 
-                RunAutomation(exportDocumentArgs, "OnDocumentUpdate");
+                RunAutomation(exportDocumentArgs, "OnDocumentUpdate", documentTypeCopiesDetails);
 
                 UpdateDocumentsExecutionLog(new DocumentsExecutionLogArgs() {StatusCode = "D", DoneDate = DateTime.Now });
                 queueService.Complete();
@@ -92,7 +94,7 @@ namespace WebFreight.Web.Helpers.WorkerRoleHelpers
             }
         }
 
-        private void RunAutomation(ExportDocumentArgs exportDocumentArgs, string automationType)
+        private void RunAutomation(ExportDocumentArgs exportDocumentArgs, string automationType, Dictionary<string, string> documentTypeCopiesDetails)
         {
             GeneralEntityChangeService generalEntityChangeService = new GeneralEntityChangeService();
             EntityDetails entityDetails = generalEntityChangeService.GetEntityDetails(exportDocumentArgs.EntityId, exportDocumentArgs.ObjectTableName, exportDocumentArgs.Tenant);
@@ -100,7 +102,7 @@ namespace WebFreight.Web.Helpers.WorkerRoleHelpers
             bool isHaveAutomation = generalEntityChangeService.CheckIfEntityHaveAutomation(entityDetails.CombinedObjectTableName, automationType, exportDocumentArgs.Tenant);
             if (!isHaveAutomation) return;
 
-            MainEntityChangeService mainEntityChangeService = new MainEntityChangeService(new EntityChangeArgs() { ProcessType = automationType, ObjectTableName = entityDetails.ObjectTableName, EntityId = exportDocumentArgs.EntityId, Tenant = exportDocumentArgs.Tenant, StartDate = DateTime.Now, ExtraDetails = new OnUpdateDocumentResult { Type = "Print", DocumentTypeCopyIds = exportDocumentArgs.DocumentTypeCopyIdsList }, OtherObjectTableName = entityDetails.OtherObjectTableName });
+            MainEntityChangeService mainEntityChangeService = new MainEntityChangeService(new EntityChangeArgs() { EntityPM = entityDetails.EntityPM, ProcessType = automationType, ObjectTableName = entityDetails.ObjectTableName, EntityId = exportDocumentArgs.EntityId, Tenant = exportDocumentArgs.Tenant, StartDate = DateTime.Now, ExtraDetails = new OnUpdateDocumentDetails { Type = "Print", DocumentTypeCopiesDetails = documentTypeCopiesDetails }, OtherObjectTableName = entityDetails.OtherObjectTableName });
             mainEntityChangeService.AddEntityChange();
         }
 

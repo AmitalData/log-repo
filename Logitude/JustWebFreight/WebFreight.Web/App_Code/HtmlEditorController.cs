@@ -235,7 +235,7 @@ namespace WebFreight.Web.App_Code
             bool isHaveAutomation = generalEntityChangeService.CheckIfEntityHaveAutomation(entityDetails.CombinedObjectTableName, automationType, filter.Tenant);
             if (!isHaveAutomation) return;
 
-            MainEntityChangeService mainEntityChangeService = new MainEntityChangeService(new EntityChangeArgs() { ProcessType = automationType, ObjectTableName = entityDetails.ObjectTableName, EntityId = filter.EntityId, Tenant = filter.Tenant, StartDate = DateTime.Now, ExtraDetails = new OnUpdateDocumentResult { Type = "Send", DocumentId = documentId, DocumentTypeId = filter.DocumentTypeId }, OtherObjectTableName = entityDetails.OtherObjectTableName });
+            MainEntityChangeService mainEntityChangeService = new MainEntityChangeService(new EntityChangeArgs() { EntityPM = entityDetails.EntityPM, ProcessType = automationType, ObjectTableName = entityDetails.ObjectTableName, EntityId = filter.EntityId, Tenant = filter.Tenant, StartDate = DateTime.Now, ExtraDetails = new OnUpdateDocumentDetails { Type = "Send", DocumentId = documentId, DocumentTypeId = filter.DocumentTypeId }, OtherObjectTableName = entityDetails.OtherObjectTableName });
             mainEntityChangeService.AddEntityChange();
         }
 

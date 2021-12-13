@@ -27,8 +27,7 @@ namespace WebFreight.Web.Helpers.AutomationModel
         EntityChangeAutomation entityChangesAutomation = null;
         List<EntityChangeAutomation> entityChangesAutomationsLists = null;
         DocumentRepository documentRepository = null;
-        DocumentTypeCopyRepository documentTypeCopyRepository = null;
-        AutomationOnUpdateDocument automationOnUpdateDocument = null;
+        AutomationOnUpdateDocument automationOnUpdateDocumentResult = null;
         int tenant;
         string entityId;
         string extraDetails = string.Empty;
@@ -42,9 +41,8 @@ namespace WebFreight.Web.Helpers.AutomationModel
             entityId = onUpdateDocumentArgs.EntityId;
             extraDetails = onUpdateDocumentArgs.ExtraDetails;
             documentRepository = new DocumentRepository(tenant);
-            documentTypeCopyRepository = new DocumentTypeCopyRepository(tenant);
             entityChangesAutomation.type = onUpdateDocumentArgs.ValidateResult.IsAutomationValid ? "OnUpdateDocumentSsucceed" : "OnUpdateDocumentFailed";
-            automationOnUpdateDocument = onUpdateDocumentArgs.AutomatedBackup.AutomationOnUpdateDocument;
+            automationOnUpdateDocumentResult = onUpdateDocumentArgs.AutomatedBackup.AutomationOnUpdateDocument;
         }
 
         public void Execute()
@@ -57,52 +55,60 @@ namespace WebFreight.Web.Helpers.AutomationModel
 
         private void HandleValidAutomation()
         {
-            if (automationOnUpdateDocument.SendVia == "FTP") ApplyFTPSelection();
+            if (automationOnUpdateDocumentResult.SendVia == "FTP") ApplyFTPAutomationResult();
             if (IsValidDocumentSelectionAutomation) MarkEntityChangeExecutedRecord(onUpdateDocumentArgs.EntityChange, entityChangesAutomation, entityChangesAutomationsLists);
             else HandleInvalidAutomation();
         }
 
-        private void ApplyFTPSelection()
+        private void ApplyFTPAutomationResult()
         {
-            OnUpdateDocumentResult onUpdateDocumentResult = LogitudeXmlSerializer.DeserializeObject<OnUpdateDocumentResult>(extraDetails);
-            if (!string.IsNullOrEmpty(onUpdateDocumentResult.DocumentId))
-            {
-                SendUploadedSentDocumentToFTP(onUpdateDocumentResult);
-            }
-            else if (onUpdateDocumentResult.DocumentTypeCopyIds.Count() > 0)
-            {
-                StartSendingPrintedDocumentToFTP(onUpdateDocumentResult);
-            }
+            OnUpdateDocumentDetails onUpdateDocumentDetails = LogitudeXmlSerializer.DeserializeObject<OnUpdateDocumentDetails>(extraDetails);
+            
+            List<string> documentsIds = GetAutomationSelectedDocuments(onUpdateDocumentDetails);
+            documentsIds.ForEach(documentId => {
+                SendDocumentViaFTP(new OnUpdateDocumentFTPArgs { AutomationOnUpdateDocument = automationOnUpdateDocumentResult, DocumentId = documentId, ObjectTableId = onUpdateDocumentArgs.EntityChange.ObjectTableId });
+            });
+
+            IsValidDocumentSelectionAutomation = documentsIds.Count() > 0;
         }
 
-        private void StartSendingPrintedDocumentToFTP(OnUpdateDocumentResult onUpdateDocumentResult)
+        private List<string> GetAutomationSelectedDocuments(OnUpdateDocumentDetails onUpdateDocumentDetails)
         {
-            automationOnUpdateDocument.DocumentTypeLists.ForEach(documentType => {
-                SendPrintedDocumentToFTP(onUpdateDocumentResult, documentType);
+            List<string> documentsIds = new List<string>();
+            if (!string.IsNullOrEmpty(onUpdateDocumentDetails.DocumentId))
+            {
+                AddDocumentTypeDocumentId(onUpdateDocumentDetails, documentsIds);
+            }
+            else if (onUpdateDocumentDetails.DocumentTypeCopiesDetails.Count() > 0)
+            {
+                FillDocumentTypeCopiesDocumentId(onUpdateDocumentDetails, documentsIds);
+            }
+
+            return documentsIds;
+        }
+
+        private void FillDocumentTypeCopiesDocumentId(OnUpdateDocumentDetails onUpdateDocumentDetails, List<string> documentsIds)
+        {
+            onUpdateDocumentDetails.DocumentTypeCopiesDetails.ToList().ForEach(documentTypeCopy =>
+            {
+                AddDocumentTypeCopyDocumentId(documentsIds, documentTypeCopy);
             });
         }
 
-        private void SendPrintedDocumentToFTP(OnUpdateDocumentResult onUpdateDocumentResult, OnUpdateDocumentTypeAttachment documentType)
+        private void AddDocumentTypeCopyDocumentId(List<string> documentsIds, KeyValuePair<string, string> documentTypeCopy)
         {
-            string documentTypeCopyId = onUpdateDocumentResult.DocumentTypeCopyIds.Where(documentCopyId => documentCopyId == documentType.DocumentTypeCopyId).FirstOrDefault();
-
-            if (string.IsNullOrEmpty(documentTypeCopyId)) return;
-
-            DocumentTypeCopy documentTypeCopy = documentTypeCopyRepository.GetSingleDocumentTypeCopyByTenant(documentTypeCopyId, tenant);
-            string documnetFileName = "";
-            if (documentTypeCopy != null) documnetFileName = documentTypeCopy.Name;
-            ApplyAutomationOnUpdateDocumentFTP(new OnUpdateDocumentFTPArgs { AutomationOnUpdateDocument = automationOnUpdateDocument, DocumentId = documentTypeCopyId, ObjectTableId = onUpdateDocumentArgs.EntityChange.ObjectTableId, DocumentFileName = onUpdateDocumentResult.Type + " " + documnetFileName });
-            IsValidDocumentSelectionAutomation = true;
+            if (automationOnUpdateDocumentResult.DocumentTypeLists.Where(d => d.DocumentTypeCopyId == documentTypeCopy.Key).FirstOrDefault() != null)
+            {
+                documentsIds.Add(documentTypeCopy.Value);
+            }
         }
 
-        private void SendUploadedSentDocumentToFTP(OnUpdateDocumentResult onUpdateDocumentResult)
+        private void AddDocumentTypeDocumentId(OnUpdateDocumentDetails onUpdateDocumentDetails, List<string> documents)
         {
-            OnUpdateDocumentTypeAttachment onUpdateDocumentTypeAttachment = automationOnUpdateDocument.DocumentTypeLists.Where(documentType => documentType.DocumentTypeId == onUpdateDocumentResult.DocumentTypeId).FirstOrDefault();
-            if (onUpdateDocumentTypeAttachment == null) return;
-
-            string documnetFileName = documentRepository.GetCalculatedFileNameById(onUpdateDocumentResult.DocumentId, tenant);
-            ApplyAutomationOnUpdateDocumentFTP(new OnUpdateDocumentFTPArgs { AutomationOnUpdateDocument = automationOnUpdateDocument, DocumentId = onUpdateDocumentResult.DocumentId, ObjectTableId = onUpdateDocumentArgs.EntityChange.ObjectTableId, DocumentFileName = onUpdateDocumentResult.Type + " " + documnetFileName });
-            IsValidDocumentSelectionAutomation = true;
+            if (automationOnUpdateDocumentResult.DocumentTypeLists.Where(documentType => documentType.DocumentTypeId == onUpdateDocumentDetails.DocumentTypeId).FirstOrDefault() != null)
+            {
+                documents.Add(onUpdateDocumentDetails.DocumentId);
+            }
         }
 
         private void HandleInvalidAutomation()
@@ -118,8 +124,9 @@ namespace WebFreight.Web.Helpers.AutomationModel
             onUpdateDocumentArgs.EntityChange.OnUpdateDocumentAutomationSsucceedXml = entityChangesAutomationsLists.Where(d => d.IsConditionTrue).ToList().Count > 0 ? LogitudeXmlSerializer.SerializeObjectToXmlString(entityChangesAutomationsLists.Where(d => d.IsConditionTrue).ToList()) : "";
         }
 
-        private void ApplyAutomationOnUpdateDocumentFTP(OnUpdateDocumentFTPArgs onUpdateDocumentFTPArgs)
+        private void SendDocumentViaFTP(OnUpdateDocumentFTPArgs onUpdateDocumentFTPArgs)
         {
+            string documentFileName = documentRepository.GetCalculatedFileNameById(onUpdateDocumentFTPArgs.DocumentId, tenant);
             FTPAutomationServiceArgs fTPAutomationServiceArgs = new FTPAutomationServiceArgs()
             {
                 FTPDetails = onUpdateDocumentFTPArgs.AutomationOnUpdateDocument.FTPDetails,
@@ -127,7 +134,7 @@ namespace WebFreight.Web.Helpers.AutomationModel
                 Tenant = tenant,
                 EntityId = entityId,
                 ObjectTableId = onUpdateDocumentFTPArgs.ObjectTableId,
-                DocumentFileName = onUpdateDocumentFTPArgs.DocumentFileName,
+                DocumentFileName = documentFileName,
             };
             FTPAutomationService ftpAutomationService = new FTPAutomationService(fTPAutomationServiceArgs);
             ftpAutomationService.Run();
@@ -157,6 +164,5 @@ namespace WebFreight.Web.Helpers.AutomationModel
         public AutomationOnUpdateDocument AutomationOnUpdateDocument { get; set; }
         public string DocumentId { get; set; }
         public string ObjectTableId { get; set; }
-        public string DocumentFileName { get; set; }
     }
 }

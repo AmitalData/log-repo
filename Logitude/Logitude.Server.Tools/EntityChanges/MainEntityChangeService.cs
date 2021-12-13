@@ -268,11 +268,11 @@ namespace Logitude.Server.Tools.EntityChanges
         public object ExtraDetails { get; set; }
     }
 
-    public class OnUpdateDocumentResult
+    public class OnUpdateDocumentDetails
     {
         public string Type { get; set; }
         public string DocumentId { get; set; }
-        public List<string> DocumentTypeCopyIds { get; set; }
+        public Dictionary<string, string> DocumentTypeCopiesDetails { get; set; }
         public string DocumentTypeId { get; set; }
     }
 
