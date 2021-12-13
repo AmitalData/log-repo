@@ -92,8 +92,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
 
                 AccountingStreamingInNewSerializableTransaction(actions, myLedgerTransactionsWithCounters, gLAccountAgingDataPMs);
-
-
+                CalculateTotalFutureOpenChequesForCreditGlAccount(myLedgerTransactionsWithCounters);
 
                 return new ResultApproveJournalM()
                 {
@@ -174,7 +173,6 @@ namespace Logitude.Accounting.BL.CoreBL
                     //if (!_ExecAsSP)
                     {
                         FillIdCountersUseNewDBTransaction(myLedgerTransactionsWithCounters);
-                        CalculateTotalFutureOpenChequesForCreditGlAccount(myLedgerTransactionsWithCounters);
                     }
                 }
                 //scope.Complete();//Please do not commit !!!!
