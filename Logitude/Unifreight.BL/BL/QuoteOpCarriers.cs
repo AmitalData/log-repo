@@ -29,8 +29,37 @@ namespace Unifreight.BL.BL
             }
             return tenantAmitalContext;
         }
-        public List<Carriers> GetCarriersItemsList(string DIRECTIONID, string TRANSPORTMODEID, QueryOperations queryOperations)
+
+        public Carriers GetFromCache(string DIRECTIONID, string TRANSPORTMODEID, string AIRLINEID)
         {
+            IDataFromDB data;
+
+            if (DIRECTIONID == "E" && TRANSPORTMODEID == "A")
+                data = (IDataFromDB)new ETBAIRLINEQueryService(GetAmitalContext(tenant)).GetSingle(AIRLINEID, true);
+            else if (DIRECTIONID == "E" && TRANSPORTMODEID == "O")
+                data = (IDataFromDB)new MTBCARRQueryService(GetAmitalContext(tenant)).GetSingle(AIRLINEID, true);
+            else if (DIRECTIONID == "I")
+                data = (IDataFromDB)new ETBVENDQueryService(GetAmitalContext(tenant)).GetSingle(AIRLINEID, true);
+            else
+                return null;
+
+            return new Carriers
+            {
+                Name = data.NAMEENG,
+                AIRLINE_ID = data.AIRLINEID,
+                Prefix = data.AIRLINENUM,
+                VENDOR_ID = TRANSPORTMODEID == "A" && DIRECTIONID == "I" ? data.VENDORPREFIX : ""
+            };
+        }
+
+        public List<Carriers> GetCarriersItemsList(string DIRECTIONID, string TRANSPORTMODEID, QueryOperations queryOperations, bool getFromCache = true)
+        {
+            if (getFromCache)
+            {
+                string cacheId = "carrierList" + DIRECTIONID + TRANSPORTMODEID + ";i:" + queryOperations.PageIndex + ";s:" + queryOperations.PageSize + ";d:" + queryOperations.SortDirectin + ";c:" + queryOperations.SortByColumnName + string.Join("", queryOperations.QueryFilterItems.Select(x => ";f:" + x.FieldName + ";v:" + x.FieldValue).ToArray());
+                return CacheHelper.GetFromCache(cacheId, () => GetCarriersItemsList(DIRECTIONID, TRANSPORTMODEID, queryOperations, false));
+            }
+
 
             if (DIRECTIONID == "E" && TRANSPORTMODEID == "A")
             {
@@ -59,5 +88,15 @@ namespace Unifreight.BL.BL
             public string Prefix;
             public string VENDOR_ID;
         }
+
+        public interface IDataFromDB
+        {
+            string NAMEENG { get; set; }
+            string AIRLINEID { get; set; }
+            string AIRLINENUM { get; set; }
+            string VENDORID { get; set; }
+            string VENDORPREFIX { get; set; }
+        }
+
     }
 }
