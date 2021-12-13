@@ -2634,6 +2634,7 @@
       <DependentUpon>HealthProb.aspx</DependentUpon>
     </Compile>
     <Compile Include="Helpers\AdvancedDateResolver.cs" />
+    <Compile Include="Helpers\AutomationModel\OnUpdateDocumentService.cs" />
     <Compile Include="Helpers\AutomationModel\WebHookAutomationService.cs" />
     <Compile Include="Helpers\CrmWebServicesValidator.cs" />
     <Compile Include="Helpers\DocumentFile.cs" />

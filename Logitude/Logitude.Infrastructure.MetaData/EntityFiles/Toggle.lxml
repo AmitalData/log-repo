@@ -39,7 +39,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Toggle&quot;"
-  Code="&quot;62bb&quot;"
+  Code="&quot;4a97&quot;"
   Name="&quot; Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;Name&quot;"
@@ -648,6 +648,11 @@
       Description="&quot;Container Automation&quot;"
       SearchFields="&quot;CAU,Container Automation&quot;" />
 
+    <Record
+      Code="&quot;ODA&quot;"
+      Name="&quot;On Update Document Automation Tab&quot;"
+      SearchFields="&quot;ODA,On Update Document Automation Tab&quot;"
+      Description="&quot;On Update Document Automation Tab&quot;" />
   </Records>
   <DataContracts />
   <AdditionalTextCodes />

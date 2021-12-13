@@ -18,6 +18,7 @@ using Logitude.BL.CommonDataModel.Tools.EntityService;
 using Logitude.BL.DataContracts;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Logitude.Server.Tools.EntityChanges;
 
 namespace WebFreight.Web.Helpers.WorkerRoleHelpers
 {
@@ -68,16 +69,20 @@ namespace WebFreight.Web.Helpers.WorkerRoleHelpers
             ExportDocumentArgs exportDocumentArgs = !string.IsNullOrEmpty(documentsExecutionLog.RequestXML) ? LogitudeXmlSerializer.DeserializeObject<ExportDocumentArgs>(documentsExecutionLog.RequestXML) : null;
             if (exportDocumentArgs != null)
             {
+                List<DocumentTypeCopiesDetails> documentTypeCopiesDetails = new List<DocumentTypeCopiesDetails>();
                 string authenticatedUserEmail = GetContactEmailByContactId(exportDocumentArgs.LoggedContactId, exportDocumentArgs.Tenant);
                 Parallel.ForEach(exportDocumentArgs.DocumentTypeCopyIdsList, (documentTypeCopyId) =>
                 {
                     AuthenticationUtil.AuthenticatedUserEmail = authenticatedUserEmail;
                     ExportDocumentHelper exportDocumentHelper = new ExportDocumentHelper();
                     string result = exportDocumentHelper.ExportDocument2Pdf(exportDocumentArgs, documentTypeCopyId);
+                    documentTypeCopiesDetails.Add(new DocumentTypeCopiesDetails() { DocumentTypeCopyId = documentTypeCopyId, DocumentId = result });
                 });
                 UpdateDocumentOut(exportDocumentArgs);
                 DocumentPopulateAutomaticDateUpdateService documentPopulateAutomaticDateUpdateService = new DocumentPopulateAutomaticDateUpdateService();
                 documentPopulateAutomaticDateUpdateService.Update(new DocumentPopulateAutomaticDateArgs() { EntityId = exportDocumentArgs.EntityId, ObjectTableName = exportDocumentArgs.ObjectTableName, ChildObjectTableId = exportDocumentArgs.ChildObjectTableId, ChildEntityId = exportDocumentArgs.ChildEntityId, DocumentTypeCode = exportDocumentArgs.CurrentDocumentTypeCode, ProcessType = "Print", Tenant = exportDocumentArgs.Tenant });
+                
+                RunAutomation(exportDocumentArgs, "OnDocumentUpdate", documentTypeCopiesDetails);
 
                 UpdateDocumentsExecutionLog(new DocumentsExecutionLogArgs() {StatusCode = "D", DoneDate = DateTime.Now });
                 queueService.Complete();
@@ -87,6 +92,18 @@ namespace WebFreight.Web.Helpers.WorkerRoleHelpers
                 UpdateDocumentsExecutionLog(new DocumentsExecutionLogArgs() { Exception = new Exception("RequestXML is null"), DoneDate = DateTime.Now, StartDate = startDate, StatusCode = "F" });
                 queueService.Complete();
             }
+        }
+
+        private void RunAutomation(ExportDocumentArgs exportDocumentArgs, string automationType, List<DocumentTypeCopiesDetails> documentTypeCopiesDetails)
+        {
+            GeneralEntityChangeService generalEntityChangeService = new GeneralEntityChangeService();
+            EntityDetails entityDetails = generalEntityChangeService.GetEntityDetails(exportDocumentArgs.EntityId, exportDocumentArgs.ObjectTableName, exportDocumentArgs.Tenant);
+
+            bool isHaveAutomation = generalEntityChangeService.CheckIfEntityHaveAutomation(entityDetails.CombinedObjectTableName, automationType, exportDocumentArgs.Tenant);
+            if (!isHaveAutomation) return;
+
+            MainEntityChangeService mainEntityChangeService = new MainEntityChangeService(new EntityChangeArgs() { EntityPM = entityDetails.EntityPM, ProcessType = automationType, ObjectTableName = entityDetails.ObjectTableName, EntityId = exportDocumentArgs.EntityId, Tenant = exportDocumentArgs.Tenant, StartDate = DateTime.Now, ExtraDetails = new OnUpdateDocumentDetails { Type = "Print", DocumentTypeCopiesDetails = documentTypeCopiesDetails }, OtherObjectTableName = entityDetails.OtherObjectTableName });
+            mainEntityChangeService.AddEntityChange();
         }
 
         private void UpdateDocumentOut(ExportDocumentArgs exportDocumentArgs)

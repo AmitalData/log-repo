@@ -429,6 +429,13 @@ namespace Logitude.Infrastructure.BL
                 Description = "Container Automation", 
                 SearchFields = "CAU,Container Automation", 
 			});
+            all.Add(new ToggleDetails()
+            {    
+                Code = "ODA", 
+                Name = "On Update Document Automation Tab", 
+                SearchFields = "ODA,On Update Document Automation Tab", 
+                Description = "On Update Document Automation Tab", 
+			});
 			
 
 			
