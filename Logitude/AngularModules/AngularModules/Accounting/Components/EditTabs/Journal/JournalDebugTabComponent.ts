@@ -37,12 +37,14 @@ import { JournalMoreDataPM } from '../../../EntityPMs/JournalMoreDataPM';
 import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
 import { JournalAdditionalDataListService } from '../../../Services/StandardLists/JournalAdditionalDataListService';
 import { JournalAdditionalDataList } from '../../../EntityLists/JournalAdditionalDataList';
+import { LedgerTransactionPMService } from 'Accounting/Services/StandardPMs/LedgerTransactionPMService';
+import { LedgerTransactionPM } from 'Accounting/EntityPMs/LedgerTransactionPM';
 
 
 @Component({
 
     templateUrl: './JournalDebugTabComponent.html',
-    
+
 })
 
 export class JournalDebugTabComponent extends BaseComponent implements OnInit {
@@ -53,7 +55,7 @@ export class JournalDebugTabComponent extends BaseComponent implements OnInit {
     public DataContext = this;
     defaultCurrencyId: string = SessionLocator.TenantPM.CurrencyId;
     public TenantCurrency = SessionLocator.TenantPM.CurrencyCode;
-    
+
     creditTotal: number = 0;
     debitTotal: number = 0;
     journalDisabled: boolean = false;
@@ -65,13 +67,14 @@ export class JournalDebugTabComponent extends BaseComponent implements OnInit {
     IsJournalEditableAfterApproval: boolean = false;
     APInvoice: APInvoicePM;
     Voided: boolean = false;
-    
+
     _AccountingPeriodListService: AccountingPeriodListService = new AccountingPeriodListService();
     ratesTableExtendedListService: RatesTableExtendedListService = new RatesTableExtendedListService();
     private ledgerTransactionListService: LedgerTransactionListService = new LedgerTransactionListService();
     private interestTransactionListService: InterestTransactionListService = new InterestTransactionListService();
     JournalExtendedListService: JournalExtendedListService = new JournalExtendedListService();
     JournalAdditionalDataListService: JournalAdditionalDataListService=new JournalAdditionalDataListService();
+    ledgerTransactionPMService: LedgerTransactionPMService=new LedgerTransactionPMService();
     Load: boolean = false;
 
     public isRTL: boolean = false;
@@ -128,7 +131,7 @@ export class JournalDebugTabComponent extends BaseComponent implements OnInit {
             })
         });
     }
-    
+
     public CurrentEditComponentId: string;
     private SaveCompletedEvent: any = null;
     private LoadCompletedEvent: any = null;
@@ -172,16 +175,16 @@ export class JournalDebugTabComponent extends BaseComponent implements OnInit {
     }
 
     SetUIProperties() {
-     
+
 
         //this.UIProperties.SetVisibility("Reference2", "Journal", false);
-     
+
     }
 
 
-    
-   
-    
+
+
+
     FillGrid() {
 
         // if entity in edit mode
@@ -194,7 +197,7 @@ export class JournalDebugTabComponent extends BaseComponent implements OnInit {
             this.JournalMoreDataList.Clear();
             this.JournalAdditionalDataList.Clear();
 
-            
+
             this.JournalExtendedListService.GetJournalAdditionalDataByJournalId(this.EntityPM.Id)
                 .subscribe(r => {
                     let res: JournalAdditionalDataList[] = r.Result;
@@ -211,7 +214,7 @@ export class JournalDebugTabComponent extends BaseComponent implements OnInit {
             this.JournalReconciles.InsertCollection(this.EntityPM.JournalReconciles);
             this.JournalExternalReconciles.InsertCollection(this.EntityPM.JournalExternalReconciles);
         }
-       
+
     }
 
 
@@ -225,14 +228,14 @@ export class JournalDebugTabComponent extends BaseComponent implements OnInit {
                 }
             }
         });
-       
+
 
         //set focus on accounting date
         //var t = setTimeout(() => { this.forceFocus = true; }, 1);
     }
 
     //#region Properties
-    
+
     //#endregion
     JournalAdditionalDataGetRows_notwork() {
         let filters = new ApiQueryFilters();
@@ -244,9 +247,9 @@ export class JournalDebugTabComponent extends BaseComponent implements OnInit {
         filters.GetCount = true;
         filters.SortBy = "GLAccountId";
         //InterestEntityTypeCode
-        
+
         filters.addAdditionalFilter("JournalId", this.EntityPM.Id, null, null, "Equals", false, false, false, "string");
-        
+
 
         return this.JournalAdditionalDataListService.getByFilters(filters)
             .subscribe(r => {
@@ -258,7 +261,7 @@ export class JournalDebugTabComponent extends BaseComponent implements OnInit {
             });
 
     }
-    
+
     InterestTransactionGetRows()//skip, take, sortingCol, sortingDir, getCount: boolean, searchfields?: string, filters: ApiQueryFilters = null) {
     {
         let filters = new ApiQueryFilters();
@@ -313,8 +316,8 @@ export class JournalDebugTabComponent extends BaseComponent implements OnInit {
             .subscribe(r => {
                 //this.LedgerTransactionList = new ObservableCollection([]);
                 let res: InterestTransactionList[] = r.Result;
-                
-                
+
+
                 this.InterestTransactionList.InsertCollection(res);
             });
 
@@ -330,8 +333,8 @@ export class JournalDebugTabComponent extends BaseComponent implements OnInit {
         filters.GetAll = false;
         filters.GetCount = true;
         filters.SortBy = "JournalLineNumber";
-        
-        
+
+
 
         filters.addAdditionalFilter("JournalId", this.EntityPM.Id, null, null, "Equals", false, false, false, "string");
 
@@ -347,13 +350,13 @@ export class JournalDebugTabComponent extends BaseComponent implements OnInit {
                     } else {
                         lt.AccountDisplayNumber = jl.CreditAccountNumber;
                     }
-                    
+
                 });
                 this.LedgerTransactionList.InsertCollection(r.Result);
             });
 
     }
-  
+
 
     DetectChanges() {
         this.CD.detectChanges();
@@ -369,7 +372,7 @@ export class JournalDebugTabComponent extends BaseComponent implements OnInit {
     }
 
     ResetJournalClicked(clearIt: boolean) {
-        
+
         this.JournalExtendedListService.GetResetJournalByJournalId(this.EntityPM.Id, clearIt)
             .subscribe(r => {
                 if (!r.HasError) {
@@ -389,5 +392,65 @@ export class JournalDebugTabComponent extends BaseComponent implements OnInit {
 
     }
 
+    IsExternalReconcileChanged(transaction: LedgerTransactionList, checked)
+    {
+        this.CurrentSession.StartBusyIndicatorLoading();
+        transaction.IsExternalReconcile = checked;
+        this.ledgerTransactionPMService.get(transaction.Id)
+            .subscribe(response =>
+            {
+                this.CurrentSession.StopBusyIndicator();
+
+                if (!response.HasError) {
+                    var ledger: LedgerTransactionPM = response.Result;
+                    this.UpdateLedgerTransaction(ledger, checked);
+
+                } else {
+                    var myMessageWindow = new MessageWindow();
+                    myMessageWindow.Title = "Error";
+                    myMessageWindow.Show(response.ErrorsArray[0]);
+                }
+            },
+                (err) =>
+                {
+                    this.CurrentSession.StopBusyIndicator();
+
+                    var myMessageWindow = new MessageWindow();
+                    myMessageWindow.Show(err);
+                });
+
+    }
+
+
+    private UpdateLedgerTransaction(ledger: LedgerTransactionPM, checked: any)
+    {
+        this.CurrentSession.StartBusyIndicatorSaving();
+
+        ledger.IsExternalReconcile = checked;
+
+        this.ledgerTransactionPMService.update(ledger)
+            .subscribe(r =>
+            {
+                this.CurrentSession.StopBusyIndicator();
+
+                if (!r.HasError) {
+                    var myMessageWindow = new MessageWindow();
+
+                    myMessageWindow.Show("Ledger Transaction Updated");
+                } else {
+                    var myMessageWindow = new MessageWindow();
+                    myMessageWindow.Title = "Error while update";
+                    myMessageWindow.Show(r.ErrorsArray[0]);
+
+                }
+            },
+                (err) =>
+                {
+                    this.CurrentSession.StopBusyIndicator();
+
+                    var myMessageWindow = new MessageWindow();
+                    myMessageWindow.Show(err);
+                });
+    }
 }
 

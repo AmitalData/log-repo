@@ -295,9 +295,16 @@
                                         <log-column [header]="'LedgerTransaction.F.IsExternalReconcile' | TextCodeTranslationPipe" [width]="'80'" [Alignment]="isRTL ? 'right' : 'left'">
                                             <ng-template let-item>
                                                 <log-cell-template [IgnoreMods]="true" [TabIndex]="-1" #logcelltemplate>
-                                                    <div class="TextTrimming" text-start>
+
+                                                    <CheckBox
+                                                        [IsChecked]="item.IsExternalReconcile"
+                                                        (Checked)="IsExternalReconcileChanged(item,$event)"
+                                                        ></CheckBox>
+
+
+                                                    <!-- <div class="TextTrimming" text-start>
                                                         <span>{{item.IsExternalReconcile}}</span>
-                                                    </div>
+                                                    </div> -->
                                                 </log-cell-template>
                                             </ng-template>
                                         </log-column>
@@ -586,6 +593,6 @@
 
     </table>
 
-    
+
 
 
