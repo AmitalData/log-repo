@@ -1804,7 +1804,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 {
                     string token = HttpContext.Current.Request.Headers["Token"];
                     AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-
+                    SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                     IShipmentsContext iContext = ShipmentsContext.GetContext(0);
                     ShipmentRepository iShipmentRepository = new ShipmentRepository(iContext);
                     ShipmentQuery iShipmentQuery = new ShipmentQuery(iShipmentRepository);

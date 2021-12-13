@@ -555,6 +555,10 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         {
             try
             {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnTenant(Tenant);
                 var documentsFilingQuery = new DocumentsFilingQuery(Tenant);
                 var AllDocs = documentsFilingQuery.GetDocumentsFilingPMsByEntityIdAndObjectTable(ShipmentId, null, ObjectTableId, "I", Tenant);
                 var guid = Guid.NewGuid();
