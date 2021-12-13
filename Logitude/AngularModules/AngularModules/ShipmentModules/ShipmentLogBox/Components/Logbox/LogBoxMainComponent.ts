@@ -813,13 +813,17 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
         if (!this.HasQueryFiltersHighlightColor) return;
         var element = document.getElementById(id);
         if (element) {
-            if (label == this.SelectedFilter) {
-                this.SetQueryFilterOptions(element, "1");
-            } else{
-                this.ClearQuereFilter(element);
-            }
+            this.SetQuereyFilterForHover(label, element);
         }
     }
+    private SetQuereyFilterForHover(label: any, element: HTMLElement) {
+        if (label == this.SelectedFilter) {
+            this.SetQueryFilterOptions(element, "1");
+        } else {
+            this.ClearQuereFilter(element);
+        }
+    }
+
     private ClearQuereFilter(element: HTMLElement) {
         element.style.backgroundColor = null;
         element.style.opacity = "1";
