@@ -150,7 +150,10 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
                                                                PoNumber = shipment.PoNumber,
                                                                SupplyDateTime = shipment.SupplyDateTime,
                                                                DescriptionOfGoods = shipment.DescriptionOfGoods,
-                                                               ATAETASortingField = shipment.ArrivalDate != null ? shipment.ArrivalDate : shipment.ArrivalEstimationDate,
+
+
+
+                                                               ATAETASortingField = shipment.ArrivalDate != null ? shipment.ArrivalDate: shipment.ArrivalEstimationDate,
                                                                ATDETDSortingField = shipment.DepartureDate != null ? shipment.DepartureDate : shipment.DepartureEstimationDate,
                                                                CreatedDone = shipment.CreatedDone,
                                                                DeliveredDone = shipment.DeliveredDone,

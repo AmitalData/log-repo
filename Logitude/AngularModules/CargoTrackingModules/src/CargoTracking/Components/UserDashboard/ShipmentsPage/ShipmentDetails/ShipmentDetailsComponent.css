@@ -432,6 +432,7 @@ h1 {
     }
 
     .slider .cards .routing-timeline {
+        align-content: flex-start;
         width: 70%;
         height: 160px;
         transition: margin-left 1s;
