@@ -380,9 +380,17 @@ namespace WebFreight.Web.ExternalAPIs.ExternalAPIsHelpers
                     }
             }
         }
-
-
-
+        public void ValidatePreAndOnCarrageFields()
+        {
+            this.ValidatePreCarrageFields();
+            this.ValidateOnCarrageFields();
+            this.ValidatePreCarrageToPortField();
+            this.ValidateOnCarrageFromPortField();
+            this.ValidateOnCarriageDates();
+            this.ValidatePreCarriageDates();
+            this.ValidatePreCarriageVessel();
+            this.ValidateOnCarriageVessel();
+        }
         private void ValidateOperationalClosed()
         {
             if (shipmentPM.IsOperationalClosed)
@@ -459,7 +467,7 @@ namespace WebFreight.Web.ExternalAPIs.ExternalAPIsHelpers
             List<FeatureToggle> featureTogglesList = featureToggles.ToList();
             if (featureTogglesList != null)
             {
-                return IsFeatureToggleExistInMultiOrSingleTenant(featureTogglesList.Find(a => a.ToggleCode == ocaenInsightFeatureToggleCode), tenant);
+                return IsFeatureToggleExistInMultiOrSingleTenant(featureTogglesList.Find(a => a.ToggleCode == ocaenInsightFeatureToggleCode && !a.Inactive), tenant);
             }
             return false;
         }
@@ -484,6 +492,176 @@ namespace WebFreight.Web.ExternalAPIs.ExternalAPIsHelpers
         private bool IsShipmentHasDelivery()
         {
             return shipmentPM.ShipmentDeliveries != null && shipmentPM.ShipmentDeliveries.Count > 0;
+        }
+        private void ValidatePreCarrageFields()
+        {
+            if (!IsAnyFieldOfPreCarrageNotNull())
+                return;
+
+            if (string.IsNullOrEmpty(shipmentPM.PreCarriageTransportModeId))
+                this.ThrowRequiredFieldExcption("PreCarriageTransportMode");
+
+            if (string.IsNullOrEmpty(shipmentPM.PreCarriageFromPortId))
+                this.ThrowRequiredFieldExcption("PreCarriageFromPort");
+
+            if (string.IsNullOrEmpty(shipmentPM.PreCarriageToPortId))
+                this.ThrowRequiredFieldExcption("PreCarriageToPort");
+        }
+        private void ValidateOnCarrageFields()
+        {
+            if (!IsAnyFieldOfOnCarrageNotNull())
+                return;
+
+            if (string.IsNullOrEmpty(shipmentPM.OnCarriageTransportModeId))
+                this.ThrowRequiredFieldExcption("OnCarriageTransportMode");
+
+            if (string.IsNullOrEmpty(shipmentPM.OnCarriageFromPortId))
+                this.ThrowRequiredFieldExcption("OnCarriageFromPort");
+
+            if (string.IsNullOrEmpty(shipmentPM.OnCarriageToPortId))
+                this.ThrowRequiredFieldExcption("OnCarriageToPort");
+        }
+        private bool IsAnyFieldOfPreCarrageNotNull()
+        {
+            if (!string.IsNullOrEmpty(shipmentPM.PreCarriageTransportModeId))
+                return true;
+
+            if (!string.IsNullOrEmpty(shipmentPM.PreCarriageFromPortId))
+                return true;
+
+            if (!string.IsNullOrEmpty(shipmentPM.PreCarriageToPortId))
+                return true;
+
+            if (!string.IsNullOrEmpty(shipmentPM.PreCarriageCarrierId))
+                return true;
+
+            if (!string.IsNullOrEmpty(shipmentPM.PreCarriageCarrierNumber))
+                return true;
+
+            if (shipmentPM.PreCarriageETA != null)
+                return true;
+
+            if (shipmentPM.PreCarriageETD != null)
+                return true;
+
+            if (shipmentPM.PreCarriageATA != null)
+                return true;
+
+            if (shipmentPM.PreCarriageATD != null)
+                return true;
+
+            return false;
+        }
+        private bool IsAnyFieldOfOnCarrageNotNull()
+        {
+            if (!string.IsNullOrEmpty(shipmentPM.OnCarriageTransportModeId))
+                return true;
+
+            if (!string.IsNullOrEmpty(shipmentPM.OnCarriageFromPortId))
+                return true;
+
+            if (!string.IsNullOrEmpty(shipmentPM.OnCarriageToPortId))
+                return true;
+
+            if (!string.IsNullOrEmpty(shipmentPM.OnCarriageCarrierId))
+                return true;
+
+            if (!string.IsNullOrEmpty(shipmentPM.OnCarriageCarrierNumber))
+                return true;
+
+            if (shipmentPM.OnCarriageETA != null)
+                return true;
+
+            if (shipmentPM.OnCarriageETD != null)
+                return true;
+
+            if (shipmentPM.OnCarriageATA != null)
+                return true;
+
+            if (shipmentPM.OnCarriageATD != null)
+                return true;
+
+            return false;
+        }
+        private void ThrowRequiredFieldExcption(string fieldName)
+        {
+            throw new ApplicationException(fieldName + " Is Required");
+        }
+        private void ValidatePreCarrageToPortField()
+        {
+            if (string.IsNullOrEmpty(shipmentPM.PreCarriageToPortId) || string.IsNullOrEmpty(shipmentPM.PreCarriageFromPortId))
+                return;
+
+            if(shipmentPM.PreCarriageToPortId != shipmentPM.MainCarriageFromPortId)
+                throw new ApplicationException("PreCarriageToPort Must Be Same As MainCarriageFromPort");
+        }
+        private void ValidateOnCarrageFromPortField()
+        {
+            if (string.IsNullOrEmpty(shipmentPM.OnCarriageFromPortId) || string.IsNullOrEmpty(shipmentPM.OnCarriageFromPortId))
+                return;
+
+            if (shipmentPM.OnCarriageFromPortId != shipmentPM.FinalDistenationPortId)
+                throw new ApplicationException("OnCarriageFromPort Must Be Same As Final Main Carriage To Port");
+        }
+        private void ValidateOnCarriageDates()
+        {
+            if (!this.IsRoutingLegDatesValid(shipmentPM.OnCarriageETD, shipmentPM.OnCarriageETA))
+            {
+                throw new ApplicationException("On Carriage expected departure must be less than On Carriage expected arrival");
+            }
+
+            if (!this.IsRoutingLegDatesValid(shipmentPM.OnCarriageATD, shipmentPM.OnCarriageATA))
+            {
+                throw new ApplicationException("On Carriage actual departure must be less than On Carriage actual arrival");
+            }
+        }
+        private void ValidatePreCarriageDates()
+        {
+            if (!this.IsRoutingLegDatesValid(shipmentPM.PreCarriageETD, shipmentPM.PreCarriageETA))
+            {
+                throw new ApplicationException("Pre Carriage expected departure must be less than Pre Carriage expected arrival");
+            }
+
+            if (!this.IsRoutingLegDatesValid(shipmentPM.PreCarriageATD, shipmentPM.PreCarriageATA))
+            {
+                throw new ApplicationException("Pre Carriage actual departure must be less than Pre Carriage actual arrival");
+            }
+        }
+        private bool IsRoutingLegDatesValid(DateTime? fisrtDate, DateTime? secondeDate)
+        {
+            bool isValid = true;
+
+            if (fisrtDate != null && secondeDate != null)
+            {
+                if (fisrtDate > secondeDate.Value.AddHours(24))
+                {
+                    isValid = false;
+                }
+            }
+            return isValid;
+        }
+        private void ValidatePreCarriageVessel()
+        {
+            if (string.IsNullOrEmpty(shipmentPM.PreCarriageToPortId) || string.IsNullOrEmpty(shipmentPM.PreCarriageFromPortId))
+                return;
+
+            if (shipmentPM.PreCarriageTransportModeId == "O")
+                return;
+
+            if(!string.IsNullOrEmpty(shipmentPM.PreCarriageVesselId))
+                throw new ApplicationException("PreCarriage should not have Vessel");
+
+        }
+        private void ValidateOnCarriageVessel()
+        {
+            if (string.IsNullOrEmpty(shipmentPM.OnCarriageFromPortId) || string.IsNullOrEmpty(shipmentPM.OnCarriageFromPortId))
+                return;
+
+            if (shipmentPM.OnCarriageTransportModeId == "O")
+                return;
+
+            if (!string.IsNullOrEmpty(shipmentPM.OnCarriageVesselId))
+                throw new ApplicationException("OnCarriage should not have Vessel");
         }
     }
 }
