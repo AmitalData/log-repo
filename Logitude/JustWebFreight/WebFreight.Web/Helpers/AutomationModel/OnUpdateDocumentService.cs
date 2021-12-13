@@ -32,6 +32,7 @@ namespace WebFreight.Web.Helpers.AutomationModel
         string entityId;
         string extraDetails = string.Empty;
         bool IsValidDocumentSelectionAutomation = false;
+        private List<string> documentsIds = null;
         public OnUpdateDocumentService(OnUpdateDocumentArgs onUpdateDocumentArgs, EntityChangeAutomation entityChangesAutomation, List<EntityChangeAutomation> entityChangesAutomationsLists)
         {
             this.onUpdateDocumentArgs = onUpdateDocumentArgs;
@@ -43,6 +44,7 @@ namespace WebFreight.Web.Helpers.AutomationModel
             documentRepository = new DocumentRepository(tenant);
             entityChangesAutomation.type = onUpdateDocumentArgs.ValidateResult.IsAutomationValid ? "OnUpdateDocumentSsucceed" : "OnUpdateDocumentFailed";
             automationOnUpdateDocumentResult = onUpdateDocumentArgs.AutomatedBackup.AutomationOnUpdateDocument;
+            documentsIds = new List<string>();
         }
 
         public void Execute()
@@ -74,28 +76,32 @@ namespace WebFreight.Web.Helpers.AutomationModel
 
         private List<string> GetAutomationSelectedDocuments(OnUpdateDocumentDetails onUpdateDocumentDetails)
         {
-            List<string> documentsIds = new List<string>();
-            if (!string.IsNullOrEmpty(onUpdateDocumentDetails.DocumentId))
+            if (!string.IsNullOrEmpty(onUpdateDocumentDetails.DocumentId) && CheckIfDocumentTypeDefinedInDocumentAutomation(onUpdateDocumentDetails.DocumentTypeId))
             {
-                AddDocumentTypeDocumentId(onUpdateDocumentDetails, documentsIds);
+                documentsIds.Add(onUpdateDocumentDetails.DocumentId);
             }
             else if (onUpdateDocumentDetails.DocumentTypeCopiesDetails.Count() > 0)
             {
-                FillDocumentTypeCopiesDocumentId(onUpdateDocumentDetails, documentsIds);
+                FillDocumentTypeCopiesDocumentId(onUpdateDocumentDetails);
             }
 
             return documentsIds;
         }
 
-        private void FillDocumentTypeCopiesDocumentId(OnUpdateDocumentDetails onUpdateDocumentDetails, List<string> documentsIds)
+        private bool CheckIfDocumentTypeDefinedInDocumentAutomation(string documentTypeId)
+        {
+            return automationOnUpdateDocumentResult.DocumentTypeLists.Where(documentType => documentType.DocumentTypeId == documentTypeId).FirstOrDefault() != null;
+        }
+
+        private void FillDocumentTypeCopiesDocumentId(OnUpdateDocumentDetails onUpdateDocumentDetails)
         {
             onUpdateDocumentDetails.DocumentTypeCopiesDetails.ToList().ForEach(documentTypeCopy =>
             {
-                AddDocumentTypeCopyDocumentId(documentsIds, documentTypeCopy);
+                AddDocumentTypeCopyDocumentId( documentTypeCopy);
             });
         }
 
-        private void AddDocumentTypeCopyDocumentId(List<string> documentsIds, KeyValuePair<string, string> documentTypeCopy)
+        private void AddDocumentTypeCopyDocumentId( KeyValuePair<string, string> documentTypeCopy)
         {
             if (automationOnUpdateDocumentResult.DocumentTypeLists.Where(d => d.DocumentTypeCopyId == documentTypeCopy.Key).FirstOrDefault() != null)
             {
@@ -103,13 +109,7 @@ namespace WebFreight.Web.Helpers.AutomationModel
             }
         }
 
-        private void AddDocumentTypeDocumentId(OnUpdateDocumentDetails onUpdateDocumentDetails, List<string> documents)
-        {
-            if (automationOnUpdateDocumentResult.DocumentTypeLists.Where(documentType => documentType.DocumentTypeId == onUpdateDocumentDetails.DocumentTypeId).FirstOrDefault() != null)
-            {
-                documents.Add(onUpdateDocumentDetails.DocumentId);
-            }
-        }
+   
 
         private void HandleInvalidAutomation()
         {
