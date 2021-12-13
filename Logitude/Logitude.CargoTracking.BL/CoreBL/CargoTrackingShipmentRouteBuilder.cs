@@ -32,7 +32,7 @@ namespace Logitude.CargoTracking.BL.EntityQueryServices
             if (shipmentPM != null)
                 BuildShipmentRoute(shipmentPM);
 
-            if(shipmentOrderPM != null)
+            if (shipmentOrderPM != null)
                 BuildShipmentOrderRoute(shipmentOrderPM);
 
             return routingSteps;
@@ -53,7 +53,7 @@ namespace Logitude.CargoTracking.BL.EntityQueryServices
                 BuildWarehouseLegStep(shipmentPM);
             }
 
-            BuildDeliveriesSteps(shipmentPM);            
+            BuildDeliveriesSteps(shipmentPM);
         }
         private void BuildShipmentOrderRoute(ShipmentOrderPM shipmentOrderPM)
         {
@@ -72,7 +72,7 @@ namespace Logitude.CargoTracking.BL.EntityQueryServices
                     TransportModeCode = InlandTransportMode,
                     FromPortLabel = GetFromPortLabelFromPickup(delivery),
                     ToPortLabel = GetToPortLabelFromPickup(delivery),
-                    Description = delivery != null ? delivery.CarrierTypeName+" " + delivery.CarrierLocalName : null
+                    Description = delivery != null ? delivery.CarrierTypeName + " " + delivery.CarrierLocalName : null
                 };
                 SetDeliveryDirections(delivery, step);
                 steps.Add(step);
@@ -121,9 +121,9 @@ namespace Logitude.CargoTracking.BL.EntityQueryServices
                 var step = new RoutingStep()
                 {
                     TransportModeCode = shipmentPM.TransportModeId,
-                    FromPortLabel = shipmentPM.MainCarriageFromPortCode,
-                    ToPortLabel = shipmentPM.MainCarriageToPortCode,
-                    Description = shipmentPM.MainCarriageCarrierName != null || shipmentPM.MainCarriageCarrierTypeName != null   ? shipmentPM.MainCarriageCarrierTypeName + " " + shipmentPM.MainCarriageCarrierName : null
+                    FromPortLabel = mainCarrigeLeg.FromPortCode,
+                    ToPortLabel = mainCarrigeLeg.ToPortCode,
+                    Description = mainCarrigeLeg.CarrierName != null || mainCarrigeLeg.CarrierTypeName != null ? mainCarrigeLeg.CarrierTypeName + mainCarrigeLeg.CarrierName : null
                 };
                 SetMainCarriageLegDirections(mainCarrigeLeg, step);
                 steps.Add(step);
