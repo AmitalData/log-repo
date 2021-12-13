@@ -83,9 +83,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="bin\Debug\CargoTrackingConfig.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    <Folder Include="bin\Debug\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
