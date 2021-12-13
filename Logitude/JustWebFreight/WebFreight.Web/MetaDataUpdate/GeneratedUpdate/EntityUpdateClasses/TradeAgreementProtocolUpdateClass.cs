@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class TradeAgreementProtocolUpdateClass
    {  		
-		public const string HashString = "9ac46d42457f45eabd2c36ca598726d3";
+		public const string HashString = "481adbb383e554fcada59f3959b52409";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -109,13 +109,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    KeyPropertyPath =  "Code",
 			      				    AutoCompleteSearchWindow =  false,
 			      				    IsClosed =  true,
-			      				    CacheOnClient =  false,
+			      				    CacheOnClient =  true,
 			      				    EditableFromAutoCompleteWindow =  false,
 			      				    HasCounter =  false,
 			      				    EnableAddFromLOV =  false,
 			      				    IsRestrictable =  false,
 			      				    IsMain =  false,
-			      				    IsAutoComplete =  false,
+			      				    IsAutoComplete =  true,
 			      				    EnableEditFromLOV =  false,
 			      				    SortingByObjectField =  "Code",
 			      				    InActive =  false,
@@ -128,7 +128,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "פרוטוקול הסכם סחר",
 			      				    DefaultText =  "TradeAgreementProtocol",
-			      				    Code =  "e0cc",
+			      				    Code =  "4658",
 			      				    Name =  " Query Group",
 			      				    CloseTableCode =  "Code",
 			      				    CloseTableName =  "LocalName",
@@ -460,7 +460,60 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
-	    {    
+	    {  
+	        //FeatureRepository featureRepository = new FeatureRepository(0); 
+            //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
+	        QueryGroup TradeAgreementProtocolQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "4658", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
+						QueryGroup TradeAgreementProtocolQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "d4e7", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
+				        queryGroupRepository.SubmitChanges();
+	        ObjectTable TradeAgreementProtocolObjectTable = objectTables.ContainsKey("Customs.TradeAgreementProtocol") ? objectTables["Customs.TradeAgreementProtocol"] : null;
+            if (TradeAgreementProtocolObjectTable == null)
+            {
+                IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
+
+                TradeAgreementProtocolObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.TradeAgreementProtocol" && d.Tenant == 0).FirstOrDefault();
+            }
+
+	         
+			List<Feature> addedFeatures = new List<Feature>();
+			List<TextCode> addedTextCodes = new List<TextCode>();
+			List<Query> addedQueries = new List<Query>();
+			List<QueryColumn> addedQueryColumns = new List<QueryColumn>();
+			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
+   
+
+			   TextCode TradeAgreementProtocolTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TradeAgreementProtocol.Q.TradeAgreementProtocol", DefaultText = @"TradeAgreementProtocol",LocalDefaultText = "פרוטוקול הסכם סחר", ObjectTableId = TradeAgreementProtocolObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature TradeAgreementProtocolFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TradeAgreementProtocol.Q.TradeAgreementProtocol", ObjectTableId = TradeAgreementProtocolObjectTable.Id, Tenant = 0, NameTextCodeCode = "TradeAgreementProtocolFeatures.TradeAgreementProtocol", NameTextCodeDefaultText = "TradeAgreementProtocol", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,TradeAgreementProtocolObjectTable, addedFeatures, addedTextCodes);
+ 
+
+			   TextCode TradeAgreementProtocolTextCode_1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TradeAgreementProtocol.Q.TradeAgreementProtocol1", DefaultText = @"TradeAgreementProtocol1",LocalDefaultText = "1פרוטוקול הסכם סחר", ObjectTableId = TradeAgreementProtocolObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature TradeAgreementProtocolFeature_1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TradeAgreementProtocol.Q.TradeAgreementProtocol1", ObjectTableId = TradeAgreementProtocolObjectTable.Id, Tenant = 0, NameTextCodeCode = "TradeAgreementProtocolFeatures.TradeAgreementProtocol1", NameTextCodeDefaultText = "TradeAgreementProtocol1", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,TradeAgreementProtocolObjectTable, addedFeatures, addedTextCodes);
+
+	        //TextCodeRepository.SubmitChanges();
+	        //FeaturesRepository.SubmitChanges();    
+	      
+
+			  Query TradeAgreementProtocolQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = TradeAgreementProtocolTextCode_0.Id, NameTextCodeCode = TradeAgreementProtocolTextCode_0.Code, ObjectTableName = "Customs.TradeAgreementProtocol", Code = "TradeAgreementProtocol",  QueryGroupCode = "4658", IndexOrder = 0, Tenant = 0, ObjectTableId = TradeAgreementProtocolObjectTable.Id, QuerySection = "Customs.TradeAgreementProtocol", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = TradeAgreementProtocolFeature_0.Id,FeatureUniqeCode= TradeAgreementProtocolFeature_0.FeatureUniqeCode, DefaultSortName = "Code", DefaultSortDirection = "Ascending", Perspective = null }, addedQueries);
+	
+			 QueryColumn TradeAgreementProtocolQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TradeAgreementProtocolQuery.Id,QueryCode = TradeAgreementProtocolQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.TradeAgreementProtocol.Code" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn TradeAgreementProtocolQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TradeAgreementProtocolQuery.Id,QueryCode = TradeAgreementProtocolQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.TradeAgreementProtocol.LocalName" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn TradeAgreementProtocolQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TradeAgreementProtocolQuery.Id,QueryCode = TradeAgreementProtocolQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.TradeAgreementProtocol.EnglishName" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn TradeAgreementProtocolQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TradeAgreementProtocolQuery.Id,QueryCode = TradeAgreementProtocolQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.TradeAgreementProtocol.InActive" , ColumnWidth = 100 }, addedQueryColumns);
+  
+	      
+
+			  Query TradeAgreementProtocol1Query = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = TradeAgreementProtocolTextCode_1.Id, NameTextCodeCode = TradeAgreementProtocolTextCode_1.Code, ObjectTableName = "Customs.TradeAgreementProtocol", Code = "TradeAgreementProtocol1",  QueryGroupCode = "4658", IndexOrder = 1, Tenant = 0, ObjectTableId = TradeAgreementProtocolObjectTable.Id, QuerySection = "Customs.TradeAgreementProtocol", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = TradeAgreementProtocolFeature_1.Id,FeatureUniqeCode= TradeAgreementProtocolFeature_1.FeatureUniqeCode, DefaultSortName = "Code", DefaultSortDirection = "Ascending", Perspective = null }, addedQueries);
+	
+			 QueryColumn TradeAgreementProtocol1QueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TradeAgreementProtocol1Query.Id,QueryCode = TradeAgreementProtocol1Query.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.TradeAgreementProtocol.Code" , ColumnWidth = 100 }, addedQueryColumns);
+			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+			SqlBulkInsert.BulkInsert("Features", addedFeatures);
+			SqlBulkInsert.BulkInsert("Queries", addedQueries);
+			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);
+			SqlBulkInsert.BulkInsert("AdvancedQueryFilters", addedQueryFilters);	 
+  
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)

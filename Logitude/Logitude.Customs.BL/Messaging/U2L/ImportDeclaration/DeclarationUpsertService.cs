@@ -320,6 +320,11 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                     MyGenericResponseObj.Message = "CustomerId " + _AmitalCustomsFile.CustomerId + " could not translate (is must )";
                     return;
                 }
+                if (!String.IsNullOrWhiteSpace(_AmitalCustomsFile.Direction))
+                {
+                    this._MyDeclarationPM.Direction = _AmitalCustomsFile.Direction;
+                    if (this._MyDeclarationPM.Direction == "E" && string.IsNullOrWhiteSpace(this._MyDeclarationPM.AgentRoleCode)) this._MyDeclarationPM.AgentRoleCode = "A";
+                }
                 if (mode == "UpdateNotEmpty" || this._MyDeclarationPM.CustomerId != DBcustomer) // moran 12.7.15 - Task 14510 - insert into 'if'
                 {
                     if (!string.IsNullOrWhiteSpace(_AmitalCustomsFile.ImporterId))

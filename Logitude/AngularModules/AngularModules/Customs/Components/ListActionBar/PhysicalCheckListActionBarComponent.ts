@@ -56,7 +56,7 @@ export class PhysicalCheckListActionBarComponent
   
     CloseMarkChecks() {
         var checkList = this._physicalChecksCloseSharedDataService._SelectedItems.Collection.join(',');
-        debugger;
+        
         this._PhysicalCheckWebService.PostCloseMarkPhysicalChecks(checkList, SessionLocator.Tenant)
             .subscribe((myResponse: ServiceResponse) => {
                 if (!myResponse.HasError) {

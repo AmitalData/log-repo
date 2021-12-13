@@ -50,8 +50,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         DistributionArea, 
 	         CrateNumber, 
 	         TerminalReleaseDate, 
-	         LastMileServiceType, 
-	         ShopId,
+	         ShopId, 
+	         LastMileServiceType,
 	      }
 
 
@@ -123,8 +123,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         CrateNumber, 
 	         TruckerName, 
 	         TerminalReleaseDate, 
-	         LastMileServiceType, 
 	         ShopId, 
+	         LastMileServiceType, 
 	         CargoDescription,
 	      }
 
@@ -269,14 +269,14 @@ namespace Logitude.Customs.BL.EntityDataMappings
 				entityPOCO.TerminalReleaseDate = entityPM.TerminalReleaseDate;
 			}
 			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LastMileServiceType))
-            {
-				entityPOCO.LastMileServiceType = entityPM.LastMileServiceType;
-			}
-			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ShopId))
             {
 				entityPOCO.ShopId = entityPM.ShopId;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LastMileServiceType))
+            {
+				entityPOCO.LastMileServiceType = entityPM.LastMileServiceType;
 			}
 			}
 
@@ -423,14 +423,14 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.TerminalReleaseDate = entityPOCO.TerminalReleaseDate;
             }
 
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.LastMileServiceType))
-            {
-					entityPM.LastMileServiceType = entityPOCO.LastMileServiceType;
-            }
-
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ShopId))
             {
 					entityPM.ShopId = entityPOCO.ShopId;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.LastMileServiceType))
+            {
+					entityPM.LastMileServiceType = entityPOCO.LastMileServiceType;
             }
 
 		}
@@ -574,14 +574,14 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 oldEntityPM.TerminalReleaseDate = entityPM.TerminalReleaseDate;
             }
 			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LastMileServiceType))
-            {
-                oldEntityPM.LastMileServiceType = entityPM.LastMileServiceType;
-            }
-			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ShopId))
             {
                 oldEntityPM.ShopId = entityPM.ShopId;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LastMileServiceType))
+            {
+                oldEntityPM.LastMileServiceType = entityPM.LastMileServiceType;
             }
 			
 		}

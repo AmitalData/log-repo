@@ -36,7 +36,7 @@
   MaxNumberOfCustomFields="0"
   ParentTableName="QuoteOP"
   DefaultText="&quot;QuoteOPPackage&quot;"
-  Code="&quot;f66b&quot;"
+  Code="&quot;5d7e&quot;"
   Name="&quot;QuoteopPackage&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;QuoteOPM&quot;"

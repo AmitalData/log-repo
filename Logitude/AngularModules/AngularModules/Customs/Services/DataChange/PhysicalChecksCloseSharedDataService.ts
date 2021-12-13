@@ -16,7 +16,6 @@ export class PhysicalChecksCloseSharedDataService {
     public IsDisplayOnly: boolean = false;
     constructor()
     {
-        debugger;
     }
 
     SendNextMessage(message: string) {
