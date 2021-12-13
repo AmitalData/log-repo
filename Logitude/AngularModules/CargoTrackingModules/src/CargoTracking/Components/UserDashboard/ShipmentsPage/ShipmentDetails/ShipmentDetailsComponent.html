@@ -786,7 +786,7 @@ package.ShipperSeal == null ? package.CarrierSeal :
                                                 {{step.ToPortLabel}}
                                             </div>
                                         </div>
-                                        <div class="route-description TextTrimming">{{step.Description}}</div>
+                                        <div class="route-description TextTrimming" [title]="step.Description">{{step.Description}}</div>
                                         <div class="routes">
                                             <div *ngFor="let direction of step.Directions" class="route-direction">
 

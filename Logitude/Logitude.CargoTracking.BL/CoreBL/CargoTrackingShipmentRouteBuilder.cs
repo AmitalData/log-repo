@@ -123,7 +123,7 @@ namespace Logitude.CargoTracking.BL.EntityQueryServices
                     TransportModeCode = shipmentPM.TransportModeId,
                     FromPortLabel = mainCarrigeLeg.FromPortCode,
                     ToPortLabel = mainCarrigeLeg.ToPortCode,
-                    Description = mainCarrigeLeg.CarrierName != null || mainCarrigeLeg.CarrierTypeName != null ? mainCarrigeLeg.CarrierTypeName + mainCarrigeLeg.CarrierName : null
+                    Description = mainCarrigeLeg.CarrierName != null || mainCarrigeLeg.CarrierTypeName != null ? mainCarrigeLeg.CarrierTypeName +" "+ mainCarrigeLeg.CarrierName : null
                 };
                 SetMainCarriageLegDirections(mainCarrigeLeg, step);
                 steps.Add(step);
