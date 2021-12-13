@@ -12,11 +12,14 @@ using Unifreight.BL.EntityDataMappings;
 using Unifreight.BL.EntityPMs.UGenerated;
 using Unifreight.Data.AmitalModel.EntityPOCOs;
 using Simplog.Server.Infrastructure.DataContracts;
-using static Unifreight.BL.BL.QuoteOPPorts;
+using Unifreight.BL.Inteface;
+using Simplog.Server.Infrastructure.Helpers;
+using static Unifreight.BL.BL.QuoteOPPortsHelper;
+using Unifreight.BL.BL;
 
 namespace Unifreight.BL.EntityQueryServices
 {
-    public class ETBPORTQueryService : EntityQueryService<ETBPORT, ETBPORTKeys, ETBPORTPM, object, ETBPORTKeys>
+    public class ETBPORTQueryService : EntityQueryService<ETBPORT, ETBPORTKeys, ETBPORTPM, object, ETBPORTKeys>, IGetSinglePortFromCacheWithCountry
     {
         private AmitalContext MainContext;
 
@@ -31,6 +34,21 @@ namespace Unifreight.BL.EntityQueryServices
         {
             var keys = new ETBPORTKeys() { PORTID = PORTID };
             return base.GetSingle(keys, false, getFromCache);
+        }
+
+        public Ports GetSingleFromCacheWithCountry(string portId)
+        {
+            Ports res = CacheHelper.GetFromCache("ETBPORT" + portId, ()=> GetSingleWithCountry(portId));
+            return res;
+        }
+
+        public Ports GetSingleWithCountry(string portId)
+        {
+            IQueryable<QPorts> baseQ = (from port in MainContext.ETBPORTs
+                                        select new QPorts { NAMEENG = port.NAMEENG, PORTID = port.PORTID, COUNTRYID = port.COUNTRYID, SEARCHENG = port.SEARCHENG });
+            IQueryable<Ports> q = QuoteOPPortsHelper.GetQuery(portId, baseQ, MainContext);
+            Ports res = q.ToList().FirstOrDefault();
+            return res;
         }
 
         protected override Simplog.Server.Infrastructure.EntityKeyFields GetKeys(ETBPORT entityPOCO)

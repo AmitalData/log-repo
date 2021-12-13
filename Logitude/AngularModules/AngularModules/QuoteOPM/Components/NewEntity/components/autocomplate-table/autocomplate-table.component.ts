@@ -10,6 +10,8 @@ import { fromEvent } from 'rxjs';
 import { debounceTime, take } from 'rxjs/operators';
 // import { Subscription } from 'rxjs';
 
+type SearchEvent = {originalEvent: InputEvent, query: string}
+
 @Component({
   selector: 'app-autocomplate-table',
   templateUrl: './autocomplate-table.component.html',
@@ -45,12 +47,12 @@ export class AutocomplateTableComponent {
   rowTake = 200;
   index: number = 0;
   isGetAll: boolean = false;
+  getDataBusy: boolean = false;
   filterVal: string = ''
   toHighlight: string = null as any;
   defaultValidator: ValidatorFn = null as any;
 
   constructor(
-    @Inject(DOCUMENT) private document: any,
     private genericTableService: GenericTableService,
   ) { }
 
@@ -64,6 +66,9 @@ export class AutocomplateTableComponent {
   }
 
   async getDataFromFunc() {
+    if (this.isGetAll || this.getDataBusy) return;
+
+    this.getDataBusy = true;
     const filters: ApiQueryFilters = new ApiQueryFilters()
     filters.PageIndex = this.index;
     filters.PageSize = this.rowTake;
@@ -80,8 +85,15 @@ export class AutocomplateTableComponent {
     if (this.selected.length && !this.columnsNames.length)
       this.columnsShow = Object.keys(this.selected[0]);
 
-    if (this.index === 0)
+    if (this.index === 0){
       this.selected.unshift(this.columnsHeader);
+
+      const divDDL: HTMLDivElement = document.querySelector('.p-autocomplete-panel');
+      if(divDDL)
+        divDDL.scrollTop = 0;
+    }
+
+    this.getDataBusy = false;
   }
 
   initialData() {
@@ -99,7 +111,7 @@ export class AutocomplateTableComponent {
     }
   }
 
-  search(event: any) {
+  search(event: SearchEvent) {
     this.toHighlight = event.query;
 
     if (this.getDataFunc !== null) {
@@ -153,7 +165,7 @@ export class AutocomplateTableComponent {
 
   private setNotIdentityValueValidator() {
     if (this.defaultValidator !== null) return;
-    
+
     const ctrl: AbstractControl = this.formGroup.controls[this.controlName];
     this.defaultValidator = (this.formGroup.get(this.controlName)?.validator as ValidatorFn) || undefined;
     ctrl.setValidators([this.notIdentityValueValidator]);
@@ -166,7 +178,7 @@ export class AutocomplateTableComponent {
 
   private setDefaultValidator() {
     if (this.defaultValidator === null) return
-    
+
     const ctrl: AbstractControl = this.formGroup.controls[this.controlName];
     ctrl.setValidators(this.defaultValidator || null);
     this.defaultValidator = null as any
@@ -183,26 +195,6 @@ export class AutocomplateTableComponent {
     return obj;
   }
 
-  ngDoCheck() {
-    if (!!this.getDataFunc)
-      this.getNewData()
-  }
-
-  getNewData() {
-    const elms: HTMLCollection = this.document.getElementsByClassName('cdk-virtual-scroll-content-wrapper');
-    if (!elms.length) return;
-    const div: HTMLDivElement = elms[0] as HTMLDivElement;
-    const transform: string = div.style.transform;
-    const px: number = + transform.substring(transform.indexOf('(') + 1, transform.length - 3)
-    if (!px) return;
-    const rowIndex = px / this.itemSize + 10;
-
-    if (50 + this.index * rowIndex < rowIndex) {
-      this.index++;
-      this.getDataFromFunc();
-    }
-  }
-
   private titleStyle(str: string) {
     return this.capitalize(this.addSpace(str))
   }
@@ -215,15 +207,34 @@ export class AutocomplateTableComponent {
     return str.replace(/[A-Z]/g, letter => ' ' + letter);
   }
 
-  alignRow(e: any) {
+  subscribeScrollDDL(e: any) {
     fromEvent(e.element, 'scroll')
       .pipe(debounceTime(100))
       .subscribe((e: any) => {
-        const div = e.target as HTMLDivElement;
-        const diff: number = div.scrollTop % 26;
-        if (diff > 2 && diff < 24)
-          div.scrollBy(0, 26 - diff + 1);
+        const divDDL = e.target as HTMLDivElement;
+        this.alignRow(divDDL);
+
+        if (!!this.getDataFunc)
+          this.getNewData(divDDL)
       });
+  }
+
+  getNewData(divDDL: HTMLDivElement) {
+    const rowHeight: number = divDDL.querySelector('li').offsetHeight;
+    const scrollLeft: number = divDDL.scrollHeight - divDDL.scrollTop;
+    const rowLeft: number = scrollLeft / rowHeight;
+
+    if (rowLeft < 100) {
+      this.index++;
+      this.getDataFromFunc();
+    }
+  }
+
+  private alignRow(divDDL: HTMLDivElement) {
+    const rowHeight: number = divDDL.querySelector('li').offsetHeight;
+    const diff: number = divDDL.scrollTop % rowHeight;
+    if (diff > rowHeight + 2 && diff < rowHeight - 2)
+      divDDL.scrollBy(0, rowHeight - diff + 1);
   }
 
   openDdl(e: Event) {

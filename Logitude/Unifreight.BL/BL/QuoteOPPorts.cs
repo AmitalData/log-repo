@@ -1,12 +1,15 @@
-﻿using Simplog.Server.Infrastructure.DataContracts;
+﻿using Logitude.Server.Tools;
+using Simplog.Server.Infrastructure.DataContracts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Unifreight.BL.EntityQueryServices;
+using Unifreight.BL.Inteface;
 using Unifreight.Data.AmitalModel;
 using Unifreight.Data.AmitalModel.EntityPOCOs;
+using static Unifreight.BL.BL.QuoteOPPortsHelper;
 
 namespace Unifreight.BL.BL
 {
@@ -30,8 +33,41 @@ namespace Unifreight.BL.BL
             return tenantAmitalContext;
         }
 
-        public List<Ports> GetItemsList(string DIRECTIONID, string TRANSPORTMODEID, QueryOperations queryOperations)
+        public Ports GetFromCacheWithCountry(string DIRECTIONID, string TRANSPORTMODEID, string portId)
         {
+            var context = GetAmitalContext(tenant);
+
+            IGetSinglePortFromCacheWithCountry service = null; 
+
+            if (DIRECTIONID == "E" && TRANSPORTMODEID == "A")
+                service = new ETBPORTQueryService(context);
+                
+
+            else if (DIRECTIONID == "E" && TRANSPORTMODEID == "O")
+                service = new MTBPORTQueryService(context);
+                
+
+            else if (DIRECTIONID == "I" && TRANSPORTMODEID == "A")
+                service = new ITBPORTQueryService(context);
+
+            else if (DIRECTIONID == "I" && TRANSPORTMODEID == "O")
+                service = new RTBPORTQueryService(context);
+            else
+                return null;
+
+            Ports ports = service.GetSingleFromCacheWithCountry(portId);
+
+            return ports;
+        }
+
+        public List<Ports> GetItemsList(string DIRECTIONID, string TRANSPORTMODEID, QueryOperations queryOperations, bool getFromCache = true)
+        {
+            if (getFromCache)
+            {
+                string cacheId = "ports" + DIRECTIONID + TRANSPORTMODEID + ";i:" + queryOperations.PageIndex + ";s:" + queryOperations.PageSize + ";d:" + queryOperations.SortDirectin + ";c:" + queryOperations.SortByColumnName + string.Join("", queryOperations.QueryFilterItems.Select(x => ";f:" + x.FieldName + ";v:" + x.FieldValue).ToArray());
+                return CacheHelper.GetFromCache(cacheId, () => GetItemsList(DIRECTIONID, TRANSPORTMODEID, queryOperations, false));
+            }
+
             IQueryable<Ports> query = GetBaseQuery(DIRECTIONID, TRANSPORTMODEID);
             query = AddFilter(query, queryOperations);
             query = AddSort(query, queryOperations);
@@ -123,14 +159,6 @@ namespace Unifreight.BL.BL
             else
                 query = query.OrderBy(o => o.Name);
             return query;
-        }
-
-        public class Ports
-        {
-            public string Name;
-            public string Code;
-            public string CountryName;
-            public string SEARCHENG;
-        }
+        }      
     }
 }

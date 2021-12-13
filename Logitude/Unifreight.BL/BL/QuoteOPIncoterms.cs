@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Unifreight.BL.EntityQueryServices;
 using Unifreight.Data.AmitalModel;
 
 namespace Unifreight.BL.BL
@@ -30,8 +31,20 @@ namespace Unifreight.BL.BL
             return tenantAmitalContext;
         }
 
-        public List<Incoterms> GetItemsList(QueryOperations queryOperations)
+        public Incoterms GetFromCache(string IncotermId)
         {
+            var data = new ETBPAYTRQueryService(GetAmitalContext(tenant)).GetSingle(IncotermId, true);
+            return new Incoterms { Name = data.NAMEENG, PTERMID = data.PTERMID, SEARCHENG = data.SEARCHENG };
+        }
+
+        public List<Incoterms> GetItemsList(QueryOperations queryOperations, bool getFromCache = true)
+        {
+            if (getFromCache)
+            {
+                string cacheId = "incoterms" + "i:" + queryOperations.PageIndex + ";s:" + queryOperations.PageSize + ";d:" + queryOperations.SortDirectin + ";c:" + queryOperations.SortByColumnName + string.Join("", queryOperations.QueryFilterItems.Select(x => ";f:" + x.FieldName + ";v:" + x.FieldValue).ToArray());
+                return CacheHelper.GetFromCache(cacheId, () => GetItemsList(queryOperations, false));
+            }
+
             IQueryable<Incoterms> query = GetBaseQuery();
             query = AddFilter(query, queryOperations);
             query = AddSort(query, queryOperations);

@@ -28,8 +28,13 @@ namespace Unifreight.BL.BL
             return tenantAmitalContext;
         }
 
-        public List<SpecialServices> GetItemsList(string DIRECTIONID, string TRANSSpecialServiceMODEID, QueryOperations queryOperations)
+        public List<SpecialServices> GetItemsList(string DIRECTIONID, string TRANSSpecialServiceMODEID, QueryOperations queryOperations, bool getFromCache = true)
         {
+            if (getFromCache)
+            {
+                string cacheId = "specialServices" + DIRECTIONID + TRANSSpecialServiceMODEID + ";i:" + queryOperations.PageIndex + ";s:" + queryOperations.PageSize + ";d:" + queryOperations.SortDirectin + ";c:" + queryOperations.SortByColumnName + string.Join("", queryOperations.QueryFilterItems.Select(x => ";f:" + x.FieldName + ";v:" + x.FieldValue).ToArray());
+                return CacheHelper.GetFromCache(cacheId, () => GetItemsList(DIRECTIONID, TRANSSpecialServiceMODEID, queryOperations, false));
+            }
             IQueryable<SpecialServices> query = GetBaseQuery(DIRECTIONID, TRANSSpecialServiceMODEID);
             query = AddFilter(query, queryOperations);
             query = AddSort(query, queryOperations);

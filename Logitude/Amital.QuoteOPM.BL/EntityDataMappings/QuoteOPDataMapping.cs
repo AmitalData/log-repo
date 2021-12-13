@@ -6,9 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
-using Logitude.Server.Tools; 
+using Logitude.Server.Tools;
 using Amital.QuoteOPM.Data.EntityPOCOs;
-using Amital.QuoteOPM.Def.EntityPMs; 
+using Amital.QuoteOPM.Def.EntityPMs;
 using Amital.QuoteOPM.Data;
 using Logitude.Server.Tools.Helpers;
 using Logitude.BL.Helpers;
@@ -20,27 +20,30 @@ using Simplog.Data.CommonDataModel;
 using Amital.QuoteOPM.Data.Repsitories;
 using Amital.QuoteOPM.BL.EntityQueryServices;
 using Logitude.BL.CommonDataModel.EntityLists;
+using Unifreight.BL.BL;
+using static Unifreight.BL.BL.QuoteOpCarriers;
+using static Unifreight.BL.BL.QuoteOPIncoterms;
 
 namespace Amital.QuoteOPM.BL.EntityDataMappings
 {
-   
-   public partial class QuoteOPDataMapping: IMapping<QuoteOPPM, QuoteOP>
-   {
-        
+
+    public partial class QuoteOPDataMapping : IMapping<QuoteOPPM, QuoteOP>
+    {
+
 
         public void CustomPMToPOCO(QuoteOPPM entityPM, QuoteOP entityPOCO)
         {
             //throw new NotImplementedException();\
             this.CustomMappedPOCOProperties.Add(POCOPropertyNames.QuoteNumber);
-            
+
             this.CustomMappedPOCOProperties.Add(POCOPropertyNames.CreatedByUserId);
-            
+
             this.CustomMappedPOCOProperties.Add(POCOPropertyNames.OpenDate);
-            
+
             this.CustomMappedPOCOProperties.Add(POCOPropertyNames.Tenant);
-            
+
             this.CustomMappedPOCOProperties.Add(POCOPropertyNames.DirectionId);
-            
+
             this.CustomMappedPOCOProperties.Add(POCOPropertyNames.ProductCode);
 
             this.CustomMappedPOCOProperties.Add(POCOPropertyNames.ConcurrencyGUID);
@@ -240,11 +243,12 @@ namespace Amital.QuoteOPM.BL.EntityDataMappings
             #region Carrier
             if (!string.IsNullOrEmpty(entityPM.MainCarriageCarrierId))
             {
-                Card myCard = CardRepository.GetSingleCard(entityPM.MainCarriageCarrierId, entityPM.Tenant, true);
-                if (myCard != null)
+                Carriers carriers = new QuoteOpCarriers(tenant).GetFromCache(entityPM.DirectionId, entityPM.TransportModeId, entityPM.MainCarriageCarrierId);
+
+                if (carriers != null)
                 {
-                    MethodHelper.AddToSearchFields(ref mySearchFields, myCard.Code);
-                    MethodHelper.AddToSearchFields(ref mySearchFields, myCard.EnglishName);
+                    MethodHelper.AddToSearchFields(ref mySearchFields, carriers.AIRLINE_ID);
+                    MethodHelper.AddToSearchFields(ref mySearchFields, carriers.Name);
                 }
             }
             #endregion
@@ -259,28 +263,6 @@ namespace Amital.QuoteOPM.BL.EntityDataMappings
         }
         public void CustomPOCOToPM(QuoteOPPM entityPM, QuoteOP entityPOCO)
         {
-            //throw new NotImplementedException();
-            string myIncotermCode = null;
-            string myIncotermName = null;
-
-
-            if (!string.IsNullOrEmpty(entityPOCO.IncotermId))
-            {
-                //IncotermRepository incotermRepository = new IncotermRepository(entityPOCO.Tenant);
-                Incoterm incoterm = IncotermRepository.GetSingleFromCache(entityPOCO.IncotermId, entityPOCO.Tenant);
-                if (incoterm != null)
-                {
-                    myIncotermCode = incoterm.Code;
-                    myIncotermName = incoterm.Name;
-                }
-            }
-            this.CustomMappedPMProperties.Add(PMPropertyNames.IncotermCode);
-            this.CustomMappedPMProperties.Add(PMPropertyNames.IncotermName);
-            entityPM.IncotermCode = myIncotermCode;
-            entityPM.IncotermName = myIncotermName;
-
-
-
             int tenant = entityPOCO.Tenant;
             string entityId = entityPOCO.Id;
 
@@ -288,19 +270,25 @@ namespace Amital.QuoteOPM.BL.EntityDataMappings
             IQuoteOPMContext myQuotesContext = QuoteOPMContext.GetContext(tenant);
 
             PortRepository portRepository = new PortRepository(myCommonContext);
-            CardRepository cardsRepository = new CardRepository(myCommonContext);
             CountryRepository countryRepository = new CountryRepository(myCommonContext);
             AddressRepository addressRepository = new AddressRepository(myCommonContext);
 
-            QuoteOPChargeRepository quoteChargeRepository = new QuoteOPChargeRepository(myQuotesContext);
-            QuoteOPPackageRepository quotePackageRepository = new  QuoteOPPackageRepository (myQuotesContext);
-            QuoteOPTotalVATRepository myTotalVATRepository = new  QuoteOPTotalVATRepository (myQuotesContext);
-            QuoteOPChargeQueryService quoteChargeQuery = new  QuoteOPChargeQueryService(quoteChargeRepository);
-            QuoteOPPackageQueryService quotePackageQuery = new  QuoteOPPackageQueryService(quotePackageRepository);
-            QuoteOPTotalVATQueryService myTotalVATQuery = new  QuoteOPTotalVATQueryService(myTotalVATRepository);
-           
 
             bool isInlandDomestic = (entityPOCO.DirectionId == "D" && entityPOCO.TransportModeId == "I");
+
+            this.CustomMappedPMProperties.Add(PMPropertyNames.IncotermCode);
+            this.CustomMappedPMProperties.Add(PMPropertyNames.IncotermName);
+
+            if (!string.IsNullOrEmpty(entityPOCO.IncotermId))
+            {
+                Incoterms incoterms = new QuoteOPIncoterms(entityPOCO.Tenant).GetFromCache(entityPOCO.IncotermId);
+
+                if (incoterms != null)
+                {
+                    entityPM.IncotermCode = incoterms.PTERMID;
+                    entityPM.IncotermName = incoterms.Name;
+                }
+            }
 
 
             #region From | To Location
@@ -401,27 +389,27 @@ namespace Amital.QuoteOPM.BL.EntityDataMappings
 
             #region Routings
 
-          /*  if (entityPOCO.FromPort != null)
-            {
-                entityPM.FromPort = entityPOCO.FromPort.Code;
-                entityPM.FromPortName = entityPOCO.FromPort.EnglishName;
+            /*  if (entityPOCO.FromPort != null)
+              {
+                  entityPM.FromPort = entityPOCO.FromPort.Code;
+                  entityPM.FromPortName = entityPOCO.FromPort.EnglishName;
 
-                if (entityPOCO.FromPort.Country != null)
-                {
-                    entityPM.FromPortCountry = entityPOCO.FromPort.Country.EnglishName;
-                }
-            }
+                  if (entityPOCO.FromPort.Country != null)
+                  {
+                      entityPM.FromPortCountry = entityPOCO.FromPort.Country.EnglishName;
+                  }
+              }
 
-            if (entityPOCO.ToPort != null)
-            {
-                entityPM.ToPort = entityPOCO.ToPort.Code;
-                entityPM.ToPortName = entityPOCO.ToPort.EnglishName;
+              if (entityPOCO.ToPort != null)
+              {
+                  entityPM.ToPort = entityPOCO.ToPort.Code;
+                  entityPM.ToPortName = entityPOCO.ToPort.EnglishName;
 
-                if (entityPOCO.ToPort.Country != null)
-                {
-                    entityPM.ToPortCountry = entityPOCO.ToPort.Country.EnglishName;
-                }
-            }*/
+                  if (entityPOCO.ToPort.Country != null)
+                  {
+                      entityPM.ToPortCountry = entityPOCO.ToPort.Country.EnglishName;
+                  }
+              }*/
 
             if (isInlandDomestic)
             {
@@ -464,36 +452,16 @@ namespace Amital.QuoteOPM.BL.EntityDataMappings
             {
                 if (!string.IsNullOrEmpty(entityPOCO.FromPortId))
                 {
-                    Port port = portRepository.GetSinglePort(tenant, entityPOCO.FromPortId);
-                    if (port != null)
-                    {
-                        if (!string.IsNullOrEmpty(port.CountryId))
-                        {
-                            Country country = countryRepository.GetSingleCountry(port.CountryId, tenant);
-                            if (country != null)
-                            {
-                                entityPM.FromCountryCode = country.Code;
-                                entityPM.FromCountryName = country.EnglishName;
-                            }
-                        }
-                    }
+                    var port = new QuoteOPPorts(entityPOCO.Tenant).GetFromCacheWithCountry(entityPOCO.DirectionId, entityPOCO.TransportModeId, entityPOCO.FromPortId);
+                    entityPM.FromCountryCode = port?.CountryId;
+                    entityPM.FromCountryName = port?.CountryName;
                 }
 
                 if (!string.IsNullOrEmpty(entityPOCO.ToPortId))
                 {
-                    Port port = portRepository.GetSinglePort(tenant, entityPOCO.ToPortId);
-                    if (port != null)
-                    {
-                        if (!string.IsNullOrEmpty(port.CountryId))
-                        {
-                            Country country = countryRepository.GetSingleCountry(port.CountryId, tenant);
-                            if (country != null)
-                            {
-                                entityPM.ToCountryCode = country.Code;
-                                entityPM.ToCountryName = country.EnglishName;
-                            }
-                        }
-                    }
+                    var port = new QuoteOPPorts(entityPOCO.Tenant).GetFromCacheWithCountry(entityPOCO.DirectionId, entityPOCO.TransportModeId, entityPOCO.ToPortId);
+                    entityPM.ToCountryCode = port.CountryId;
+                    entityPM.ToCountryName = port.CountryName;
                 }
             }
             #endregion
@@ -847,7 +815,6 @@ namespace Amital.QuoteOPM.BL.EntityDataMappings
                 #endregion
             }
             #endregion
-
         }
 
         private string GetAddress(Address address)
@@ -906,4 +873,3 @@ namespace Amital.QuoteOPM.BL.EntityDataMappings
 
 
 }
-   

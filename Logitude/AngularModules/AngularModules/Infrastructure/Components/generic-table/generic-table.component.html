@@ -15,7 +15,7 @@
     </ng-template>
     <ng-template pTemplate="header" let-columns>
         <tr>
-            <!-- <th>id</th> -->
+            <th>id</th>
             <th *ngFor='let col of columns' [pSortableColumn]="col.name" pResizableColumn>
                 {{col.alias}}
                 <p-sortIcon [field]="col.name"></p-sortIcon>
@@ -25,7 +25,7 @@
     <ng-template pTemplate="body" let-row let-columns="columns" let-i='rowIndex'>
         <!-- [ngClass]='{"highlight-row":(i + 1)%2}' -->
         <tr style='height:34px' (click)='onSelectedRow(row)' >
-            <!-- <td>{{i}}</td> -->
+            <td>{{i}}</td>
             <td *ngFor='let col of columns' [innerHTML]='row[col.name] | highlight: filterVal'></td>
         </tr>
         <tr></tr>
