@@ -198,6 +198,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         }
 
                         APInvoiceService apinvoiceService = new APInvoiceService(MyContext, tenant);
+                        apinvoicePM.IsExternalEntity = true;
                         apinvoiceService.Create(apinvoicePM);
 
                         APIHelper.AddCommunicationLog("D", oldEntity, apinvoice, "APInvoice", apinvoicePM.Id, "APInvoice API", tenant);
