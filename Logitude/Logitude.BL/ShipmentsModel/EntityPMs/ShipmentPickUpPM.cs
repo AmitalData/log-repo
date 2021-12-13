@@ -117,6 +117,7 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string CarrierId { get; set; }
         public string CarrierCode { get; set; }
         public string CarrierName { get; set; }
+        public string CarrierTypeName { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string CarrierNumber { get; set; }
