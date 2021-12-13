@@ -69,14 +69,14 @@ namespace WebFreight.Web.Helpers.WorkerRoleHelpers
             ExportDocumentArgs exportDocumentArgs = !string.IsNullOrEmpty(documentsExecutionLog.RequestXML) ? LogitudeXmlSerializer.DeserializeObject<ExportDocumentArgs>(documentsExecutionLog.RequestXML) : null;
             if (exportDocumentArgs != null)
             {
-                Dictionary<string, string> documentTypeCopiesDetails = new Dictionary<string, string>();
+                List<DocumentTypeCopiesDetails> documentTypeCopiesDetails = new List<DocumentTypeCopiesDetails>();
                 string authenticatedUserEmail = GetContactEmailByContactId(exportDocumentArgs.LoggedContactId, exportDocumentArgs.Tenant);
                 Parallel.ForEach(exportDocumentArgs.DocumentTypeCopyIdsList, (documentTypeCopyId) =>
                 {
                     AuthenticationUtil.AuthenticatedUserEmail = authenticatedUserEmail;
                     ExportDocumentHelper exportDocumentHelper = new ExportDocumentHelper();
                     string result = exportDocumentHelper.ExportDocument2Pdf(exportDocumentArgs, documentTypeCopyId);
-                    documentTypeCopiesDetails.Add(documentTypeCopyId, result);
+                    documentTypeCopiesDetails.Add(new DocumentTypeCopiesDetails() { DocumentTypeCopyId = documentTypeCopyId, DocumentId = result });
                 });
                 UpdateDocumentOut(exportDocumentArgs);
                 DocumentPopulateAutomaticDateUpdateService documentPopulateAutomaticDateUpdateService = new DocumentPopulateAutomaticDateUpdateService();
@@ -94,7 +94,7 @@ namespace WebFreight.Web.Helpers.WorkerRoleHelpers
             }
         }
 
-        private void RunAutomation(ExportDocumentArgs exportDocumentArgs, string automationType, Dictionary<string, string> documentTypeCopiesDetails)
+        private void RunAutomation(ExportDocumentArgs exportDocumentArgs, string automationType, List<DocumentTypeCopiesDetails> documentTypeCopiesDetails)
         {
             GeneralEntityChangeService generalEntityChangeService = new GeneralEntityChangeService();
             EntityDetails entityDetails = generalEntityChangeService.GetEntityDetails(exportDocumentArgs.EntityId, exportDocumentArgs.ObjectTableName, exportDocumentArgs.Tenant);

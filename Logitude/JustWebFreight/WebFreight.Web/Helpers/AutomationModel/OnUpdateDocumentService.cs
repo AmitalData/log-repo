@@ -89,17 +89,17 @@ namespace WebFreight.Web.Helpers.AutomationModel
 
         private void FillDocumentTypeCopiesDocumentId(OnUpdateDocumentDetails onUpdateDocumentDetails, List<string> documentsIds)
         {
-            onUpdateDocumentDetails.DocumentTypeCopiesDetails.ToList().ForEach(documentTypeCopy =>
+            onUpdateDocumentDetails.DocumentTypeCopiesDetails.ForEach(documentTypeCopy =>
             {
                 AddDocumentTypeCopyDocumentId(documentsIds, documentTypeCopy);
             });
         }
 
-        private void AddDocumentTypeCopyDocumentId(List<string> documentsIds, KeyValuePair<string, string> documentTypeCopy)
+        private void AddDocumentTypeCopyDocumentId(List<string> documentsIds, DocumentTypeCopiesDetails documentTypeCopiesDetails)
         {
-            if (automationOnUpdateDocumentResult.DocumentTypeLists.Where(d => d.DocumentTypeCopyId == documentTypeCopy.Key).FirstOrDefault() != null)
+            if (automationOnUpdateDocumentResult.DocumentTypeLists.Where(d => d.DocumentTypeCopyId == documentTypeCopiesDetails.DocumentTypeCopyId).FirstOrDefault() != null)
             {
-                documentsIds.Add(documentTypeCopy.Value);
+                documentsIds.Add(documentTypeCopiesDetails.DocumentId);
             }
         }
 
