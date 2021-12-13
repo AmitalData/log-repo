@@ -68,7 +68,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         BranchId, 
 	         CurrencySign, 
 	         BranchName, 
-	         InDepositingProgress,
+	         InDepositingProgress, 
+	         IsTotalUpdatedByCC,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
