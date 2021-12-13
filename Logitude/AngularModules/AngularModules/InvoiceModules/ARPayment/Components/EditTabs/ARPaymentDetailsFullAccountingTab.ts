@@ -484,7 +484,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
 		this.AdjustedAmount = this.paymentReconciledAmountTotal == 0 ? this.amount2reconcileTotal : this.paymentReconciledAmountTotal + this.amount2reconcileTotal;
 		if (this.EntityPM.InvoicesLedgerTransactions.length == 0) {
 			// this.EntityPM.OpenAmount = this.originalPaymentOpenAmount;
-			this.EntityPM.IsDirty = false;
+			// this.EntityPM.IsDirty = false;
 		} else {
 			// Open Amount
 			var _openAmount = this.paymentAmountTotal - _linesAmount2reco;
