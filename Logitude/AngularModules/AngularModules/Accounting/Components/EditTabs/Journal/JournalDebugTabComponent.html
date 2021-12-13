@@ -298,6 +298,7 @@
 
                                                     <CheckBox
                                                         [IsChecked]="item.IsExternalReconcile"
+                                                        [IsEnabled]="IsExternalBankTransaction(item)"
                                                         (Checked)="IsExternalReconcileChanged(item,$event)"
                                                         ></CheckBox>
 

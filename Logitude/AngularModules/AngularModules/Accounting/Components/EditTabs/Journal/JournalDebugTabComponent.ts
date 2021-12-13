@@ -41,6 +41,7 @@ import { LedgerTransactionPMService } from 'Accounting/Services/StandardPMs/Ledg
 import { LedgerTransactionPM } from 'Accounting/EntityPMs/LedgerTransactionPM';
 
 
+const BanksChartOfAccountsTypeCode = '5';
 @Component({
 
     templateUrl: './JournalDebugTabComponent.html',
@@ -451,6 +452,15 @@ export class JournalDebugTabComponent extends BaseComponent implements OnInit {
                     var myMessageWindow = new MessageWindow();
                     myMessageWindow.Show(err);
                 });
+    }
+
+
+    IsExternalBankTransaction(ledger: LedgerTransactionList){
+        const isFromAmital = this.EntityPM.ExternalSystem == 'AMITAL';
+        const journalLine = this.EntityPM.JournalLines.find(line=>line.Line == ledger.JournalLineNumber);
+        const isConnectedToBankGLAccount = (journalLine.DebitAccountCOACode || journalLine.CreditAccountCOACode) == BanksChartOfAccountsTypeCode;
+
+        return isFromAmital && isConnectedToBankGLAccount;
     }
 }
 
