@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class TaxDeductionReportUpdateClass
    {  		
-		public const string HashString = "ae1def04e77e0efb92bf0b352ca27293";
+		public const string HashString = "b193cc86896ad43a79715258f70ccd8b";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -1005,12 +1005,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  false,
+					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  0,
-					  						DisplayInList =  false,
+					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -1024,6 +1025,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "TaxDeductionReport",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -1033,7 +1035,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ByMonth",
-					  						DefaultText =  "ByMonth",
+					  						DefaultText =  "By Month",
+					  						FullLocalDefaultText =  "לפי חודש",
+					  						ListFieldLable =  "ByMonthListLable",
+					  						ListLableDefaultText =  "By Month",
+					  						ListLocalDefaultText =  "לפי חודש",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -1061,12 +1067,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  false,
+					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  0,
-					  						DisplayInList =  false,
+					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -1080,6 +1087,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "TaxDeductionReport",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -1091,6 +1099,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						FullFieldLable =  "Month",
 					  						DefaultText =  "Month",
 					  						FullLocalDefaultText =  "לחודש",
+					  						ListFieldLable =  "MonthListLable",
+					  						ListLableDefaultText =  "Month",
+					  						ListLocalDefaultText =  "לחודש",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -1099,7 +1110,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
-					  						HasTemplate =  false,
+					  						HasTemplate =  true,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
@@ -1141,11 +1152,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	
 			 QueryColumn ALLTaxDeductionReportsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALLTaxDeductionReportsQuery.Id,QueryCode = ALLTaxDeductionReportsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "TaxDeductionReport.TaxYear" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn ALLTaxDeductionReportsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALLTaxDeductionReportsQuery.Id,QueryCode = ALLTaxDeductionReportsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "TaxDeductionReport.CreatedByUser" , ColumnWidth = 120 }, addedQueryColumns);
+			 QueryColumn ALLTaxDeductionReportsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALLTaxDeductionReportsQuery.Id,QueryCode = ALLTaxDeductionReportsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "TaxDeductionReport.Month" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn ALLTaxDeductionReportsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALLTaxDeductionReportsQuery.Id,QueryCode = ALLTaxDeductionReportsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "TaxDeductionReport.CreateDate" , ColumnWidth = 120 }, addedQueryColumns);
+			 QueryColumn ALLTaxDeductionReportsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALLTaxDeductionReportsQuery.Id,QueryCode = ALLTaxDeductionReportsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "TaxDeductionReport.ByMonth" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn ALLTaxDeductionReportsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALLTaxDeductionReportsQuery.Id,QueryCode = ALLTaxDeductionReportsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "TaxDeductionReport.Status" , ColumnWidth = 120 }, addedQueryColumns);
+			 QueryColumn ALLTaxDeductionReportsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALLTaxDeductionReportsQuery.Id,QueryCode = ALLTaxDeductionReportsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "TaxDeductionReport.CreatedByUser" , ColumnWidth = 120 }, addedQueryColumns);
+
+			 QueryColumn ALLTaxDeductionReportsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALLTaxDeductionReportsQuery.Id,QueryCode = ALLTaxDeductionReportsQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "TaxDeductionReport.CreateDate" , ColumnWidth = 120 }, addedQueryColumns);
+
+			 QueryColumn ALLTaxDeductionReportsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALLTaxDeductionReportsQuery.Id,QueryCode = ALLTaxDeductionReportsQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "TaxDeductionReport.Status" , ColumnWidth = 120 }, addedQueryColumns);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);

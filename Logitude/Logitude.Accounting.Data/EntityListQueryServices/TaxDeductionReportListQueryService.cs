@@ -48,6 +48,8 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 					                          TaxYear = a.TaxYear,
 					
 					                          Email = a.Email,
+											  ByMonth = a.ByMonth,
+											  Month = a.Month,
 					
 					                          ErrorMessage = a.ErrorMessage,
                                               Status = a.TaxDeductionReportStatus != null? a.TaxDeductionReportStatus.EnglishName: null, 
