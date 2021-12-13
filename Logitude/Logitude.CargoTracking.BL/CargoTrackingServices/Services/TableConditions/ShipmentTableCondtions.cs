@@ -54,8 +54,16 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
              "AdditionalData.IsPaymentRequired as IsPaymentRequired , " +
              "min(AdditionalData.PaymentDateTime) as PaymentDateTime , " +
              "min(AdditionalData.PaymentRequestDateTime) as PaymentRequestDateTime , " +
-             "NULL OrderShipmentNumber , " +
              "min(AdditionalData.GatepassDocumentsReady) as GatepassDocumentsReady ";
+
+            var shipmentOrderFields =
+             "min(SHO.Master) as OrderMaster, " +
+             "min(SHO.House) as OrderHouse, " +
+             "min(SHO.CasualImporterName) as OrderShipperName, " +
+             "min(SHO.OrderNumber) as OrderShipmentNumber, " +
+             "min(SHO.PoNumber) as OrderPoNumber, " +
+             "min(SHO.CustomerReferences) as OrderCustomerReference ";
+
 
 
             var carrierCardFields =
@@ -64,7 +72,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
 
             var groupSelect = "Min(P.Id) as ForwardingIdForCustom";
 
-            var selectScript = $"SELECT {updatedShipmentFields}, {shipmentComputedFields}, {shipmentMasterFields}, {groupSelect} , {forwardingShipmentFields} , {shipmentAdditionalDataFields}, {carrierCardFields}";
+            var selectScript = $"SELECT {updatedShipmentFields}, {shipmentComputedFields}, {shipmentMasterFields}, {groupSelect} , {forwardingShipmentFields} , {shipmentAdditionalDataFields},{shipmentOrderFields}, {carrierCardFields}";
 
 
 
@@ -80,6 +88,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
                              $"LEFT OUTER JOIN dbo.ShipmentPickUpDeliveries ShipmentDeliveries    ON ShipmentDeliveries.ShipmentId = C.Id " +
                              $"LEFT OUTER JOIN dbo.Cards CarrierCard    ON CarrierCard.Id = ShipmentDeliveries.CarrierId " +
                              $"LEFT OUTER JOIN dbo.Cards ConsigneeCard    ON ConsigneeCard.Id = C.ConsigneeId " +
+                             $"LEFT OUTER JOIN dbo.ShipmentOrders SHO    ON P.Id = SHO.ShipmentId " +
                              $"LEFT OUTER JOIN dbo.Cards ShipperCard    ON ShipperCard.Id = C.ShipperId";
 
 
