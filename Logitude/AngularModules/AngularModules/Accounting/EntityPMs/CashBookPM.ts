@@ -184,6 +184,11 @@ export class CashBookPM {
     public set InDepositingProgress(newValue: boolean) { if (this.inDepositingProgress != newValue) { this.inDepositingProgress = newValue; this.MarkAsDirty("InDepositingProgress"); } }
        
 	 
+    private isTotalUpdatedByCC: boolean;
+    public get IsTotalUpdatedByCC() { return this.isTotalUpdatedByCC; }
+    public set IsTotalUpdatedByCC(newValue: boolean) { if (this.isTotalUpdatedByCC != newValue) { this.isTotalUpdatedByCC = newValue; this.MarkAsDirty("IsTotalUpdatedByCC"); } }
+       
+	 
 
     public OldEntityPM: CashBookPM;
 		

@@ -1,0 +1,98 @@
+<table>
+
+    <tr>
+        <td style="width: 400px">
+            <table>
+                <tr class="FormFieldRow">
+                    <td>
+                        <table>
+
+                            <tr style="height: 10px;">
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
+
+                            <!-- AccountingDate -->
+                            <tr class="FormFieldRow">
+                                <td>
+                                    <LogLabel [ObjectFieldName]="'AccountingDate'" [NoObjectField]="true"
+                                        [Text]="'New Balance'" [ObjectTableName]="ObjectTableName" [DataContext]="this">
+                                    </LogLabel>
+                                </td>
+
+                                <td style="width: 230px;" [style.padding-right]="isRTL ? 'initial' : '36px'"
+                                    [style.padding-left]="isRTL ? '36px' : 'initial'">
+                                    <LogTextBox [ObjectFieldName]="'Amount'" [InputType]="'sigdouble'"
+                                        [DataContext]="this" [ObjectTableName]="ObjectTableName" [HideColumns]="true">
+                                    </LogTextBox>
+                                </td>
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
+                        </table>
+
+                    </td>
+                </tr>
+            </table>
+        </td>
+
+        <td style="width: 80px;">
+            <div></div>
+        </td>
+
+        <td>
+            <table>
+                <tr class="FormFieldRow">
+                    <td>
+                        <table>
+
+
+                            <tr>
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+
+
+        </td>
+    </tr>
+
+    <tr style="height: 32px;">
+        <td colspan="4" style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="Button" (click)="CancelButtonClicked()">{{'Accounting.General.B.Cancel' |
+                            TextCodeTranslationPipe}}</button>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button id="{{'CREATEDEPOSIT' | IdGeneratorPipe}}" class="RedButton"
+                            (click)="OkButtonClicked()">{{'Accounting.General.B.OK' | TextCodeTranslationPipe}}</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+</table>
