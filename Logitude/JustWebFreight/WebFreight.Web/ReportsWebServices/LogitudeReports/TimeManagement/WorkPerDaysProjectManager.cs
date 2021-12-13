@@ -28,6 +28,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
         private string ownerId = null;
         private string externalProjectNumber = null;
         private bool IncludeInnerProject = false;
+        private bool IncludeInactiveProjects = false;
         private ITimeManagementContext iContext;
         private IQueryable<TMProject> iQueryable_Projects = null;
         private IQueryable<TMEmployeeTime> iQueryable_EmployeeTimes = null;
@@ -51,6 +52,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
             QueryFilterItem filterItem_BudgetId = iQueryOperations.QueryFilterItems.Where(d => d.FieldName == "BudgetId").FirstOrDefault();
             QueryFilterItem filterItem_CategoryId = iQueryOperations.QueryFilterItems.Where(d => d.FieldName == "CategoryId").FirstOrDefault();
             QueryFilterItem filterItem_ExternalProjectNumber = iQueryOperations.QueryFilterItems.Where(d => d.FieldName == "ExternalProjectNumber").FirstOrDefault();
+            QueryFilterItem filterItem_IncludeInactiveProjects = iQueryOperations.QueryFilterItems.Where(d => d.FieldName == "IncludeInactiveProjects").FirstOrDefault();
 
             if (filterItem_FromDate != null)
             {
@@ -120,6 +122,14 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
                 if (filterItem_IncludeInnerProject.FieldValue != null)
                 {
                     IncludeInnerProject = Convert.ToBoolean(filterItem_IncludeInnerProject.FieldValue);
+                }
+            }
+
+            if (filterItem_IncludeInactiveProjects != null)
+            {
+                if (filterItem_IncludeInactiveProjects.FieldValue != null)
+                {
+                    IncludeInactiveProjects = Convert.ToBoolean(filterItem_IncludeInactiveProjects.FieldValue);
                 }
             }
         }
@@ -261,6 +271,11 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
             if (!this.IncludeInnerProject)
             {
                 iQueryable_Projects = iQueryable_Projects.Where(d => d.IsInnerProject == this.IncludeInnerProject);
+            }
+
+            if (!this.IncludeInactiveProjects)
+            {
+                iQueryable_Projects = iQueryable_Projects.Where(d => !d.Inactive);
             }
         }
         private void BuildReportData()

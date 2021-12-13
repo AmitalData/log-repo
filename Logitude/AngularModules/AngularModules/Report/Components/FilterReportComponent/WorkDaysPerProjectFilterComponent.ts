@@ -40,6 +40,15 @@ export class WorkDaysPerProjectFilterComponent extends BaseComponent {
             this.includeInnerProject = value;
         }
     }
+
+    private includeInactiveProjects: boolean = true;
+    public get IncludeInactiveProjects() { return this.includeInactiveProjects; }
+    public set IncludeInactiveProjects(value: boolean) {
+        if (value != this.includeInactiveProjects) {
+            this.includeInactiveProjects = value;
+        }
+    }
+
     constructor() {
         super();
     }
@@ -138,7 +147,6 @@ export class WorkDaysPerProjectFilterComponent extends BaseComponent {
             this.queryFilterItem.Operator = "Equals";
             this.queryFilterItems.push(this.queryFilterItem);
 
-
             this.queryFilterItem = new QueryFilterItem();
             this.queryFilterItem.DisplayInList = false;
             this.queryFilterItem.FieldName = "IncludeInnerProject";
@@ -157,6 +165,13 @@ export class WorkDaysPerProjectFilterComponent extends BaseComponent {
             this.queryFilterItem.DisplayInList = false;
             this.queryFilterItem.FieldName = "OwnerId";
             this.queryFilterItem.FieldValue = this.OwnerId;
+            this.queryFilterItem.Operator = "Equals";
+            this.queryFilterItems.push(this.queryFilterItem);
+
+            this.queryFilterItem = new QueryFilterItem();
+            this.queryFilterItem.DisplayInList = false;
+            this.queryFilterItem.FieldName = "IncludeInactiveProjects";
+            this.queryFilterItem.FieldValue = this.IncludeInactiveProjects;
             this.queryFilterItem.Operator = "Equals";
             this.queryFilterItems.push(this.queryFilterItem);
 
