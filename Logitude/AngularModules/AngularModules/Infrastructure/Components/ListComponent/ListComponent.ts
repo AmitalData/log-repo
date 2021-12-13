@@ -1523,6 +1523,8 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                     if (value2 != null) {
                         filterOperator = "Between";
                     }
+                    if (value1 == '#logged-user') value1 = SessionLocator.LoggedUserId;
+
                     if (filter.DataTypeCode == "DateTime" || filter.DataTypeCode == "Date") {
 
                         var TodayDate = new Date();

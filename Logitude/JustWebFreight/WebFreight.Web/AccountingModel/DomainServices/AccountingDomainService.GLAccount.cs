@@ -11,6 +11,7 @@ using Logitude.Accounting.Data;
 using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Data.Repositories;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Logitude.Accounting.Data.EntityLists;
 using Logitude.Accounting.Def.EntityPMs;
@@ -25,6 +26,7 @@ using Logitude.Accounting.BL.EntityUpdateServices;
 using Logitude.Accounting.Data.EntityListQueryServices;
 using Logitude.Server.Tools.Helpers;
 using Logitude.Accounting.Data.CustomFilters;
+using Simplog.Data.CommonDataModel.Repositories;
 
 namespace WebFreight.Web.AccountingModel.DomainServices
 {
@@ -454,7 +456,7 @@ namespace WebFreight.Web.AccountingModel.DomainServices
             {
 
                 GLAccountRepository glAccountRepository = new GLAccountRepository(tenant);
-                var iQueryable_Data = 
+                var iQueryable_Data =
                     glAccountRepository.GetAllAsGLAccountAndMore(tenant);
 
                 // Main GLAccounts
@@ -470,7 +472,9 @@ namespace WebFreight.Web.AccountingModel.DomainServices
                 // Customers GLAccounts
                 result.ActiveCustomersCount = iQueryable_Data.Where(d => d.AccountTypeCode == "2" && d.Inactive == false).Count();
                 result.InactiveCustomersCount = iQueryable_Data.Where(d => d.AccountTypeCode == "2" && d.Inactive == true).Count();
-                result.CollectorsCount = iQueryable_Data.Where(d => d.AccountTypeCode == "2").Count();
+                var allCustomers = iQueryable_Data.Where(d => d.AccountTypeCode == "2");
+                result.CollectorsCount = GetGlaccountsThatConnectedCardCollectorAsLoggedUser(tenant, allCustomers);
+
                 result.DebitorsCount = iQueryable_Data.Where(d => d.AccountTypeCode == "2" && d.LocalBalanceInDue > 0).Count();
                 result.AllCustomersCount = iQueryable_Data.Where(d => d.AccountTypeCode == "2").Count();
 
@@ -480,12 +484,26 @@ namespace WebFreight.Web.AccountingModel.DomainServices
                 //result.CollectorsCount = iQueryable_Data.Where(d => d.AccountTypeCode == "3").Count();
                 //result.DebitorsCount = iQueryable_Data.Where(d => d.AccountTypeCode == "3" && d.BalanceInLocalCurrency > 0).Count();
                 result.AllVendorsCount = iQueryable_Data.Where(d => d.AccountTypeCode == "3").Count();
-              
+
             }
 
             return result;
         }
 
+        private int GetGlaccountsThatConnectedCardCollectorAsLoggedUser(int tenant, IQueryable<GLAccountAndMoreDTO> allCustomers)
+        {
+            var loggedUserId = GetLoggedUser(tenant).Id;
+            var glaccountIds = allCustomers.Include("CardsData").Where(e => e.CardsData.CollectorUserId == loggedUserId).Count();
+            return glaccountIds;
+        }
+
+        private User GetLoggedUser(int tenant)
+        {
+            string email = AuthenticationUtil.GetLoggedUserEmail(tenant);
+            UserRepository userRepository = new UserRepository(tenant);
+            var loggedUser = userRepository.GetSingleUserByEmail(email, tenant, false);
+            return loggedUser;
+        }
         public JournalSummary GetJournalSummary(int tenant)
         {
             SecurityUtility.AuthenticationOnTenant(tenant);
