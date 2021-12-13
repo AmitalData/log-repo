@@ -701,9 +701,14 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 gLAccountFollowUpData.FollowUpDate = accountPM.GLAccountFollowUpDate;
                 gLAccountFollowUpData.FollowUpRemarks = accountPM.GLAccountFollowUpRemarks;
             }
-            else if (accountPM.AccountTypeCode == GLAccountTypes.Card &&  accountPM.FollowupNotes != null || accountPM.FollowupDate != null) {
+            else if (accountPM.AccountTypeCode == GLAccountTypes.Card && accountPM.FollowupNotes != null || accountPM.FollowupDate != null)
+            {
                 gLAccountFollowUpData.FollowUpDate = accountPM.FollowupDate;
                 gLAccountFollowUpData.FollowUpRemarks = accountPM.FollowupNotes;
+            }
+            else {
+                gLAccountFollowUpData.FollowUpDate = null;
+                gLAccountFollowUpData.FollowUpRemarks = null;
             }
                           
             gLAccountFollowUpData.UpdatedByUserId = loggedUser?.Id;
