@@ -654,7 +654,7 @@ export class PartnerItem extends BaseComponent {
             case "CSAEX":
             case "CSAIM":
                 {
-                    myResult = "CG";
+                    myResult = "CG,AG";
                     break;
                 }
 
@@ -734,6 +734,8 @@ export class PartnerItem extends BaseComponent {
             case "SHPNT":
             case "CONNT":
             case "CONSL":
+            case "CSAEX":
+            case "CSAIM":
                 {
                     myResult = true;
                     break;

@@ -1598,8 +1598,8 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
             case "CAE":
             case "CAI":
                 {
-                    this.CustomerDependencyProperty1 = "CG";
-                    this.CustomerDependencyProperty1IsList = false;
+                    this.CustomerDependencyProperty1 = "CG,AG";
+                    this.CustomerDependencyProperty1IsList = true;
                     break;
                 }
 
