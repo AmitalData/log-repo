@@ -95,7 +95,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
             
             if (ledgerTransactionBalanceFilter.GLAccountId == accountingSettingList.VATInputsGLAccountId)
             {
-                IQueryable<LedgerTransaction> inputs = GetInputTransactions(taxReport, transactionBalanceFilter, accountingSettingList);
+                IQueryable<LedgerTransaction> inputs = GetInputTransactions(taxReport, transactionBalanceFilter, accountingSettingList).OrderByDescending(d => d.AccountingDate).Skip(ledgerTransactionBalanceFilter.PageStartAtRecordIndex).Take(ledgerTransactionBalanceFilter.PageSize);
               transactions=  inputTransactions = GetIqueryableList(inputs).Distinct().ToList();
 
 
@@ -183,7 +183,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                             CurrencyId = ledger.CurrencyId,
                                                             SearchFields = ledger.SearchFields
                                                             
-                                                        }).Distinct().ToList();
+                                                        }).OrderByDescending(d => d.AccountingDate).Skip(transactionBalanceFilter.PageStartAtRecordIndex).Take(transactionBalanceFilter.PageSize).Distinct().ToList();
            
             List<LedgerTransactionList> creditLines = GetTaxJournalLines(transactions, taxReport.Tenant);
             transactions= ExcludeDuplicatedLinesForTheSameJournal(creditLines, transactions);         
@@ -248,7 +248,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                            CurrencyId = ledger.CurrencyId,
                                                            SearchFields = ledger.SearchFields
 
-                                                       }).Distinct().ToList();
+                                                       }).OrderByDescending(d => d.AccountingDate).Skip(transactionBalanceFilter.PageStartAtRecordIndex).Take(transactionBalanceFilter.PageSize).Distinct().ToList();
             List<LedgerTransactionList> creditLines = GetTaxJournalLines(outputLines, transactionBalanceFilter.Tenant);
             outputLines = ExcludeDuplicatedLinesForTheSameJournal(creditLines, outputLines);
             return outputLines.Concat(creditLines).ToList();
