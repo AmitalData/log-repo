@@ -391,7 +391,8 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                         JournalLinePM oldJournalLine = GetOldJournalLineFromDB(journalLinePM);
                         if (oldJournalLine != null)
                         {
-                            var isOneOfJournalLineValuesUpdated = journalLinePM.Notes != oldJournalLine.Notes || journalLinePM.Reference1 != oldJournalLine.Reference1 || journalLinePM.Reference2 != oldJournalLine.Reference2 || journalLinePM.Reference3 != oldJournalLine.Reference3;
+                            var isOneOfJournalLineValuesUpdated = journalLinePM.Notes != oldJournalLine.Notes || journalLinePM.Reference1 != oldJournalLine.Reference1 || journalLinePM.Reference2 != oldJournalLine.Reference2 || journalLinePM.Reference3 != oldJournalLine.Reference3
+                                || journalLinePM.IsExternalReconcile != oldJournalLine.IsExternalReconcile;
 
                             if (isOneOfJournalLineValuesUpdated)
                             {
@@ -457,6 +458,10 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             if (journalLinePM.Reference3 != oldJournalLine.Reference3)
             {
                 eventNotes += string.Concat(TranslateTextsClass.Translate("Journal.CH.Reference3", entityPM.Tenant, showLocals), ": ", TranslateTextsClass.Translate("Accounting.General.O.OldValue", entityPM.Tenant, showLocals), oldJournalLine.Reference3, "\t", TranslateTextsClass.Translate("Accounting.General.O.NewValue", entityPM.Tenant, showLocals), journalLinePM.Reference3, "\n");
+            }
+            if (journalLinePM.IsExternalReconcile != oldJournalLine.IsExternalReconcile)
+            {
+                eventNotes += string.Concat("IsExternalReconcile: ", TranslateTextsClass.Translate("Accounting.General.O.OldValue", entityPM.Tenant, showLocals), oldJournalLine.IsExternalReconcile, "\t", TranslateTextsClass.Translate("Accounting.General.O.NewValue", entityPM.Tenant, showLocals), journalLinePM.IsExternalReconcile, "\n");
             }
 
             return eventNotes;

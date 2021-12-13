@@ -28,7 +28,7 @@ namespace Logitude.Accounting.Data.Repositories
 
 		 
 		
-		public  ARPaymentsJournal GetSingle(int tenant, string paymentid, bool isvoided, int ten1ant)
+		public  ARPaymentsJournal GetSingle(int tenant, string paymentid, bool isvoided, int ten0ant)
         {
             return (from a in context.ARPaymentsJournals
                     where a.Tenant == tenant && a.PaymentId == paymentid && a.IsVoided == isvoided && a.Tenant == tenant
