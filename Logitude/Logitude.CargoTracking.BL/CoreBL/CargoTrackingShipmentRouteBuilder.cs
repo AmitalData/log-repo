@@ -121,9 +121,9 @@ namespace Logitude.CargoTracking.BL.EntityQueryServices
                 var step = new RoutingStep()
                 {
                     TransportModeCode = shipmentPM.TransportModeId,
-                    FromPortLabel = shipmentPM.MainCarriageFromPortCode,
-                    ToPortLabel = shipmentPM.MainCarriageToPortCode,
-                    Description = shipmentPM.MainCarriageCarrierName != null ? "Via " + shipmentPM.MainCarriageCarrierName : null
+                    FromPortLabel = mainCarrigeLeg.FromPortCode,
+                    ToPortLabel = mainCarrigeLeg.ToPortCode,
+                    Description = mainCarrigeLeg.CarrierName != null ? "Via " + mainCarrigeLeg.CarrierName : null
                 };
                 SetMainCarriageLegDirections(mainCarrigeLeg, step);
                 steps.Add(step);
