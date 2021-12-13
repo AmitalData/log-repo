@@ -2,6 +2,7 @@
 using Logitude.Accounting.BL.EntityQueryServices;
 using Logitude.Accounting.BL.EntityUpdateServices;
 using Logitude.Accounting.Data;
+using Logitude.Accounting.Data.EntityListQueryServices;
 using Logitude.Accounting.Def.EntityPMs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
@@ -28,6 +29,9 @@ namespace Logitude.Accounting.BL.CoreBL
 
         public void RecalculateChequesTotalForBillToAccount(string billToAccountId)
         {
+            IAccountingContext MyContext = AccountingContext.GetContext(tenant);
+            LedgerTransactionListQueryService ledgerQuery = new LedgerTransactionListQueryService(MyContext);
+
             GLAccountMoreDataPM glaccountMoreData = GetGLAccountMoreDataConnectedToBillToAccount(tenant, billToAccountId);
 
             ResetChequesTotals(glaccountMoreData);
@@ -35,7 +39,9 @@ namespace Logitude.Accounting.BL.CoreBL
             List<ARPaymentChequePM> cheques = GetChequesOfPaymentBillToAccount(tenant, billToAccountId);
             foreach (ARPaymentChequePM cheque in cheques)
                 AddChequeAmountToTotal(glaccountMoreData, cheque);
-
+            var externalTransactions = ledgerQuery.GetExternalTransactionsForAccount(glaccountMoreData.AccountId, tenant).ToList();
+            var externalTransactionsTotal = externalTransactions.Sum(d => d.LocalAmountCredit);
+            glaccountMoreData.TotFutureOpenChequesInLocalCur += externalTransactionsTotal;
             SubmiGLAccountMoreData(tenant, glaccountMoreData);
         }
 

@@ -56,14 +56,14 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 : base(mainContext)
             { }
         }
-        
+
         protected StornoOverrideM _StornoOverrideM;
 
         protected override void AddContext(JournalPM myTEntityPM)
         {
             base.AddContext(myTEntityPM);
             this.Repository = GetJournalRepositoryPriv();
-                //new JournalRepositoryPriv((IAccountingContext)this.MainContext);
+            //new JournalRepositoryPriv((IAccountingContext)this.MainContext);
             //this.entityRepository.SetInsureUsingOnlyByUpdateService();
         }
 
@@ -73,7 +73,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             var JournalUpdateInsert = JournalUpdateOnCreatingFactory.Create(this.MainContext as IAccountingContext);
             JournalUpdateInsert.OnCreating(entityPM, entityParentPM);
 
-          
+
         }
 
         protected override void UpdateComposition(JournalPM entityPM)
@@ -98,7 +98,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             if (entityPM.ChangeSetOp == ChangeSetOperation.Insert
                 || (
                 entityPM.ChangeSetOp == ChangeSetOperation.Update &&
-                entityPM.JournalReconciles.All( r=>r.ChangeSetOp== ChangeSetOperation.Delete)
+                entityPM.JournalReconciles.All(r => r.ChangeSetOp == ChangeSetOperation.Delete)
                 )
                 )
             {
@@ -111,7 +111,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 }
 
                 bool inReconcileProgress = entityPM.ChangeSetOp == ChangeSetOperation.Insert;
-                
+
                 var listTransactionId = entityPM.JournalReconciles.Select(r => r.LedgerTransactionId).ToList();
                 if (listTransactionId.Count > 0)
                 {
@@ -152,7 +152,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
         private void UpdateLedgerTransactionWithNewValuesFromJournalLines(JournalPM entityPM)
         {
-            foreach(JournalLinePM JournalLine in entityPM.JournalLines)
+            foreach (JournalLinePM JournalLine in entityPM.JournalLines)
             {
                 UpdateRelatedLedgerTransactionIfJournalLineUpdated(entityPM, JournalLine);
             }
@@ -161,7 +161,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         private void UpdateRelatedLedgerTransactionIfJournalLineUpdated(JournalPM entityPM, JournalLinePM JournalLine)
         {
             if (JournalLine == null) { return; }
-            
+
             JournalLinePM oldJournalLine = GetOldJournalLineFromDB(JournalLine);
             bool isJournalLineUpdated = CheckIfJournalLineChanged(JournalLine, oldJournalLine);
             if (isJournalLineUpdated)
@@ -177,17 +177,18 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             return journalLine;
         }
 
-        private bool CheckIfJournalLineChanged(JournalLinePM journalLine, JournalLinePM oldJournalLine) {
-           return  oldJournalLine != null && journalLine != null && (journalLine.Notes != oldJournalLine.Notes || journalLine.Reference1 != oldJournalLine.Reference1 || journalLine.Reference2 != oldJournalLine.Reference2 || journalLine.Reference3 != oldJournalLine.Reference3);
+        private bool CheckIfJournalLineChanged(JournalLinePM journalLine, JournalLinePM oldJournalLine)
+        {
+            return oldJournalLine != null && journalLine != null && (journalLine.Notes != oldJournalLine.Notes || journalLine.Reference1 != oldJournalLine.Reference1 || journalLine.Reference2 != oldJournalLine.Reference2 || journalLine.Reference3 != oldJournalLine.Reference3);
         }
-       
+
         private void UpdateLedgerTransactionRelatedToJournalLine(JournalPM entityPM, JournalLinePM JournalLine, JournalLinePM oldJournalLine)
         {
             List<LedgerTransactionPM> allTransactionsRelatedToJournal = GetAllTransactionsRelatedToJournal(entityPM, JournalLine);
             UpdateAllLedgerTransactionsRelatedToJournalLine(JournalLine, allTransactionsRelatedToJournal);
         }
 
-        private  List<LedgerTransactionPM> GetAllTransactionsRelatedToJournal(JournalPM entityPM, JournalLinePM JournalLine)
+        private List<LedgerTransactionPM> GetAllTransactionsRelatedToJournal(JournalPM entityPM, JournalLinePM JournalLine)
         {
             LedgerTransactionQueryService ledgerTransactionQueryService = new LedgerTransactionQueryService(entityPM.Tenant);
             List<LedgerTransactionPM> allTransactionsRelatedToJournal = ledgerTransactionQueryService.GetByJournalLineIdAndLine(entityPM.Id, JournalLine.Line, entityPM.Tenant).ToList();
@@ -212,7 +213,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             transaction.Reference3 = journalLine.Reference3;
         }
 
-        private  void UpdateLedgerTransaction(LedgerTransactionPM transaction)
+        private void UpdateLedgerTransaction(LedgerTransactionPM transaction)
         {
             var ledgerTransactionUpdateService = new LedgerTransactionUpdateService(this.MainContext as IAccountingContext, new Dictionary<string, IContext>(), transaction.Tenant);
             transaction.ChangeSetOp = ChangeSetOperation.Update;
@@ -225,7 +226,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
             journalUpdate.OnUpdating(entityPM, entityPOCO, ChangeTrackingEntityPM);
 
-            
+
         }
         private JournalRepository GetJournalRepositoryPriv()
         {
@@ -245,17 +246,17 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             var poco = repoPriv.GetSingle(seedJournalId, tenant);
             poco.StatusCode = ((int)Def.EntityPMs.JournalStatusTypePM.StatusCodeEnum.Failed).ToString();
             repoPriv.Update(poco);
-            
+
         }
 
         public virtual JournalUpdateOnUpdating GetJournalOnUpdtatingObject()
         {
             var journalUpdate = new JournalUpdateOnUpdating(this.MainContext as IAccountingContext);
-          
+
             return journalUpdate;
         }
 
-   
+
         protected override void Trace(JournalPM entityPM, Journal entityPOCO, string changesXml)
         {
             if (entityPM.ChangeSetOp == ChangeSetOperation.Insert)
@@ -310,8 +311,8 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
                     });
                 }
-                if(entityPM.Copied)
-                CreateCopyJournalEvent(entityPM, contact);
+                if (entityPM.Copied)
+                    CreateCopyJournalEvent(entityPM, contact);
             }
             else if (entityPM.ChangeSetOp == ChangeSetOperation.Update)
             {
@@ -413,19 +414,20 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
                     }
 
-                    if (!isJournalLineUpdated) { 
-                    String notes = "Journal Updated";
-                    EventTracer.CreateTraceEvent(new EventTracerArgs()
+                    if (!isJournalLineUpdated)
                     {
-                        EntityId = entityPM.Id,
-                        Tenant = entityPM.Tenant,
-                        UserId = contact.Id,
-                        ObjectTableName = "Journal",
-                        IsAddedManually = false,
-                        EventTypeCode = "JUP",
-                        Notes = notes,
+                        String notes = "Journal Updated";
+                        EventTracer.CreateTraceEvent(new EventTracerArgs()
+                        {
+                            EntityId = entityPM.Id,
+                            Tenant = entityPM.Tenant,
+                            UserId = contact.Id,
+                            ObjectTableName = "Journal",
+                            IsAddedManually = false,
+                            EventTypeCode = "JUP",
+                            Notes = notes,
 
-                    });
+                        });
                     }
 
                 }
@@ -438,9 +440,9 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         private static string SetJournalLineEventNotes(JournalPM entityPM, bool showLocals, JournalLinePM journalLinePM, JournalLinePM oldJournalLine)
         {
             var eventNotes = string.Concat(TranslateTextsClass.Translate("Journal.M.Line", entityPM.Tenant, showLocals), ' ', oldJournalLine.Line, "\n");
-            if(journalLinePM.Notes != oldJournalLine.Notes)
+            if (journalLinePM.Notes != oldJournalLine.Notes)
             {
-                eventNotes += string.Concat(TranslateTextsClass.Translate("Journal.M.Note", entityPM.Tenant, showLocals),": ", TranslateTextsClass.Translate("Accounting.General.O.OldValue", entityPM.Tenant, showLocals), oldJournalLine.Notes, "\t", TranslateTextsClass.Translate("Accounting.General.O.NewValue", entityPM.Tenant, showLocals), journalLinePM.Notes, "\n");
+                eventNotes += string.Concat(TranslateTextsClass.Translate("Journal.M.Note", entityPM.Tenant, showLocals), ": ", TranslateTextsClass.Translate("Accounting.General.O.OldValue", entityPM.Tenant, showLocals), oldJournalLine.Notes, "\t", TranslateTextsClass.Translate("Accounting.General.O.NewValue", entityPM.Tenant, showLocals), journalLinePM.Notes, "\n");
             }
 
             if (journalLinePM.Reference1 != oldJournalLine.Reference1)
@@ -488,7 +490,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
         }
 
-       
+
         public string oldsJournalStatus()
         {
 
@@ -507,11 +509,11 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
         }
 
-        
-     
-        
 
-         
+
+
+
+
 
 
         protected override void AfterUpdating(JournalPM entityPM, EntityPM entityParentPM)
@@ -569,15 +571,16 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         }
         private void CreateJournalAdditionalDataForEachDebitInputLine(JournalPM journal)
         {
-            if (journal.AccountingEntityCode != JournalAccountingEntities.ARInvoice) { 
-                List<JournalLinePM> jourlDebitInputLines = SelectJournalDebitLinesFromJournalLines(journal);
-            foreach (JournalLinePM journalLine in jourlDebitInputLines)
+            if (journal.AccountingEntityCode != JournalAccountingEntities.ARInvoice)
             {
-                JournalAdditionalDataPM journalAdditionalDataPM = MapJournalAdditionalDataFields(journalLine, journal);
-                SaveJournalAdditionalData(journalAdditionalDataPM);
+                List<JournalLinePM> jourlDebitInputLines = SelectJournalDebitLinesFromJournalLines(journal);
+                foreach (JournalLinePM journalLine in jourlDebitInputLines)
+                {
+                    JournalAdditionalDataPM journalAdditionalDataPM = MapJournalAdditionalDataFields(journalLine, journal);
+                    SaveJournalAdditionalData(journalAdditionalDataPM);
 
+                }
             }
-        }
         }
         private List<JournalLinePM> SelectJournalDebitLinesFromJournalLines(JournalPM journal)
         {
@@ -618,19 +621,19 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         }
         protected void ReCheckFromDBThrowIfNotValid(JournalPM entityPM)
         {
-            var qs= new JournalQueryService(entityPM.Tenant);
+            var qs = new JournalQueryService(entityPM.Tenant);
             var aftreUpdateGetFromDBPm = qs.GetSingle(entityPM.Id, true, false);
             Validate(aftreUpdateGetFromDBPm);
         }
-        
+
         protected override void Validate(JournalPM entityPM)
         {
 
             bool SuppressCheckGLAccountIsMultiCurrencyWI40640 = false;
             ValidationContext validContext = AccountingValidationContextServiceProvider.NewJournalValidatorContextByAContext(MainContext as IAccountingContext, entityPM, SuppressCheckGLAccountIsMultiCurrencyWI40640);
-            
-            
-            
+
+
+
             ValidationResult result = JournalValidator.IsJournalValid(entityPM, validContext);
             if (result != null)
             {
@@ -642,14 +645,14 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
 
 
-      
+
     }
 
     public partial class JournalVoidUpdateService : JournalUpdateService
     {
         private JournalPM _JornalPmSource;
-        public JournalVoidUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base(mainContext,additionalContexts, tenant)
+        public JournalVoidUpdateService(IContext mainContext, Dictionary<string, IContext> additionalContexts, int tenant)
+            : base(mainContext, additionalContexts, tenant)
         {
 
         }
@@ -666,7 +669,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             return journalUpdate;
         }
         public JournalPM VoidJournal(string JournalId, int requestTenant,
-           StornoOverrideM stornoOverrideM, DateTime? APPaymentCanceledDate=null
+           StornoOverrideM stornoOverrideM, DateTime? APPaymentCanceledDate = null
            ) //Call from JournalOpController
         {
 
@@ -681,10 +684,10 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     throw new Exception("Journal id couldn't find in db" + JournalId);
                 }
                 if (_JornalPmSource.Tenant != requestTenant)
-                { 
+                {
                     throw new Exception("(Journal.Tenant!= requestTenant)");
                 }
-                if (String.IsNullOrWhiteSpace( _JornalPmSource.QueueId ))
+                if (String.IsNullOrWhiteSpace(_JornalPmSource.QueueId))
                 {
                     throw new Exception(
                         //"I must/Need??? Ledger to Reconcile - but journal did not Stream yet ..."
@@ -699,7 +702,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 scope.Complete();
                 return _JornalPmSource;
             }
-            
+
         }
 
         protected override void AfterUpdating(JournalPM entityPM, EntityPM entityParentPM)
@@ -711,7 +714,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             {
                 base.AfterUpdating(entityPM, entityParentPM);
             }
-            
+
         }
 
         private bool CanIMatchVoidReconciliation()
@@ -727,10 +730,10 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             //repo.GetByJournalId(_JornalPmSource.Id, _JornalPmSource.Tenant);
             return true;
         }
-        
+
     }
 
-    public interface IJournalUpdateService 
+    public interface IJournalUpdateService
     {
         void Update(JournalPM entityPM, bool commit, TimeSpan? transactionTimeout = null);
     }
@@ -753,6 +756,6 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 }
 
 
-    
-    
+
+
 
