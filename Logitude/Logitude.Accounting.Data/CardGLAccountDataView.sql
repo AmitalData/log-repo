@@ -25,6 +25,7 @@ SELECT     dbo.Cards.EnglishName AS CardEnglishName, dbo.Cards.GLAccountId AS Ca
                       dbo.GLAccounts.RevaluationEnabled, dbo.GLAccounts.ParentAccountId, dbo.GLAccounts.Category2Id, dbo.GLAccounts.Category3Id, dbo.GLAccounts.Category4Id, 
                       dbo.GLAccounts.Category5Id, dbo.GLAccounts.Category1Id, dbo.GLAccounts.IsVATExempt, dbo.GLAccounts.CustomerGLAccountId, dbo.GLAccounts.ConsolidationVat, dbo.Cards.VatNumber,
 					  dbo.GLAccounts.DeductionFileNumber,
+					  dbo.GLAccounts.ExcludeFromDeductionReport,
                       dbo.Cards.LocalName AS CardLocalName, SalesMan.LocalName AS SalesManLocalName, Collectors.LocalName AS CollectorLocalName, dbo.Cards.VatTypeId, 
                       dbo.Cards.CountryId, dbo.Cards.CountryCode, dbo.Cards.CityName, dbo.Cards.CountryName, dbo.Cards.PaymentTermId, 
                       dbo.ChartOfAccounts.LocalName AS ChartOfAccountsLocalName, dbo.ChartOfAccounts.EnglishName AS ChartOfAccountsEnglishName, 

@@ -54,6 +54,8 @@ namespace Logitude.Accounting.Data.EntityPOCOs
         public DateTime? LastActivityDate { get; set; }
         public string LastActivityTypeName { get; set; }
         public string LastActivityByUserName { get; set; }
+        public bool ExcludeFromDeductionReport { get; set; }
+        
 
         // Card
         public string SalesmanUserId { get; set; }
