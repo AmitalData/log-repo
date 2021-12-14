@@ -3,7 +3,7 @@ import {SessionLocator} from '../../Infrastructure/Utilities/SessionLocator';
 
 @Component({
     selector: 'CellTooltip',
-    
+
     templateUrl: './CellTooltip.html',
     inputs: ['IconWidth', 'IconHeight', 'IconPath', 'Width', 'Height', 'Head', 'Body', 'MaxHeight', 'IsOnClick', 'IsOpened','IsToRight'],
     changeDetection: ChangeDetectionStrategy.OnPush,
@@ -24,6 +24,7 @@ export class CellTooltip implements OnInit, AfterViewInit {
     public Head: string = null;
     public Body: string = null;
     public IsMouseOver: boolean = false;
+    public IsPopupMouseOver: boolean = false;
     @Output() Opened: EventEmitter<boolean> = new EventEmitter<boolean>();
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
@@ -103,12 +104,17 @@ export class CellTooltip implements OnInit, AfterViewInit {
     mouseleave() {
         this.IsMouseOver = false;
         if (!this.IsOnClick) {
-            setTimeout(() => {
                 document.getElementById(this.TooltipContentId).style.visibility = "hidden";
-            },500)
         }
     }
 
+    OnButtonMouseLeave(){
+        setTimeout(() => {
+            if (!this.IsOnClick && !this.IsPopupMouseOver) {
+                document.getElementById(this.TooltipContentId).style.visibility = "hidden";
+            }
+        },200)
+    }
     click() {
         if (this.IsOnClick) {
             if (document.getElementById(this.TooltipContentId).style.visibility == "visible") {
