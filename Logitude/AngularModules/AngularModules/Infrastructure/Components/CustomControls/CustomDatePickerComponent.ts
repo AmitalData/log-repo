@@ -209,7 +209,7 @@ export class CustomDatePickerComponent extends BaseComponent implements OnInit {
         if (this.HasAdvancedFiltersOptionsToggle) {
             itemsCount = itemsCount + 2;
         }
-        if (this.ObjectField.IsRequiered == true) {
+        if (this.ObjectField.IsRequiered == false) {
             itemsCount = itemsCount + 1;
         }
         return itemsCount;
