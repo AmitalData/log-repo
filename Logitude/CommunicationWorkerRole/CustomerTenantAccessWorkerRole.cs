@@ -188,7 +188,7 @@ namespace CommunicationWorkerRole
                                         IsCustomsActivated = IsCustomsActivated
                                     };
 
-                                    UpdateCustomerTenantAccessRequests(customerTenantAccessRequest);
+                                    //UpdateCustomerTenantAccessRequests(customerTenantAccessRequest);
 
                                     var serializedObject = JsonConvert.SerializeObject(customerTenantAccessRequest);
                                     LogPM.Subject = "Start To Send Response To Importer By CustomerTenantAccessRequestApproval Controller";
