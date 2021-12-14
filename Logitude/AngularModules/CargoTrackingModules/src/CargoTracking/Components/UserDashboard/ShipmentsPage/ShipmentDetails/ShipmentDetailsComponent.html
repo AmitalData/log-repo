@@ -297,7 +297,7 @@
     <panel *ngIf="!ShowDeclarationApproval" style="order: 3;margin-top: 10px" [Title]="OverviewPanelTitle" [ShowWhitePanelOnMobile]="true" [Name]="'Overview'">
 
         <div body>
-            <div class="data-cards" *ngIf="cargoTrackingShipmentPM">
+            <div class="data-cards" *ngIf="cargoTrackingShipmentPM" id="overview-data-cards">
                 <div *ngIf="cargoTrackingShipmentPM.EntityType == 'O'">
                     <div class="title">po number</div>
                     <div class="description">{{cargoTrackingShipmentPM.ShipmentOrderPONumber}}</div>
@@ -397,10 +397,9 @@ cargoTrackingShipmentPM.ArrivalDate |
                     </div>
                 </div>
                 <!-- <div>
-                    <div class="title">shipper</div>
-                    <div class="description">{{cargoTrackingShipmentPM.ShipperName}}</div>
-                </div> -->
-
+        <div class="title">shipper</div>
+        <div class="description">{{cargoTrackingShipmentPM.ShipperName}}</div>
+    </div> -->
                 <!--<div>
         <div class="title">Incoterms</div>
         <div class="description">{{ShipmentPM?.IncotermName}}</div>
@@ -440,6 +439,18 @@ cargoTrackingShipmentPM.ArrivalDate |
                         </span>
                     </div>
                 </div>
+                <div *ngIf=" cargoTrackingShipmentPM.EntityType == 'O'">
+                    <div class="title">PO Date</div>
+                    <div class="description">
+                        {{cargoTrackingShipmentPM?.SHOPODate |date:'dd/MM/yyyy'}}
+                    </div>
+                </div>
+                <div *ngIf=" cargoTrackingShipmentPM.EntityType == 'O'">
+                    <div class="title booking-title">Booking Confirmation #</div>
+                    <div class="description">
+                        {{cargoTrackingShipmentPM?.SHOBookingConfirmationNumber}}
+                    </div>
+                </div>
 
             </div>
         </div>
@@ -465,8 +476,8 @@ cargoTrackingShipmentPM.ArrivalDate |
                             <div class="description TextTrimming"> {{package.PackageTypeName}}</div>
 
                             <i class="las" style="color: var(--MainColor);margin-top:5px; margin-left: 5px;"
-                                [class.la-chevron-circle-up]="ShowDetailsSection" [class.la-chevron-circle-down]="!ShowDetailsSection"
-                                *ngIf="cargoTrackingShipmentPM.Packages.length > 1 && i == 1" (click)="ShowMoreLinkClicked()"></i>
+                               [class.la-chevron-circle-up]="ShowDetailsSection" [class.la-chevron-circle-down]="!ShowDetailsSection"
+                               *ngIf="cargoTrackingShipmentPM.Packages.length > 1 && i == 1" (click)="ShowMoreLinkClicked()"></i>
                         </div>
                     </div>
                 </div>
@@ -498,8 +509,8 @@ cargoTrackingShipmentPM.ArrivalDate |
                     <div class="description TextTrimming">
                         {{cargoTrackingShipmentPM?.WarehouseLegEnglishName}}
                         <a *ngIf="cargoTrackingShipmentPM && cargoTrackingShipmentPM.WarehouseLegEnglishName && cargoTrackingShipmentPM.WarehouseLegEnglishName.length > 18"
-                            (click)="ShowMoreWindow(cargoTrackingShipmentPM.WarehouseLegEnglishName)"
-                            style="cursor: pointer;text-decoration: underline;font-size: 11px;">Show more</a>
+                           (click)="ShowMoreWindow(cargoTrackingShipmentPM.WarehouseLegEnglishName)"
+                           style="cursor: pointer;text-decoration: underline;font-size: 11px;">Show more</a>
                     </div>
                 </div>
                 <div class="hide-mobile" *ngIf="cargoTrackingShipmentPM.TransportModeId != 'A' && cargoTrackingShipmentPM.EntityType != 'O'">
@@ -522,12 +533,31 @@ cargoTrackingShipmentPM.ArrivalDate |
                         {{cargoTrackingShipmentPM?.ImportManifest}}
                     </div>
                 </div>
-                <div *ngIf=" cargoTrackingShipmentPM.EntityType == 'O'">
+                <div id="description-of-goods" *ngIf=" cargoTrackingShipmentPM.EntityType == 'O'">
                     <div class="title">Description Of Goods </div>
                     <div class="description">
                         {{cargoTrackingShipmentPM?.DescriptionOfGoods}}
                     </div>
                 </div>
+                <div *ngIf=" cargoTrackingShipmentPM.EntityType == 'O'">
+                    <div class="title">Carrier </div>
+                    <div class="description">
+                        {{cargoTrackingShipmentPM?.SHOCarrierName}}
+                    </div>
+                </div>
+                <div *ngIf=" cargoTrackingShipmentPM.EntityType == 'O'  && cargoTrackingShipmentPM?.Master !=null && cargoTrackingShipmentPM?.Master.length > 0">
+                    <div class="title">Master </div>
+                    <div class="description">
+                        {{cargoTrackingShipmentPM?.Master}}
+                    </div>
+                </div>
+                <div *ngIf=" cargoTrackingShipmentPM.EntityType == 'O'  && cargoTrackingShipmentPM?.House !=null && cargoTrackingShipmentPM?.Master.length > 0">
+                            <div class="title">house </div>
+                    <div class="description">
+                        {{cargoTrackingShipmentPM?.House}}
+                    </div>
+                </div>
+
 
             </div>
         </div>

@@ -66,6 +66,13 @@ namespace Logitude.CargoTracking.BL.EntityQueryServices
             cargoShipmentPM.ShipmentTypeName = shipmentPM?.ShipmentTypeName;
             cargoShipmentPM.ShipmentOrderQuantity = shipmentOrderPM?.Quantity;
             cargoShipmentPM.ShipmentOrderPONumber = shipmentOrderPM?.PONumber;
+            cargoShipmentPM.SHOBookingConfirmationNumber = shipmentOrderPM?.BookingConfirmationNumber;
+            cargoShipmentPM.SHOPODate = shipmentOrderPM?.PODate;
+            cargoShipmentPM.SHOCarrierName = shipmentOrderPM?.CarrierName;
+            cargoShipmentPM.House = shipmentOrderPM?.House;
+
+
+
         }
         private void BuildShipmentRoute()
         {
