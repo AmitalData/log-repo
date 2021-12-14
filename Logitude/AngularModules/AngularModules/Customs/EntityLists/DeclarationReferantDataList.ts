@@ -82,6 +82,8 @@ export class DeclarationReferantDataList {
 	CancelRequestStatusCode: string;
 	IsExceptionReasonsListNull: boolean;
 	IsManualPayment: boolean;
+	Commodity: string;
+	LastStatusRemarks: string;
 	
 }
  

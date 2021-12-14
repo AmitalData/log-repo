@@ -162,6 +162,10 @@ namespace Logitude.Customs.Data.EntityLists
        public bool? IsExceptionReasonsListNull  { get; set; }
        [DataMember]
        public bool IsManualPayment  { get; set; }
+       [DataMember]
+       public string Commodity  { get; set; }
+       [DataMember]
+       public string LastStatusRemarks  { get; set; }
    }
 
 }

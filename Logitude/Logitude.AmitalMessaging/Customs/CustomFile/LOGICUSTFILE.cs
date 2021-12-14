@@ -188,6 +188,8 @@ public partial class LogitudeCustomsFile
 
     private string directionField;
 
+    private string commodityField;
+
     /// <remarks/>
     public string CustomFileNo
     {
@@ -1069,6 +1071,19 @@ public partial class LogitudeCustomsFile
         set
         {
             this.directionField = value;
+        }
+    }
+
+    /// <remarks/>
+    public string Commodity
+    {
+        get
+        {
+            return this.commodityField;
+        }
+        set
+        {
+            this.commodityField = value;
         }
     }
 }
