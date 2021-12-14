@@ -87,6 +87,7 @@ namespace Logitude.Accounting.BL.Utils
                                     IAccountingContext MyContext = AccountingContext.GetContext(tenant.Id);
                                     GLAccountMoreDataUpdateService updateService = new GLAccountMoreDataUpdateService(MyContext, new Dictionary<string, IContext>(), tenant.Id);
                                     List<ARPaymentChequeFutureData> data = moreDataQueryService.GetARPaymentChequeFutureData(tenant.Id);
+                                    LedgerTransactionListQueryService ledgerQuery = new LedgerTransactionListQueryService(MyContext);
                                     List<string> glAccountIds = new List<string>();
                                     foreach (ARPaymentChequeFutureData item in data)
                                     {
@@ -124,8 +125,9 @@ namespace Logitude.Accounting.BL.Utils
 
                                                     }
                                                 }
-
-
+                                                var externalTransactions = ledgerQuery.GetExternalTransactionsForAccount(item.GLAccountId, tenant.Id).ToList();
+                                                var externalTransactionsTotal = externalTransactions.Sum(d => d.LocalAmountCredit);
+                                                moreDataPM.TotFutureOpenChequesInLocalCur += externalTransactionsTotal;
                                                 moreDataPM.ChangeSetOp = ChangeSetOperation.Update;
                                                 updateService.Update(moreDataPM, true);
                                             }

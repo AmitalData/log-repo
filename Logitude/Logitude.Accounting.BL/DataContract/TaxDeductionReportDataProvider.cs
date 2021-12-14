@@ -737,7 +737,7 @@ namespace Logitude.Accounting.BL.DataContract
                 TotalVendors = deductionLines.Where(d => d.MonthOfRegisterDate == month).GroupBy(d => d.VendorId).Count(),
                 TotalPaymentsWithoutDivided = Math.Round(deductionLines.Where(d => d.MonthOfRegisterDate == month && d.DeductionType != "18").Sum(d => d.AmountInLocalCurrency).Value, 0),
                 TotalDeductionsWithoutDivided = Math.Round(deductionLines.Where(d => d.MonthOfRegisterDate == month && d.DeductionType != "18").Sum(d => d.TaxDeductionLocalAmount).Value, 0),
-                TotalDivided = Math.Round(deductionLines.Where(d => d.MonthOfRegisterDate == month && d.DeductionType == "18").Sum(d => d.AmountInLocalCurrency + (double?)d.TaxDeductionLocalAmount).Value, 0),
+                TotalDivided = Math.Round(deductionLines.Where(d => d.MonthOfRegisterDate == month && d.DeductionType == "18").Sum(d => d.AmountInLocalCurrency ).Value, 0),
                 TotalDeductionsFromDivided = Math.Round(deductionLines.Where(d => d.MonthOfRegisterDate == month && d.DeductionType == "18").Sum(d => d.TaxDeductionLocalAmount).Value, 0),
                 ReportMonth = month + "." + ReportYear,
             };

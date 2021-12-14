@@ -116,6 +116,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         externalAPIShipmentValidator.ValidateShipmentClosure();
                         externalAPIShipmentValidator.ValidatePickupDeliveryPackages();
                         externalAPIShipmentValidator.ValidatePartnersDueToDirection();
+                        externalAPIShipmentValidator.ValidatePreAndOnCarrageFields();
 
                         this.SetClosurePropertiers(entityPM);
                         this.SetMasterNumberProperties(entityPM);
@@ -124,8 +125,6 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         AddressRepository addressRepository = new AddressRepository(entityPM.Tenant);
                         this.ValidateAndSetCustomerData(entityPM, addressRepository, authToken.Tenant);
                         this.ValidateCustomsFields(entityPM);
-                        this.ValidateOnCarriageDates(entityPM);
-                        this.ValidatePreCarriageDates(entityPM);
 
                         if (!IsInlandDomesticShipment(entityPM))
                         {
@@ -291,6 +290,9 @@ namespace WebFreight.Web.ExternalAPIs.V1
                                 AddressRepository addressRepository = new AddressRepository(authToken.Tenant);
                                 this.ValidateAndSetCustomerData(directPM, addressRepository, authToken.Tenant);
                                 this.ValidateUpdateShipmentPackages(directPM);
+
+                                ExternalAPIShipmentValidator externalAPIShipmentValidator = new ExternalAPIShipmentValidator(directPM, authToken.Tenant);
+                                externalAPIShipmentValidator.ValidatePreAndOnCarrageFields();
                             }
                             else
                             {
@@ -299,8 +301,6 @@ namespace WebFreight.Web.ExternalAPIs.V1
                             }
 
                             this.ValidateCustomsFields(directPM);
-                            this.ValidateOnCarriageDates(directPM);
-                            this.ValidatePreCarriageDates(directPM);
                             this.UpdatePartners(MyContext, directPM);
                             ComputeHelper.ComputeTotals(directPM);
 
@@ -668,30 +668,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
             }
             shipmentPM.IncludesCustoms = true;
         }     
-        private void ValidateOnCarriageDates(ShipmentPM entityPM)
-        {
-            if (!this.IsRoutingLegDatesValid(entityPM.OnCarriageETD, entityPM.OnCarriageETA))
-            {
-                throw new ApplicationException("On Carriage expected departure must be less than On Carriage expected arrival");
-            }
 
-            if (!this.IsRoutingLegDatesValid(entityPM.OnCarriageATD, entityPM.OnCarriageATA))
-            {
-                throw new ApplicationException("On Carriage actual departure must be less than On Carriage actual arrival");
-            }
-        }
-        private void ValidatePreCarriageDates(ShipmentPM entityPM)
-        {
-            if (!this.IsRoutingLegDatesValid(entityPM.PreCarriageETD, entityPM.PreCarriageETA))
-            {
-                throw new ApplicationException("Pre Carriage expected departure must be less than Pre Carriage expected arrival");
-            }
-
-            if (!this.IsRoutingLegDatesValid(entityPM.PreCarriageATD, entityPM.PreCarriageATA))
-            {
-                throw new ApplicationException("Pre Carriage actual departure must be less than Pre Carriage actual arrival");
-            }
-        }
         private void ValidateInlandDomesticMainCarriageDates(ShipmentPM entityPM)
         {
             if (!this.IsRoutingLegDatesValid(entityPM.MainCarriageETD, entityPM.MainCarriageETA))

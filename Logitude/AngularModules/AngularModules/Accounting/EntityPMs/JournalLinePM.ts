@@ -212,6 +212,16 @@ export class JournalLinePM {
     public set ActionId(newValue: string) { if (this.actionId != newValue) { this.actionId = newValue; this.MarkAsDirty("ActionId"); } }
        
 	 
+    private creditAccountCOACode: string;
+    public get CreditAccountCOACode() { return this.creditAccountCOACode; }
+    public set CreditAccountCOACode(newValue: string) { if (this.creditAccountCOACode != newValue) { this.creditAccountCOACode = newValue; this.MarkAsDirty("CreditAccountCOACode"); } }
+       
+	 
+    private debitAccountCOACode: string;
+    public get DebitAccountCOACode() { return this.debitAccountCOACode; }
+    public set DebitAccountCOACode(newValue: string) { if (this.debitAccountCOACode != newValue) { this.debitAccountCOACode = newValue; this.MarkAsDirty("DebitAccountCOACode"); } }
+       
+	 
 
     public OldEntityPM: JournalLinePM;
 	

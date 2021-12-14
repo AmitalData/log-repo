@@ -82,6 +82,7 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string MainCarriageCarrierWebSite { get; set; }
+        public string MainCarriageCarrierTypeName { get; set; }
 
         public bool IsFSRSent { get; set; }
 
@@ -1059,6 +1060,7 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string Transshipment1CarrierNumber { get; set; }
         public string Transshipment1CarrierId { get; set; }
         public string Transshipment1CarrierName { get; set; }
+        public string Transshipment1CarrierTypeName { get; set; }
         public string Transshipment1CarrierCode { get; set; }
         public string Transshipment1FromPortCode { get; set; }
         public string Transshipment1FromPortName { get; set; }
@@ -1080,6 +1082,7 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public DateTime? Transshipment2ETA { get; set; }
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string Transshipment2CarrierNumber { get; set; }
+        public string Transshipment2CarrierTypeName { get; set; }
         public string Transshipment2CarrierId { get; set; }
         public string Transshipment2CarrierName { get; set; }
         public string Transshipment2CarrierCode { get; set; }
@@ -1100,6 +1103,7 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public DateTime? Transshipment3ETA { get; set; }
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string Transshipment3CarrierNumber { get; set; }
+        public string Transshipment3CarrierTypeName { get; set; }
         public string Transshipment3CarrierId { get; set; }
         public string Transshipment3CarrierName { get; set; }
         public string Transshipment3CarrierCode { get; set; }
@@ -2805,5 +2809,6 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public DateTime? ETA { get; set; }
         public DateTime? ATD { get; set; }
         public DateTime? ATA { get; set; }
+        public string CarrierTypeName { get; set; }
     }
 }

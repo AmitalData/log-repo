@@ -12,6 +12,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Logitude.Server.Tools.Helpers;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.Repositories;
 
 namespace Logitude.Accounting.BL.EntityUpdateServices
 {
@@ -171,6 +174,31 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             {
                 this.SubmitChanges();
             }
+        }
+
+        protected override void Trace(LedgerTransactionPM entityPM, LedgerTransaction entityPOCO, string changesXml)
+        {
+            if(entityPM.IsExternalReconcile != entityPOCO.IsExternalReconcile)
+            {
+                ContactRepository contactRep = new ContactRepository(entityPM.Tenant);
+                string resolveLoggingUserId = AuthenticationUtil.ResolveUserIdentityName(entityPM.Tenant);
+                Contact contact = contactRep.GetSingleContactByEmail(resolveLoggingUserId, entityPM.Tenant);
+                bool showLocals = !contact.DontShowLocalLabels;
+                var eventNotes = string.Concat("Line No:  "+ entityPM.JournalLineNumber + ", Is Externally Reconciled changed: ", TranslateTextsClass.Translate("Accounting.General.O.OldValue", entityPM.Tenant, showLocals), entityPOCO.IsExternalReconcile, "\t", TranslateTextsClass.Translate("Accounting.General.O.NewValue", entityPM.Tenant, showLocals), entityPM.IsExternalReconcile, "\n");
+
+                EventTracer.CreateTraceEvent(new EventTracerArgs()
+                {
+                    EntityId = entityPM.JournalId,
+                    Tenant = entityPM.Tenant,
+                    UserId = contact.Id,
+                    ObjectTableName = "Journal",
+                    IsAddedManually = false,
+                    EventTypeCode = "JUP",
+                    Notes = eventNotes,
+
+                });
+            }
+            
         }
     }
 }
