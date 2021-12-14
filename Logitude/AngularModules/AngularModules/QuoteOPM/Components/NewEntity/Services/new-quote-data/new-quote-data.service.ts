@@ -26,6 +26,10 @@ import { TenantPMService } from 'Common/Services/StandardPMs/TenantPMService';
 import { SessionLocator } from 'Infrastructure/Utilities/SessionLocator';
 import { TenantList } from 'Common/EntityLists/TenantList';
 import { TenantListService } from 'Common/Services/StandardLists/TenantListService';
+import { CardPMService } from 'Common/Services/StandardPMs/CardPMService';
+import { CardPM } from 'Common/EntityPMs/CardPM';
+import { ContactPMService } from 'Common/Services/StandardPMs/ContactPMService';
+import { ContactPM } from 'Common/EntityPMs/ContactPM';
 
 @Injectable()
 export class NewQuoteDataService {
@@ -34,6 +38,8 @@ export class NewQuoteDataService {
 
   constructor(
     private entityListService: EntityListService,
+    private cardPMService: CardPMService,
+    private contactPMService: ContactPMService,
     private newQuoteOPWebService: NewQuoteOPWebService,
     private logtuideTableDataService: LogtuideTableDataService,
     private tanentsService: TenantListService,
@@ -55,10 +61,16 @@ export class NewQuoteDataService {
     return this.logtuideTableDataService.getDataFromService(new ShipmentTypeListService().getAll());
   }
 
+  async getContact(id: string): Promise<ContactPM> {
+    return await this.logtuideTableDataService.getDataFromService(this.contactPMService.get(id))
+  }
+
+  async getCard(id: string): Promise<CardPM> {
+    return await this.logtuideTableDataService.getDataFromService(this.cardPMService.get(id))
+  }
+
   async getCardsTable(): Promise<CardList[]> {
     return await this.logtuideTableDataService.getTable('Card') as CardList[];
-    //   const cards: ServiceResponse = await new CardListService().getAll().toPromise() as ServiceResponse;
-    //   return cards.Result as CardList[];
   }
 
   async getContactsTable(cardId: string): Promise<ContactList[]> {
@@ -185,8 +197,6 @@ export class NewQuoteDataService {
         .pipe(filterIsNotNull(), take(1))
         .subscribe((myResult: ServiceResponse) => resolve(myResult.Result)));
   }
-
-
 
   creatingNewQuote(entityPM: QuoteOPPM): Promise<any> {
     return new Promise<any>((resolve, reject) => {

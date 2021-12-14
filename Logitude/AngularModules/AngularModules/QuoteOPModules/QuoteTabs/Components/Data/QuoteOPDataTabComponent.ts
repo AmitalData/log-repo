@@ -7,7 +7,10 @@ import { QuoteOPPM } from "QuoteOPM/EntityPMs/QuoteOPPM";
 @Component({
     selector: 'QuoteOPDataTabComponent',
     templateUrl: './QuoteOPDataTabComponent.html',
-    styleUrls: ['./QuoteOPDataTabComponent.scss'],
+    styleUrls: [
+        './QuoteOPDataTabComponent.scss',
+        '../../../../QuoteOPM/Components/NewEntity/NewQuoteComponent.scss'
+    ],
 })
 
 export class QuoteOPDataTabComponent extends BaseComponent  {

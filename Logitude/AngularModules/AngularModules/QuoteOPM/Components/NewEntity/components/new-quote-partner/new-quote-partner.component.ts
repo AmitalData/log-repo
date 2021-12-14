@@ -3,6 +3,8 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AddressList } from 'Common/EntityLists/AddressList';
 import { CardList } from 'Common/EntityLists/CardList';
 import { ContactList } from 'Common/EntityLists/ContactList';
+import { CardPM } from 'Common/EntityPMs/CardPM';
+import { ContactPM } from 'Common/EntityPMs/ContactPM';
 import { ContactListService } from 'Common/Services/StandardLists/ContactListService';
 import { CardPMService } from 'Common/Services/StandardPMs/CardPMService';
 import { BaseComponent } from 'Infrastructure/Components/LogitudeComponents/BaseComponent';
@@ -62,24 +64,31 @@ export class NewQuotePartnerComponent extends BaseComponent implements OnInit, A
     public entityArgs: EntityArgs,
     private cdr: ChangeDetectorRef,
     private dataShareService: NewQuoteDataShareService,
-    ) {
-      super();
-    }
-    
-    ngOnInit(): void {
-      this.isHidden = this.dataShareService.partnersHidden[this.type as any];
-      
-      this.initCards();
-      this.partnerform.controls.notes.disable();
-      this.initDdl();
-      this.resetForm()
-      this.subscribeSecondPartner();
+  ) {
+    super();
+  }
+
+  ngOnInit(): void {
+    this.isHidden = this.dataShareService.partnersHidden[this.type as any];
+
+    this.initCards();
+    this.partnerform.controls.notes.disable();
+    this.initDdl();
+    this.resetForm()
+    this.subscribeSecondPartner();
   }
 
   ngAfterViewInit(): void {
-    if (this.EntityPM != null && this.EntityPM.Id != null) {
-      this.setPartners();
-    }
+    this.setDataFromEntity();
+  }
+
+  setDataFromEntity() {
+    if (!this.EntityPM || !this.EntityPM.Id) return;
+
+    this.setPartner();
+    this.setContact();
+    this.partnerform.controls.reference1.setValue(this.EntityPM[this.capitalizeType + 'Reference1']);
+    this.partnerform.controls.ConsigneeNote.setValue(this.EntityPM[this.capitalizeType + 'Note']);
   }
 
   private setValidatorBySecondPrtner() {
@@ -92,32 +101,19 @@ export class NewQuotePartnerComponent extends BaseComponent implements OnInit, A
     });
   }
 
-  setPartners() {
-    const cardService = new CardPMService();
-    const contactService = new ContactListService();
-    if (this.EntityPM[this.capitalizeType + 'Id'] != null) {
-      cardService.get(this.EntityPM[this.capitalizeType + 'Id']).subscribe((cardResponse: any) => {
-        if (cardResponse.Result != null) {
-          this.partnerform.controls.partner.setValue(cardResponse.Result);
-        }
-        if (this.EntityPM[this.capitalizeType + 'ContactId'] != null) {
-          contactService.getSingle(this.EntityPM[this.capitalizeType + 'ContactId']).subscribe((ContactResponse: any) => {
-            if (ContactResponse.Result != null) {
-              this.partnerform.controls.contact.setValue(ContactResponse.Result);
-            }
-          });
-        }
-      });
+  async setPartner() {
+    const prtnerId = this.EntityPM[this.capitalizeType + 'Id']
+    if (prtnerId) {
+      const card: CardPM = await this.newQuoteDataService.getCard(prtnerId)
+      this.partnerform.controls.partner.setValue(card)
     }
-    if (this.EntityPM[this.capitalizeType + 'Reference1'] != null) {
-      this.partnerform.controls.reference1.setValue(this.EntityPM[this.capitalizeType + 'Reference1']);
-    }
-    // if (this.EntityPM[this.capitalizeType + 'Reference2'] != null) {
-    //   this.partnerform.controls.reference2.setValue(this.EntityPM[this.capitalizeType + 'Reference2']);
-    // }
-
-    if (this.EntityPM[this.capitalizeType + 'Note'] != null) {
-      this.partnerform.controls.ConsigneeNote.setValue(this.EntityPM[this.capitalizeType + 'Note']);
+  }
+  
+  async setContact() {
+    const contactId = this.EntityPM[this.capitalizeType + 'ContactId']
+    if (contactId) {
+      const contact: ContactPM = await this.newQuoteDataService.getContact(contactId)
+      this.partnerform.controls.contact.setValue(contact)
     }
   }
 
@@ -139,11 +135,10 @@ export class NewQuotePartnerComponent extends BaseComponent implements OnInit, A
       this.subscribeCtrls();
       this.subscribePartner();
     }
-
   }
 
   private async subscribeSecondPartner() {
-    const s = this.formGroup.valueChanges.subscribe(()=>{
+    const s = this.formGroup.valueChanges.subscribe(() => {
       if (this.formGroup.contains(this.secondPartner) && !this.isSubscribePartner) {
         this.isSubscribePartner = true;
         this.setValidatorBySecondPrtner();
