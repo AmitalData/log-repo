@@ -611,12 +611,28 @@ namespace WebFreight.Web.ExternalAPIs.ExternalAPIsHelpers
             return "";
         }
 
+
+        private string GetMainCarriageToPortId()
+        {
+            if (!string.IsNullOrEmpty(shipmentPM.MainCarriageToPortId))
+                return shipmentPM.MainCarriageToPortId;
+
+            if (shipmentPM.MainCarriageLegs.Count > 0)
+            {
+                var mainCarriageLeg = shipmentPM.MainCarriageLegs.LastOrDefault();
+                return mainCarriageLeg?.ToPortId;
+            }
+
+            return "";
+        }
+
         private void ValidateOnCarrageFromPortField()
         {
             if (string.IsNullOrEmpty(shipmentPM.OnCarriageFromPortId) || string.IsNullOrEmpty(shipmentPM.OnCarriageFromPortId))
                 return;
 
-            if (shipmentPM.OnCarriageFromPortId != shipmentPM.FinalDistenationPortId)
+            string mainCarriageToPortId = this.GetMainCarriageToPortId();
+            if (shipmentPM.OnCarriageFromPortId != mainCarriageToPortId)
                 throw new ApplicationException("OnCarriageFromPort Must Be Same As Final Main Carriage To Port");
         }
         private void ValidateOnCarriageDates()
