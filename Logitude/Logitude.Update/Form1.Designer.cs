@@ -175,6 +175,8 @@
             this.lblUInvoice = new System.Windows.Forms.Label();
             this.lblUQuote = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.UploadTimeZonesLabel = new System.Windows.Forms.Label();
+            this.button55 = new System.Windows.Forms.Button();
             this.UpdateQuoteTemplateSettingsButton = new System.Windows.Forms.Button();
             this.OIStatisticslabel = new System.Windows.Forms.Label();
             this.OIStatisticsButton = new System.Windows.Forms.Button();
@@ -233,8 +235,7 @@
             this.fixJournalsButton = new System.Windows.Forms.Button();
             this.button51 = new System.Windows.Forms.Button();
             this.timer2 = new System.Windows.Forms.Timer(this.components);
-            this.button55 = new System.Windows.Forms.Button();
-            this.UploadTimeZonesLabel = new System.Windows.Forms.Label();
+            this.button56 = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
@@ -2246,6 +2247,7 @@
             // 
             // tabPage4
             // 
+            this.tabPage4.Controls.Add(this.button56);
             this.tabPage4.Controls.Add(this.groupBox1);
             this.tabPage4.Controls.Add(this.panel1);
             this.tabPage4.Controls.Add(this.button52);
@@ -2462,6 +2464,16 @@
             this.button55.Text = "Upload Time Zones";
             this.button55.UseVisualStyleBackColor = false;
             this.button55.Click += new System.EventHandler(this.UploadTimeZones_Click);
+            // 
+            // button56
+            // 
+            this.button56.Location = new System.Drawing.Point(18, 283);
+            this.button56.Name = "button56";
+            this.button56.Size = new System.Drawing.Size(180, 41);
+            this.button56.TabIndex = 83;
+            this.button56.Text = "Run Future Open Cheques Batch";
+            this.button56.UseVisualStyleBackColor = true;
+            this.button56.Click += new System.EventHandler(this.button56_Click);
             // 
             // UploadTimeZonesLabel
             // 
@@ -2736,6 +2748,7 @@
         private System.Windows.Forms.Button UpdateQuoteTemplateSettingsButton;
         private System.Windows.Forms.Label UploadTimeZonesLabel;
         private System.Windows.Forms.Button button55;
+        private System.Windows.Forms.Button button56;
     }
 }
 
