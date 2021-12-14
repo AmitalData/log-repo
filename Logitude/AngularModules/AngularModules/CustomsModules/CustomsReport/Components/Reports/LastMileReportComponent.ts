@@ -70,10 +70,10 @@ export class LastMileReportComponent extends BaseComponent implements OnInit {
         this._Airline=value;
     }
 
-    _CourierHawb;
-    get CourierHawb() { return this._CourierHawb; }
-    set CourierHawb(value: string) {
-        this._CourierHawb=value;
+    _Mawb;
+    get Mawb() { return this._Mawb; }
+    set Mawb(value: string) {
+        this._Mawb=value;
     }
 
     
@@ -112,7 +112,7 @@ export class LastMileReportComponent extends BaseComponent implements OnInit {
         url += '&LastMileToDate=' + this.GetDateWithoutTime(this.ToDateLastMile);
         url += '&airline=' + this.Airline;
         url += '&trucker=' + this.Trucker;
-        url += '&courierHawb=' + this.CourierHawb;
+        url += '&mawb=' + this.Mawb;
         return url;
 
     }
