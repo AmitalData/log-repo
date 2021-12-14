@@ -412,7 +412,7 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "AEV,Automation Event Creation", 
                 Description = "Automation Event Creation", 
 			});
-
+			 
             all.Add(new ToggleDetails()
             {    
                 Code = "OPS", 
@@ -421,7 +421,6 @@ namespace Logitude.Infrastructure.BL
                 Description = "Operational Status", 
 			});
 			 
-
             all.Add(new ToggleDetails()
             {    
                 Code = "CAU", 
@@ -436,8 +435,14 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "ODA,On Update Document Automation Tab", 
                 Description = "On Update Document Automation Tab", 
 			});
-			
-
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "FHR", 
+                Name = "FixHtmlResolverVariable", 
+                SearchFields = "FHR,FixHtmlResolverVariable", 
+                Description = "Fix Html Resolver Variable", 
+			});
 			
             return all;
        }

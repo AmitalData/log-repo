@@ -38,7 +38,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
 {
     public class HouseController : ApiController
     {
-        public HttpResponseMessage GetSingleHouse(string id, string include)
+        public HttpResponseMessage GetSingleHouse(string id, string include = "")
         {
             try
             {
@@ -61,7 +61,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
             }
         }
 
-        public HttpResponseMessage GetSingleHouseByNumber(string number, string include)
+        public HttpResponseMessage GetSingleHouseByNumber(string number, string include = "")
         {
             try
             {

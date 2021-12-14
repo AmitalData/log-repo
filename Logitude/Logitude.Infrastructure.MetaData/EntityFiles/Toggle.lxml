@@ -39,7 +39,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Toggle&quot;"
-  Code="&quot;4a97&quot;"
+  Code="&quot;774b&quot;"
   Name="&quot; Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;Name&quot;"
@@ -653,6 +653,11 @@
       Name="&quot;On Update Document Automation Tab&quot;"
       SearchFields="&quot;ODA,On Update Document Automation Tab&quot;"
       Description="&quot;On Update Document Automation Tab&quot;" />
+    <Record
+      Code="&quot;FHR&quot;"
+      Name="&quot;FixHtmlResolverVariable&quot;"
+      SearchFields="&quot;FHR,FixHtmlResolverVariable&quot;"
+      Description="&quot;Fix Html Resolver Variable&quot;" />
   </Records>
   <DataContracts />
   <AdditionalTextCodes />

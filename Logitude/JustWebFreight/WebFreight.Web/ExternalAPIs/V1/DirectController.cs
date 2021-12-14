@@ -35,7 +35,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
 {
     public class DirectController : ApiController
     {
-        public HttpResponseMessage GetSingleDirect(string id, string include)
+        public HttpResponseMessage GetSingleDirect(string id, string include = "")
         {
             try
             {
@@ -57,7 +57,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
             }
         }
 
-        public HttpResponseMessage GetSingleDirectByNumber(string number, string include)
+        public HttpResponseMessage GetSingleDirectByNumber(string number, string include = "")
         {
             try
             {
