@@ -186,6 +186,8 @@ public partial class LogitudeCustomsFile
 
     private string lastMileServiceTypeField;
 
+    private string commodityField;
+
     /// <remarks/>
     public string CustomFileNo
     {
@@ -1054,6 +1056,19 @@ public partial class LogitudeCustomsFile
         set
         {
             this.lastMileServiceTypeField = value;
+        }
+    }
+
+    /// <remarks/>
+    public string Commodity
+    {
+        get
+        {
+            return this.commodityField;
+        }
+        set
+        {
+            this.commodityField = value;
         }
     }
 }
