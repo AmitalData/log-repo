@@ -63,6 +63,9 @@ Then("the move type should open successfully", () => {
 //#region  Edit the move type
 Given("fill move type local name", () => {
     MaintenanceActions.FillMoveTypeLocalName()
+});
+
+Given("make move type inactivate", () => {
     cy.Navigate(MaintenanceSelectors.MoveTypeInActive, true)
 
 });
