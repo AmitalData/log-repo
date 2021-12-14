@@ -83,6 +83,14 @@ namespace WebFreight.Web.Helpers
                                 }
                                 writeRange.NumberFormat = datetimeformat;
                                 break;
+                            case "DateTime?":
+                                string longdatetimeformat = @"dd\/MM\/yyyy HH:mm";
+                                if (!string.IsNullOrEmpty(CurTenant.DateTimeFormat))
+                                {
+                                    datetimeformat = CurTenant.DateTimeFormat;
+                                }
+                                writeRange.NumberFormat = longdatetimeformat;
+                                break;
                             case "Decimal":
                             case "Double":
                                 writeRange.HorizontalAlignment = ExcelHAlign.HAlignRight;
