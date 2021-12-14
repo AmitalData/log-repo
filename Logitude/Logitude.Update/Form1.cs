@@ -5036,6 +5036,11 @@ User/Pass",
                 SetControlPropertyValue(UploadTimeZonesLabel, "Text", "Done in " + ts.ToString(@"hh\:mm\:ss"));
             }
         }
+        private void button56_Click(object sender, EventArgs e)
+        {
+            FutureOpenChequesBatch FutureOpenChequesBatch = new FutureOpenChequesBatch();
+            FutureOpenChequesBatch.SetTotalFutureOpenChequesInLocalCurrency();
+        }
     }
     public class TimeZoneExcelItem
     {
