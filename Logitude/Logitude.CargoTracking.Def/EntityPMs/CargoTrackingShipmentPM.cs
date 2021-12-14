@@ -59,6 +59,12 @@ namespace Logitude.CargoTracking.Def.EntityPMs
         public string RouteFromPortCode { get; set; }
         [DataMember]
         public string RouteToPortCode { get; set; }
+        [DataMember]
+        public string SHOBookingConfirmationNumber { get; set; }
+        [DataMember]
+        public string SHOCarrierName { get; set; }
+        [DataMember]
+        public DateTime? SHOPODate { get; set; }
 
     }
 
