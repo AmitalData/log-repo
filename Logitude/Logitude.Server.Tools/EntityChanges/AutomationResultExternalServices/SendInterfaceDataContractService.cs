@@ -34,7 +34,9 @@ namespace Logitude.Server.Tools.EntityChanges.Service
 
         private bool IsShouldBeRemoveEventList(AutomationSendInterface automationSendInterface)
         {
-            return !(bool)automationSendInterface.AdvancedAutomationSendInterfaceDetails?.IncludeEvents;
+            if (automationSendInterface.AdvancedAutomationSendInterfaceDetails != null)
+                return !automationSendInterface.AdvancedAutomationSendInterfaceDetails.IncludeEvents;
+            return true;
         }
 
         private void SetPropertyValueToEntity(string fieldName, object entity, object fieldValue)
