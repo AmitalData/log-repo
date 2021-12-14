@@ -42,6 +42,7 @@ import { LedgerTransactionPM } from 'Accounting/EntityPMs/LedgerTransactionPM';
 
 
 const BanksChartOfAccountsTypeCode = '5';
+const amitalExternalSystemCode = 'amital';
 @Component({
 
     templateUrl: './JournalDebugTabComponent.html',
@@ -456,7 +457,7 @@ export class JournalDebugTabComponent extends BaseComponent implements OnInit {
 
 
     IsExternalBankTransaction(ledger: LedgerTransactionList){
-        const isFromAmital = this.EntityPM.ExternalSystem == 'AMITAL';
+        const isFromAmital = this.EntityPM.ExternalSystem?.toLowerCase() == amitalExternalSystemCode;
         const journalLine = this.EntityPM.JournalLines.find(line=>line.Line == ledger.JournalLineNumber);
         const isConnectedToBankGLAccount = (journalLine.DebitAccountCOACode || journalLine.CreditAccountCOACode) == BanksChartOfAccountsTypeCode;
 
