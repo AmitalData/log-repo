@@ -170,13 +170,15 @@ export class GeneralPrintHelper {
         logitudeWindow.Show('./InfrastructureModules/InfrastructureDocuments/Components/DocumentComponent/PrintDocumentComponent');
         logitudeWindow.WindowClosed.subscribe(($event: any) => {
             if (this.CurrentSession.CurrentEditComponent) {
-                if (this.ChildObjectTableName == "ARInvoice" || this.ObjectTableName == "ARInvoice") {
-                    this.UpdateInvoicePrintProperties();
-                }
+                this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
 
-                else {
-                    this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
-                }
+                //if (this.ChildObjectTableName == "ARInvoice" || this.ObjectTableName == "ARInvoice") {
+                //    this.UpdateInvoicePrintProperties();
+                //}
+
+                //else {
+                //    this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                //}
             }
         });
     }
