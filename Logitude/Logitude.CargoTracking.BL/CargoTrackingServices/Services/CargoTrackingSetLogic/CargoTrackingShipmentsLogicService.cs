@@ -262,11 +262,11 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
             {
                 tableRow.SetField("CustomerReference", tableRow["CustomerReference1"] + "," + tableRow["CustomerReference2"]);
             }
-            else if (!tableRow.IsNull("CustomerReference1") && tableRow["CustomerReference1"].GetType().Name != "")
+            else if (!tableRow.IsNull("CustomerReference1") && !tableRow["CustomerReference1"].Equals("") && tableRow["CustomerReference1"].GetType().Name != "")
             {
                 tableRow.SetField("CustomerReference", tableRow["CustomerReference1"]);
             }
-            else if (!tableRow.IsNull("CustomerReference2") && tableRow["CustomerReference2"].GetType().Name != "")
+            else if (!tableRow.IsNull("CustomerReference2") && !tableRow["CustomerReference2"].Equals("") && tableRow["CustomerReference2"].GetType().Name != "")
             {
                 tableRow.SetField("CustomerReference", tableRow["CustomerReference2"]);
             }
