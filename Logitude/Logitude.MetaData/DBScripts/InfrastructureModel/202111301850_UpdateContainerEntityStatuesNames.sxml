@@ -1,8 +1,8 @@
 ﻿<Script DBType="Main" Module="Infrastructure">
-  <Sql Version="1">
+  <Sql Version="2">
     <![CDATA[
 
-declare @ObjectTableId varchar(15)
+declare  @ObjectTableId  varchar(15)
 set @ObjectTableId = (select Id from ObjectTables where Name = 'Container')
  IF EXISTS (SELECT Code FROM EventTypes where Code = 'EMPS' and ObjectTableId = @ObjectTableId )
    BEGIN 
