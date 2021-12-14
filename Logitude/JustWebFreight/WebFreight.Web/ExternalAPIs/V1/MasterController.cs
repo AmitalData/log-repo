@@ -47,7 +47,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
 {
     public class MasterController : ApiController
     {
-        public HttpResponseMessage GetSingleMaster(string id, string include)
+        public HttpResponseMessage GetSingleMaster(string id, string include = "")
         {
             try
             {
@@ -68,7 +68,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
             }
         }
 
-        public HttpResponseMessage GetSingleMasterByNumber(string number, string include)
+        public HttpResponseMessage GetSingleMasterByNumber(string number, string include = "")
         {
             try
             {
