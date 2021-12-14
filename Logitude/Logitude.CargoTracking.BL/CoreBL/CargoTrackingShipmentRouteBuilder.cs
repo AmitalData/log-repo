@@ -32,7 +32,7 @@ namespace Logitude.CargoTracking.BL.EntityQueryServices
             if (shipmentPM != null)
                 BuildShipmentRoute(shipmentPM);
 
-            if(shipmentOrderPM != null)
+            if (shipmentOrderPM != null)
                 BuildShipmentOrderRoute(shipmentOrderPM);
 
             return routingSteps;
@@ -53,7 +53,7 @@ namespace Logitude.CargoTracking.BL.EntityQueryServices
                 BuildWarehouseLegStep(shipmentPM);
             }
 
-            BuildDeliveriesSteps(shipmentPM);            
+            BuildDeliveriesSteps(shipmentPM);
         }
         private void BuildShipmentOrderRoute(ShipmentOrderPM shipmentOrderPM)
         {
@@ -72,7 +72,7 @@ namespace Logitude.CargoTracking.BL.EntityQueryServices
                     TransportModeCode = InlandTransportMode,
                     FromPortLabel = GetFromPortLabelFromPickup(delivery),
                     ToPortLabel = GetToPortLabelFromPickup(delivery),
-                    Description = delivery != null ? "Via " + delivery.CarrierLocalName : null
+                    Description = delivery != null ? delivery.CarrierTypeName + " " + delivery.CarrierLocalName : null
                 };
                 SetDeliveryDirections(delivery, step);
                 steps.Add(step);
@@ -123,7 +123,7 @@ namespace Logitude.CargoTracking.BL.EntityQueryServices
                     TransportModeCode = shipmentPM.TransportModeId,
                     FromPortLabel = mainCarrigeLeg.FromPortCode,
                     ToPortLabel = mainCarrigeLeg.ToPortCode,
-                    Description = mainCarrigeLeg.CarrierName != null ? "Via " + mainCarrigeLeg.CarrierName : null
+                    Description = mainCarrigeLeg.CarrierName != null || mainCarrigeLeg.CarrierTypeName != null ? mainCarrigeLeg.CarrierTypeName + mainCarrigeLeg.CarrierName : null
                 };
                 SetMainCarriageLegDirections(mainCarrigeLeg, step);
                 steps.Add(step);
@@ -170,8 +170,8 @@ namespace Logitude.CargoTracking.BL.EntityQueryServices
                     ToolTipToPortLabel = GetToolTipToPortLabelFromPickup(pickup),
                 };
 
-                if (pickup.CarrierLocalName != null)
-                    pickupRoute.Description = "Via " + pickup.CarrierLocalName;
+                if (pickup.CarrierLocalName != null || pickup.CarrierTypeName != null )
+                    pickupRoute.Description = pickup.CarrierTypeName +" "+ pickup.CarrierLocalName;
 
                 SetPickupRouteDirections(pickup, pickupRoute);
 
