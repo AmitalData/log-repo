@@ -136,7 +136,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                                 FUStatusCode = "PCE",
                                 FUStatusRemarks = "Limit date: " + physicalCheckPM.LimitDate + ", Destination type: " + physicalCheckPM.StorageSiteName,
                             };
-
+                            physicalCheckPM.CurrentContextTag = myEventContextTagModel;
                             ICustomContext dbContext = CustomContext.GetContext(tenant);
                             PhysicalCheckUpdateService updateService = new PhysicalCheckUpdateService(dbContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), tenant);
                             updateService.Update(physicalCheckPM, true);
