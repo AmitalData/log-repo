@@ -156,6 +156,24 @@ namespace Logitude.ShipmentOrderModule.Data.EntityLists
        public bool IsOperationalClosed  { get; set; }
        [DataMember]
        public string OnHandNumber  { get; set; }
+       [DataMember]
+       public string PlaceOfDeliveryId  { get; set; }
+       [DataMember]
+       public string PlaceOfDeliveryName  { get; set; }
+       [DataMember]
+       public bool DangerousGoods  { get; set; }
+       [DataMember]
+       public string ShipmentTypeId  { get; set; }
+       [DataMember]
+       public string ShipmentTypeName  { get; set; }
+       [DataMember]
+       public string PackageTypeId  { get; set; }
+       [DataMember]
+       public string PackageTypeName  { get; set; }
+       [DataMember]
+       public int? CustomerTenantNumber  { get; set; }
+       [DataMember]
+       public string CustomerShipmentNumber  { get; set; }
    }
 
 }

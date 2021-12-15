@@ -215,8 +215,32 @@ using Logitude.ShipmentOrderModule.Data;
 				   temp.LastExceptionDescription = MyEntityPM.LastExceptionDescription;
 				   temp.LastExceptionDate = MyEntityPM.LastExceptionDate;
 				   temp.OnHandDate = MyEntityPM.OnHandDate;
-				   temp.IsOperationalClosed = MyEntityPM.IsOperationalClosed;
-				   temp.OnHandNumber = MyEntityPM.OnHandNumber;					
+				   temp.OnHandNumber = MyEntityPM.OnHandNumber;			  
+				   if(MyEntityPM.PlaceOfDeliveryId != null)
+				   {
+					   CardQueryService CardService17 = new CardQueryService(Tenant);
+					   					   temp.PlaceOfDelivery = CardService17.GetCardById(MyEntityPM.PlaceOfDeliveryId,Tenant); 
+			       
+					   				   }
+				   
+				   temp.DangerousGoods = MyEntityPM.DangerousGoods;			  
+				   if(MyEntityPM.ShipmentTypeId != null)
+				   {
+					   ShipmentTypeQueryService ShipmentTypeService18 = new ShipmentTypeQueryService(Tenant);
+					   					   temp.ShipmentType = ShipmentTypeService18.GetShipmentTypeById(MyEntityPM.ShipmentTypeId,Tenant); 
+			       
+					   				   }
+				   			  
+				   if(MyEntityPM.PackageTypeId != null)
+				   {
+					   PackageTypeQueryService PackageTypeService19 = new PackageTypeQueryService(Tenant);
+					   					   temp.PackageType = PackageTypeService19.GetPackageTypeById(MyEntityPM.PackageTypeId,Tenant); 
+			       
+					   				   }
+				   
+				   temp.CustomerTenantNumber = MyEntityPM.CustomerTenantNumber;
+				   temp.CustomerShipmentNumber = MyEntityPM.CustomerShipmentNumber;
+				   temp.IsOperationalClosed = MyEntityPM.IsOperationalClosed;					
 				   return temp;
 			}
             catch (Exception ex)
@@ -482,8 +506,47 @@ using Logitude.ShipmentOrderModule.Data;
 					temp.LastExceptionDescription = MyEntity.LastExceptionDescription;
 					temp.LastExceptionDate = MyEntity.LastExceptionDate;
 					temp.OnHandDate = MyEntity.OnHandDate;
-					temp.IsOperationalClosed = MyEntity.IsOperationalClosed;
-					temp.OnHandNumber = MyEntity.OnHandNumber;					   
+					temp.OnHandNumber = MyEntity.OnHandNumber;
+					CardQueryService PlaceOfDeliveryCardService = new CardQueryService(Tenant);
+					if(MyEntity.PlaceOfDelivery != null)
+					{
+						var myPlaceOfDeliveryPM = PlaceOfDeliveryCardService.CardDataMappingAndValidatin(MyEntity.PlaceOfDelivery,Tenant,ComputingPartnerName);
+												if(myPlaceOfDeliveryPM != null)
+						{
+							temp.PlaceOfDeliveryId = myPlaceOfDeliveryPM.Id;
+						}
+						 
+					}
+			
+					
+					temp.DangerousGoods = MyEntity.DangerousGoods;
+					ShipmentTypeQueryService ShipmentTypeShipmentTypeService = new ShipmentTypeQueryService(Tenant);
+					if(MyEntity.ShipmentType != null)
+					{
+						var myShipmentTypePM = ShipmentTypeShipmentTypeService.ShipmentTypeDataMappingAndValidatin(MyEntity.ShipmentType,Tenant,ComputingPartnerName);
+												if(myShipmentTypePM != null)
+						{
+							temp.ShipmentTypeId = myShipmentTypePM.Id;
+						}
+						 
+					}
+			
+					
+					PackageTypeQueryService PackageTypePackageTypeService = new PackageTypeQueryService(Tenant);
+					if(MyEntity.PackageType != null)
+					{
+						var myPackageTypePM = PackageTypePackageTypeService.PackageTypeDataMappingAndValidatin(MyEntity.PackageType,Tenant,ComputingPartnerName);
+												if(myPackageTypePM != null)
+						{
+							temp.PackageTypeId = myPackageTypePM.Id;
+						}
+						 
+					}
+			
+					
+					temp.CustomerTenantNumber = MyEntity.CustomerTenantNumber;
+					temp.CustomerShipmentNumber = MyEntity.CustomerShipmentNumber;
+					temp.IsOperationalClosed = MyEntity.IsOperationalClosed;					   
 					   return temp;
 		    }
             catch (Exception ex)

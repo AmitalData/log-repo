@@ -118,8 +118,20 @@ namespace Logitude.ShipmentOrderModule.BL.APIDataContract.ApiV1
     
     public DateTime? OnHandDate { get; set; }
     
-    public bool IsOperationalClosed { get; set; }
-    
     public string OnHandNumber { get; set; }
+    
+    public Card PlaceOfDelivery { get; set; }
+    
+    public bool DangerousGoods { get; set; }
+    
+    public ShipmentType ShipmentType { get; set; }
+    
+    public PackageType PackageType { get; set; }
+    
+    public int? CustomerTenantNumber { get; set; }
+    
+    public string CustomerShipmentNumber { get; set; }
+    
+    public bool IsOperationalClosed { get; set; }
     }
 } 

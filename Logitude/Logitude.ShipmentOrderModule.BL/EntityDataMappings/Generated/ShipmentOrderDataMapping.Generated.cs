@@ -77,8 +77,14 @@ namespace Logitude.ShipmentOrderModule.BL.EntityDataMappings
 	         LastExceptionDate, 
 	         OnHandDate, 
 	         IsOperationalClosed, 
-	         OnHandNumber,
-	         AutomaticLastUpdateDate
+	         OnHandNumber, 
+	         AutomaticLastUpdateDate, 
+	         PlaceOfDeliveryId, 
+	         DangerousGoods, 
+	         ShipmentTypeId, 
+	         PackageTypeId, 
+	         CustomerTenantNumber, 
+	         CustomerShipmentNumber,
 	      }
 
 
@@ -161,7 +167,16 @@ namespace Logitude.ShipmentOrderModule.BL.EntityDataMappings
 	         LastExceptionDate, 
 	         OnHandDate, 
 	         IsOperationalClosed, 
-	         OnHandNumber,
+	         OnHandNumber, 
+	         PlaceOfDeliveryId, 
+	         PlaceOfDeliveryName, 
+	         DangerousGoods, 
+	         ShipmentTypeId, 
+	         ShipmentTypeName, 
+	         PackageTypeId, 
+	         PackageTypeName, 
+	         CustomerTenantNumber, 
+	         CustomerShipmentNumber,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -443,6 +458,36 @@ namespace Logitude.ShipmentOrderModule.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.OnHandNumber))
             {
 				entityPOCO.OnHandNumber = entityPM.OnHandNumber;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PlaceOfDeliveryId))
+            {
+				entityPOCO.PlaceOfDeliveryId = entityPM.PlaceOfDeliveryId;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DangerousGoods))
+            {
+				entityPOCO.DangerousGoods = entityPM.DangerousGoods;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ShipmentTypeId))
+            {
+				entityPOCO.ShipmentTypeId = entityPM.ShipmentTypeId;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PackageTypeId))
+            {
+				entityPOCO.PackageTypeId = entityPM.PackageTypeId;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CustomerTenantNumber))
+            {
+				entityPOCO.CustomerTenantNumber = entityPM.CustomerTenantNumber;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CustomerShipmentNumber))
+            {
+				entityPOCO.CustomerShipmentNumber = entityPM.CustomerShipmentNumber;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -731,6 +776,36 @@ namespace Logitude.ShipmentOrderModule.BL.EntityDataMappings
 					entityPM.OnHandNumber = entityPOCO.OnHandNumber;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.PlaceOfDeliveryId))
+            {
+					entityPM.PlaceOfDeliveryId = entityPOCO.PlaceOfDeliveryId;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.DangerousGoods))
+            {
+					entityPM.DangerousGoods = entityPOCO.DangerousGoods;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ShipmentTypeId))
+            {
+					entityPM.ShipmentTypeId = entityPOCO.ShipmentTypeId;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.PackageTypeId))
+            {
+					entityPM.PackageTypeId = entityPOCO.PackageTypeId;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CustomerTenantNumber))
+            {
+					entityPM.CustomerTenantNumber = entityPOCO.CustomerTenantNumber;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CustomerShipmentNumber))
+            {
+					entityPM.CustomerShipmentNumber = entityPOCO.CustomerShipmentNumber;
+            }
+
 		}
 
 		public void PMToOldPM(ShipmentOrderPM entityPM, ShipmentOrderPM oldEntityPM)
@@ -1010,6 +1085,36 @@ namespace Logitude.ShipmentOrderModule.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.OnHandNumber))
             {
                 oldEntityPM.OnHandNumber = entityPM.OnHandNumber;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PlaceOfDeliveryId))
+            {
+                oldEntityPM.PlaceOfDeliveryId = entityPM.PlaceOfDeliveryId;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DangerousGoods))
+            {
+                oldEntityPM.DangerousGoods = entityPM.DangerousGoods;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ShipmentTypeId))
+            {
+                oldEntityPM.ShipmentTypeId = entityPM.ShipmentTypeId;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PackageTypeId))
+            {
+                oldEntityPM.PackageTypeId = entityPM.PackageTypeId;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CustomerTenantNumber))
+            {
+                oldEntityPM.CustomerTenantNumber = entityPM.CustomerTenantNumber;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CustomerShipmentNumber))
+            {
+                oldEntityPM.CustomerShipmentNumber = entityPM.CustomerShipmentNumber;
             }
 			
 		}

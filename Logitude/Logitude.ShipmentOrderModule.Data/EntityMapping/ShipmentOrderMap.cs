@@ -136,6 +136,18 @@ namespace Logitude.ShipmentOrderModule.Data.EntityMapping
             this.Property(t => t.OnHandNumber).HasColumnName("OnHandNumber").HasMaxLength(15).IsUnicode(false);
 
             this.Property(t => t.AutomaticLastUpdateDate).HasColumnName("AutomaticLastUpdateDate");
+
+            this.Property(t => t.PlaceOfDeliveryId).HasColumnName("PlaceOfDeliveryId").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.DangerousGoods).HasColumnName("DangerousGoods");
+
+            this.Property(t => t.ShipmentTypeId).HasColumnName("ShipmentTypeId").HasMaxLength(4).IsUnicode(false);
+
+            this.Property(t => t.PackageTypeId).HasColumnName("PackageTypeId").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.CustomerTenantNumber).HasColumnName("CustomerTenantNumber");
+
+            this.Property(t => t.CustomerShipmentNumber).HasColumnName("CustomerShipmentNumber").HasMaxLength(20).IsUnicode(false);
         }
     }
 }

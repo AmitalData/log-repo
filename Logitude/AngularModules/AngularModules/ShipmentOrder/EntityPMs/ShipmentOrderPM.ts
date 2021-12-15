@@ -409,6 +409,51 @@ export class ShipmentOrderPM {
     public set OnHandNumber(newValue: string) { if (this.onHandNumber != newValue) { this.onHandNumber = newValue; this.MarkAsDirty("OnHandNumber"); } }
        
 	 
+    private placeOfDeliveryId: string;
+    public get PlaceOfDeliveryId() { return this.placeOfDeliveryId; }
+    public set PlaceOfDeliveryId(newValue: string) { if (this.placeOfDeliveryId != newValue) { this.placeOfDeliveryId = newValue; this.MarkAsDirty("PlaceOfDeliveryId"); } }
+       
+	 
+    private placeOfDeliveryName: string;
+    public get PlaceOfDeliveryName() { return this.placeOfDeliveryName; }
+    public set PlaceOfDeliveryName(newValue: string) { if (this.placeOfDeliveryName != newValue) { this.placeOfDeliveryName = newValue; this.MarkAsDirty("PlaceOfDeliveryName"); } }
+       
+	 
+    private dangerousGoods: boolean;
+    public get DangerousGoods() { return this.dangerousGoods; }
+    public set DangerousGoods(newValue: boolean) { if (this.dangerousGoods != newValue) { this.dangerousGoods = newValue; this.MarkAsDirty("DangerousGoods"); } }
+       
+	 
+    private shipmentTypeId: string;
+    public get ShipmentTypeId() { return this.shipmentTypeId; }
+    public set ShipmentTypeId(newValue: string) { if (this.shipmentTypeId != newValue) { this.shipmentTypeId = newValue; this.MarkAsDirty("ShipmentTypeId"); } }
+       
+	 
+    private shipmentTypeName: string;
+    public get ShipmentTypeName() { return this.shipmentTypeName; }
+    public set ShipmentTypeName(newValue: string) { if (this.shipmentTypeName != newValue) { this.shipmentTypeName = newValue; this.MarkAsDirty("ShipmentTypeName"); } }
+       
+	 
+    private packageTypeId: string;
+    public get PackageTypeId() { return this.packageTypeId; }
+    public set PackageTypeId(newValue: string) { if (this.packageTypeId != newValue) { this.packageTypeId = newValue; this.MarkAsDirty("PackageTypeId"); } }
+       
+	 
+    private packageTypeName: string;
+    public get PackageTypeName() { return this.packageTypeName; }
+    public set PackageTypeName(newValue: string) { if (this.packageTypeName != newValue) { this.packageTypeName = newValue; this.MarkAsDirty("PackageTypeName"); } }
+       
+	 
+    private customerTenantNumber: number;
+    public get CustomerTenantNumber() { return this.customerTenantNumber; }
+    public set CustomerTenantNumber(newValue: number) { if (this.customerTenantNumber != newValue) { this.customerTenantNumber = newValue; this.MarkAsDirty("CustomerTenantNumber"); } }
+       
+	 
+    private customerShipmentNumber: string;
+    public get CustomerShipmentNumber() { return this.customerShipmentNumber; }
+    public set CustomerShipmentNumber(newValue: string) { if (this.customerShipmentNumber != newValue) { this.customerShipmentNumber = newValue; this.MarkAsDirty("CustomerShipmentNumber"); } }
+       
+	 
 
     public OldEntityPM: ShipmentOrderPM;
 		

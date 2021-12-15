@@ -193,6 +193,27 @@ namespace Logitude.ShipmentOrderModule.Data.EntityPOCOs
 	    public string OnHandNumber { get; set; }
         [Column("AutomaticLastUpdateDate")]
 	    public DateTime? AutomaticLastUpdateDate { get; set; }
+        [ForeignKey("PlaceOfDelivery")]
+        [Column("PlaceOfDeliveryId")]
+	    public string PlaceOfDeliveryId { get; set; }
+	      
+        public virtual Card PlaceOfDelivery { get; set; }
+        [Column("DangerousGoods")]
+	    public bool DangerousGoods { get; set; }
+        [ForeignKey("ShipmentType")]
+        [Column("ShipmentTypeId")]
+	    public string ShipmentTypeId { get; set; }
+	      
+        public virtual ShipmentType ShipmentType { get; set; }
+        [ForeignKey("PackageType")]
+        [Column("PackageTypeId")]
+	    public string PackageTypeId { get; set; }
+	      
+        public virtual PackageType PackageType { get; set; }
+        [Column("CustomerTenantNumber")]
+	    public int? CustomerTenantNumber { get; set; }
+        [Column("CustomerShipmentNumber")]
+	    public string CustomerShipmentNumber { get; set; }
     }
 }
 	 

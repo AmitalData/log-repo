@@ -163,6 +163,24 @@ namespace Logitude.ShipmentOrderModule.Data.EntityListQueryServices
 
                                                        IsOperationalClosed = a.IsOperationalClosed,
 
+                                                       PlaceOfDeliveryId = a.PlaceOfDeliveryId,
+
+                                                       PlaceOfDeliveryName = a.PlaceOfDelivery == null ? "" : a.PlaceOfDelivery.EnglishName,
+
+                                                       DangerousGoods = a.DangerousGoods,
+
+                                                       ShipmentTypeId = a.ShipmentTypeId,
+
+                                                       ShipmentTypeName = a.ShipmentType == null ? "" : a.ShipmentType.Name,
+
+                                                       PackageTypeId = a.PackageTypeId,
+
+                                                       PackageTypeName = a.PackageType == null ? "" : a.PackageType.EnglishName,
+
+                                                       CustomerTenantNumber = a.CustomerTenantNumber,
+
+                                                       CustomerShipmentNumber = a.CustomerShipmentNumber,
+
                                                    });
             return query;
         }
