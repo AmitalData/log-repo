@@ -75,7 +75,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 }
                 if (filters.GetCount)
                 {
-                    response.Count = LTBFilter.DateTypeCode == "4" ? ledgerTransactions.Count() : ledgerTransactionBalanceService.Response.TotalRowCount.Value;
+                    response.Count =  LTBFilter.DateTypeCode == "4" ? LTBFilter.TaxReportTotalCount : ledgerTransactionBalanceService.Response.TotalRowCount.Value;
                 }
                 response.Result = LTBFilter.DateTypeCode == "4" ? ledgerTransactions : ledgerTransactionBalanceService.Response.MyLedgerTransactionList;
                 response.TookMS = LTBFilter.DateTypeCode != "4" ? ledgerTransactionBalanceService.Response.TookMS: 0;
