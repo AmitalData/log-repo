@@ -49,6 +49,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         TruckerId, 
 	         DistributionArea, 
 	         CrateNumber, 
+	         ShopId, 
 	         TerminalReleaseDate, 
 	         LastMileServiceType,
 	      }
@@ -121,6 +122,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         DistributionArea, 
 	         CrateNumber, 
 	         TruckerName, 
+	         ShopId, 
 	         CargoDescription, 
 	         TerminalReleaseDate, 
 	         LastMileServiceType,
@@ -260,6 +262,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CrateNumber))
             {
 				entityPOCO.CrateNumber = entityPM.CrateNumber;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ShopId))
+            {
+				entityPOCO.ShopId = entityPM.ShopId;
 			}
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TerminalReleaseDate))
@@ -411,6 +418,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.CrateNumber = entityPOCO.CrateNumber;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ShopId))
+            {
+					entityPM.ShopId = entityPOCO.ShopId;
+            }
+
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.TerminalReleaseDate))
             {
 					entityPM.TerminalReleaseDate = entityPOCO.TerminalReleaseDate;
@@ -555,6 +567,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CrateNumber))
             {
                 oldEntityPM.CrateNumber = entityPM.CrateNumber;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ShopId))
+            {
+                oldEntityPM.ShopId = entityPM.ShopId;
             }
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TerminalReleaseDate))
