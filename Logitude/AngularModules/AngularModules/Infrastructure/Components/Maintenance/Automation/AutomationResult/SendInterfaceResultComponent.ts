@@ -160,8 +160,6 @@ export class SendInterfaceResultComponent extends BaseComponent implements OnIni
             } else this.SendViaSelected = this.SendViaClassLists[0];
 
             this.ComputingPartnerId = this.automationSendInterface.ComputingPartnerId;
-            if (this.SendViaSelected && this.SendViaSelected.Code == "WEBHOOK")
-                this.SendFormatSelected = this.SendFormatLists.filter(d => d.Code == "JSON")[0];
 
         }
 
