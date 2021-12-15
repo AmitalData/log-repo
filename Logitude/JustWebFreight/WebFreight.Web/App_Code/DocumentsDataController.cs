@@ -135,10 +135,10 @@ namespace WebFreight.Web.App_Code
 
         public List<SharedLogisticDocumentPM> GetShipmentDocuments(string securitykey, string entityId, string partnerType, int tenant)
         {
-            string token = HttpContext.Current.Request.Headers["Token"];
-            AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-            SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-            SecurityUtility.AuthenticationOnTenant(tenant);
+            //string token = HttpContext.Current.Request.Headers["Token"];
+            //AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+            //SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+            //SecurityUtility.AuthenticationOnTenant(tenant);
 
             List<SharedLogisticDocumentPM> output = new List<SharedLogisticDocumentPM>();
 
