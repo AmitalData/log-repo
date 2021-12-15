@@ -472,7 +472,7 @@ export class DecCargoSplitConsPackDetLine extends BaseComponent {
 
     get MarksNumbers() { return this.entityPM.MarksNumbers; }
     set MarksNumbers(value: string) {
-        if (this.entityPM.MarksNumbers != value) {
+        if (this.entityPM.MarksNumbers != value && !AppTool.IsNullOrEmpty(value)) {
             this.entityPM.MarksNumbers = value;
 
         }
