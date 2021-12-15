@@ -105,7 +105,9 @@ namespace WebFreight.Web.App_Code
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                SecurityUtility.AuthenticationOnEntityTenant("DocumentsFiling", EntityAM.Tenant, authToken.Tenant);
+                SecurityUtility.AuthenticationOnTenant(EntityAM.ImporterTenant);
+
+                // SecurityUtility.AuthenticationOnEntityTenant("DocumentsFiling", EntityAM.Tenant, authToken.Tenant);
 
                 //SecurityUtility.CheckContactFeature("DocumentsFiling", "NEW", EntityAM.ImporterTenant);
                 APIException Result = null;
@@ -323,7 +325,9 @@ namespace WebFreight.Web.App_Code
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                SecurityUtility.AuthenticationOnEntityTenant("DocumentsFiling", EntityAM.Tenant, authToken.Tenant);
+                SecurityUtility.AuthenticationOnTenant(EntityAM.ImporterTenant);
+
+                //SecurityUtility.AuthenticationOnEntityTenant("DocumentsFiling", EntityAM.Tenant, authToken.Tenant);
                 //SecurityUtility.CheckContactFeature("DocumentsFiling", "UPDATE", EntityAM.ImporterTenant);
                 DocumentsFilingQuery documentsFilingQuery = new DocumentsFilingQuery(EntityAM.ImporterTenant);
                 DocumentsFilingPM ImporterDocumentFilingPM = documentsFilingQuery.GetSinglePM(EntityAM.CustomerDocumentId, EntityAM.ImporterTenant);
