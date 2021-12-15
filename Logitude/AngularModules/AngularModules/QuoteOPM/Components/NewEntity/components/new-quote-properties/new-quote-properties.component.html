@@ -3,6 +3,8 @@
     <p-tabView (onClose)="removeProperty($event)" [(activeIndex)]="activeTab">
       <p-tabPanel *ngFor='let x of properties.controls; let i = index' [closable]='properties.controls.length > 1'
         [formGroupName]="i">
+
+
         <ng-template pTemplate="header">
           <span
             *ngIf='!(x.value.fromPort?.Code || x.value.toPort?.Code || x.value.mainCarriageCarrier?.AIRLINE_ID || x.value.incoterm?.PTERMID)'>Quote
@@ -19,6 +21,8 @@
             *ngIf='x.value.incoterm?.PTERMID && (x.value.mainCarriageCarrier?.AIRLINE_ID || x.value.toPort?.Code)'>,</span>
           <span *ngIf='x.value.incoterm?.PTERMID'>{{x.value.incoterm?.PTERMID}}</span>
         </ng-template>
+
+        
         <h3 class="sub-header">Quote Properties</h3>
         <div class="grid content-in-section">
 

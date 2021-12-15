@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Unifreight.BL.EntityPMs;
 using Unifreight.BL.EntityQueryServices;
 using Unifreight.Data.AmitalModel;
 using Unifreight.Data.AmitalModel.Repsitories;
@@ -23,7 +24,6 @@ namespace Unifreight.BL.BL
             var tenantAmitalContext = _AmitalContextList.FirstOrDefault(rec => rec.TenantSeed == tenant);
             if (tenantAmitalContext == null)
             {
-
                 tenantAmitalContext = AmitalContext.GetContext(tenant);
                 _AmitalContextList.Add(tenantAmitalContext);
             }
@@ -32,24 +32,23 @@ namespace Unifreight.BL.BL
 
         public Carriers GetFromCache(string DIRECTIONID, string TRANSPORTMODEID, string AIRLINEID)
         {
-            IDataFromDB data;
-
             if (DIRECTIONID == "E" && TRANSPORTMODEID == "A")
-                data = (IDataFromDB)new ETBAIRLINEQueryService(GetAmitalContext(tenant)).GetSingle(AIRLINEID, true);
+            {
+                ETBAIRLINEPM data = new ETBAIRLINEQueryService(GetAmitalContext(tenant)).GetSingle(AIRLINEID, true);
+                return new Carriers { Name = data.NAMEENG, AIRLINE_ID = data.AIRLINEID, Prefix = data.AIRLINENUM };
+            }
             else if (DIRECTIONID == "E" && TRANSPORTMODEID == "O")
-                data = (IDataFromDB)new MTBCARRQueryService(GetAmitalContext(tenant)).GetSingle(AIRLINEID, true);
+            {
+                MTBCARRPM data = new MTBCARRQueryService(GetAmitalContext(tenant)).GetSingle(AIRLINEID, true);
+                return new Carriers { Name = data.NAMEENG, AIRLINE_ID = data.AIRLINEID, Prefix = "", VENDOR_ID = data.VENDORID };
+            }
             else if (DIRECTIONID == "I")
-                data = (IDataFromDB)new ETBVENDQueryService(GetAmitalContext(tenant)).GetSingle(AIRLINEID, true);
+            {
+                ETBVENDPM data = new ETBVENDQueryService(GetAmitalContext(tenant)).GetSingle(AIRLINEID, true);
+                return new Carriers { Name = data.NAMEENG, Prefix = TRANSPORTMODEID == "A" ? data.VENDORPREFIX : "", VENDOR_ID = data.VENDORID };
+            }
             else
                 return null;
-
-            return new Carriers
-            {
-                Name = data.NAMEENG,
-                AIRLINE_ID = data.AIRLINEID,
-                Prefix = data.AIRLINENUM,
-                VENDOR_ID = TRANSPORTMODEID == "A" && DIRECTIONID == "I" ? data.VENDORPREFIX : ""
-            };
         }
 
         public List<Carriers> GetCarriersItemsList(string DIRECTIONID, string TRANSPORTMODEID, QueryOperations queryOperations, bool getFromCache = true)

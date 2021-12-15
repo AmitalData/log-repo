@@ -8,11 +8,11 @@
     <div class="grid container">
 
         <div class="col-10 right-side">
-            <div class="section">
-                <app-new-quote-partner [type]='"shipper"' [formGroup]='formGroup' [EntityPM]='EntityPM'></app-new-quote-partner>
-                <hr>
-                <app-new-quote-partner [type]='"consignee"' [formGroup]='formGroup' [EntityPM]='EntityPM'></app-new-quote-partner>
-                <!-- <app-new-quote-my-customers [formGroup]='formGroup'></app-new-quote-my-customers> -->
+            <div class="partners">
+                <div class="section" *ngFor='let partner of ["shipper", "consignee"]'>
+                    <app-new-quote-partner [type]='partner' [formGroup]='formGroup' [EntityPM]='EntityPM'>
+                    </app-new-quote-partner>
+                </div>
             </div>
 
             <app-new-quote-properties [formGroup]='formGroup' [EntityPM]='EntityPM'></app-new-quote-properties>
@@ -21,15 +21,10 @@
                 <app-new-quote-general [formGroup]='formGroup' [EntityPM]='EntityPM'></app-new-quote-general>
             </div>
 
-            <div class="section">
+            <div class="section section-order">
                 <app-new-quote-expected-order [formGroup]='formGroup' [EntityPM]='EntityPM'>
                 </app-new-quote-expected-order>
             </div>
-
-            <div class="section">
-                <h2 class="sub-header">Additional Fields</h2>
-            </div>
-
         </div>
     </div>
 </form>
