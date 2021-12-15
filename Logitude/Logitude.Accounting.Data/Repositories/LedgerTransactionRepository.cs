@@ -1416,9 +1416,9 @@ on record.JournalId equals j.Id
                            && a.AccountId == ledgerTransactionBalanceFilter.GLAccountId
                             && journalIds.Contains(a.JournalId)
 
-                    select a);
+                    select a).Distinct();
 
-
+           
         }
 
         public List<LedgerTransaction> GetLedgerTransactionsByJournalIds(List<string> journalIds, int tenant)
