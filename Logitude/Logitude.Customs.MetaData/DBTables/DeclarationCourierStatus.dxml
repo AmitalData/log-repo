@@ -197,16 +197,16 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="LastMileServiceType"
-    Type="nvarchar"
-    Size="4">
+    Name="ShopId"
+    Type="varchar"
+    Size="15">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
-    Name="ShopId"
-    Type="varchar"
-    Size="15">
+    Name="LastMileServiceType"
+    Type="nvarchar"
+    Size="4">
     <Constraints
       Nullable="true" />
   </Column>

@@ -37,6 +37,26 @@ namespace Simplog.Data.CommonDataModel.Repositories
             return (from record in context.Incoterms where record.Id == id && record.Tenant == tenant select record).FirstOrDefault();
         }
 
+        public static Incoterm GetSingleFromCache(string id, int tenant)
+        {
+            string entityName = "Incoterm" + id + tenant;
+
+
+            Incoterm entity = (Incoterm)CacheManager.CacheWrapper.Get(entityName);
+
+            if(entity == null)
+            {
+                ICommonDataContext context = CommonDataContext.GetContext(tenant);
+                entity = new IncotermRepository().GetSingleIncoterm(id, tenant);
+
+
+                if (CacheManager.CacheWrapper.Get(entityName) == null && entity != null)
+                    CacheManager.CacheWrapper.Insert(entityName, entity, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
+            }
+
+            return entity;
+        }
+
         public Incoterm GetSingleIncotermByCode(string code, int tenant)
         {
             return (from record in context.Incoterms where record.Code == code && record.Tenant == tenant select record).FirstOrDefault();

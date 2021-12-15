@@ -491,6 +491,7 @@
     <None Include="DBTables\TermsOfSaleType.dxml" />
     <None Include="DBTables\TPGFileType.dxml" />
     <None Include="DBTables\TradeAgreement.dxml" />
+    <None Include="DBTables\TradeAgreementProtocol.dxml" />
     <None Include="DBTables\TradeLevyExamptType.dxml" />
     <None Include="DBTables\TransactionNatureType.dxml" />
     <None Include="DBTables\TransferCargoMethodType.dxml" />
@@ -548,6 +549,7 @@
     <None Include="EntityFiles\ExportDeliveryDocumentMessage.lxml" />
     <None Include="EntityFiles\SecurityClearenceTypeCode.lxml" />
     <None Include="EntityFiles\CoolingReportingMethod.lxml" />
+    <None Include="EntityFiles\TradeAgreementProtocol.lxml" />
     <None Include="EntityFiles\TransportMeansType.lxml" />
     <None Include="EntityFiles\FullnessCode.lxml" />
     <None Include="EntityFiles\CancellationReasonRequestType.lxml" />

@@ -30,7 +30,8 @@
                 (formGroup.value.transportMode?.Id === 'A' ? 'Gateway': 'LoadingPort') | TextCodeTranslationPipe}}
                 field is required</div>
               <app-autocomplate-table [columnsShow]="{Code:'Code', Name: 'Name',CountryName:'CountryName'}"
-                [data]='toPortList' [fieldShow]='"Name"' [searchIcon]='true'
+                [getDataFunc]='portsFunc' [virtualScroll]='true' [columnsFilter]='["SearchFields"]' [fieldShow]='"Name"'
+                [searchIcon]='true'
                 [label]="'QuoteOP.S.NewQuote.' + (formGroup.value.transportMode?.Id === 'A' ? 'Gateway': 'LoadingPort') | TextCodeTranslationPipe"
                 [controlName]='"fromPort"' [formGroup]='x' id='fromPort'>
               </app-autocomplate-table>
@@ -43,9 +44,10 @@
                 (formGroup.value.transportMode?.Id === 'A' ? 'Destination': 'DischargePort') | TextCodeTranslationPipe}}
                 field is required</div>
               <app-autocomplate-table [columnsShow]="{Code:'Code', Name: 'Name',CountryName:'CountryName'}"
-                [data]='fromPortList' [fieldShow]='"Name"' [searchIcon]='true'
+                [getDataFunc]='portsFunc' [virtualScroll]='true' [columnsFilter]='["SearchFields"]' [fieldShow]='"Name"'
+                [searchIcon]='true'
                 [label]="'QuoteOP.S.NewQuote.' + (formGroup.value.transportMode?.Id === 'A' ? 'Destination': 'DischargePort') | TextCodeTranslationPipe"
-                [controlName]='"toPort"' [formGroup]='x'  id='toPort'>
+                [controlName]='"toPort"' [formGroup]='x' id='toPort'>
               </app-autocomplate-table>
             </div>
 
@@ -72,8 +74,9 @@
             </div>
 
             <div class="p-field">
-              <app-autocomplate-table [columnsShow]="{PTERMID:'Code', Name: 'Name'}" [data]='incotermList'
-                [fieldShow]='"Name"' [label]="'Incoterm'" [controlName]='"incoterm"' [formGroup]='x' [dropIcon]='true'>
+              <app-autocomplate-table [columnsShow]="{PTERMID:'Code', Name: 'Name'}" [getDataFunc]='incotermFunc'
+                [virtualScroll]='true' [fieldShow]='"Name"' [label]="'Incoterm'" [controlName]='"incoterm"' [columnsFilter]='["SearchFields"]'
+                [formGroup]='x' [dropIcon]='true'>
               </app-autocomplate-table>
             </div>
 
@@ -93,9 +96,10 @@
 
           <div class="col-4 p-fluid">
             <div class="p-field">
-              <app-autocomplate-table [columnsShow]="{SERVLEVEL_ID:'Code', Name: 'Name'}" [data]='specialServiceList'
-                [fieldShow]='"Name"' [label]="'Special Services Type'" [controlName]='"specialService"' [formGroup]='x'
-                [searchIcon]='true'>
+              <app-autocomplate-table [columnsShow]="{SERVLEVEL_ID:'Code', Name: 'Name'}"
+                [getDataFunc]='specialServiceFunc' [virtualScroll]='true' [fieldShow]='"Name"'
+                [columnsFilter]='["SearchFields"]'
+                [label]="'Special Services Type'" [controlName]='"specialService"' [formGroup]='x' [searchIcon]='true'>
               </app-autocomplate-table>
             </div>
           </div>

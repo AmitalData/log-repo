@@ -268,6 +268,7 @@ namespace Logitude.CustomsMessaging.Dca
                 MoveUnUseDCAFilesToDIr();
             }
         }
+        static DateTime _LastErrordateTime = DateTime.MinValue;
         private void Take50_MultiThread(string debugIIGMessageId)
         {
             int iMultiThread = 5;
@@ -310,9 +311,30 @@ namespace Logitude.CustomsMessaging.Dca
                                     if (!ContainerAccessor.Container.IsRegistered<IMessagingServiceInterfaceType>(currMessagingService))
                                     {
 
+                                        try
+                                        {
 
-                                        Debug.WriteLine("currMessagingService : " + currMessagingService + " Is not Registered in ContainerAccessor.Container,    Due infinite errors i cancel writing log");
-                                        //_totalDownload--;
+
+                                            Debug.WriteLine("currMessagingService : " + currMessagingService + " Is not Registered in ContainerAccessor.Container,    Due infinite errors i cancel writing log");
+                                            //_totalDownload--;
+                                            if (DateTime.Now.Subtract(_LastErrordateTime) > TimeSpan.FromMinutes(10))
+                                            {
+                                                _LastErrordateTime = DateTime.Now;
+                                                Logger.LogMe("NO MAIN Code (response 2754 of 2750 !!!)  currMessagingService : " + currMessagingService + " Is not Registered in ContainerAccessor.Container,    Due infinite errors i cancel writing log", true, "DCANotIsRegistered");
+                                            }
+                                            string myMoreParams = "";
+                                            bool myErrorOccurred;
+                                            string myMessageOut = "";
+                                            _DcaManager.DeleteIncomeFile(//this.GetPartnerID(messageDCA.Tenant), this.GetUnifreightEnvironmentID(messageDCA.Tenant),
+                   dcaFile.SelectedFileDownload, this._AppendToDownloadFolderName,
+                      ref myMoreParams, out myErrorOccurred, out myMessageOut);
+                                        }
+                                        catch (Exception)
+                                        {
+
+                                            //throw;
+                                        }
+
                                         return;
 
 

@@ -748,6 +748,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new TradeAgreementMap());
 	
+            modelBuilder.Configurations.Add(new TradeAgreementProtocolMap());
+	
             modelBuilder.Configurations.Add(new TradeLevyExamptTypeMap());
 	
             modelBuilder.Configurations.Add(new TransactionNatureTypeMap());
@@ -3342,6 +3344,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<TradeAgreement> TradeAgreements 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<TradeAgreementProtocol> TradeAgreementProtocols 
 	 {
 	      get; set;
 	 

@@ -576,15 +576,15 @@
                                     </td>
 
                                     <td style="width: 130px;">
-                                        <LogLabel [ObjectFieldName]="'PartyRelationshipCode'" [ObjectTableName]="ObjectTableName"
+                                        <LogLabel [ObjectFieldName]="'DutyRegimeProtocolCode'" [ObjectTableName]="ObjectTableName"
                                                   [DataContext]="DataContext"></LogLabel>
                                     </td>
                                     <td style="width: 160px;">
-                                        <LogLov [ObjectFieldName]="'PartyRelationshipCode'"
+                                        <LogLov [ObjectFieldName]="'DutyRegimeProtocolCode'"
                                                 [ObjectTableName]="ObjectTableName"
                                                 [DataContext]="DataContext"
                                                 [HideColumns]="true"
-                                                [LookUpTableName]="'Customs.PartyRelationshipType'">
+                                                [LookUpTableName]="'Customs.TradeAgreementProtocol'">
                                         </LogLov>
                                     </td>
 
@@ -622,9 +622,19 @@
 
                                 </tr>
 
-                                <tr style="height: 32px;">
-                                    <td style="width: 130px;"><div></div></td>
-                                    <td style="width: 160px;"><div></div></td>
+                                <tr style="height: 60px;">
+                                    <td style="width: 130px;">
+                                        <LogLabel [ObjectFieldName]="'PartyRelationshipCode'" [ObjectTableName]="ObjectTableName"
+                                                  [DataContext]="DataContext"></LogLabel>
+                                    </td>
+                                    <td style="width: 160px;">
+                                        <LogLov [ObjectFieldName]="'PartyRelationshipCode'"
+                                                [ObjectTableName]="ObjectTableName"
+                                                [DataContext]="DataContext"
+                                                [HideColumns]="true"
+                                                [LookUpTableName]="'Customs.PartyRelationshipType'">
+                                        </LogLov>
+                                    </td>
 
                                     <td>
                                         <div style="width:20px"></div>
@@ -1174,8 +1184,28 @@
                                     </ng-template>
 
                                 </log-column>
-                                <log-column [header]="'Customs.SupplierInvoiceItem.F.InvoiceQuantity' | TextCodeTranslationPipe" [binding]="'InvoiceQuantity'" [width]="'80'" [Editable]="true" [Alignment]="'right'">
 
+                                <log-column *ngIf="declarationPM.Direction == 'E'" [header]="'Customs.SupplierInvoiceItem.F.DutyRegimeProtocolCode' | TextCodeTranslationPipe" [binding]="'DutyRegimeProtocolCode'" [width]="'80'" [Editable]="true" [Alignment]="'right'">
+                                    <ng-template let-item>
+                                        <log-cell-template (CellClicked)="onCellSelected($event,item)" #logcelltemplate [RIndex]="item.rowIndex">
+                                            <div class="TextTrimming" style="text-align:right" *ngIf="logcelltemplate.IsDisplayMode">
+                                                <span>{{item.DutyRegimeProtocolCode }}</span>
+                                            </div>
+                                            <div *ngIf="logcelltemplate.IsEditMode">
+                                                <LogLov [ObjectFieldName]="'DutyRegimeProtocolCode'"
+                                                    [ObjectTableName]="ObjectTableName"
+                                                    [DataContext]="item"
+                                                    [LookUpTableName]="'Customs.TradeAgreementProtocol'"
+                                                    (SelectedItemChanged)="item.TradeAgreementProtocol = $event"
+                                                    [HideColumns]="true"
+                                                    [FocusOnMe]="true">
+                                                </LogLov>
+                                            </div>
+                                        </log-cell-template>
+                                    </ng-template>
+                                </log-column>
+                                
+                                <log-column [header]="'Customs.SupplierInvoiceItem.F.InvoiceQuantity' | TextCodeTranslationPipe" [binding]="'InvoiceQuantity'" [width]="'80'" [Editable]="true" [Alignment]="'right'">
                                     <ng-template let-item>
                                         <log-cell-template (CellClicked)="onCellSelected($event,item)" #logcelltemplate [RIndex]="item.rowIndex">
                                             <div class="TextTrimming" style="text-align:right" *ngIf="logcelltemplate.IsDisplayMode">
@@ -1191,7 +1221,7 @@
                                     </ng-template>
 
 
-                                </log-column>
+                                </log-column>                           
                                 <log-column [header]="'Customs.SupplierInvoiceItem.F.InvoiceQuantityType' | TextCodeTranslationPipe" [binding]="'InvoiceQuantityType'" [width]="'50'" [Editable]="true" [Alignment]="'right'">
 
                                     <ng-template let-item>

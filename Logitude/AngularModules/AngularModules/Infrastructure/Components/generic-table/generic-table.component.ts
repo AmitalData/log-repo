@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator';
 import { LazyLoadEvent, SortEvent } from 'primeng/api';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
@@ -55,7 +55,7 @@ export class GenericTableComponent implements OnInit {
   }
 
   async loadLazy(e: LazyLoadEvent) {
-    this.addDataFromFunc(e.rows - this.config.data.rowTake);
+    this.addDataFromFunc(e.rows + e.first - this.config.data.rowTake);
   }
 
   filterTable(val: string) {
@@ -79,19 +79,38 @@ export class GenericTableComponent implements OnInit {
     this.addDataFromFunc(0);
   }
 
-  async addDataFromFunc(index: number) {
+  async addDataFromFunc(rowIndex: number) {
     if (this.allRowGet) return;
 
-    const loadedData: any[] = await this.config.data.getData(this.filterVal, index / this.config.data.rowTake, this.sortField, this.sortOrder);
+    const rowTake: number = this.config.data.rowTake;
+    const index: number = rowIndex + rowTake * 2;
+    const loadedData: any[] = await this.config.data.getData(this.filterVal, index / rowTake, this.sortField, this.sortOrder);
+    this.allRowGet = loadedData.length !== rowTake;
 
-    Array.prototype.splice.apply(this.data, [index, this.config.data.rowTake, ...loadedData]);
-    Array.prototype.splice.apply(this.data, [index + this.config.data.rowTake, 0, ...Array.from({ length: this.config.data.rowTake })]);
+    Array.prototype.splice.apply(this.data, [index, rowTake, ...loadedData]);
+    if (this.data.length <= index + rowTake && !this.allRowGet)
+      Array.prototype.splice.apply(this.data, [index + rowTake, 0, ...Array.from({ length: rowTake })]);
     this.data = [...this.data]
 
-    this.allRowGet = loadedData.length !== this.config.data.rowTake;
     if (this.allRowGet) {
       const rowsHave: number = index + loadedData.length;
       Array.prototype.splice.apply(this.data, [rowsHave, this.data.length - rowsHave]);
+    }
+
+    if (rowIndex === 0) {
+      this.allRowGet = false;
+      this.addDataFromFunc(rowTake * -2);
+      this.addDataFromFunc(rowTake * -1);
+    }
+
+    if (index - rowTake > -1 && !this.data[index - rowTake]) {
+      this.allRowGet = false;
+      this.addDataFromFunc(index - rowTake * 3);
+    }
+
+    if (index - rowTake * 2 > -1 && !this.data[index - rowTake * 2]) {
+      this.allRowGet = false;
+      this.addDataFromFunc(index - rowTake * 4);
     }
   }
 
@@ -99,10 +118,14 @@ export class GenericTableComponent implements OnInit {
     this.dialogRef.close(e)
   }
 
-  private alignRow() {
-    let elements = this.elem.nativeElement.querySelectorAll('.p-datatable-scrollable-body')[0];
+  private async alignRow() {
+    let scrollBarElement = this.getScrollBarElement();
+    while (!scrollBarElement) {
+      await new Promise(r => setTimeout(r, 100));
+      scrollBarElement = this.getScrollBarElement();
+    }
 
-    fromEvent(elements, 'scroll')
+    fromEvent(scrollBarElement, 'scroll')
       .pipe(debounceTime(100))
       .subscribe((e: any) => {
         const div = e.target as HTMLDivElement;
@@ -110,6 +133,10 @@ export class GenericTableComponent implements OnInit {
         if (diff > 2 && diff < 39)
           div.scrollBy(0, 41 - diff + 1);
       });
+  }
+
+  private getScrollBarElement() {
+    return this.elem.nativeElement.querySelectorAll('.p-datatable-scrollable-body')[0];
   }
 }
 

@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationCourierStatusUpdateClass
    {  		
-		public const string HashString = "a761d1bfe5b036ae97ca22cad3471c08";
+		public const string HashString = "e967d5d2eda1bab7444bb7ad6a58379c";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -125,7 +125,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Declaration Courier Status",
-			      				    Code =  "e53a",
+			      				    Code =  "ed45",
 			      				    Name =  "Customs.DeclarationCourierStatus Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -5024,6 +5024,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "ShopId",
 					  						ListPropertyPath =  "ShopId",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -5042,6 +5043,128 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						FullFieldLable =  "ShopId",
 					  						DefaultText =  "Shop Id",
 					  						FullLocalDefaultText =  "חנות",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "LastMileServiceType",
+					  						ObjectTableName =  "Customs.DeclarationCourierStatus",
+					  						FieldsDataType =  "nText",
+					  						MinLength =  0,
+					  						MaxLength =  4,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  4,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "LastMileServiceType",
+					  						ListPropertyPath =  "LastMileServiceType",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Customs.DeclarationCourierStatus",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "LastMileServiceType",
+					  						DefaultText =  "LastMile Service Type",
+					  						FullLocalDefaultText =  "סוג שירות",
+					  						ListFieldLable =  "LastMileServiceTypeListLable",
+					  						ListLableDefaultText =  "LastMileServiceType",
+					  						ListLocalDefaultText =  "סוג שירות",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "CargoDescription",
+					  						ObjectTableName =  "Customs.DeclarationCourierStatus",
+					  						FieldsDataType =  "nText",
+					  						MinLength =  0,
+					  						MaxLength =  256,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  256,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "CargoDescription",
+					  						ListPropertyPath =  "CargoDescription",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Customs.DeclarationCourierStatus",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "CargoDescription",
+					  						DefaultText =  "Cargo Description",
+					  						FullLocalDefaultText =  "תאור טובין",
+					  						ListFieldLable =  "CargoDescriptionListLable",
+					  						ListLableDefaultText =  "Cargo Description",
+					  						ListLocalDefaultText =  "תאור טובין",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -5155,6 +5278,20 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode DeclarationCourierStatusTextCode_CustomsDeclarationCourierStatusOIntegrator = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.DeclarationCourierStatus.O.Integrator", DefaultText = "Integrator",LocalDefaultText = @"אינטגרטור", ObjectTableId = DeclarationCourierStatusObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode DeclarationCourierStatusTextCode_CustomsDeclarationCourierStatusOReportType = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.DeclarationCourierStatus.O.ReportType", DefaultText = "Report Type",LocalDefaultText = @"סוג דוח", ObjectTableId = DeclarationCourierStatusObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode DeclarationCourierStatusTextCode_CustomsDeclarationCourierStatusOFromLastMile = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.DeclarationCourierStatus.O.FromLastMile", DefaultText = "From Date LastMile",LocalDefaultText = @"מתאריך הפצה", ObjectTableId = DeclarationCourierStatusObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode DeclarationCourierStatusTextCode_CustomsDeclarationCourierStatusOToDateLastMile = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.DeclarationCourierStatus.O.ToDateLastMile", DefaultText = "From Date LastMile",LocalDefaultText = @"עד תאריך הפצה", ObjectTableId = DeclarationCourierStatusObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode DeclarationCourierStatusTextCode_CustomsDeclarationCourierStatusOToDateHatra = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.DeclarationCourierStatus.O.ToDateHatra", DefaultText = "To Date Hatra",LocalDefaultText = @" עד תאריך התרה", ObjectTableId = DeclarationCourierStatusObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode DeclarationCourierStatusTextCode_CustomsDeclarationCourierStatusOFromDateHatra = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.DeclarationCourierStatus.O.FromDateHatra", DefaultText = "From Date Hatra",LocalDefaultText = @"מתאריך התרה", ObjectTableId = DeclarationCourierStatusObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode DeclarationCourierStatusTextCode_CustomsDeclarationCourierStatusOTrucker = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.DeclarationCourierStatus.O.Trucker", DefaultText = "Trucker",LocalDefaultText = @"מפיץ", ObjectTableId = DeclarationCourierStatusObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode DeclarationCourierStatusTextCode_CustomsDeclarationCourierStatusOAirline = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.DeclarationCourierStatus.O.Airline", DefaultText = "Airline",LocalDefaultText = @"חברת תעופה", ObjectTableId = DeclarationCourierStatusObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode DeclarationCourierStatusTextCode_CustomsDeclarationCourierStatusOCourierHawb = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.DeclarationCourierStatus.O.CourierHawb", DefaultText = "CourierHawb",LocalDefaultText = @"ש.מ.ר", ObjectTableId = DeclarationCourierStatusObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

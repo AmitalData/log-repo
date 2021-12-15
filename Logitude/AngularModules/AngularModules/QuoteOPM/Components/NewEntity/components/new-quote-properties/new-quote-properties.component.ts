@@ -8,6 +8,8 @@ import { takeUntil } from 'rxjs/operators';
 import { NewQuoteDataShareService } from '../../Services/new-quote-data-share/new-quote-data-share.service';
 import { Carrier, Incoterm, NewQuoteDataService, Port, SpecialService } from '../../Services/new-quote-data/new-quote-data.service';
 
+type fiterFunc = (filter: ApiQueryFilters) => Promise<any[]>;
+
 @Component({
   selector: 'app-new-quote-properties',
   templateUrl: './new-quote-properties.component.html',
@@ -17,11 +19,14 @@ export class NewQuotePropertiesComponent implements OnInit, AfterViewInit {
   @Input() EntityPM: QuoteOPPM = null as any;
   @Input() formGroup: FormGroup = null as any;
 
-  fromPortList: Port[] = []
-  toPortList: Port[] = []
-  specialServiceList: SpecialService[] = []
-  mainCarriageCarrierFunc: (filter: ApiQueryFilters) => Promise<any[]> = null as any;
-  incotermList: Incoterm[] = []
+  // fromPortList: Port[] = []
+  // toPortList: Port[] = []
+  // specialServiceList: SpecialService[] = []
+  mainCarriageCarrierFunc: fiterFunc = null as any;
+  portsFunc: fiterFunc = null as any;
+  specialServiceFunc: fiterFunc = null as any;
+  incotermFunc: fiterFunc = null as any;
+  // incotermList: Incoterm[] = []
   transportModeId: string = '';
   directionId: string = '';
   carrierColumns: any = {}
@@ -114,27 +119,24 @@ export class NewQuotePropertiesComponent implements OnInit, AfterViewInit {
   }
 
   async getPorts() {
-    this.fromPortList = await this.newQuoteDataService.getPorts(this.directionId, this.transportModeId);
-    this.toPortList = this.fromPortList;
+    this.portsFunc = (qf: ApiQueryFilters) => this.newQuoteDataService.getPorts(this.directionId, this.transportModeId, qf);
   }
 
   async getSpecialService() {
-    this.specialServiceList = await this.newQuoteDataService.getSpecialServices(this.directionId, this.transportModeId);
+
+    // this.specialServiceList = await this.newQuoteDataService.getSpecialServices(this.directionId, this.transportModeId);
+    this.specialServiceFunc = (qf: ApiQueryFilters) => this.newQuoteDataService.getSpecialServices(this.directionId, this.transportModeId, qf);
   }
 
   async getMainCarriageCarrier() {
-    const filters = new ApiQueryFilters();
-    filters.PageIndex = 0;
-    filters.PageSize = 100;
-
     this.carrierColumns = this.directionId === "E" ? { AIRLINE_ID: 'Code' } : { VENDOR_ID: 'Code' }
     this.carrierColumns = { ...this.carrierColumns, ...{ Name: 'Name', Prefix: 'Prefix' } }
 
     this.mainCarriageCarrierFunc = (qf: ApiQueryFilters) => this.newQuoteDataService.getCarrierses(this.directionId, this.transportModeId, qf);
   }
-
+  
   async getIncoterms() {
-    this.incotermList = await this.newQuoteDataService.getIncoterms();
+    this.incotermFunc = (qf: ApiQueryFilters) => this.newQuoteDataService.getIncoterms(qf);    
   }
 
   addProperty() {

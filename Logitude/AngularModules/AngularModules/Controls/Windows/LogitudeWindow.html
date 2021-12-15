@@ -34,7 +34,7 @@
         /*vertical-align: middle;
         display: block;
         margin: auto;*/
-        z-index: 2;
+        z-index: 0;
     }
 
     .WindowHeader {
@@ -104,7 +104,8 @@
             <input [attr.id]="FocusElementId" style="position: absolute; width: 0px; height: 0px; border:0px; outline: none;">
 
             <table [style.direction]="RTL == true ? 'rtl' : 'ltr'">
-                <tr *ngIf="!IsHideHeader" style="height: 35px" class="LogitudeWindow-header-top-margin">
+                <tr *ngIf="!IsHideHeader" style="height: 35px" >
+                <!-- class="LogitudeWindow-header-top-margin" -->
                     <td>
                         <div [style.border-bottom]="BottomBorderForTitle"
                              [class.WindowHeaderRight]="RTL == true" [class.WindowHeader]="RTL != true"
@@ -217,7 +218,8 @@
                     </td>
                 </tr>
 
-                <tr style="height: 10px;" class="LogitudeWindow-bottom-margin" *ngIf="!IsEditComponent && !IsFullScreen && !IsHideWindowMargin">
+                <tr style="height: 10px;" *ngIf="!IsEditComponent && !IsFullScreen && !IsHideWindowMargin">
+                    <!-- class="LogitudeWindow-bottom-margin" -->
                     <td>
                         <div></div>
                     </td>

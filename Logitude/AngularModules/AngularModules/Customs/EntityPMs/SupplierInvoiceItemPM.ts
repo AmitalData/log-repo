@@ -842,6 +842,11 @@ export class SupplierInvoiceItemPM {
     public set DocumentFilingId(newValue: string) { if (this.documentFilingId != newValue) { this.documentFilingId = newValue; this.MarkAsDirty("DocumentFilingId"); } }
        
 	 
+    private dutyRegimeProtocolCode: string;
+    public get DutyRegimeProtocolCode() { return this.dutyRegimeProtocolCode; }
+    public set DutyRegimeProtocolCode(newValue: string) { if (this.dutyRegimeProtocolCode != newValue) { this.dutyRegimeProtocolCode = newValue; this.MarkAsDirty("DutyRegimeProtocolCode"); } }
+       
+	 
 
     public OldEntityPM: SupplierInvoiceItemPM;
 	

@@ -389,6 +389,16 @@ export class DeclarationCourierStatusPM {
     public set ShopId(newValue: string) { if (this.shopId != newValue) { this.shopId = newValue; this.MarkAsDirty("ShopId"); } }
        
 	 
+    private lastMileServiceType: string;
+    public get LastMileServiceType() { return this.lastMileServiceType; }
+    public set LastMileServiceType(newValue: string) { if (this.lastMileServiceType != newValue) { this.lastMileServiceType = newValue; this.MarkAsDirty("LastMileServiceType"); } }
+       
+	 
+    private cargoDescription: string;
+    public get CargoDescription() { return this.cargoDescription; }
+    public set CargoDescription(newValue: string) { if (this.cargoDescription != newValue) { this.cargoDescription = newValue; this.MarkAsDirty("CargoDescription"); } }
+       
+	 
 
     public OldEntityPM: DeclarationCourierStatusPM;
 		

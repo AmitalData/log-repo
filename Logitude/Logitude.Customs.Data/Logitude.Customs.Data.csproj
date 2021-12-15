@@ -224,6 +224,7 @@
     <Compile Include="EntityKeys\SupplierInvoiceUCRKeys.cs" />
     <Compile Include="EntityKeys\SupplierPartyTypeKeys.cs" />
     <Compile Include="EntityKeys\TPGFileTypeKeys.cs" />
+    <Compile Include="EntityKeys\TradeAgreementProtocolKeys.cs" />
     <Compile Include="EntityKeys\TransactionNatureTypeKeys.cs" />
     <Compile Include="EntityKeys\TransferCargoMethodTypeKeys.cs" />
     <Compile Include="EntityKeys\TransportMeansTypeKeys.cs" />
@@ -436,6 +437,7 @@
     <Compile Include="EntityListQueryServices\Generated\SupplierInvoiceUCRListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\SupplierPartyTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\TPGFileTypeListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\TradeAgreementProtocolListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\TransactionNatureTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\TransferCargoMethodTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\TransportMeansTypeListQueryService.Generated.cs" />
@@ -482,6 +484,7 @@
     <Compile Include="EntityListQueryServices\SupplierInvoiceUCRListQueryService.cs" />
     <Compile Include="EntityListQueryServices\SupplierPartyTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\TPGFileTypeListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\TradeAgreementProtocolListQueryService.cs" />
     <Compile Include="EntityListQueryServices\TransactionNatureTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\TransferCargoMethodTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\TransportMeansTypeListQueryService.cs" />
@@ -613,6 +616,7 @@
     <Compile Include="EntityLists\Generated\SupplierInvoiceUCRList.Generated.cs" />
     <Compile Include="EntityLists\Generated\SupplierPartyTypeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\TPGFileTypeList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\TradeAgreementProtocolList.Generated.cs" />
     <Compile Include="EntityLists\Generated\TransactionNatureTypeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\TransferCargoMethodTypeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\TransportMeansTypeList.Generated.cs" />
@@ -742,6 +746,7 @@
     <Compile Include="EntityMapping\SupplierInvoiceUCRMap.cs" />
     <Compile Include="EntityMapping\SupplierPartyTypeMap.cs" />
     <Compile Include="EntityMapping\TPGFileTypeMap.cs" />
+    <Compile Include="EntityMapping\TradeAgreementProtocolMap.cs" />
     <Compile Include="EntityMapping\TransactionNatureTypeMap.cs" />
     <Compile Include="EntityMapping\TransferCargoMethodTypeMap.cs" />
     <Compile Include="EntityMapping\TransportMeansTypeMap.cs" />
@@ -872,6 +877,7 @@
     <Compile Include="EntityPOCOs\SupplierInvoiceUCR.cs" />
     <Compile Include="EntityPOCOs\SupplierPartyType.cs" />
     <Compile Include="EntityPOCOs\TPGFileType.cs" />
+    <Compile Include="EntityPOCOs\TradeAgreementProtocol.cs" />
     <Compile Include="EntityPOCOs\TransactionNatureType.cs" />
     <Compile Include="EntityPOCOs\TransferCargoMethodType.cs" />
     <Compile Include="EntityPOCOs\TransportMeansType.cs" />
@@ -1084,6 +1090,7 @@
     <Compile Include="Repsitories\Generated\SupplierInvoiceUCRRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\SupplierPartyTypeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\TPGFileTypeRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\TradeAgreementProtocolRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\TransactionNatureTypeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\TransferCargoMethodTypeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\TransportMeansTypeRepository.Generated.cs" />
@@ -1130,6 +1137,7 @@
     <Compile Include="Repsitories\SupplierInvoiceUCRRepository.cs" />
     <Compile Include="Repsitories\SupplierPartyTypeRepository.cs" />
     <Compile Include="Repsitories\TPGFileTypeRepository.cs" />
+    <Compile Include="Repsitories\TradeAgreementProtocolRepository.cs" />
     <Compile Include="Repsitories\TransactionNatureTypeRepository.cs" />
     <Compile Include="Repsitories\TransferCargoMethodTypeRepository.cs" />
     <Compile Include="Repsitories\TransportMeansTypeRepository.cs" />

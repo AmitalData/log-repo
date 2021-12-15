@@ -265,7 +265,7 @@
                                         <td style="width:5px"></td>
 
                                         <td>
-                                            <button (click)="UpdateAllCertificateWithoutResponse()" [disabled]="IsDisplayOnly" class="Button" style="width:70px; height:25px;padding-right:5px">פטור 92 גורף</button>
+                                            <button *ngIf="TaxExemptCode92" (click)="UpdateAllCertificateWithoutResponse()" [disabled]="IsDisplayOnly" class="Button" style="width:70px; height:25px;padding-right:5px">פטור 92 גורף</button>
                                         </td>
 
                                         <td style="width: 30px;">
