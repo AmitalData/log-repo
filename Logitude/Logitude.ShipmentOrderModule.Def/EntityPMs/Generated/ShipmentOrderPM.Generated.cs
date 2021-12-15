@@ -1722,7 +1722,6 @@ namespace Logitude.ShipmentOrderModule.Def.EntityPMs
 			
 		 }
 	   }
-
 	  private DateTime? onHandDate ;
 	  	  
        
@@ -1792,7 +1791,213 @@ namespace Logitude.ShipmentOrderModule.Def.EntityPMs
 			
 		 }
 	   }
-
+	  private string placeOfDeliveryId ;
+	  	  
+       
+	   [CustomValidation(typeof(ShipmentOrderModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string PlaceOfDeliveryId  
+	   {
+	    
+	     get
+		{
+		   return placeOfDeliveryId;
+		 }
+		 set
+		 {
+		   if(placeOfDeliveryId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PlaceOfDeliveryId",OldValue=placeOfDeliveryId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   placeOfDeliveryId=value;
+		   }
+			
+		 }
+	   }
+	  private string placeOfDeliveryName ;
+	  	  
+       
+	   [CustomValidation(typeof(ShipmentOrderModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string PlaceOfDeliveryName  
+	   {
+	    
+	     get
+		{
+		   return placeOfDeliveryName;
+		 }
+		 set
+		 {
+		   if(placeOfDeliveryName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PlaceOfDeliveryName",OldValue=placeOfDeliveryName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   placeOfDeliveryName=value;
+		   }
+			
+		 }
+	   }
+	  private bool dangerousGoods ;
+	  	  
+       
+	   [CustomValidation(typeof(ShipmentOrderModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool DangerousGoods  
+	   {
+	    
+	     get
+		{
+		   return dangerousGoods;
+		 }
+		 set
+		 {
+		   if(dangerousGoods != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DangerousGoods",OldValue=dangerousGoods,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   dangerousGoods=value;
+		   }
+			
+		 }
+	   }
+	  private string shipmentTypeId ;
+	  	  
+       
+	   [CustomValidation(typeof(ShipmentOrderModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ShipmentTypeId  
+	   {
+	    
+	     get
+		{
+		   return shipmentTypeId;
+		 }
+		 set
+		 {
+		   if(shipmentTypeId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ShipmentTypeId",OldValue=shipmentTypeId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   shipmentTypeId=value;
+		   }
+			
+		 }
+	   }
+	  private string shipmentTypeName ;
+	  	  
+       
+	   [CustomValidation(typeof(ShipmentOrderModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ShipmentTypeName  
+	   {
+	    
+	     get
+		{
+		   return shipmentTypeName;
+		 }
+		 set
+		 {
+		   if(shipmentTypeName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ShipmentTypeName",OldValue=shipmentTypeName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   shipmentTypeName=value;
+		   }
+			
+		 }
+	   }
+	  private string packageTypeId ;
+	  	  
+       
+	   [CustomValidation(typeof(ShipmentOrderModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string PackageTypeId  
+	   {
+	    
+	     get
+		{
+		   return packageTypeId;
+		 }
+		 set
+		 {
+		   if(packageTypeId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PackageTypeId",OldValue=packageTypeId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   packageTypeId=value;
+		   }
+			
+		 }
+	   }
+	  private string packageTypeName ;
+	  	  
+       
+	   [CustomValidation(typeof(ShipmentOrderModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string PackageTypeName  
+	   {
+	    
+	     get
+		{
+		   return packageTypeName;
+		 }
+		 set
+		 {
+		   if(packageTypeName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PackageTypeName",OldValue=packageTypeName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   packageTypeName=value;
+		   }
+			
+		 }
+	   }
+	  private int? customerTenantNumber ;
+	  	  
+       
+	   [CustomValidation(typeof(ShipmentOrderModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int? CustomerTenantNumber  
+	   {
+	    
+	     get
+		{
+		   return customerTenantNumber;
+		 }
+		 set
+		 {
+		   if(customerTenantNumber != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CustomerTenantNumber",OldValue=customerTenantNumber,NewValue=value,PropertyType="int?"};
+		    NotifyPropertyChanged(values);
+		   customerTenantNumber=value;
+		   }
+			
+		 }
+	   }
+	  private string customerShipmentNumber ;
+	  	  
+       
+	   [CustomValidation(typeof(ShipmentOrderModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CustomerShipmentNumber  
+	   {
+	    
+	     get
+		{
+		   return customerShipmentNumber;
+		 }
+		 set
+		 {
+		   if(customerShipmentNumber != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CustomerShipmentNumber",OldValue=customerShipmentNumber,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   customerShipmentNumber=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

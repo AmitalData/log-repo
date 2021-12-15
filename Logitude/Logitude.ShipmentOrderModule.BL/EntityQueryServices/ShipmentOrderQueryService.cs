@@ -85,6 +85,12 @@ namespace Logitude.ShipmentOrderModule.BL.EntityQueryServices
                 OnHandDate = shipmentOrder.OnHandDate,
                 OnHandNumber = shipmentOrder.OnHandNumber,
                 IsOperationalClosed = shipmentOrder.IsOperationalClosed,
+                PlaceOfDeliveryId = shipmentOrder.PlaceOfDeliveryId,
+                DangerousGoods = shipmentOrder.DangerousGoods,
+                ShipmentTypeId = shipmentOrder.ShipmentTypeId,
+                PackageTypeId = shipmentOrder.PackageTypeId,
+                CustomerTenantNumber = shipmentOrder.CustomerTenantNumber,
+                CustomerShipmentNumber = shipmentOrder.CustomerShipmentNumber,
             };
         }
 

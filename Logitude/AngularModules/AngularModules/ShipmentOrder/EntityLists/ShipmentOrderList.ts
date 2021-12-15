@@ -79,6 +79,15 @@ export class ShipmentOrderList {
 	OnHandDate: Date;
 	IsOperationalClosed: boolean;
 	OnHandNumber: string;
+	PlaceOfDeliveryId: string;
+	PlaceOfDeliveryName: string;
+	DangerousGoods: boolean;
+	ShipmentTypeId: string;
+	ShipmentTypeName: string;
+	PackageTypeId: string;
+	PackageTypeName: string;
+	CustomerTenantNumber: number;
+	CustomerShipmentNumber: string;
 	
 }
  
