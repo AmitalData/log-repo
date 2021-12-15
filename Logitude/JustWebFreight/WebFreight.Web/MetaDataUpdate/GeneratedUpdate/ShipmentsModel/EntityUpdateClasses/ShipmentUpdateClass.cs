@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 {
    public class ShipmentUpdateClass
    {  		
-		public const string HashString = "086f098b8b873815f3026e6549d1f35e";
+		public const string HashString = "204866804988e61556697c8786c713c5";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -2025,7 +2025,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						IncludeInSearchField =  false,
 					  						AllowedinAutomationConditions =  true,
 					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  true,
+					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
 					  						HtmlListComponentName =  "IsOperationalClosedListTemplate",
 					  						HasTemplate =  true,
@@ -2218,7 +2218,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						IncludeInSearchField =  false,
 					  						AllowedinAutomationConditions =  true,
 					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  true,
+					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
 					  						RecordType =  "Master",
 					  						HtmlListComponentName =  "IsAccountingClosedListTemplate",
