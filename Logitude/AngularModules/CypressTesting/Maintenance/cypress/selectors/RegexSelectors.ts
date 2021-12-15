@@ -42,7 +42,7 @@ export class RegexSelectors {
     }
 
     public static PricingCheckBox(columnName: string): string {
-        return "[data-cy='checkbox_" + columnName + "']"
+        return "[data-cy='QuoteTemplate.S.Show" + columnName + "']"
     }
     //#endregion
 

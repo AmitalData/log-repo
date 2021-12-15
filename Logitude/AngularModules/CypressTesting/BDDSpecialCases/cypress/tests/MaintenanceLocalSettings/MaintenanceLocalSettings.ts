@@ -88,8 +88,8 @@ Given("the user update the shipment for UTC-6", () => {
 Given("the user update the shipment for UTC+3", () => {
     ShipmentActions.UpdateShipment(ShipmentSelectors.ShipmentSaveButton)
     BaseAssertion.AssertStatusCode(RequestAliases.ShipmentRequest, 200);
-    LocalSettingsDetails.UpdateTime = new Date().toLocaleTimeString("en-US", { timeZone: "Asia/Jerusalem" })
-    LocalSettingsDetails.UpdateTime = new Date().toLocaleTimeString("en-US", { timeZone: "Asia/Jerusalem" })
+    LocalSettingsDetails.UpdateTime = new Date().toLocaleTimeString("en-US", { timeZone: "Asia/Baghdad" })
+    LocalSettingsDetails.UpdateTime = new Date().toLocaleTimeString("en-US", { timeZone: "Asia/Baghdad" })
 });
 
 When("navigate to event tab", () => {

@@ -14,9 +14,9 @@ Feature: Currency fake Create, Search and Edit from Maintenance
 
     Scenario: Create Currency
         And fill the following currency details
-            | Currency         | DM |
-            | ExchangeRate     | 10 |
-            | ExchangeRateDate | .  |
+            | Currency         | AED |
+            | ExchangeRate     | 10  |
+            | ExchangeRateDate | .   |
         When create currency
         Then the currency should create successfully
 
