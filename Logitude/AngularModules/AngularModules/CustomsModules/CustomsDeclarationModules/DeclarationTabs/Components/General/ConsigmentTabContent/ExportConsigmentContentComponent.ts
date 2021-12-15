@@ -95,6 +95,7 @@ export class ExportConsigmentContentComponent extends BaseComponent {
 
     public get DeliverySiteCode() { return this.EntityPM.StorageSiteCode; }
     public set DeliverySiteCode(newValue: string) {
+        this.EntityPM.DeliverySiteCode = newValue;
         this.EntityPM.StorageSiteCode = newValue;
         if (newValue) {
             this.UIProperties.SetRequired("DeliverySiteCode", this.ObjectTableName, false);
