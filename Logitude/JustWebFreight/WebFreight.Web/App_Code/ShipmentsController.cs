@@ -1154,7 +1154,7 @@ namespace WebFreight.Web
         public ShipmentPM GetSingleShipmentPMByKey(string securitykey, string id, int tenant)
         {
 
-            SecurityUtility.AuthenticationOnTenant(tenant);
+           // SecurityUtility.AuthenticationOnTenant(tenant);
 
 
             ShipmentQuery shipmentQuery = new ShipmentQuery(tenant); 
@@ -1171,7 +1171,7 @@ namespace WebFreight.Web
         public ShipmentPM GetSingleShipmentPMByKeyAndTenant(string securitykey, int tenant)
         {
 
-            SecurityUtility.AuthenticationOnTenant(tenant);
+           // SecurityUtility.AuthenticationOnTenant(tenant);
 
             ShipmentQuery shipmentQuery = new ShipmentQuery(tenant);
 
