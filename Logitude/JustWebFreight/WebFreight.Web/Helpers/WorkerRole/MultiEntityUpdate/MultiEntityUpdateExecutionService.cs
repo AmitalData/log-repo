@@ -100,12 +100,13 @@ namespace WebFreight.Web.Helpers.WorkerRole.MultiEntityUpdate
 
         private void MarkMultiEntityUpdateLogAsFailed(Exception exception)
         {
+            multiEntityUpdateProcessService.multiEntityUpdateData.Entities = multiEntityUpdateProcessService.modifiedMultiEntityUpdateDataEntities;
             multiEntityUpdateLogService.Update(new MultiEntityUpdateLogArgs()
             {
                 StatusCode = "F",
                 UpdatedEntitiesNumber = multiEntityUpdateLogPM.UpdatedEntitiesNumber,
                 DoneDate = DateTime.UtcNow,
-                XMLData = LogitudeXmlSerializer.SerializeObjectToXmlString(multiEntityUpdateProcessService.modifiedMultiEntityUpdateDataEntities),
+                XMLData = LogitudeXmlSerializer.SerializeObjectToXmlString(multiEntityUpdateProcessService.multiEntityUpdateData),
                 ExceptionMessage = multiEntityUpdateGeneralService.GetFullExceptionMessageFromException(exception)
             });
         }
