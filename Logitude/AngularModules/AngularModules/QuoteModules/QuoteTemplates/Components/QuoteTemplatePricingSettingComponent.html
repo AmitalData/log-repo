@@ -118,7 +118,7 @@
                                                                                                                             <td style="width:1px;"><div style="width:1px"></div></td>
                                                                                                                             <td style="vertical-align:central;width:200px;">
                                                                                                                                 <div class="CheckBox">
-                                                                                                                                    <input [disabled]="!ShowPricesTable" [(ngModel)]="item.InUse" class="LeftCenter" style="text-align:center" [attr.id]="item.Key" type="checkbox" />
+                                                                                                                                    <input  attr.data-cy="{{item.DisplayTextCode}}" [disabled]="!ShowPricesTable" [(ngModel)]="item.InUse" class="LeftCenter" style="text-align:center" [attr.id]="item.Key" type="checkbox" />
                                                                                                                                     <label style="color:black" class="LeftCenter" [attr.for]="item.Key">{{item.DisplayTextCode | TextCodeTranslationPipe}}</label>
                                                                                                                                 </div>
                                                                                                                             </td>
