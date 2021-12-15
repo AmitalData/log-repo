@@ -1382,29 +1382,7 @@ namespace WebFreight.Web.ReportsWebServices
                         invoicedataprovider.IssuedByUserEmail = contact.Email;
                     }
 
-                    //currentInvoice.PrintByUserId = issuedByuser.Id;
-                    //currentInvoice.PrintDate = TenantServerConfigration.GetCurrentDateTime(tenant);
-
-                    //switch (currentInvoice.StatusCode)
-                    //{
-                    //    case "AD":
-                    //    case "VD":
-                    //    case "PD":
-                    //    case "PP":
-                    //    case "AR":
-                    //    case "AC":
-                    //        {
-                    //            if (currentInvoice.IsFromInterestBatchInvoice == false)
-                    //            {
-                    //                currentInvoice.IsPrinted = true;
-                    //            }
-                                
-                    //            break;
-                    //        }
-                    //}
-
-                    //invoiceRepository.Update(currentInvoice);
-                    //invoiceRepository.SubmitChanges();
+                    this.SaveInvoice(currentInvoice, invoiceRepository);                   
                 }
                 #endregion
 
@@ -2400,6 +2378,36 @@ namespace WebFreight.Web.ReportsWebServices
             return invoicedataprovider;
         }
 
+        private void SaveInvoice(ARInvoice currentInvoice, ARInvoiceRepository invoiceRepository)
+        {
+            ARInvoice savedInvoice = invoiceRepository.GetSingleInvoice(currentInvoice.Id);
+            if(savedInvoice != null)
+            {
+                savedInvoice.PrintByUserId = currentInvoice.IssuedByUserId;
+                savedInvoice.PrintDate = TenantServerConfigration.GetCurrentDateTime(currentInvoice.Tenant);
+
+                switch (currentInvoice.StatusCode)
+                {
+                    case "AD":
+                    case "VD":
+                    case "PD":
+                    case "PP":
+                    case "AR":
+                    case "AC":
+                        {
+                            if (currentInvoice.IsFromInterestBatchInvoice == false)
+                            {
+                                savedInvoice.IsPrinted = true;
+                            }
+                            break;
+                        }
+                }
+
+                invoiceRepository.Update(savedInvoice);
+                invoiceRepository.SubmitChanges();
+            }            
+        }
+
         private void FillARStockVariables(InvoiceDataProvider invoicedataprovider, ARInvoice invoice)
         {
             var arInvoiceStockLine = aRInvoiceStockLineRepository.GetSingleARInvoiceStockLine(invoice.ARInvoiceStockId, invoice.Tenant);
@@ -3036,28 +3044,7 @@ namespace WebFreight.Web.ReportsWebServices
                             invoiceDataProvider.IssuedByUserEmail = contact.Email;
                         }
 
-                        //entityPOCO.PrintByUserId = issuedByuser.Id;
-                        //entityPOCO.PrintDate = TenantServerConfigration.GetCurrentDateTime(tenant);
-
-                        //switch (entityPOCO.StatusCode)
-                        //{
-                        //    case "AD":
-                        //    case "VD":
-                        //    case "PD":
-                        //    case "PP":
-                        //    case "AR":
-                        //    case "AC":
-                        //        {
-                        //            if (entityPOCO.IsFromInterestBatchInvoice == false)
-                        //            {
-                        //                entityPOCO.IsPrinted = true;
-                        //            }
-                        //            break;
-                        //        }
-                        //}
-
-                        //invoiceRepository.Update(entityPOCO);
-                        //invoiceRepository.SubmitChanges();
+                        this.SaveInvoice(entityPOCO, invoiceRepository);
                     }
                 }
                 #endregion

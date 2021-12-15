@@ -384,10 +384,14 @@ h1 {
             border-radius: 8px; */
         }
 
-        .data-cards > div {
-            width: calc(50% - 20px);
-            height: 50px;
-        }
+    #overview-data-cards {
+        height: 435px;
+    }
+
+    .data-cards > div {
+        width: calc(50% - 20px);
+        height: 50px;
+    }
 
     .PanelsNavigator {
         width: 100%;
@@ -627,6 +631,14 @@ h1 {
     .route-description {
         max-width: 130px;
     }
+
+    .booking-title {
+        width: 170px;
+    }
+
+    #description-of-goods{
+        margin-right:20px;
+    }
 }
 @media screen and (max-width: 479px){
     .mobile-font-12{
@@ -645,6 +657,10 @@ h1 {
 
     .description a{
         display: block;
+    }
+
+    .booking-title{
+        width:150px;
     }
 }
 
