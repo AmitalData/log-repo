@@ -318,36 +318,44 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
                     if (myCard != null)
                     {
-                        if (!string.IsNullOrEmpty(entityPM.Email))
-                        {
-                            if (string.IsNullOrEmpty(myCard.SearchFields))
-                            {
-                                myCard.SearchFields = entityPM.Email;
-                            }
-
-                            else if (!myCard.SearchFields.Contains(entityPM.Email.ToLower()))
-                            {
-                                myCard.SearchFields += "," + entityPM.Email;
-                            }
-                        }
-
-                        if (!string.IsNullOrEmpty(entityPM.EnglishName))
-                        {
-                            if (string.IsNullOrEmpty(myCard.SearchFields))
-                            {
-                                myCard.SearchFields = entityPM.EnglishName;
-                            }
-
-                            else if (!myCard.SearchFields.Contains(entityPM.EnglishName))
-                            {
-                                myCard.SearchFields += "," + entityPM.EnglishName;
-                            }
-                        }
-
+                        UpdateCardSearchFields(myCard);
                         myCardRepository.Update(myCard);
                         myCardRepository.SubmitChanges();
                     }
                 }
+            }
+        }
+        private void UpdateCardSearchFields(Card myCard)
+        {
+            if (!string.IsNullOrEmpty(entityPM.Email))
+            {
+                if (string.IsNullOrEmpty(myCard.SearchFields))
+                {
+                    myCard.SearchFields = entityPM.Email;
+                }
+
+                else if (!myCard.SearchFields.Contains(entityPM.Email.ToLower()))
+                {
+                    myCard.SearchFields += "," + entityPM.Email;
+                }
+            }
+
+            if (!string.IsNullOrEmpty(entityPM.EnglishName))
+            {
+                if (string.IsNullOrEmpty(myCard.SearchFields))
+                {
+                    myCard.SearchFields = entityPM.EnglishName;
+                }
+
+                else if (!myCard.SearchFields.Contains(entityPM.EnglishName))
+                {
+                    myCard.SearchFields += "," + entityPM.EnglishName;
+                }
+            }
+
+            if (myCard.SearchFields.Length > 1000)
+            {
+                myCard.SearchFields = myCard.SearchFields.Substring(0, 1000);
             }
         }
         private void InitializeGlobalContact()
