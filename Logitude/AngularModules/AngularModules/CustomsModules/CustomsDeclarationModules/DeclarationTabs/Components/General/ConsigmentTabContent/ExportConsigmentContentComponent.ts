@@ -93,6 +93,17 @@ export class ExportConsigmentContentComponent extends BaseComponent {
         }
     }
 
+    public get DeliverySiteCode() { return this.EntityPM.StorageSiteCode; }
+    public set DeliverySiteCode(newValue: string) {
+        this.EntityPM.StorageSiteCode = newValue;
+        if (newValue) {
+            this.UIProperties.SetRequired("DeliverySiteCode", this.ObjectTableName, false);
+        }
+        else {
+            this.UIProperties.SetRequired("DeliverySiteCode", this.ObjectTableName, true);
+        }
+    }
+
     
     public get ExportRecieverWareHouseCode() { return this.EntityPM.ExportRecieverWareHouseCode; }
     public set ExportRecieverWareHouseCode(newValue: string) {

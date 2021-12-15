@@ -85,7 +85,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         ExportUnloadingPortCode, 
 	         ExportLoadingPortCode, 
 	         ShipCode, 
-	         ConsignmentType,
+	         ConsignmentType, 
+	         DeliverySiteCode,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
