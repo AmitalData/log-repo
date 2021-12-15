@@ -568,11 +568,17 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             entityPoco.LocalCustomsTransmissionsStatusCode = entityPM.LocalCustomsTransmissionsStatusCode;
             entityPoco.LocalCustomsTransmissionsStatusError = entityPM.LocalCustomsTransmissionsStatusError;
             entityPoco.LocalCustomsTransmissionsStatusDate = entityPM.LocalCustomsTransmissionsStatusDate;
-            entityPoco.IncludesCustoms = entityPM.IncludesCustoms;
+            entityPoco.IncludesCustoms = GetIncludesCustomsValue(entityPM);
             entityPoco.DeclarationNumber = entityPM.DeclarationNumber;
             entityPoco.DeclarationDate = entityPM.DeclarationDate;
             entityPoco.CustomsClearanceDate = entityPM.CustomsClearanceDate;
         }
+
+        private static bool GetIncludesCustomsValue(ShipmentPM entityPM)
+        {
+            return entityPM.IncludesCustoms || !string.IsNullOrEmpty(entityPM.DeclarationNumber) || entityPM.DeclarationDate != null || entityPM.CustomsClearanceDate != null;
+        }
+
         private static void BuildRoutingField(ShipmentPM entityPM, Shipment entityPoco, ShipmentMasterData entityMasterData, IShipmentsContext objectContext)
         {
             string myRoutingField = null;
