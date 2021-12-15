@@ -78,6 +78,7 @@
         <xs:element minOccurs="0" maxOccurs="1" ref="ForwarderId" />
         <xs:element minOccurs="0" maxOccurs="1" ref="LastMileServiceType" />
         <xs:element ref="Direction" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="Commodity" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -149,4 +150,5 @@
   <xs:element name="ForwarderId" type="xs:string" />
   <xs:element name="LastMileServiceType" type="xs:string" />
   <xs:element name="Direction" type="xs:string" />
+  <xs:element name="Commodity" type="xs:string" />
 </xs:schema>

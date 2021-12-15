@@ -851,6 +851,29 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private string deliverySiteCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string DeliverySiteCode  
+	   {
+	    
+	     get
+		{
+		   return deliverySiteCode;
+		 }
+		 set
+		 {
+		   if(deliverySiteCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DeliverySiteCode",OldValue=deliverySiteCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   deliverySiteCode=value;
+		   }
+			
+		 }
+	   }
    }
    
 }
