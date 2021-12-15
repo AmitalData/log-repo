@@ -1,4 +1,6 @@
+import { HttpResponse } from "@angular/common/http";
 import { Injectable } from "@angular/core";
+import { reject } from "cypress/types/lodash";
 import { ApiQueryFilters } from "Infrastructure/DataContracts/ApiQueryFilters";
 import { ServiceResponse } from "Infrastructure/DataContracts/ServiceResponse";
 import { ObjectTablePM } from "Infrastructure/EntityPMs/ObjectTablePM";
@@ -12,7 +14,7 @@ declare const window: any;
 @Injectable()
 export class LogtuideTableDataService {
   private _entityResourceService: EntityResourceService = new EntityResourceService();
-  
+
   constructor(
     private entityListService: EntityListService,
   ) { }
@@ -36,8 +38,10 @@ export class LogtuideTableDataService {
   getDataFromService(ob: Observable<any>): Promise<any> {
     return new Promise<any[]>((resolve, reject) =>
       ob.pipe(filterIsNotNull(), take(1))
-        .subscribe((res: ServiceResponse) =>
-          resolve(res.Result)
-        ));
+        .subscribe(
+          (res: ServiceResponse) => resolve(res.Result instanceof HttpResponse ? res.Result.body : res.Result),
+          reject
+        )
+    )
   }
 }

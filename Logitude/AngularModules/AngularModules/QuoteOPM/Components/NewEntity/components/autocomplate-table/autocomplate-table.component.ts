@@ -6,11 +6,11 @@ import { GenericTableService } from 'Infrastructure/Components/generic-table/gen
 import { ApiQueryFilters } from 'Infrastructure/DataContracts/ApiQueryFilters';
 import { AutoComplete } from 'primeng/autocomplete';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
-import { fromEvent } from 'rxjs';
-import { debounceTime, take } from 'rxjs/operators';
+import { from, fromEvent } from 'rxjs';
+import { debounceTime, filter, pairwise, startWith, take } from 'rxjs/operators';
 // import { Subscription } from 'rxjs';
 
-type SearchEvent = {originalEvent: InputEvent, query: string}
+type SearchEvent = { originalEvent: InputEvent, query: string }
 
 @Component({
   selector: 'app-autocomplate-table',
@@ -51,6 +51,7 @@ export class AutocomplateTableComponent {
   filterVal: string = ''
   toHighlight: string = null as any;
   defaultValidator: ValidatorFn = null as any;
+  userStartTyped: boolean = false;
 
   constructor(
     private genericTableService: GenericTableService,
@@ -58,6 +59,19 @@ export class AutocomplateTableComponent {
 
   ngOnInit() {
     this.InitColumns();
+  }
+
+  ngAfterViewInit() {
+    this.checkUserStartTyped();
+  }
+
+  // where insert data from server and lazy loading is stop notIdentityValueValidator
+  private checkUserStartTyped() {
+    from(this.autoComplete.onKeyUp)
+      .pipe(
+        startWith(null as string),
+        filter((e: KeyboardEvent) => e && e.key !== 'Tab'))
+      .subscribe(() => this.userStartTyped = true);
   }
 
   private InitColumns() {
@@ -85,11 +99,11 @@ export class AutocomplateTableComponent {
     if (this.selected.length && !this.columnsNames.length)
       this.columnsShow = Object.keys(this.selected[0]);
 
-    if (this.index === 0){
+    if (this.index === 0) {
       this.selected.unshift(this.columnsHeader);
 
       const divDDL: HTMLDivElement = document.querySelector('.p-autocomplete-panel');
-      if(divDDL)
+      if (divDDL)
         divDDL.scrollTop = 0;
     }
 
@@ -155,7 +169,7 @@ export class AutocomplateTableComponent {
     const ctrl: AbstractControl = this.formGroup.controls[this.controlName];
     const val: any = ctrl.value;
 
-    if (val && !this.data?.includes(val) && !this.selected?.includes(val))
+    if (val && this.userStartTyped && !this.data?.includes(val) && !this.selected?.includes(val))
       this.setNotIdentityValueValidator()
     else {
       this.setDefaultValidator()

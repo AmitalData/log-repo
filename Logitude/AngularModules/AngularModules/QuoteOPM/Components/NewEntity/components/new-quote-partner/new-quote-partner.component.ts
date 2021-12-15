@@ -88,7 +88,7 @@ export class NewQuotePartnerComponent extends BaseComponent implements OnInit, A
     this.setPartner();
     this.setContact();
     this.partnerform.controls.reference1.setValue(this.EntityPM[this.capitalizeType + 'Reference1']);
-    this.partnerform.controls.ConsigneeNote.setValue(this.EntityPM[this.capitalizeType + 'Note']);
+    // this.partnerform.controls[this.capitalizeType + 'Note'].setValue(this.EntityPM[this.capitalizeType + 'Note']);
   }
 
   private setValidatorBySecondPrtner() {

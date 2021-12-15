@@ -42,6 +42,12 @@ import { NewQuoteFocusErrorService } from "./Services/new-quote-focus-error/new-
 import { NewQuoteDataShareService } from "./Services/new-quote-data-share/new-quote-data-share.service";
 import { ContactPMService } from "Common/Services/StandardPMs/ContactPMService";
 import { CardPMService } from "Common/Services/StandardPMs/CardPMService";
+import { DirectionListService } from "Infrastructure/Services/StandardLists/DirectionListService";
+import { TransportModeListService } from "Infrastructure/Services/StandardLists/TransportModeListService";
+import { ShipmentTypeListService } from "Shipment/Services/StandardLists/ShipmentTypeListService";
+import { QuoteOPPMService } from "QuoteOPM/Services/StandardPMs/QuoteOPPMService";
+import { PackageTypeListService } from "Common/Services/StandardLists/PackageTypeListService";
+import { MoveTypeListService } from "Infrastructure/Services/StandardLists/MoveTypeListService";
 
 @NgModule({
     imports: [  
@@ -85,6 +91,12 @@ import { CardPMService } from "Common/Services/StandardPMs/CardPMService";
     [
         ContactPMService,
         CardPMService,
+        DirectionListService,
+        TransportModeListService,
+        ShipmentTypeListService,
+        QuoteOPPMService,
+        PackageTypeListService,
+        MoveTypeListService,
         LogtuideTableDataService,
         NewQuoteDataService,
         NewQuoteOPWebService,

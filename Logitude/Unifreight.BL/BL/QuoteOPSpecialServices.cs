@@ -30,7 +30,7 @@ namespace Unifreight.BL.BL
 
         public List<SpecialServices> GetItemsList(string DIRECTIONID, string TRANSSpecialServiceMODEID, QueryOperations queryOperations, bool getFromCache = true)
         {
-            if (getFromCache)
+            if (false)
             {
                 string cacheId = "specialServices" + DIRECTIONID + TRANSSpecialServiceMODEID + ";i:" + queryOperations.PageIndex + ";s:" + queryOperations.PageSize + ";d:" + queryOperations.SortDirectin + ";c:" + queryOperations.SortByColumnName + string.Join("", queryOperations.QueryFilterItems.Select(x => ";f:" + x.FieldName + ";v:" + x.FieldValue).ToArray());
                 return CacheHelper.GetFromCache(cacheId, () => GetItemsList(DIRECTIONID, TRANSSpecialServiceMODEID, queryOperations, false));
@@ -38,8 +38,12 @@ namespace Unifreight.BL.BL
             IQueryable<SpecialServices> query = GetBaseQuery(DIRECTIONID, TRANSSpecialServiceMODEID);
             query = AddFilter(query, queryOperations);
             query = AddSort(query, queryOperations);
-            query = query.Skip(queryOperations.PageIndex * queryOperations.PageSize);
-            query = query.Take(queryOperations.PageSize);
+
+            if (queryOperations.PageSize != 0)
+            {
+                query = query.Skip(queryOperations.PageIndex * queryOperations.PageSize);
+                query = query.Take(queryOperations.PageSize);
+            }
 
             List<SpecialServices> list = query.ToList();
             return list;
@@ -98,7 +102,7 @@ namespace Unifreight.BL.BL
                         query = asc ? query.OrderBy(o => o.SERVLEVEL_ID) : query.OrderByDescending(o => o.SERVLEVEL_ID);
                         break;
 
-                      case "SearchFields":
+                    case "SearchFields":
                         query = asc ? query.OrderBy(o => o.SEARCHENG) : query.OrderByDescending(o => o.SEARCHENG);
                         break;
                 }

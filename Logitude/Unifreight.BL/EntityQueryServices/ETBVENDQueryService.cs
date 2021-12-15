@@ -132,8 +132,12 @@ namespace Unifreight.BL.EntityQueryServices
                 VENDOR_ID = o.VENDORID,
                 Prefix = TRANSPORTMODEID=="A"?o.VENDORPREFIX:"",
             });
-            res = res.Skip(queryOperations.PageIndex * queryOperations.PageSize);
-            res = res.Take(queryOperations.PageSize);
+
+            if (queryOperations.PageSize != 0)
+            {
+                res = res.Skip(queryOperations.PageIndex * queryOperations.PageSize);
+                res = res.Take(queryOperations.PageSize);
+            }
 
             List<Carriers> carrier = res.ToList();
             return carrier;
