@@ -316,6 +316,9 @@ export class RelatedCustomerComponent extends BaseComponent{
         customerTenantAccessCardPM.CreateByUserId = SessionLocator.LoggedUserPM.EnglishName;  
     }
 
+    isInActive(isInActive) {
+        return isInActive == 'IA'
+    }
     public get IsAddEnabled() { return this.isAddEnabled; }
     public set IsAddEnabled(value: boolean) { if (this.isAddEnabled != value) this.isAddEnabled = value; }
 
