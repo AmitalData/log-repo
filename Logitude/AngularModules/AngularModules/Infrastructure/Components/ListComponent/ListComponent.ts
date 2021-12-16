@@ -982,13 +982,13 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
     }
 
     MutliUpdate() {
-        if (!IsMultiUpdateValid(this.Title, this.dataSource.rowCount)) {
+        if (!IsMultiUpdateValid(this.ObjectTableName, this.dataSource.rowCount)) {
             return;
         }
         let newWindow = new LogitudeWindow();
         newWindow.Width = 1050;
         newWindow.Height = 700;
-        newWindow.Title = "Multi Update " + this.Title;
+        newWindow.Title = "Multi Update " + this.ObjectTableName;
 
         let windowArgs: any = {};
         windowArgs.QueryCode = this.SelectedQueryCode;
