@@ -526,6 +526,11 @@ h1 {
 .routing-step.active .route-direction svg path{
     fill: #fff !important;
 }
+
+.connected-orders-table{
+    width: 100%;
+}
+
 @media screen and (min-width: 479px){
     .routing-timeline{
         flex-flow: row wrap;
@@ -638,6 +643,12 @@ h1 {
 
     #description-of-goods{
         margin-right:20px;
+    }
+}
+
+@media screen and (min-width: 1000px){
+    .connected-orders-table{
+        width: 50%;
     }
 }
 @media screen and (max-width: 479px){
@@ -914,5 +925,4 @@ h1 {
     .declaration-approval-toolbar {
         padding: 20px 0px 0 0;
     }
-
 }

@@ -653,6 +653,7 @@ export class CargoTrackingShipmentMappedPM {
     public PartnerCards: PartnerCard[] = [];
     public Packages: CargoShipmentPackage[] = [];
     public DocumentsFilings: CargoDocumentsFiling[] = [];
+    public ConnectedOrders: any[] = [];
 
     public ShipmentReferences: string;
     public ForwardingHouse: string;
