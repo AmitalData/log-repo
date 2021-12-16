@@ -458,7 +458,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Operational
 
             if (cutOffDate != null)
             {
-                shipmentPackageList = shipmentPackageList.Where(d => d.CutOffDate != null && d.CutOffDate == cutOffDate);
+                shipmentPackageList = shipmentPackageList.Where(d => d.CutOffDate != null && System.Data.Entity.DbFunctions.TruncateTime(d.CutOffDate) == System.Data.Entity.DbFunctions.TruncateTime(cutOffDate));
             }
 
             return shipmentPackageList.ToList();
