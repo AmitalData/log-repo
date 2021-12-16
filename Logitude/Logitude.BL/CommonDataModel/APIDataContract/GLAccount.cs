@@ -72,7 +72,12 @@ namespace Logitude.BL.CommonDataModel.APIDataContract
             
         }
 
-        public GLAccount GLAccountCustomDataMapping(CardPM cardPM, int Tenant, string ComputingPartnerName = "")
+        public GLAccount GLAccountCustomDataMapping(string id, int Tenant, string ComputingPartnerName = "")
+        {
+            return new GLAccount();
+        }
+
+        public GLAccount GLAccountVendorDataMapping(CardPM cardPM, int Tenant, string ComputingPartnerName = "")
         {
              accountingContext = AccountingContext.GetContext(Tenant);
              var glaccount = (from a in accountingContext.GLAccounts.Include("AccountingCompanyType").Include("TaxWithholdingAssessOffice").Include("WithholdingTaxDeductionType")
