@@ -104,7 +104,6 @@ export class ContainerPMInitService {
             entityPM.UIProperties.SetEnabled("IsAutomaticUpdates", "Container", false);
             entityPM.UIProperties.SetEnabled("CancelledDate", "Container", false);
             entityPM.UIProperties.SetEnabled("IsCancelled", "Container", false);
-            entityPM.UIProperties.SetEnabled("TerminalId", "Container", false);
 
         }
     }
