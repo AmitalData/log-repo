@@ -134,7 +134,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             }
         }
 
-        public void Update(CustomerTenantAccessPM paramentityPM = null,bool temp = false)
+        public void Update(CustomerTenantAccessPM paramentityPM = null, bool temp = false)
         {
             if (paramentityPM != null)
             {
@@ -230,7 +230,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                     TempCustomer.IsPrivateLabelCustomer = false;
                     TempCustomer.LogBoxActivated = true;
                 }
-                
+
                 TempCustomer.IsLogBox = true;
 
                 CustomerTenantAccessCardQuery customerTenantAccessCardQuery = new CustomerTenantAccessCardQuery(tenant);
@@ -266,8 +266,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             try
             {
                 
-             
-
+ 
                 if (BuildBatch)
                 {
                     CustomerTenantAccessCardsBatchPM CustomerTenantAccessCardsBatchPM = new CustomerTenantAccessCardsBatchPM()
@@ -282,7 +281,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                         TotalShipment = 0,
                         Totalsucceeded = 0
                     };
-                    
+
                     CustomerTenantAccessCardsBatchService customerTenantAccessCardsBatchService = new CustomerTenantAccessCardsBatchService(ObjectContext, CustomerTenantAccessCardsBatchPM.Tenant, CustomerTenantAccessCardsBatchPM);
                     customerTenantAccessCardsBatchService.Create();
 
@@ -318,9 +317,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
             customerTenantAccessCardRepository.Update(itemPoco);
             customerTenantAccessCardRepository.SubmitChanges();
-
           
-             
             if (itemPM.StatusTypeCode == "A")
             {
                 InitializeCustomerTenantAccessQueue(itemPM);
