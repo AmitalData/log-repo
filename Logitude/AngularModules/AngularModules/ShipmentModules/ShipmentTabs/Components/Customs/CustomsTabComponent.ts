@@ -164,9 +164,9 @@ export class CustomsTabComponent extends BaseComponent implements OnInit, OnDest
         }
 
         this.UIProperties.SetEnabled("IncludesCustoms", this.ObjectTableName, isEditingEnabled);
-        this.UIProperties.SetEnabled("DeclarationNumber", this.ObjectTableName, isIncludeFieldsEnabled);
-        this.UIProperties.SetEnabled("DeclarationDate", this.ObjectTableName, isIncludeFieldsEnabled);
-        this.UIProperties.SetEnabled("CustomsClearanceDate", this.ObjectTableName, isIncludeFieldsEnabled);
+        //this.UIProperties.SetEnabled("DeclarationNumber", this.ObjectTableName, isIncludeFieldsEnabled);
+        //this.UIProperties.SetEnabled("DeclarationDate", this.ObjectTableName, isIncludeFieldsEnabled);
+        //this.UIProperties.SetEnabled("CustomsClearanceDate", this.ObjectTableName, isIncludeFieldsEnabled);
 
         this.UIProperties.SetEnabled("FreightRelease", this.ObjectTableName, isEditingEnabled);
         this.UIProperties.SetEnabled("TerminalAvailable", this.ObjectTableName, isEditingEnabled);
@@ -189,16 +189,20 @@ export class CustomsTabComponent extends BaseComponent implements OnInit, OnDest
         this.IsEditingEnabled = isEditingEnabled;
     }
 
+    MarkIncludesCustoms(value) {
+        if (value) this.IncludesCustoms = true;
+    }
+
     get IncludesCustoms() { return this.EntityPM.IncludesCustoms; }
     set IncludesCustoms(newValue: boolean) {
         if (this.EntityPM.IncludesCustoms != newValue) {
             this.EntityPM.IncludesCustoms = newValue;
 
-            if (!newValue) {
-                this.DeclarationNumber = null;
-                this.DeclarationDate = null;
-                this.CustomsClearanceDate = null;
-            }
+            //if (!newValue) {
+            //    this.DeclarationNumber = null;
+            //    this.DeclarationDate = null;
+            //    this.CustomsClearanceDate = null;
+            //}
 
             this.SetUIProperties();
         }
@@ -208,7 +212,7 @@ export class CustomsTabComponent extends BaseComponent implements OnInit, OnDest
     set DeclarationNumber(newValue: string) {
         if (this.EntityPM.DeclarationNumber != newValue) {
             this.EntityPM.DeclarationNumber = newValue;
-
+            this.MarkIncludesCustoms(newValue);
             this.SetUIProperties();
         }
     }
@@ -217,7 +221,7 @@ export class CustomsTabComponent extends BaseComponent implements OnInit, OnDest
     set DeclarationDate(newValue: Date) {
         if (this.EntityPM.DeclarationDate != newValue) {
             this.EntityPM.DeclarationDate = newValue;
-
+            this.MarkIncludesCustoms(newValue);
             this.SetUIProperties();
         }
     }
@@ -226,6 +230,7 @@ export class CustomsTabComponent extends BaseComponent implements OnInit, OnDest
     set CustomsClearanceDate(newValue: Date) {
         if (this.EntityPM.CustomsClearanceDate != newValue) {
             this.EntityPM.CustomsClearanceDate = newValue;
+            this.MarkIncludesCustoms(newValue);
         }
     }
 
