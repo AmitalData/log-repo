@@ -1,5 +1,5 @@
 {
-    "numTestsKeptInMemory": 1,
+    "numTestsKeptInMemory": 10,
     "watchForFileChanges": false,
     "viewportWidth": 1200,
     "viewportHeight": 800,
@@ -13,7 +13,7 @@
     "defaultCommandTimeout": 20000,
     "responseTimeout": 120000,
     "requestTimeout": 120000,
-    "video": false,
+    "video": true,
     "screenshotOnRunFailure": true,
     "screenshots": true,
     "trashAssetsBeforeRuns": false,
