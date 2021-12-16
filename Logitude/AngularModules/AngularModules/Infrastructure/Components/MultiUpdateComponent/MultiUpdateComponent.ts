@@ -120,7 +120,7 @@ export class MultiUpdateComponent extends BaseComponent implements OnInit {
     }
 
     private ChangeSelectedItemsCountText(selectedCount) {
-        this.SelectedItemsCountText = selectedCount + " of " + this.AllRecordsCount + " " + this.ObjectTable.Name + " selected";
+        this.SelectedItemsCountText = selectedCount + " of " + this.AllRecordsCount + " " + this.ObjectTable.DBTableName + " selected";
     }
 
     dataSource = {
