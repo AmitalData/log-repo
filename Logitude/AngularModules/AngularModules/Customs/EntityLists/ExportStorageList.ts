@@ -17,6 +17,8 @@ export class ExportStorageList {
 	StorageStatus: string;
 	CargoTypeCode: string;
 	CustomStatus: string;
+	OpenDate: Date;
+	CargoType: string;
 	
 }
  
