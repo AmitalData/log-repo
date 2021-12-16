@@ -61,6 +61,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         HasCustomFields = a.HasCustomFields , 
                         MaxNumberOfCustomFields = a.MaxNumberOfCustomFields,
                         AdditionalFactRelationType = a.AdditionalFactRelationType,
+                        Description = a.Description,
 
                     }).FirstOrDefault();
         }
@@ -92,6 +93,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         HasCustomFields = a.HasCustomFields,
                         MaxNumberOfCustomFields = a.MaxNumberOfCustomFields,
                         AdditionalFactRelationType = a.AdditionalFactRelationType,
+                        Description = a.Description,
                     });
         }
 
@@ -121,6 +123,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         MaxNumberOfCustomFields = a.MaxNumberOfCustomFields,
                         AdditionalFactRelationType = a.AdditionalFactRelationType,
                         AdditionalConditions = a.AdditionalConditions,
+                        Description = a.Description,
+
                     }).FirstOrDefault();
         }
 
@@ -149,6 +153,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         HasCustomFields = a.HasCustomFields,
                         MaxNumberOfCustomFields = a.MaxNumberOfCustomFields,
                         AdditionalFactRelationType = a.AdditionalFactRelationType,
+                        Description = a.Description,
+
                     });
         }
 
@@ -176,6 +182,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                        HasCustomFields = a.HasCustomFields,
                                                        MaxNumberOfCustomFields = a.MaxNumberOfCustomFields,
                                                        AdditionalFactRelationType = a.AdditionalFactRelationType,
+                                                       Description = a.Description,
+
                                                    };
 
             return result;
@@ -197,7 +205,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                     select new ShortFactTableDetails()
                     { 
                         DisplayName = a.DisplayName,
-                        Code = a.Code
+                        Code = a.Code,
+                        Description = a.Description
                     }).ToList();
         }
 
@@ -230,5 +239,6 @@ public class ShortFactTableDetails
     { 
         public string DisplayName { get; set; }
         public string Code { get; set; }
+        public string Description { get; set; }
     }
 }

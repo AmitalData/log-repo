@@ -44,6 +44,7 @@ export class NewBIReport extends BaseComponent {
     public BIReportFolders: string[] = [];
     public SelectdBIReportFolder: string;
     public ShowTypeCode: boolean = false;
+    public FactTableDescription : string;
 
     private ComponentRef;
     @Output() BackCompleted: EventEmitter<boolean> = new EventEmitter<boolean>();
@@ -69,6 +70,7 @@ export class NewBIReport extends BaseComponent {
         this.myService = new BIReportPMService();
         this.SetUIProperties();
         this.CheckTenantZero();
+        
     }
 
 
@@ -117,7 +119,7 @@ export class NewBIReport extends BaseComponent {
             var factTablesNames = response.Result;
             factTablesNames.forEach((factTable) => {
                 if (FeatureLocator.HasFeaturePermession(this.ObjectTableName, "BIReport." + factTable.Code))
-                    this.FactTables.push(new CodeNameClass(factTable.Code, factTable.DisplayName));
+                    this.FactTables.push(new CodeNameClass(factTable.Code, factTable.DisplayName,null, factTable.Description));
             });
             if (AppTool.IsNullOrEmpty(this.EntityPM.FactTableName)) {
                 this.SelectdFactTable = null;
@@ -264,6 +266,7 @@ export class NewBIReport extends BaseComponent {
     set SelectdFactTable(value: CodeNameClass) {
         if (this.selectdFactTable != value) {
             this.selectdFactTable = value;
+            this.FactTableDescription = value.AdditionalField;
             if (!AppTool.IsNullOrEmpty(value)) {
                 this.FactTableName = this.selectdFactTable.Code;
                 this.UIProperties.SetRequired("FactTableName", this.ObjectTableName, false);
