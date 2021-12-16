@@ -26,7 +26,7 @@ SELECT        dbo.Shipments.Id, dbo.Shipments.Tenant, dbo.Shipments.ShipmentNumb
 						 dbo.Shipments.ComputedStatusId, dbo.Shipments.ComputedStatusDate, dbo.Shipments.OperationalCloseDate, dbo.Shipments.AccountingCloseDate,
 						 dbo.Shipments.CustomConnectToShipment, dbo.Shipments.ForeignPartnerCountryCode, dbo.Shipments.IsNewARInvoiceBlocked, dbo.Shipments.IsStandalonePickupDelivery, dbo.Shipments.ParentShipmentNumber,dbo.Shipments.HasUnassignedData,
                          dbo.Shipments.ParentShipmentType, dbo.Shipments.ParentShipmentDirectionId, dbo.ShipmentMasterDatas.MainCarriageFinalDestinationPortId, dbo.ShipmentMasterDatas.Transshipment3CarrierId,dbo.Shipments.IsHTSMissing ,
-                         dbo.Shipments.ApprovedCargoReadyDate ,dbo.Shipments.PlannedCargoReadyDate ,dbo.Shipments.HandlerUserId ,
+                         dbo.Shipments.ApprovedCargoReadyDate ,dbo.Shipments.PlannedCargoReadyDate ,dbo.Shipments.HandlerUserId , dbo.Shipments.DestinationWarehouseId ,
                          dbo.ShipmentMasterDatas.Transshipment2CarrierId, dbo.ShipmentMasterDatas.Transshipment1CarrierId, dbo.ShipmentMasterDatas.MainCarriageCarrierId, 
                          dbo.ShipmentMasterDatas.MainCarriageIsFromStack, dbo.ShipmentMasterDatas.Transshipment3AdditionalMAWBOBLBL, 
                          dbo.ShipmentMasterDatas.Transshipment2AdditionalMAWBOBLBL, dbo.ShipmentMasterDatas.Transshipment1AdditionalMAWBOBLBL, 
@@ -253,6 +253,7 @@ SELECT        dbo.Shipments.Id, dbo.Shipments.Tenant, dbo.Shipments.ShipmentNumb
 						 CreatedByUserContact.EnglishName as CreatedByUserName,
 						 LastSentByUserContact.EnglishName as LastSentByUserName,		
              HandlerUserContact.EnglishName as HandlerUserName,
+             DestinationWarehouseCard.EnglishName as DestinationWarehouseName,
 						 ShipmentComputedFields.IsMissingDocuments as IsMissingDocument,
 						 ShipmentComputedFields.DocumentsSearchFields as DocumentsSearchFields,
 						 dbo.Shipments.ForwarderShipmentNumber as ForwarderShipmentNumber,
@@ -396,6 +397,7 @@ FROM            dbo.Shipments LEFT OUTER JOIN
 						 dbo.Contacts AS LastSentByUserContact ON dbo.Shipments.LastSentByUserId = LastSentByUserContact.Id LEFT OUTER JOIN
 						 dbo.Contacts AS LocalCustomsSentByUser ON dbo.Shipments.LocalCustomsSentByUserId = LocalCustomsSentByUser.Id LEFT OUTER JOIN
              dbo.Contacts AS HandlerUserContact ON dbo.Shipments.HandlerUserId = HandlerUserContact.Id LEFT OUTER JOIN
+             dbo.Cards AS DestinationWarehouseCard ON dbo.Shipments.DestinationWarehouseId = DestinationWarehouseCard.Id LEFT OUTER JOIN
 						 dbo.Contacts AS CreatedByUserContact ON dbo.Shipments.CreatedByUserId = CreatedByUserContact.Id INNER JOIN
 						 dbo.ShipmentComputedFields AS ShipmentComputedFields ON dbo.Shipments.Id = ShipmentComputedFields.Id INNER JOIN
 						 dbo.ShipmentAdditionalCloudDatas AS ShipmentAdditionalCloudDatas ON dbo.Shipments.Id = ShipmentAdditionalCloudDatas.Id LEFT OUTER JOIN

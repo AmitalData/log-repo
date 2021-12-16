@@ -144,6 +144,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
                 return true;
             if (this.initializer.EntityPM.FreightRelease != this.initializer.EntityPOCO.FreightRelease)
                 return true;
+            if (this.initializer.EntityPM.DestinationWarehouseId != this.initializer.EntityPOCO.DestinationWarehouseId)
+                return true;
 
             return false;
         }
@@ -369,7 +371,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
             container.OPClosed = this.initializer.EntityPM != null ? this.initializer.EntityPM.IsOperationalClosed : false;
             container.ShipmentTypeId = this.initializer.EntityPM?.ShipmentTypeId;
             container.PODReceivedOnDate = this.initializer.EntityPM?.PODReceivedDate;
-
+            container.TerminalId = this.initializer.EntityPM?.DestinationWarehouseId;
             this.MapContainerFieldsFromShipmentPickup(container);
             this.MapContainerFieldsFromShipmentDelivery(container);
         }

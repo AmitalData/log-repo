@@ -482,6 +482,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             entityPoco.ForwarderPickUpDeliveryType = entityPM.ForwarderPickUpDeliveryType;
             entityPoco.IsHTSMissing = entityPM.IsHTSMissing;
             entityPoco.HandlerUserId = entityPM.HandlerUserId;
+            entityPoco.DestinationWarehouseId = entityPM.DestinationWarehouseId;
             entityPoco.PlannedCargoReadyDate = entityPM.PlannedCargoReadyDate;
             entityPoco.ApprovedCargoReadyDate = entityPM.ApprovedCargoReadyDate; 
             entityPoco.PrivateLabelInvoiceNumber = entityPM.PrivateLabelInvoiceNumber; 

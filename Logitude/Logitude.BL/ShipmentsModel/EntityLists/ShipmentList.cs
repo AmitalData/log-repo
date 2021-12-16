@@ -581,6 +581,8 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public string CustomerContactEmail { get; set; }
         public DateTime? PODReceivedDate { get; set; }
         public bool HasUnassignedData { get; set; }
+        public string DestinationWarehouseId { get; set; }
+        public string DestinationWarehouseName { get; set; }
 
     }
 }

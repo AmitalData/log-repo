@@ -11,7 +11,7 @@ SELECT         dbo.Shipments.Id, dbo.Shipments.Tenant, dbo.Shipments.ShipmentNum
                          dbo.ShipmentMasterDatas.MainCarriageFinalDestinationPortId, dbo.ShipmentMasterDatas.Transshipment3CarrierId, 
                          dbo.ShipmentMasterDatas.Transshipment2CarrierId, dbo.ShipmentMasterDatas.Transshipment1CarrierId, dbo.ShipmentMasterDatas.MainCarriageCarrierId, 
                          dbo.ShipmentMasterDatas.MainCarriageIsFromStack, dbo.ShipmentMasterDatas.Transshipment3AdditionalMAWBOBLBL, dbo.Shipments.IsStandalonePickupDelivery, dbo.Shipments.ParentShipmentNumber,
-                         dbo.Shipments.ParentShipmentType, dbo.Shipments.ParentShipmentDirectionId, dbo.Shipments.HandlerUserId,
+                         dbo.Shipments.ParentShipmentType, dbo.Shipments.ParentShipmentDirectionId, dbo.Shipments.HandlerUserId, dbo.Shipments.DestinationWarehouseId ,
                          dbo.ShipmentMasterDatas.Transshipment2AdditionalMAWBOBLBL, dbo.ShipmentMasterDatas.Transshipment1AdditionalMAWBOBLBL, 
                          dbo.ShipmentMasterDatas.Transshipment3VesselId, dbo.ShipmentMasterDatas.Transshipment2VesselId, dbo.ShipmentMasterDatas.Transshipment1VesselId, 
                          dbo.ShipmentMasterDatas.MainCarriageVesselId, dbo.ShipmentMasterDatas.BookingConfirmedBy, dbo.ShipmentMasterDatas.BookingConfirmationNotes, 
@@ -191,6 +191,7 @@ SELECT         dbo.Shipments.Id, dbo.Shipments.Tenant, dbo.Shipments.ShipmentNum
 						 CargonautFWBStatus.Name AS CargonautFWBStatusName,
 						 dbo.ShipmentMasterDatas.CargonautFWBStatusDate,
              HandlerUserContact.EnglishName as HandlerUserName,
+             DestinationWarehouseCard.EnglishName as DestinationWarehouseName,
              OperationalEntityStatus.Name as OperationalStatusName,
 						 dbo.Shipments.AWBPrint, CarrierLastStatuses.Name AS CarrierLastStatusName, dbo.Shipments.FNAReason, 
                          dbo.Shipments.Routing, dbo.ShipmentMasterDatas.TruckNumber, dbo.Shipments.AsAgreedFreight, dbo.Shipments.AsAgreedOtherCharges, 
@@ -257,6 +258,7 @@ FROM            dbo.Shipments LEFT OUTER JOIN
                          dbo.Cards AS Transshipment2CarrierCards ON dbo.ShipmentMasterDatas.Transshipment2CarrierId = Transshipment2CarrierCards.Id LEFT OUTER JOIN
                          dbo.Cards AS Transshipment3CarrierCards ON dbo.ShipmentMasterDatas.Transshipment3CarrierId = Transshipment3CarrierCards.Id LEFT OUTER JOIN
                          dbo.Contacts AS HandlerUserContact ON dbo.Shipments.HandlerUserId = HandlerUserContact.Id LEFT OUTER JOIN
+                         dbo.Cards AS DestinationWarehouseCard ON dbo.Shipments.DestinationWarehouseId = DestinationWarehouseCard.Id LEFT OUTER JOIN
                          dbo.NextLegs ON dbo.Shipments.NextLegCode = dbo.NextLegs.Code LEFT OUTER JOIN
                          dbo.Directions ON dbo.Shipments.DirectionId = dbo.Directions.Id LEFT OUTER JOIN
                          dbo.TransportModes ON dbo.Shipments.TransportModeId = dbo.TransportModes.Id LEFT OUTER JOIN
