@@ -148,13 +148,14 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
             this.RefTemplateWidth = '150px';
             this.IsPrivateLabelExportActivated = SessionLocator.PrivateLableSettings.IsExportActivated;
             this.IsPrivateLabelCustomsActivated = SessionLocator.PrivateLableSettings.IsCustomsActivated;
-            this.SetCustomerTenantAccessRequestsDirections(SessionLocator.PrivateLableSettings.HybridPartnerId);
+            //this.SetCustomerTenantAccessRequestsDirections(SessionLocator.PrivateLableSettings.HybridPartnerId);
 
         }
         else {
             this.RefTemplateWidth = '250px';
         }
     }
+ 
     SetCustomerTenantAccessRequestsDirections(hybridPartnerId: any) {
 
         var tenant = SessionLocator.Tenant;
@@ -173,7 +174,8 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
     private HasOneDirectionFilter() {
         return !(this.IsExportActivated && this.IsCustomsActivated);
     }
-
+  
+  
 
     private getAgentShipmentsLabel(agentName: string) {
         let agentShipmentsLabel = "";
@@ -423,6 +425,36 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
 
     SetPrivateLabelDirectionFilters(shipmentsQueriesCountsArgs: ShipmentsQueriesCountsArgs) {
 
+        this.SetCustomerTenantAccessRequestsDirections(SessionLocator.PrivateLableSettings.HybridPartnerId, shipmentsQueriesCountsArgs);
+
+         
+         
+    }
+  
+    SetCustomerTenantAccessRequestsDirections(hybridPartnerId: any, shipmentsQueriesCountsArgs: ShipmentsQueriesCountsArgs) {
+        var tenant = SessionLocator.Tenant;
+        this.customerTenantAccessRequestExtendedPMService.getByForwarderId(tenant, hybridPartnerId).subscribe((res: any) => {
+            if (!res.HasError) {
+                this.SetDitections(res, shipmentsQueriesCountsArgs);
+            }
+        });
+    }
+     
+    private SetPrivateLabelDriectionId(shipmentsQueriesCountsArgs: ShipmentsQueriesCountsArgs) {
+        this.SetCustomShipmentFilters(shipmentsQueriesCountsArgs);
+        this.SetExportShipmentFilters(shipmentsQueriesCountsArgs);
+    }
+
+    private SetDitections(res: any, shipmentsQueriesCountsArgs: ShipmentsQueriesCountsArgs) {
+        this.IsCustomsActivated = (res.Result.IsCustoms && this.IsPrivateLabelCustomsActivated);
+        this.IsExportActivated = (res.Result.IsExport && this.IsPrivateLabelExportActivated);
+        this.SetPrivateLabelDirectionValues(shipmentsQueriesCountsArgs);
+        this.SetDirectionsFilters();
+    }
+    private HasOneDirectionFilter() {
+        return !(this.IsExportActivated && this.IsCustomsActivated);
+    }
+    private SetPrivateLabelDirectionValues(shipmentsQueriesCountsArgs: ShipmentsQueriesCountsArgs) {
         if (!shipmentsQueriesCountsArgs.DirectionId && this.ShowDirectionFilters) {
             this.ExecludeImportShipmentsFilters(shipmentsQueriesCountsArgs);
         } else {
@@ -431,14 +463,9 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
 
         if (!this.IsCustomsActivated && !this.IsExportActivated) {
             this.SetDefalutFilter(shipmentsQueriesCountsArgs);
+ 
+
         }
-
-
-
-    }
-    private SetPrivateLabelDriectionId(shipmentsQueriesCountsArgs: ShipmentsQueriesCountsArgs) {
-        this.SetCustomShipmentFilters(shipmentsQueriesCountsArgs);
-        this.SetExportShipmentFilters(shipmentsQueriesCountsArgs);
     }
 
     private ExecludeImportShipmentsFilters(shipmentsQueriesCountsArgs: ShipmentsQueriesCountsArgs) {
