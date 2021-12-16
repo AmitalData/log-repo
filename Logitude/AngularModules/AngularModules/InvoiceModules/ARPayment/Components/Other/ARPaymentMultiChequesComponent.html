@@ -10,11 +10,11 @@
     </tr>
     <tr>
 
-      
+
         <td style="width:85px; padding-right: 15px;" colspan="6">
             <div style="color: #3b95d5;font-size:16px">{{'ARPaymentCheque.O.Cheques'  | TextCodeTranslationPipe}} ({{ChequesCounter}})</div>
         </td>
-      
+
 
         <td style="width: 25px;height: 20px;padding: 5px;padding-bottom: 0px;">
             <div><IconButton [IsEnabled]="!IsDisplayOnly" [IsSmall]="true" [Name]="'Add'" (click)="AddNewCheque()" style="float:left;"></IconButton></div>
@@ -26,7 +26,7 @@
         <td colspan="7">
             <table>
                 <tr>
-                
+
                     <td colspan="5" style="padding-right:10px">
 
                         <div class="CellContent" style="bottom: 5px;padding:5px">
@@ -164,19 +164,21 @@
                                             <div class="TextTrimming" style="text-align:left" *ngIf="logcelltemplate.IsDisplayMode" text-start>
                                                 <span>{{item.StatusName}}</span>
                                             </div>
-                                            
+
                                         </log-cell-template>
                                     </ng-template>
 
 
                                 </log-column>
-                                <log-column [width]="'40'" [Editable]="true" [Alignment]="'right'" [visibility]="'collapsed'">
+                                <log-column [width]="'70'" [Editable]="true" [Alignment]="'right'" [visibility]="'collapsed'">
                                     <ng-template let-item>
                                         <log-cell-template [IgnoreMods]="true" #logcelltemplate>
                                             <div style="width: 30px; float: right; height:20px;padding-top:3px">
                                                 <IconButton [Name]="'Delete'" [IsSmall]="true" (click)="item.DeleteButtonClicked()" [IsEnabled]="!IsDisplayOnly"></IconButton>
                                             </div>
-
+                                            <div style="width: 30px; float: right; height:20px;padding-top:3px">
+                                                <IconButton [IsEnabled]="!IsDisplayOnly"
+                                                    [Name]="'return'" [IsSmall]="true" (click)="ReturnChequeButtonClicked(item)"></IconButton>                                            </div>
 
 
                                         </log-cell-template>

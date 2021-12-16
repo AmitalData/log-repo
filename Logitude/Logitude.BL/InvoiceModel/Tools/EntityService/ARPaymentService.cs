@@ -1597,43 +1597,26 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                         }
                         else if (entityPm.AccountingPaymentMethodCode == "CH")
                         {
-                            IARPaymentChequeQueryServiceExt query = ContainerAccessor.Container.Resolve(typeof(IARPaymentChequeQueryServiceExt), "ARPaymentChequeQueryServiceExt", new ParameterOverride("", 1)) as IARPaymentChequeQueryServiceExt;
-                            List<ARPaymentChequePM> aRPaymentCheques = query.GetListByPaymentId(entityPm.Id, tenant);
-                            if (aRPaymentCheques != null)
+                            List<ARPaymentChequePM> chequesToVoid = GetPaymentChequesToVoid(entityPm, tenant);
+                            if (chequesToVoid != null && chequesToVoid.Count() != 0)
                             {
-                                var list = aRPaymentCheques.Where(a => a.StatusCode == "6" || a.StatusCode == "3" || a.StatusCode == "2").ToList(); // 2-In bank / 6 (ReDeemed-נפרע) or 3- In bank account 
-                                if (list != null && list.Count() != 0)
+                                ThrowCantCancelARPaymentMessage(entityPm, useLocal);
+                            }
+                            else
+                            {
+                                foreach (var cheque in chequesToVoid)
                                 {
-                                    string msg = TranslateTextsClass.Translate("ARPayment.M.CANTCancelARPayment", entityPm.Tenant, useLocal);
-                                    //    + "{ ";
-                                    //foreach (var item in list)
-                                    //{
-                                    //    msg += "Cheque No.: " + item.ChequeNumber + ", Status: " + item.StatusName;
-                                    //}
-                                    throw new ApplicationException(msg);
+                                    ReturnChequeToCustomer(cheque);
+                                    CreateVoidedARPaymentEvent("Returned To Customer - Cheque Number: " + cheque.ChequeNumber);
                                 }
-                                else
-                                {
-                                    IARPaymentChequeUpdateServiceExt paymentUpdate = ContainerAccessor.Container.Resolve(typeof(IARPaymentChequeUpdateServiceExt), "ARPaymentChequeUpdateServiceExt", new ParameterOverride("", 1)) as IARPaymentChequeUpdateServiceExt;
-                                    foreach (var item in aRPaymentCheques)
-                                    {
-                                        item.ChangeSetOp = ChangeSetOperation.Update;
-                                        item.StatusCode = "5";
-                                        paymentUpdate.Update(item);
-                                        CreateVoidedARPaymentEvent("Returned To Customer - Cheque Number: " + item.ChequeNumber);
-                                    }
 
-                                    ICashBookQueryServiceExt cashQuery = ContainerAccessor.Container.Resolve(typeof(ICashBookQueryServiceExt), "CashBookQueryServiceExt", new ParameterOverride("", 1)) as ICashBookQueryServiceExt;
-                                    ICashBookUpdateServiceExt cashBookUpdate = ContainerAccessor.Container.Resolve(typeof(ICashBookUpdateServiceExt), "CashBookUpdateServiceExt", new ParameterOverride("", 1)) as ICashBookUpdateServiceExt;
-                                    CashBookPM cashBook = cashQuery.GetByPaymentAndCurrencyAndBranch(entityPm.PaymentCurrencyId, "2", entityPm.BranchId, tenant);
-                                    cashBook.TotalAmount = cashBook.TotalAmount - aRPaymentCheques.Sum(a => a.ForeignAmount);
-                                    cashBook.ChangeSetOp = ChangeSetOperation.Update;
-                                    cashBookUpdate.Update(cashBook);
-                                    CreateVoidedARPaymentEvent("ARPayment Cancel");
-                                    CancelJournal(entityPm);
-                                    //CancelledInterestTransactions(entityPm);
-                                    CreateInterestTransactionLine(entityPm, true);
-                                }
+                                UpdateCashbookTotal(entityPm, tenant, chequesToVoid);
+
+                                CreateVoidedARPaymentEvent("ARPayment Cancel");
+
+                                CancelJournal(entityPm);
+
+                                CreateInterestTransactionLine(entityPm, true);
                             }
                         }
                         else if (entityPm.AccountingPaymentMethodCode == "BT")
@@ -1641,11 +1624,64 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                             CreateVoidedARPaymentEvent("ARPayment Cancel");
                             CancelJournal(entityPm);
                             CreateInterestTransactionLine(entityPm, true);
-                            // CancelledInterestTransactions(entityPm);
                         }
                     }
                 }
             }
+        }
+
+        private static void UpdateCashbookTotal(ARPaymentPM entityPm, int tenant, List<ARPaymentChequePM> chequesToVoid)
+        {
+            CashBookPM cashBook = GetConnectedCashbook(entityPm, tenant);
+
+            cashBook.TotalAmount -= chequesToVoid.Sum(a => a.ForeignAmount);
+            cashBook.ChangeSetOp = ChangeSetOperation.Update;
+
+            SubmitCashbook(cashBook);
+        }
+
+        private static void SubmitCashbook(CashBookPM cashBook)
+        {
+            ICashBookUpdateServiceExt cashBookUpdate = ContainerAccessor.Container.Resolve(typeof(ICashBookUpdateServiceExt), "CashBookUpdateServiceExt", new ParameterOverride("", 1)) as ICashBookUpdateServiceExt;
+            cashBookUpdate.Update(cashBook);
+        }
+
+        private static CashBookPM GetConnectedCashbook(ARPaymentPM entityPm, int tenant)
+        {
+            ICashBookQueryServiceExt cashQuery = ContainerAccessor.Container.Resolve(typeof(ICashBookQueryServiceExt), "CashBookQueryServiceExt", new ParameterOverride("", 1)) as ICashBookQueryServiceExt;
+            CashBookPM cashBook = cashQuery.GetByPaymentAndCurrencyAndBranch(entityPm.PaymentCurrencyId, "2", entityPm.BranchId, tenant);
+            return cashBook;
+        }
+
+        private static void ReturnChequeToCustomer(ARPaymentChequePM cheque)
+        {
+            cheque.ChangeSetOp = ChangeSetOperation.Update;
+            cheque.StatusCode = ARPaymentChequeStatusValues.ReturnedToCustomer;
+
+            IARPaymentChequeUpdateServiceExt paymentUpdate = ContainerAccessor.Container.Resolve(typeof(IARPaymentChequeUpdateServiceExt), "ARPaymentChequeUpdateServiceExt", new ParameterOverride("", 1)) as IARPaymentChequeUpdateServiceExt;
+            paymentUpdate.Update(cheque);
+        }
+
+        private static void ThrowCantCancelARPaymentMessage(ARPaymentPM entityPm, bool useLocal)
+        {
+            string msg = TranslateTextsClass.Translate("ARPayment.M.CANTCancelARPayment", entityPm.Tenant, useLocal);
+            throw new ApplicationException(msg);
+        }
+
+        private static List<ARPaymentChequePM> GetPaymentChequesToVoid(ARPaymentPM entityPm, int tenant)
+        {
+            IARPaymentChequeQueryServiceExt query = ContainerAccessor.Container.Resolve(typeof(IARPaymentChequeQueryServiceExt), "ARPaymentChequeQueryServiceExt", new ParameterOverride("", 1)) as IARPaymentChequeQueryServiceExt;
+            List<ARPaymentChequePM> cheques = query.GetListByPaymentId(entityPm.Id, tenant);
+
+            var chequeStatusesThatIsAbleToReturn = new List<string>()
+                            {
+                                ARPaymentChequeStatusValues.InBank,
+                                ARPaymentChequeStatusValues.InBankAccount,
+                                ARPaymentChequeStatusValues.Redeemed
+                            };
+
+            var filteredCheques = cheques.Where(a => chequeStatusesThatIsAbleToReturn.Contains(a.StatusCode)).ToList();
+            return filteredCheques;
         }
 
         private CashBookPM GetPaymentCashbook()
@@ -2148,6 +2184,16 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             return loggedcontact;
         }
         #endregion
+    }
+
+    public struct ARPaymentChequeStatusValues
+    {
+        public const string InCashbook = "1";
+        public const string InBank = "2";
+        public const string InBankAccount = "3";
+        public const string ReturnedFromBank = "4";
+        public const string ReturnedToCustomer = "5";
+        public const string Redeemed = "6";
     }
 }
 
