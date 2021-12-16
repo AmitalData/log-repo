@@ -117,8 +117,12 @@ namespace Unifreight.BL.EntityQueryServices
                 AIRLINE_ID = o.AIRLINEID,
                 Prefix = "",
             });
-            res = res.Skip(queryOperations.PageIndex * queryOperations.PageSize);
-            res = res.Take(queryOperations.PageSize);
+
+            if (queryOperations.PageSize != 0)
+            {
+                res = res.Skip(queryOperations.PageIndex * queryOperations.PageSize);
+                res = res.Take(queryOperations.PageSize);
+            }
 
             List<Carriers> carrier = res.ToList();
             return carrier;

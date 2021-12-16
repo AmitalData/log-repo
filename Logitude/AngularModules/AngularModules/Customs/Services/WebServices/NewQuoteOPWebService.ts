@@ -55,9 +55,6 @@ export class NewQuoteOPWebService {
     }
 
     private sendGetHttp(callUrl: string) {
-
-
-
         return defer(() => {
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);

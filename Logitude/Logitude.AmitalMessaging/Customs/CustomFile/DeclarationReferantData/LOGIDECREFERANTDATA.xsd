@@ -24,6 +24,7 @@
         <xs:element minOccurs="0" maxOccurs="1" ref="LastStatusName" />
         <xs:element minOccurs="0" maxOccurs="1" ref="LastStatusDate" />
         <xs:element minOccurs="0" maxOccurs="1" ref="OrderMoney" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="LastStatusRemarks" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -41,4 +42,5 @@
   <xs:element name="LastStatusName" type="xs:string" />
   <xs:element name="LastStatusDate" type="xs:string" />
   <xs:element name="OrderMoney" type="xs:string" />
+  <xs:element name="LastStatusRemarks" type="xs:string" />
 </xs:schema>

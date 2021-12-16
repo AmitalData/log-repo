@@ -113,7 +113,7 @@
 
 
             <td style="width: 150px;">
-                <LogLabel [ObjectFieldName]="'StorageSiteCode'"
+                <LogLabel [ObjectFieldName]="'DeliverySiteCode'"
                           [ObjectTableName]="ObjectTableName"
                           [Text]="'אתר מסירה'"
                           [DataContext]="DataContext"></LogLabel>
@@ -121,12 +121,12 @@
 
             <td style="width: 160px;">
 
-                <LogLov [ObjectFieldName]="'StorageSiteCode'"
+                <LogLov [ObjectFieldName]="'DeliverySiteCode'"
                         [ObjectTableName]="ObjectTableName"
                         [DataContext]="DataContext"
                         [LookUpTableName]="'Customs.DeliverySiteType'"
                         [DisplayMemberPath]="'LocalName'"
-                        [SelectedValue]="StorageSiteCode"
+                        [SelectedValue]="DeliverySiteCode"
                         [HideColumns]="true">
                 </LogLov>
             </td>

@@ -3,6 +3,7 @@ import { FormGroup, FormControl, FormArray, Validators } from '@angular/forms';
 import { ApiQueryFilters } from 'Infrastructure/DataContracts/ApiQueryFilters';
 import { MessageService } from 'primeng/api';
 import { QuoteOPPM } from 'QuoteOPM/EntityPMs/QuoteOPPM';
+import { QuoteOPPropertiesPM } from 'QuoteOPM/EntityPMs/QuoteOPPropertiesPM';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { NewQuoteDataShareService } from '../../Services/new-quote-data-share/new-quote-data-share.service';
@@ -22,32 +23,33 @@ export class NewQuotePropertiesComponent implements OnInit, AfterViewInit {
   // fromPortList: Port[] = []
   // toPortList: Port[] = []
   // specialServiceList: SpecialService[] = []
+  // incotermList: Incoterm[] = []
   mainCarriageCarrierFunc: fiterFunc = null as any;
   portsFunc: fiterFunc = null as any;
   specialServiceFunc: fiterFunc = null as any;
   incotermFunc: fiterFunc = null as any;
-  // incotermList: Incoterm[] = []
   transportModeId: string = '';
   directionId: string = '';
   carrierColumns: any = {}
   formArray: FormArray = new FormArray([this.propForm]);
   indexTabs: BehaviorSubject<number> = null as any;
   activeTab: number = 0;
-  destroyObservable: Subject<void> = new Subject<void>();  
+  destroyObservable: Subject<void> = new Subject<void>();
 
   get propForm(): FormGroup {
     return new FormGroup({
       fromPort: new FormControl('', Validators.required),
       toPort: new FormControl('', Validators.required),
-      specialService: new FormControl(),
       mainCarriageCarrier: new FormControl(),
       incoterm: new FormControl(),
+      specialService: new FormControl(),
     })
   }
 
   get properties(): any {
     return this.formGroup.get('properties') as any;
   }
+
 
   constructor(
     private newQuoteDataService: NewQuoteDataService,
@@ -56,29 +58,42 @@ export class NewQuotePropertiesComponent implements OnInit, AfterViewInit {
     private cdr: ChangeDetectorRef,
   ) { }
 
-  ngAfterViewInit(): void {
-    if (this.EntityPM != null && this.EntityPM.Id != null) {
-      if (this.EntityPM.QuoteProperties.length > 0) {
-        for (let QuoteOpProperty of this.EntityPM.QuoteProperties) {
-          //edit part
-          if (QuoteOpProperty.FromPortId) {
 
-          }
-        }
-      }
-    }
+  ngAfterViewInit(): void {
+    this.setExistData();
   }
+
 
   ngOnInit(): void {
     this.subscribeIndexTab();
     this.getIncoterms()
-    this.resetForm();
+    this.resetForm();    
   }
+
+
+  setExistData() {
+    const dataExist: boolean = !!this.EntityPM && !!this.EntityPM.ToPortId;
+    if (!dataExist) return;
+
+    this.EntityPM.QuoteProperties.forEach((prop: QuoteOPPropertiesPM, i: number) => {
+      if (this.formArray.length < i + 1)
+        this.formArray.push(this.propForm)
+
+      const propCtrl = (this.formArray.at(i) as FormGroup).controls;
+      this.setFromPort(prop, propCtrl);
+      this.setToPort(prop, propCtrl);
+      this.setCarrier(prop, propCtrl);
+      this.setIncoterm(prop, propCtrl);
+      this.setSpecialService(prop, propCtrl);
+    });
+  }
+
 
   private subscribeIndexTab() {
     this.indexTabs = this.dataShareService.indexPropertyTab;
     this.indexTabs.pipe(takeUntil(this.destroyObservable)).subscribe(x => this.activeTab = x);
   }
+
 
   resetForm() {
     this.newQuoteDataService.$resetForm.subscribe(() => {
@@ -98,18 +113,21 @@ export class NewQuotePropertiesComponent implements OnInit, AfterViewInit {
     }
   }
 
+
   addFormControls() {
     this.formGroup.addControl('properties', this.formArray)
   }
+
 
   subscribeTransport() {
     this.formGroup.controls.transportMode.valueChanges.subscribe(() => this.updateList())
     this.formGroup.controls.direction.valueChanges.subscribe(() => this.updateList())
   }
 
+
   updateList() {
-    this.transportModeId = this.formGroup.controls.transportMode.value?.Id;
-    this.directionId = this.formGroup.controls.direction.value?.Id;
+    this.transportModeId = this.formGroup.controls.transportMode.value?.Id || this.EntityPM?.TransportModeId;
+    this.directionId = this.formGroup.controls.direction.value?.Id || this.EntityPM?.TransportModeId;
 
     if (!this.transportModeId || !this.directionId) return;
 
@@ -118,15 +136,17 @@ export class NewQuotePropertiesComponent implements OnInit, AfterViewInit {
     this.getMainCarriageCarrier()
   }
 
+
   async getPorts() {
     this.portsFunc = (qf: ApiQueryFilters) => this.newQuoteDataService.getPorts(this.directionId, this.transportModeId, qf);
   }
 
-  async getSpecialService() {
 
+  async getSpecialService() {
     // this.specialServiceList = await this.newQuoteDataService.getSpecialServices(this.directionId, this.transportModeId);
     this.specialServiceFunc = (qf: ApiQueryFilters) => this.newQuoteDataService.getSpecialServices(this.directionId, this.transportModeId, qf);
   }
+
 
   async getMainCarriageCarrier() {
     this.carrierColumns = this.directionId === "E" ? { AIRLINE_ID: 'Code' } : { VENDOR_ID: 'Code' }
@@ -134,10 +154,12 @@ export class NewQuotePropertiesComponent implements OnInit, AfterViewInit {
 
     this.mainCarriageCarrierFunc = (qf: ApiQueryFilters) => this.newQuoteDataService.getCarrierses(this.directionId, this.transportModeId, qf);
   }
-  
+
+
   async getIncoterms() {
-    this.incotermFunc = (qf: ApiQueryFilters) => this.newQuoteDataService.getIncoterms(qf);    
+    this.incotermFunc = (qf: ApiQueryFilters) => this.newQuoteDataService.getIncoterms(qf);
   }
+
 
   addProperty() {
     if (this.formArray.valid) {
@@ -148,17 +170,51 @@ export class NewQuotePropertiesComponent implements OnInit, AfterViewInit {
       this.messageService.add({ severity: 'error', summary: 'Property not add', detail: 'Not all the field in Quote Properties were entered/filled' })
   }
 
+
   removeProperty(e: { originalEvent: PointerEvent, index: number }) {
     this.indexTabs.next(0);
     this.formArray.removeAt(e.index)
   }
 
+
   sortArray(arr: any[], prop: string): any[] {
     return arr.sort((a, b) => (a[prop] > b[prop]) ? 1 : ((b[prop] > a[prop]) ? -1 : 0))
   }
 
+
   ngOnDestroy() {
     this.destroyObservable.next()
     this.destroyObservable.complete()
+  }
+
+
+  private async setSpecialService(prop: QuoteOPPropertiesPM, propCtrl: any) {
+    if(!prop.SpecialServiceID) return;
+    const specialService = await this.newQuoteDataService.getSpecialServiceById(this.EntityPM.DirectionId, this.EntityPM.TransportModeId, prop.SpecialServiceID);
+    propCtrl.specialService.setValue(specialService);
+  }
+  
+  private async setIncoterm(prop: QuoteOPPropertiesPM, propCtrl: any) {
+    if(!prop.IncotermId) return;
+    const incoterm = await this.newQuoteDataService.getIncotermById(prop.IncotermId);
+    propCtrl.incoterm.setValue(incoterm);
+  }
+  
+  private async setCarrier(prop: QuoteOPPropertiesPM, propCtrl: any) {
+    if(!prop.MainCarriageCarrierId) return;
+    const carrier = await this.newQuoteDataService.getCarriersesById(this.EntityPM.DirectionId, this.EntityPM.TransportModeId, prop.MainCarriageCarrierId);
+    propCtrl.mainCarriageCarrier.setValue(carrier);
+  }
+  
+  private async setToPort(prop: QuoteOPPropertiesPM, propCtrl: any) {
+    if(!prop.ToPortId) return;
+    const toPort = await this.newQuoteDataService.getPortsById(this.EntityPM.DirectionId, this.EntityPM.TransportModeId, prop.ToPortId);
+    propCtrl.toPort.setValue(toPort);
+  }
+  
+  private async setFromPort(prop: QuoteOPPropertiesPM, propCtrl: any) {
+    if(!prop.FromPortId) return;
+    const fromPort = await this.newQuoteDataService.getPortsById(this.EntityPM.DirectionId, this.EntityPM.TransportModeId, prop.FromPortId);
+    propCtrl.fromPort.setValue(fromPort);
   }
 }

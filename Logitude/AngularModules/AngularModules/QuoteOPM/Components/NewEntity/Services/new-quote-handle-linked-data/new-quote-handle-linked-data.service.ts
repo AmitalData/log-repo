@@ -64,6 +64,7 @@ export class NewQuoteHandleLinkedDataService {
         const entityPM: QuoteOPPM = this.dataShareService.EntityPM;
         const formGroup: FormGroup = this.dataShareService.formGroup
         const propertiesForms: AbstractControl[] = (formGroup.controls.properties as FormArray).controls.filter((propertyForm: FormGroup) => propertyForm.valid);
+        entityPM.QuoteProperties = [];
 
         propertiesForms.forEach((propertyFormGroup: FormGroup) => {
             const propertyForm: FormGroup["controls"] = propertyFormGroup.controls;
@@ -91,13 +92,14 @@ export class NewQuoteHandleLinkedDataService {
             propertiesPM.IncotermId = propertyForm.incoterm.value?.PTERMID
             propertiesPM.SpecialServiceID = propertyForm.specialService.value?.SERVLEVEL_ID;
 
-            entityPM.QuoteProperties.push(propertiesPM)
+            entityPM.QuoteProperties.push(propertiesPM) 
         });
     }
 
     attachPackages() {
         const entityPM: QuoteOPPM = this.dataShareService.EntityPM;
         const formGroup: FormGroup = this.dataShareService.formGroup;
+        entityPM.QuotePackages = [];
 
         (<FormArray>formGroup.controls.packages).controls.forEach((form: FormGroup) => {
             const pack: QuoteOPPackagePM = new QuoteOPPackagePM(entityPM);

@@ -48,8 +48,12 @@ namespace Unifreight.BL.BL
             IQueryable<Incoterms> query = GetBaseQuery();
             query = AddFilter(query, queryOperations);
             query = AddSort(query, queryOperations);
-            query = query.Skip(queryOperations.PageIndex * queryOperations.PageSize);
-            query = query.Take(queryOperations.PageSize);
+
+            if (queryOperations.PageSize != 0)
+            {
+                query = query.Skip(queryOperations.PageIndex * queryOperations.PageSize);
+                query = query.Take(queryOperations.PageSize);
+            }
 
             List<Incoterms> list = query.ToList();
             return list;

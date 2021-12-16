@@ -68,6 +68,10 @@ namespace Logitude.Customs.BL.EntityDataMappings
 
                 }
             }
+            if(entityPOCO.StorageSiteCode != null)
+            {
+                entityPM.DeliverySiteCode = entityPOCO.StorageSiteCode;
+            }
         }
     }
 

@@ -62,11 +62,8 @@ export class NewQuoteGeneralComponent implements OnInit {
     // closeDate.setHours(0,0,0,0);
     this.formGroup.addControl('quoteType', new FormControl('', Validators.required));
     this.checkType(this.quoteTypes[0].code);
-
-    if (this.EntityPM && !this.EntityPM.Id)
-      this.initDefaultValue(dateNow);
-    else
-      this.initValueFromEntity();
+    this.initDefaultValue(dateNow);    
+    this.initValueFromEntity();    
   }
 
   private getDateNow() {
@@ -75,22 +72,21 @@ export class NewQuoteGeneralComponent implements OnInit {
     return dateNow;
   }
 
-  private initValueFromEntity() {
+  private async initValueFromEntity() {
+    const dataExist:boolean = !!this.EntityPM?.ExpirationDate;
+    if (!dataExist) return;
     const entityDate = new Date(this.EntityPM.StartDate);
     const entityDateNextMonth = new Date(entityDate.setMonth(new Date().getMonth() + 1));
     const entityDateCloseDate = new Date(entityDate.setDate(new Date().getDate() + 45));
 
-    this.formGroup.addControl('moveType', new FormControl('', Validators.required));
-    this.formGroup.addControl('startDate', new FormControl(entityDate, Validators.required));
-    this.formGroup.addControl('expirationDays', new FormControl(this.EntityPM.ExpirationDays, Validators.required));
-    this.formGroup.addControl('expirationDate', new FormControl(entityDateNextMonth, Validators.required));
-    this.formGroup.addControl('isAutomaticallyClosed', new FormControl(this.EntityPM.IsAutomaticallyClosed));
-    this.formGroup.addControl('automaticallyCloseDays', new FormControl(this.EntityPM.AutomaticallyCloseDays));
-    this.formGroup.addControl('automaticallyCloseDate', new FormControl(entityDateCloseDate));
+    this.formGroup.controls.startDate.setValue(entityDate);
+    this.formGroup.controls.expirationDays.setValue(this.EntityPM.ExpirationDays);
+    this.formGroup.controls.expirationDate.setValue(entityDateNextMonth);
+    this.formGroup.controls.isAutomaticallyClosed.setValue(this.EntityPM.IsAutomaticallyClosed);
+    this.formGroup.controls.automaticallyCloseDays.setValue(this.EntityPM.AutomaticallyCloseDays);
+    this.formGroup.controls.automaticallyCloseDate.setValue(entityDateCloseDate);
     this.formGroup.controls.quoteType.setValue(this.EntityPM.QuoteTypeCode);
-
-    new MoveTypePMService().get(this.EntityPM.MoveTypeId).pipe(filter(x => x.Result)).subscribe((res: any) =>
-      this.formGroup.controls.moveType.setValue(res.Result));
+    this.formGroup.controls.moveType.setValue(await this.newQuoteDataService.getMoveTypeById(this.EntityPM.MoveTypeId));    
   }
 
   private initDefaultValue(dateNow: Date) {

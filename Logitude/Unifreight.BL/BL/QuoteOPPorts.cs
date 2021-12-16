@@ -37,15 +37,15 @@ namespace Unifreight.BL.BL
         {
             var context = GetAmitalContext(tenant);
 
-            IGetSinglePortFromCacheWithCountry service = null; 
+            IGetSinglePortFromCacheWithCountry service = null;
 
             if (DIRECTIONID == "E" && TRANSPORTMODEID == "A")
                 service = new ETBPORTQueryService(context);
-                
+
 
             else if (DIRECTIONID == "E" && TRANSPORTMODEID == "O")
                 service = new MTBPORTQueryService(context);
-                
+
 
             else if (DIRECTIONID == "I" && TRANSPORTMODEID == "A")
                 service = new ITBPORTQueryService(context);
@@ -62,17 +62,24 @@ namespace Unifreight.BL.BL
 
         public List<Ports> GetItemsList(string DIRECTIONID, string TRANSPORTMODEID, QueryOperations queryOperations, bool getFromCache = true)
         {
-            if (getFromCache)
+            if (false)
             {
                 string cacheId = "ports" + DIRECTIONID + TRANSPORTMODEID + ";i:" + queryOperations.PageIndex + ";s:" + queryOperations.PageSize + ";d:" + queryOperations.SortDirectin + ";c:" + queryOperations.SortByColumnName + string.Join("", queryOperations.QueryFilterItems.Select(x => ";f:" + x.FieldName + ";v:" + x.FieldValue).ToArray());
                 return CacheHelper.GetFromCache(cacheId, () => GetItemsList(DIRECTIONID, TRANSPORTMODEID, queryOperations, false));
             }
 
             IQueryable<Ports> query = GetBaseQuery(DIRECTIONID, TRANSPORTMODEID);
+            if (query == null)
+                return null;
+
             query = AddFilter(query, queryOperations);
             query = AddSort(query, queryOperations);
-            query = query.Skip(queryOperations.PageIndex * queryOperations.PageSize);
-            query = query.Take(queryOperations.PageSize);
+
+            if (queryOperations.PageSize != 0)
+            {
+                query = query.Skip(queryOperations.PageIndex * queryOperations.PageSize);
+                query = query.Take(queryOperations.PageSize);
+            }
 
             List<Ports> list = query.ToList();
             return list;
@@ -159,6 +166,6 @@ namespace Unifreight.BL.BL
             else
                 query = query.OrderBy(o => o.Name);
             return query;
-        }      
+        }
     }
 }

@@ -99,8 +99,11 @@ namespace Unifreight.BL.EntityQueryServices
                 Prefix = o.AIRLINENUM,
             });
 
-            res = res.Skip(queryOperations.PageIndex * queryOperations.PageSize);
-            res = res.Take(queryOperations.PageSize);
+            if (queryOperations.PageSize != 0)
+            {
+                res = res.Skip(queryOperations.PageIndex * queryOperations.PageSize);
+                res = res.Take(queryOperations.PageSize);
+            }
 
             List<Carriers> carrier = res.ToList();
             return carrier;

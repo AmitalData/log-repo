@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, SimpleChanges, AfterViewInit, ChangeDetectorRef } from '@angular/core';
-import { FormGroup, FormControl, FormArray, Validators } from '@angular/forms';
+import { FormGroup, FormControl, FormArray, Validators, AbstractControl } from '@angular/forms';
 import { TenantList } from 'Common/EntityLists/TenantList';
 import { TransportModeList } from 'Infrastructure/EntityLists/TransportModeList';
 import { requiredOneFromMultiValidator } from 'Infrastructure/Validators/requiredOneFromMultiValidator';
@@ -63,7 +63,6 @@ export class NewQuoteExpectedOrderComponent implements OnInit, AfterViewInit {
 
   async initTenantsData() {
     this.tenant = await this.newQuoteDataService.getTenantsData();
-    console.log(this.tenant)
   }
 
   resetForm() {
@@ -77,29 +76,35 @@ export class NewQuoteExpectedOrderComponent implements OnInit, AfterViewInit {
     })
   }
 
-  ngAfterViewInit(): void {
+  async ngAfterViewInit(): Promise<void> {
     if (this.EntityPM != null && this.EntityPM.Id != null) {
-      if (this.EntityPM.GrossWeight != null) {
-        this.formGroup.controls.grossWeight.setValue(this.EntityPM.GrossWeight);
-      }
-      if (this.EntityPM.Volume != null) {
-        this.formGroup.controls.volume.setValue(this.EntityPM.Volume);
-      }
-      if (this.EntityPM.ChargeableWeight != null) {
-        this.formGroup.controls.chargeableWeight.setValue(this.EntityPM.ChargeableWeight);
-      }
-      if (this.EntityPM.NumberOfPackages != null) {
-        this.formGroup.controls.numberOfPackages.setValue(this.EntityPM.NumberOfPackages);
-      }
-      if (this.EntityPM.IsDangerous != null) {
-        this.formGroup.controls.isDangerous.setValue(this.EntityPM.IsDangerous);
-      }
-      if (this.EntityPM.DescriptionOfGoods != null) {
-        this.formGroup.controls.descriptionOfGoods.setValue(this.EntityPM.DescriptionOfGoods);
-      }
-      if (this.EntityPM.Notes != null) {
-        this.formGroup.controls.notes.setValue(this.EntityPM.Notes);
-      }
+      this.formGroup.controls.quantity1.setValue(this.EntityPM.PackageType1Quantity)
+      this.formGroup.controls.quantityType1.setValue(this.EntityPM.PackageType1Id)
+      this.formGroup.controls.quantity1.setValue(this.EntityPM.PackageType2Quantity)
+      this.formGroup.controls.quantityType1.setValue(this.EntityPM.PackageType2Id)
+      this.formGroup.controls.quantity1.setValue(this.EntityPM.PackageType3Quantity)
+      this.formGroup.controls.quantityType1.setValue(this.EntityPM.PackageType3Id)
+      this.formGroup.controls.quantity1.setValue(this.EntityPM.PackageType4Quantity)
+      this.formGroup.controls.quantityType1.setValue(this.EntityPM.PackageType4Id)
+      this.formGroup.controls.isDangerous.setValue(this.EntityPM.IsDangerous);
+      this.formGroup.controls.descriptionOfGoods.setValue(this.EntityPM.DescriptionOfGoods);
+      this.formGroup.controls.notes.setValue(this.EntityPM.Notes);
+
+      await this.EntityPM.QuotePackages.forEach(async (pack, i) => {
+        if (this.formArray.length < i + 1)
+          this.addPackage(false)
+
+        const packCtrl = (this.formArray.at(i) as FormGroup).controls;
+        packCtrl.volume.setValue(pack.Volume)
+        packCtrl.grossWeight.setValue(pack.GrossWeight)
+        packCtrl.packageType.setValue(await this.newQuoteDataService.getPackageTypeById(pack.PackageTypeId))
+        packCtrl.Ldimension.setValue(pack.Length)
+        packCtrl.Wdimension.setValue(pack.Width)
+        packCtrl.Hdimension.setValue(pack.Height)
+        packCtrl.quantity.setValue(pack.Quantity)
+      })
+
+      this.calcChargeableWeight();
     }
   }
 
@@ -169,11 +174,11 @@ export class NewQuoteExpectedOrderComponent implements OnInit, AfterViewInit {
     }));
   }
 
-  addPackage() {
-    if (this.formArray.invalid) {
+  addPackage(valid:  boolean = true) {
+    if (valid && this.formArray.invalid) {
       let msg: string = 'Volume or Gross Weight fields required';
 
-      if (this.formArray.controls.some(ctrl => (<FormGroup>ctrl).controls.packageType.errors.notIdentityValue))
+      if (this.formArray.controls.some(ctrl => (<FormGroup>ctrl).controls.packageType?.errors?.notIdentityValue))
         msg = 'value in package type not exist';
       else if (this.formArray.length === 1)
         msg = 'Please insert data to the first package';
@@ -244,19 +249,18 @@ export class NewQuoteExpectedOrderComponent implements OnInit, AfterViewInit {
   // }
 
   calcTotalQuantity(prev_quantity: number, current_quantity: number) {
-    this.totalQuantity = this.totalQuantity - prev_quantity + current_quantity;
+    this.totalQuantity = this.totalQuantity - (prev_quantity || 0) + (current_quantity || 0);
     this.EntityPM.NumberOfPackages = this.totalQuantity;
   }
 
-  calcTotalGrossWeight(prev_quantity: number, current_quantity: number) {
-
-    this.totalGrossWeight = this.totalGrossWeight - prev_quantity + current_quantity;
+  calcTotalGrossWeight(prev_GrossWeight: number, current_GrossWeight: number) {
+    this.totalGrossWeight = this.totalGrossWeight - (prev_GrossWeight || 0) + (current_GrossWeight || 0);
     this.EntityPM.GrossWeight = this.totalGrossWeight;
     this.calcChargeableWeight()
   }
 
-  calcTotalVolume(prev_quantity: number, current_quantity: number) {
-    this.totalVolume = this.totalVolume - prev_quantity + current_quantity;
+  calcTotalVolume(prev_volume: number, current_volume: number) {
+    this.totalVolume = this.totalVolume - (prev_volume || 0) + (current_volume || 0);
     this.EntityPM.Volume = this.totalVolume;
     this.calcChargeableWeight()
   }
