@@ -448,6 +448,7 @@ export class FilterField extends BaseComponent {
             if (field.DataTypeCode == "DateTime" || field.DataTypeCode == "Date") {
                 this.list.push(this.BetweenOp);
             }
+            this.AddNumberFilters(field);
         }
 
 
@@ -472,6 +473,13 @@ export class FilterField extends BaseComponent {
     lessThanOrEqualOp: ObjectFieldOperator = new ObjectFieldOperator("LessThanOrEqual", "Less Than Or Equal");
     BetweenOp: ObjectFieldOperator = new ObjectFieldOperator("Between", "Between");
 
+
+    private AddNumberFilters(field: ObjectFieldPM) {
+        if (field.DataTypeCode == "DateTime" || field.DataTypeCode == "Date") {
+            return;
+        }
+        this.list.push(this.notEqualsOp);
+    }
 }
 
 
