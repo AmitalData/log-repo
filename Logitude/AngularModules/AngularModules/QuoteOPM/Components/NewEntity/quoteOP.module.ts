@@ -48,6 +48,7 @@ import { ShipmentTypeListService } from "Shipment/Services/StandardLists/Shipmen
 import { QuoteOPPMService } from "QuoteOPM/Services/StandardPMs/QuoteOPPMService";
 import { PackageTypeListService } from "Common/Services/StandardLists/PackageTypeListService";
 import { MoveTypeListService } from "Infrastructure/Services/StandardLists/MoveTypeListService";
+import { NewQuoteInsertFromEntityService } from "./Services/new-quote-insert-from-entity/new-quote-insert-from-entity.service";
 
 @NgModule({
     imports: [  
@@ -108,6 +109,7 @@ import { MoveTypeListService } from "Infrastructure/Services/StandardLists/MoveT
         NewQuoteDataShareService,
         NewQuoteFocusErrorService,
         NewQuoteHandleLinkedDataService,
+        NewQuoteInsertFromEntityService,
     ],
     exports:
     [
