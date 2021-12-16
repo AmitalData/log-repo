@@ -27,7 +27,8 @@ export class InvoicesFilterComponent extends BaseComponent   {
     reportFliter: ReportFliter;
     ToDate: Date;
     FromDate: Date;
-
+    public IsInvoiceDate: boolean = true;
+    public IsCreateDate: boolean = false;
     queryFilterItems: QueryFilterItem[];
     public CustomerId = null;
     queryFilterItem: QueryFilterItem;
@@ -36,7 +37,8 @@ export class InvoicesFilterComponent extends BaseComponent   {
 
     settingShipmentTypeCode(code) {
         this.ShipmentTypeRadio = code;
-
+        this.IsInvoiceDate = code == "InvoiceDate" ? true : false;
+        this.IsCreateDate = !this.IsInvoiceDate;
     }
 
     public shipmentTypeRadio: string = "InvoiceDate";
@@ -58,8 +60,7 @@ export class InvoicesFilterComponent extends BaseComponent   {
 
     }
 
-    public IsInvoiceDate: boolean = true;
-    public IsCreateDate: boolean = false;
+
     public invoiceType: string;
 
     public IsLocalCurrency: boolean = true;
@@ -220,6 +221,12 @@ export class InvoicesFilterComponent extends BaseComponent   {
             this.queryFilterItem.Operator = "Equals";
             this.queryFilterItems.push(this.queryFilterItem);
 
+            this.queryFilterItem = new QueryFilterItem();
+            this.queryFilterItem.DisplayInList = false;
+            this.queryFilterItem.FieldName = "InvoiceDate";
+            this.queryFilterItem.FieldValue = this.IsInvoiceDate;
+            this.queryFilterItem.Operator = "Equals";
+            this.queryFilterItems.push(this.queryFilterItem);
 
             this.reportFliter = new ReportFliter();
             this.reportFliter.Tenant = SessionInfo.LoggedUserTenant;
