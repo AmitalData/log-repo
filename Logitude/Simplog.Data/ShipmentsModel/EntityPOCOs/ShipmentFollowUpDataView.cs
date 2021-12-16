@@ -652,5 +652,7 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public bool HasUnassignedData { get; set; }
         public string OperationalStatusId { get; set; }
         public string OperationalStatusName { get; set; }
+        public string DestinationWarehouseId { get; set; }
+        public string DestinationWarehouseName { get; set; }
     }
 }

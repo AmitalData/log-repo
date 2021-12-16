@@ -5018,6 +5018,10 @@ export class ShipmentPM {
     public get HandlerUserId() { return this.handlerUserId; }
     public set HandlerUserId(newValue: string) { if (this.handlerUserId != newValue) { this.handlerUserId = newValue; this.MarkAsDirty("HandlerUserId"); } }
 
+    private destinationWarehouseId: string;
+    public get DestinationWarehouseId() { return this.destinationWarehouseId; }
+    public set DestinationWarehouseId(newValue: string) { if (this.destinationWarehouseId != newValue) { this.destinationWarehouseId = newValue; this.MarkAsDirty("DestinationWarehouseId"); } }
+
     private inlandDomesticFromZipCode: string;
     public get InlandDomesticFromZipCode() { return this.inlandDomesticFromZipCode; }
     public set InlandDomesticFromZipCode(newValue: string) { if (this.inlandDomesticFromZipCode != newValue) { this.inlandDomesticFromZipCode = newValue; this.MarkAsDirty("InlandDomesticFromZipCode"); } }

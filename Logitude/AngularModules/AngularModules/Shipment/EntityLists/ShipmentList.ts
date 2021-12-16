@@ -488,5 +488,7 @@ export class ShipmentList {
 		CustomerContactEmail: string;
 		PODReceivedDate: Date;
 		HasUnassignedData: boolean;
+		DestinationWarehouseId: string;
+		DestinationWarehouseName: string;
 	
 }
