@@ -6,7 +6,7 @@
 	(
 		SELECT ReconWithAccountingYear.ReconciliationId, Count(*) as FromCrossYearCount from (
 			SELECT extRecLines.ReconciliationId as ReconciliationId, YEAR(ledgTrans.AccountingDate) AccountingYear
-			FROM [2021R3_Main].[dbo].[ExternalReconciliationLines] as extRecLines
+			FROM ExternalReconciliationLines as extRecLines
 			inner join LedgerTransactions ledgTrans on extRecLines.LedgerTransactionId = ledgTrans.Id
 			GROUP BY extRecLines.ReconciliationId, YEAR(ledgTrans.AccountingDate)
 		) as ReconWithAccountingYear
