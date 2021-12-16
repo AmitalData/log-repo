@@ -834,6 +834,9 @@ h1{
     margin-right: 20px;
 }
 
+::ng-deep .sort-by-div .mat-form-field-flex{
+        width: 130px !important;
+}
 .has-exception-checkbox-filter {
     display: inline-block;
     width: 220px !important;
