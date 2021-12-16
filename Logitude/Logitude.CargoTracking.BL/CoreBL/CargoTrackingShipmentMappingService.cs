@@ -33,12 +33,14 @@ namespace Logitude.CargoTracking.BL.EntityQueryServices
             FillShipmentPackages();
             FillCustomsData();
             FillDocumentsFilings();
+            FillConnectedOrders();
             BuildPartnerCards();
             BuildShipmentMilstones(milestoneDictionary);
             SetMilestonesStatus();
             SetRoutePortsCodes(cargoShipmentPM);
             SetTenantFields();
             SetShipmentCloudDataFields();
+
         }
 
 
@@ -103,6 +105,22 @@ namespace Logitude.CargoTracking.BL.EntityQueryServices
             foreach (var documentFiling in documentsFilingPM)
             {
                 MapCargoDocumentsFromDocumentsFilings(documentFiling);
+            }
+        }
+
+        private void FillConnectedOrders()
+        {
+            ShipmentOrderQueryService shipmentOrderQuery = new ShipmentOrderQueryService(cargoShipmentPM.Tenant);
+            var shipmentOrders = shipmentOrderQuery.GetConnectedShipmentOrders(cargoShipmentPM.ShipmentNumber, cargoShipmentPM.Tenant);
+            if (shipmentOrders.Any())
+            {
+                cargoShipmentPM.ConnectedOrders = shipmentOrders.Select(x => new ConnectedOrder
+                {
+                    Id = x.Id,
+                    OrderNumber = x.OrderNumber,
+                    PONumber = x.PONumber,
+                    SupplyDateTime = x.SupplyDateTime
+                }).ToList();
             }
         }
         private void BuildPartnerCards()

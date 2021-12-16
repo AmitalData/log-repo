@@ -1,6 +1,7 @@
 import { Milestone } from "../Components/PublicSite/PublicShipmentDetailsComponent/PublicShipmentDetailsComponent";
 import { CargoDocumentsFiling } from "./CargoDocumentsFiling";
 import { CargoShipmentPackage } from "./CargoShipmentPackage";
+import { ConnectedOrder } from "./ConnectedOrder";
 import { PartnerCard } from "./PartnerCard";
 import { RoutingStep } from "./RoutingStep";
 import { ShipmentCustomsData } from "./ShipmentCustomsData";
@@ -653,6 +654,7 @@ export class CargoTrackingShipmentMappedPM {
     public PartnerCards: PartnerCard[] = [];
     public Packages: CargoShipmentPackage[] = [];
     public DocumentsFilings: CargoDocumentsFiling[] = [];
+    public ConnectedOrders: ConnectedOrder[] = [];
 
     public ShipmentReferences: string;
     public ForwardingHouse: string;

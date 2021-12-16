@@ -285,6 +285,10 @@
                     (click)="PanelsNavigatorClicked('DocumentsPanel')">
                 Documents
             </button>
+            <button [class.active]="selectedNavButton=='ConnectedOrdersPanel'"
+                    (click)="PanelsNavigatorClicked('ConnectedOrdersPanel')">
+                    Connected SHO's
+            </button>
             <button  *ngIf="!ShowDeclarationApproval" [class.active]="selectedNavButton=='PartnersPanel'"
                     (click)="PanelsNavigatorClicked('PartnersPanel')">
                 Partners
@@ -709,7 +713,7 @@ package.ShipperSeal == null ? package.CarrierSeal :
 
     </panel>
 
-    <panel *ngIf="!ShowDeclarationApproval" style="order: 6;" [Title]="'Routing'" [Name]="'RoutingPanel'" [ShowWhitePanelOnMobile]="cargoTrackingShipmentPM.RoutingSteps?.length === 0">
+    <panel *ngIf="!ShowDeclarationApproval" style="order: 7;" [Title]="'Routing'" [Name]="'RoutingPanel'" [ShowWhitePanelOnMobile]="cargoTrackingShipmentPM.RoutingSteps?.length === 0">
 
         <div body>
             <div class="slider-wrapper" id="RoutingSliderWrapper" #RoutingSliderWrapper style="background:rgba(59, 59, 59, 0.00);padding-bottom:10px"
@@ -954,7 +958,39 @@ package.ShipperSeal == null ? package.CarrierSeal :
 
     </panel>
 
-    <panel *ngIf="!ShowDeclarationApproval" style="order: 7;" [Title]="'Partners'" [Name]="'PartnersPanel'" TransparentBackground="true" [ShowWhitePanelOnMobile]="cargoTrackingShipmentPM.PartnerCards?.length === 0">
+    
+
+
+    <panel [Title]="'SHO List'" style="order: 6;" [Name]="'ConnectedOrdersPanel'" [ShowWhitePanelOnMobile]="true">
+
+        <div body style="padding: 0px 8px 13px 0px;">
+            <div  class="no-data-available" *ngIf="!cargoTrackingShipmentPM.ConnectedOrders || cargoTrackingShipmentPM.ConnectedOrders.length == 0 " style="margin-top:10px">The Shipment is not connected to any Order</div>
+            
+            <div *ngIf="cargoTrackingShipmentPM.ConnectedOrders?.length > 0 ">
+
+                <table class="row-hover connected-orders-table">
+                    <tr class="header">
+                        <th >SHO Number</th>
+                        <th >PO Number</th>
+                        <th >Supply Date</th>
+                    </tr>
+                    <tr *ngFor="let item of cargoTrackingShipmentPM.ConnectedOrders">
+                        <td >{{item.OrderNumber}}</td>
+                        <td >{{item.PONumber}}</td>
+                        <td >{{item.SupplyDateTime | date:'dd/MM/yyyy'}}</td>
+                    </tr>
+
+                </table>
+
+            </div>
+        </div>
+
+    </panel>
+
+
+
+
+    <panel *ngIf="!ShowDeclarationApproval" style="order: 8;" [Title]="'Partners'" [Name]="'PartnersPanel'" TransparentBackground="true" [ShowWhitePanelOnMobile]="cargoTrackingShipmentPM.PartnerCards?.length === 0">
 
         <div body>
             <div  class="no-data-available" *ngIf="cargoTrackingShipmentPM.PartnerCards?.length == 0 " style="margin-top:10px">No Partners defined for this shipment</div>

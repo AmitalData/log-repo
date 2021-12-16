@@ -29,6 +29,8 @@ namespace Logitude.CargoTracking.Def.EntityPMs
         [DataMember]
         public List<CargoDocumentsFiling> DocumentsFilings { get; set; }
         [DataMember]
+        public List<ConnectedOrder> ConnectedOrders { get; set; }
+        [DataMember]
         public string ShipmentReferences { get; set; }
         [DataMember]
         public string ForwardingHouse { get; set; }
@@ -183,5 +185,11 @@ namespace Logitude.CargoTracking.Def.EntityPMs
 
     }
 
-
+    public class ConnectedOrder
+    {
+        public string Id { get; set; }
+        public string OrderNumber { get; set; }
+        public string PONumber { get; set; }
+        public DateTime? SupplyDateTime { get; set; }
+    }
 }
