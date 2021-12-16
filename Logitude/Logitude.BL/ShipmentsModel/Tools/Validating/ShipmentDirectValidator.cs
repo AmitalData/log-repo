@@ -52,7 +52,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
             ShipmentAccountingValidator shipmentAccountingValidator = new ShipmentAccountingValidator(shipmentPM);
             shipmentAccountingValidator.ValidateAccountingClosed();
 
-            ValidateCustomerData(shipmentPM);
+            //ValidateCustomerData(shipmentPM);
             ValidateUpdateShipmentPackages(shipmentPM);
         }
 
