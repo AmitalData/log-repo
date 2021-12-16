@@ -436,6 +436,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="true"
     DisplayInAutomationAsEnitity="false"
+    RecordType="&quot;Shipment&quot;"
     HasTemplate="false"
     IsCustom="false"
     HelpTextCode="&quot;IncludesCustoms&quot;"
