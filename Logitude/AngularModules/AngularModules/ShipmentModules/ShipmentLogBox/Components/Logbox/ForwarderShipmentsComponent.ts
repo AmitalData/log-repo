@@ -114,6 +114,7 @@ export class ForwarderShipmentsComponent extends BaseComponent implements OnInit
     public AllShipmentsCount: string;
     public searchFields: string;
     public HasSharedDocs: boolean = true;
+    public AllowCreateAirExportShipmentsWithoutDocuments: boolean = false;
     @Output() SearchFieldchangeevent = new EventEmitter();
     DataSource = {
         pageSize: 20,
@@ -133,6 +134,7 @@ export class ForwarderShipmentsComponent extends BaseComponent implements OnInit
     SetWindowArgs(args: any) {
         this.SourceEntity = args.SourceEntity;
         this.HasSharedDocs = args.HasSharedDocs;
+        this.AllowCreateAirExportShipmentsWithoutDocuments = this.SourceEntity.TransportModeId == "A" && this.SourceEntity.DirectionId == "E" && SessionLocator.PrivateLableSettings.CreateShipmentsWithoutDocs;
         if (this.SourceEntity) { 
             if (this.SourceEntity.TransportModeId == "O") {
                 this.TransportationTypes = [new TransportationTypes("Ashdod", "O", "ASH", "IL"), new TransportationTypes("Haifa", "O", "HFA", "IL"), new TransportationTypes("Eilat", "O", "ETH", "IL")];                

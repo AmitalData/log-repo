@@ -58,6 +58,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                              DocumentTypeHighlightColor = a.DocumentTypeHighlightColor,
                                              IsCustomsActivated = a.IsCustomsActivated,
                                              IsExportActivated = a.IsExportActivated,
+                                             CreateShipmentsWithoutDocs = a.CreateShipmentsWithoutDocs,
                                          }).FirstOrDefault();
 
             return entity;
@@ -91,6 +92,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                                          DocumentTypeHighlightColor = a.DocumentTypeHighlightColor,
                                                          IsCustomsActivated = a.IsCustomsActivated,
                                                          IsExportActivated = a.IsExportActivated,
+                                                         CreateShipmentsWithoutDocs = a.CreateShipmentsWithoutDocs,
                                                      }).FirstOrDefault();
 
             return entity;
@@ -124,6 +126,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                                            DocumentTypeHighlightColor = a.DocumentTypeHighlightColor,
                                                            IsCustomsActivated = a.IsCustomsActivated,
                                                            IsExportActivated = a.IsExportActivated,
+                                                           CreateShipmentsWithoutDocs = a.CreateShipmentsWithoutDocs,
                                                        }).FirstOrDefault();
 
             return entity;
@@ -156,6 +159,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                         DocumentTypeHighlightColor = a.DocumentTypeHighlightColor,
                         IsCustomsActivated = a.IsCustomsActivated,
                         IsExportActivated = a.IsExportActivated,
+                        CreateShipmentsWithoutDocs = a.CreateShipmentsWithoutDocs,
                     });
         }
 
@@ -188,6 +192,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                         DocumentTypeHighlightColor = a.DocumentTypeHighlightColor,
                         IsCustomsActivated = a.IsCustomsActivated,
                         IsExportActivated = a.IsExportActivated,
+                        CreateShipmentsWithoutDocs = a.CreateShipmentsWithoutDocs,
                     });
         }
 
@@ -219,6 +224,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                         DocumentTypeHighlightColor = a.DocumentTypeHighlightColor,
                         IsCustomsActivated = a.IsCustomsActivated,
                         IsExportActivated = a.IsExportActivated,
+                        CreateShipmentsWithoutDocs = a.CreateShipmentsWithoutDocs,
                     });
         }
 
@@ -251,6 +257,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                        DocumentTypeHighlightColor = a.DocumentTypeHighlightColor,
                        IsCustomsActivated = a.IsCustomsActivated,
                        IsExportActivated = a.IsExportActivated,
+                       CreateShipmentsWithoutDocs = a.CreateShipmentsWithoutDocs,
                    };
 
         }

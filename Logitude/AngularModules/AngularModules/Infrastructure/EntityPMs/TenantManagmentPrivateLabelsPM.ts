@@ -145,6 +145,11 @@ export class TenantManagmentPrivateLabelsPM {
     public set IsCustomsActivated(newValue: boolean) { if (this.isCustomsActivated != newValue) { this.isCustomsActivated = newValue; this.MarkAsDirty("IsCustomsActivated"); } }
        
 	 
+    private createShipmentsWithoutDocs: boolean;
+    public get CreateShipmentsWithoutDocs() { return this.createShipmentsWithoutDocs; }
+    public set CreateShipmentsWithoutDocs(newValue: boolean) { if (this.createShipmentsWithoutDocs != newValue) { this.createShipmentsWithoutDocs = newValue; this.MarkAsDirty("CreateShipmentsWithoutDocs"); } }
+       
+	 
 
     public OldEntityPM: TenantManagmentPrivateLabelsPM;
 		

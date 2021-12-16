@@ -30,5 +30,6 @@ export class TenantManagmentPrivateLabelsList {
 		DocumentTypeHighlightColor: string;
 		IsCustomsActivated: boolean;
 		IsExportActivated: boolean;
+		CreateShipmentsWithoutDocs: boolean;
 	
 }

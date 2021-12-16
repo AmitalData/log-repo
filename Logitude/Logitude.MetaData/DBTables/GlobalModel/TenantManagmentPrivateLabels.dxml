@@ -175,4 +175,10 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="CreateShipmentsWithoutDocs"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
 </Table>

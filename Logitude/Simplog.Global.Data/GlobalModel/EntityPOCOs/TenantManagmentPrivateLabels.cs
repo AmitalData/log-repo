@@ -38,6 +38,7 @@ namespace Simplog.Global.Data.GlobalModel.EntityPOCOs
         public bool IsExportActivated { get; set; }
 
         public bool IsCustomsActivated { get; set; }
+        public bool CreateShipmentsWithoutDocs { get; set; }
 
         //[ForeignKey("MainLogoId")]
         //public virtual ImageDetail ImageDetail { get; set; }
