@@ -865,7 +865,13 @@ export class AddEditPrivateLabelsComponent extends BaseComponent implements OnIn
         if (value != this.EntityPM.HasLogboxAccess)
             this.EntityPM.HasLogboxAccess = value;
     }
-
+    get CreateShipmentsWithoutDocs() {
+        return this.EntityPM.CreateShipmentsWithoutDocs;
+    }
+    set CreateShipmentsWithoutDocs(value: boolean) {
+        if (value != this.EntityPM.CreateShipmentsWithoutDocs)
+            this.EntityPM.CreateShipmentsWithoutDocs = value;
+    }
     get IsCustomsActivated() {
         return this.EntityPM.IsCustomsActivated;
     }

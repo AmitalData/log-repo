@@ -38,5 +38,6 @@ namespace Logitude.BL.GlobalModel.EntityPMs
 
         public bool IsCustomsActivated { get; set; }
         public string QueryFiltersHighlightColor { get; set; }
+        public bool CreateShipmentsWithoutDocs { get; set; }
     }
 }

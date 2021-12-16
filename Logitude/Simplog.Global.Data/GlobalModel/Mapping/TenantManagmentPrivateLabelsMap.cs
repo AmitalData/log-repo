@@ -56,6 +56,7 @@ namespace Simplog.Global.Data.GlobalModel.Mapping
             this.Property(t => t.IsCustomsActivated).HasColumnName("IsCustomsActivated");
             this.Property(t => t.IsExportActivated).HasColumnName("IsExportActivated");
             this.Property(t => t.QueryFiltersHighlightColor).HasColumnName("QueryFiltersHighlightColor");
+            this.Property(t => t.CreateShipmentsWithoutDocs).HasColumnName("CreateShipmentsWithoutDocs");
 
             //this.HasRequired(t => t.GlobalTenant).WithOptional(t => t.TenantManagement);
             //this.HasOptional(t => t.MainLogoId).WithMany().HasForeignKey(d => d.LogoId);

@@ -148,6 +148,10 @@ export class TenantManagmentPrivateLabelsPM {
     private queryFiltersHighlightColor: string;
     public get QueryFiltersHighlightColor() { return this.queryFiltersHighlightColor; }
     public set QueryFiltersHighlightColor(newValue: string) { if (this.queryFiltersHighlightColor != newValue) { this.queryFiltersHighlightColor = newValue; this.MarkAsDirty("QueryFiltersHighlightColor"); } }
+
+    private createShipmentsWithoutDocs: boolean;
+    public get CreateShipmentsWithoutDocs() { return this.createShipmentsWithoutDocs; }
+    public set CreateShipmentsWithoutDocs(newValue: boolean) { if (this.createShipmentsWithoutDocs != newValue) { this.createShipmentsWithoutDocs = newValue; this.MarkAsDirty("CreateShipmentsWithoutDocs"); } }
        
 	 
 
@@ -177,4 +181,4 @@ export class TenantManagmentPrivateLabelsPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

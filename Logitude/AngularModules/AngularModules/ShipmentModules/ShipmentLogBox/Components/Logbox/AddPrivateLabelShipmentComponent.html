@@ -1050,7 +1050,7 @@
 
 
 																	<td style="width:7px;">
-																		<div style="width: 7px; height: 7px; background: #E45A26; -webkit-border-radius: 25px; -moz-border-radius: 25px; border-radius: 25px;"></div>
+																		<div *ngIf="!(AllowCreateShipmentsWithoutDocuments && DirectionId == 'E' && TransportModeId == 'A')" style="width: 7px; height: 7px; background: #E45A26; -webkit-border-radius: 25px; -moz-border-radius: 25px; border-radius: 25px;"></div>
 
 																	</td>
 																	<td>

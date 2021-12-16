@@ -1,4 +1,4 @@
-﻿
+
 <style>
     .MenuFilters {
         color: #909293;
@@ -104,9 +104,9 @@
                                 </td>
                                 <td style="width:15px;"></td>
                                 <td style="height: 22px;width:315px;">
-                                    <button class="RedButton" *ngIf="this.HasSharedDocs == true" (click)="CreateButtonClicked()" style="width:57px;float:left;">Create</button>
+                                    <button class="RedButton" *ngIf="this.HasSharedDocs == true || AllowCreateAirExportShipmentsWithoutDocuments" (click)="CreateButtonClicked()" style="width:57px;float:left;">Create</button>
                                     <div *ngIf="this.HasSharedDocs == false">
-                                        <button class="RedButton" title="No documents were shared with agent yet." style="width:57px;float: left;margin:4px; opacity:0.5;">Create</button>
+                                        <button *ngIf="!AllowCreateAirExportShipmentsWithoutDocuments" class="RedButton" title="No documents were shared with agent yet." style="width:57px;float: left;margin:4px; opacity:0.5;">Create</button>
                                         <div style="float:left;color:red;margin-top:5px;">No documents were shared with agent yet.</div>
                                     </div>
                                 </td>

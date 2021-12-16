@@ -222,7 +222,7 @@
                                                         <LogLabel [Text]="'Name'" [ObjectFieldName]="'PrivateLabelName'" [ObjectTableName]="ObjectTableName"
                                                                   [DataContext]="DataContext"></LogLabel>
                                                     </td>
-                                                    <td>
+                                                    <td style="width:380px;">
                                                         <LogTextBox [ObjectFieldName]="'PrivateLabelName'" [ObjectTableName]="ObjectTableName"
                                                                     [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
                                                     </td>
@@ -233,11 +233,11 @@
                                                 <!-- Short Name -->
                                                 <tr class="FormFieldRow">
 
-                                                    <td>
+                                                    <td style="width:130px">
                                                         <LogLabel [Text]="'Short Name'" [ObjectFieldName]="'PrivateLabelShortName'" [ObjectTableName]="ObjectTableName"
                                                                   [DataContext]="DataContext"></LogLabel>
                                                     </td>
-                                                    <td>
+                                                    <td style="width:380px;">
                                                         <LogTextBox [ObjectFieldName]="'PrivateLabelShortName'" [ObjectTableName]="ObjectTableName"
                                                                     [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
                                                     </td>
@@ -249,11 +249,11 @@
                                                 <!-- URL -->
                                                 <tr class="FormFieldRow">
 
-                                                    <td>
+                                                    <td style="width:130px">
                                                         <LogLabel [Text]="'URL'" [ObjectFieldName]="'PrivateLabelUrl'" [ObjectTableName]="ObjectTableName"
                                                                   [DataContext]="DataContext"></LogLabel>
                                                     </td>
-                                                    <td>
+                                                    <td style="width:380px;">
                                                         <LogTextBox [ObjectFieldName]="'PrivateLabelUrl'" [ObjectTableName]="ObjectTableName"
                                                                     [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
                                                     </td>
@@ -265,11 +265,11 @@
                                                 <!-- Domain -->
                                                 <tr class="FormFieldRow">
 
-                                                    <td>
+                                                    <td style="width:130px">
                                                         <LogLabel [Text]="'Domain'" [ObjectFieldName]="'PrivateLabelDomain'" [ObjectTableName]="ObjectTableName"
                                                                   [DataContext]="DataContext"></LogLabel>
                                                     </td>
-                                                    <td>
+                                                    <td style="width:380px;">
                                                         <LogTextBox [ObjectFieldName]="'PrivateLabelDomain'" [ObjectTableName]="ObjectTableName"
                                                                     [DataContext]="DataContext" [HideLastColumn]="true"></LogTextBox>
                                                     </td>
@@ -281,11 +281,11 @@
                                                 <!-- Contact Us Email -->
                                                 <tr class="FormFieldRow">
 
-                                                    <td>
+                                                    <td style="width:130px">
                                                         <LogLabel [Text]="'Contact Us Email'" [ObjectFieldName]="'ContactUsEmail'" [ObjectTableName]="ObjectTableName"
                                                                   [DataContext]="DataContext"></LogLabel>
                                                     </td>
-                                                    <td>
+                                                    <td style="width:380px;">
                                                         <LogTextBox [ObjectFieldName]="'ContactUsEmail'" [ObjectTableName]="ObjectTableName"
                                                                     [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
                                                     </td>
@@ -297,11 +297,11 @@
                                                 <!-- Hybrid Partner -->
                                                 <tr class="FormFieldRow">
 
-                                                    <td>
+                                                    <td style="width:130px">
                                                         <LogLabel [Text]="'Hybrid Partner'" [ObjectFieldName]="'HybridPartnerId'" [ObjectTableName]="ObjectTableName"
                                                                   [DataContext]="DataContext"></LogLabel>
                                                     </td>
-                                                    <td>
+                                                    <td style="width:380px;">
                                                         <LogLov [ObjectFieldName]="'HybridPartnerId'"
                                                                 [ObjectTableName]="ObjectTableName"
                                                                 [SelectedValue]="HybridPartnerId"
@@ -316,80 +316,101 @@
 
                                                 </tr>
 
+                                                <!-- Receive All Statuses -->
                                                 <tr class="FormFieldRow">
-
-                                                    <!-- Receive All Statuses -->
                                                     <td>
-                                                        <LogLabel [Text]="'Receive All Statuses'" [ObjectFieldName]="'ReceiveAllStatuses'" [ObjectTableName]="ObjectTableName"
-                                                                  [DataContext]="DataContext"></LogLabel>
-                                                    </td>
-                                                    <td>
-                                                        <LogCheckBox [ObjectFieldName]="'ReceiveAllStatuses'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
-                                                    </td>
+                                                        <div style="display:inline-flex;width:300px">
+                                                            <div style="display:inline;width:auto">
+                                                                <LogLabel [Text]="'Receive All Statuses'" [ObjectFieldName]="'ReceiveAllStatuses'" [ObjectTableName]="ObjectTableName"
+                                                                          [DataContext]="DataContext"></LogLabel>
+                                                            </div>
+                                                            <div style="display:inline;width:auto;margin-left:5px">
+                                                                <LogCheckBox [ObjectFieldName]="'ReceiveAllStatuses'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
 
-                                                    <td></td>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+
+                                                <!-- Inactive -->
+                                                <tr class="FormFieldRow">
+                                                    <td>
+                                                        <div style="display:inline-flex;width:300px">
+                                                            <div style="display:inline;width:auto">
+                                                                <LogLabel [Text]="'In Active'" [ObjectFieldName]="'InActive'" [ObjectTableName]="ObjectTableName"
+                                                                          [DataContext]="DataContext"></LogLabel>
+                                                            </div>
+
+                                                            <div style="display:inline;width:auto;margin-left:5px">
+                                                                <LogCheckBox [ObjectFieldName]="'InActive'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                                            </div>
+                                                        </div>
+                                                    </td>
 
                                                 </tr>
 
+                                                <!-- HasLogboxAccess -->
                                                 <tr class="FormFieldRow">
-
-                                                    <!-- Inactive -->
                                                     <td>
-                                                        <LogLabel [Text]="'In Active'" [ObjectFieldName]="'InActive'" [ObjectTableName]="ObjectTableName"
-                                                                  [DataContext]="DataContext"></LogLabel>
-                                                    </td>
-                                                    <td>
-                                                        <LogCheckBox [ObjectFieldName]="'InActive'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
-                                                    </td>
+                                                        <div style="display:inline-flex;width:300px">
+                                                            <div style="display:inline;width:auto">
+                                                                <LogLabel [Text]="'Has Logbox Access'" [ObjectFieldName]="'HasLogboxAccess'" [ObjectTableName]="ObjectTableName"
+                                                                          [DataContext]="DataContext"></LogLabel>
+                                                            </div>
 
-                                                    <td></td>
-
+                                                            <div style="display:inline;width:auto;margin-left:5px">
+                                                                <LogCheckBox [ObjectFieldName]="'HasLogboxAccess'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                                            </div>
+                                                        </div>
+                                                    </td>
                                                 </tr>
 
-
+                                                <!-- IsCustomsActivated -->
                                                 <tr class="FormFieldRow">
-
-                                                    <!-- HasLogboxAccess -->
                                                     <td>
-                                                        <LogLabel [Text]="'Has Logbox Access'" [ObjectFieldName]="'HasLogboxAccess'" [ObjectTableName]="ObjectTableName"
-                                                                  [DataContext]="DataContext"></LogLabel>
-                                                    </td>
-                                                    <td>
-                                                        <LogCheckBox [ObjectFieldName]="'HasLogboxAccess'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
-                                                    </td>
+                                                        <div style="display:inline-flex;width:300px">
+                                                            <div style="display:inline;width:auto">
+                                                                <LogLabel [Text]="'Is Customs Activated'" [ObjectFieldName]="'IsCustomsActivated'" [ObjectTableName]="ObjectTableName"
+                                                                          [DataContext]="DataContext"></LogLabel>
+                                                            </div>
 
-                                                    <td></td>
-
+                                                            <div style="display:inline;width:auto;margin-left:5px">
+                                                                <LogCheckBox [ObjectFieldName]="'IsCustomsActivated'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                                            </div>
+                                                        </div>
+                                                    </td>
                                                 </tr>
 
+                                                <!-- IsExportActivated -->
                                                 <tr class="FormFieldRow">
-
-                                                    <!-- IsCustomsActivated -->
                                                     <td>
-                                                        <LogLabel [Text]="'Is Customs Activated'" [ObjectFieldName]="'IsCustomsActivated'" [ObjectTableName]="ObjectTableName"
-                                                                  [DataContext]="DataContext"></LogLabel>
-                                                    </td>
-                                                    <td>
-                                                        <LogCheckBox [ObjectFieldName]="'IsCustomsActivated'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
-                                                    </td>
+                                                        <div style="display:inline-flex;width:300px">
+                                                            <div style="display:inline;width:auto">
+                                                                <LogLabel [Text]="'Is Export Activated'" [ObjectFieldName]="'IsExportActivated'" [ObjectTableName]="ObjectTableName"
+                                                                          [DataContext]="DataContext"></LogLabel>
+                                                            </div>
 
-                                                    <td></td>
-
+                                                            <div style="display:inline;width:auto;margin-left:5px">
+                                                                <LogCheckBox [ObjectFieldName]="'IsExportActivated'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                                            </div>
+                                                        </div>
+                                                    </td>
                                                 </tr>
 
+                                                <!-- CreateShipmentsWithoutDocs -->
                                                 <tr class="FormFieldRow">
-
-                                                    <!-- IsExportActivated -->
                                                     <td>
-                                                        <LogLabel [Text]="'Is Export Activated'" [ObjectFieldName]="'IsExportActivated'" [ObjectTableName]="ObjectTableName"
-                                                                  [DataContext]="DataContext"></LogLabel>
-                                                    </td>
-                                                    <td>
-                                                        <LogCheckBox [ObjectFieldName]="'IsExportActivated'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
-                                                    </td>
+                                                        <div style="display:inline-flex;width:300px">
+                                                            <div style="display:inline;width:auto">
+                                                                <LogLabel [ObjectFieldName]="'CreateShipmentsWithoutDocs'" [ObjectTableName]="ObjectTableName"
+                                                                          [DataContext]="DataContext"></LogLabel>
+                                                            </div>
+                                                            <div style="display:inline;width:auto;margin-left:5px">
+                                                                <LogCheckBox [ObjectFieldName]="'CreateShipmentsWithoutDocs'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
 
-                                                    <td></td>
-
+                                                            </div>
+                                                        </div>
+                                                    </td>
                                                 </tr>
 
                                                 <tr class="FormFieldRow">

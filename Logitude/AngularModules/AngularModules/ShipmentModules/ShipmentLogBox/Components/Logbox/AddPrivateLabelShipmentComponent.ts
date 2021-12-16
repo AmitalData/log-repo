@@ -62,6 +62,7 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
     public ShowAddDocument: boolean = false;
     public ChangePageButton: string = "Next";
     public IsCustomsActivated: boolean = false;
+    public AllowCreateShipmentsWithoutDocuments: boolean = false;
     constructor() {
         super(); 
         this.InitializeServices();
@@ -204,6 +205,7 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
         if (args.EntityPM) {
             this.EntityPM = args.EntityPM;
         }
+        this.AllowCreateShipmentsWithoutDocuments = SessionLocator.PrivateLableSettings.CreateShipmentsWithoutDocs;
     }
 
     private SetDirections(args: any) {
@@ -445,9 +447,14 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
             this.PushErrorMessage("Destination");  
         }
 
-        if (!this.IsDSVTenant &&(!this.documentsFilings || this.documentsFilings.filter(d => d.IsSharedWithForwarder == true).length == 0)) {
+        if (this.ValidateDocuments()) {
             this.ValidationErrorsList.push("You should have at least one document shared with agent");
         }
+    }
+
+    private ValidateDocuments() {
+        let AllowCreateAirExportShipmentsWithoutDocuments = this.AllowCreateShipmentsWithoutDocuments && this.DirectionId == "E" && this.TransportModeId == "A";
+        return !this.IsDSVTenant && !AllowCreateAirExportShipmentsWithoutDocuments && (!this.documentsFilings || this.documentsFilings.filter(d => d.IsSharedWithForwarder == true).length == 0);
     }
 
     private ValidatBookingNumberOfPackagese() {

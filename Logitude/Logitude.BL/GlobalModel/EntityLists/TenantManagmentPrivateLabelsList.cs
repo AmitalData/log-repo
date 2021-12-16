@@ -32,6 +32,7 @@ namespace Logitude.BL.GlobalModel.EntityLists
         public bool IsCustomsActivated { get; set; }
         public bool IsExportActivated { get; set; }
         public string QueryFiltersHighlightColor { get; set; }
+        public bool CreateShipmentsWithoutDocs { get; set; }
 
 
     }

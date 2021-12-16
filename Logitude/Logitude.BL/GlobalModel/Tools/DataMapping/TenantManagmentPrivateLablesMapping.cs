@@ -41,6 +41,7 @@ namespace Logitude.BL.GlobalModel.Tools.DataMapping
             entityPOCO.DocumentTypeHighlightColor = entityPM.DocumentTypeHighlightColor;
             entityPOCO.IsCustomsActivated = entityPM.IsCustomsActivated;
             entityPOCO.IsExportActivated = entityPM.IsExportActivated;
+            entityPOCO.CreateShipmentsWithoutDocs = entityPM.CreateShipmentsWithoutDocs;
 
         }
     }
