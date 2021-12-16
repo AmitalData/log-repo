@@ -40,7 +40,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
             ShipmentMainCarriageLegsValidator shipmentMainCarriageLegsValidator = new ShipmentMainCarriageLegsValidator(shipmentPM);
             shipmentMainCarriageLegsValidator.ValidateRoutingsSeriesDates();
 
-            ValidateCustomerData(shipmentPM);
+            //ValidateCustomerData(shipmentPM);
         }
 
         private static void ValidateCustomerData(ShipmentPM shipmentPM)
