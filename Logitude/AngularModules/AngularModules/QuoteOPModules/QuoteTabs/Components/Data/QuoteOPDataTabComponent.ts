@@ -5,6 +5,7 @@ import { EntityArgs } from "Infrastructure/DataContracts/EntityArgs";
 import { NewQuoteDataShareService } from "QuoteOPM/Components/NewEntity/Services/new-quote-data-share/new-quote-data-share.service";
 import { NewQuoteDataService } from "QuoteOPM/Components/NewEntity/Services/new-quote-data/new-quote-data.service";
 import { NewQuoteHandleLinkedDataService } from "QuoteOPM/Components/NewEntity/Services/new-quote-handle-linked-data/new-quote-handle-linked-data.service";
+import { NewQuoteInsertFromEntityService } from "QuoteOPM/Components/NewEntity/Services/new-quote-insert-from-entity/new-quote-insert-from-entity.service";
 import { QuoteOPPM } from "QuoteOPM/EntityPMs/QuoteOPPM";
 
 @Component({
@@ -30,6 +31,7 @@ export class QuoteOPDataTabComponent extends BaseComponent {
         private elmRef: ElementRef,
         private dataShareService: NewQuoteDataShareService,
         private handleLinkedDataService: NewQuoteHandleLinkedDataService,
+        private insertFromEntityService: NewQuoteInsertFromEntityService,
     ) {
         super();
     }
@@ -37,6 +39,7 @@ export class QuoteOPDataTabComponent extends BaseComponent {
     
     ngOnInit() {
         this.EntityPM = this.entityArgs.EntityPM;
+        this.insertFromEntityService.EntityPM = this.EntityPM;
         this.setLeftSideData();
         this.dataShareService.EntityPM = this.EntityPM;
         this.dataShareService.newQuoteRef = this.elmRef;

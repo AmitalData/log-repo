@@ -9,6 +9,7 @@ import { filter, pairwise, startWith } from 'rxjs/operators';
 import { ShipmentTypeList } from 'Shipment/EntityLists/ShipmentTypeList';
 import { PackageTypeList } from '../../../../../Common/EntityLists/PackageTypeList';
 import { NewQuoteDataService } from '../../Services/new-quote-data/new-quote-data.service';
+import { NewQuoteInsertFromEntityService } from '../../Services/new-quote-insert-from-entity/new-quote-insert-from-entity.service';
 import { NewQuoteUnitsService } from '../../Services/new-quote-units/new-quote-units.service';
 
 @Component({
@@ -50,8 +51,10 @@ export class NewQuoteExpectedOrderComponent implements OnInit, AfterViewInit {
     private newQuoteDataService: NewQuoteDataService,
     private msg: MessageService,
     private unitsService: NewQuoteUnitsService,
+    private insertFromEntityService: NewQuoteInsertFromEntityService,
     private cdr: ChangeDetectorRef,
   ) { }
+
 
   ngOnInit(): void {
     this.initTenantsData();
@@ -61,9 +64,24 @@ export class NewQuoteExpectedOrderComponent implements OnInit, AfterViewInit {
     this.resetForm();
   }
 
+
+  async ngAfterViewInit(): Promise<void> {
+    this.insertFromEntityService.expectedOrderInsert(this);
+  }
+
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (!this.formGroup.contains('descriptionOfGoods')) {
+      this.addFormControls();
+      this.subscribeCtrl();
+    }
+  }
+
+
   async initTenantsData() {
     this.tenant = await this.newQuoteDataService.getTenantsData();
   }
+
 
   resetForm() {
     this.newQuoteDataService.$resetForm.subscribe(() => {
@@ -76,48 +94,11 @@ export class NewQuoteExpectedOrderComponent implements OnInit, AfterViewInit {
     })
   }
 
-  async ngAfterViewInit(): Promise<void> {
-    if (this.EntityPM != null && this.EntityPM.Id != null) {
-      this.formGroup.controls.quantity1.setValue(this.EntityPM.PackageType1Quantity)
-      this.formGroup.controls.quantityType1.setValue(this.EntityPM.PackageType1Id)
-      this.formGroup.controls.quantity1.setValue(this.EntityPM.PackageType2Quantity)
-      this.formGroup.controls.quantityType1.setValue(this.EntityPM.PackageType2Id)
-      this.formGroup.controls.quantity1.setValue(this.EntityPM.PackageType3Quantity)
-      this.formGroup.controls.quantityType1.setValue(this.EntityPM.PackageType3Id)
-      this.formGroup.controls.quantity1.setValue(this.EntityPM.PackageType4Quantity)
-      this.formGroup.controls.quantityType1.setValue(this.EntityPM.PackageType4Id)
-      this.formGroup.controls.isDangerous.setValue(this.EntityPM.IsDangerous);
-      this.formGroup.controls.descriptionOfGoods.setValue(this.EntityPM.DescriptionOfGoods);
-      this.formGroup.controls.notes.setValue(this.EntityPM.Notes);
-
-      await this.EntityPM.QuotePackages.forEach(async (pack, i) => {
-        if (this.formArray.length < i + 1)
-          this.addPackage(false)
-
-        const packCtrl = (this.formArray.at(i) as FormGroup).controls;
-        packCtrl.volume.setValue(pack.Volume)
-        packCtrl.grossWeight.setValue(pack.GrossWeight)
-        packCtrl.packageType.setValue(await this.newQuoteDataService.getPackageTypeById(pack.PackageTypeId))
-        packCtrl.Ldimension.setValue(pack.Length)
-        packCtrl.Wdimension.setValue(pack.Width)
-        packCtrl.Hdimension.setValue(pack.Height)
-        packCtrl.quantity.setValue(pack.Quantity)
-      })
-
-      this.calcChargeableWeight();
-    }
-  }
 
   async getPackageTypes() {
     this.packageTypes = await this.newQuoteDataService.getPackageTypeTable();
   }
 
-  ngOnChanges(changes: SimpleChanges) {
-    if (!this.formGroup.contains('descriptionOfGoods')) {
-      this.addFormControls();
-      this.subscribeCtrl();
-    }
-  }
 
   onTransportAndShipmentChange(): void {
     this.isSeaFcl = this.formGroup.controls.transportMode?.value?.Id === 'O' && this.formGroup.controls.shipmentType?.value?.Name === 'FCL';
@@ -130,6 +111,7 @@ export class NewQuoteExpectedOrderComponent implements OnInit, AfterViewInit {
     this.isSeaFcl ? this.formArray.disable() : this.formArray.enable();
   }
 
+  
   addFormControls() {
     this.formGroup.addControl('quantity1', new FormControl());
     this.formGroup.addControl('quantity2', new FormControl());
@@ -149,6 +131,7 @@ export class NewQuoteExpectedOrderComponent implements OnInit, AfterViewInit {
     this.formGroup.addControl('notes', new FormControl());
   }
 
+  
   subscribeCtrl() {
     this.formGroup.controls.quantity1.valueChanges.subscribe(val => this.EntityPM.PackageType1Quantity = val);
     this.formGroup.controls.quantity2.valueChanges.subscribe(val => this.EntityPM.PackageType2Quantity = val);
@@ -174,7 +157,8 @@ export class NewQuoteExpectedOrderComponent implements OnInit, AfterViewInit {
     }));
   }
 
-  addPackage(valid:  boolean = true) {
+  
+  addPackage(valid: boolean = true) {
     if (valid && this.formArray.invalid) {
       let msg: string = 'Volume or Gross Weight fields required';
 
@@ -197,6 +181,7 @@ export class NewQuoteExpectedOrderComponent implements OnInit, AfterViewInit {
     this.formArray.push(form)
   }
 
+
   removePackage(index: number) {
     if (this.formArray.controls.length > 1) {
       var remove_quantity = (this.formArray.at(index) as FormGroup).controls.quantity.value;
@@ -212,6 +197,7 @@ export class NewQuoteExpectedOrderComponent implements OnInit, AfterViewInit {
     }
   }
 
+  
   calcVolume(form: FormGroup) {
     const vu = this.unitsService.getVolumeUnit(this.tenant.VolumeUnitCode);
     const du = this.unitsService.getDimensionsUnit(this.tenant.DimensionsUnitCode);
@@ -221,6 +207,7 @@ export class NewQuoteExpectedOrderComponent implements OnInit, AfterViewInit {
     if (val)
       form.controls.volume.setValue(val)
   }
+
 
   disableDimensionsForm(form: FormGroup) {
     if (!form.controls.quantity.value || (form.controls.volume.value && !form.controls.Ldimension.value)) {
@@ -233,6 +220,7 @@ export class NewQuoteExpectedOrderComponent implements OnInit, AfterViewInit {
       form.controls.Hdimension.enable();
     }
   }
+
 
   disablevolumeForm(form: FormGroup) {
     if (form.controls.Ldimension.value || form.controls.Wdimension.value || form.controls.Hdimension.value)
@@ -248,16 +236,19 @@ export class NewQuoteExpectedOrderComponent implements OnInit, AfterViewInit {
   //     form.controls.packageType.disable();
   // }
 
+  
   calcTotalQuantity(prev_quantity: number, current_quantity: number) {
     this.totalQuantity = this.totalQuantity - (prev_quantity || 0) + (current_quantity || 0);
     this.EntityPM.NumberOfPackages = this.totalQuantity;
   }
 
+  
   calcTotalGrossWeight(prev_GrossWeight: number, current_GrossWeight: number) {
     this.totalGrossWeight = this.totalGrossWeight - (prev_GrossWeight || 0) + (current_GrossWeight || 0);
     this.EntityPM.GrossWeight = this.totalGrossWeight;
     this.calcChargeableWeight()
   }
+
 
   calcTotalVolume(prev_volume: number, current_volume: number) {
     this.totalVolume = this.totalVolume - (prev_volume || 0) + (current_volume || 0);
@@ -265,6 +256,7 @@ export class NewQuoteExpectedOrderComponent implements OnInit, AfterViewInit {
     this.calcChargeableWeight()
   }
 
+  
   calcChargeableWeight() {
     if (!this.tenant) return;
 
@@ -292,6 +284,7 @@ export class NewQuoteExpectedOrderComponent implements OnInit, AfterViewInit {
     this.EntityPM.ChargeableWeight = this.billableWeight = this.roundHalf(bulk);
   }
 
+  
   roundHalf(num: number): number {
     return Math.ceil(num * 2) / 2;
   }
