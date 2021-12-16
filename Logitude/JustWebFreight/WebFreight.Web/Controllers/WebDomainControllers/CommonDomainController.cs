@@ -205,8 +205,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     string token = HttpContext.Current.Request.Headers["Token"];
                     AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                     int tenant = authToken.Tenant;
-                    SecurityUtility.AuthenticationOnTenant(tenant);
-                    SecurityUtility.AuthenticationOnEntityTenant( "", filter.Tenant, tenant);
                     string loggedUserEmail = authToken.Email;
                     byte[] fileData = Convert.FromBase64String(filter.FileData);
 
