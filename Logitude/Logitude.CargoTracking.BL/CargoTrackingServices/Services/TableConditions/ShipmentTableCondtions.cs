@@ -11,10 +11,10 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
     public static class ShipmentTableCondtions
     {
 
-        public static string GetAllCustomsShipmentsThatContainForwardingShipments(CargoTrackingUpdateDataBaseArgs cargoTrackingDataBaseArgs, 
+        public static string GetAllCustomsShipmentsThatContainForwardingShipments(CargoTrackingUpdateDataBaseArgs cargoTrackingDataBaseArgs,
             CargoTrackingTable table, string LastUpdate)
         {
-            string shipmentFields = !string.IsNullOrEmpty(cargoTrackingDataBaseArgs.BuildCargoArgs.Table.FieldsDBName) ?  cargoTrackingDataBaseArgs.BuildCargoArgs.Table.FieldsDBName : "*";
+            string shipmentFields = !string.IsNullOrEmpty(cargoTrackingDataBaseArgs.BuildCargoArgs.Table.FieldsDBName) ? cargoTrackingDataBaseArgs.BuildCargoArgs.Table.FieldsDBName : "*";
             shipmentFields = " C." + shipmentFields.Replace(",", " ,C.");
             string updatedShipmentFields = shipmentFields.Replace("C.ConsigneeName", "(case when C.DirectionId = 'E' AND C.ConsigneeId IS NOT NULL then ConsigneeCard.EnglishName when" +
                 " C.DirectionId = 'E' AND C.ConsigneeId IS NULL then C.ConsigneeName end) as ConsigneeName");
@@ -28,11 +28,45 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
                 "com.FinalDeliveryETD as FinalDeliveryETD,com.FinalDeliveryATD as FinalDeliveryATD" +
                 ",com.FirstPickupATD as FirstPickupATD";
 
-            var shipmentMasterFields =
-                 "Mas.MainCarriageATD as MainCarriageATD, Mas.Master as Master " +
-                ", Mas.MainCarriageETD  as MainCarriageETD , Mas.MainCarriageATA  as MainCarriageATA " +
-                ", Mas.MainCarriageETA  as MainCarriageETA " +
-                ", Mas.ImportManifest as ImportManifest ";
+            var shipmentMasterFields =$@"
+                  Mas.Master as Master , 
+                (
+                  case 
+                  when Mas.MainCarriageATD is not null or Mas.MainCarriageETD is not null  then Mas.MainCarriageATD
+                  when Mas.Transshipment1ATD is not null or Mas.Transshipment1ETD is not null then Mas.Transshipment1ATD
+                  when Mas.Transshipment2ATD is not null or Mas.Transshipment2ETD is not null then Mas.Transshipment2ATD
+                  when Mas.Transshipment3ATD is not null or Mas.Transshipment3ETD is not null then Mas.Transshipment3ATD
+                  ELSE Mas.MainCarriageATD
+                  END
+                ) as MainCarriageATD,
+                (
+                  case 
+                  when Mas.MainCarriageETD is not null then Mas.MainCarriageETD
+                  when Mas.Transshipment1ETD is not null then Mas.Transshipment1ETD
+                  when Mas.Transshipment2ETD is not null then Mas.Transshipment2ETD
+                  when Mas.Transshipment3ETD is not null then Mas.Transshipment3ETD
+                  ELSE  Mas.MainCarriageETD
+                  END
+                ) as MainCarriageETD,                
+
+                (
+                  case 
+                  when Mas.Transshipment3ATA is not null or Mas.Transshipment3ETA is not null  then Mas.Transshipment3ATA
+                  when Mas.Transshipment2ATA is not null or Mas.Transshipment3ETA is not null then Mas.Transshipment2ATA
+                  when Mas.Transshipment1ATA is not null or Mas.Transshipment3ETA is not null then Mas.Transshipment1ATA
+                  ELSE  Mas.MainCarriageATA
+                  END
+                  ) as MainCarriageATA,
+                  (
+                  case 
+                  when Mas.Transshipment3ETA is not null then Mas.Transshipment3ETA
+                  when Mas.Transshipment2ETA is not null then Mas.Transshipment2ETA
+                  when Mas.Transshipment1ETA is not null then Mas.Transshipment1ETA
+                  ELSE  Mas.MainCarriageETA
+                  END
+                 ) as MainCarriageETA
+
+                , Mas.ImportManifest as ImportManifest ";
 
             var forwardingShipmentFields =
                 "min(P.ShipmentNumber) as ForwardingShipmentNumber , " +
@@ -138,7 +172,19 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
                     Mas.MainCarriageETD,
                     Mas.MainCarriageATA,
                     Mas.ImportManifest,
-                    Mas.MainCarriageETA";
+                    Mas.MainCarriageETA,
+                    Mas.Transshipment3ATA,
+					Mas.Transshipment2ATA,
+					Mas.Transshipment1ATA,
+					Mas.Transshipment3ETA,
+					Mas.Transshipment2ETA,
+					Mas.Transshipment1ETA,
+                    Mas.Transshipment3ATD,
+					Mas.Transshipment2ATD,
+					Mas.Transshipment1ATD,
+					Mas.Transshipment3ETD,
+					Mas.Transshipment2ETD,
+					Mas.Transshipment1ETD";
 
 
             string sqlQuery = string.Join(Environment.NewLine, " SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED ", selectScript, fromScript, joinScript, whereScript, groupByScript);
@@ -168,11 +214,45 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
                 "com.FinalDeliveryETD as FinalDeliveryETD,com.FinalDeliveryATD as FinalDeliveryATD" +
                 ",com.FirstPickupATD as FirstPickupATD";
 
-            var shipmentMasterFields =
-                 "Mas.MainCarriageATD as MainCarriageATD, Mas.Master as Master " +
-                ",  Mas.MainCarriageETD  as MainCarriageETD , Mas.MainCarriageATA  as MainCarriageATA " +
-                ", Mas.MainCarriageETA  as MainCarriageETA"+
-                ", Mas.ImportManifest as ImportManifest ";
+            var shipmentMasterFields =$@"
+                  Mas.Master as Master ,
+                (
+                  case 
+                  when Mas.MainCarriageATD is not null or Mas.MainCarriageETD is not null  then Mas.MainCarriageATD
+                  when Mas.Transshipment1ATD is not null or Mas.Transshipment1ETD is not null then Mas.Transshipment1ATD
+                  when Mas.Transshipment2ATD is not null or Mas.Transshipment2ETD is not null then Mas.Transshipment2ATD
+                  when Mas.Transshipment3ATD is not null or Mas.Transshipment3ETD is not null then Mas.Transshipment3ATD
+                  ELSE Mas.MainCarriageATD
+                  END
+                ) as MainCarriageATD,
+                (
+                  case 
+                  when Mas.MainCarriageETD is not null then Mas.MainCarriageETD
+                  when Mas.Transshipment1ETD is not null then Mas.Transshipment1ETD
+                  when Mas.Transshipment2ETD is not null then Mas.Transshipment2ETD
+                  when Mas.Transshipment3ETD is not null then Mas.Transshipment3ETD
+                  ELSE  Mas.MainCarriageETD
+                  END
+                ) as MainCarriageETD,
+                
+                
+                (
+                  case 
+                  when Mas.Transshipment3ATA is not null or Mas.Transshipment3ETA is not null  then Mas.Transshipment3ATA
+                  when Mas.Transshipment2ATA is not null or Mas.Transshipment2ETA is not null then Mas.Transshipment2ATA
+                  when Mas.Transshipment1ATA is not null or Mas.Transshipment1ETA is not null then Mas.Transshipment1ATA
+                  ELSE  Mas.MainCarriageATA
+                  END
+                  ) as MainCarriageATA,
+                 (
+                  case 
+                  when Mas.Transshipment3ETA is not null then Mas.Transshipment3ETA
+                  when Mas.Transshipment2ETA is not null then Mas.Transshipment2ETA
+                  when Mas.Transshipment1ETA is not null then Mas.Transshipment1ETA
+                  ELSE  Mas.MainCarriageETA
+                  END
+                 ) as MainCarriageETA
+                , Mas.ImportManifest as ImportManifest ";
 
             var forwardingShipmentFields =
               "min(P.ShipmentNumber) as ForwardingShipmentNumber , " +
@@ -279,7 +359,19 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
                     Mas.MainCarriageETD,
                     Mas.MainCarriageATA,
                     Mas.ImportManifest,
-                    Mas.MainCarriageETA";
+                    Mas.MainCarriageETA,
+                    Mas.Transshipment3ATA,
+					Mas.Transshipment2ATA,
+					Mas.Transshipment1ATA,
+					Mas.Transshipment3ETA,
+					Mas.Transshipment2ETA,
+					Mas.Transshipment1ETA,
+                    Mas.Transshipment3ATD,
+					Mas.Transshipment2ATD,
+					Mas.Transshipment1ATD,
+					Mas.Transshipment3ETD,
+					Mas.Transshipment2ETD,
+					Mas.Transshipment1ETD";
 
 
             string sqlQuery = " SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED " + selectScript + fromScript + joinScript + whereScript + groupByScript;
