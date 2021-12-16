@@ -285,6 +285,10 @@
                     (click)="PanelsNavigatorClicked('DocumentsPanel')">
                 Documents
             </button>
+            <button [class.active]="selectedNavButton=='ConnectedOrdersPanel'"
+                    (click)="PanelsNavigatorClicked('ConnectedOrdersPanel')">
+                    Connected SHO's
+            </button>
             <button  *ngIf="!ShowDeclarationApproval" [class.active]="selectedNavButton=='PartnersPanel'"
                     (click)="PanelsNavigatorClicked('PartnersPanel')">
                 Partners
@@ -959,7 +963,7 @@ package.ShipperSeal == null ? package.CarrierSeal :
 
     <panel [Title]="'SHO List'" style="order: 6;" [Name]="'ConnectedOrdersPanel'" [ShowWhitePanelOnMobile]="true">
 
-        <div body style="padding: 13px 8px 13px 8px;">
+        <div body style="padding: 0px 8px 13px 0px;">
             <div  class="no-data-available" *ngIf="!cargoTrackingShipmentPM.ConnectedOrders || cargoTrackingShipmentPM.ConnectedOrders.length == 0 " style="margin-top:10px">The Shipment is not connected to any Order</div>
             
             <div *ngIf="cargoTrackingShipmentPM.ConnectedOrders?.length > 0 ">
@@ -968,7 +972,7 @@ package.ShipperSeal == null ? package.CarrierSeal :
                     <tr class="header">
                         <th >SHO Number</th>
                         <th >PO Number</th>
-                        <th >Supply Data</th>
+                        <th >Supply Date</th>
                     </tr>
                     <tr *ngFor="let item of cargoTrackingShipmentPM.ConnectedOrders">
                         <td >{{item.OrderNumber}}</td>
