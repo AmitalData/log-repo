@@ -354,6 +354,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.PrivateLabelInvoiceNumber).HasMaxLength(40).IsUnicode(false);
             this.Property(t => t.OperationalStatusId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.BillingStatusId).HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.DestinationWarehouseId).HasMaxLength(15).IsUnicode(false);
 
             // Table & Column Mappings
             this.ToTable("Shipments");
@@ -807,6 +808,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.ParentShipmentNumber).HasColumnName("ParentShipmentNumber");
             this.Property(t => t.ParentShipmentType).HasColumnName("ParentShipmentType");
             this.Property(t => t.BillingStatusId).HasColumnName("BillingStatusId");
+            this.Property(t => t.DestinationWarehouseId).HasColumnName("DestinationWarehouseId");
             this.Property(t => t.OperationalStatusId).HasColumnName("OperationalStatusId");
             this.Property(t => t.HasUnassignedData).HasColumnName("HasUnassignedData");
 
@@ -1022,6 +1024,8 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.HasOptional(t => t.OnForwardingAdditionalTransportMode).WithMany().HasForeignKey(d => d.OnForwardingAdditionalTransportModeCode);
             this.HasOptional(t => t.BillingStatus).WithMany().HasForeignKey(d => d.BillingStatusId);
             this.HasOptional(t => t.OperationalStatus).WithMany().HasForeignKey(d => d.OperationalStatusId);
+            this.HasOptional(t => t.DestinationWarehouseCard).WithMany().HasForeignKey(d => d.DestinationWarehouseId);
+
         }
     }
 }

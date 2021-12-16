@@ -3307,6 +3307,13 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="DestinationWarehouseId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="CountryForStatisticsId"
     ReferencedTable="Countries"
@@ -4030,6 +4037,11 @@
   <Relation
     ForeignKeyColumn="BillingStatusId"
     ReferencedTable="EntityStatus"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="DestinationWarehouseId"
+    ReferencedTable="Cards"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Index

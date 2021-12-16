@@ -1792,6 +1792,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.IsCFSWarehouse = shipment.IsCFSWarehouse;
             shipmentPM.IsCFSWarehouseChanged = shipment.IsCFSWarehouseChanged;
             shipmentPM.HasUnassignedData = shipment.HasUnassignedData;
+            shipmentPM.DestinationWarehouseId = shipment.DestinationWarehouseId;
 
             if (!string.IsNullOrEmpty(shipment.WarehouseLegWarehouseId))
             {
@@ -1801,6 +1802,15 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     shipmentPM.WarehouseLegTerminalName = cardObject.EnglishName;
                     shipmentPM.WarehouseLegAddressCountryCode = cardObject.CountryCode;
                     shipmentPM.WarehouseLegAddressCountryName = cardObject.CountryName;
+                }
+            }
+
+            if (!string.IsNullOrEmpty(shipment.DestinationWarehouseId))
+            {
+                Card destinationWarehouse = CardRepository.GetSingleCard(shipment.DestinationWarehouseId, shipment.Tenant, true);
+                if (destinationWarehouse != null)
+                {
+                    shipmentPM.DestinationWarehouseName = destinationWarehouse.EnglishName;
                 }
             }
 
@@ -3913,6 +3923,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.IsPODReceived = shipment.IsPODReceived;
             shipmentPM.IsHTSMissing = shipment.IsHTSMissing;
             shipmentPM.HasUnassignedData = shipment.HasUnassignedData;
+            shipmentPM.DestinationWarehouseId = shipment.DestinationWarehouseId;
             shipmentPM.IsStandalonePickupDelivery = shipment.IsStandalonePickupDelivery;
             shipmentPM.ParentShipmentDirectionId = shipment.ParentShipmentDirectionId;
             shipmentPM.ParentShipmentNumber = shipment.ParentShipmentNumber;
@@ -11339,6 +11350,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         HandlerUserId = view.HandlerUserId,
                         HandlerUserName = view.HandlerUserName,
                         HasUnassignedData = view.HasUnassignedData,
+                        DestinationWarehouseId = view.DestinationWarehouseId,
+                        DestinationWarehouseName = view.DestinationWarehouseName,
                     };
 
                     list.LongMaster = EntityFieldsHelper.GetLongMasterField(view);
@@ -11901,6 +11914,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                          ShipperReference2 = s.ShipperReference2,
                                                          UpdatedByUserId = s.UpdatedByUserId,
                                                          HandlerUserId = s.HandlerUserId,
+                                                         DestinationWarehouseId = s.DestinationWarehouseId,
+                                                         DestinationWarehouseName = s.DestinationWarehouseCard != null ? s.DestinationWarehouseCard.EnglishName : null,
                                                          PlannedCargoReadyDate = s.PlannedCargoReadyDate,
                                                          ApprovedCargoReadyDate = s.ApprovedCargoReadyDate,
                                                          VolumeInCBM = s.VolumeInCBM,
@@ -12581,6 +12596,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                ApprovedCargoReadyDate = f.ApprovedCargoReadyDate,
                                HandlerUserId = f.HandlerUserId,
                                HandlerUserName = f.HandlerUserName,
+                               DestinationWarehouseId = f.DestinationWarehouseId,
+                               DestinationWarehouseName = f.DestinationWarehouseName,
                                GrossWeightUnitCode = f.GrossWeightUnitCode,
                                AccrualsApprovalDate = f.AccrualsApprovalDate,
                                IsAccrualsApproved = f.IsAccrualsApproved,
@@ -12964,6 +12981,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     ApprovedCargoReadyDate = f.ApprovedCargoReadyDate,
                     HandlerUserId = f.HandlerUserId,
                     HandlerUserName = f.HandlerUserName,
+                    DestinationWarehouseId = f.DestinationWarehouseId,
+                    DestinationWarehouseName = f.DestinationWarehouseName,
                     AccrualsApprovalDate = f.AccrualsApprovalDate,
                     IsAccrualsApproved = f.IsAccrualsApproved,
                     CustomerContactEmail = f.CustomerContactEmail,
@@ -13244,6 +13263,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     ApprovedCargoReadyDate = f.ApprovedCargoReadyDate,
                     HandlerUserId = f.HandlerUserId,
                     HandlerUserName = f.HandlerUserName,
+                    DestinationWarehouseId = f.DestinationWarehouseId,
+                    DestinationWarehouseName = f.DestinationWarehouseName,
                     HasUnassignedData = f.HasUnassignedData,
                     OperationalStatusName = f.OperationalStatusName,
                 };
@@ -13781,6 +13802,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                          ParentShipmentNumber = s.ParentShipmentNumber,
                                                          ParentShipmentType = s.ParentShipmentType,
                                                          StandalonePickupDeliveryId = s.StandalonePickupDeliveryId,
+                                                         DestinationWarehouseId = s.DestinationWarehouseId,
+                                                         DestinationWarehouseName = s.DestinationWarehouseCard != null ? s.DestinationWarehouseCard.EnglishName : null ,
 
                                                      };
 

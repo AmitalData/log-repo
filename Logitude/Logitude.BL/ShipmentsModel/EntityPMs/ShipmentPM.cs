@@ -2788,6 +2788,8 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string UnassignedShipperAddressId { get; set; }
         public string UnassignedConsigneeAddressId { get; set; }
         public bool HasUnassignedData { get; set; }
+        public string DestinationWarehouseId { get; set; }
+        public string DestinationWarehouseName { get; set; }
         public List<TraceEventPM> EventList { get; set; }
         public List<TraceEventPM> AddManualEvents { get; set; }
     }

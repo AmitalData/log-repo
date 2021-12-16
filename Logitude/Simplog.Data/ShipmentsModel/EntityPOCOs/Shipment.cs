@@ -713,10 +713,14 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
 
         public virtual EntityStatus BillingStatus { get; set; }
 
-       public bool IsPODReceived { get; set; }
+        public bool IsPODReceived { get; set; }
 
-       public DateTime? PODReceivedDate { get; set; }
+        public DateTime? PODReceivedDate { get; set; }
         public bool HasUnassignedData { get; set; }
+        public string DestinationWarehouseId { get; set; }
+        [ForeignKey("DestinationWarehouseId")]
+        public virtual Card DestinationWarehouseCard { get; set; }
+
 
     }
 }
