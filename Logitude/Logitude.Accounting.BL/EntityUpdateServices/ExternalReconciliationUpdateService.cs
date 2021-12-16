@@ -80,7 +80,9 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                                             && ledgerGroupedByYears.First().Key != pageLinesGroupedByYears.First().Key;
 
 
-            return bothLinesSelected && (ledgerHasDifferentYears || pageLinesHasDifferentYears || hasSingleDifferentYears);
+            return  ledgerHasDifferentYears 
+                || (pageLinesHasDifferentYears && bothLinesSelected) 
+                || (hasSingleDifferentYears);
         }
 
         private void SetExtenalPageAsReconciled(ExternalReconciliationPM externalRecoPM)
