@@ -75,16 +75,13 @@ export class NewQuoteGeneralComponent implements OnInit {
   private async initValueFromEntity() {
     const dataExist:boolean = !!this.EntityPM?.ExpirationDate;
     if (!dataExist) return;
-    const entityDate = new Date(this.EntityPM.StartDate);
-    const entityDateNextMonth = new Date(entityDate.setMonth(new Date().getMonth() + 1));
-    const entityDateCloseDate = new Date(entityDate.setDate(new Date().getDate() + 45));
 
-    this.formGroup.controls.startDate.setValue(entityDate);
+    this.formGroup.controls.startDate.setValue(this.EntityPM.StartDate ? new Date(this.EntityPM.StartDate): null);
     this.formGroup.controls.expirationDays.setValue(this.EntityPM.ExpirationDays);
-    this.formGroup.controls.expirationDate.setValue(entityDateNextMonth);
+    this.formGroup.controls.expirationDate.setValue(this.EntityPM.ExpirationDate ? new Date(this.EntityPM.ExpirationDate): null);
     this.formGroup.controls.isAutomaticallyClosed.setValue(this.EntityPM.IsAutomaticallyClosed);
     this.formGroup.controls.automaticallyCloseDays.setValue(this.EntityPM.AutomaticallyCloseDays);
-    this.formGroup.controls.automaticallyCloseDate.setValue(entityDateCloseDate);
+    this.formGroup.controls.automaticallyCloseDate.setValue(this.EntityPM.AutomaticallyCloseDate ? new Date(this.EntityPM.AutomaticallyCloseDate): null);
     this.formGroup.controls.quoteType.setValue(this.EntityPM.QuoteTypeCode);
     this.formGroup.controls.moveType.setValue(await this.newQuoteDataService.getMoveTypeById(this.EntityPM.MoveTypeId));    
   }
@@ -120,12 +117,14 @@ export class NewQuoteGeneralComponent implements OnInit {
     if (!date) return;
     const expirationDays: number = this.differenceBetweenDates(date, this.formGroup.value.startDate) - 1
     this.formGroup.controls.expirationDays.setValue(expirationDays, { emitEvent: false });
+    this.EntityPM.ExpirationDays = expirationDays;
   }
 
   automaticallyCloseDateChange(date: Date) {
     this.EntityPM.AutomaticallyCloseDate = date;
     const automaticallyCloseDays: number = this.differenceBetweenDates(date, this.formGroup.value.startDate)
     this.formGroup.controls.automaticallyCloseDays.setValue(automaticallyCloseDays, { emitEvent: false });
+    this.EntityPM.AutomaticallyCloseDays = automaticallyCloseDays;
   }
 
   expirationDaysChange(days: number) {
