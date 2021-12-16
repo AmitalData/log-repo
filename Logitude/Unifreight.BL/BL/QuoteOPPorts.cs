@@ -62,7 +62,7 @@ namespace Unifreight.BL.BL
 
         public List<Ports> GetItemsList(string DIRECTIONID, string TRANSPORTMODEID, QueryOperations queryOperations, bool getFromCache = true)
         {
-            if (false)
+            if (getFromCache)
             {
                 string cacheId = "ports" + DIRECTIONID + TRANSPORTMODEID + ";i:" + queryOperations.PageIndex + ";s:" + queryOperations.PageSize + ";d:" + queryOperations.SortDirectin + ";c:" + queryOperations.SortByColumnName + string.Join("", queryOperations.QueryFilterItems.Select(x => ";f:" + x.FieldName + ";v:" + x.FieldValue).ToArray());
                 return CacheHelper.GetFromCache(cacheId, () => GetItemsList(DIRECTIONID, TRANSPORTMODEID, queryOperations, false));
