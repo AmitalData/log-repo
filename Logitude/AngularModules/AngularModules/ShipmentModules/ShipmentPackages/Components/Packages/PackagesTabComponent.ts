@@ -62,6 +62,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
     public IsDownloadUploadPackagesVisible: boolean = false;
     public IsContainerFeatureToggleVisible: boolean = false;
     public HorseFieldIsVisible: boolean = false;
+
     private warehouseReleasePMExtendedService: WarehouseReleasePMExtendedService;
     @Output() ReloadDetails = new EventEmitter();
     warehouseReleasePackageListExtendedService: WarehouseReleasePackageListExtendedService;
@@ -387,12 +388,16 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
             this.IsEditingEnabled = ShipmentTool.IsEditingEnabled(this.EntityPM);
         }
 
+        if (this.IsShipmentStatuesDelivered()) {
+            this.IsEditingEnabled = false;
+        }
+
         this.IsContainerFeatureToggleVisible = false;
         var featureToggle: FeatureToggleList = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "OIC")[0];
         if (featureToggle) {
             this.IsContainerFeatureToggleVisible = true;
         }
-        
+
         this.UIProperties.SetEnabled("DimensionsUnitCode", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("GrossWeightUnitCode", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("ChargeableWeightUnitCode", this.ObjectTableName, this.IsEditingEnabled);
@@ -2203,6 +2208,15 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
         this.ComputeTotals();
         this.CurrentSession.StopBusyIndicator();
     }
+
+    private IsShipmentStatuesDelivered() {
+        var deliverdStausName = "Delivered";
+        if (this.EntityPM.StatusName == (deliverdStausName)) {
+            return true;
+        }
+
+        return false;
+    }
 }
 
 export class ShipmentPackageItem extends BaseComponent {
@@ -2264,6 +2278,8 @@ export class ShipmentPackageItem extends BaseComponent {
     public IsEditingFieldsEnabled: boolean = false;
     public IsConnectedToRouting: boolean = false;
     public IsDeliveryConnectedWithMultiContainers: boolean = false;
+    public IsShipmentStatuesDelivered: boolean = false;
+
     SetUIProperties() {
         this.IsEditingEnabled = this.fatherComponent.IsEditingEnabled;
 
