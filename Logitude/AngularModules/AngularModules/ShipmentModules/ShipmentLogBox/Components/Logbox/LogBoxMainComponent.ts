@@ -156,25 +156,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
         }
     }
  
-    SetCustomerTenantAccessRequestsDirections(hybridPartnerId: any) {
-
-        var tenant = SessionLocator.Tenant;
-        this.customerTenantAccessRequestExtendedPMService.getByForwarderId(tenant, hybridPartnerId).subscribe((res: any) => {
-            if (!res.HasError) {
-                this.SetDitections(res);
-            }
-        });
-    }
-
-    private SetDitections(res: any) {
-        this.IsCustomsActivated = (res.Result.IsCustoms && this.IsPrivateLabelCustomsActivated);
-        this.IsExportActivated = (res.Result.IsExport && this.IsPrivateLabelExportActivated);
-        this.SetDirectionsFilters();
-    }
-    private HasOneDirectionFilter() {
-        return !(this.IsExportActivated && this.IsCustomsActivated);
-    }
-  
+     
   
 
     private getAgentShipmentsLabel(agentName: string) {
