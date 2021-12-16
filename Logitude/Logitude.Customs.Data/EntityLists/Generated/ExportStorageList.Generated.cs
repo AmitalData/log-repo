@@ -32,6 +32,10 @@ namespace Logitude.Customs.Data.EntityLists
        public string CargoTypeCode  { get; set; }
        [DataMember]
        public string CustomStatus  { get; set; }
+       [DataMember]
+       public DateTime OpenDate  { get; set; }
+       [DataMember]
+       public string CargoType  { get; set; }
    }
 
 }
