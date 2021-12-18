@@ -21,6 +21,7 @@ using System.Linq;
 using System.Text;
 using System.Web;
 using WebFreight.Web.DataContracts;
+using WebFreight.Web.Helpers.DataWarehouse;
 using WebFreight.Web.Security;
 
 namespace WebFreight.Web.Helpers
@@ -741,7 +742,9 @@ namespace WebFreight.Web.Helpers
             }
 
 
+
             string additionalCondition = new DWObjectTableAdditionalConditionService(dWObjectTablePM).Get();
+            if (dWObjectTablePM.Code == "Fact_Quote") additionalCondition += ApplyFactQuoteBusinessUnitFilter(additionalCondition);
 
             List<string>shipmentLevelLists = GetShipmentLevelListsByRecordType(dWObjectTablePM.RecordType);
             if (shipmentLevelLists.Count() > 0)
@@ -806,6 +809,12 @@ namespace WebFreight.Web.Helpers
             sqlCommandDefinition.SQLString = sqlCommandDefinition.SQLString.Replace("@SelectFieldTenantSql", selectFieldTenantSql);
 
             return sqlCommandDefinition;
+        }
+
+        private string ApplyFactQuoteBusinessUnitFilter(string additionalCondition)
+        {
+            var factQuoteBusinessUnitFilter = new FactQuoteBusinessUnitFilter(Tenant).Run();
+            return (!string.IsNullOrEmpty(factQuoteBusinessUnitFilter) ? ((!string.IsNullOrEmpty(additionalCondition) ? " and " : "") + factQuoteBusinessUnitFilter) : "");
         }
 
         private List<string> GetShipmentLevelListsByRecordType(string recordType)
