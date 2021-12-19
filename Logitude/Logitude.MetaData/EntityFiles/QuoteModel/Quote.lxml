@@ -12723,7 +12723,7 @@
     MinLength="0"
     MaxLength="50"
     IsRequired="true"
-    CopyToDW="false"
+    CopyToDW="true"
     DisplayOnLookUp="false"
     DisplayOnLookUpLocal="false"
     CanFilter="false"
