@@ -239,5 +239,8 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public int StatusWeight { get; set; }
         public DateTime? CancelledDate { get; set; }
         public bool IsCancelled { get; set; }
+        public string ShipmentDeliveryTruckerId { get; set; }
+        public string ShipmentDeliveryTruckerName { get; set; }
+
     }
 }
