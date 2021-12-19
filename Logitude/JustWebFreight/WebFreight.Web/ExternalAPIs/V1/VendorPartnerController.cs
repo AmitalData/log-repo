@@ -1,4 +1,5 @@
-﻿using Logitude.Accounting.Data.EntityPOCOs;
+﻿using Logitude.Accounting.BL.EntityQueryServices;
+using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Data.Repositories;
 using Logitude.Accounting.Def.EntityPMs;
 using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
@@ -131,10 +132,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                                 gLAccountEntity.AccountTypeCode = "3";
                                 gLAccountEntity.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert;
                                 gLAccountEntity.InternalNumber = entity.GLAccount.InternalNumber;
-                                gLAccountEntity.DeductionFileNumber = entity.GLAccount.DeductionFileNumber;
-                                gLAccountEntity.AssessingOfficeCode = entity.GLAccount.AssessingOfficeCode;
-                                gLAccountEntity.DeductionFileTypeId = entity.GLAccount.DeductionFileTypeId;
-                                gLAccountEntity.ConsolidationVat = entity.GLAccount.ConsolidationVat;
+                                MapGLAccountTaxWithholdingFields(entity, gLAccountEntity);
 
                                 //DisplayNumber
                                 SetDisplayNumber(entity, card, gLAccountEntity);
@@ -269,6 +267,34 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 APIHelper.AddCommunicationLog("F", entity, apiExceptionResult.Exception, "Vendor", null, "Vendor API");
                 return Request.CreateResponse(apiExceptionResult.StatusCode, apiExceptionResult.Exception);
             }
+        }
+
+        private static void MapGLAccountTaxWithholdingFields(Logitude.BL.CommonDataModel.APIDataContract.ApiV1.Vendor entity, GLAccountPM gLAccountEntity)
+        {
+            gLAccountEntity.DeductionFileNumber = entity.GLAccount.DeductionFileNumber;
+            gLAccountEntity.AssessingOfficeCode = GetTaxWithholdingAssessingOfficeId(entity, gLAccountEntity);
+            gLAccountEntity.DeductionFileTypeId = GetDeductionFileTypeId(entity, gLAccountEntity);
+            gLAccountEntity.DeductionTypeId = GetDeductionTypeId(entity, gLAccountEntity);
+            gLAccountEntity.ConsolidationVat = entity.GLAccount.ConsolidationVat;
+            gLAccountEntity.Occupation = entity.GLAccount.Occupation;
+        }
+
+        private static string GetDeductionTypeId(Logitude.BL.CommonDataModel.APIDataContract.ApiV1.Vendor entity, GLAccountPM gLAccountEntity)
+        {
+            AccountingCompanyTypeQueryService accountingCompanyTypeService = new AccountingCompanyTypeQueryService(gLAccountEntity.Tenant);
+             return accountingCompanyTypeService.GetByCode(entity.GLAccount.DeductionTypeCode, gLAccountEntity.Tenant).Id;
+        }
+
+        private static string GetDeductionFileTypeId(Logitude.BL.CommonDataModel.APIDataContract.ApiV1.Vendor entity, GLAccountPM gLAccountEntity)
+        {
+            WithholdingTaxDeductionTypeQueryService taxDeductionTypeService = new WithholdingTaxDeductionTypeQueryService(gLAccountEntity.Tenant);
+             return taxDeductionTypeService.GetByCode(entity.GLAccount.DeductionFileTypeCode, gLAccountEntity.Tenant).Id;
+        }
+
+        private static string GetTaxWithholdingAssessingOfficeId(Logitude.BL.CommonDataModel.APIDataContract.ApiV1.Vendor entity, GLAccountPM gLAccountEntity)
+        {
+            TaxWithholdingAssessOfficeQueryService assessOfficeService = new TaxWithholdingAssessOfficeQueryService(gLAccountEntity.Tenant);
+            return assessOfficeService.GetByNumber(entity.GLAccount.AssessingOfficeCode, gLAccountEntity.Tenant).Id;
         }
 
         private static void SetDisplayNumber(Logitude.BL.CommonDataModel.APIDataContract.ApiV1.Vendor entity, Simplog.Data.CommonDataModel.EntityPOCOs.Card card, GLAccountPM gLAccountEntity)
