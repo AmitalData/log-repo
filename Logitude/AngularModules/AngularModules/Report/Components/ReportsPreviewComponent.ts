@@ -212,8 +212,9 @@ export class ReportsPreviewComponent implements AfterViewInit {
             if (Component && filtersArea) {
                 this.StimulsoftArg = new StimulsoftArg();
                 if (this.IsSchedulerReport) {
-                    this.StimulsoftArg.IsSchedulerReport = true;
+                    this.StimulsoftArg.IsExcelReportAllowed = true;
                 }
+                this.StimulsoftArg.IsExcelReportAllowed = this.Report.IsExcelReportAllowed;
                 this.FilterConrolHeight = filtersArea.clientHeight;
                 this.StimulsoftArg.Tenant = SessionLocator.Tenant;
                 this.StimulsoftArg.ReportsPreviewComponent = this;

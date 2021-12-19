@@ -30,6 +30,7 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public bool AvailableForScheduling { get; set; }
         public bool DisablePreview { get; set; }
         public string DefaultExcelTemplateId { get; set; }
+        public bool IsExcelReportAllowed { get; set; }
 
         [ForeignKey("DefaultExcelTemplateId")]
         public ReportsTemplate ReportsTemplateDefaultExcel { get; set; }

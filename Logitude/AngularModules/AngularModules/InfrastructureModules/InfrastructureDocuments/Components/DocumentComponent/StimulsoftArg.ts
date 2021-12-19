@@ -27,6 +27,7 @@ export class StimulsoftArg {
     IsShowExportMicrosoftExcel: boolean = false;
     IsShowSendButton: boolean = false;
     IsSchedulerReport: boolean = false;
+    IsExcelReportAllowed: boolean = false;
     ReportKey: string;
     NumberOfPage: number;
     PagesCount: number;
