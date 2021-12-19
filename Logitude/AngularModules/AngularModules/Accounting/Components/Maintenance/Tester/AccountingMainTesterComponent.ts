@@ -463,14 +463,16 @@ Line3
 
     getHeaders() {
         let headers: string[] = [];
-        if (this.JsonList) {
+        if (!AppTool.IsNullOrEmpty( this.JsonList)) {
             this.JsonList.forEach((value) => {
-                Object.keys(value).forEach((key) => {
-                    if (!headers.find((header) => header == key)) {
-                        headers.push(key)
-                    }
-                })
-            })
+                if (!AppTool.IsNullOrEmpty(value)) {
+                    Object.keys(value).forEach((key) => {
+                        if (!headers.find((header) => header == key)) {
+                            headers.push(key);
+                        }
+                    });
+                }
+            });
         }
         return headers;
     }
