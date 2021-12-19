@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 {
    public class ARPaymentUpdateClass
    {  		
-		public const string HashString = "a9237c9fda53caa0fca0280bd30f4c18";
+		public const string HashString = "5c1b5d1ec942d088ec503efc8684659e";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -6950,6 +6950,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
  		   TextCode ARPaymentTextCode_ARPaymentMSearchByTransferReference = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPayment.M.SearchByTransferReference", DefaultText = "Search by Transfer Reference",LocalDefaultText = "חיפוש ע''י אסמכתא של העברה", ObjectTableId = ARPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode ARPaymentTextCode_ARPaymentMAddBankTransfersHint = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPayment.M.AddBankTransfersHint", DefaultText = "You can add multiple Bank Transfers by clicking on the Add Button",LocalDefaultText = @"אתה יכול להוסיף מספר העברות בנקאיות על ידי לחיצה על כפתור הוסף", ObjectTableId = ARPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ARPaymentTextCode_ARPaymentOReturnChequeConfirmMessage = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPayment.O.ReturnChequeConfirmMessage", DefaultText = "This action will return the cheque back to the customer, are you sure you want to do this action?",LocalDefaultText = @"החזרת המחאה ללקוח פעולה זה מחזירה את ההמחאה ללקוח, אתה בטוח שאתה רוצה לעשות פעולה זו?", ObjectTableId = ARPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

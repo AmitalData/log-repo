@@ -11399,6 +11399,12 @@
       LocalDefaultText="&quot;אתה יכול להוסיף מספר העברות בנקאיות על ידי לחיצה על כפתור הוסף&quot;"
       TextCodeTypeCode="&quot;M&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ARPayment.O.ReturnChequeConfirmMessage&quot;"
+      DefaultText="&quot;This action will return the cheque back to the customer, are you sure you want to do this action?&quot;"
+      LocalDefaultText="&quot;החזרת המחאה ללקוח פעולה זה מחזירה את ההמחאה ללקוח, אתה בטוח שאתה רוצה לעשות פעולה זו?&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature

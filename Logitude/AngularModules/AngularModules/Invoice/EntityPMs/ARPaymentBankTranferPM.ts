@@ -14,7 +14,6 @@ import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
 import {Output, EventEmitter}  from '@angular/core';
 import {PropertyChangedArgs} from '../../Infrastructure/EventEmitterArgs/PropertyChangedArgs';
 import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass';
-import { BankAccountPM } from 'Accounting/EntityPMs/BankAccountPM';
 
 
 export class ARPaymentBankTranferPM {
@@ -68,8 +67,7 @@ export class ARPaymentBankTranferPM {
     public get BankAccountId() { return this.bankAccountId; }
     public set BankAccountId(newValue: string) { if (this.bankAccountId != newValue) { this.bankAccountId = newValue; this.MarkAsDirty("BankAccountId"); } }
        
-    public BankAccount: BankAccountPM;
-    
+	 
     private currencyId: string;
     public get CurrencyId() { return this.currencyId; }
     public set CurrencyId(newValue: string) { if (this.currencyId != newValue) { this.currencyId = newValue; this.MarkAsDirty("CurrencyId"); } }
@@ -93,6 +91,36 @@ export class ARPaymentBankTranferPM {
     private exchageRate: number;
     public get ExchageRate() { return this.exchageRate; }
     public set ExchageRate(newValue: number) { if (this.exchageRate != newValue) { this.exchageRate = newValue; this.MarkAsDirty("ExchageRate"); } }
+       
+	 
+    private bankAccount: any;
+    public get BankAccount() { return this.bankAccount; }
+    public set BankAccount(newValue: any) { if (this.bankAccount != newValue) { this.bankAccount = newValue; this.MarkAsDirty("BankAccount"); } }
+       
+	 
+    private bankAccountNumber: string;
+    public get BankAccountNumber() { return this.bankAccountNumber; }
+    public set BankAccountNumber(newValue: string) { if (this.bankAccountNumber != newValue) { this.bankAccountNumber = newValue; this.MarkAsDirty("BankAccountNumber"); } }
+       
+	 
+    private id: string;
+    public get Id() { return this.id; }
+    public set Id(newValue: string) { if (this.id != newValue) { this.id = newValue; this.MarkAsDirty("Id"); } }
+       
+	 
+    private localName: string;
+    public get LocalName() { return this.localName; }
+    public set LocalName(newValue: string) { if (this.localName != newValue) { this.localName = newValue; this.MarkAsDirty("LocalName"); } }
+       
+	 
+    private englishName: string;
+    public get EnglishName() { return this.englishName; }
+    public set EnglishName(newValue: string) { if (this.englishName != newValue) { this.englishName = newValue; this.MarkAsDirty("EnglishName"); } }
+       
+	 
+    private bankAccountNumber: string;
+    public get BankAccountNumber() { return this.bankAccountNumber; }
+    public set BankAccountNumber(newValue: string) { if (this.bankAccountNumber != newValue) { this.bankAccountNumber = newValue; this.MarkAsDirty("BankAccountNumber"); } }
        
 	 
 
@@ -130,4 +158,4 @@ export class ARPaymentBankTranferPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

@@ -16,6 +16,7 @@ import { ObjectsLocator } from '../../../../Infrastructure/Locators/ObjectsLocat
 
 declare var window: any;
 
+const ReturnChequeWindowWidth = 400;
 @Component({
 
     templateUrl: './ARPaymentMultiChequesComponent.html',
@@ -224,6 +225,15 @@ export class ARPaymentMultiChequesComponent extends BaseComponent {
     }
 
     ReturnChequeButtonClicked(cheque){
+        const confirmWindow = new ConfirmWindow();
+        confirmWindow.Width = ReturnChequeWindowWidth;
+        var message = TextCodeTranslator.Translate('ARPayment.O.ReturnChequeConfirmMessage');
+        confirmWindow.Show(message);
+        confirmWindow.WindowClosed.subscribe(function (event) {
+            if (confirmWindow.Yes) {
+                alert('ok');
+            }
+        });
 
     }
 
