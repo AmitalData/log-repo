@@ -192,11 +192,15 @@ export class NewQuoteComponent extends BaseComponent implements OnInit, AfterVie
     SetWindowArgs(args: NewQuoteComponentArgs) {
         if (args.ConvertTransportMode) {
             this.EntityPM = args.Quote;
-            this.ConvertTransportMode = args.ConvertTransportMode; 
+            this.ConvertTransportMode = args.ConvertTransportMode;
         }
 
         else {
+
             if (args.OpportunityId && !this.EntityPM) {
+                this.CreateNewQuote();
+            }
+            if (args.IsCreatedFromTicket && !this.EntityPM) {
                 this.CreateNewQuote();
             }
 
