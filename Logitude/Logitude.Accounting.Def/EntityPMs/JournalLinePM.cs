@@ -18,7 +18,7 @@ namespace Logitude.Accounting.Def.EntityPMs
     public partial class JournalLinePM : EntityPM
     {
         [DataMember]
-        public MyJournalActionTypeEnum ActionTypeCodeEnum
+        public JournalActionTypeEnum ActionTypeCodeEnum
         {
             get
             {
@@ -33,23 +33,23 @@ namespace Logitude.Accounting.Def.EntityPMs
                 //        this.ActionTypeCode = action.Code;
                 //    }
                 //}
-                var codeEnum = MyJournalActionTypeEnum.NotValid;
+                var codeEnum = JournalActionTypeEnum.NotValid;
                 bool dueActionTypeCodeIsNull = true;//on onsert is null !!
                 if (dueActionTypeCodeIsNull)
                 {
                     if (!string.IsNullOrWhiteSpace(this.ActionCode))
                     {
-                        Enum.TryParse<MyJournalActionTypeEnum>(this.ActionCode, out codeEnum);
+                        Enum.TryParse<JournalActionTypeEnum>(this.ActionCode, out codeEnum);
                     }
                     else 
                     {
-                        Enum.TryParse<MyJournalActionTypeEnum>(this.ActionTypeCode, out codeEnum);
+                        Enum.TryParse<JournalActionTypeEnum>(this.ActionTypeCode, out codeEnum);
                     }
                     
                 }
                 else
                 {
-                    Enum.TryParse<MyJournalActionTypeEnum>(this.ActionTypeCode, out codeEnum);
+                    Enum.TryParse<JournalActionTypeEnum>(this.ActionTypeCode, out codeEnum);
                 }
                 return codeEnum;
             }

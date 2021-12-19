@@ -24,20 +24,20 @@ namespace Logitude.UnitTest.Accounting.UniTests
         public void IsJournalValidValueRange_StatusApprovedDebitTotalNotEqual2CreditTotal_ValidationResultContainsM_JournalAmountNotMatched()
         {
             var listGenerateDataForThisMethod = new List<Tuple<int, string>>() { 
-                new Tuple<int, string>(1, ((int)MyJournalActionTypeEnum.Credit).ToString()) ,
-                new Tuple<int, string>(-1, ((int)MyJournalActionTypeEnum.Credit).ToString()) ,
-                new Tuple<int, string>(10, ((int)MyJournalActionTypeEnum.Credit).ToString()) ,
-                new Tuple<int, string>(-10, ((int)MyJournalActionTypeEnum.Credit).ToString()) ,
-                new Tuple<int, string>(1099, ((int)MyJournalActionTypeEnum.Credit).ToString()) ,
-                new Tuple<int, string>(-1099, ((int)MyJournalActionTypeEnum.Credit).ToString()) ,
+                new Tuple<int, string>(1, ((int)JournalActionTypeEnum.Credit).ToString()) ,
+                new Tuple<int, string>(-1, ((int)JournalActionTypeEnum.Credit).ToString()) ,
+                new Tuple<int, string>(10, ((int)JournalActionTypeEnum.Credit).ToString()) ,
+                new Tuple<int, string>(-10, ((int)JournalActionTypeEnum.Credit).ToString()) ,
+                new Tuple<int, string>(1099, ((int)JournalActionTypeEnum.Credit).ToString()) ,
+                new Tuple<int, string>(-1099, ((int)JournalActionTypeEnum.Credit).ToString()) ,
 
 
-                new Tuple<int, string>(1, ((int)MyJournalActionTypeEnum.Debit).ToString()) ,
-                new Tuple<int, string>(-1, ((int)MyJournalActionTypeEnum.Debit).ToString()) ,
-                new Tuple<int, string>(10, ((int)MyJournalActionTypeEnum.Debit).ToString()) ,
-                new Tuple<int, string>(-10, ((int)MyJournalActionTypeEnum.Debit).ToString()) ,
-                new Tuple<int, string>(1099, ((int)MyJournalActionTypeEnum.Debit).ToString()) ,
-                new Tuple<int, string>(-1099, ((int)MyJournalActionTypeEnum.Debit).ToString()) ,
+                new Tuple<int, string>(1, ((int)JournalActionTypeEnum.Debit).ToString()) ,
+                new Tuple<int, string>(-1, ((int)JournalActionTypeEnum.Debit).ToString()) ,
+                new Tuple<int, string>(10, ((int)JournalActionTypeEnum.Debit).ToString()) ,
+                new Tuple<int, string>(-10, ((int)JournalActionTypeEnum.Debit).ToString()) ,
+                new Tuple<int, string>(1099, ((int)JournalActionTypeEnum.Debit).ToString()) ,
+                new Tuple<int, string>(-1099, ((int)JournalActionTypeEnum.Debit).ToString()) ,
             };
             foreach (var item in listGenerateDataForThisMethod)
             {

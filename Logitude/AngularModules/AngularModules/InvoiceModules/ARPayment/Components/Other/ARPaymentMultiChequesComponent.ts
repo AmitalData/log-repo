@@ -13,6 +13,8 @@ import { ServiceResponse } from '../../../../Infrastructure/DataContracts/Servic
 import { ObservableCollection } from '../../../../Infrastructure/Utilities/ObservableCollection';
 import { ConfirmWindow } from '../../../../Controls/Windows/ConfirmWindow';
 import { ObjectsLocator } from '../../../../Infrastructure/Locators/ObjectsLocator';
+import { ARPaymentChequeOperationsService } from 'Accounting/Services/Others/ARPaymentChequeOpService';
+import { ARPaymentPMService } from 'Invoice/Services/StandardPMs/ARPaymentPMService';
 
 declare var window: any;
 
@@ -38,6 +40,8 @@ export class ARPaymentMultiChequesComponent extends BaseComponent {
     public ChequesCounter: number;
     public TotalAmount: number;
     public isLTR: boolean;
+    arPaymentChequeOperationsService:ARPaymentChequeOperationsService = new ARPaymentChequeOperationsService();
+    arPaymentPMService:ARPaymentPMService = new ARPaymentPMService();
     constructor() {
         super();
         this.ItemsSource = new ObservableCollection([]);
@@ -52,13 +56,18 @@ export class ARPaymentMultiChequesComponent extends BaseComponent {
             this.paymentPM = args.EntityPM;
             this.OriginalItemPM = args.EntityPM;
             this.ClonedItemPM = this.CloneEntity(args.EntityPM);
-            this.FillItemSource();
-            this.AddFirstChequeRecord();
-            this.CalculateTotal();
-            this.UpdateChequeCounter();
+            this.LoadScreen();
             this.IsDisplayOnly = this.paymentPM.StatusCode == "AD" || this.paymentPM.StatusCode == "VD"  ? true : false;
         }
     }
+    private LoadScreen()
+    {
+        this.FillItemSource();
+        this.AddFirstChequeRecord();
+        this.CalculateTotal();
+        this.UpdateChequeCounter();
+    }
+
     UpdateChequeCounter() {
         this.ChequesCounter = this.paymentPM.ARPaymentChequeReplicas.length;
     }
@@ -229,15 +238,37 @@ export class ARPaymentMultiChequesComponent extends BaseComponent {
         confirmWindow.Width = ReturnChequeWindowWidth;
         var message = TextCodeTranslator.Translate('ARPayment.O.ReturnChequeConfirmMessage');
         confirmWindow.Show(message);
-        confirmWindow.WindowClosed.subscribe(function (event) {
+        confirmWindow.WindowClosed.subscribe((event) => {
             if (confirmWindow.Yes) {
-                alert('ok');
+                this.ReturnChequeToCustomer(cheque);
             }
         });
 
     }
 
 
+    GetPayment(){
+        this.CurrentSession.StartBusyIndicatorSaving()
+        this.arPaymentPMService
+        .get(this.paymentPM.Id)
+            .subscribe((response:ServiceResponse) => {
+                this.CurrentSession.StopBusyIndicator();
+                this.paymentPM = response.Result;
+                this.LoadScreen();
+            });
+    }
+
+    ReturnChequeToCustomer(cheque)
+    {
+        this.CurrentSession.StartBusyIndicatorSaving()
+        this.arPaymentChequeOperationsService
+        .ReturnChequeToCustomer(this.paymentPM.Tenant,cheque.entityPM.Id,this.paymentPM.Id)
+            .subscribe((response:ServiceResponse) => {
+                this.CurrentSession.StopBusyIndicator();
+                this.GetPayment();
+            });
+
+    }
 }
 
 export class PaymentChequeLine extends BaseComponent {

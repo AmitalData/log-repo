@@ -67,7 +67,7 @@ namespace Logitude.Accounting.BL.CoreBL
             foreach (var journalLine in _JournalPM.JournalLines)
             {
 
-                if (journalLine.EnsureSettingActionTypeCodeEnum() == MyJournalActionTypeEnum.DebitCreditAndVatdeduction)
+                if (journalLine.EnsureSettingActionTypeCodeEnum() == JournalActionTypeEnum.DebitCreditAndVatdeduction)
                 {
                     if (!GLAccountTaxChecked.HasValue)
                     {
@@ -229,22 +229,22 @@ namespace Logitude.Accounting.BL.CoreBL
             {
                 switch (item.EnsureSettingActionTypeCodeEnum())
                 {
-                    case MyJournalActionTypeEnum.Credit:
+                    case JournalActionTypeEnum.Credit:
                         AddCredit(item);
                         break;
-                    case MyJournalActionTypeEnum.Debit:
+                    case JournalActionTypeEnum.Debit:
                         AddDebit(item, false);
                         break;
-                    case MyJournalActionTypeEnum.DebitAndCredit:
+                    case JournalActionTypeEnum.DebitAndCredit:
                         AddCredit(item);
                         AddDebit(item, false);
                         break;
-                    case MyJournalActionTypeEnum.DebitCreditAndVatdeduction:
+                    case JournalActionTypeEnum.DebitCreditAndVatdeduction:
                         AddCredit(item);
                         AddDebit(item, true);
                         AddTaxDebit(item);
                         break;
-                    case MyJournalActionTypeEnum.NotValid:
+                    case JournalActionTypeEnum.NotValid:
                     default:
                         throw new Exception("JournalApproveParser():JournalActionType is must ");
                         break;
@@ -666,7 +666,7 @@ namespace Logitude.Accounting.BL.CoreBL
         private void CheckLedgerTransactions()
         {
             var TotalLocalAmountInJornal = _JournalPM.JournalLines
-                .Where(jl => jl.EnsureSettingActionTypeCodeEnum() != MyJournalActionTypeEnum.Debit) // Why credit ? credit is not vat splitded (like debit)
+                .Where(jl => jl.EnsureSettingActionTypeCodeEnum() != JournalActionTypeEnum.Debit) // Why credit ? credit is not vat splitded (like debit)
                  .Sum(jl => jl.LocalAmount);
 
             var totalLocalAmountCredit = LedgerTransactions.Sum(rec => rec.LocalAmountCredit);

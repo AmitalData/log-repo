@@ -318,7 +318,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
                 Tenant = 2,
                 CurrencyCode = "USD",
                 CurrencyId = "",
-                 ActionTypeCodeEnum =  MyJournalActionTypeEnum.DebitAndCredit,
+                 ActionTypeCodeEnum =  JournalActionTypeEnum.DebitAndCredit,
                 LocalAmount = 10.020202m,
                 ForeignAmount = 10.020201m,
 
@@ -361,7 +361,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
             {
                 Id = "",
                 Tenant = tenant,
-                Code = MyJournalActionTypeEnum.DebitAndCredit.ToString(),
+                Code = JournalActionTypeEnum.DebitAndCredit.ToString(),
                 EnglishName = "Debit",
 
 
@@ -398,7 +398,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
                 Tenant = 2,
                 CurrencyCode = "USD",
                 CurrencyId = "",
-                 ActionTypeCodeEnum = MyJournalActionTypeEnum.DebitAndCredit,
+                 ActionTypeCodeEnum = JournalActionTypeEnum.DebitAndCredit,
                 LocalAmount = 10.020202m,
                 ForeignAmount = 10.020201m,
 
@@ -446,7 +446,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
             {
                 Id = "",
                 Tenant = tenant,
-                Code = MyJournalActionTypeEnum.DebitAndCredit.ToString(),
+                Code = JournalActionTypeEnum.DebitAndCredit.ToString(),
                 EnglishName = "Debit",
 
 
@@ -484,7 +484,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
                 Tenant = 2,
                 CurrencyCode = "USD",
                 CurrencyId = "1-1",
-                 ActionTypeCodeEnum = MyJournalActionTypeEnum.Credit,
+                 ActionTypeCodeEnum = JournalActionTypeEnum.Credit,
                 LocalAmount = 10.020202m,
                 ForeignAmount = 10.020201m,
 
@@ -552,7 +552,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
             {
                 Id = "",
                 Tenant = tenant,
-                Code = MyJournalActionTypeEnum.Credit.ToString(),
+                Code = JournalActionTypeEnum.Credit.ToString(),
                 EnglishName = "Credit" ,
                  
                  
@@ -590,7 +590,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
                 Tenant = 2,
                 CurrencyCode = "USD",
                 CurrencyId = "1-1",
-                ActionTypeCodeEnum = MyJournalActionTypeEnum.Credit,
+                ActionTypeCodeEnum = JournalActionTypeEnum.Credit,
                 LocalAmount = 10.020202m,
                 ForeignAmount = 10.020201m,
 
@@ -660,7 +660,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
             {
                 Id = "",
                 Tenant = tenant,
-                Code = MyJournalActionTypeEnum.Debit.ToString(),
+                Code = JournalActionTypeEnum.Debit.ToString(),
                 EnglishName = "Debit",
 
 
@@ -700,7 +700,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
                 Tenant = 2,
                 CurrencyCode = "USD",
                 CurrencyId = "",
-                 ActionTypeCodeEnum = MyJournalActionTypeEnum.DebitAndCredit,
+                 ActionTypeCodeEnum = JournalActionTypeEnum.DebitAndCredit,
                 LocalAmount = 10.020202m,
                 ForeignAmount = 10.020201m,
 
@@ -749,7 +749,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
             {
                 Id = "",
                 Tenant = tenant,
-                Code = MyJournalActionTypeEnum.DebitAndCredit.ToString(),
+                Code = JournalActionTypeEnum.DebitAndCredit.ToString(),
                 EnglishName = "Debit",
 
 

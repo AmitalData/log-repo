@@ -3710,7 +3710,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                         journalLine.JournalId = journal.Id;
                         journalLine.Line = 1;
                         journalLine.ActionCode = "2";
-                        journalLine.ActionTypeCodeEnum = MyJournalActionTypeEnum.Debit;
+                        journalLine.ActionTypeCodeEnum = JournalActionTypeEnum.Debit;
                         journalLine.DocumentDate = theEntityPm.InvoiceDate.Value;
                         journalLine.AccountingDate = theEntityPm.InvoiceDate.Value;
                         journalLine.DueDate = theEntityPm.DueDate.Value;
@@ -3736,7 +3736,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                                                             {
                                                                 Tenant = tenant,
                                                                 ActionCode = "1",
-                                                                ActionTypeCodeEnum = MyJournalActionTypeEnum.Credit,
+                                                                ActionTypeCodeEnum = JournalActionTypeEnum.Credit,
                                                                 JournalId = journal.Id,
                                                                 CreditAccountId = g.Key.GLAccountId,
                                                                 Line = ++counter,
@@ -3772,7 +3772,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                             {
                                 Tenant = tenant,
                                 ActionCode = "1",
-                                ActionTypeCodeEnum = MyJournalActionTypeEnum.Credit,
+                                ActionTypeCodeEnum = JournalActionTypeEnum.Credit,
                                 JournalId = journal.Id,
                                 CreditAccountId = accountingSettings != null ? accountingSettings.VATOutputGLAccountId : "",
                                 Line = ++counter,
@@ -3885,7 +3885,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                                                     JournalId = journal.Id,
                                                     Line = 1,
                                                     ActionCode = "2",
-                                                    ActionTypeCodeEnum = MyJournalActionTypeEnum.Debit,
+                                                    ActionTypeCodeEnum = JournalActionTypeEnum.Debit,
                                                     DocumentDate = invoice.InvoiceDate.Value,
                                                     AccountingDate = invoice.InvoiceDate.Value,
                                                     DueDate = invoice.DueDate.Value,
@@ -3938,7 +3938,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             {
                 Tenant = tenant,
                 ActionCode = "2",
-                ActionTypeCodeEnum = MyJournalActionTypeEnum.Debit,
+                ActionTypeCodeEnum = JournalActionTypeEnum.Debit,
                 JournalId = journal.Id,
                 Line = ++counter,
                 DocumentDate = invoice.InvoiceDate.Value,

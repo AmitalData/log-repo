@@ -103,11 +103,11 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
         {
             string adjustGLAccountId = "";
             var journalLineToadjustGLAccount = myJournalPM.JournalLines.Last();
-            if (journalLineToadjustGLAccount.ActionTypeCodeEnum == MyJournalActionTypeEnum.Credit)
+            if (journalLineToadjustGLAccount.ActionTypeCodeEnum == JournalActionTypeEnum.Credit)
             {
                 adjustGLAccountId = journalLineToadjustGLAccount.CreditAccountId;
             }
-            else if (journalLineToadjustGLAccount.ActionTypeCodeEnum == MyJournalActionTypeEnum.Debit)
+            else if (journalLineToadjustGLAccount.ActionTypeCodeEnum == JournalActionTypeEnum.Debit)
             {
                 adjustGLAccountId = journalLineToadjustGLAccount.DebitAccountId;
             }

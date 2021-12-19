@@ -174,7 +174,7 @@
                                     <ng-template let-item>
                                         <log-cell-template [IgnoreMods]="true" #logcelltemplate>
                                             <div style="width: 30px; float: right; height:20px;padding-top:3px">
-                                                <IconButton [IsEnabled]="item.StatusCode!='5'" [Name]="'return'" [IsSmall]="true"
+                                                <IconButton [IsEnabled]="item.entityPM.StatusCode!='5' && paymentPM.StatusCode == 'AD'" [Name]="'return'" [IsSmall]="true"
                                                     (click)="ReturnChequeButtonClicked(item)"></IconButton>
                                             </div>
                                             <div style="width: 30px; float: right; height:20px;padding-top:3px">

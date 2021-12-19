@@ -10,21 +10,48 @@ using Logitude.Accounting.Def.EntityQueryServicesExt;
 using Microsoft.Practices.Unity;
 using Logitude.Accounting.BL.CloseTables;
 using Logitude.Accounting.BL.EntityQueryServices;
+using Simplog.Data.Helpers;
+using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.Accounting.BL.EntityUpdateServices;
+using Logitude.Accounting.Data;
+using Logitude.BL.InvoiceModel.EntityQueries;
 
 namespace Logitude.Accounting.BL.CoreBL
 {
     public class ARPaymentChequeReturnService
     {
         private const string ChequePaymentMethodCode = "2";
-        ARPaymentChequeReturnServiceArguments arguments;
+        private const string CreditLineNotes = "החזרת שיק ללקוח";
+        private CardPM billTo;
+        private CashBookPM paymentCashbook;
+        private GLAccountPM cashbookGLAccount;
+        private ARPaymentChequeReturnServiceArguments arguments;
+        private ARPaymentChequePM cheque;
+        private JournalPM createdJournal;
+        private ARPaymentPM paymentPM;
         public ARPaymentChequeReturnService(ARPaymentChequeReturnServiceArguments arguments)
         {
             this.arguments = arguments;
+            ValidateServiceArguments();
+            GetRelatedEntities();
+        }
+        private void ValidateServiceArguments()
+        {
+            if (arguments.PaymentId is null || arguments.ChequeId is null)
+                throw new ApplicationException("ARPaymentChequeReturnService parameters is incomplete");
+        }
+        private void GetRelatedEntities()
+        {
+            paymentPM = GetARPayment();
+            cheque = GetPaymentCheque();
+            billTo = GetPaymentBilltoAccount();
+            paymentCashbook = GetPaymentCashbook();
+            cashbookGLAccount = GetCashbookGLAccount(paymentCashbook);
         }
 
         public void ReturnChequeToCustomer()
         {
-            ARPaymentChequePM cheque = GetChequeById(arguments.chequeId, arguments.tenant);
             UpdateChequeStatusAsReturnedToCustomer(cheque);
             UpdateCashbookTotal(cheque);
             CreateJournal();
@@ -35,84 +62,151 @@ namespace Logitude.Accounting.BL.CoreBL
             cheque.ChangeSetOp = ChangeSetOperation.Update;
             cheque.StatusCode = ARPaymentChequeStatusValues.ReturnedToCustomer;
 
-            IARPaymentChequeUpdateServiceExt paymentUpdate = ContainerAccessor.Container.Resolve(typeof(IARPaymentChequeUpdateServiceExt), "ARPaymentChequeUpdateServiceExt", new ParameterOverride("", 1)) as IARPaymentChequeUpdateServiceExt;
-            paymentUpdate.Update(cheque);
+
+            IAccountingContext MyContext = AccountingContext.GetContext(arguments.Tenant);
+            ARPaymentChequeUpdateService aRPaymentChequeUpdateService = new ARPaymentChequeUpdateService(MyContext, new Dictionary<string, IContext>(), arguments.Tenant);
+            aRPaymentChequeUpdateService.Update(cheque,true);
         }
         private void UpdateCashbookTotal(ARPaymentChequePM cheque)
         {
-            CashBookPM cashBook = GetConnectedCashbook();
+            paymentCashbook.TotalAmount -= cheque.ForeignAmount;
+            paymentCashbook.ChangeSetOp = ChangeSetOperation.Update;
 
-            cashBook.TotalAmount -= cheque.ForeignAmount;
-            cashBook.ChangeSetOp = ChangeSetOperation.Update;
-
-            SubmitCashbook(cashBook);
+            SubmitCashbook(paymentCashbook);
         }
 
         private void CreateJournal()
         {
+            InitJournal();
+            CreateJournalLines();
+            SubmitJournal();
 
         }
         private JournalPM InitJournal()
         {
-            JournalPM newJournal = new JournalPM
+            createdJournal = new JournalPM
             {
                 ChangeSetOp = ChangeSetOperation.Insert,
-                Tenant = arguments.tenant,
+                Tenant = arguments.Tenant,
                 CreateDate = GetCurrentDateTime(),
-                CreatedByUserId = arguments.paymentPM.CreatedByUserId,
+                CreatedByUserId = paymentPM.CreatedByUserId,
                 UpdateDate = GetCurrentDateTime(),
-                UpdatedByUserId = arguments.paymentPM.UpdatedByUserId,
-                AccountingDate = arguments.paymentPM.RegisterDate.Value,
+                UpdatedByUserId = paymentPM.UpdatedByUserId,
+                AccountingDate = paymentPM.RegisterDate.Value,
                 TypeCode = JournalTypeValues.Regular,
                 StatusCode = JournalStatusTypeValues.Approved,
-                AccountingEntityId = arguments.paymentPM.Id,
-                AccountingEntityReference = arguments.paymentPM.PaymentNo,
+                AccountingEntityId = paymentPM.Id,
+                AccountingEntityReference = paymentPM.PaymentNo,
                 ExternalNo = null,
                 AccountingEntityCode = AccountingEntityValues.ARPayment
             };
 
-            return newJournal;
+            return createdJournal;
         }
 
-
-        public DateTime GetCurrentDateTime()
+        private void CreateJournalLines()
         {
-            return TenantServerConfigration.GetCurrentDateTime(Tenant);
+            var creditLine = CreateCreditLineForCashbook();
+            createdJournal.JournalLines.Add(creditLine);
+
+            var debitLine =  CreateDebitLineForCustomer();
+            createdJournal.JournalLines.Add(debitLine);
         }
 
-        private JournalLinePM CreateLineForCashCashbook()
+        private JournalLinePM CreateCreditLineForCashbook()
         {
-            JournalLinePM newCreditJournalLine = new JournalLinePM
+            return new JournalLinePM
             {
                 ChangeSetOp = ChangeSetOperation.Insert,
-                Tenant = journal.Tenant,
+                Tenant = arguments.Tenant,
                 Line = 1,
-                ActionCode = "1", //Credit
-                DueDate = DepositPM.CreateDate,
-                LocalAmount = DepositPM.LocalDepositAmount,
-                ForeignAmount = DepositPM.ForeignAmount,
-                CurrencyId = DepositPM.DepositCurrencyId,
-                DocumentDate = DepositPM.CreateDate,
-                AccountingDate = DepositPM.AccountingDate,
-                ExchangeRate = DepositPM.LocalDepositAmount / DepositPM.ForeignAmount,
-
-                CreditAccountId = CashbookPM.AccountId
+                ActionCode = "1",
+                AccountingDate = paymentPM.RegisterDate.Value,
+                DocumentDate = paymentPM.RegisterDate.Value,
+                DueDate = cheque.ValueDate,
+                LocalAmount = cheque.LocalAmount,
+                ForeignAmount = cheque.ForeignAmount,
+                CurrencyId = cheque.CurrencyId,
+                ExchangeRate = cheque.LocalAmount / cheque.ForeignAmount,
+                
+                CreditAccountId = paymentCashbook.AccountId,
+                DebitAccountId = billTo.GLAccountId,
+                DebitControlAccountId = cashbookGLAccount.ControlAccountId,
+                Reference1 = cheque.ChequeNumber,
+                Reference2 = paymentPM.PaymentNo,
+                Notes = CreditLineNotes
             };
+        }
+        private JournalLinePM CreateDebitLineForCustomer()
+        {
+            return new JournalLinePM
+            {
+                ChangeSetOp = ChangeSetOperation.Insert,
+                Tenant = arguments.Tenant,
+                Line = 2,
+                ActionCode = "2",
+                AccountingDate = paymentPM.RegisterDate.Value,
+                DocumentDate = paymentPM.RegisterDate.Value,
+                DueDate = cheque.ValueDate,
+                LocalAmount = cheque.LocalAmount,
+                ForeignAmount = cheque.ForeignAmount,
+                CurrencyId = cheque.CurrencyId,
+                ExchangeRate = cheque.LocalAmount / cheque.ForeignAmount,
+                
+                DebitAccountId = billTo.GLAccountId,
+                CreditAccountId = paymentCashbook.AccountId,
+                DebitControlAccountId = cashbookGLAccount.ControlAccountId,
+                Reference1 = cheque.ChequeNumber,
+                Reference2 = paymentPM.PaymentNo,
+                Notes = CreditLineNotes
+            };
+        }
 
-            newCreditJournalLine.CreditControlAccountId = CashbookGLAccount?.ControlAccountId;
-
-            // opposit account
-            newCreditJournalLine.DebitAccountId = BankGLAccount.Id;
-
-            newCreditJournalLine.Reference1 = DepositPM.DepositNumber.ToString();
-            return newCreditJournalLine;
+        private void SubmitJournal()
+        {
+            IAccountingContext MyContext = AccountingContext.GetContext(arguments.Tenant);
+            var myJournalUpdateService = new JournalUpdateService(MyContext, new Dictionary<string, IContext>(), arguments.Tenant);
+            myJournalUpdateService.Update(createdJournal, true);
+        }
+        public DateTime GetCurrentDateTime()
+        {
+            return TenantServerConfigration.GetCurrentDateTime(arguments.Tenant);
         }
 
 
-        private ARPaymentChequePM GetChequeById(string chequeId, int tenant)
+        private ARPaymentPM GetARPayment()
         {
-            ARPaymentChequeQueryService aRPaymentChequeQuery = new ARPaymentChequeQueryService(tenant);
-            return aRPaymentChequeQuery.GetSingle(chequeId, false, false);
+            ARPaymentQuery aRPaymentQuery = new ARPaymentQuery(arguments.Tenant);
+            return aRPaymentQuery.GetSinglePM(arguments.PaymentId, arguments.Tenant);
+        }
+
+        private GLAccountPM GetCashbookGLAccount(CashBookPM paymentCashbook)
+        {
+            GLAccountQueryService gLAccountQueryService = new GLAccountQueryService(arguments.Tenant);
+            var cashbookGLAccount = gLAccountQueryService.GetSinglePM(paymentCashbook.AccountId, arguments.Tenant);
+            return cashbookGLAccount;
+        }
+
+        private CashBookPM GetPaymentCashbook()
+        {
+            CashBookQueryService cashBookQueryService = new CashBookQueryService(arguments.Tenant);
+            var paymentCashbook = cashBookQueryService
+                .GetByPaymentAndCurrencyAndBranch(paymentPM.PaymentCurrencyId,
+                ChequePaymentMethodCode, paymentPM.BranchId, arguments.Tenant);
+            return paymentCashbook;
+        }
+
+        private CardPM GetPaymentBilltoAccount()
+        {
+            CardQuery cardQuery = new CardQuery(arguments.Tenant);
+            var billTo = cardQuery.GetSinglePM(paymentPM.BillToId, arguments.Tenant);
+            return billTo;
+        }
+
+        private ARPaymentChequePM GetPaymentCheque()
+        {
+            ARPaymentChequeQueryService aRPaymentChequeQuery = new ARPaymentChequeQueryService(arguments.Tenant);
+            return aRPaymentChequeQuery.GetSingle(arguments.ChequeId, false, false);
         }
 
         private void SubmitCashbook(CashBookPM cashBook)
@@ -123,14 +217,14 @@ namespace Logitude.Accounting.BL.CoreBL
 
         private CashBookPM GetConnectedCashbook()
         {
-            CashBookQueryService cashbookQuery = new CashBookQueryService(arguments.tenant);
-            return cashbookQuery.GetByPaymentAndCurrencyAndBranch(arguments.paymentPM.PaymentCurrencyId, ChequePaymentMethodCode, arguments.paymentPM.BranchId, arguments.tenant);
+            CashBookQueryService cashbookQuery = new CashBookQueryService(arguments.Tenant);
+            return cashbookQuery.GetByPaymentAndCurrencyAndBranch(paymentPM.PaymentCurrencyId, ChequePaymentMethodCode, paymentPM.BranchId, arguments.Tenant);
         }
     }
     public class ARPaymentChequeReturnServiceArguments
     {
-        public int tenant { get; set; }
-        public string chequeId { get; set; }
-        public ARPaymentPM paymentPM { get; set; }
+        public int Tenant { get; set; }
+        public string ChequeId { get; set; }
+        public string PaymentId { get; set; }
     }
 }

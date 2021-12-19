@@ -401,9 +401,9 @@ namespace Logitude.Accounting.BL.CoreBL
             //         CreateJLinesAganistMainREGLAcc(RevenueExpenseGLAccountId, listallRevenueExpenseCards, totalBalance, journal,RevenueType, MyJournalActionTypeEnum.Debit);
 
             //         CreateJLinesAganistMainREGLAcc(RevenueExpenseGLAccountId, listallRevenueExpenseCards, totalBalance, journal, ExpenseType, MyJournalActionTypeEnum.Credit);
-            CreateJLinesAganistMainREGLAcc(RevenueExpenseGLAccountId, listallRevenueExpenseCards, totalBalance, journal, RevenueType, MyJournalActionTypeEnum.Credit);
+            CreateJLinesAganistMainREGLAcc(RevenueExpenseGLAccountId, listallRevenueExpenseCards, totalBalance, journal, RevenueType, JournalActionTypeEnum.Credit);
 
-            CreateJLinesAganistMainREGLAcc(RevenueExpenseGLAccountId, listallRevenueExpenseCards, totalBalance, journal, ExpenseType, MyJournalActionTypeEnum.Debit);
+            CreateJLinesAganistMainREGLAcc(RevenueExpenseGLAccountId, listallRevenueExpenseCards, totalBalance, journal, ExpenseType, JournalActionTypeEnum.Debit);
 
 
 
@@ -420,27 +420,27 @@ namespace Logitude.Accounting.BL.CoreBL
             return journal;
         }
 
-        private MyJournalActionTypeEnum GetMyEnum(string revenueExpenseType)
+        private JournalActionTypeEnum GetMyEnum(string revenueExpenseType)
         {
             switch (revenueExpenseType)
             {
 
                 case RevenueType:
                    // return MyJournalActionTypeEnum.Credit;
-                    return MyJournalActionTypeEnum.Debit;
+                    return JournalActionTypeEnum.Debit;
 
                     break;
 
                 case ExpenseType:
                 default:
                    // return MyJournalActionTypeEnum.Debit;
-                    return MyJournalActionTypeEnum.Credit;
+                    return JournalActionTypeEnum.Credit;
                     break;
 
             }
         }
 
-        private void CreateJLinesAganistMainREGLAcc(string RevenueExpenseGLAccountId, List<GLAccountAndMoreDTO> allRevenueExpenseCards, List<CurrencySum> totalBalance, JournalPM journal, string revenueExpenseType,MyJournalActionTypeEnum journalActionTypeEnum)
+        private void CreateJLinesAganistMainREGLAcc(string RevenueExpenseGLAccountId, List<GLAccountAndMoreDTO> allRevenueExpenseCards, List<CurrencySum> totalBalance, JournalPM journal, string revenueExpenseType,JournalActionTypeEnum journalActionTypeEnum)
         {
             var Type1Ids = allRevenueExpenseCards.Where(r => r.RevenueExpenseType == revenueExpenseType).Select(r => r.Id).ToList();
 
@@ -475,7 +475,7 @@ namespace Logitude.Accounting.BL.CoreBL
         }
 
 
-        private JournalLinePM GetJournalLine(MyJournalActionTypeEnum journalActionTypeEnum, CurrencySum myCurrencySum, JournalPM journal, string RevenueExpenseGLAccountId, string revenueExpenseType)
+        private JournalLinePM GetJournalLine(JournalActionTypeEnum journalActionTypeEnum, CurrencySum myCurrencySum, JournalPM journal, string RevenueExpenseGLAccountId, string revenueExpenseType)
         {
             if (string.IsNullOrWhiteSpace(RevenueExpenseGLAccountId))
             {
@@ -508,16 +508,16 @@ namespace Logitude.Accounting.BL.CoreBL
             int actionCode = 0;
             switch (journalActionTypeEnum)
             {
-                case MyJournalActionTypeEnum.Credit:
-                    journalLine.ActionTypeCodeEnum = MyJournalActionTypeEnum.Credit;
-                    actionCode = (int)MyJournalActionTypeEnum.Credit;
+                case JournalActionTypeEnum.Credit:
+                    journalLine.ActionTypeCodeEnum = JournalActionTypeEnum.Credit;
+                    actionCode = (int)JournalActionTypeEnum.Credit;
                     journalLine.ActionCode = actionCode.ToString();
                     journalLine.CreditAccountId = myCurrencySum.AccountId; //
                     journalLine.DebitAccountId= RevenueExpenseGLAccountId; //
                     break;
-                case MyJournalActionTypeEnum.Debit:
-                    journalLine.ActionTypeCodeEnum = MyJournalActionTypeEnum.Debit;
-                    actionCode = (int)MyJournalActionTypeEnum.Debit;
+                case JournalActionTypeEnum.Debit:
+                    journalLine.ActionTypeCodeEnum = JournalActionTypeEnum.Debit;
+                    actionCode = (int)JournalActionTypeEnum.Debit;
                     journalLine.ActionCode = actionCode.ToString();
                     journalLine.DebitAccountId = myCurrencySum.AccountId; //
                     journalLine.CreditAccountId = RevenueExpenseGLAccountId; //
