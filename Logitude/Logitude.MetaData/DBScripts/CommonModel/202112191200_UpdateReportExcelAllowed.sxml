@@ -1,4 +1,4 @@
-﻿<Script DBType="Main" Module="Common" TargetTableName="Tenants">
+﻿<Script DBType="Main" Module="Common" TargetTableName="Reports">
   <Sql Version="1">
     <![CDATA[
 
