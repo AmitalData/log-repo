@@ -226,7 +226,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     }
                     if (SumOpenTransactions)
                     {
-                        AccountBalance.TotalOpenTransactionAmount =  myLedgerTransactionQueryService.TotalOpenTransactionAmount(accountId: _GLAccountId, _Tenant);
+                        AccountBalance.TotalOpenTransactionAmount =  myLedgerTransactionQueryService.TotalOpenTransactionAmount(_GLAccountId, _Tenant);
 
                     }
 
