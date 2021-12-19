@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class PhysicalCheckUpdateClass
    {  		
-		public const string HashString = "c608dd56475963cf2d710587b79f44c8";
+		public const string HashString = "aa0c7743a2468513875c87bc9eb23d83";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -2768,6 +2768,67 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "MyCloseCheckBox",
+					  						ObjectTableName =  "Customs.PhysicalCheck",
+					  						FieldsDataType =  "Boolean",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "MyCloseCheckBox",
+					  						ListPropertyPath =  "MyCloseCheckBox",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Customs.PhysicalCheck",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "MyCloseCheckBox",
+					  						DefaultText =  "סימון לסגירה גורפת",
+					  						FullLocalDefaultText =  "סימון לסגירה גורפת",
+					  						ListFieldLable =  "MyCloseCheckBoxListLable",
+					  						ListLableDefaultText =  "MyCloseCheckBox",
+					  						ListLocalDefaultText =  "סימון לסגירה גורפת",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  true,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
@@ -2810,33 +2871,35 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			  Query OpenChecksQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = PhysicalCheckTextCode_0.Id, NameTextCodeCode = PhysicalCheckTextCode_0.Code, ObjectTableName = "Customs.PhysicalCheck", Code = "OpenChecks",  QueryGroupCode = "PHCK", IndexOrder = 0, Tenant = 0, ObjectTableId = PhysicalCheckObjectTable.Id, QuerySection = "Customs.PhysicalCheck", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = PhysicalCheckFeature_0.Id,FeatureUniqeCode= PhysicalCheckFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn OpenChecksQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenChecksQuery.Id,QueryCode = OpenChecksQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.PhysicalCheck.CustomFileNo" , ColumnWidth = 90 }, addedQueryColumns);
+			 QueryColumn OpenChecksQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenChecksQuery.Id,QueryCode = OpenChecksQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.PhysicalCheck.MyCloseCheckBox" , ColumnWidth = 40 }, addedQueryColumns);
 
-			 QueryColumn OpenChecksQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenChecksQuery.Id,QueryCode = OpenChecksQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.PhysicalCheck.DeclarationNo" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn OpenChecksQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenChecksQuery.Id,QueryCode = OpenChecksQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.PhysicalCheck.CustomFileNo" , ColumnWidth = 90 }, addedQueryColumns);
 
-			 QueryColumn OpenChecksQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenChecksQuery.Id,QueryCode = OpenChecksQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.PhysicalCheck.CustomerName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn OpenChecksQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenChecksQuery.Id,QueryCode = OpenChecksQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.PhysicalCheck.DeclarationNo" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn OpenChecksQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenChecksQuery.Id,QueryCode = OpenChecksQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.PhysicalCheck.StorageSiteName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn OpenChecksQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenChecksQuery.Id,QueryCode = OpenChecksQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.PhysicalCheck.CustomerName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn OpenChecksQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenChecksQuery.Id,QueryCode = OpenChecksQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Customs.PhysicalCheck.CheckSiteName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn OpenChecksQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenChecksQuery.Id,QueryCode = OpenChecksQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Customs.PhysicalCheck.StorageSiteName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn OpenChecksQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenChecksQuery.Id,QueryCode = OpenChecksQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Customs.PhysicalCheck.QueueTypeName" , ColumnWidth = 70 }, addedQueryColumns);
+			 QueryColumn OpenChecksQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenChecksQuery.Id,QueryCode = OpenChecksQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Customs.PhysicalCheck.CheckSiteName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn OpenChecksQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenChecksQuery.Id,QueryCode = OpenChecksQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Customs.PhysicalCheck.CheckId" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn OpenChecksQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenChecksQuery.Id,QueryCode = OpenChecksQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Customs.PhysicalCheck.QueueTypeName" , ColumnWidth = 70 }, addedQueryColumns);
 
-			 QueryColumn OpenChecksQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenChecksQuery.Id,QueryCode = OpenChecksQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Customs.PhysicalCheck.LimitDate" , ColumnWidth = 110 }, addedQueryColumns);
+			 QueryColumn OpenChecksQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenChecksQuery.Id,QueryCode = OpenChecksQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Customs.PhysicalCheck.CheckId" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn OpenChecksQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenChecksQuery.Id,QueryCode = OpenChecksQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "Customs.PhysicalCheck.ContainerNubmer" , ColumnWidth = 110 }, addedQueryColumns);
+			 QueryColumn OpenChecksQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenChecksQuery.Id,QueryCode = OpenChecksQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "Customs.PhysicalCheck.LimitDate" , ColumnWidth = 110 }, addedQueryColumns);
 
-			 QueryColumn OpenChecksQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenChecksQuery.Id,QueryCode = OpenChecksQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "Customs.PhysicalCheck.OperationName" , ColumnWidth = 80 }, addedQueryColumns);
+			 QueryColumn OpenChecksQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenChecksQuery.Id,QueryCode = OpenChecksQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "Customs.PhysicalCheck.ContainerNubmer" , ColumnWidth = 110 }, addedQueryColumns);
 
-			 QueryColumn OpenChecksQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenChecksQuery.Id,QueryCode = OpenChecksQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "Customs.PhysicalCheck.IsComprehensiveCheck" , ColumnWidth = 80 }, addedQueryColumns);
+			 QueryColumn OpenChecksQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenChecksQuery.Id,QueryCode = OpenChecksQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "Customs.PhysicalCheck.OperationName" , ColumnWidth = 80 }, addedQueryColumns);
 
-			 QueryColumn OpenChecksQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenChecksQuery.Id,QueryCode = OpenChecksQuery.UniqueCode, IndexOrder = 11, ObjectFieldCode = "Customs.PhysicalCheck.CheckTypeCode" , ColumnWidth = 80 }, addedQueryColumns);
+			 QueryColumn OpenChecksQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenChecksQuery.Id,QueryCode = OpenChecksQuery.UniqueCode, IndexOrder = 11, ObjectFieldCode = "Customs.PhysicalCheck.IsComprehensiveCheck" , ColumnWidth = 80 }, addedQueryColumns);
 
-			 QueryColumn OpenChecksQueryColumn_12 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenChecksQuery.Id,QueryCode = OpenChecksQuery.UniqueCode, IndexOrder = 12, ObjectFieldCode = "Customs.PhysicalCheck.CheckTypeName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn OpenChecksQueryColumn_12 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenChecksQuery.Id,QueryCode = OpenChecksQuery.UniqueCode, IndexOrder = 12, ObjectFieldCode = "Customs.PhysicalCheck.CheckTypeCode" , ColumnWidth = 80 }, addedQueryColumns);
 
-			 QueryColumn OpenChecksQueryColumn_13 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenChecksQuery.Id,QueryCode = OpenChecksQuery.UniqueCode, IndexOrder = 13, ObjectFieldCode = "Customs.PhysicalCheck.VehicleChassisNumber" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn OpenChecksQueryColumn_13 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenChecksQuery.Id,QueryCode = OpenChecksQuery.UniqueCode, IndexOrder = 13, ObjectFieldCode = "Customs.PhysicalCheck.CheckTypeName" , ColumnWidth = 130 }, addedQueryColumns);
+
+			 QueryColumn OpenChecksQueryColumn_14 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenChecksQuery.Id,QueryCode = OpenChecksQuery.UniqueCode, IndexOrder = 14, ObjectFieldCode = "Customs.PhysicalCheck.VehicleChassisNumber" , ColumnWidth = 130 }, addedQueryColumns);
 
              AdvancedQueryFilter OpenChecksQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.PhysicalCheck.IsClosed", PredefinedValue = "false",PredefinedValue2 = null, QueryId = OpenChecksQuery.Id,QueryCode = OpenChecksQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 

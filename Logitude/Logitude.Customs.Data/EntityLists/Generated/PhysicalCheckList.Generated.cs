@@ -92,6 +92,8 @@ namespace Logitude.Customs.Data.EntityLists
        public bool NoEscortRequired  { get; set; }
        [DataMember]
        public string VehicleChassisNumber  { get; set; }
+       [DataMember]
+       public bool MyCloseCheckBox  { get; set; }
    }
 
 }

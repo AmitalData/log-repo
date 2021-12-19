@@ -47,6 +47,7 @@ export class PhysicalCheckList {
 	CustomerId: string;
 	NoEscortRequired: boolean;
 	VehicleChassisNumber: string;
+	MyCloseCheckBox: boolean;
 	
 }
  
