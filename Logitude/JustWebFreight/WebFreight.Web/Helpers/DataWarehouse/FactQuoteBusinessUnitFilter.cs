@@ -28,17 +28,17 @@ namespace WebFreight.Web.Helpers.DataWarehouse
          
             if (featureRoles.Where(d => d.FeatureAccessLevelCode == "US").Any())
             {
-                return " Fact_Quotes.[Salesman User Id] = " + quoteBusinessUnitFilter.loggedUser.Id;
+                return " Fact_Quotes.[Salesman User Id] = '" + quoteBusinessUnitFilter.loggedUser.Id + "' ";
             }
 
             if (featureRoles.Where(d => d.FeatureAccessLevelCode == "BU").Any())
             {
-                return " Fact_Quotes.[Business Unit Id] = " + quoteBusinessUnitFilter.loggedUser.BusinessUnitId;
+                return " Fact_Quotes.[Business Unit Id] = '" + quoteBusinessUnitFilter.loggedUser.BusinessUnitId + "' ";
             }
 
             if (featureRoles.Where(d => d.FeatureAccessLevelCode == "PR").Any())
             {
-                return " Fact_Quotes.[Business Unit Id]  LIKE '" + quoteBusinessUnitFilter.loggedUser.BusinessUnitId + "%'";
+                return " Fact_Quotes.[Business Unit Id]  LIKE '" + quoteBusinessUnitFilter.loggedUser.BusinessUnitId + "%' ";
             }
 
             return "";
