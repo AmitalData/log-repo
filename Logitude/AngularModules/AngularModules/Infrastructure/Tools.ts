@@ -1113,7 +1113,11 @@ export class AppTool {
                 myResult = "Tariff";
                 break;
             }
-                
+            case "General.MH.Automations": {
+                myResult = "AutomationBlueIcon";
+                break;
+            }
+
 
             default: {
                 myResult = "Person";
