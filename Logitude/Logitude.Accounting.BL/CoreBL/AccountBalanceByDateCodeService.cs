@@ -61,7 +61,9 @@ namespace Logitude.Accounting.BL.CoreBL
             bool checkHaveAccountingQueued ,
             bool inclusiveTheDateLTransaction /*= false*/, 
             bool verbose /*= false*/,
-            bool ClacOpenReconciledAmount)
+            bool ClacOpenReconciledAmount,
+            bool SumOpenTransactions
+            )
         {
             _TheDate = theDate;
             _DateTypeCode = DateTypeCode;
@@ -222,7 +224,11 @@ namespace Logitude.Accounting.BL.CoreBL
                         }
 
                     }
+                    if (SumOpenTransactions)
+                    {
+                        AccountBalance.TotalOpenTransactionAmount =  myLedgerTransactionQueryService.TotalOpenTransactionAmount(accountId: _GLAccountId, _Tenant);
 
+                    }
 
                     AccountBalance.Totals = totals;
                     AccountBalance.TotalLocalAmountDebit = AccountBalance.Totals.Sum(r => r.LocalAmountDebit);
@@ -344,6 +350,8 @@ namespace Logitude.Accounting.BL.CoreBL
         public List<string> YearTransferLedgerTransactionIds { get; internal set; }
         public string OpenAmountCurrencyId { get; set; }
         public decimal StartTotalOpenAmount { get; set; }
+        public decimal TotalOpenTransactionAmount { get; set; }
+        
 
         internal List<CallBackBalance> GetCallBackBalanceOfCurrency(string currencyId)
         {
