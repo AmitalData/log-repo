@@ -14241,6 +14241,9 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
         private List<ShipmentAdditionalFields> GetShipmentsOrderPackageFields(IQueryable<Shipment> targetedShipmentsQuery)
         {
             var shipmentsOrderPackageFieldsQuery = from shipment in targetedShipmentsQuery
+                                                   join shipmentPackage in repository.context.ShipmentPackages
+                                                   on shipment.Id equals shipmentPackage.ShipmentId
+                                                   into shipmentPackages
                                                    join shipmentOrderPackage in repository.context.ShipmentOrderPackages
                                                    on shipment.Id equals shipmentOrderPackage.ShipmentId
                                                    into shipmentOrderPackages
@@ -14248,11 +14251,27 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                    {
                                                        ShipmentId = shipment.Id,
 
-                                                       ShipmentOrdersType = shipmentOrderPackages.Select(x => x.PackageTypeId).Distinct().Count() == 1 ?
-                                                           (shipmentOrderPackages.Select(x => x.PackageType).FirstOrDefault() != null ?
-                                                           shipmentOrderPackages.Select(x => x.PackageType).FirstOrDefault().EnglishName : "Packages") : "Packages",
+                                                       PackagesNumberLabel = shipment.ShipmentType.Id == "FCLD" || shipment.ShipmentType.Id == "LCLD" ?
 
-                                                       NumberOfOrderPackages = shipment.BookingNumberOfPackages.ToString()
+                                                       shipmentPackages.Count() > 0 ?
+                                                       shipmentPackages.Sum(p => p.Quantity).ToString() + " " + (shipmentPackages.Select(x => x.PackageTypeId).Distinct().Count() == 1 ?
+                                                       (shipmentPackages.Select(x => x.PackageType).FirstOrDefault() != null ?
+                                                       shipmentPackages.Select(x => x.PackageType).FirstOrDefault().EnglishName :
+                                                       (shipment.ShipmentType.Id == "FCLD" ? "Containers" : "Packages")) :
+                                                       (shipment.ShipmentType.Id == "FCLD" ? "Containers" : "Packages"))
+                                                       :
+                                                       (shipmentOrderPackages.Count() > 0 ?
+                                                       shipmentOrderPackages.Sum(p => p.Quantity).ToString() + " " + (shipmentOrderPackages.Select(x => x.PackageTypeId).Distinct().Count() == 1 ?
+                                                       (shipmentOrderPackages.Select(x => x.PackageType).FirstOrDefault() != null ?
+                                                       shipmentOrderPackages.Select(x => x.PackageType).FirstOrDefault().EnglishName :
+                                                       (shipment.ShipmentType.Id == "FCLD" ? "Containers" : "Packages")) :
+                                                       (shipment.ShipmentType.Id == "FCLD" ? "Containers" : "Packages"))
+                                                       :
+                                                       null)
+                                                       :
+                                                       shipment.BookingNumberOfPackages.ToString() + " " + (shipmentOrderPackages.Select(x => x.PackageTypeId).Distinct().Count() == 1 ?
+                                                       (shipmentOrderPackages.Select(x => x.PackageType).FirstOrDefault() != null ?
+                                                       shipmentOrderPackages.Select(x => x.PackageType).FirstOrDefault().EnglishName : "Packages") : "Packages")
                                                    };
 
             return shipmentsOrderPackageFieldsQuery.ToList();
@@ -14311,7 +14330,6 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 shipmentAdditionalFields.FirstPickupATA = shipmentPickUpDeliveryFields.FirstPickupATA;
                 shipmentAdditionalFields.LastDeliveryATD = shipmentPickUpDeliveryFields.LastDeliveryATD;
                 shipmentAdditionalFields.LastDeliveryATA = shipmentPickUpDeliveryFields.LastDeliveryATA;
-                shipmentAdditionalFields.ShipmentOrdersType = shipmentPickUpDeliveryFields.ShipmentOrdersType;
             }
         }
 
@@ -14319,8 +14337,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
         {
             if (shipmentsOrderPackageFields != null)
             {
-                shipmentAdditionalFields.ShipmentOrdersType = shipmentsOrderPackageFields.ShipmentOrdersType;
-                shipmentAdditionalFields.NumberOfOrderPackages = shipmentsOrderPackageFields.NumberOfOrderPackages;
+                shipmentAdditionalFields.PackagesNumberLabel = shipmentsOrderPackageFields.PackagesNumberLabel;
             }
         }
 
