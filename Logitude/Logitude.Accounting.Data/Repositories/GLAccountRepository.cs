@@ -511,7 +511,8 @@ namespace Logitude.Accounting.Data.Repositories
                         select a;
             return query.Where(r => !String.IsNullOrEmpty(r.VatNumber)
             //     && !String.IsNullOrEmpty(r.DeductionFileNumber) // ironically - see 140210 
-            && !(r.Inactive.HasValue && r.Inactive.Value));
+            && !(r.Inactive.HasValue && r.Inactive.Value)
+            && !r.ExcludeFromDeductionReport);
         }
 
 
