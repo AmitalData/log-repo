@@ -172,7 +172,11 @@
         position: relative;
         top: 12px;
     }
-	 
+
+    .Container{
+		position:relative;
+		right: 35px;
+    }
 </style>
  
 
@@ -214,16 +218,29 @@
 											<div style="margin-top: -2px;">
 												<div class="RadioButton" *ngFor="let item of TransportModesList" [attr.id]="'TransportModeRadio_Div_' + SessionIndex + item.Code">
 
-													<input [disabled]="item.Code != 'A'" [attr.id]="'TransportModeRadio_' + SessionIndex + item.Code" [attr.name]="'TransportModesRadio' + SessionIndex" type="radio" [checked]="TransportModeId == item.Code" (click)="TransportModeId = item.Code" />
+													<input [disabled]="item.Code == 'I'" [attr.id]="'TransportModeRadio_' + SessionIndex + item.Code" [attr.name]="'TransportModesRadio' + SessionIndex" type="radio" [checked]="TransportModeId == item.Code" (click)="TransportModeId = item.Code" />
 													<label [attr.for]="'TransportModeRadio_' + SessionIndex + item.Code" style="text-indent: 40px; font-size: 12px" [ngStyle]="{color: TransportModeId == item.Code ? '#287828':'#282E30'}">
 														<img class="LeftCenter" style="margin-left: 20px;" [attr.src]="'./Images/Icons/' + item.Code + '.png'" />
 														{{item.Name}}
 													</label>
-													<div style="margin-left: 80px;" *ngIf="item.Code != 'A'"> <HelpIcon [IconSize]="14" [Header]="'Transport'" [Text]="'Will be available in the near future'"></HelpIcon></div>
+													<div style="margin-left: 80px;" *ngIf="item.Code == 'I'"> <HelpIcon [IconSize]="14" [Header]="'Transport'" [Text]="'Will be available in the near future'"></HelpIcon></div>
 												</div>
 											</div>
 										</div>
 
+										<!-- Shipment Types -->
+										<div style="margin: 10px;" *ngIf="DirectionId && DirectionId != 'C' && (TransportModeId == 'O' || TransportModeId == 'I')">
+											<div style="font-size: 13px; color: #6E7172;">{{'Shipment.F.ShipmentTypeId' | TextCodeTranslationPipe}}:</div>
+											<div style="margin-top: -2px;">
+												<div class="RadioButton" *ngFor="let item of ShipmentTypesList" [attr.id]="'ShipmentTypeRadio_Div_' + SessionIndex + item.Code">
+													<input [attr.id]="'ShipmentTypeRadio_' + SessionIndex + item.Code" [attr.name]="'ShipmentTypesRadio' + SessionIndex" type="radio" [checked]="ShipmentTypeId == item.Code" (click)="ShipmentTypeId = item.Code" />
+													<label [attr.for]="'ShipmentTypeRadio_' + SessionIndex + item.Code" style="text-indent: 45px; font-size: 12px" [ngStyle]="{color: ShipmentTypeId == item.Code ? '#287828':'#282E30'}">
+														<img class="LeftCenter" style="margin-left: 20px;" [attr.src]="item.SRC" />
+														{{item.Name}}
+													</label>
+												</div>
+											</div>
+										</div>
 
 									</td>
 								</tr>
@@ -267,7 +284,7 @@
 																				<td [style.width.px]="LabelColumnWidth">
 																					<div class="RedPoint"></div>
 																					<label style="padding-left:10px;color: rgb(110, 113, 114);">
-																						Reference:
+																						{{Order}}
 																					</label>
 																				</td>
 
@@ -341,13 +358,93 @@
 																					<div></div>
 																				</td>
 
+																				<!--<td [style.width.px]="LabelColumnWidth">
+									<div class="RedPoint"></div>
+									<label style="padding-left:10px;color: rgb(110, 113, 114);">
+										FromTextCode
+									</label>
+								</td>-->
 																				<td [style.width.px]="LabelColumnWidth">
-																					<div class="RedPoint"></div>
-																					<label style="padding-left:10px;color: rgb(110, 113, 114);">
-																						Destination:
-																					</label>
+																					<div *ngIf="TransportModeId=='A'" class="RedPoint"></div>
+																					<div *ngIf="TransportModeId=='A'"><LogLabel [ObjectFieldName]="'MainCarriageFromPortId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="ToTextCode"></LogLabel> </div>
+
+																				</td>
+																				<td [style.width.px]="ControlColumnWidth">
+																					<LogLov *ngIf="TransportModeId=='A'" [ObjectFieldName]="'MainCarriageToPortId'"
+																							[SelectedValue]="MainCarriageToPortId"
+																							[ObjectTableName]="ObjectTableName"
+																							[DataContext]="DataContext"
+																							[LookUpTableName]="'Port'"
+																							[DependencyFilter1Value]="TransportModeId">
+																					</LogLov>
 																				</td>
 
+																				<td style="width: 20px;">
+																					<div></div>
+																				</td>
+
+
+																			</tr>
+
+
+																		</table>
+
+																		<div style="height:1px; width: 100%; background: #999999; opacity:0.3; margin-top: 5px; margin-bottom: 5px;"></div>
+																	</div>
+
+
+																</div>
+															</div>
+														</td>
+													</tr>
+
+
+
+													<tr *ngIf="TransportModeId=='O'" style="height: 30px;">
+														<td>
+															<div class="ScrollViewer" style="padding: 10px; padding-top: 5px; top: 3px; right: 3px; bottom: 3px;">
+																<div class="ScrollContent" [ngStyle]="{opacity: ScreenOpacity}">
+
+																	<!-- Main Carriage -->
+																	<div>
+																		<div class="SectionTitle">
+																			<table>
+																				<tr>
+																					<td>Main Carriage</td>
+																				</tr>
+																			</table>
+																		</div>
+
+																		<table>
+
+																			<tr class="FormFieldRow">
+
+
+																				<td [style.width.px]="LabelColumnWidth">
+																					<div class="RedPoint"></div>
+																					<div><LogLabel [ObjectFieldName]="'MainCarriageFromPortId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="FromTextCode"></LogLabel> </div>
+
+																				</td>
+																				<td [style.width.px]="ControlColumnWidth">
+																					<LogLov [ObjectFieldName]="'MainCarriageFromPortId'"
+																							[SelectedValue]="MainCarriageFromPortId"
+																							[ObjectTableName]="ObjectTableName"
+																							[DataContext]="DataContext"
+																							[LookUpTableName]="'Port'"
+																							[DependencyFilter1Value]="TransportModeId">
+																					</LogLov>
+																				</td>
+
+																				<td style="width: 20px;">
+																					<div></div>
+																				</td>
+
+
+																				<td [style.width.px]="LabelColumnWidth">
+																					<div class="RedPoint"></div>
+																					<div><LogLabel [ObjectFieldName]="'MainCarriageToPortId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="ToTextCode"></LogLabel> </div>
+
+																				</td>
 																				<td [style.width.px]="ControlColumnWidth">
 																					<LogLov [ObjectFieldName]="'MainCarriageToPortId'"
 																							[SelectedValue]="MainCarriageToPortId"
@@ -376,6 +473,7 @@
 															</div>
 														</td>
 													</tr>
+
 
 													<tr style="height: 30px;">
 														<td>
@@ -528,9 +626,256 @@
 															</div>
 														</td>
 													</tr>
+													 
+
+													<tr *ngIf="ShipmentTypeId == 'FCLD' && TransportModeId == 'O'" style="height: 55px;">
+														<td>
+															<div class="ScrollViewer" style="padding: 10px; padding-top: 5px; top: 3px; right: 3px; bottom: 3px;">
+																<div class="ScrollContent" [ngStyle]="{opacity: ScreenOpacity}">
+
+																	<!-- Container -->
+																	<div> 
+
+																		<table>
+
+																			<tr class="FormFieldRow">
+																			 
+																				<td [style.width.px]="ControlColumnWidth">
+																					<table style="height: 20px;">
+																						<tr>
+																							<td style="width: 330px; vertical-align: middle;">
+
+																								<div *ngIf="ShipmentTypeId == 'FCLD'" class="FillParent">
+																									<table>
+																										<tr>
+																											<td style="width: 10px;">
+																												<div></div>
+																											</td>
+
+																											<td style="width: 60px;">
+																												<label class="Label">{{'Shipment.S.NewShipment.Quantity' | TextCodeTranslationPipe}}</label>
+																											</td>
+
+																											<td style="width: 2px;">
+																												<div></div>
+																											</td>
+
+																											<td style="width: 140px;">
+																												<label class="Label">{{'Shipment.S.NewShipment.PackageType' | TextCodeTranslationPipe}}</label>
+																											</td>
+																											<td style="width: 2px;">
+																												<div></div>
+																											</td>
+																											<td>
+																												<label class="Label">Container #</label>
+																											</td>
+																											<td style="width: 10px;">
+																												<div></div>
+																											</td>
+																											<td style="width: 40px;">
+																												<label style="padding-left:10px;color: rgb(110, 113, 114);">
+																													Notes:
+																												</label>
+																											</td>
+																										</tr>
+																									</table>
+																								</div>
+																							</td>
+
+																							<td>
+																								<div></div>
+																							</td>
+
+																						</tr>
+																					</table>
+																					<table style="height: 30px">
+																						<tr style="height: 30px;">
+																							<td style="width: 330px; height: 30px">
 
 
-													<tr style="height: 55px;">
+																								<table>
+																									<tr class="FormFieldRow">
+																										<td style="width: 10px;">
+																											<div></div>
+																										</td>
+
+																										<td [style.width.px]="LabelColumnWidth - 70">
+																											<LogTextBox [ObjectFieldName]="'Quantity1'" [Text]="Quantity1" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+																										</td>
+
+																										<td style="width: 2px;">
+																											<div></div>
+																										</td>
+
+																										<td [style.width.px]="ControlColumnWidth - 120">
+																											<LogLov [ObjectFieldName]="'PackageTypeId1'"
+																													[SelectedValue]="PackageTypeId1"
+																													[ObjectTableName]="ObjectTableName"
+																													[DataContext]="DataContext"
+																													[LookUpTableName]="'PackageType'"
+																													[DependencyFilter2Value]="true"
+																													(SelectedItemChanged)="PackageTypeList1 = $event">
+																											</LogLov>
+																										</td>
+
+																										<td style="width: 2px;">
+																											<div></div>
+																										</td>
+
+																										<td class="Container" [style.width.px]="LabelColumnWidth - 30">
+																											<LogTextBox [ObjectFieldName]="'ContatinerNumber1'" [Text]="ContatinerNumber1" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+																										</td>
+																									</tr>
+
+																									<tr class="FormFieldRow">
+																										<td style="width: 10px;">
+																											<div></div>
+																										</td>
+
+																										<td [style.width.px]="LabelColumnWidth - 120">
+																											<LogTextBox [ObjectFieldName]="'Quantity2'" [Text]="Quantity2" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+																										</td>
+
+																										<td style="width: 2px;">
+																											<div></div>
+																										</td>
+
+																										<td [style.width.px]="ControlColumnWidth - 40">
+																											<LogLov [ObjectFieldName]="'PackageTypeId2'"
+																													[SelectedValue]="PackageTypeId2"
+																													[ObjectTableName]="ObjectTableName"
+																													[DataContext]="DataContext"
+																													[LookUpTableName]="'PackageType'"
+																													[DependencyFilter2Value]="true"
+																													(SelectedItemChanged)="PackageTypeList2 = $event">
+																											</LogLov>
+																										</td>
+																										<td style="width: 2px;">
+																											<div></div>
+																										</td>
+
+																										<td  class="Container" [style.width.px]="LabelColumnWidth - 30">
+																											<LogTextBox [ObjectFieldName]="'ContatinerNumber1'" [Text]="ContatinerNumber1" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+																										</td>
+																									</tr>
+
+																									<!--<tr class="FormFieldRow">
+																										<td style="width: 10px;">
+																											<div></div>
+																										</td>
+
+																										<td [style.width.px]="LabelColumnWidth - 12">
+																											<LogTextBox [ObjectFieldName]="'Quantity3'" [Text]="Quantity3" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+																										</td>
+
+																										<td style="width: 2px;">
+																											<div></div>
+																										</td>
+
+																										<td [style.width.px]="ControlColumnWidth">
+																											<LogLov [ObjectFieldName]="'PackageTypeId3'"
+																													[SelectedValue]="PackageTypeId3"
+																													[ObjectTableName]="ObjectTableName"
+																													[DataContext]="DataContext"
+																													[LookUpTableName]="'PackageType'"
+																													[DependencyFilter2Value]="true"
+																													(SelectedItemChanged)="PackageTypeList3 = $event">
+																											</LogLov>
+																										</td>
+																									</tr>
+
+																									<tr class="FormFieldRow">
+																										<td style="width: 10px;">
+																											<div></div>
+																										</td>
+
+																										<td [style.width.px]="LabelColumnWidth - 12">
+																											<LogTextBox [ObjectFieldName]="'Quantity4'" [Text]="Quantity4" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+																										</td>
+
+																										<td style="width: 2px;">
+																											<div></div>
+																										</td>
+
+																										<td [style.width.px]="ControlColumnWidth">
+																											<LogLov [ObjectFieldName]="'PackageTypeId4'"
+																													[SelectedValue]="PackageTypeId4"
+																													[ObjectTableName]="ObjectTableName"
+																													[DataContext]="DataContext"
+																													[LookUpTableName]="'PackageType'"
+																													[DependencyFilter2Value]="true"
+																													(SelectedItemChanged)="PackageTypeList4 = $event">
+																											</LogLov>
+																										</td>
+																									</tr>-->
+																								</table>
+
+																							</td>
+
+																							<td>
+																								<div></div>
+																							</td>
+
+
+																							<!--<td style="width: 330px;">
+																								<table>
+																									<tr class="FormFieldRow" style="height: 20px;">
+																										<td colspan="2">
+																											<LogLabel [ObjectFieldName]="'DescriptionOfGoods'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+																										</td>
+																									</tr>
+
+																									<tr class="FormFieldRow" style="height:auto;">
+																										<td style="width: 10px;">
+																											<div></div>
+																										</td>
+
+																										<td>
+																											<div class="FillParent">
+																												<LogTextBox [ObjectFieldName]="'DescriptionOfGoods'" [Text]="DescriptionOfGoods" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [IsMultiline]="true"></LogTextBox>
+																											</div>
+																										</td>
+																									</tr>
+
+																									<tr style="height: 5px;">
+																										<td colspan="2">
+																											<div></div>
+																										</td>
+																									</tr>
+																								</table>
+																							</td>-->
+
+																						</tr>
+																					</table>
+
+																				</td>
+
+																				<td style="width: 20px;">
+																					<div></div>
+																				</td>
+  
+
+																				<td style="width: 20px;">
+																					<div></div>
+																				</td>
+
+
+																			</tr>
+
+
+																		</table>
+
+																		<div style="height:1px; width: 100%; background: #999999; opacity:0.3; margin-top: 5px; margin-bottom: 5px;"></div>
+																	</div>
+
+
+																</div>
+															</div>
+														</td>
+													</tr>
+
+													 
+													<tr *ngIf="(ShipmentTypeId == 'LCLD' || TransportModeId == 'A')" style="height: 55px;">
 														<td>
 															<div class="ScrollViewer" style="padding: 10px; padding-top: 5px; top: 3px; right: 3px; bottom: 3px;">
 																<div class="ScrollContent" [ngStyle]="{opacity: ScreenOpacity}">
@@ -652,7 +997,7 @@
 
 
 												</table>
-
+											 
 
 
 												<table *ngIf="DirectionId == 'C' || ShowAddDocument">
@@ -1034,18 +1379,18 @@
 													<tr style="height:33px;" *ngIf="!IsDSVTenant || ShowAddDocument">
 
 														<td>
-																	<table *ngIf="ShowAddDocument && DirectionId == 'E'">
-																			<tr>
-																				<td style="width:7px;">
-																				</td>
-																				<td>
-																					<label class="SectionTitle">
-																						Documents
-																					</label>
-																				</td>
-																			</tr>
-																		</table>
-															<table style="height:33px"> 
+															<table *ngIf="ShowAddDocument && DirectionId == 'E'">
+																<tr>
+																	<td style="width:7px;">
+																	</td>
+																	<td>
+																		<label class="SectionTitle">
+																			Documents
+																		</label>
+																	</td>
+																</tr>
+															</table>
+															<table style="height:33px">
 																<tr style="height:33px">
 
 
@@ -1062,7 +1407,7 @@
 
 
 																	<td style="width:300px"></td>
-																	<td  *ngIf="ShowAddDocument && DirectionId == 'E'" style="width:360px"></td>
+																	<td *ngIf="ShowAddDocument && DirectionId == 'E'" style="width:360px"></td>
 																	<td *ngIf="TransportModeId === 'O' &&DirectionId == 'C'" [class.Disabled]="!TransportModeId || TransportModeId != 'O'">
 																		<table>
 																			<tr>
