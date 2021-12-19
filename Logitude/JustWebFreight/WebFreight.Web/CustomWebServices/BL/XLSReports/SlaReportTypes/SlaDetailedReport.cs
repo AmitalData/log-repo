@@ -84,6 +84,7 @@ namespace WebFreight.Web.CustomWebServices.BL.XLSReports.SlaReportTypes
                 report.TerminalReleaseDate = decStatus.TerminalReleaseDate?.ToShortDateString();
                 if (decStatus.Delivered && decStatus.LastMileStatusDate.HasValue)
                 {
+                    report.LastMileDate = decStatus.LastMileStatusDate?.ToShortDateString();
                     double daysBetween = (decStatus.LastMileStatusDate.Value - landingDate.Value).TotalDays;
                     if (daysBetween > 0)
                     {
@@ -99,7 +100,6 @@ namespace WebFreight.Web.CustomWebServices.BL.XLSReports.SlaReportTypes
                         }
                     }
                 }
-                report.LastMileDate = decStatus.LastMileStatusDate?.ToShortDateString();
 
                 report.CourierHawb = decStatus.CourierHawb;
             }
