@@ -14568,12 +14568,14 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
         private Tuple<int, int> GetActiveShipmentsCount(int tenant, string CustomerId)
         {
             var shipmentsFilteredByCustomerId = repository.context.Shipments.Where(shipment => shipment.CustomerId == CustomerId &&
-                                                                                   shipment.Tenant == tenant).AsQueryable();
+                                                                                               shipment.IsCancelled == false &&
+                                                                                               shipment.IsStandalonePickupDelivery == false &&
+                                                                                               shipment.Tenant == tenant)
+                                                                            .AsQueryable();
             var activeShipments = shipmentsFilteredByCustomerId.Where(shipment => shipment.IsOperationalClosed == false).AsQueryable();
 
             int allShipmentsCount = shipmentsFilteredByCustomerId.Count();
             int activeShipmentsCount = activeShipments.Count();
-
             return Tuple.Create(allShipmentsCount, activeShipmentsCount);
         }
 
@@ -14582,11 +14584,14 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             ShipmentRepository shipmentRepository = new ShipmentRepository(tenant);
             IQueryable<ShipmentDataView> shipmentsDataView = shipmentRepository.GetShipmentViewsByTenant(tenant);
             IQueryable<ShipmentDataView> activeShipmentsDataViewFilteredByCustomerId = shipmentsDataView.Where(shipment => shipment.CustomerId == CustomerId &&
-                                                                                               shipment.IsOperationalClosed == false).AsQueryable();
-            int atOriginShipmentCount = activeShipmentsDataViewFilteredByCustomerId.Where(shipment => shipment.StatusWeight <= leastStatusWeight).Count();
-            int inTransitShipmentCount = activeShipmentsDataViewFilteredByCustomerId.Where(shipment => shipment.StatusWeight > leastStatusWeight &&
-                                                                                                       shipment.StatusWeight <= greatestStatusWeight).Count();
-            int atDestinationShipmentCount = activeShipmentsDataViewFilteredByCustomerId.Where(shipment => shipment.StatusWeight > greatestStatusWeight).Count();
+                                                                                                                           shipment.IsCancelled == false &&
+                                                                                                                           shipment.IsStandalonePickupDelivery == false &&
+                                                                                                                           shipment.IsOperationalClosed == false)
+                                                                                                        .AsQueryable();
+            int atOriginShipmentCount = activeShipmentsDataViewFilteredByCustomerId.Where(shipment => shipment.StatusWeight < leastStatusWeight).Count();
+            int inTransitShipmentCount = activeShipmentsDataViewFilteredByCustomerId.Where(shipment => shipment.StatusWeight >= leastStatusWeight &&
+                                                                                                       shipment.StatusWeight < greatestStatusWeight).Count();
+            int atDestinationShipmentCount = activeShipmentsDataViewFilteredByCustomerId.Where(shipment => shipment.StatusWeight >= greatestStatusWeight).Count();
 
             return Tuple.Create(atOriginShipmentCount, inTransitShipmentCount, atDestinationShipmentCount);
         }
