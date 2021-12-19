@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class PhysicalCheckUpdateClass
    {  		
-		public const string HashString = "c608dd56475963cf2d710587b79f44c8";
+		public const string HashString = "366c89f0c28748bd5f294eab2552507b";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -2152,10 +2152,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CustomFileNo",
 					  						DefaultText =  "Custom File No",
-					  						FullLocalDefaultText =  "תיק עמילות",
+					  						FullLocalDefaultText =  "תיק עמילות/מכס",
 					  						ListFieldLable =  "CustomFileNoListLable",
 					  						ListLableDefaultText =  "Custom File No",
-					  						ListLocalDefaultText =  "תיק עמילות",
+					  						ListLocalDefaultText =  "תיק עמילות/מכס",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,

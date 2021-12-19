@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CustomsRequestsSheetUpdateClass
    {  		
-		public const string HashString = "688b4211e31482cd03fdb1e7be118d62";
+		public const string HashString = "105f1e1b6612c071b21aa50363749000";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -125,7 +125,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Customs Requests Sheet",
-			      				    Code =  "10d0",
+			      				    Code =  "849d",
 			      				    Name =  "Customs.CustomsRequestsSheet Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -925,10 +925,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CustomFileNo",
 					  						DefaultText =  "Custom File No",
-					  						FullLocalDefaultText =  "תיק עמילות",
+					  						FullLocalDefaultText =  "תיק עמילות/מכס",
 					  						ListFieldLable =  "CustomFileNoListLable",
 					  						ListLableDefaultText =  "Custom File No",
-					  						ListLocalDefaultText =  "תיק עמילות",
+					  						ListLocalDefaultText =  "תיק עמילות/מכס",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
