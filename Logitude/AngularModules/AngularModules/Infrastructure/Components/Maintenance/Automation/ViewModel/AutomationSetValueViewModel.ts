@@ -147,10 +147,16 @@ export class AutomationSetValueViewModel extends BaseComponent implements OnInit
 
         if (this.SelectedCustomField) {
             if (this.SelectedCustomField.DataTypeCode == "LookUp") {
-                this.CustomAutomationCondationFieldListFilterItems.addAdditionalFilter("LookUpTableId", this.SelectedCustomField.LookUpTableId, null, null, "Equals", false, false, false, "string");
+                this.AddLOVFilterLookUp();
             }
             this.CustomAutomationCondationFieldListFilterItems.addAdditionalFilter("DataTypeCode", this.SelectedCustomField.DataTypeCode, null, null, "Equals", false, false, false, "string");
         }
+    }
+
+    private AddLOVFilterLookUp() {
+        this.CustomAutomationCondationFieldListFilterItems.addAdditionalFilter("LookUpTableId", this.SelectedCustomField.LookUpTableId, null, null, "Equals", false, false, false, "string");
+        this.CustomAutomationCondationFieldListFilterItems.addAdditionalFilter("DependencyFilter1Value", this.SelectedCustomField.DependencyFilter1Value, null, null, "Equals", false, false, false, "string");
+        this.CustomAutomationCondationFieldListFilterItems.addAdditionalFilter("DependencyFilter2Value", this.SelectedCustomField.DependencyFilter2Value, null, null, "Equals", false, false, false, "string");
     }
 
     private AddRecordTypeFilter() {
