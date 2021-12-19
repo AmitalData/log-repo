@@ -256,6 +256,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     StatusId = entityPoco.StatusId, 
                     IsCancelled = entityPoco.IsCancelled,
                     CancelledDate = entityPoco.CancelledDate,
+                    ShipmentDeliveryTruckerId = entityPoco.ShipmentDeliveryTruckerId,
+                    ShipmentDeliveryTruckerName = entityPoco.TruckerCard != null ? entityPoco.TruckerCard.EnglishName : "",
                 };
 
                 if(entityPoco.EntityStatus != null)
@@ -290,7 +292,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     .Include("ShipmentTransshipment1ToPort").Include("ShipmentTransshipment1FromPort").Include("ShipmentMainCarriageToPort").Include("ShipmentMainCarriageFromPort")
                     .Include("ShipmentPreCarriageToPort").Include("ShipmentPreCarriageFromPort").Include("ShipmentEntityStatus").Include("TerminalCard").Include("TerminalCardAddress")
                     .Include("ShipmentOriginAgent").Include("ShipmentDestinationAgent").Include("ShipmentType").Include("CustomerCard").Include("Handler")
-                    .Include("EntityStatus")
+                    .Include("EntityStatus").Include("TruckerCard")
                     where a.Id == id && a.Tenant == tenant
                     select new ContainerPM()
                     {
@@ -518,6 +520,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         StatusWeight = a.EntityStatus != null ? a.EntityStatus.StatusWeight: 0,
                         IsCancelled = a.IsCancelled,
                         CancelledDate = a.CancelledDate,
+                        ShipmentDeliveryTruckerId = a.ShipmentDeliveryTruckerId,
+                        ShipmentDeliveryTruckerName = a.TruckerCard != null ? a.TruckerCard.EnglishName : "",
                     }).ToList();
         }
 
@@ -527,7 +531,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     Include("ShipmentTransshipment3ToPort").Include("ShipmentTransshipment3FromPort").Include("ShipmentTransshipment2ToPort").Include("ShipmentTransshipment2FromPort")
                     .Include("ShipmentTransshipment1ToPort").Include("ShipmentTransshipment1FromPort").Include("ShipmentMainCarriageToPort").Include("ShipmentMainCarriageFromPort")
                     .Include("ShipmentPreCarriageToPort").Include("ShipmentPreCarriageFromPort").Include("ShipmentPreCarriageFromPort").Include("ShipmentEntityStatus").Include("TerminalCard")
-                    .Include("ShipmentOriginAgent").Include("ShipmentDestinationAgent").Include("ShipmentType").Include("CustomerCard").Include("Handler").Include("EntityStatus")
+                    .Include("ShipmentOriginAgent").Include("ShipmentDestinationAgent").Include("ShipmentType").Include("CustomerCard").Include("Handler").Include("EntityStatus").Include("TruckerCard")
                                                select new ContainerList()
                                                {
                                                    Id = entity.Id,
@@ -757,6 +761,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                    StatusId = entity.StatusId,
                                                    IsCancelled = entity.IsCancelled,
                                                    CancelledDate = entity.CancelledDate,
+                                                   ShipmentDeliveryTruckerId = entity.ShipmentDeliveryTruckerId,
+                                                   ShipmentDeliveryTruckerName = entity.TruckerCard != null ? entity.TruckerCard.EnglishName : "",
                                                };
             return result;
         }
@@ -982,6 +988,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     StatusId = container.StatusId,
                     IsCancelled = container.IsCancelled,
                     CancelledDate = container.CancelledDate,
+                    ShipmentDeliveryTruckerId = container.ShipmentDeliveryTruckerId,
+                    ShipmentDeliveryTruckerName = container.TruckerCard != null ? container.TruckerCard.EnglishName : "",
                 };
                 MapCustomFields(containerPM, container);
             }
@@ -1221,6 +1229,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     StatusId = entityPoco.StatusId,
                     IsCancelled = entityPoco.IsCancelled,
                     CancelledDate = entityPoco.CancelledDate,
+                    ShipmentDeliveryTruckerId = entityPoco.ShipmentDeliveryTruckerId,
+                    ShipmentDeliveryTruckerName = entityPoco.TruckerCard != null ? entityPoco.TruckerCard.EnglishName : "",
                 };
             }
 
@@ -1448,6 +1458,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     StatusId = container.StatusId,
                     IsCancelled = container.IsCancelled,
                     CancelledDate = container.CancelledDate,
+                    ShipmentDeliveryTruckerId = container.ShipmentDeliveryTruckerId,
+                    ShipmentDeliveryTruckerName = container.TruckerCard!= null ? container.TruckerCard.EnglishName : "",
                 };
                 MapCustomFields(containerPM, container);
             }

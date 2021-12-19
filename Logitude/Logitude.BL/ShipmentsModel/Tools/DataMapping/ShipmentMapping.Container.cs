@@ -222,6 +222,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             container.StatusId = containerPM.StatusId;
             container.IsCancelled = containerPM.IsCancelled;
             container.CancelledDate = containerPM.CancelledDate;
+            container.ShipmentDeliveryTruckerId = containerPM.ShipmentDeliveryTruckerId;
 
             BuildSearchField(containerPM, container);
         }

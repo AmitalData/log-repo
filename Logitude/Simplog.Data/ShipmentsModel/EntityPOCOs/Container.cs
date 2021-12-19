@@ -311,5 +311,8 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string StatusId { get; set; }
         public DateTime? CancelledDate { get; set; }
         public bool IsCancelled { get; set; }
+        public string ShipmentDeliveryTruckerId { get; set; }
+        [ForeignKey("ShipmentDeliveryTruckerId")]
+        public virtual Card TruckerCard { get; set; }
     }
 }
