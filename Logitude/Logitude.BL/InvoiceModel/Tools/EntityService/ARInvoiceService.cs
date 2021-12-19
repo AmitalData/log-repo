@@ -2063,7 +2063,16 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                                     }
                                 }
 
-                                TotalAmount = item.Quantity * item.UnitPrice;
+                                if (item.MeasurementCode == "PRVL" || item.MeasurementCode == "PRFR" || item.MeasurementCode == "PFCL")
+                                {
+                                    var price = item.UnitPrice / 100;
+                                    TotalAmount = item.Quantity * price;
+                                }
+
+                                else
+                                {
+                                    TotalAmount = item.Quantity * item.UnitPrice;
+                                }
 
                                 /* MinMax Quote */
                                 if (TotalAmount != null)

@@ -2513,7 +2513,14 @@ export class ShipmentPayableItem extends BaseComponent {
                     }
 
                     else {
-                        myResult = this.EntityPM.ExpectedAmount / this.EntityPM.Quantity;
+                        if (this.MeasurementCode == "PRVL" || this.MeasurementCode == "PRFR" || this.MeasurementCode == "PFCL") {
+                            var price = this.EntityPM.ExpectedAmount / this.EntityPM.Quantity;
+                            myResult = 100 * price;
+                        }
+
+                        else {
+                            myResult = this.EntityPM.ExpectedAmount / this.EntityPM.Quantity;
+                        }
                     }
                 }
 
