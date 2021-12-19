@@ -1,0 +1,81 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table
+  Name="PayableProratedAmounts"
+  Schema="dbo"
+  DBType="Main"
+  Module="Shipment">
+  <Column
+    Name="Id"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="Tenant"
+    Type="int">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ShipmentId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="InvoiceId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="InvoiceLineId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="PayableId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ProratedAmountInLocalCurrency"
+    Type="float">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ProratedAmountInProfitCurrency"
+    Type="float">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Relation
+    ForeignKeyColumn="ShipmentId"
+    ReferencedTable="Shipments"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="InvoiceId"
+    ReferencedTable="APInvoices"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="InvoiceLineId"
+    ReferencedTable="APInvoiceLines"
+    ReferencedColumn="APInvoiceId,LineNumber"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="PayableId"
+    ReferencedTable="ShipmentPayables"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+</Table>
