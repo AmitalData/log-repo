@@ -38,7 +38,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         Manifest, 
 	         SecondCargoID, 
 	         ThirdCargoID, 
-	         ExportDealIdentification,
+	         ExportDealIdentification, 
+	         FirstCargoID,
 	      }
 
 
@@ -63,7 +64,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         SecondCargoID, 
 	         ThirdCargoID, 
 	         ExportDealIdentification, 
-	         DeclarationStatusTypeName,
+	         DeclarationStatusTypeName, 
+	         FirstCargoID,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -150,6 +152,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExportDealIdentification))
             {
 				entityPOCO.ExportDealIdentification = entityPM.ExportDealIdentification;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FirstCargoID))
+            {
+				entityPOCO.FirstCargoID = entityPM.FirstCargoID;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -243,6 +250,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.ExportDealIdentification = entityPOCO.ExportDealIdentification;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.FirstCargoID))
+            {
+					entityPM.FirstCargoID = entityPOCO.FirstCargoID;
+            }
+
 		}
 
 		public void PMToOldPM(ExportStoragePM entityPM, ExportStoragePM oldEntityPM)
@@ -329,6 +341,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 oldEntityPM.ExportDealIdentification = entityPM.ExportDealIdentification;
             }
 			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FirstCargoID))
+            {
+                oldEntityPM.FirstCargoID = entityPM.FirstCargoID;
+            }
+			
 		}
 
 	    public void EncodeBase64NVARCHARFields(ExportStoragePM entityPM)
@@ -345,6 +362,10 @@ namespace Logitude.Customs.BL.EntityDataMappings
             if (!String.IsNullOrWhiteSpace(entityPM.CustomsStatus)) //T4 find type == nText 
             {
                 entityPM.CustomsStatus = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.CustomsStatus));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.FirstCargoID)) //T4 find type == nText 
+            {
+                entityPM.FirstCargoID = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.FirstCargoID));
             }
             entityPM.EncodeBase64NVARCHARFieldsBy=null;
 		}

@@ -52,6 +52,8 @@ namespace Logitude.Customs.Data.EntityLists
        public decimal ExportDealIdentification  { get; set; }
        [DataMember]
        public string DeclarationStatusTypeName  { get; set; }
+       [DataMember]
+       public string FirstCargoID  { get; set; }
    }
 
 }

@@ -56,6 +56,8 @@ namespace Logitude.Customs.Data.EntityMapping
             this.Property(t => t.ThirdCargoID).HasColumnName("ThirdCargoID").HasMaxLength(35).IsUnicode(false);
 
             this.Property(t => t.ExportDealIdentification).HasColumnName("ExportDealIdentification").HasPrecision(16, 0);
+
+            this.Property(t => t.FirstCargoID).HasColumnName("FirstCargoID").HasMaxLength(35).IsUnicode(true);
         }
     }
 }

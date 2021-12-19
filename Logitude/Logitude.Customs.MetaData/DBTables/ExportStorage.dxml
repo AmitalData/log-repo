@@ -122,6 +122,13 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="FirstCargoID"
+    Type="nvarchar"
+    Size="35">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="StorageStatus"
     ReferencedTable="StorageStatuses"

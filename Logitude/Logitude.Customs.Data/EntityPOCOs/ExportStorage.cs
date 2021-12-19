@@ -65,6 +65,8 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string ThirdCargoID { get; set; }
         [Column("ExportDealIdentification")]
 	    public decimal ExportDealIdentification { get; set; }
+        [Column("FirstCargoID")]
+	    public string FirstCargoID { get; set; }
     }
 }
 	 

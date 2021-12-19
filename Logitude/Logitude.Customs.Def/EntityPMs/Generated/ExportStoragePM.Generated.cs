@@ -457,6 +457,29 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private string firstCargoID ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string FirstCargoID  
+	   {
+	    
+	     get
+		{
+		   return firstCargoID;
+		 }
+		 set
+		 {
+		   if(firstCargoID != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="FirstCargoID",OldValue=firstCargoID,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   firstCargoID=value;
+		   }
+			
+		 }
+	   }
    }
    
 }
