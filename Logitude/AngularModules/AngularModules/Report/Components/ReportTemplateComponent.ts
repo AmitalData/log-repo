@@ -77,7 +77,7 @@ export class ReportTemplateComponent implements OnInit {
             this.IsEnableEditUserReportTemplate = true;
         }
 
-        if (FeatureLocator.HasFeaturePermession("ReportsTemplate", "ReportTemplateExcel")) {
+        if (FeatureLocator.HasFeaturePermession("ReportsTemplate", "ReportTemplateExcel") && this.EntityPM.IsExcelReportAllowed == true) {
             this.IsEnableReportTemplateExcel = true;
         }
 

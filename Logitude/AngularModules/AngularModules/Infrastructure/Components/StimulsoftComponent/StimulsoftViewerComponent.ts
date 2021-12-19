@@ -144,7 +144,7 @@ export class StimulsoftViewerComponent implements OnInit {
             }
         }
 
-        if (FeatureLocator.HasFeaturePermession("ReportsTemplate", "ReportTemplateExcel")) {
+        if (FeatureLocator.HasFeaturePermession("ReportsTemplate", "ReportTemplateExcel") && this.StimulsoftArgData.IsExcelReportAllowed == true) {
             this.IsEnableReportTemplateExcel = true;
         }
 

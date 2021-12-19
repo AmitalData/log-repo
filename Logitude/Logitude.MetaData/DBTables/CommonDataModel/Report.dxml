@@ -135,6 +135,12 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="IsExcelReportAllowed"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
   <Relation
     ForeignKeyColumn="ReportGroupId"
     ReferencedTable="ReportGroups"

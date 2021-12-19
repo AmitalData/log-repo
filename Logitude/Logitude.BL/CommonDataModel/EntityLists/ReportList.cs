@@ -26,5 +26,6 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public bool AvailableForScheduling { get; set; }
         public bool DisablePreview { get; set; }
         public string DefaultExcelTemplateId { get; set; }
+        public bool IsExcelReportAllowed { get; set; }
     }
 }
