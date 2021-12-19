@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 {
    public class ShipmentUpdateClass
    {  		
-		public const string HashString = "8007ac8e78bd2a4078446d008c517b6d";
+		public const string HashString = "747892bc92904125204cde1d0839d621";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -47207,7 +47207,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "DestinationWarehouseId",
-					  						DefaultText =  "Destination Warehouse",
+					  						DefaultText =  "Terminal",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -47264,9 +47264,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "DestinationWarehouseName",
-					  						DefaultText =  "Destination Warehouse Name",
+					  						DefaultText =  "Terminal Name",
 					  						ListFieldLable =  "DestinationWarehouseNameListLable",
-					  						ListLableDefaultText =  "Destination Warehouse Name",
+					  						ListLableDefaultText =  "Terminal Name",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,

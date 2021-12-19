@@ -267,6 +267,7 @@ namespace CommunicationWorkerRole
         {
             var documentsFilings = (from a in parmeters.CommonContext.DocumentsFilings.Include("DocumentType")
                                     where a.Tenant == parmeters.Tenant && a.EntityId == documentFiling.EntityId
+                                    && a.ChildEntityId == documentFiling.ChildEntityId
                                     && a.ObjectTableId == documentFiling.ObjectTableId
                                     && a.IsDeleted == false && a.IsTransferdToQBO == null
                                     && (a.DocumentType != null && a.DocumentType.Code == parmeters.DocumentCode)
