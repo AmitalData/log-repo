@@ -12,7 +12,8 @@ namespace Logitude.FullAccounting.Test.Models
         WaitingforApprove = 1,
         Approved = 2,
         Voided = 3,
-        Failed = 4
+        Failed = 4,
+        Cancelled = 5,
 
     }
 }
