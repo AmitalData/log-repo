@@ -94,6 +94,7 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string ShopId { get; set; }
 	      
         public virtual Card Card { get; set; }
+
     }
 }
 	 

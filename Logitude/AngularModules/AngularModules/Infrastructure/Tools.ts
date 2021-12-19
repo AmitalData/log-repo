@@ -232,7 +232,7 @@ export class AppTool {
         var myResult: number = null;
 
         if (!this.IsNullOrEmpty(currencyformat)) {
-            let numberformat= currencyformat.replace(/[^0-9.-]+/g, '')
+            let numberformat = currencyformat.toString().replace(/[^0-9.-]+/g, '')
             myResult = +numberformat;
         }
 

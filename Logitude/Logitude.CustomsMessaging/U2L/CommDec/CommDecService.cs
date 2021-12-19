@@ -592,8 +592,9 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                         currentDeclarationCourierStatusPM.CrateNumber = _LogitudeCommDecFile.CrateNumber;
                         if (currentDeclarationCourierStatusPM.ChangeSetOp != ChangeSetOperation.Update) currentDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
                     }
+ 
                     if (currentDeclarationCourierStatusPM != null && currentDeclarationCourierStatusPM.ShopId != _LogitudeCommDecFile.shopId)
-                    {
+                     {
                         UpdateShop();
                     }
                     if (currentDeclarationCourierStatusPM != null && currentDeclarationCourierStatusPM.LastMileServiceType != _LogitudeCommDecFile.LastMileServiceType)
@@ -854,14 +855,12 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                         }
 
                     }
-
                 }
-
             }
-
         }
+        
 
-
+ 
         private void UpdateShop()
         {
             if (!String.IsNullOrWhiteSpace(_LogitudeCommDecFile.shopId))
@@ -871,6 +870,7 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                     DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(_context);
                     currentDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(_MyDeclarationPM.Id, true, false);
                 }
+
                 if (currentDeclarationCourierStatusPM != null)
                 {
                     string shopId = null;
@@ -880,6 +880,10 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                     {
                         shopId = _LogitudeCommDecFile.shopId;
                     }
+
+
+                }
+
                     else
                     {
                         card = cardRep.GetSingleCardByCode(_LogitudeCommDecFile.shopId, this._MyDeclarationPM.Tenant, true);
@@ -896,6 +900,8 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                         if (_MyDeclarationPM.SupplierInvoices != null && _MyDeclarationPM.SupplierInvoices.Count() > 0 && _MyDeclarationPM.SupplierInvoices[0].ChangeSetOp == ChangeSetOperation.None) _MyDeclarationPM.SupplierInvoices[0].ChangeSetOp = ChangeSetOperation.Update;
                     }
                 }
+            }
+        }
             }
         }
 
