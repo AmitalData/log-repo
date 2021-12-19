@@ -571,6 +571,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
                 entityPM.ShipmentDeliveryETD = null;
                 entityPM.ShipmentDeliveryATA = null;
                 entityPM.ShipmentDeliveryATD = null;
+                entityPM.ShipmentDeliveryTruckerId = null;
                 return;
             }
             
@@ -585,6 +586,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
             entityPM.ShipmentDeliveryETD = shipmentDeliveryPM?.ETD;
             entityPM.ShipmentDeliveryATA = shipmentDeliveryPM?.ATA;
             entityPM.ShipmentDeliveryATD = shipmentDeliveryPM?.ATD;
+            entityPM.ShipmentDeliveryTruckerId = shipmentDeliveryPM.CarrierId;
         }
 
         private ShipmentPickUpPM GetShipmentPickUpPMByContainerEntityId(ContainerPM entityPM)
@@ -849,6 +851,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
                 containerPM.ShipmentDeliveryETD  = isPackageDeleted ? null : updatedShipmentDeliveryPM?.ETD;
                 containerPM.ShipmentDeliveryATA  = isPackageDeleted ? null : updatedShipmentDeliveryPM?.ATA;
                 containerPM.ShipmentDeliveryATD = isPackageDeleted ? null : updatedShipmentDeliveryPM?.ATD;
+                containerPM.ShipmentDeliveryTruckerId = isPackageDeleted ? null : updatedShipmentDeliveryPM?.CarrierId;
                 containerService.Update(containerPM);
             }
         }
@@ -933,6 +936,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
                 containerPM.ShipmentDeliveryETD = null;
                 containerPM.ShipmentDeliveryATA = null;
                 containerPM.ShipmentDeliveryATD = null;
+                containerPM.ShipmentDeliveryTruckerId = null;
                 containerService.Update(containerPM);
             }
         }

@@ -320,5 +320,10 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public int StatusWeight { get; set; }
         public DateTime? CancelledDate { get; set; }
         public bool IsCancelled { get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string ShipmentDeliveryTruckerId { get; set; }
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string ShipmentDeliveryTruckerName { get; set; }
     }
 }

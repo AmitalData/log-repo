@@ -41,6 +41,8 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.ShipmentTypeId).HasMaxLength(4).IsUnicode(false);
             this.Property(t => t.ShipmentNumber).HasMaxLength(20).IsUnicode(false);
             this.Property(t => t.StatusId).HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.ShipmentDeliveryTruckerId).HasMaxLength(15).IsUnicode(false);
+
             this.ToTable("Containers");
             this.Property(t => t.Id).HasColumnName("Id");
             this.Property(t => t.Tenant).HasColumnName("Tenant");
@@ -232,7 +234,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.StatusId).HasColumnName("StatusId");
             this.Property(t => t.IsCancelled).HasColumnName("IsCancelled");
             this.Property(t => t.CancelledDate).HasColumnName("CancelledDate");
-
+            this.Property(t => t.ShipmentDeliveryTruckerId).HasColumnName("ShipmentDeliveryTruckerId");
 
             this.HasOptional(t => t.CarrierCard).WithMany().HasForeignKey(d => d.MainCarriageCarrierId).WillCascadeOnDelete(false); 
             this.HasOptional(t => t.ShipmentPackage).WithMany().HasForeignKey(d => d.ShipmentPackagesId).WillCascadeOnDelete(false);
@@ -271,6 +273,8 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.HasOptional(t => t.CustomerCard).WithMany().HasForeignKey(d => d.CustomerId);
             this.HasOptional(t => t.ShipmentType).WithMany().HasForeignKey(d => d.ShipmentTypeId);
             this.HasOptional(t => t.EntityStatus).WithMany().HasForeignKey(d => d.StatusId);
+            this.HasOptional(t => t.TruckerCard).WithMany().HasForeignKey(d => d.ShipmentDeliveryTruckerId);
+
         }
     }
 }

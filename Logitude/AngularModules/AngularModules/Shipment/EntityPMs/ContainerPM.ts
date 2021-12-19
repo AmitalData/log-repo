@@ -1201,6 +1201,16 @@ export class ContainerPM {
     public set IsCancelled(newValue: boolean) { if (this.isCancelled != newValue) { this.isCancelled = newValue; this.MarkAsDirty("IsCancelled"); } }
        
 	 
+    private shipmentDeliveryTruckerId: string;
+    public get ShipmentDeliveryTruckerId() { return this.shipmentDeliveryTruckerId; }
+    public set ShipmentDeliveryTruckerId(newValue: string) { if (this.shipmentDeliveryTruckerId != newValue) { this.shipmentDeliveryTruckerId = newValue; this.MarkAsDirty("ShipmentDeliveryTruckerId"); } }
+       
+	 
+    private shipmentDeliveryTruckerName: string;
+    public get ShipmentDeliveryTruckerName() { return this.shipmentDeliveryTruckerName; }
+    public set ShipmentDeliveryTruckerName(newValue: string) { if (this.shipmentDeliveryTruckerName != newValue) { this.shipmentDeliveryTruckerName = newValue; this.MarkAsDirty("ShipmentDeliveryTruckerName"); } }
+       
+	 
 
     public OldEntityPM: ContainerPM;
 		
