@@ -19,6 +19,14 @@ export class ExportStorageList {
 	CustomStatus: string;
 	OpenDate: Date;
 	CargoType: string;
+	CustomsStatus: string;
+	ExporterID: string;
+	ShipCode: string;
+	Manifest: string;
+	SecondCargoID: string;
+	ThirdCargoID: string;
+	ExportDealIdentification: number;
+	DeclarationStatusTypeName: string;
 	
 }
  

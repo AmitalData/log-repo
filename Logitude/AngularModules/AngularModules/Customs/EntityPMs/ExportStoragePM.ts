@@ -114,6 +114,11 @@ export class ExportStoragePM {
     public set ExportDealIdentification(newValue: number) { if (this.exportDealIdentification != newValue) { this.exportDealIdentification = newValue; this.MarkAsDirty("ExportDealIdentification"); } }
        
 	 
+    private declarationStatusTypeName: string;
+    public get DeclarationStatusTypeName() { return this.declarationStatusTypeName; }
+    public set DeclarationStatusTypeName(newValue: string) { if (this.declarationStatusTypeName != newValue) { this.declarationStatusTypeName = newValue; this.MarkAsDirty("DeclarationStatusTypeName"); } }
+       
+	 
 
     public OldEntityPM: ExportStoragePM;
 		

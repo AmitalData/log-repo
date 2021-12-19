@@ -36,6 +36,22 @@ namespace Logitude.Customs.Data.EntityLists
        public DateTime OpenDate  { get; set; }
        [DataMember]
        public string CargoType  { get; set; }
+       [DataMember]
+       public string CustomsStatus  { get; set; }
+       [DataMember]
+       public string ExporterID  { get; set; }
+       [DataMember]
+       public string ShipCode  { get; set; }
+       [DataMember]
+       public string Manifest  { get; set; }
+       [DataMember]
+       public string SecondCargoID  { get; set; }
+       [DataMember]
+       public string ThirdCargoID  { get; set; }
+       [DataMember]
+       public decimal ExportDealIdentification  { get; set; }
+       [DataMember]
+       public string DeclarationStatusTypeName  { get; set; }
    }
 
 }

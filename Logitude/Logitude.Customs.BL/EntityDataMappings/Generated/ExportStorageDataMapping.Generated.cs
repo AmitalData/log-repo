@@ -62,7 +62,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         Manifest, 
 	         SecondCargoID, 
 	         ThirdCargoID, 
-	         ExportDealIdentification,
+	         ExportDealIdentification, 
+	         DeclarationStatusTypeName,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
