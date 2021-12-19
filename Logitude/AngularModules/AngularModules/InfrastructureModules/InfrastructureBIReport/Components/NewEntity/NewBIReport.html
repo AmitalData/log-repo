@@ -1,3 +1,8 @@
+<style>
+    .Description:disabled{
+        opacity: 1!important;
+    }
+</style>
 <table>
     <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
         <td>
@@ -5,208 +10,279 @@
         </td>
     </tr>
 
-    <tr *ngIf="IsTenantZero" style="height:2px;">
+    <tr>
         <td>
             <table>
                 <tr>
-                    <td style="width:3px;">
-                        <RadioButton [Name]="'NewBIReport'" [IsChecked]="IsNewBIReport" (Checked)="SetNewBIReport(true)"></RadioButton>
-                    </td>
-                    <td style="width:40px;">
-                        <label style="margin-left: 7px;">New</label>
-                    </td>
-                    <td style="width:3px;">
-                        <RadioButton [Name]="'CopyBIReport'" [IsChecked]="!IsNewBIReport" (Checked)="SetNewBIReport(false)"></RadioButton>
-                    </td>
-                    <td style="width:50px;">
-                        <label style="margin-left: 7px;">{{CopyFromTitle}}</label>
-                    </td>
-                    <td>
-                        <div></div>
-                    </td>
-                </tr>
-            </table>
-        </td>
-    </tr>
-
-    <tr *ngIf="IsNewBIReport">
-        <td>
-            <table>
-
-                <!-- Name -->
-                <tr class="FormFieldRow">
-                    <td style="width:110px;">
-                        <LogLabel [ObjectFieldName]="'Name'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                    </td>
-
-                    <td style="width:260px;">
-                        <LogTextBox [ObjectFieldName]="'Name'" [Text]="Name" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
-                    </td>
-                    <td>
-                        <div></div>
-                    </td>
-                </tr>
-
-                <!-- Description -->
-                <tr class="FormFieldRow">
-                    <td style="vertical-align:top;">
-                        <LogLabel [ObjectFieldName]="'Description'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                    </td>
-
-                    <td colspan="2">
+                    <td style="width: 100px;">
                         <table>
-                            <tr>
-                                <td style="width:260px;height:85px;">
-                                    <div class="MediaFill">
-                                        <LogTextBox [ObjectFieldName]="'Description'" [Text]="Description" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [IsMultiline]="true" [HideColumns]="true"></LogTextBox>
-                                    </div>
-                                </td>
-                                <td><div></div></td>
-                            </tr>
-                        </table>
-                    </td>
-                </tr>
-
-                <!-- TypeCode-->
-                <tr *ngIf="ShowTypeCode" class="FormFieldRow">
-                    <td>
-                        <LogLabel [ObjectFieldName]="'TypeCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                    </td>
-                    <td>
-                        <LogLov [ObjectFieldName]="'TypeCode'"
-                                [SelectedValue]="TypeCode"
-                                [ObjectTableName]="ObjectTableName"
-                                [DataContext]="DataContext"
-                                [LookUpTableName]="'BIReportsType'" [HideColumns]="true">
-                        </LogLov>
-                    </td>
-                    <td>
-                        <div></div>
-                    </td>
-                </tr>
-
-                <!-- FactTableName -->
-                <tr class="FormFieldRow">
-                    <td>
-                        <LogLabel [ObjectFieldName]="'FactTableName'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                    </td>
-                    <td>
-                        <ComboBox [IsDisabled]="IsCopy" (SelectedItemChanged)="SelectdFactTable = $event" [SelectedItem]="SelectdFactTable" [ItemsSource]="FactTables" [Binding]="'Name'"></ComboBox>
-                    </td>
-                </tr>
-
-                <!-- BIReportFolderId -->
-                <tr class="FormFieldRow">
-                    <td>
-                        <LogLabel [ObjectFieldName]="'BIReportFolderId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                    </td>
-                    <td>
-                        <ComboBox (SelectedItemChanged)="BIReportFolderSelectionChanged($event)" [SelectedItem]="SelectdBIReportFolder" [ItemsSource]="BIReportFolders" [Binding]="'Name'"></ComboBox>
-                    </td>
-                    <td>
-                        <div></div>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td colspan="3">
-                        <div></div>
-                    </td>
-                </tr>
-
-            </table>
-        </td>
-    </tr>
-
-    <tr *ngIf="!IsNewBIReport">
-        <td>
-            <table>
-
-                <!-- Name -->
-                <tr class="FormFieldRow">
-                    <td style="width:120px;">
-                        <LogLabel [ObjectFieldName]="'Name'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                    </td>
-
-                    <td style="width:200px;">
-                        <LogTextBox [ObjectFieldName]="'Name'" [Text]="Name" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
-                    </td>
-                    <td>
-                        <div></div>
-                    </td>
-                </tr>
-
-                <!-- FactTableName -->
-                <tr class="FormFieldRow">
-                    <td>
-                        <LogLabel [ObjectFieldName]="'FactTableName'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                    </td>
-                    <td>
-                        <ComboBox [IsDisabled]="true" (SelectedItemChanged)="SelectdFactTable = $event" [SelectedItem]="SelectdFactTable" [ItemsSource]="FactTables" [Binding]="'Name'"></ComboBox>
-                    </td>
-                </tr>
-
-                <!-- BIReportFolderId -->
-                <tr class="FormFieldRow">
-                    <td>
-                        <LogLabel [ObjectFieldName]="'BIReportFolderId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                    </td>
-                    <td>
-                        <ComboBox (SelectedItemChanged)="BIReportFolderSelectionChanged($event)" [SelectedItem]="SelectdBIReportFolder" [ItemsSource]="BIReportFolders" [Binding]="'Name'"></ComboBox>
-                    </td>
-                    <td colspan="2">
-                        <div></div>
-                    </td>
-                </tr>
-
-                <!-- Tenant -->
-                <tr *ngIf="IsTenantZero" class="FormFieldRow">
-                    <td style="width:120px;">
-                        <LogLabel [NoObjectField]="true" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="'Tenant'"></LogLabel>
-                    </td>
-
-                    <td style="width:200px;">
-                        <LogTextBox [ObjectFieldName]="'Tenant'" [Text]="'Tenant'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" (ValueChanged)="OnTenantFieldChangeEvent($event)" [InputType]="'integer'" [HideColumns]="true"></LogTextBox>
-                    </td>
-                    <td colspan="2">
-                        <div></div>
-                    </td>
-                </tr>
-
-                <!-- Grid -->
-                <tr>
-                    <td colspan="4">
-                        <div class="FillParent">
-                            <div class="ScrollViewer">
-                                <div class="ScrollContent">
+                            <tr *ngIf="IsTenantZero" style="height:2px;">
+                                <td>
                                     <table>
                                         <tr>
-                                            <td style="height: 100%;">
-                                                <div style="height: 100%; width: 100%; position: relative;">
-
-
-                                                    <logitude-grid [rows]="items"
-                                                                   [dataSource]="DataSource"
-                                                                   [SearchFieldchangeevent]="TenantFieldChangeEvent"
-                                                                   [columns]="columns"
-                                                                   [autoLoad]="true"
-                                                                   (rowSelectedEvent)="onRowSelected($event)"
-                                                                   [IsCustomTemplate]="true">
-                                                    </logitude-grid>
-
-
-                                                </div>
+                                            <td style="width:3px;">
+                                                <RadioButton [Name]="'NewBIReport'" [IsChecked]="IsNewBIReport"
+                                                    (Checked)="SetNewBIReport(true)"></RadioButton>
+                                            </td>
+                                            <td style="width:40px;">
+                                                <label style="margin-left: 7px;">New</label>
+                                            </td>
+                                            <td style="width:3px;">
+                                                <RadioButton [Name]="'CopyBIReport'" [IsChecked]="!IsNewBIReport"
+                                                    (Checked)="SetNewBIReport(false)"></RadioButton>
+                                            </td>
+                                            <td style="width:50px;">
+                                                <label style="margin-left: 7px;">{{CopyFromTitle}}</label>
+                                            </td>
+                                            <td>
+                                                <div></div>
                                             </td>
                                         </tr>
                                     </table>
-                                </div>
-                            </div>
-                        </div>
+                                </td>
+                            </tr>
+    
+                            <tr *ngIf="IsNewBIReport">
+                                <td>
+                                    <table>
+    
+                                        <!-- Name -->
+                                        <tr class="FormFieldRow">
+                                            <td style="width:110px;">
+                                                <LogLabel [ObjectFieldName]="'Name'" [ObjectTableName]="ObjectTableName"
+                                                    [DataContext]="DataContext"></LogLabel>
+                                            </td>
+    
+                                            <td style="width:260px;">
+                                                <LogTextBox [ObjectFieldName]="'Name'" [Text]="Name"
+                                                    [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"
+                                                    [HideColumns]="true"></LogTextBox>
+                                            </td>
+                                            <td>
+                                                <div></div>
+                                            </td>
+                                        </tr>
+    
+                                        <!-- Description -->
+                                        <tr class="FormFieldRow">
+                                            <td style="vertical-align:top;">
+                                                <LogLabel [ObjectFieldName]="'Description'"
+                                                    [ObjectTableName]="ObjectTableName" [DataContext]="DataContext">
+                                                </LogLabel>
+                                            </td>
+    
+                                            <td colspan="2">
+                                                <table>
+                                                    <tr>
+                                                        <td style="width:260px;height:85px;">
+                                                            <div class="MediaFill">
+                                                                <LogTextBox [ObjectFieldName]="'Description'"
+                                                                    [Text]="Description" [ObjectTableName]="ObjectTableName"
+                                                                    [DataContext]="DataContext" [IsMultiline]="true"
+                                                                    [HideColumns]="true"></LogTextBox>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div></div>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+    
+                                        <!-- TypeCode-->
+                                        <tr *ngIf="ShowTypeCode" class="FormFieldRow">
+                                            <td>
+                                                <LogLabel [ObjectFieldName]="'TypeCode'" [ObjectTableName]="ObjectTableName"
+                                                    [DataContext]="DataContext"></LogLabel>
+                                            </td>
+                                            <td>
+                                                <LogLov [ObjectFieldName]="'TypeCode'" [SelectedValue]="TypeCode"
+                                                    [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"
+                                                    [LookUpTableName]="'BIReportsType'" [HideColumns]="true">
+                                                </LogLov>
+                                            </td>
+                                            <td>
+                                                <div></div>
+                                            </td>
+                                        </tr>
+    
+                                        <!-- FactTableName -->
+                                        <tr class="FormFieldRow">
+                                            <td>
+                                                <LogLabel [ObjectFieldName]="'FactTableName'"
+                                                    [ObjectTableName]="ObjectTableName" [DataContext]="DataContext">
+                                                </LogLabel>
+                                            </td>
+                                            <td>
+                                                <ComboBox [IsDisabled]="IsCopy"
+                                                    (SelectedItemChanged)="SelectdFactTable = $event"
+                                                    [SelectedItem]="SelectdFactTable" [ItemsSource]="FactTables"
+                                                    [Binding]="'Name'"></ComboBox>
+                                            </td>
+                                        </tr>
+    
+                                        <!-- BIReportFolderId -->
+                                        <tr class="FormFieldRow">
+                                            <td>
+                                                <LogLabel [ObjectFieldName]="'BIReportFolderId'"
+                                                    [ObjectTableName]="ObjectTableName" [DataContext]="DataContext">
+                                                </LogLabel>
+                                            </td>
+                                            <td>
+                                                <ComboBox (SelectedItemChanged)="BIReportFolderSelectionChanged($event)"
+                                                    [SelectedItem]="SelectdBIReportFolder" [ItemsSource]="BIReportFolders"
+                                                    [Binding]="'Name'">
+                                                </ComboBox>
+                                            </td>
+                                            <td>
+                                                <div></div>
+                                            </td>
+                                        </tr>
+    
+                                        <tr>
+                                            <td colspan="3">
+                                                <div></div>
+                                            </td>
+                                        </tr>
+    
+                                    </table>
+                                </td>
+                            </tr>
+    
+                            <tr *ngIf="!IsNewBIReport">
+                                <td>
+                                    <table>
+    
+                                        <!-- Name -->
+                                        <tr class="FormFieldRow">
+                                            <td style="width:120px;">
+                                                <LogLabel [ObjectFieldName]="'Name'" [ObjectTableName]="ObjectTableName"
+                                                    [DataContext]="DataContext"></LogLabel>
+                                            </td>
+    
+                                            <td style="width:200px;">
+                                                <LogTextBox [ObjectFieldName]="'Name'" [Text]="Name"
+                                                    [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"
+                                                    [HideColumns]="true"></LogTextBox>
+                                            </td>
+                                            <td>
+                                                <div></div>
+                                            </td>
+                                        </tr>
+    
+                                        <!-- FactTableName -->
+                                        <tr class="FormFieldRow">
+                                            <td>
+                                                <LogLabel [ObjectFieldName]="'FactTableName'"
+                                                    [ObjectTableName]="ObjectTableName" [DataContext]="DataContext">
+                                                </LogLabel>
+                                            </td>
+                                            <td>
+                                                <ComboBox [IsDisabled]="true"
+                                                    (SelectedItemChanged)="SelectdFactTable = $event"
+                                                    [SelectedItem]="SelectdFactTable" [ItemsSource]="FactTables"
+                                                    [Binding]="'Name'"></ComboBox>
+                                            </td>
+                                        </tr>
+    
+                                        <!-- BIReportFolderId -->
+                                        <tr class="FormFieldRow">
+                                            <td>
+                                                <LogLabel [ObjectFieldName]="'BIReportFolderId'"
+                                                    [ObjectTableName]="ObjectTableName" [DataContext]="DataContext">
+                                                </LogLabel>
+                                            </td>
+                                            <td>
+                                                <ComboBox (SelectedItemChanged)="BIReportFolderSelectionChanged($event)"
+                                                    [SelectedItem]="SelectdBIReportFolder" [ItemsSource]="BIReportFolders"
+                                                    [Binding]="'Name'">
+                                                </ComboBox>
+                                            </td>
+                                            <td colspan="2">
+                                                <div></div>
+                                            </td>
+                                        </tr>
+    
+                                        <!-- Tenant -->
+                                        <tr *ngIf="IsTenantZero" class="FormFieldRow">
+                                            <td style="width:120px;">
+                                                <LogLabel [NoObjectField]="true" [ObjectTableName]="ObjectTableName"
+                                                    [DataContext]="DataContext" [Text]="'Tenant'"></LogLabel>
+                                            </td>
+    
+                                            <td style="width:200px;">
+                                                <LogTextBox [ObjectFieldName]="'Tenant'" [Text]="'Tenant'"
+                                                    [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"
+                                                    (ValueChanged)="OnTenantFieldChangeEvent($event)"
+                                                    [InputType]="'integer'" [HideColumns]="true"></LogTextBox>
+                                            </td>
+                                            <td colspan="2">
+                                                <div></div>
+                                            </td>
+                                        </tr>
+    
+                                        <!-- Grid -->
+                                        <tr>
+                                            <td colspan="4">
+                                                <div class="FillParent">
+                                                    <div class="ScrollViewer">
+                                                        <div class="ScrollContent">
+                                                            <table>
+                                                                <tr>
+                                                                    <td style="height: 100%;">
+                                                                        <div
+                                                                            style="height: 100%; width: 100%; position: relative;">
+    
+    
+                                                                            <logitude-grid [rows]="items"
+                                                                                [dataSource]="DataSource"
+                                                                                [SearchFieldchangeevent]="TenantFieldChangeEvent"
+                                                                                [columns]="columns" [autoLoad]="true"
+                                                                                (rowSelectedEvent)="onRowSelected($event)"
+                                                                                [IsCustomTemplate]="true">
+                                                                            </logitude-grid>
+    
+    
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+    
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
                     </td>
+    
+                    <td style="width: 5px;"></td>
+    
+                    <td style="width: 100px;">
+                        <table>
+                            <tr>
+                                <div style="background-color:#EDEDED;height:25px;border-top:2px solid #E4E3E1;border-bottom:2px solid #E4E3E1;border-top-Right-radius:6px; border-top-left-radius:6px;color:black;margin-bottom: 5px;">
+                                    <p style="font-size:11px;margin-left:5px;margin-top:1px;color:#1B90CB">Fact Table Description</p>
+                                </div>
+                                
+                                <div style="height:100px;">
+                                    <textarea class="Description" [(ngModel)]="FactTableDescription" [disabled]="'true'"></textarea>
+                                </div>
+            
+    
+                            </tr>
+                        </table>
+    
+                    </td>
+    
                 </tr>
-
             </table>
         </td>
+
     </tr>
 
     <tr style="height: 32px;">
@@ -218,7 +294,8 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button class="Button" (click)="CancelButtonClicked()">{{'General.B.Cancel' | TextCodeTranslationPipe}}</button>
+                        <button class="Button" (click)="CancelButtonClicked()">{{'General.B.Cancel' |
+                            TextCodeTranslationPipe}}</button>
                     </td>
 
                     <td style="width: 5px;">
@@ -226,7 +303,8 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button id="{{'OKButton' | IdGeneratorPipe}}" class="RedButton" (click)="OkButtonClicked()">{{'General.B.Ok' | TextCodeTranslationPipe}}</button>
+                        <button id="{{'OKButton' | IdGeneratorPipe}}" class="RedButton"
+                            (click)="OkButtonClicked()">{{'General.B.Ok' | TextCodeTranslationPipe}}</button>
                     </td>
                 </tr>
             </table>

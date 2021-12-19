@@ -40,10 +40,11 @@ export class NewBIReport extends BaseComponent {
     public IsOneRowSelected: boolean = false;
     public HasCopyFeature: boolean = false;
     public CopyFromTitle: string;
-    public FactTables: CodeNameClass[] = [];
+    public FactTables: ShortFactTableDetails[] = [];
     public BIReportFolders: string[] = [];
     public SelectdBIReportFolder: string;
     public ShowTypeCode: boolean = false;
+    public FactTableDescription : string;
 
     private ComponentRef;
     @Output() BackCompleted: EventEmitter<boolean> = new EventEmitter<boolean>();
@@ -69,6 +70,7 @@ export class NewBIReport extends BaseComponent {
         this.myService = new BIReportPMService();
         this.SetUIProperties();
         this.CheckTenantZero();
+        
     }
 
 
@@ -114,17 +116,23 @@ export class NewBIReport extends BaseComponent {
         this.FactTableName = "";
         this.UIProperties.SetRequired("FactTableName", this.ObjectTableName, true);
         this.DWObjectTableExtendedListService.GetFactTablesNames().subscribe((response: ServiceResponse) => {
-            var factTablesNames = response.Result;
-            factTablesNames.forEach((factTable) => {
-                if (FeatureLocator.HasFeaturePermession(this.ObjectTableName, "BIReport." + factTable.Code))
-                    this.FactTables.push(new CodeNameClass(factTable.Code, factTable.DisplayName));
-            });
+            this.FillFactTableList(response);
             if (AppTool.IsNullOrEmpty(this.EntityPM.FactTableName)) {
                 this.SelectdFactTable = null;
             }
             else {
                 this.SelectdFactTable = this.FactTables.filter(fact => fact.Code == this.EntityPM.FactTableName)[0];
             }
+        });
+    }
+
+    FillFactTableList(response: ServiceResponse) {
+        var factTablesNames = response?.Result;
+        if (factTablesNames == undefined || factTablesNames == null)
+            return;
+        factTablesNames.forEach((factTable: any) => {
+            if (FeatureLocator.HasFeaturePermession(this.ObjectTableName, "BIReport." + factTable.Code))
+                this.FactTables.push(new ShortFactTableDetails(factTable.Code, factTable.DisplayName, factTable.Description));
         });
     }
 
@@ -259,11 +267,12 @@ export class NewBIReport extends BaseComponent {
             this.SelectdFactTable = this.FactTables.filter(fact => fact.Code == this.EntityPM.FactTableName)[0];
     }
 
-    private selectdFactTable: CodeNameClass;
+    private selectdFactTable: ShortFactTableDetails;
     get SelectdFactTable() { return this.selectdFactTable; }
-    set SelectdFactTable(value: CodeNameClass) {
+    set SelectdFactTable(value: ShortFactTableDetails) {
         if (this.selectdFactTable != value) {
             this.selectdFactTable = value;
+            this.FactTableDescription = value.Description;
             if (!AppTool.IsNullOrEmpty(value)) {
                 this.FactTableName = this.selectdFactTable.Code;
                 this.UIProperties.SetRequired("FactTableName", this.ObjectTableName, false);
@@ -457,4 +466,15 @@ export class NewBIReport extends BaseComponent {
        
    
     }
+}
+
+class ShortFactTableDetails {
+    constructor(code: string, name: string, description: string) {
+        this.Code = code;
+        this.Name = name;
+        this.Description = description;
+    }
+    Code: string;
+    Name: string;
+    Description: string
 }

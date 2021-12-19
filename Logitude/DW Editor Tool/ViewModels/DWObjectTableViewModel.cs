@@ -62,6 +62,8 @@ namespace DW_Editor_Tool.ViewModels
         public string AdditionalFactRelationType { get { return additionalFactRelationType; } set { additionalFactRelationType = value; FirePropertyChanged("AdditionalFactRelationType"); } }
 
 
+        private string description;
+        public string Description { get { return description; } set { description = value; FirePropertyChanged("Description"); } }
 
 
         bool isClosed;
