@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CustomsRequestsSheetUpdateClass
    {  		
-		public const string HashString = "105f1e1b6612c071b21aa50363749000";
+		public const string HashString = "f6998ae88aaf778ac1c8439ac68f2b2f";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -801,10 +801,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "InterfaceTypeCode",
 					  						DefaultText =  "Interface Management",
-					  						FullLocalDefaultText =  "ממשק ניהול",
+					  						FullLocalDefaultText =  "ניהול בקשות מכס",
 					  						ListFieldLable =  "InterfaceTypeCodeListLable",
 					  						ListLableDefaultText =  "Interface Management",
-					  						ListLocalDefaultText =  "ממשק ניהול",
+					  						ListLocalDefaultText =  "ניהול בקשות מכס",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -1170,10 +1170,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "InterfaceTypeName",
 					  						DefaultText =  "Interface Management",
-					  						FullLocalDefaultText =  "ממשק ניהול",
+					  						FullLocalDefaultText =  "ניהול בקשות מכס",
 					  						ListFieldLable =  "InterfaceTypeNameListLable",
 					  						ListLableDefaultText =  "Interface Management",
-					  						ListLocalDefaultText =  "ממשק ניהול",
+					  						ListLocalDefaultText =  "ניהול בקשות מכס",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,

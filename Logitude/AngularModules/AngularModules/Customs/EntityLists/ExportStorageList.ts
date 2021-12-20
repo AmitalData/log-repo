@@ -13,7 +13,6 @@ export class ExportStorageList {
 	SearchFields: string;
 	DeclarationId: string;
 	ExportFileNo: string;
-	StorageNo: string;
 	StorageStatus: string;
 	CargoTypeCode: string;
 	OpenDate: Date;
@@ -24,7 +23,6 @@ export class ExportStorageList {
 	FirstCargoID: string;
 	SecondCargoID: string;
 	ThirdCargoID: string;
-	ExportDealIdentification: string;
 	DeclarationStatusTypeName: string;
 	CargoTypeName: string;
 	StorageStatusName: string;

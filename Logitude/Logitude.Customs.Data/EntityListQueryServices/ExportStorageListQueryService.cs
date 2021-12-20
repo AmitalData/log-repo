@@ -21,7 +21,21 @@ namespace Logitude.Customs.Data.EntityListQueryServices
     {
         private IQueryable<ExportStorageList> GetIqueryableList(IQueryable<ExportStorage> iQueryable)
         {
+
+           
+
             IQueryable<ExportStorageList> query = (from a in iQueryable
+                                                    //DeclarationStatusTypeName = (
+                                                    //    from status in context.DeclarationStatusTypes
+                                                    //    where status.Code == (from Declaration in context.Declarations where Declaration.Id == a.DeclarationId select Declaration).FirstOrDefault().DeclarationStatusTypeCode
+                                                    //    select status
+                                                    //   ).FirstOrDefault().LocalName,
+                                                    join d in context.Declarations.Select( r=> new { r.Id,r.DeclarationStatusTypeCode })
+                                                    on a.DeclarationId  equals d.Id
+                                                    join s in context.DeclarationStatusTypes
+                                                    on d.DeclarationStatusTypeCode  equals s.Code
+
+
                                                    select new ExportStorageList()
                                                    {
 
@@ -35,7 +49,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
                                                        ExportFileNo = a.ExportFileNo,
 
-                                                       StorageNo = a.StorageNo,
+                                                       //StorageNo = a.StorageNo,
 
                                                        StorageStatus = a.StorageStatus,
 
@@ -57,11 +71,12 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
                                                        ThirdCargoID = a.ThirdCargoID,
 
-                                                       ExportDealIdentification = a.ExportDealIdentification,
+                                                       //ExportDealIdentification = a.ExportDealIdentification,
 
-                                                       //DeclarationStatusTypeName = (
-                                                       // from status in context.DeclarationStatusTypes where status.Code ==
-                                                       // (from Declaration in context.Declarations where Declaration.Id == a.DeclarationId select Declaration).FirstOrDefault().DeclarationStatusTypeCode
+                                                       DeclarationStatusTypeName = s.LocalName
+                                                       //(
+                                                       // from status in context.DeclarationStatusTypes
+                                                       // where status.Code == (from Declaration in context.Declarations where Declaration.Id == a.DeclarationId select Declaration).FirstOrDefault().DeclarationStatusTypeCode
                                                        // select status
                                                        //).FirstOrDefault().LocalName,
 

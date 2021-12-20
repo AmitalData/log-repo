@@ -135,29 +135,6 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-	  private string storageNo ;
-	  	  
-       
-	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string StorageNo  
-	   {
-	    
-	     get
-		{
-		   return storageNo;
-		 }
-		 set
-		 {
-		   if(storageNo != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="StorageNo",OldValue=storageNo,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   storageNo=value;
-		   }
-			
-		 }
-	   }
 	  private string storageStatus ;
 	  	  
        
@@ -384,29 +361,6 @@ namespace Logitude.Customs.Def.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ThirdCargoID",OldValue=thirdCargoID,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   thirdCargoID=value;
-		   }
-			
-		 }
-	   }
-	  private string exportDealIdentification ;
-	  	  
-       
-	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ExportDealIdentification  
-	   {
-	    
-	     get
-		{
-		   return exportDealIdentification;
-		 }
-		 set
-		 {
-		   if(exportDealIdentification != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ExportDealIdentification",OldValue=exportDealIdentification,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   exportDealIdentification=value;
 		   }
 			
 		 }

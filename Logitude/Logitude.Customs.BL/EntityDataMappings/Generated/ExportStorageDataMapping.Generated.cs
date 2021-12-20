@@ -27,7 +27,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         SearchFields, 
 	         DeclarationId, 
 	         ExportFileNo, 
-	         StorageNo, 
 	         StorageStatus, 
 	         CargoTypeCode, 
 	         OpenDate, 
@@ -38,7 +37,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         FirstCargoID, 
 	         SecondCargoID, 
 	         ThirdCargoID, 
-	         ExportDealIdentification, 
 	         StorErrorXML,
 	      }
 
@@ -51,7 +49,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         SearchFields, 
 	         DeclarationId, 
 	         ExportFileNo, 
-	         StorageNo, 
 	         StorageStatus, 
 	         CargoTypeCode, 
 	         OpenDate, 
@@ -62,7 +59,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         FirstCargoID, 
 	         SecondCargoID, 
 	         ThirdCargoID, 
-	         ExportDealIdentification, 
 	         DeclarationStatusTypeName, 
 	         CargoTypeName, 
 	         StorageStatusName, 
@@ -95,11 +91,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExportFileNo))
             {
 				entityPOCO.ExportFileNo = entityPM.ExportFileNo;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.StorageNo))
-            {
-				entityPOCO.StorageNo = entityPM.StorageNo;
 			}
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.StorageStatus))
@@ -152,11 +143,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
 				entityPOCO.ThirdCargoID = entityPM.ThirdCargoID;
 			}
 			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExportDealIdentification))
-            {
-				entityPOCO.ExportDealIdentification = entityPM.ExportDealIdentification;
-			}
-			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.StorErrorXML))
             {
 				entityPOCO.StorErrorXML = entityPM.StorErrorXML;
@@ -191,11 +177,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ExportFileNo))
             {
 					entityPM.ExportFileNo = entityPOCO.ExportFileNo;
-            }
-
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.StorageNo))
-            {
-					entityPM.StorageNo = entityPOCO.StorageNo;
             }
 
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.StorageStatus))
@@ -248,11 +229,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.ThirdCargoID = entityPOCO.ThirdCargoID;
             }
 
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ExportDealIdentification))
-            {
-					entityPM.ExportDealIdentification = entityPOCO.ExportDealIdentification;
-            }
-
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.StorErrorXML))
             {
 					entityPM.StorErrorXML = entityPOCO.StorErrorXML;
@@ -282,11 +258,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExportFileNo))
             {
                 oldEntityPM.ExportFileNo = entityPM.ExportFileNo;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.StorageNo))
-            {
-                oldEntityPM.StorageNo = entityPM.StorageNo;
             }
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.StorageStatus))
@@ -339,11 +310,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 oldEntityPM.ThirdCargoID = entityPM.ThirdCargoID;
             }
 			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExportDealIdentification))
-            {
-                oldEntityPM.ExportDealIdentification = entityPM.ExportDealIdentification;
-            }
-			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.StorErrorXML))
             {
                 oldEntityPM.StorErrorXML = entityPM.StorErrorXML;
@@ -366,17 +332,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
             {
                 entityPM.ExportFileNo = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.ExportFileNo));
             }
-            if (!String.IsNullOrWhiteSpace(entityPM.StorageNo)) //T4 find type == nText 
-            {
-                entityPM.StorageNo = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.StorageNo));
-            }
             if (!String.IsNullOrWhiteSpace(entityPM.CustomsStatus)) //T4 find type == nText 
             {
                 entityPM.CustomsStatus = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.CustomsStatus));
-            }
-            if (!String.IsNullOrWhiteSpace(entityPM.ExportDealIdentification)) //T4 find type == nText 
-            {
-                entityPM.ExportDealIdentification = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.ExportDealIdentification));
             }
             if (!String.IsNullOrWhiteSpace(entityPM.StorErrorXML)) //T4 find type == nText 
             {

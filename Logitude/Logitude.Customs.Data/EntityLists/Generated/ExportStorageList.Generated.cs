@@ -25,8 +25,6 @@ namespace Logitude.Customs.Data.EntityLists
        [DataMember]
        public string ExportFileNo  { get; set; }
        [DataMember]
-       public string StorageNo  { get; set; }
-       [DataMember]
        public string StorageStatus  { get; set; }
        [DataMember]
        public string CargoTypeCode  { get; set; }
@@ -46,8 +44,6 @@ namespace Logitude.Customs.Data.EntityLists
        public string SecondCargoID  { get; set; }
        [DataMember]
        public string ThirdCargoID  { get; set; }
-       [DataMember]
-       public string ExportDealIdentification  { get; set; }
        [DataMember]
        public string DeclarationStatusTypeName  { get; set; }
        [DataMember]

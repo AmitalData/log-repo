@@ -40,13 +40,6 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="StorageNo"
-    Type="nvarchar"
-    Size="20">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
     Name="StorageStatus"
     Type="varchar"
     Size="1">
@@ -113,13 +106,6 @@
     Name="ThirdCargoID"
     Type="varchar"
     Size="35">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="ExportDealIdentification"
-    Type="nvarchar"
-    Size="16">
     <Constraints
       Nullable="true" />
   </Column>

@@ -29,8 +29,6 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string DeclarationId { get; set; }
         [Column("ExportFileNo")]
 	    public string ExportFileNo { get; set; }
-        [Column("StorageNo")]
-	    public string StorageNo { get; set; }
         [ForeignKey("CustomsStorageStatus")]
         [Column("StorageStatus")]
 	    public string StorageStatus { get; set; }
@@ -63,8 +61,6 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string SecondCargoID { get; set; }
         [Column("ThirdCargoID")]
 	    public string ThirdCargoID { get; set; }
-        [Column("ExportDealIdentification")]
-	    public string ExportDealIdentification { get; set; }
         [Column("StorErrorXML")]
 	    public string StorErrorXML { get; set; }
     }

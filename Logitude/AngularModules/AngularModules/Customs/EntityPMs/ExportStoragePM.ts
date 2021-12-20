@@ -49,11 +49,6 @@ export class ExportStoragePM {
     public set ExportFileNo(newValue: string) { if (this.exportFileNo != newValue) { this.exportFileNo = newValue; this.MarkAsDirty("ExportFileNo"); } }
        
 	 
-    private storageNo: string;
-    public get StorageNo() { return this.storageNo; }
-    public set StorageNo(newValue: string) { if (this.storageNo != newValue) { this.storageNo = newValue; this.MarkAsDirty("StorageNo"); } }
-       
-	 
     private storageStatus: string;
     public get StorageStatus() { return this.storageStatus; }
     public set StorageStatus(newValue: string) { if (this.storageStatus != newValue) { this.storageStatus = newValue; this.MarkAsDirty("StorageStatus"); } }
@@ -102,11 +97,6 @@ export class ExportStoragePM {
     private thirdCargoID: string;
     public get ThirdCargoID() { return this.thirdCargoID; }
     public set ThirdCargoID(newValue: string) { if (this.thirdCargoID != newValue) { this.thirdCargoID = newValue; this.MarkAsDirty("ThirdCargoID"); } }
-       
-	 
-    private exportDealIdentification: string;
-    public get ExportDealIdentification() { return this.exportDealIdentification; }
-    public set ExportDealIdentification(newValue: string) { if (this.exportDealIdentification != newValue) { this.exportDealIdentification = newValue; this.MarkAsDirty("ExportDealIdentification"); } }
        
 	 
     private declarationStatusTypeName: string;
