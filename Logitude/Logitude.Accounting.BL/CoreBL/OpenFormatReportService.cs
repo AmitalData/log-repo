@@ -817,13 +817,13 @@ namespace Logitude.Accounting.BL.CoreBL
                     else
                     {
                         myStringBuilder.Append(a);
-                        myStringBuilder.Append(' ', 130);
+                        myStringBuilder.Append(' ', 260);
                     }
                 }
                 else
                 {
                     myStringBuilder.Append(a);
-                    myStringBuilder.Append(' ', 130);
+                    myStringBuilder.Append(' ', 260);
                 }
                 myStringBuilder.Append(a);
                 myStringBuilder.Append(' ', 15);
