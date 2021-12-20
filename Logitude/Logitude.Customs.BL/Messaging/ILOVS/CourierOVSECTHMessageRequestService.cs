@@ -25,6 +25,7 @@ using Simplog.Data.CommonDataModel;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
+using System.Text.RegularExpressions;
 
 namespace Logitude.Customs.BL.Messaging.ILOVS
 {
@@ -200,10 +201,10 @@ namespace Logitude.Customs.BL.Messaging.ILOVS
                 Weight = DecWeight,
                 GoodValueInUSD = DolarValue,
 
-                
-                Description = myDeclarationPM.Consignments.DefaultIfEmpty(new ConsignmentPM()).First().CargoDescription ?? "",
-                ImporterName = myDeclarationPM.ImporterName ?? "",
-                ImporterAddress = myDeclarationPM.ImporterAddress ?? "",
+
+                Description = myDeclarationPM.Consignments.DefaultIfEmpty(new ConsignmentPM()).First().CargoDescription != null ? Regex.Replace(myDeclarationPM.Consignments.DefaultIfEmpty(new ConsignmentPM()).First().CargoDescription, @"(\-)|(\%)|(\()|(\))", "") : "",
+                ImporterName = myDeclarationPM.ImporterName != null ? Regex.Replace(myDeclarationPM.ImporterName, @"(\-)|(\%)|(\()|(\))", "") : "",
+                ImporterAddress = myDeclarationPM.ImporterAddress != null ? Regex.Replace(myDeclarationPM.ImporterAddress, @"(\-)|(\%)|(\()|(\))", "") : "",
                 DistributionLine = string.IsNullOrEmpty(currentDeclarationCourierStatusPM.DistributionArea) ? "כללי" : currentDeclarationCourierStatusPM.DistributionArea,
                 DistributionCompanyVat = distributionCompanyVat,
 
