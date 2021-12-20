@@ -67,8 +67,8 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
     public AllowCreateShipmentsWithoutDocuments: boolean = false;
     public Order: string = "Reference";
     public RequestedDateLabel: string = "Requested Flight Date";
-
-     
+    public AllowCreateOceanExport: boolean = false;
+ 
     public FromTextCode: string;
     public ToTextCode: string;
 
@@ -85,8 +85,15 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
         this.SetUnits();
         this.SetLabels();
         this.SetFromPort();
-         
+        this.checkAirShipmentToggle();
 
+    }
+    checkAirShipmentToggle() { 
+         let AirShipmentFeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "PLE")[0];
+        if (AirShipmentFeatureToggle) {
+            this.AllowCreateOceanExport = true;
+
+        }
     }
 
     SetFieldsLabel() {
@@ -708,15 +715,17 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
             this.ValidateAirExportShipmentFields();
             return;
         }
-        this.ValidateOceanExportShipmentFields();
-    }
-    ValidateOceanExportShipmentFields() {
-        if (!AppTool.IsNullOrEmpty(this.RequestedFlightDate)) {
-            this.ValidateRequestedFlightDate();
+        if (this.TransportModeId == 'O') {
+            this.ValidateOceanExportShipmentFields();
+            return;
         }
+        return; 
+    }
+    ValidateOceanExportShipmentFields() { 
+
         if (AppTool.IsNullOrEmpty(this.CustomerReference3)) {
             this.PushErrorMessage("Order Number");
-        }
+        } 
 
         if (AppTool.IsNullOrEmpty(this.MainCarriageToPortId)) {
             this.PushErrorMessage("Discharge Port");
@@ -724,7 +733,18 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
 
         if (AppTool.IsNullOrEmpty(this.MainCarriageFromPortId)) {
             this.PushErrorMessage("Loading Port");
+        } 
+
+        if (AppTool.IsNullOrEmpty(this.IncotermId)) {
+            this.PushErrorMessage("Incoterm");
         }
+
+        this.ValidateFCLShipmentType();
+        if (!AppTool.IsNullOrEmpty(this.RequestedFlightDate)) {
+            this.ValidateRequestedFlightDate();
+        }
+        
+ 
 
         //this.ValidatBookingNumberOfPackagese();
 
@@ -733,8 +753,23 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
         //}
     }
 
+    ValidateFCLShipmentType() {
+        if (!(this.ShipmentTypeId == 'FCLD' && this.TransportModeId == 'o')) {
+            return;
+        }
+        this.ValidatBookingNumberOfPackagese();
+
+        if (AppTool.IsNullOrEmpty(this.OrderGrossWeight)) {
+            this.PushErrorMessage("Gross Weight");
+        }
+
+        if (AppTool.IsNullOrEmpty(this.BookingVolume)) {
+            this.PushErrorMessage("Volume");
+        }
+    }
+
     private ValidateAirExportShipmentFields() {
-        // need to change validation message based on shipment type
+     
         if (!AppTool.IsNullOrEmpty(this.RequestedFlightDate)) {
             this.ValidateRequestedFlightDate();
         }
@@ -749,7 +784,7 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
         this.ValidatBookingNumberOfPackagese();
 
         if (AppTool.IsNullOrEmpty(this.OrderGrossWeight)) {
-            this.PushErrorMessage("Gross Weight (MT)");
+            this.PushErrorMessage("Gross Weight");
         }
 
         if (AppTool.IsNullOrEmpty(this.MainCarriageToPortId)) {
@@ -780,7 +815,7 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
 
     ValidateRequestedFlightDate() { 
         if (this.RequestedFlightDate.getTime() < new Date().getTime()) { 
-            this.ValidationErrorsList.push("Requested flight date must be for a future date");
+            this.ValidationErrorsList.push(this.RequestedDateLabel+ " must be for a future date");
         } 
     }
 

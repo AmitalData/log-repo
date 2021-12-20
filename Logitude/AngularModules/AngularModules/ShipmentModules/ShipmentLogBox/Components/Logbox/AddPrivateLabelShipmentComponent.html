@@ -218,7 +218,7 @@
 											<div style="margin-top: -2px;">
 												<div class="RadioButton" *ngFor="let item of TransportModesList" [attr.id]="'TransportModeRadio_Div_' + SessionIndex + item.Code">
 
-													<input [disabled]="item.Code == 'I'" [attr.id]="'TransportModeRadio_' + SessionIndex + item.Code" [attr.name]="'TransportModesRadio' + SessionIndex" type="radio" [checked]="TransportModeId == item.Code" (click)="TransportModeId = item.Code" />
+													<input [disabled]="item.Code == 'I' || (item.Code == 'O' && !AllowCreateOceanExport)" [attr.id]="'TransportModeRadio_' + SessionIndex + item.Code" [attr.name]="'TransportModesRadio' + SessionIndex" type="radio" [checked]="TransportModeId == item.Code" (click)="TransportModeId = item.Code" />
 													<label [attr.for]="'TransportModeRadio_' + SessionIndex + item.Code" style="text-indent: 40px; font-size: 12px" [ngStyle]="{color: TransportModeId == item.Code ? '#287828':'#282E30'}">
 														<img class="LeftCenter" style="margin-left: 20px;" [attr.src]="'./Images/Icons/' + item.Code + '.png'" />
 														{{item.Name}}
@@ -1001,6 +1001,7 @@
 																			<tr class="FormFieldRow">
 
 																				<td [style.width.px]="LabelColumnWidth">
+																					<div *ngIf="TransportModeId == 'O'" class="RedPoint"></div>
 																					<label style="padding-left:10px;color: rgb(110, 113, 114);">
 																						{{VolumeLabel}}:
 																					</label>
