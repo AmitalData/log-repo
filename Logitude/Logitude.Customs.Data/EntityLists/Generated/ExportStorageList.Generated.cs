@@ -25,13 +25,11 @@ namespace Logitude.Customs.Data.EntityLists
        [DataMember]
        public string ExportFileNo  { get; set; }
        [DataMember]
-       public int StorageNo  { get; set; }
+       public string StorageNo  { get; set; }
        [DataMember]
        public string StorageStatus  { get; set; }
        [DataMember]
        public string CargoTypeCode  { get; set; }
-       [DataMember]
-       public string CustomStatus  { get; set; }
        [DataMember]
        public DateTime OpenDate  { get; set; }
        [DataMember]
@@ -43,17 +41,23 @@ namespace Logitude.Customs.Data.EntityLists
        [DataMember]
        public string ShipCode  { get; set; }
        [DataMember]
-       public string Manifest  { get; set; }
+       public string FirstCargoID  { get; set; }
        [DataMember]
        public string SecondCargoID  { get; set; }
        [DataMember]
        public string ThirdCargoID  { get; set; }
        [DataMember]
-       public decimal ExportDealIdentification  { get; set; }
+       public string ExportDealIdentification  { get; set; }
        [DataMember]
        public string DeclarationStatusTypeName  { get; set; }
        [DataMember]
-       public string FirstCargoID  { get; set; }
+       public string CargoTypeName  { get; set; }
+       [DataMember]
+       public string StorageStatusName  { get; set; }
+       [DataMember]
+       public string ExporterName  { get; set; }
+       [DataMember]
+       public string ShipName  { get; set; }
    }
 
 }

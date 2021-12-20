@@ -34,16 +34,17 @@
   </Column>
   <Column
     Name="ExportFileNo"
-    Type="varchar"
-    Size="15">
+    Type="nvarchar"
+    Size="20">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
     Name="StorageNo"
-    Type="int">
+    Type="nvarchar"
+    Size="20">
     <Constraints
-      Nullable="false" />
+      Nullable="true" />
   </Column>
   <Column
     Name="StorageStatus"
@@ -82,7 +83,7 @@
   <Column
     Name="ExporterID"
     Type="varchar"
-    Size="20">
+    Size="15">
     <Constraints
       Nullable="true" />
   </Column>
@@ -94,7 +95,8 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="Manifest"
+    Name="FirstCargoID"
+    OldNames="Manifest"
     Type="varchar"
     Size="35">
     <Constraints
@@ -116,16 +118,15 @@
   </Column>
   <Column
     Name="ExportDealIdentification"
-    Type="decimal"
-    Precision="16"
-    Scale="0">
+    Type="nvarchar"
+    Size="16">
     <Constraints
-      Nullable="false" />
+      Nullable="true" />
   </Column>
   <Column
-    Name="FirstCargoID"
+    Name="StorErrorXML"
     Type="nvarchar"
-    Size="35">
+    Size="512">
     <Constraints
       Nullable="true" />
   </Column>

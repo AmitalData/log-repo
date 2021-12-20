@@ -40,6 +40,33 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                        StorageStatus = a.StorageStatus,
 
                                                        CargoTypeCode = a.CargoTypeCode,
+                                                       
+                                                       OpenDate = a.OpenDate,
+
+                                                       CargoType = a.CargoType,
+
+                                                       CustomsStatus = a.CustomsStatus,
+
+                                                       ExporterID = a.ExporterID,
+                                                       
+                                                       ShipCode = a.ShipCode,
+
+                                                       FirstCargoID = a.FirstCargoID,
+
+                                                       SecondCargoID = a.SecondCargoID,
+
+                                                       ThirdCargoID = a.ThirdCargoID,
+
+                                                       ExportDealIdentification = a.ExportDealIdentification,
+
+                                                       //DeclarationStatusTypeName = (
+                                                       // from status in context.DeclarationStatusTypes where status.Code ==
+                                                       // (from Declaration in context.Declarations where Declaration.Id == a.DeclarationId select Declaration).FirstOrDefault().DeclarationStatusTypeCode
+                                                       // select status
+                                                       //).FirstOrDefault().LocalName,
+
+
+
 
                                                    });
             return query;
