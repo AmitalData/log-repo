@@ -299,7 +299,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 this.ComputeFinalDestination();
                 this.ComputeIsHTSMissingField();
                 this.ComputeHasUnassignedField();
-                RunAutomation("OnCreate");
 
                 ShipmentMapping.MapEntity(entityPM, entityPoco, entityMasterData, isNewEntity, entityPM.ShipmentPackages, objectContext);
                 this.ComputeAgentComputed(entityPM, entityPoco);
@@ -351,6 +350,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 BuildImportersQueue();
                 RunStoredProcedures();
                 BuildAgentSharedManifest();
+                RunAutomation("OnCreate");
 
                 SendAutomaticallyOceanOnsightsRequest();
                 if (UpdateByEmail != "system@tenant" + entityPM.Tenant + ".com")
