@@ -202,10 +202,11 @@ namespace Logitude.Customs.BL.Messaging.ILOVS
                 GoodValueInUSD = DolarValue,
 
 
+ 
                 Description = myDeclarationPM.Consignments.DefaultIfEmpty(new ConsignmentPM()).First().CargoDescription != null ? Regex.Replace(myDeclarationPM.Consignments.DefaultIfEmpty(new ConsignmentPM()).First().CargoDescription, @"(\-)|(\%)|(\()|(\))", "") : "",
-                ImporterName = myDeclarationPM.ImporterName ?? "",
-                ImporterAddress = myDeclarationPM.ImporterAddress ?? "",
-                DistributionLine = string.IsNullOrEmpty(currentDeclarationCourierStatusPM.DistributionArea) ? "כללי" : currentDeclarationCourierStatusPM.DistributionArea,
+                ImporterName = myDeclarationPM.ImporterName != null ? Regex.Replace(myDeclarationPM.ImporterName, @"(\-)|(\%)|(\()|(\))", "") : "",
+                ImporterAddress = myDeclarationPM.ImporterAddress != null ? Regex.Replace(myDeclarationPM.ImporterAddress, @"(\-)|(\%)|(\()|(\))", "") : "",
+                 DistributionLine = string.IsNullOrEmpty(currentDeclarationCourierStatusPM.DistributionArea) ? "כללי" : currentDeclarationCourierStatusPM.DistributionArea,
                 DistributionCompanyVat = distributionCompanyVat,
 
 
