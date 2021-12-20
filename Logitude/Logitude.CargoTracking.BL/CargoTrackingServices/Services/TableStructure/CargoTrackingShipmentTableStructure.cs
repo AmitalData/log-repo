@@ -55,7 +55,8 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
                 "ShipmentTypeId",
 
                 "ExceptionDate",
-                "ExceptionDescription"
+                "ExceptionDescription",
+                "IsOperationalClosed"
             };
         public List<string> fields = new List<string>
             {

@@ -14,4 +14,5 @@ export class CargoTrackingShipmentFilters
     public HasException: boolean = false;
     public OrdersOnly: boolean = false;
     public EstimatedArrivalOnly: boolean = false;
+    public OperationalClosedOnly: boolean = false;
 }

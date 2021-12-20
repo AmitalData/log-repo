@@ -649,6 +649,11 @@ export class CargoTrackingShipmentPM {
     public set TenantDeclarationMessage(newValue: string) { if (this.tenantDeclarationMessage != newValue) { this.tenantDeclarationMessage = newValue; this.MarkAsDirty("TenantDeclarationMessage"); } }
        
 	 
+    private isOperationalClosed: boolean;
+    public get IsOperationalClosed() { return this.isOperationalClosed; }
+    public set IsOperationalClosed(newValue: boolean) { if (this.isOperationalClosed != newValue) { this.isOperationalClosed = newValue; this.MarkAsDirty("IsOperationalClosed"); } }
+       
+	 
 
     public OldEntityPM: CargoTrackingShipmentPM;
 		

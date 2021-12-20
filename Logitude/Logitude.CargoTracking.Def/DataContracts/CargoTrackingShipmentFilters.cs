@@ -42,6 +42,7 @@ namespace Logitude.CargoTracking.Def.DataContracts
         public bool HasException { get; set; }
         public bool OrdersOnly { get; set; }
         public bool EstimatedArrivalOnly { get; set; }
+        public bool OperationalClosedOnly { get; set; }
 
     }
 }

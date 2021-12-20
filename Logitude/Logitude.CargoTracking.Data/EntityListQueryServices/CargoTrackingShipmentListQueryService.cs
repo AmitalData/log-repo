@@ -162,6 +162,7 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
                                                                DeclarationDate = shipment.DeclarationDate,
                                                                WarehouseLegActualEntryDate = shipment.WarehouseLegActualEntryDate,
                                                                WarehouseLegExpectedEntryDate = shipment.WarehouseLegExpectedEntryDate,
+                                                               IsOperationalClosed = shipment.IsOperationalClosed,
                                                                
                                                            });
             return query;
@@ -669,6 +670,8 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
                 shipments = shipments.Where(d => d.EntityType == OrderType);
             if (shipmentFilters.EstimatedArrivalOnly)
                 shipments = shipments.Where(d => d.ArrivalEstimationDate != null && d.ArrivalDate == null);
+            if (shipmentFilters.OperationalClosedOnly)
+                shipments = shipments.Where(d => d.IsOperationalClosed == true);
             return shipments;
         }
 
