@@ -53,7 +53,7 @@ namespace WebFreight.Web.App_Code
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                SecurityUtility.AuthenticationOnEntityTenant("DocumentsFiling", EntityPM.Tenant, authToken.Tenant);
+                SecurityUtility.AuthenticationOnTenant(EntityPM.Tenant);
 
 
                 bool IsNewLog = false;
@@ -297,7 +297,7 @@ namespace WebFreight.Web.App_Code
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                SecurityUtility.AuthenticationOnEntityTenant("DocumentsFiling", EntityPM.Tenant, authToken.Tenant);
+                SecurityUtility.AuthenticationOnTenant(EntityPM.Tenant);
 
                 bool IsNewLog = false;
                 DocumentsFilingQuery documentsFilingQuery = new DocumentsFilingQuery(EntityPM.Tenant);
