@@ -1,18 +1,21 @@
-export class CargoTrackingShipmentFilters
-{
-    public Tenant: number;
-    public SearchText: string;
-    public CustomersIds: string[] = [];
-    public CustomersIdsString: string;
-    public MilestonesStatus: string;
-    public SelectedMilestonesStatus: any[] = [];
-    public TransportModeCodes: string;
-    public DirectionCodes: string;
-    public SortDescending: string;
-    public SortFieldName: string;
-    public SelectedInvitedCustomers: any[];
+export class MoreFilter{
     public HasException: boolean = false;
     public OrdersOnly: boolean = false;
     public EstimatedArrivalOnly: boolean = false;
     public OperationalClosedOnly: boolean = false;
 }
+export class CargoTrackingShipmentSearchInput extends MoreFilter
+{
+    public Tenant: number;
+    public SearchText: string;
+    public CustomersIds: string[] = [];
+    public MilestonesCodes: string[] = [];
+    public TransportModeCodes: string[] = [];
+    public DirectionCodes: string[] = [];
+    public SortType: string;
+    public SortFieldName: string;
+    public PageIndex: number;
+    public PageSize: number;
+
+}
+
