@@ -261,14 +261,14 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
             return mixPanelEvent;
         }
 
-        [HttpGet] // for private needs auth.
-        public HttpResponseMessage GetUserShipments(int pageIndex, int pageSize, [FromUri] CargoTrackingShipmentFilters shipmentFilters)
+        [HttpPost] // for private needs auth.
+        public HttpResponseMessage GetUserShipments([FromBody] CargoTrackingShipmentSearchInput shipmentFilters)
         {
             try
             {
                 AuthorizeTenant(shipmentFilters.Tenant);
                 CargoTrackingUsersShipmentService usersShipmentService = new CargoTrackingUsersShipmentService();
-                CargoTrackingShipmentsResponse response = usersShipmentService.GetUserShipmentsResponse(pageIndex, pageSize, shipmentFilters);
+                CargoTrackingShipmentsResponse response = usersShipmentService.GetUserShipmentsResponse( shipmentFilters);
 
                 CreateSearchEventForMixPanel(shipmentFilters.SearchText, shipmentFilters.Tenant, response.Shipments, false);
             
@@ -283,8 +283,8 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
 
         }
 
-        [HttpGet] // for private needs auth.
-        public HttpResponseMessage GetUserShipmentsCount([FromUri] CargoTrackingShipmentFilters shipmentFilters)
+        [HttpPost] // for private needs auth.
+        public HttpResponseMessage GetUserShipmentsCount([FromBody] CargoTrackingShipmentSearchInput shipmentFilters)
         {
             try
             {

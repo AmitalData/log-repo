@@ -2895,6 +2895,29 @@ namespace Logitude.CargoTracking.Def.EntityPMs
 			
 		 }
 	   }
+	  private bool? isOperationalClosed ;
+	  	  
+       
+	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool? IsOperationalClosed  
+	   {
+	    
+	     get
+		{
+		   return isOperationalClosed;
+		 }
+		 set
+		 {
+		   if(isOperationalClosed != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsOperationalClosed",OldValue=isOperationalClosed,NewValue=value,PropertyType="bool?"};
+		    NotifyPropertyChanged(values);
+		   isOperationalClosed=value;
+		   }
+			
+		 }
+	   }
    }
    
 }
