@@ -119,6 +119,11 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                                       //)
                                       select myPackage).Count();
 
+                myResult.ContainersCount = (from container in MyContext.Containers
+                                            where container.Tenant == tenant 
+                                            && container.IsCancelled == false && container.IsClosed == false
+                                            select container).Count();
+
                 return Request.CreateResponse(HttpStatusCode.OK, myResult);
             }
 
@@ -144,5 +149,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         public int InTransit { get; set; }
         public int ArrivedNotDelivered { get; set; }
         public int DeliveredNotReturned { get; set; }
+        public int ContainersCount { get; set; }
     }
 }
