@@ -1527,6 +1527,7 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+ 
 	  private DateTime? terminalReleaseDate ;
 	  	  
        
@@ -1619,6 +1620,7 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+ 
    }
    
 }

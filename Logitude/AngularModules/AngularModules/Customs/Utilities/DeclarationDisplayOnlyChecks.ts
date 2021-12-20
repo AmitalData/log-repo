@@ -239,6 +239,15 @@ export class DeclarationDisplayOnlyChecks {
 
 
                         } else {
+                            if (requestSheets[0].InterfaceTypeCode == "DCAUAC") {
+                                var errorMessage: string = "קיימת בקשה לעדכון פטור 92 גורף ";
+                                SessionLocator.SelectedSession.CurrentEditComponent.IsSaveBtnDisable = true;
+                                SessionLocator.SelectedSession.CurrentEditComponent.EditComponentController.MustRefresh = true;
+                                editComponentNeedsRefresh = SessionLocator.SelectedSession.CurrentEditComponent.EditComponentController.MustRefresh;
+                                SessionLocator.SelectedSession.CurrentEditComponent.EditComponentController.MustRefreshMessage = errorMessage;
+                                serviceResponse.Result = new DisplayOnlyCheckResult(true, errorMessage);
+                                return serviceResponse;
+                            }
                             return returnDefualt();
                         }
 
@@ -312,7 +321,7 @@ export class DeclarationDisplayOnlyChecks {
 
         var objecttable = window.ObjectTables.filter(x => x.Name === "Customs.Declaration")[0];
         return defer(() => {
-            return ServiceHelper.HttpClient.get(this.apiUrl + '/GetRequestInProgress/?' + 'tenant=' + tenant + '&interfaceTypeCode=' + interfaceTypeCode + '&objectTableId1=' + objecttable + '&entityId1=' + decId + '&objectTableId2=' + "" + '&entityId2=' + "" + '&customFileNo=' + "" + '&displayOnlyMode=' + displayOnlyMode, ServiceHelper.GetHttpHeaders())
+            return ServiceHelper.HttpClient.get(this.apiUrl + '/GetRequestInProgress/?' + 'tenant=' + tenant + '&interfaceTypeCode=' + interfaceTypeCode + '&objectTableId1=' + objecttable.Id + '&entityId1=' + decId + '&objectTableId2=' + "" + '&entityId2=' + "" + '&customFileNo=' + "" + '&displayOnlyMode=' + displayOnlyMode, ServiceHelper.GetHttpHeaders())
                 .pipe(map(response => {
                     var serviceResponse: ServiceResponse = new ServiceResponse();
                     var requestSheets = response;

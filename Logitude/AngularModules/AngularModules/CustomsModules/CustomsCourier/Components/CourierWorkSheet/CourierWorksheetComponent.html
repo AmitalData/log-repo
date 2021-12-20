@@ -203,10 +203,10 @@
                                                             | TextCodeTranslationPipe }}</button>
                                                         <button style="text-align:right"
                                                             (click)="ChangeStorageSiteMethod()"
-                                                            [disabled]="IsDisplayOnly">{{'שינוי םתר םחסון' }}</button>
+                                                            [disabled]="IsDisplayOnly">{{'שינוי אתר אחסון' }}</button>
                                                         <button style="text-align:right"
                                                             (click)="ChangeUnloadPortSiteMethod()"
-                                                            [disabled]="IsDisplayOnly">{{'שינוי םתר פריקה' }}</button>
+                                                            [disabled]="IsDisplayOnly">{{'שינוי אתר פריקה' }}</button>
 
                                                         <button *ngIf="isAllowAccounting" style="text-align:right"
                                                             (click)="IsReadyForInvoiceClick()"
@@ -984,7 +984,7 @@
                                                                                 <split-button
                                                                                     (DefaultSplitButtonClicked)="ClosePendingMethod()"
                                                                                     [IsDisabled]="IsDisplayOnly"
-                                                                                    [ButtonText]="' שידור סגירת PENDING מסוננים לבלדר'"
+                                                                                    [ButtonText]="' סגירה גורפת ל-Pending מסוננים'"
                                                                                     [AsRegularButton]="'true'"
                                                                                     [MENUDivExtraTop]="24"
                                                                                     [MENUDivExtraLeft]="110">

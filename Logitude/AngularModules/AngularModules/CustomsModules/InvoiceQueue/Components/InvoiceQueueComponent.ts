@@ -322,7 +322,7 @@ export class InvoiceQueueComponent
                 "CFIHMAIN.LogitudeTask",
                 "ShowPayments",
                 unifreightMessageM,
-                " הצגת מסך : רשימת הוצםות");
+                " הצגת מסך : רשימת הוצאות");
         }
         else {
             alert("ShowPayments");
