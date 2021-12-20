@@ -63,7 +63,7 @@ export class ContainersFUsComponent implements OnInit {
     private SetContainersQueriesVisibility() {
         this.IsContainersToggleFeatureUp = false;
         var isOceanInsightsContainersFeatureToggleUp: FeatureToggleList = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "OIC")[0];
-        if (isOceanInsightsContainersFeatureToggleUp && (this.IsQueryVisible_AllContainers || this.IsQueryVisible_ClosedContainers)) {
+        if (isOceanInsightsContainersFeatureToggleUp && (this.IsQueryVisible_AllContainers || this.IsQueryVisible_ClosedContainers || this.IsQueryVisible_Containers || this.IsQueryVisible_CancelledContainers)) {
             this.IsContainersToggleFeatureUp = true;
         }
     }
@@ -74,6 +74,8 @@ export class ContainersFUsComponent implements OnInit {
     public IsQueryVisible_MyViewsGroup: boolean = false;
     public IsQueryVisible_AllContainers: boolean = false;
     public IsQueryVisible_ClosedContainers: boolean = false;
+    public IsQueryVisible_Containers: boolean = false;
+    public IsQueryVisible_CancelledContainers: boolean = false;
     private SetQueriesVisibility() {
         this.IsQueryVisible_InTransit = FeatureLocator.HasFeaturePermession("ContainerFollowUp", "InTransit") ? true : false;
         this.IsQueryVisible_ArrivedNotDelivered = FeatureLocator.HasFeaturePermession("ContainerFollowUp", "ArrivedNotDelivered") ? true : false;
@@ -81,11 +83,14 @@ export class ContainersFUsComponent implements OnInit {
         this.IsQueryVisible_MyViewsGroup = FeatureLocator.HasFeaturePermession("General", "BUILDQUERIES") ? true : false;
         this.IsQueryVisible_AllContainers = FeatureLocator.HasFeaturePermession("Container", "Container.Q.AllContainers") ? true : false;
         this.IsQueryVisible_ClosedContainers = FeatureLocator.HasFeaturePermession("Container", "Container.Q.ClosedContainers") ? true : false;
+        this.IsQueryVisible_Containers = FeatureLocator.HasFeaturePermession("Container", "Container.Q.Containers") ? true : false;
+        this.IsQueryVisible_CancelledContainers = FeatureLocator.HasFeaturePermession("Container", "Container.Q.CancelledContainers") ? true : false;
     }
 
     public InTransit: string;
     public ArrivedNotDelivered: string;
     public DeliveredNotReturned: string;
+    public ContainersCount: string;
     LoadQueriesCounts() {
         this.myDomainService.GetQueriesCounts().subscribe((myResponse: ServiceResponse) => {
             if (myResponse != null) {
@@ -96,6 +101,7 @@ export class ContainersFUsComponent implements OnInit {
                         this.InTransit = myResult.InTransit > 1000 ? "1000+" : myResult.InTransit.toString();
                         this.ArrivedNotDelivered = myResult.ArrivedNotDelivered > 1000 ? "1000+" : myResult.ArrivedNotDelivered.toString();
                         this.DeliveredNotReturned = myResult.DeliveredNotReturned > 1000 ? "1000+" : myResult.DeliveredNotReturned.toString();
+                        this.ContainersCount = myResult.ContainersCount > 10000 ? "10000+" : myResult.ContainersCount.toString();
                     }
                 }
             }
@@ -122,6 +128,16 @@ export class ContainersFUsComponent implements OnInit {
                 }
                 case "All Containers": {
                     ServiceLocator.SendTotangoUserActivity("Container", "All Containers");
+                    objectTableName = "Container";
+                    break;
+                }
+                case "Containers": {
+                    ServiceLocator.SendTotangoUserActivity("Container", "Containers");
+                    objectTableName = "Container";
+                    break;
+                }
+                case "Cancelled Containers": {
+                    ServiceLocator.SendTotangoUserActivity("Container", "Cancelled Containers");
                     objectTableName = "Container";
                     break;
                 }
