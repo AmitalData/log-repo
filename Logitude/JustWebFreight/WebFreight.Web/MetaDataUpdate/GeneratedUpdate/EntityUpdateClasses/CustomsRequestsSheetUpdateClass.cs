@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CustomsRequestsSheetUpdateClass
    {  		
-		public const string HashString = "cad880de61b1e89d3366707fa4bda0a6";
+		public const string HashString = "105f1e1b6612c071b21aa50363749000";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -125,7 +125,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Customs Requests Sheet",
-			      				    Code =  "10d0",
+			      				    Code =  "849d",
 			      				    Name =  "Customs.CustomsRequestsSheet Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -801,10 +801,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "InterfaceTypeCode",
 					  						DefaultText =  "Interface Management",
-					  						FullLocalDefaultText =  "ניהול בקשות מכס",
+					  						FullLocalDefaultText =  "ממשק ניהול",
 					  						ListFieldLable =  "InterfaceTypeCodeListLable",
 					  						ListLableDefaultText =  "Interface Management",
-					  						ListLocalDefaultText =  "ניהול בקשות מכס",
+					  						ListLocalDefaultText =  "ממשק ניהול",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -925,10 +925,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CustomFileNo",
 					  						DefaultText =  "Custom File No",
-					  						FullLocalDefaultText =  "תיק עמילות",
+					  						FullLocalDefaultText =  "תיק עמילות/מכס",
 					  						ListFieldLable =  "CustomFileNoListLable",
 					  						ListLableDefaultText =  "Custom File No",
-					  						ListLocalDefaultText =  "תיק עמילות",
+					  						ListLocalDefaultText =  "תיק עמילות/מכס",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -1170,10 +1170,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "InterfaceTypeName",
 					  						DefaultText =  "Interface Management",
-					  						FullLocalDefaultText =  "ניהול בקשות מכס",
+					  						FullLocalDefaultText =  "ממשק ניהול",
 					  						ListFieldLable =  "InterfaceTypeNameListLable",
 					  						ListLableDefaultText =  "Interface Management",
-					  						ListLocalDefaultText =  "ניהול בקשות מכס",
+					  						ListLocalDefaultText =  "ממשק ניהול",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
