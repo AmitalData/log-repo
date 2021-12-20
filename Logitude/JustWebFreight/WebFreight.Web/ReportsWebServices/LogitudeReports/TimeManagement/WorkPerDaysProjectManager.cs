@@ -33,6 +33,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
         private IQueryable<TMEmployeeTime> iQueryable_EmployeeTimes = null;
         private List<TMProjectCategory> AllCategories = null;
         private WorkDaysPerProjectDataProvider iDataProvider;
+
         public WorkPerDaysProjectManager(byte[] xmlFilters, int tenant)
         {
             this.tenant = tenant;
@@ -222,12 +223,6 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
             this.iQueryable_EmployeeTimes = this.iQueryable_EmployeeTimes.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.DateOfWork) >= System.Data.Entity.DbFunctions.TruncateTime(fromDate));
             this.iQueryable_EmployeeTimes = this.iQueryable_EmployeeTimes.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.DateOfWork) <= System.Data.Entity.DbFunctions.TruncateTime(toDate));
 
-            if (!string.IsNullOrEmpty(this.projectId))
-            {
-                iQueryable_Projects = iQueryable_Projects.Where(d => d.Id == this.projectId);
-                iQueryable_EmployeeTimes = iQueryable_EmployeeTimes.Where(d => d.ProjectId == this.projectId);
-            }
-
             if (!string.IsNullOrEmpty(this.employeeUserId))
             {
                 iQueryable_EmployeeTimes = iQueryable_EmployeeTimes.Where(d => d.EmployeeUserId == this.employeeUserId);
@@ -258,11 +253,44 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
                 iQueryable_Projects = iQueryable_Projects.Where(d => d.ExternalProjectNumber == this.externalProjectNumber);
             }
 
-            if (!this.IncludeInnerProject)
+            this.HandleProjectFilter();
+        }
+        private void HandleProjectFilter()
+        {
+            if (string.IsNullOrEmpty(this.projectId))
             {
-                iQueryable_Projects = iQueryable_Projects.Where(d => d.IsInnerProject == this.IncludeInnerProject);
+                this.HandleIncludeInnerProjectWithoutSelectedProject();
+            }
+            else
+            {
+                this.HandleIncludeInnerProjectWithSelectedProject();
             }
         }
+        private void HandleIncludeInnerProjectWithoutSelectedProject()
+        {
+            if (!this.IncludeInnerProject)
+            {
+                iQueryable_Projects = this.iQueryable_Projects.Where(d => !d.IsInnerProject);
+            }
+        }
+        private void HandleIncludeInnerProjectWithSelectedProject()
+        {
+            if (this.IncludeInnerProject)
+            {
+                var project = iQueryable_Projects.Where(d => d.Id == this.projectId).FirstOrDefault();
+                if (project != null)
+                {
+                    iQueryable_Projects = this.iQueryable_Projects.Where(d => d.ProjectNumber.StartsWith(project.ProjectNumber + "-") || d.ProjectNumber == project.ProjectNumber);
+                }
+            }
+            else
+            {
+                iQueryable_Projects = iQueryable_Projects.Where(d => d.Id == this.projectId);
+            }
+            var projectsIds = iQueryable_Projects.Select(d => d.Id).ToList();
+            iQueryable_EmployeeTimes = iQueryable_EmployeeTimes.Where(d => projectsIds.Contains(d.ProjectId));
+        }
+
         private void BuildReportData()
         {
             this.BuildDetailedWorkHours();

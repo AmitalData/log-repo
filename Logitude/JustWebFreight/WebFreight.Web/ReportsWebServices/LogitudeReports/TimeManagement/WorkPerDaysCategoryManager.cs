@@ -436,7 +436,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
                     {
                         itemRecord.ProjectName = iProject.Name;
 
-                        if (!this.IncludeInnerProject)
+                        if (!this.IncludeInnerProject && !iProject.IsInnerProject)
                         {
                             itemRecord.IsVisisble = iProject.IsInnerProject ? false : true;
                         }
@@ -465,7 +465,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
 
             itemRecord.TotalDaysIncludingInner = this.GetDaysFormatFromMinutes(itemRecord.TotalDaysIncludingInnerDouble);
 
-            var isCategoryFirstRow = iWorkDaysPerGategoryDataList.Where(a => a.CategoryId == item.CategoryId && a.TotalGategoryDays != null).FirstOrDefault();
+            var isCategoryFirstRow = iWorkDaysPerGategoryDataList.Where(a => a.CategoryId == item.CategoryId).FirstOrDefault();
             if (isCategoryFirstRow == null)
             {
                 itemRecord.TotalGategoryDaysDouble = gategoryLines.Sum(s => s.TotalMinutes);
