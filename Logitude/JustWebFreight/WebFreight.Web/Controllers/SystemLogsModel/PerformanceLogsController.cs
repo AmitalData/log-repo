@@ -136,7 +136,7 @@ namespace WebFreight.Web.Controllers.SystemLogsModel
 							foreach (var entity in logsList)
 							{
                                 SecurityUtility.AuthenticationOnTenant(entity.Tenant);
-                                SecurityUtility.AuthenticationOnEntityTenant("PerformanceLog", entity.Tenant, authToken.Tenant);
+                                //SecurityUtility.AuthenticationOnEntityTenant("PerformanceLog", entity.Tenant, authToken.Tenant);
 
                                 entity.UserIP = ip;
 
