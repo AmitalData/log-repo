@@ -667,7 +667,7 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
                 shipments = shipments.Where(d => d.EntityType == OrderType);
             if (shipmentSearchInput.EstimatedArrivalOnly)
                 shipments = shipments.Where(d => d.ArrivalEstimationDate != null && d.ArrivalDate == null);
-            if (shipmentFilters.OperationalClosedOnly)
+            if (shipmentSearchInput.OperationalClosedOnly)
                 shipments = shipments.Where(d => d.IsOperationalClosed == true);
             return shipments;
         }

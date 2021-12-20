@@ -108,6 +108,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
         this.getPreviousScroll();
         this.GetCompanyLoginsFromCache();
         this.fillFeltersDictionary();
+        this.setViews();
     }
 
     private GetCompanyLoginsFromCache() {
@@ -202,6 +203,10 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
                 this.ShipmentSearchInput.OrdersOnly = !this.ShipmentSearchInput.OrdersOnly;
                 this.MoreFilterMobileValue.OrdersOnly = this.ShipmentSearchInput.OrdersOnly;
                 break;
+            case MoreFilterCodes.OperationalClosedOnly:
+                this.ShipmentSearchInput.OperationalClosedOnly = !this.ShipmentSearchInput.OperationalClosedOnly;
+                this.MoreFilterMobileValue.OperationalClosedOnly = this.ShipmentSearchInput.OperationalClosedOnly;
+                break;
 
         }
         this.LoadScreenData();
@@ -265,20 +270,26 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
 
     ClearHasExceptionChanged(event) {
         RootContext.ShipmentsScrollPosition = 0;
-        this.ShipmentSearchInput.HasException=this.MoreFilterMobileValue.HasException = event;
+        this.ShipmentSearchInput.HasException = this.MoreFilterMobileValue.HasException = event;
         this.shipmentMoreFiltersMultipleSelection.DeselectFilter(MoreFilterCodes.ExceptionOnly);
         this.LoadScreenData();
     }
     ClearOrdersOnlyChanged(event) {
         RootContext.ShipmentsScrollPosition = 0;
-        this.ShipmentSearchInput.OrdersOnly=this.MoreFilterMobileValue.OrdersOnly = event;
+        this.ShipmentSearchInput.OrdersOnly = this.MoreFilterMobileValue.OrdersOnly = event;
         this.shipmentMoreFiltersMultipleSelection.DeselectFilter(MoreFilterCodes.OrdersOnly);
         this.LoadScreenData();
     }
     ClearEstimatedArrivalOnlyChanged(event) {
         RootContext.ShipmentsScrollPosition = 0;
-        this.ShipmentSearchInput.EstimatedArrivalOnly=this.MoreFilterMobileValue.EstimatedArrivalOnly = event;
+        this.ShipmentSearchInput.EstimatedArrivalOnly = this.MoreFilterMobileValue.EstimatedArrivalOnly = event;
         this.shipmentMoreFiltersMultipleSelection.DeselectFilter(MoreFilterCodes.EstimatedArrivalOnly);
+        this.LoadScreenData();
+    }
+    ClearOperationalClosedOnlyChanged(event) {
+        RootContext.ShipmentsScrollPosition = 0;
+        this.ShipmentSearchInput.OperationalClosedOnly = this.MoreFilterMobileValue.OperationalClosedOnly = event;
+        this.shipmentMoreFiltersMultipleSelection.DeselectFilter(MoreFilterCodes.OperationalClosedOnly);
         this.LoadScreenData();
     }
 
@@ -716,7 +727,8 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
     ShipmentMoreFilters: ToggleFilter[] = [
         new ToggleFilter(MoreFilterCodes.ExceptionOnly, 'Exception Only'),
         new ToggleFilter(MoreFilterCodes.OrdersOnly, 'Orders Only'),
-        new ToggleFilter(MoreFilterCodes.EstimatedArrivalOnly, 'Estimated Arrival Only')
+        new ToggleFilter(MoreFilterCodes.EstimatedArrivalOnly, 'Estimated Arrival Only'),
+        new ToggleFilter(MoreFilterCodes.OperationalClosedOnly, 'Operational Closed Only')
     ];
 
 
@@ -787,6 +799,8 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
             return this.ShipmentsCounter.OrdersOnly;
         } else if (toggleFilter.Code == MoreFilterCodes.EstimatedArrivalOnly) {
             return this.ShipmentsCounter.EstimatedArrivalOnly;
+        }else if (toggleFilter.Code == MoreFilterCodes.OperationalClosedOnly) {
+            return this.ShipmentsCounter.OperationalClosedOnly;
         }
     }
 
@@ -804,8 +818,9 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
         this.ShipmentSearchInput.MilestonesCodes = [];
         this.ShipmentSearchInput.TransportModeCodes = [];
         this.ShipmentSearchInput.EstimatedArrivalOnly = this.MoreFilterMobileValue.EstimatedArrivalOnly = false;
-        this.ShipmentSearchInput.HasException = this.MoreFilterMobileValue.HasException =false;
-        this.ShipmentSearchInput.OrdersOnly = this.MoreFilterMobileValue.OrdersOnly =false;
+        this.ShipmentSearchInput.HasException = this.MoreFilterMobileValue.HasException = false;
+        this.ShipmentSearchInput.OrdersOnly = this.MoreFilterMobileValue.OrdersOnly = false;
+        this.ShipmentSearchInput.OperationalClosedOnly = this.MoreFilterMobileValue.OperationalClosedOnly = false;
         this.LoadScreenData();
     }
     ClearAdvancedFilters() {
@@ -814,19 +829,20 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
         this.ShipmentDirectionFilters.map(e => e.IsSelected = false);
         this.ShipmentTypeFilters.map(e => e.IsSelected = false);
         this.MoreFilterMobileValue.EstimatedArrivalOnly = false;
-        this.MoreFilterMobileValue.HasException =false;
-        this.MoreFilterMobileValue.OrdersOnly =false;
+        this.MoreFilterMobileValue.HasException = false;
+        this.MoreFilterMobileValue.OrdersOnly = false;
+        this.MoreFilterMobileValue.OperationalClosedOnly = false;
     }
     ApplyFilterButtonClicked() {
         this.sharedService.updateValue(false);
         this.ShipmentSearchInput.CustomersIds = this.InvitedCustomers.filter(e => e.IsSelected).map(d => d.CardId);
         this.ShipmentSearchInput.MilestonesCodes = this.MilestonesStatus.filter(e => e.IsSelected).map(state => state.Code);
-        if(this.isMobileView){
+        if (this.isMobileView) {
             this.ShipmentSearchInput.DirectionCodes = this.ShipmentDirectionFilters.filter(e => e.IsSelected).map(e => e.Code);
             this.ShipmentSearchInput.TransportModeCodes = this.ShipmentTypeFilters.filter(e => e.IsSelected).map(e => e.Code);
             this.MapMoreMobileFilter();
         }
-        
+
         RootContext.ShipmentsScrollPosition = 0;
         this.LoadScreenData();
     }
@@ -834,6 +850,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
         this.ShipmentSearchInput.EstimatedArrivalOnly = this.MoreFilterMobileValue.EstimatedArrivalOnly;
         this.ShipmentSearchInput.HasException = this.MoreFilterMobileValue.HasException;
         this.ShipmentSearchInput.OrdersOnly = this.MoreFilterMobileValue.OrdersOnly;
+        this.ShipmentSearchInput.OperationalClosedOnly = this.MoreFilterMobileValue.OperationalClosedOnly;
     }
     CheckFiltersExists() {
         return this.ShipmentSearchInput.CustomersIds.length > 0
@@ -843,6 +860,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
             || this.ShipmentSearchInput.EstimatedArrivalOnly
             || this.ShipmentSearchInput.HasException
             || this.ShipmentSearchInput.OrdersOnly
+            || this.ShipmentSearchInput.OperationalClosedOnly
     }
 
     SortMenuClicked(buttonCode: string) {
@@ -925,8 +943,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
         this.setMaxNumberOfCarachter(event.srcElement.innerWidth);
         this.setViews();
     }
-    private setViews()
-    {
+    private setViews() {
         this.isMobileView = window.innerWidth <= 479;
     }
     setMaxNumberOfCarachter(width) {
@@ -995,6 +1012,7 @@ export class CargoTrackingShipmentsCounter {
     HasException: number = 0;
     OrdersOnly: number = 0;
     EstimatedArrivalOnly: number = 0;
+    OperationalClosedOnly: number = 0;
 }
 
 enum Milestones {
@@ -1037,7 +1055,8 @@ export enum ShipmentEntityTypes {
 export enum MoreFilterCodes {
     ExceptionOnly = 'ExceptionOnly',
     OrdersOnly = 'OrdersOnly',
-    EstimatedArrivalOnly = 'EstimatedArrivalOnly'
+    EstimatedArrivalOnly = 'EstimatedArrivalOnly',
+    OperationalClosedOnly = 'OperationalClosedOnly'
 }
 export enum ShipmentDirectionCodes {
     Import = 'I',

@@ -146,6 +146,9 @@
             <li *ngIf="ShipmentSearchInput.HasException" (click)="ClearHasExceptionChanged(false)"> Exceptions Only
                 <span class="filter-close-btn">×</span>
             </li>
+            <li *ngIf="ShipmentSearchInput.OperationalClosedOnly" (click)="ClearOperationalClosedOnlyChanged(false)"> Operational Closed Only
+                <span class="filter-close-btn">×</span>
+            </li>
             <li *ngIf="ShipmentSearchInput.OrdersOnly" (click)="ClearOrdersOnlyChanged(false)"> Orders Only
                 <span class="filter-close-btn">×</span>
             </li>
@@ -610,6 +613,10 @@
                     <div class="flex-row-space-between">
                         <label>Estimated Arrival Only</label>
                         <mat-slide-toggle color="primary" [(ngModel)]="this.MoreFilterMobileValue.EstimatedArrivalOnly"></mat-slide-toggle>
+                    </div>
+                    <div class="flex-row-space-between">
+                        <label>Operational Closed Only</label>
+                        <mat-slide-toggle color="primary" [(ngModel)]="this.MoreFilterMobileValue.OperationalClosedOnly"></mat-slide-toggle>
                     </div>
                     
                     
