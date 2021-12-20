@@ -1280,11 +1280,11 @@ export class CargoSplitGeneralTabComponent
 
         for (let tab of this.Tabs) {
             if (tab.EntityPM.DecCargoSplitConsItems == null || tab.EntityPM.DecCargoSplitConsItems.length < 1) {
-                errors.push("חובה להזין נתוני םריזות");
+                errors.push("חובה להזין נתוני אריזות");
             }
             for (let item of tab.EntityPM.DecCargoSplitConsItems) {
                 if (item.DecCargoSplitConsPackDets == null || item.DecCargoSplitConsPackDets.length < 1) {
-                    errors.push("קיימות םריזות ללם פירוט");
+                    errors.push("קיימות אריזות ללא פירוט");
                     break;
                 }
                 for (let pack of item.DecCargoSplitConsPackDets) {
