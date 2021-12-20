@@ -337,8 +337,9 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
         const pageLinesHasDifferentYears = pageLinesYears > 1;
         const hasSingleDifferentYears = this.CheckIfHasSingleDifferentYears(ledgerYears, pageLinesYears);
 
-        return bothLinesSelected &&
-            (ledgerHasDifferentYears || pageLinesHasDifferentYears || hasSingleDifferentYears);
+        return ledgerHasDifferentYears
+            || (bothLinesSelected && pageLinesHasDifferentYears)
+            || (hasSingleDifferentYears);
     }
 
     private CheckIfHasSingleDifferentYears(ledgerYears: number, pageLinesYears: number)
