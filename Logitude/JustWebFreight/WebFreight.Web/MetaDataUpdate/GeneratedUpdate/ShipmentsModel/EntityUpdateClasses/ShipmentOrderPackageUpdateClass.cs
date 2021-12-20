@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 {
    public class ShipmentOrderPackageUpdateClass
    {  		
-		public const string HashString = "61d8dca4729b8b3712ed67fa929a4a46";
+		public const string HashString = "891b3ffc588a4c0ec994b4b5d1059908";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -89,7 +89,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 	             				    ObjectTableName =  "ShipmentOrderPackage",
 			      				    IsNew =  false,
 			      				    DBTableName =  "ShipmentOrderPackages",
-			      				    OldDBTableName =  "ShipmentOrderPackages",
 			      				    ObjectTableSingular =  "Shipment Order Package",
 			      				    ObjectTablePlural =  "ShipmentOrderPackages",
 			      				    HasCustomFilter =  false,
@@ -119,7 +118,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			      				    ObjectTableTypeCode =  "BR",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Shipment Order Package",
-			      				    Code =  "18f9",
+			      				    Code =  "dea6",
 			      				    Name =  "ShipmentOrderPackage",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Shipment",
@@ -144,7 +143,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "ShipmentId",
-					  						OldFieldName =  "ShipmentId",
 					  						ObjectTableName =  "ShipmentOrderPackage",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -208,7 +206,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "PackageTypeId",
-					  						OldFieldName =  "PackageTypeId",
 					  						ObjectTableName =  "ShipmentOrderPackage",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "PackageType",
@@ -273,7 +270,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "Quantity",
-					  						OldFieldName =  "Quantity",
 					  						ObjectTableName =  "ShipmentOrderPackage",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -337,7 +333,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "GrossWeight",
-					  						OldFieldName =  "GrossWeight",
 					  						ObjectTableName =  "ShipmentOrderPackage",
 					  						FieldsDataType =  "Double",
 					  						MinLength =  0,
@@ -399,7 +394,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "Volume",
-					  						OldFieldName =  "Volume",
 					  						ObjectTableName =  "ShipmentOrderPackage",
 					  						FieldsDataType =  "Double",
 					  						MinLength =  0,
@@ -461,7 +455,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "Height",
-					  						OldFieldName =  "Height",
 					  						ObjectTableName =  "ShipmentOrderPackage",
 					  						FieldsDataType =  "Double",
 					  						MinLength =  0,
@@ -523,7 +516,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "Width",
-					  						OldFieldName =  "Width",
 					  						ObjectTableName =  "ShipmentOrderPackage",
 					  						FieldsDataType =  "Double",
 					  						MinLength =  0,
@@ -585,7 +577,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "Length",
-					  						OldFieldName =  "Length",
 					  						ObjectTableName =  "ShipmentOrderPackage",
 					  						FieldsDataType =  "Double",
 					  						MinLength =  0,
@@ -647,7 +638,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "VolumetricWeight",
-					  						OldFieldName =  "VolumetricWeight",
 					  						ObjectTableName =  "ShipmentOrderPackage",
 					  						FieldsDataType =  "Double",
 					  						MinLength =  0,
@@ -709,7 +699,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "Dimensions",
-					  						OldFieldName =  "Dimensions",
 					  						ObjectTableName =  "ShipmentOrderPackage",
 					  						FieldsDataType =  "Double",
 					  						MinLength =  0,
@@ -771,7 +760,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "ContainerTypeId",
-					  						OldFieldName =  "ContainerTypeId",
 					  						ObjectTableName =  "ShipmentOrderPackage",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "PackageType",
@@ -825,6 +813,61 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "ContainerTypeId",
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "ContainerNumber",
+					  						ObjectTableName =  "ShipmentOrderPackage",
+					  						FieldsDataType =  "Text",
+					  						MinLength =  0,
+					  						MaxLength =  20,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "ContainerNumber",
+					  						ListPropertyPath =  "ContainerNumber",
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  true,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "ContainerNumber",
+					  						DefaultText =  "Container Number",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);

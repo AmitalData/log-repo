@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IncotermList } from '../../../../Common/EntityLists/IncotermList';
+import { PackageTypeList } from '../../../../Common/EntityLists/PackageTypeList';
 import { PortList } from '../../../../Common/EntityLists/PortList';
 import { TenantPM } from '../../../../Common/EntityPMs/TenantPM';
 import { BranchListService } from '../../../../Common/Services/StandardLists/BranchListService';
@@ -17,6 +18,7 @@ import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLoca
 import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import { FilterClass } from '../../../../Shipment/Components/NewEntity/NewShipmentComponent';
 import { ShipmentSubTypeList } from '../../../../shipment/EntityLists/ShipmentSubTypeList';
+import { ShipmentOrderPackagePM } from '../../../../Shipment/EntityPMs/ShipmentOrderPackagePM';
 import { ShipmentPackagePM } from '../../../../Shipment/EntityPMs/ShipmentPackagePM';
 import { ShipmentPM } from '../../../../Shipment/EntityPMs/ShipmentPM';
 import { ShipmentPMService } from '../../../../Shipment/Services/StandardPMs/ShipmentPMService';
@@ -64,6 +66,9 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
     public IsCustomsActivated: boolean = false;
     public AllowCreateShipmentsWithoutDocuments: boolean = false;
     public Order: string = "Reference";
+    public RequestedDateLabel: string = "Requested Flight Date";
+
+     
     public FromTextCode: string;
     public ToTextCode: string;
 
@@ -88,11 +93,14 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
 
         if (this.EntityPM.TransportModeId == "A") {
             this.Order = "Reference";
+            this.RequestedDateLabel = "Requested Flight Date";
         }
         if (this.EntityPM.TransportModeId == "O") {
             this.Order = "Order Number";
+            this.RequestedDateLabel = "Expected Sealing Date";
         }
 
+        
         this.SetPortsLabel();
     }
  
@@ -342,8 +350,195 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
         }
     }
 
-    
+    SetOrderPackagesOnFinish() {
+        if (this.ShipmentTypeId == 'FCLD') {
+            var numberOfPackages = 0;
+            this.EntityPM.ShipmentOrderPackages = [];
 
+            if (this.PackageTypeList1 != null && this.Quantity1 > 0) {
+                var item = new ShipmentOrderPackagePM(this.EntityPM);
+                item.IsContainer = this.PackageTypeList1.IsContainer;
+                item.Quantity = this.Quantity1;
+                item.ContainerNumber = this.ContainerNumber1;
+                item.PackageTypeId = this.PackageTypeId1;
+                item.Tenant = SessionLocator.Tenant;
+                item.ShipmentId = this.EntityPM.Id;
+                this.EntityPM.AddOrderPackage(item);
+                numberOfPackages = numberOfPackages + this.Quantity1;
+            }
+
+            if (this.PackageTypeList2 != null && this.Quantity2 > 0) {
+                var item = new ShipmentOrderPackagePM(this.EntityPM);
+                item.IsContainer = this.PackageTypeList2.IsContainer;
+                item.ContainerNumber = this.ContainerNumber2;
+                item.Quantity = this.Quantity2;
+                item.PackageTypeId = this.PackageTypeId2;
+                item.Tenant = SessionLocator.Tenant;
+                item.ShipmentId = this.EntityPM.Id;
+                this.EntityPM.AddOrderPackage(item);
+                numberOfPackages = numberOfPackages + this.Quantity2;
+            }
+
+            if (this.PackageTypeList3 != null && this.Quantity3 > 0) {
+                var item = new ShipmentOrderPackagePM(this.EntityPM);
+                item.IsContainer = this.PackageTypeList3.IsContainer;
+                item.ContainerNumber = this.ContainerNumber3;
+                item.Quantity = this.Quantity3;
+                item.PackageTypeId = this.PackageTypeId3;
+                item.Tenant = SessionLocator.Tenant;
+                item.ShipmentId = this.EntityPM.Id;
+                this.EntityPM.AddOrderPackage(item);
+                numberOfPackages = numberOfPackages + this.Quantity3;
+            }
+
+            if (this.PackageTypeList4 != null && this.Quantity4 > 0) {
+                var item = new ShipmentOrderPackagePM(this.EntityPM);
+                item.IsContainer = this.PackageTypeList4.IsContainer;
+                item.ContainerNumber = this.ContainerNumber4;
+                item.Quantity = this.Quantity4;
+                item.PackageTypeId = this.PackageTypeId4;
+                item.Tenant = SessionLocator.Tenant;
+                item.ShipmentId = this.EntityPM.Id;
+                this.EntityPM.AddOrderPackage(item);
+                numberOfPackages = numberOfPackages + this.Quantity4;
+            }
+             
+
+            if (numberOfPackages > 0) {
+                this.EntityPM.BookingNumberOfPackages = numberOfPackages;
+            }
+        }
+    }
+
+    get ContainerNumber1() { return this.EntityPM.ContainerNumber1; }
+    set ContainerNumber1(newValue: string) {
+        if (this.EntityPM.ContainerNumber1 != newValue) {
+            this.EntityPM.ContainerNumber1 = newValue;
+
+            this.SetUIProperties_Containers();
+        }
+    }
+
+    get ContainerNumber2() { return this.EntityPM.ContainerNumber2; }
+    set ContainerNumber2(newValue: string) {
+        if (this.EntityPM.ContainerNumber2 != newValue) {
+            this.EntityPM.ContainerNumber2 = newValue;
+
+            this.SetUIProperties_Containers();
+        }
+    }
+
+    get ContainerNumber3() { return this.EntityPM.ContainerNumber3; }
+    set ContainerNumber3(newValue: string) {
+        if (this.EntityPM.ContainerNumber3 != newValue) {
+            this.EntityPM.ContainerNumber3 = newValue;
+
+            this.SetUIProperties_Containers();
+        }
+    }
+
+    get ContainerNumber4() { return this.EntityPM.ContainerNumber4; }
+    set ContainerNumber4(newValue: string) {
+        if (this.EntityPM.ContainerNumber4 != newValue) {
+            this.EntityPM.ContainerNumber4 = newValue;
+
+            this.SetUIProperties_Containers();
+        }
+    }
+
+    get Quantity1() { return this.EntityPM.Quantity1; }
+    set Quantity1(newValue: number) {
+        if (this.EntityPM.Quantity1 != newValue) {
+            this.EntityPM.Quantity1 = newValue;
+
+            this.SetUIProperties_Containers();
+        }
+    }
+
+
+    SetUIProperties_Containers() {
+
+        this.UIProperties.SetEnabled("PackageTypeId1", this.ObjectTableName, this.Quantity1 > 0);
+        this.UIProperties.SetEnabled("PackageTypeId2", this.ObjectTableName, this.Quantity2 > 0 );
+        this.UIProperties.SetEnabled("PackageTypeId3", this.ObjectTableName, this.Quantity3 > 0);
+        this.UIProperties.SetEnabled("PackageTypeId4", this.ObjectTableName, this.Quantity4 > 0);
+
+        if (AppTool.IsNullOrZero(this.Quantity1)) {
+            this.PackageTypeId1 = null;
+        }
+
+        if (AppTool.IsNullOrZero(this.Quantity2)) {
+            this.PackageTypeId2 = null;
+        }
+
+        if (AppTool.IsNullOrZero(this.Quantity3)) {
+            this.PackageTypeId3 = null;
+        }
+
+        if (AppTool.IsNullOrZero(this.Quantity4)) {
+            this.PackageTypeId4 = null;
+        }
+
+    }
+
+    get Quantity2() { return this.EntityPM.Quantity2; }
+    set Quantity2(newValue: number) {
+        if (this.EntityPM.Quantity2 != newValue) {
+            this.EntityPM.Quantity2 = newValue;
+
+            this.SetUIProperties_Containers();
+        }
+    }
+
+    get Quantity3() { return this.EntityPM.Quantity3; }
+    set Quantity3(newValue: number) {
+        if (this.EntityPM.Quantity3 != newValue) {
+            this.EntityPM.Quantity3 = newValue;
+
+            this.SetUIProperties_Containers();
+        }
+    }
+
+    get Quantity4() { return this.EntityPM.Quantity4; }
+    set Quantity4(newValue: number) {
+        if (this.EntityPM.Quantity4 != newValue) {
+            this.EntityPM.Quantity4 = newValue;
+
+            this.SetUIProperties_Containers();
+
+        }
+    }
+    public PackageTypeList1: PackageTypeList = null;
+    get PackageTypeId1() { return this.EntityPM.PackageTypeId1; }
+    set PackageTypeId1(newValue: string) {
+        if (this.EntityPM.PackageTypeId1 != newValue) {
+            this.EntityPM.PackageTypeId1 = newValue;
+        }
+    }
+
+    public PackageTypeList2: PackageTypeList = null;
+    get PackageTypeId2() { return this.EntityPM.PackageTypeId2; }
+    set PackageTypeId2(newValue: string) {
+        if (this.EntityPM.PackageTypeId2 != newValue) {
+            this.EntityPM.PackageTypeId2 = newValue;
+        }
+    }
+
+    public PackageTypeList3: PackageTypeList = null;
+    get PackageTypeId3() { return this.EntityPM.PackageTypeId3; }
+    set PackageTypeId3(newValue: string) {
+        if (this.EntityPM.PackageTypeId3 != newValue) {
+            this.EntityPM.PackageTypeId3 = newValue;
+        }
+    }
+
+    public PackageTypeList4: PackageTypeList = null;
+    get PackageTypeId4() { return this.EntityPM.PackageTypeId4; }
+    set PackageTypeId4(newValue: string) {
+        if (this.EntityPM.PackageTypeId4 != newValue) {
+            this.EntityPM.PackageTypeId4 = newValue;
+        }
+    }
 
     public get BranchId() { return this.EntityPM.BranchId }
     public set BranchId(newValue: string) { this.EntityPM.BranchId = newValue; }
@@ -406,15 +601,19 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
         if (this.DirectionId == 'C') {
             this.SaveChanges();
         } else { 
-            this.ValidateRequiredFields();
-
-            if (this.ValidationErrorsList.length == 0) { 
-                this.InitializeExportShipmentFields(); 
-            }
+            this.CreateExportShipment();
         }
 
     }
      
+    private CreateExportShipment() {
+        this.ValidateRequiredFields();
+
+        if (this.ValidationErrorsList.length == 0) {
+            this.InitializeExportShipmentFields();
+        }
+    }
+
     NextButtonClicked() {
         this.ShowAddDocument = !this.ShowAddDocument;
         this.SetChangeButtonTitle();
@@ -456,6 +655,7 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
     public set StatusId(newValue: string) { this.EntityPM.StatusId = newValue; }
 
     private InitializeExportShipmentFields() {
+
         this.CurrentSession.StartBusyIndicator("Creating...");
         this.EntityPM.MainCarriageFinalDestinationPortId = this.EntityPM.MainCarriageToPortId; 
         this.EntityPM.StatusDate = DateTool.GetCurrentDateTimeAsUtc();  
@@ -471,7 +671,7 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
         this.EntityPM.FreightPrepaidCollectId = "C";
         this.EntityPM.ShipmentLevelCode = "A";
         this.EntityPM.FromPortId = this.FromPort;
-
+        this.SetOrderPackagesOnFinish();
         this._EntityStatusListService.getAll().subscribe((myResult: any) => {
             if (!myResult.HasError) {
 
@@ -504,6 +704,37 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
 
     private ValidateRequiredFields() { 
 
+        if (this.TransportModeId == 'A') { 
+            this.ValidateAirExportShipmentFields();
+            return;
+        }
+        this.ValidateOceanExportShipmentFields();
+    }
+    ValidateOceanExportShipmentFields() {
+        if (!AppTool.IsNullOrEmpty(this.RequestedFlightDate)) {
+            this.ValidateRequestedFlightDate();
+        }
+        if (AppTool.IsNullOrEmpty(this.CustomerReference3)) {
+            this.PushErrorMessage("Order Number");
+        }
+
+        if (AppTool.IsNullOrEmpty(this.MainCarriageToPortId)) {
+            this.PushErrorMessage("Discharge Port");
+        }
+
+        if (AppTool.IsNullOrEmpty(this.MainCarriageFromPortId)) {
+            this.PushErrorMessage("Loading Port");
+        }
+
+        //this.ValidatBookingNumberOfPackagese();
+
+        //if (this.ValidateDocuments()) {
+        //    this.ValidationErrorsList.push("You should have at least one document shared with agent");
+        //}
+    }
+
+    private ValidateAirExportShipmentFields() {
+        // need to change validation message based on shipment type
         if (!AppTool.IsNullOrEmpty(this.RequestedFlightDate)) {
             this.ValidateRequestedFlightDate();
         }
@@ -512,17 +743,17 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
         }
 
         if (AppTool.IsNullOrEmpty(this.IncotermId)) {
-            this.PushErrorMessage("Incoterm");  
+            this.PushErrorMessage("Incoterm");
         }
 
         this.ValidatBookingNumberOfPackagese();
 
         if (AppTool.IsNullOrEmpty(this.OrderGrossWeight)) {
-            this.PushErrorMessage("Gross Weight (MT)");  
+            this.PushErrorMessage("Gross Weight (MT)");
         }
 
         if (AppTool.IsNullOrEmpty(this.MainCarriageToPortId)) {
-            this.PushErrorMessage("Destination");  
+            this.PushErrorMessage("Destination");
         }
 
         if (this.ValidateDocuments()) {
@@ -621,7 +852,11 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
 
     public get ConsigneeName() { return this.EntityPM.ConsigneeName }
     public set ConsigneeName(newValue: string) { this.EntityPM.ConsigneeName = newValue; }
-     
+
+    public get ShippingAgent() { return this.EntityPM.ShippingAgent  }
+    public set ShippingAgent(newValue: string) { this.EntityPM.ShippingAgent  = newValue; }
+
+
 
     get PrivateLabelInvoiceNumber() { return this.EntityPM.PrivateLabelInvoiceNumber; }
     set PrivateLabelInvoiceNumber(newValue: string) {
@@ -650,7 +885,35 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
         }
     }
 
-    MainCarriageFromPortId = null;
+    get MainCarriageFromPortId() { return this.EntityPM.MainCarriageFromPortId; }
+    set MainCarriageFromPortId(value: string) {
+        if (this.EntityPM.MainCarriageFromPortId != value) {
+            this.EntityPM.MainCarriageFromPortId = value;
+            this.EntityPM.FromPortId = value;
+
+            this.OnMainCarrigeFromPortChanged();
+        }
+    }
+    public FromPortList: PortList = null;
+
+    private OnMainCarrigeFromPortChanged() {
+       
+            //this.SetUIProperties_Ports();
+
+            if (AppTool.IsNullOrEmpty(this.MainCarriageFromPortId)) {
+                this.FromPortList = null;
+            }
+
+            else {
+                this.portListService.getSingle(this.MainCarriageFromPortId).subscribe((myResponse: ServiceResponse) => {
+                    if (!myResponse.HasError) {
+                        this.FromPortList = myResponse.Result;
+                    }
+                });
+            }
+       
+    }
+
     SetUIProperties_Ports() { 
         var isToRequired: boolean = false; 
         if (AppTool.IsNullOrEmpty(this.MainCarriageToPortId)) {

@@ -1147,7 +1147,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
     }
 
     private LoadNewAddShipmentComponent(newWindow: LogitudeWindow, newWindowComponentPath: string) {
-        newWindow.Width = this.isPrivateLabel ? 960 : 600;
+        newWindow.Width = this.isPrivateLabel ? 960 : 660;
         newWindow.Height = this.isPrivateLabel ? 600 : 350;
         newWindowComponentPath += this.isPrivateLabel ? 'AddPrivateLabelShipmentComponent' : 'AddEditImporterShipmentComponent';
         return newWindowComponentPath;

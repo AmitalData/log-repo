@@ -41,6 +41,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                                       Width = a.Width,
                                                                       VolumetricWeight = a.VolumetricWeight,
                                                                       ContainerTypeId = a.PackageTypeId,
+                                                                      ContainerNumber = a.ContainerNumber,
                                                                   }).ToList();
 
             foreach (ShipmentOrderPackagePM package in shipmentOrderPackages)
@@ -74,6 +75,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         Height = a.Height,
                         Width = a.Width,
                         VolumetricWeight = a.VolumetricWeight,
+                        ContainerNumber = a.ContainerNumber,
                     }).FirstOrDefault();
         }
     }

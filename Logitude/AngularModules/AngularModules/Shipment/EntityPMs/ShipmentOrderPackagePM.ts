@@ -108,6 +108,11 @@ export class ShipmentOrderPackagePM {
     public set ChangeSetOp(newValue: string) { if (this.changeSetOp != newValue) { this.changeSetOp = newValue; this.MarkAsDirty("ChangeSetOp"); } }
        
 	 
+    private containerNumber: string;
+    public get ContainerNumber() { return this.containerNumber; }
+    public set ContainerNumber(newValue: string) { if (this.containerNumber != newValue) { this.containerNumber = newValue; this.MarkAsDirty("ContainerNumber"); } }
+       
+	 
 
     public OldEntityPM: ShipmentOrderPackagePM;
 	    
