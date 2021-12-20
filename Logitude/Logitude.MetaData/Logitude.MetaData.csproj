@@ -1053,6 +1053,7 @@
     <None Include="DBTables\ShipmentsModel\OceanInsightsRequestsCount.dxml" />
     <None Include="DBTables\ShipmentsModel\OceanInsightsStatuses.dxml" />
     <None Include="DBTables\ShipmentsModel\OtherParticipantId.dxml" />
+    <None Include="DBTables\ShipmentsModel\PayableProratedAmount.dxml" />
     <None Include="DBTables\ShipmentsModel\PickUpDeliveryFromToType.dxml" />
     <None Include="DBTables\ShipmentsModel\PickUpDeliveryPackageHarmonize.dxml" />
     <None Include="DBTables\ShipmentsModel\PickUpDeliveryTransportMode.dxml" />
