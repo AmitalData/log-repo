@@ -277,7 +277,9 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     //.GetByAccountingEntityId(entityPM.Id, entityPM.Tenant);
                 //10  התאמה Adjustment
                 .GetByAccountingEntityIdAndAccountingEntityCode(entityPM.Id, "10", entityPM.Tenant);
-                if (journal != null && IsMonthOpenForAccountingDate(journal.AccountingDate, entityPM.Tenant))
+                if (journal != null && 
+                    (journal.StatusCode != ((int)JournalStatusTypePM.StatusCodeEnum.Voided).ToString())
+                    && IsMonthOpenForAccountingDate(journal.AccountingDate, entityPM.Tenant))
                 {
                     // Void it!
                     var tenant = entityPM.Tenant;

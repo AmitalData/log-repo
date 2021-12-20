@@ -234,5 +234,7 @@ export class ContainerList {
 		StatusWeight: number;
 		CancelledDate: Date;
 		IsCancelled: boolean;
+		ShipmentDeliveryTruckerId: string;
+		ShipmentDeliveryTruckerName: string;
 	
 }
