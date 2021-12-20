@@ -42,6 +42,13 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
                             showIsCancelled = true;
                         }
                     }
+
+                    if (item.FieldName == "Containers")
+                    {
+                       
+                        queryableData = queryableData.Where(d => !d.IsClosed && !d.IsCancelled);
+                    }
+   
                 }
             }
 

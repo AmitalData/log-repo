@@ -80,7 +80,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
    public class ContainerUpdateClass
    {  		
 
-		public const string HashString = "64ea4bc88a6c818715d3e011263291b0";
+
+		public const string HashString = "e9a926a07f04c8a1eec5b5db2e17b112";
+
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -13411,6 +13413,64 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
+					 						FieldName =  "Containers",
+					  						ObjectTableName =  "Container",
+					  						FieldsDataType =  "Constant",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  true,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  true,
+					  						Operator =  "Equals",
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "Containers",
+					  						ListPropertyPath =  "Containers",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Container",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "Containers",
+					  						DefaultText =  "Containers",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
 					 						FieldName =  "ShipmentDeliveryTruckerId",
 					  						ObjectTableName =  "Container",
 					  						FieldsDataType =  "LookUp",
@@ -13560,6 +13620,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 
 			   TextCode ContainerTextCode_2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Container.Q.CancelledContainers", DefaultText = @"Cancelled Containers",LocalDefaultText = null, ObjectTableId = ContainerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
 			   Feature ContainerFeature_2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Container.Q.CancelledContainers", ObjectTableId = ContainerObjectTable.Id, Tenant = 0, NameTextCodeCode = "ContainerFeatures.CancelledContainers", NameTextCodeDefaultText = "Cancelled Containers", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,ContainerObjectTable, addedFeatures, addedTextCodes);
+ 
+
+			   TextCode ContainerTextCode_3 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Container.Q.Containers", DefaultText = @"Containers",LocalDefaultText = "Containers", ObjectTableId = ContainerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature ContainerFeature_3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Container.Q.Containers", ObjectTableId = ContainerObjectTable.Id, Tenant = 0, NameTextCodeCode = "ContainerFeatures.Containers", NameTextCodeDefaultText = "Containers", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,ContainerObjectTable, addedFeatures, addedTextCodes);
 
 	        //TextCodeRepository.SubmitChanges();
 	        //FeaturesRepository.SubmitChanges();    
@@ -13617,6 +13681,23 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			 QueryColumn CancelledContainersQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledContainersQuery.Id,QueryCode = CancelledContainersQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Container.VesselName" , ColumnWidth = 120 }, addedQueryColumns);
 
              AdvancedQueryFilter CancelledContainersQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Container.IsCancelled", PredefinedValue = "True",PredefinedValue2 = null, QueryId = CancelledContainersQuery.Id,QueryCode = CancelledContainersQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+
+  
+	      
+
+			  Query ContainersQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ContainerTextCode_3.Id, NameTextCodeCode = ContainerTextCode_3.Code, ObjectTableName = "Container", Code = "Containers",  QueryGroupCode = "38cb", IndexOrder = 3, Tenant = 0, ObjectTableId = ContainerObjectTable.Id, QuerySection = "Container", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ContainerFeature_3.Id,FeatureUniqeCode= ContainerFeature_3.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
+	
+			 QueryColumn ContainersQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ContainersQuery.Id,QueryCode = ContainersQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Container.ContainerNumber" , ColumnWidth = 120 }, addedQueryColumns);
+
+			 QueryColumn ContainersQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ContainersQuery.Id,QueryCode = ContainersQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Container.CarrierName" , ColumnWidth = 120 }, addedQueryColumns);
+
+			 QueryColumn ContainersQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ContainersQuery.Id,QueryCode = ContainersQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Container.MainCarriageCarrierNumber" , ColumnWidth = 120 }, addedQueryColumns);
+
+			 QueryColumn ContainersQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ContainersQuery.Id,QueryCode = ContainersQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Container.Master" , ColumnWidth = 120 }, addedQueryColumns);
+
+			 QueryColumn ContainersQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ContainersQuery.Id,QueryCode = ContainersQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Container.VesselName" , ColumnWidth = 120 }, addedQueryColumns);
+
+             AdvancedQueryFilter ContainersQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Container.Containers", PredefinedValue = "true",PredefinedValue2 = null, QueryId = ContainersQuery.Id,QueryCode = ContainersQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
