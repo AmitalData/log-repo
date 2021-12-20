@@ -697,15 +697,20 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 }
 
                 _JornalPmSource.ChangeSetOp = ChangeSetOperation.Update;
-                if (_JornalPmSource.StatusCodeEnum == JournalStatusTypePM.StatusCodeEnum.Draft)
-                    _JornalPmSource.StatusCodeEnum = JournalStatusTypePM.StatusCodeEnum.Cancelled;
-                else
-                    _JornalPmSource.StatusCodeEnum = JournalStatusTypePM.StatusCodeEnum.Voided;
+                SetJournalStatusCodeBasedOnCurrentStatusCode();
                 this.Update(_JornalPmSource, true);
                 scope.Complete();
                 return _JornalPmSource;
             }
 
+        }
+
+        private void SetJournalStatusCodeBasedOnCurrentStatusCode()
+        {
+            if (_JornalPmSource.StatusCodeEnum == JournalStatusTypePM.StatusCodeEnum.Draft)
+                _JornalPmSource.StatusCodeEnum = JournalStatusTypePM.StatusCodeEnum.Cancelled;
+            else
+                _JornalPmSource.StatusCodeEnum = JournalStatusTypePM.StatusCodeEnum.Voided;
         }
 
         protected override void AfterUpdating(JournalPM entityPM, EntityPM entityParentPM)
