@@ -346,6 +346,10 @@ namespace WebFreight.Web.ReportsWebServices
                 {
                     dataProvider.OnCarriageCarrier = shipment.OnCarriageCarrierName;
                 }
+            }
+
+            if(shipment.OnCarriageToPortId != null)
+            {
                 this.MapOnCarriageToPort();
             }
         }
