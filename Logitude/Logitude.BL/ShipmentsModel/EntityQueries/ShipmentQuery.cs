@@ -14267,27 +14267,22 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                    {
                                                        ShipmentId = shipment.Id,
 
-                                                       PackagesNumberLabel = shipment.ShipmentType.Id == "FCLD" || shipment.ShipmentType.Id == "LCLD" ?
-
+                                                       PackagesNumberLabel =
                                                        shipmentPackages.Count() > 0 ?
                                                        shipmentPackages.Sum(p => p.Quantity).ToString() + " " + (shipmentPackages.Select(x => x.PackageTypeId).Distinct().Count() == 1 ?
                                                        (shipmentPackages.Select(x => x.PackageType).FirstOrDefault() != null ?
                                                        shipmentPackages.Select(x => x.PackageType).FirstOrDefault().EnglishName :
-                                                       (shipment.ShipmentType.Id == "FCLD" ? "Containers" : "Packages")) :
-                                                       (shipment.ShipmentType.Id == "FCLD" ? "Containers" : "Packages"))
+                                                       (shipment.ShipmentTypeId == "FCLD" || shipment.ShipmentTypeId == "FTL" ? "Containers" : "Packages")) :
+                                                       (shipment.ShipmentTypeId == "FCLD" || shipment.ShipmentTypeId == "FTL" ? "Containers" : "Packages"))
                                                        :
                                                        (shipmentOrderPackages.Count() > 0 ?
                                                        shipmentOrderPackages.Sum(p => p.Quantity).ToString() + " " + (shipmentOrderPackages.Select(x => x.PackageTypeId).Distinct().Count() == 1 ?
                                                        (shipmentOrderPackages.Select(x => x.PackageType).FirstOrDefault() != null ?
                                                        shipmentOrderPackages.Select(x => x.PackageType).FirstOrDefault().EnglishName :
-                                                       (shipment.ShipmentType.Id == "FCLD" ? "Containers" : "Packages")) :
-                                                       (shipment.ShipmentType.Id == "FCLD" ? "Containers" : "Packages"))
+                                                       (shipment.ShipmentTypeId == "FCLD" || shipment.ShipmentTypeId == "FTL" ? "Containers" : "Packages")) :
+                                                       (shipment.ShipmentTypeId == "FCLD" || shipment.ShipmentTypeId == "FTL" ? "Containers" : "Packages"))
                                                        :
                                                        null)
-                                                       :
-                                                       shipment.BookingNumberOfPackages.ToString() + " " + (shipmentOrderPackages.Select(x => x.PackageTypeId).Distinct().Count() == 1 ?
-                                                       (shipmentOrderPackages.Select(x => x.PackageType).FirstOrDefault() != null ?
-                                                       shipmentOrderPackages.Select(x => x.PackageType).FirstOrDefault().EnglishName : "Packages") : "Packages")
                                                    };
 
             return shipmentsOrderPackageFieldsQuery.ToList();
