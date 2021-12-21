@@ -144,7 +144,7 @@
             <li *ngIf="hasException" (click)="OnHasExceptionChanged(false)"> Exceptions Only
                 <span class="filter-close-btn">×</span>
             </li>
-            <li *ngIf="ordersOnly" (click)="OnOrdersOnlyChanged(false)"> Orders Only
+            <li *ngIf="ordersOnly" (click)="OnOrdersOnlyChanged(false)"> SHO Only
                 <span class="filter-close-btn">×</span>
             </li>
             <li *ngIf="estimatedArrivalOnly" (click)="OnEstimatedArrivalOnlyChanged(false)"> Estimated Arrival Only
@@ -602,7 +602,7 @@
                         <mat-slide-toggle color="primary" [(ngModel)]="hasExceptionAdvancedFilter" ></mat-slide-toggle>
                     </div>
                     <div class="flex-row-space-between">
-                        <label>Orders Only</label>
+                        <label>SHO Only</label>
                         <mat-slide-toggle color="primary" [(ngModel)]="OrdersOnlyAdvancedFilter" ></mat-slide-toggle>
                     </div>
                     <div class="flex-row-space-between">

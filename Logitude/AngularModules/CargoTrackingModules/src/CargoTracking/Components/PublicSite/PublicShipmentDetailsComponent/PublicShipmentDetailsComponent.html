@@ -38,7 +38,7 @@
         </div>
 
         <div class="field">
-            <div class="label" > {{ isShipmentOrder ? 'Order ID' : 'Shipment ID'}} </div>
+            <div class="label" > {{ isShipmentOrder ? 'SHO ID' : 'Shipment ID'}} </div>
             <div class="value">{{ Shipment.ShipmentNumber }}</div>
         </div>
 
@@ -84,8 +84,8 @@
 
     <div class="panel-container">
         <div class="tab-selector" *ngIf="isTabletView">
-            <div [class.active]="SelectedTab=='steps'" (click)="TabToggleClicked('steps')">{{ isShipmentOrder ? 'Order Milestones' : 'Shipment Milestones'}} </div>
-            <div [class.active]="SelectedTab=='details'" (click)="TabToggleClicked('details')">{{ isShipmentOrder ? 'Order Details' : 'Shipment Details'}} </div>
+            <div [class.active]="SelectedTab=='steps'" (click)="TabToggleClicked('steps')">{{ isShipmentOrder ? 'SHO Milestones' : 'Shipment Milestones'}} </div>
+            <div [class.active]="SelectedTab=='details'" (click)="TabToggleClicked('details')">{{ isShipmentOrder ? 'SHO Details' : 'Shipment Details'}} </div>
         </div>
 
         <div *ngIf="(isTabletView && SelectedTab=='steps') || !isTabletView" class="panel left">
@@ -256,7 +256,7 @@
             <div class="shipment-details">
 
                 <h2 class="hide-mobile hide-tablet" *ngIf="!isShipmentOrder">Shipment Details</h2>
-                <h2 class="hide-mobile hide-tablet" *ngIf="isShipmentOrder">Order Details</h2>
+                <h2 class="hide-mobile hide-tablet" *ngIf="isShipmentOrder">SHO Details</h2>
 
                 <div class="field">
                     <div class="label">{{ShipmentLabel}}</div>
