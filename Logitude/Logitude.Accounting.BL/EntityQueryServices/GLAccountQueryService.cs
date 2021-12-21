@@ -245,8 +245,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
         public IQueryable<string> GetAllIdAccountsTypeCat(int tenant, string GLAccountId, string cat1, string cat2, string cat3, string cat4, string cat5, string gLAccountType, string chartOfAccountsId, 
     bool IncludeChildAccounts,string ChartOfAccountsTypeCode, string salesmanId,bool includeControlAccount, bool useSecurityLevel )
         {
-            UserPM loggedUser = GetLoggedUser(tenant);
-            if (loggedUser.IsCustomerCare || !useSecurityLevel) loggedUser.SecurityLevel = null;
+            int? securityLevel = GetSecurityLevel(useSecurityLevel,tenant);
             // List<String> allIdAccounts = new List<string>() { GLAccountId };
             IQueryable<string> allIdAccounts = repository.GetQId(new List<string>() { GLAccountId }, tenant);
             if (!String.IsNullOrWhiteSpace(cat1) || !String.IsNullOrWhiteSpace(cat2) || !String.IsNullOrWhiteSpace(cat3) || !String.IsNullOrWhiteSpace(cat4)
@@ -255,14 +254,14 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                 || !String.IsNullOrWhiteSpace(salesmanId)
                 )
             {
-               
-                allIdAccounts = repository.GetQAccIdByAcountIdTypeCategories(tenant, GLAccountId, cat1, cat2, cat3, cat4, cat5, gLAccountType, chartOfAccountsId, ChartOfAccountsTypeCode, salesmanId, includeControlAccount, loggedUser.SecurityLevel);
-                 //   .ToList();
+
+                allIdAccounts = repository.GetQAccIdByAcountIdTypeCategories(tenant, GLAccountId, cat1, cat2, cat3, cat4, cat5, gLAccountType, chartOfAccountsId, ChartOfAccountsTypeCode, salesmanId, includeControlAccount, securityLevel);
+                //   .ToList();
             }
 
             if (IncludeChildAccounts && allIdAccounts != null && allIdAccounts.ToList().Count > 0)
             {
-                IQueryable<String> ChildAccounts = repository.GetChildAccountsQ(allIdAccounts, tenant, loggedUser.SecurityLevel)
+                IQueryable<String> ChildAccounts = repository.GetChildAccountsQ(allIdAccounts, tenant, securityLevel)
                 .Select(ca => ca.Id).AsQueryable<string>();//ToList();
                 allIdAccounts.Union(ChildAccounts);
             }
@@ -270,7 +269,15 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             return allIdAccounts;// new HashSet<string>(allIdAccounts);
         }
 
-      
+        private int? GetSecurityLevel(bool useSecurityLevel,int tenant)
+        {
+            UserPM loggedUser = GetLoggedUser(tenant);
+            if (loggedUser != null && (loggedUser.IsCustomerCare || !useSecurityLevel))
+                return loggedUser.SecurityLevel = null;
+            else
+                return null;
+        }
+
         public List<GLAccountAndMoreDTO> GetCurrentBalanceByType(int tenant)
         {
             var fullPM=FullAccountingSettingQueryService.Get(tenant);
@@ -423,6 +430,12 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                 ContactPM loggedContact = LoggedContactResolver.GetLoggedContact(tenant);
                 loggedUser = userQuery.GetSinglePM(loggedContact.Id, tenant);
             }
+
+            if(loggedUser == null)
+            {
+                loggedUser = userQuery.GetSinglePMByEmail(AuthenticationUtil.AuthenticatedUserEmail, 0);
+            }
+
             return loggedUser;
         }
 
