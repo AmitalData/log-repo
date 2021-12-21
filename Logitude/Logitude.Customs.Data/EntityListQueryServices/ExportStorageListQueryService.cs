@@ -21,68 +21,83 @@ namespace Logitude.Customs.Data.EntityListQueryServices
     {
         private IQueryable<ExportStorageList> GetIqueryableList(IQueryable<ExportStorage> iQueryable)
         {
+            IQueryable<ExportStorageList> query = (from en in iQueryable
+                                                   
+                                                   join declaration in context.Declarations.Select(r => new { r.Id, r.DeclarationStatusTypeCode })
+                                                   on en.DeclarationId equals declaration.Id
+                                                   join status in context.DeclarationStatusTypes.Select(r => new { r.Code, r.LocalName })
+                                                   on declaration.DeclarationStatusTypeCode equals status.Code
 
-           
+                                                   join cargoType in context.CargoTypes.Select(r => new { r.Code, r.LocalName})
+                                                   on en.CargoType equals cargoType.Code
 
-            IQueryable<ExportStorageList> query = (from a in iQueryable
-                                                    //DeclarationStatusTypeName = (
-                                                    //    from status in context.DeclarationStatusTypes
-                                                    //    where status.Code == (from Declaration in context.Declarations where Declaration.Id == a.DeclarationId select Declaration).FirstOrDefault().DeclarationStatusTypeCode
-                                                    //    select status
-                                                    //   ).FirstOrDefault().LocalName,
-                                                    join d in context.Declarations.Select( r=> new { r.Id,r.DeclarationStatusTypeCode })
-                                                    on a.DeclarationId  equals d.Id
-                                                    join s in context.DeclarationStatusTypes
-                                                    on d.DeclarationStatusTypeCode  equals s.Code
+                                                   join storageStatus in context.StorageStatuses.Select( r=> new {r.Code, r.LocalName})
+                                                   on en.StorageStatus equals storageStatus.Code
 
+                                                   join card in context.Cards.Select( r=> new {r.Id, r.LocalName})
+                                                   on en.ExporterID equals card.Id
+
+                                                   join customsShip in context.CustomsShips.Select( r=> new {r.Code, r.LocalName})
+                                                   on en.ShipCode equals customsShip.Code
+
+                                                   join cargoIdentifireType in context.CargoIdentifireTypes.Select(r=> new{ r.Code, r.LocalName})
+                                                   on en.CargoType equals cargoIdentifireType.Code
 
                                                    select new ExportStorageList()
                                                    {
+                                                       Id = en.Id,
 
-                                                       Id = a.Id,
+                                                       Tenant = en.Tenant,
 
-                                                       Tenant = a.Tenant,
+                                                       SearchFields = en.SearchFields,
 
-                                                       SearchFields = a.SearchFields,
+                                                       DeclarationId = en.DeclarationId,
 
-                                                       DeclarationId = a.DeclarationId,
+                                                       ExportFileNo = en.ExportFileNo,
 
-                                                       ExportFileNo = a.ExportFileNo,
+                                                       StorageStatus = en.StorageStatus,
 
-                                                       //StorageNo = a.StorageNo,
+                                                       CargoTypeCode = en.CargoTypeCode,
 
-                                                       StorageStatus = a.StorageStatus,
+                                                       OpenDate = en.OpenDate,
 
-                                                       CargoTypeCode = a.CargoTypeCode,
-                                                       
-                                                       OpenDate = a.OpenDate,
+                                                       CargoType = en.CargoType,
 
-                                                       CargoType = a.CargoType,
+                                                       CustomsStatus = en.CustomsStatus,
 
-                                                       CustomsStatus = a.CustomsStatus,
+                                                       ExporterID = en.ExporterID,
 
-                                                       ExporterID = a.ExporterID,
-                                                       
-                                                       ShipCode = a.ShipCode,
+                                                       ShipCode = en.ShipCode,
 
-                                                       FirstCargoID = a.FirstCargoID,
+                                                       FirstCargoID = en.FirstCargoID,
 
-                                                       SecondCargoID = a.SecondCargoID,
+                                                       SecondCargoID = en.SecondCargoID,
 
-                                                       ThirdCargoID = a.ThirdCargoID,
+                                                       ThirdCargoID = en.ThirdCargoID,
 
-                                                       //ExportDealIdentification = a.ExportDealIdentification,
-
-                                                       DeclarationStatusTypeName = s.LocalName
+                                                       DeclarationStatusTypeName = status.LocalName,
+                                                       //DeclarationStatusTypeName = 
                                                        //(
                                                        // from status in context.DeclarationStatusTypes
-                                                       // where status.Code == (from Declaration in context.Declarations where Declaration.Id == a.DeclarationId select Declaration).FirstOrDefault().DeclarationStatusTypeCode
-                                                       // select status
+                                                       // where status.Code == (from Declaration in context.Declarations where Declaration.Id == en.DeclarationId select new { Declaration.DeclarationStatusTypeCode }).FirstOrDefault().DeclarationStatusTypeCode
+                                                       // select new  { status.LocalName }
                                                        //).FirstOrDefault().LocalName,
+                                                       
+                                                       CargoTypeName = cargoType.LocalName,
 
+                                                       StorageStatusName = storageStatus.LocalName,
 
+                                                       ExporterName = card.LocalName,
 
+                                                       ShipName = customsShip.LocalName,
 
+                                                       StorErrorXML = en.StorErrorXML,
+
+                                                       StorageNo = en.StorageNo,
+
+                                                       ExportDealIdentification = en.ExportDealIdentification,
+
+                                                       CargoTypeCodeName = cargoIdentifireType.LocalName,
                                                    });
             return query;
         }
