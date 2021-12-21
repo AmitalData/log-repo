@@ -2245,6 +2245,7 @@ export function AssertOpenMoveType() {
 
 export function UpdateMoveType() {
     DefinePutMoveTypeRequest()
+    
     cy.Click(MaintenanceSelectors.MoveTypeSaveButton, null)
 }
 function DefinePutMoveTypeRequest() {

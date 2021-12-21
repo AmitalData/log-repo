@@ -26,8 +26,9 @@ Feature: Move Type Create and Edit it in Maintenance Module
 
     Scenario: Edit the move type
         Given fill move type local name
+        And make move type inactivate
         When update move type
         Then the move type should update successfully
         And the following event should appear in events tab
-            | Event             |
-            | Move Type Updated |
+            | Event             | Notes                 |
+            | Move Type Updated | Move Type Inactivated |
