@@ -57,9 +57,10 @@
                                     <div *ngIf="IsContainersToggleFeatureUp" class="QueriesSection">
                                         <div>Containers Views</div>
                                         <div>
-                                            <p attr.data-cy="{{'ContainersView' | IdGeneratorPipe}}" class="QueryLink" (click)="ViewQuery('All Containers')" *ngIf="IsQueryVisible_AllContainers">{{'Container.Q.AllContainers' | TextCodeTranslationPipe}}</p>
+                                            <p attr.data-cy="{{'ContainersView' | IdGeneratorPipe}}" class="QueryLink" (click)="ViewQuery('Containers')" *ngIf="IsQueryVisible_Containers">{{'Container.Q.Containers' | TextCodeTranslationPipe}} ({{ContainersCount}})</p>
                                             <p attr.data-cy="{{'ClosedContainersView' | IdGeneratorPipe}}" class="QueryLink" (click)="ViewQuery('Closed Containers')" *ngIf="IsQueryVisible_ClosedContainers">{{'Container.Q.ClosedContainers' | TextCodeTranslationPipe}}</p>
-
+                                            <p attr.data-cy="{{'CancelledContainersView' | IdGeneratorPipe}}" class="QueryLink" (click)="ViewQuery('Cancelled Containers')" *ngIf="IsQueryVisible_CancelledContainers">{{'Container.Q.CancelledContainers' | TextCodeTranslationPipe}}</p>
+                                            <p attr.data-cy="{{'AllContainersView' | IdGeneratorPipe}}" class="QueryLink" (click)="ViewQuery('All Containers')" *ngIf="IsQueryVisible_AllContainers">{{'Container.Q.AllContainers' | TextCodeTranslationPipe}}</p>
                                         </div>
                                     </div>
 
