@@ -130,23 +130,6 @@ export class UserDashboardComponent implements AfterViewInit, OnInit
         }
     }
 
-    private GetCompanyLoginsFromCache()
-    {
-        SessionInfo.LoggedUserCompanyLogins = JSON.parse(sessionStorage.getItem("LoggedUserCompanyLogins"));
-        console.log("[LoggedUserCompanyLogins]", SessionInfo.LoggedUserCompanyLogins);
-        this.GetInvitedCustomers();
-    }
-
-    private GetInvitedCustomers()
-    {
-        this.ConnectedCustomers = SessionInfo.LoggedUserCompanyLogins
-            .filter(d => d.CardType == 'CS' && d.CardId != null && d.Tenant == this.tenant)
-            .map(d => d.CardId);
-        console.log("[Invited Customers]", this.ConnectedCustomers);
-    }
-
-
-
     private Authenticate()
     {
         let token = sessionStorage.getItem("Token");
