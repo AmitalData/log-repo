@@ -17,7 +17,6 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string ShipmentId { get; set; }
         public string PayableId { get; set; }
         public string InvoiceId { get; set; }
-        public string InvoiceLineId { get; set; }
         public double? ProratedAmountInLocalCurrency { get; set; }
         public double? ProratedAmountInProfitCurrency { get; set; }
 
@@ -26,9 +25,6 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
 
         [ForeignKey("PayableId")]
         public virtual ShipmentPayable ShipmentPayable { get; set; }
-
-        [ForeignKey("InvoiceLineId")]
-        public virtual APInvoiceLine APInvoiceLine { get; set; }
 
         [ForeignKey("InvoiceId")]
         public virtual APInvoice APInvoice { get; set; }

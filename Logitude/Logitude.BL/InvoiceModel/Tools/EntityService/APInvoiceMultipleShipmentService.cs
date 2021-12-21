@@ -752,7 +752,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 foreach (APInvoiceEntity invoiceEntity in allInvoiceEntities)
                 {
                     invoiceEntityRepository.Remove(invoiceEntity);
-                    this.RunShipmentSQL(invoiceEntity.EntityId);
+                    this.RunShipmentSQL(invoiceEntity.EntityId, invoiceEntity.APInvoiceId);
                 }
             }
 
@@ -855,7 +855,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                                 }
 
                                 this.UpdateAllPayablesAccountedAmount(allPayables.Where(d=>d.ShipmentId == item.ShipmentId).ToList());
-                                this.RunShipmentSQL(item.ShipmentId);
+                                this.RunShipmentSQL(item.ShipmentId, item.APInvoiceId);
                                 break;
                             }
                     }
@@ -963,9 +963,9 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 entity.ShipmentPayableLineStatusCode = "PACC";
             }
         }
-        private void RunShipmentSQL(string myShipmentId)
+        private void RunShipmentSQL(string myShipmentId, string invoiceId)
         {
-            UpdateShipmentProfitClass.UpdatePayables(myShipmentId, tenant,true);
+            UpdateShipmentProfitClass.UpdatePayables(myShipmentId, tenant,true, invoiceId);
             UpdateShipmentProfitClass.UpdateProfit(myShipmentId, tenant);
         }
         #endregion
@@ -1321,7 +1321,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             {
                 if (entityPM.MainEntityId != null)
                 {
-                    UpdateShipmentProfitClass.UpdatePayables(entityPM.MainEntityId, tenant,true);
+                    UpdateShipmentProfitClass.UpdatePayables(entityPM.MainEntityId, tenant,true, entityPM.Id);
                     UpdateShipmentProfitClass.UpdateProfit(entityPM.MainEntityId, tenant);
                 }
             }

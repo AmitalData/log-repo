@@ -1973,7 +1973,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             {
                 if (entityPM.MainEntityId != null)
                 {
-                    UpdateShipmentProfitClass.UpdatePayables(entityPM.MainEntityId, tenant, true);
+                    UpdateShipmentProfitClass.UpdatePayables(entityPM.MainEntityId, tenant, true, entityPM.Id);
                     UpdateShipmentProfitClass.UpdateProfit(entityPM.MainEntityId, tenant);
                 }
             }

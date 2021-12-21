@@ -33,13 +33,6 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="InvoiceLineId"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
     Name="PayableId"
     Type="varchar"
     Size="15">
@@ -67,11 +60,6 @@
     ForeignKeyColumn="InvoiceId"
     ReferencedTable="APInvoices"
     ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
-  <Relation
-    ForeignKeyColumn="InvoiceLineId"
-    ReferencedTable="APInvoiceLines"
-    ReferencedColumn="APInvoiceId,LineNumber"
     ReferencedTableSchema="dbo" />
   <Relation
     ForeignKeyColumn="PayableId"
