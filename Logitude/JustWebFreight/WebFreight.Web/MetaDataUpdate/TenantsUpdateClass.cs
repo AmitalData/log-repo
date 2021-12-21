@@ -382,6 +382,13 @@ namespace WebFreight.Web.MetaDataUpdate
 
                             break;
                         }
+                    case "fixmodifiedsystemreportstemplates":
+                        {
+                            ReportHelper reportHelper = new ReportHelper();
+                            reportHelper.CopyModifiedSystemReportsTemplates();
+
+                            break;
+                        }
                     case "encryptiondocument":
                         {
                             DocumentHelper documentHelper = new DocumentHelper();

@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class ReportsTemplateUpdateClass
    {  		
-		public const string HashString = "993f9db09295e54f4ba969088fcabfbc";
+		public const string HashString = "208e5fb4574af064313fd97d2eb59e45";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -119,7 +119,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Reports Template",
-			      				    Code =  "d3ba",
+			      				    Code =  "18f4",
 			      				    Name =  "ReportsTemplate",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Common",

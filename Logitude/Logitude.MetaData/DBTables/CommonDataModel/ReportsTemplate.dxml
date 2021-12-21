@@ -112,6 +112,12 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="IsSystemReportFixed"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
   <Relation
     ForeignKeyColumn="ReportId"
     ReferencedTable="Reports"

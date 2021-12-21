@@ -3,6 +3,7 @@ using HtmlAgilityPack;
 using Logitude.BL.CommonDataModel.EntityLists;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.CommonDataModel.ExternalService;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.QueueService;
@@ -450,6 +451,11 @@ namespace WebFreight.Web.Helpers
             return reportsTemplate;
         }
 
+        public void CopyModifiedSystemReportsTemplates()
+        {
+            ReportExtendedService reportExtendedService = new ReportExtendedService();
+            reportExtendedService.CopyModifiedSystemReportsTemplates();
+        }
         public ReportsTemplatesVersion RestoreReportsTemplatesVersion(string reportsTemplatesVersionId, string userId, int tenant)
         {
             ReportsTemplatesVersion reportsTemplatesVersion = null;

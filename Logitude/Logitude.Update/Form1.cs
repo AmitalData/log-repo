@@ -5041,6 +5041,13 @@ User/Pass",
             FutureOpenChequesBatch FutureOpenChequesBatch = new FutureOpenChequesBatch();
             FutureOpenChequesBatch.SetTotalFutureOpenChequesInLocalCurrency();
         }
+
+        private void FixModifiedSystemReportsTemplates_Click(object sender, EventArgs e)
+        {
+            Thread thread = new Thread(() => UpdateModule(0, "FixModifiedSystemReportsTemplates", lblFixModSysReports));
+            thread.IsBackground = true;
+            thread.Start();
+        }
     }
     public class TimeZoneExcelItem
     {
