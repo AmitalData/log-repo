@@ -53,6 +53,8 @@ export class PhysicalCheckList {
 	CheckAuthorityAttenderTypeName: string;
 	CheckAnwserStatus: number;
 	MyCloseCheckBox: boolean;
+	TransportModeId: string;
+	Direction: string;
 	
 }
  

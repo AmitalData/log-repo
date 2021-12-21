@@ -661,9 +661,9 @@ export class ListComponent implements OnInit, AfterViewInit {
     //   }
         this.Listen();
         //this.CD.detectChanges();
-        if (this.ObjectTableName == "Customs.DeclarationReferantData" || this.ObjectTableName == "Customs.DeclarationCargoSplit") {
+        if(this.ObjectTable.ClientModuleName=="Customs"){
             this.HasCustomsFilterMenu = true;
-        }
+          }
          if (this.ObjectTableName == "Customs.PhysicalCheck") {
             this.IsPhysicalCheckObjectTable = true;
         }
@@ -894,12 +894,17 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                             if (myObjectTableName.startsWith(this.ObjectTable.ClientModuleName + '.')) {
                                 myObjectTableName = myObjectTableName.substr((this.ObjectTable.ClientModuleName + '.').length)
                             }
-                            let isCustomsObjectTableWith=(myObjectTableName == "DeclarationCargoSplit" || myObjectTableName == "DeclarationReferantData")?true:false;
+                            debugger;
+                            let isCustomsObjectTableWith=false;
+                            if(this.ObjectTable.ClientModuleName=="Customs"){
+                              isCustomsObjectTableWith=true
+                            }
                             var myComponentPath = "./" + this.ObjectTable.ClientModuleName + "/Components/FiltersMenu/" + /*this.ObjectTable.Name*/myObjectTableName + "FiltersMenuComponent";
                             if (isCustomsObjectTableWith) {
                                 myComponentPath = "./CustomsModules";
                                 myComponentPath=(myObjectTableName == "DeclarationReferantData")?myComponentPath+="/CustomsReferant":myComponentPath;
                                 myComponentPath=(myObjectTableName == "DeclarationCargoSplit")?myComponentPath+="/CustomsDeclarationCargoSplit":myComponentPath;
+                                myComponentPath=(myObjectTableName == "PhysicalCheck")?myComponentPath+="/CustomsPhysicalCheck":myComponentPath;
                                 myComponentPath+="/Components/FiltersMenu/" + /*this.ObjectTable.Name*/myObjectTableName + "FiltersMenuComponent";
                             }
 

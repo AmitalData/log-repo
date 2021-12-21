@@ -71,6 +71,8 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                                 VehicleChassisNumber = a.VehicleChassisNumber,
                                                                 CustomerId = a.CustomerId,
                                                                 NoEscortRequired=a.NoEscortRequired,
+                                                                Direction= s.Direction,
+                                                                TransportModeId= s.TransportModeId,
 
                                                             });
         
