@@ -47,17 +47,17 @@
                                 src="assets/icons/price-check/note.png">
                             <img *ngIf='offer.Result.Summary.IsSaleAllIn || offer.Result.Summary.IsCostAllIn'
                                 class="icon" src="assets/icons/price-check/all_in.png" pTooltip="All in"
-                                tooltipPosition='left'>
+                                tooltipPosition='top' tooltipStyleClass='price-check-tooltip-icons'>
                             <div *ngIf='offer.Result.Summary.Frequency' class="icon-wrapper"
-                                pTooltip="Frequency per week" tooltipPosition='left'
-                                tooltipStyleClass='price-check-tooltip-frequency'>
+                                pTooltip="Frequency per week" tooltipPosition='top'
+                                tooltipStyleClass='price-check-tooltip-icons price-check-tooltip-frequency'>
                                 <img class="icon" src="assets/icons/price-check/calendar.png">
                                 <div class='icon-number-in'>{{offer.Result.Summary.Frequency}}
                                 </div>
                             </div>
                             <div *ngIf='offer.Result.Summary.TransitTime' class="icon-wrapper"
-                                pTooltip="Transit Time (Days)" tooltipPosition='left'
-                                tooltipStyleClass='price-check-tooltip-transit'>
+                                pTooltip="Transit Time (Days)" tooltipPosition='top'
+                                tooltipStyleClass='price-check-tooltip-icons price-check-tooltip-transit'>
                                 <img class="icon" src="assets/icons/price-check/time.png">
                                 <div class='icon-number-in'>{{offer.Result.Summary.TransitTime}}
                                 </div>
