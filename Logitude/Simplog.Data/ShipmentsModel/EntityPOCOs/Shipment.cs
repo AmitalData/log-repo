@@ -720,7 +720,7 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string DestinationWarehouseId { get; set; }
         [ForeignKey("DestinationWarehouseId")]
         public virtual Card DestinationWarehouseCard { get; set; }
-
+        public string PrivateLabelAgentName { get; set; }
 
     }
 }

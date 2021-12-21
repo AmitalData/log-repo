@@ -583,6 +583,7 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public bool HasUnassignedData { get; set; }
         public string DestinationWarehouseId { get; set; }
         public string DestinationWarehouseName { get; set; }
+        public string PrivateLabelAgentName { get; set; }
 
     }
 }

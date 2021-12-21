@@ -765,5 +765,6 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string OperationalStatusName { get; set; }
         public string DestinationWarehouseId { get; set; }
         public string DestinationWarehouseName { get; set; }
+        public string PrivateLabelAgentName { get; set; }
     }
 }
