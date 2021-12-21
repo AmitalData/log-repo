@@ -1026,9 +1026,9 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             MethodHelper.AddToSearchFields(ref mySearchFields, paymentPM.AccountingPaymentMethodCode);
             MethodHelper.AddToSearchFields(ref mySearchFields, paymentPM.PrintNotes);
             
-            if (paymentPM.AccountingPaymentMethodCode == BankTransferARPaymentAccountingMethod && paymentPM.ARPaymentBankTranfers.Count() == 0)
+            if (paymentPM.AccountingPaymentMethodCode == BankTransferARPaymentAccountingMethod && paymentPM.ARPaymentBankTranfers != null && paymentPM.ARPaymentBankTranfers.Count() == 0)
                 MethodHelper.AddToSearchFields(ref mySearchFields, paymentPM.ChequeOrPaymentRef);
-            else if (paymentPM.ARPaymentBankTranfers.Count() > 0)
+            else if (paymentPM.ARPaymentBankTranfers != null && paymentPM.ARPaymentBankTranfers.Count() > 0)
             {
                 var bankTransfersReferences = String.Join(",", paymentPM.ARPaymentBankTranfers.Select(x => x.PaymentRef));
                 MethodHelper.AddToSearchFields(ref mySearchFields, bankTransfersReferences);

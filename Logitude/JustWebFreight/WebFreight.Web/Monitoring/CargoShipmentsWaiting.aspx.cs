@@ -11,7 +11,7 @@ namespace WebFreight.Web.Monitoring
 {
     public partial class CargoShipmentsWaiting : System.Web.UI.Page
     {
-        int MaxShipmentsWaiting = 50;
+        int MaxShipmentsWaiting = 20000;
         protected void Page_Load(object sender, EventArgs e)
         {
             Response.Clear();
