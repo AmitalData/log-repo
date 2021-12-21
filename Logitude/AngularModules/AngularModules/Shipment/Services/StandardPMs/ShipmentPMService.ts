@@ -61,6 +61,7 @@ export class ShipmentPMService {
                 var entity: ShipmentPM;
                 if (pm) {
                     entity = this.MapJsonToEntityPM(pm);
+                    ShipmentPMInitService.ApplyUIPoperties(entity, false);
                 }
                // ServiceLocator.RulesValidator.ApplyAllEntityStaticRules(entity, "Shipment");
                 var pmresponse: ServiceResponse;
@@ -436,7 +437,7 @@ export class ShipmentPMService {
         entityPM = new ShipmentPM();
         entityPM.Tenant = InfraSettings.TenantPM.Id;
         ShipmentPMInitService.InitValues(entityPM, true);
-
+        ShipmentPMInitService.ApplyUIPoperties(entityPM, false);
         return entityPM;
     }    
     clone(jsonPM: any) {
