@@ -70,8 +70,6 @@ Given("inactive the user", () => {
 });
 
 Then("the following event should appear in events tab", (dataTable) => {
-    cy.Click(UsersSelectors.EventsTab, null)
-    cy.Click(BaseSelectors.RefreshImg + BaseSelectors.LastElement, null, true);
     let eventDetailsList = Assists.CreateSet<EventTypeDetails>(dataTable);
     BaseActions.ValidateEventsTab(eventDetailsList, UsersSelectors.EventsTab);
 });
