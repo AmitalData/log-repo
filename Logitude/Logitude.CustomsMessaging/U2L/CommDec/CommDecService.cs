@@ -1164,51 +1164,55 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
 
                                 myCourierDeclarationUpdateService.Update(_CourierDeclarationPMPMDiferentMaster, true);
 
-                                
 
-                                CustomsRequestsSheetQueryService customsRequestsSheetQueryService = new CustomsRequestsSheetQueryService(_context);
-                                List<CustomsRequestsSheetPM> customsRequestsSheetPMList = customsRequestsSheetQueryService.GetRequestInProgress(_tenant, "UCUDO", "", "", null, null, _CourierDeclarationPMPMDiferentMaster.CourierMasterId, true);
-
-                                if (customsRequestsSheetPMList == null || customsRequestsSheetPMList.Count == 0)
+                                if (false)
                                 {
-                                    AppendLogLine("open UCUDO  ??");
 
-                                    string GeneralKey = GetGeneralLockKey(_CourierDeclarationPMPMDiferentMaster.CourierMasterId);
-                                    var concurrentKiller = new ConcurrentKiller();
-                                    concurrentKiller.FreeLockIfCreated15MinOld(GeneralKey, _CourierDeclarationPMPMDiferentMaster.Tenant);
-                                    bool haveUCUDOInProgress = false;
-                                    try
-                                    {
-                                        concurrentKiller.LockOrCrashOnCommitDueUnique(GeneralKey, _CourierDeclarationPMPMDiferentMaster.Tenant);
-                                        haveUCUDOInProgress = false;
-                                        AppendLogLine("UCUDO:concurrentKiller: Ok");
-                                    }
-                                    catch (Exception)
-                                    {
-                                        AppendLogLine("UCUDO:concurrentKiller:Have in the middle in the last 15 min- not open  UCUDO");
-                                        haveUCUDOInProgress = true;
-                                    }
 
-                                    // customsRequestsSheetPMList = customsRequestsSheetQueryService.GetRequestInProgress(_tenant, "UCUW2L", "", "", null, null, _CourierDeclarationPMPMDiferentMaster.CourierMasterId, true);
-                                    //customsRequestsSheetPMList = customsRequestsSheetPMList.Where(x => x.Id != _PBId).ToList();
-                                    //  if (customsRequestsSheetPMList == null || customsRequestsSheetPMList.Count == 0)
-                                    //  {
-                                    if (!haveUCUDOInProgress)
+                                    CustomsRequestsSheetQueryService customsRequestsSheetQueryService = new CustomsRequestsSheetQueryService(_context);
+                                    List<CustomsRequestsSheetPM> customsRequestsSheetPMList = customsRequestsSheetQueryService.GetRequestInProgress(_tenant, "UCUDO", "", "", null, null, _CourierDeclarationPMPMDiferentMaster.CourierMasterId, true);
+
+                                    if (customsRequestsSheetPMList == null || customsRequestsSheetPMList.Count == 0)
                                     {
-                                        var messagingService = new DCAInUCUDO_UpdateOpenDeclarationsMessagingService();
-                                        UpdateOpenDeclarationsRequestParams requestParams2 = new UpdateOpenDeclarationsRequestParams()
+                                        AppendLogLine("open UCUDO  ??");
+
+                                        string GeneralKey = GetGeneralLockKey(_CourierDeclarationPMPMDiferentMaster.CourierMasterId);
+                                        var concurrentKiller = new ConcurrentKiller();
+                                        concurrentKiller.FreeLockIfCreated15MinOld(GeneralKey, _CourierDeclarationPMPMDiferentMaster.Tenant);
+                                        bool haveUCUDOInProgress = false;
+                                        try
                                         {
+                                            concurrentKiller.LockOrCrashOnCommitDueUnique(GeneralKey, _CourierDeclarationPMPMDiferentMaster.Tenant);
+                                            haveUCUDOInProgress = false;
+                                            AppendLogLine("UCUDO:concurrentKiller: Ok");
+                                        }
+                                        catch (Exception)
+                                        {
+                                            AppendLogLine("UCUDO:concurrentKiller:Have in the middle in the last 15 min- not open  UCUDO");
+                                            haveUCUDOInProgress = true;
+                                        }
 
-                                            LoggingUserId = Curruser,
-                                            Tenant = _tenant,
-                                            LoggingEntityId = _CourierDeclarationPMPMDiferentMaster.CourierMasterId,
+                                        // customsRequestsSheetPMList = customsRequestsSheetQueryService.GetRequestInProgress(_tenant, "UCUW2L", "", "", null, null, _CourierDeclarationPMPMDiferentMaster.CourierMasterId, true);
+                                        //customsRequestsSheetPMList = customsRequestsSheetPMList.Where(x => x.Id != _PBId).ToList();
+                                        //  if (customsRequestsSheetPMList == null || customsRequestsSheetPMList.Count == 0)
+                                        //  {
+                                        if (!haveUCUDOInProgress)
+                                        {
+                                            var messagingService = new DCAInUCUDO_UpdateOpenDeclarationsMessagingService();
+                                            UpdateOpenDeclarationsRequestParams requestParams2 = new UpdateOpenDeclarationsRequestParams()
+                                            {
 
-                                        };
+                                                LoggingUserId = Curruser,
+                                                Tenant = _tenant,
+                                                LoggingEntityId = _CourierDeclarationPMPMDiferentMaster.CourierMasterId,
 
-                                        string message = messagingService.CreateCRS(_tenant, Curruser, requestParams2);
+                                            };
 
+                                            string message = messagingService.CreateCRS(_tenant, Curruser, requestParams2);
+
+                                        }
+                                        //}
                                     }
-                                    //}
                                 }
                             }
                             catch (DbEntityValidationException ex)
