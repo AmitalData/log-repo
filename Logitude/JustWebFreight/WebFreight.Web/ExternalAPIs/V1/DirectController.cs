@@ -271,7 +271,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
             {
                 try
                 {
-                    return Request.CreateResponse(HttpStatusCode.OK, this.CreateDirectShipmentPatchUpdateResponse(id, directPatchEntity));
+                    return Request.CreateResponse(HttpStatusCode.OK, this.UpdateDirectShipmentByPatchUpdate(id, directPatchEntity));
                 }
                 catch (Exception ex)
                 {
@@ -287,7 +287,8 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 return Request.CreateResponse(apiExceptionResult.StatusCode, apiExceptionResult.Exception);
             }
         }
-        private Direct CreateDirectShipmentPatchUpdateResponse(string id, JsonPatchDocument<Direct> directPatchEntity)
+
+        private Direct UpdateDirectShipmentByPatchUpdate(string id, JsonPatchDocument<Direct> directPatchEntity)
         {
             string token = HttpContext.Current.Request.Headers["Token"];
             AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
@@ -297,7 +298,6 @@ namespace WebFreight.Web.ExternalAPIs.V1
 
             return this.UpdateDirectShipment(directShipment,authToken.Tenant);
         }
-
         private Direct UpdateDirectShipment(Direct entity,int tenant)
         {
             string computingPartnerCode = "";
@@ -381,7 +381,6 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 throw new ApplicationException("Update is not allowed");
             }
         }
-
         private void UpdateRoutingPartnersAddresses(ShipmentPM entityPM)
         {
             if (entityPM.InlandDomesticFromTypeCode == "PART" && !string.IsNullOrEmpty(entityPM.MainCarriageFromPartnerId))
