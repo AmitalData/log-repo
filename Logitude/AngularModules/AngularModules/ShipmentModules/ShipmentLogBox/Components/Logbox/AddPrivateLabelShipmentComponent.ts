@@ -97,30 +97,8 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
 
         }
     }
-
-    SetFieldsLabel() {
-
-        if (this.EntityPM.TransportModeId == "A") {
-            this.SetAirExportLabels();
-        }
-        if (this.EntityPM.TransportModeId == "O") {
-            this.SetOceanExportLabels();
-        }
-
-        
-        this.SetPortsLabel();
-    }
+     
  
-
-    private SetOceanExportLabels() {
-        this.Order = "Order Number";
-        this.RequestedDateLabel = "Expected Sealing Date";
-    }
-
-    private SetAirExportLabels() {
-        this.Order = "Reference";
-        this.RequestedDateLabel = "Requested Flight Date";
-    }
 
     SetFromPort() {
         this._PortExtendedPMService.getSinglePort("TLV", "IL", SessionLocator.Tenant).subscribe((Result: any) => {
@@ -212,7 +190,7 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
 
     SetLabels() { 
 
-        this.SetPortsLabel();
+        this.SetExportShipmentLabels();
 
         this.VolumeLabel = TextCodeTranslator.Translate("Shipment.F.BookingVolume.Short").replace("%VolumeCode", this.EntityPM.VolumeUnitCode);
         this.GrossWeightLabel = TextCodeTranslator.Translate("Shipment.F.OrderGrossWeight.Short").replace("%GrossWeightCode", this.EntityPM.GrossWeightUnitCode);
@@ -225,32 +203,47 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
         }
          
     }
-    private SetPortsLabel() {
+
+
+ 
+    private SetExportShipmentLabels() {
+         
         switch (this.TransportModeId) {
             case "A": {
-                this.FromTextCode = "Shipment.S.NewShipment.Gateway";
-                this.ToTextCode = "Shipment.S.NewShipment.Destination";
+                this.SetAirExportLabels();
                 break;
             }
 
             case "O": {
-                this.FromTextCode = "Shipment.S.NewShipment.LoadingPort";
-                this.ToTextCode = "Shipment.S.NewShipment.DischargePort";
+                this.SetOceanExportLabel();
                 break;
-            }
-
-            case "I": {
-                this.FromTextCode = "Shipment.S.NewShipment.From";
-                this.ToTextCode = "Shipment.S.NewShipment.To";
-                break;
-            }
-
+            } 
+         
+            case "I":
             default: {
-                this.FromTextCode = "Shipment.S.NewShipment.From";
-                this.ToTextCode = "Shipment.S.NewShipment.To";
+                this.SetDefaultExportLabel();
                 break;
             }
         }
+    }
+
+    private SetDefaultExportLabel() {
+        this.FromTextCode = "Shipment.S.NewShipment.From";
+        this.ToTextCode = "Shipment.S.NewShipment.To";
+    }
+
+    private SetOceanExportLabel() {
+        this.FromTextCode = "Shipment.S.NewShipment.LoadingPort";
+        this.ToTextCode = "Shipment.S.NewShipment.DischargePort";
+        this.Order = "Order Number";
+        this.RequestedDateLabel = "Expected Sealing Date";
+    }
+
+    private SetAirExportLabels() {
+        this.FromTextCode = "Shipment.S.NewShipment.Gateway";
+        this.ToTextCode = "Shipment.S.NewShipment.Destination";
+        this.Order = "Reference";
+        this.RequestedDateLabel = "Requested Flight Date";
     }
 
     InitializeServices() {
@@ -327,7 +320,7 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
        // this.BuildShipmentTypes();
     }
 
-    p 
+    
     BuildShipmentTypes() {
         this.ShipmentTypesList = [];
 
@@ -369,30 +362,34 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
     }
 
     SetOrderPackagesOnFinish() {
-        if (this.ShipmentTypeId == 'FCLD') {
 
-            this.EntityPM.ShipmentOrderPackages = [];
+        if (this.ShipmentTypeId != 'FCLD') return; 
+        this.AddShipmentOrderPackages(); 
+        this.EntityPM.BookingNumberOfPackages = this.CalculateNumberOfPackages();
 
-            if (this.hasPackage1()) {
-                var item = this.AddOrderPackage1(); 
-            }
+    }
 
-            if (this.hasPackage2()) {
-                var item = this.AddOrderPackage2(item); 
-            }
+    private AddShipmentOrderPackages() {
 
-            if (this.hasPackage3()) {
-                var item = this.AddOrderPackage3(item); 
-            }
+        this.EntityPM.ShipmentOrderPackages = [];
 
-            if (this.hasPackage4()) {
-                var item = this.AddOrderPackage4(item); 
-            }
-             
-            this.EntityPM.BookingNumberOfPackages = this.CalculateNumberOfPackages();
-            
+        if (this.hasPackage1()) {
+            var item = this.AddOrderPackage1();
+        }
+
+        if (this.hasPackage2()) {
+            var item = this.AddOrderPackage2(item);
+        }
+
+        if (this.hasPackage3()) {
+            var item = this.AddOrderPackage3(item);
+        }
+
+        if (this.hasPackage4()) {
+            var item = this.AddOrderPackage4(item);
         }
     }
+
     private hasPackage4() {
         return this.PackageTypeList4 != null && this.Quantity4 > 0;
     }
@@ -631,22 +628,29 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
     get TransportModeId() { return this.EntityPM.TransportModeId; }
     set TransportModeId(newValue: string) {
         if (this.EntityPM.TransportModeId != newValue) {
-            this.EntityPM.TransportModeId = newValue; 
-            if (newValue == "A") {
-                this.EntityPM.ShipmentTypeId = "Air";
-            }
-            else if (this.EntityPM.DirectionId == "E") {
-                this.EntityPM.ShipmentTypeId = "FCLD";
-            } else {
-                this.EntityPM.ShipmentTypeId = null;
-            }
-
-            this.BuildShipmentTypes();
-            this.SetFieldsLabel();
+            this.SetPrivateLabelTranssportMode(newValue);
         }
     }
 
     
+
+    private SetPrivateLabelTranssportMode(newValue: string) {
+        this.EntityPM.TransportModeId = newValue;
+        if (newValue == "A") {
+            this.EntityPM.ShipmentTypeId = "Air";
+        }
+        this.SetExportShipmentType(); 
+        this.BuildShipmentTypes();
+        this.SetExportShipmentLabels();
+    }
+
+    private SetExportShipmentType() {
+        if (this.EntityPM.DirectionId == "E") {
+            this.EntityPM.ShipmentTypeId = "FCLD";
+        } else {
+            this.EntityPM.ShipmentTypeId = null;
+        }
+    }
 
     changeDirection(code) {
         this.DirectionId = code;
@@ -903,6 +907,7 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
         if (AppTool.IsNullOrEmpty(this.BookingVolume)) {
             this.PushErrorMessage("Volume");
         }
+
     }
 
     private ValidateAirExportShipmentFields() {
