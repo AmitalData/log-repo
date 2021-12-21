@@ -177,6 +177,11 @@
 		position:relative;
 		right: 35px;
     }
+
+	.test{
+		position: relative;
+		bottom: 15px;
+	}
 </style>
  
 
@@ -742,7 +747,7 @@
 																										</td>
 
 																										<td class="Container" [style.width.px]="LabelColumnWidth - 30">
-																											<LogTextBox [ObjectFieldName]="'ContainerNumber1'" [Text]="ContainerNumber1" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+																											<LogTextBox [ObjectFieldName]="'ContainerNumber1'" [Text]="ContainerNumber1"  (LostFocus)="ValidateContainerNumber($event)"  [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
 																										</td>
 																									</tr>
 
@@ -774,18 +779,18 @@
 																										</td>
 
 																										<td class="Container" [style.width.px]="LabelColumnWidth - 30">
-																											<LogTextBox [ObjectFieldName]="'ContatinerNumber2'" [Text]="ContatinerNumber2" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+																											<LogTextBox [ObjectFieldName]="'ContainerNumber2'" [Text]="ContainerNumber2"  (LostFocus)="ValidateContainerNumber($event)"  [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
 																										</td>
 																									</tr>
 
 
-																									<tr class="FormFieldRow">
+																									<tr  *ngIf="ShowThirdContainer" class="FormFieldRow">
 																										<td style="width: 10px;">
 																											<div></div>
 																										</td>
 
 																										<td [style.width.px]="LabelColumnWidth - 120">
-																											<LogTextBox [ObjectFieldName]="'Quantity3'" [Text]="Quantity3" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+																											<LogTextBox [ObjectFieldName]="'Quantity3'" [Text]="Quantity3"  (LostFocus)="ValidateContainerNumber($event)"  [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
 																										</td>
 
 																										<td style="width: 2px;">
@@ -807,11 +812,11 @@
 																										</td>
 
 																										<td class="Container" [style.width.px]="LabelColumnWidth - 30">
-																											<LogTextBox [ObjectFieldName]="'ContatinerNumber3'" [Text]="ContatinerNumber3" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+																											<LogTextBox [ObjectFieldName]="'ContainerNumbe3'" [Text]="ContainerNumber3"  (LostFocus)="ValidateContainerNumber($event)"  [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
 																										</td>
 																									</tr>
 
-																									<tr class="FormFieldRow">
+																									<tr  *ngIf="ShowForthContainer" class="FormFieldRow">
 																										<td style="width: 10px;">
 																											<div></div>
 																										</td>
@@ -839,7 +844,7 @@
 																										</td>
 
 																										<td class="Container" [style.width.px]="LabelColumnWidth - 30">
-																											<LogTextBox [ObjectFieldName]="'ContatinerNumber4'" [Text]="ContatinerNumber4" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+																											<LogTextBox [ObjectFieldName]="'ContainerNumber4'" [Text]="ContainerNumber4" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
 																										</td>
 																									</tr>
 
@@ -891,7 +896,7 @@
   
 
 																				<td style="width: 200px;">
-																					<div class="FillParent">
+																					<div class="test">
 																						<LogTextBox [ObjectFieldName]="'Notes'" [Text]="Notes" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [IsMultiline]="true"></LogTextBox>
 																					</div>
 																				</td>

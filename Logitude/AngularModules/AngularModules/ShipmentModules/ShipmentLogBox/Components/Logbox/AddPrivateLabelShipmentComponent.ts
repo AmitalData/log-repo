@@ -12,7 +12,7 @@ import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeCom
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
 import { EntityStatusListService } from '../../../../Infrastructure/Services/StandardLists/EntityStatusListService';
-import { AppTool, DateTool } from '../../../../Infrastructure/Tools';
+import { AppTool, DateTool, FormatTool } from '../../../../Infrastructure/Tools';
 import { Guid } from '../../../../Infrastructure/Utilities/Guid';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
 import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
@@ -70,9 +70,12 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
     public AllowCreateOceanExport: boolean = false;
  
     public FromTextCode: string;
-    public ToTextCode: string;
-
+    public ToTextCode: string; 
     public ToPortTextCode: string;
+
+    public ShowThirdContainer: boolean = false;
+    public ShowForthContainer: boolean = false;
+
     constructor() {
         super(); 
         this.InitializeServices();
@@ -317,6 +320,13 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
        // this.BuildShipmentTypes();
     }
 
+    public ValidateContainerNumber(input: string) {
+        let result = FormatTool.ValidateContainerNumber(input);
+
+        if (result != null) {
+            this.PushErrorMessage(result);
+        }  
+    }
     BuildShipmentTypes() {
         this.ShipmentTypesList = [];
 
