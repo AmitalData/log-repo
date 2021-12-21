@@ -324,21 +324,30 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
     BuildShipmentTypes() {
         this.ShipmentTypesList = [];
 
-        if (this.DirectionId && this.TransportModeId) {
+        if (!(this.DirectionId && this.TransportModeId)) return; 
+        
             switch (this.TransportModeId) {
                 case "O": {
-                    this.ShipmentTypesList.push(new FilterClass("FCLD", "FCL", "./Images/CellIcons/Container.png"));
-                    this.ShipmentTypesList.push(new FilterClass("LCLD", "LCL", "./Images/CellIcons/Package.png"));
+                    this.BuildOceanShipmentTypeList();
                     break;
                 }
 
                 case "I": {
-                    this.ShipmentTypesList.push(new FilterClass("FTL", "FTL", "./Images/CellIcons/Container.png"));
-                    this.ShipmentTypesList.push(new FilterClass("LTL", "LTL", "./Images/CellIcons/Package.png"));
+                    this.BuildInlandShipmentTYpeList();
                     break;
                 }
             }
-        }
+       
+    }
+
+    private BuildInlandShipmentTYpeList() {
+        this.ShipmentTypesList.push(new FilterClass("FTL", "FTL", "./Images/CellIcons/Container.png"));
+        this.ShipmentTypesList.push(new FilterClass("LTL", "LTL", "./Images/CellIcons/Package.png"));
+    }
+
+    private BuildOceanShipmentTypeList() {
+        this.ShipmentTypesList.push(new FilterClass("FCLD", "FCL", "./Images/CellIcons/Container.png"));
+        this.ShipmentTypesList.push(new FilterClass("LCLD", "LCL", "./Images/CellIcons/Package.png"));
     }
 
     private BuildTransportModesList() {
@@ -478,47 +487,44 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
 
     get ContainerNumber1() { return this.EntityPM.ContainerNumber1; }
     set ContainerNumber1(newValue: string) {
-        if (this.EntityPM.ContainerNumber1 != newValue) {
-            this.EntityPM.ContainerNumber1 = newValue;
+        if (this.EntityPM.ContainerNumber1 == newValue) return;
 
-            this.SetUIProperties_Containers();
-        }
+         this.EntityPM.ContainerNumber1 = newValue; 
+         this.SetUIProperties_Containers(); 
     }
 
     get ContainerNumber2() { return this.EntityPM.ContainerNumber2; }
     set ContainerNumber2(newValue: string) {
-        if (this.EntityPM.ContainerNumber2 != newValue) {
-            this.EntityPM.ContainerNumber2 = newValue;
+        if (this.EntityPM.ContainerNumber2 == newValue) return;
 
-            this.SetUIProperties_Containers();
-        }
+        this.EntityPM.ContainerNumber2 = newValue;
+        this.SetUIProperties_Containers(); 
     }
 
     get ContainerNumber3() { return this.EntityPM.ContainerNumber3; }
     set ContainerNumber3(newValue: string) {
-        if (this.EntityPM.ContainerNumber3 != newValue) {
-            this.EntityPM.ContainerNumber3 = newValue;
+        if (this.EntityPM.ContainerNumber3 == newValue) return;
 
-            this.SetUIProperties_Containers();
-        }
+        this.EntityPM.ContainerNumber3 = newValue;
+        this.SetUIProperties_Containers();
+         
     }
 
     get ContainerNumber4() { return this.EntityPM.ContainerNumber4; }
     set ContainerNumber4(newValue: string) {
-        if (this.EntityPM.ContainerNumber4 != newValue) {
-            this.EntityPM.ContainerNumber4 = newValue;
+        if (this.EntityPM.ContainerNumber4 == newValue) return;
 
-            this.SetUIProperties_Containers();
-        }
+        this.EntityPM.ContainerNumber4 = newValue;
+        this.SetUIProperties_Containers();
+       
     }
 
     get Quantity1() { return this.EntityPM.Quantity1; }
     set Quantity1(newValue: number) {
-        if (this.EntityPM.Quantity1 != newValue) {
-            this.EntityPM.Quantity1 = newValue;
+        if (this.EntityPM.Quantity1 == newValue) return;
 
-            this.SetUIProperties_Containers();
-        }
+        this.EntityPM.Quantity1 = newValue;
+        this.SetUIProperties_Containers();
     }
 
 
@@ -549,30 +555,27 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
 
     get Quantity2() { return this.EntityPM.Quantity2; }
     set Quantity2(newValue: number) {
-        if (this.EntityPM.Quantity2 != newValue) {
-            this.EntityPM.Quantity2 = newValue;
+        if (this.EntityPM.Quantity2 == newValue) return;
 
-            this.SetUIProperties_Containers();
-        }
+        this.EntityPM.Quantity2 = newValue;
+        this.SetUIProperties_Containers();
+ 
     }
 
     get Quantity3() { return this.EntityPM.Quantity3; }
     set Quantity3(newValue: number) {
-        if (this.EntityPM.Quantity3 != newValue) {
-            this.EntityPM.Quantity3 = newValue;
+        if (this.EntityPM.Quantity3 == newValue) return;
 
-            this.SetUIProperties_Containers();
-        }
+        this.EntityPM.Quantity3 = newValue;
+        this.SetUIProperties_Containers();
     }
 
     get Quantity4() { return this.EntityPM.Quantity4; }
     set Quantity4(newValue: number) {
-        if (this.EntityPM.Quantity4 != newValue) {
-            this.EntityPM.Quantity4 = newValue;
+        if (this.EntityPM.Quantity4 == newValue) return;
 
-            this.SetUIProperties_Containers();
-
-        }
+        this.EntityPM.Quantity4 = newValue;
+        this.SetUIProperties_Containers();
     }
     public PackageTypeList1: PackageTypeList = null;
     get PackageTypeId1() { return this.EntityPM.PackageTypeId1; }
