@@ -17,9 +17,11 @@ export class MainMenuAutomationComponent implements OnInit {
     IsShowTransmissionLogs: boolean = false;
     AutomationEntityLists: AutomationItemClass[] = [];
     private CurrentSession = SessionLocator.SelectedSession;
+    IsMainteneceView: boolean = false;
+     
     constructor() {
     }
-
+ 
     ngOnInit() {
         let containerToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "CAU")[0];
 
@@ -39,8 +41,7 @@ export class MainMenuAutomationComponent implements OnInit {
     }
 
     SetDataContext(dataContext: any) {
-    
-
+        this.IsMainteneceView = dataContext.IsMainteneceView; 
     }
 
 
