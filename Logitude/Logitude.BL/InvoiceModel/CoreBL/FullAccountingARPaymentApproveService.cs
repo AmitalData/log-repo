@@ -224,7 +224,7 @@ namespace Logitude.BL.InvoiceModel.CoreBL
         public void AddNewBankTransfers()
         {
             int LineNumberCounter = GetInitialLineNumberForBankTransfer(paymentPM);
-            if (paymentPM.ARPaymentBankTranfers.Any()) {
+            if (paymentPM.ARPaymentBankTranfers != null && paymentPM.ARPaymentBankTranfers.Any()) {
                 foreach (ARPaymentBankTranferPM bankTransfer in paymentPM.ARPaymentBankTranfers)
                 {
                     ARPaymentBankTranferPM aRPaymentBankTranferPM = InitializeARPaymentBankTransfer(paymentPM, bankTransfer, ref LineNumberCounter);
@@ -543,7 +543,7 @@ namespace Logitude.BL.InvoiceModel.CoreBL
 
         private void CheckAbiltiyOfCreatingAutomaticReconcileForJournal()
         {
-            if ((paymentPM.ARPaymentChequeReplicas.Count() > 1 || paymentPM.ARPaymentBankTranfers.Count() > 1) && paymentPM.PaymentInvoices.Count() > 0)
+            if ((paymentPM.ARPaymentChequeReplicas.Count() > 1 || (paymentPM.ARPaymentBankTranfers != null && paymentPM.ARPaymentBankTranfers.Count() > 1)) && paymentPM.PaymentInvoices.Count() > 0)
             {
                 //  throw new Exception("Can't Perform ARPayment Reconciliation  in multiple Cheques case");
             } 
@@ -655,7 +655,7 @@ namespace Logitude.BL.InvoiceModel.CoreBL
 
         private int CreateDebitLinesForEachBankTransfer(JournalPM journal, int counter)
         {
-            if (paymentPM.ARPaymentBankTranfers.Count > 0)
+            if (paymentPM.ARPaymentBankTranfers != null && paymentPM.ARPaymentBankTranfers.Count > 0)
                 CreateJournalLineForEachBankTransfer(ref counter, "2");
             return counter;
         }
@@ -699,7 +699,7 @@ namespace Logitude.BL.InvoiceModel.CoreBL
 
         private void CreateCreditLinesForEachBankTransfer(ref int counter)
         {
-            if (paymentPM.ARPaymentBankTranfers.Count > 0)
+            if (paymentPM.ARPaymentBankTranfers != null && paymentPM.ARPaymentBankTranfers.Count > 0)
                 CreateJournalLineForEachBankTransfer(ref counter, "1");
         }
 
@@ -876,6 +876,10 @@ namespace Logitude.BL.InvoiceModel.CoreBL
 
         private void CreateJournalLineForEachBankTransfer(ref int counter, string actionCode)
         {
+            if (paymentPM.ARPaymentBankTranfers == null)
+            {
+                return;
+            }
             foreach (ARPaymentBankTranferPM bankTransfer in paymentPM.ARPaymentBankTranfers)
             {
                 JournalLinePM journalLine = MapPaymentBankTransferJournalLineFields(bankTransfer, actionCode, ref counter);
