@@ -28,6 +28,10 @@ export class ExportStorageList {
 	StorageStatusName: string;
 	ExporterName: string;
 	ShipName: string;
+	StorErrorXML: string;
+	StorageNo: string;
+	ExportDealIdentification: string;
+	CargoTypeCodeName: string;
 	
 }
  

@@ -129,6 +129,21 @@ export class ExportStoragePM {
     public set StorErrorXML(newValue: string) { if (this.storErrorXML != newValue) { this.storErrorXML = newValue; this.MarkAsDirty("StorErrorXML"); } }
        
 	 
+    private storageNo: string;
+    public get StorageNo() { return this.storageNo; }
+    public set StorageNo(newValue: string) { if (this.storageNo != newValue) { this.storageNo = newValue; this.MarkAsDirty("StorageNo"); } }
+       
+	 
+    private exportDealIdentification: string;
+    public get ExportDealIdentification() { return this.exportDealIdentification; }
+    public set ExportDealIdentification(newValue: string) { if (this.exportDealIdentification != newValue) { this.exportDealIdentification = newValue; this.MarkAsDirty("ExportDealIdentification"); } }
+       
+	 
+    private cargoTypeCodeName: string;
+    public get CargoTypeCodeName() { return this.cargoTypeCodeName; }
+    public set CargoTypeCodeName(newValue: string) { if (this.cargoTypeCodeName != newValue) { this.cargoTypeCodeName = newValue; this.MarkAsDirty("CargoTypeCodeName"); } }
+       
+	 
 
     public OldEntityPM: ExportStoragePM;
 		

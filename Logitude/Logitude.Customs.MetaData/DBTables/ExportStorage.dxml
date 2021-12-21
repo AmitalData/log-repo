@@ -116,6 +116,25 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="StorageNo"
+    Type="nvarchar"
+    Size="20">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ExportDealIdentification"
+    Type="nvarchar"
+    Size="4">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Relation
+    ForeignKeyColumn="DeclarationId"
+    ReferencedTable="Declarations"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="Customs" />
   <Relation
     ForeignKeyColumn="StorageStatus"
     ReferencedTable="StorageStatuses"

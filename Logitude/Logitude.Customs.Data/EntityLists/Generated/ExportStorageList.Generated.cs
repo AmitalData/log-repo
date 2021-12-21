@@ -54,6 +54,14 @@ namespace Logitude.Customs.Data.EntityLists
        public string ExporterName  { get; set; }
        [DataMember]
        public string ShipName  { get; set; }
+       [DataMember]
+       public string StorErrorXML  { get; set; }
+       [DataMember]
+       public string StorageNo  { get; set; }
+       [DataMember]
+       public string ExportDealIdentification  { get; set; }
+       [DataMember]
+       public string CargoTypeCodeName  { get; set; }
    }
 
 }

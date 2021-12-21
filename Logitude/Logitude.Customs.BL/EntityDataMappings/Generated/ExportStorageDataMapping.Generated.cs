@@ -37,7 +37,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         FirstCargoID, 
 	         SecondCargoID, 
 	         ThirdCargoID, 
-	         StorErrorXML,
+	         StorErrorXML, 
+	         StorageNo, 
+	         ExportDealIdentification,
 	      }
 
 
@@ -64,7 +66,10 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         StorageStatusName, 
 	         ExporterName, 
 	         ShipName, 
-	         StorErrorXML,
+	         StorErrorXML, 
+	         StorageNo, 
+	         ExportDealIdentification, 
+	         CargoTypeCodeName,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -146,6 +151,16 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.StorErrorXML))
             {
 				entityPOCO.StorErrorXML = entityPM.StorErrorXML;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.StorageNo))
+            {
+				entityPOCO.StorageNo = entityPM.StorageNo;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExportDealIdentification))
+            {
+				entityPOCO.ExportDealIdentification = entityPM.ExportDealIdentification;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -234,6 +249,16 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.StorErrorXML = entityPOCO.StorErrorXML;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.StorageNo))
+            {
+					entityPM.StorageNo = entityPOCO.StorageNo;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ExportDealIdentification))
+            {
+					entityPM.ExportDealIdentification = entityPOCO.ExportDealIdentification;
+            }
+
 		}
 
 		public void PMToOldPM(ExportStoragePM entityPM, ExportStoragePM oldEntityPM)
@@ -315,6 +340,16 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 oldEntityPM.StorErrorXML = entityPM.StorErrorXML;
             }
 			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.StorageNo))
+            {
+                oldEntityPM.StorageNo = entityPM.StorageNo;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExportDealIdentification))
+            {
+                oldEntityPM.ExportDealIdentification = entityPM.ExportDealIdentification;
+            }
+			
 		}
 
 	    public void EncodeBase64NVARCHARFields(ExportStoragePM entityPM)
@@ -339,6 +374,14 @@ namespace Logitude.Customs.BL.EntityDataMappings
             if (!String.IsNullOrWhiteSpace(entityPM.StorErrorXML)) //T4 find type == nText 
             {
                 entityPM.StorErrorXML = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.StorErrorXML));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.StorageNo)) //T4 find type == nText 
+            {
+                entityPM.StorageNo = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.StorageNo));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.ExportDealIdentification)) //T4 find type == nText 
+            {
+                entityPM.ExportDealIdentification = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.ExportDealIdentification));
             }
             entityPM.EncodeBase64NVARCHARFieldsBy=null;
 		}
