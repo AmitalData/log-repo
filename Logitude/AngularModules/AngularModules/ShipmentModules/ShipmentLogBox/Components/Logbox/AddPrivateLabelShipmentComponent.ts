@@ -10,6 +10,7 @@ import { PortListService } from '../../../../Common/Services/StandardLists/PortL
 import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
 import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
+import { ObjectsLocator } from '../../../../Infrastructure/Locators/ObjectsLocator';
 import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
 import { EntityStatusListService } from '../../../../Infrastructure/Services/StandardLists/EntityStatusListService';
 import { AppTool, DateTool, FormatTool } from '../../../../Infrastructure/Tools';
@@ -67,17 +68,15 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
     public AllowCreateShipmentsWithoutDocuments: boolean = false;
     public Order: string = "Reference";
     public RequestedDateLabel: string = "Requested Flight Date";
-    public AllowCreateOceanExport: boolean = false;
- 
+    public AllowCreateOceanExport: boolean = false; 
     public FromTextCode: string;
     public ToTextCode: string; 
     public ToPortTextCode: string;
-
-    public ShowThirdContainer: boolean = false;
-    public ShowForthContainer: boolean = false;
+    public isRTL: boolean = false;
 
     constructor() {
-        super(); 
+        super();
+        if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
         this.InitializeServices();
         this.SetUIProperties();
         this.SetUIProperties_Filters(); 
@@ -102,18 +101,26 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
     SetFieldsLabel() {
 
         if (this.EntityPM.TransportModeId == "A") {
-            this.Order = "Reference";
-            this.RequestedDateLabel = "Requested Flight Date";
+            this.SetAirExportLabels();
         }
         if (this.EntityPM.TransportModeId == "O") {
-            this.Order = "Order Number";
-            this.RequestedDateLabel = "Expected Sealing Date";
+            this.SetOceanExportLabels();
         }
 
         
         this.SetPortsLabel();
     }
  
+
+    private SetOceanExportLabels() {
+        this.Order = "Order Number";
+        this.RequestedDateLabel = "Expected Sealing Date";
+    }
+
+    private SetAirExportLabels() {
+        this.Order = "Reference";
+        this.RequestedDateLabel = "Requested Flight Date";
+    }
 
     SetFromPort() {
         this._PortExtendedPMService.getSinglePort("TLV", "IL", SessionLocator.Tenant).subscribe((Result: any) => {
@@ -320,13 +327,7 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
        // this.BuildShipmentTypes();
     }
 
-    public ValidateContainerNumber(input: string) {
-        let result = FormatTool.ValidateContainerNumber(input);
-
-        if (result != null) {
-            this.PushErrorMessage(result);
-        }  
-    }
+    p 
     BuildShipmentTypes() {
         this.ShipmentTypesList = [];
 
@@ -369,62 +370,113 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
 
     SetOrderPackagesOnFinish() {
         if (this.ShipmentTypeId == 'FCLD') {
-            var numberOfPackages = 0;
+
             this.EntityPM.ShipmentOrderPackages = [];
 
-            if (this.PackageTypeList1 != null && this.Quantity1 > 0) {
-                var item = new ShipmentOrderPackagePM(this.EntityPM);
-                item.IsContainer = this.PackageTypeList1.IsContainer;
-                item.Quantity = this.Quantity1;
-                item.ContainerNumber = this.ContainerNumber1;
-                item.PackageTypeId = this.PackageTypeId1;
-                item.Tenant = SessionLocator.Tenant;
-                item.ShipmentId = this.EntityPM.Id;
-                this.EntityPM.AddOrderPackage(item);
-                numberOfPackages = numberOfPackages + this.Quantity1;
+            if (this.hasPackage1()) {
+                var item = this.AddOrderPackage1(); 
             }
 
-            if (this.PackageTypeList2 != null && this.Quantity2 > 0) {
-                var item = new ShipmentOrderPackagePM(this.EntityPM);
-                item.IsContainer = this.PackageTypeList2.IsContainer;
-                item.ContainerNumber = this.ContainerNumber2;
-                item.Quantity = this.Quantity2;
-                item.PackageTypeId = this.PackageTypeId2;
-                item.Tenant = SessionLocator.Tenant;
-                item.ShipmentId = this.EntityPM.Id;
-                this.EntityPM.AddOrderPackage(item);
-                numberOfPackages = numberOfPackages + this.Quantity2;
+            if (this.hasPackage2()) {
+                var item = this.AddOrderPackage2(item); 
             }
 
-            if (this.PackageTypeList3 != null && this.Quantity3 > 0) {
-                var item = new ShipmentOrderPackagePM(this.EntityPM);
-                item.IsContainer = this.PackageTypeList3.IsContainer;
-                item.ContainerNumber = this.ContainerNumber3;
-                item.Quantity = this.Quantity3;
-                item.PackageTypeId = this.PackageTypeId3;
-                item.Tenant = SessionLocator.Tenant;
-                item.ShipmentId = this.EntityPM.Id;
-                this.EntityPM.AddOrderPackage(item);
-                numberOfPackages = numberOfPackages + this.Quantity3;
+            if (this.hasPackage3()) {
+                var item = this.AddOrderPackage3(item); 
             }
 
-            if (this.PackageTypeList4 != null && this.Quantity4 > 0) {
-                var item = new ShipmentOrderPackagePM(this.EntityPM);
-                item.IsContainer = this.PackageTypeList4.IsContainer;
-                item.ContainerNumber = this.ContainerNumber4;
-                item.Quantity = this.Quantity4;
-                item.PackageTypeId = this.PackageTypeId4;
-                item.Tenant = SessionLocator.Tenant;
-                item.ShipmentId = this.EntityPM.Id;
-                this.EntityPM.AddOrderPackage(item);
-                numberOfPackages = numberOfPackages + this.Quantity4;
+            if (this.hasPackage4()) {
+                var item = this.AddOrderPackage4(item); 
             }
              
-
-            if (numberOfPackages > 0) {
-                this.EntityPM.BookingNumberOfPackages = numberOfPackages;
-            }
+            this.EntityPM.BookingNumberOfPackages = this.CalculateNumberOfPackages();
+            
         }
+    }
+    private hasPackage4() {
+        return this.PackageTypeList4 != null && this.Quantity4 > 0;
+    }
+
+    private hasPackage3() {
+        return this.PackageTypeList3 != null && this.Quantity3 > 0;
+    }
+
+    private hasPackage2() {
+        return this.PackageTypeList2 != null && this.Quantity2 > 0;
+    }
+
+    private hasPackage1() {
+        return this.PackageTypeList1 != null && this.Quantity1 > 0;
+    }
+
+    CalculateNumberOfPackages(): number {
+        var numberOfPackages = 0;
+
+        if (this.hasPackage1()) { 
+            numberOfPackages = numberOfPackages + this.Quantity1;
+        }
+
+        if (this.hasPackage2()) { 
+            numberOfPackages = numberOfPackages + this.Quantity2;
+        }
+
+        if (this.hasPackage3()) { 
+            numberOfPackages = numberOfPackages + this.Quantity3;
+        }
+
+        if (this.hasPackage4()) { 
+            numberOfPackages = numberOfPackages + this.Quantity4;
+        }
+        return numberOfPackages;
+ 
+    }
+
+    private AddOrderPackage4(item: ShipmentOrderPackagePM) {
+        var item = new ShipmentOrderPackagePM(this.EntityPM);
+        item.IsContainer = this.PackageTypeList4.IsContainer;
+        item.ContainerNumber = this.ContainerNumber4;
+        item.Quantity = this.Quantity4;
+        item.PackageTypeId = this.PackageTypeId4;
+        item.Tenant = SessionLocator.Tenant;
+        item.ShipmentId = this.EntityPM.Id;
+        this.EntityPM.AddOrderPackage(item);
+        return item;
+    }
+
+    private AddOrderPackage3(item: ShipmentOrderPackagePM) {
+        var item = new ShipmentOrderPackagePM(this.EntityPM);
+        item.IsContainer = this.PackageTypeList3.IsContainer;
+        item.ContainerNumber = this.ContainerNumber3;
+        item.Quantity = this.Quantity3;
+        item.PackageTypeId = this.PackageTypeId3;
+        item.Tenant = SessionLocator.Tenant;
+        item.ShipmentId = this.EntityPM.Id;
+        this.EntityPM.AddOrderPackage(item);
+        return item;
+    }
+
+    private AddOrderPackage2(item: ShipmentOrderPackagePM) {
+        var item = new ShipmentOrderPackagePM(this.EntityPM);
+        item.IsContainer = this.PackageTypeList2.IsContainer;
+        item.ContainerNumber = this.ContainerNumber2;
+        item.Quantity = this.Quantity2;
+        item.PackageTypeId = this.PackageTypeId2;
+        item.Tenant = SessionLocator.Tenant;
+        item.ShipmentId = this.EntityPM.Id;
+        this.EntityPM.AddOrderPackage(item);
+        return item;
+    }
+
+    private AddOrderPackage1() {
+        var item = new ShipmentOrderPackagePM(this.EntityPM);
+        item.IsContainer = this.PackageTypeList1.IsContainer;
+        item.Quantity = this.Quantity1;
+        item.ContainerNumber = this.ContainerNumber1;
+        item.PackageTypeId = this.PackageTypeId1;
+        item.Tenant = SessionLocator.Tenant;
+        item.ShipmentId = this.EntityPM.Id;
+        this.EntityPM.AddOrderPackage(item);
+        return item;
     }
 
     get ContainerNumber1() { return this.EntityPM.ContainerNumber1; }
@@ -683,7 +735,7 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
         this.EntityPM.NewConcurrencyGUID = Guid.newGuid();
         this.EntityPM.Tenant = SessionLocator.Tenant;
         this.EntityPM.ShipmentCustomerTypeCode = "SHI";
-        this.EntityPM.MainCarriageFromPortId = this.FromPort;
+        this.EntityPM.MainCarriageFromPortId = this.TransportModeId == 'A' ? this.FromPort : this.MainCarriageFromPortId;
         this.EntityPM.OtherPrepaidCollectId = "C";
         this.EntityPM.FreightPrepaidCollectId = "C";
         this.EntityPM.ShipmentLevelCode = "A";
@@ -731,6 +783,15 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
         }
         return; 
     }
+
+    public ValidateContainerNumber(input: string) {
+        let result = FormatTool.ValidateContainerNumber(input);
+
+        if (result != null) {
+            this.PushErrorMessage(result);
+        }
+    }
+
     ValidateOceanExportShipmentFields() { 
 
         if (AppTool.IsNullOrEmpty(this.CustomerReference3)) {
@@ -749,22 +810,88 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
             this.PushErrorMessage("Incoterm");
         }
 
-        this.ValidateFCLShipmentType();
         if (!AppTool.IsNullOrEmpty(this.RequestedFlightDate)) {
             this.ValidateRequestedFlightDate();
         }
-        
+
+
+        this.ValidateLCLDShipmentType();
+         
+        this.ValidateFCLDShipmentType();
  
+    }
+    ValidateFCLDShipmentType() {
 
-        //this.ValidatBookingNumberOfPackagese();
+        if (!(this.ShipmentTypeId == 'FCLD' && this.TransportModeId == 'O')) {
+            return;
+        }
 
-        //if (this.ValidateDocuments()) {
-        //    this.ValidationErrorsList.push("You should have at least one document shared with agent");
-        //}
+        if (AppTool.IsNullOrEmpty(this.Quantity1)) {
+            this.PushErrorMessage("Quantity");
+        }
+
+
+        this.ValidateContainerFCLDContainerNumber();
+
+    }
+    ValidateContainerFCLDContainerNumber() {
+
+        this.ValidateContainers();
+        this.ValidatePackateTypes();
     }
 
-    ValidateFCLShipmentType() {
-        if (!(this.ShipmentTypeId == 'FCLD' && this.TransportModeId == 'o')) {
+    ValidatePackateTypes() {
+        if (AppTool.IsNullOrEmpty(this.PackageTypeId1) && !AppTool.IsNullOrEmpty(this.Quantity1)) {
+            this.PushErrorMessage("Package Type");
+        }
+        if (AppTool.IsNullOrEmpty(this.PackageTypeId2) && !AppTool.IsNullOrEmpty(this.Quantity2)) {
+            this.PushErrorMessage("Package Type");
+        }
+        if (AppTool.IsNullOrEmpty(this.PackageTypeId3) && !AppTool.IsNullOrEmpty(this.Quantity3)) {
+            this.PushErrorMessage("Package Type");
+        }
+        if (AppTool.IsNullOrEmpty(this.PackageTypeId4) && !AppTool.IsNullOrEmpty(this.Quantity4)) {
+            this.PushErrorMessage("Package Type");
+        }
+    }
+    private ValidateContainers() {
+
+        if (!AppTool.IsNullOrEmpty(this.ContainerNumber1) && AppTool.IsNullOrEmpty(this.Quantity1)) {
+            this.PushErrorMessage("Quantity");
+        }
+        if (!AppTool.IsNullOrEmpty(this.ContainerNumber2) && AppTool.IsNullOrEmpty(this.Quantity2)) {
+            this.PushErrorMessage("Quantity");
+        }
+        if (!AppTool.IsNullOrEmpty(this.ContainerNumber3) && AppTool.IsNullOrEmpty(this.Quantity3)) {
+            this.PushErrorMessage("Quantity");
+        }
+        if (!AppTool.IsNullOrEmpty(this.ContainerNumber4) && AppTool.IsNullOrEmpty(this.Quantity4)) {
+            this.PushErrorMessage("Quantity");
+        } 
+
+        if (!AppTool.IsNullOrEmpty(this.ContainerNumber1)) {
+            this.ShowContainerValidationMessage(this.ContainerNumber1);
+        }
+        if (!AppTool.IsNullOrEmpty(this.ContainerNumber2)) {
+            this.ShowContainerValidationMessage(this.ContainerNumber2);
+        }
+        if (!AppTool.IsNullOrEmpty(this.ContainerNumber3)) {
+            this.ShowContainerValidationMessage(this.ContainerNumber3);
+        }
+        if (!AppTool.IsNullOrEmpty(this.ContainerNumber4)) {
+            this.ShowContainerValidationMessage(this.ContainerNumber4);
+        }
+    }
+
+    ShowContainerValidationMessage(ContainerNumber: string) {
+        let validateContainerNumber = FormatTool.ValidateContainerNumber(ContainerNumber);
+        if (validateContainerNumber != null)
+            this.PushErrorMessage(validateContainerNumber);
+    }
+     
+
+    ValidateLCLDShipmentType() {
+        if (!(this.ShipmentTypeId == 'LCLD' && this.TransportModeId == 'O')) {
             return;
         }
         this.ValidatBookingNumberOfPackagese();

@@ -173,15 +173,10 @@
         top: 12px;
     }
 
-    .Container{
-		position:relative;
-		right: 35px;
+    .Container {
+        position: relative; 
     }
-
-	.test{
-		position: relative;
-		bottom: 15px;
-	}
+    
 </style>
  
 
@@ -234,7 +229,7 @@
 										</div>
 
 										<!-- Shipment Types -->
-										<div style="margin: 10px;" *ngIf="DirectionId && DirectionId != 'C' && (TransportModeId == 'O' || TransportModeId == 'I')">
+										<div style="margin: 15px;margin-right: 30px;" *ngIf="DirectionId && DirectionId != 'C' && (TransportModeId == 'O' || TransportModeId == 'I')">
 											<div style="font-size: 13px; color: #6E7172;">{{'Shipment.F.ShipmentTypeId' | TextCodeTranslationPipe}}:</div>
 											<div style="margin-top: -2px;">
 												<div class="RadioButton" *ngFor="let item of ShipmentTypesList" [attr.id]="'ShipmentTypeRadio_Div_' + SessionIndex + item.Code">
@@ -287,6 +282,7 @@
 																			<tr class="FormFieldRow">
 
 																				<td [style.width.px]="LabelColumnWidth">
+
 																					<div class="RedPoint"></div>
 																					<label style="padding-left:10px;color: rgb(110, 113, 114);">
 																						{{Order}}
@@ -470,9 +466,10 @@
 
  
 																				<td [style.width.px]="LabelColumnWidth">
-																					<label style="padding-left:10px;color: rgb(110, 113, 114);">
+																					<label style="padding-left: 10px; color: rgb(110, 113, 114); font-size: 11px;">
 																						Shipping Agent:
 																					</label>
+
 																				</td>
 
 																				<td [style.width.px]="ControlColumnWidth">
@@ -587,7 +584,7 @@
 																					<td style="width: 5px;">
 																						<div></div>
 																					</td>
-																					<td style="width:150px;position: relative; right: 60px;">
+																					<td style="width:150px;position: relative;" [ngStyle]="isRTL ? {'right.px': -50} : {'right.px': 50}" >
 																						<LogDatePicker [ObjectTableName]="ObjectTableName" [ObjectFieldName]="'RequestedFlightDate'" [DataContext]="DataContext"></LogDatePicker>
 																					</td>
 
@@ -690,13 +687,13 @@
 																											<td style="width: 2px;">
 																												<div></div>
 																											</td>
-																											<td>
+																											<td [style.padding-right]="isRTL ? '15px'  : 'initial'">
 																												<label class="Label">Container #</label>
 																											</td>
 																											<td style="width: 10px;">
 																												<div></div>
 																											</td>
-																											<td style="width: 40px;">
+																											<td style="width: 40px; position: relative; left: 90px; top: 8px; " [ngStyle]="isRTL ? {'right.px': 370} : {}" >
 																												<label style="padding-left:10px;color: rgb(110, 113, 114);">
 																													Notes:
 																												</label>
@@ -720,7 +717,7 @@
 																								<table>
 																									<tr class="FormFieldRow">
 																										<td style="width: 10px;">
-																											<div></div>
+																											<div class="RedPoint" style="position: relative; top: 0px;"></div>
 																										</td>
 
 																										<td [style.width.px]="LabelColumnWidth - 70">
@@ -746,7 +743,7 @@
 																											<div></div>
 																										</td>
 
-																										<td class="Container" [style.width.px]="LabelColumnWidth - 30">
+																										<td class="Container" [style.width.px]="LabelColumnWidth - 30" [ngStyle]="isRTL ? {'right.px': -35} : {'right.px': 35}"   >
 																											<LogTextBox [ObjectFieldName]="'ContainerNumber1'" [Text]="ContainerNumber1"  (LostFocus)="ValidateContainerNumber($event)"  [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
 																										</td>
 																									</tr>
@@ -778,19 +775,19 @@
 																											<div></div>
 																										</td>
 
-																										<td class="Container" [style.width.px]="LabelColumnWidth - 30">
-																											<LogTextBox [ObjectFieldName]="'ContainerNumber2'" [Text]="ContainerNumber2"  (LostFocus)="ValidateContainerNumber($event)"  [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+																										<td class="Container" [style.width.px]="LabelColumnWidth - 30" [ngStyle]="isRTL ? {'right.px': -35} : {'right.px': 35}">
+																											<LogTextBox [ObjectFieldName]="'ContainerNumber2'" [Text]="ContainerNumber2" (LostFocus)="ValidateContainerNumber($event)" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
 																										</td>
 																									</tr>
 
 
-																									<tr  *ngIf="ShowThirdContainer" class="FormFieldRow">
+																									<tr class="FormFieldRow">
 																										<td style="width: 10px;">
 																											<div></div>
 																										</td>
 
 																										<td [style.width.px]="LabelColumnWidth - 120">
-																											<LogTextBox [ObjectFieldName]="'Quantity3'" [Text]="Quantity3"  (LostFocus)="ValidateContainerNumber($event)"  [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+																											<LogTextBox [ObjectFieldName]="'Quantity3'" [Text]="Quantity3" (LostFocus)="ValidateContainerNumber($event)" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
 																										</td>
 
 																										<td style="width: 2px;">
@@ -811,12 +808,12 @@
 																											<div></div>
 																										</td>
 
-																										<td class="Container" [style.width.px]="LabelColumnWidth - 30">
-																											<LogTextBox [ObjectFieldName]="'ContainerNumbe3'" [Text]="ContainerNumber3"  (LostFocus)="ValidateContainerNumber($event)"  [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+																										<td class="Container" [style.width.px]="LabelColumnWidth - 30" [ngStyle]="isRTL ? {'right.px': -35} : {'right.px': 35}">
+																											<LogTextBox [ObjectFieldName]="'ContainerNumbe3'" [Text]="ContainerNumber3" (LostFocus)="ValidateContainerNumber($event)" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
 																										</td>
 																									</tr>
 
-																									<tr  *ngIf="ShowForthContainer" class="FormFieldRow">
+																									<tr class="FormFieldRow">
 																										<td style="width: 10px;">
 																											<div></div>
 																										</td>
@@ -843,7 +840,7 @@
 																											<div></div>
 																										</td>
 
-																										<td class="Container" [style.width.px]="LabelColumnWidth - 30">
+																										<td class="Container" [style.width.px]="LabelColumnWidth - 30" [ngStyle]="isRTL ? {'right.px': -35} : {'right.px': 35}">
 																											<LogTextBox [ObjectFieldName]="'ContainerNumber4'" [Text]="ContainerNumber4" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
 																										</td>
 																									</tr>
@@ -896,7 +893,7 @@
   
 
 																				<td style="width: 200px;">
-																					<div class="test">
+																					<div style=" position: relative; bottom: 15px;" >
 																						<LogTextBox [ObjectFieldName]="'Notes'" [Text]="Notes" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [IsMultiline]="true"></LogTextBox>
 																					</div>
 																				</td>
