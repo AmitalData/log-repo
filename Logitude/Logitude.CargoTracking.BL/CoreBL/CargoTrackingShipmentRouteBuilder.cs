@@ -57,7 +57,7 @@ namespace Logitude.CargoTracking.BL.EntityQueryServices
         }
         private void BuildShipmentOrderRoute(ShipmentOrderPM shipmentOrderPM)
         {
-            if (shipmentOrderPM.GatewayId == null)
+            if (shipmentOrderPM.GatewayId != null)
                 BuildShipmentOrderGatewayRoute(shipmentOrderPM);
             else
                 BuildShipmentOrderNonGatwayRoute(shipmentOrderPM);
