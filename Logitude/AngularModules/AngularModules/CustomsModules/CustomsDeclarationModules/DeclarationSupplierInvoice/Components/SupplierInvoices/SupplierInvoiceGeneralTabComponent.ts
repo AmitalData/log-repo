@@ -3057,7 +3057,7 @@ export class SupplierInvoiceItemLine extends BaseComponent {
     }
 
     gITITEMCRs: GITITEMCR[];
-    get GITITEMCRs() { return this.GITITEMCRs; }
+    get GITITEMCRs() { return this.gITITEMCRs; }
     set GITITEMCRs(value: GITITEMCR[]) {
 
         if (!AppTool.IsNullOrEmpty(value)) {
