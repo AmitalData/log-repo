@@ -1,4 +1,27 @@
 ::ng-deep {
+    .price-check-tooltip-icons {
+        div.p-tooltip-text {
+            background: rgb(0 0 0);
+            box-shadow: 0 0 15px -5px rgba(0, 0, 0.9);
+            border: 1px solid rgb(234 234 234);
+        }
+
+        .p-tooltip-arrow {
+            border-top-color: black !important;
+            bottom: 1px;
+        }
+    }
+
+    .price-check-tooltip-frequency {
+        width: 78px;
+        text-align: center;
+    }
+
+    .price-check-tooltip-transit {
+        width: 87px;
+        text-align: center;
+    }
+
     .price-check {
         background: #e5e5e5;
 

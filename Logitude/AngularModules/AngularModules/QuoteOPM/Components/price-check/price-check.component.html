@@ -44,17 +44,22 @@
 
                         <div class="icons">
                             <img *ngIf='offer.Result.Summary.HasRemarks' class="icon"
-                                src="assets/icons/price-check/note.png" [pTooltip]="offer.Result.Summary.HasRemarks">
+                                src="assets/icons/price-check/note.png">
                             <img *ngIf='offer.Result.Summary.IsSaleAllIn || offer.Result.Summary.IsCostAllIn'
-                                class="icon" src="assets/icons/price-check/all_in.png" pTooltip="All in">
-                            <div *ngIf='offer.Result.Summary.Frequency' class="icon-wrapper">
+                                class="icon" src="assets/icons/price-check/all_in.png" pTooltip="All in"
+                                tooltipPosition='top' tooltipStyleClass='price-check-tooltip-icons'>
+                            <div *ngIf='offer.Result.Summary.Frequency' class="icon-wrapper"
+                                pTooltip="Frequency per week" tooltipPosition='top'
+                                tooltipStyleClass='price-check-tooltip-icons price-check-tooltip-frequency'>
                                 <img class="icon" src="assets/icons/price-check/calendar.png">
-                                <div class='icon-number-in' pTooltip="Frequency">{{offer.Result.Summary.Frequency}}
+                                <div class='icon-number-in'>{{offer.Result.Summary.Frequency}}
                                 </div>
                             </div>
-                            <div *ngIf='offer.Result.Summary.TransitTime' class="icon-wrapper">
+                            <div *ngIf='offer.Result.Summary.TransitTime' class="icon-wrapper"
+                                pTooltip="Transit Time (Days)" tooltipPosition='top'
+                                tooltipStyleClass='price-check-tooltip-icons price-check-tooltip-transit'>
                                 <img class="icon" src="assets/icons/price-check/time.png">
-                                <div class='icon-number-in' pTooltip="Transit Time">{{offer.Result.Summary.TransitTime}}
+                                <div class='icon-number-in'>{{offer.Result.Summary.TransitTime}}
                                 </div>
                             </div>
                         </div>
@@ -134,10 +139,13 @@
     </div>
 
     <div class="footer">
-        <button pButton pRipple style="color: #f57974; border-radius: 5px;background: white;" type="submit" label="Cancel"
-            class="p-button-raised  p-button-text" icon="pi pi-times" iconPos="right" (click)='cancel()'></button>
-        <button pButton pRipple style="color: #1084dc; border-radius: 5px;background: white;padding: 0.5rem 22px !important;" type="button" label="Next"
-            class="p-button-raised p-button-text" icon="pi pi-check" iconPos="right" (click)='sendData()'></button>
+        <button pButton pRipple style="color: #f57974; border-radius: 5px;background: white;" type="submit"
+            label="Cancel" class="p-button-raised  p-button-text" icon="pi pi-times" iconPos="right"
+            (click)='cancel()'></button>
+        <button pButton pRipple
+            style="color: #1084dc; border-radius: 5px;background: white;padding: 0.5rem 22px !important;" type="button"
+            label="Next" class="p-button-raised p-button-text" icon="pi pi-check" iconPos="right"
+            (click)='sendData()'></button>
         <!-- <button pButton (click)='cancel()' label="Cancel" class="p-button-danger"></button>
         <button pButton (click)='sendData()' label="Next" class="p-button-primary"></button> -->
     </div>
