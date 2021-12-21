@@ -139,7 +139,6 @@ namespace Logitude.Accounting.BL
                 
                 if (
                     JournalPOCO.StatusCode == ((int)JournalStatusTypePM.StatusCodeEnum.Voided).ToString() ||
-                    JournalPOCO.StatusCode == ((int)JournalStatusTypePM.StatusCodeEnum.WaitingforApprove).ToString() ||
                     JournalPOCO.StatusCode == ((int)JournalStatusTypePM.StatusCodeEnum.Failed).ToString()
                     )
                 {
@@ -254,9 +253,7 @@ namespace Logitude.Accounting.BL
 
                 case JournalStatusTypePM.StatusCodeEnum.Cancelled:
                     {
-                        journalPM.IsVoided = true;
-                        journalPM.VoidedByUserId = journalPM.UpdatedByUserId = this.GetLogContactId(journalPM);
-                        journalPM.VoidDate = DateTime.UtcNow;
+                        CancelJournal(journalPM);
                         break;
                     }
 
@@ -266,8 +263,12 @@ namespace Logitude.Accounting.BL
 
         }
 
-
-
+        private void CancelJournal(JournalPM journalPM)
+        {
+            journalPM.IsVoided = true;
+            journalPM.VoidedByUserId = journalPM.UpdatedByUserId = this.GetLogContactId(journalPM);
+            journalPM.VoidDate = DateTime.UtcNow;
+        }
 
         public virtual string TranslateTextsClassTranslate(string textCodeCode, int tenant, bool getLocalDefaultText)
         {

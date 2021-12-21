@@ -687,7 +687,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 {
                     throw new Exception("(Journal.Tenant!= requestTenant)");
                 }
-                if (String.IsNullOrWhiteSpace(_JornalPmSource.QueueId) && _JornalPmSource.StatusCodeEnum != JournalStatusTypePM.StatusCodeEnum.Draft)
+                if (String.IsNullOrWhiteSpace(_JornalPmSource.QueueId) &&  _JornalPmSource.StatusCodeEnum != JournalStatusTypePM.StatusCodeEnum.Draft && _JornalPmSource.StatusCodeEnum != JournalStatusTypePM.StatusCodeEnum.WaitingforApprove)
                 {
                     throw new Exception(
                         //"I must/Need??? Ledger to Reconcile - but journal did not Stream yet ..."
@@ -707,7 +707,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
         private void SetJournalStatusCodeBasedOnCurrentStatusCode()
         {
-            if (_JornalPmSource.StatusCodeEnum == JournalStatusTypePM.StatusCodeEnum.Draft)
+            if (_JornalPmSource.StatusCodeEnum == JournalStatusTypePM.StatusCodeEnum.Draft || _JornalPmSource.StatusCodeEnum == JournalStatusTypePM.StatusCodeEnum.WaitingforApprove)
                 _JornalPmSource.StatusCodeEnum = JournalStatusTypePM.StatusCodeEnum.Cancelled;
             else
                 _JornalPmSource.StatusCodeEnum = JournalStatusTypePM.StatusCodeEnum.Voided;
