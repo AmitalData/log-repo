@@ -406,7 +406,7 @@ import { NDMessageActionCodeListService } from './Services/StandardLists/NDMessa
 import { HandingCodeListService } from './Services/StandardLists/HandingCodeListService';
 import { StuffingSiteTypeListService } from './Services/StandardLists/StuffingSiteTypeListService';
 import { ContainerTypeListService } from './Services/StandardLists/ContainerTypeListService';
-import { ExportStorgeListService } from './Services/StandardLists/ExportStorgeListService';
+import { ExportStorageListService } from './Services/StandardLists/ExportStorageListService';
 import { LogisticsReferenceTypeListService } from './Services/StandardLists/LogisticsReferenceTypeListService';
 import { ReferenceStatusListService } from './Services/StandardLists/ReferenceStatusListService';
 import { ReferenceInputTypeListService } from './Services/StandardLists/ReferenceInputTypeListService';
@@ -704,7 +704,7 @@ export class ModuleProviders {
             case "CoolingReportingMethodListService": { myResult = new CoolingReportingMethodListService(); break; } 
             case "NDMessageActionCodeListService": { myResult = new NDMessageActionCodeListService(); break; } 
             case "HandingCodeListService": { myResult = new HandingCodeListService(); break; } 
-            case "ExportStorgeListService": { myResult = new ExportStorgeListService(); break; } 
+            case "ExportStorageListService": { myResult = new ExportStorageListService(); break; } 
 
             case "AmendCancellRequestInitiatorListService": { myResult = new AmendCancellRequestInitiatorListService(); break; }
             case "FclLclCodeListService": { myResult = new FclLclCodeListService(); break; }

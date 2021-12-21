@@ -34,16 +34,10 @@
   </Column>
   <Column
     Name="ExportFileNo"
-    Type="varchar"
-    Size="15">
+    Type="nvarchar"
+    Size="20">
     <Constraints
       Nullable="true" />
-  </Column>
-  <Column
-    Name="StorageNo"
-    Type="int">
-    <Constraints
-      Nullable="false" />
   </Column>
   <Column
     Name="StorageStatus"
@@ -82,7 +76,7 @@
   <Column
     Name="ExporterID"
     Type="varchar"
-    Size="20">
+    Size="15">
     <Constraints
       Nullable="true" />
   </Column>
@@ -94,7 +88,8 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="Manifest"
+    Name="FirstCargoID"
+    OldNames="Manifest"
     Type="varchar"
     Size="35">
     <Constraints
@@ -115,13 +110,31 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="ExportDealIdentification"
-    Type="decimal"
-    Precision="16"
-    Scale="0">
+    Name="StorErrorXML"
+    Type="nvarchar"
+    Size="512">
     <Constraints
-      Nullable="false" />
+      Nullable="true" />
   </Column>
+  <Column
+    Name="StorageNo"
+    Type="nvarchar"
+    Size="20">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ExportDealIdentification"
+    Type="nvarchar"
+    Size="4">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Relation
+    ForeignKeyColumn="DeclarationId"
+    ReferencedTable="Declarations"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="Customs" />
   <Relation
     ForeignKeyColumn="StorageStatus"
     ReferencedTable="StorageStatuses"

@@ -49,11 +49,6 @@ export class ExportStoragePM {
     public set ExportFileNo(newValue: string) { if (this.exportFileNo != newValue) { this.exportFileNo = newValue; this.MarkAsDirty("ExportFileNo"); } }
        
 	 
-    private storageNo: number;
-    public get StorageNo() { return this.storageNo; }
-    public set StorageNo(newValue: number) { if (this.storageNo != newValue) { this.storageNo = newValue; this.MarkAsDirty("StorageNo"); } }
-       
-	 
     private storageStatus: string;
     public get StorageStatus() { return this.storageStatus; }
     public set StorageStatus(newValue: string) { if (this.storageStatus != newValue) { this.storageStatus = newValue; this.MarkAsDirty("StorageStatus"); } }
@@ -62,11 +57,6 @@ export class ExportStoragePM {
     private cargoTypeCode: string;
     public get CargoTypeCode() { return this.cargoTypeCode; }
     public set CargoTypeCode(newValue: string) { if (this.cargoTypeCode != newValue) { this.cargoTypeCode = newValue; this.MarkAsDirty("CargoTypeCode"); } }
-       
-	 
-    private customStatus: string;
-    public get CustomStatus() { return this.customStatus; }
-    public set CustomStatus(newValue: string) { if (this.customStatus != newValue) { this.customStatus = newValue; this.MarkAsDirty("CustomStatus"); } }
        
 	 
     private openDate: Date;
@@ -94,9 +84,9 @@ export class ExportStoragePM {
     public set ShipCode(newValue: string) { if (this.shipCode != newValue) { this.shipCode = newValue; this.MarkAsDirty("ShipCode"); } }
        
 	 
-    private manifest: string;
-    public get Manifest() { return this.manifest; }
-    public set Manifest(newValue: string) { if (this.manifest != newValue) { this.manifest = newValue; this.MarkAsDirty("Manifest"); } }
+    private firstCargoID: string;
+    public get FirstCargoID() { return this.firstCargoID; }
+    public set FirstCargoID(newValue: string) { if (this.firstCargoID != newValue) { this.firstCargoID = newValue; this.MarkAsDirty("FirstCargoID"); } }
        
 	 
     private secondCargoID: string;
@@ -109,9 +99,49 @@ export class ExportStoragePM {
     public set ThirdCargoID(newValue: string) { if (this.thirdCargoID != newValue) { this.thirdCargoID = newValue; this.MarkAsDirty("ThirdCargoID"); } }
        
 	 
-    private exportDealIdentification: number;
+    private declarationStatusTypeName: string;
+    public get DeclarationStatusTypeName() { return this.declarationStatusTypeName; }
+    public set DeclarationStatusTypeName(newValue: string) { if (this.declarationStatusTypeName != newValue) { this.declarationStatusTypeName = newValue; this.MarkAsDirty("DeclarationStatusTypeName"); } }
+       
+	 
+    private cargoTypeName: string;
+    public get CargoTypeName() { return this.cargoTypeName; }
+    public set CargoTypeName(newValue: string) { if (this.cargoTypeName != newValue) { this.cargoTypeName = newValue; this.MarkAsDirty("CargoTypeName"); } }
+       
+	 
+    private storageStatusName: string;
+    public get StorageStatusName() { return this.storageStatusName; }
+    public set StorageStatusName(newValue: string) { if (this.storageStatusName != newValue) { this.storageStatusName = newValue; this.MarkAsDirty("StorageStatusName"); } }
+       
+	 
+    private exporterName: string;
+    public get ExporterName() { return this.exporterName; }
+    public set ExporterName(newValue: string) { if (this.exporterName != newValue) { this.exporterName = newValue; this.MarkAsDirty("ExporterName"); } }
+       
+	 
+    private shipName: string;
+    public get ShipName() { return this.shipName; }
+    public set ShipName(newValue: string) { if (this.shipName != newValue) { this.shipName = newValue; this.MarkAsDirty("ShipName"); } }
+       
+	 
+    private storErrorXML: string;
+    public get StorErrorXML() { return this.storErrorXML; }
+    public set StorErrorXML(newValue: string) { if (this.storErrorXML != newValue) { this.storErrorXML = newValue; this.MarkAsDirty("StorErrorXML"); } }
+       
+	 
+    private storageNo: string;
+    public get StorageNo() { return this.storageNo; }
+    public set StorageNo(newValue: string) { if (this.storageNo != newValue) { this.storageNo = newValue; this.MarkAsDirty("StorageNo"); } }
+       
+	 
+    private exportDealIdentification: string;
     public get ExportDealIdentification() { return this.exportDealIdentification; }
-    public set ExportDealIdentification(newValue: number) { if (this.exportDealIdentification != newValue) { this.exportDealIdentification = newValue; this.MarkAsDirty("ExportDealIdentification"); } }
+    public set ExportDealIdentification(newValue: string) { if (this.exportDealIdentification != newValue) { this.exportDealIdentification = newValue; this.MarkAsDirty("ExportDealIdentification"); } }
+       
+	 
+    private cargoTypeCodeName: string;
+    public get CargoTypeCodeName() { return this.cargoTypeCodeName; }
+    public set CargoTypeCodeName(newValue: string) { if (this.cargoTypeCodeName != newValue) { this.cargoTypeCodeName = newValue; this.MarkAsDirty("CargoTypeCodeName"); } }
        
 	 
 

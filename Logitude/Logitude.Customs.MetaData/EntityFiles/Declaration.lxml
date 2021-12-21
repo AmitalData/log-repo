@@ -37,7 +37,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   NewWizardControlName="&quot;Logitude.Customs.NewDeclarationControlCommand&quot;"
-  LocalDefaultText="&quot;הצהרות יבוא&quot;"
+  LocalDefaultText="&quot;הצהרות&quot;"
   DefaultText="&quot;Declaration&quot;"
   Code="&quot;DECL&quot;"
   Name="&quot;Customs.CourierMaster&quot;"
@@ -18807,7 +18807,6 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
- 
   <Query
     Code="&quot;OpenCourierMaster&quot;"
     TextCode="&quot;Courier Master Open&quot;"
@@ -20089,8 +20088,8 @@
         IsPredefined="true"
         Operator="&quot;Equal&quot;"
         IndexOrder="0" />
-	</QueryFilters>
-</Query>
+    </QueryFilters>
+  </Query>
   <Query
     Code="&quot;AllCourierDeclarations&quot;"
     TextCode="&quot;All Courier Declarations&quot;"

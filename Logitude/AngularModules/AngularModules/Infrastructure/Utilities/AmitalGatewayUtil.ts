@@ -310,6 +310,7 @@ export class AmitalGatewayUtil {
     
     UnifaceRequest(myParam, myEditTab, change2EditTab: () => void, change2CA23Tab: () => void) {
         const MaintenanceMenu: string = "General.MH.Maintenance";
+        const QuotesOPMenu: string = "General.MH.QuotesOP";
         let unifreightMessage: UnifreightMessageM = myParam;
         //if (AppTool.IsNullOrEmpty(unifreightMessage.LogitudeCommandId)) {
         //    throw new Error("UnifaceRequest get bad  unifreightMessage (LogitudeCommandId is null !?!?!?)");
@@ -318,7 +319,11 @@ export class AmitalGatewayUtil {
         this._LastUnifreightMessageM.Requset = this._LastUnifreightMessageM.Requset || [];
         this._LastUnifreightMessageM.Response = this._LastUnifreightMessageM.Response || [];
         switch (unifreightMessage.LogitudeCommandId) {
-            
+            case "ShowQuotesOPMenu()":
+                {
+                    this.SelectCustomsRequestMenu(QuotesOPMenu);
+                }
+                break;
             case "SessionLocator.SelectedSession.CurrentEditComponent.ReloadEntityPM()": 
             case "this.CurrentSession.CurrentEditComponent.ReloadEntityPM()": {
                 if (SessionLocator.SelectedSession.CurrentEditComponent) {

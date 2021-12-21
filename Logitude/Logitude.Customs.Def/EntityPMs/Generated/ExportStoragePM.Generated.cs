@@ -135,29 +135,6 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-	  private int storageNo ;
-	  	  
-       
-	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
-	   [DataMember]
-       public int StorageNo  
-	   {
-	    
-	     get
-		{
-		   return storageNo;
-		 }
-		 set
-		 {
-		   if(storageNo != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="StorageNo",OldValue=storageNo,NewValue=value,PropertyType="int"};
-		    NotifyPropertyChanged(values);
-		   storageNo=value;
-		   }
-			
-		 }
-	   }
 	  private string storageStatus ;
 	  	  
        
@@ -200,29 +177,6 @@ namespace Logitude.Customs.Def.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CargoTypeCode",OldValue=cargoTypeCode,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   cargoTypeCode=value;
-		   }
-			
-		 }
-	   }
-	  private string customStatus ;
-	  	  
-       
-	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string CustomStatus  
-	   {
-	    
-	     get
-		{
-		   return customStatus;
-		 }
-		 set
-		 {
-		   if(customStatus != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CustomStatus",OldValue=customStatus,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   customStatus=value;
 		   }
 			
 		 }
@@ -342,25 +296,25 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-	  private string manifest ;
+	  private string firstCargoID ;
 	  	  
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
 	   [DataMember]
-       public string Manifest  
+       public string FirstCargoID  
 	   {
 	    
 	     get
 		{
-		   return manifest;
+		   return firstCargoID;
 		 }
 		 set
 		 {
-		   if(manifest != value)
+		   if(firstCargoID != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Manifest",OldValue=manifest,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="FirstCargoID",OldValue=firstCargoID,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
-		   manifest=value;
+		   firstCargoID=value;
 		   }
 			
 		 }
@@ -411,12 +365,173 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-	  private decimal exportDealIdentification ;
+	  private string declarationStatusTypeName ;
 	  	  
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
 	   [DataMember]
-       public decimal ExportDealIdentification  
+       public string DeclarationStatusTypeName  
+	   {
+	    
+	     get
+		{
+		   return declarationStatusTypeName;
+		 }
+		 set
+		 {
+		   if(declarationStatusTypeName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DeclarationStatusTypeName",OldValue=declarationStatusTypeName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   declarationStatusTypeName=value;
+		   }
+			
+		 }
+	   }
+	  private string cargoTypeName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CargoTypeName  
+	   {
+	    
+	     get
+		{
+		   return cargoTypeName;
+		 }
+		 set
+		 {
+		   if(cargoTypeName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CargoTypeName",OldValue=cargoTypeName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   cargoTypeName=value;
+		   }
+			
+		 }
+	   }
+	  private string storageStatusName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string StorageStatusName  
+	   {
+	    
+	     get
+		{
+		   return storageStatusName;
+		 }
+		 set
+		 {
+		   if(storageStatusName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="StorageStatusName",OldValue=storageStatusName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   storageStatusName=value;
+		   }
+			
+		 }
+	   }
+	  private string exporterName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ExporterName  
+	   {
+	    
+	     get
+		{
+		   return exporterName;
+		 }
+		 set
+		 {
+		   if(exporterName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ExporterName",OldValue=exporterName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   exporterName=value;
+		   }
+			
+		 }
+	   }
+	  private string shipName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ShipName  
+	   {
+	    
+	     get
+		{
+		   return shipName;
+		 }
+		 set
+		 {
+		   if(shipName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ShipName",OldValue=shipName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   shipName=value;
+		   }
+			
+		 }
+	   }
+	  private string storErrorXML ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string StorErrorXML  
+	   {
+	    
+	     get
+		{
+		   return storErrorXML;
+		 }
+		 set
+		 {
+		   if(storErrorXML != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="StorErrorXML",OldValue=storErrorXML,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   storErrorXML=value;
+		   }
+			
+		 }
+	   }
+	  private string storageNo ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string StorageNo  
+	   {
+	    
+	     get
+		{
+		   return storageNo;
+		 }
+		 set
+		 {
+		   if(storageNo != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="StorageNo",OldValue=storageNo,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   storageNo=value;
+		   }
+			
+		 }
+	   }
+	  private string exportDealIdentification ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ExportDealIdentification  
 	   {
 	    
 	     get
@@ -427,9 +542,32 @@ namespace Logitude.Customs.Def.EntityPMs
 		 {
 		   if(exportDealIdentification != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ExportDealIdentification",OldValue=exportDealIdentification,NewValue=value,PropertyType="decimal"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ExportDealIdentification",OldValue=exportDealIdentification,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   exportDealIdentification=value;
+		   }
+			
+		 }
+	   }
+	  private string cargoTypeCodeName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CargoTypeCodeName  
+	   {
+	    
+	     get
+		{
+		   return cargoTypeCodeName;
+		 }
+		 set
+		 {
+		   if(cargoTypeCodeName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CargoTypeCodeName",OldValue=cargoTypeCodeName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   cargoTypeCodeName=value;
 		   }
 			
 		 }

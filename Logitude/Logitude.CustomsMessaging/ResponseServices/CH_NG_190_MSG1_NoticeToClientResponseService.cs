@@ -149,7 +149,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             var limitDate = NoticeToClient.limitDateSpecified ? NoticeToClient.limitDate : null;
                             if (NoticeToClient.limitDate == null)
                             {
-                                limitDate = DateTime.Now;
+                                limitDate = NoticeToClient.openDate;
                             }
                             if (limitDate != physicalCheck.LimitDate)
                             {
@@ -312,7 +312,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 physicalCheck.LimitDate = NoticeToClient.limitDateSpecified ? NoticeToClient.limitDate : null;
                 if (NoticeToClient.limitDate == null)
                 {
-                    physicalCheck.LimitDate = DateTime.Now;
+                    physicalCheck.LimitDate = NoticeToClient.openDate;
                 }
 
                 physicalCheck.OpenDate = DateTime.Now;

@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationUpdateClass
    {  		
-		public const string HashString = "8419ca7dc819299c290534f88f2199a0";
+		public const string HashString = "322f0d6e62a989ec5f9ea15536a3c232";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -125,7 +125,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    NewWizardControlName =  "Logitude.Customs.NewDeclarationControlCommand",
-			      				    LocalDefaultText =  "הצהרות יבוא",
+			      				    LocalDefaultText =  "הצהרות",
 			      				    DefaultText =  "Declaration",
 			      				    Code =  "DECL",
 			      				    Name =  "Customs.CourierMaster",

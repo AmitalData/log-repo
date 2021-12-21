@@ -16,6 +16,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { DialogsService, PartnerType } from '../../Services/dialogs/dialogs.service';
 import { NewQuoteDataShareService } from '../../Services/new-quote-data-share/new-quote-data-share.service';
 import { NewQuoteDataService } from '../../Services/new-quote-data/new-quote-data.service';
+import { NewQuoteInsertFromEntityService } from '../../Services/new-quote-insert-from-entity/new-quote-insert-from-entity.service';
 
 @Component({
   selector: 'app-new-quote-partner',
@@ -64,6 +65,7 @@ export class NewQuotePartnerComponent extends BaseComponent implements OnInit, A
     public entityArgs: EntityArgs,
     private cdr: ChangeDetectorRef,
     private dataShareService: NewQuoteDataShareService,
+    private insertFromEntityService: NewQuoteInsertFromEntityService,
   ) {
     super();
   }
@@ -79,16 +81,7 @@ export class NewQuotePartnerComponent extends BaseComponent implements OnInit, A
   }
 
   ngAfterViewInit(): void {
-    this.setDataFromEntity();
-  }
-
-  setDataFromEntity() {
-    if (!this.EntityPM || !this.EntityPM.Id) return;
-
-    this.setPartner();
-    this.setContact();
-    this.partnerform.controls.reference1.setValue(this.EntityPM[this.capitalizeType + 'Reference1']);
-    // this.partnerform.controls[this.capitalizeType + 'Note'].setValue(this.EntityPM[this.capitalizeType + 'Note']);
+    this.insertFromEntityService.partnerInsert(this);
   }
 
   private setValidatorBySecondPrtner() {
@@ -101,21 +94,6 @@ export class NewQuotePartnerComponent extends BaseComponent implements OnInit, A
     });
   }
 
-  async setPartner() {
-    const prtnerId = this.EntityPM[this.capitalizeType + 'Id']
-    if (prtnerId) {
-      const card: CardPM = await this.newQuoteDataService.getCard(prtnerId)
-      this.partnerform.controls.partner.setValue(card)
-    }
-  }
-  
-  async setContact() {
-    const contactId = this.EntityPM[this.capitalizeType + 'ContactId']
-    if (contactId) {
-      const contact: ContactPM = await this.newQuoteDataService.getContact(contactId)
-      this.partnerform.controls.contact.setValue(contact)
-    }
-  }
 
   resetForm() {
     this.newQuoteDataService.$resetForm.subscribe(() => {
