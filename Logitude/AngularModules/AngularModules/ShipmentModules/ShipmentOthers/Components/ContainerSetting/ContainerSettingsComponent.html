@@ -30,11 +30,23 @@
                                                 </td>
 
                                                 <td style="width: 200px;">
-                                                    <LogTextBox [InputType]="'unsinteger'" [ObjectFieldName]="'AutomaticallyCloseDays'" [Text]="AutomaticallyCloseDays" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                                                    <table>
+                                                        <tr>
+                                                            <td>
+                                                                <LogTextBox [InputType]="'unsinteger'" [ObjectFieldName]="'AutomaticallyCloseDays'" [Text]="AutomaticallyCloseDays" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                                                            </td>
+                                                            <td>
+                                                                <div float-end >
+                                                                    <LogToolTip [bottom]="5"
+                                                                                [mode]="'Info'" [title]="''">
+                                                                        {{ClosingContainerToolTipMessage}}
+                                                                    </LogToolTip>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
                                                 </td>
-
                                                 <td>
-                                                    <div></div>
                                                 </td>
                                             </tr>
 
