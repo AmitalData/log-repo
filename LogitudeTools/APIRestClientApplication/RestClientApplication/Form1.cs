@@ -42,6 +42,13 @@ namespace RestClientApplication
                     this.operationCombo.Items.Clear();
                     this.operationCombo.Items.Add("Create (POST)");
                 }
+                else if(apiCombo.SelectedItem.Equals("Direct"))
+                {
+                    this.operationCombo.SelectedItem = null;
+                    this.operationCombo.Items.Clear();
+                    AddGeneralOperationsToComboBox();
+                    this.operationCombo.Items.Add("Update (Patch)");
+                }
                 else
                 {
                     AddGeneralOperationsToComboBox();
@@ -265,6 +272,15 @@ namespace RestClientApplication
 
                             txtParameter2.Visible = true;
                             lblParameter2.Visible = true;
+                        }
+                        else if (operationCombo.SelectedItem != null && operationCombo.SelectedItem.Equals("Update (Patch)"))
+                        {
+                            lblParameter2.Text = "Id";
+                            txtParameter2.Visible = true;
+                            lblParameter2.Visible = true;
+                            txtRequestContentType.Text = "application/json";
+                            rdbJson.Checked = true;
+                            rdbXml.Visible = false;
                         }
 
                         apiName = "direct";
@@ -596,17 +612,17 @@ namespace RestClientApplication
                     {
                         client.DefaultRequestHeaders.Add("Accept", "application/xml");
 
-                        if(apiName == "direct" || apiName == "house" || apiName == "master")
+                        if (apiName == "direct" || apiName == "house" || apiName == "master")
                         {
                             string url = "";
                             if (!string.IsNullOrEmpty(txtParameter.Text))
                             {
-                                 url = txtServerUrl.Text + "/" + api + "?number=" + txtParameter.Text + "&include=";                                
+                                url = txtServerUrl.Text + "/" + api + "?number=" + txtParameter.Text + "&include=";
                             }
 
                             else
                             {
-                                 url = txtServerUrl.Text + "/" + api + "?id=" + txtParameter2.Text + "&include=";                                
+                                url = txtServerUrl.Text + "/" + api + "?id=" + txtParameter2.Text + "&include=";
                             }
 
                             if (IncludeEventsCheckBox.Checked)
@@ -662,6 +678,14 @@ namespace RestClientApplication
                         {
                             response = await client.DeleteAsync(txtServerUrl.Text + "/" + api + "?entityXML=" + txtRequestBody.Text);
                         }
+                    }
+
+                    else if (operationCombo.SelectedItem.Equals("Update (Patch)") && apiName == "direct")
+                    {
+                        var url = txtServerUrl.Text + "/" + api+ "?id=" + txtParameter.Text;
+                        var request = new HttpRequestMessage(new HttpMethod("PATCH"), url);
+                        request.Content = content;
+                        response = await client.SendAsync(request);
                     }
 
                     txtReponseCode.Text = ((int)response.StatusCode).ToString();
