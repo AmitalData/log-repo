@@ -238,8 +238,6 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
     
     public DateTime? OnCarriageETA { get; set; }
     
-    public Vessel OnCarriageVessel { get; set; }
-    
     public TransportMode PreCarriageTransportMode { get; set; }
     
     public Port PreCarriageFromPort { get; set; }
@@ -257,8 +255,6 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
     public DateTime? PreCarriageETD { get; set; }
     
     public DateTime? PreCarriageETA { get; set; }
-    
-    public Vessel PreCarriageVessel { get; set; }
     
     public Card ConsigneeNotImporter { get; set; }
     

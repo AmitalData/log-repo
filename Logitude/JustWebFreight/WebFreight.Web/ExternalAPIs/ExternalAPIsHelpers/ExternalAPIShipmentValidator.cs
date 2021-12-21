@@ -19,6 +19,8 @@ using Simplog.Data.ShipmentsModel.Repositories;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Logitude.BL.ShipmentsModel.APIDataContract.ApiV1;
 using Simplog.Data.ShipmentsModel;
+using Logitude.BL.ShipmentsModel.EntityQueries;
+using WebFreight.Web.Helpers.APIHelpers;
 
 namespace WebFreight.Web.ExternalAPIs.ExternalAPIsHelpers
 {
@@ -596,7 +598,6 @@ namespace WebFreight.Web.ExternalAPIs.ExternalAPIsHelpers
             if (shipmentPM.PreCarriageToPortId != mainCarriageFromPortId)
                 throw new ApplicationException("PreCarriageToPort Must Be Same As MainCarriageFromPort");
         }
-
         private string GetMainCarriageFromPortId()
         {
             if (!string.IsNullOrEmpty(shipmentPM.MainCarriageFromPortId))
@@ -610,8 +611,6 @@ namespace WebFreight.Web.ExternalAPIs.ExternalAPIsHelpers
 
             return "";
         }
-
-
         private string GetMainCarriageToPortId()
         {
             if (!string.IsNullOrEmpty(shipmentPM.MainCarriageToPortId))
@@ -625,7 +624,6 @@ namespace WebFreight.Web.ExternalAPIs.ExternalAPIsHelpers
 
             return "";
         }
-
         private void ValidateOnCarrageFromPortField()
         {
             if (string.IsNullOrEmpty(shipmentPM.OnCarriageFromPortId) || string.IsNullOrEmpty(shipmentPM.OnCarriageFromPortId))
@@ -694,6 +692,207 @@ namespace WebFreight.Web.ExternalAPIs.ExternalAPIsHelpers
 
             if (!string.IsNullOrEmpty(shipmentPM.OnCarriageVesselId))
                 throw new ApplicationException("OnCarriage should not have Vessel");
+        }
+
+        private ShipmentPickUpDeliveryPackageQuery shipmentPickUpDeliveryPackageQuery;
+        public void UpdatePickupDeliveryPackagesChangeSet(ShipmentPM entityPM)
+        {
+            shipmentPickUpDeliveryPackageQuery = new ShipmentPickUpDeliveryPackageQuery(entityPM.Tenant);
+            this.UpdatePickupPackagesChangeSet(entityPM);
+            this.UpdateDeliveryPackagesChangeSet(entityPM);            
+        }
+        private void UpdateDeliveryPackagesChangeSet(ShipmentPM entityPM)
+        {
+            if (entityPM.ShipmentDeliveries.Count == 0)
+            {
+                return;
+            }
+
+            foreach (ShipmentDeliveryPM shipmentDelivery in entityPM.ShipmentDeliveries)
+            {
+                this.SetDeletedPickupDeliveryPackagesChangeSet(shipmentDelivery.Id, shipmentDelivery.ShipmentPickUpDeliveryPackages, entityPM.Tenant);
+
+                foreach (ShipmentPickUpDeliveryPackagePM item in shipmentDelivery.ShipmentPickUpDeliveryPackages)
+                {
+                    this.FillShipmentPickupDeliveryPackageChangeSet(item);
+                }
+            }
+        }
+        private void UpdatePickupPackagesChangeSet(ShipmentPM entityPM)
+        {
+            if (entityPM.ShipmentPickUps.Count == 0)
+            {
+                return;
+            }
+
+            foreach (ShipmentPickUpPM shipmentPickUp in entityPM.ShipmentPickUps)
+            {
+                this.SetDeletedPickupDeliveryPackagesChangeSet(shipmentPickUp.Id, shipmentPickUp.ShipmentPickUpDeliveryPackages, entityPM.Tenant);
+
+                foreach (ShipmentPickUpDeliveryPackagePM item in shipmentPickUp.ShipmentPickUpDeliveryPackages)
+                {
+                    this.FillShipmentPickupDeliveryPackageChangeSet(item);
+                }
+            }
+        }
+        private void SetDeletedPickupDeliveryPackagesChangeSet(string id, List<ShipmentPickUpDeliveryPackagePM> shipmentPickUpDeliveryPackages, int tenant)
+        {
+            List<ShipmentPickUpDeliveryPackagePM> alreadyAddedPackages = this.GetDataBasePickupDeliveryPackages(id, tenant);
+            if (alreadyAddedPackages != null && alreadyAddedPackages.Count > 0)
+            {
+                foreach (var package in alreadyAddedPackages)
+                {
+                    if (!shipmentPickUpDeliveryPackages.Where(d => d.Id != null && d.Id == package.Id).Any())
+                    {
+                        shipmentPickUpDeliveryPackages.Add(new ShipmentPickUpDeliveryPackagePM()
+                        {
+                            Id = package.Id,
+                            ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Delete,
+                        });
+                    }
+                }
+            }
+        }
+        private List<ShipmentPickUpDeliveryPackagePM> GetDataBasePickupDeliveryPackages(string id, int tenant)
+        {
+            return shipmentPickUpDeliveryPackageQuery.GetShipmentPickUpDeliveryPackages(id, tenant);
+        }
+        private void FillShipmentPickupDeliveryPackageChangeSet(ShipmentPickUpDeliveryPackagePM item)
+        {
+            if (item.ChangeSetOp != Simplog.Server.Infrastructure.ChangeSetOperation.Delete)
+            {
+                item.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
+
+                if (string.IsNullOrEmpty(item.Id))
+                {
+                    item.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert;
+                }
+            }
+        }
+
+
+        public void ValidateUpdateShipmentPackages(ShipmentPM entityPM)
+        {
+            if (!(entityPM.ShipmentPackages.Count > 0))
+            {
+                return;
+            }
+
+            this.SetDeletedPackagesChangeSet(entityPM);
+
+            foreach (ShipmentPackagePM item in entityPM.ShipmentPackages)
+            {
+                this.ValidateShipmentPackageItem(item, entityPM);
+            }
+        }
+        private void SetDeletedPackagesChangeSet(ShipmentPM entityPM)
+        {
+            List<ShipmentPackagePM> alreadyAddedPackages = this.GetDataBasePackages(entityPM);
+            if (alreadyAddedPackages != null && alreadyAddedPackages.Count > 0)
+            {
+                foreach (var package in alreadyAddedPackages)
+                {
+                    if (!entityPM.ShipmentPackages.Where(d => d.Id != null && d.Id == package.Id).Any())
+                    {
+                        entityPM.ShipmentPackages.Add(new ShipmentPackagePM()
+                        {
+                            Id = package.Id,
+                            ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Delete,
+                        });
+                    }
+                }
+            }
+        }
+        private List<ShipmentPackagePM> GetDataBasePackages(ShipmentPM entityPM)
+        {
+            ShipmentPackageQuery shipmentPackageQuery = new ShipmentPackageQuery(entityPM.Tenant);
+            return shipmentPackageQuery.GetShipmentPackages(entityPM.Id, entityPM.ShipmentNumber, entityPM.Tenant);
+        }
+
+        private void ValidateShipmentPackageItem(ShipmentPackagePM item, ShipmentPM entityPM)
+        {
+            this.ValidateShipmentPackageDimensionsAndVolume(item, entityPM);
+
+            if (!item.IsContainer)
+            {
+                if (item.InsideShipmentPackages != null && item.InsideShipmentPackages.Count > 0)
+                {
+                    throw new ApplicationException("Inside Packages allowed in FCL/FTL shipments only");
+                }
+            }
+            else
+            {
+                this.ValidateInsidePackage(item, entityPM);
+            }
+            item.VolumetricWeight = ComputeHelper.ComputeVolumetricWeight(item, entityPM);
+            this.SetPackageChangeSet(item);
+        }
+        private void ValidateShipmentPackageDimensionsAndVolume(ShipmentPackagePM shipmentPackagePM, ShipmentPM entityPM)
+        {
+            double? calculatedVolume = ComputeHelper.ComputeVolume(shipmentPackagePM, entityPM);
+
+            if (IsOneOfTheDimensionsNotNull(shipmentPackagePM))
+            {
+                shipmentPackagePM.Volume = calculatedVolume;
+            }
+        }
+        private void ValidateInsidePackage(ShipmentPackagePM item, ShipmentPM entityPM)
+        {
+            if (!(item.InsideShipmentPackages != null && item.InsideShipmentPackages.Count > 0))
+            {
+                return;
+            }
+
+            item.Weight = 0;
+            item.Volume = 0;
+            item.InsideShipmentPackages.ForEach(inside =>
+            {
+                if (inside.Weight != null)
+                {
+                    item.Weight += inside.Weight;
+                }
+
+                if (inside.Volume != null)
+                {
+                    item.Volume += inside.Volume;
+                }
+
+                if (inside.Quantity == null)
+                {
+                    throw new ApplicationException("Inside Packages Quantity is required");
+                }
+
+                inside.Volume = ComputeHelper.ComputeInsideVolume(inside, entityPM);
+                inside.VolumetricWeight = ComputeHelper.ComputeInsideVolumetricWeight(inside, entityPM);
+            });
+        }
+        private bool IsOneOfTheDimensionsNotNull(ShipmentPackagePM shipmentPackagePM)
+        {
+            if (shipmentPackagePM.Width != null)
+            {
+                return true;
+            }
+            if (shipmentPackagePM.Height != null)
+            {
+                return true;
+            }
+            if (shipmentPackagePM.Length != null)
+            {
+                return true;
+            }
+            return false;
+        }
+        private void SetPackageChangeSet(ShipmentPackagePM item)
+        {
+            if (item.ChangeSetOp != Simplog.Server.Infrastructure.ChangeSetOperation.Delete)
+            {
+                item.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
+
+                if (string.IsNullOrEmpty(item.Id))
+                {
+                    item.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert;
+                }
+            }
         }
     }
 }

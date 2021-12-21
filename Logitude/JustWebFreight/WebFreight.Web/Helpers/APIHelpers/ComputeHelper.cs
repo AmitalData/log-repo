@@ -597,7 +597,8 @@ namespace WebFreight.Web.Helpers.APIHelpers
 
         public static void ComputeTotals(ShipmentPM entityPM)
         {
-            if (entityPM.ShipmentPackages.Count == 0)
+            List<ShipmentPackagePM> notDeletedPackages = entityPM.ShipmentPackages.Where(d => d.ChangeSetOp != Simplog.Server.Infrastructure.ChangeSetOperation.Delete).ToList();
+            if (notDeletedPackages.Count == 0)
             {
                 entityPM.NumberOfPackages = null;
                 entityPM.NumberOfContainers = null;
@@ -610,20 +611,20 @@ namespace WebFreight.Web.Helpers.APIHelpers
             }
 
             else
-            {
-                if(MethodHelper.IsLCLEntity(entityPM.TransportModeId, entityPM.ShipmentTypeId))
+            {                
+                if (MethodHelper.IsLCLEntity(entityPM.TransportModeId, entityPM.ShipmentTypeId))
                 {
-                    entityPM.NumberOfPackages = entityPM.ShipmentPackages.Sum(s => s.Quantity);
+                    entityPM.NumberOfPackages = notDeletedPackages.Sum(s => s.Quantity);
                 }
 
                 else
                 {
-                    entityPM.NumberOfContainers = entityPM.ShipmentPackages.Sum(s => s.Quantity);
+                    entityPM.NumberOfContainers = notDeletedPackages.Sum(s => s.Quantity);
                 }
                                 
-                entityPM.GrossWeight = Round(entityPM.ShipmentPackages.Sum(s => s.Weight), 3);
-                entityPM.Volume = Round(entityPM.ShipmentPackages.Sum(s => s.Volume), 3);
-                entityPM.VolumetricWeight = Round(entityPM.ShipmentPackages.Sum(s => s.VolumetricWeight), 3);
+                entityPM.GrossWeight = Round(notDeletedPackages.Sum(s => s.Weight), 3);
+                entityPM.Volume = Round(notDeletedPackages.Sum(s => s.Volume), 3);
+                entityPM.VolumetricWeight = Round(notDeletedPackages.Sum(s => s.VolumetricWeight), 3);
                 entityPM.ChargeableWeight = CalculateChargeableWeight(entityPM.GrossWeight, entityPM.VolumetricWeight, entityPM.GrossWeightUnitCode, entityPM.ChargeableWeightUnitCode, entityPM.DirectionId, entityPM.TransportModeId);
                 ComputeGrossWeigh_Kg_Ton(entityPM);
             }

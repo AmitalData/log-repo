@@ -36,7 +36,7 @@
   MaxNumberOfCustomFields="0"
   ParentTableName="Shipment"
   DefaultText="&quot;Shipment Package&quot;"
-  Code="&quot;3127&quot;"
+  Code="&quot;cc0f&quot;"
   Name="&quot;ShipmentPackage&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Shipment&quot;"
@@ -9425,7 +9425,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="true" />
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;Reference4&quot;"
         FieldName="&quot;Reference4&quot;"

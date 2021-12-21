@@ -30,6 +30,8 @@ using Logitude.BL.InfrastructureModel.APIDataContract.ApiV1;
 using Logitude.BL.ShipmentsModel.EntityQueries;
 using Logitude.BL.CommonDataModel.APIDataContract.QueryService;
 using Logitude.BL.CommonDataModel.EntityLists;
+using Container = Logitude.BL.ShipmentsModel.APIDataContract.ApiV1.Container;
+using Simplog.Data.ShipmentsModel.Repositories;
 
 namespace WebFreight.Web.ExternalAPIs.V1
 {
@@ -100,6 +102,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         ExternalAPIXMLEntityValidator externalAPIXMLEntityValidator = new ExternalAPIXMLEntityValidator(authToken.Tenant);
                         externalAPIXMLEntityValidator.ValidateDirectEntity(entity);
                         this.InitOceanOrInlandPackages(entity);
+                        this.InitContainers(entity);
 
                         IShipmentsContext MyContext = ShipmentsContext.GetContext(authToken.Tenant);
 
@@ -269,6 +272,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
 
                         if (directPM != null)
                         {
+                            ExternalAPIShipmentValidator externalAPIShipmentValidator = new ExternalAPIShipmentValidator(directPM, authToken.Tenant);
                             directPM.ConcurrencyGUID = entity.ConcurrencyGUID;
                             directPM.IsExternalAPI = true;
 
@@ -288,17 +292,17 @@ namespace WebFreight.Web.ExternalAPIs.V1
                                 externalAPIMainCarriageLegsHelper.MapTransshipments();
 
                                 AddressRepository addressRepository = new AddressRepository(authToken.Tenant);
-                                this.ValidateAndSetCustomerData(directPM, addressRepository, authToken.Tenant);
-                                this.ValidateUpdateShipmentPackages(directPM);
-
-                                ExternalAPIShipmentValidator externalAPIShipmentValidator = new ExternalAPIShipmentValidator(directPM, authToken.Tenant);
-                                externalAPIShipmentValidator.ValidatePreAndOnCarrageFields();
+                                this.ValidateAndSetCustomerData(directPM, addressRepository, authToken.Tenant);                                
+                                externalAPIShipmentValidator.ValidatePreAndOnCarrageFields();                                
                             }
                             else
                             {
                                 directPM = this.ValidateInlandDomesticShipment(directPM);
                                 this.UpdateRoutingPartnersAddresses(directPM);
                             }
+
+                            externalAPIShipmentValidator.ValidateUpdateShipmentPackages(directPM);
+                            externalAPIShipmentValidator.UpdatePickupDeliveryPackagesChangeSet(directPM);
 
                             this.ValidateCustomsFields(directPM);
                             this.UpdatePartners(MyContext, directPM);
@@ -692,66 +696,6 @@ namespace WebFreight.Web.ExternalAPIs.V1
             }
 
         }
-        private void ValidateUpdateShipmentPackages(ShipmentPM entityPM)
-        {
-            if (!(entityPM.ShipmentPackages.Count > 0))
-            {
-                return;
-            }
-            foreach (ShipmentPackagePM item in entityPM.ShipmentPackages)
-            {
-                this.ValidateShipmentPackageItem(item, entityPM);
-            }
-
-        }
-        private void ValidateShipmentPackageItem(ShipmentPackagePM item, ShipmentPM entityPM)
-        {
-            this.ValidateShipmentPackageDimensionsAndVolume(item, entityPM);
-
-            if (!item.IsContainer)
-            {
-                if (item.InsideShipmentPackages != null && item.InsideShipmentPackages.Count > 0)
-                {
-                    throw new ApplicationException("Inside Packages allowed in FCL/FTL shipments only");
-                }
-            }
-            else
-            {
-                this.ValidateInsidePackage(item, entityPM);
-            }
-            item.VolumetricWeight = ComputeHelper.ComputeVolumetricWeight(item, entityPM);
-            item.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
-        }
-        private void ValidateInsidePackage(ShipmentPackagePM item, ShipmentPM entityPM)
-        {
-            if (!(item.InsideShipmentPackages != null && item.InsideShipmentPackages.Count > 0))
-            {
-                return;
-            }
-
-            item.Weight = 0;
-            item.Volume = 0;
-            item.InsideShipmentPackages.ForEach(inside =>
-            {
-                if (inside.Weight != null)
-                {
-                    item.Weight += inside.Weight;
-                }
-
-                if (inside.Volume != null)
-                {
-                    item.Volume += inside.Volume;
-                }
-
-                if (inside.Quantity == null)
-                {
-                    throw new ApplicationException("Inside Packages Quantity is required");
-                }
-
-                inside.Volume = ComputeHelper.ComputeInsideVolume(inside, entityPM);
-                inside.VolumetricWeight = ComputeHelper.ComputeInsideVolumetricWeight(inside, entityPM);
-            });
-        }
         private bool IsInlandDomesticShipment(Direct entity)
         {
             bool isInland = false;
@@ -862,7 +806,6 @@ namespace WebFreight.Web.ExternalAPIs.V1
             }
             return false;
         }
-
         private void UpdatePartners(IShipmentsContext shipmentsContext, ShipmentPM shipmentPM)
         {
             Shipment shipmentPOCO = shipmentsContext.Shipments.Where(d => d.Id == shipmentPM.Id && d.Tenant == shipmentPM.Tenant).FirstOrDefault();
@@ -915,6 +858,18 @@ namespace WebFreight.Web.ExternalAPIs.V1
                     entity.OceanOrInlandPackages = null;
                 }
             }
+        }
+        private void InitContainers(Direct entity)
+        {
+            if (entity.Containers == null)
+            {
+                return;
+            }
+
+            foreach (Container item in entity.Containers)
+            {
+                item.Pieces = 1;
+            }                     
         }
         private void SetClosurePropertiers(ShipmentPM entityPM)
         {

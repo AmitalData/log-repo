@@ -18,7 +18,7 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
    public partial class ARInvoiceLineQueryService
     {
 
-        public List<ARInvoiceLinePM> ARInvoiceLineCustomDataMappingAndValidatin(ARInvoice MyEntity,List<ARInvoiceLine> lines, int Tenant, string ComputingPartnerName = "")
+        public List<ARInvoiceLinePM> ARInvoiceLineCustomDataMappingAndValidatin(ARInvoice MyEntity,List<ARInvoiceLine> lines, int Tenant, string ComputingPartnerName = "", bool IsUpdate = false)
         {
             try
             {

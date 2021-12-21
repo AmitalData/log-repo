@@ -163,26 +163,26 @@ using Simplog.Data.ShipmentsModel;
 
 						
 					}
-                    							//throw new ApplicationException("ATD Can't be update"); 
-							temp.ATD = item.ATD;
+                    							
+						temp.ATD = item.ATD;
 
 					 
 
 					
-                    							//throw new ApplicationException("ATA Can't be update"); 
-							temp.ATA = item.ATA;
+                    							
+						temp.ATA = item.ATA;
 
 					 
 
 					
-                    							//throw new ApplicationException("ETD Can't be update"); 
-							temp.ETD = item.ETD;
+                    							
+						temp.ETD = item.ETD;
 
 					 
 
 					
-                    							//throw new ApplicationException("ETA Can't be update"); 
-							temp.ETA = item.ETA;
+                    							
+						temp.ETA = item.ETA;
 
 					 
 
@@ -197,7 +197,7 @@ using Simplog.Data.ShipmentsModel;
 
 						 
 							if(!IsUpdate)
-							{								//throw new ApplicationException("FromPort Can't be update"); 
+							{								
 								temp.FromPortId = myFromPortPM.Id;
 						  
 							}  
@@ -218,7 +218,7 @@ using Simplog.Data.ShipmentsModel;
 
 						 
 							if(!IsUpdate)
-							{								//throw new ApplicationException("ToPort Can't be update"); 
+							{								
 								temp.ToPortId = myToPortPM.Id;
 						  
 							}  
@@ -239,7 +239,7 @@ using Simplog.Data.ShipmentsModel;
 
 						 
 							if(!IsUpdate)
-							{								//throw new ApplicationException("FromPartnerCard Can't be update"); 
+							{								
 								temp.FromPartnerCardId = myFromPartnerCardPM.Id;
 						  
 							}  
@@ -260,7 +260,7 @@ using Simplog.Data.ShipmentsModel;
 
 						 
 							if(!IsUpdate)
-							{								//throw new ApplicationException("ToPartnerCard Can't be update"); 
+							{								
 								temp.ToPartnerCardId = myToPartnerCardPM.Id;
 						  
 							}  
@@ -281,7 +281,7 @@ using Simplog.Data.ShipmentsModel;
 
 						 
 							if(!IsUpdate)
-							{								//throw new ApplicationException("Carrier Can't be update"); 
+							{								
 								temp.CarrierId = myCarrierPM.Id;
 						  
 							}  
@@ -293,57 +293,57 @@ using Simplog.Data.ShipmentsModel;
 			
 					
                     
-					if(!IsUpdate)// && !string.IsNullOrEmpty(item.TruckNumber))
-					{							//throw new ApplicationException("TruckNumber Can't be update"); 
-							temp.TruckNumber = item.TruckNumber;
+					if(!IsUpdate)
+					{							
+						temp.TruckNumber = item.TruckNumber;
 
 										}  
 
 					
                     
-					if(!IsUpdate)// && !string.IsNullOrEmpty(item.Driver))
-					{							//throw new ApplicationException("Driver Can't be update"); 
-							temp.Driver = item.Driver;
+					if(!IsUpdate)
+					{							
+						temp.Driver = item.Driver;
 
 										}  
 
 					
                     
-					if(!IsUpdate)// && !string.IsNullOrEmpty(item.TrailerNumber))
-					{							//throw new ApplicationException("TrailerNumber Can't be update"); 
-							temp.TrailerNumber = item.TrailerNumber;
+					if(!IsUpdate)
+					{							
+						temp.TrailerNumber = item.TrailerNumber;
 
 										}  
 
 					
                     
-					if(!IsUpdate)// && !string.IsNullOrEmpty(item.TransportModeCode))
-					{							//throw new ApplicationException("TransportModeCode Can't be update"); 
-							temp.TransportModeCode = item.TransportModeCode;
+					if(!IsUpdate)
+					{							
+						temp.TransportModeCode = item.TransportModeCode;
 
 										}  
 
 					
                     
-					if(!IsUpdate)// && !string.IsNullOrEmpty(item.Notes))
-					{							//throw new ApplicationException("Notes Can't be update"); 
-							temp.Notes = item.Notes;
+					if(!IsUpdate)
+					{							
+						temp.Notes = item.Notes;
 
 										}  
 
 					
                     
-					if(!IsUpdate)// && !string.IsNullOrEmpty(item.TruckerNumber))
-					{							//throw new ApplicationException("TruckerNumber Can't be update"); 
-							temp.CarrierNumber = item.TruckerNumber;
+					if(!IsUpdate)
+					{							
+						temp.CarrierNumber = item.TruckerNumber;
 
 										}  
 
 					
                     
-					if(!IsUpdate)// && !string.IsNullOrEmpty(item.PickUpReference))
-					{							//throw new ApplicationException("PickUpReference Can't be update"); 
-							temp.PickUpDeliveryNumber = item.PickUpReference;
+					if(!IsUpdate)
+					{							
+						temp.PickUpDeliveryNumber = item.PickUpReference;
 
 										}  
 
@@ -352,13 +352,10 @@ using Simplog.Data.ShipmentsModel;
 					if(item.Packages != null && item.Packages.Count > 0)
 					{
 						PackageQueryService PackageService5 = new PackageQueryService(Tenant);
-						  
-						if(!IsUpdate)
-						{								//throw new ApplicationException("Packages Can't be update"); 
-								temp.ShipmentPickUpDeliveryPackages = PackageService5.PackageDataMappingAndValidatin(item.Packages,Tenant,ComputingPartnerName,IsUpdate);
+						 								
+							temp.ShipmentPickUpDeliveryPackages = PackageService5.PackageDataMappingAndValidatin(item.Packages,Tenant,ComputingPartnerName,IsUpdate);
 
 					 
-						}  
 
 						
 					}

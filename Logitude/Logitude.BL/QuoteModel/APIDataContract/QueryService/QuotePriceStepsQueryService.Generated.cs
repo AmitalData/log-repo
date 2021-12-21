@@ -99,33 +99,33 @@ using Simplog.Data.QuoteModel;
 						
 					}
                     
-					if(!IsUpdate)// && item.PriceBreakStep != null)
-					{							//throw new ApplicationException("PriceBreakStep Can't be update"); 
-							temp.Step = item.PriceBreakStep;
+					if(!IsUpdate)
+					{							
+						temp.Step = item.PriceBreakStep;
 
 										}  
 
 					
                     
-					if(!IsUpdate)// && item.CostUnitPrice != null)
-					{							//throw new ApplicationException("CostUnitPrice Can't be update"); 
-							temp.CostUnitPrice = item.CostUnitPrice;
+					if(!IsUpdate)
+					{							
+						temp.CostUnitPrice = item.CostUnitPrice;
 
 										}  
 
 					
                     
-					if(!IsUpdate)// && item.SaleUnitPrice != null)
-					{							//throw new ApplicationException("SaleUnitPrice Can't be update"); 
-							temp.SaleUnitPrice = item.SaleUnitPrice;
+					if(!IsUpdate)
+					{							
+						temp.SaleUnitPrice = item.SaleUnitPrice;
 
 										}  
 
 					
                     
-					if(!IsUpdate)// && !string.IsNullOrEmpty(item.MeasurementUnit))
-					{							//throw new ApplicationException("MeasurementUnit Can't be update"); 
-							temp.MeasurementUnit = item.MeasurementUnit;
+					if(!IsUpdate)
+					{							
+						temp.MeasurementUnit = item.MeasurementUnit;
 
 										}  
 
