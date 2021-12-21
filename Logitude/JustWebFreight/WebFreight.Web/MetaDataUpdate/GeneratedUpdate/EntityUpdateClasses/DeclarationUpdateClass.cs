@@ -79,7 +79,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationUpdateClass
    {  		
-		public const string HashString = "40377e8e2e6196f188e523eb8a5daafc";
+		public const string HashString = "25c6a165e6b038e56e7aab0ce200de12";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -14924,6 +14924,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
              AdvancedQueryFilter OpenCourierMasterQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.Declaration.IsCourierDeclaration", PredefinedValue = "true",PredefinedValue2 = null, QueryId = OpenCourierMasterQuery.Id,QueryCode = OpenCourierMasterQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
 
+
+             AdvancedQueryFilter OpenCourierMasterQueryFilter_2 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.Declaration.IsCancelled", PredefinedValue = "true",PredefinedValue2 = null, QueryId = OpenCourierMasterQuery.Id,QueryCode = OpenCourierMasterQuery.UniqueCode, Tenant = 0,Operator = "NotEqual"}, addedQueryFilters);
+
   
 	      
 
@@ -14957,6 +14960,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
              AdvancedQueryFilter UnReleasedFastProcessQueryFilter_2 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.Declaration.IsCourierDeclaration", PredefinedValue = "true",PredefinedValue2 = null, QueryId = UnReleasedFastProcessQuery.Id,QueryCode = UnReleasedFastProcessQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
 
+
+             AdvancedQueryFilter UnReleasedFastProcessQueryFilter_3 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.Declaration.IsCancelled", PredefinedValue = "true",PredefinedValue2 = null, QueryId = UnReleasedFastProcessQuery.Id,QueryCode = UnReleasedFastProcessQuery.UniqueCode, Tenant = 0,Operator = "NotEqual"}, addedQueryFilters);
+
   
 	      
 
@@ -14983,6 +14989,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 
              AdvancedQueryFilter CourierMasterOpenIndividualQueryFilter_2 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.Declaration.IsCourierDeclaration", PredefinedValue = "true",PredefinedValue2 = null, QueryId = CourierMasterOpenIndividualQuery.Id,QueryCode = CourierMasterOpenIndividualQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
+
+
+             AdvancedQueryFilter CourierMasterOpenIndividualQueryFilter_3 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.Declaration.IsCancelled", PredefinedValue = "true",PredefinedValue2 = null, QueryId = CourierMasterOpenIndividualQuery.Id,QueryCode = CourierMasterOpenIndividualQuery.UniqueCode, Tenant = 0,Operator = "NotEqual"}, addedQueryFilters);
 
   
 	      
@@ -15017,6 +15026,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
              AdvancedQueryFilter UnReleasedIndividualQueryFilter_2 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.Declaration.IsCourierDeclaration", PredefinedValue = "true",PredefinedValue2 = null, QueryId = UnReleasedIndividualQuery.Id,QueryCode = UnReleasedIndividualQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
 
+
+             AdvancedQueryFilter UnReleasedIndividualQueryFilter_3 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.Declaration.IsCancelled", PredefinedValue = "true",PredefinedValue2 = null, QueryId = UnReleasedIndividualQuery.Id,QueryCode = UnReleasedIndividualQuery.UniqueCode, Tenant = 0,Operator = "NotEqual"}, addedQueryFilters);
+
   
 	      
 
@@ -15044,6 +15056,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
              AdvancedQueryFilter WithoutIdQueryFilter_2 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.Declaration.IsCourierDeclaration", PredefinedValue = "true",PredefinedValue2 = null, QueryId = WithoutIdQuery.Id,QueryCode = WithoutIdQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
 
+
+             AdvancedQueryFilter WithoutIdQueryFilter_3 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.Declaration.IsCancelled", PredefinedValue = "true",PredefinedValue2 = null, QueryId = WithoutIdQuery.Id,QueryCode = WithoutIdQuery.UniqueCode, Tenant = 0,Operator = "NotEqual"}, addedQueryFilters);
+
   
 	      
 
@@ -15070,6 +15085,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
              AdvancedQueryFilter WithoutClassificationQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.Declaration.IsCourierDeclaration", PredefinedValue = "true",PredefinedValue2 = null, QueryId = WithoutClassificationQuery.Id,QueryCode = WithoutClassificationQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
 
+
+             AdvancedQueryFilter WithoutClassificationQueryFilter_2 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.Declaration.IsCancelled", PredefinedValue = "true",PredefinedValue2 = null, QueryId = WithoutClassificationQuery.Id,QueryCode = WithoutClassificationQuery.UniqueCode, Tenant = 0,Operator = "NotEqual"}, addedQueryFilters);
+
   
 	      
 
@@ -15093,6 +15111,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 
              AdvancedQueryFilter PendingPaymentQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.Declaration.IsCourierDeclaration", PredefinedValue = "true",PredefinedValue2 = null, QueryId = PendingPaymentQuery.Id,QueryCode = PendingPaymentQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
+
+
+             AdvancedQueryFilter PendingPaymentQueryFilter_2 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.Declaration.IsCancelled", PredefinedValue = "true",PredefinedValue2 = null, QueryId = PendingPaymentQuery.Id,QueryCode = PendingPaymentQuery.UniqueCode, Tenant = 0,Operator = "NotEqual"}, addedQueryFilters);
 
   
 	      
@@ -15125,6 +15146,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
              AdvancedQueryFilter PendingCustomsQueryFilter_2 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.Declaration.IsCourierDeclaration", PredefinedValue = "true",PredefinedValue2 = null, QueryId = PendingCustomsQuery.Id,QueryCode = PendingCustomsQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
 
+
+             AdvancedQueryFilter PendingCustomsQueryFilter_3 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.Declaration.IsCancelled", PredefinedValue = "true",PredefinedValue2 = null, QueryId = PendingCustomsQuery.Id,QueryCode = PendingCustomsQuery.UniqueCode, Tenant = 0,Operator = "NotEqual"}, addedQueryFilters);
+
   
 	      
 
@@ -15153,6 +15177,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
              AdvancedQueryFilter PendingQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.Declaration.IsCourierDeclaration", PredefinedValue = "true",PredefinedValue2 = null, QueryId = PendingQuery.Id,QueryCode = PendingQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
 
+
+             AdvancedQueryFilter PendingQueryFilter_2 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.Declaration.IsCancelled", PredefinedValue = "true",PredefinedValue2 = null, QueryId = PendingQuery.Id,QueryCode = PendingQuery.UniqueCode, Tenant = 0,Operator = "NotEqual"}, addedQueryFilters);
+
   
 	      
 
@@ -15172,7 +15199,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			 QueryColumn DeclarationWithoutReleaseQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeclarationWithoutReleaseQuery.Id,QueryCode = DeclarationWithoutReleaseQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Customs.Declaration.DeclarationStatusTypeName" , ColumnWidth = 200 }, addedQueryColumns);
 
-             AdvancedQueryFilter DeclarationWithoutReleaseQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.Declaration.IsCancelled", PredefinedValue = "false",PredefinedValue2 = null, QueryId = DeclarationWithoutReleaseQuery.Id,QueryCode = DeclarationWithoutReleaseQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+             AdvancedQueryFilter DeclarationWithoutReleaseQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.Declaration.IsCancelled", PredefinedValue = "true",PredefinedValue2 = null, QueryId = DeclarationWithoutReleaseQuery.Id,QueryCode = DeclarationWithoutReleaseQuery.UniqueCode, Tenant = 0,Operator = "NotEqual"}, addedQueryFilters);
 
 
              AdvancedQueryFilter DeclarationWithoutReleaseQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.Declaration.DeclarationWithoutRelease", PredefinedValue = "1",PredefinedValue2 = null, QueryId = DeclarationWithoutReleaseQuery.Id,QueryCode = DeclarationWithoutReleaseQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
@@ -15202,7 +15229,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			 QueryColumn DeclarationInConstraintQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeclarationInConstraintQuery.Id,QueryCode = DeclarationInConstraintQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Customs.Declaration.DeclarationStatusTypeName" , ColumnWidth = 200 }, addedQueryColumns);
 
-             AdvancedQueryFilter DeclarationInConstraintQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.Declaration.IsCancelled", PredefinedValue = "false",PredefinedValue2 = null, QueryId = DeclarationInConstraintQuery.Id,QueryCode = DeclarationInConstraintQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+             AdvancedQueryFilter DeclarationInConstraintQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.Declaration.IsCancelled", PredefinedValue = "true",PredefinedValue2 = null, QueryId = DeclarationInConstraintQuery.Id,QueryCode = DeclarationInConstraintQuery.UniqueCode, Tenant = 0,Operator = "NotEqual"}, addedQueryFilters);
 
 
              AdvancedQueryFilter DeclarationInConstraintQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.Declaration.DeclarationStatusTypeCode", PredefinedValue = "11",PredefinedValue2 = null, QueryId = DeclarationInConstraintQuery.Id,QueryCode = DeclarationInConstraintQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
@@ -15232,7 +15259,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			 QueryColumn PaidDeclarationQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PaidDeclarationQuery.Id,QueryCode = PaidDeclarationQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Customs.Declaration.DeclarationStatusTypeName" , ColumnWidth = 200 }, addedQueryColumns);
 
-             AdvancedQueryFilter PaidDeclarationQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.Declaration.IsCancelled", PredefinedValue = "false",PredefinedValue2 = null, QueryId = PaidDeclarationQuery.Id,QueryCode = PaidDeclarationQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+             AdvancedQueryFilter PaidDeclarationQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.Declaration.IsCancelled", PredefinedValue = "true",PredefinedValue2 = null, QueryId = PaidDeclarationQuery.Id,QueryCode = PaidDeclarationQuery.UniqueCode, Tenant = 0,Operator = "NotEqual"}, addedQueryFilters);
 
 
              AdvancedQueryFilter PaidDeclarationQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.Declaration.PaidDeclarationWithoutRelease", PredefinedValue = "",PredefinedValue2 = null, QueryId = PaidDeclarationQuery.Id,QueryCode = PaidDeclarationQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
@@ -15272,6 +15299,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
              AdvancedQueryFilter DeclarationAmendmentsQueryFilter_2 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.Declaration.Direction", PredefinedValue = "E",PredefinedValue2 = null, QueryId = DeclarationAmendmentsQuery.Id,QueryCode = DeclarationAmendmentsQuery.UniqueCode, Tenant = 0,Operator = "NotEqual"}, addedQueryFilters);
 
+
+             AdvancedQueryFilter DeclarationAmendmentsQueryFilter_3 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.Declaration.IsCancelled", PredefinedValue = "true",PredefinedValue2 = null, QueryId = DeclarationAmendmentsQuery.Id,QueryCode = DeclarationAmendmentsQuery.UniqueCode, Tenant = 0,Operator = "NotEqual"}, addedQueryFilters);
+
   
 	      
 
@@ -15291,7 +15321,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			 QueryColumn DeclarationsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeclarationsQuery.Id,QueryCode = DeclarationsQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Customs.Declaration.DeclarationStatusTypeName" , ColumnWidth = 200 }, addedQueryColumns);
 
-             AdvancedQueryFilter DeclarationsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.Declaration.IsCancelled", PredefinedValue = "false",PredefinedValue2 = null, QueryId = DeclarationsQuery.Id,QueryCode = DeclarationsQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+             AdvancedQueryFilter DeclarationsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.Declaration.IsCancelled", PredefinedValue = "true",PredefinedValue2 = null, QueryId = DeclarationsQuery.Id,QueryCode = DeclarationsQuery.UniqueCode, Tenant = 0,Operator = "NotEqual"}, addedQueryFilters);
 
 
              AdvancedQueryFilter DeclarationsQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.Declaration.AmendmentDontDisplayInList", PredefinedValue = "false",PredefinedValue2 = null, QueryId = DeclarationsQuery.Id,QueryCode = DeclarationsQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
@@ -15322,6 +15352,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
              AdvancedQueryFilter ExportDeclarationQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.Declaration.Direction", PredefinedValue = "E",PredefinedValue2 = null, QueryId = ExportDeclarationQuery.Id,QueryCode = ExportDeclarationQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
 
+
+             AdvancedQueryFilter ExportDeclarationQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.Declaration.IsCancelled", PredefinedValue = "true",PredefinedValue2 = null, QueryId = ExportDeclarationQuery.Id,QueryCode = ExportDeclarationQuery.UniqueCode, Tenant = 0,Operator = "NotEqual"}, addedQueryFilters);
+
   
 	      
 
@@ -15344,6 +15377,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			 QueryColumn AllCourierDeclarationsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCourierDeclarationsQuery.Id,QueryCode = AllCourierDeclarationsQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Customs.Declaration.DeclarationStatusTypeName" , ColumnWidth = 180 }, addedQueryColumns);
 
              AdvancedQueryFilter AllCourierDeclarationsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.Declaration.IsCourierDeclaration", PredefinedValue = "true",PredefinedValue2 = null, QueryId = AllCourierDeclarationsQuery.Id,QueryCode = AllCourierDeclarationsQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
+
+
+             AdvancedQueryFilter AllCourierDeclarationsQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.Declaration.IsCancelled", PredefinedValue = "true",PredefinedValue2 = null, QueryId = AllCourierDeclarationsQuery.Id,QueryCode = AllCourierDeclarationsQuery.UniqueCode, Tenant = 0,Operator = "NotEqual"}, addedQueryFilters);
 
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);

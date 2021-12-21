@@ -80,6 +80,7 @@ export class ListComponent implements OnInit, AfterViewInit {
     LayoutDirection: string = 'ltr';
     customsSettingListService: CustomsSettingListService = new CustomsSettingListService();
     public IsReferantObjectTable: boolean = false;
+    public IsPhysicalCheckObjectTable: boolean = false;
 
     @ViewChild(LogGridComponent) MyLogGridComponent: LogGridComponent = null;
     @ViewChild(LogGridComponentV2) MyLogGridComponentV2: LogGridComponentV2 = null;
@@ -105,6 +106,7 @@ export class ListComponent implements OnInit, AfterViewInit {
     CurrentQueryFilters: ApiQueryFilters;
     AdvanceFilters: ApiQueryFilters;
     @Output() onQueryChangeEvent = new EventEmitter();
+    @Output() onRefershQueryEvent = new EventEmitter();
     @Output() onSelectedQueryChangeEvent = new EventEmitter();
     onOpenFilterAreaClick() {
         this.IsAdvancedSearchOpened = true;
@@ -470,7 +472,7 @@ export class ListComponent implements OnInit, AfterViewInit {
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
     private SessionEvent: any = null;
     private CurrentSession = SessionLocator.SelectedSession;
-    constructor(public _ListComponentArgs: ListComponentArgs,private _http: HttpClient, private _entityListService: EntityListService, private _entityResourceService: EntityResourceService, public pubSubAdvanceQueryFiltersService: PubSubService, private temp: PubSubService1, private entityPMService: EntityPMService, private _totangoService: TotangoService, private CD: ChangeDetectorRef) {
+    constructor(public _ListComponentArgs: ListComponentArgs, private _http: HttpClient, private _entityListService: EntityListService, private _entityResourceService: EntityResourceService, public pubSubAdvanceQueryFiltersService: PubSubService, private temp: PubSubService1, private entityPMService: EntityPMService, private _totangoService: TotangoService, private CD: ChangeDetectorRef) {
         var UsingV2FeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "LV2")[0];
         if (UsingV2FeatureToggle || SessionLocator.LoggedUserPM.Email == "ahmada@logitudeworld.com") { this.UsingLogGridV2 = true; }
        
@@ -659,7 +661,9 @@ export class ListComponent implements OnInit, AfterViewInit {
         if (this.ObjectTableName == "Customs.DeclarationReferantData") {
             this.IsReferantObjectTable = true;
         }
-
+        if (this.ObjectTableName == "Customs.PhysicalCheck") {
+            this.IsPhysicalCheckObjectTable = true;
+        }
         if (this.ObjectTableName == "Customs.ExportStorge") {
             this.LayoutDirection = "ltr";
             this.RTL = false;
@@ -860,12 +864,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
 
         }
 
-
-
-
-      
-
-
+        
         if (this.ObjectTable.HasFiltersMenu || this.HasActionBar()) {
             if (this.AllLocations) {
 
@@ -875,7 +874,13 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
 
                 else {
                     this.isLoaderReady = true;
-                    this.LoadedActionBar("MNA", "ListActionBar");
+                    if (this.ObjectTable.Name == "Customs.PhysicalCheck") {
+                        this.LoadedActionBar("MNO", "ListActionBar");
+
+                    }
+                    else {
+                        this.LoadedActionBar("MNA", "ListActionBar");
+                    }
                     if (this.ObjectTable.HasFiltersMenu) {
 
                         let myLocation: LocationDirective = this.AllLocations.toArray().filter(d => d.Code == "MNH")[0];
@@ -3283,6 +3288,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
     }
 
     DoRefresh() {
+        debugger;
         this.MyScrollTop = 0;
         this.MySelectedRowIndex = null;
         this.CurrentQueryFilters = new ApiQueryFilters();//this.listArgs.Filters;
@@ -3398,6 +3404,8 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                 });
             }
             this.onQueryChangeEvent.emit({ QueryCode: this.SelectedQueryCode, Filters: this.CurrentQueryFilters, Reload: false });
+            this.onRefershQueryEvent.emit({ QueryCode: this.SelectedQueryCode, Filters: this.CurrentQueryFilters, Reload: false });
+
             //     else {
             //         this.onQueryChangeEvent.emit({ QueryId: this.SelectedQueryId, Filters: this.CurrentQueryFilters });
             //     }
@@ -3688,6 +3696,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
     HasActionBar() {//ADD TO LXML\METADATA OBJECTTABLE- to be continue 
         switch (this.ObjectTable.Name) {
             case "Customs.DeclarationReferantData":
+            case "Customs.PhysicalCheck":
                 return true;
                 //return false;
                 break;

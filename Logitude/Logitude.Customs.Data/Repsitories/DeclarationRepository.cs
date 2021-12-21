@@ -758,8 +758,13 @@ namespace Logitude.Customs.Data.Repsitories
 
           
         }
-
-
+        public string GetHatraDateForDecId(string decId,int tenant)
+        {
+            var HatraDateQuery = (from a in context.Declarations
+                             where a.Id == decId && a.Tenant == tenant
+                             select a.HatraDate);
+            return HatraDateQuery.FirstOrDefault().ToString();
+        }
     }
     //class TotM {
 

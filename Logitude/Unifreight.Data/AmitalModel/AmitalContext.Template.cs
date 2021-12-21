@@ -7858,6 +7858,38 @@ namespace Unifreight.Data.AmitalModel
 
             #endregion
 
+            #region GGGHDAY
+
+            modelBuilder.Entity<GGGHDAY>()
+                .HasKey(p => p.HOLIDAY)
+                .ToTable("GGGHDAY", "AMITESTM");
+            // Properties:
+            modelBuilder.Entity<GGGHDAY>()
+                .Property(p => p.HOLIDAY)
+                    .IsRequired()
+                    .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
+                    .HasColumnType("date");
+            modelBuilder.Entity<GGGHDAY>()
+                .Property(p => p.NAMEHEB)
+                    .HasColumnName(@"NAME_HEB")
+                    .HasMaxLength(30)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GGGHDAY>()
+                .Property(p => p.NAMEENG)
+                    .HasColumnName(@"NAME_ENG")
+                    .HasMaxLength(30)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GGGHDAY>()
+                .Property(p => p.BEGINWORK)
+                    .HasColumnName(@"BEGIN_WORK")
+                    .HasColumnType("date");
+            modelBuilder.Entity<GGGHDAY>()
+                .Property(p => p.ENDWORK)
+                    .HasColumnName(@"END_WORK")
+                    .HasColumnType("date");
+
+            #endregion
+
             #region Disabled conventions
 
 
@@ -7967,5 +7999,6 @@ namespace Unifreight.Data.AmitalModel
         public virtual DbSet<GAQUSER> GAQUSERs { get; set; }
         public virtual DbSet<GGGQC> GGGQCs { get; set; }
         public virtual DbSet<GAQTEAMUSR> GAQTEAMUSRs { get; set; }
+        public virtual DbSet<GGGHDAY> GGGHDAYS { get; set; }
     }
 }

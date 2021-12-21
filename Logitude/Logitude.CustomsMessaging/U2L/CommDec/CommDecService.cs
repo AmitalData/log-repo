@@ -557,28 +557,25 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                     {
                         UpdateDeclarationPending("901");
                     }
-                    if(currentDeclarationCourierStatusPM != null && currentDeclarationCourierStatusPM.CrateNumber != _LogitudeCommDecFile.CrateNumber)
- 	
-                  {
- 	
-                  // UpdateNoIdUnder150();
- 	
-                      currentDeclarationCourierStatusPM.CrateNumber = _LogitudeCommDecFile.CrateNumber;
- 	
-                      if (currentDeclarationCourierStatusPM.ChangeSetOp != ChangeSetOperation.Update) currentDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
- 	
-                  }
- 	
-                  if (currentDeclarationCourierStatusPM.ChangeSetOp == ChangeSetOperation.Update)
- 	
-                  {
- 	
-                      DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(_context, new Dictionary<string, IContext>(), _MyDeclarationPM.Tenant);
- 	
-                      declarationCourierStatusUpdateService.Update(currentDeclarationCourierStatusPM, true);
- 	
+                    if (currentDeclarationCourierStatusPM != null && currentDeclarationCourierStatusPM.CrateNumber != _LogitudeCommDecFile.CrateNumber)
+                    {
+                        currentDeclarationCourierStatusPM.CrateNumber = _LogitudeCommDecFile.CrateNumber;
+                        if (currentDeclarationCourierStatusPM.ChangeSetOp != ChangeSetOperation.Update) currentDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
                     }
-                    // UpdateNoIdUnder150();
+                    if (currentDeclarationCourierStatusPM != null && currentDeclarationCourierStatusPM.ShopId != _LogitudeCommDecFile.shopId)
+                    {
+                        UpdateShop();
+                    }
+                    if (currentDeclarationCourierStatusPM != null && currentDeclarationCourierStatusPM.LastMileServiceType != _LogitudeCommDecFile.LastMileServiceType)
+                    {
+                        currentDeclarationCourierStatusPM.LastMileServiceType = _LogitudeCommDecFile.LastMileServiceType;
+                        if (currentDeclarationCourierStatusPM.ChangeSetOp != ChangeSetOperation.Update) currentDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
+                    }
+                    if (currentDeclarationCourierStatusPM != null && currentDeclarationCourierStatusPM.ChangeSetOp == ChangeSetOperation.Update)
+                    {
+                        DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(_context, new Dictionary<string, IContext>(), _MyDeclarationPM.Tenant);
+                        declarationCourierStatusUpdateService.Update(currentDeclarationCourierStatusPM, true);
+                    }
                 }
             }
 
@@ -834,6 +831,41 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
 
         }
 
+
+        private void UpdateShop()
+        {
+            if (!String.IsNullOrWhiteSpace(_LogitudeCommDecFile.shopId))
+            {
+                if (currentDeclarationCourierStatusPM == null)
+                {
+                    DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(_context);
+                    currentDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(_MyDeclarationPM.Id, true, false);
+                }
+                if (currentDeclarationCourierStatusPM != null)
+                {
+                    string shopId = null;
+                    CardRepository cardRep = new CardRepository(this._MyDeclarationPM.Tenant);
+                    Card card = cardRep.GetSingleCard(_LogitudeCommDecFile.shopId, this._MyDeclarationPM.Tenant);
+                    if (card != null)
+                    {
+                        shopId = _LogitudeCommDecFile.shopId;
+                    }
+                    else
+                    {
+                        card = cardRep.GetSingleCardByCode(_LogitudeCommDecFile.shopId, this._MyDeclarationPM.Tenant, true);
+                        if (card != null)
+                        {
+                            shopId = card.Id;
+                        }
+                    }
+                    if (!String.IsNullOrWhiteSpace(shopId) && shopId != currentDeclarationCourierStatusPM.ShopId)
+                    {
+                        if (currentDeclarationCourierStatusPM.ChangeSetOp != ChangeSetOperation.Update) currentDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
+                        currentDeclarationCourierStatusPM.ShopId = shopId;
+                    }
+                }
+            }
+        }
 
         private void UpdateDeclarationPending(string declarationPendingCode)
         {
@@ -1941,7 +1973,7 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
             }
             if (this._INVOICE.INCOTERM_ID != null)
             {
-                this._MySupplierInvoicePM.IncotermCode = this._INVOICE.INCOTERM_ID;
+                this._MySupplierInvoicePM.IncotermCode = TranslateTermsOfSaleType(this._INVOICE.INCOTERM_ID);
             }
             if (this._INVOICE.TRANSP_VALUE_LIST != null) // moran 7.8.17 - AMI-61197
             {
@@ -2053,6 +2085,24 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
             }
             return;
 
+        }
+
+        private string TranslateTermsOfSaleType(string amitalTermsOfSaleTypeCode)
+        {
+            if (String.IsNullOrWhiteSpace(amitalTermsOfSaleTypeCode))
+            {
+                AppendLogLine("amitalTermsOfSaleTypeCode is null");
+                return null;
+            }
+            var termsOfSaleType = new TermsOfSaleTypeRepository(ResolvedTenant());
+            var myTermsOfSaleType = termsOfSaleType.GetSingle(amitalTermsOfSaleTypeCode);
+            if (myTermsOfSaleType == null)
+            {
+                AppendLogLine("amitalTermsOfSaleTypeCode = " + amitalTermsOfSaleTypeCode + " could not translate to Logitude Id");
+                return null;
+            }
+            AppendLogLine("amitalTermsOfSaleTypeCode = " + amitalTermsOfSaleTypeCode + " Translated to " + myTermsOfSaleType.Code);
+            return myTermsOfSaleType.Code;
         }
 
         private void CalculateInsuranceAmount(decimal? insruancePercentage)
