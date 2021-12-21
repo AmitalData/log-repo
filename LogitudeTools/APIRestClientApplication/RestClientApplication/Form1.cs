@@ -776,6 +776,15 @@ namespace RestClientApplication
             }
         }
 
+        private string DeleteAllowUnassignedEntryFromXML(string xmlString)
+        {
+            string newXmlString = "";
+            newXmlString = xmlString.Replace("AllowUnassignedEntry=\"true\"", "");
+            newXmlString = newXmlString.Replace("AllowUnassignedEntry=\"false\"", "");
+
+            return newXmlString;
+        }
+
         private bool IsResponseFromPatchAPI(string apiName)
         {
             if (!(apiName == "direct"))
@@ -785,15 +794,6 @@ namespace RestClientApplication
                 return false;
 
             return true;
-        }
-
-        private string DeleteAllowUnassignedEntryFromXML(string xmlString)
-        {
-            string newXmlString = "";
-            newXmlString = xmlString.Replace("AllowUnassignedEntry=\"true\"", "");
-            newXmlString = newXmlString.Replace("AllowUnassignedEntry=\"false\"", "");
-
-            return newXmlString;
         }
 
         private void txtCredentialsPrimary_TextChanged(object sender, EventArgs e)
