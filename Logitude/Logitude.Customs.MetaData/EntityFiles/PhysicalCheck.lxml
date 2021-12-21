@@ -1643,7 +1643,7 @@
     DisplayLongName="false"
     FullFieldLable="&quot;IsClosed&quot;"
     DefaultText="&quot;Is Closed&quot;"
-    FullLocalDefaultText="&quot;פתוח/סגור&quot;"
+    FullLocalDefaultText="&quot;סגורה&quot;"
     ListFieldLable="&quot;IsClosedListLable&quot;"
     ListLableDefaultText="&quot;Is Closed&quot;"
     ListLocalDefaultText="&quot;פתוח/סגור&quot;"

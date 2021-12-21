@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class PhysicalCheckUpdateClass
    {  		
-		public const string HashString = "153ba5e9531e1444995fd5aba954354d";
+		public const string HashString = "366c89f0c28748bd5f294eab2552507b";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -1330,7 +1330,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "IsClosed",
 					  						DefaultText =  "Is Closed",
-					  						FullLocalDefaultText =  "פתוח/סגור",
+					  						FullLocalDefaultText =  "סגורה",
 					  						ListFieldLable =  "IsClosedListLable",
 					  						ListLableDefaultText =  "Is Closed",
 					  						ListLocalDefaultText =  "פתוח/סגור",
