@@ -295,6 +295,7 @@
     <Content Include="CustomsModules\CustomsCourier\Components\MamanSpecialAction\DeclarationMamanSpecialActionComponent.html" />
     <Content Include="CustomsModules\CustomsCourier\Components\PendingByKeyword\AddEditPendingByKeywordComponent.html" />
     <Content Include="CustomsModules\CustomsDeclarationCargoSplit\Components\EditTabs\DecCargoSplitConsPackDetComponent.html" />
+    <Content Include="CustomsModules\CustomsDeclarationCargoSplit\Components\FiltersMenu\DeclarationCargoSplitFiltersMenuComponent.html" />
     <Content Include="CustomsModules\CustomsDeclarationModules\DeclarationOthers\Components\CloseDeclaration\ExportDeclarationClosingDataComponent.html" />
     <Content Include="CustomsModules\CustomsDeclarationModules\DeclarationOthers\Components\DeclarationCancellation\DeclarationCancellationComponent.html" />
     <Content Include="CustomsModules\CustomsDeclarationModules\DeclarationOthers\Components\DeclarationPayment\DeclarationPaymentExportComponent.html" />
@@ -311,11 +312,9 @@
     <Content Include="CustomsModules\CustomsDeclarationModules\DeclarationTabs\Components\General\ConsigmentTabContent\ExportConsigmentContentComponent.html" />
     <Content Include="CustomsModules\CustomsListTemplates\Components\CourierWorksheetNGListTemplate.html" />
     <Content Include="CustomsModules\CustomsListTemplates\Components\CustomsContainerizationListTemplate.html" />
-
     <Content Include="CustomsModules\CustomsPhysicalCheck\Components\EditTabs\SearchReasult\PhysicalCheckSearchReasultTabComponent.html" />
-
     <Content Include="CustomsModules\CustomsMaintenance\Components\InterfaceTenantPriorityComponent.html" />
-
+    <Content Include="CustomsModules\CustomsPhysicalCheck\Components\FiltersMenu\PhysicalCheckFiltersMenuComponent.html" />
     <Content Include="CustomsModules\CustomsReferant\Components\ReferantExceptionReason\AddEditExceptionReasonComponent.html" />
     <Content Include="CustomsModules\CustomsReferant\Components\ReferantWorkspaces\ReferantWorkspaceComponent.html" />
     <Content Include="Customs\Components\ListActionBar\PhysicalCheckListActionBarComponent.html" />
@@ -468,6 +467,7 @@
     <TypeScriptCompile Include="CustomsModules\CustomsCourier\Components\CourierWorkSheet\CourierWorksheetNGComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsCourier\Components\CourierWorkSheet\GetUnloadPortCodeComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsCourier\ModuleSharedPrimeNG.ts" />
+    <TypeScriptCompile Include="CustomsModules\CustomsDeclarationCargoSplit\Components\FiltersMenu\DeclarationCargoSplitFiltersMenuComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsDeclarationModules\DeclarationOthers\Components\CloseDeclaration\ExportDeclarationClosingDataComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsDeclarationModules\DeclarationOthers\Components\DeclarationCancellation\DeclarationCancellationComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsDeclarationModules\DeclarationOthers\Components\DeclarationCancellation\Documents\DeclarationCancellationCustomsDocumentsController.ts" />
@@ -564,11 +564,9 @@
     <TypeScriptCompile Include="CustomsModules\CustomsListTemplates\Components\ListHeaderTemplates\ActionListHeaderTemplate.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsListTemplates\Components\ListHeaderTemplates\BlackTransportModeListHeaderTemplate.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsListTemplates\Components\ListHeaderTemplates\TransportModeListHeaderTemplate.ts" />
-
     <TypeScriptCompile Include="CustomsModules\CustomsPhysicalCheck\Components\EditTabs\SearchReasult\PhysicalCheckSearchReasultTabComponent.ts" />
-
     <TypeScriptCompile Include="CustomsModules\CustomsMaintenance\Components\InterfaceTenantPriorityComponent.ts" />
-
+    <TypeScriptCompile Include="CustomsModules\CustomsPhysicalCheck\Components\FiltersMenu\PhysicalCheckFiltersMenuComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsReferant\Components\FiltersMenu\DeclarationReferantDataFiltersMenuComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsReferant\Components\ReferantExceptionReason\AddEditExceptionReasonComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsReferant\Components\ReferantExceptionReason\AddExceptionReasonToUnifreightStatusComponent.ts" />

@@ -3891,6 +3891,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;TransportModeId&quot;"
     ListPropertyPath="&quot;TransportModeId&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -3964,6 +3965,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;Direction&quot;"
     ListPropertyPath="&quot;Direction&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -4072,31 +4074,41 @@
       <QueryColumn
         QueryCode="&quot;OpenChecks&quot;"
         IndexOrder="9"
+        ObjectFieldName="&quot;Direction&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;OpenChecks&quot;"
+        IndexOrder="10"
+        ObjectFieldName="&quot;TransportModeId&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;OpenChecks&quot;"
+        IndexOrder="11"
         ObjectFieldName="&quot;ContainerNubmer&quot;"
         ColumnWidth="110" />
       <QueryColumn
         QueryCode="&quot;OpenChecks&quot;"
-        IndexOrder="10"
+        IndexOrder="12"
         ObjectFieldName="&quot;OperationName&quot;"
         ColumnWidth="80" />
       <QueryColumn
         QueryCode="&quot;OpenChecks&quot;"
-        IndexOrder="11"
+        IndexOrder="13"
         ObjectFieldName="&quot;IsComprehensiveCheck&quot;"
         ColumnWidth="80" />
       <QueryColumn
         QueryCode="&quot;OpenChecks&quot;"
-        IndexOrder="12"
+        IndexOrder="14"
         ObjectFieldName="&quot;CheckTypeCode&quot;"
         ColumnWidth="80" />
       <QueryColumn
         QueryCode="&quot;OpenChecks&quot;"
-        IndexOrder="13"
+        IndexOrder="15"
         ObjectFieldName="&quot;CheckTypeName&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;OpenChecks&quot;"
-        IndexOrder="14"
+        IndexOrder="16"
         ObjectFieldName="&quot;VehicleChassisNumber&quot;"
         ColumnWidth="130" />
     </QueryColumns>
@@ -4167,31 +4179,41 @@
       <QueryColumn
         QueryCode="&quot;ClosedChecks&quot;"
         IndexOrder="8"
+        ObjectFieldName="&quot;Direction&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;ClosedChecks&quot;"
+        IndexOrder="9"
+        ObjectFieldName="&quot;TransportModeId&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;ClosedChecks&quot;"
+        IndexOrder="10"
         ObjectFieldName="&quot;ContainerNubmer&quot;"
         ColumnWidth="110" />
       <QueryColumn
         QueryCode="&quot;ClosedChecks&quot;"
-        IndexOrder="9"
+        IndexOrder="11"
         ObjectFieldName="&quot;OperationName&quot;"
         ColumnWidth="80" />
       <QueryColumn
         QueryCode="&quot;ClosedChecks&quot;"
-        IndexOrder="10"
+        IndexOrder="12"
         ObjectFieldName="&quot;IsComprehensiveCheck&quot;"
         ColumnWidth="80" />
       <QueryColumn
         QueryCode="&quot;ClosedChecks&quot;"
-        IndexOrder="11"
+        IndexOrder="13"
         ObjectFieldName="&quot;CheckTypeCode&quot;"
         ColumnWidth="80" />
       <QueryColumn
         QueryCode="&quot;ClosedChecks&quot;"
-        IndexOrder="12"
+        IndexOrder="14"
         ObjectFieldName="&quot;CheckTypeName&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;ClosedChecks&quot;"
-        IndexOrder="13"
+        IndexOrder="15"
         ObjectFieldName="&quot;VehicleChassisNumber&quot;"
         ColumnWidth="130" />
     </QueryColumns>
@@ -4262,31 +4284,41 @@
       <QueryColumn
         QueryCode="&quot;By Upcoming Checks&quot;"
         IndexOrder="8"
+        ObjectFieldName="&quot;Direction&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;By Upcoming Checks&quot;"
+        IndexOrder="9"
+        ObjectFieldName="&quot;TransportModeId&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;By Upcoming Checks&quot;"
+        IndexOrder="10"
         ObjectFieldName="&quot;ContainerNubmer&quot;"
         ColumnWidth="110" />
       <QueryColumn
         QueryCode="&quot;By Upcoming Checks&quot;"
-        IndexOrder="9"
+        IndexOrder="11"
         ObjectFieldName="&quot;OperationName&quot;"
         ColumnWidth="80" />
       <QueryColumn
         QueryCode="&quot;By Upcoming Checks&quot;"
-        IndexOrder="10"
+        IndexOrder="12"
         ObjectFieldName="&quot;IsComprehensiveCheck&quot;"
         ColumnWidth="80" />
       <QueryColumn
         QueryCode="&quot;By Upcoming Checks&quot;"
-        IndexOrder="11"
+        IndexOrder="13"
         ObjectFieldName="&quot;CheckTypeCode&quot;"
         ColumnWidth="80" />
       <QueryColumn
         QueryCode="&quot;By Upcoming Checks&quot;"
-        IndexOrder="12"
+        IndexOrder="14"
         ObjectFieldName="&quot;CheckTypeName&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;By Upcoming Checks&quot;"
-        IndexOrder="13"
+        IndexOrder="15"
         ObjectFieldName="&quot;VehicleChassisNumber&quot;"
         ColumnWidth="130" />
     </QueryColumns>
