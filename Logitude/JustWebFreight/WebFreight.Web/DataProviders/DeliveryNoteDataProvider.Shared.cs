@@ -194,5 +194,10 @@ namespace WebFreight.Web.DataProviders
         public string MasterShipmentNumber { get; set; }
         public string TruckerAddress { get; set; }
         public string ContainerSeals { get; set; }
+        public string ShipmentType { get; set; }
+        public string OnCarriageToPortName { get; set; }
+        public string GrossWeightUnitCode { get; set; }
+        public string VolumeUnitCode { get; set; }
+
     }
 }
