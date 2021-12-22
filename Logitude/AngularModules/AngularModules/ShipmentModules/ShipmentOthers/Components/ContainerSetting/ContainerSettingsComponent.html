@@ -36,11 +36,8 @@
                                                                 <LogTextBox [InputType]="'unsinteger'" [ObjectFieldName]="'AutomaticallyCloseDays'" [Text]="AutomaticallyCloseDays" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
                                                             </td>
                                                             <td>
-                                                                <div float-end >
-                                                                    <LogToolTip [bottom]="5"
-                                                                                [mode]="'Info'" [title]="''">
-                                                                        {{ClosingContainerToolTipMessage}}
-                                                                    </LogToolTip>
+                                                                <div float-end>
+                                                                    <HelpIcon [Header]="'Help'" [Text]="ClosingContainerToolTipMessage"></HelpIcon>
                                                                 </div>
                                                             </td>
                                                         </tr>
