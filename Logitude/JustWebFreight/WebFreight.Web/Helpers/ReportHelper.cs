@@ -453,7 +453,7 @@ namespace WebFreight.Web.Helpers
 
         public void CopyModifiedSystemReportsTemplates()
         {
-            new CopyModifiedSystemReportsTemplatesByUsersService().Execute();
+            new SystemReportsTemplatesService().CopyModifiedByUsersTemplates();
         }
         public ReportsTemplatesVersion RestoreReportsTemplatesVersion(string reportsTemplatesVersionId, string userId, int tenant)
         {
