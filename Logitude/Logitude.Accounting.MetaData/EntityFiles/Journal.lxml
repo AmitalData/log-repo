@@ -10,7 +10,7 @@
   HasCustomFilter="false"
   HasCustomFields="false"
   HasHelper="false"
-  HasShortTitle="false"
+  HasShortTitle="true"
   HasFiltersMenu="false"
   HasCustomValidator="true"
   IsEditable="false"

@@ -223,6 +223,12 @@
                             Entity.StatusLocalName : Entity.StatusName
                             }}
                         </div>
+                        <div *ngIf="FieldValue == 'Cancelled'" style="color: darkred;">
+                            {{
+ showLocal ?
+                            Entity.StatusLocalName : Entity.StatusName
+                            }}
+                        </div>
                     </div>
                     <div *ngIf="FieldName == 'AccountingEntityReference'">
                         <div *ngIf="IsHeaderScreenTemplate">

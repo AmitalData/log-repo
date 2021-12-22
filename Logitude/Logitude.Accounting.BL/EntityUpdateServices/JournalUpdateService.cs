@@ -357,7 +357,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                         });
 
                     }
-                    else if (entityPM.StatusCode == "3")  //Approved
+                    else if (entityPM.StatusCode == "3" || entityPM.StatusCodeEnum == JournalStatusTypePM.StatusCodeEnum.Cancelled)  //Approved
                     {
                         ContactRepository contactRep = new ContactRepository(entityPM.Tenant);
                         string resolveLoggingUserId = AuthenticationUtil.ResolveUserIdentityName(entityPM.Tenant);
@@ -687,7 +687,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 {
                     throw new Exception("(Journal.Tenant!= requestTenant)");
                 }
-                if (String.IsNullOrWhiteSpace(_JornalPmSource.QueueId))
+                if (String.IsNullOrWhiteSpace(_JornalPmSource.QueueId) &&  _JornalPmSource.StatusCodeEnum != JournalStatusTypePM.StatusCodeEnum.Draft && _JornalPmSource.StatusCodeEnum != JournalStatusTypePM.StatusCodeEnum.WaitingforApprove)
                 {
                     throw new Exception(
                         //"I must/Need??? Ledger to Reconcile - but journal did not Stream yet ..."
@@ -697,12 +697,20 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 }
 
                 _JornalPmSource.ChangeSetOp = ChangeSetOperation.Update;
-                _JornalPmSource.StatusCodeEnum = JournalStatusTypePM.StatusCodeEnum.Voided;
+                SetJournalStatusCodeBasedOnCurrentStatusCode();
                 this.Update(_JornalPmSource, true);
                 scope.Complete();
                 return _JornalPmSource;
             }
 
+        }
+
+        private void SetJournalStatusCodeBasedOnCurrentStatusCode()
+        {
+            if (_JornalPmSource.StatusCodeEnum == JournalStatusTypePM.StatusCodeEnum.Draft || _JornalPmSource.StatusCodeEnum == JournalStatusTypePM.StatusCodeEnum.WaitingforApprove)
+                _JornalPmSource.StatusCodeEnum = JournalStatusTypePM.StatusCodeEnum.Cancelled;
+            else
+                _JornalPmSource.StatusCodeEnum = JournalStatusTypePM.StatusCodeEnum.Voided;
         }
 
         protected override void AfterUpdating(JournalPM entityPM, EntityPM entityParentPM)

@@ -256,7 +256,8 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             {
                
                 allIdAccounts = repository.GetQAccIdByAcountIdTypeCategories(tenant, GLAccountId, cat1, cat2, cat3, cat4, cat5, gLAccountType, chartOfAccountsId, ChartOfAccountsTypeCode, salesmanId, includeControlAccount, securityLevel);
-                 //   .ToList();
+
+                //   .ToList();
             }
 
             if (IncludeChildAccounts && allIdAccounts != null && allIdAccounts.ToList().Count > 0)
@@ -276,7 +277,6 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             else
                 return null;
         }
-
 
         public List<GLAccountAndMoreDTO> GetCurrentBalanceByType(int tenant)
         {
@@ -430,6 +430,12 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                 ContactPM loggedContact = LoggedContactResolver.GetLoggedContact(tenant);
                 loggedUser = userQuery.GetSinglePM(loggedContact.Id, tenant);
             }
+
+            if(loggedUser == null)
+            {
+                loggedUser = userQuery.GetSinglePMByEmail(AuthenticationUtil.AuthenticatedUserEmail, 0);
+            }
+
             return loggedUser;
         }
 
