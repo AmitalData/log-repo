@@ -29,6 +29,7 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public string ReplyTo { get; set; }
         public string CC { get; set; }
         public string Subject { get; set; }
+        public bool IsSystemReportFixed { get; set; }
 
 
         [ForeignKey("ReportId")]

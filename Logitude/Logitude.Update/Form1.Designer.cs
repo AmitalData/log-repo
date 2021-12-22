@@ -175,9 +175,11 @@
             this.lblUInvoice = new System.Windows.Forms.Label();
             this.lblUQuote = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.lblFixModSysReports = new System.Windows.Forms.Label();
+            this.FixModifiedSystemReportsTemplates = new System.Windows.Forms.Button();
+            this.UpdateQuoteTemplateSettingsButton = new System.Windows.Forms.Button();
             this.UploadTimeZonesLabel = new System.Windows.Forms.Label();
             this.button55 = new System.Windows.Forms.Button();
-            this.UpdateQuoteTemplateSettingsButton = new System.Windows.Forms.Button();
             this.OIStatisticslabel = new System.Windows.Forms.Label();
             this.OIStatisticsButton = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
@@ -216,6 +218,7 @@
             this.AirlineLogoTenantTextBox = new System.Windows.Forms.TextBox();
             this.button46 = new System.Windows.Forms.Button();
             this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.button56 = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.RecalculateCashbookBtn = new System.Windows.Forms.Button();
@@ -235,7 +238,6 @@
             this.fixJournalsButton = new System.Windows.Forms.Button();
             this.button51 = new System.Windows.Forms.Button();
             this.timer2 = new System.Windows.Forms.Timer(this.components);
-            this.button56 = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
@@ -452,7 +454,6 @@
             // 
             // toolStripTextBoxFilePath
             // 
-            this.toolStripTextBoxFilePath.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.toolStripTextBoxFilePath.Name = "toolStripTextBoxFilePath";
             this.toolStripTextBoxFilePath.Size = new System.Drawing.Size(100, 27);
             this.toolStripTextBoxFilePath.Text = "c:\\TextCode.xml";
@@ -588,7 +589,6 @@
             // 
             // tenantTxtBox
             // 
-            this.tenantTxtBox.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.tenantTxtBox.Name = "tenantTxtBox";
             this.tenantTxtBox.Size = new System.Drawing.Size(100, 27);
             this.tenantTxtBox.Text = "1";
@@ -1412,9 +1412,6 @@
             // 
             // updateReportLocalNamesBtn
             // 
-            this.updateReportLocalNamesBtn.Location = new System.Drawing.Point(11, 367);
-            this.updateReportLocalNamesBtn.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-
             this.updateReportLocalNamesBtn.Location = new System.Drawing.Point(9, 313);
             this.updateReportLocalNamesBtn.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.updateReportLocalNamesBtn.Name = "updateReportLocalNamesBtn";
@@ -1772,7 +1769,8 @@
             // tabPage2
             // 
             this.tabPage2.BackColor = System.Drawing.Color.Transparent;
-
+            this.tabPage2.Controls.Add(this.lblFixModSysReports);
+            this.tabPage2.Controls.Add(this.FixModifiedSystemReportsTemplates);
             this.tabPage2.Controls.Add(this.UpdateQuoteTemplateSettingsButton);
             this.tabPage2.Controls.Add(this.UploadTimeZonesLabel);
             this.tabPage2.Controls.Add(this.button55);
@@ -1844,6 +1842,28 @@
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Other";
             // 
+            // lblFixModSysReports
+            // 
+            this.lblFixModSysReports.AutoSize = true;
+            this.lblFixModSysReports.Location = new System.Drawing.Point(1241, 116);
+            this.lblFixModSysReports.MinimumSize = new System.Drawing.Size(70, 0);
+            this.lblFixModSysReports.Name = "lblFixModSysReports";
+            this.lblFixModSysReports.Size = new System.Drawing.Size(70, 17);
+            this.lblFixModSysReports.TabIndex = 110;
+            this.lblFixModSysReports.Text = "...";
+            this.lblFixModSysReports.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            // 
+            // FixModifiedSystemReportsTemplates
+            // 
+            this.FixModifiedSystemReportsTemplates.Location = new System.Drawing.Point(996, 105);
+            this.FixModifiedSystemReportsTemplates.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.FixModifiedSystemReportsTemplates.Name = "FixModifiedSystemReportsTemplates";
+            this.FixModifiedSystemReportsTemplates.Size = new System.Drawing.Size(245, 34);
+            this.FixModifiedSystemReportsTemplates.TabIndex = 109;
+            this.FixModifiedSystemReportsTemplates.Text = "Fix Modified System Reports Templates";
+            this.FixModifiedSystemReportsTemplates.UseVisualStyleBackColor = true;
+            this.FixModifiedSystemReportsTemplates.Click += new System.EventHandler(this.FixModifiedSystemReportsTemplates_Click);
+            // 
             // UpdateQuoteTemplateSettingsButton
             // 
             this.UpdateQuoteTemplateSettingsButton.Location = new System.Drawing.Point(996, 51);
@@ -1854,6 +1874,27 @@
             this.UpdateQuoteTemplateSettingsButton.Text = "Update Quote Template Settings";
             this.UpdateQuoteTemplateSettingsButton.UseVisualStyleBackColor = true;
             this.UpdateQuoteTemplateSettingsButton.Click += new System.EventHandler(this.UpdateQuoteTemplateSettingsButton_Click);
+            // 
+            // UploadTimeZonesLabel
+            // 
+            this.UploadTimeZonesLabel.AutoSize = true;
+            this.UploadTimeZonesLabel.Location = new System.Drawing.Point(8, 278);
+            this.UploadTimeZonesLabel.Name = "UploadTimeZonesLabel";
+            this.UploadTimeZonesLabel.Size = new System.Drawing.Size(20, 17);
+            this.UploadTimeZonesLabel.TabIndex = 108;
+            this.UploadTimeZonesLabel.Text = "...";
+            // 
+            // button55
+            // 
+            this.button55.BackColor = System.Drawing.Color.IndianRed;
+            this.button55.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button55.Location = new System.Drawing.Point(9, 237);
+            this.button55.Name = "button55";
+            this.button55.Size = new System.Drawing.Size(198, 34);
+            this.button55.TabIndex = 107;
+            this.button55.Text = "Upload Time Zones";
+            this.button55.UseVisualStyleBackColor = false;
+            this.button55.Click += new System.EventHandler(this.UploadTimeZones_Click);
             // 
             // OIStatisticslabel
             // 
@@ -2262,6 +2303,16 @@
             this.tabPage4.Text = "Accounting Tools";
             this.tabPage4.UseVisualStyleBackColor = true;
             // 
+            // button56
+            // 
+            this.button56.Location = new System.Drawing.Point(18, 283);
+            this.button56.Name = "button56";
+            this.button56.Size = new System.Drawing.Size(180, 41);
+            this.button56.TabIndex = 83;
+            this.button56.Text = "Run Future Open Cheques Batch";
+            this.button56.UseVisualStyleBackColor = true;
+            this.button56.Click += new System.EventHandler(this.button56_Click);
+            // 
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.linkLabel1);
@@ -2452,37 +2503,6 @@
             this.button51.Text = "Verify Redeemed Cheques";
             this.button51.UseVisualStyleBackColor = true;
             this.button51.Click += new System.EventHandler(this.button51_Click_1);
-            // 
-            // button55
-            // 
-            this.button55.BackColor = System.Drawing.Color.IndianRed;
-            this.button55.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button55.Location = new System.Drawing.Point(9, 237);
-            this.button55.Name = "button55";
-            this.button55.Size = new System.Drawing.Size(198, 34);
-            this.button55.TabIndex = 107;
-            this.button55.Text = "Upload Time Zones";
-            this.button55.UseVisualStyleBackColor = false;
-            this.button55.Click += new System.EventHandler(this.UploadTimeZones_Click);
-            // 
-            // button56
-            // 
-            this.button56.Location = new System.Drawing.Point(18, 283);
-            this.button56.Name = "button56";
-            this.button56.Size = new System.Drawing.Size(180, 41);
-            this.button56.TabIndex = 83;
-            this.button56.Text = "Run Future Open Cheques Batch";
-            this.button56.UseVisualStyleBackColor = true;
-            this.button56.Click += new System.EventHandler(this.button56_Click);
-            // 
-            // UploadTimeZonesLabel
-            // 
-            this.UploadTimeZonesLabel.AutoSize = true;
-            this.UploadTimeZonesLabel.Location = new System.Drawing.Point(8, 278);
-            this.UploadTimeZonesLabel.Name = "UploadTimeZonesLabel";
-            this.UploadTimeZonesLabel.Size = new System.Drawing.Size(16, 13);
-            this.UploadTimeZonesLabel.TabIndex = 108;
-            this.UploadTimeZonesLabel.Text = "...";
             // 
             // Form1
             // 
@@ -2749,6 +2769,8 @@
         private System.Windows.Forms.Label UploadTimeZonesLabel;
         private System.Windows.Forms.Button button55;
         private System.Windows.Forms.Button button56;
+        private System.Windows.Forms.Button FixModifiedSystemReportsTemplates;
+        private System.Windows.Forms.Label lblFixModSysReports;
     }
 }
 

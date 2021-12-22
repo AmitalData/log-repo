@@ -1,4 +1,4 @@
-﻿
+
 
 <table>
 
@@ -156,7 +156,7 @@
                                                                                       <td style="width:5px"><div style="width:5px"></div></td>
                                                                                       <td style="width: 57px;">
                                                                                           <div>
-                                                                                              <button [disabled]="!item.IsSystem ? !IsEnableEditAllReportTemplate && !IsEnableEditUserReportTemplate :!IsEnableEditAllReportTemplate" style="display:inline;width:57px;vertical-align:middle" class="Button" (click)="EditReportsTemplate(item)">
+                                                                                              <button [disabled]="!item.IsSystem ? !IsEnableEditAllReportTemplate && !IsEnableEditUserReportTemplate : item.Tenant != 0" style="display:inline;width:57px;vertical-align:middle" class="Button" (click)="EditReportsTemplate(item)">
                                                                                                   <table>
                                                                                                       <tr>
                                                                                                           <td style="width:20px;"><img style="margin-bottom:-1px" src="./Images/Buttons/Edit.png" /></td>
@@ -180,7 +180,7 @@
                                                                                       <td style="width:5px"><div style="width:5px"></div></td>
                                                                                       <td style="width: 100px;">
                                                                                           <div>
-                                                                                              <button class="Button" (click)="RestoreVersionButtonClicked(item)">Version History</button>
+                                                                                              <button [disabled]="item.IsSystem && item.Tenant != 0" class="Button" (click)="RestoreVersionButtonClicked(item)">Version History</button>
                                                                                           </div>
                                                                                       </td>
                                                                                       <td>
