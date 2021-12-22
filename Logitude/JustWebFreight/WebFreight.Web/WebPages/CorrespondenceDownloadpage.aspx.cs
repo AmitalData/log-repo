@@ -47,18 +47,21 @@ namespace WebFreight.Web.WebPages
                     string EntityId = filestrings[1].ToString();
                     string partnertype = filestrings[2].ToString();
                     string forwardingShipmentEntityId = null;
+                    string cargoTrackingShipmentNumber = null;
+
                     int tenant = int.Parse(filestrings[3] + "");
                     // cargo forwarding shipment
-                    if (filestrings.Length == 5)
+                    if (filestrings.Length >= 5)
                     {
                         forwardingShipmentEntityId = filestrings[4].ToString();
+                        cargoTrackingShipmentNumber = filestrings[5].ToString();
                     }
 
                     
                     if (!string.IsNullOrEmpty(securityId) && !string.IsNullOrEmpty(EntityId))
-                        DownloadAll(securityId, EntityId, tenant, partnertype, forwardingShipmentEntityId);
+                        DownloadAll(securityId, EntityId, tenant, partnertype, forwardingShipmentEntityId, cargoTrackingShipmentNumber);
                     else if (!string.IsNullOrEmpty(securityId) && string.IsNullOrEmpty(EntityId))
-                        DownloadAllBySecurityKey(securityId, tenant, partnertype, forwardingShipmentEntityId);
+                        DownloadAllBySecurityKey(securityId, tenant, partnertype, forwardingShipmentEntityId, cargoTrackingShipmentNumber);
 
                 }
                 else
@@ -253,7 +256,7 @@ namespace WebFreight.Web.WebPages
         }
 
 
-        private void DownloadAll(string SecurityKey, string EntityId, int tenant, string partnerType, string forwardingShipmentEntityId)
+        private void DownloadAll(string SecurityKey, string EntityId, int tenant, string partnerType, string forwardingShipmentEntityId, string cargoTrackingShipmentNumber)
         {
             try
             {
@@ -283,12 +286,12 @@ namespace WebFreight.Web.WebPages
                     var ItemNum = 0;
                     foreach (DocumentsFilingPM document in documents)
                     {
+                        document.CalculatedFileName = cargoTrackingShipmentNumber != null ? cargoTrackingShipmentNumber + '_' + document.DocumentTypeName : document.CalculatedFileName;
+
                         if (document.DirectionCode == "O" && document.DoucmentTypeTemplateFormatCode == "M")
                         {
                             continue;
                         }
-
-
                         else if (!string.IsNullOrEmpty(document.FileExtension))
                         {
                             DocumentsExistance = true;
@@ -340,11 +343,11 @@ namespace WebFreight.Web.WebPages
 
             }
         }
-        private void DownloadAllBySecurityKey(string SecurityKey, int tenant, string partnerType, string forwardingShipmentEntityId)
+        private void DownloadAllBySecurityKey(string SecurityKey, int tenant, string partnerType, string forwardingShipmentEntityId, string cargoTrackingShipmentNumber)
         {
             Shipment shipment = GetShipmentBySecurityKey(SecurityKey, tenant);
 
-            DownloadAll(SecurityKey, shipment?.Id, tenant, partnerType, forwardingShipmentEntityId);
+            DownloadAll(SecurityKey, shipment?.Id, tenant, partnerType, forwardingShipmentEntityId, cargoTrackingShipmentNumber);
         }
 
         private static Shipment GetShipmentBySecurityKey(string SecurityKey, int tenant)
