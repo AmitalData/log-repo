@@ -93,7 +93,7 @@ namespace Logitude.Accounting.BL.CoreBL
             ThrowIfStornoNotAllowed();
             Storno = CreateStorno(_StornoOverrideM);
             
-            if (_JournalStornoPrepareJReconcileService.CreateJournalReconcileFromStorno(Storno))
+            if (_JournalStornoPrepareJReconcileService.CreateJournalReconcileFromStorno(Storno, _StornoOverrideM))
             {
                 Storno.JournalReconciles.AddRange(_JournalStornoPrepareJReconcileService.JournalReconciles2Insert);
             }
