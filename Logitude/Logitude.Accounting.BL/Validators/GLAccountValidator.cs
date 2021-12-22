@@ -439,11 +439,6 @@ namespace Logitude.Accounting.BL.Validators
                 return TextCodesTranslator.TranslateText("GLAccounts.O.GLAParentValidation1",0);
                 //return "GLAccount and its parent must be same chart of account type!";
             }
-            else if (parentPM.ChartOfAccountsId != glaccountPM.ChartOfAccountsId)
-            {
-                return TextCodesTranslator.TranslateText("GLAccounts.O.GLAParentValidation2",0);
-                //return "GLAccount and its parent must be same chart of account!";
-            }
             else if (parentPM.AccountTypeCode != glaccountPM.AccountTypeCode)
             {
                 return "GLAccount and its parent must be same account type!";
