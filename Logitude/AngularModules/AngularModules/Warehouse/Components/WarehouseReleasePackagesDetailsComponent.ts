@@ -247,7 +247,7 @@ export class WarehouseReleasePackagesDetailsComponent extends BaseComponent impl
         }
         logWindow.Width = 1250;
         logWindow.Height = 550;
-        logWindow.Title = "Choose Packages";
+        logWindow.Title = "Choose " + packageType+"s";
         logWindow.WindowArgs = windowArgs;
         logWindow.Show("./Warehouse/Components/WarehouseReleaseChoosePackagesComponent");
 

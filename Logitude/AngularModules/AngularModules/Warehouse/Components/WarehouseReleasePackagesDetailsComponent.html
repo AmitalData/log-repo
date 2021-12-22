@@ -1,4 +1,4 @@
-﻿
+
 <div class="MediaFill">
 
     <table style="height:100%">
@@ -147,8 +147,8 @@
 
 
                                                             <td class="GridViewCell" style="width:100%; min-width: 100%; max-width: 100%; position: relative;">
-                                                                <div *ngIf="!IsLCLEntity" style="width:135px;max-width:135px">{{item.Description}}</div>
-                                                                <div *ngIf="IsLCLEntity" style="width:240px;max-width:240px">{{item.Description}}</div>
+                                                                <div *ngIf="!IsLCLEntity" style="width:135px;max-width:135px" title={{item.Description}}>{{item.Description}}</div>
+                                                                <div *ngIf="IsLCLEntity" style="width:240px;max-width:240px" title={{item.Description}}>{{item.Description}}</div>
                                                             </td>
 
                                                             <td *ngIf="!IsEditMode" class="GridViewCell" style="width: 50px; min-width: 50px; max-width: 50px;vertical-align:central">
