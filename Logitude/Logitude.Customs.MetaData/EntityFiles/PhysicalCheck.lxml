@@ -1646,7 +1646,7 @@
     FullLocalDefaultText="&quot;סגורה&quot;"
     ListFieldLable="&quot;IsClosedListLable&quot;"
     ListLableDefaultText="&quot;Is Closed&quot;"
-    ListLocalDefaultText="&quot;פתוח/סגור&quot;"
+    ListLocalDefaultText="&quot;סגורה&quot;"
     IsNullable="false"
     IsForeignKey="false"
     DontBuildRelationOnDB="false"
