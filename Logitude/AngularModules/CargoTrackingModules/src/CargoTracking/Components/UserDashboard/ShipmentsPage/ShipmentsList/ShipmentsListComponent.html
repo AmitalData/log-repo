@@ -150,6 +150,7 @@
                 <span class="filter-close-btn">×</span>
             </li>
             <li *ngIf="ShipmentSearchInput.OrdersOnly" (click)="ClearOrdersOnlyChanged(false)"> SHO Only
+
                 <span class="filter-close-btn">×</span>
             </li>
             <li *ngIf="ShipmentSearchInput.EstimatedArrivalOnly" (click)="ClearEstimatedArrivalOnlyChanged(false)"> Estimated Arrival Only
@@ -613,6 +614,7 @@
                     <div class="flex-row-space-between">
                         <label>SHO Only</label>
                         <mat-slide-toggle color="primary" [(ngModel)]="this.MoreFilterMobileValue.OrdersOnly" ></mat-slide-toggle>
+
                     </div>
                     <div class="flex-row-space-between">
                         <label>Estimated Arrival Only</label>
