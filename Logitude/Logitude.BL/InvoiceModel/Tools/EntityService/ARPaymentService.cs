@@ -1771,18 +1771,13 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             JournalPM journalPM = journalQuery.GetJournalByAccountingEntityIdAndCode(paymentPM.Id, "3", paymentPM.Tenant);
             if (journalPM != null)
             {
-                //journalPM.AccountingEntityReference = paymentPM.PaymentNo;
-                //journalPM.AccountingEntityCode = "3";
-                //journalPM.StatusCode = "3";
-                //journalPM.ChangeSetOp = ChangeSetOperation.Update;
-
-                //IJournalUpdateServiceExt journalUpdate = ContainerAccessor.Container.Resolve(typeof(IJournalUpdateServiceExt), "JournalUpdateServiceExt", new ParameterOverride("", 1)) as IJournalUpdateServiceExt;
+                var returnedToCustomerChequesNumbers = entityPm.ARPaymentChequeReplicas
+                    .Where(cheque => cheque.StatusCode == ARPaymentChequeStatusValues.ReturnedToCustomer)
+                    .Select(cheque=>cheque.ChequeNumber)
+                    .ToList();
 
                 var journalUpdate = ContainerAccessor.Container.Resolve(typeof(IJournalVoidUpdateServiceExt), "JournalVoidUpdateServiceExt", new ParameterOverride("", 1)) as IJournalVoidUpdateServiceExt;
 
-                //journal.AccountingEntityCode = "3";
-                //journal.AccountingEntityId = theEntityPm.Id;
-                //journal.AccountingEntityReference = theEntityPm.PaymentNo;
 
                 journalUpdate.Update(journalPM, new StornoOverrideM()
                 {
@@ -1790,7 +1785,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     LineNotes = paymentPM.CancelationNotes,
                     AccountingEntityId = paymentPM.Id,
                     AccountingDate = entityPm.AccountingCancelationDate,
-                    AccountingEntityReference = paymentPM.PaymentNo
+                    AccountingEntityReference = paymentPM.PaymentNo,
+                    ChequeNumbersToExcludeFromStorno = returnedToCustomerChequesNumbers
                 });
 
                 voidARPaymentJounal();

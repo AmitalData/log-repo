@@ -163,10 +163,20 @@ namespace Logitude.Accounting.BL.CoreBL
                 Storno.ExternalNo = _JournalPM.ExternalNo;
             }
 
-            foreach (JournalLinePM item in _JournalPM.JournalLines)
+            var journalLines = _JournalPM.JournalLines;
+
+            if (stornoOverrideM.ChequeNumbersToExcludeFromStorno != null && stornoOverrideM.ChequeNumbersToExcludeFromStorno.Count > 0)
+            {
+                RemoveChequesJournalLinesByNumber(stornoOverrideM.ChequeNumbersToExcludeFromStorno, journalLines);
+                ResequenceLinesNumbers(journalLines);
+            }
+
+
+
+            foreach (JournalLinePM item in journalLines)
             {
                 JournalLinePM newStornoJournalLine = new JournalLinePM();
-                newStornoJournalLine.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert;
+                newStornoJournalLine.ChangeSetOp = ChangeSetOperation.Insert;
                 newStornoJournalLine.AccountingDate = item.AccountingDate;
                 if (stornoOverrideM.AccountingDate.HasValue)
                 {
@@ -218,6 +228,22 @@ namespace Logitude.Accounting.BL.CoreBL
             return Storno;
         }
 
+        private void RemoveChequesJournalLinesByNumber(List<string> chequeNumbersToExcludeFromStorno, List<JournalLinePM> journalLines)
+        {
+            journalLines.RemoveAll(line =>
+            {
+                return chequeNumbersToExcludeFromStorno.Contains(line.Reference2);
+            });
+        }
+
+        private void ResequenceLinesNumbers(List<JournalLinePM> journalLines)
+        {
+            var lineNumber = 1;
+            foreach (var line in journalLines)
+            {
+                line.Line = lineNumber++;
+            }
+        }
 
         public JournalPM Storno { get; set; }
     }
