@@ -976,6 +976,12 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="PermissionBuildMonths"
+    Type="int">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="Id"
     ReferencedTable="GlobalTenants"

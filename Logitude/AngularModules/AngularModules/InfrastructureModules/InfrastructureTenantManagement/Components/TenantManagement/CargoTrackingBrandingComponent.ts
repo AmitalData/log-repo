@@ -141,6 +141,17 @@ export class CargoTrackingBrandingComponent extends BaseComponent implements Aft
         this.ValidateMainColorCode(hexColor);
         this.UpdateEntityMainColor();
     }
+    private permissionBuildMonths: number;
+    public get PermissionBuildMonths(): number
+    {
+        return this.permissionBuildMonths;
+    }
+    public set PermissionBuildMonths(Months: number)
+    {
+        this.mainColorCode = hexColor;
+        this.ValidateMainColorCode(hexColor);
+        this.UpdateEntityMainColor();
+    }
 
     private ValidateMainColorCode(hexColor: string)
     {
