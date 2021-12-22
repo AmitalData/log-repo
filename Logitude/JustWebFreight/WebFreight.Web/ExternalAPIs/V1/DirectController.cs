@@ -319,6 +319,9 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 IShipmentsContext MyContext = ShipmentsContext.GetContext(tenant);
                 DirectQueryService mappingService = new DirectQueryService(tenant);
 
+                this.InitOceanOrInlandPackages(entity);
+                this.InitContainers(entity);
+
                 APIUnassignedDataHandler apiUnassignedDataHandler = new APIUnassignedDataHandler(tenant, computingPartnerCode);
                 entity = apiUnassignedDataHandler.HandleUnassignedDirectShipmentData(entity);
 
@@ -356,6 +359,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                     }
                     externalAPIShipmentValidator.ValidateUpdateShipmentPackages(directPM);
                     externalAPIShipmentValidator.UpdatePickupDeliveryPackagesChangeSet(directPM);
+
                     this.ValidateCustomsFields(directPM);
                     this.UpdatePartners(MyContext, directPM);
                     ComputeHelper.ComputeTotals(directPM);

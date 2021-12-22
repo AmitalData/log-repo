@@ -401,6 +401,9 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         IShipmentsContext MyContext = ShipmentsContext.GetContext(authToken.Tenant);
                         HouseQueryService mappingService = new HouseQueryService(authToken.Tenant);
 
+                        this.InitOceanOrInlandPackages(entity);
+                        this.InitContainers(entity);
+
                         APIUnassignedDataHandler apiUnassignedDataHandler = new APIUnassignedDataHandler(authToken.Tenant, computingPartnerCode);
                         entity = apiUnassignedDataHandler.HandleUnassignedHouseShipmentData(entity);
 
