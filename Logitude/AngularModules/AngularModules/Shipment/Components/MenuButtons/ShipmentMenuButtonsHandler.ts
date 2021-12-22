@@ -55,6 +55,7 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
                     if (button.EventCode == "ShowAWB") {
                         button.IsDisabled = buttonEnabled ? (this.EntityPM.TransportModeId != "A") : true;
                     }
+
                     if (button.EventCode == "CopyShipment") {
                         if (buttonEnabled) {
                             if (this.EntityPM.ShipmentLevelCode == "C") {
@@ -71,6 +72,7 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
                             button.IsDisabled = true;
                         }
                     }
+
                     if (button.EventCode == "OperationalCloseShipment") {
                         if (buttonEnabled) {
                             if (this.EntityPM.IsOperationalClosed || this.EntityPM.IsCancelled || this.EntityPM.ShipmentLevelCode == "H") {
@@ -84,6 +86,7 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
                             button.IsDisabled = true;
                         }
                     }
+
                     if (button.EventCode == "AccountingCloseShipment") {
                         if (buttonEnabled) {
                             if (this.EntityPM.IsAccountingClosed || !this.EntityPM.IsOperationalClosed || this.EntityPM.IsCancelled || this.EntityPM.ShipmentLevelCode == "H") {
@@ -97,6 +100,7 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
                             button.IsDisabled = true;
                         }
                     }
+
                     if (button.EventCode == "OperationalReopenShipment") {
                         if (buttonEnabled) {
                             if (!this.EntityPM.IsOperationalClosed || this.EntityPM.IsAccountingClosed || this.EntityPM.IsCancelled || this.EntityPM.ShipmentLevelCode == "H") {
@@ -230,18 +234,23 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
                         }
                     }
                     if (button.EventCode == "SplitShipment") {
+                        if (buttonEnabled) {
+                            if (this.EntityPM.IsCancelled) {
+                                button.IsDisabled = true;
+                            }
+                            else {
+                                if (this.EntityPM.ShipmentLevelCode == "D" || this.EntityPM.ShipmentLevelCode == "H") {
+                                    button.IsHidden = false;
+                                    button.IsDisabled = false;
+                                }
+                                else {
+                                    button.IsHidden = true;
+                                }
 
-                        if (this.EntityPM.ShipmentLevelCode == "D" || this.EntityPM.ShipmentLevelCode == "H") {
-                            button.IsHidden = false;
-
-                            button.IsDisabled = !buttonEnabled;
-                        }
-
-                        else {
-                            button.IsHidden = true;
-                        }
-                        if (this.IsStandAloneFeatureShipment() || this.IsForwarderShipmentConnectedWithStandAlone()) {
-                            button.IsDisabled = true;
+                                if (this.IsStandAloneFeatureShipment() || this.IsForwarderShipmentConnectedWithStandAlone()) {
+                                    button.IsDisabled = true;
+                                }
+                            }                            
                         }
                     }
 
