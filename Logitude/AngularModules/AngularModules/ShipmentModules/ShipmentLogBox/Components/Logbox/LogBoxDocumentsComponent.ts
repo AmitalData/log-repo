@@ -763,6 +763,9 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
     }
 
     RefreshBtnClick() {
+        if(!this.SelectedShipment){
+            return;
+        }
         this.ReloadDocuments();
     }
     archiveButtonText: string = "Archive";
@@ -773,6 +776,9 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
     public set ArchiveButtonText(newValue: string) { this.archiveButtonText = newValue; }
 
     ArchiveClicked() {
+        if(!this.SelectedShipment){
+            return;
+        }
         //this.CurrentSession.StartBusyIndicator("Saving ...");
         this.StartBusyIndicator("Saving ...");
         this._ShipmentPMService.get(this.SelectedShipment.Id).subscribe((myResult:any) => {
@@ -1000,6 +1006,9 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
     }
 
     DownloadAllClicked() {
+        if(!this.SelectedShipment){
+            return;
+        }
         var windowArgs: any = {};
         var OTable = window.ObjectTables.filter(a => a.Name == "Shipment")[0];
         windowArgs.ObjectTableId = OTable.Id;
