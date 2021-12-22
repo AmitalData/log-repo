@@ -378,10 +378,10 @@ export class AddEditDeliveryComponent implements AfterViewInit, OnDestroy {
 
                                             // Task 47686: Export& Domestic Terminal: Delivery From
 
-                                            //else if (!AppTool.IsNullOrEmpty(this.ShipmentPM.WarehouseLegWarehouseId)) {
-                                            //    this.PageChild_MAIN.FromTypeCode = "PART";
-                                            //    this.PageChild_MAIN.FromPartnerCardId = this.ShipmentPM.WarehouseLegWarehouseId;
-                                            //}
+                                            else if (!AppTool.IsNullOrEmpty(this.ShipmentPM.WarehouseLegWarehouseId) && this.ShipmentPM.DirectionId == 'I' ) {
+                                                this.PageChild_MAIN.FromTypeCode = "PART";
+                                                this.PageChild_MAIN.FromPartnerCardId = this.ShipmentPM.WarehouseLegWarehouseId;
+                                            }
 
                                             else {
                                                 var fromPortId = this.ShipmentPM.MainCarriageToPortId;
