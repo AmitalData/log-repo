@@ -918,6 +918,10 @@ export class TenantManagementPM {
     private scheduledTasksLimitPerReport: number;
     public get ScheduledTasksLimitPerReport() { return this.scheduledTasksLimitPerReport; }
     public set ScheduledTasksLimitPerReport(newValue: number) { if (this.scheduledTasksLimitPerReport != newValue) { this.scheduledTasksLimitPerReport = newValue; this.MarkAsDirty("ScheduledTasksLimitPerReport"); } }
+    
+    private permissionBuildMonths: number;
+    public get PermissionBuildMonths() { return this.permissionBuildMonths; }
+    public set PermissionBuildMonths(newValue: number) { if (this.permissionBuildMonths != newValue) { this.permissionBuildMonths = newValue; this.MarkAsDirty("permissionBuildMonths"); } }
        
 	 
     private isHybrid: boolean;
@@ -957,4 +961,4 @@ export class TenantManagementPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}
