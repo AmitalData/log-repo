@@ -13067,7 +13067,7 @@
     IsChecked="true"
     IsDeleted="false"
     ObjectTableName="&quot;TenantManagement&quot;"
-    FieldsDataType="&quot;Integer&quot;"
+    FieldsDataType="&quot;Double&quot;"
     MinLength="0"
     MaxLength="0"
     IsRequired="false"

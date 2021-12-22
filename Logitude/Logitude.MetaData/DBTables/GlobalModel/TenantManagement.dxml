@@ -978,7 +978,7 @@
   </Column>
   <Column
     Name="PermissionBuildMonths"
-    Type="int">
+    Type="float">
     <Constraints
       Nullable="true" />
   </Column>
