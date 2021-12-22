@@ -549,7 +549,17 @@ h1{
     transition: 1s all ;
     /* padding: 20px; */
 }
-.filters-sidebar::after{
+
+.clear-addvance-filter-div{
+    float: right;
+    cursor: pointer;
+}
+.clear-addvance-filter-svg{
+    /* position: relative; */
+    top: 4px;
+    /* fill: var(--MainColor); */
+}
+.filters-sidebar-close-space{
     content: "";
     background: #00000021;
     top: 0;
