@@ -652,6 +652,11 @@
       Name="&quot;FixHtmlResolverVariable&quot;"
       SearchFields="&quot;FHR,FixHtmlResolverVariable&quot;"
       Description="&quot;Fix Html Resolver Variable&quot;" />
+    <Record
+      Code="&quot;OPF&quot;"
+      Name="&quot;Open Format RTL&quot;"
+      SearchFields="&quot;OPF,Open Format RTL&quot;"
+      Description="&quot;Open Format RTL Issues&quot;" />
   </Records>
   <DataContracts />
   <AdditionalTextCodes />

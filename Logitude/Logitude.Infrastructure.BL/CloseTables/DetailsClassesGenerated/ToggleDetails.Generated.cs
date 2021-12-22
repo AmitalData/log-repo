@@ -436,6 +436,14 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "FHR,FixHtmlResolverVariable", 
                 Description = "Fix Html Resolver Variable", 
 			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "OPF", 
+                Name = "Open Format RTL", 
+                SearchFields = "OPF,Open Format RTL", 
+                Description = "Open Format RTL Issues", 
+			});
 			
             return all;
        }
