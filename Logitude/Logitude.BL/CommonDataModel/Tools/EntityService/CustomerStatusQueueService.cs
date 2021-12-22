@@ -20,7 +20,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         }
         public List<QueueTask> CreateQueueTasks()
         {
-            CustomerTenantAccessCard customerTenantAccessCards = customerTenantAccessCardRepository.GetByCustomerId(customerPM.Id, customerPM.Tenant);
+            CustomerTenantAccessCard customerTenantAccessCards = customerTenantAccessCardRepository.GetCustomerById(customerPM.Id, customerPM.Tenant);
             return GetCustomerStatusLogsParameters(customerTenantAccessCards);
         }
         private List<QueueTask> GetCustomerStatusLogsParameters(CustomerTenantAccessCard customerTenantAccessCards)

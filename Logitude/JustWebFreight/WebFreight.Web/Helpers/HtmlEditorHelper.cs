@@ -1420,7 +1420,7 @@ namespace WebFreight.Web.Helpers
                 return document.DocumentNode.SelectNodes("//span")?.Where(n => n.InnerText.Contains("[") && n.InnerText.Contains("[") && (n.LastChild.Name != "span" || n.FirstChild.Name != "span"));
             }
            
-           return document.DocumentNode.SelectNodes("//span").Where(n => n.InnerText.Contains("[") && n.InnerText.Contains("["));
+           return document.DocumentNode.SelectNodes("//span")?.Where(n => n.InnerText.Contains("[") && n.InnerText.Contains("["));
         
         }
 

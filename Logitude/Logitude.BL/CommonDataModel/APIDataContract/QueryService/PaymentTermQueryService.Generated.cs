@@ -176,33 +176,33 @@ using Simplog.Data.CommonDataModel;
 						
 					}
                     
-					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.EnglishName))
-					{							//throw new ApplicationException("EnglishName Can't be update"); 
-							temp.EnglishName = MyEntity.EnglishName;
+					if(!IsUpdate)
+					{							
+						temp.EnglishName = MyEntity.EnglishName;
 
 										}  
 
 					
                     
-					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.LocalName))
-					{							//throw new ApplicationException("LocalName Can't be update"); 
-							temp.LocalName = MyEntity.LocalName;
+					if(!IsUpdate)
+					{							
+						temp.LocalName = MyEntity.LocalName;
 
 										}  
 
 					
                     
-					if(!IsUpdate)// && MyEntity.Days != null)
-					{							//throw new ApplicationException("Days Can't be update"); 
-							temp.Days = MyEntity.Days;
+					if(!IsUpdate)
+					{							
+						temp.Days = MyEntity.Days;
 
 										}  
 
 					
                     
-					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.ExternalId))
-					{							//throw new ApplicationException("ExternalId Can't be update"); 
-							temp.ExternalId = MyEntity.ExternalId;
+					if(!IsUpdate)
+					{							
+						temp.ExternalId = MyEntity.ExternalId;
 
 										}  
 
@@ -212,9 +212,8 @@ using Simplog.Data.CommonDataModel;
 					   
 						 
 						if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.Code))
-						{
-								//throw new ApplicationException("Code Can't be update"); 
-								temp.Code = MyEntity.Code;
+						{								
+							temp.Code = MyEntity.Code;
 								
 						
 						}  
@@ -226,9 +225,8 @@ using Simplog.Data.CommonDataModel;
 					   
 						 
 						if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.PartnerCode))
-						{
-								//throw new ApplicationException("PartnerCode Can't be update"); 
-								temp.Code = MyEntity.PartnerCode;
+						{								
+							temp.Code = MyEntity.PartnerCode;
 								
 						
 						}  

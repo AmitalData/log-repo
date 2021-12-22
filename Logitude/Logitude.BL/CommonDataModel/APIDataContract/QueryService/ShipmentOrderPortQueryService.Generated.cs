@@ -193,33 +193,33 @@ using Simplog.Data.CommonDataModel;
 						
 					}
                     
-					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.Code))
-					{							//throw new ApplicationException("Code Can't be update"); 
-							temp.CombinedCode = MyEntity.Code;
+					if(!IsUpdate)
+					{							
+						temp.CombinedCode = MyEntity.Code;
 
 										}  
 
 					
                     
-					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.LocalName))
-					{							//throw new ApplicationException("LocalName Can't be update"); 
-							temp.LocalName = MyEntity.LocalName;
+					if(!IsUpdate)
+					{							
+						temp.LocalName = MyEntity.LocalName;
 
 										}  
 
 					
                     
-					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.EnglishName))
-					{							//throw new ApplicationException("EnglishName Can't be update"); 
-							temp.EnglishName = MyEntity.EnglishName;
+					if(!IsUpdate)
+					{							
+						temp.EnglishName = MyEntity.EnglishName;
 
 										}  
 
 					
                     
-					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.PartnerCode))
-					{							//throw new ApplicationException("PartnerCode Can't be update"); 
-							temp.CombinedCode = MyEntity.PartnerCode;
+					if(!IsUpdate)
+					{							
+						temp.CombinedCode = MyEntity.PartnerCode;
 
 										}  
 
@@ -234,7 +234,7 @@ using Simplog.Data.CommonDataModel;
 
 						 
 							if(!IsUpdate)
-							{								//throw new ApplicationException("Country Can't be update"); 
+							{								
 								temp.CountryId = myCountryPM.Id;
 						  
 							}  
@@ -255,7 +255,7 @@ using Simplog.Data.CommonDataModel;
 
 						 
 							if(!IsUpdate)
-							{								//throw new ApplicationException("State Can't be update"); 
+							{								
 								temp.StateId = myStatePM.Id;
 						  
 							}  
@@ -271,9 +271,8 @@ using Simplog.Data.CommonDataModel;
 					   
 						 
 						if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.PortCode))
-						{
-								//throw new ApplicationException("PortCode Can't be update"); 
-								temp.Code = MyEntity.PortCode;
+						{								
+							temp.Code = MyEntity.PortCode;
 								
 						
 						}  

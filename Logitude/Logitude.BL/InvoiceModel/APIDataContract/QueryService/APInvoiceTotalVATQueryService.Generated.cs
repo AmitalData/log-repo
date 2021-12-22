@@ -115,7 +115,7 @@ using Simplog.Data.InvoiceModel;
 
 						 
 							if(!IsUpdate)
-							{								//throw new ApplicationException("VatType Can't be update"); 
+							{								
 								temp.VatTypeId = myVatTypePM.Id;
 						  
 							}  
@@ -127,17 +127,17 @@ using Simplog.Data.InvoiceModel;
 			
 					
                     
-					if(!IsUpdate)// && item.VatPercent != null)
-					{							//throw new ApplicationException("VatPercent Can't be update"); 
-							temp.VatPercent = item.VatPercent;
+					if(!IsUpdate)
+					{							
+						temp.VatPercent = item.VatPercent;
 
 										}  
 
 					
                     
-					if(!IsUpdate)// && item.InvoiceCurrencyVATAmount != null)
-					{							//throw new ApplicationException("InvoiceCurrencyVATAmount Can't be update"); 
-							temp.InvoiceCurrencyVATAmount = item.InvoiceCurrencyVATAmount;
+					if(!IsUpdate)
+					{							
+						temp.InvoiceCurrencyVATAmount = item.InvoiceCurrencyVATAmount;
 
 										}  
 

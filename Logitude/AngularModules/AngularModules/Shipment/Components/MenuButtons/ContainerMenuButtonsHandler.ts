@@ -78,7 +78,7 @@ export class ContainerMenuButtonsHandler implements OnDestroy {
                     var button = menuButtons[i];
                     if (button.EventCode == "CloseContainer") {
                         if (buttonEnabled) {
-                            if (this.EntityPM.IsClosed) {
+                            if (this.EntityPM.IsClosed || this.EntityPM.IsCancelled) {
                                 button.IsDisabled = true;
                             }
                             else {
@@ -92,7 +92,7 @@ export class ContainerMenuButtonsHandler implements OnDestroy {
 
                     if (button.EventCode == "ReopenContainer") {
                         if (buttonEnabled) {
-                            if (!this.EntityPM.IsClosed) {
+                            if (!this.EntityPM.IsClosed || this.EntityPM.IsCancelled) {
                                 button.IsDisabled = true;
                             }
                             else {
