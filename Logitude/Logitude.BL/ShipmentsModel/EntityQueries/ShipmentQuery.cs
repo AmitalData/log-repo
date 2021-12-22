@@ -11381,7 +11381,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 (from shipment in repository.context.Shipments.Include("Direction").Include("ShipmentLevel").Include("TransportMode").Include("CustomerCard").Include("ShipperCard").Include("ShipmentType").Include("OnCarriageToPort")
                  join shipmentPackage in repository.context.ShipmentPackages.Include("PackageType")
                  on shipment.Id equals shipmentPackage.ShipmentId into JoinedData
-                 join sm in repository.context.ShipmentMasterDatas.Include("MainCarriageFromPort").Include("MainCarriageToPort").Include("MainCarriageFinalDestinationPort").Include("MainCarriageCarrierCard").Include("Transshipment1ToPort").Include("Transshipment2ToPort").Include("Transshipment3ToPort")
+                 join sm in repository.context.ShipmentMasterDatas.Include("MainCarriageFromPort").Include("MainCarriageToPort").Include("MainCarriageFinalDestinationPort").Include("MainCarriageCarrierCard")
+                                                                  .Include("Transshipment1ToPort").Include("Transshipment2ToPort").Include("Transshipment3ToPort").Include("Transshipment1FromPort").Include("Transshipment2FromPort").Include("Transshipment3FromPort")
                  on shipment.MasterShipmentDataId equals sm.Id into shipmentJoin
                  from jd in JoinedData.DefaultIfEmpty()
                  from m in shipmentJoin.DefaultIfEmpty()
@@ -11398,7 +11399,6 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                      CustomerId = shipment.CustomerId,
                      CustomerName = shipment.CustomerCard != null ? shipment.CustomerCard.EnglishName : null,
                      AgentName = shipment.AgentCard != null ? shipment.AgentCard.EnglishName : null,
-                     MainCarriageFromPortName = m.MainCarriageFromPort.EnglishName,
                      MainCarriageFinalDestinationPortName = m.MainCarriageFinalDestinationPort != null ? m.MainCarriageFinalDestinationPort.EnglishName : null,
                      ShipperName = shipment.ShipperCard != null ? shipment.ShipperCard.EnglishName : null,
                      MainCarriageCarrierName = m.MainCarriageCarrierCard != null ? m.MainCarriageCarrierCard.EnglishName : null,                    
@@ -11496,6 +11496,10 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                      Transshipment1FromPortId = m.Transshipment1FromPortId,
                      Transshipment2FromPortId = m.Transshipment2FromPortId,
                      Transshipment3FromPortId = m.Transshipment3FromPortId,
+                     MainCarriageFromPortName = m.MainCarriageFromPort != null ? m.MainCarriageFromPort.EnglishName:null,
+                     Transshipment1FromPortName = m.Transshipment1FromPort != null ? m.Transshipment1FromPort.EnglishName : null,
+                     Transshipment2FromPortName = m.Transshipment2FromPort != null ? m.Transshipment2FromPort.EnglishName : null,
+                     Transshipment3FromPortName = m.Transshipment3FromPort != null ? m.Transshipment3FromPort.EnglishName : null,
                      MainCarriageATA = m.MainCarriageATA,
                      MainCarriageETA = m.MainCarriageETA,
                      Transshipment1ATA = m.Transshipment1ATA,
@@ -11504,6 +11508,12 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                      Transshipment2ETA = m.Transshipment2ETA,
                      Transshipment3ATA = m.Transshipment3ATA,
                      Transshipment3ETA = m.Transshipment3ETA,
+                     Transshipment1ATD = m.Transshipment1ATD,
+                     Transshipment1ETD = m.Transshipment1ETD,
+                     Transshipment2ATD = m.Transshipment2ATD,
+                     Transshipment2ETD = m.Transshipment2ETD,
+                     Transshipment3ATD = m.Transshipment3ATD,
+                     Transshipment3ETD = m.Transshipment3ETD,
                      MainCarriageVesselId = m.MainCarriageVesselId,
                      Transshipment1VesselId = m.Transshipment1VesselId,
                      Transshipment2VesselId = m.Transshipment2VesselId,

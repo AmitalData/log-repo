@@ -125,10 +125,12 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public string PackageDliveryId { get; set; }
 
         public string Transshipment3FromPortId { get; set; }
+        public string Transshipment3FromPortName { get; set; }
         public string Transshipment2FromPortId { get; set; }
+        public string Transshipment2FromPortName { get; set; }
         public string Transshipment1FromPortId { get; set; }
+        public string Transshipment1FromPortName { get; set; }
         public string MainCarriageFromPortId { get; set; }
-   
 
         public DateTime? Transshipment3ETA { get; set; }
         public DateTime? Transshipment2ETA { get; set; }
@@ -139,6 +141,14 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public DateTime? Transshipment2ATA { get; set; }
         public DateTime? Transshipment1ATA { get; set; }
         public DateTime? MainCarriageATA { get; set; }
+
+        public DateTime? Transshipment3ETD { get; set; }
+        public DateTime? Transshipment2ETD { get; set; }
+        public DateTime? Transshipment1ETD { get; set; }
+
+        public DateTime? Transshipment3ATD { get; set; }
+        public DateTime? Transshipment2ATD { get; set; }
+        public DateTime? Transshipment1ATD { get; set; }
 
         public string Transshipment3VesselId { get; set; }
         public string Transshipment2VesselId { get; set; }
