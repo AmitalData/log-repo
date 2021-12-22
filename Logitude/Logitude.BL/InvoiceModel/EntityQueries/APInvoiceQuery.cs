@@ -1111,6 +1111,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                         where a.Tenant == tenant && a.StatusCode != "WA" && a.StatusCode != "VD" && a.StatusCode != "LL" && !a.IsClosed
                         select new APInvoiceList()
                         {
+                            MainEntityId = a.MainEntityId,
                             ProfitCurrencyExchangeRate = a.ProfitCurrencyExchangeRate,
                             ProfitCurrencyId = a.ProfitCurrencyId,
                             SubTotalInInvoiceCurrency = a.SubTotalInInvoiceCurrency,
