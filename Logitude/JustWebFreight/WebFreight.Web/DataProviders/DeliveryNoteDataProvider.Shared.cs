@@ -39,6 +39,7 @@ namespace WebFreight.Web.DataProviders
         public string ToAddressDescription { get; set; }
         public string DeliveryContactName { get; set; }
         public string DeliveryContactPhone { get; set; }
+        public string DeliveryContactEmail { get; set; }
         public string DeliveryDate { get; set; }
         public string DeliveryTime { get; set; }
         public DateTime? DeliveryTime_DateTime_New { get; set; }
@@ -194,5 +195,6 @@ namespace WebFreight.Web.DataProviders
         public string MasterShipmentNumber { get; set; }
         public string TruckerAddress { get; set; }
         public string ContainerSeals { get; set; }
+        public DateTime? FinalDestinationETA { get; set; }
     }
 }
