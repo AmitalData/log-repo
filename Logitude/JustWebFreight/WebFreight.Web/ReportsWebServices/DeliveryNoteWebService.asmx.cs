@@ -51,6 +51,7 @@ namespace WebFreight.Web.ReportsWebServices
         private byte[] output;
         private BranchRepository branchRepository;
         private ShipmentRepository shipmentRepository;
+        private ShipmentTypeRepository shipmentTypeRepository;
 
         [WebMethod]
         public byte[] GetPickupData(string entityId, string entityObjectTableId, string childEntityId, string childEntityObjectTableId, int tenant)
@@ -103,6 +104,7 @@ namespace WebFreight.Web.ReportsWebServices
             this.branchRepository = new BranchRepository(tenant);
             this.shipmentRepository = new ShipmentRepository(shipmentsContext);
             ShipmentQuery shipmentQuery = new ShipmentQuery(shipmentRepository);
+            this.shipmentTypeRepository = new ShipmentTypeRepository(shipmentsContext);
 
             shipment = shipmentQuery.GetSinglePM(entityId, tenant);
 
@@ -204,6 +206,9 @@ namespace WebFreight.Web.ReportsWebServices
             dataProvider.ValueOfGoods = shipment.ValueOfGoods;
             dataProvider.MainCarriageCarrierNumber = shipment.MainCarriageCarrierNumber;
             dataProvider.CarrierCode = shipment.MainCarriageCarrierCode;
+            dataProvider.GrossWeightUnitCode = shipment.GrossWeightUnitCode;
+            dataProvider.VolumeUnitCode = shipment.VolumeUnitCode;
+
             MapBranchData();
             MapSealNumbers();
 
@@ -237,6 +242,7 @@ namespace WebFreight.Web.ReportsWebServices
             this.MapShipmentCustomClearancePoint();
             this.MapShipmentCustomsAgent();
             this.MapMasterShipmentNumber();
+            this.MapShipmentType();
         }
 
         private void MapSealNumbers()
@@ -341,7 +347,23 @@ namespace WebFreight.Web.ReportsWebServices
                     dataProvider.OnCarriageCarrier = shipment.OnCarriageCarrierName;
                 }
             }
+
+            if(shipment.OnCarriageToPortId != null)
+            {
+                this.MapOnCarriageToPort();
+            }
         }
+
+        private void MapOnCarriageToPort()
+        {
+            Port onCarriagePort = this.portRepository.GetSinglePort(shipment.OnCarriageToPortId, shipment.Tenant);
+
+            if (onCarriagePort == null)
+                return;
+
+            dataProvider.OnCarriageToPortName = onCarriagePort.EnglishName;
+        }
+
         private void MapShipmentOnForwarding()
         {
             if (shipment.OnForwardingFromPortId != null && shipment.OnForwardingToPortId != null)
@@ -1376,6 +1398,19 @@ namespace WebFreight.Web.ReportsWebServices
             {
                 dataProvider.MasterShipmentNumber = masterData.ShipmentNumber;
             }
+        }
+
+        private void MapShipmentType()
+        {
+            if (string.IsNullOrEmpty(shipment.ShipmentTypeId))
+                return;
+
+            ShipmentType shipmentType = this.shipmentTypeRepository.GetSingleShipmentType(shipment.ShipmentTypeId);
+
+            if (shipmentType == null)
+                return;
+
+            dataProvider.ShipmentType = shipmentType.Name;
         }
 
     }
