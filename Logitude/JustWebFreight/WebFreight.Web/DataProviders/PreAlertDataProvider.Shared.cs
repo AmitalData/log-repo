@@ -171,6 +171,7 @@ namespace WebFreight.Web.DataProviders
         public DateTime? PickupETD { get; set; }
         public DateTime? PickupATD { get; set; }
         public DateTime? MainCarriageATD { get; set; }
+        public DateTime?  MainCarriageATA { get; set; }
         public DateTime? Transhipment1ATD { get; set; }
         public string Transshipment1CarrierCode { get; set; }
         public string Transshipment1CarrierNumber_New { get; set; }
