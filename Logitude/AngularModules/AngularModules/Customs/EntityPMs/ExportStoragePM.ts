@@ -144,6 +144,11 @@ export class ExportStoragePM {
     public set CargoTypeCodeName(newValue: string) { if (this.cargoTypeCodeName != newValue) { this.cargoTypeCodeName = newValue; this.MarkAsDirty("CargoTypeCodeName"); } }
        
 	 
+    private declarationStatusTypeCode: string;
+    public get DeclarationStatusTypeCode() { return this.declarationStatusTypeCode; }
+    public set DeclarationStatusTypeCode(newValue: string) { if (this.declarationStatusTypeCode != newValue) { this.declarationStatusTypeCode = newValue; this.MarkAsDirty("DeclarationStatusTypeCode"); } }
+       
+	 
 
     public OldEntityPM: ExportStoragePM;
 		

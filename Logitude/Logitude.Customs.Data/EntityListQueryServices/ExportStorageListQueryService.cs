@@ -98,6 +98,8 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                        ExportDealIdentification = en.ExportDealIdentification,
 
                                                        CargoTypeCodeName = cargoIdentifireType.LocalName,
+
+                                                       DeclarationStatusTypeCode = status.Code
                                                    });
             return query;
         }

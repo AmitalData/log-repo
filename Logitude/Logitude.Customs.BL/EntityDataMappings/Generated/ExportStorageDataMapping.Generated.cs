@@ -69,7 +69,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         StorErrorXML, 
 	         StorageNo, 
 	         ExportDealIdentification, 
-	         CargoTypeCodeName,
+	         CargoTypeCodeName, 
+	         DeclarationStatusTypeCode,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
