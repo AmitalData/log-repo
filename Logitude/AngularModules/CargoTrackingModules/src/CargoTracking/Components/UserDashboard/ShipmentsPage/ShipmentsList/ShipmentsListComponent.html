@@ -149,7 +149,8 @@
             <li *ngIf="ShipmentSearchInput.OperationalClosedOnly" (click)="ClearOperationalClosedOnlyChanged(false)"> Operational Closed Only
                 <span class="filter-close-btn">×</span>
             </li>
-            <li *ngIf="ShipmentSearchInput.OrdersOnly" (click)="ClearOrdersOnlyChanged(false)"> Orders Only
+            <li *ngIf="ShipmentSearchInput.OrdersOnly" (click)="ClearOrdersOnlyChanged(false)"> SHO Only
+
                 <span class="filter-close-btn">×</span>
             </li>
             <li *ngIf="ShipmentSearchInput.EstimatedArrivalOnly" (click)="ClearEstimatedArrivalOnlyChanged(false)"> Estimated Arrival Only
@@ -290,7 +291,7 @@
                                             </g>
                                         </g>
                                     </svg>
-                                    <span *ngIf="shipment.EntityType==='O'" class="order-icon">Order</span>
+                                    <span *ngIf="shipment.EntityType==='O'" class="order-icon">SHO</span>
                                 </div>
 
                                 <svg *ngIf="shipment.DirectionId !='R'"
@@ -357,7 +358,7 @@
                         <!-- Shipment Number -->
                         <div class="column col-md-2 hide-mobile" style="width: 12%;">
                             <div>
-                                <div class="subtitle">{{shipment.EntityType==='O' ? 'Order Number' : 'Shipment Number'}}
+                                <div class="subtitle">{{shipment.EntityType==='O' ? 'SHO Number' : 'Shipment Number'}}
                                 </div>
                                 <div class="value uppercase truncateText">{{ shipment.ShipmentNumber }}</div>
 
@@ -607,8 +608,9 @@
                         <mat-slide-toggle color="primary" [(ngModel)]="this.MoreFilterMobileValue.HasException" ></mat-slide-toggle>
                     </div>
                     <div class="flex-row-space-between">
-                        <label>Orders Only</label>
+                        <label>SHO Only</label>
                         <mat-slide-toggle color="primary" [(ngModel)]="this.MoreFilterMobileValue.OrdersOnly" ></mat-slide-toggle>
+
                     </div>
                     <div class="flex-row-space-between">
                         <label>Estimated Arrival Only</label>
