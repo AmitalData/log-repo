@@ -423,7 +423,7 @@
                                         <span style="vertical-align:middle;font-size:18px;color:#6E7172;margin-left: 10px;">Documents</span>
                                     </td>
                                     <td style="float:right;">
-                                        <button id="{{'AddLogboxDocument' | IdGeneratorPipe}}" class="IconButton"  style="width:114px;height:26px;margin-right:5px;" (click)="AddDocumentClick()" [class.Disable]="DisableAddDocumentButton == true">
+                                        <button id="{{'AddLogboxDocument' | IdGeneratorPipe}}" class="IconButton"  style="width:114px;height:26px;margin-right:5px;" (click)="AddDocumentClick()" [class.Disable]="DisableAddDocumentButton == true || !SelectedShipment">
                                             <img src="./Images/LogBox/Add.png"  style="visibility:inherit;left:2px;vertical-align:middle;position:relative;" />
                                             <span style="vertical-align:middle;">Add Document</span>
                                         </button>
