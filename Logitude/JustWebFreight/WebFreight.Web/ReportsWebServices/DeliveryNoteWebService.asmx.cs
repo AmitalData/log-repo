@@ -317,6 +317,7 @@ namespace WebFreight.Web.ReportsWebServices
             dataProvider.MainCarriageETD_DateTime = shipment.MainCarriageETD;
             dataProvider.MainCarriageETA_DateTime = shipment.MainCarriageETA;
             dataProvider.MainCarriageATA_DateTime = shipment.MainCarriageATA;
+            dataProvider.FinalDestinationETA = shipment.MainCarriageFinalDestinationETA;
         }
         private void MapShipmentCutoffDate()
         {
@@ -879,6 +880,7 @@ namespace WebFreight.Web.ReportsWebServices
                         {
                             dataProvider.DeliveryContactPhone = contact.BusinessPhone != null ? contact.BusinessPhone : "";
                             dataProvider.DeliveryContactName = contact.EnglishName != null ? contact.EnglishName : "";
+                            dataProvider.DeliveryContactEmail = contact.Email;
                         }
                     }
 

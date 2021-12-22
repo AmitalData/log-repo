@@ -39,6 +39,7 @@ namespace WebFreight.Web.DataProviders
         public string ToAddressDescription { get; set; }
         public string DeliveryContactName { get; set; }
         public string DeliveryContactPhone { get; set; }
+        public string DeliveryContactEmail { get; set; }
         public string DeliveryDate { get; set; }
         public string DeliveryTime { get; set; }
         public DateTime? DeliveryTime_DateTime_New { get; set; }
@@ -198,6 +199,6 @@ namespace WebFreight.Web.DataProviders
         public string OnCarriageToPortName { get; set; }
         public string GrossWeightUnitCode { get; set; }
         public string VolumeUnitCode { get; set; }
-
+        public DateTime? FinalDestinationETA { get; set; }
     }
 }
