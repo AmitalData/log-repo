@@ -17,14 +17,14 @@ using System.Threading.Tasks;
 
 namespace Logitude.BL.CommonDataModel.ExternalService
 {
-    public class ReportExtendedService
+    public class CopyModifiedSystemReportsTemplatesByUsersService
     {
         readonly ReportsTemplateRepository reportsTemplateRepository;
         readonly ReportsTemplatesVersionRepository reportsTemplatesVersionRepository;
         readonly DocumentRepository documentRepository;
         readonly ReportRepository reportRepository;
         IBlobService storageservice;
-        public ReportExtendedService()
+        public CopyModifiedSystemReportsTemplatesByUsersService()
         {
             reportsTemplateRepository = new ReportsTemplateRepository(0);
             reportsTemplatesVersionRepository = new ReportsTemplatesVersionRepository(0);
@@ -32,7 +32,7 @@ namespace Logitude.BL.CommonDataModel.ExternalService
             reportRepository = new ReportRepository(0);
         }
 
-        public void CopyModifiedSystemReportsTemplates()
+        public void Execute()
         {
             List<ReportsTemplatesVersion> modifiedSystemReportsTemplatesVersions = reportsTemplatesVersionRepository.GetModifiedSystemStimuleReportsTemplatesVersions();
             modifiedSystemReportsTemplatesVersions.ForEach(modifiedSystemReport =>
