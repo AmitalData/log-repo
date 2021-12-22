@@ -698,7 +698,7 @@ namespace Logitude.Accounting.BL.DataContract
 
             return (from a in deductionLines
                     group a by
-                        new { a.VendorId, a.TaxDeductionPercentage, a.MonthOfRegisterDate, a.DeductionType } into g
+                        new { a.VendorId, a.TaxDeductionPercentage } into g
                     select new TaxDeductionReportLine
                     {
                         VendorId = g.Key.VendorId,
