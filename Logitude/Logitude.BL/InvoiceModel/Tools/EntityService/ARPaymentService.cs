@@ -1598,19 +1598,23 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                         else if (entityPm.AccountingPaymentMethodCode == "CH")
                         {
                             List<ARPaymentChequePM> chequesToVoid = GetPaymentChequesToVoid(entityPm, tenant);
-                            if (chequesToVoid != null && chequesToVoid.Count() != 0)
+                            List<ARPaymentChequePM> redeemedCheques = FilterRedeemedAndInBankCheques(chequesToVoid);
+                            if (redeemedCheques != null && redeemedCheques.Count() != 0)
                             {
                                 ThrowCantCancelARPaymentMessage(entityPm, useLocal);
                             }
                             else
                             {
+                                var chequesToVoidNotReturnedToCustomer = chequesToVoid.Where(c => c.StatusCode != ARPaymentChequeStatusValues.ReturnedToCustomer).ToList();
+                                UpdateCashbookTotal(entityPm, tenant, chequesToVoidNotReturnedToCustomer);
+
                                 foreach (var cheque in chequesToVoid)
                                 {
                                     ReturnChequeToCustomer(cheque);
                                     CreateVoidedARPaymentEvent("Returned To Customer - Cheque Number: " + cheque.ChequeNumber);
                                 }
 
-                                UpdateCashbookTotal(entityPm, tenant, chequesToVoid);
+                                
 
                                 CreateVoidedARPaymentEvent("ARPayment Cancel");
 
@@ -1672,7 +1676,11 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         {
             IARPaymentChequeQueryServiceExt query = ContainerAccessor.Container.Resolve(typeof(IARPaymentChequeQueryServiceExt), "ARPaymentChequeQueryServiceExt", new ParameterOverride("", 1)) as IARPaymentChequeQueryServiceExt;
             List<ARPaymentChequePM> cheques = query.GetListByPaymentId(entityPm.Id, tenant);
+            return cheques;
+        }
 
+        private static List<ARPaymentChequePM> FilterRedeemedAndInBankCheques(List<ARPaymentChequePM> cheques)
+        {
             var chequeStatusesThatIsAbleToReturn = new List<string>()
                             {
                                 ARPaymentChequeStatusValues.InBank,
