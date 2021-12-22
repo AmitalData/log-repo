@@ -301,6 +301,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
 
             return this.UpdateDirectShipment(directShipment,authToken.Tenant);
         }
+
         private Direct UpdateDirectShipment(Direct entity,int tenant)
         {
             string computingPartnerCode = "";
@@ -323,11 +324,11 @@ namespace WebFreight.Web.ExternalAPIs.V1
 
                 ShipmentPM directPM = mappingService.DirectDataMappingAndValidatin(entity, tenant, computingPartnerCode, true);
 
-                        if (directPM != null)
-                        {
-                            ExternalAPIShipmentValidator externalAPIShipmentValidator = new ExternalAPIShipmentValidator(directPM, authToken.Tenant);
-                            directPM.ConcurrencyGUID = entity.ConcurrencyGUID;
-                            directPM.IsExternalAPI = true;
+                if (directPM != null)
+                {
+                    ExternalAPIShipmentValidator externalAPIShipmentValidator = new ExternalAPIShipmentValidator(directPM, tenant);
+                    directPM.ConcurrencyGUID = entity.ConcurrencyGUID;
+                    directPM.IsExternalAPI = true;
 
                     if (directPM.IsOperationalClosed)
                     {
@@ -344,20 +345,8 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         externalAPIMainCarriageLegsHelper.ValidateMainCarriageLegs();
                         externalAPIMainCarriageLegsHelper.MapTransshipments();
 
-                                AddressRepository addressRepository = new AddressRepository(authToken.Tenant);
-                                this.ValidateAndSetCustomerData(directPM, addressRepository, authToken.Tenant);                                
-                                externalAPIShipmentValidator.ValidatePreAndOnCarrageFields();                                
-                            }
-                            else
-                            {
-                                directPM = this.ValidateInlandDomesticShipment(directPM);
-                                this.UpdateRoutingPartnersAddresses(directPM);
-                            }
                         AddressRepository addressRepository = new AddressRepository(tenant);
                         this.ValidateAndSetCustomerData(directPM, addressRepository, tenant);
-                        this.ValidateUpdateShipmentPackages(directPM);
-
-                        ExternalAPIShipmentValidator externalAPIShipmentValidator = new ExternalAPIShipmentValidator(directPM, tenant);
                         externalAPIShipmentValidator.ValidatePreAndOnCarrageFields();
                     }
                     else
@@ -365,13 +354,8 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         directPM = this.ValidateInlandDomesticShipment(directPM);
                         this.UpdateRoutingPartnersAddresses(directPM);
                     }
-
-                            externalAPIShipmentValidator.ValidateUpdateShipmentPackages(directPM);
-                            externalAPIShipmentValidator.UpdatePickupDeliveryPackagesChangeSet(directPM);
-
-                            this.ValidateCustomsFields(directPM);
-                            this.UpdatePartners(MyContext, directPM);
-                            ComputeHelper.ComputeTotals(directPM);
+                    externalAPIShipmentValidator.ValidateUpdateShipmentPackages(directPM);
+                    externalAPIShipmentValidator.UpdatePickupDeliveryPackagesChangeSet(directPM);
                     this.ValidateCustomsFields(directPM);
                     this.UpdatePartners(MyContext, directPM);
                     ComputeHelper.ComputeTotals(directPM);
@@ -400,6 +384,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 throw new ApplicationException("Update is not allowed");
             }
         }
+
         private void UpdateRoutingPartnersAddresses(ShipmentPM entityPM)
         {
             if (entityPM.InlandDomesticFromTypeCode == "PART" && !string.IsNullOrEmpty(entityPM.MainCarriageFromPartnerId))
@@ -443,6 +428,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 }
             }
         }
+
         private void SetFromPortAddress(ShipmentPM entityPM) 
         {
             PortRepository portRepository = new PortRepository(entityPM.Tenant);
