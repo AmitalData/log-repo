@@ -806,13 +806,13 @@ namespace Logitude.Accounting.BL.CoreBL
                     else
                     {
                         myStringBuilder.Append(a);
-                        myStringBuilder.Append(' ', 260);
+                        myStringBuilder.Append(' ', 130);
                     }
                 }
                 else
                 {
                     myStringBuilder.Append(a);
-                    myStringBuilder.Append(' ', 260);
+                    myStringBuilder.Append(' ', 130);
                 }
                 myStringBuilder.Append(a);
                 myStringBuilder.Append(' ', 15);
