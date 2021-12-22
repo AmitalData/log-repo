@@ -533,8 +533,8 @@
                     <table>
                         <tr>
                             <td style="width: 32px; min-width: 32px;"></td>
-                            <td style="width: 150px; min-width: 150px"> Description </td>
-                            <td style="width: 100px; min-width: 100px;">Document Type</td>
+                            <td style="width: 290px; min-width: 290px"> Description </td>
+                            <td style="width: 180px; min-width: 180px;">Document Type</td>
                             <td style="width: 32px; min-width: 32px;"></td>
 
                             <td></td>
@@ -561,19 +561,19 @@
 
 
 
-                                                    <td class="GridViewCell" style="width: 150px; min-width: 150px; max-width: 150px; position: relative;">
+                                                    <td title={{item.Description}} class="GridViewCell" style="width: 290px; min-width: 290px; max-width: 290px; position: relative;">
 
                                                         {{item.Description}}
                                                     </td>
 
-                                                    <td class="GridViewCell" style="width: 100px; min-width: 100px; max-width: 100px; position: relative;">
+                                                    <td title={{item.DocumentTypeName}} class="GridViewCell" style="width: 180px; min-width: 180px; max-width: 180px; position: relative;">
                                                         <div>{{item.DocumentTypeName}}</div>
                                                     </td>
 
                                                     <td class="CellStretched" style="width: 32px; min-width: 32px; max-width: 32px; position: relative;">
 
-                                                        <img  style="margin-left:5px" *ngIf="item.IsDigitallySigned" src="./Images/DigitallySigned.png" [title]="item.SignersList" />
-                                                        <img style="margin-left:5px"  *ngIf="!item.IsDigitallySigned" src="./Images/DigitallySignedG.png" (click)="SetDigitallySigned(item)" />
+                                                        <img style="margin-left:5px" *ngIf="item.IsDigitallySigned" src="./Images/DigitallySigned.png" [title]="item.SignersList" />
+                                                        <img style="margin-left:5px" *ngIf="!item.IsDigitallySigned" src="./Images/DigitallySignedG.png" (click)="SetDigitallySigned(item)" />
 
                                                     </td>
                                                     <td>
