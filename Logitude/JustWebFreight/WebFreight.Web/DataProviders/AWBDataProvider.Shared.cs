@@ -266,6 +266,8 @@ namespace WebFreight.Web.DataProviders
         public DateTime? OnCarriageATA { get; set; }
         public string OnCarriageCarrierCode { get; set; }
         public string OnCarriageCarrierNumber { get; set; }
+        public string CustomsDeclarationNumber { get; set; }
+
     }
 
     public class CommodityLine

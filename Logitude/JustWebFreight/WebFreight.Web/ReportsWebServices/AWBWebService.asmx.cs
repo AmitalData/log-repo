@@ -118,6 +118,7 @@ namespace WebFreight.Web.ReportsWebServices
                 awbDp.CustomerLogo = DataProviders.General.GetCarrierLogo(shipmentPM.CustomerId, tenant);
                 awbDp.UserSignatureImage = GetUserSignatureImage();
                 awbDp.Place = shipmentPM.AWBPlace;
+                awbDp.CustomsDeclarationNumber = shipmentPM.DeclarationNumber;
 
                 this.GetBranchData();
                 this.GetLoggedTenantData();
