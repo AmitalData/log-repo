@@ -4,7 +4,7 @@ import { Inject, Injectable } from '@angular/core';
 import { HttpClient, HttpResponse, HttpHeaders } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
 import { defer } from 'rxjs';
-import { CargoTrackingShipmentFilters } from 'src/CargoTracking/DataContracts/CargoTrackingShipmentFilters';
+import { CargoTrackingShipmentSearchInput } from 'src/CargoTracking/DataContracts/CargoTrackingShipmentFilters';
 import { CaptchaParameters } from 'src/CargoTracking/DataContracts/CaptchaParameters';
 import { ServiceResponse } from '../../DataContracts/ServiceResponse';
 import { SessionInfo } from 'src/Infrastructure/Utilities/SessionInfo';
@@ -62,27 +62,10 @@ export class CargoTrackingSearchService {
         return urlparameters;
     }
 
-    GetUserShipments(pageIndex: number, pageSize: number, shipmentFilters: CargoTrackingShipmentFilters) {
+    GetUserShipments(shipmentFilters: CargoTrackingShipmentSearchInput) {
         var authHeaders = ServiceHelper.GetHeadersWithToken();
-
-        var urlparameters = '';
-		var mykeys = Object.keys(shipmentFilters);
-		var addtionalFiltersValues = null;
-
-		for (var i in mykeys) {
-			var propName = mykeys[i];
-			var propValue = shipmentFilters[propName];
-
-            propValue = encodeURIComponent(propValue);
-            urlparameters = urlparameters.concat(propName.concat('=').concat(propValue)).concat('&');
-
-        }
-
-
 		return defer(() => {
-            return this._http.get(this._apiUrl + '/GetUserShipments/?' + urlparameters
-            + '&pageIndex=' + pageIndex
-            + '&pageSize=' + pageSize,
+            return this._http.post(this._apiUrl + '/GetUserShipments',shipmentFilters,
             authHeaders)
 				.pipe(
 					map((response: HttpResponse<any>) => {
@@ -95,10 +78,10 @@ export class CargoTrackingSearchService {
 					})));
 		});
     }
-    GetUserShipmentsCounter(shipmentFilters: CargoTrackingShipmentFilters) {
+    GetUserShipmentsCounter(shipmentFilters: CargoTrackingShipmentSearchInput) {
         var authHeaders = ServiceHelper.GetHeadersWithToken();
 		return defer(() => {
-            return this._http.get(this._apiUrl + '/GetUserShipmentsCount/?' + this.ParseFiltersIntoURL(shipmentFilters),
+            return this._http.post(this._apiUrl + '/GetUserShipmentsCount/' , shipmentFilters,
             authHeaders)
 				.pipe(
 					map((response: HttpResponse<any>) => {
@@ -136,7 +119,7 @@ export class CargoTrackingSearchService {
 
 
 
-    private ParseFiltersIntoURL(shipmentFilters: CargoTrackingShipmentFilters)
+    private ParseFiltersIntoURL(shipmentFilters: CargoTrackingShipmentSearchInput)
     {
         var urlparameters = '';
         var keys = Object.keys(shipmentFilters);

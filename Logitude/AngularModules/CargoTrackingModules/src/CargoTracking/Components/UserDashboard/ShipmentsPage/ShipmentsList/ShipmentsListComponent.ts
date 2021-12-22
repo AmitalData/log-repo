@@ -7,7 +7,7 @@ import { CargoTrackingShipmentList } from '../../../../EntityLists/CargoTracking
 import { SessionInfo } from '../../../../../Infrastructure/Utilities/SessionInfo';
 import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
 import { ShipmentDataSource } from '../../../../DataContracts/CargoTrackingShipmentDataSource';
-import { CargoTrackingShipmentFilters } from '../../../../DataContracts/CargoTrackingShipmentFilters';
+import { CargoTrackingShipmentSearchInput, MoreFilter } from '../../../../DataContracts/CargoTrackingShipmentFilters';
 import { CargoTrackingBrandingData } from 'src/CargoTracking/DataContracts/CargoTrackingBrandingData';
 import { CargoTrackingPortService } from '../../../../Services/Others/CargoTrackingPortService';
 import { CargoTrackingShipmentService } from '../../../../Services/Others/CargoTrackingShipmentService';
@@ -51,8 +51,6 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
     isAbdullahCompanyChecked: boolean = true;
     showMobileSortMenu: boolean = false;
     showShipmentDetailsMenu: boolean = false;
-    InvitedCustomersIds: string[];
-    InvitedCustomers: any[] = [];
     ShipmentsDataSource;
     @ViewChild(CdkVirtualScrollViewport) virtualScroll: CdkVirtualScrollViewport;
     @ViewChild('input') searchInput: ElementRef;
@@ -75,13 +73,20 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
     ShowMobileSearch: boolean = false;
     ShipmenTypeForRouting: string;
     public SortOptions = SortOptions;
-    PanelSearchText;
     MasterOrHouseLabel: string = "";
     EntityType_Customs = "C";
+    isMobileView: boolean;
     get tenant() {
         return CargoTrackingBrandingData.Tenant;
     }
+    FiltersSelectedInvitedCustoms: any[] = [];
+    ShipmentSearchInput: CargoTrackingShipmentSearchInput = new CargoTrackingShipmentSearchInput();
+    MilestonesStatus: any[] = [];
+    MilestonesStatusDictionary: {} = {};
 
+    InvitedCustomers: any[] = [];
+    InvitedCustomersDictionary: {} = {};
+    MoreFilterMobileValue: MoreFilter = new MoreFilter();
     constructor(private router: Router,
         private route: ActivatedRoute,
         private formBuilder: FormBuilder,
@@ -99,17 +104,39 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
     ngOnInit(): void {
         this.setMaxNumberOfCarachter(window.innerWidth);
         this.setDefaultSort();
-        this.GetPreservedToggleFiltersFromSessionInfo();
-        this.GetCompanyLoginsFromCache();
         this.GetMilstones();
         this.getPreviousScroll();
-        this.selectDefaultSortFields();
+        this.GetCompanyLoginsFromCache();
+        this.fillFeltersDictionary();
+        this.setViews();
+    }
+
+    private GetCompanyLoginsFromCache() {
+        SessionInfo.LoggedUserCompanyLogins = JSON.parse(sessionStorage.getItem("LoggedUserCompanyLogins"));
+        this.GetInvitedCustomers();
+    }
+    private GetInvitedCustomers() {
+        this.InvitedCustomers = SessionInfo.LoggedUserCompanyLogins
+            .filter(d => d.CardType == 'CS' && d.CardId != null && d.Tenant == this.tenant)
+            .map(d => (
+                {
+                    IsSelected: false,
+                    Name: d.CompanyName.substring(0, d.CompanyName.lastIndexOf('(')),
+                    ...d
+                }
+            ));
+        this.FillInvitedCustomersDictionary(this.InvitedCustomers);
+    }
+    FillInvitedCustomersDictionary(InvitedCustomers: any[]) {
+        InvitedCustomers.forEach(element => {
+            this.InvitedCustomersDictionary[element.CardId] = element;
+        });
     }
 
 
     private setDefaultSort() {
-        this.sortField = SortOptions.CMD;
-        this.isSortDescending = SortOptions.DESC;
+        this.ShipmentSearchInput.SortFieldName = SortOptions.CMD;
+        this.ShipmentSearchInput.SortType = SortOptions.DESC;
     }
 
     private selectDefaultSortFields() {
@@ -132,10 +159,158 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
         });
     }
     ngAfterViewInit(): void {
-        this.LoadScreenData();
+        this.selectDefaultSortFields();
         this.SetShipmentsScrollPosition();
+        this.LoadScreenData();
+    }
+    ShipmentTypeChangedHandler(code: string) {
+        RootContext.ShipmentsScrollPosition = 0;
+        if (this.ShipmentSearchInput.TransportModeCodes.includes(code)) {
+            this.ShipmentSearchInput.TransportModeCodes = this.ShipmentSearchInput.TransportModeCodes.filter(e => e != code);
+            this.ShipmentTypeFilters.filter(e => e.Code == code).map(e => e.IsSelected = false);
+        } else {
+            this.ShipmentSearchInput.TransportModeCodes.push(code);
+            this.ShipmentTypeFilters.filter(e => e.Code == code).map(e => e.IsSelected = true);
+
+        }
+        this.LoadScreenData();
+
+    }
+    ShipmentDirectionChangedHandler(code: string) {
+        RootContext.ShipmentsScrollPosition = 0;
+        if (this.ShipmentSearchInput.DirectionCodes.includes(code)) {
+            this.ShipmentSearchInput.DirectionCodes = this.ShipmentSearchInput.DirectionCodes.filter(e => e != code);
+            this.ShipmentDirectionFilters.filter(e => e.Code == code).map(e => e.IsSelected = false);
+        } else {
+            this.ShipmentSearchInput.DirectionCodes.push(code);
+            this.ShipmentDirectionFilters.filter(e => e.Code == code).map(e => e.IsSelected = true);
+
+        }
+        this.LoadScreenData();
+
+    }
+    SelectionMoreFilterChangedHandler(event) {
+        switch (event) {
+            case MoreFilterCodes.EstimatedArrivalOnly:
+                this.ShipmentSearchInput.EstimatedArrivalOnly = !this.ShipmentSearchInput.EstimatedArrivalOnly;
+                this.MoreFilterMobileValue.EstimatedArrivalOnly = this.ShipmentSearchInput.EstimatedArrivalOnly;
+                break;
+            case MoreFilterCodes.ExceptionOnly:
+                this.ShipmentSearchInput.HasException = !this.ShipmentSearchInput.HasException;
+                this.MoreFilterMobileValue.HasException = this.ShipmentSearchInput.HasException;
+                break;
+            case MoreFilterCodes.OrdersOnly:
+                this.ShipmentSearchInput.OrdersOnly = !this.ShipmentSearchInput.OrdersOnly;
+                this.MoreFilterMobileValue.OrdersOnly = this.ShipmentSearchInput.OrdersOnly;
+                break;
+            case MoreFilterCodes.OperationalClosedOnly:
+                this.ShipmentSearchInput.OperationalClosedOnly = !this.ShipmentSearchInput.OperationalClosedOnly;
+                this.MoreFilterMobileValue.OperationalClosedOnly = this.ShipmentSearchInput.OperationalClosedOnly;
+                break;
+
+        }
+        this.LoadScreenData();
+    }
+    sortBySelectionChangedHandler(event) {
+        switch (event) {
+            case SortOptions.ASC:
+                this.ShipmentSearchInput.SortType = event;
+                this.sortByMultipleSelection.select.options.filter(d =>
+                    d.value.Code == SortOptions.DESC).map(x => x.deselect());
+                break;
+            case SortOptions.DESC: {
+                this.ShipmentSearchInput.SortType = event;
+                this.sortByMultipleSelection.select.options.filter(d =>
+                    d.value.Code == SortOptions.ASC).map(x => x.deselect());
+                break;
+            }
+            case SortOptions.ATA:
+                this.ShipmentSearchInput.SortFieldName = event;
+                this.sortByMultipleSelection.select.options.filter(d =>
+                    [SortOptions.CMD, SortOptions.ATD].includes(d.value.Code)).map(x => x.deselect());
+                break;
+            case SortOptions.ATD:
+                this.ShipmentSearchInput.SortFieldName = event;
+                this.sortByMultipleSelection.select.options.filter(d =>
+                    [SortOptions.CMD, SortOptions.ATA].includes(d.value.Code)).map(x => x.deselect());
+                break;
+            case SortOptions.CMD: {
+                this.ShipmentSearchInput.SortFieldName = event;
+                this.sortByMultipleSelection.select.options.filter(d =>
+                    [SortOptions.ATD, SortOptions.ATA].includes(d.value.Code)).map(x => x.deselect());
+                break;
+            }
+
+        }
+        this.LoadScreenData();
+    }
+    DeselectTransportModeFilter(code) {
+        RootContext.ShipmentsScrollPosition = 0;
+        this.ShipmentSearchInput.TransportModeCodes = this.ShipmentSearchInput.TransportModeCodes.filter(e => e != code)
+        this.shipmentTypeMultipleSelection.DeselectFilter(code);
+        this.ShipmentTypeFilters.filter(e => e.Code == code).map(e => e.IsSelected = false);
+        this.LoadScreenData();
+
+    }
+    DeselectDirectionFilter(code) {
+        RootContext.ShipmentsScrollPosition = 0;
+        this.ShipmentSearchInput.DirectionCodes = this.ShipmentSearchInput.DirectionCodes.filter(e => e != code)
+        this.shipmentDirectionMultipleSelection.DeselectFilter(code);
+        this.ShipmentDirectionFilters.filter(e => e.Code == code).map(e => e.IsSelected = false);
+
+        this.LoadScreenData();
+
+    }
+    UnselectCustomer(customerId) {
+        RootContext.ShipmentsScrollPosition = 0;
+        this.InvitedCustomersDictionary[customerId].IsSelected = false;
+        this.ShipmentSearchInput.CustomersIds = this.ShipmentSearchInput.CustomersIds.filter(e => e != customerId);
+        this.LoadScreenData();
     }
 
+    ClearHasExceptionChanged(event) {
+        RootContext.ShipmentsScrollPosition = 0;
+        this.ShipmentSearchInput.HasException = this.MoreFilterMobileValue.HasException = event;
+        this.shipmentMoreFiltersMultipleSelection.DeselectFilter(MoreFilterCodes.ExceptionOnly);
+        this.LoadScreenData();
+    }
+    ClearOrdersOnlyChanged(event) {
+        RootContext.ShipmentsScrollPosition = 0;
+        this.ShipmentSearchInput.OrdersOnly = this.MoreFilterMobileValue.OrdersOnly = event;
+        this.shipmentMoreFiltersMultipleSelection.DeselectFilter(MoreFilterCodes.OrdersOnly);
+        this.LoadScreenData();
+    }
+    ClearEstimatedArrivalOnlyChanged(event) {
+        RootContext.ShipmentsScrollPosition = 0;
+        this.ShipmentSearchInput.EstimatedArrivalOnly = this.MoreFilterMobileValue.EstimatedArrivalOnly = event;
+        this.shipmentMoreFiltersMultipleSelection.DeselectFilter(MoreFilterCodes.EstimatedArrivalOnly);
+        this.LoadScreenData();
+    }
+    ClearOperationalClosedOnlyChanged(event) {
+        RootContext.ShipmentsScrollPosition = 0;
+        this.ShipmentSearchInput.OperationalClosedOnly = this.MoreFilterMobileValue.OperationalClosedOnly = event;
+        this.shipmentMoreFiltersMultipleSelection.DeselectFilter(MoreFilterCodes.OperationalClosedOnly);
+        this.LoadScreenData();
+    }
+
+    UnselectMiletone(code) {
+        RootContext.ShipmentsScrollPosition = 0;
+        this.MilestonesStatusDictionary[code].IsSelected = false;
+        this.ShipmentSearchInput.MilestonesCodes = this.ShipmentSearchInput.MilestonesCodes.filter(e => e != code);
+        this.LoadScreenData();
+
+    }
+    // Milestones filter
+    OnMilestonesStatusFilterChanged(value, state) {
+        state.IsSelected = value;
+    }
+    OnShipmentTypeFilterChanged(value, item: ToggleFilter) {
+        item.IsSelected = value;
+    }
+
+    OnShipmentDirectionFilterChanged(value, item: ToggleFilter) {
+        item.IsSelected = value;
+    }
     private SetShipmentsScrollPosition() {
         const shipmentCardsContainer = document.getElementById("scrollArea");
         if (shipmentCardsContainer) {
@@ -261,51 +436,13 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
     }
 
 
-    private GetPreservedToggleFiltersFromSessionInfo() {
-        if (SessionInfo.ShipmentsFilters) {
-            this.appliedSelectedFilterMilestonesStatus = SessionInfo.ShipmentsFilters.SelectedMilestonesStatus;
-            this.SelectedInvitedCustomers = SessionInfo.ShipmentsFilters.SelectedInvitedCustomers;
-            this.SearchText = RootContext.LastSearchText ? SessionInfo.ShipmentsFilters.SearchText : '';
-            this.updateShipmentTypeAndDirectionSelectedFilters();
-            this.hasException = SessionInfo.ShipmentsFilters.HasException ? SessionInfo.ShipmentsFilters.HasException : this.hasException;
-            this.ordersOnly = SessionInfo.ShipmentsFilters.OrdersOnly ? SessionInfo.ShipmentsFilters.OrdersOnly : this.ordersOnly;
-            this.estimatedArrivalOnly = SessionInfo.ShipmentsFilters.EstimatedArrivalOnly ? SessionInfo.ShipmentsFilters.EstimatedArrivalOnly : this.estimatedArrivalOnly;
-            this.GetInvitedCustomers();
-            this.updateShipmentTypeAndDirectionSelection();
 
-            this.LoadScreenData();
-        }
-    }
 
     private InitComponent() {
         this.InitForm();
-        ''.substring(''.indexOf('('))
     }
 
-    private updateShipmentTypeAndDirectionSelectedFilters() {
-        if (SessionInfo.ShipmentsFilters.TransportModeCodes) {
-            var splitted = SessionInfo.ShipmentsFilters.TransportModeCodes.split(',');
-            splitted.forEach(filterCode => {
-                this.SelectFilterByCode(filterCode);
-            });
-        }
-        if (SessionInfo.ShipmentsFilters.DirectionCodes) {
-            var splitted = SessionInfo.ShipmentsFilters.DirectionCodes.split(',');
-            splitted.forEach(filterCode => {
-                this.SelectFilterByCode(filterCode);
-            });
-        }
-    }
 
-    private updateShipmentTypeAndDirectionSelection() {
-        this.SelectedFilters.map(x => {
-            if (x.FilterName == 'shipmentType') {
-                this.shipmentTypeMultipleSelection.select.options.find(d => d.value.Code == x.Code).select();
-            } else if (x.FilterName == 'shipmentDirection') {
-                this.shipmentDirectionMultipleSelection.select.options.find(d => d.value.Code == x.Code).select();
-            }
-        });
-    }
 
     SetMoreReferenceText(reference: string) {
         var allreferences = reference?.split(',');
@@ -316,41 +453,19 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
 
         }
     }
-    private GetCompanyLoginsFromCache() {
-        SessionInfo.LoggedUserCompanyLogins = JSON.parse(sessionStorage.getItem("LoggedUserCompanyLogins"));
-        this.GetInvitedCustomers();
-    }
-
-    FiltersSelectedInvitedCustoms: any[] = [];
-    SelectedInvitedCustomers: any[] = [];
-    selectedFilterMilestonesStatus: any[] = [];
-    appliedSelectedFilterMilestonesStatus: any[] = [];
-    selectedShipmentTypesFilter: any[] = [];
-    selectedShipmentDirectionsFilter: any[] = [];
-    private GetInvitedCustomers() {
-        this.InvitedCustomersIds = SessionInfo.LoggedUserCompanyLogins
-            .filter(d => d.CardType == 'CS' && d.CardId != null && d.Tenant == this.tenant)
-            .map(d => d.CardId);
-
-        this.InvitedCustomers = SessionInfo.LoggedUserCompanyLogins
-            .filter(d => d.CardType == 'CS' && d.CardId != null && d.Tenant == this.tenant)
-            .map(d => (
-                {
-                    IsSelected: false,
-                    Name: d.CompanyName.substring(0, d.CompanyName.lastIndexOf('(')),
-                    ...d
-                }
-            ));
-        this.LoadScreenData();
-    }
-
-
 
     private GetMilstones() {
         this.milestonesService.getAll(this.tenant)
             .subscribe((milestones: any) => {
-                this.MilestonesStatus = milestones.map(s => ({ IsSelected: false, ...s }));
+                this.MilestonesStatus = milestones;
+                this.FillMilestoneDictionary(milestones);
             });
+    }
+    FillMilestoneDictionary(milestones: any[]) {
+        milestones.forEach(element => {
+            this.MilestonesStatusDictionary[element.Code] = element
+        });
+
     }
 
 
@@ -381,31 +496,8 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
 
 
 
-
-    private _SearchText: string = '';
-    public get SearchText(): string {
-        return this._SearchText;
-    }
-    public set SearchText(v: string) {
-        this._SearchText = v;
-
-        // if (this.SearchText)
-        //     this.LoadShipments();
-    }
-
-    Clear() {
-        this.SearchText = '';
-        RootContext.LastSearchText = '';
-        this.LoadScreenData();
-    }
-
     Search() {
-        if (this.tenant != null && this.SearchText) {
-            this.Shipments = [];
-            RootContext.LastSearchText = this.SearchText;
-            this.LoadScreenData();
-        }
-
+        this.LoadScreenData();
     }
 
     ItemClicked(item) {
@@ -428,33 +520,25 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
     ShipmentsCounter: CargoTrackingShipmentsCounter = new CargoTrackingShipmentsCounter();
     LoadScreenData() {
         if (this.tenant) {
+            this.ShipmentSearchInput.Tenant = this.tenant;
             var shipmentFilters = this.BuildShipmentFilters();
-            this.LoadShipments(shipmentFilters);
-            this.LoadShipmentsCounter(shipmentFilters);
+            this.LoadShipments();
+            this.LoadShipmentsCounter();
             this.SetShipmentsScrollPosition();
         }
     }
     references: string[];
-    sortField: string = '';
-    isSortDescending: string = '';
-    hasException: boolean = false;
-    ordersOnly: boolean = false;
-    estimatedArrivalOnly: boolean = false;
-    hasExceptionAdvancedFilter: boolean = false;
-    OrdersOnlyAdvancedFilter: boolean = false;
-    EstimatedArrivalOnlyAdvancedFilter: boolean = false;
-    private LoadShipments(shipmentFilters: CargoTrackingShipmentFilters) {
+    private LoadShipments() {
         if (this.ShipmentsDataSource)
-            this.ReloadShipments(shipmentFilters);
+            this.ReloadShipments();
 
         else {
-            this.InitiateShipmentDataSource(shipmentFilters);
-            this.ReloadShipments(shipmentFilters);
+            this.InitiateShipmentDataSource();
         }
     }
 
-    private LoadShipmentsCounter(shipmentFilters: CargoTrackingShipmentFilters) {
-        this.searchService.GetUserShipmentsCounter(shipmentFilters).subscribe((counter: any) => {
+    private LoadShipmentsCounter() {
+        this.searchService.GetUserShipmentsCounter(this.ShipmentSearchInput).subscribe((counter: any) => {
             this.ShipmentsCounter = counter;
             this.BuildToggleFilters();
             this.SetShipmentsScrollPosition();
@@ -462,12 +546,12 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
     }
 
 
-    private InitiateShipmentDataSource(shipmentFilters: CargoTrackingShipmentFilters) {
-        this.ShipmentsDataSource = new ShipmentDataSource(this.changeDetector, this.searchService, shipmentFilters, this);
+    private InitiateShipmentDataSource() {
+        this.ShipmentsDataSource = new ShipmentDataSource(this.changeDetector, this.searchService, this.ShipmentSearchInput, this);
     }
 
-    private ReloadShipments(shipmentFilters: CargoTrackingShipmentFilters) {
-        this.ShipmentsDataSource.ReloadData(shipmentFilters);
+    private ReloadShipments() {
+        this.ShipmentsDataSource.ReloadData(this.ShipmentSearchInput);
         this.ResetShipmentsScrollbarPosition();
     }
 
@@ -475,153 +559,20 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
         this.virtualScroll.scrollToIndex(0);
     }
 
-    // SortClicked(){
-    //     this.isSortDescending = !this.isSortDescending;
-    //     this.LoadScreenData();
-    // }
+
     private BuildShipmentFilters() {
-        var shipmentFilters = new CargoTrackingShipmentFilters();
+        var shipmentFilters = new CargoTrackingShipmentSearchInput();
         shipmentFilters.Tenant = this.tenant;
-        shipmentFilters.SearchText = this._SearchText ? this._SearchText.trim().toLowerCase() : '';
-
-        shipmentFilters.SortFieldName = this.sortField;
-        shipmentFilters.SortDescending = this.isSortDescending;
-        shipmentFilters.HasException = this.hasException;
-        shipmentFilters.OrdersOnly = this.ordersOnly;
-        shipmentFilters.EstimatedArrivalOnly = this.estimatedArrivalOnly;
-
-
-        this.SetCustomersFilter(shipmentFilters);
-        this.SetMilestonesFilter(shipmentFilters);
-        this.SetTransportModeFilters(shipmentFilters);
-        this.SetDirectionFilters(shipmentFilters);
-        //this.SetMoreFilters(shipmentFilters);
         return shipmentFilters;
     }
-    SetMoreFilters(shipmentFilters: CargoTrackingShipmentFilters) {
-        if (this.SelectedFilters.length <= 0)
-            return;
-        shipmentFilters.HasException = !!(this.SelectedFilters.find(e => e.Code == MoreFilterCodes.ExceptionOnly));
-        shipmentFilters.OrdersOnly = !!(this.SelectedFilters.find(e => e.Code == MoreFilterCodes.OrdersOnly));
-        shipmentFilters.EstimatedArrivalOnly = !!(this.SelectedFilters.find(e => e.Code == MoreFilterCodes.EstimatedArrivalOnly));
-    }
 
-    private SetCustomersFilter(shipmentFilters: CargoTrackingShipmentFilters) {
-        if (this.SelectedInvitedCustomers.length > 0) {
-            var str = this.SelectedInvitedCustomers.map(d => d.CardId)?.join(',');
 
-        } else {
-            var str = this.InvitedCustomers.map(d => d.CardId)?.join(',');
-        }
-        shipmentFilters.CustomersIds = this.InvitedCustomersIds;
-        shipmentFilters.CustomersIdsString = str;
-        shipmentFilters.SelectedInvitedCustomers = this.SelectedInvitedCustomers;
-    }
 
-    private SetMilestonesFilter(shipmentFilters: CargoTrackingShipmentFilters) {
-        if (this.appliedSelectedFilterMilestonesStatus.length > 0) {
-            var str = this.appliedSelectedFilterMilestonesStatus.map(state => state.Code)?.join(',');
-            shipmentFilters.SelectedMilestonesStatus = this.appliedSelectedFilterMilestonesStatus;
-            shipmentFilters.MilestonesStatus = str;
-        }
-    }
 
-    private SetDirectionFilters(shipmentFilters: CargoTrackingShipmentFilters) {
-        var direction = "";
-        if (this.SelectedFilters.length > 0) {
-            const directionsCodes = ['IM', 'EX', 'R'];
-            direction = this.SelectedFilters.filter(d => directionsCodes.includes(d.Code)).map(d => d.Code).join(',');
-        }
-        shipmentFilters.DirectionCodes = direction;
-    }
 
-    private SetTransportModeFilters(shipmentFilters: CargoTrackingShipmentFilters) {
-        var transportMode = "";
-        if (this.SelectedFilters.length > 0) {
-            const transportModeCodes = ['A', 'I', 'O'];
-            transportMode = this.SelectedFilters.filter(d => transportModeCodes.includes(d.Code)).map(d => d.Code).join(',');
-        }
-        shipmentFilters.TransportModeCodes = transportMode;
-    }
 
-    SelectionChangedHandler(toggleFilterCodes: string) {
-        RootContext.ShipmentsScrollPosition = 0;
-        this.SelectToggleFilters(toggleFilterCodes);
-    }
 
-    OnHasExceptionChanged(event) {
-        RootContext.ShipmentsScrollPosition = 0;
-        this.hasException = event;
-        this.hasExceptionAdvancedFilter = event;
-        this.shipmentMoreFiltersMultipleSelection.DeselectFilter(MoreFilterCodes.ExceptionOnly);
-        this.LoadScreenData();
-    }
-    OnOrdersOnlyChanged(event) {
-        RootContext.ShipmentsScrollPosition = 0;
-        this.ordersOnly = event;
-        this.OrdersOnlyAdvancedFilter = event;
-        this.shipmentMoreFiltersMultipleSelection.DeselectFilter(MoreFilterCodes.OrdersOnly);
-        this.LoadScreenData();
-    }
-    OnEstimatedArrivalOnlyChanged(event) {
-        RootContext.ShipmentsScrollPosition = 0;
-        this.estimatedArrivalOnly = event;
-        this.EstimatedArrivalOnlyAdvancedFilter = event;
-        this.shipmentMoreFiltersMultipleSelection.DeselectFilter(MoreFilterCodes.EstimatedArrivalOnly);
-        this.LoadScreenData();
-    }
 
-    OnAdvancedHasExceptionChanged(event) {
-        this.hasExceptionAdvancedFilter = event;
-    }
-
-    sortBySelectionChangedHandler(event) {
-        const index = this.sortByOptions.findIndex(d => d.Code == event);
-        switch (index) {
-            case 0: {
-                this.sortField = this.sortField === event ? '' : event;
-                this.sortByMultipleSelection.select.options.filter(d =>
-                    [SortOptions.ATA, SortOptions.ATD].includes(d.value.Code)).map(x => x.deselect());
-                break;
-            }
-            case 1: {
-                this.sortField = this.sortField === event ? '' : event;
-                this.sortByMultipleSelection.select.options.filter(d =>
-                    [SortOptions.CMD, SortOptions.ATD].includes(d.value.Code)).map(x => x.deselect());
-                break;
-            }
-            case 2: {
-                this.sortField = this.sortField === event ? '' : event;
-                this.sortByMultipleSelection.select.options.filter(d =>
-                    [SortOptions.CMD, SortOptions.ATA].includes(d.value.Code)).map(x => x.deselect());
-                break;
-            }
-            case 3: {
-                this.isSortDescending = this.isSortDescending === event ? '' : event;
-                this.sortByMultipleSelection.select.options.find(d => d.value.Code == SortOptions.DESC).deselect();
-                break;
-            }
-            case 4: {
-                this.isSortDescending = this.isSortDescending === event ? '' : event;
-                this.sortByMultipleSelection.select.options.find(d => d.value.Code == SortOptions.ASC).deselect();
-                break;
-            }
-        }
-        if ((this.sortField && this.isSortDescending) || (!this.sortField && !this.isSortDescending)) {
-            RootContext.ShipmentsScrollPosition = 0;
-            this.LoadScreenData();
-        }
-    }
-
-    private SelectToggleFilters(toggleFilterCodes: string) {
-        if (toggleFilterCodes) {
-            var splitted = toggleFilterCodes.split(',');
-            splitted.forEach(filterCode => {
-                this.SelectFilterByCode(filterCode);
-            });
-            this.LoadScreenData();
-        }
-    }
 
     SplitReference(reference: string) {
         this.references = reference != null ? reference.split(',') : null;
@@ -744,17 +695,15 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
 
     GetModeIcon(mode: string) {
         var iconPath = "";
-        const Air = 'A';
-        const Ocean = 'O';
-        const InLand = 'I';
+
         switch (mode) {
-            case Air:
+            case shipmentTypeCodes.Air:
                 iconPath = "./assets/images/misc/plane.svg";
                 break;
-            case Ocean:
+            case shipmentTypeCodes.Ocean:
                 iconPath = "./assets/images/misc/ship.svg";
                 break;
-            case InLand:
+            case shipmentTypeCodes.InLand:
                 iconPath = "./assets/images/misc/Truck.svg";
                 break;
             default:
@@ -762,211 +711,158 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
         }
         return iconPath;
     }
-    ToggleFilters: ToggleFilter[] = [
-        // new ToggleFilter('AL', 'ALL', ''),
-        new ToggleFilter('IM', 'Import', 'shipmentDirection'),
-        new ToggleFilter('EX', 'Export', 'shipmentDirection'),
-        new ToggleFilter('R', 'Drop', 'shipmentDirection'),
-        new ToggleFilter('A', 'Air', 'shipmentType'),
-        new ToggleFilter('I', 'Land', 'shipmentType'),
-        new ToggleFilter('O', 'Ocean', 'shipmentType'),
-        new ToggleFilter(MoreFilterCodes.ExceptionOnly, 'Exception Only', 'moreFilter'),
-        new ToggleFilter(MoreFilterCodes.OrdersOnly, 'Orders Only', 'moreFilter'),
-        new ToggleFilter(MoreFilterCodes.EstimatedArrivalOnly, 'Estimated Arrival Only', 'moreFilter')
+
+    ShipmentDirectionFilters: ToggleFilter[] = [
+        new ToggleFilter(ShipmentDirectionCodes.Import, 'Import'),
+        new ToggleFilter(ShipmentDirectionCodes.Export, 'Export'),
+        new ToggleFilter(ShipmentDirectionCodes.Drop, 'Drop'),
+        new ToggleFilter(ShipmentDirectionCodes.Domestic, 'Domestic'),
+        new ToggleFilter(ShipmentDirectionCodes.CustomsImport, 'Customs Import')
+    ];
+    ShipmentTypeFilters: ToggleFilter[] = [
+        new ToggleFilter(shipmentTypeCodes.Air, 'Air'),
+        new ToggleFilter(shipmentTypeCodes.InLand, 'Land'),
+        new ToggleFilter(shipmentTypeCodes.Ocean, 'Ocean'),
+    ];
+    ShipmentMoreFilters: ToggleFilter[] = [
+        new ToggleFilter(MoreFilterCodes.ExceptionOnly, 'Exception Only'),
+        new ToggleFilter(MoreFilterCodes.OrdersOnly, 'Orders Only'),
+        new ToggleFilter(MoreFilterCodes.EstimatedArrivalOnly, 'Estimated Arrival Only'),
+        new ToggleFilter(MoreFilterCodes.OperationalClosedOnly, 'Operational Closed Only')
     ];
 
+
     sortByOptions: ToggleFilter[] = [
-        new ToggleFilter(SortOptions.CMD, 'Current Status Date', '', null),
-        new ToggleFilter(SortOptions.ATA, 'ATA/ETA', '', null),
-        new ToggleFilter(SortOptions.ATD, 'ATD/ETD', '', null),
-        new ToggleFilter(SortOptions.ASC, 'Ascending', '', null),
-        new ToggleFilter(SortOptions.DESC, 'Descending', '', null),
+        new ToggleFilter(SortOptions.CMD, 'Current Status Date'),
+        new ToggleFilter(SortOptions.ATA, 'ATA/ETA'),
+        new ToggleFilter(SortOptions.ATD, 'ATD/ETD'),
+        new ToggleFilter(SortOptions.ASC, 'Ascending'),
+        new ToggleFilter(SortOptions.DESC, 'Descending'),
     ];
+    ShipmentDirectionFiltersDictionary: { [key: string]: ToggleFilter } = {};
+    ShipmentShipmentTypeFiltersDictionary: { [key: string]: ToggleFilter } = {};
+    fillFeltersDictionary() {
+        this.ShipmentDirectionFilters.forEach(element => {
+            this.ShipmentDirectionFiltersDictionary[element.Code] = element;
+        });
+        this.ShipmentTypeFilters.forEach(element => {
+            this.ShipmentShipmentTypeFiltersDictionary[element.Code] = element;
+        });
+
+
+    }
 
     BuildToggleFilters() {
         this.shipmentTypeMultipleSelection.MultipleSelectionList.map(x => {
-            x.Count = this.setCounterForMultipleSelect(x);
+            x.Count = this.setCounterForshipmentTypeMultipleSelect(x);
             return x;
         });
         this.shipmentDirectionMultipleSelection.MultipleSelectionList.map(x => {
-            x.Count = this.setCounterForMultipleSelect(x);
+            x.Count = this.setCounterForDirectionMultipleSelect(x);
             return x;
         });
         this.shipmentMoreFiltersMultipleSelection.MultipleSelectionList.map(x => {
-            x.Count = this.setCounterForMultipleSelect(x);
+            x.Count = this.setCounterForMoreFiltersMultipleSelect(x);
             return x;
         });
 
         this.changeDetector.detectChanges();
     }
 
-    setCounterForMultipleSelect(toggleFilter: ToggleFilter): number {
-        if (toggleFilter.Code == 'AL') {
-            return this.ShipmentsCount;
-        } else if (toggleFilter.Code == 'IM') {
-            return this.ShipmentsCounter.Import;
-        } else if (toggleFilter.Code == 'R') {
-            return this.ShipmentsCounter.Drop;
-        } else if (toggleFilter.Code == 'EX') {
-            return this.ShipmentsCounter.Export;
-        } else if (toggleFilter.Code == 'A') {
+    setCounterForshipmentTypeMultipleSelect(toggleFilter: ToggleFilter): number {
+        if (toggleFilter.Code == shipmentTypeCodes.Air) {
             return this.ShipmentsCounter.Air;
-        } else if (toggleFilter.Code == 'I') {
+        } else if (toggleFilter.Code == shipmentTypeCodes.InLand) {
             return this.ShipmentsCounter.Land;
-        } else if (toggleFilter.Code == 'O') {
+        } else if (toggleFilter.Code == shipmentTypeCodes.Ocean) {
             return this.ShipmentsCounter.Sea;
-        } else if (toggleFilter.Code == MoreFilterCodes.ExceptionOnly) {
+        }
+    }
+
+    setCounterForDirectionMultipleSelect(toggleFilter: ToggleFilter) {
+        if (toggleFilter.Code == ShipmentDirectionCodes.Import) {
+            return this.ShipmentsCounter.Import;
+        } else if (toggleFilter.Code == ShipmentDirectionCodes.Drop) {
+            return this.ShipmentsCounter.Drop;
+        } else if (toggleFilter.Code == ShipmentDirectionCodes.Export) {
+            return this.ShipmentsCounter.Export;
+        } else if (toggleFilter.Code == ShipmentDirectionCodes.Domestic) {
+            return this.ShipmentsCounter.Domestic;
+        } else if (toggleFilter.Code == ShipmentDirectionCodes.CustomsImport) {
+            return this.ShipmentsCounter.CustomsImport;
+        }
+    }
+    setCounterForMoreFiltersMultipleSelect(toggleFilter: ToggleFilter) {
+        if (toggleFilter.Code == MoreFilterCodes.ExceptionOnly) {
             return this.ShipmentsCounter.HasException;
         } else if (toggleFilter.Code == MoreFilterCodes.OrdersOnly) {
             return this.ShipmentsCounter.OrdersOnly;
         } else if (toggleFilter.Code == MoreFilterCodes.EstimatedArrivalOnly) {
             return this.ShipmentsCounter.EstimatedArrivalOnly;
+        }else if (toggleFilter.Code == MoreFilterCodes.OperationalClosedOnly) {
+            return this.ShipmentsCounter.OperationalClosedOnly;
         }
     }
 
-    SelectedFilters: ToggleFilter[] = [];
-    SelectFilter(filter: ToggleFilter) {
-        var item = this.SelectedFilters.find(d => d.Name == filter.Name);
-        if (!item)
-            this.SelectedFilters.push(filter);
-        RootContext.ShipmentsScrollPosition = 0;
-        this.LoadScreenData();
-    }
 
-    SelectFilterWithoutLoadScreenData(filter: ToggleFilter) {
-        var item = this.SelectedFilters.find(d => d.Name == filter.Name);
-        if (!item) {
-            this.SelectedFilters.push(filter);
-        } else {
-            var index = this.SelectedFilters.findIndex(d => d.Name == filter.Name);
-            this.SelectedFilters.splice(index, 1);
-        }
-    }
 
-    SelectFilterByCode(filterCode: string) {
-        var filter = this.ToggleFilters.find(d => d.Code == filterCode);
-        this.SelectFilterWithoutLoadScreenData(filter);
-    }
-    DeselectFilter(filter: ToggleFilter) {
-        var index = this.SelectedFilters.findIndex(d => d.Name == filter.Name);
-        this.SelectedFilters.splice(index, 1);
-        if (filter.FilterName == 'shipmentType') {
-            this.shipmentTypeMultipleSelection.DeselectFilter(filter.Code);
-            var index = this.selectedShipmentTypesFilter.findIndex(d => d.Code == filter.Code);
-            if (index >= 0) {
-                this.selectedShipmentTypesFilter.splice(index, 1);
-            };
-        } else if (filter.FilterName == 'shipmentDirection') {
-            this.shipmentDirectionMultipleSelection.DeselectFilter(filter.Code);
-            var index = this.selectedShipmentDirectionsFilter.findIndex(d => d.Code == filter.Code);
-            if (index >= 0) {
-                this.selectedShipmentDirectionsFilter.splice(index, 1);
-            };
-        }
-        else if (filter.FilterName == 'moreFilter') {
-            this.shipmentMoreFiltersMultipleSelection.DeselectFilter(filter.Code);
-            switch (filter.Code) {
-                case MoreFilterCodes.ExceptionOnly: {
-                    this.hasException = this.hasExceptionAdvancedFilter = false;
-                    break;
-                }
-                case MoreFilterCodes.OrdersOnly: {
-                    this.ordersOnly = this.OrdersOnlyAdvancedFilter = false;
-                    break;
-                }
-                case MoreFilterCodes.EstimatedArrivalOnly: {
-                    this.estimatedArrivalOnly = this.EstimatedArrivalOnlyAdvancedFilter = false;
-                    break;
-                }
-
-            }
-        }
-        RootContext.ShipmentsScrollPosition = 0;
-        this.LoadScreenData();
-
-    }
-    SelectionMoreFilterChangedHandler(event){
-        switch (event) {
-            case MoreFilterCodes.ExceptionOnly: {
-                this.hasException = this.hasExceptionAdvancedFilter = !this.hasException;
-                break;
-            }
-            case MoreFilterCodes.OrdersOnly: {
-                this.ordersOnly = this.OrdersOnlyAdvancedFilter = !this.ordersOnly;
-                break;
-            }
-            case MoreFilterCodes.EstimatedArrivalOnly: {
-                this.estimatedArrivalOnly = this.EstimatedArrivalOnlyAdvancedFilter = !this.estimatedArrivalOnly;
-                break;
-            }
-
-        }
-        this.LoadScreenData();
-    }
     ClearFilters() {
-        this.SelectedFilters = [];
         this.ClearAdvancedFilters();
         this.shipmentTypeMultipleSelection.ClearFilters();
         this.shipmentDirectionMultipleSelection.ClearFilters();
         this.shipmentMoreFiltersMultipleSelection.ClearFilters();
-        this.hasException = this.hasExceptionAdvancedFilter = false;
-        this.ordersOnly = this.OrdersOnlyAdvancedFilter = false;
-        this.estimatedArrivalOnly = this.EstimatedArrivalOnlyAdvancedFilter = false;
+        this.InvitedCustomers.map(e => e.IsSelected = false);
+        this.MilestonesStatus.map(e => e.IsSelected = false);
+        this.ShipmentSearchInput.CustomersIds = [];
+        this.ShipmentSearchInput.DirectionCodes = [];
+        this.ShipmentSearchInput.MilestonesCodes = [];
+        this.ShipmentSearchInput.TransportModeCodes = [];
+        this.ShipmentSearchInput.EstimatedArrivalOnly = this.MoreFilterMobileValue.EstimatedArrivalOnly = false;
+        this.ShipmentSearchInput.HasException = this.MoreFilterMobileValue.HasException = false;
+        this.ShipmentSearchInput.OrdersOnly = this.MoreFilterMobileValue.OrdersOnly = false;
+        this.ShipmentSearchInput.OperationalClosedOnly = this.MoreFilterMobileValue.OperationalClosedOnly = false;
         this.LoadScreenData();
     }
-
+    ClearAdvancedFilters() {
+        this.InvitedCustomers.map(e => e.IsSelected = false);
+        this.MilestonesStatus.map(e => e.IsSelected = false);
+        this.ShipmentDirectionFilters.map(e => e.IsSelected = false);
+        this.ShipmentTypeFilters.map(e => e.IsSelected = false);
+        this.MoreFilterMobileValue.EstimatedArrivalOnly = false;
+        this.MoreFilterMobileValue.HasException = false;
+        this.MoreFilterMobileValue.OrdersOnly = false;
+        this.MoreFilterMobileValue.OperationalClosedOnly = false;
+    }
     ApplyFilterButtonClicked() {
         this.sharedService.updateValue(false);
-        this.SelectedInvitedCustomers = this.FiltersSelectedInvitedCustoms.map(d => d);
-        this.appliedSelectedFilterMilestonesStatus = this.selectedFilterMilestonesStatus.map(state => state);
-        this.toggleMobileAdvancedFilters();
+        this.ShipmentSearchInput.CustomersIds = this.InvitedCustomers.filter(e => e.IsSelected).map(d => d.CardId);
+        this.ShipmentSearchInput.MilestonesCodes = this.MilestonesStatus.filter(e => e.IsSelected).map(state => state.Code);
+        if (this.isMobileView) {
+            this.ShipmentSearchInput.DirectionCodes = this.ShipmentDirectionFilters.filter(e => e.IsSelected).map(e => e.Code);
+            this.ShipmentSearchInput.TransportModeCodes = this.ShipmentTypeFilters.filter(e => e.IsSelected).map(e => e.Code);
+            this.MapMoreMobileFilter();
+        }
+
         RootContext.ShipmentsScrollPosition = 0;
         this.LoadScreenData();
     }
-
-    private toggleMobileAdvancedFilters() {
-        this.SelectedFilters = this.SelectedFilters.filter(item => !this.ToggleFilters.includes(item));
-        if (this.selectedShipmentTypesFilter.length) {
-            this.SelectToggleFilters(this.selectedShipmentTypesFilter.map(x => x.Code).join(','));
-        }
-        if (this.selectedShipmentDirectionsFilter.length) {
-            this.SelectToggleFilters(this.selectedShipmentDirectionsFilter.map(x => x.Code).join(','));
-        }
-        this.hasException = this.hasExceptionAdvancedFilter;
-        this.ordersOnly = this.OrdersOnlyAdvancedFilter;
-        this.estimatedArrivalOnly = this.EstimatedArrivalOnlyAdvancedFilter;
+    MapMoreMobileFilter() {
+        this.ShipmentSearchInput.EstimatedArrivalOnly = this.MoreFilterMobileValue.EstimatedArrivalOnly;
+        this.ShipmentSearchInput.HasException = this.MoreFilterMobileValue.HasException;
+        this.ShipmentSearchInput.OrdersOnly = this.MoreFilterMobileValue.OrdersOnly;
+        this.ShipmentSearchInput.OperationalClosedOnly = this.MoreFilterMobileValue.OperationalClosedOnly;
     }
     CheckFiltersExists() {
-        return this.SelectedInvitedCustomers.length > 0
-            || this.selectedFilterMilestonesStatus.length > 0
-            || this.MilestonesStatus.find(e => e.IsSelected)
-            || this.selectedShipmentTypesFilter.length > 0
-            || this.selectedShipmentDirectionsFilter.length > 0
-            || this.appliedSelectedFilterMilestonesStatus.length > 0
-            || this.FiltersInvitedCustomers.find(e => e.IsSelected)
-            || this.SelectedFilters.length > 0
-            || this.hasException
-            || this.ordersOnly
-            || this.estimatedArrivalOnly
-
-
+        return this.ShipmentSearchInput.CustomersIds.length > 0
+            || this.ShipmentSearchInput.DirectionCodes.length > 0
+            || this.ShipmentSearchInput.MilestonesCodes.length > 0
+            || this.ShipmentSearchInput.TransportModeCodes.length > 0
+            || this.ShipmentSearchInput.EstimatedArrivalOnly
+            || this.ShipmentSearchInput.HasException
+            || this.ShipmentSearchInput.OrdersOnly
+            || this.ShipmentSearchInput.OperationalClosedOnly
     }
-    ClearAdvancedFilters() {
-        this.SelectedInvitedCustomers = [];
-        this.selectedFilterMilestonesStatus = [];
-        this.MilestonesStatus.map((item, index) => {
-            this.MilestonesStatus[index].IsSelected = false;
-        });
-        this.selectedShipmentTypesFilter = [];
-        this.selectedShipmentDirectionsFilter = [];
-        this.hasExceptionAdvancedFilter = false;
-        this.appliedSelectedFilterMilestonesStatus = [];
-        this.FiltersInvitedCustomers.map((item, index) => {
-            item.IsSelected = false;
-        });
-        // RootContext.ShipmentsScrollPosition = 0;
-        // this.LoadScreenData();
-    }
+
     SortMenuClicked(buttonCode: string) {
         // this.LoadScreenData();
     }
@@ -995,94 +891,15 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
     }
 
 
-    public get SelectedCustomers(): any[] {
-        return this.InvitedCustomers.filter(customer => customer.IsSelected) || [];
-    }
 
-    UnselectCustomer(customer) {
-        var index = this.SelectedInvitedCustomers.findIndex(d => d == customer);
-        if (index >= 0)
-            this.SelectedInvitedCustomers.splice(index, 1);
-        RootContext.ShipmentsScrollPosition = 0;
-        this.LoadScreenData();
-
-    }
-
-    UnselectMiletone(state) {
-        var index = this.appliedSelectedFilterMilestonesStatus.findIndex(d => d == state);
-        if (index >= 0)
-            this.appliedSelectedFilterMilestonesStatus.splice(index, 1);
-        let itemIndex = this.MilestonesStatus.findIndex(item => item.Code == state.Code);
-        state.IsSelected = false;
-        this.MilestonesStatus[itemIndex] = state;
-        RootContext.ShipmentsScrollPosition = 0;
-        this.LoadScreenData();
-
-    }
-    FiltersInvitedCustomers: any[] = [];
     OpenAdvancedFiltersSidebar() {
         this.sharedService.updateValue(true);
-        this.mapFiltersInvitedCustomers();
     }
 
-    mapFiltersInvitedCustomers() {
-
-        this.FiltersSelectedInvitedCustoms = this.SelectedInvitedCustomers.map(d => d);
-
-        this.InvitedCustomers.forEach(d => d.IsSelected = false);
-        this.FiltersSelectedInvitedCustoms.forEach(d => d.IsSelected = true);
-
-        this.FiltersInvitedCustomers = this.InvitedCustomers.map(d => {
-            var selected = this.FiltersSelectedInvitedCustoms.find(g => g == d);
-            return selected || d;
-        });
-    }
     OnCustomerValueChanged(value, customer) {
-        if (value) {
-            var index = this.FiltersSelectedInvitedCustoms.findIndex(d => d == customer);
-            if (index < 0)
-                this.FiltersSelectedInvitedCustoms.push(customer);
-        }
-        else {
-            var index = this.FiltersSelectedInvitedCustoms.findIndex(d => d == customer);
-            if (index >= 0)
-                this.FiltersSelectedInvitedCustoms.splice(index, 1);
-        }
+        customer.IsSelected = value;
     }
 
-    // Milestones filter
-    MilestonesStatus: any[] = [];
-    OnMilestonesStatusFilterChanged(value, state) {
-        var index = this.selectedFilterMilestonesStatus.findIndex(d => d == state);
-        if (value === true && index < 0) {
-            this.MilestonesStatus.filter(x => x.Code === state.Code)[0].IsSelected = true;
-            this.selectedFilterMilestonesStatus.push(state);
-        }
-        else if (value === false && index >= 0) {
-            this.MilestonesStatus.filter(x => x.Code === state.Code)[0].IsSelected = false;
-            this.selectedFilterMilestonesStatus.splice(index, 1);
-        }
-    }
-
-    OnShipmentTypeFilterChanged(value, item) {
-        var index = this.selectedShipmentTypesFilter.findIndex(d => d == item);
-        if (value === true && index < 0) {
-            this.selectedShipmentTypesFilter.push(item);
-        }
-        else if (value === false && index >= 0) {
-            this.selectedShipmentTypesFilter.splice(index, 1);
-        };
-    }
-
-    OnShipmentDirectionFilterChanged(value, item) {
-        var index = this.selectedShipmentDirectionsFilter.findIndex(d => d == item);
-        if (value === true && index < 0) {
-            this.selectedShipmentDirectionsFilter.push(item);
-        }
-        else if (value === false && index >= 0) {
-            this.selectedShipmentDirectionsFilter.splice(index, 1);
-        }
-    }
 
     ShowSearchPanel() {
         this.ShowMobileSearch = true;
@@ -1090,10 +907,9 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
     }
     HideSearchPanel() {
         this.ShowMobileSearch = false;
-        this.SearchText = this.PanelSearchText;
-        if (!this.SearchText) {
+        if (!this.ShipmentSearchInput.SearchText) {
             this.Shipments = [];
-            RootContext.LastSearchText = this.SearchText;
+            RootContext.LastSearchText = this.ShipmentSearchInput.SearchText;
             this.LoadScreenData();
         } else {
             this.Search();
@@ -1125,8 +941,11 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
     @HostListener('window:resize', ['$event'])
     onResize(event) {
         this.setMaxNumberOfCarachter(event.srcElement.innerWidth);
+        this.setViews();
     }
-
+    private setViews() {
+        this.isMobileView = window.innerWidth <= 479;
+    }
     setMaxNumberOfCarachter(width) {
         if (width <= 1024 && width > 768) {
             this.maxNumberOfCarachter = 10
@@ -1141,13 +960,13 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
 }
 
 export class ToggleFilter {
-    constructor(code: string, name: string, filterName: string = '', count: number = 0) {
+    constructor(code: string, name: string, count: number = 0) {
         this.Code = code;
         this.Name = name;
         this.Count = count;
-        this.FilterName = filterName;
+        this.IsSelected = false;
     }
-
+    public IsSelected: boolean;
 
     private name: string;
     public get Name(): string {
@@ -1176,13 +995,7 @@ export class ToggleFilter {
         this.code = v;
     }
 
-    private filterName: string;
-    public get FilterName(): string {
-        return this.filterName;
-    }
-    public set FilterName(v: string) {
-        this.filterName = v;
-    }
+
 
 }
 
@@ -1191,12 +1004,15 @@ export class CargoTrackingShipmentsCounter {
     Import: number = 0;
     Export: number = 0;
     Drop: number = 0;
+    Domestic: number = 0;
+    CustomsImport: number = 0;
     Air: number = 0;
     Land: number = 0;
     Sea: number = 0;
     HasException: number = 0;
     OrdersOnly: number = 0;
     EstimatedArrivalOnly: number = 0;
+    OperationalClosedOnly: number = 0;
 }
 
 enum Milestones {
@@ -1239,5 +1055,22 @@ export enum ShipmentEntityTypes {
 export enum MoreFilterCodes {
     ExceptionOnly = 'ExceptionOnly',
     OrdersOnly = 'OrdersOnly',
-    EstimatedArrivalOnly = 'EstimatedArrivalOnly'
+    EstimatedArrivalOnly = 'EstimatedArrivalOnly',
+    OperationalClosedOnly = 'OperationalClosedOnly'
 }
+export enum ShipmentDirectionCodes {
+    Import = 'I',
+    Export = 'E',
+    Drop = 'R',
+    Domestic = 'D',
+    CustomsImport = 'C'
+
+}
+export enum shipmentTypeCodes {
+    Air = 'A',
+    Ocean = 'O',
+    InLand = 'I'
+
+}
+
+

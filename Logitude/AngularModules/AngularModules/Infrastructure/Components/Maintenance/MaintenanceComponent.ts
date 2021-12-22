@@ -939,6 +939,7 @@ export class MaintenanceComponent {
                     logitudeWindow.Width = 950;
                     logitudeWindow.Height = 640;
                     logitudeWindow.DataContext = this;
+                    logitudeWindow.DataContext.IsMainteneceView = true;
                     logitudeWindow.Title = "Automations";
                     logitudeWindow.Show('./Infrastructure/Components/Maintenance/Automation/MainMenuAutomationComponent');
                     break;

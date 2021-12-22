@@ -35,4 +35,12 @@ export class ShipmentPMInitService {
             entityPM.OnForwardingAdditionalTransportModeCode = "BYTR";
         }
     }
+
+    public static ApplyUIPoperties(entityPM: ShipmentPM, isNew: boolean) {
+        if (!isNew) {
+            entityPM.UIProperties.SetEnabled("IsPODReceived", "Shipment", false);
+            entityPM.UIProperties.SetEnabled("PODReceivedDate", "Shipment", false);
+        }
+    }
+
 }

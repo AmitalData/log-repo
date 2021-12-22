@@ -21,6 +21,8 @@ namespace Logitude.Accounting.BL.InterestService.HelperClasses
         public bool AttachReportWithEachInvoice { get; set; }
         public DateTime InvoiceDate { get; set; }
         public bool CloseWithoutInvoice{get;set;}
+        public string CategoryValue {get;set;}
+        public string CategoryIndex {get;set;}
 
     }
 

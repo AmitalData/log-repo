@@ -238,9 +238,25 @@ namespace Logitude.CargoTracking.BL.EntityQueryServices
         private List<DocumentsFilingPM> GetShipmentDocumentsFilings()
         {
             DocumentsFilingQuery documentsFilingQuery = new DocumentsFilingQuery(cargoShipmentPM.Tenant);
+            
             List<DocumentsFilingPM> documentsFilingPM = documentsFilingQuery.GetInputDocumentsFilingPMsByEntityId(cargoShipmentPM.EntityId, cargoShipmentPM.Tenant);
+
+            if (!string.IsNullOrWhiteSpace(cargoShipmentPM.ForwardingShipmentHeaderId))
+            {
+                List<DocumentsFilingPM> forwardingShipmentDocumentsFiling = documentsFilingQuery
+                    .GetInputDocumentsFilingPMsByEntityId(cargoShipmentPM.ForwardingShipmentHeaderId, cargoShipmentPM.Tenant);
+                AddForwardingShipmentsDocsToCustomsShipment(documentsFilingPM, forwardingShipmentDocumentsFiling);
+            }
             return documentsFilingPM;
         }
+
+        private void AddForwardingShipmentsDocsToCustomsShipment(List<DocumentsFilingPM> documentsFilingPM , List<DocumentsFilingPM> forwardingShipmentDocumentsFiling) {
+            if (forwardingShipmentDocumentsFiling.Any())
+            {
+                documentsFilingPM.AddRange(forwardingShipmentDocumentsFiling);
+            }
+        }
+
         private void MapCargoDocumentsFromDocumentsFilings(DocumentsFilingPM document)
         {
             cargoShipmentPM.DocumentsFilings.Add(new CargoDocumentsFiling()

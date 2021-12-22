@@ -35,7 +35,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;General&quot;"
-  Code="&quot;18d0&quot;"
+  Code="&quot;d116&quot;"
   Name="&quot;General&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Generals&quot;"
@@ -5092,6 +5092,11 @@
       Code="&quot;General.MH.TasksApp&quot;"
       DefaultText="&quot;Tasks App&quot;"
       LocalDefaultText="&quot;Tasks App&quot;"
+      TextCodeTypeCode="&quot;MH&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.MH.Automations&quot;"
+      DefaultText="&quot;Automations&quot;"
       TextCodeTypeCode="&quot;MH&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>

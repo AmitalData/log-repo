@@ -275,7 +275,7 @@ export class ShipmentDetailsComponent implements OnInit,AfterViewInit
 
     private SetOverviewPanelTitle() {
         if (this.cargoTrackingShipmentPM.EntityType == this.OrderEntityType) {
-            this.OverviewPanelTitle = "Order Overview";
+            this.OverviewPanelTitle = "SHO Overview";
 
         }
         else {
@@ -450,8 +450,8 @@ export class ShipmentDetailsComponent implements OnInit,AfterViewInit
             this.TitleOfCustomsOrForwarder_MB = "Forwarder Ref.";
         }
         if (this.cargoTrackingShipmentPM.EntityType == this.OrderEntityType) {
-            this.TitleOfCustomsOrForwarder = "Order References";
-            this.TitleOfCustomsOrForwarder_MB = "Order References";
+            this.TitleOfCustomsOrForwarder = "SHO References";
+            this.TitleOfCustomsOrForwarder_MB = "SHO References";
         }
     }
 
@@ -666,7 +666,7 @@ export class ShipmentDetailsComponent implements OnInit,AfterViewInit
         this.router.navigate(['cargo-tracking', 'shipments']);
     }
     ExternalDownloadAllClick(securityKey: string) {
-        this.documentDownloadService.ExternalDownloadAllDocuments(securityKey,this.tenant);
+        this.documentDownloadService.ExternalDownloadAllDocuments(securityKey, this.cargoTrackingShipmentPM.ForwardingShipmentHeaderId,this.tenant);
     }
     ExternalDownloadDocument(securityId: string) {
         this.documentDownloadService.ExternalDownloadPage(securityId,this.tenant);

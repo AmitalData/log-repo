@@ -83,8 +83,8 @@
         width: 100%;
     }
 
-        .filters-sidebar::after {
-            content: none;
+        .filters-sidebar-close-space {
+            display: none;
         }
 
         .filters-sidebar li {

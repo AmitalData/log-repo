@@ -83,6 +83,53 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                     where a.Tenant == tenant && a.Id == GLAccountId
                     select a.InterestCreditLimit).FirstOrDefault();
         }
+
+        internal List<InterestReportPM> GetNotInvoicedInterestReportsByCategory(List<InterestReportPM> interestReports, InterestReportArguments interestReportArguments)
+        {
+            switch (interestReportArguments.CategoryIndex)
+            {
+                case "Category1Id":
+                    {
+                        return (from a in interestReports
+                                join glAccount in context.GLAccounts on a.GLAccountId equals glAccount.Id
+                                where glAccount.Category1Id == interestReportArguments.CategoryValue
+                                select a).ToList();
+                    }
+                case "Category2Id":
+                    {
+                        return (from a in interestReports
+                                join glAccount in context.GLAccounts on a.GLAccountId equals glAccount.Id
+                                where glAccount.Category2Id == interestReportArguments.CategoryValue
+                                select a).ToList();
+                    }
+                case "Category3Id":
+                    {
+                        return (from a in interestReports
+                                join glAccount in context.GLAccounts on a.GLAccountId equals glAccount.Id
+                                where glAccount.Category3Id == interestReportArguments.CategoryValue
+                                select a).ToList();
+                    }
+                case "Category4Id":
+                    {
+                        return (from a in interestReports
+                                join glAccount in context.GLAccounts on a.GLAccountId equals glAccount.Id
+                                where glAccount.Category4Id == interestReportArguments.CategoryValue
+                                select a).ToList();
+                    }
+                case "Category5Id":
+                    {
+                        return (from a in interestReports
+                                join glAccount in context.GLAccounts on a.GLAccountId equals glAccount.Id
+                                where glAccount.Category5Id == interestReportArguments.CategoryValue
+                                select a).ToList();
+                    }
+
+                default: return interestReports;
+
+            }
+            
+        }
+
         public List<string> GetInterestReportNumbersByIds(List<string> InterestReportIds, int tenant)
         {
             var result = (from a in  context.InterestReports where a.Tenant == tenant   && InterestReportIds.Contains(a.Id) select a.ReportNumber).ToList();

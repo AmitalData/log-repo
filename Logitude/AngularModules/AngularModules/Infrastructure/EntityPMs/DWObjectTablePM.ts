@@ -120,6 +120,11 @@ export class DWObjectTablePM {
     public set AdditionalFactRelationType(newValue: string) { if (this.additionalFactRelationType != newValue) { this.additionalFactRelationType = newValue; this.MarkAsDirty("AdditionalFactRelationType"); } }
        
 	 
+    private additionalConditions: string;
+    public get AdditionalConditions() { return this.additionalConditions; }
+    public set AdditionalConditions(newValue: string) { if (this.additionalConditions != newValue) { this.additionalConditions = newValue; this.MarkAsDirty("AdditionalConditions"); } }
+       
+	 
 
     public OldEntityPM: DWObjectTablePM;
 		

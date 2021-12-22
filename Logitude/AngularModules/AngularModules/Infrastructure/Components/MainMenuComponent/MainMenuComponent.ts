@@ -85,7 +85,7 @@ export class MainMenuComponent {
             }
 
 
-            if (isAddingItem) {
+            if (isAddingItem) { 
                 var menuItem: MainMenuItem = new MainMenuItem(item.TextCode, AppTool.GetMainMenuIconCode(item.TextCode));
                 menuItem.IndexOfOrder = item.IndexOfOrder;
                 menuItem.ObjectTableId = item.ObjectTableId;
@@ -296,6 +296,12 @@ export class MainMenuComponent {
                         }
                         break;
                     }
+
+                    case "General.MH.Automations": {
+                        myComponentPath = "./Infrastructure/Components/Maintenance/Automation/MainMenuAutomationComponent";
+                        break;
+                    }
+
 
                     case "General.MH.ContainersFU": {
                         myComponentPath = "./Shipment/Components/Workspaces/ContainersFUsComponent";

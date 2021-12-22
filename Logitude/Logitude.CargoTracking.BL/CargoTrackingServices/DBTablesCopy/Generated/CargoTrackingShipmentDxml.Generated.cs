@@ -342,11 +342,15 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.DBTablesCopy.Generated
 "  <Column Name='SupplyDateTime' Type='datetime'>"+
 "    <Constraints Nullable='true' />"+
 "  </Column>"+
+"  <Column Name='IsOperationalClosed' Type='bit'>"+
+"    <Constraints Nullable='true' />"+
+"  </Column>"+
 "  <Relation ForeignKeyColumn='EntityType' ReferencedTable='CargoTrackingHeaderEntityTypes' ReferencedColumn='Code' ReferencedTableSchema='dbo' />"+
 "  <Relation ForeignKeyColumn='CurrentMilestoneCode' ReferencedTable='CargoTrackingMilestones' ReferencedColumn='Code' ReferencedTableSchema='dbo' />"+
 "  <Index Columns='EntityId' />"+
 "  <Index Columns='Tenant,SecurityKey' />"+
 "  <Index Columns='CustomerId' />"+
+"  <Index Columns='CustomsShipmentHeaderId' />"+
 "  <UniqueConstraint Columns='EntityType,EntityId,Tenant' />"+
 "</Table>";
 		
