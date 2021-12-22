@@ -24,6 +24,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 
         public void CustomPOCOToPM(ExportStoragePM entityPM, ExportStorage entityPOCO)
         {
+
+            Console.WriteLine(1);
             //throw new NotImplementedException();
         }
    }
