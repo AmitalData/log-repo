@@ -972,6 +972,11 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             }
             #endregion
 
+
+            #region Consignee
+            shipmentPM.ShippingAgent = shipment.ShippingAgent;
+            #endregion
+
             #region Consignee
             shipmentPM.ConsigneeId = shipment.ConsigneeId;
             shipmentPM.ConsigneeAddressId = shipment.ConsigneeAddressId;
@@ -3582,6 +3587,12 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
             #endregion
 
+            #region ShippingAgent 
+            shipmentPM.ShippingAgent = shipment.ShippingAgent;
+
+
+            #endregion
+
             #region Agent
             shipmentPM.AgentId = shipment.AgentId;
             shipmentPM.AgentComputed = shipment.AgentComputed;
@@ -4614,6 +4625,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                         ConsigneeContactId = s.ConsigneeContactId,
                                                         ConsigneeId = s.ConsigneeId,
                                                         ConsigneeName = s.ConsigneeCard != null ? s.ConsigneeCard.EnglishName : null,
+                                                        ShippingAgent = s.ShippingAgent,
                                                         ConsigneeNote = s.ConsigneeCard != null ? s.ConsigneeCard.Notes : null,
                                                         ConsigneeNotImporterAddressId = s.ConsigneeNotImporterAddressId,
                                                         ConsigneeNotImporterContactId = s.ConsigneeNotImporterContactId,
@@ -5292,6 +5304,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                         ConsigneeAddressId = s.ConsigneeAddressId,
                                                         ConsigneeAddressOneTime = s.ConsigneeAddressOneTime,
                                                         ConsigneeContactId = s.ConsigneeContactId,
+                                                        ShippingAgent = s.ShippingAgent,
                                                         ConsigneeId = s.ConsigneeId,
                                                         ConsigneeName = s.ConsigneeCard != null ? s.ConsigneeCard.EnglishName : null,
                                                         ConsigneeNote = s.ConsigneeCard != null ? s.ConsigneeCard.Notes : null,
@@ -11448,7 +11461,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                      Field40 = shipment.Field40,
                      IsCancelled = shipment.IsCancelled,
                      DescriptionofGoods = shipment.DescriptionOfGoods,
-                     House = shipment.House,
+                     House = shipment.House, 
                      ConsigneeName = shipment.ConsigneeName,
                      ShipmentPackageReference1 = jd.Reference1,
                      ShipmentPackageReference2 = jd.Reference2,
@@ -11824,6 +11837,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                          BookingNumberOfPackages = s.BookingNumberOfPackages,
                                                          BranchId = s.BranchId,
                                                          ChargeableWeightInKG = s.ChargeableWeightInKG,
+                                                         ShippingAgent = s.ShippingAgent,
                                                          ConsigneeId = s.ConsigneeId,
                                                          ConsigneeName = s.ConsigneeCard != null ? s.ConsigneeCard.EnglishName : null,
                                                          ConsigneeReference1 = s.ConsigneeReference1,
@@ -12439,7 +12453,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                ManifestReason = f.ManifestReason,
                                ManifestStatusCode = f.ManifestStatusCode,
                                IsMissingDocument = f.IsMissingDocument,
-                               DocumentsSearchFields = f.DocumentsSearchFields,
+                               DocumentsSearchFields = f.DocumentsSearchFields, 
                                ConsigneeName = f.ConsigneeName,
                                ShipperName = f.ShipperName,
                                ForwarderShipmentNumber = f.ForwarderShipmentNumber,
@@ -12648,7 +12662,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     CarrierLastStatusCode = f.CarrierLastStatusCode,
                     ShipmentViewId = f.Id,
                     Id = f.Id,
-                    Shipper = f.ShipperName,
+                    Shipper = f.ShipperName, 
                     Consignee = f.ConsigneeName,
                     DirectionId = f.DirectionId,
                     DirectionName = f.DirectionName,
@@ -12832,7 +12846,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     ManifestReason = f.ManifestReason,
                     ManifestStatusCode = f.ManifestStatusCode,
                     IsMissingDocument = f.IsMissingDocument,
-                    DocumentsSearchFields = f.DocumentsSearchFields,
+                    DocumentsSearchFields = f.DocumentsSearchFields, 
                     ConsigneeName = f.ConsigneeName,
                     ShipperName = f.ShipperName,
                     ForwarderShipmentNumber = f.ForwarderShipmentNumber,
@@ -13022,7 +13036,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     CarrierLastStatusCode = f.CarrierLastStatusCode,
                     ShipmentViewId = f.Id + f.FollowUpId,
                     Id = f.Id,
-                    Shipper = f.ShipperName,
+                    Shipper = f.ShipperName, 
                     Consignee = f.ConsigneeName,
                     DirectionId = f.DirectionId,
                     DirectionName = f.DirectionName,
@@ -13622,6 +13636,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                          BookingNumberOfPackages = s.BookingNumberOfPackages,
                                                          BranchId = s.BranchId,
                                                          ChargeableWeightInKG = s.ChargeableWeightInKG,
+                                                         ShippingAgent = s.ShippingAgent,
                                                          ConsigneeId = s.ConsigneeId,
                                                          ConsigneeName = s.ConsigneeCard != null ? s.ConsigneeCard.EnglishName : null,
                                                          ConsigneeReference1 = s.ConsigneeReference1,

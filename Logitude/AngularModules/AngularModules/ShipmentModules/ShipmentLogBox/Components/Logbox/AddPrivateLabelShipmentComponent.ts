@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IncotermList } from '../../../../Common/EntityLists/IncotermList';
+import { PackageTypeList } from '../../../../Common/EntityLists/PackageTypeList';
 import { PortList } from '../../../../Common/EntityLists/PortList';
 import { TenantPM } from '../../../../Common/EntityPMs/TenantPM';
 import { BranchListService } from '../../../../Common/Services/StandardLists/BranchListService';
@@ -9,14 +10,16 @@ import { PortListService } from '../../../../Common/Services/StandardLists/PortL
 import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
 import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
+import { ObjectsLocator } from '../../../../Infrastructure/Locators/ObjectsLocator';
 import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
 import { EntityStatusListService } from '../../../../Infrastructure/Services/StandardLists/EntityStatusListService';
-import { AppTool, DateTool } from '../../../../Infrastructure/Tools';
+import { AppTool, DateTool, FormatTool } from '../../../../Infrastructure/Tools';
 import { Guid } from '../../../../Infrastructure/Utilities/Guid';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
 import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import { FilterClass } from '../../../../Shipment/Components/NewEntity/NewShipmentComponent';
 import { ShipmentSubTypeList } from '../../../../shipment/EntityLists/ShipmentSubTypeList';
+import { ShipmentOrderPackagePM } from '../../../../Shipment/EntityPMs/ShipmentOrderPackagePM';
 import { ShipmentPackagePM } from '../../../../Shipment/EntityPMs/ShipmentPackagePM';
 import { ShipmentPM } from '../../../../Shipment/EntityPMs/ShipmentPM';
 import { ShipmentPMService } from '../../../../Shipment/Services/StandardPMs/ShipmentPMService';
@@ -36,23 +39,23 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
     public TransportModesList: FilterClass[] = [];
     public ShipmentTypesList: FilterClass[] = [];
     public ShipmentLevelsList: FilterClass[] = [];
-    public ShipmentSubTypesList: FilterClass[] = []; 
+    public ShipmentSubTypesList: FilterClass[] = [];
     EntityPM: ShipmentPM = new ShipmentPM();
-    public ShipmentTypeName: string = null; 
-    public ShowShipmentLevels: boolean = true; 
+    public ShipmentTypeName: string = null;
+    public ShowShipmentLevels: boolean = true;
     public ObjectTableName: string = "Shipment";
     public LabelColumnWidth: number = 115;
     public ControlColumnWidth: number = 220;
     private portListService: PortListService;
     private incotermListService: IncotermListService;
-    private shipmentPMService: ShipmentPMService; 
+    private shipmentPMService: ShipmentPMService;
     public departmentListService: DepartmentListService;
     public entityStatusListService: EntityStatusListService;
-    public errorMessage = TextCodeTranslator.Translate("General.M.FieldIsRequired"); 
+    public errorMessage = TextCodeTranslator.Translate("General.M.FieldIsRequired");
     private args: any;
     EntityProgressStatusId: string;
-    public SessionIndex: number; 
-    public ScreenOpacity: number = 1;   
+    public SessionIndex: number;
+    public ScreenOpacity: number = 1;
     public VolumeLabel: string;
     public GrossWeightLabel: string;
     public ChargeableWeightLabel: string;
@@ -63,8 +66,17 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
     public ChangePageButton: string = "Next";
     public IsCustomsActivated: boolean = false;
     public AllowCreateShipmentsWithoutDocuments: boolean = false;
+    public Order: string = "Reference";
+    public RequestedDateLabel: string = "Requested Flight Date";
+    public AllowCreateOceanExport: boolean = false; 
+    public FromTextCode: string;
+    public ToTextCode: string; 
+    public ToPortTextCode: string;
+    public isRTL: boolean = false;
+
     constructor() {
-        super(); 
+        super();
+        if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
         this.InitializeServices();
         this.SetUIProperties();
         this.SetUIProperties_Filters(); 
@@ -75,10 +87,19 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
         this.SetUnits();
         this.SetLabels();
         this.SetFromPort();
+        this.checkAirShipmentToggle();
 
     }
+    checkAirShipmentToggle() { 
+         let AirShipmentFeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "PLE")[0];
+        if (AirShipmentFeatureToggle) {
+            this.AllowCreateOceanExport = true;
 
-   
+        }
+    }
+     
+ 
+
     SetFromPort() {
         this._PortExtendedPMService.getSinglePort("TLV", "IL", SessionLocator.Tenant).subscribe((Result: any) => {
             this.FromPort =  Result.Result.Id;
@@ -169,6 +190,8 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
 
     SetLabels() { 
 
+        this.SetExportShipmentLabels();
+
         this.VolumeLabel = TextCodeTranslator.Translate("Shipment.F.BookingVolume.Short").replace("%VolumeCode", this.EntityPM.VolumeUnitCode);
         this.GrossWeightLabel = TextCodeTranslator.Translate("Shipment.F.OrderGrossWeight.Short").replace("%GrossWeightCode", this.EntityPM.GrossWeightUnitCode);
 
@@ -180,6 +203,49 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
         }
          
     }
+
+
+ 
+    private SetExportShipmentLabels() {
+         
+        switch (this.TransportModeId) {
+            case "A": {
+                this.SetAirExportLabels();
+                break;
+            }
+
+            case "O": {
+                this.SetOceanExportLabel();
+                break;
+            } 
+         
+            case "I":
+            default: {
+                this.SetDefaultExportLabel();
+                break;
+            }
+        }
+    }
+
+    private SetDefaultExportLabel() {
+        this.FromTextCode = "Shipment.S.NewShipment.From";
+        this.ToTextCode = "Shipment.S.NewShipment.To";
+    }
+
+    private SetOceanExportLabel() {
+        this.FromTextCode = "Shipment.S.NewShipment.LoadingPort";
+        this.ToTextCode = "Shipment.S.NewShipment.DischargePort";
+        this.Order = "Order Number";
+        this.RequestedDateLabel = "Expected Sealing Date";
+    }
+
+    private SetAirExportLabels() {
+        this.FromTextCode = "Shipment.S.NewShipment.Gateway";
+        this.ToTextCode = "Shipment.S.NewShipment.Destination";
+        this.Order = "Reference";
+        this.RequestedDateLabel = "Requested Flight Date";
+    }
+
     InitializeServices() {
         this.portListService = new PortListService();
         this.incotermListService = new IncotermListService();
@@ -244,12 +310,44 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
 
     SetUIProperties_Filters() {
         this.DirectionId = 'E';
-        this.TransportModeId = 'A';  
+        this.TransportModeId = 'A';
+        this.ShipmentTypeId = 'FCLD';
     }
 
     BuildFiltersLists() { 
         this.BuildDirectionsList(); 
-        this.BuildTransportModesList();  
+        this.BuildTransportModesList();
+       // this.BuildShipmentTypes();
+    }
+
+    
+    BuildShipmentTypes() {
+        this.ShipmentTypesList = [];
+
+        if (!(this.DirectionId && this.TransportModeId)) return; 
+        
+            switch (this.TransportModeId) {
+                case "O": {
+                    this.BuildOceanShipmentTypeList();
+                    break;
+                }
+
+                case "I": {
+                    this.BuildInlandShipmentTYpeList();
+                    break;
+                }
+            }
+       
+    }
+
+    private BuildInlandShipmentTYpeList() {
+        this.ShipmentTypesList.push(new FilterClass("FTL", "FTL", "./Images/CellIcons/Container.png"));
+        this.ShipmentTypesList.push(new FilterClass("LTL", "LTL", "./Images/CellIcons/Package.png"));
+    }
+
+    private BuildOceanShipmentTypeList() {
+        this.ShipmentTypesList.push(new FilterClass("FCLD", "FCL", "./Images/CellIcons/Container.png"));
+        this.ShipmentTypesList.push(new FilterClass("LCLD", "LCL", "./Images/CellIcons/Package.png"));
     }
 
     private BuildTransportModesList() {
@@ -272,8 +370,244 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
         }
     }
 
-    
+    SetOrderPackagesOnFinish() {
 
+        if (this.ShipmentTypeId != 'FCLD') return; 
+        this.AddShipmentOrderPackages(); 
+        this.EntityPM.BookingNumberOfPackages = this.CalculateNumberOfPackages();
+
+    }
+
+    private AddShipmentOrderPackages() {
+
+        this.EntityPM.ShipmentOrderPackages = [];
+
+        if (this.hasPackage1()) {
+            var item = this.AddOrderPackage1();
+        }
+
+        if (this.hasPackage2()) {
+            var item = this.AddOrderPackage2(item);
+        }
+
+        if (this.hasPackage3()) {
+            var item = this.AddOrderPackage3(item);
+        }
+
+        if (this.hasPackage4()) {
+            var item = this.AddOrderPackage4(item);
+        }
+    }
+
+    private hasPackage4() {
+        return this.PackageTypeList4 != null && this.Quantity4 > 0;
+    }
+
+    private hasPackage3() {
+        return this.PackageTypeList3 != null && this.Quantity3 > 0;
+    }
+
+    private hasPackage2() {
+        return this.PackageTypeList2 != null && this.Quantity2 > 0;
+    }
+
+    private hasPackage1() {
+        return this.PackageTypeList1 != null && this.Quantity1 > 0;
+    }
+
+    CalculateNumberOfPackages(): number {
+        var numberOfPackages = 0;
+
+        if (this.hasPackage1()) { 
+            numberOfPackages = numberOfPackages + this.Quantity1;
+        }
+
+        if (this.hasPackage2()) { 
+            numberOfPackages = numberOfPackages + this.Quantity2;
+        }
+
+        if (this.hasPackage3()) { 
+            numberOfPackages = numberOfPackages + this.Quantity3;
+        }
+
+        if (this.hasPackage4()) { 
+            numberOfPackages = numberOfPackages + this.Quantity4;
+        }
+        return numberOfPackages;
+ 
+    }
+
+    private AddOrderPackage4(item: ShipmentOrderPackagePM) {
+        var item = new ShipmentOrderPackagePM(this.EntityPM);
+        item.IsContainer = this.PackageTypeList4.IsContainer;
+        item.ContainerNumber = this.ContainerNumber4;
+        item.Quantity = this.Quantity4;
+        item.PackageTypeId = this.PackageTypeId4;
+        item.Tenant = SessionLocator.Tenant;
+        item.ShipmentId = this.EntityPM.Id;
+        this.EntityPM.AddOrderPackage(item);
+        return item;
+    }
+
+    private AddOrderPackage3(item: ShipmentOrderPackagePM) {
+        var item = new ShipmentOrderPackagePM(this.EntityPM);
+        item.IsContainer = this.PackageTypeList3.IsContainer;
+        item.ContainerNumber = this.ContainerNumber3;
+        item.Quantity = this.Quantity3;
+        item.PackageTypeId = this.PackageTypeId3;
+        item.Tenant = SessionLocator.Tenant;
+        item.ShipmentId = this.EntityPM.Id;
+        this.EntityPM.AddOrderPackage(item);
+        return item;
+    }
+
+    private AddOrderPackage2(item: ShipmentOrderPackagePM) {
+        var item = new ShipmentOrderPackagePM(this.EntityPM);
+        item.IsContainer = this.PackageTypeList2.IsContainer;
+        item.ContainerNumber = this.ContainerNumber2;
+        item.Quantity = this.Quantity2;
+        item.PackageTypeId = this.PackageTypeId2;
+        item.Tenant = SessionLocator.Tenant;
+        item.ShipmentId = this.EntityPM.Id;
+        this.EntityPM.AddOrderPackage(item);
+        return item;
+    }
+
+    private AddOrderPackage1() {
+        var item = new ShipmentOrderPackagePM(this.EntityPM);
+        item.IsContainer = this.PackageTypeList1.IsContainer;
+        item.Quantity = this.Quantity1;
+        item.ContainerNumber = this.ContainerNumber1;
+        item.PackageTypeId = this.PackageTypeId1;
+        item.Tenant = SessionLocator.Tenant;
+        item.ShipmentId = this.EntityPM.Id;
+        this.EntityPM.AddOrderPackage(item);
+        return item;
+    }
+
+    get ContainerNumber1() { return this.EntityPM.ContainerNumber1; }
+    set ContainerNumber1(newValue: string) {
+        if (this.EntityPM.ContainerNumber1 == newValue) return;
+
+         this.EntityPM.ContainerNumber1 = newValue; 
+         this.SetUIProperties_Containers(); 
+    }
+
+    get ContainerNumber2() { return this.EntityPM.ContainerNumber2; }
+    set ContainerNumber2(newValue: string) {
+        if (this.EntityPM.ContainerNumber2 == newValue) return;
+
+        this.EntityPM.ContainerNumber2 = newValue;
+        this.SetUIProperties_Containers(); 
+    }
+
+    get ContainerNumber3() { return this.EntityPM.ContainerNumber3; }
+    set ContainerNumber3(newValue: string) {
+        if (this.EntityPM.ContainerNumber3 == newValue) return;
+
+        this.EntityPM.ContainerNumber3 = newValue;
+        this.SetUIProperties_Containers();
+         
+    }
+
+    get ContainerNumber4() { return this.EntityPM.ContainerNumber4; }
+    set ContainerNumber4(newValue: string) {
+        if (this.EntityPM.ContainerNumber4 == newValue) return;
+
+        this.EntityPM.ContainerNumber4 = newValue;
+        this.SetUIProperties_Containers();
+       
+    }
+
+    get Quantity1() { return this.EntityPM.Quantity1; }
+    set Quantity1(newValue: number) {
+        if (this.EntityPM.Quantity1 == newValue) return;
+
+        this.EntityPM.Quantity1 = newValue;
+        this.SetUIProperties_Containers();
+    }
+
+
+    SetUIProperties_Containers() {
+
+        this.UIProperties.SetEnabled("PackageTypeId1", this.ObjectTableName, this.Quantity1 > 0);
+        this.UIProperties.SetEnabled("PackageTypeId2", this.ObjectTableName, this.Quantity2 > 0 );
+        this.UIProperties.SetEnabled("PackageTypeId3", this.ObjectTableName, this.Quantity3 > 0);
+        this.UIProperties.SetEnabled("PackageTypeId4", this.ObjectTableName, this.Quantity4 > 0);
+
+        if (AppTool.IsNullOrZero(this.Quantity1)) {
+            this.PackageTypeId1 = null;
+        }
+
+        if (AppTool.IsNullOrZero(this.Quantity2)) {
+            this.PackageTypeId2 = null;
+        }
+
+        if (AppTool.IsNullOrZero(this.Quantity3)) {
+            this.PackageTypeId3 = null;
+        }
+
+        if (AppTool.IsNullOrZero(this.Quantity4)) {
+            this.PackageTypeId4 = null;
+        }
+
+    }
+
+    get Quantity2() { return this.EntityPM.Quantity2; }
+    set Quantity2(newValue: number) {
+        if (this.EntityPM.Quantity2 == newValue) return;
+
+        this.EntityPM.Quantity2 = newValue;
+        this.SetUIProperties_Containers();
+ 
+    }
+
+    get Quantity3() { return this.EntityPM.Quantity3; }
+    set Quantity3(newValue: number) {
+        if (this.EntityPM.Quantity3 == newValue) return;
+
+        this.EntityPM.Quantity3 = newValue;
+        this.SetUIProperties_Containers();
+    }
+
+    get Quantity4() { return this.EntityPM.Quantity4; }
+    set Quantity4(newValue: number) {
+        if (this.EntityPM.Quantity4 == newValue) return;
+
+        this.EntityPM.Quantity4 = newValue;
+        this.SetUIProperties_Containers();
+    }
+    public PackageTypeList1: PackageTypeList = null;
+    get PackageTypeId1() { return this.EntityPM.PackageTypeId1; }
+    set PackageTypeId1(newValue: string) {
+        if (this.EntityPM.PackageTypeId1 != newValue) {
+            this.EntityPM.PackageTypeId1 = newValue;
+        }
+    }
+
+    public PackageTypeList2: PackageTypeList = null;
+    get PackageTypeId2() { return this.EntityPM.PackageTypeId2; }
+    set PackageTypeId2(newValue: string) {
+        if (this.EntityPM.PackageTypeId2 != newValue) {
+            this.EntityPM.PackageTypeId2 = newValue;
+        }
+    }
+
+    public PackageTypeList3: PackageTypeList = null;
+    get PackageTypeId3() { return this.EntityPM.PackageTypeId3; }
+    set PackageTypeId3(newValue: string) {
+        if (this.EntityPM.PackageTypeId3 != newValue) {
+            this.EntityPM.PackageTypeId3 = newValue;
+        }
+    }
+
+    public PackageTypeList4: PackageTypeList = null;
+    get PackageTypeId4() { return this.EntityPM.PackageTypeId4; }
+    set PackageTypeId4(newValue: string) {
+        if (this.EntityPM.PackageTypeId4 != newValue) {
+            this.EntityPM.PackageTypeId4 = newValue;
+        }
+    }
 
     public get BranchId() { return this.EntityPM.BranchId }
     public set BranchId(newValue: string) { this.EntityPM.BranchId = newValue; }
@@ -293,16 +627,31 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
         }
     } 
 
+
     get TransportModeId() { return this.EntityPM.TransportModeId; }
     set TransportModeId(newValue: string) {
         if (this.EntityPM.TransportModeId != newValue) {
-            this.EntityPM.TransportModeId = newValue; 
-            if (newValue == "A") {
-                this.EntityPM.ShipmentTypeId = "Air";
-            } 
-            else {
-                this.EntityPM.ShipmentTypeId = null;
-            } 
+            this.SetPrivateLabelTranssportMode(newValue);
+        }
+    }
+
+    
+
+    private SetPrivateLabelTranssportMode(newValue: string) {
+        this.EntityPM.TransportModeId = newValue;
+        if (newValue == "A") {
+            this.EntityPM.ShipmentTypeId = "Air";
+        }
+        this.SetExportShipmentType(); 
+        this.BuildShipmentTypes();
+        this.SetExportShipmentLabels();
+    }
+
+    private SetExportShipmentType() {
+        if (this.EntityPM.DirectionId == "E") {
+            this.EntityPM.ShipmentTypeId = "FCLD";
+        } else {
+            this.EntityPM.ShipmentTypeId = null;
         }
     }
 
@@ -328,15 +677,19 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
         if (this.DirectionId == 'C') {
             this.SaveChanges();
         } else { 
-            this.ValidateRequiredFields();
-
-            if (this.ValidationErrorsList.length == 0) { 
-                this.InitializeExportShipmentFields(); 
-            }
+            this.CreateExportShipment();
         }
 
     }
      
+    private CreateExportShipment() {
+        this.ValidateRequiredFields();
+
+        if (this.ValidationErrorsList.length == 0) {
+            this.InitializeExportShipmentFields();
+        }
+    }
+
     NextButtonClicked() {
         this.ShowAddDocument = !this.ShowAddDocument;
         this.SetChangeButtonTitle();
@@ -378,6 +731,7 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
     public set StatusId(newValue: string) { this.EntityPM.StatusId = newValue; }
 
     private InitializeExportShipmentFields() {
+
         this.CurrentSession.StartBusyIndicator("Creating...");
         this.EntityPM.MainCarriageFinalDestinationPortId = this.EntityPM.MainCarriageToPortId; 
         this.EntityPM.StatusDate = DateTool.GetCurrentDateTimeAsUtc();  
@@ -388,12 +742,12 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
         this.EntityPM.NewConcurrencyGUID = Guid.newGuid();
         this.EntityPM.Tenant = SessionLocator.Tenant;
         this.EntityPM.ShipmentCustomerTypeCode = "SHI";
-        this.EntityPM.MainCarriageFromPortId = this.FromPort;
+        this.EntityPM.MainCarriageFromPortId = this.TransportModeId == 'A' ? this.FromPort : this.MainCarriageFromPortId;
         this.EntityPM.OtherPrepaidCollectId = "C";
         this.EntityPM.FreightPrepaidCollectId = "C";
         this.EntityPM.ShipmentLevelCode = "A";
         this.EntityPM.FromPortId = this.FromPort;
-
+        this.SetOrderPackagesOnFinish();
         this._EntityStatusListService.getAll().subscribe((myResult: any) => {
             if (!myResult.HasError) {
 
@@ -426,6 +780,145 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
 
     private ValidateRequiredFields() { 
 
+        if (this.TransportModeId == 'A') { 
+            this.ValidateAirExportShipmentFields();
+            return;
+        }
+        if (this.TransportModeId == 'O') {
+            this.ValidateOceanExportShipmentFields();
+            return;
+        }
+        return; 
+    }
+
+    public ValidateContainerNumber(input: string) {
+        let result = FormatTool.ValidateContainerNumber(input);
+
+        if (result != null) {
+            this.PushErrorMessage(result);
+        }
+    }
+
+    ValidateOceanExportShipmentFields() { 
+
+        if (AppTool.IsNullOrEmpty(this.CustomerReference3)) {
+            this.PushErrorMessage("Order Number");
+        } 
+
+        if (AppTool.IsNullOrEmpty(this.MainCarriageToPortId)) {
+            this.PushErrorMessage("Discharge Port");
+        }
+
+        if (AppTool.IsNullOrEmpty(this.MainCarriageFromPortId)) {
+            this.PushErrorMessage("Loading Port");
+        } 
+
+        if (AppTool.IsNullOrEmpty(this.IncotermId)) {
+            this.PushErrorMessage("Incoterm");
+        }
+
+        if (!AppTool.IsNullOrEmpty(this.RequestedFlightDate)) {
+            this.ValidateRequestedFlightDate();
+        }
+
+
+        if (!this.IsDSVTenant && (!this.documentsFilings || this.documentsFilings.filter(d => d.IsSharedWithForwarder == true).length == 0)) {
+            this.ValidationErrorsList.push("You should have at least one document shared with agent");
+        }
+
+        this.ValidateLCLDShipmentType();
+         
+        this.ValidateFCLDShipmentType();
+ 
+    }
+    ValidateFCLDShipmentType() {
+
+        if (!(this.ShipmentTypeId == 'FCLD' && this.TransportModeId == 'O')) {
+            return;
+        }
+
+        if (AppTool.IsNullOrEmpty(this.Quantity1)) {
+            this.PushErrorMessage("Quantity");
+        }
+
+
+        this.ValidateContainerFCLDContainerNumber();
+
+    }
+    ValidateContainerFCLDContainerNumber() {
+
+        this.ValidateContainers();
+        this.ValidatePackateTypes();
+    }
+
+    ValidatePackateTypes() {
+        if (AppTool.IsNullOrEmpty(this.PackageTypeId1) && !AppTool.IsNullOrEmpty(this.Quantity1)) {
+            this.PushErrorMessage("Package Type");
+        }
+        if (AppTool.IsNullOrEmpty(this.PackageTypeId2) && !AppTool.IsNullOrEmpty(this.Quantity2)) {
+            this.PushErrorMessage("Package Type");
+        }
+        if (AppTool.IsNullOrEmpty(this.PackageTypeId3) && !AppTool.IsNullOrEmpty(this.Quantity3)) {
+            this.PushErrorMessage("Package Type");
+        }
+        if (AppTool.IsNullOrEmpty(this.PackageTypeId4) && !AppTool.IsNullOrEmpty(this.Quantity4)) {
+            this.PushErrorMessage("Package Type");
+        }
+    }
+    private ValidateContainers() {
+
+        if (!AppTool.IsNullOrEmpty(this.ContainerNumber1) && AppTool.IsNullOrEmpty(this.Quantity1)) {
+            this.PushErrorMessage("Quantity");
+        }
+        if (!AppTool.IsNullOrEmpty(this.ContainerNumber2) && AppTool.IsNullOrEmpty(this.Quantity2)) {
+            this.PushErrorMessage("Quantity");
+        }
+        if (!AppTool.IsNullOrEmpty(this.ContainerNumber3) && AppTool.IsNullOrEmpty(this.Quantity3)) {
+            this.PushErrorMessage("Quantity");
+        }
+        if (!AppTool.IsNullOrEmpty(this.ContainerNumber4) && AppTool.IsNullOrEmpty(this.Quantity4)) {
+            this.PushErrorMessage("Quantity");
+        } 
+
+        if (!AppTool.IsNullOrEmpty(this.ContainerNumber1)) {
+            this.ShowContainerValidationMessage(this.ContainerNumber1);
+        }
+        if (!AppTool.IsNullOrEmpty(this.ContainerNumber2)) {
+            this.ShowContainerValidationMessage(this.ContainerNumber2);
+        }
+        if (!AppTool.IsNullOrEmpty(this.ContainerNumber3)) {
+            this.ShowContainerValidationMessage(this.ContainerNumber3);
+        }
+        if (!AppTool.IsNullOrEmpty(this.ContainerNumber4)) {
+            this.ShowContainerValidationMessage(this.ContainerNumber4);
+        }
+    }
+
+    ShowContainerValidationMessage(ContainerNumber: string) {
+        let validateContainerNumber = FormatTool.ValidateContainerNumber(ContainerNumber);
+        if (validateContainerNumber != null)
+            this.PushErrorMessage(validateContainerNumber);
+    }
+     
+
+    ValidateLCLDShipmentType() {
+        if (!(this.ShipmentTypeId == 'LCLD' && this.TransportModeId == 'O')) {
+            return;
+        }
+        this.ValidatBookingNumberOfPackagese();
+
+        if (AppTool.IsNullOrEmpty(this.OrderGrossWeight)) {
+            this.PushErrorMessage("Gross Weight");
+        }
+
+        if (AppTool.IsNullOrEmpty(this.BookingVolume)) {
+            this.PushErrorMessage("Volume");
+        }
+
+    }
+
+    private ValidateAirExportShipmentFields() {
+     
         if (!AppTool.IsNullOrEmpty(this.RequestedFlightDate)) {
             this.ValidateRequestedFlightDate();
         }
@@ -434,17 +927,17 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
         }
 
         if (AppTool.IsNullOrEmpty(this.IncotermId)) {
-            this.PushErrorMessage("Incoterm");  
+            this.PushErrorMessage("Incoterm");
         }
 
         this.ValidatBookingNumberOfPackagese();
 
         if (AppTool.IsNullOrEmpty(this.OrderGrossWeight)) {
-            this.PushErrorMessage("Gross Weight (MT)");  
+            this.PushErrorMessage("Gross Weight");
         }
 
         if (AppTool.IsNullOrEmpty(this.MainCarriageToPortId)) {
-            this.PushErrorMessage("Destination");  
+            this.PushErrorMessage("Destination");
         }
 
         if (this.ValidateDocuments()) {
@@ -471,7 +964,7 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
 
     ValidateRequestedFlightDate() { 
         if (this.RequestedFlightDate.getTime() < new Date().getTime()) { 
-            this.ValidationErrorsList.push("Requested flight date must be for a future date");
+            this.ValidationErrorsList.push(this.RequestedDateLabel+ " must be for a future date");
         } 
     }
 
@@ -494,10 +987,19 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
                 if (item) {
                     this.ShipmentTypeName = item.Name;
                 }
-             } 
+            }
+
+
+            //this.IsLCLEntity = AppTool.IsLCLEntity(this.EntityPM.TransportModeId, this.EntityPM.ShipmentTypeId);
+            //this.IsFCLEntity = AppTool.IsFCLEntity(this.EntityPM.TransportModeId, this.EntityPM.ShipmentTypeId);
+
+             //this.BuildShipmentSubTypes();
+            //this.DelOrderDetails();
+            //this.OnFiltersChanged();
           } 
     }
 
+  
 
     public get ForwarderPartnerId() { return this.EntityPM.ForwarderPartnerId }
     public set ForwarderPartnerId(newValue: string) { this.EntityPM.ForwarderPartnerId = newValue; }
@@ -534,7 +1036,11 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
 
     public get ConsigneeName() { return this.EntityPM.ConsigneeName }
     public set ConsigneeName(newValue: string) { this.EntityPM.ConsigneeName = newValue; }
-     
+
+    public get ShippingAgent() { return this.EntityPM.ShippingAgent  }
+    public set ShippingAgent(newValue: string) { this.EntityPM.ShippingAgent  = newValue; }
+
+
 
     get PrivateLabelInvoiceNumber() { return this.EntityPM.PrivateLabelInvoiceNumber; }
     set PrivateLabelInvoiceNumber(newValue: string) {
@@ -563,7 +1069,35 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
         }
     }
 
-    MainCarriageFromPortId = null;
+    get MainCarriageFromPortId() { return this.EntityPM.MainCarriageFromPortId; }
+    set MainCarriageFromPortId(value: string) {
+        if (this.EntityPM.MainCarriageFromPortId != value) {
+            this.EntityPM.MainCarriageFromPortId = value;
+            this.EntityPM.FromPortId = value;
+
+            this.OnMainCarrigeFromPortChanged();
+        }
+    }
+    public FromPortList: PortList = null;
+
+    private OnMainCarrigeFromPortChanged() {
+       
+            //this.SetUIProperties_Ports();
+
+            if (AppTool.IsNullOrEmpty(this.MainCarriageFromPortId)) {
+                this.FromPortList = null;
+            }
+
+            else {
+                this.portListService.getSingle(this.MainCarriageFromPortId).subscribe((myResponse: ServiceResponse) => {
+                    if (!myResponse.HasError) {
+                        this.FromPortList = myResponse.Result;
+                    }
+                });
+            }
+       
+    }
+
     SetUIProperties_Ports() { 
         var isToRequired: boolean = false; 
         if (AppTool.IsNullOrEmpty(this.MainCarriageToPortId)) {

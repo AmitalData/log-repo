@@ -1279,7 +1279,11 @@ export class ShipmentPM {
     public get ConsigneeReference3() { return this.consigneeReference3; }
     public set ConsigneeReference3(newValue: string) { if (this.consigneeReference3 != newValue) { this.consigneeReference3 = newValue; this.MarkAsDirty("ConsigneeReference3"); } }
 
-	 
+    private shippingAgent: string;
+    public get ShippingAgent() { return this.shippingAgent; }
+    public set ShippingAgent(newValue: string) { if (this.shippingAgent != newValue) { this.shippingAgent = newValue; this.MarkAsDirty("ShippingAgent"); } }
+
+
     private consigneeName: string;
     public get ConsigneeName() { return this.consigneeName; }
     public set ConsigneeName(newValue: string) { if (this.consigneeName != newValue) { this.consigneeName = newValue; this.MarkAsDirty("ConsigneeName"); } }
@@ -3402,7 +3406,34 @@ export class ShipmentPM {
     public get SpecialServicesTypeName() { return this.specialServicesTypeName; }
     public set SpecialServicesTypeName(newValue: string) { if (this.specialServicesTypeName != newValue) { this.specialServicesTypeName = newValue; this.MarkAsDirty("SpecialServicesTypeName"); } }
        
-	 
+
+  
+    private containerNumber1: string;
+    public get ContainerNumber1() { return this.containerNumber1; }
+    public set ContainerNumber1(newValue: string) { if (this.containerNumber1 != newValue) { this.containerNumber1 = newValue; this.MarkAsDirty("ContainerNumber1"); } }
+
+
+
+    private containerNumber2: string;
+    public get ContainerNumber2() { return this.containerNumber2; }
+    public set ContainerNumber2(newValue: string) { if (this.containerNumber2 != newValue) { this.containerNumber2 = newValue; this.MarkAsDirty("ContainerNumber2"); } }
+
+
+    private containerNumber3: string;
+    public get ContainerNumber3() { return this.containerNumber3; }
+    public set ContainerNumber3(newValue: string) { if (this.containerNumber3 != newValue) { this.containerNumber3 = newValue; this.MarkAsDirty("ContainerNumber3"); } }
+
+
+    private containerNumber4: string;
+    public get ContainerNumber4() { return this.containerNumber4; }
+    public set ContainerNumber4(newValue: string) { if (this.containerNumber4 != newValue) { this.containerNumber4 = newValue; this.MarkAsDirty("ContainerNumber4"); } }
+
+    private containerNumber5: string;
+    public get ContainerNumber5() { return this.containerNumber5; }
+    public set ContainerNumber5(newValue: string) { if (this.containerNumber5 != newValue) { this.containerNumber5 = newValue; this.MarkAsDirty("ContainerNumber5"); } }
+
+
+
     private quantity1: number;
     public get Quantity1() { return this.quantity1; }
     public set Quantity1(newValue: number) { if (this.quantity1 != newValue) { this.quantity1 = newValue; this.MarkAsDirty("Quantity1"); } }

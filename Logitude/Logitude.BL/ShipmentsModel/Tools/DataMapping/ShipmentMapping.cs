@@ -2150,6 +2150,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             entityPoco.CustomsDeclarationNumber = entityPM.CustomsDeclarationNumber;
             entityPoco.ShipperName = entityPM.ShipperName;
             entityPoco.ConsigneeName = entityPM.ConsigneeName;
+            entityPoco.ShippingAgent = entityPM.ShippingAgent;
 
             if (!entityPM.IsHybrid || entityPM.DontAddToImportersQueue)
             {
@@ -2384,6 +2385,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.CarrierTransportDocumentNumber);
             MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.ShipperName);
             MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.ConsigneeName);
+            MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.ShippingAgent);
             MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.Transshipment1AdditionalMAWBOBLBL);
             MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.Transshipment2AdditionalMAWBOBLBL);
             MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.Transshipment3AdditionalMAWBOBLBL);

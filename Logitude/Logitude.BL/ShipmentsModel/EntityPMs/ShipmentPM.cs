@@ -1959,12 +1959,20 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string DeliveryAddressId { get; set; }
         public string SpecialServicesTypeId { get; set; }
         public string SpecialServicesTypeName { get; set; }
+
+        public string ContainerNumber1 { get; set; }
+        public string ContainerNumber2 { get; set; }
+        public string ContainerNumber3 { get; set; }
+        public string ContainerNumber4 { get; set; }
+        public string ContainerNumber5 { get; set; }
+
         #region Dummy fields needed for the Build from Quote screen
         public int? Quantity1 { get; set; }
         public int? Quantity2 { get; set; }
         public int? Quantity3 { get; set; }
         public int? Quantity4 { get; set; }
         public int? Quantity5 { get; set; }
+         
         public string PackageTypeId1 { get; set; }
         public string PackageTypeId2 { get; set; }
         public string PackageTypeId3 { get; set; }
@@ -2792,6 +2800,7 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string DestinationWarehouseName { get; set; }
         public List<TraceEventPM> EventList { get; set; }
         public List<TraceEventPM> AddManualEvents { get; set; }
+        public string ShippingAgent { get; set; }
     }
 
     public class TransshipmentLeg
