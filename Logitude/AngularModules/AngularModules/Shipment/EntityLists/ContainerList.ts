@@ -236,5 +236,10 @@ export class ContainerList {
 		IsCancelled: boolean;
 		ShipmentDeliveryTruckerId: string;
 		ShipmentDeliveryTruckerName: string;
+		Leg1VesselId: string;
+		Leg2VesselId: string;
+		Leg3VesselId: string;
+		Leg4VesselId: string;
+		Leg5VesselId: string;
 	
 }

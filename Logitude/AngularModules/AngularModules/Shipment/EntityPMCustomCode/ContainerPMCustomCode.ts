@@ -7,6 +7,7 @@ import { ContactListService } from '../../Common/Services/StandardLists/ContactL
 import { ServiceResponse } from '../../Infrastructure/DataContracts/ServiceResponse';
 import { AppTool } from '../../Infrastructure/Tools';
 import { ContainerPM } from '../EntityPMs/ContainerPM';
+import { VesselPMService } from '../../Common/Services/StandardPMs/VesselPMService';
 
 export class ContainerPMCustomCode {
     public static ApplyEntityChanged(propertyName: string, entityPM: ContainerPM) {
@@ -29,6 +30,12 @@ export class ContainerPMCustomCode {
         if (propertyName == "TerminalAddressId" && entityPM.TerminalAddressId) {
             this.GetTerminalAddress(entityPM.TerminalAddressId, entityPM);
         }
+
+        this.HandleVesselLeg(propertyName, 1, entityPM);
+        this.HandleVesselLeg(propertyName, 2, entityPM);
+        this.HandleVesselLeg(propertyName, 3, entityPM);
+        this.HandleVesselLeg(propertyName, 4, entityPM);
+        this.HandleVesselLeg(propertyName, 5, entityPM);
     }
 
     private static GetTerminalAddress(terminalAddressId: string , entityPM: ContainerPM) {
@@ -62,4 +69,17 @@ export class ContainerPMCustomCode {
  
     }
 
+    static HandleVesselLeg(propertyName: string, index: number, entityPM: ContainerPM) {
+        var legId = "Leg" + index + "VesselId";
+        var legName = "Leg" + index + "Vessel";
+        if (propertyName == legId && entityPM[legId]) {
+            var vesselPMService = new VesselPMService();
+            vesselPMService.get(entityPM[legId]).subscribe((response: any) => {
+                if (response.Result) {
+                    var vessel = response.Result;
+                    entityPM[legName] = vessel.EnglishName;
+                }
+            });
+        }
+    }
 }
