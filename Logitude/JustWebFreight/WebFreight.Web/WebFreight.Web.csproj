@@ -3455,6 +3455,7 @@
     <Content Include="Monitoring\ForwarderShipmentQueue.aspx" />
     <Content Include="Monitoring\LogBoxApprovePaymentQueue.aspx" />
     <Content Include="Monitoring\LogBoxDocumentsQueue.aspx" />
+    <Content Include="Monitoring\CToolQueue.aspx" />
     <Content Include="Monitoring\LogBoxImporterApprovalReceivedQueue.aspx" />
     <Content Include="Monitoring\LogBoxShipmentQueue.aspx" />
     <Content Include="Monitoring\LogBoxQueue.aspx" />
@@ -5603,6 +5604,13 @@
     </Compile>
     <Compile Include="Monitoring\LogBoxDocumentsQueue.aspx.designer.cs">
       <DependentUpon>LogBoxDocumentsQueue.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Monitoring\CToolQueue.aspx.cs">
+      <DependentUpon>CToolQueue.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Monitoring\CToolQueue.aspx.designer.cs">
+      <DependentUpon>CToolQueue.aspx</DependentUpon>
     </Compile>
     <Compile Include="Monitoring\LogBoxImporterApprovalReceivedQueue.aspx.cs">
       <DependentUpon>LogBoxImporterApprovalReceivedQueue.aspx</DependentUpon>
