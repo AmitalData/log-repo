@@ -75,7 +75,8 @@ using Simplog.Data.ShipmentsModel;
 					 temp.InsidePackages = InsidePackageService1.InsidePackageDataMapping(item.InsideShipmentPackages,Tenant,ComputingPartnerName);
 				}
 
-							 					
+							 
+				   temp.ChangeSetOp = item.ChangeSet;					
 					MyList.Add(temp);
 				}
 					
@@ -251,7 +252,13 @@ using Simplog.Data.ShipmentsModel;
 						
 					}
 
-								 					   
+								 
+                    							
+						temp.ChangeSet = item.ChangeSetOp;
+
+					 
+
+										   
 						MyList.Add(temp);
 					}
 						

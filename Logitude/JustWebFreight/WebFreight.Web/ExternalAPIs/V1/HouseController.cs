@@ -443,6 +443,9 @@ namespace WebFreight.Web.ExternalAPIs.V1
 
                             ExternalAPIShipmentValidator externalAPIShipmentValidator = new ExternalAPIShipmentValidator(HousePM, authToken.Tenant);
                             externalAPIShipmentValidator.ValidateUpdateShipmentPackages(HousePM);
+                            //externalAPIShipmentValidator.UpdatePickupDeliveryPackagesChangeSet(HousePM);
+                            //externalAPIShipmentValidator.UpdatePayablesChangeSet(HousePM);
+                            //externalAPIShipmentValidator.UpdateReceivablesChangeSet(HousePM);
 
                             HousePM.HasUnassignedData = apiUnassignedDataHandler.HasUnassignedData;
                             HousePM = apiUnassignedDataHandler.AddHouseShipmentUnassignedData(entity, HousePM);

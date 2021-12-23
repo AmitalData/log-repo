@@ -87,7 +87,8 @@ using Simplog.Data.ShipmentsModel;
 				}
 
 							 
-				   temp.ContainerNumber = item.ContainerNumber;					
+				   temp.ContainerNumber = item.ContainerNumber;
+				   temp.ChangeSetOp = item.ChangeSet;					
 					MyList.Add(temp);
 				}
 					
@@ -350,6 +351,12 @@ using Simplog.Data.ShipmentsModel;
 						temp.ContainerNumber = item.ContainerNumber;
 
 										}  
+
+					
+                    							
+						temp.ChangeSet = item.ChangeSetOp;
+
+					 
 
 										   
 						MyList.Add(temp);

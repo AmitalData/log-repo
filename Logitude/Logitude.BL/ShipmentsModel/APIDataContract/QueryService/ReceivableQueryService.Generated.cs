@@ -86,7 +86,8 @@ using Simplog.Data.ShipmentsModel;
 					   					   temp.PrepaidCollect = PrepaidCollectService3.GetPrepaidCollectById(item.PrepaidCollectId,Tenant,ComputingPartnerName); 
 			       
 					   				   }
-				   					
+				   
+				   temp.ChangeSetOp = item.ChangeSet;					
 					MyList.Add(temp);
 				}
 					
@@ -249,6 +250,12 @@ using Simplog.Data.ShipmentsModel;
 
 					}
 			
+					
+                    							
+						temp.ChangeSet = item.ChangeSetOp;
+
+					 
+
 										   
 						MyList.Add(temp);
 					}

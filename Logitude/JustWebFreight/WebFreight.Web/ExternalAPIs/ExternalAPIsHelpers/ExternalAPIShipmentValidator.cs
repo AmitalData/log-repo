@@ -694,10 +694,8 @@ namespace WebFreight.Web.ExternalAPIs.ExternalAPIsHelpers
                 throw new ApplicationException("OnCarriage should not have Vessel");
         }
 
-        private ShipmentPickUpDeliveryPackageQuery shipmentPickUpDeliveryPackageQuery;
         public void UpdatePickupDeliveryPackagesChangeSet(ShipmentPM entityPM)
         {
-            shipmentPickUpDeliveryPackageQuery = new ShipmentPickUpDeliveryPackageQuery(entityPM.Tenant);
             this.UpdatePickupPackagesChangeSet(entityPM);
             this.UpdateDeliveryPackagesChangeSet(entityPM);            
         }
@@ -710,11 +708,11 @@ namespace WebFreight.Web.ExternalAPIs.ExternalAPIsHelpers
 
             foreach (ShipmentDeliveryPM shipmentDelivery in entityPM.ShipmentDeliveries)
             {
-                this.SetDeletedPickupDeliveryPackagesChangeSet(shipmentDelivery.Id, shipmentDelivery.ShipmentPickUpDeliveryPackages, entityPM.Tenant);
+                shipmentDelivery.ChangeSetOp = this.GetChangeSet(shipmentDelivery.ChangeSet);
 
                 foreach (ShipmentPickUpDeliveryPackagePM item in shipmentDelivery.ShipmentPickUpDeliveryPackages)
                 {
-                    this.FillShipmentPickupDeliveryPackageChangeSet(item);
+                    item.ChangeSetOp = this.GetChangeSet(item.ChangeSet);
                 }
             }
         }
@@ -727,49 +725,14 @@ namespace WebFreight.Web.ExternalAPIs.ExternalAPIsHelpers
 
             foreach (ShipmentPickUpPM shipmentPickUp in entityPM.ShipmentPickUps)
             {
-                this.SetDeletedPickupDeliveryPackagesChangeSet(shipmentPickUp.Id, shipmentPickUp.ShipmentPickUpDeliveryPackages, entityPM.Tenant);
+                shipmentPickUp.ChangeSetOp = this.GetChangeSet(shipmentPickUp.ChangeSet);
 
                 foreach (ShipmentPickUpDeliveryPackagePM item in shipmentPickUp.ShipmentPickUpDeliveryPackages)
                 {
-                    this.FillShipmentPickupDeliveryPackageChangeSet(item);
+                    item.ChangeSetOp = this.GetChangeSet(item.ChangeSet);
                 }
             }
         }
-        private void SetDeletedPickupDeliveryPackagesChangeSet(string id, List<ShipmentPickUpDeliveryPackagePM> shipmentPickUpDeliveryPackages, int tenant)
-        {
-            List<ShipmentPickUpDeliveryPackagePM> alreadyAddedPackages = this.GetDataBasePickupDeliveryPackages(id, tenant);
-            if (alreadyAddedPackages != null && alreadyAddedPackages.Count > 0)
-            {
-                foreach (var package in alreadyAddedPackages)
-                {
-                    if (!shipmentPickUpDeliveryPackages.Where(d => d.Id != null && d.Id == package.Id).Any())
-                    {
-                        shipmentPickUpDeliveryPackages.Add(new ShipmentPickUpDeliveryPackagePM()
-                        {
-                            Id = package.Id,
-                            ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Delete,
-                        });
-                    }
-                }
-            }
-        }
-        private List<ShipmentPickUpDeliveryPackagePM> GetDataBasePickupDeliveryPackages(string id, int tenant)
-        {
-            return shipmentPickUpDeliveryPackageQuery.GetShipmentPickUpDeliveryPackages(id, tenant);
-        }
-        private void FillShipmentPickupDeliveryPackageChangeSet(ShipmentPickUpDeliveryPackagePM item)
-        {
-            if (item.ChangeSetOp != Simplog.Server.Infrastructure.ChangeSetOperation.Delete)
-            {
-                item.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
-
-                if (string.IsNullOrEmpty(item.Id))
-                {
-                    item.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert;
-                }
-            }
-        }
-
 
         public void ValidateUpdateShipmentPackages(ShipmentPM entityPM)
         {
@@ -778,37 +741,12 @@ namespace WebFreight.Web.ExternalAPIs.ExternalAPIsHelpers
                 return;
             }
 
-            this.SetDeletedPackagesChangeSet(entityPM);
-
             foreach (ShipmentPackagePM item in entityPM.ShipmentPackages)
             {
                 this.ValidateShipmentPackageItem(item, entityPM);
+                item.ChangeSetOp = this.GetChangeSet(item.ChangeSet);
             }
         }
-        private void SetDeletedPackagesChangeSet(ShipmentPM entityPM)
-        {
-            List<ShipmentPackagePM> alreadyAddedPackages = this.GetDataBasePackages(entityPM);
-            if (alreadyAddedPackages != null && alreadyAddedPackages.Count > 0)
-            {
-                foreach (var package in alreadyAddedPackages)
-                {
-                    if (!entityPM.ShipmentPackages.Where(d => d.Id != null && d.Id == package.Id).Any())
-                    {
-                        entityPM.ShipmentPackages.Add(new ShipmentPackagePM()
-                        {
-                            Id = package.Id,
-                            ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Delete,
-                        });
-                    }
-                }
-            }
-        }
-        private List<ShipmentPackagePM> GetDataBasePackages(ShipmentPM entityPM)
-        {
-            ShipmentPackageQuery shipmentPackageQuery = new ShipmentPackageQuery(entityPM.Tenant);
-            return shipmentPackageQuery.GetShipmentPackages(entityPM.Id, entityPM.ShipmentNumber, entityPM.Tenant);
-        }
-
         private void ValidateShipmentPackageItem(ShipmentPackagePM item, ShipmentPM entityPM)
         {
             this.ValidateShipmentPackageDimensionsAndVolume(item, entityPM);
@@ -825,7 +763,7 @@ namespace WebFreight.Web.ExternalAPIs.ExternalAPIsHelpers
                 this.ValidateInsidePackage(item, entityPM);
             }
             item.VolumetricWeight = ComputeHelper.ComputeVolumetricWeight(item, entityPM);
-            this.SetPackageChangeSet(item);
+            //this.SetPackageChangeSet(item);
         }
         private void ValidateShipmentPackageDimensionsAndVolume(ShipmentPackagePM shipmentPackagePM, ShipmentPM entityPM)
         {
@@ -882,16 +820,58 @@ namespace WebFreight.Web.ExternalAPIs.ExternalAPIsHelpers
             }
             return false;
         }
-        private void SetPackageChangeSet(ShipmentPackagePM item)
+        private Simplog.Server.Infrastructure.ChangeSetOperation GetChangeSet(string ChangeSet)
         {
-            if (item.ChangeSetOp != Simplog.Server.Infrastructure.ChangeSetOperation.Delete)
+            Simplog.Server.Infrastructure.ChangeSetOperation changeSetOperation = Simplog.Server.Infrastructure.ChangeSetOperation.None;
+            if(!string.IsNullOrEmpty(ChangeSet))
             {
-                item.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
-
-                if (string.IsNullOrEmpty(item.Id))
+                switch (ChangeSet.ToLower())
                 {
-                    item.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert;
+                    case "insert":
+                        {
+                            changeSetOperation = Simplog.Server.Infrastructure.ChangeSetOperation.Insert;
+                            break;
+                        }
+
+                    case "update":
+                        {
+                            changeSetOperation = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
+                            break;
+                        }
+
+                    case "delete":
+                        {
+                            changeSetOperation = Simplog.Server.Infrastructure.ChangeSetOperation.Delete;
+                            break;
+                        }
                 }
+            }
+
+            return changeSetOperation;
+        }
+
+        public void UpdatePayablesChangeSet(ShipmentPM entityPM)
+        {
+            if (entityPM.ShipmentPayables.Count == 0)
+            {
+                return;
+            }
+
+            foreach (ShipmentPayablePM payable in entityPM.ShipmentPayables)
+            {
+                payable.ChangeSetOp = this.GetChangeSet(payable.ChangeSet);
+            }
+        }
+        public void UpdateReceivablesChangeSet(ShipmentPM entityPM)
+        {
+            if (entityPM.ShipmentReceivables.Count == 0)
+            {
+                return;
+            }
+
+            foreach (ShipmentReceivablePM receivable in entityPM.ShipmentReceivables)
+            {
+                receivable.ChangeSetOp = this.GetChangeSet(receivable.ChangeSet);
             }
         }
     }

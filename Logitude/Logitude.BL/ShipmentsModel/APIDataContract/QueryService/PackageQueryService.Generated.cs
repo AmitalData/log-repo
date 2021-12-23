@@ -60,7 +60,8 @@ using Simplog.Data.ShipmentsModel;
 				   temp.ContainerNumber = item.ContainerNumber;
 				   temp.Volume = item.Volume;
 				   temp.Weight = item.Weight;
-				   temp.Description = item.Description;					
+				   temp.Description = item.Description;
+				   temp.ChangeSetOp = item.ChangeSet;					
 					MyList.Add(temp);
 				}
 					
@@ -158,6 +159,12 @@ using Simplog.Data.ShipmentsModel;
 					
                     							
 						temp.Description = item.Description;
+
+					 
+
+					
+                    							
+						temp.ChangeSet = item.ChangeSetOp;
 
 					 
 

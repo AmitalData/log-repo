@@ -357,8 +357,11 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         directPM = this.ValidateInlandDomesticShipment(directPM);
                         this.UpdateRoutingPartnersAddresses(directPM);
                     }
+
                     externalAPIShipmentValidator.ValidateUpdateShipmentPackages(directPM);
                     externalAPIShipmentValidator.UpdatePickupDeliveryPackagesChangeSet(directPM);
+                    externalAPIShipmentValidator.UpdatePayablesChangeSet(directPM);
+                    externalAPIShipmentValidator.UpdateReceivablesChangeSet(directPM);
 
                     this.ValidateCustomsFields(directPM);
                     this.UpdatePartners(MyContext, directPM);
