@@ -533,6 +533,23 @@
                             <div></div>
                         </td>
                     </tr>
+                    <tr>
+                        <td style="width:8px">
+                            <div></div>
+                        </td>
+                        <td style="width:180px;height:22px; vertical-align:top">
+                            <LogLabel [ObjectFieldName]="'PermissionBuildMonths'" [ObjectTableName]="'TenantManagement'"
+                                      [DataContext]="EntityPM"></LogLabel>
+                        </td>
+                        <td style="width:160px">
+                            <LogTextBox InputType="double" [HideColumns]="true" [ObjectFieldName]="'PermissionBuildMonths'"
+                                        [ObjectTableName]="'TenantManagement'" [DataContext]="DataContext"></LogTextBox>
+                        </td>
+                        
+                        <td>
+                            <div style="margin: 0px 6px 0px 6px;">Month/s</div>
+                        </td>
+                    </tr>
 
                     <tr>
                         <td colspan="4"></td>
