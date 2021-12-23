@@ -133,7 +133,7 @@ namespace CommunicationWorkerRole
                             string CorrelationId = response.MessageId;
                             IWebFreightContext webFreightContext = WebFreightContext.GetContext(tenant);
                             string LogSubject = "Send Shipment To Forwarder By ForwarderExportShipments Controller";
-                            string NewExportShipmentURI = "ForwarderExportShipments";
+                            //string NewExportShipmentURI = "ForwarderExportShipments";
 
                             #region APILogs
                             var aPILogsRepository = new APILogsRepository(webFreightContext);
@@ -254,7 +254,7 @@ namespace CommunicationWorkerRole
                                             if (ForwarderShipment.DirectionId.ToUpper() == "E")
                                             {
                                                 ExporterShipmentAMMappingService exporterShipmentMappingServie = new ExporterShipmentAMMappingService(ForwarderShipment);
-                                                NewAExporterShipmentAM newAExporterShipmentAM = exporterShipmentMappingServie.GetMappedExportShipmentAM(tenant);
+                                                object NewExportShipmentAM = exporterShipmentMappingServie.GetMappedExportShipmentAM();
 
                                                 LogPM.Subject = LogSubject;
                                                 if (IsNewLog)
@@ -262,11 +262,11 @@ namespace CommunicationWorkerRole
                                                     CreateNewExportShipmentLog(response, LogPM);
                                                 }
                                                 var msg = "Start Sending Shipment To Forwarder " + DateTime.Now;
-                                                APILogsUtility.UpdateAPILogStatus(LogPM.Id, tenant, "I", response.RetryNumber + 1, DateTime.Now, DateTime.UtcNow, msg, LogitudeXmlSerializer.SerializeObjectToXmlString(newAExporterShipmentAM), null, null, "");
+                                                APILogsUtility.UpdateAPILogStatus(LogPM.Id, tenant, "I", response.RetryNumber + 1, DateTime.Now, DateTime.UtcNow, msg, LogitudeXmlSerializer.SerializeObjectToXmlString(NewExportShipmentAM, true), null, null, "");
 
-                                                var serializedObject = JsonConvert.SerializeObject(newAExporterShipmentAM);
+                                                var serializedObject = JsonConvert.SerializeObject(NewExportShipmentAM);
                                                 var content = new StringContent(serializedObject, Encoding.UTF8, "application/json");
-                                                ImporterShipmentsURI = URI + NewExportShipmentURI;
+                                                ImporterShipmentsURI = URI + "Forwarder" + ForwarderShipment.TransportModeId + "ExportShipments";
                                                 var result = client.PostAsync(ImporterShipmentsURI, content);
 
                                                 result.Wait();
@@ -275,7 +275,7 @@ namespace CommunicationWorkerRole
                                                 {
                                                     var responseData = result.Result.Content.ReadAsStringAsync().Result;
                                                     msg = "Shipment sent To Forwarder " + DateTime.Now;
-                                                    APILogsUtility.UpdateAPILogStatus(LogPM.Id, tenant, "D", response.RetryNumber + 1, DateTime.Now, DateTime.UtcNow, msg, LogitudeXmlSerializer.SerializeObjectToXmlString(newAExporterShipmentAM), responseData, null, "");
+                                                    APILogsUtility.UpdateAPILogStatus(LogPM.Id, tenant, "D", response.RetryNumber + 1, DateTime.Now, DateTime.UtcNow, msg, LogitudeXmlSerializer.SerializeObjectToXmlString(NewExportShipmentAM, true), responseData, null, "");
                                                     queue.Complete();
                                                 }
                                                 else

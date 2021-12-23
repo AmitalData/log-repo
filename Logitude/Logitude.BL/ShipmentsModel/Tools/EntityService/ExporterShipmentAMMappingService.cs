@@ -11,55 +11,44 @@ using System.Collections.Generic;
 
 namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 {
-
     public class ExporterShipmentAMMappingService
     {
-        private ShipmentPM shipmentPM;
-        private HybridPartnerRepository hybridPartnerRepository;
+        private readonly ShipmentPM shipmentPM;
         private CardRepository cardsReporistory;
-        public ExporterShipmentAMMappingService(ShipmentPM shipment)
+        private readonly int tenant;
+        private HybridPartnerPM Partner;
+        public ExporterShipmentAMMappingService(ShipmentPM shipmentPM)
         {
-            this.shipmentPM = shipment;
-            ICommonDataContext commoncontext = CommonDataContext.GetContext(shipment.Tenant);
-            hybridPartnerRepository = new HybridPartnerRepository(commoncontext);
+            this.shipmentPM = shipmentPM;
+            tenant = shipmentPM.Tenant;
+            Initialize();
+        }
+
+        private void Initialize()
+        {
+            ICommonDataContext commoncontext = CommonDataContext.GetContext(tenant);
             cardsReporistory = new CardRepository(commoncontext);
-        }
-        public NewAExporterShipmentAM GetMappedExportShipmentAM(int tenant)
-        {
-            HybridPartnerPM Partner = GetHybridPartner();
-            NewAExporterShipmentAM newAExporterShipmentAM = GetNewExportShipmentAM(tenant, Partner);
-            MapExportShipmentPackages(shipmentPM, newAExporterShipmentAM);
-            MapShipmentShipper(newAExporterShipmentAM);
-            MapShipmentCustomer(newAExporterShipmentAM);
-            MapShipmentPorts(shipmentPM, newAExporterShipmentAM);
-            MapPartners(newAExporterShipmentAM);
-
-            return newAExporterShipmentAM;
-        }
-
-        private void MapPartners(NewAExporterShipmentAM newAExporterShipmentAM)
-        {
-            newAExporterShipmentAM.Agent = GetCard(shipmentPM.AgentId);
-            newAExporterShipmentAM.Consignee = GetCard(shipmentPM.ConsigneeId);
-        }
-
-        private CodeProperties GetCard(string cardId)
-        {
-            Card card = cardsReporistory.GetSingleCard(cardId, shipmentPM.Tenant);
-            return new CodeProperties()
-            {
-                Code = card != null ? card.Code : "",
-            };
-
+            Partner = GetHybridPartner();
         }
 
         private HybridPartnerPM GetHybridPartner()
         {
-            HybridPartnerQuery HybridPartnerQuerey = new HybridPartnerQuery(hybridPartnerRepository);
+            HybridPartnerQuery HybridPartnerQuerey = new HybridPartnerQuery(tenant);
             HybridPartnerPM Partner = HybridPartnerQuerey.GetSinglePM(shipmentPM.ForwarderPartnerId);
             return Partner;
         }
-        private NewAExporterShipmentAM GetNewExportShipmentAM(int tenant, HybridPartnerPM Partner)
+
+        public object GetMappedExportShipmentAM()
+        {
+            switch (shipmentPM.TransportModeId)
+            {
+                case "A": return GetNewAExportShipmentAM();
+                case "O": return GetNewOExportShipmentAM();
+                default: return null;
+            }
+        }
+
+        private NewAExporterShipmentAM GetNewAExportShipmentAM()
         {
             return new NewAExporterShipmentAM()
             {
@@ -81,62 +70,83 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 Volume = shipmentPM.BookingVolume,
                 Incoterm = shipmentPM.IncotermCode,
                 Notes = shipmentPM.Notes,
-                IsDangerouseOfGoods = shipmentPM.OrderIsDangerouseGoods
+                IsDangerouseOfGoods = shipmentPM.OrderIsDangerouseGoods,
+                ShipmentPackages = GetShipmentPackages(),
+                Shipper = GetCardById(shipmentPM.ShipperId),
+                Customer = GetCardById(shipmentPM.CustomerId),
+                FromPort = GetShipmentPort(shipmentPM.FromPort, shipmentPM.FromCountryCode),
+                ToPort = GetShipmentPort(shipmentPM.ToPort, shipmentPM.ToCountryCode),
+                Agent = GetCardById(shipmentPM.AgentId),
+                Consignee = GetCardById(shipmentPM.ConsigneeId),
             };
         }
-        private static void MapExportShipmentPackages(ShipmentPM ForwarderShipment, NewAExporterShipmentAM newAExporterShipmentAM)
+        
+        private NewOExporterShipmentAM GetNewOExportShipmentAM()
         {
-            newAExporterShipmentAM.ShipmentPackages = new List<Packages>();
-            foreach (var item in ForwarderShipment.ShipmentOrderPackages)
+            return new NewOExporterShipmentAM()
             {
-                Packages Package = new Packages();
-                Package.Quantity = item.Quantity;
-                Package.GrossWeight = item.GrossWeight;
-                Package.Length = item.Length;
-                Package.Width = item.Width;
-                Package.Height = item.Height;
-                newAExporterShipmentAM.ShipmentPackages.Add(Package);
+                Id = shipmentPM.Id,
+                Tenant = (int)Partner.PartnerTenant,
+                ExporterTenant = tenant,
+                TransportModeId = shipmentPM.TransportModeId,
+                DirectionId = shipmentPM.DirectionId,
+                CustomerShipmentNumber = shipmentPM.ShipmentNumber,
+                Shipper = GetCardById(shipmentPM.ShipperId),
+                FromPort = GetShipmentPort(shipmentPM.FromPort, shipmentPM.FromCountryCode),
+                ToPort = GetShipmentPort(shipmentPM.ToPort, shipmentPM.ToCountryCode),
+                ShipmentTypeId = shipmentPM.ShipmentTypeId,
+                Customer = GetCardById(shipmentPM.CustomerId),
+                ConsigneeName = shipmentPM.ConsigneeName,
+                ShippingAgent = shipmentPM.ShippingAgent,
+                InvoiceReference = shipmentPM.PrivateLabelInvoiceNumber,
+                CustomerReference = !string.IsNullOrEmpty(shipmentPM.CustomerReference3) ? shipmentPM.CustomerReference3 : shipmentPM.CustomerReference1,
+                Notes = shipmentPM.Notes,
+                IncludePickup = shipmentPM.PrivateLabelIncludePickup,
+                IncludeDelivery = shipmentPM.PrivateLabelIncludeDelivery,
+                DangerouseGoods = shipmentPM.OrderIsDangerouseGoods,
+                Incoterm = shipmentPM.IncotermCode,
+                ReqFlightDate = shipmentPM.RequestedFlightDate,
+                Quantity = shipmentPM.BookingNumberOfPackages,
+                Weight = shipmentPM.OrderGrossWeight,
+                Volume = shipmentPM.BookingVolume,
+                ShipmentPackages = GetShipmentPackages(),
+            };
+        }
+        
+        private List<Packages> GetShipmentPackages()
+        {
+            List<Packages> shipmentPMPackages = new List<Packages>();
+            foreach (var shipmentPMPackage in shipmentPMPackages)
+            {
+                shipmentPMPackages.Add(new Packages
+                {
+                    Quantity = shipmentPMPackage.Quantity,
+                    GrossWeight = shipmentPMPackage.GrossWeight,
+                    Length = shipmentPMPackage.Length,
+                    Width = shipmentPMPackage.Width,
+                    Height = shipmentPMPackage.Height
+                });
             }
-        }
-        private static void MapShipmentPorts(ShipmentPM ForwarderShipment, NewAExporterShipmentAM newAExporterShipmentAM)
-        {
-            newAExporterShipmentAM.FromPort = new CodeProperties()
-            {
-                Code = ForwarderShipment.FromPort,
-                CountryCode = ForwarderShipment.FromCountryCode
-            };
-            newAExporterShipmentAM.ToPort = new CodeProperties()
-            {
-                Code = ForwarderShipment.ToPort,
-                CountryCode = ForwarderShipment.ToCountryCode
-            };
-        }
-        private void MapShipmentCustomer(NewAExporterShipmentAM newAExporterShipmentAM)
-        {
-            Card Customer = cardsReporistory.GetSingleCard(shipmentPM.CustomerId, shipmentPM.Tenant);
-            string CustomerCode = "";
-            if (Customer != null)
-            {
-                CustomerCode = Customer.Code;
-            }
-            newAExporterShipmentAM.Customer = new CodeProperties()
-            {
-                Code = CustomerCode
-            };
-        }
-        private void MapShipmentShipper(NewAExporterShipmentAM newAExporterShipmentAM)
-        {
-            Card Shipper = cardsReporistory.GetSingleCard(shipmentPM.ShipperId, shipmentPM.Tenant);
-            string ShipperCode = "";
 
-            if (Shipper != null)
+            return shipmentPMPackages;
+        }
+       
+        private CodeProperties GetCardById(string cardId)
+        {
+            Card card = cardsReporistory.GetSingleCard(cardId, tenant);
+            
+            return new CodeProperties()
             {
-                ShipperCode = Shipper.Code;
-            }
+                Code = card != null ? card.Code : ""
+            };
+        }
 
-            newAExporterShipmentAM.Shipper = new CodeProperties()
+        private CodeProperties GetShipmentPort(string portCode, string countryCode)
+        {
+            return new CodeProperties()
             {
-                Code = ShipperCode
+                Code = portCode,
+                CountryCode = countryCode
             };
         }
     }
