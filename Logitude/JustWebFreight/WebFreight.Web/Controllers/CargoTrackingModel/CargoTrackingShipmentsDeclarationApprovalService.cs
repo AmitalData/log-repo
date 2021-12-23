@@ -81,39 +81,37 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 
         private string DeserializeDeclarationXMLData(string declarationXmlData)
         {
-            int MySize = 1024;
-            byte[] BytesUncompressed = new byte[MySize];
-            StringBuilder MyEncodedUncompressMessage = new StringBuilder();
+            int defaultSize = 1024;
+            byte[] bytesUncompressed = new byte[defaultSize];
+            StringBuilder encodedUncompressMessage = new StringBuilder();
             try
             {
-                var MyMemoryStream = new MemoryStream(Convert.FromBase64String(declarationXmlData));
-                var MyZipInputStream = new BZip2InputStream(MyMemoryStream);
+                var memoryStream = new MemoryStream(Convert.FromBase64String(declarationXmlData));
+                var zipInputStream = new BZip2InputStream(memoryStream);
                 StringBuilder MyUncompressMessage = new StringBuilder();
 
-
-                Encoding wind1252 = Encoding.GetEncoding(1255);
-                Encoding utf8 = Encoding.UTF8;
-                byte[] utf8Bytes = new byte[MySize];
+                Encoding windows1252Encoding = Encoding.GetEncoding(1255);
+                Encoding utf8Encoding = Encoding.UTF8;
+                byte[] utf8Bytes = new byte[defaultSize];
                 while (true)
                 {
-                    MySize = MyZipInputStream.Read(BytesUncompressed, 0, MySize);
-                    if (MySize > 0)
+                    defaultSize = zipInputStream.Read(bytesUncompressed, 0, defaultSize);
+                    if (defaultSize > 0)
                     {
-                        utf8Bytes = Encoding.Convert(wind1252, utf8, BytesUncompressed, 0, MySize);
-                        MyEncodedUncompressMessage.Append(Encoding.UTF8.GetString(utf8Bytes));
-                        MyUncompressMessage.Append(Encoding.UTF8.GetString(BytesUncompressed, 0, MySize));
+                        utf8Bytes = Encoding.Convert(windows1252Encoding, utf8Encoding, bytesUncompressed, 0, defaultSize);
+                        encodedUncompressMessage.Append(Encoding.UTF8.GetString(utf8Bytes));
+                        MyUncompressMessage.Append(Encoding.UTF8.GetString(bytesUncompressed, 0, defaultSize));
                     }
-
                     else
                         break;
                 }
             }
             catch (Exception)
             {
-                MyEncodedUncompressMessage.Append(Encoding.UTF8.GetString(Convert.FromBase64String(declarationXmlData)));
+                encodedUncompressMessage.Append(Encoding.UTF8.GetString(Convert.FromBase64String(declarationXmlData)));
             }
 
-            var data_out = MyEncodedUncompressMessage.ToString();
+            var data_out = encodedUncompressMessage.ToString();
             return data_out;
         }
 
