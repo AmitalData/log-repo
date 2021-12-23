@@ -203,10 +203,10 @@
                                                             | TextCodeTranslationPipe }}</button>
                                                         <button style="text-align:right"
                                                             (click)="ChangeStorageSiteMethod()"
-                                                            [disabled]="IsDisplayOnly">{{'שינוי םתר םחסון' }}</button>
+                                                            [disabled]="IsDisplayOnly">{{'שינוי אתר אחסון' }}</button>
                                                         <button style="text-align:right"
                                                             (click)="ChangeUnloadPortSiteMethod()"
-                                                            [disabled]="IsDisplayOnly">{{'שינוי םתר פריקה' }}</button>
+                                                            [disabled]="IsDisplayOnly">{{'שינוי אתר פריקה' }}</button>
 
                                                         <button *ngIf="isAllowAccounting" style="text-align:right"
                                                             (click)="IsReadyForInvoiceClick()"
@@ -484,7 +484,7 @@
                                                                             <split-button
                                                                                 (DefaultSplitButtonClicked)="SendALLCorrectManifest('R')"
                                                                                 [ButtonText]=_ReadyMNFToBatchSendButtonText
-                                                                                [IsDisabled]="IsDisplayOnly"
+                                                                                [IsDisabled]="IsDisplayOnly || (_DecWithoutHaTra == 0)"
                                                                                 [MENUDivExtraTop]="24"
                                                                                 [MENUDivExtraLeft]="110">
 
@@ -512,7 +512,7 @@
                                                                             <split-button
                                                                                 (DefaultSplitButtonClicked)="SendALLCorrectManifest('M')"
                                                                                 [ButtonText]=SelectedMNFToBatchSendButtonText
-                                                                                [IsDisabled]="IsDisplayOnly"
+                                                                                [IsDisabled]="IsDisplayOnly || (_DecWithoutHaTra == 0)"
                                                                                 [MENUDivExtraTop]="24"
                                                                                 [MENUDivExtraLeft]="110">
 

@@ -399,6 +399,11 @@ export class DeclarationCourierStatusPM {
     public set LastMileServiceType(newValue: string) { if (this.lastMileServiceType != newValue) { this.lastMileServiceType = newValue; this.MarkAsDirty("LastMileServiceType"); } }
        
 	 
+    private hatraDate: Date;
+    public get HatraDate() { return this.hatraDate; }
+    public set HatraDate(newValue: Date) { if (this.hatraDate != newValue) { this.hatraDate = newValue; this.MarkAsDirty("HatraDate"); } }
+       
+	 
 
     public OldEntityPM: DeclarationCourierStatusPM;
 		

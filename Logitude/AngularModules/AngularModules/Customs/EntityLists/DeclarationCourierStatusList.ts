@@ -89,6 +89,7 @@ export class DeclarationCourierStatusList {
 	CargoDescription: string;
 	TerminalReleaseDate: Date;
 	LastMileServiceType: string;
+	HatraDate: Date;
 	
 }
  
