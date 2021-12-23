@@ -146,6 +146,7 @@ import { CargoTrackingIncrementalStatExtendedListService } from './Services/Exte
 import { UserDefinedReportListService } from './Services/StandardLists/UserDefinedReportListService';
 import { UserDefinedReportPMService } from './Services/StandardPMs/UserDefinedReportPMService';
 import { CalculatedChartsLineTypeListService } from './Services/StandardLists/CalculatedChartsLineTypeListService';
+import { ARPaymentChequeOperationsService } from './Services/Others/ARPaymentChequeOpService';
 
 export class ModuleProviders {
     public static GetInstance(name: string) {
@@ -277,6 +278,7 @@ export class ModuleProviders {
             case "ReconciliationExtendedPMService": { myResult = new ReconciliationExtendedPMService(); break; }
             case "CashBookExtendedPMService": { myResult = new CashBookExtendedPMService(); break; }
             case "JournalOpService": { myResult = new JournalOpService(); break; }
+            case "ARPaymentChequeOperationsService": { myResult = new ARPaymentChequeOperationsService(); break; }
             case "ReconcileExternalPageListService": { myResult = new ReconcileExternalPageListService(); break; }
             case "TaxWithholdingAssessOfficeListService": { myResult = new TaxWithholdingAssessOfficeListService(); break; }
             case "ExternalReconciliationExtendedPMService": { myResult = new ExternalReconciliationExtendedPMService(); break; }

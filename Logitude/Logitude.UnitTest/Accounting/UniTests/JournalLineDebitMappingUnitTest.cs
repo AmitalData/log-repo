@@ -213,7 +213,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
                 {
                     Tenant = tenant,
                     JournalId = id,
-                    ActionTypeCode = ((int)MyJournalActionTypeEnum.Credit).ToString(),
+                    ActionTypeCode = ((int)JournalActionTypeEnum.Credit).ToString(),
 
                     DueDate = jlDueDate,
                     LocalAmount = localAmount,
@@ -437,7 +437,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
                {
                    Tenant = tenant,
                    JournalId = id,
-                   ActionTypeCode = ((int)MyJournalActionTypeEnum.Credit).ToString(),
+                   ActionTypeCode = ((int)JournalActionTypeEnum.Credit).ToString(),
                    DueDate = jlDueDate,
 
                    Line = jline,

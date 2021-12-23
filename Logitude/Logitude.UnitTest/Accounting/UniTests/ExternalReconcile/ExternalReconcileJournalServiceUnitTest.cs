@@ -582,8 +582,8 @@ fakeExternalReconcileDataProvider.GetBankAccountFromReconcileExternalPageLineId(
             var theCreatedJournal = myExternalReconcileJournalService.TheJournalPM;
             Assert.IsNotNull(theCreatedJournal.JournalLines);
             Assert.AreEqual(2, theCreatedJournal.JournalLines.Count);
-            Assert.AreEqual(1, theCreatedJournal.JournalLines.Count(r => r.ActionTypeCodeEnum == MyJournalActionTypeEnum.Credit));
-            Assert.AreEqual(1, theCreatedJournal.JournalLines.Count(r => r.ActionTypeCodeEnum == MyJournalActionTypeEnum.Debit));
+            Assert.AreEqual(1, theCreatedJournal.JournalLines.Count(r => r.ActionTypeCodeEnum == JournalActionTypeEnum.Credit));
+            Assert.AreEqual(1, theCreatedJournal.JournalLines.Count(r => r.ActionTypeCodeEnum == JournalActionTypeEnum.Debit));
 
             Assert.AreEqual(2, theCreatedJournal.JournalLines.Count(r => r.DebitAccountId == myBankAccountPM.TransferGLAcccountId));
             Assert.AreEqual(2, theCreatedJournal.JournalLines.Count(r => r.CreditAccountId == myBankAccountPM.GLAccountId));
@@ -648,8 +648,8 @@ fakeExternalReconcileDataProvider.GetBankAccountFromReconcileExternalPageLineId(
             var theCreatedJournal = myExternalReconcileJournalService.TheJournalPM;
             Assert.IsNotNull(theCreatedJournal.JournalLines);
             Assert.AreEqual(2, theCreatedJournal.JournalLines.Count);
-            Assert.AreEqual(1, theCreatedJournal.JournalLines.Count(r => r.ActionTypeCodeEnum == MyJournalActionTypeEnum.Credit));
-            Assert.AreEqual(1, theCreatedJournal.JournalLines.Count(r => r.ActionTypeCodeEnum == MyJournalActionTypeEnum.Debit));
+            Assert.AreEqual(1, theCreatedJournal.JournalLines.Count(r => r.ActionTypeCodeEnum == JournalActionTypeEnum.Credit));
+            Assert.AreEqual(1, theCreatedJournal.JournalLines.Count(r => r.ActionTypeCodeEnum == JournalActionTypeEnum.Debit));
 
             Assert.AreEqual(2, theCreatedJournal.JournalLines.Count(r => r.DebitAccountId == myBankAccountPM.TransferGLAcccountId));
             Assert.AreEqual(2, theCreatedJournal.JournalLines.Count(r => r.CreditAccountId == myBankAccountPM.GLAccountId));

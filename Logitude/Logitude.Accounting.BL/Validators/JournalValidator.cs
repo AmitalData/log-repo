@@ -772,7 +772,7 @@ accountingValidationContextServiceProvider
                 var creditCardWithTheSameReference1 =
                     (from jl in myJournalPM.JournalLines
                      .Where(r => !string.IsNullOrWhiteSpace(r.Reference1))
-                     .Where(r => r.ActionTypeCodeEnum == MyJournalActionTypeEnum.Credit)
+                     .Where(r => r.ActionTypeCodeEnum == JournalActionTypeEnum.Credit)
                      group jl by new { jl.CreditAccountId, jl.Reference1 } into jlGroup
                      select new { jlGroup.Key, c = jlGroup.Count() });
                 var creditCardWithTheSameReference1example = creditCardWithTheSameReference1.FirstOrDefault(r => r.c > 1);
@@ -786,7 +786,7 @@ accountingValidationContextServiceProvider
                 var debitCardWithTheSameReference1 =
                     (from jl in myJournalPM.JournalLines
                      .Where(r => !string.IsNullOrWhiteSpace(r.Reference1))
-                     .Where(r => r.ActionTypeCodeEnum == MyJournalActionTypeEnum.Debit)
+                     .Where(r => r.ActionTypeCodeEnum == JournalActionTypeEnum.Debit)
                      group jl by new { jl.CreditAccountId, jl.Reference1 } into jlGroup
                      select new { jlGroup.Key, c = jlGroup.Count() });
                 var debitCardWithTheSameReference1example = debitCardWithTheSameReference1.FirstOrDefault(r => r.c > 1);

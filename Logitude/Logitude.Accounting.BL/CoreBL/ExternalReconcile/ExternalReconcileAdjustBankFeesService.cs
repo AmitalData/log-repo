@@ -161,7 +161,7 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
                     //GetFirstJournalLine(tenant, adjustGLAccountId, listOfpageLineList, bankGLAccountList, screenNotes, PageLineForeignAmount, PageLineLocalAmount, ledgerForeignAmount, ledgerLocalAmountDebit, creditTheBank);
                     GetFirstJournalLineSum(tenant, adjustGLAccountId, listOfpageLineList, bankGLAccountList, screenNotes, foreignTotalAmount, localTotalAmountConvertFromforeign, creditTheBank);
                 LstJL.Line = 2;
-                LstJL.ActionTypeCodeEnum = creditTheBank ? MyJournalActionTypeEnum.Debit : MyJournalActionTypeEnum.Credit;
+                LstJL.ActionTypeCodeEnum = creditTheBank ? JournalActionTypeEnum.Debit : JournalActionTypeEnum.Credit;
 
                 //int line = TheNewJournal.JournalLines.Max(r => r.Line);
                 TheNewJournal.JournalLines.Add(firstJL);
@@ -231,7 +231,7 @@ new JournalLinePM()
 
 
     ///if r.DebitAmount != 0 then credit else debit 
-    ActionTypeCodeEnum = creditTheBank ? MyJournalActionTypeEnum.Credit : MyJournalActionTypeEnum.Debit,
+    ActionTypeCodeEnum = creditTheBank ? JournalActionTypeEnum.Credit : JournalActionTypeEnum.Debit,
     CreditAccountId = creditTheBank ? bankGLAccountList.Id : adjustGLAccountId,
     DebitAccountId = creditTheBank ? adjustGLAccountId : bankGLAccountList.Id,
     LocalAmount = creditTheBank ? (LocalAmount ) : -1 * (LocalAmount),
@@ -281,7 +281,7 @@ new JournalLinePM()
     
 
     ///if r.DebitAmount != 0 then credit else debit 
-    ActionTypeCodeEnum = creditTheBank ? MyJournalActionTypeEnum.Credit : MyJournalActionTypeEnum.Debit,
+    ActionTypeCodeEnum = creditTheBank ? JournalActionTypeEnum.Credit : JournalActionTypeEnum.Debit,
     CreditAccountId = creditTheBank ? bankGLAccountList.Id : adjustGLAccountId,
     DebitAccountId = creditTheBank ?  adjustGLAccountId: bankGLAccountList.Id,
     LocalAmount = creditTheBank? (PageLineLocalAmount + ledgerLocalAmountDebit) : -1* (PageLineLocalAmount + ledgerLocalAmountDebit),
@@ -298,7 +298,7 @@ new JournalLinePM()
             var jlPage = TheNewJournal.JournalLines.First();
             var jlAdjust = TheNewJournal.JournalLines.Last();
 
-            jlPage.ActionTypeCodeEnum = jlAdjust.ActionTypeCodeEnum == MyJournalActionTypeEnum.Credit ? MyJournalActionTypeEnum.Debit : MyJournalActionTypeEnum.Credit;
+            jlPage.ActionTypeCodeEnum = jlAdjust.ActionTypeCodeEnum == JournalActionTypeEnum.Credit ? JournalActionTypeEnum.Debit : JournalActionTypeEnum.Credit;
 
             jlPage.CreditAccountId = jlAdjust.CreditAccountId;
             jlPage.DebitAccountId = jlAdjust.DebitAccountId;
@@ -380,7 +380,7 @@ new JournalLinePM()
                 ForeignAmount = r.LocalAmountDebit != 0 ? r.ForeignAmountDebit : r.ForeignAmountCredit, //r.DebitAmount != 0 ? r.DebitAmount : r.CreditAmount,
 
                 ///if r.DebitAmount != 0 then credit else debit 
-                ActionTypeCodeEnum = r.LocalAmountDebit != 0 ? MyJournalActionTypeEnum.Credit : MyJournalActionTypeEnum.Debit,
+                ActionTypeCodeEnum = r.LocalAmountDebit != 0 ? JournalActionTypeEnum.Credit : JournalActionTypeEnum.Debit,
                 DebitAccountId = r.LocalAmountDebit != 0 ? adjustGLAccountId : bankGLAccountList.Id,
                 CreditAccountId = r.LocalAmountDebit != 0 ? bankGLAccountList.Id : adjustGLAccountId,
                 LocalAmount = r.LocalAmountDebit != 0 ? r.LocalAmountDebit : r.LocalAmountCredit, //Convert2LocalAmount(bankGLAccountList.CurrencyId, accountingCurrencyId, r),
@@ -424,19 +424,19 @@ new JournalLinePM()
 
         private void CreateJournalLineToadjustGLAccountId(string adjustGLAccountId, GLAccountList bankGLAccountList)
         {
-            decimal totDebitlocal = TheNewJournal.JournalLines.Where(r => r.ActionTypeCodeEnum == MyJournalActionTypeEnum.Debit).Sum(r => r.LocalAmount);
-            decimal totCreditlocal = TheNewJournal.JournalLines.Where(r => r.ActionTypeCodeEnum == MyJournalActionTypeEnum.Credit).Sum(r => r.LocalAmount);
+            decimal totDebitlocal = TheNewJournal.JournalLines.Where(r => r.ActionTypeCodeEnum == JournalActionTypeEnum.Debit).Sum(r => r.LocalAmount);
+            decimal totCreditlocal = TheNewJournal.JournalLines.Where(r => r.ActionTypeCodeEnum == JournalActionTypeEnum.Credit).Sum(r => r.LocalAmount);
 
 
 
-            decimal totDebitForiegn = TheNewJournal.JournalLines.Where(r => r.ActionTypeCodeEnum == MyJournalActionTypeEnum.Debit).Sum(r => r.ForeignAmount);
-            decimal totCreditForiegn = TheNewJournal.JournalLines.Where(r => r.ActionTypeCodeEnum == MyJournalActionTypeEnum.Credit).Sum(r => r.ForeignAmount);
-            MyJournalActionTypeEnum myJournalActionTypeEnum = MyJournalActionTypeEnum.Credit;
+            decimal totDebitForiegn = TheNewJournal.JournalLines.Where(r => r.ActionTypeCodeEnum == JournalActionTypeEnum.Debit).Sum(r => r.ForeignAmount);
+            decimal totCreditForiegn = TheNewJournal.JournalLines.Where(r => r.ActionTypeCodeEnum == JournalActionTypeEnum.Credit).Sum(r => r.ForeignAmount);
+            JournalActionTypeEnum myJournalActionTypeEnum = JournalActionTypeEnum.Credit;
             string debitAccountId = bankGLAccountList.Id;
             string creditAccountId = adjustGLAccountId;
             if (totDebitlocal - totCreditlocal < 0)
             {
-                myJournalActionTypeEnum =MyJournalActionTypeEnum.Debit;
+                myJournalActionTypeEnum =JournalActionTypeEnum.Debit;
                 debitAccountId = adjustGLAccountId;
                 creditAccountId = bankGLAccountList.Id;
 
@@ -500,7 +500,7 @@ new JournalLinePM()
                 ForeignAmount = r.DebitAmount != 0 ? r.DebitAmount : r.CreditAmount,
 
                 ///if r.DebitAmount != 0 then credit else debit 
-                ActionTypeCodeEnum = r.DebitAmount != 0 ? MyJournalActionTypeEnum.Credit : MyJournalActionTypeEnum.Debit,
+                ActionTypeCodeEnum = r.DebitAmount != 0 ? JournalActionTypeEnum.Credit : JournalActionTypeEnum.Debit,
                 DebitAccountId = r.DebitAmount != 0 ?  adjustGLAccountId: bankGLAccountList.Id,
                 CreditAccountId = r.DebitAmount != 0 ? bankGLAccountList.Id : adjustGLAccountId,
                 LocalAmount = Convert2LocalAmount(bankGLAccountList.CurrencyId, accountingCurrencyId, r),

@@ -13,9 +13,12 @@ import { ServiceResponse } from '../../../../Infrastructure/DataContracts/Servic
 import { ObservableCollection } from '../../../../Infrastructure/Utilities/ObservableCollection';
 import { ConfirmWindow } from '../../../../Controls/Windows/ConfirmWindow';
 import { ObjectsLocator } from '../../../../Infrastructure/Locators/ObjectsLocator';
+import { ARPaymentChequeOperationsService } from 'Accounting/Services/Others/ARPaymentChequeOpService';
+import { ARPaymentPMService } from 'Invoice/Services/StandardPMs/ARPaymentPMService';
 
 declare var window: any;
 
+const ReturnChequeWindowWidth = 400;
 @Component({
 
     templateUrl: './ARPaymentMultiChequesComponent.html',
@@ -37,6 +40,8 @@ export class ARPaymentMultiChequesComponent extends BaseComponent {
     public ChequesCounter: number;
     public TotalAmount: number;
     public isLTR: boolean;
+    arPaymentChequeOperationsService:ARPaymentChequeOperationsService = new ARPaymentChequeOperationsService();
+    arPaymentPMService:ARPaymentPMService = new ARPaymentPMService();
     constructor() {
         super();
         this.ItemsSource = new ObservableCollection([]);
@@ -44,20 +49,25 @@ export class ARPaymentMultiChequesComponent extends BaseComponent {
         this.isLTR = (ObjectsLocator.GlobalSetting.LayoutDirection == "ltr");
         this.CalculateTotal();
     }
-   
+
     SetWindowArgs(args: any) {
-    
+
         if (!AppTool.IsNullOrEmpty(args)) {
             this.paymentPM = args.EntityPM;
             this.OriginalItemPM = args.EntityPM;
             this.ClonedItemPM = this.CloneEntity(args.EntityPM);
-            this.FillItemSource();
-            this.AddFirstChequeRecord();
-            this.CalculateTotal();
-            this.UpdateChequeCounter();
+            this.LoadScreen();
             this.IsDisplayOnly = this.paymentPM.StatusCode == "AD" || this.paymentPM.StatusCode == "VD"  ? true : false;
         }
     }
+    private LoadScreen()
+    {
+        this.FillItemSource();
+        this.AddFirstChequeRecord();
+        this.CalculateTotal();
+        this.UpdateChequeCounter();
+    }
+
     UpdateChequeCounter() {
         this.ChequesCounter = this.paymentPM.ARPaymentChequeReplicas.length;
     }
@@ -66,7 +76,7 @@ export class ARPaymentMultiChequesComponent extends BaseComponent {
         for (let item of this.paymentPM.ARPaymentChequeReplicas) {
             this.ItemsSource.Insert(new PaymentChequeLine(item, this));
         }
-      
+
 
     }
     AddFirstChequeRecord() {
@@ -84,7 +94,7 @@ export class ARPaymentMultiChequesComponent extends BaseComponent {
             this.UpdatePaymentChequeList(cheque);
         }
     }
-  
+
     UpdatePaymentChequeList(cheque: ARPaymentChequeReplicaPM) {
         if (!this.paymentPM.ARPaymentChequeReplicas.includes(cheque)) {
             this.paymentPM.AddARPaymentChequeReplicaPM(cheque);
@@ -127,7 +137,7 @@ export class ARPaymentMultiChequesComponent extends BaseComponent {
             if (!AppTool.IsNullOrEmpty(cheque.ForeignAmount))
             this.TotalAmount += cheque.ForeignAmount;
         }
-         
+
     }
 
     CancelButtonClicked() {
@@ -166,13 +176,13 @@ export class ARPaymentMultiChequesComponent extends BaseComponent {
         }
         if (this.ValidationErrorsList.length == 0) {
             return true;
-        } 
-        
+        }
+
     }
-    OkButtonClicked() {       
-        if (this.CheckRequiredFileds()) {      
+    OkButtonClicked() {
+        if (this.CheckRequiredFileds()) {
             this.CurrentSession.CloseCurrentWindowEmit('ok');
-        } 
+        }
     }
     private ValidateChequeFields(cheque: ARPaymentChequeReplicaPM) {
         if (AppTool.IsNullOrEmpty(cheque.ChequeNumber)) {
@@ -223,8 +233,42 @@ export class ARPaymentMultiChequesComponent extends BaseComponent {
         }
     }
 
-  
+    ReturnChequeButtonClicked(cheque){
+        const confirmWindow = new ConfirmWindow();
+        confirmWindow.Width = ReturnChequeWindowWidth;
+        var message = TextCodeTranslator.Translate('ARPayment.O.ReturnChequeConfirmMessage');
+        confirmWindow.Show(message);
+        confirmWindow.WindowClosed.subscribe((event) => {
+            if (confirmWindow.Yes) {
+                this.ReturnChequeToCustomer(cheque);
+            }
+        });
 
+    }
+
+
+    GetPayment(){
+        this.CurrentSession.StartBusyIndicatorSaving()
+        this.arPaymentPMService
+        .get(this.paymentPM.Id)
+            .subscribe((response:ServiceResponse) => {
+                this.CurrentSession.StopBusyIndicator();
+                this.paymentPM = response.Result;
+                this.LoadScreen();
+            });
+    }
+
+    ReturnChequeToCustomer(cheque)
+    {
+        this.CurrentSession.StartBusyIndicatorSaving()
+        this.arPaymentChequeOperationsService
+        .ReturnChequeToCustomer(this.paymentPM.Tenant,cheque.entityPM.Id,this.paymentPM.Id)
+            .subscribe((response:ServiceResponse) => {
+                this.CurrentSession.StopBusyIndicator();
+                this.GetPayment();
+            });
+
+    }
 }
 
 export class PaymentChequeLine extends BaseComponent {
@@ -239,7 +283,7 @@ export class PaymentChequeLine extends BaseComponent {
 
     }
 
-  
+
     get LineNumber() { return this.entityPM.LineNumber; }
     set LineNumber(value: number) {
         if (this.entityPM.LineNumber != value) {
@@ -314,12 +358,12 @@ export class PaymentChequeLine extends BaseComponent {
     }
 
     DeleteButtonClicked() {
-    
+
         this.parent.ItemsSource.Remove(this);
         if (this.parent.paymentPM.ARPaymentChequeReplicas.includes(this.entityPM)) {
             this.parent.paymentPM.RemoveARPaymentChequeReplicaPM(this.entityPM);
         }
-        this.ResetLineNumber();     
+        this.ResetLineNumber();
         this.parent.CalculateTotal();
         --this.parent.ChequesCounter;
     }
