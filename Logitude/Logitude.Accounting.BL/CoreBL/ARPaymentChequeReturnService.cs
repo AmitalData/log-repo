@@ -62,11 +62,16 @@ namespace Logitude.Accounting.BL.CoreBL
             cheque.ChangeSetOp = ChangeSetOperation.Update;
             cheque.StatusCode = ARPaymentChequeStatusValues.ReturnedToCustomer;
 
+            SubmitARPaymentCheque(cheque);
+        }
 
+        private void SubmitARPaymentCheque(ARPaymentChequePM cheque)
+        {
             IAccountingContext MyContext = AccountingContext.GetContext(arguments.Tenant);
             ARPaymentChequeUpdateService aRPaymentChequeUpdateService = new ARPaymentChequeUpdateService(MyContext, new Dictionary<string, IContext>(), arguments.Tenant);
-            aRPaymentChequeUpdateService.Update(cheque,true);
+            aRPaymentChequeUpdateService.Update(cheque, true);
         }
+
         private void UpdateCashbookTotal(ARPaymentChequePM cheque)
         {
             paymentCashbook.TotalAmount -= cheque.ForeignAmount;
