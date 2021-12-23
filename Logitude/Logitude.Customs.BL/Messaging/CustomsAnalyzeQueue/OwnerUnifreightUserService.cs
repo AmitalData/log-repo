@@ -15,7 +15,7 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
         {
 
             var userRepository = new UserRepository(declaration.Tenant);
-            var storageSiteCode = declaration.Consignments.FirstOrDefault().StorageSiteCode;
+            var storageSiteCode = declaration.Consignments.FirstOrDefault()?.StorageSiteCode;
             if (!String.IsNullOrWhiteSpace(storageSiteCode))
             {
                 var user = userRepository.GetSingleUserByCode(storageSiteCode, declaration.Tenant, true);
