@@ -128,25 +128,25 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
             if (attachment == null || attachment.Length == 0) return;
 
-            var tapagQueryService = new TapagQueryService(CustomContext.GetContext(requestParams.Tenant));
-            TapagPM tapagPM = tapagQueryService.GetSingleTapagByLeadingFileNumber(leadingFileNumber, requestParams.Tenant);
-            if (tapagPM != null)
-            {
-                var objectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Tapag");
-                var entityId = tapagPM.Id;
-                var documentType = documentTypeQuery.GetSinglePMByCodeAndTenant("DFC", tapagPM.Tenant);
+            //var tapagQueryService = new TapagQueryService(CustomContext.GetContext(requestParams.Tenant));
+            //TapagPM tapagPM = tapagQueryService.GetSingleTapagByLeadingFileNumber(leadingFileNumber, requestParams.Tenant);
+           // if (tapagPM != null)
+           // {
+                //var objectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Tapag");
+                //var entityId = tapagPM.Id;
+                var documentType = documentTypeQuery.GetSinglePMByCodeAndTenant("DFC", requestParams.Tenant);
                 if (documentType == null) return;
-                var documentsFilingPMs = documentsFilingQuery.GetDocumentsFilingListByDocumentType(documentType.Id, objectTableId, entityId, requestParams.Tenant);
+                //var documentsFilingPMs = documentsFilingQuery.GetDocumentsFilingListByDocumentType(documentType.Id, objectTableId, entityId, requestParams.Tenant);
 
                 foreach (var item in attachment)
                 {
-                    var documentsFilingPM = documentsFilingPMs.FirstOrDefault(x => x.ExternalAttachmentId == item.externalAttachmentID);
-                    if(documentsFilingPM == null)
-                        CreateDocument(item, requestParams, tapagPM, documentType);
-                    else
-                        UpdateDocument(documentsFilingPM, item, requestParams);
+                    //var documentsFilingPM = documentsFilingPMs.FirstOrDefault(x => x.ExternalAttachmentId == item.externalAttachmentID);
+                    //if(documentsFilingPM == null)
+                        CreateDocument(item, requestParams, leadingFileNumber, documentType);
+                    //else
+                        //UpdateDocument(documentsFilingPM, item, requestParams);
                 }
-            }
+            //}
         }
 
         private void UpdateDocument(DocumentsFilingPM documentsFilingPM, Attachment attachment, GenericRequestParams requestParams)
@@ -163,24 +163,22 @@ namespace Logitude.CustomsMessaging.ResponseServices
             var pm = CustomsSettingQueryService.GetSettingByTenant(tenant);
             return pm?.CompanyType == "B";//Courier
         }
-        private void CreateDocument(Attachment attachment, GenericRequestParams requestParams, TapagPM tapagPM, DocumentTypePM documentType)
+        private void CreateDocument(Attachment attachment, GenericRequestParams requestParams, string leadingFileNumber, DocumentTypePM documentType)
         {
             var documentsFilingPM = new DocumentsFilingPM();
-            documentsFilingPM.Tenant = tapagPM.Tenant;
+            documentsFilingPM.Tenant = requestParams.Tenant;
             documentsFilingPM.DocumentTypeId = documentType.Id;
-            documentsFilingPM.EntityId = tapagPM.Id;
-            documentsFilingPM.ObjectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
+            //documentsFilingPM.EntityId = tapagPM.Id;
+            //documentsFilingPM.ObjectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
             //documentsFilingPM.ChildEntityId = _PaymentOrderPM.Id;
             //documentsFilingPM.ChildObjectTableId = ObjectTableRepository.GetObjectTableByName("Customs.PaymentOrder");
-            documentsFilingPM.ExternalEntityReference = tapagPM.LeadingFileNumber;
-            //documentsFilingPM.ChildEntityReference = _PaymentOrderPM.PaymentNumber;
+            documentsFilingPM.ChildEntityReference = leadingFileNumber;
             documentsFilingPM.CreatedByUserId = requestParams.LoggingUserId;
             documentsFilingPM.OwnerId = requestParams.LoggingUserId;
             documentsFilingPM.UpdatedByUserId = requestParams.LoggingUserId;
             documentsFilingPM.ReceivedByUserId = requestParams.LoggingUserId;
             documentsFilingPM.DirectionCode = "I";
-            documentsFilingPM.Description = "החלטה לתיק גרעון " + tapagPM.LeadingFileNumber;
-            //documentsFilingPM.ExternalEntityName = "CFIFILEM";
+            documentsFilingPM.Description = "החלטה לתיק גרעון " + leadingFileNumber;
             documentsFilingPM.FileExtension = "PDF";
             
             var commonContext = CommonDataContext.GetContext(requestParams.Tenant);
