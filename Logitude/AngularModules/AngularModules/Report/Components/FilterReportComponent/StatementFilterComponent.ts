@@ -174,6 +174,12 @@ export class StatementFilterComponent extends BaseComponent implements OnInit {
         this.SetInvoicePaymentFilter(queryFilterItem);
     }
 
+    GetLookUpFieldValue(field) {
+        if (field && field[0]["@nil"] != "true")
+            return field;
+        return null
+    }
+
     SetInvoicePaymentFilter(queryFilterItem: QueryFilterItem) {
         if (queryFilterItem.FieldName != "InvoicePaymentFilter") {
             return;
@@ -192,7 +198,7 @@ export class StatementFilterComponent extends BaseComponent implements OnInit {
         if (queryFilterItem.FieldName != "PartnerId") {
             return;
         }
-        this.PartnerId = queryFilterItem.FieldValue;
+        this.PartnerId = this.GetLookUpFieldValue(queryFilterItem.FieldValue);
     }
     SetIncludeDraftInvoicesFilter(queryFilterItem: QueryFilterItem) {
         if (queryFilterItem.FieldName != "IncludeDraftInvoices") {
@@ -205,7 +211,7 @@ export class StatementFilterComponent extends BaseComponent implements OnInit {
         if (queryFilterItem.FieldName != "DueDate") {
             return;
         }
-        this.DueDate = queryFilterItem.FieldValue;
+        this.DueDate = this.GetLookUpFieldValue(queryFilterItem.FieldValue);
     }
 
     SetFromDateFilter(queryFilterItem: QueryFilterItem) {
@@ -242,7 +248,7 @@ export class StatementFilterComponent extends BaseComponent implements OnInit {
         if (queryFilterItem.FieldName != "BillToId") {
             return;
         }
-        this.CustomerId = queryFilterItem.FieldValue;
+        this.CustomerId = this.GetLookUpFieldValue(queryFilterItem.FieldValue);
     }
 
     RunReport(isloading: boolean) {
