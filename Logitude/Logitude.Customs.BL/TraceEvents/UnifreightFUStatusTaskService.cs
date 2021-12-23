@@ -304,9 +304,9 @@ namespace Logitude.Customs.BL.TraceEvents
     public sealed class FUOwnerUnifreightUserCode
     {
         public const string MEHES = "MEHES";
-        public const string MAMAN = "MAMAN";
-        public const string SWISS = "SWISS";
-        public const string OVERSEAS = "OVERSEAS";
+        //public const string MAMAN = "MAMAN";
+        //public const string SWISS = "SWISS";
+        //public const string OVERSEAS = "OVERSEAS";
 
     }
 }

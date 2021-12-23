@@ -100,6 +100,8 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
                 _DeclarationPM = qsDeclarationQueryService.GetSingle(theDecId, true, false);
                 res.EntityID = theDecId;
                 res.EntityReference = _DeclarationPM.CustomFileNo;
+                var ownerUnifreightUserService = new OwnerUnifreightUserService();
+                string myOwnerUnifreightUserCode = ownerUnifreightUserService.GetOwnerUnifreightUserCode(declaration: _DeclarationPM);
 
                 ContactRepository contactRepository = new ContactRepository(_CommunicationLog.Tenant);
                 var loggedContact = contactRepository.GetSingleContactByEmail(AuthenticationUtil.ResolveLoggingUserId(_CommunicationLog.Tenant), _CommunicationLog.Tenant);
@@ -121,7 +123,7 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
                                 Mode = UnifreightEventMode.@new,
                                 StatusCode = "SMG",
                                 EventDateTime = mySTBMessage.EventTime,
-                                OwnerUnifreightUserCode = FUOwnerUnifreightUserCode.MAMAN
+                                OwnerUnifreightUserCode = myOwnerUnifreightUserCode
                             });
                         }
                         break;
@@ -134,7 +136,7 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
                                 Mode = UnifreightEventMode.@new,
                                 StatusCode = "OMN",
                                 EventDateTime = mySTBMessage.EventTime,
-                                OwnerUnifreightUserCode = FUOwnerUnifreightUserCode.MAMAN
+                                OwnerUnifreightUserCode = myOwnerUnifreightUserCode
                             });
                         }
                         break;
@@ -163,6 +165,8 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
             }
             return res;
         }
+
+        
 
         private void UpadteTerminalSuspentionNumber(STBMessage mySTBMessage, string theDecId)
         {
