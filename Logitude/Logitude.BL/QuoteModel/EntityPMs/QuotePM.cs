@@ -739,6 +739,7 @@ namespace Logitude.BL.QuoteModel.EntityPMs
         public string RoutingTo { get; set; }
         public string FromZipCode { get; set; }
         public string ToZipCode { get; set; }
-        
+        public string TicketId { get; set; }
+         
     }
 }
