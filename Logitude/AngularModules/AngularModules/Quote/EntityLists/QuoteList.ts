@@ -199,5 +199,6 @@ export class QuoteList {
 		PackagesQuantity: number;
 		InlandDomesticFromCountryId: string;
 		InlandDomesticToCountryId: string;
+		TicketId: string;
 	
 }

@@ -24,6 +24,7 @@ using Simplog.Data.CommonDataModel;
 using Simplog.Data.QuoteModel;
 using Simplog.Data.ShipmentsModel.Repositories;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
+using Logitude.CRM.Data.Repsitories;
 
 namespace Logitude.BL.QuoteModel.EntityQueries
 {
@@ -297,6 +298,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                                                RegionalTaxPercentage=f.RegionalTaxPercentage,
                                                IsMultiCurrency = f.IsMultiCurrency,
                                                PackagesQuantity = f.PackagesQuantity,
+
                                            };
             return result;
         }
@@ -1403,7 +1405,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                 GrossWeightEdited = entityPOCO.GrossWeightEdited,
                 ChargeableWeightEdited = entityPOCO.ChargeableWeightEdited,
                 QuoteHTMLDocumentId = entityPOCO.QuoteHTMLDocumentId,
-                QuoteVersion = entityPOCO.LastVersionNumber > 0 ? entityPOCO.QuoteNumber + "-" + entityPOCO.LastVersionNumber:"",
+                QuoteVersion = entityPOCO.LastVersionNumber > 0 ? entityPOCO.QuoteNumber + "-" + entityPOCO.LastVersionNumber : "",
                 Field11 = new CustomFieldClass("Field11", "Quote", entityPOCO.Field11),
                 Field12 = new CustomFieldClass("Field12", "Quote", entityPOCO.Field12),
                 Field13 = new CustomFieldClass("Field13", "Quote", entityPOCO.Field13),
@@ -1429,8 +1431,8 @@ namespace Logitude.BL.QuoteModel.EntityQueries
             int tenant = entityPOCO.Tenant;
             string entityId = entityPOCO.Id;
 
-            ICommonDataContext myCommonContext= CommonDataContext.GetContext(tenant);
-            IQuotesContext myQuotesContext= QuotesContext.GetContext(tenant);
+            ICommonDataContext myCommonContext = CommonDataContext.GetContext(tenant);
+            IQuotesContext myQuotesContext = QuotesContext.GetContext(tenant);
 
             FollowUpRepository followUpsRepository = new FollowUpRepository(tenant);
             PortRepository portRepository = new PortRepository(myCommonContext);
@@ -1672,7 +1674,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                 }
 
                 entityPM.Routing = entityPM.FromCountryName + " > " + entityPM.ToCountryName;
-            }            
+            }
             #endregion
 
             #region Partners
@@ -1931,7 +1933,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                 }
                 #endregion
             }
-            
+
             if (entityPOCO.IncludeDelivery)
             {
                 #region Delivery Location
@@ -2139,7 +2141,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries
             #endregion
 
             entityPM.TotalReceivablesAmount = 0;
-   
+
             foreach (QuoteChargePM receviable in entityPM.QuoteCharges)
             {
                 if (receviable.SaleTotalAmountLocal != null)
@@ -2301,7 +2303,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                     }
                 }
 
-            
+
 
                 if (isSaleChargeAddable || isSaleChargeQuotationAddable)
                 {
@@ -2335,7 +2337,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                                 string stepUOM = GetPriceBreakWeightUnitCodeByCostMeasurementCode(item.CostMeasurementCode, entityPM);
                                 if (string.IsNullOrEmpty(myPriceBreaks))
                                 {
-                                    myPriceBreaks += "+" + itemStep.Step + " "+stepUOM + ": " + formattedValue;
+                                    myPriceBreaks += "+" + itemStep.Step + " " + stepUOM + ": " + formattedValue;
                                 }
 
                                 else
@@ -2343,7 +2345,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                                     myPriceBreaks += "\r";//Environment.NewLine;
                                     myPriceBreaks += "+" + itemStep.Step + " " + stepUOM + ": " + formattedValue;
                                 }
-                               
+
                             }
 
                             saleChargePM.PriceBreaks = myPriceBreaks;
@@ -2352,7 +2354,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries
 
                     if (isSaleChargeAddable) entityPM.QuoteSaleCharges.Add(saleChargePM);
                     else if (isSaleChargeQuotationAddable) entityPM.QuotationSaleCharges.Add(saleChargePM);
-             
+
                 }
             }
             #endregion
@@ -2365,7 +2367,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                                              select new QuoteSalesTotalPM()
                                              {
                                                  CurrencyCode = g.Key,
-                                                 Amount = g.Sum(s=>s.SaleTotalAmount),
+                                                 Amount = g.Sum(s => s.SaleTotalAmount),
                                              }).ToList();
             }
 
@@ -2433,7 +2435,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                 {
                     containerTypeCode = packageType.Code.Insert(2, "'");
                 }
-                
+
                 container = entityPM.PackageType1Quantity + " x " + containerTypeCode;
                 totalContainers = totalContainers + container;
             }
@@ -2538,9 +2540,20 @@ namespace Logitude.BL.QuoteModel.EntityQueries
 
             entityPM.TotalSaleIncludingVATAmountInSaleCurrency = mySaleAmount + myTotalVAT;
             entityPM.TotalSaleIncludingVATAmountInLocalCurrency = mySaleAmountLocal + myTotalVATLocal;
-       
+
+            entityPM.TicketId = GetConnectedTicketId(entityPOCO, tenant);
+
             return entityPM;
         }
+
+        private string GetConnectedTicketId(Quote entityPOCO, int tenant)
+        {
+            #region Ticket
+            TicketRepository ticketRepository = new TicketRepository(tenant);
+            return ticketRepository.GetIdByQuoteId(entityPOCO.Id);
+            #endregion
+        }
+ 
 
         private string GetAddress(Address address)
         {
