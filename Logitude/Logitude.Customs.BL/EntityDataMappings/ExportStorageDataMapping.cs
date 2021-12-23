@@ -45,6 +45,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
             var cargoIdentifireTypeQueryService = new CargoIdentifireTypeQueryService(entityPOCO.Tenant);
             CargoIdentifireTypePM cargoIdentifireTypePM  = cargoIdentifireTypeQueryService.GetSingle(entityPOCO.CargoTypeCode, false, true);
 
+            entityPM.Declaration_ID = declarationPM.Id;
             entityPM.DeclarationStatusTypeName = declarationPM.DeclarationStatusTypeName;
             entityPM.CargoTypeName = cargoTypePM.LocalName;
             entityPM.StorageStatusName = storageStatusPM.LocalName;
@@ -52,6 +53,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
             entityPM.ShipName = customsShipPM.LocalName;
             entityPM.CargoTypeCodeName = cargoIdentifireTypePM.LocalName;
             entityPM.DeclarationStatusTypeCode = declarationPM.DeclarationStatusTypeCode;
+            entityPM.DeclarationCustomFileNo = declarationPM.CustomFileNo;
         }
    }
 }

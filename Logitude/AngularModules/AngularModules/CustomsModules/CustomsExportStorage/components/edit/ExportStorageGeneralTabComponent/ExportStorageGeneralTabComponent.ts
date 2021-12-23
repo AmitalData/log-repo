@@ -10,7 +10,7 @@ import { EntityArgs } from 'Infrastructure/DataContracts/EntityArgs';
 })
 export class ExportStorageGeneralTabComponent extends BaseComponent {
   public DataContext: ExportStorageGeneralTabComponent = this;
-  // public EntityPM: ExportStoragePM = null as any;
+  EntityPM: ExportStoragePM = null as any;
   public ObjectTableName: string = '';
 
   
@@ -21,10 +21,6 @@ export class ExportStorageGeneralTabComponent extends BaseComponent {
   
   ngOnInit(): void {
     this.initEntity()
-    console.log(1)
-    console.log(this.entityArgs.EntityPM)
-    // this.EntityResourceService.getEntityResourceByTableName("Customs.PaymentOrder").subscribe((response:any) => {
-
   }
 
 
@@ -34,21 +30,11 @@ export class ExportStorageGeneralTabComponent extends BaseComponent {
   }
 
   
+  public get ShipType() { return this.EntityPM.DeclarationId ? 'יצוא' : ''; }
   public get CargoTypeCodeName() { return this.EntityPM.CargoTypeCodeName; }
-  public set CargoTypeCodeName(newValue: number) { this.EntityPM.CargoTypeCodeName = newValue; }
-
   public get SecondCargoID() { return this.EntityPM.SecondCargoID; }
-  public set SecondCargoID(newValue: number) { this.EntityPM.SecondCargoID = newValue; }
-
   public get ExporterID() { return this.EntityPM.ExporterID; }
-  public set ExporterID(newValue: number) { this.EntityPM.ExporterID = newValue; }
-  
   public get FirstCargoID() { return this.EntityPM.FirstCargoID; }
-  public set FirstCargoID(newValue: number) { this.EntityPM.FirstCargoID = newValue; }
-
   public get ThirdCargoID() { return this.EntityPM.ThirdCargoID; }
-  public set ThirdCargoID(newValue: number) { this.EntityPM.ThirdCargoID = newValue; }
-
   public get ExportDealIdentification() { return this.EntityPM.ExportDealIdentification; }
-  public set ExportDealIdentification(newValue: number) { this.EntityPM.ExportDealIdentification = newValue; }
 }

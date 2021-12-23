@@ -64,6 +64,10 @@ namespace Logitude.Customs.Data.EntityLists
        public string CargoTypeCodeName  { get; set; }
        [DataMember]
        public string DeclarationStatusTypeCode  { get; set; }
+       [DataMember]
+       public string Declaration_ID  { get; set; }
+       [DataMember]
+       public string DeclarationCustomFileNo  { get; set; }
    }
 
 }
