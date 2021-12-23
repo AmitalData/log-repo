@@ -88,22 +88,25 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
 
         public void SyncShipmentMilstones(BulkDataPreperation bulkDataPreperation)
         {
+
             var buildCargoArgs = bulkDataPreperation.CargoTrackingUpdateDataBaseArgs.BuildCargoArgs;
+            
             // move fields from order to forwarding
             // & if fields of forwarding is empty, fill their values from order
             var sql = BuildScriptForUpdatingForwardingShipmentMilstonesFromShipmentOrder();
             ExcuteSqlScript(buildCargoArgs, sql);
 
-            sql = BuildScriptForUpdatingOrderShipmentMilstones();
-            ExcuteSqlScript(buildCargoArgs, sql);
+            //sql = BuildScriptForUpdatingOrderShipmentMilstones();
+            //ExcuteSqlScript(buildCargoArgs, sql);
 
 
             // customs
+            
             sql = BuildScriptForUpdatingCustomsShipmentMilstones();
-            ExcuteSqlScript(buildCargoArgs, sql);
+            ExecuteByTenant(bulkDataPreperation, sql, " where CustomShipment.Tenant =");
 
-            sql = BuildScriptForUpdatingForwardingShipmentMilstonesFromCustoms();
-            ExcuteSqlScript(buildCargoArgs, sql);
+            //sql = BuildScriptForUpdatingForwardingShipmentMilstonesFromCustoms();
+            //ExcuteSqlScript(buildCargoArgs, sql);
 
             // current
             //sql = BuildScriptToSetCurrentMistones();
@@ -113,6 +116,15 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
 
             //sql = DisconnectShipments(buildCargoArgs);
             //ExcuteSqlScriptForSourceDatabase(cargoArgs, sql);
+        }
+
+        private void ExecuteByTenant(BulkDataPreperation bulkDataPreperation, string sql , string whereCondition)
+        {
+            foreach (var id in bulkDataPreperation.AllTenantIds)
+            {
+                var queryWithTenantCondition = sql +" "+ whereCondition + " " + id;
+                ServiceHelper.ExecuteSql(queryWithTenantCondition, bulkDataPreperation.CargoTrackingUpdateDataBaseArgs.BuildCargoArgs.DestinationConnectionString);
+            }
         }
 
         private string BuildScriptToSetCurrentMistonesByWeight(BulkDataPreperation bulkDataPreperation)
@@ -168,7 +180,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
                 case CargoTrackingMilestoneValues.AssignedToTrucker: return $"WHEN [AssignedTruckerDone] = 1 THEN {CargoTrackingMilestoneValues.AssignedToTrucker}  ";
                 case CargoTrackingMilestoneValues.DeliveryOut: return $"WHEN [DeliveryDone] = 1 THEN {CargoTrackingMilestoneValues.DeliveryOut}  ";
                 case CargoTrackingMilestoneValues.Delivered: return $"WHEN [DeliveredDone] = 1 THEN {CargoTrackingMilestoneValues.Delivered}  ";
-                //case CargoTrackingMilestoneValues.Invoiced: return $"WHEN [CreatedDone] = 1 THEN {CargoTrackingMilestoneValues.Invoiced}  ";
+                    //case CargoTrackingMilestoneValues.Invoiced: return $"WHEN [CreatedDone] = 1 THEN {CargoTrackingMilestoneValues.Invoiced}  ";
             }
             return "";
         }
