@@ -491,5 +491,6 @@ export class ShipmentList {
 		DestinationWarehouseId: string;
 		DestinationWarehouseName: string;
 		ShippingAgent: string;
+		PrivateLabelAgentName: string;
 	
-}
+}

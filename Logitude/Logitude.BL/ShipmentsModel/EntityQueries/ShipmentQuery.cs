@@ -1852,6 +1852,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.PrivateLabelInvoiceNumber = shipment.PrivateLabelInvoiceNumber; 
             shipmentPM.PrivateLabelIncludePickup = shipment.PrivateLabelIncludePickup;
             shipmentPM.PrivateLabelIncludeDelivery = shipment.PrivateLabelIncludeDelivery;
+            shipmentPM.PrivateLabelAgentName = shipment.PrivateLabelAgentName;
             shipmentPM.RequestedFlightDate = shipment.RequestedFlightDate;
 
 
@@ -12632,6 +12633,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                HasUnassignedData = f.HasUnassignedData,
                                OperationalStatusId = f.OperationalStatusId,
                                OperationalStatusName = f.OperationalStatusName,
+                               PrivateLabelAgentName = string.IsNullOrEmpty(f.PrivateLabelAgentName) ? f.Agent: f.PrivateLabelAgentName,
                            };
             return myResult;
         }

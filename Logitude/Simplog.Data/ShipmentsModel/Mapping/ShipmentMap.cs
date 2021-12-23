@@ -357,6 +357,8 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.BillingStatusId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.DestinationWarehouseId).HasMaxLength(15).IsUnicode(false);
 
+            this.Property(t => t.PrivateLabelAgentName).HasMaxLength(70).IsUnicode(false);
+
             // Table & Column Mappings
             this.ToTable("Shipments");
             this.Property(t => t.Id).HasColumnName("Id");
@@ -812,6 +814,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.DestinationWarehouseId).HasColumnName("DestinationWarehouseId");
             this.Property(t => t.OperationalStatusId).HasColumnName("OperationalStatusId");
             this.Property(t => t.HasUnassignedData).HasColumnName("HasUnassignedData");
+            this.Property(t => t.PrivateLabelAgentName).HasColumnName("PrivateLabelAgentName");
 
             if (dbms == "oracle")
             {

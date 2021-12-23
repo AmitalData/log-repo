@@ -711,15 +711,15 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
 
     private DisplayAgentColumn() {
         this.columns.push({
-            FieldName: 'Agent',
+            FieldName: 'PrivateLabelAgentName',
             DataTypeCode: 'String',
             Display: 'Agent',
             Styles: { width: '150px' },
             IsCustomTemplate: true,
             ServerSideSortable: true,
-            SortByName: "Agent"
+            SortByName: "PrivateLabelAgentName"
         });
-        this.QueryColumns.push(this.GetQueryColumn("Agent", 'Text', 'Agent'));
+        this.QueryColumns.push(this.GetQueryColumn("PrivateLabelAgentName", 'Text', 'Agent'));
         this.HoverTemplateIndex = this.HoverTemplateIndex + 1;
     }
 

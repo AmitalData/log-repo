@@ -2801,6 +2801,8 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public List<TraceEventPM> EventList { get; set; }
         public List<TraceEventPM> AddManualEvents { get; set; }
         public string ShippingAgent { get; set; }
+        public string PrivateLabelAgentName { get; set; }
+
     }
 
     public class TransshipmentLeg
