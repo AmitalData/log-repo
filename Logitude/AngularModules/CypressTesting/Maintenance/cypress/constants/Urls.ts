@@ -27,7 +27,8 @@ export class Urls {
     public static readonly PutQuoteTemplateDetailsFields = "**/PutQuoteTemplateDetailsFields";
 
     public static readonly AccountingSettings = "**/accountingsettings"
-
+    public static readonly Signature ="**/PutSaveDocumentTypeTemplate"
+    
     public static readonly Tenants = "**/tenants"
     public static readonly PostChangePassword = '**/PostChangeUserPassword'
 

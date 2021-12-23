@@ -40,7 +40,7 @@ import { SpecialServicesTypeDetails } from "../models/SpecialServicesTypeDetails
 import { MoveTypeDetails } from "../models/MoveTypeDetails";
 import { ShipmentSubTypeDetails } from "../models/ShipmentSubTypeDetails";
 import { CreditCardTypeDetails } from "../models/CreditCardTypeDetails";
-
+import {SignatureDetails} from "../models/SignatureDetails";
 
 //#region variables
 let CityCode = null;
@@ -840,6 +840,77 @@ export function AssertVoidInvoiceMessage(Message: string) {
 }
 //#endregion
 
+//#region Signature
+export function AddDataFields(signatureDetails: SignatureDetails) {
+
+    if (signatureDetails.Date.toUpperCase() == Constants.Add) {
+        AddDataField(MaintenanceSelectors.SignatureDate)
+    }
+    if (signatureDetails.User.toUpperCase() == Constants.Add) {
+        AddDataField(MaintenanceSelectors.SignatureUser)
+    }
+    if (signatureDetails.Logo) {
+        AddDataField(MaintenanceSelectors.SignatureLogo)
+    }
+    if (signatureDetails.SmallLogo) {
+        AddDataField(MaintenanceSelectors.SignatureSmallLogo)
+    }
+    if (signatureDetails.WideLogo) {
+        AddDataField(MaintenanceSelectors.SignatureWideLogo)
+    }
+    if (signatureDetails.LocalCurrency) {
+        AddDataField(MaintenanceSelectors.SignatureLocalCurrency)
+    }
+    if (signatureDetails.Company) {
+        AddDataField(MaintenanceSelectors.SignatureCompany)
+    }
+    if (signatureDetails.Email) {
+        AddDataField(MaintenanceSelectors.SignatureEmail)
+    }
+    if (signatureDetails.Website) {
+        AddDataField(MaintenanceSelectors.SignatureWebsite)
+    }
+    if (signatureDetails.IATA) {
+        AddDataField(MaintenanceSelectors.SignatureIATA)
+    }
+    if (signatureDetails.VATNo) {
+        AddDataField(MaintenanceSelectors.SignatureVATNo)
+    }
+    if (signatureDetails.AddressID) {
+        AddDataField(MaintenanceSelectors.SignatureAddressID)
+    }
+    if (signatureDetails.SupporteMail) {
+        AddDataField(MaintenanceSelectors.SignatureSupporte_mail)
+    }
+    if (signatureDetails.UserSignatureImage) {
+        AddDataField(MaintenanceSelectors.SignatureUserSignatureImage)
+    }
+
+}
+function AddDataField(dataField: string){
+    
+    cy.Click(BaseSelectors.Button, BaseSelectors.ContainAddDataField)
+    cy.contains(dataField).click()
+    cy.get(BaseSelectors.OkButton).click()
+}
+export function UpdateSignature() {
+    DefinePutUpdateSignaturesRequest();
+    cy.Click(BaseSelectors.RedButton, BaseSelectors.ContainSave);
+}
+
+function DefinePutUpdateSignaturesRequest() {
+    cy.DefineRequestWait(RestAPI.PUT, Urls.Signature, RequestAliases.Signature);
+}
+export function AssertUpdateSignature() {
+    AssertPutUpdateSignature();
+}
+
+function AssertPutUpdateSignature() {
+    BaseAssertion.AssertStatusCode(RequestAliases.Signature, 200).then((interception) => {
+        cy.log("Updated")
+    });
+}
+//#endregion
 //#region Customer Settings
 export function FillCustomerSettingsDetails(customerSettingsDetails: CustomerSettingsDetails) {
     FillCheckBoxProcess(MaintenanceSelectors.IsCustomerTelephoneRequiredCheckBox, customerSettingsDetails.IsCustomerTelphoneRequired)

@@ -30,7 +30,7 @@ export class MaintenanceSelectors extends RegexSelectors {
    public static readonly MaintenanceItemBranch = "#MaintenanceItemMTBR"
    public static readonly MaintenanceItemShipperAndConsignee = "#MaintenanceItemMTCL"
    public static readonly MaintenanceItemSystemDefaults = "#MaintenanceItemCODE"
-
+   public static readonly MaintenanceItemSignature="#MaintenanceItemSIGN"
    //#endregion
 
    public static readonly GeneralEditScreen = ".MediaFillAbsolute .CurvedEditArea";
@@ -302,4 +302,24 @@ export class MaintenanceSelectors extends RegexSelectors {
    public static readonly CustomerGeneralTab = "#CustomerTHGeneral"
    public static readonly CustomerSaveButton = "#Customer-Save"
    //#endregion
+
+   //#region  Signature
+   public static readonly SignatureDate="Date"
+   public static readonly SignatureUser="User"
+   public static readonly SignatureSignature="Signature"
+   public static readonly SignatureLogo="Logo"
+   public static readonly SignatureSmallLogo="Small Logo"
+   public static readonly SignatureWideLogo="Wide Logo"
+   public static readonly SignatureLocalCurrency="Local Currency"
+   public static readonly SignatureCompany="Company"
+   public static readonly SignatureEmail="Email"
+   public static readonly SignatureWebsite="Website"
+   public static readonly SignatureIATA="IATA"
+   public static readonly SignatureVATNo="VAT No."
+   public static readonly SignatureAddressID="Address ID"
+   public static readonly SignatureContact="Contact"
+   public static readonly SignatureSupporte_mail="Support e-mail"
+   public static readonly SignatureUserSignatureImage="User Signature Image"
+   //#endregion
+   
 }
