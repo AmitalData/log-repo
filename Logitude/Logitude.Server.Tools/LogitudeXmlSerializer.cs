@@ -90,11 +90,11 @@ namespace Logitude.Server.Tools
             return doc.InnerXml;
         }
 
-        public static string SerializeObjectToUTF8XmlString<T>(T myObject)
+        public static string SerializeObjectToUTF8XmlString<T>(T myObject, bool useObjectGetType = false)
         {
 
             MemoryStream memstream = new MemoryStream();
-            XmlSerializer serilaizer = new XmlSerializer(typeof(T));
+            XmlSerializer serilaizer = new XmlSerializer(useObjectGetType ? myObject.GetType() : typeof(T));
             var streamWriter = new StreamWriter(memstream, System.Text.Encoding.UTF8);
             serilaizer.Serialize(streamWriter, myObject);
             byte[] utf8EncodedXml = memstream.ToArray();

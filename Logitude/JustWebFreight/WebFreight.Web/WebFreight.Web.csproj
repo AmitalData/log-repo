@@ -1065,7 +1065,8 @@
     <Compile Include="Controllers\ShipmentsModel\ApiHelpers\ContainerAPiHelper.cs" />
     <Compile Include="Controllers\ShipmentsModel\Extended\LogboxShipmentExportExcelController.cs" />
     <Compile Include="Controllers\ShipmentsModel\Extended\ShipmentCargoTrackingController.cs" />
-    <Compile Include="Controllers\ShipmentsModel\ForwarderExportShipmentsController.cs" />
+    <Compile Include="Controllers\ShipmentsModel\ForwarderOExportShipmentsController.cs" />
+    <Compile Include="Controllers\ShipmentsModel\ForwarderAExportShipmentsController.cs" />
     <Compile Include="Controllers\ShipmentsModel\Generated\ListControllers\AccountingInformationIdentifierViewsController.Generated.cs" />
     <Compile Include="Controllers\ShipmentsModel\DocumentApprovalController.cs" />
     <Compile Include="Controllers\ShipmentsModel\Generated\ListControllers\ContainerViewsController.Generated.cs" />
