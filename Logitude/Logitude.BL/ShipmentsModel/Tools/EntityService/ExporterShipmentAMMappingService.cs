@@ -116,7 +116,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         private List<Packages> GetShipmentPackages()
         {
             List<Packages> shipmentPMPackages = new List<Packages>();
-            foreach (var shipmentPMPackage in shipmentPMPackages)
+            foreach (var shipmentPMPackage in shipmentPM.ShipmentOrderPackages)
             {
                 shipmentPMPackages.Add(new Packages
                 {
