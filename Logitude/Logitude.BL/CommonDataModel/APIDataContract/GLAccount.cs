@@ -109,8 +109,8 @@ namespace Logitude.BL.CommonDataModel.APIDataContract
                     },
                  ReconcileMethod = new ReconcileMethod {
                  Code = a.ReconcileMethod.Code,
-                 EnglishName = a.EnglishName,
-                 LocalName = a.LocalName,
+                 EnglishName = a.ReconcileMethod.EnglishName,
+                 LocalName = a.ReconcileMethod.LocalName,
                  },
 
              }).FirstOrDefault();
