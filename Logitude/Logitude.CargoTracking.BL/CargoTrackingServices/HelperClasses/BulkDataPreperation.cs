@@ -28,5 +28,6 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.HelperClasses
 
         // first key = tenant , second key = milestone code , value = milestone code
         public Dictionary<int, Dictionary<string, string>> MilestonesNotPermitted { get; internal set; }
+        public List<int> AllTenantIds { get; internal set; }
     }
 }

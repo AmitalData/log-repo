@@ -355,6 +355,41 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.ServicesHelpe
 
             return dropTableCommand;
         }
+
+        public static List<int> GetAllTenants(string connectionString)
+        {
+
+            SqlConnection connection = new SqlConnection(connectionString);
+            SqlCommand getAllTenantsCommand = new SqlCommand(
+               "select id from Tenants", connection);
+            try
+            {
+                getAllTenantsCommand.CommandTimeout = (int)TimeOut;
+                connection.Open();
+                var result = ExecuteGetAllTenantsCommand(getAllTenantsCommand);
+                connection.Close();
+                return result;
+            }
+            catch (Exception ex)
+            {
+                connection.Close();
+                throw ex;
+            }
+        }
+
+        private static List<int> ExecuteGetAllTenantsCommand(SqlCommand getAllTenantsCommand)
+        {
+            var tenantsIds = new List<int>();
+            using (SqlDataReader reader = getAllTenantsCommand.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    tenantsIds.Add(int.Parse(reader["Id"].ToString()));
+                }
+
+            }
+            return tenantsIds;
+        }
     }
 
 
