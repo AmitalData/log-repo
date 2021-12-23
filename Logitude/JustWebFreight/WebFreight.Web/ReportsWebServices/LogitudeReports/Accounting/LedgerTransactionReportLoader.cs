@@ -242,7 +242,6 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             {
                 ReportLedgerTransaction reportTransaction = GetReportNewLedgerTransaction(transaction);
                 FillReportTransactionGLAccountFields(transactionsAccounts, reportTransaction);
-
                 transactionsDataProvider.Transactions.Add(reportTransaction);
             }
 
@@ -307,6 +306,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
 
                 Source = transaction.Source,
                 JournalNumber = transaction.JournalNumber,
+                JournalCreatedByUser = transaction.JournalCreatedByUser,
                 TenantCurrencySign = GetTenantPM().CurrencySign,
 
                 OppositeAccountDisplayNumber = transaction.OppositeAccountDisplayNumber,
