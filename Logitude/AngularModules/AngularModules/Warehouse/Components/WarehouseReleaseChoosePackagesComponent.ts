@@ -45,7 +45,7 @@ export class WarehouseReleaseChoosePackagesComponent extends BaseComponent imple
     IsFromFullWarehouseReleaseComponent: boolean = false;
     IsCFSWarehouse : boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
-    OldCustomerId: string;
+    OldCustomerId: string; 
     constructor(private warehouseEntryPackagePMExtendedService: WarehouseEntryPackagePMExtendedService) {
         super();
     }
