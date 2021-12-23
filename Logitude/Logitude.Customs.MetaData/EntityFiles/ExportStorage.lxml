@@ -1994,10 +1994,67 @@
     ObjectTableName="&quot;Customs.ExportStorage&quot;"
     IsReadOnly="true"
     IsHeaderScreen="true"
-    NumberOfColumns="2"
-    NumberOfRows="1">
-    <ScreenFields />
+    NumberOfColumns="3"
+    NumberOfRows="2">
+    <ScreenFields>
+      <ScreenField
+        Column="0"
+        Row="0"
+        ObjectFieldName="&quot;DeclarationId&quot;"
+        ScreenName="Customs.ExportStorageHeaderScreen" />
+      <ScreenField
+        Column="0"
+        Row="1"
+        ObjectFieldName="&quot;ExportFileNo&quot;"
+        ScreenName="Customs.ExportStorageHeaderScreen" />
+      <ScreenField
+        Column="1"
+        Row="0"
+        ObjectFieldName="&quot;OpenDate&quot;"
+        ScreenName="Customs.ExportStorageHeaderScreen" />
+      <ScreenField
+        Column="1"
+        Row="1"
+        ObjectFieldName="&quot;ShipName&quot;"
+        ScreenName="Customs.ExportStorageHeaderScreen" />
+      <ScreenField
+        Column="2"
+        Row="0"
+        ObjectFieldName="&quot;CustomsStatus&quot;"
+        ScreenName="Customs.ExportStorageHeaderScreen" />
+      <ScreenField
+        Column="2"
+        Row="1"
+        ObjectFieldName="&quot;DeclarationStatusTypeName&quot;"
+        ScreenName="Customs.ExportStorageHeaderScreen" />
+    </ScreenFields>
   </Screen>
+  <Tab
+    TabName="&quot;General&quot;"
+    TabLocalName="&quot;כללי&quot;"
+    ObjectTableName="&quot;Customs.ExportStorage&quot;"
+    Code="&quot;STGN&quot;"
+    ControlPath="&quot;Logitude.Customs.Views.ExportStorage.ExportStorageGeneralTabComponent&quot;"
+    TextCode="&quot;Customs.ExportStorage.TH.General&quot;"
+    IsPackagable="true"
+    IndexOrder="0"
+    HtmlComponentURL="&quot;./CustomsModules/CustomsExportStorage/components/edit/ExportStorageGeneralTabComponent/ExportStorageGeneralTabComponent&quot;"
+    HtmlComponentName="&quot;ExportStorageGeneralTabComponent&quot;"
+    IsSpellChecked="false"
+    HasGeneralFeature="false" />
+  <Tab
+    TabName="&quot;Request Sheets&quot;"
+    TabLocalName="&quot;גיליון בקשה&quot;"
+    ObjectTableName="&quot;Customs.ExportStorage&quot;"
+    Code="&quot;ESRS&quot;"
+    ControlPath="&quot; &quot;"
+    TextCode="&quot;Customs.ExportStorage.TH.RequestSheets&quot;"
+    IsPackagable="false"
+    IndexOrder="1"
+    HtmlComponentURL="&quot;./CustomsModules/CustomsControls/Components/CustomsRequestsSheetsComponent&quot;"
+    HtmlComponentName="&quot;RequestSheetTabComponent&quot;"
+    IsSpellChecked="false"
+    HasGeneralFeature="false" />
   <EventTypes>
     <EventType
       Code="&quot;CREV&quot;"

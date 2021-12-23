@@ -41,7 +41,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                    on en.ShipCode equals customsShip.Code
 
                                                    join cargoIdentifireType in context.CargoIdentifireTypes.Select(r=> new{ r.Code, r.LocalName})
-                                                   on en.CargoType equals cargoIdentifireType.Code
+                                                   on en.CargoTypeCode equals cargoIdentifireType.Code
 
                                                    select new ExportStorageList()
                                                    {
