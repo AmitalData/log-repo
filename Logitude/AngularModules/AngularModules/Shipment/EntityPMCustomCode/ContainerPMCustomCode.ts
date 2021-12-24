@@ -33,11 +33,7 @@ export class ContainerPMCustomCode {
 
         this.ManageContainerVesselLegs(propertyName, entityPM);
     }
-    static ManageContainerVesselLegs(propertyName: string, entityPM: ContainerPM) {
-        for (let vesselLegIndex = 1; i <= 5; i++) {
-            this.HandleVesselLegName(propertyName, vesselLegIndex, entityPM);
-        }
-    }
+   
     private static GetTerminalAddress(terminalAddressId: string , entityPM: ContainerPM) {
         var addressService = new AddressListService();
         if (terminalAddressId != null)
@@ -68,7 +64,11 @@ export class ContainerPMCustomCode {
         }
  
     }
-
+    static ManageContainerVesselLegs(propertyName: string, entityPM: ContainerPM) {
+        for (let vesselLegIndex = 1; vesselLegIndex <= 5; vesselLegIndex++) {
+            this.HandleVesselLegName(propertyName, vesselLegIndex, entityPM);
+        }
+    }
     static HandleVesselLegName(propertyName: string, index: number, entityPM: ContainerPM) {
         var legId = "Leg" + index + "VesselId";
         var legName = "Leg" + index + "Vessel";
