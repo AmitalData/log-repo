@@ -3609,6 +3609,7 @@ namespace WebFreight.Web.ReportsWebServices
             ARInvoiceQuery arInvoiceQuery = new ARInvoiceQuery(aRInvoiceRepository);
             APPaymentQuery aPPaymentQuery = new APPaymentQuery(aPPaymentRepository);
             APInvoiceQuery aPInvoiceQuery = new APInvoiceQuery(aPInvoiceRepository);
+            ShipmentRepository shipmentRepository = new ShipmentRepository(tenant);
 
             IQueryable<ARInvoiceList> iQueryableARInvoice = arInvoiceQuery.GetUnpaidARInvoices(tenant);
             IQueryable<ARPaymentList> iQueryableARPayment = arPaymentQuery.GetOpenedARPayments(tenant);
@@ -3616,6 +3617,9 @@ namespace WebFreight.Web.ReportsWebServices
             IQueryable<APInvoiceList> iQueryableAPInvoice = aPInvoiceQuery.GetUnpaidAPInvoices(tenant);
 
             iQueryableARInvoice = iQueryableARInvoice.Where(d => !d.IsConstituentInvoice);
+            List<string> shipmentsIds = iQueryableARInvoice.Select(s => s.MainEntityId).Concat(iQueryableAPInvoice.Select(s => s.MainEntityId)).ToList();
+            shipmentsIds = shipmentsIds.Distinct().ToList();
+            IQueryable<Shipment> shipments = shipmentRepository.GetShipmentsForCrossDock(shipmentsIds, tenant);
 
             #region Report Filters
             MemoryStream memorystream = new MemoryStream(xmlFilters);
@@ -3704,6 +3708,7 @@ namespace WebFreight.Web.ReportsWebServices
                     statementRecord = new StatementByInvoiceDateDataProvider.StatementByInvoiceRecord();
 
                     Card billTo = cardRepository.GetSingleCard(a.BillToId, tenant);
+                    Shipment shipment = shipments.Where(d => d.Id == a.MainEntityId).FirstOrDefault();
 
                     statementRecord.InvoiceCurrency = a.InvoiceCurrencyCode;
                     statementRecord.ShipmentNumber = a.MainEntityReference;
@@ -3786,9 +3791,12 @@ namespace WebFreight.Web.ReportsWebServices
                     {
                         statementRecord.PastAmountOver_120 = a.AmountDue;
                     }
-                    /////////////////////////////////
 
-                   
+                    if (shipment != null)
+                    {
+                        statementRecord.ShipperRef1 = shipment.ShipperReference1;
+                        statementRecord.ShipperRef2 = shipment.ShipperReference2;
+                    }
 
                     totalData.RecordList.Add(statementRecord);
                 }
@@ -3806,6 +3814,7 @@ namespace WebFreight.Web.ReportsWebServices
                     statementRecord = new StatementByInvoiceDateDataProvider.StatementByInvoiceRecord();
 
                     Card vendor = cardRepository.GetSingleCard(a.VendorId, tenant);
+                    Shipment shipment = shipments.Where(d => d.Id == a.MainEntityId).FirstOrDefault();
 
                     statementRecord.InvoiceCurrency = a.InvoiceCurrencyCode;
                     statementRecord.ShipmentNumber = a.MainEntityReference;
@@ -3865,7 +3874,6 @@ namespace WebFreight.Web.ReportsWebServices
                         statementRecord.PastAmountOver_90 = a.AmountDue * -1;
                     }
 
-
                     //////////////////////////////////////////////
                      if (((todayDate - a.DueDate.Value).TotalDays >= 1) && ((todayDate - a.DueDate.Value).TotalDays <= 15))
                     {
@@ -3892,7 +3900,12 @@ namespace WebFreight.Web.ReportsWebServices
                         statementRecord.PastAmountOver_120 = a.AmountDue * -1;
                     }
 
-                    /////////////////////////////////////////////
+                    if (shipment != null)
+                    {
+                        statementRecord.ShipperRef1 = shipment.ShipperReference1;
+                        statementRecord.ShipperRef2 = shipment.ShipperReference2;
+                    }
+                    
                     totalData.RecordList.Add(statementRecord);
                 }
             }
