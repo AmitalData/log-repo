@@ -436,6 +436,11 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                 loggedUser = userQuery.GetSinglePMByEmail(AuthenticationUtil.AuthenticatedUserEmail, 0);
             }
 
+            if(loggedUser == null)
+            {
+                loggedUser = userQuery.GetSinglePMByEmail(AuthenticationUtil.AuthenticatedUserEmail, 0);
+            }
+
             return loggedUser;
         }
 
