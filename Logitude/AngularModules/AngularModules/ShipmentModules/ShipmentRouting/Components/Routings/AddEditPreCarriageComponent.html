@@ -109,19 +109,25 @@
                                 </td>
                             </tr>
 
-                            <!-- PreCarriageVesselId -->
+                            <!-- PreCarriageVesselName -->
                             <tr class="FormFieldRow">
                                 <td>
-                                    <LogLabel [ObjectFieldName]="'PreCarriageVesselId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="'Shipment.O.Routings.Vessel'"></LogLabel>
+                                    <LogLabel [ObjectFieldName]="'PreCarriageVesselName'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="'Shipment.O.Routings.Vessel'"></LogLabel>
                                 </td>
 
                                 <td>
-                                    <LogLov [ObjectFieldName]="'PreCarriageVesselId'"
-                                            [SelectedValue]="PreCarriageVesselId"
-                                            [ObjectTableName]="ObjectTableName"
-                                            [DataContext]="DataContext"
-                                            [LookUpTableName]="'Vessel'">
-                                    </LogLov>
+                                    <table>
+                                        <tr>
+                                            <td>
+                                                <LogTextBox [HideColumns]="true" [ObjectFieldName]="'PreCarriageVesselName'" [Text]="PreCarriageVesselName" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                            </td>
+                                            <td style="width: 20px; padding-left: 4px;">
+                                                <span *ngIf="IsChooseVesselVisible" class="hyperlink" [class.HyperlinkDisabled]="!IsEditingEnabled" (click)="ChooseVesselClicked('P')">
+                                                    <img style="vertical-align: middle; width: 14px; height: 14px; cursor: pointer;" src="./Images/LOVSearch.png" />
+                                                </span>
+                                            </td>
+                                        </tr>
+                                    </table>
                                 </td>
                             </tr>
 
@@ -350,19 +356,25 @@
                                 </td>
                             </tr>
 
-                            <!-- PreForwardingVesselId -->
+                            <!-- PreForwardingVesselName -->
                             <tr class="FormFieldRow">
                                 <td>
-                                    <LogLabel [ObjectFieldName]="'PreForwardingVesselId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="'Shipment.O.Routings.Vessel'"></LogLabel>
+                                    <LogLabel [ObjectFieldName]="'PreForwardingVesselName'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="'Shipment.O.Routings.Vessel'"></LogLabel>
                                 </td>
 
                                 <td>
-                                    <LogLov [ObjectFieldName]="'PreForwardingVesselId'"
-                                            [SelectedValue]="PreForwardingVesselId"
-                                            [ObjectTableName]="ObjectTableName"
-                                            [DataContext]="DataContext"
-                                            [LookUpTableName]="'Vessel'">
-                                    </LogLov>
+                                    <table>
+                                        <tr>
+                                            <td>
+                                                <LogTextBox [HideColumns]="true" [ObjectFieldName]="'PreForwardingVesselName'" [Text]="PreForwardingVesselName" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                            </td>
+                                            <td style="width: 20px; padding-left: 4px;" *ngIf="IsChooseVesselVisible">
+                                                <span class="hyperlink" [class.HyperlinkDisabled]="!IsEditingEnabled" (click)="ChooseVesselClicked('F')">
+                                                    <img style="vertical-align: middle; width: 14px; height: 14px; cursor: pointer;" src="./Images/LOVSearch.png" />
+                                                </span>
+                                            </td>
+                                        </tr>
+                                    </table>
                                 </td>
                             </tr>
 

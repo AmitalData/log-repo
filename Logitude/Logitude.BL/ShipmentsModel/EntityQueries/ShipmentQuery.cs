@@ -456,45 +456,13 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     }
 
                     shipmentPM.MainCarriageVesselId = masterData.MainCarriageVesselId;
+                    shipmentPM.MainCarriageVesselName = masterData.MainCarriageVesselName;
                     shipmentPM.Transshipment1VesselId = masterData.Transshipment1VesselId;
+                    shipmentPM.Transshipment1VesselName = masterData.Transshipment1VesselName;
                     shipmentPM.Transshipment2VesselId = masterData.Transshipment2VesselId;
+                    shipmentPM.Transshipment2VesselName = masterData.Transshipment2VesselName;
                     shipmentPM.Transshipment3VesselId = masterData.Transshipment3VesselId;
-
-                    if (!string.IsNullOrEmpty(shipmentPM.MainCarriageVesselId))
-                    {
-                        Vessel vesselEntity = vesselRep.GetSingleVessel(masterData.MainCarriageVesselId, masterData.Tenant);
-                        if (vesselEntity != null)
-                        {
-                            shipmentPM.MainCarriageVesselName = vesselEntity.EnglishName;
-                        }
-                    }
-
-                    if (!string.IsNullOrEmpty(shipmentPM.Transshipment1VesselId))
-                    {
-                        Vessel vesselEntity = vesselRep.GetSingleVessel(masterData.Transshipment1VesselId, masterData.Tenant);
-                        if (vesselEntity != null)
-                        {
-                            shipmentPM.Transshipment1VesselName = vesselEntity.EnglishName;
-                        }
-                    }
-
-                    if (!string.IsNullOrEmpty(shipmentPM.Transshipment2VesselId))
-                    {
-                        Vessel vesselEntity = vesselRep.GetSingleVessel(masterData.Transshipment2VesselId, masterData.Tenant);
-                        if (vesselEntity != null)
-                        {
-                            shipmentPM.Transshipment2VesselName = vesselEntity.EnglishName;
-                        }
-                    }
-
-                    if (!string.IsNullOrEmpty(shipmentPM.Transshipment3VesselId))
-                    {
-                        Vessel vesselEntity = vesselRep.GetSingleVessel(masterData.Transshipment3VesselId, masterData.Tenant);
-                        if (vesselEntity != null)
-                        {
-                            shipmentPM.Transshipment3VesselName = vesselEntity.EnglishName;
-                        }
-                    }
+                    shipmentPM.Transshipment3VesselName = masterData.Transshipment3VesselName;
 
                     #region Transshipment 1
                     shipmentPM.Transshipment1ATA = masterData.Transshipment1ATA;
@@ -684,6 +652,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     shipmentPM.PreCarriageETD = masterData.PreCarriageETD;
                     shipmentPM.PreCarriageTransportModeId = masterData.PreCarriageTransportModeId;
                     shipmentPM.PreCarriageVesselId = masterData.PreCarriageVesselId;
+                    shipmentPM.PreCarriageVesselName = masterData.PreCarriageVesselName;
 
                     if (precarriageFromPort != null)
                     {
@@ -709,15 +678,6 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                             shipmentPM.PreCarriageCarrierCode = cardObject.Code;
                             shipmentPM.PreCarriageCarrierName = cardObject.EnglishName;
                             shipmentPM.PreCarriageCarrierWebSite = cardObject.Website;
-                        }
-                    }
-
-                    if (!string.IsNullOrEmpty(masterData.PreCarriageVesselId))
-                    {
-                        Vessel vesselEntity = vesselRep.GetSingleVessel(masterData.PreCarriageVesselId, masterData.Tenant);
-                        if (vesselEntity != null)
-                        {
-                            shipmentPM.PreCarriageVesselName = vesselEntity.EnglishName;
                         }
                     }
                     #endregion
@@ -755,6 +715,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     shipmentPM.OnCarriageETD = masterData.OnCarriageETD;
                     shipmentPM.OnCarriageTransportModeId = masterData.OnCarriageTransportModeId;
                     shipmentPM.OnCarriageVesselId = masterData.OnCarriageVesselId;
+                    shipmentPM.OnCarriageVesselName = masterData.OnCarriageVesselName;
 
                     if (oncarriageFromPort != null)
                     {
@@ -782,16 +743,6 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                             shipmentPM.OnCarriageCarrierWebSite = cardObject.Website;
                         }
                     }
-
-                    if (!string.IsNullOrEmpty(masterData.OnCarriageVesselId))
-                    {
-                        Vessel vesselEntity = vesselRep.GetSingleVessel(masterData.OnCarriageVesselId, masterData.Tenant);
-                        if (vesselEntity != null)
-                        {
-                            shipmentPM.OnCarriageVesselName = vesselEntity.EnglishName;
-                        }
-                    }
-
                     #endregion
 
                     shipmentPM.MainCarriageCarrierPrefix = masterData.MainCarriageCarrierPrefix;
@@ -1663,6 +1614,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.PreForwardingETD = shipment.PreForwardingETD;
             shipmentPM.PreForwardingTransportModeId = shipment.PreForwardingTransportModeId;
             shipmentPM.PreForwardingVesselId = shipment.PreForwardingVesselId;
+            shipmentPM.PreForwardingVesselName = shipment.PreForwardingVesselName;
 
             if (preForwardingFromPort != null)
             {
@@ -1688,15 +1640,6 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     shipmentPM.PreForwardingCarrierCode = cardObject.Code;
                     shipmentPM.PreForwardingCarrierName = cardObject.EnglishName;
                     shipmentPM.PreForwardingCarrierWebSite = cardObject.Website;
-                }
-            }
-
-            if (!string.IsNullOrEmpty(shipment.PreForwardingVesselId))
-            {
-                Vessel vesselEntity = vesselRep.GetSingleVessel(shipment.PreForwardingVesselId, shipment.Tenant);
-                if (vesselEntity != null)
-                {
-                    shipmentPM.PreForwardingVesselName = vesselEntity.EnglishName;
                 }
             }
             #endregion
@@ -1732,6 +1675,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.OnForwardingETD = shipment.OnForwardingETD;
             shipmentPM.OnForwardingTransportModeId = shipment.OnForwardingTransportModeId;
             shipmentPM.OnForwardingVesselId = shipment.OnForwardingVesselId;
+            shipmentPM.OnForwardingVesselName = shipment.OnForwardingVesselName;
 
             if (onForwardingFromPort != null)
             {
@@ -1757,15 +1701,6 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     shipmentPM.OnForwardingCarrierCode = cardObject.Code;
                     shipmentPM.OnForwardingCarrierName = cardObject.EnglishName;
                     shipmentPM.OnForwardingCarrierWebSite = cardObject.Website;
-                }
-            }
-
-            if (!string.IsNullOrEmpty(shipment.OnForwardingVesselId))
-            {
-                Vessel vesselEntity = vesselRep.GetSingleVessel(shipment.OnForwardingVesselId, shipment.Tenant);
-                if (vesselEntity != null)
-                {
-                    shipmentPM.OnForwardingVesselName = vesselEntity.EnglishName;
                 }
             }
             #endregion
@@ -3102,43 +3037,11 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     shipmentPM.Transshipment1VesselId = masterData.Transshipment1VesselId;
                     shipmentPM.Transshipment2VesselId = masterData.Transshipment2VesselId;
                     shipmentPM.Transshipment3VesselId = masterData.Transshipment3VesselId;
+                    shipmentPM.MainCarriageVesselName = masterData.MainCarriageVesselName;
+                    shipmentPM.Transshipment1VesselName = masterData.Transshipment1VesselName;
+                    shipmentPM.Transshipment2VesselName = masterData.Transshipment2VesselName;
+                    shipmentPM.Transshipment3VesselName = masterData.Transshipment3VesselName;
 
-                    if (!string.IsNullOrEmpty(shipmentPM.MainCarriageVesselId))
-                    {
-                        Vessel vesselEntity = vesselRep.GetSingleVessel(masterData.MainCarriageVesselId, masterData.Tenant);
-                        if (vesselEntity != null)
-                        {
-                            shipmentPM.MainCarriageVesselName = vesselEntity.EnglishName;
-                        }
-                    }
-
-
-                    if (!string.IsNullOrEmpty(shipmentPM.Transshipment1VesselId))
-                    {
-                        Vessel vesselEntity = vesselRep.GetSingleVessel(masterData.Transshipment1VesselId, masterData.Tenant);
-                        if (vesselEntity != null)
-                        {
-                            shipmentPM.Transshipment1VesselName = vesselEntity.EnglishName;
-                        }
-                    }
-
-                    if (!string.IsNullOrEmpty(shipmentPM.Transshipment2VesselId))
-                    {
-                        Vessel vesselEntity = vesselRep.GetSingleVessel(masterData.Transshipment2VesselId, masterData.Tenant);
-                        if (vesselEntity != null)
-                        {
-                            shipmentPM.Transshipment2VesselName = vesselEntity.EnglishName;
-                        }
-                    }
-
-                    if (!string.IsNullOrEmpty(shipmentPM.Transshipment3VesselId))
-                    {
-                        Vessel vesselEntity = vesselRep.GetSingleVessel(masterData.Transshipment3VesselId, masterData.Tenant);
-                        if (vesselEntity != null)
-                        {
-                            shipmentPM.Transshipment3VesselName = vesselEntity.EnglishName;
-                        }
-                    }
 
                     if (!string.IsNullOrEmpty(shipmentPM.Transshipment1FromPortId))
                     {
@@ -3285,6 +3188,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     shipmentPM.PreCarriageETD = masterData.PreCarriageETD;
                     shipmentPM.PreCarriageTransportModeId = masterData.PreCarriageTransportModeId;
                     shipmentPM.PreCarriageVesselId = masterData.PreCarriageVesselId;
+                    shipmentPM.PreCarriageVesselName = masterData.PreCarriageVesselName;
 
                     if (precarriageFromPort != null)
                     {
@@ -3310,15 +3214,6 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                             shipmentPM.PreCarriageCarrierCode = cardObject.Code;
                             shipmentPM.PreCarriageCarrierName = cardObject.EnglishName;
                             shipmentPM.PreCarriageCarrierWebSite = cardObject.Website;
-                        }
-                    }
-
-                    if (!string.IsNullOrEmpty(masterData.PreCarriageVesselId))
-                    {
-                        Vessel vesselEntity = vesselRep.GetSingleVessel(masterData.PreCarriageVesselId, masterData.Tenant);
-                        if (vesselEntity != null)
-                        {
-                            shipmentPM.PreCarriageVesselName = vesselEntity.EnglishName;
                         }
                     }
                     #endregion
@@ -3354,6 +3249,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     shipmentPM.OnCarriageETD = masterData.OnCarriageETD;
                     shipmentPM.OnCarriageTransportModeId = masterData.OnCarriageTransportModeId;
                     shipmentPM.OnCarriageVesselId = masterData.OnCarriageVesselId;
+                    shipmentPM.OnCarriageVesselName = masterData.OnCarriageVesselName;
 
                     if (oncarriageFromPort != null)
                     {
@@ -3381,16 +3277,6 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                             shipmentPM.OnCarriageCarrierWebSite = cardObject.Website;
                         }
                     }
-
-                    if (!string.IsNullOrEmpty(masterData.OnCarriageVesselId))
-                    {
-                        Vessel vesselEntity = vesselRep.GetSingleVessel(masterData.OnCarriageVesselId, masterData.Tenant);
-                        if (vesselEntity != null)
-                        {
-                            shipmentPM.OnCarriageVesselName = vesselEntity.EnglishName;
-                        }
-                    }
-
                     #endregion
                 }
             }
@@ -3441,6 +3327,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     shipmentPM.PreForwardingETD = shipment.PreForwardingETD;
                     shipmentPM.PreForwardingTransportModeId = shipment.PreForwardingTransportModeId;
                     shipmentPM.PreForwardingVesselId = shipment.PreForwardingVesselId;
+                    shipmentPM.PreForwardingVesselName = shipment.PreForwardingVesselName;
 
                     if (preForwardingFromPort != null)
                     {
@@ -3466,15 +3353,6 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                             shipmentPM.PreForwardingCarrierCode = cardObject.Code;
                             shipmentPM.PreForwardingCarrierName = cardObject.EnglishName;
                             shipmentPM.PreForwardingCarrierWebSite = cardObject.Website;
-                        }
-                    }
-
-                    if (!string.IsNullOrEmpty(shipment.PreForwardingVesselId))
-                    {
-                        Vessel vesselEntity = vesselRep.GetSingleVessel(shipment.PreForwardingVesselId, shipment.Tenant);
-                        if (vesselEntity != null)
-                        {
-                            shipmentPM.PreForwardingVesselName = vesselEntity.EnglishName;
                         }
                     }
                     #endregion
@@ -3510,6 +3388,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     shipmentPM.OnForwardingETD = shipment.OnForwardingETD;
                     shipmentPM.OnForwardingTransportModeId = shipment.OnForwardingTransportModeId;
                     shipmentPM.OnForwardingVesselId = shipment.OnForwardingVesselId;
+                    shipmentPM.OnForwardingVesselName = shipment.OnForwardingVesselName;
 
                     if (onForwardingFromPort != null)
                     {
@@ -3535,15 +3414,6 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                             shipmentPM.OnForwardingCarrierCode = cardObject.Code;
                             shipmentPM.OnForwardingCarrierName = cardObject.EnglishName;
                             shipmentPM.OnForwardingCarrierWebSite = cardObject.Website;
-                        }
-                    }
-
-                    if (!string.IsNullOrEmpty(shipment.OnForwardingVesselId))
-                    {
-                        Vessel vesselEntity = vesselRep.GetSingleVessel(shipment.OnForwardingVesselId, shipment.Tenant);
-                        if (vesselEntity != null)
-                        {
-                            shipmentPM.OnForwardingVesselName = vesselEntity.EnglishName;
                         }
                     }
                     #endregion
