@@ -93,6 +93,12 @@ namespace WebFreight.Web.Helpers
             if (workitem.Fields.GetValueOrDefault("System.WorkItemType").ToString() == "Product Backlog Item" && workitem.Relations != null)
                 return true;
 
+            if (workitem.Fields.GetValueOrDefault("System.WorkItemType").ToString() == "Epic" && workitem.Relations != null)
+                return true;
+
+            if (workitem.Fields.GetValueOrDefault("System.WorkItemType").ToString() == "Feature" && workitem.Relations != null)
+                return true;
+
             return false;
         }
 
@@ -159,17 +165,39 @@ namespace WebFreight.Web.Helpers
         private string GetParentWorkItem(WorkItem workitem)
         {
             string parentId;
-            if (workitem.Fields.GetValueOrDefault("System.WorkItemType").ToString() == "Product Backlog Item")
+
+            if (IsParent(workitem))
             {
                 parentId = workitem.Id.ToString();
             }
             else
             {
-                parentId = workitem.Relations.Where(a=>a.Rel == "System.LinkTypes.Hierarchy-Reverse").FirstOrDefault()?.Url.Split('/').Last();
+                parentId = workitem.Relations.Where(a => a.Rel == "System.LinkTypes.Hierarchy-Reverse").FirstOrDefault()?.Url.Split('/').Last();
             }
 
             return parentId;
         }
+
+        private bool IsParent(WorkItem workitem)
+        {
+            if (workitem.Fields.GetValueOrDefault("System.WorkItemType").ToString() == "Product Backlog Item")
+            {
+                return true;
+            }
+
+            if (workitem.Fields.GetValueOrDefault("System.WorkItemType").ToString() == "Feature")
+            {
+                return true;
+            }
+
+            if (workitem.Fields.GetValueOrDefault("System.WorkItemType").ToString() == "Epic")
+            {
+                return true;
+            }
+
+            return false;
+        }
+
         private bool IsParentWorkItemExist(WorkItem workitem, string parent)
         {
             int parentId;
