@@ -31,19 +31,12 @@ export class ContainerPMCustomCode {
             this.GetTerminalAddress(entityPM.TerminalAddressId, entityPM);
         }
 
-        this.ManageVesselLegs(propertyName, entityPM);
+        this.ManageContainerVesselLegs(propertyName, entityPM);
     }
-    static ManageVesselLegs(propertyName: string, entityPM: ContainerPM) {
-        var vesselLeg1Index = 1;
-        var vesselLeg2Index = 2;
-        var vesselLeg3Index = 3;
-        var vesselLeg4Index = 4;
-        var vesselLeg5Index = 5;
-        this.HandleVesselLeg(propertyName, vesselLeg1Index, entityPM);
-        this.HandleVesselLeg(propertyName, vesselLeg2Index, entityPM);
-        this.HandleVesselLeg(propertyName, vesselLeg3Index, entityPM);
-        this.HandleVesselLeg(propertyName, vesselLeg4Index, entityPM);
-        this.HandleVesselLeg(propertyName, vesselLeg5Index, entityPM);
+    static ManageContainerVesselLegs(propertyName: string, entityPM: ContainerPM) {
+        for (let vesselLegIndex = 1; i <= 5; i++) {
+            this.HandleVesselLegName(propertyName, vesselLegIndex, entityPM);
+        }
     }
     private static GetTerminalAddress(terminalAddressId: string , entityPM: ContainerPM) {
         var addressService = new AddressListService();
@@ -76,7 +69,7 @@ export class ContainerPMCustomCode {
  
     }
 
-    static HandleVesselLeg(propertyName: string, index: number, entityPM: ContainerPM) {
+    static HandleVesselLegName(propertyName: string, index: number, entityPM: ContainerPM) {
         var legId = "Leg" + index + "VesselId";
         var legName = "Leg" + index + "Vessel";
         if (propertyName == legId && entityPM[legId]) {
