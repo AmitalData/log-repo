@@ -31,13 +31,20 @@ export class ContainerPMCustomCode {
             this.GetTerminalAddress(entityPM.TerminalAddressId, entityPM);
         }
 
-        this.HandleVesselLeg(propertyName, 1, entityPM);
-        this.HandleVesselLeg(propertyName, 2, entityPM);
-        this.HandleVesselLeg(propertyName, 3, entityPM);
-        this.HandleVesselLeg(propertyName, 4, entityPM);
-        this.HandleVesselLeg(propertyName, 5, entityPM);
+        this.ManageVesselLegs(propertyName, entityPM);
     }
-
+    static ManageVesselLegs(propertyName: string, entityPM: ContainerPM) {
+        var vesselLeg1Index = 1;
+        var vesselLeg2Index = 2;
+        var vesselLeg3Index = 3;
+        var vesselLeg4Index = 4;
+        var vesselLeg5Index = 5;
+        this.HandleVesselLeg(propertyName, vesselLeg1Index, entityPM);
+        this.HandleVesselLeg(propertyName, vesselLeg2Index, entityPM);
+        this.HandleVesselLeg(propertyName, vesselLeg3Index, entityPM);
+        this.HandleVesselLeg(propertyName, vesselLeg4Index, entityPM);
+        this.HandleVesselLeg(propertyName, vesselLeg5Index, entityPM);
+    }
     private static GetTerminalAddress(terminalAddressId: string , entityPM: ContainerPM) {
         var addressService = new AddressListService();
         if (terminalAddressId != null)
