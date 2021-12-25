@@ -11,7 +11,7 @@ Feature: Create standalone shipment from Delivery
 
     Scenario: Create import ocean FCL shipment
         Given the user logged in and navigates to shipments workspace
-        And a shipment with the following details
+        And a direct shipment with the following details
             | ShipmentLevel        | Direct              |
             | Direction            | Import              |
             | TransportMode        | Ocean               |
@@ -24,13 +24,13 @@ Feature: Create standalone shipment from Delivery
         Then the shipment should create successfully
 
     Scenario: Create standalone shipment when Delivery from partner to port with the same countries
-        Given the user in the shipment's routings tab
+        Given the user open the shipment and navigate to RoutingsTab workspace
         And add a new Delivery leg with the following details
             | FullResponsibility | True                      |
-            | FromName           | Partner                   |
-            | PartnerName        | ALS CUSTOMS SERVICES GMBH |
-            | ToName             | Port                      |
-            | Port               | Brandscheid/Westerwald    |
+            | From               | Partner                   |
+            | FromPartner        | ALS CUSTOMS SERVICES GMBH |
+            | To                 | Port                      |
+            | ToPort             | Brandscheid/Westerwald    |
 
         And save the Delivery
         When create standalone shipment
