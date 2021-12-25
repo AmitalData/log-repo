@@ -129,7 +129,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
 
                     if (entityPM.ShipmentDirectionConverted)
                     {
-                        this.CreateTraceEvent("SDCV", entityPM.EventNote);
+                        this.TraceChangingShipmentDirection();
                     }
 
                     if (entityPM.ConvertFromDirectToHouse)
@@ -702,6 +702,66 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                 EventNotes = "To " + entityPM.OnForwardingToPortName
             });
         }
+        private void TraceChangingShipmentDirection()
+        {
+            this.CreateTraceEvent("SDCV", entityPM.EventNote);
+
+            if (!IsShipmentHaveCustomsClearanceDate())
+            {
+                return;
+            }
+
+            if (IsDirectionChangedFromImportOrDropToExport())
+            {
+                this.DeleteTraceEvent("ICCL");
+                this.CreateTraceEvent("ECCL", entityPM.CustomsClearanceDate);
+            }
+            else if (IsDirectionChangedFromExportToImportOrDrop())
+            {
+                this.DeleteTraceEvent("ECCL");
+                this.CreateTraceEvent("ICCL", entityPM.CustomsClearanceDate);
+            }
+        }
+
+        private bool IsShipmentHaveCustomsClearanceDate()
+        {
+            if (entityPM.CustomsClearanceDate != null)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        private bool IsDirectionChangedFromImportOrDropToExport()
+        {
+            string exportDirectionId = "E", importDirectionId = "I", dropDirectionId = "R";
+
+            if (entityPM.DirectionId != exportDirectionId)
+            {
+                return false;
+            }
+            if (!(new[] { importDirectionId, dropDirectionId }.Contains(entityPoco.DirectionId)))
+            {
+                return false;
+            }
+            return true;
+        }
+
+        private bool IsDirectionChangedFromExportToImportOrDrop()
+        {
+            string exportDirectionId = "E", importDirectionId = "I", dropDirectionId = "R";
+
+            if (entityPoco.DirectionId != exportDirectionId)
+            {
+                return false;
+            }
+            if (!(new[] { importDirectionId, dropDirectionId }.Contains(entityPM.DirectionId)))
+            {
+                return false;
+            }
+            return true;
+        }
+
         private DateTime? GetFinalETA()
         {
             DateTime? myResult = entityPM.MainCarriageETA;
