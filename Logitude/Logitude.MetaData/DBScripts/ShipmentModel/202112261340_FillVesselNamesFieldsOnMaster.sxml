@@ -1,0 +1,61 @@
+﻿<Script DBType="Main" Module="Shipment" AOT="true" TargetTableName="ShipmentMasterDatas">
+  <Sql Version="1">
+    <![CDATA[
+   
+	declare @EntityId as varchar(15)
+	declare @Tenant as int
+
+	declare @MainVesselId as varchar(15)
+	declare @T1VesselId as varchar(15)
+	declare @T2VesselId as varchar(15)
+	declare @T3VesselId as varchar(15)
+	declare @PreCarVesselId as varchar(15)
+	declare @OnCarVesselId as varchar(15)
+
+	declare @MainVesselName as varchar(15)
+	declare @T1VesselName as varchar(15)
+	declare @T2VesselName as varchar(15)
+	declare @T3VesselName as varchar(15)
+	declare @PreCarVesselName as varchar(15)
+	declare @OnCarVesselName as varchar(15)
+	
+	DECLARE MastersCursor CURSOR READ_ONLY
+	FOR
+	SELECT Id, Tenant, MainCarriageVesselId, Transshipment1VesselId, Transshipment2VesselId, Transshipment3VesselId, PreCarriageVesselId, OnCarriageVesselId
+	FROM ShipmentMasterDatas 
+	where $LastCounterWhere$ 
+  and	(MainCarriageVesselId is not null 
+	or Transshipment1VesselId is not null 
+	or Transshipment2VesselId is not null 
+	or Transshipment3VesselId is not null 
+	or PreCarriageVesselId is not null
+	or OnCarriageVesselId is not null)	
+	OPEN MastersCursor FETCH NEXT FROM MastersCursor INTO @EntityId, @Tenant, @MainVesselId, @T1VesselId, @T2VesselId, @T3VesselId, @PreCarVesselId, @OnCarVesselId
+	WHILE @@FETCH_STATUS = 0
+	BEGIN
+		set @MainVesselName = (select EnglishName from Vessels where Id = @MainVesselId and Tenant = @Tenant)
+		set @T1VesselName = (select EnglishName from Vessels where Id = @T1VesselId and Tenant = @Tenant)
+		set @T2VesselName = (select EnglishName from Vessels where Id = @T2VesselId and Tenant = @Tenant)
+		set @T3VesselName = (select EnglishName from Vessels where Id = @T3VesselId and Tenant = @Tenant)
+		set @PreCarVesselName = (select EnglishName from Vessels where Id = @PreCarVesselId and Tenant = @Tenant)
+		set @OnCarVesselName = (select EnglishName from Vessels where Id = @OnCarVesselId and Tenant = @Tenant)
+
+		update ShipmentMasterDatas 
+		set 
+		MainCarriageVesselName = @MainVesselName, 
+		Transshipment1VesselName = @T1VesselName, 
+		Transshipment2VesselName = @T2VesselName, 
+		Transshipment3VesselName = @T3VesselName, 
+		PreCarriageVesselName = @PreCarVesselName, 
+		OnCarriageVesselName = @OnCarVesselName
+		where Id = @EntityId and Tenant = @Tenant
+
+	FETCH NEXT FROM MastersCursor INTO @EntityId, @Tenant, @MainVesselId, @T1VesselId, @T2VesselId, @T3VesselId, @PreCarVesselId, @OnCarVesselId
+	END
+	CLOSE MastersCursor
+	DEALLOCATE MastersCursor
+
+  
+    ]]>
+  </Sql>
+</Script>

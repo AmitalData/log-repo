@@ -1073,6 +1073,7 @@ namespace WebFreight.Web.ReportsWebServices
                         invoicedataprovider.HouseNumber_Label = "FBL";
                         invoicedataprovider.HouseNumber_HBL = "HBL";
                         invoicedataprovider.Containers_Label = "Containers";
+                        invoicedataprovider.MainCarriageVesselName = shipment.MainCarriageVesselName;
 
                         //Vessel name
                         Vessel maincarriagevessel = (from mc in commonContext.Vessels
@@ -1080,8 +1081,7 @@ namespace WebFreight.Web.ReportsWebServices
                                                      select mc).FirstOrDefault();
 
                         if (maincarriagevessel != null)
-                        {
-                            invoicedataprovider.MainCarriageVesselName = maincarriagevessel.EnglishName;
+                        {                            
                             invoicedataprovider.MainCarriageVessel_LocalName = maincarriagevessel.LocalName != null ? maincarriagevessel.LocalName : "";
                         }
                     }

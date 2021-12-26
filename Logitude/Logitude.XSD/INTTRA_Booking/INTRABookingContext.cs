@@ -83,7 +83,6 @@ namespace Logitude.XSD.INTTRA_Booking
         public ContactQuery contactQuery;
 
         private ShipmentMasterDataRepository shipmentMasterDataRepository;
-        private Vessel MainVessel;
         private void GetObjects()
         {
             this.Errors = new List<string>();
@@ -222,13 +221,10 @@ namespace Logitude.XSD.INTTRA_Booking
 
             if (this.MasterData.MainCarriageETD == null)
             {
-                if (this.MasterData.MainCarriageVesselId == null || this.MasterData.MainCarriageCarrierNumber == null)
+                if (this.MasterData.MainCarriageVesselName == null || this.MasterData.MainCarriageCarrierNumber == null)
+                {
                     this.Errors.Add("ETD or Main-Carriage Vessel and Voyage must be provided");
-            }
-
-            if (this.MasterData.MainCarriageVesselId != null)
-            {
-                this.MainVessel = (from d in CommonContext.Vessels where d.Id == this.MasterData.MainCarriageVesselId select d).FirstOrDefault();
+                }
             }
         }
         private void GetObjects_ShipmentOrderPackages()
@@ -538,14 +534,14 @@ namespace Logitude.XSD.INTTRA_Booking
                 },
             };
 
-            if (this.MasterData.MainCarriageCarrierNumber != null && this.MasterData.MainCarriageVesselId != null)
+            if (this.MasterData.MainCarriageCarrierNumber != null && this.MasterData.MainCarriageVesselName != null)
             {
                 transportationDetails.ConveyanceInformation.Identifier = new ConveyanceIdentifierType[]
                 {
                     new ConveyanceIdentifierType()
                     {
                         Type = ConveyanceIdentifierTypeValues.VesselName,
-                        Value = this.iNTTRAGeneralMethods.FormatString(this.MainVessel.EnglishName, 35),
+                        Value = this.iNTTRAGeneralMethods.FormatString(this.MasterData.MainCarriageVesselName, 35),
                     },
                     new ConveyanceIdentifierType()
                     {
