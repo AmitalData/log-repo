@@ -212,6 +212,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Operational
                     myDataRecord.MainCarriageATD = shipmentPackage.MainCarriageATD;
                     myDataRecord.MainCarriageETA = shipmentPackage.MainCarriageETA;
                     myDataRecord.MainCarriageETD = shipmentPackage.MainCarriageETD;
+                    myDataRecord.MainCarriageCarrierName = shipmentPackage.MainCarriageCarrierName;
 
                     string flightNumber = null;
                     if(!string.IsNullOrEmpty(shipmentPackage.MainCarriageCarrierCode))
@@ -336,7 +337,9 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Operational
                  join shipmentPackage in context.ShipmentPackages.Include("PackageType")
                  on shipment.Id equals shipmentPackage.ShipmentId into JoinedData
                  join masterData in context.ShipmentMasterDatas.Include("MainCarriageFromPort").Include("MainCarriageFinalDestinationPort").Include("MainCarriageToPort")
-                                                               .Include("Transshipment1ToPort").Include("Transshipment2ToPort").Include("Transshipment3ToPort").Include("Transshipment1FromPort").Include("Transshipment2FromPort").Include("Transshipment3FromPort")
+                                                               .Include("Transshipment1ToPort").Include("Transshipment2ToPort").Include("Transshipment3ToPort")
+                                                               .Include("Transshipment1FromPort").Include("Transshipment2FromPort").Include("Transshipment3FromPort")
+                                                               .Include("MainCarriageCarrierCard")
                  on shipment.MasterShipmentDataId equals masterData.Id into shipmentJoin
                  from master in shipmentJoin.DefaultIfEmpty()
                  from package in JoinedData
@@ -464,7 +467,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Operational
                      PackageLength = package.Length,
                      PackageHeight = package.Height,
                      CutOffDate = master.CutoffDate,
-
+                     MainCarriageCarrierName = master.MainCarriageCarrierCard == null ? null : master.MainCarriageCarrierCard.EnglishName,
                  });
 
             return dataList;
