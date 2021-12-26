@@ -372,6 +372,7 @@
     <None Include="DBTables\ImporterDesposition.dxml" />
     <None Include="DBTables\ImporterPeriodicDeclarStatus.dxml" />
     <None Include="DBTables\ImporterTypeForClaim.dxml" />
+    <None Include="DBTables\IncotemrsFileValidation.dxml" />
     <None Include="DBTables\InterfaceManagement.dxml" />
     <None Include="DBTables\InterfaceSendOption.dxml" />
     <None Include="DBTables\InterfaceTenantDefinition.dxml" />
@@ -526,6 +527,7 @@
     <None Include="EntityFiles\AmendmentStatus.lxml" />
     <None Include="EntityFiles\AmendmentType.lxml" />
     <None Include="EntityFiles\AutonomyRegionType.lxml" />
+    <None Include="EntityFiles\IncotemrsFileValidation.lxml" />
     <None Include="EntityFiles\ClientsPoa.lxml" />
     <None Include="EntityFiles\AmedmentType.lxml" />
     <None Include="EntityFiles\ContainerizationStatusCode.lxml" />

@@ -427,6 +427,7 @@ import { AmedmentTypeListService } from './Services/StandardLists/AmedmentTypeLi
 import { CustomsRequestsSheetWebService } from './Services/WebServices/CustomsRequestsSheetWebService';
 import { TradeAgreementProtocolListService } from './Services/StandardLists/TradeAgreementProtocolListService';
 import { ExportStoragePMService } from './Services/StandardPMs/ExportStoragePMService';
+import { IncotemrsFileValidationListService } from './Services/StandardLists/IncotemrsFileValidationListService';
 
 
 export class ModuleProviders {
@@ -718,6 +719,7 @@ export class ModuleProviders {
             case "ClientsPoaListService": { myResult = new ClientsPoaListService(); break; }
             case "BuyerRoleTypeListService": { myResult = new BuyerRoleTypeListService(); break; }
             case "PhysicalCheckSearchResultTypeListService": { myResult = new PhysicalCheckSearchResultTypeListService(); break; }
+            case "IncotemrsFileValidationListService": { myResult = new IncotemrsFileValidationListService(); break; }
 
                 
              //#endregion                

@@ -500,6 +500,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new ImporterTypeForClaimMap());
 	
+            modelBuilder.Configurations.Add(new IncotemrsFileValidationMap());
+	
             modelBuilder.Configurations.Add(new InterfaceManagementMap());
 	
             modelBuilder.Configurations.Add(new InterfaceSendOptionMap());
@@ -2598,6 +2600,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<ImporterTypeForClaim> ImporterTypeForClaims 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<IncotemrsFileValidation> IncotemrsFileValidations 
 	 {
 	      get; set;
 	 
