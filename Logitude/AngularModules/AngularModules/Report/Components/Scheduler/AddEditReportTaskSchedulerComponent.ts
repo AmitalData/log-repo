@@ -21,7 +21,7 @@ import { AddEditReportSchedulerComponent } from './AddEditReportSchedulerCompone
 
 @Component({
     templateUrl: './AddEditReportTaskSchedulerComponent.html',
-   
+
 })
 export class AddEditReportTaskSchedulerComponent {
     public EntityPM: TasksSchedulerPM;
@@ -36,9 +36,6 @@ export class AddEditReportTaskSchedulerComponent {
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         this.schedulerExtendedPMService = new SchedulerExtendedPMService();
-        if (SessionLocator.LoggedUserPM.IsCustomerCare || ObjectsLocator.GlobalSetting.DeploymentStage == "Dev") {
-            this.DisplayFTPOption = true;
-        }
     }
 
     SetDataContext(DataContext: any) {
@@ -53,8 +50,15 @@ export class AddEditReportTaskSchedulerComponent {
         this.BuildSchedulerDetailsData();
         this.Clone();
         this.SetTigger(this.DataContext.TriggerType);
+        this.SendValidation();
     }
-     
+
+    SendValidation() {
+        if ((SessionLocator.LoggedUserPM.IsCustomerCare || ObjectsLocator.GlobalSetting.DeploymentStage == "Dev") && this.DataContext?.fatherComponent?.ReportList?.Code != "RSTA") {
+            this.DisplayFTPOption = true;
+        }
+    }
+
     private FillSchedulerFormats() {
         this.SchedulerFormats.push(new CodeNameClass("PDF", "PDF"));
         this.SchedulerFormats.push(new CodeNameClass("EXCL", "Excel File"));
@@ -234,7 +238,7 @@ export class AddEditReportTaskSchedulerComponent {
 
 
         if (this.IsFTP) {
-            
+
 
             if (AppTool.IsNullOrEmpty(this.DataContext.UserName)) errors.push(msg.replace("%FieldName", "UserName"));
             if (AppTool.IsNullOrEmpty(this.DataContext.Password)) errors.push(msg.replace("%FieldName", "Password"));
