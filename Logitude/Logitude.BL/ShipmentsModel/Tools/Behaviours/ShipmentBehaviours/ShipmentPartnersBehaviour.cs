@@ -123,6 +123,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
 
             if (string.IsNullOrEmpty(cardId))
             {
+                entityPM.PrivateLabelAgentName = IsShipmentFromToLogbox() ? entityPM.AgentName : null;
                 entityPM.AgentName = null;
                 entityPM.AgentNote = null;
                 entityPM.AgentContactId = null;
@@ -138,6 +139,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
                 if (card != null)
                 {
                     entityPM.AgentName = card.EnglishName;
+                    entityPM.PrivateLabelAgentName = card.EnglishName;
 
                     if (string.IsNullOrEmpty(entityPM.AgentContactId))
                     {
@@ -153,10 +155,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
 
             else
             {
+                Card card = CardRepository.GetSingleCard(cardId, initializer.Tenant, true);
+                entityPM.PrivateLabelAgentName = card?.EnglishName;
                 // from new shipment screen: additional fields
                 if (string.IsNullOrEmpty(entityPM.AgentAddressId))
-                {
-                    Card card = CardRepository.GetSingleCard(cardId, initializer.Tenant, true);
+                {        
                     if (card != null)
                     {
                         entityPM.AgentName = card.EnglishName;
@@ -164,6 +167,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
                         entityPM.AgentAddressId = initializer.AddressRepository.GetMainAddressId(cardId, initializer.Tenant);
                     }
                 }
+
+
             }            
         }
         private void HandleShipperNotExporter()

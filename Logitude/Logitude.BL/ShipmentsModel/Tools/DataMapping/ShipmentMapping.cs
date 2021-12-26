@@ -492,7 +492,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             entityPoco.IsPODReceived = entityPM.IsPODReceived;
             entityPoco.PODReceivedDate = entityPM.PODReceivedDate;
             entityPoco.HasUnassignedData = entityPM.HasUnassignedData;
-            entityPoco.PrivateLabelAgentName = entityPM.PrivateLabelAgentName;
 
             BuildSearchField(entityPM, entityPoco, entityMasterData, myPackagesList);
             if (!LBcurrentTenant.IsDocumentsArchive)
@@ -2151,6 +2150,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             entityPoco.CustomsDeclarationNumber = entityPM.CustomsDeclarationNumber;
             entityPoco.ShipperName = entityPM.ShipperName;
             entityPoco.ConsigneeName = entityPM.ConsigneeName;
+            entityPoco.PrivateLabelAgentName = entityPM.AgentName ?? entityPM.PrivateLabelAgentName;
 
             if (!entityPM.IsHybrid || entityPM.DontAddToImportersQueue)
             {
