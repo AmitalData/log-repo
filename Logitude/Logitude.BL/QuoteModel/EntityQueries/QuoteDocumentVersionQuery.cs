@@ -169,6 +169,23 @@ namespace Logitude.BL.QuoteModel.EntityQueries
 
         }
 
+        public List<QuoteDocumentVersionPM> GetQuoteDocumentVersionsPMByQuotesIds(List<string> quotesids, int tenant)
+        {
+            List< QuoteDocumentVersionPM> quoteDocumentVersionPMs;
+            quoteDocumentVersionPMs = (from a in repository.quotesContext.QuoteDocumentVersions
+                                     where a.Tenant == tenant && quotesids.Contains(a.QuoteId)
+                                     group a by a.QuoteId into grp
+                                     select grp.OrderByDescending(d => d.VersionNumber).FirstOrDefault())
+                                     .Select(quoteDocumentVersion => new QuoteDocumentVersionPM()
+                                     {
+                                         QuoteId = quoteDocumentVersion.QuoteId,
+                                         CreateDate = quoteDocumentVersion.CreateDate,
+                                         DocumentId = quoteDocumentVersion.DocumentId,
+                                     }).ToList();
+
+            return quoteDocumentVersionPMs;
+
+        }
 
         public QuoteDocumentVersion GetFirstQuoteDocumentVersionForTenant(int tenant)
         {
