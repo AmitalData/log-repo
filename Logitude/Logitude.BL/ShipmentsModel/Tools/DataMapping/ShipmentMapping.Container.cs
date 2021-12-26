@@ -223,7 +223,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             container.IsCancelled = containerPM.IsCancelled;
             container.CancelledDate = containerPM.CancelledDate;
             container.ShipmentDeliveryTruckerId = containerPM.ShipmentDeliveryTruckerId;
-
+            container.Leg1VesselId = containerPM.Leg1VesselId;
+            container.Leg2VesselId = containerPM.Leg2VesselId;
+            container.Leg3VesselId = containerPM.Leg3VesselId;
+            container.Leg4VesselId = containerPM.Leg4VesselId;
+            container.Leg5VesselId = containerPM.Leg5VesselId;
             BuildSearchField(containerPM, container);
         }
 
