@@ -95,6 +95,7 @@ export class BaseSelectors extends RegexSelectors {
     public static readonly ContainSettings = "Settings"
     public static readonly ContainWarehouse = "Warehouse"
     public static readonly ContainVendor = "Vendor"
+    public static readonly ContainAddDataField="Add Data Field"
     //#endregion
 
     //#region general
@@ -258,5 +259,4 @@ export class BaseSelectors extends RegexSelectors {
     public static readonly Air = "Air"
     public static readonly Ocean = "Ocean"
     public static readonly Inland = "Inland"
-
 }

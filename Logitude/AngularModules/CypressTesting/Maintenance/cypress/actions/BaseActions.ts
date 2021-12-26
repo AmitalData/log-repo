@@ -7,6 +7,7 @@ import * as Actions from "./Actions"
 import { ShippingLineSelectors } from "../Selectors/ShippingLineSelectors";
 import { AddressDetails } from 'cypress/models/AddressDetails';
 import { AddressSelectors } from "../selectors/AddressSelectors";
+import * as SignatureActions from "../actions/SignatureActions";
 
 export function Search(searchFieldValue) {
     cy.get("body").then($body => {
@@ -77,4 +78,13 @@ export function CreateAddress() {
 
 export function AssertCreateAddress() {
     BaseAssertion.AssertStatusCode(RequestAliases.PostAddress, 200);
+}
+export function MockSave(url) {
+    cy.intercept(RestAPI.PUT, url, [true])
+    SignatureActions.DefinePutUpdateSignaturesRequest()
+    cy.Click(BaseSelectors.RedButton + BaseSelectors.LastElement, null);
+}
+
+export function AssertMockSave() {
+    BaseAssertion.AssertElementNotExist(BaseSelectors.LogitudeWindow)
 }

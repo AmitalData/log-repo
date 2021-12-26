@@ -32,6 +32,8 @@ export class MaintenanceSelectors extends RegexSelectors {
    public static readonly MaintenanceItemSystemDefaults = "#MaintenanceItemCODE"
    public static readonly MoveTypeInActive = "#MoveType_InActive"
    
+   public static readonly MaintenanceItemSignature="#MaintenanceItemSIGN"
+   
    //#endregion
 
    public static readonly GeneralEditScreen = ".MediaFillAbsolute .CurvedEditArea";
@@ -303,4 +305,5 @@ export class MaintenanceSelectors extends RegexSelectors {
    public static readonly CustomerGeneralTab = "#CustomerTHGeneral"
    public static readonly CustomerSaveButton = "#Customer-Save"
    //#endregion
+   
 }
