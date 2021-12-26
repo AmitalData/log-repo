@@ -30,7 +30,7 @@ export class MaintenanceSelectors extends RegexSelectors {
    public static readonly MaintenanceItemBranch = "#MaintenanceItemMTBR"
    public static readonly MaintenanceItemShipperAndConsignee = "#MaintenanceItemMTCL"
    public static readonly MaintenanceItemSystemDefaults = "#MaintenanceItemCODE"
-   public static readonly AccountingSettingsMaintenanceItem = "#MaintenanceItemACSE";
+   public static readonly MaintenanceItemAccountingSettings = "#MaintenanceItemACSE";
    //#endregion
 
    public static readonly GeneralEditScreen = ".MediaFillAbsolute .CurvedEditArea";
@@ -306,7 +306,8 @@ export class MaintenanceSelectors extends RegexSelectors {
    public static readonly AllowVoidARICheckBox="#AccountingSetting_AllowVoidARI"
    public static readonly AllowVoidAPICheckBox="#AccountingSetting_AllowVoidAPI"
    public static readonly VATNumber="#AccountingSetting_VatNumber"
-   
+   public static readonly AllowVoidAPPayment="#AccountingSetting_AllowVoidARP"
+   public static readonly AllowVoidARPayment="#AccountingSetting_AllowVoidAPP"
  //#endregion
 
 }

@@ -840,38 +840,6 @@ export function AssertVoidInvoiceMessage(Message: string) {
     cy.Click(BaseSelectors.Button, BaseSelectors.ContainsOK)
 }
 //#endregion
-//#region Accounting Settings
-export function ChangeAccountingSettings(accountingSettings: AccountingSettingsDetails) {
-    let IsARInvoice = (accountingSettings.VoidARInvoice != null)
-
-    if (IsARInvoice) {
-        ChangeAccountinghelper(accountingSettings.VoidARInvoice, MaintenanceSelectors.AllowVoidARICheckBox)
-    }
-    else {
-        ChangeAccountinghelper(accountingSettings.VoidAPInvoice, MaintenanceSelectors.AllowVoidAPICheckBox)
-    }
-}
-function ChangeAccountinghelper(Settings: string, selector: string) {
-    if (Settings.toUpperCase() == Constants.Allowed) {
-        cy.get(selector).check({ force: true })
-    }
-    else if (Settings.toUpperCase() == Constants.NotAllowed) {
-        cy.get(selector).uncheck({ force: true })
-    }
-}
-export function AssertUpdateAccountingSettings() {
-    AssertAccountingSettings();
-}
-function AssertAccountingSettings() {
-   // cy.get('[type="checkbox"]').check(MaintenanceSelectors.AllowVoidARICheckBox) 
-   BaseAssertion.AssertStatusCode(RequestAliases.AccountingSettings, 200).then((interception) => {
-    InvoiceSettingsDetails.AllowVoidARI = interception.request.body.allowVoidARI
-});
-}
-export function FillAccountingSettingsVATNumber(VATNumber: string) {
-    cy.FillLogTextBox(MaintenanceSelectors.VATNumber, VATNumber);
-}
-//#endregion
 //#region Customer Settings
 export function FillCustomerSettingsDetails(customerSettingsDetails: CustomerSettingsDetails) {
     FillCheckBoxProcess(MaintenanceSelectors.IsCustomerTelephoneRequiredCheckBox, customerSettingsDetails.IsCustomerTelphoneRequired)
