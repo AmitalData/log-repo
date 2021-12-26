@@ -103,65 +103,65 @@ using Simplog.Data.InvoiceModel;
 						
 					}
                     
-					if(!IsUpdate)// && item.Tenant != null)
-					{							//throw new ApplicationException("Tenant Can't be update"); 
-							temp.Tenant = item.Tenant;
+					if(!IsUpdate)
+					{							
+						temp.Tenant = item.Tenant;
 
 										}  
 
 					
                     
-					if(!IsUpdate)// && item.LineNumber != null)
-					{							//throw new ApplicationException("LineNumber Can't be update"); 
-							temp.LineNumber = item.LineNumber;
+					if(!IsUpdate)
+					{							
+						temp.LineNumber = item.LineNumber;
 
 										}  
 
 					
                     
-					if(!IsUpdate)// && !string.IsNullOrEmpty(item.PaymentRef))
-					{							//throw new ApplicationException("PaymentRef Can't be update"); 
-							temp.PaymentRef = item.PaymentRef;
+					if(!IsUpdate)
+					{							
+						temp.PaymentRef = item.PaymentRef;
 
 										}  
 
 					
                     
-					if(!IsUpdate)// && item.ValueDate != null)
-					{							//throw new ApplicationException("ValueDate Can't be update"); 
-							temp.ValueDate = item.ValueDate;
+					if(!IsUpdate)
+					{							
+						temp.ValueDate = item.ValueDate;
 
 										}  
 
 					
                     
-					if(!IsUpdate)// && item.LocalAmount != null)
-					{							//throw new ApplicationException("LocalAmount Can't be update"); 
-							temp.LocalAmount = item.LocalAmount;
+					if(!IsUpdate)
+					{							
+						temp.LocalAmount = item.LocalAmount;
 
 										}  
 
 					
                     
-					if(!IsUpdate)// && item.ForeignAmount != null)
-					{							//throw new ApplicationException("ForeignAmount Can't be update"); 
-							temp.ForeignAmount = item.ForeignAmount;
+					if(!IsUpdate)
+					{							
+						temp.ForeignAmount = item.ForeignAmount;
 
 										}  
 
 					
                     
-					if(!IsUpdate)// && !string.IsNullOrEmpty(item.BankAccountNumber))
-					{							//throw new ApplicationException("BankAccountNumber Can't be update"); 
-							temp.BankAccountNumber = item.BankAccountNumber;
+					if(!IsUpdate)
+					{							
+						temp.BankAccountNumber = item.BankAccountNumber;
 
 										}  
 
 					
                     
-					if(!IsUpdate)// && !string.IsNullOrEmpty(item.BankAccountId))
-					{							//throw new ApplicationException("BankAccountId Can't be update"); 
-							temp.BankAccountId = item.BankAccountId;
+					if(!IsUpdate)
+					{							
+						temp.BankAccountId = item.BankAccountId;
 
 										}  
 

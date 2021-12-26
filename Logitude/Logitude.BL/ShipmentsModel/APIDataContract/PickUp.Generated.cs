@@ -56,6 +56,24 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
     public string PickUpReference { get; set; }
     
     public List<Package> Packages { get; set; }
+    
+    public PickUpDeliveryFromToType FromType { get; set; }
+    
+    public PickUpDeliveryFromToType ToType { get; set; }
+    
+    public string FromCity { get; set; }
+    
+    public string FromZipCode { get; set; }
+    
+    public Country FromCountry { get; set; }
+    
+    public string ToCity { get; set; }
+    
+    public string ToZipCode { get; set; }
+    
+    public Country ToCountry { get; set; }
+    
+    public string ChangeSetOp { get; set; }
 
     public  string  ComputingPartnerCode { get; set; }
 

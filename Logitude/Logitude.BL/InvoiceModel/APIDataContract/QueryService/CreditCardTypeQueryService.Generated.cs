@@ -110,9 +110,9 @@ using Simplog.Data.InvoiceModel;
 						
 					}
                     
-					if(!IsUpdate)// && MyEntity.Tenant != null)
-					{							//throw new ApplicationException("Tenant Can't be update"); 
-							temp.Tenant = MyEntity.Tenant;
+					if(!IsUpdate)
+					{							
+						temp.Tenant = MyEntity.Tenant;
 
 										}  
 
@@ -122,9 +122,8 @@ using Simplog.Data.InvoiceModel;
 					   
 						 
 						if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.LogitudeCode))
-						{
-								//throw new ApplicationException("LogitudeCode Can't be update"); 
-								temp.Code = MyEntity.LogitudeCode;
+						{								
+							temp.Code = MyEntity.LogitudeCode;
 								
 						
 						}  
@@ -132,9 +131,9 @@ using Simplog.Data.InvoiceModel;
 						
 					}
                     
-					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.Name))
-					{							//throw new ApplicationException("Name Can't be update"); 
-							temp.Name = MyEntity.Name;
+					if(!IsUpdate)
+					{							
+						temp.Name = MyEntity.Name;
 
 										}  
 

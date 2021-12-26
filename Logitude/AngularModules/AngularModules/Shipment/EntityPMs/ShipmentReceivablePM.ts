@@ -341,6 +341,11 @@ export class ShipmentReceivablePM {
     public set VatAmountProfit(newValue: number) { if (this.vatAmountProfit != newValue) { this.vatAmountProfit = newValue; this.MarkAsDirty("VatAmountProfit"); } }
        
 	 
+    private changeSet: string;
+    public get ChangeSet() { return this.changeSet; }
+    public set ChangeSet(newValue: string) { if (this.changeSet != newValue) { this.changeSet = newValue; this.MarkAsDirty("ChangeSet"); } }
+       
+	 
 
     public OldEntityPM: ShipmentReceivablePM;
 	    

@@ -672,16 +672,16 @@ namespace WebFreight.Web.ExternalAPIs.ExternalAPIsHelpers
                 {
                     case 1:
                         {
-                            shipmentPM.MainCarriageCarrierId = item.CarrierId;
+                            shipmentPM.MainCarriageCarrierId = item.CarrierId != null ? item.CarrierId : shipmentPM.MainCarriageCarrierId;
                             shipmentPM.MainCarriageVesselId = item.VesselId;
-                            shipmentPM.MainCarriageCarrierNumber = item.CarrierNumber;
+                            shipmentPM.MainCarriageCarrierNumber = item.CarrierNumber != null ? item.CarrierNumber : shipmentPM.MainCarriageCarrierNumber; 
                             shipmentPM.Master = item.MasterNumber;
                             shipmentPM.MainCarriageFromPortId = item.FromPortId;
                             shipmentPM.MainCarriageToPortId = item.ToPortId;
-                            shipmentPM.MainCarriageATA = item.ATA;
-                            shipmentPM.MainCarriageATD = item.ATD;
-                            shipmentPM.MainCarriageETA = item.ETA;
-                            shipmentPM.MainCarriageETD = item.ETD;
+                            shipmentPM.MainCarriageATA = item.ATA != null ? item.ATA : shipmentPM.MainCarriageATA;
+                            shipmentPM.MainCarriageATD = item.ATD != null ? item.ATD : shipmentPM.MainCarriageATD;
+                            shipmentPM.MainCarriageETA = item.ETA != null ? item.ETA : shipmentPM.MainCarriageETA;
+                            shipmentPM.MainCarriageETD = item.ETD != null ? item.ETD : shipmentPM.MainCarriageETD;
 
                             if (myCarrier != null)
                             {

@@ -39,19 +39,19 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
             }
         }
 
-        public List<ShipmentPackagePM> ContainerCustomDataMappingAndValidatin(House MyHouse, List<Container> MyEntities, int Tenant, string ComputingPartnerName = "")
+        public List<ShipmentPackagePM> ContainerCustomDataMappingAndValidatin(House MyHouse, List<Container> MyEntities, int Tenant, string ComputingPartnerName = "", bool IsUpdate = false)
         {
-            return this.ContainerDataMappingAndValidatin(MyEntities, Tenant, ComputingPartnerName);
+            return this.ContainerDataMappingAndValidatin(MyEntities, Tenant, ComputingPartnerName, IsUpdate);
         }
 
-        public List<ShipmentPackagePM> ContainerCustomDataMappingAndValidatin(Direct MyDirect, List<Container> MyEntities, int Tenant, string ComputingPartnerName = "")
+        public List<ShipmentPackagePM> ContainerCustomDataMappingAndValidatin(Direct MyDirect, List<Container> MyEntities, int Tenant, string ComputingPartnerName = "", bool IsUpdate = false)
         {
-            return this.ContainerDataMappingAndValidatin(MyEntities, Tenant, ComputingPartnerName);
+            return this.ContainerDataMappingAndValidatin(MyEntities, Tenant, ComputingPartnerName, IsUpdate);
         }
 
-        public List<ShipmentPackagePM> ContainerCustomDataMappingAndValidatin(Customs MyDirect, List<Container> MyEntities, int Tenant, string ComputingPartnerName = "")
+        public List<ShipmentPackagePM> ContainerCustomDataMappingAndValidatin(Customs MyDirect, List<Container> MyEntities, int Tenant, string ComputingPartnerName = "", bool IsUpdate = false)
         {
-            return this.ContainerDataMappingAndValidatin(MyEntities, Tenant, ComputingPartnerName);
+            return this.ContainerDataMappingAndValidatin(MyEntities, Tenant, ComputingPartnerName, IsUpdate);
         }
 
     }

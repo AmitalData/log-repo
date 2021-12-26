@@ -37,19 +37,19 @@ using Simplog.Data.ShipmentsModel;
             }
         } 
 
-		public List<ShipmentPackagePM> OceanOrInlandPackageCustomDataMappingAndValidatin(House myHouse,List<OceanOrInlandPackage> MyEntities,int Tenant, string ComputingPartnerName = "")
+		public List<ShipmentPackagePM> OceanOrInlandPackageCustomDataMappingAndValidatin(House myHouse,List<OceanOrInlandPackage> MyEntities,int Tenant, string ComputingPartnerName = "", bool IsUpdate = false)
         {
-            return this.OceanOrInlandPackageDataMappingAndValidatin(MyEntities,Tenant, ComputingPartnerName);   
+            return this.OceanOrInlandPackageDataMappingAndValidatin(MyEntities,Tenant, ComputingPartnerName, IsUpdate);   
         }
 
-        public List<ShipmentPackagePM> OceanOrInlandPackageCustomDataMappingAndValidatin(Direct myDirect, List<OceanOrInlandPackage> MyEntities, int Tenant, string ComputingPartnerName = "")
+        public List<ShipmentPackagePM> OceanOrInlandPackageCustomDataMappingAndValidatin(Direct myDirect, List<OceanOrInlandPackage> MyEntities, int Tenant, string ComputingPartnerName = "", bool IsUpdate = false)
         {
-            return this.OceanOrInlandPackageDataMappingAndValidatin(MyEntities, Tenant, ComputingPartnerName);
+            return this.OceanOrInlandPackageDataMappingAndValidatin(MyEntities, Tenant, ComputingPartnerName, IsUpdate);
         }
 
-        public List<ShipmentPackagePM> OceanOrInlandPackageCustomDataMappingAndValidatin(Customs myDirect, List<OceanOrInlandPackage> MyEntities, int Tenant, string ComputingPartnerName = "")
+        public List<ShipmentPackagePM> OceanOrInlandPackageCustomDataMappingAndValidatin(Customs myDirect, List<OceanOrInlandPackage> MyEntities, int Tenant, string ComputingPartnerName = "", bool IsUpdate = false)
         {
-            return this.OceanOrInlandPackageDataMappingAndValidatin(MyEntities, Tenant, ComputingPartnerName);
+            return this.OceanOrInlandPackageDataMappingAndValidatin(MyEntities, Tenant, ComputingPartnerName, IsUpdate);
         }
 
     }

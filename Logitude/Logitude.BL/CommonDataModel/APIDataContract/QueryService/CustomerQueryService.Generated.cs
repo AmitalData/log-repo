@@ -155,25 +155,25 @@ using Simplog.Data.CommonDataModel;
 						
 					}
                     
-					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.EnglishName))
-					{							//throw new ApplicationException("EnglishName Can't be update"); 
-							temp.EnglishName = MyEntity.EnglishName;
+					if(!IsUpdate)
+					{							
+						temp.EnglishName = MyEntity.EnglishName;
 
 										}  
 
 					
                     
-					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.LocalName))
-					{							//throw new ApplicationException("LocalName Can't be update"); 
-							temp.LocalName = MyEntity.LocalName;
+					if(!IsUpdate)
+					{							
+						temp.LocalName = MyEntity.LocalName;
 
 										}  
 
 					
                     
-					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.VatNumber))
-					{							//throw new ApplicationException("VatNumber Can't be update"); 
-							temp.VatNumber = MyEntity.VatNumber;
+					if(!IsUpdate)
+					{							
+						temp.VatNumber = MyEntity.VatNumber;
 
 										}  
 
@@ -188,7 +188,7 @@ using Simplog.Data.CommonDataModel;
 
 						 
 							if(!IsUpdate)
-							{								//throw new ApplicationException("PaymentTerm Can't be update"); 
+							{								
 								temp.PaymentTermId = myPaymentTermPM.Id;
 						  
 							}  
@@ -209,7 +209,7 @@ using Simplog.Data.CommonDataModel;
 
 						 
 							if(!IsUpdate)
-							{								//throw new ApplicationException("MainAddress Can't be update"); 
+							{								
 								temp.MainAddressId = myMainAddressPM.Id;
 						  
 							}  
@@ -226,8 +226,8 @@ using Simplog.Data.CommonDataModel;
 						ContactQueryService ContactService4 = new ContactQueryService(Tenant);
 						  
 						if(!IsUpdate)
-						{								//throw new ApplicationException("Contacts Can't be update"); 
-								temp.Contacts = ContactService4.ContactCustomDataMappingAndValidatin(MyEntity,MyEntity.Contacts,Tenant,ComputingPartnerName);
+						{								
+							temp.Contacts = ContactService4.ContactCustomDataMappingAndValidatin(MyEntity,MyEntity.Contacts,Tenant,ComputingPartnerName,IsUpdate);
 
 					 
 						}  
@@ -246,7 +246,7 @@ using Simplog.Data.CommonDataModel;
 
 						 
 							if(!IsUpdate)
-							{								//throw new ApplicationException("BillingAddress Can't be update"); 
+							{								
 								temp.BillingAddressId = myBillingAddressPM.Id;
 						  
 							}  
@@ -267,7 +267,7 @@ using Simplog.Data.CommonDataModel;
 
 						 
 							if(!IsUpdate)
-							{								//throw new ApplicationException("GLAccount Can't be update"); 
+							{								
 								temp.GLAccountId = myGLAccountPM.Id;
 						  
 							}  
@@ -283,9 +283,8 @@ using Simplog.Data.CommonDataModel;
 					   
 						 
 						if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.Code))
-						{
-								//throw new ApplicationException("Code Can't be update"); 
-								temp.Code = MyEntity.Code;
+						{								
+							temp.Code = MyEntity.Code;
 								
 						
 						}  
@@ -293,9 +292,9 @@ using Simplog.Data.CommonDataModel;
 						
 					}
                     
-					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.PartnerCode))
-					{							//throw new ApplicationException("PartnerCode Can't be update"); 
-							temp.PartnerCode = MyEntity.PartnerCode;
+					if(!IsUpdate)
+					{							
+						temp.PartnerCode = MyEntity.PartnerCode;
 
 										}  
 

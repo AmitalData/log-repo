@@ -14,7 +14,7 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
             return this.ContactMapping(MyEntityPMs, Tenant,ComputingPartnerName);           
         }
 
-        public List<ContactPM> ContactCustomDataMappingAndValidatin(Customer MainEntity, List<Contact> MyEntities, int Tenant, string ComputingPartnerName = "")
+        public List<ContactPM> ContactCustomDataMappingAndValidatin(Customer MainEntity, List<Contact> MyEntities, int Tenant, string ComputingPartnerName = "", bool IsUpdate = false)
         {
             return this.ContactMappingAndValidating(MyEntities, Tenant, ComputingPartnerName);
         }

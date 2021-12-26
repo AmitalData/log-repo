@@ -34,6 +34,8 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
     public double? Weight { get; set; }
     
     public string Description { get; set; }
+    
+    public string ChangeSetOp { get; set; }
 
     public  string  ComputingPartnerCode { get; set; }
 

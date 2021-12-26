@@ -203,6 +203,11 @@ export class ShipmentPickUpDeliveryPackagePM {
     public set ContainerEntityId(newValue: string) { if (this.containerEntityId != newValue) { this.containerEntityId = newValue; this.MarkAsDirty("ContainerEntityId"); } }
        
 	 
+    private changeSet: string;
+    public get ChangeSet() { return this.changeSet; }
+    public set ChangeSet(newValue: string) { if (this.changeSet != newValue) { this.changeSet = newValue; this.MarkAsDirty("ChangeSet"); } }
+       
+	 
 
     public OldEntityPM: ShipmentPickUpDeliveryPackagePM;
 	    

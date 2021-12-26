@@ -86,7 +86,8 @@ using Simplog.Data.ShipmentsModel;
 					   					   temp.PrepaidCollect = PrepaidCollectService3.GetPrepaidCollectById(item.PrepaidCollectId,Tenant,ComputingPartnerName); 
 			       
 					   				   }
-				   					
+				   
+				   temp.ChangeSetOp = item.ChangeSet;					
 					MyList.Add(temp);
 				}
 					
@@ -144,7 +145,7 @@ using Simplog.Data.ShipmentsModel;
 
 						 
 							if(!IsUpdate)
-							{								//throw new ApplicationException("ChargesType Can't be update"); 
+							{								
 								temp.ChargesTypeId = myChargesTypePM.Id;
 						  
 							}  
@@ -165,7 +166,7 @@ using Simplog.Data.ShipmentsModel;
 
 						 
 							if(!IsUpdate)
-							{								//throw new ApplicationException("Measurement Can't be update"); 
+							{								
 								temp.MeasurementId = myMeasurementPM.Id;
 						  
 							}  
@@ -177,25 +178,25 @@ using Simplog.Data.ShipmentsModel;
 			
 					
                     
-					if(!IsUpdate)// && item.Quantity != null)
-					{							//throw new ApplicationException("Quantity Can't be update"); 
-							temp.Quantity = item.Quantity;
+					if(!IsUpdate)
+					{							
+						temp.Quantity = item.Quantity;
 
 										}  
 
 					
                     
-					if(!IsUpdate)// && item.UnitPrice != null)
-					{							//throw new ApplicationException("UnitPrice Can't be update"); 
-							temp.UnitPrice = item.UnitPrice;
+					if(!IsUpdate)
+					{							
+						temp.UnitPrice = item.UnitPrice;
 
 										}  
 
 					
                     
-					if(!IsUpdate)// && item.Amount != null)
-					{							//throw new ApplicationException("Amount Can't be update"); 
-							temp.TotalAmount = item.Amount;
+					if(!IsUpdate)
+					{							
+						temp.TotalAmount = item.Amount;
 
 										}  
 
@@ -210,7 +211,7 @@ using Simplog.Data.ShipmentsModel;
 
 						 
 							if(!IsUpdate)
-							{								//throw new ApplicationException("Currency Can't be update"); 
+							{								
 								temp.CurrencyId = myCurrencyPM.Id;
 						  
 							}  
@@ -222,9 +223,9 @@ using Simplog.Data.ShipmentsModel;
 			
 					
                     
-					if(!IsUpdate)// && item.Rate != null)
-					{							//throw new ApplicationException("Rate Can't be update"); 
-							temp.Rate = item.Rate;
+					if(!IsUpdate)
+					{							
+						temp.Rate = item.Rate;
 
 										}  
 
@@ -239,7 +240,7 @@ using Simplog.Data.ShipmentsModel;
 
 						 
 							if(!IsUpdate)
-							{								//throw new ApplicationException("PrepaidCollect Can't be update"); 
+							{								
 								temp.PrepaidCollectId = myPrepaidCollectPM.Id;
 						  
 							}  
@@ -249,6 +250,12 @@ using Simplog.Data.ShipmentsModel;
 
 					}
 			
+					
+                    							
+						temp.ChangeSet = item.ChangeSetOp;
+
+					 
+
 										   
 						MyList.Add(temp);
 					}

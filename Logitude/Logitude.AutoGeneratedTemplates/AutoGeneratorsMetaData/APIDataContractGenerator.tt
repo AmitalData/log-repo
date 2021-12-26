@@ -518,8 +518,8 @@ using <#=myspacestring#>
 						 <#+if(IsUpdateAllowed == "false" || IsKey == "true"){#> 
 						if(!IsUpdate)
 						{<#+}#>
-								//throw new ApplicationException("<#=DCFieldName#> Can't be update"); 
-								temp.<#=FieldName#> = <#+if(IgnoreCustomTypeCheck == "true"){#><#=DCFieldName#><#+}else{#><#=type.Replace("List<","").Replace(">","")#><#+}#>Service<#=i#>.<#+if(IgnoreCustomTypeCheck == "true"){#><#=DCFieldName#><#+}else{#><#=type.Replace("List<","").Replace(">","")#><#+}#><#+if(IsManualMapping == "true"){#>Custom<#+}#>DataMappingAndValidatin(<#+if(IsManualMapping == "true"){if(IsComposition == "true"){#>item<#+}else{#>MyEntity<#+}#>,<#+}#><#+if(IsComposition == "true"){if(customType == "List"){#>item<#+}else{#><#=temp#><#+}}else{#>MyEntity<#+}#>.<#=DCFieldName#>,Tenant,ComputingPartnerName<#+if(IsManualMapping == "false"){#>,IsUpdate<#+}#>);
+								
+							temp.<#=FieldName#> = <#+if(IgnoreCustomTypeCheck == "true"){#><#=DCFieldName#><#+}else{#><#=type.Replace("List<","").Replace(">","")#><#+}#>Service<#=i#>.<#+if(IgnoreCustomTypeCheck == "true"){#><#=DCFieldName#><#+}else{#><#=type.Replace("List<","").Replace(">","")#><#+}#><#+if(IsManualMapping == "true"){#>Custom<#+}#>DataMappingAndValidatin(<#+if(IsManualMapping == "true"){if(IsComposition == "true"){#>item<#+}else{#>MyEntity<#+}#>,<#+}#><#+if(IsComposition == "true"){if(customType == "List"){#>item<#+}else{#><#=temp#><#+}}else{#>MyEntity<#+}#>.<#=DCFieldName#>,Tenant,ComputingPartnerName,IsUpdate);
 
 					<#+if(IsUpdateAllowed == "false" || IsKey == "true"){#> 
 						} <#+}#> 
@@ -544,9 +544,9 @@ using <#=myspacestring#>
 
 						 <#+if(IsUpdateAllowed == "false" || IsKey == "true"){#>
 
-							if(!IsUpdate)
+							if(!IsUpdate<#+if(IsComposition == "true" && ObjectTableName == "ShipmentPackage"){#>|| string.IsNullOrEmpty(item.Id)<#+}#>)
 							{<#+}#>
-								//throw new ApplicationException("<#=DCFieldName#> Can't be update"); 
+								
 								temp.<#=FieldName#> = my<#=DCFieldName#>PM.<#+if(FieldName.Contains("Code")){#>Code<#+}else{#>Id<#+}#>;
 						 <#+if(IsUpdateAllowed == "false" || IsKey == "true"){#> 
 							} <#+}#> 
@@ -561,7 +561,7 @@ using <#=myspacestring#>
 
 						if(!IsUpdate)
 						{<#+}#>
-								//throw new ApplicationException("<#=DCFieldName#> Can't be update"); 
+								
 								temp.<#=FieldName#> = my<#=DCFieldName#>PM;
 
 						<#+if(IsUpdateAllowed == "false" || IsKey == "true"){#>
@@ -605,9 +605,8 @@ using <#=myspacestring#>
 						 <#+if(IsUpdateAllowed == "false" || IsKey == "true"){#>
 
 						if(!IsUpdate)//<#=HasValueString#>)
-						{
-								//throw new ApplicationException("<#=DCFieldName#> Can't be update"); 
-								temp.<#=FieldName#> = <#+if(IsComposition == "true"){#>item<#+}else{#>MyEntity<#+}#>.<#=DCFieldName#>;
+						{								
+							temp.<#=FieldName#> = <#+if(IsComposition == "true"){#>item<#+}else{#>MyEntity<#+}#>.<#=DCFieldName#>;
 								<#+}#>
 
 						
@@ -620,10 +619,10 @@ using <#=myspacestring#>
 
                     <#+if(IsUpdateAllowed == "false" || IsKey == "true"){#>
 
-					if(!IsUpdate)//<#=HasValueString#>)
+					if(!IsUpdate<#+if(IsComposition == "true" && ObjectTableName == "ShipmentPackage"){#>|| string.IsNullOrEmpty(item.Id)<#+}#>)
 					{<#+}#>
-							//throw new ApplicationException("<#=DCFieldName#> Can't be update"); 
-							temp.<#=FieldName#> = <#+if(IsComposition == "true"){#>item<#+}else{#>MyEntity<#+}#>.<#=DCFieldName#>;
+							
+						temp.<#=FieldName#> = <#+if(IsComposition == "true"){#>item<#+}else{#>MyEntity<#+}#>.<#=DCFieldName#>;
 
 					<#+if(IsUpdateAllowed == "false" || IsKey == "true"){#>
 					} <#+}#> 

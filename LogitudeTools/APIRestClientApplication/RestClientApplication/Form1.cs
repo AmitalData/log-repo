@@ -1,5 +1,4 @@
 ﻿
-using Json2KeyValue;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -14,6 +13,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml;
 using System.Xml.Serialization;
+using Newtonsoft.Json;
 
 namespace RestClientApplication
 {
@@ -41,6 +41,13 @@ namespace RestClientApplication
                     this.operationCombo.SelectedItem = null;
                     this.operationCombo.Items.Clear();
                     this.operationCombo.Items.Add("Create (POST)");
+                }
+                else if(apiCombo.SelectedItem.Equals("Direct"))
+                {
+                    this.operationCombo.SelectedItem = null;
+                    this.operationCombo.Items.Clear();
+                    AddGeneralOperationsToComboBox();
+                    this.operationCombo.Items.Add("Update (Patch)");
                 }
                 else
                 {
@@ -216,6 +223,9 @@ namespace RestClientApplication
             txtParameter4.Visible = false;
             lblParameter4.Visible = false;
 
+            rdbXml.Visible = true;
+            rdbJson.Checked = false;
+
             switch (apiCombo.SelectedItem)
             {
                 #region House
@@ -266,9 +276,21 @@ namespace RestClientApplication
                             txtParameter2.Visible = true;
                             lblParameter2.Visible = true;
                         }
-
+                        else if (operationCombo.SelectedItem != null && operationCombo.SelectedItem.Equals("Update (Patch)"))
+                        {
+                            lblParameter2.Text = "Id";
+                            txtParameter2.Visible = true;
+                            lblParameter2.Visible = true;
+                            txtRequestContentType.Text = "application/json";
+                            rdbJson.Checked = true;
+                            rdbXml.Visible = false;
+                            requestText = responseParameters.XMLRequestText["PatchDirect"];
+                        }
+                        else
+                        {
+                            requestText = responseParameters.XMLRequestText["PostDirect"];
+                        }
                         apiName = "direct";
-                        requestText = responseParameters.XMLRequestText["PostDirect"];
                         break;
                     }
                 #endregion
@@ -596,17 +618,17 @@ namespace RestClientApplication
                     {
                         client.DefaultRequestHeaders.Add("Accept", "application/xml");
 
-                        if(apiName == "direct" || apiName == "house" || apiName == "master")
+                        if (apiName == "direct" || apiName == "house" || apiName == "master")
                         {
                             string url = "";
                             if (!string.IsNullOrEmpty(txtParameter.Text))
                             {
-                                 url = txtServerUrl.Text + "/" + api + "?number=" + txtParameter.Text + "&include=";                                
+                                url = txtServerUrl.Text + "/" + api + "?number=" + txtParameter.Text + "&include=";
                             }
 
                             else
                             {
-                                 url = txtServerUrl.Text + "/" + api + "?id=" + txtParameter2.Text + "&include=";                                
+                                url = txtServerUrl.Text + "/" + api + "?id=" + txtParameter2.Text + "&include=";
                             }
 
                             if (IncludeEventsCheckBox.Checked)
@@ -664,18 +686,26 @@ namespace RestClientApplication
                         }
                     }
 
+                    else if (operationCombo.SelectedItem.Equals("Update (Patch)") && apiName == "direct")
+                    {
+                        var url = txtServerUrl.Text + "/" + api+ "?id=" + txtParameter2.Text;
+                        var request = new HttpRequestMessage(new HttpMethod("PATCH"), url);
+                        request.Content = content;
+                        response = await client.SendAsync(request);
+                    }
+
                     txtReponseCode.Text = ((int)response.StatusCode).ToString();
 
                     if (response.StatusCode == System.Net.HttpStatusCode.OK)
                     {
                         var resultData = response.Content.ReadAsStringAsync().Result;
-                        this.SetXmlBrouserXml(resultData);
+                        this.SetXmlBrouserXml(resultData, api);
                     }
 
                     else
                     {
                         var resultData2 = response.Content.ReadAsStringAsync().Result;
-                        this.SetXmlBrouserXml(resultData2);
+                        this.SetXmlBrouserXml(resultData2, api);
                     }
                 }
             }
@@ -719,7 +749,7 @@ namespace RestClientApplication
             Clipboard.SetText(xmlBrowser1.XmlText);
         }
 
-        private void SetXmlBrouserXml(string xmlString)
+        private void SetXmlBrouserXml(string xmlString , string apiName)
         {
             try
             {
@@ -729,10 +759,15 @@ namespace RestClientApplication
                 XmlReader xReader = XmlReader.Create(sr);
 
                 xmlBrowser1.XmlDocumentTransformType = XmlRender.XmlBrowser.XslTransformType.XSL;
-
                 XmlDocument _xd = new XmlDocument();
-
-                _xd.Load(xReader);
+                if (IsResponseFromPatchAPI(apiName))
+                {
+                    _xd = JsonConvert.DeserializeXmlNode(xmlString, "Direct");
+                }
+                else
+                {
+                    _xd.Load(xReader);
+                }
                 xmlBrowser1.XmlDocument = _xd;
             }
             catch (Exception ex)
@@ -748,6 +783,17 @@ namespace RestClientApplication
             newXmlString = newXmlString.Replace("AllowUnassignedEntry=\"false\"", "");
 
             return newXmlString;
+        }
+
+        private bool IsResponseFromPatchAPI(string apiName)
+        {
+            if (!(apiName == "direct"))
+                return false;
+
+            if (!operationCombo.SelectedItem.Equals("Update (Patch)"))
+                return false;
+
+            return true;
         }
 
         private void txtCredentialsPrimary_TextChanged(object sender, EventArgs e)
