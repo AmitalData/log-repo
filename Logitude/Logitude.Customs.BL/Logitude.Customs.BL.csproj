@@ -2183,6 +2183,7 @@
     <Compile Include="Messaging\U2L\CourierStatus\CourierStatusService.cs" />
     <Compile Include="Messaging\U2L\Courier\CourierPendingReasonService.cs" />
     <Compile Include="Messaging\U2L\DeclarationDocuments\DeclarationDocumentsService.cs" />
+    <Compile Include="Messaging\U2L\ExportEntry\ExportEntryService.cs" />
     <Compile Include="Messaging\U2L\FritzDeclaration\FritzDeclarationCls\FritzDeclaration.cs">
       <DependentUpon>FritzDeclaration.xsd</DependentUpon>
     </Compile>

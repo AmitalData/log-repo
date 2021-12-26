@@ -1,0 +1,70 @@
+<!ELEMENT LOGIEXPORTSTORAGE (LogitudeExportStorage*)>
+<!ELEMENT LogitudeExportStorage (StorageNo?, tenant?, quantity?, reshimon_num?, freight_rate?, insurance_type?, insurance_percent?, insurance_amount?, agent_fee?, country*, freight_currency*, insurance_amount_currency*, SupplierInvoice*, agent_fee_currency?, CustomsDocuments*, TaxationDateTime?)>
+<!ATTLIST LogitudeExportStorage id CDATA #REQUIRED>
+<!ELEMENT StorageNo (#PCDATA)>
+<!ELEMENT tenant (#PCDATA)>
+<!ELEMENT quantity (#PCDATA)>
+<!ELEMENT reshimon_num (#PCDATA)>
+<!ELEMENT freight_rate (#PCDATA)>
+<!ELEMENT insurance_type (#PCDATA)>
+<!ELEMENT insurance_percent (#PCDATA)>
+<!ELEMENT insurance_amount (#PCDATA)>
+<!ELEMENT agent_fee (#PCDATA)>
+<!ELEMENT country (country-name?, country-id?)>
+<!ATTLIST country id CDATA #REQUIRED>
+<!ELEMENT country-name (#PCDATA)>
+<!ELEMENT country-id (#PCDATA)>
+<!ELEMENT freight_currency (freight_currency-name?, freight_currency-id?)>
+<!ATTLIST freight_currency id CDATA #REQUIRED>
+<!ELEMENT freight_currency-name (#PCDATA)>
+<!ELEMENT freight_currency-id (#PCDATA)>
+<!ELEMENT insurance_amount_currency (insurance_amount_currency-name?, insurance_amount_currency-id?)>
+<!ATTLIST insurance_amount_currency id CDATA #REQUIRED>
+<!ELEMENT insurance_amount_currency-name (#PCDATA)>
+<!ELEMENT insurance_amount_currency-id (#PCDATA)>
+<!ELEMENT SupplierInvoice (InvoiceNumber?, AccountTypeCode?, IssueDate?, VendorId?, InvoiceCurrencyTypeCode?, InvoiceAmount?, IncotermCode?, IssueCountryCode?, IsPreference?, PreferenceDocumentTypeCode?, LogitudeSupplierAccount*, EXPENSES*, PackageTypeCode?)>
+<!ELEMENT InvoiceNumber (#PCDATA)>
+<!ELEMENT AccountTypeCode (#PCDATA)>
+<!ELEMENT IssueDate (#PCDATA)>
+<!ELEMENT VendorId (#PCDATA)>
+<!ELEMENT InvoiceCurrencyTypeCode (#PCDATA)>
+<!ELEMENT InvoiceAmount (#PCDATA)>
+<!ELEMENT IncotermCode (#PCDATA)>
+<!ELEMENT IssueCountryCode (#PCDATA)>
+<!ELEMENT IsPreference (#PCDATA)>
+<!ELEMENT PreferenceDocumentTypeCode (#PCDATA)>
+<!ELEMENT LogitudeSupplierAccount (ItemNo?, PratMehes?, AccountQuantity?, Unit?, StatisticQuantity?, StatisticQuantityUnit?, RateGroup?, Document?, OriginCcountryId?, SupplierAccountLine?, SupplierItemLine?, MarksAndNumbers?, PackageWeight?, PackageQuantity?, ItemPrice?, WholeSaleItemPrice?, WholeSaleItemPriceCurrencyCode?, AdditionalQuantity?, AdditionalQuantityType?)>
+<!ELEMENT ItemNo (#PCDATA)>
+<!ELEMENT PratMehes (#PCDATA)>
+<!ELEMENT AccountQuantity (#PCDATA)>
+<!ELEMENT Unit (#PCDATA)>
+<!ELEMENT StatisticQuantity (#PCDATA)>
+<!ELEMENT StatisticQuantityUnit (#PCDATA)>
+<!ELEMENT RateGroup (#PCDATA)>
+<!ELEMENT Document (#PCDATA)>
+<!ELEMENT OriginCcountryId (#PCDATA)>
+<!ELEMENT SupplierAccountLine (#PCDATA)>
+<!ELEMENT SupplierItemLine (#PCDATA)>
+<!ELEMENT MarksAndNumbers (#PCDATA)>
+<!ELEMENT PackageWeight (#PCDATA)>
+<!ELEMENT PackageQuantity (#PCDATA)>
+<!ELEMENT ItemPrice (#PCDATA)>
+<!ELEMENT WholeSaleItemPrice (#PCDATA)>
+<!ELEMENT WholeSaleItemPriceCurrencyCode (#PCDATA)>
+<!ELEMENT AdditionalQuantity (#PCDATA)>
+<!ELEMENT AdditionalQuantityType (#PCDATA)>
+<!ELEMENT EXPENSES (TypeCode?, Amount?, CurrencyTypeCode?)>
+<!ELEMENT TypeCode (#PCDATA)>
+<!ELEMENT Amount (#PCDATA)>
+<!ELEMENT CurrencyTypeCode (#PCDATA)>
+<!ELEMENT PackageTypeCode (#PCDATA)>
+<!ELEMENT agent_fee_currency (#PCDATA)>
+<!ELEMENT CustomsDocuments (Entname?, ExternalAttachmentId?, DocumentTypeCode?, Blocked?, FromDeclartion?, COM_ID?, SerialNum?)>
+<!ELEMENT Entname (#PCDATA)>
+<!ELEMENT ExternalAttachmentId (#PCDATA)>
+<!ELEMENT DocumentTypeCode (#PCDATA)>
+<!ELEMENT Blocked (#PCDATA)>
+<!ELEMENT FromDeclartion (#PCDATA)>
+<!ELEMENT COM_ID (#PCDATA)>
+<!ELEMENT SerialNum (#PCDATA)>
+<!ELEMENT TaxationDateTime (#PCDATA)>

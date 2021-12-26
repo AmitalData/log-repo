@@ -270,6 +270,9 @@
     <None Include="Customs\MasterCourier\LOGIMASTERCOUR.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Export\Entry\LOGIEXPORTSTORAGE.dtd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Infrastructure\FuStatus\gfusts.dtd" />
     <None Include="Infrastructure\FuStatus\gfusts.xsd">
       <SubType>Designer</SubType>
