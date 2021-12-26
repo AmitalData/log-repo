@@ -34,6 +34,8 @@
                         </g>
                     </g>
                 </svg>
+                <span *ngIf="Shipment.EntityType==='O'" class="order-icon">SHO</span>
+
             </div>
         </div>
 
@@ -175,7 +177,7 @@
                             </svg>
 
                             <div class="label" *ngIf="!Delivered && AssignedTruckerDone">{{currentMilestoneName||'In Progress'}}</div>
-                            
+
 
                             <div *ngIf="!Delivered && !AssignedTruckerDone" class="label dim">Delivered</div>
                             <div *ngIf="Delivered" class="label">Delivered</div>
