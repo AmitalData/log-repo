@@ -41,6 +41,7 @@ export class AddEditOnCarriageComponent extends BaseComponent {
     public LegType: string;
     public IsOkButtonEnabled: boolean = true;
     private SaveCompletedEvent: any = null;
+    public IsChooseVesselVisible: boolean = false;
     constructor() {
         super();
         this.InitServices();
@@ -192,14 +193,16 @@ export class AddEditOnCarriageComponent extends BaseComponent {
         this.UIProperties.SetEnabled("OnCarriageToPortId", this.ObjectTableName, isConnectedMasterPortsEnabled && isTransportFieldEnabled);
         this.UIProperties.SetEnabled("OnCarriageCarrierId", this.ObjectTableName, isTransportFieldEnabled);
         this.UIProperties.SetEnabled("OnCarriageCarrierNumber", this.ObjectTableName, isCarrierNumberFieldEnabled);
-        this.UIProperties.SetEnabled("OnCarriageVesselId", this.ObjectTableName, this.IsEditingEnabled);
+        this.UIProperties.SetEnabled("OnCarriageVesselName", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("OnCarriageETD", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("OnCarriageETA", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("OnCarriageATD", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("OnCarriageATA", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("SplitOnCarriage", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("OnCarriageAdditionalTransportModeCode", this.ObjectTableName, this.IsEditingEnabled);
-        this.UIProperties.SetVisibility("OnCarriageVesselId", this.ObjectTableName, this.OnCarriageTransportModeId == "O" ? true : false);
+        this.UIProperties.SetVisibility("OnCarriageVesselName", this.ObjectTableName, this.OnCarriageTransportModeId == "O" ? true : false);
+        this.IsChooseVesselVisible = this.OnCarriageTransportModeId == "O" ? true : false;
+
         this.SetUIProperties_Carriage_RequiredFields();
         this.SetUIProperties_Carriage_ValidateActualDates();
     }
@@ -221,13 +224,16 @@ export class AddEditOnCarriageComponent extends BaseComponent {
         this.UIProperties.SetEnabled("OnForwardingToPortId", this.ObjectTableName, isTransportFieldEnabled);
         this.UIProperties.SetEnabled("OnForwardingCarrierId", this.ObjectTableName, isTransportFieldEnabled);
         this.UIProperties.SetEnabled("OnForwardingCarrierNumber", this.ObjectTableName, isCarrierNumberFieldEnabled);
-        this.UIProperties.SetEnabled("OnForwardingVesselId", this.ObjectTableName, this.IsEditingEnabled);
+        this.UIProperties.SetEnabled("OnForwardingVesselName", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("OnForwardingETD", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("OnForwardingETA", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("OnForwardingATD", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("OnForwardingATA", this.ObjectTableName, this.IsEditingEnabled);        
         this.UIProperties.SetEnabled("OnForwardingAdditionalTransportModeCode", this.ObjectTableName, this.IsEditingEnabled);
-        this.UIProperties.SetVisibility("OnForwardingVesselId", this.ObjectTableName, this.OnForwardingTransportModeId == "O" ? true : false);
+        this.UIProperties.SetVisibility("OnForwardingVesselName", this.ObjectTableName, this.OnForwardingTransportModeId == "O" ? true : false);
+        this.IsChooseVesselVisible = this.OnForwardingTransportModeId == "O" ? true : false;
+
+
         this.SetUIProperties_Forwarding_RequiredFields();
         this.SetUIProperties_Forwarding_ValidateActualDates();
     }
@@ -275,14 +281,15 @@ export class AddEditOnCarriageComponent extends BaseComponent {
         this.UIProperties.SetEnabled("OnCarriageToPortId", this.ObjectTableName, false);
         this.UIProperties.SetEnabled("OnCarriageCarrierId", this.ObjectTableName, false);
         this.UIProperties.SetEnabled("OnCarriageCarrierNumber", this.ObjectTableName, false);
-        this.UIProperties.SetEnabled("OnCarriageVesselId", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("OnCarriageVesselName", this.ObjectTableName, false);
         this.UIProperties.SetEnabled("OnCarriageETD", this.ObjectTableName, false);
         this.UIProperties.SetEnabled("OnCarriageETA", this.ObjectTableName, false);
         this.UIProperties.SetEnabled("OnCarriageATD", this.ObjectTableName, false);
         this.UIProperties.SetEnabled("OnCarriageATA", this.ObjectTableName, false);
-        this.UIProperties.SetVisibility("OnCarriageVesselId", this.ObjectTableName, this.OnCarriageTransportModeId == "O" ? true : false);
+        this.UIProperties.SetVisibility("OnCarriageVesselName", this.ObjectTableName, this.OnCarriageTransportModeId == "O" ? true : false);
         this.UIProperties.SetEnabled("SplitOnCarriage", this.ObjectTableName, false);
         this.UIProperties.SetEnabled("OnCarriageAdditionalTransportModeCode", this.ObjectTableName, false);
+        this.IsChooseVesselVisible = this.OnCarriageTransportModeId == "O" ? true : false;
     }
 
     public CarrierDependencyProperty1: string = null;
@@ -319,6 +326,7 @@ export class AddEditOnCarriageComponent extends BaseComponent {
             this.OnCarriageCarrierId = null;
             this.OnCarriageCarrierNumber = null;
             this.OnCarriageVesselId = null;
+            this.OnCarriageVesselName = null;
             this.SetUIProperties_Carriage();
             this.SetDependencies();
         }
@@ -449,22 +457,14 @@ export class AddEditOnCarriageComponent extends BaseComponent {
     get OnCarriageVesselId() { return this.EntityPM.OnCarriageVesselId; }
     set OnCarriageVesselId(value: string) {
         if (this.EntityPM.OnCarriageVesselId != value) {
-            this.EntityPM.OnCarriageVesselId = value;
-
-            if (AppTool.IsNullOrEmpty(value)) {
-                this.EntityPM.OnCarriageVesselName = null;
-            }
-
-            else {
-                this.myVesselListService.getSingleFromCache(value).subscribe((myResponse: ServiceResponse) => {
-                    if (!myResponse.HasError) {
-                        var list: VesselList = myResponse.Result;
-                        if (list) {
-                            this.EntityPM.OnCarriageVesselName = list.EnglishName;
-                        }
-                    }
-                });
-            }
+            this.EntityPM.OnCarriageVesselId = value;            
+        }
+    }
+    get OnCarriageVesselName() { return this.EntityPM.OnCarriageVesselName; }
+    set OnCarriageVesselName(newValue: string) {
+        if (this.EntityPM.OnCarriageVesselName != newValue) {
+            this.EntityPM.OnCarriageVesselName = newValue;
+            this.OnCarriageVesselId = null;
         }
     }
 
@@ -538,6 +538,7 @@ export class AddEditOnCarriageComponent extends BaseComponent {
             this.OnForwardingCarrierId = null;
             this.OnForwardingCarrierNumber = null;
             this.OnForwardingVesselId = null;
+            this.OnForwardingVesselName = null;
             this.SetUIProperties_Forwarding();
             this.SetDependencies();
         }
@@ -668,22 +669,15 @@ export class AddEditOnCarriageComponent extends BaseComponent {
     get OnForwardingVesselId() { return this.EntityPM.OnForwardingVesselId; }
     set OnForwardingVesselId(value: string) {
         if (this.EntityPM.OnForwardingVesselId != value) {
-            this.EntityPM.OnForwardingVesselId = value;
+            this.EntityPM.OnForwardingVesselId = value;            
+        }
+    }
 
-            if (AppTool.IsNullOrEmpty(value)) {
-                this.EntityPM.OnForwardingVesselName = null;
-            }
-
-            else {
-                this.myVesselListService.getSingleFromCache(value).subscribe((myResponse: ServiceResponse) => {
-                    if (!myResponse.HasError) {
-                        var list: VesselList = myResponse.Result;
-                        if (list) {
-                            this.EntityPM.OnForwardingVesselName = list.EnglishName;
-                        }
-                    }
-                });
-            }
+    get OnForwardingVesselName() { return this.EntityPM.OnForwardingVesselName; }
+    set OnForwardingVesselName(newValue: string) {
+        if (this.EntityPM.OnForwardingVesselName != newValue) {
+            this.EntityPM.OnForwardingVesselName = newValue;
+            this.OnForwardingVesselId = null;
         }
     }
 
@@ -744,6 +738,18 @@ export class AddEditOnCarriageComponent extends BaseComponent {
                 case "OnCarriageETA": { this.OnCarriageATA = DateTool.GetDateParts(this.OnCarriageETA).DateObject; break; }
             }
         }
+    }
+
+    ChooseVesselClicked(type: string) {
+        var idProperty = type == "O" ? "OnCarriageVesselId" : "OnForwardingVesselId";
+        var nameProperty = type == "O" ? "OnCarriageVesselName" : "OnForwardingVesselName";
+
+        var logitudeWindow = new LogitudeWindow();
+        logitudeWindow.Width = 775;
+        logitudeWindow.Height = 570;
+        logitudeWindow.WindowArgs = { EntityPM: this.EntityPM, IdProperty: idProperty, NameProperty: nameProperty };
+        logitudeWindow.Title = "Vessel Search";
+        logitudeWindow.Show("./ShipmentModules/ShipmentRouting/Components/Routings/ChooseVesselComponent");
     }
 
     CancelButtonClicked() {
@@ -968,6 +974,7 @@ export class AddEditOnCarriageComponent extends BaseComponent {
         this.myCloner.AddField('OnCarriageCarrierId');
         this.myCloner.AddField('OnCarriageCarrierNumber');
         this.myCloner.AddField('OnCarriageVesselId');
+        this.myCloner.AddField('OnCarriageVesselName');
         this.myCloner.AddField('OnCarriageETD');
         this.myCloner.AddField('OnCarriageETA');
         this.myCloner.AddField('OnCarriageATD');
@@ -979,6 +986,7 @@ export class AddEditOnCarriageComponent extends BaseComponent {
         this.myCloner.AddField('OnForwardingCarrierId');
         this.myCloner.AddField('OnForwardingCarrierNumber');
         this.myCloner.AddField('OnForwardingVesselId');
+        this.myCloner.AddField('OnForwardingVesselName');
         this.myCloner.AddField('OnForwardingETD');
         this.myCloner.AddField('OnForwardingETA');
         this.myCloner.AddField('OnForwardingATD');

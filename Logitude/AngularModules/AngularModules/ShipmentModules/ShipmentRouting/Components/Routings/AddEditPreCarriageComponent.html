@@ -87,7 +87,6 @@
                                 </td>
 
                                 <td>
-
                                     <!-- [DependencyFilter1Value]="CarrierDependencyProperty1" -->
                                     <LogLov [ObjectFieldName]="'PreCarriageCarrierId'"
                                             [SelectedValue]="PreCarriageCarrierId"
@@ -119,9 +118,9 @@
                                     <table>
                                         <tr>
                                             <td>
-                                                <LogTextBox [HideColumns]="true" [ObjectFieldName]="'PreCarriageVesselName'" [Text]="PreCarriageVesselName" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                <LogTextBox [HideLastColumn]="true" [ObjectFieldName]="'PreCarriageVesselName'" [Text]="PreCarriageVesselName" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
                                             </td>
-                                            <td style="width: 20px; padding-left: 4px;">
+                                            <td style="width: 20px; left:-15px;">
                                                 <span *ngIf="IsChooseVesselVisible" class="hyperlink" [class.HyperlinkDisabled]="!IsEditingEnabled" (click)="ChooseVesselClicked('P')">
                                                     <img style="vertical-align: middle; width: 14px; height: 14px; cursor: pointer;" src="./Images/LOVSearch.png" />
                                                 </span>
@@ -366,10 +365,10 @@
                                     <table>
                                         <tr>
                                             <td>
-                                                <LogTextBox [HideColumns]="true" [ObjectFieldName]="'PreForwardingVesselName'" [Text]="PreForwardingVesselName" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                <LogTextBox [HideLastColumn]="true" [ObjectFieldName]="'PreForwardingVesselName'" [Text]="PreForwardingVesselName" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
                                             </td>
-                                            <td style="width: 20px; padding-left: 4px;" *ngIf="IsChooseVesselVisible">
-                                                <span class="hyperlink" [class.HyperlinkDisabled]="!IsEditingEnabled" (click)="ChooseVesselClicked('F')">
+                                            <td style=" width: 20px; left:-15px;">
+                                                <span *ngIf="IsChooseVesselVisible" class="hyperlink" [class.HyperlinkDisabled]="!IsEditingEnabled" (click)="ChooseVesselClicked('F')">
                                                     <img style="vertical-align: middle; width: 14px; height: 14px; cursor: pointer;" src="./Images/LOVSearch.png" />
                                                 </span>
                                             </td>

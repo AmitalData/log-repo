@@ -9,10 +9,8 @@ import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocato
 import {Cloner} from '../../../../Infrastructure/Utilities/Cloner';
 import {CardList} from '../../../../Common/EntityLists/CardList'; 
 import {PortList} from '../../../../Common/EntityLists/PortList';
-import {VesselList} from '../../../../Common/EntityLists/VesselList';  
 import {CardListService} from '../../../../Common/Services/StandardLists/CardListService';
 import {PortListService} from '../../../../Common/Services/StandardLists/PortListService';
-import {VesselListService} from '../../../../Common/Services/StandardLists/VesselListService';
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { ConfirmWindow } from '../../../../Controls/Windows/ConfirmWindow';
@@ -377,9 +375,7 @@ export class AddEditPreCarriageComponent extends BaseComponent {
     get PreCarriageVesselId() { return this.EntityPM.PreCarriageVesselId; }
     set PreCarriageVesselId(newValue: string) {
         if (this.EntityPM.PreCarriageVesselId != newValue) {
-            this.EntityPM.PreCarriageVesselId = newValue;
-
-            this.PreCarriageVesselName = null;
+            this.EntityPM.PreCarriageVesselId = newValue;            
         }
     }
 
@@ -387,6 +383,7 @@ export class AddEditPreCarriageComponent extends BaseComponent {
     set PreCarriageVesselName(newValue: string) {
         if (this.EntityPM.PreCarriageVesselName != newValue) {
             this.EntityPM.PreCarriageVesselName = newValue;
+            this.PreCarriageVesselId = null;
         }
     }
 
@@ -552,9 +549,7 @@ export class AddEditPreCarriageComponent extends BaseComponent {
     get PreForwardingVesselId() { return this.EntityPM.PreForwardingVesselId; }
     set PreForwardingVesselId(newValue: string) {
         if (this.EntityPM.PreForwardingVesselId != newValue) {
-            this.EntityPM.PreForwardingVesselId = newValue;
-
-            this.PreForwardingVesselName = null;
+            this.EntityPM.PreForwardingVesselId = newValue;            
         }
     }
 
@@ -562,6 +557,7 @@ export class AddEditPreCarriageComponent extends BaseComponent {
     set PreForwardingVesselName(newValue: string) {
         if (this.EntityPM.PreForwardingVesselName != newValue) {
             this.EntityPM.PreForwardingVesselName = newValue;
+            this.PreForwardingVesselId = null;
         }
     }
 

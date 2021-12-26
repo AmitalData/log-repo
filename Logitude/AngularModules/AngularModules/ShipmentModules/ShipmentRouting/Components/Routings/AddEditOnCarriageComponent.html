@@ -154,19 +154,25 @@
                                                 </td>
                                             </tr>
 
-                                            <!-- OnCarriageVesselId -->
+                                            <!-- OnCarriageVesselName -->
                                             <tr class="FormFieldRow">
                                                 <td>
-                                                    <LogLabel [ObjectFieldName]="'OnCarriageVesselId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="'Shipment.O.Routings.Vessel'"></LogLabel>
+                                                    <LogLabel [ObjectFieldName]="'OnCarriageVesselName'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="'Shipment.O.Routings.Vessel'"></LogLabel>
                                                 </td>
 
                                                 <td>
-                                                    <LogLov [ObjectFieldName]="'OnCarriageVesselId'"
-                                                            [SelectedValue]="OnCarriageVesselId"
-                                                            [ObjectTableName]="ObjectTableName"
-                                                            [DataContext]="DataContext"
-                                                            [LookUpTableName]="'Vessel'">
-                                                    </LogLov>
+                                                    <table>
+                                                        <tr>
+                                                            <td>
+                                                                <LogTextBox [HideLastColumn]="true" [ObjectFieldName]="'OnCarriageVesselName'" [Text]="OnCarriageVesselName" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                            </td>
+                                                            <td style="width: 20px; left:-15px;">
+                                                                <span *ngIf="IsChooseVesselVisible" class="hyperlink" [class.HyperlinkDisabled]="!IsEditingEnabled" (click)="ChooseVesselClicked('O')">
+                                                                    <img style="vertical-align: middle; width: 14px; height: 14px; cursor: pointer;" src="./Images/LOVSearch.png" />
+                                                                </span>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
                                                 </td>
                                             </tr>
 
@@ -532,19 +538,25 @@
                                                 </td>
                                             </tr>
 
-                                            <!-- OnForwardingVesselId -->
+                                            <!-- OnForwardingVesselName -->
                                             <tr class="FormFieldRow">
                                                 <td>
-                                                    <LogLabel [ObjectFieldName]="'OnForwardingVesselId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="'Shipment.O.Routings.Vessel'"></LogLabel>
+                                                    <LogLabel [ObjectFieldName]="'OnForwardingVesselName'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="'Shipment.O.Routings.Vessel'"></LogLabel>
                                                 </td>
 
                                                 <td>
-                                                    <LogLov [ObjectFieldName]="'OnForwardingVesselId'"
-                                                            [SelectedValue]="OnForwardingVesselId"
-                                                            [ObjectTableName]="ObjectTableName"
-                                                            [DataContext]="DataContext"
-                                                            [LookUpTableName]="'Vessel'">
-                                                    </LogLov>
+                                                    <table>
+                                                        <tr>
+                                                            <td>
+                                                                <LogTextBox [HideLastColumn]="true" [ObjectFieldName]="'OnForwardingVesselName'" [Text]="OnForwardingVesselName" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                            </td>
+                                                            <td style=" width: 20px; left:-15px;">
+                                                                <span *ngIf="IsChooseVesselVisible" class="hyperlink" [class.HyperlinkDisabled]="!IsEditingEnabled" (click)="ChooseVesselClicked('F')">
+                                                                    <img style="vertical-align: middle; width: 14px; height: 14px; cursor: pointer;" src="./Images/LOVSearch.png" />
+                                                                </span>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
                                                 </td>
                                             </tr>
 
