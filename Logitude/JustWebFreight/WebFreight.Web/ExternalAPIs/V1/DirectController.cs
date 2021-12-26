@@ -591,7 +591,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 }
             }
         }
-        private bool IsInlandDomesticShipment(dynamic entity)
+        private bool IsInlandDomesticShipment(Direct entity)
         {
             bool isInland = false;
             bool isDomestic = false;
@@ -606,6 +606,10 @@ namespace WebFreight.Web.ExternalAPIs.V1
             }
 
             return isDomestic && isInland;
+        }
+        private bool IsInlandDomesticShipment(ShipmentPM entityPM)
+        {
+            return entityPM.DirectionId == "D" && entityPM.TransportModeId == "I";
         }
         private bool IsSentCustomerAShipmentPatrner(ShipmentPM entityPM)
         {
