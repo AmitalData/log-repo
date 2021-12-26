@@ -257,6 +257,27 @@ namespace WebFreight.Web.DataProviders
         public DateTime? CustomsDeclarationDate { get; set; }
         public DateTime? CustomsClearanceDate { get; set; }
 
+        public string Transshipment1CarrierNumber { get; set; }
+        public string Transshipment1CarrierName { get; set; }
+        public string Transshipment1FromPortCode { get; set; }
+        public string Transshipment1ToPortCode { get; set; }
+        public string Transshipment1FromPortName { get; set; }
+        public string Transshipment1ToPortName { get; set; }
+        public DateTime? Transshipment1ETA { get; set; }
+        public DateTime? Transshipment1ETD { get; set; }
+        public DateTime? Transshipment1ATA { get; set; }
+        public DateTime? Transshipment1ATD { get; set; }
+
+        public string Transshipment2CarrierNumber { get; set; }
+        public string Transshipment2CarrierName { get; set; }
+        public string Transshipment2FromPortCode { get; set; }
+        public string Transshipment2ToPortCode { get; set; }
+        public string Transshipment2FromPortName { get; set; }
+        public string Transshipment2ToPortName { get; set; }
+        public DateTime? Transshipment2ETA { get; set; }
+        public DateTime? Transshipment2ETD { get; set; }
+        public DateTime? Transshipment2ATA { get; set; }
+        public DateTime? Transshipment2ATD { get; set; }
 
     }
 
