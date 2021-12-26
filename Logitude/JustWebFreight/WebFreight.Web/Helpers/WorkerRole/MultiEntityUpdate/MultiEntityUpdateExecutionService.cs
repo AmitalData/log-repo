@@ -59,6 +59,7 @@ namespace WebFreight.Web.Helpers.WorkerRole.MultiEntityUpdate
             }
             catch (Exception exception)
             {
+                queueService.CompleteAsFailed();
                 HandleException(exception);
             }
         }
@@ -96,7 +97,6 @@ namespace WebFreight.Web.Helpers.WorkerRole.MultiEntityUpdate
         {
             DatabaseInitializer.RunOnSeconderyDB = false;
             MarkMultiEntityUpdateLogAsFailed(exception);
-            queueService.CompleteAsFailed();
         }
 
         private void MarkMultiEntityUpdateLogAsFailed(Exception exception)
