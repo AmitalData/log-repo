@@ -20,7 +20,8 @@ namespace Logitude.BL.ShipmentsModel.EntityAMs
         public CodeProperties ToPort { get; set; } 
         public string ShipmentTypeId { get; set; } 
         public CodeProperties Customer { get; set; }
-        public string ConsigneeName { get; set; } 
+        public string ConsigneeName { get; set; }
+        public string AgentName { get; set; }
         public string InvoiceReference { get; set; }
         public string CustomerReference { get; set; }
         public bool IncludePickup { get; set; }

@@ -1029,6 +1029,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 Card loadedCard = CardRepository.GetSingleCard(shipment.AgentId, shipment.Tenant, true);
                 shipmentPM.AgentName = loadedCard.EnglishName;
                 shipmentPM.AgentNote = loadedCard.Notes;
+                shipmentPM.PrivateLabelAgentName = loadedCard.EnglishName;
 
                 if (!string.IsNullOrEmpty(shipment.AgentAddressId))
                 {
@@ -1039,6 +1040,10 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         shipmentPM.AgentAddressCountryCode = agentAddress.Country == null ? "" : agentAddress.Country.Code;
                     }
                 }
+            }
+            else
+            {
+                shipmentPM.PrivateLabelAgentName = shipment.PrivateLabelAgentName;
             }
             #endregion
 
@@ -1852,7 +1857,6 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.PrivateLabelInvoiceNumber = shipment.PrivateLabelInvoiceNumber; 
             shipmentPM.PrivateLabelIncludePickup = shipment.PrivateLabelIncludePickup;
             shipmentPM.PrivateLabelIncludeDelivery = shipment.PrivateLabelIncludeDelivery;
-            shipmentPM.PrivateLabelAgentName = shipment.PrivateLabelAgentName;
             shipmentPM.RequestedFlightDate = shipment.RequestedFlightDate;
 
 

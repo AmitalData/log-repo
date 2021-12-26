@@ -199,7 +199,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 this.calculateProfit = false;
                 this.calculatePayables = false;
                 this.calculateReceivables = false;
-
+                
                 this.initializer.HandleBehaviours();
 
                 this.entityMasterData = this.initializer.EntityMasterData;

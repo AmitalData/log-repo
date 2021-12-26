@@ -78,6 +78,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 ToPort = GetShipmentPort(shipmentPM.ToPort, shipmentPM.ToCountryCode),
                 Agent = GetCardById(shipmentPM.AgentId),
                 Consignee = GetCardById(shipmentPM.ConsigneeId),
+                AgentName = shipmentPM.PrivateLabelAgentName,
+
             };
         }
         
