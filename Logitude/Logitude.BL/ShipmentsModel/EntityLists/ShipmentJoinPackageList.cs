@@ -40,7 +40,7 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public string AgentId { get; set; }
         public string AgentName { get; set; }
         public string ShipmentLevelCode { get; set; }
-        public string VesselId { get; set; }
+        public string VesselName { get; set; }
         public string CustomerReference1 { get; set; }
         public string CustomerReference2 { get; set; }
         public bool IsCancelled { get; set; }
@@ -150,10 +150,10 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public DateTime? Transshipment2ATD { get; set; }
         public DateTime? Transshipment1ATD { get; set; }
 
-        public string Transshipment3VesselId { get; set; }
-        public string Transshipment2VesselId { get; set; }
-        public string Transshipment1VesselId { get; set; }
-        public string MainCarriageVesselId { get; set; }
+        public string Transshipment3VesselName { get; set; }
+        public string Transshipment2VesselName { get; set; }
+        public string Transshipment1VesselName { get; set; }
+        public string MainCarriageVesselName { get; set; }
         public string BookingConfirmationNumber { get; set; }
         public string IncotermId { get; set; }
         public string ShipperAddressId { get; set; }

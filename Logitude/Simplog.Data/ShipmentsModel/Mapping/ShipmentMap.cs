@@ -347,16 +347,15 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.OnForwardingVesselId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.OnForwardingCarrierId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.OnForwardingAdditionalTransportModeCode).HasMaxLength(4).IsUnicode(false);
-
             this.Property(t => t.ParentShipmentDirectionId).IsFixedLength().HasMaxLength(1).IsUnicode(false);
             this.Property(t => t.ParentShipmentNumber).HasMaxLength(20).IsUnicode(false);
             this.Property(t => t.ParentShipmentType).HasMaxLength(40).IsUnicode(false);
-
             this.Property(t => t.PrivateLabelInvoiceNumber).HasMaxLength(40).IsUnicode(false);
             this.Property(t => t.OperationalStatusId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.BillingStatusId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.DestinationWarehouseId).HasMaxLength(15).IsUnicode(false);
-
+            this.Property(t => t.PreForwardingVesselName).HasMaxLength(40).IsUnicode(false);
+            this.Property(t => t.OnForwardingVesselName).HasMaxLength(40).IsUnicode(false);
             this.Property(t => t.PrivateLabelAgentName).HasMaxLength(70).IsUnicode(false);
 
             // Table & Column Mappings
@@ -815,6 +814,8 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.OperationalStatusId).HasColumnName("OperationalStatusId");
             this.Property(t => t.HasUnassignedData).HasColumnName("HasUnassignedData");
             this.Property(t => t.PrivateLabelAgentName).HasColumnName("PrivateLabelAgentName");
+            this.Property(t => t.PreForwardingVesselName).HasColumnName("PreForwardingVesselName");
+            this.Property(t => t.OnForwardingVesselName).HasColumnName("OnForwardingVesselName");
 
             if (dbms == "oracle")
             {

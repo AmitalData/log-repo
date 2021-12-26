@@ -3054,6 +3054,13 @@
       Nullable="true" />
   </Column>
   <Column
+    Name="PreForwardingVesselName"
+    Type="varchar"
+    Size="40">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
     Name="OnForwardingTransportModeId"
     Type="char"
     Size="1">
@@ -3116,6 +3123,13 @@
     Name="OnForwardingVesselId"
     Type="varchar"
     Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="OnForwardingVesselName"
+    Type="varchar"
+    Size="40">
     <Constraints
       Nullable="true" />
   </Column>

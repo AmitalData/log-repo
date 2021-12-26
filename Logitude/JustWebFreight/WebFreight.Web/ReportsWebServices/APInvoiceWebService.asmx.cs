@@ -383,13 +383,14 @@ namespace WebFreight.Web.ReportsWebServices
                         invoiceDataProvider.MainCarriageVesselLabel = "Vessel";
                         invoiceDataProvider.HouseNumberLabel = "FBL";
                         invoiceDataProvider.ContainersLabel = "Containers";
+                        invoiceDataProvider.MainCarriageVesselName = shipment.MainCarriageVesselName;
 
-                        Vessel maincarriagevessel = (from v in commonContext.Vessels where v.Id == shipment.MainCarriageVesselId select v).FirstOrDefault();
+                        //Vessel maincarriagevessel = (from v in commonContext.Vessels where v.Id == shipment.MainCarriageVesselId select v).FirstOrDefault();
 
-                        if (maincarriagevessel != null)
-                        {
-                            invoiceDataProvider.MainCarriageVesselName = maincarriagevessel.EnglishName;
-                        }
+                        //if (maincarriagevessel != null)
+                        //{
+                        //    invoiceDataProvider.MainCarriageVesselName = maincarriagevessel.EnglishName;
+                        //}
                     }
 
                     else if (shipment.TransportModeId == "I")

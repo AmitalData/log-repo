@@ -544,7 +544,6 @@ namespace WebFreight.Web.ReportsWebServices
                         prealertDataProvider.FromPort = mainCarriageFromPort.EnglishName;
                     }
                 }
-                VesselQuery vesselQuery = new VesselQuery(tenant);
 
                 // Inland + Domestic
                 if (shipmentpm.DirectionId == "D" && shipmentpm.TransportModeId == "I")
@@ -582,12 +581,11 @@ namespace WebFreight.Web.ReportsWebServices
                 //Transshipment1
                 prealertDataProvider.Transshipment1CarrierNumber = shipmentpm.Transshipment1CarrierNumber != null ? shipmentpm.Transshipment1CarrierNumber : "";
                 prealertDataProvider.Transshipment1CarrierName = shipmentpm.Transshipment1CarrierName != null ? shipmentpm.Transshipment1CarrierName : "";
+                prealertDataProvider.Transshipment1Vessel = shipmentpm.Transshipment1VesselName;
 
-                VesselPM trans1Vesselpm = vesselQuery.GetSinglePM(shipmentpm.Transshipment1VesselId, tenant);
-                if (trans1Vesselpm != null)
-                {
-                    prealertDataProvider.Transshipment1Vessel = trans1Vesselpm.EnglishName != null ? trans1Vesselpm.EnglishName : "";
-                    prealertDataProvider.Transshipment1CarrierNumber = shipmentpm.Transshipment1CarrierNumber != null ? (trans1Vesselpm.EnglishName + " / " + shipmentpm.Transshipment1CarrierNumber) : "";
+                if (!string.IsNullOrEmpty(shipmentpm.Transshipment1VesselName))
+                {                    
+                    prealertDataProvider.Transshipment1CarrierNumber = shipmentpm.Transshipment1CarrierNumber != null ? (shipmentpm.Transshipment1VesselName + " / " + shipmentpm.Transshipment1CarrierNumber) : "";
                 }
 
                 prealertDataProvider.Transshipment1ETA = shipmentpm.Transshipment1ETA != null ? String.Format("{0:dd MMM yyyy}", shipmentpm.Transshipment1ETA) : "";
@@ -599,12 +597,11 @@ namespace WebFreight.Web.ReportsWebServices
 
                 //Transshipment2
                 prealertDataProvider.Transshipment2CarrierNumber = shipmentpm.Transshipment2CarrierNumber != null ? shipmentpm.Transshipment2CarrierNumber : "";
+                prealertDataProvider.Transshipment2Vessel = shipmentpm.Transshipment2VesselName;
 
-                VesselPM trans2Vesselpm = vesselQuery.GetSinglePM(shipmentpm.Transshipment2VesselId, tenant);
-                if (trans2Vesselpm != null)
+                if (!string.IsNullOrEmpty(shipmentpm.Transshipment2VesselName))
                 {
-                    prealertDataProvider.Transshipment2Vessel = trans2Vesselpm.EnglishName != null ? trans2Vesselpm.EnglishName : "";
-                    prealertDataProvider.Transshipment2CarrierNumber = shipmentpm.Transshipment2CarrierNumber != null ? (trans2Vesselpm.EnglishName + " / " + shipmentpm.Transshipment2CarrierNumber) : "";
+                    prealertDataProvider.Transshipment2CarrierNumber = shipmentpm.Transshipment2CarrierNumber != null ? (shipmentpm.Transshipment2VesselName + " / " + shipmentpm.Transshipment2CarrierNumber) : "";
                 }
 
                 prealertDataProvider.Transshipment2ETA = shipmentpm.Transshipment2ETA != null ? String.Format("{0:dd MMM yyyy}", shipmentpm.Transshipment2ETA) : "";
@@ -616,12 +613,11 @@ namespace WebFreight.Web.ReportsWebServices
 
                 //Transshipment3
                 prealertDataProvider.Transshipment3CarrierNumber = shipmentpm.Transshipment3CarrierNumber != null ? shipmentpm.Transshipment3CarrierNumber : "";
+                prealertDataProvider.Transshipment3Vessel = shipmentpm.Transshipment3VesselName;
 
-                VesselPM trans3Vesselpm = vesselQuery.GetSinglePM(shipmentpm.Transshipment3VesselId, tenant);
-                if (trans3Vesselpm != null)
-                {
-                    prealertDataProvider.Transshipment3Vessel = trans3Vesselpm.EnglishName != null ? trans3Vesselpm.EnglishName : "";
-                    prealertDataProvider.Transshipment3CarrierNumber = shipmentpm.Transshipment3CarrierNumber != null ? (trans3Vesselpm.EnglishName + " / " + shipmentpm.Transshipment3CarrierNumber) : "";
+                if (!string.IsNullOrEmpty(shipmentpm.Transshipment3VesselName))
+                {                    
+                    prealertDataProvider.Transshipment3CarrierNumber = shipmentpm.Transshipment3CarrierNumber != null ? (shipmentpm.Transshipment3VesselName + " / " + shipmentpm.Transshipment3CarrierNumber) : "";
                 }
 
                 prealertDataProvider.Transshipment3ETA = shipmentpm.Transshipment3ETA != null ? String.Format("{0:dd MMM yyyy}", shipmentpm.Transshipment3ETA) : "";
@@ -667,13 +663,10 @@ namespace WebFreight.Web.ReportsWebServices
                     prealertDataProvider.MainCarriageCarrierNumber_Label = "Vessel & Voyage";
                     prealertDataProvider.ShippingDetails_FlightDetails = "Shipping Details";
 
-                    if (shipmentpm.MainCarriageVesselId != null)
+                    if (shipmentpm.MainCarriageVesselName != null)
                     {
-                        VesselPM vesselpm = vesselQuery.GetSinglePM(shipmentpm.MainCarriageVesselId, tenant);
-                        if (vesselpm != null)
-                        {
-                            prealertDataProvider.MainCarriageCarrierNumber = vesselpm.EnglishName + " / " + prealertDataProvider.MainCarriageCarrierNumber;
-                        }
+                        prealertDataProvider.MainCarriageCarrierNumber = shipmentpm.MainCarriageVesselName + " / " + prealertDataProvider.MainCarriageCarrierNumber;
+
                     }
                 }
 
@@ -1526,15 +1519,7 @@ namespace WebFreight.Web.ReportsWebServices
                 }
 
                 prealertDataProvider.VoyageNumber = shipmentpm.MainCarriageCarrierNumber;
-
-                if (!string.IsNullOrEmpty(shipmentpm.MainCarriageVesselId))
-                {
-                    VesselPM myVessel = vesselQuery.GetSinglePM(shipmentpm.MainCarriageVesselId, tenant);
-                    if (myVessel != null)
-                    {
-                        prealertDataProvider.Vessel = myVessel.EnglishName;
-                    }
-                }
+                prealertDataProvider.Vessel = shipmentpm.MainCarriageVesselName;
 
                 if (!string.IsNullOrEmpty(shipmentpm.MoveTypeId))
                 {

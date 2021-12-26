@@ -71,7 +71,6 @@ namespace Logitude.XSD.INTTRA.BL
         private Contact EmergencyContact;
         public Country FromPortCountry;
         private Country FinalPortCountry;
-        private Vessel MainVessel;
         public ShippingLine MainShippingLine;
         public List<ShipmentPackage> ShipmentPackages = new List<ShipmentPackage>();
         private List<InsideShipmentPackage> InsidePackages = new List<InsideShipmentPackage>();
@@ -405,14 +404,9 @@ namespace Logitude.XSD.INTTRA.BL
                 this.Errors.Add("Basic Freight is required");
             }
 
-            if (this.MasterData.MainCarriageVesselId == null)
+            if (this.MasterData.MainCarriageVesselName == null)
             {
                 this.Errors.Add("Main Carriage Vessel is required");
-            }
-
-            else
-            {
-                this.MainVessel = (from d in CommonContext.Vessels where d.Id == this.MasterData.MainCarriageVesselId select d).FirstOrDefault();
             }
 
             if (this.Shipment.EmergencyContactId != null)
@@ -1213,7 +1207,7 @@ namespace Logitude.XSD.INTTRA.BL
 
                 ConveyanceInformation = new INTTRA_Out.ConveyanceInformation()
                 {
-                    ConveyanceName = this.iNTTRAGeneralMethods.FormatString(this.MainVessel.EnglishName, 35),
+                    ConveyanceName = this.iNTTRAGeneralMethods.FormatString(this.MasterData.MainCarriageVesselName, 35),
 
                     //TransportIdentification = new TransportIdentification()
                     //{
