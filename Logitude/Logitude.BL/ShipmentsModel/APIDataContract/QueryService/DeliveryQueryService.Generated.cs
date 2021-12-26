@@ -413,12 +413,9 @@ using Simplog.Data.ShipmentsModel;
 						if(myToTypePM != null)
 						{ 
 
-						 
-							if(!IsUpdate)
-							{								
+						 								
 								temp.PickUpDeliveryToTypeCode = myToTypePM.Code;
 						  
-							}  
 
 							
 						} 

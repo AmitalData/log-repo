@@ -198,6 +198,24 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
                 throw ex;
             }
         }
+        public void UpdatePickups(ShipmentPM temp)
+        {
+            foreach (ShipmentPickUpPM item in temp.ShipmentPickUps)
+            {
+                item.PickUpDeliveryTypeCode = "PICK";
+                this.ValidateAndSetPickupFromSide(item);
+                this.ValidateAndSetPickupToSide(item);
+            }
+        }
+        public void UpdateDeliveries(ShipmentPM temp)
+        {
+            foreach (ShipmentDeliveryPM item in temp.ShipmentDeliveries)
+            {
+                item.PickUpDeliveryTypeCode = "DELV";
+                this.ValidateAndSetDeliveryFromSide(item);
+                this.ValidateAndSetDeliveryToSide(item);
+            }
+        }
         private bool IsInlandDomesticShipment(ShipmentPM entityPM)
         {
             return entityPM.DirectionId == "D" && entityPM.TransportModeId == "I";
@@ -319,26 +337,6 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
             }
 
             return myResult;
-        }
-
-        private void UpdatePickups(ShipmentPM temp)
-        {
-            foreach (ShipmentPickUpPM item in temp.ShipmentPickUps)
-            {
-                item.PickUpDeliveryTypeCode = "PICK";
-                this.ValidateAndSetPickupFromSide(item);
-                this.ValidateAndSetPickupToSide(item);
-            }
-        }
-
-        private void UpdateDeliveries(ShipmentPM temp)
-        {
-            foreach (ShipmentDeliveryPM item in temp.ShipmentDeliveries)
-            {
-                item.PickUpDeliveryTypeCode = "DELV";
-                this.ValidateAndSetDeliveryFromSide(item);
-                this.ValidateAndSetDeliveryToSide(item);
-            }
         }
         private void ValidateAndSetPickupFromSide(ShipmentPickUpPM item)
         {
