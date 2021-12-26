@@ -65,6 +65,13 @@ namespace Unifreight.Data.AmitalModel.Repsitories
             get { return currentContext; }
         }
 
+        public GGGQ GetByPrimary(string primary, string entity, string originQue, string formId)
+        {
+            return (from a in context.GGGQs
+                    where a.PRIMARYNUM.ToLower() == primary.ToLower() & a.ENTNAME.ToLower() == entity.ToLower() & a.ORIGINQUE.ToLower() == originQue.ToLower() & a.FORMID.ToLower() == formId.ToLower()
+                    select a).ToList().FirstOrDefault();
+        }
+
         public void SubmitChanges()
         {
             context.SaveChanges();
