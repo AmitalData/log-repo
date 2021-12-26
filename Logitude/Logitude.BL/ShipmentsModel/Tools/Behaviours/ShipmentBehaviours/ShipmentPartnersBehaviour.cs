@@ -123,7 +123,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
 
             if (string.IsNullOrEmpty(cardId))
             {
-                entityPM.PrivateLabelAgentName = IsShipmentFromToLogbox() ? entityPM.AgentName : null;
+                entityPM.PrivateLabelAgentName = IsShipmentFromToLogbox() ? entityPM.PrivateLabelAgentName : null;
                 entityPM.AgentName = null;
                 entityPM.AgentNote = null;
                 entityPM.AgentContactId = null;
