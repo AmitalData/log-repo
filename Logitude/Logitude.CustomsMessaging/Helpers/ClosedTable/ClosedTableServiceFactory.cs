@@ -294,6 +294,26 @@ namespace Logitude.CustomsMessaging.Helpers.ClosedTable
                          );
                     }
                     break;
+                case "23928":
+                case "IncotemrsFileValidation":
+                    {
+
+                        closedTableService = new Update23928IncotemrsFileValidation(customContext, entitySystemTables,
+                         (mycustomContext) =>
+                         {
+                             return new
+                                 IncotemrsFileValidationUpdateService(mycustomContext, new Dictionary<string, IContext>(), tenant);
+                         },
+                         (mycustomContext) =>
+                         {
+                             var qs = new IncotemrsFileValidationQueryService(mycustomContext);
+                             return qs as ICanGetAllClosedTable<IncotemrsFileValidationPM>;
+                         }
+                         , tenant
+                         , false
+                         );
+                    }
+                    break;
                 case "1998":
                 case "NDMessageActionCode":
                     {

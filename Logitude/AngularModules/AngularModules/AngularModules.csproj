@@ -1482,6 +1482,7 @@
     <TypeScriptCompile Include="Customs\EntityLists\GatepassReturnCodeList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\HandingCodeList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\HazardousSubstanceList.ts" />
+    <TypeScriptCompile Include="Customs\EntityLists\IncotemrsFileValidationList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\LoadingSiteTypeList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\LogisticsReferenceTypeList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\NbcDeclarationTypeList.ts" />
@@ -1571,6 +1572,7 @@
     <TypeScriptCompile Include="Customs\EntityPMs\GatepassReturnCodePM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\HandingCodePM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\HazardousSubstancePM.ts" />
+    <TypeScriptCompile Include="Customs\EntityPMs\IncotemrsFileValidationPM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\LoadingSiteTypePM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\LogisticsReferenceTypePM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\NbcDeclarationTypePM.ts" />
@@ -1689,6 +1691,7 @@
     <TypeScriptCompile Include="Customs\Services\StandardLists\GatepassReturnCodeListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\HandingCodeListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\HazardousSubstanceListService.ts" />
+    <TypeScriptCompile Include="Customs\Services\StandardLists\IncotemrsFileValidationListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\LoadingSiteTypeListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\LogisticsReferenceTypeListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\NbcDeclarationTypeListService.ts" />

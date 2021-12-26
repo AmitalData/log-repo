@@ -418,6 +418,7 @@ import { PoaAuthorizationTypeLookupListService } from './Services/StandardLists/
 import { ClientsPoaListService } from './Services/StandardLists/ClientsPoaListService';
 import { BuyerRoleTypeListService } from './Services/StandardLists/BuyerRoleTypeListService';
 import { AmedmentTypeListService } from './Services/StandardLists/AmedmentTypeListService';
+import { IncotemrsFileValidationListService } from './Services/StandardLists/IncotemrsFileValidationListService';
 
 export class ModuleProviders {
     public static GetInstance(name: string) {
@@ -706,6 +707,7 @@ export class ModuleProviders {
             case "PoaAuthorizationTypeLookupListService": { myResult = new PoaAuthorizationTypeLookupListService(); break; }
             case "ClientsPoaListService": { myResult = new ClientsPoaListService(); break; }
             case "BuyerRoleTypeListService": { myResult = new BuyerRoleTypeListService(); break; }
+            case "IncotemrsFileValidationListService": { myResult = new IncotemrsFileValidationListService(); break; }
 
                 
              //#endregion                
