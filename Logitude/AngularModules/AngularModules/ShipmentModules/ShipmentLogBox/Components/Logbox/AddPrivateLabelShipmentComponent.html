@@ -181,6 +181,13 @@
  
 
 <table style="overflow: scroll">
+
+	<tr *ngIf="WarningErrorsList != null && WarningErrorsList.length > 0" style="height:1px;">
+		<td>
+			<WarningSummary [ItemsSource]="WarningErrorsList" [SingleLine]="true"></WarningSummary>
+		</td>
+	</tr>
+
 	<tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
 		<td>
 			<ValidationSummary [ItemsSource]="ValidationErrorsList" [SingleLine]="false"></ValidationSummary>
@@ -360,11 +367,11 @@
 																				</td>
 
 																				<!--<td [style.width.px]="LabelColumnWidth">
-									<div class="RedPoint"></div>
-									<label style="padding-left:10px;color: rgb(110, 113, 114);">
-										FromTextCode
-									</label>
-								</td>-->
+																					<div class="RedPoint"></div>
+																					<label style="padding-left:10px;color: rgb(110, 113, 114);">
+																						FromTextCode
+																					</label>
+																				</td>-->
 																				<td [style.width.px]="LabelColumnWidth">
 																					<div *ngIf="TransportModeId=='A'" class="RedPoint"></div>
 																					<div *ngIf="TransportModeId=='A'"><LogLabel [ObjectFieldName]="'MainCarriageFromPortId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="ToTextCode"></LogLabel> </div>
@@ -434,7 +441,7 @@
 																							[LookUpTableName]="'Port'"
 																							[DependencyFilter1Value]="TransportModeId">
 																					</LogLov>
-																				</td> 
+																				</td>
 
 																				<td style="width: 20px;">
 																				</td>
@@ -464,7 +471,7 @@
 
 																			<tr *ngIf="TransportModeId == 'O'" class="FormFieldRow">
 
- 
+
 																				<td [style.width.px]="LabelColumnWidth">
 																					<label style="padding-left: 10px; color: rgb(110, 113, 114); font-size: 11px;">
 																						Shipping Agent:
@@ -474,7 +481,7 @@
 
 																				<td [style.width.px]="ControlColumnWidth">
 																					<LogTextBox [ObjectFieldName]="'ShippingAgent'" [Text]="ShippingAgent" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
-																				</td> 
+																				</td>
 
 																				<td style="width: 20px;">
 																					<div></div>
@@ -584,7 +591,7 @@
 																					<td style="width: 5px;">
 																						<div></div>
 																					</td>
-																					<td style="width:150px;position: relative;" [ngStyle]="isRTL ? {'right.px': -50} : {'right.px': 50}" >
+																					<td style="width:150px;position: relative;" [ngStyle]="isRTL ? {'right.px': -50} : {'right.px': 50}">
 																						<LogDatePicker [ObjectTableName]="ObjectTableName" [ObjectFieldName]="'RequestedFlightDate'" [DataContext]="DataContext"></LogDatePicker>
 																					</td>
 
@@ -647,7 +654,7 @@
 															</div>
 														</td>
 													</tr>
-													 
+
 
 													<tr *ngIf="ShipmentTypeId == 'FCLD' && TransportModeId == 'O'" style="height: 45px;">
 														<td>
@@ -655,12 +662,12 @@
 																<div class="ScrollContent" [ngStyle]="{opacity: ScreenOpacity}">
 
 																	<!-- Container -->
-																	<div> 
+																	<div>
 
 																		<table>
 
 																			<tr class="FormFieldRow">
-																			 
+
 																				<td [style.width.px]="ControlColumnWidth">
 																					<table style="height: 20px;">
 																						<tr>
@@ -693,7 +700,7 @@
 																											<td style="width: 10px;">
 																												<div></div>
 																											</td>
-																											<td style="width: 40px; position: relative; left: 90px; top: 8px; " [ngStyle]="isRTL ? {'right.px': 370} : {}" >
+																											<td style="width: 40px; position: relative; left: 90px; top: 8px; " [ngStyle]="isRTL ? {'right.px': 370} : {}">
 																												<label style="padding-left:10px;color: rgb(110, 113, 114);">
 																													Notes:
 																												</label>
@@ -743,8 +750,8 @@
 																											<div></div>
 																										</td>
 
-																										<td class="Container" [style.width.px]="LabelColumnWidth - 30" [ngStyle]="isRTL ? {'right.px': -35} : {'right.px': 35}"   >
-																											<LogTextBox [ObjectFieldName]="'ContainerNumber1'" [Text]="ContainerNumber1"  (LostFocus)="ValidateContainerNumber($event)"  [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+																										<td class="Container" [style.width.px]="LabelColumnWidth - 30" [ngStyle]="isRTL ? {'right.px': -35} : {'right.px': 35}">
+																											<LogTextBox [ObjectFieldName]="'ContainerNumber1'" [Text]="ContainerNumber1" (LostFocus)="ValidateContainerNumber($event)" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
 																										</td>
 																									</tr>
 
@@ -841,7 +848,7 @@
 																										</td>
 
 																										<td class="Container" [style.width.px]="LabelColumnWidth - 30" [ngStyle]="isRTL ? {'right.px': -35} : {'right.px': 35}">
-																											<LogTextBox [ObjectFieldName]="'ContainerNumber4'" [Text]="ContainerNumber4" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+																											<LogTextBox [ObjectFieldName]="'ContainerNumber4'" [Text]="ContainerNumber4"  (LostFocus)="ValidateContainerNumber($event)"  [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
 																										</td>
 																									</tr>
 
@@ -890,10 +897,10 @@
 																				<td style="width: 20px;">
 																					<div></div>
 																				</td>
-  
+
 
 																				<td style="width: 200px;">
-																					<div style=" position: relative; bottom: 15px;" >
+																					<div style=" position: relative; bottom: 15px;">
 																						<LogTextBox [ObjectFieldName]="'Notes'" [Text]="Notes" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [IsMultiline]="true"></LogTextBox>
 																					</div>
 																				</td>
@@ -913,7 +920,7 @@
 														</td>
 													</tr>
 
-													 
+
 													<tr *ngIf="(ShipmentTypeId == 'LCLD' || TransportModeId == 'A')" style="height: 45px;">
 														<td>
 															<div class="ScrollViewer" style="padding: 10px; padding-top: 5px; top: 3px; right: 3px; bottom: 3px;">
@@ -1037,7 +1044,7 @@
 
 
 												</table>
-											 
+
 
 
 												<table *ngIf="DirectionId == 'C' || ShowAddDocument">
@@ -1594,8 +1601,8 @@
 		</td>
 	</tr>
 
- 
-	<tr  style="height: 32px;">
+
+	<tr style="height: 32px;">
 		<td style="vertical-align: bottom">
 			<table style="height: 22px;">
 				<tr>
