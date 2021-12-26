@@ -8,6 +8,8 @@ using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
 using Logitude.Customs.Data.Utils;
+using Logitude.Accounting.Data;
+using Logitude.Accounting.Data.EntityPOCOs;
 
 namespace Logitude.BL.CommonDataModel.CustomFilters
 {
@@ -63,6 +65,19 @@ namespace Logitude.BL.CommonDataModel.CustomFilters
                         {
                             queryableData = queryableData.Where(d => d.EnglishName.StartsWith(value) || d.Code.StartsWith(value) || d.LocalName.StartsWith(value));
                         }
+                    }
+
+                    if (item.FieldName == "GLAccountId")
+                    {
+                        queryableData = queryableData.Where(d => d.GLAccountId != null);
+
+                    }
+                    if (item.FieldName == "ExcluedFromDeductionReport")
+                    {
+                        IAccountingContext accountingContext = AccountingContext.GetContext(tenant);
+                        List<string> accountIds = (from account in accountingContext.GLAccounts where !account.ExcludeFromDeductionReport select account.Id).ToList();
+                        queryableData = queryableData.Where(d => accountIds.Contains(d.GLAccountId));
+
                     }
                 }
             }

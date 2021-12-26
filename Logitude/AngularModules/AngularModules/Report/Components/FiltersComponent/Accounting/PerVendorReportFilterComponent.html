@@ -100,11 +100,13 @@
         <td style="width:10px"></td>
         <td style="width:190px;">
             <LogLov [ObjectFieldName]="'VendorId'"
+                       [NoObjectField]="true"
                     [SelectedValue]="VendorId"
                      (SelectedItemChanged)="Vendor = $event"
-                    [ObjectTableName]="ObjectTableName"
+                    [ObjectTableName]="'Card'"
                     [DataContext]="DataContext"
                     [LookUpTableName]="'Card'"
+                    [QueryFilterItems]="CardFilterItems"
                     [DependencyFilter1Value]="VendorDependencyFilter1Value">
             </LogLov>
 

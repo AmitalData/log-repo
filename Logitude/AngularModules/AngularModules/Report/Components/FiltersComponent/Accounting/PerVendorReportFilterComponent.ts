@@ -79,8 +79,10 @@ export class PerVendorReportFilterComponent extends BaseComponent {
     InitLOVFilters() {
         // initialize query filters for Accounts
         this.CardFilterItems = new ApiQueryFilters();
-        // this.CardFilterItems.addAdditionalFilter("PartnerTypeId", "VD", null, null, "Equals", false, false, false, "string");
-      //  this.CardFilterItems.addAdditionalFilter("GLAccountId", null, null, null, "NotEqual", false, false, false, "string");
+        // this.CardFilterItems.addAdditionalFilter("PartnerTypeId", "VD", null, null, "Equals", false, false, true, "string");
+        this.CardFilterItems.addAdditionalFilter("GLAccountId", "A", null, null, "IsNotNull", true, false, true, "string");
+        this.CardFilterItems.addAdditionalFilter("CountryCode", "IL", null, null, "Equal", false, false, false, "string");
+        this.CardFilterItems.addAdditionalFilter("ExcluedFromDeductionReport", false, null, null, "Equal", true, false, true, "boolean");
     }
 
     private GetResources() {
@@ -190,6 +192,8 @@ export class PerVendorReportFilterComponent extends BaseComponent {
     }
     SetGLaccountFilterEnability() {
         if (this.VendorFilterSelectedValue == "All") {
+            this.Vendor = null;
+            this.VendorId = null;
             this.UIProperties.SetEnabled("VendorId", "Card", false);
         }
         else {
