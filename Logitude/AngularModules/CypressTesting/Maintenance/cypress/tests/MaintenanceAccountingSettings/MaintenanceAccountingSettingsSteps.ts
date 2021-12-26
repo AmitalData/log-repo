@@ -9,25 +9,25 @@ import { Urls } from "../../constants/Urls";
 
 let accountingSettingsDetails: AccountingSettingsDetails;
 
-//#region Edit accounting receivable in accounting settings
+//#region Edit receivable and payables in accounting settings
 Given("the user logged in and navigate to {string} in maintenance menu", (AccountingSettings) => {
     cy.Login()
     MaintenanceActions.OpenMaintenanceItemFromMaintenanceMenu(AccountingSettings, MaintenanceSelectors.MaintenanceItemAccountingSettings)
 });
-And("the user update Receivables Accounting Settings as following", (dataTable) => {
+And("the user update accounting settings as following", (dataTable) => {
     accountingSettingsDetails = Assists.CreateInstance<AccountingSettingsDetails>(dataTable, true);
     AccountingSettingsActions.ChangeAccountingSettings(accountingSettingsDetails)
 });
 
 When("the user save the changes", () => {
-    AccountingSettingsActions.MockSave( Urls.AccountingSettings);
+    AccountingSettingsActions.UpdateAccountingSettings();
 });
 
 Then("the new settings should saved successfully", () => {
-    AccountingSettingsActions.AssertMockSave()
+    AccountingSettingsActions.AssertUpdateInvoiceSettings()
 });
 //#endregion
-//#region Edit account payables in accounting settings
+//#region Edit invoices and payment settings in accounting settings
 And("the user update Payables Accounting Settings as following", (dataTable) => {
     accountingSettingsDetails = Assists.CreateInstance<AccountingSettingsDetails>(dataTable, true);
     AccountingSettingsActions.ChangeAccountingSettings(accountingSettingsDetails)
@@ -38,7 +38,7 @@ Given("the user navigates to {string} in maintenance menu", (AccountingSettings)
 });
 //#endregion
 //#region Edit others in accounting settings
-When("the user updates the others with {string} as VATNumber", (Value) => {
+When("the user updates the others with {string} as VAT number", (Value) => {
     AccountingSettingsActions.FillAccountingSettingsVATNumber(Value)
 });
 
