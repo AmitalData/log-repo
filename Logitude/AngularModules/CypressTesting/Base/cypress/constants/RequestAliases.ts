@@ -99,7 +99,6 @@ export class RequestAliases {
     public static readonly PostVessel = "PostVessel";
     public static readonly PutVessel = "PutVessel";
     public static readonly AccountingSettings = "AccountingSettings"
-    public static readonly Signature = "Signature"
 
     public static readonly Tenants = "Tenants"
 
@@ -227,6 +226,8 @@ export class RequestAliases {
     public static readonly PutUser = "PutUser"
 
     public static readonly PutShipperConsignee = "PutShipperConsignee"
+
+    public static readonly Signature = "Signature"
 
     public static readonly GetSignle = "GetSignle"
     public static readonly GetByFilter = "GetByFilter"

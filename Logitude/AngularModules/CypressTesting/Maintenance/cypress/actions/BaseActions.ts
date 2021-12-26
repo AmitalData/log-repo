@@ -88,5 +88,3 @@ export function MockSave(url) {
 export function AssertMockSave() {
     BaseAssertion.AssertElementNotExist(BaseSelectors.LogitudeWindow)
 }
-
-

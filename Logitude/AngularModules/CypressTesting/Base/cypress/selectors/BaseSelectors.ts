@@ -259,5 +259,4 @@ export class BaseSelectors extends RegexSelectors {
     public static readonly Air = "Air"
     public static readonly Ocean = "Ocean"
     public static readonly Inland = "Inland"
-    public static readonly OkButton="#OkButton"
 }

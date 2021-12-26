@@ -27,7 +27,4 @@ export class Constants {
     public static readonly Currency = "Currency"
     public static readonly FBLStock = "FBLStock"
     public static readonly Customer = "Customer"
-    public static readonly Add= "ADD"
-    public static readonly DontAdd= "DON'TADD"
-
 }
