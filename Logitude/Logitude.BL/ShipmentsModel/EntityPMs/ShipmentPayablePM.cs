@@ -213,6 +213,6 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public double? VatAmountLocal { get; set; }
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public double? VatAmountProfit { get; set; }
-
+        public string ChangeSet { get; set; }
     }
 }

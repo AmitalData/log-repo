@@ -424,5 +424,6 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string ContainerEntityId { get; set; }
         public bool IsCreatedFromPickupDelivery{ get; set; }
         public bool IsPackageCheckedInLeg { get; set; }
+        public string ChangeSet { get; set; }
     }
 }

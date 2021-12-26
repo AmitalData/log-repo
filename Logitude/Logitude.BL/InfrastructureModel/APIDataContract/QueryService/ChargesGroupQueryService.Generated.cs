@@ -113,9 +113,8 @@ using Simplog.Data.InfrastructureModel;
 					   
 						 
 						if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.Code))
-						{
-								//throw new ApplicationException("Code Can't be update"); 
-								temp.Code = MyEntity.Code;
+						{								
+							temp.Code = MyEntity.Code;
 								
 						
 						}  
@@ -123,9 +122,9 @@ using Simplog.Data.InfrastructureModel;
 						
 					}
                     
-					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.Name))
-					{							//throw new ApplicationException("Name Can't be update"); 
-							temp.Name = MyEntity.Name;
+					if(!IsUpdate)
+					{							
+						temp.Name = MyEntity.Name;
 
 										}  
 

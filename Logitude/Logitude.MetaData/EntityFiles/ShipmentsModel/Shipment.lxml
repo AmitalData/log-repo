@@ -99543,7 +99543,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;AirPackages&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -100812,7 +100812,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;AirPackages&quot;"
         DCVersion="&quot;ApiV1&quot;"
@@ -103520,7 +103520,7 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false"
-        IsUpdateAllowed="false" />
+        IsUpdateAllowed="true" />
       <DCField
         DCFieldName="&quot;Commodity&quot;"
         FieldName="&quot;AWBCommodityItemNumber&quot;"

@@ -41,6 +41,8 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
     public double? Amount { get; set; }
     
     public Card Vendor { get; set; }
+    
+    public string ChangeSetOp { get; set; }
 
     public  string  ComputingPartnerCode { get; set; }
 

@@ -309,6 +309,11 @@ namespace WebFreight.Web.ExternalAPIs.V1
                             externalAPIMainCarriageLegsHelper.ValidateMainCarriageLegs();
                             externalAPIMainCarriageLegsHelper.MapTransshipments();
 
+                            //ExternalAPIShipmentValidator externalAPIShipmentValidator = new ExternalAPIShipmentValidator(MasterPM, authToken.Tenant);
+                            //externalAPIShipmentValidator.UpdatePickupDeliveryPackagesChangeSet(MasterPM);
+                            //externalAPIShipmentValidator.UpdatePayablesChangeSet(MasterPM);
+                            //externalAPIShipmentValidator.UpdateReceivablesChangeSet(MasterPM);
+
                             this.UpdatePartners(MyContext, MasterPM);
 
                             MasterPM.HasUnassignedData = apiUnassignedDataHandler.HasUnassignedData;

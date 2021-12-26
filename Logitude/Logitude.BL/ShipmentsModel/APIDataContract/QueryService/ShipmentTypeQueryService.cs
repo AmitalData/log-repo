@@ -48,7 +48,7 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
             return temp;
         }
 
-        public ShipmentTypePM ShipmentTypeCustomDataMappingAndValidatin(ShipmentType MyEntity, int Tenant)
+        public ShipmentTypePM ShipmentTypeCustomDataMappingAndValidatin(ShipmentType MyEntity, int Tenant, bool isUpdate = false)
         {
             var temp = new ShipmentTypePM();
             if (!string.IsNullOrEmpty(MyEntity.Code))

@@ -86,7 +86,8 @@ using Simplog.Data.InfrastructureModel;
 					   					   temp.CreatedBy = UserService1.GetUserById(MyEntityPM.UserId,Tenant,ComputingPartnerName); 
 			       
 					   				   }
-				   					
+				   
+				   temp.IsAddedManually = MyEntityPM.IsAddedManually;					
 				   return temp;
 			}
             catch (Exception ex)
@@ -137,7 +138,7 @@ using Simplog.Data.InfrastructureModel;
 
 						 
 							if(!IsUpdate)
-							{								//throw new ApplicationException("EventType Can't be update"); 
+							{								
 								temp.EventTypeId = myEventTypePM.Id;
 						  
 							}  
@@ -149,25 +150,25 @@ using Simplog.Data.InfrastructureModel;
 			
 					
                     
-					if(!IsUpdate)// && MyEntity.LogDateTime != null)
-					{							//throw new ApplicationException("LogDateTime Can't be update"); 
-							temp.LogDateTime = MyEntity.LogDateTime;
+					if(!IsUpdate)
+					{							
+						temp.LogDateTime = MyEntity.LogDateTime;
 
 										}  
 
 					
                     
-					if(!IsUpdate)// && MyEntity.EventDateTime != null)
-					{							//throw new ApplicationException("EventDateTime Can't be update"); 
-							temp.EventDateTime = MyEntity.EventDateTime;
+					if(!IsUpdate)
+					{							
+						temp.EventDateTime = MyEntity.EventDateTime;
 
 										}  
 
 					
                     
-					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.Notes))
-					{							//throw new ApplicationException("Notes Can't be update"); 
-							temp.Notes = MyEntity.Notes;
+					if(!IsUpdate)
+					{							
+						temp.Notes = MyEntity.Notes;
 
 										}  
 
@@ -182,7 +183,7 @@ using Simplog.Data.InfrastructureModel;
 
 						 
 							if(!IsUpdate)
-							{								//throw new ApplicationException("CreatedBy Can't be update"); 
+							{								
 								temp.UserId = myCreatedByPM.Id;
 						  
 							}  
@@ -192,6 +193,14 @@ using Simplog.Data.InfrastructureModel;
 
 					}
 			
+					
+                    
+					if(!IsUpdate)
+					{							
+						temp.IsAddedManually = MyEntity.IsAddedManually;
+
+										}  
+
 										   
 					return temp;
 		    }
