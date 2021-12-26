@@ -14,6 +14,8 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public string LocalName { get; set; }
         public bool InActive { get; set; }
         public string PaymentTermName { get; set; }
+        public string PaymentTermEnglishName { get; set; }
+        public string PaymentTermLocalName { get; set; }
         public string PartnerTypeName { get; set; }
         public string ReceivablesAccountingCard { get; set; }
         public string PayablesAccountingCard { get; set; }
