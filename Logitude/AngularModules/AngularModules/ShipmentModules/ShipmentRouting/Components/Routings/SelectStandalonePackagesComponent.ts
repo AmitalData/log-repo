@@ -263,6 +263,7 @@ export class SelectStandalonePackagesComponent {
             newPackage.Weight = item.Weight;
             newPackage.ShipmentPickUpDeliveryId = this.EntityPM.Id;
             newPackage.ContainerEntityId = item.ContainerEntityId;
+            newPackage.ShipperSeal = item.EntityPM.ShipperSeal;
             this.EntityPM.AddPackage(newPackage);
             item.EntityPM.IsPackageCheckedInLeg = true;
         });
