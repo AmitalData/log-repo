@@ -40,6 +40,7 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
     public ShipmentTypesList: FilterClass[] = [];
     public ShipmentLevelsList: FilterClass[] = [];
     public ShipmentSubTypesList: FilterClass[] = [];
+    public WarningErrorsList: any[];
     EntityPM: ShipmentPM = new ShipmentPM();
     public ShipmentTypeName: string = null;
     public ShowShipmentLevels: boolean = true;
@@ -77,6 +78,7 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
     constructor() {
         super();
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
+        this.WarningErrorsList = [];
         this.InitializeServices();
         this.SetUIProperties();
         this.SetUIProperties_Filters(); 
@@ -796,10 +798,11 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
     }
 
     public ValidateContainerNumber(input: string) {
+        this.WarningErrorsList = [];
         let result = FormatTool.ValidateContainerNumber(input);
 
         if (result != null) {
-            this.ValidationErrorsList.push(result); 
+            this.WarningErrorsList.push(result);
         }
     }
 
@@ -884,6 +887,7 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
             this.PushErrorMessage("Quantity");
         } 
 
+        this.WarningErrorsList = [];
         if (!AppTool.IsNullOrEmpty(this.ContainerNumber1)) {
             this.ShowContainerValidationMessage(this.ContainerNumber1);
         }
@@ -901,7 +905,7 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
     ShowContainerValidationMessage(ContainerNumber: string) {
         let validateContainerNumber = FormatTool.ValidateContainerNumber(ContainerNumber);
         if (validateContainerNumber != null)
-            this.PushErrorMessage(validateContainerNumber);
+            this.WarningErrorsList.push(validateContainerNumber);
     }
      
 
