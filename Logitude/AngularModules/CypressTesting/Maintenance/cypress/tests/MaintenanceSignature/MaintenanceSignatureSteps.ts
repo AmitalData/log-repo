@@ -7,8 +7,10 @@ import * as MaintenanceActions from "../../actions/Actions";
 import * as Assists from "../../../../Base/cypress/assists/Assists";
 import * as BaseActions from "../../actions/BaseActions";
 import { Urls } from "../../../cypress/constants/Urls";
+import * as SignatureActions from "../../actions/SignatureActions";
 
 let signatureDetails: SignatureDetails;
+
 //#region Edit signature from maintenance
 Given("the user logged in and navigate to {string} in maintenance menu", (Signature) => {
     cy.Login()
@@ -17,16 +19,14 @@ Given("the user logged in and navigate to {string} in maintenance menu", (Signat
 
 And("the user edits the HTML template as following", (dataTable) => {
     signatureDetails = Assists.CreateInstance<SignatureDetails>(dataTable, true);
-    MaintenanceActions.AddDataFields(signatureDetails)
+    SignatureActions.AddDataFields(signatureDetails)
 });
 
 When("the user saves the new Signature", () => {
     BaseActions.MockSave(Urls.Signature)
-  //  MaintenanceActions.UpdateSignature();
 });
 
 Then("the Signature should update successfully", () => {
     BaseActions.AssertMockSave()
-    //MaintenanceActions.AssertUpdateSignature()
 });
 //#Endregion
