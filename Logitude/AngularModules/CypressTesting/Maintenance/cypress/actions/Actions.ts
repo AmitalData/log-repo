@@ -839,7 +839,6 @@ export function AssertVoidInvoiceMessage(Message: string) {
     cy.Click(BaseSelectors.Button, BaseSelectors.ContainsOK)
 }
 //#endregion
-
 //#region Customer Settings
 export function FillCustomerSettingsDetails(customerSettingsDetails: CustomerSettingsDetails) {
     FillCheckBoxProcess(MaintenanceSelectors.IsCustomerTelephoneRequiredCheckBox, customerSettingsDetails.IsCustomerTelphoneRequired)
