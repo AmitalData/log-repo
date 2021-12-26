@@ -795,7 +795,7 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
         let result = FormatTool.ValidateContainerNumber(input);
 
         if (result != null) {
-            this.PushErrorMessage(result);
+            this.ValidationErrorsList.push(result); 
         }
     }
 
