@@ -114,7 +114,7 @@ export class ChooseVesselComponent {
         this.CurrentSession.CloseCurrentWindow();
     }
 
-    AddVesselClicked() {
+    AddVesselsClicked() {
         var myService: EntityPMService = new EntityPMService();
         var componentPath = "./Infrastructure/GenericComponents/NewEntityComponent";
 
