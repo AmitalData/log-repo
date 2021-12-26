@@ -261,7 +261,7 @@ tenant);
 
 
                 LedgerTransactionListQueryService transactionQuery = new LedgerTransactionListQueryService(AccountingContext.GetContext(tenant));
-
+                transactionQuery.displayNotReconciledOnly = true;
                 GenericCallBack callback = transactionQuery.GetReconciliationFilterCallBack(queryOperations, gLAccountId, tenant, true);
 
 
