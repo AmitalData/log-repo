@@ -182,6 +182,17 @@ export class PerVendorReportFilterComponent extends BaseComponent {
         }
     }
 
+    
+    private vendorId: Date;
+    public get VendorId() { return this.vendorId; }
+    public set VendorId(value: Date) {
+        if (this.vendorId != value) {
+            this.vendorId = value;
+            
+
+        }
+    }
+
     private vendorFilterSelectedValue: string = "All";
     public get VendorFilterSelectedValue() { return this.vendorFilterSelectedValue; }
     public set VendorFilterSelectedValue(value: string) {
