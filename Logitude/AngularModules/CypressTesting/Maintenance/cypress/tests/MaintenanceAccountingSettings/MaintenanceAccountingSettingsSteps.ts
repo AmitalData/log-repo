@@ -4,17 +4,20 @@ import { AccountingSettingsDetails } from "../../models/AccountingSettingsDetail
 import { MaintenanceSelectors } from "../../selectors/Selectors";
 import * as MaintenanceActions from "../../actions/Actions";
 import * as Assists from "../../../../Base/cypress/assists/Assists";
-import * as AccountingSettingsActions  from "../../actions/AccountingSettingsActions";
-import { Urls } from "../../constants/Urls";
+import * as AccountingSettingsActions from "../../actions/AccountingSettingsActions";
 
 let accountingSettingsDetails: AccountingSettingsDetails;
 
 //#region Edit receivable and payables in accounting settings
-Given("the user logged in and navigate to {string} in maintenance menu", (AccountingSettings) => {
+Given("the user logged in", () => {
     cy.Login()
+});
+
+Given("navigate to {string} in maintenance menu", (AccountingSettings) => {
     MaintenanceActions.OpenMaintenanceItemFromMaintenanceMenu(AccountingSettings, MaintenanceSelectors.MaintenanceItemAccountingSettings)
 });
-And("the user update accounting settings as following", (dataTable) => {
+
+Given("the user update accounting settings as following", (dataTable) => {
     accountingSettingsDetails = Assists.CreateInstance<AccountingSettingsDetails>(dataTable, true);
     AccountingSettingsActions.ChangeAccountingSettings(accountingSettingsDetails)
 });
@@ -24,19 +27,10 @@ When("the user save the changes", () => {
 });
 
 Then("the new settings should saved successfully", () => {
-    AccountingSettingsActions.AssertUpdateInvoiceSettings()
+    AccountingSettingsActions.AssertUpdateAccountingSettings()
 });
 //#endregion
-//#region Edit invoices and payment settings in accounting settings
-And("the user update Payables Accounting Settings as following", (dataTable) => {
-    accountingSettingsDetails = Assists.CreateInstance<AccountingSettingsDetails>(dataTable, true);
-    AccountingSettingsActions.ChangeAccountingSettings(accountingSettingsDetails)
-});
 
-Given("the user navigates to {string} in maintenance menu", (AccountingSettings) => {
-    MaintenanceActions.OpenMaintenanceItemFromMaintenanceMenu(AccountingSettings, MaintenanceSelectors.MaintenanceItemAccountingSettings)
-});
-//#endregion
 //#region Edit others in accounting settings
 When("the user updates the others with {string} as VAT number", (Value) => {
     AccountingSettingsActions.FillAccountingSettingsVATNumber(Value)

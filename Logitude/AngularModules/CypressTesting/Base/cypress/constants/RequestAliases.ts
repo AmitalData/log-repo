@@ -226,6 +226,8 @@ export class RequestAliases {
 
     public static readonly PutShipperConsignee = "PutShipperConsignee"
 
+    public static readonly PUTAccountingSettings = "PUTAccountingSettings"
+
     public static readonly GetSignle = "GetSignle"
     public static readonly GetByFilter = "GetByFilter"
     public static readonly GetFilterSearch = "GetFilterSearch"
