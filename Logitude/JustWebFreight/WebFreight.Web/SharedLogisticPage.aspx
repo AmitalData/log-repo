@@ -924,7 +924,7 @@
                     <div style="height:24px; vertical-align:central;">
                         <div class="LabelTextStyle TemplateItem" style="display:inline-block; width:35px; height:35px; position:relative">
                             <div style="position: absolute;">
-                                <img id="#= DocumentSecurityId #" OnClick="ViewQuotationDocument(id)" src="images/FileIcons/File-pdf-48.png" style="width: 30px; height: 30px; z-index:9; cursor: pointer;visibility: #= QuotationPreparedTickVisibility #;" />
+                                <img id="#= Id #" OnClick="ViewQuotationDocument(id)" src="images/FileIcons/File-pdf-48.png" style="width: 30px; height: 30px; z-index:9; cursor: pointer;visibility: #= QuotationPreparedTickVisibility #;" />
                             </div>        
                         </div>
                         <div class="LabelTextStyle TemplateItem" style="display:inline-block; width:50px;min-width:50px;">Quote \#:</div>
@@ -1116,9 +1116,8 @@
             $('#Option' + selectedQuoteRequest.Id).css("background", "linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(237, 192, 147, 1) 100%)");
         }
 
-        function ViewQuotationDocument(QuotationDocumentSecurityId) {
-
-            var sharedDownloadURL = "WebPages/DownloadPage.aspx?securityId=" + QuotationDocumentSecurityId + "&cardId=" + $.CurrentCardId + "&tempId=";
+        function ViewQuotationDocument(QuoteRequestId) {
+            var sharedDownloadURL = GetSharedDownloadURL(QuoteRequestId);
             $.ajax({
                 url: "api/DocumentDownloadToken",
                 type: 'GET',
@@ -1135,6 +1134,16 @@
             });
         }
 
+        function GetSharedDownloadURL(QuoteRequestId) {
+            var selectedQuoteRequest = $.AllQuotesRequests.find(d => d.Id == QuoteRequestId);
+            var sharedDownloadURL = "WebPages/DownloadPage.aspx?securityId=" + selectedQuoteRequest.DocumentSecurityId + "&cardId=" + $.CurrentCardId + "&tempId=";
+
+            if (selectedQuoteRequest.DocumentSecurityId == null) {
+                sharedDownloadURL = "WebPages/DownloadPage.aspx?id=" + selectedQuoteRequest.DocumentId + "&tempId=";
+            }
+
+            return sharedDownloadURL;
+        }
         function SendApprovalQuotesRequstEmailFeedback(QuoteRequestOptionId) {
             var selectedQuoteRequest = $.AllQuotesRequests.find(d => d.Id == QuoteRequestOptionId.replace('Option', ''));
             var feedback = document.getElementById(QuoteRequestOptionId).value;
