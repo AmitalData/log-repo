@@ -794,7 +794,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
                 return Responce;
             }
 
-            entityPM.AgentId = GetCardId(entityAM, entityAM.Agent);
+            //entityPM.AgentId = GetCardId(entityAM, entityAM.Agent);
             entityPM.ConsigneeId = GetCardId(entityAM, entityAM.Consignee); 
 
 
