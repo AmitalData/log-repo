@@ -1189,7 +1189,7 @@
                                     <ng-template let-item>
                                         <log-cell-template (CellClicked)="onCellSelected($event,item)" #logcelltemplate [RIndex]="item.rowIndex">
                                             <div class="TextTrimming" style="text-align:right" *ngIf="logcelltemplate.IsDisplayMode">
-                                                <span>{{item.DutyRegimeProtocolCode }}</span>
+                                                <span>{{item.DutyRegimeProtocolLocalName}}</span>
                                             </div>
                                             <div *ngIf="logcelltemplate.IsEditMode">
                                                 <LogLov [ObjectFieldName]="'DutyRegimeProtocolCode'"

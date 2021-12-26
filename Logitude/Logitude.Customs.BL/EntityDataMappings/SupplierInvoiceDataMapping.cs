@@ -6,9 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
-using Logitude.Server.Tools; 
+using Logitude.Server.Tools;
 using Logitude.Customs.Data.EntityPOCOs;
-using Logitude.Customs.Def.EntityPMs; 
+using Logitude.Customs.Def.EntityPMs;
 using Logitude.Customs.Data;
 using Logitude.Customs.BL.EntityQueryServices;
 
@@ -63,8 +63,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
             {
                 CustomerRoleTypeQueryService buyerRoleCodeQueryService = new CustomerRoleTypeQueryService(entityPOCO.Tenant);
                 CustomerRoleTypePM buyerRoleCode = buyerRoleCodeQueryService.GetSingle(entityPOCO.BuyerRoleCode, false, true);
-                entityPM.BuyerRoleName= buyerRoleCode.LocalName;
-            } 
+                entityPM.BuyerRoleName = buyerRoleCode.LocalName;
+            }
 
             if (!string.IsNullOrWhiteSpace(entityPOCO.IssueCountryCode))
             {
@@ -102,7 +102,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
                     {
                         entityPM.ExportInsuranceAmount = String.Format("{0:0.00}", item.Amount) + " " + item.CurrencyTypeCode;
                     }
-                    if(item.TypeCode == "144")
+                    if (item.TypeCode == "144")
                     {
                         entityPM.ExportFreightAmount = String.Format("{0:0.00}", item.Amount) + " " + item.CurrencyTypeCode;
                     }
@@ -115,19 +115,16 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 CurrencyTypePM currencyTypePM = currencyTypeQueryService.GetSingle(entityPOCO.InvoiceCurrencyTypeCode, false, true);
                 entityPM.InvoiceCurrencyTypeName = currencyTypePM.LocalName;
             }
-            if (!string.IsNullOrWhiteSpace(entityPOCO.InsruanceCurrencyTypeCode)) 
+
+            if (!string.IsNullOrWhiteSpace(entityPOCO.InsruanceCurrencyTypeCode))
             {
                 CurrencyTypeQueryService currencyTypeQueryService = new CurrencyTypeQueryService(entityPOCO.Tenant);
                 CurrencyTypePM currencyTypePM = currencyTypeQueryService.GetSingle(entityPOCO.InsruanceCurrencyTypeCode, false, true);
                 entityPM.InsruanceCurrencyTypeCodeName = currencyTypePM.LocalName;
             }
-
-
-
         }
     }
 }
 
 
 
-   

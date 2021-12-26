@@ -847,6 +847,11 @@ export class SupplierInvoiceItemPM {
     public set DutyRegimeProtocolCode(newValue: string) { if (this.dutyRegimeProtocolCode != newValue) { this.dutyRegimeProtocolCode = newValue; this.MarkAsDirty("DutyRegimeProtocolCode"); } }
        
 	 
+    private dutyRegimeProtocolLocalName: string;
+    public get DutyRegimeProtocolLocalName() { return this.dutyRegimeProtocolLocalName; }
+    public set DutyRegimeProtocolLocalName(newValue: string) { if (this.dutyRegimeProtocolLocalName != newValue) { this.dutyRegimeProtocolLocalName = newValue; this.MarkAsDirty("DutyRegimeProtocolLocalName"); } }
+       
+	 
 
     public OldEntityPM: SupplierInvoiceItemPM;
 	
