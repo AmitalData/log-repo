@@ -78,13 +78,13 @@ namespace Logitude.Accounting.BL.CoreBL.InterestTrans
         private static List<InterestTransactionPM> GetInterestTransactionListRegular(JournalPM regularJournal, string interestEntityType)
         {
             var CreditAccountIdS = regularJournal.JournalLines
-                .Where(r => r.ActionTypeCodeEnum == MyJournalActionTypeEnum.Credit || r.ActionTypeCodeEnum == MyJournalActionTypeEnum.DebitAndCredit /*|| r.ActionTypeCodeEnum == MyJournalActionTypeEnum.DebitCreditAndVatdeduction*/)
+                .Where(r => r.ActionTypeCodeEnum == JournalActionTypeEnum.Credit || r.ActionTypeCodeEnum == JournalActionTypeEnum.DebitAndCredit /*|| r.ActionTypeCodeEnum == MyJournalActionTypeEnum.DebitCreditAndVatdeduction*/)
                 .Select(r => r.CreditAccountId)
                 .Distinct()
                 .ToList();
 
             var DebitAccountIdS = regularJournal.JournalLines
-                .Where(r => r.ActionTypeCodeEnum == MyJournalActionTypeEnum.Debit || r.ActionTypeCodeEnum == MyJournalActionTypeEnum.DebitAndCredit /*|| r.ActionTypeCodeEnum == MyJournalActionTypeEnum.DebitCreditAndVatdeduction*/)
+                .Where(r => r.ActionTypeCodeEnum == JournalActionTypeEnum.Debit || r.ActionTypeCodeEnum == JournalActionTypeEnum.DebitAndCredit /*|| r.ActionTypeCodeEnum == MyJournalActionTypeEnum.DebitCreditAndVatdeduction*/)
                 .Select(r => r.DebitAccountId)
                 .Distinct()
                 .ToList();
@@ -98,7 +98,7 @@ namespace Logitude.Accounting.BL.CoreBL.InterestTrans
 
             var creditLines =
             regularJournal.JournalLines
-                .Where(r => r.ActionTypeCodeEnum == MyJournalActionTypeEnum.Credit || r.ActionTypeCodeEnum == MyJournalActionTypeEnum.DebitAndCredit /*|| r.ActionTypeCodeEnum == MyJournalActionTypeEnum.DebitCreditAndVatdeduction*/)
+                .Where(r => r.ActionTypeCodeEnum == JournalActionTypeEnum.Credit || r.ActionTypeCodeEnum == JournalActionTypeEnum.DebitAndCredit /*|| r.ActionTypeCodeEnum == MyJournalActionTypeEnum.DebitCreditAndVatdeduction*/)
                 .Where(r => ClientIds.Contains(r.CreditAccountId))
                 .Select(r =>
              new InterestTransactionPM()
@@ -119,7 +119,7 @@ namespace Logitude.Accounting.BL.CoreBL.InterestTrans
 
             var debitLines =
             regularJournal.JournalLines
-                .Where(r => r.ActionTypeCodeEnum == MyJournalActionTypeEnum.Debit || r.ActionTypeCodeEnum == MyJournalActionTypeEnum.DebitAndCredit /*|| r.ActionTypeCodeEnum == MyJournalActionTypeEnum.DebitCreditAndVatdeduction*/)
+                .Where(r => r.ActionTypeCodeEnum == JournalActionTypeEnum.Debit || r.ActionTypeCodeEnum == JournalActionTypeEnum.DebitAndCredit /*|| r.ActionTypeCodeEnum == MyJournalActionTypeEnum.DebitCreditAndVatdeduction*/)
                 .Where(r => ClientIds.Contains(r.DebitAccountId))
                 .Select(r =>
              new InterestTransactionPM()
@@ -146,7 +146,7 @@ namespace Logitude.Accounting.BL.CoreBL.InterestTrans
         {
 
             var creditJournalLines = externalJournal.JournalLines
-                .Where(r => r.ActionTypeCodeEnum == MyJournalActionTypeEnum.Credit || r.ActionTypeCodeEnum == MyJournalActionTypeEnum.DebitAndCredit /*|| r.ActionTypeCodeEnum == MyJournalActionTypeEnum.DebitCreditAndVatdeduction*/)
+                .Where(r => r.ActionTypeCodeEnum == JournalActionTypeEnum.Credit || r.ActionTypeCodeEnum == JournalActionTypeEnum.DebitAndCredit /*|| r.ActionTypeCodeEnum == MyJournalActionTypeEnum.DebitCreditAndVatdeduction*/)
                 .Where(r => r.DueDate >= AccountingActivationDate);
             var CreditAccountIdS = creditJournalLines
                 .Select(r => r.CreditAccountId)

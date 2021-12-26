@@ -14,7 +14,6 @@ import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
 import {Output, EventEmitter}  from '@angular/core';
 import {PropertyChangedArgs} from '../../Infrastructure/EventEmitterArgs/PropertyChangedArgs';
 import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass';
-import { BankAccountPM } from 'Accounting/EntityPMs/BankAccountPM';
 
 
 export class ARPaymentBankTranferPM {
@@ -23,87 +22,105 @@ export class ARPaymentBankTranferPM {
       public UIProperties: UIProperties;
 	        constructor(_entityParentPM: any) {
           this.EntityParentPM = _entityParentPM;
-          this.UIProperties = new UIProperties(this); 
+          this.UIProperties = new UIProperties(this);
           this.IsDirty = false;
       }
 
-	 
-    
+
+
     private id: string;
     public get Id() { return this.id; }
     public set Id(newValue: string) { if (this.id != newValue) { this.id = newValue; this.MarkAsDirty("Id"); } }
-       
-	 
+
+
     private tenant: number;
     public get Tenant() { return this.tenant; }
     public set Tenant(newValue: number) { if (this.tenant != newValue) { this.tenant = newValue; this.MarkAsDirty("Tenant"); } }
-       
-	 
+
+
     private searchFields: string;
     public get SearchFields() { return this.searchFields; }
     public set SearchFields(newValue: string) { if (this.searchFields != newValue) { this.searchFields = newValue; this.MarkAsDirty("SearchFields"); } }
-       
-	 
+
+
     private paymentId: string;
     public get PaymentId() { return this.paymentId; }
     public set PaymentId(newValue: string) { if (this.paymentId != newValue) { this.paymentId = newValue; this.MarkAsDirty("PaymentId"); } }
-       
-	 
+
+
     private lineNumber: number;
     public get LineNumber() { return this.lineNumber; }
     public set LineNumber(newValue: number) { if (this.lineNumber != newValue) { this.lineNumber = newValue; this.MarkAsDirty("LineNumber"); } }
-       
-	 
+
+
     private paymentRef: string;
     public get PaymentRef() { return this.paymentRef; }
     public set PaymentRef(newValue: string) { if (this.paymentRef != newValue) { this.paymentRef = newValue; this.MarkAsDirty("PaymentRef"); } }
-       
-	 
+
+
     private valueDate: Date;
     public get ValueDate() { return this.valueDate; }
     public set ValueDate(newValue: Date) { if (this.valueDate != newValue) { this.valueDate = newValue; this.MarkAsDirty("ValueDate"); } }
-       
-	 
+
+
     private bankAccountId: string;
     public get BankAccountId() { return this.bankAccountId; }
     public set BankAccountId(newValue: string) { if (this.bankAccountId != newValue) { this.bankAccountId = newValue; this.MarkAsDirty("BankAccountId"); } }
-       
-    public BankAccount: BankAccountPM;
-    
+
+
     private currencyId: string;
     public get CurrencyId() { return this.currencyId; }
     public set CurrencyId(newValue: string) { if (this.currencyId != newValue) { this.currencyId = newValue; this.MarkAsDirty("CurrencyId"); } }
-       
-	 
+
+
     private changeSetOp: string;
     public get ChangeSetOp() { return this.changeSetOp; }
     public set ChangeSetOp(newValue: string) { if (this.changeSetOp != newValue) { this.changeSetOp = newValue; this.MarkAsDirty("ChangeSetOp"); } }
-       
-	 
+
+
     private localAmount: number;
     public get LocalAmount() { return this.localAmount; }
     public set LocalAmount(newValue: number) { if (this.localAmount != newValue) { this.localAmount = newValue; this.MarkAsDirty("LocalAmount"); } }
-       
-	 
+
+
     private foreignAmount: number;
     public get ForeignAmount() { return this.foreignAmount; }
     public set ForeignAmount(newValue: number) { if (this.foreignAmount != newValue) { this.foreignAmount = newValue; this.MarkAsDirty("ForeignAmount"); } }
-       
-	 
+
+
     private exchageRate: number;
     public get ExchageRate() { return this.exchageRate; }
     public set ExchageRate(newValue: number) { if (this.exchageRate != newValue) { this.exchageRate = newValue; this.MarkAsDirty("ExchageRate"); } }
-       
-	 
+
+
+    private bankAccount: any;
+    public get BankAccount() { return this.bankAccount; }
+    public set BankAccount(newValue: any) { if (this.bankAccount != newValue) { this.bankAccount = newValue; this.MarkAsDirty("BankAccount"); } }
+
+
+    private bankAccountNumber: string;
+    public get BankAccountNumber() { return this.bankAccountNumber; }
+    public set BankAccountNumber(newValue: string) { if (this.bankAccountNumber != newValue) { this.bankAccountNumber = newValue; this.MarkAsDirty("BankAccountNumber"); } }
+
+    private localName: string;
+    public get LocalName() { return this.localName; }
+    public set LocalName(newValue: string) { if (this.localName != newValue) { this.localName = newValue; this.MarkAsDirty("LocalName"); } }
+
+
+    private englishName: string;
+    public get EnglishName() { return this.englishName; }
+    public set EnglishName(newValue: string) { if (this.englishName != newValue) { this.englishName = newValue; this.MarkAsDirty("EnglishName"); } }
+
+
 
     public OldEntityPM: ARPaymentBankTranferPM;
-	    
+
 	private entityParentPM: any;
     public get EntityParentPM() { return this.entityParentPM; }
     public set EntityParentPM(newValue: any) { this.entityParentPM = newValue; }
 
     public UniqueKey: string;
-	 	
+
     public IsDirty: boolean;
     public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
@@ -112,11 +129,11 @@ export class ARPaymentBankTranferPM {
         this.IsDirty = true;
 		  if (this.EntityParentPM) {
             this.EntityParentPM.MarkAsDirty();
-        }	
+        }
         if (propertyName != null) {
             this.PropertyChanged.emit(new PropertyChangedArgs(propertyName,this));
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "ARPaymentBankTranfer");
-           
+
         }
 	 }
     }

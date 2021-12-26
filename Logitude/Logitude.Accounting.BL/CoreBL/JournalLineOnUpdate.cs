@@ -124,9 +124,9 @@ namespace Logitude.Accounting.BL.CoreBL
             creditIVerifyGLAccountManager.Verify(this._MainContext, journalLinePM.Tenant, journalLinePM.CreditAccountId, journalLinePM.CreditAccountNumber, journalLinePM.CurrencyId, conversionlOrRevaluation_Journal, suppressInactive);
 
             if (IsFromMumps(journalLinePM) ||
-                journalLinePM.ActionTypeCodeEnum == MyJournalActionTypeEnum.Credit ||
-                            journalLinePM.ActionTypeCodeEnum == MyJournalActionTypeEnum.DebitAndCredit ||
-                            journalLinePM.ActionTypeCodeEnum == MyJournalActionTypeEnum.DebitCreditAndVatdeduction
+                journalLinePM.ActionTypeCodeEnum == JournalActionTypeEnum.Credit ||
+                            journalLinePM.ActionTypeCodeEnum == JournalActionTypeEnum.DebitAndCredit ||
+                            journalLinePM.ActionTypeCodeEnum == JournalActionTypeEnum.DebitCreditAndVatdeduction
                             )
             {
                 
@@ -164,9 +164,9 @@ namespace Logitude.Accounting.BL.CoreBL
                 if (
                     IsFromMumps(journalLinePM)
                             ||
-                    journalLinePM.ActionTypeCodeEnum == MyJournalActionTypeEnum.Debit ||
-    journalLinePM.ActionTypeCodeEnum == MyJournalActionTypeEnum.DebitAndCredit ||
-    journalLinePM.ActionTypeCodeEnum == MyJournalActionTypeEnum.DebitCreditAndVatdeduction
+                    journalLinePM.ActionTypeCodeEnum == JournalActionTypeEnum.Debit ||
+    journalLinePM.ActionTypeCodeEnum == JournalActionTypeEnum.DebitAndCredit ||
+    journalLinePM.ActionTypeCodeEnum == JournalActionTypeEnum.DebitCreditAndVatdeduction
     )
                 {
                    

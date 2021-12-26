@@ -4,6 +4,7 @@ using Logitude.Accounting.BL.EntityQueryServices;
 using Logitude.Accounting.BL.Validators;
 using Logitude.Accounting.Data;
 using Logitude.Accounting.Def.EntityPMs;
+using Logitude.Accounting.Def.EntityUpdateServicesExt;
 using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
@@ -32,7 +33,7 @@ namespace Logitude.Accounting.BL.CoreBL
             //_StornoJornalLedgerTransactions = stornoLedgerTransactionPM;
             _AccountingContext = accountingContext;
         }
-        public bool CreateJournalReconcileFromStorno(JournalPM theStorno)
+        public bool CreateJournalReconcileFromStorno(JournalPM theStorno, StornoOverrideM stornoOverrideM)
         {
             _TheStorno = theStorno;
             if (!String.IsNullOrWhiteSpace(_JournalToVoidPM.ExternalNo))
@@ -47,7 +48,7 @@ namespace Logitude.Accounting.BL.CoreBL
             {
                 return false;
             }
-            
+
             FetchlTransactionOfOriginalJournal(_JournalToVoidPM.Id, _JournalToVoidPM.Tenant);
             if (!_OrginalJornalLedgerTransactions.Any())
             {
@@ -62,12 +63,26 @@ namespace Logitude.Accounting.BL.CoreBL
             {
                 return false;
             }
-            this.JournalReconciles2Insert = CreateJournalReconcileList(
-                _OrginalJornalLedgerTransactions); ;
-            
+
+            var ledgers = _OrginalJornalLedgerTransactions;
+
+            ledgers = RemoveLedgersOfExcludedCheques(stornoOverrideM, ledgers);
+
+            this.JournalReconciles2Insert = CreateJournalReconcileList(ledgers);
+
 
             return true;
             //_OrginalTransaction
+        }
+
+        private static List<LedgerTransactionPM> RemoveLedgersOfExcludedCheques(StornoOverrideM stornoOverrideM, List<LedgerTransactionPM> ledgers)
+        {
+            if (stornoOverrideM.ChequeNumbersToExcludeFromStorno != null && stornoOverrideM.ChequeNumbersToExcludeFromStorno.Count() > 0)
+            {
+                ledgers = ledgers.Where(t => !stornoOverrideM.ChequeNumbersToExcludeFromStorno.Contains(t.Reference2)).ToList();
+            }
+
+            return ledgers;
         }
 
         private bool IsStornoJournal()
@@ -87,7 +102,6 @@ namespace Logitude.Accounting.BL.CoreBL
         public virtual //4 UnitTest
             List<JournalReconcilePM> CreateJournalReconcileList(
             List<LedgerTransactionPM> myOrginalJournalTransaction
-            //List<LedgerTransactionPM> myStornoLedgerTransactionPM
             )
         {
 
@@ -146,6 +160,6 @@ namespace Logitude.Accounting.BL.CoreBL
         void MustInitialize(IAccountingContext accountingContext, JournalPM journalToVoidPM
             //, List<LedgerTransactionPM> stornoLedgerTransactionPM
             );
-        bool CreateJournalReconcileFromStorno(JournalPM journalStornoPM);
+        bool CreateJournalReconcileFromStorno(JournalPM journalStornoPM, StornoOverrideM stornoOverrideM);
     }
 }

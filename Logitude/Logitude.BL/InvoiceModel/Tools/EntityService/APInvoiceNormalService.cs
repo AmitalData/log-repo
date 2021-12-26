@@ -2016,7 +2016,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     journalLine.JournalId = journal.Id;
                     journalLine.Line = 1;
                     journalLine.ActionCode = "1";
-                    journalLine.ActionTypeCodeEnum = MyJournalActionTypeEnum.Credit;
+                    journalLine.ActionTypeCodeEnum = JournalActionTypeEnum.Credit;
                     journalLine.DocumentDate = theEntityPm.InvoiceDate.Value;
                     journalLine.AccountingDate = theEntityPm.AccountingDate != null ? theEntityPm.AccountingDate.Value : TenantServerConfigration.GetCurrentDateTime(tenant);
                     journalLine.DueDate = theEntityPm.DueDate.Value;
@@ -2049,7 +2049,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                                                         {
                                                             Tenant = tenant,
                                                             ActionCode = "2",
-                                                            ActionTypeCodeEnum = MyJournalActionTypeEnum.Debit,
+                                                            ActionTypeCodeEnum = JournalActionTypeEnum.Debit,
                                                             JournalId = journal.Id,
                                                             DebitAccountId = g.Key.ChargeTypeGLAccountId,
                                                             CreditAccountId = theEntityPm.VendorGLAccountId,
@@ -2093,7 +2093,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                         {
                             Tenant = tenant,
                             ActionCode = "2",
-                            ActionTypeCodeEnum = MyJournalActionTypeEnum.Debit,
+                            ActionTypeCodeEnum = JournalActionTypeEnum.Debit,
                             JournalId = journal.Id,
                             DebitAccountId = accountingSettings != null ? accountingSettings.VATInputsGLAccountId : "",
                             Line = ++counter,

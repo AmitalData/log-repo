@@ -124,19 +124,19 @@ namespace Logitude.Accounting.BL.CoreBL.Mapping
             }
             switch (_JournalLine.EnsureSettingActionTypeCodeEnum())
             {
-                case MyJournalActionTypeEnum.Credit:
+                case JournalActionTypeEnum.Credit:
                     if (this.MyMappingTypeEnum != MappingTypeEnum.Credit)
                     {
                         throw new Exception("this.MyMappingTypeEnum != MappingTypeEnum.Credit");
                     }
                     break;
-                case MyJournalActionTypeEnum.Debit:
+                case JournalActionTypeEnum.Debit:
                     if (this.MyMappingTypeEnum != MappingTypeEnum.Debit)
                     {
                         throw new Exception("this.MyMappingTypeEnum != MappingTypeEnum.Debit");
                     }
                     break;
-                case MyJournalActionTypeEnum.DebitAndCredit:
+                case JournalActionTypeEnum.DebitAndCredit:
                     if (this.MyMappingTypeEnum == MappingTypeEnum.Debit || this.MyMappingTypeEnum == MappingTypeEnum.Credit)
                     {
 
@@ -146,10 +146,10 @@ namespace Logitude.Accounting.BL.CoreBL.Mapping
                         throw new Exception("not if (this.MyMappingTypeEnum == MappingTypeEnum.Debit || this.MyMappingTypeEnum == MappingTypeEnum.Credit)");
                     }
                     break;
-                case MyJournalActionTypeEnum.DebitCreditAndVatdeduction:
+                case JournalActionTypeEnum.DebitCreditAndVatdeduction:
                     // all ok 
                     break;
-                case MyJournalActionTypeEnum.NotValid:
+                case JournalActionTypeEnum.NotValid:
                     throw new Exception("case MyJournalActionTypeEnum.NotValid");
                 default:
                     throw new Exception("JournalApproveParser():JournalActionType is must ");
@@ -266,7 +266,7 @@ namespace Logitude.Accounting.BL.CoreBL.Mapping
                 //    MyLedgerTransaction.OpenAmount = _JournalLine.ExternalOpenAmount.GetValueOrDefault();
                 //}
                 MyLedgerTransaction.OpenAmount = _JournalLine.ExternalOpenAmount.GetValueOrDefault();
-                if (_JournalLine.ActionTypeCodeEnum == MyJournalActionTypeEnum.Credit)
+                if (_JournalLine.ActionTypeCodeEnum == JournalActionTypeEnum.Credit)
                 {
                     MyLedgerTransaction.OpenAmount = -1 * _JournalLine.ExternalOpenAmount.GetValueOrDefault();
                 }

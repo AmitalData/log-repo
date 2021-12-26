@@ -64,7 +64,7 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile.AdjustDueBankFees
             var LstJL =
                 GetFirstJournalLineSum(_TheNewJournal.Tenant, adjustGLAccountId, listOfpageLineList, bankGLAccountListFromReconcileExternalPageIds, screenNotes, foreignTotalAmount, localTotalAmountConvertFromforeign, creditTheBank);
             LstJL.Line = maxLine++;
-            LstJL.ActionTypeCodeEnum = creditTheBank ? MyJournalActionTypeEnum.Debit : MyJournalActionTypeEnum.Credit;
+            LstJL.ActionTypeCodeEnum = creditTheBank ? JournalActionTypeEnum.Debit : JournalActionTypeEnum.Credit;
 
             
             _TheNewJournal.JournalLines.Add(firstJL);
@@ -131,7 +131,7 @@ new JournalLinePM()
 
 
     ///if r.DebitAmount != 0 then credit else debit 
-    ActionTypeCodeEnum = creditTheBank ? MyJournalActionTypeEnum.Credit : MyJournalActionTypeEnum.Debit,
+    ActionTypeCodeEnum = creditTheBank ? JournalActionTypeEnum.Credit : JournalActionTypeEnum.Debit,
     CreditAccountId = creditTheBank ? bankGLAccountList.Id : adjustGLAccountId,
     DebitAccountId = creditTheBank ? adjustGLAccountId : bankGLAccountList.Id,
     LocalAmount = creditTheBank ? (LocalAmount) : -1 * (LocalAmount),

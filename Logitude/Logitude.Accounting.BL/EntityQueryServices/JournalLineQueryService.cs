@@ -262,9 +262,9 @@ namespace Logitude.Accounting.BL.EntityQueryServices
         private static IQueryable<JournalLineLedgerDTO> GetJournalLineLedgerDTO(string myTaxCard, IOrderedQueryable<VatTypePercentageDTO> percentagesQueryOrderDescByFromDate, IQueryable<JournalLine> qJournalLineByAcountingDate)
         {
             var crditList = new List<string>(){
-        ((int)MyJournalActionTypeEnum.Credit).ToString(),
-        ((int)MyJournalActionTypeEnum.DebitAndCredit).ToString(),
-        ((int)MyJournalActionTypeEnum.DebitCreditAndVatdeduction).ToString(),
+        ((int)JournalActionTypeEnum.Credit).ToString(),
+        ((int)JournalActionTypeEnum.DebitAndCredit).ToString(),
+        ((int)JournalActionTypeEnum.DebitCreditAndVatdeduction).ToString(),
         };
             var qJLCredit =
                 qJournalLineByAcountingDate.Where(rec => crditList.Contains(rec.ActionCode/*rec.JournalActionType.Code*/))
@@ -286,8 +286,8 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
                 });
             var debitList = new List<string>(){
-        ((int)MyJournalActionTypeEnum.Debit).ToString(),
-        ((int)MyJournalActionTypeEnum.DebitAndCredit).ToString(),
+        ((int)JournalActionTypeEnum.Debit).ToString(),
+        ((int)JournalActionTypeEnum.DebitAndCredit).ToString(),
         };
             var qJLDebit =
                  qJournalLineByAcountingDate.Where(rec => debitList.Contains(rec.ActionCode /*rec.JournalActionType.Code*/))
@@ -320,7 +320,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
                 var qJLDebitVat =
                     (from jl in
-                         qJournalLineByAcountingDate.Where(rec => rec.ActionCode /*rec.JournalActionType.Code*/ == ((int)MyJournalActionTypeEnum.DebitCreditAndVatdeduction).ToString())
+                         qJournalLineByAcountingDate.Where(rec => rec.ActionCode /*rec.JournalActionType.Code*/ == ((int)JournalActionTypeEnum.DebitCreditAndVatdeduction).ToString())
                      from vl in
                          (from v in percentagesQueryOrderDescByFromDate.OrderByDescending(r => r.FromDate)
                           where v.FromDate <= jl.DocumentDate
@@ -358,7 +358,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                 var qJLVat =
                     (
                     from jl in
-                        qJournalLineByAcountingDate.Where(rec => rec.ActionCode /*rec.JournalActionType.Code*/ == ((int)MyJournalActionTypeEnum.DebitCreditAndVatdeduction).ToString())
+                        qJournalLineByAcountingDate.Where(rec => rec.ActionCode /*rec.JournalActionType.Code*/ == ((int)JournalActionTypeEnum.DebitCreditAndVatdeduction).ToString())
                     from vl in
                         (from v in percentagesQueryOrderDescByFromDate.OrderByDescending(r => r.FromDate)
                          where v.FromDate <= jl.DocumentDate

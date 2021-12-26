@@ -59,7 +59,7 @@ export class ARPaymentMultiBankTransfersComponent extends BaseComponent {
             this.UpdateBankTransferCounter();
             this.IsDisplayOnly =
                 this.paymentPM.StatusCode == 'AD' ||
-                this.paymentPM.StatusCode == 'VD' || 
+                this.paymentPM.StatusCode == 'VD' ||
                 this.paymentPM.StatusCode == 'BT'
                     ? true
                     : false;
@@ -325,7 +325,7 @@ export class PaymentBankTransferLine extends BaseComponent {
             this.entityPM.BankAccountId = value;
         }
     }
-    
+
     get BankAccount(){
         return  this.entityPM.BankAccount;
     }

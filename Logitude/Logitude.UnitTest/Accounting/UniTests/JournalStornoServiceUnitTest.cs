@@ -369,7 +369,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
                         
                       AccountingDate = j.AccountingDate,
                       //ActionName = "1", 
-                      ActionTypeCodeEnum= MyJournalActionTypeEnum.Credit,
+                      ActionTypeCodeEnum= JournalActionTypeEnum.Credit,
                       ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert, 
                       CreditAccountId = "GetCreditAccountId()",
                       //DebitAccountId = "35",
@@ -394,7 +394,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
                     {
                       AccountingDate = j.AccountingDate,
                       //ActionName = "2", 
-                      ActionTypeCodeEnum= MyJournalActionTypeEnum.Debit,
+                      ActionTypeCodeEnum= JournalActionTypeEnum.Debit,
                       ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert, 
                       //CreditAccountId = "35", 
                       CurrencyId =("USD"),

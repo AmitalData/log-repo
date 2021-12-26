@@ -9,13 +9,14 @@
 
 
 import {APPaymentInvoicePM} from './APPaymentInvoicePM';
+
+import {LedgerTransactionPM} from './../../Accounting/EntityPMs/LedgerTransactionPM';
 import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
 import {Output, EventEmitter}  from '@angular/core';
 import {PropertyChangedArgs} from '../../Infrastructure/EventEmitterArgs/PropertyChangedArgs';
 import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass';
-import { LedgerTransactionPM } from 'Accounting/EntityPMs/LedgerTransactionPM';
 
 
 export class APPaymentPM {
@@ -513,15 +514,23 @@ export class APPaymentPM {
     public get ExternalPaymentNotes() { return this.externalPaymentNotes; }
     public set ExternalPaymentNotes(newValue: string) { if (this.externalPaymentNotes != newValue) { this.externalPaymentNotes = newValue; this.MarkAsDirty("ExternalPaymentNotes"); } }
        
-    private reconcileInternalTrans : LedgerTransactionPM[];
-    public get ReconcileInternalTrans() : LedgerTransactionPM[] {
+	 
+     
+	private reconcileInternalTrans: LedgerTransactionPM[];
+    get  ReconcileInternalTrans() {
+        if (this.reconcileInternalTrans == null) {
+            this.reconcileInternalTrans = [];
+        }
+
         return this.reconcileInternalTrans;
     }
-    public set ReconcileInternalTrans(v : LedgerTransactionPM[]) {
-        this.reconcileInternalTrans = v;
-        this.MarkAsDirty("ReconcileInternalTrans");
+    set  ReconcileInternalTrans(newValue: LedgerTransactionPM[]) {
+        if (this.reconcileInternalTrans != newValue) {
+            this.reconcileInternalTrans = newValue;
+        }
     }
-
+    //public ReconcileInternalTrans: Array<LedgerTransactionPMPM>= [];
+ 
     public OldEntityPM: APPaymentPM;
 		
     public IsDirty: boolean;
@@ -548,4 +557,4 @@ export class APPaymentPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}
