@@ -373,6 +373,19 @@ ul.line-list li.tick {
     font-size: 18px;
 }
 
+.order-icon{
+    position: absolute;
+    top: 58px;
+    display: block;
+    background: #000;
+    color: #FFF;
+    width: 65px;
+    border-radius: 14px;
+    text-align: center;
+    font-size: 12px;
+    line-height: 17px;
+}
+
 @media screen and (min-width: 479px) {
     .steps-list li:hover:not(.dimmed),
     .steps-list li.highlighted {
@@ -582,7 +595,7 @@ ul.line-list li.tick {
         /* order: 3; */
         float: right;
         text-align: right;
- 
+
         padding-right: 5px;
     }
     .steps-list li>div.caption {
@@ -629,7 +642,7 @@ ul.line-list li.tick {
     .steps-list li {
         margin: 0 -35px;
     }
- 
+
     .steps-list li:hover:not(.dimmed),
     .steps-list li.highlighted {
         margin: 0px -35px;
