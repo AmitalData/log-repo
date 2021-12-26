@@ -324,7 +324,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                             || (fullAccountingSettings.IsSecurityLevelActivated && (chartOfAccount.ChartOfAccountSecurityLevel <= (loggedUser.SecurityLevel ?? 0) || (loggedUser.Tenant == 0 && !loggedUser.IsDistributor)))) ? MoreDatas.TotFutureOpenChequesInLocalCur : 0,
 
                                                }) ;
-            return query.Distinct();
+            return query;
         }
         public IQueryable<GLAccountList> MapListFields(IQueryable<GLAccountList> iQueryable, User loggedUser)
         {
