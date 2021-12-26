@@ -55,13 +55,11 @@ namespace WebFreight.Web.Helpers
             this.ConnectToVisualStudioAccount();
             try
             {
-                WorkItem workitem = witClient.GetWorkItemAsync(workItemId, null, null, WorkItemExpand.Relations).Result;
-                if (workitem != null)
+                WorkItem currentWorkItem = witClient.GetWorkItemAsync(workItemId, null, null, WorkItemExpand.Relations).Result;
+                if (currentWorkItem != null)
                 {
-                    if (IsUpdatingTaskEffort(workitem))
-                    {
-                        this.ManageTFSTaskEffort(workitem);
-                    }
+                    this.ManageTFSTaskEffort(currentWorkItem);
+                    this.HandleWorkItemRelations(currentWorkItem);
                 }
             }
             catch (AggregateException aex)
@@ -71,6 +69,30 @@ namespace WebFreight.Web.Helpers
                 {
                     Console.WriteLine(vssex.Message);
                 }
+            }
+        }
+
+        private void HandleWorkItemRelations(WorkItem currentWorkItem)
+        {
+            var relations = currentWorkItem.Relations.Where(a => a.Rel == "System.LinkTypes.Hierarchy-Reverse");
+            if (relations != null)
+            {
+                foreach (var relation in relations)
+                {
+                    this.LoopWorkItemParentItems(currentWorkItem, relation);
+                }
+            }
+        }
+
+        private void LoopWorkItemParentItems(WorkItem currentWorkItem, WorkItemRelation relation)
+        {
+            string url = relation.Url;
+            if (relation.Rel == "System.LinkTypes.Hierarchy-Reverse")
+            {
+                string last = url.Split('/').Last();
+                var nextWorkItem = this.GetWorkItemById(Int32.Parse(last));
+                this.ManageTFSTaskEffort(nextWorkItem);
+                this.HandleWorkItemRelations(nextWorkItem);
             }
         }
 
@@ -104,11 +126,14 @@ namespace WebFreight.Web.Helpers
 
         private void ManageTFSTaskEffort(WorkItem workitem)
         {
-            string parentId = GetParentWorkItem(workitem);
-            bool isWIExist = this.IsParentWorkItemExist(workitem, parentId);
-            if (isWIExist)
+            if (IsUpdatingTaskEffort(workitem))
             {
-                this.UpdateTFSTaskEffortAndCompletedWork(parentId);
+                string parentId = GetParentWorkItem(workitem);
+                bool isWIExist = this.IsParentWorkItemExist(workitem, parentId);
+                if (isWIExist)
+                {
+                    this.UpdateTFSTaskEffortAndCompletedWork(parentId);
+                }
             }
         }
 
