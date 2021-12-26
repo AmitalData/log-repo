@@ -149,6 +149,8 @@ import { JournalCSVLoadComponent } from './Components/NewEntity/JournalCSVLoadCo
 import { GlAccountListTemplate } from './Components/ListTemplates/GlAccountListTemplate';
 import { CopyInvoiceComponent } from './Components/Others/CopyInvoiceComponent';
 import { TaxReportUploadLinesComponent } from './Components/Others/TaxReportUploadLinesComponent';
+import { CashbookTotalAdjustWindow } from './Components/EditTabs/CashBook/CashbookTotalAdjustWindow';
+import { JournalShortTitleComponent } from './Components/ShortTitles/JournalShortTitleComponent';
 
 //import { CashBookGeneralTabComponent } from './Components/EditTabs/CashBook/CashBookGeneralTabComponent';
 
@@ -262,6 +264,7 @@ export const Components =
         OutOfDepositMessage,
         Aging4CustomerChartWindowComponent,
         PaymentChequeShortTitleComponent,
+        JournalShortTitleComponent,
         ReconciliationShortTitleComponent,
         ExternalReconciliationShortTitleComponent,
         TaxReportShortTitleComponent,
@@ -309,7 +312,8 @@ export const Components =
         BtatchPrintWarningComponent,
         BtatchPrintConfirmComponent,
         InvoiceDateForBatchInvoicesComponent,
-        UserDefinedReportShortTitleComponent
+        UserDefinedReportShortTitleComponent,
+        CashbookTotalAdjustWindow,
 
 
     ];
@@ -322,6 +326,7 @@ export class ModuleDeclarations {
         switch (name) {
 
             //Workspaces
+            case "CashbookTotalAdjustWindow": { myResult = CashbookTotalAdjustWindow; break; }
             case "AccountingWorkspaceComponent": { myResult = AccountingWorkspaceComponent; break; }
             case "MainPageComponent": { myResult = MainPageComponent; break; }
             case "GLAccountsPageComponent": { myResult = GLAccountsPageComponent; break; }
@@ -437,6 +442,7 @@ export class ModuleDeclarations {
             case "OutOfDepositMessage": { myResult = OutOfDepositMessage; break; }
             case "Aging4CustomerChartWindowComponent": { myResult = Aging4CustomerChartWindowComponent; break; }
             case "PaymentChequeShortTitleComponent": { myResult = PaymentChequeShortTitleComponent; break; }
+            case "JournalShortTitleComponent": { myResult = JournalShortTitleComponent; break; }
             case "GLAccountShortTitleComponent": { myResult = GLAccountShortTitleComponent; break; }
             case "BankAccountShortTitleComponent": { myResult = BankAccountShortTitleComponent; break; }
             case "BankDepositShortTitleComponent": { myResult = BankDepositShortTitleComponent; break; }

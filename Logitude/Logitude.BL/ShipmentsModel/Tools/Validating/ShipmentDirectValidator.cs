@@ -31,22 +31,29 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
 {
     public class ShipmentDirectValidator
     {
-        public static void ValidateUpdate(ShipmentPM shipmentPM)
+        public static void ValidateUpdate(ShipmentPM shipmentPM, ShipmentPM oldShipmentPM)
         {
-            if (shipmentPM.IsOperationalClosed) throw new Exception("Can't update operationally closed shipments");
-            if (shipmentPM.IsCancelled) throw new Exception("Can't update cancelled shipments");
+            if (oldShipmentPM.IsOperationalClosed) throw new Exception("Can't update operationally closed shipments");
+            if (oldShipmentPM.IsCancelled) throw new Exception("Can't update cancelled shipments");
             if (IsInlandDomesticShipment(shipmentPM)) ValidateInlandDomesticShipment(shipmentPM);
+            else ValidateNotInlandDomesticShipment(shipmentPM);
+            ValidateCustomsFields(shipmentPM);
+            ValidateOnCarriageDates(shipmentPM);
+            ValidatePreCarriageDates(shipmentPM);
+        }
 
+        private static void ValidateNotInlandDomesticShipment(ShipmentPM shipmentPM)
+        {
             ShipmentMainCarriageLegsValidator shipmentMainCarriageLegsValidator = new ShipmentMainCarriageLegsValidator(shipmentPM);
             shipmentMainCarriageLegsValidator.ValidateMainCarriageLegs();
             shipmentMainCarriageLegsValidator.ValidateRoutingsSeriesDates();
             shipmentMainCarriageLegsValidator.ValidateActualDates();
 
-            ValidateCustomerData(shipmentPM);
+            ShipmentAccountingValidator shipmentAccountingValidator = new ShipmentAccountingValidator(shipmentPM);
+            shipmentAccountingValidator.ValidateAccountingClosed();
+
+            //ValidateCustomerData(shipmentPM);
             ValidateUpdateShipmentPackages(shipmentPM);
-            ValidateCustomsFields(shipmentPM);
-            ValidateOnCarriageDates(shipmentPM);
-            ValidatePreCarriageDates(shipmentPM);
         }
 
         private static bool IsInlandDomesticShipment(ShipmentPM entityPM)

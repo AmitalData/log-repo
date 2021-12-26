@@ -1,4 +1,5 @@
-﻿using Logitude.Accounting.BL.DataContract;
+﻿using Logitude.Accounting.BL.CloseTables;
+using Logitude.Accounting.BL.DataContract;
 using Logitude.Accounting.BL.EntityQueryServices;
 using Logitude.Accounting.BL.EntityUpdateServices;
 using Logitude.Accounting.Data;
@@ -87,6 +88,7 @@ namespace Logitude.Accounting.BL.Utils
                                     IAccountingContext MyContext = AccountingContext.GetContext(tenant.Id);
                                     GLAccountMoreDataUpdateService updateService = new GLAccountMoreDataUpdateService(MyContext, new Dictionary<string, IContext>(), tenant.Id);
                                     List<ARPaymentChequeFutureData> data = moreDataQueryService.GetARPaymentChequeFutureData(tenant.Id);
+                                    LedgerTransactionListQueryService ledgerQuery = new LedgerTransactionListQueryService(MyContext);
                                     List<string> glAccountIds = new List<string>();
                                     foreach (ARPaymentChequeFutureData item in data)
                                     {
@@ -112,20 +114,21 @@ namespace Logitude.Accounting.BL.Utils
                                                 {
                                                     if (moreDataPM.TotalOpenChequesInLocalCur == null) moreDataPM.TotalOpenChequesInLocalCur = 0;
                                                     if (moreDataPM.TotFutureOpenChequesInLocalCur == null) moreDataPM.TotFutureOpenChequesInLocalCur = 0;
-                                                    if ( paymentCheque.ValueDate > TenantServerConfigration.GetCurrentDateTime(tenant.Id))
+                                                    if (paymentCheque.StatusCode != ARPaymentChequeStatusValues.Redeemed && paymentCheque.StatusCode != ARPaymentChequeStatusValues.ReturnedToCustomer)
                                                     {
-                                                        moreDataPM.TotFutureOpenChequesInLocalCur += paymentCheque.LocalAmount;
-
-                                                    }
-                                                    else
-                                                    {
-                                                        moreDataPM.TotalOpenChequesInLocalCur += paymentCheque.LocalAmount;
-
-
+                                                        if (paymentCheque.ValueDate > TenantServerConfigration.GetCurrentDateTime(tenant.Id))
+                                                        {
+                                                            moreDataPM.TotFutureOpenChequesInLocalCur += paymentCheque.LocalAmount;
+                                                        }
+                                                        else
+                                                        {
+                                                            moreDataPM.TotalOpenChequesInLocalCur += paymentCheque.LocalAmount;
+                                                        }
                                                     }
                                                 }
-
-
+                                                var externalTransactions = ledgerQuery.GetExternalTransactionsForAccount(item.GLAccountId, tenant.Id).ToList();
+                                                var externalTransactionsTotal = externalTransactions.Sum(d => d.LocalAmountCredit);
+                                                moreDataPM.TotFutureOpenChequesInLocalCur += externalTransactionsTotal;
                                                 moreDataPM.ChangeSetOp = ChangeSetOperation.Update;
                                                 updateService.Update(moreDataPM, true);
                                             }

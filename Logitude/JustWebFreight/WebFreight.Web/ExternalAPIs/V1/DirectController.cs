@@ -29,12 +29,13 @@ using Simplog.Data.Helpers;
 using Logitude.BL.InfrastructureModel.APIDataContract.ApiV1;
 using Logitude.BL.ShipmentsModel.EntityQueries;
 using Logitude.BL.CommonDataModel.APIDataContract.QueryService;
+using Logitude.BL.CommonDataModel.EntityLists;
 
 namespace WebFreight.Web.ExternalAPIs.V1
 {
     public class DirectController : ApiController
     {
-        public HttpResponseMessage GetSingleDirect(string id, string include)
+        public HttpResponseMessage GetSingleDirect(string id, string include = "")
         {
             try
             {
@@ -56,7 +57,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
             }
         }
 
-        public HttpResponseMessage GetSingleDirectByNumber(string number, string include)
+        public HttpResponseMessage GetSingleDirectByNumber(string number, string include = "")
         {
             try
             {
@@ -66,7 +67,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 SecurityUtility.AuthenticateAPICall(authToken.Tenant);
                 DirectQueryService Service = new DirectQueryService(tenant);
                 ServiceResponse response = new ServiceResponse();
-                Direct Result = Service.GetDirectByShipmentNumber(number, tenant, include);                
+                Direct Result = Service.GetDirectByShipmentNumber(number, tenant, include);
                 return Request.CreateResponse(HttpStatusCode.OK, Result);
             }
             catch (Exception ex)
@@ -98,10 +99,10 @@ namespace WebFreight.Web.ExternalAPIs.V1
 
                         ExternalAPIXMLEntityValidator externalAPIXMLEntityValidator = new ExternalAPIXMLEntityValidator(authToken.Tenant);
                         externalAPIXMLEntityValidator.ValidateDirectEntity(entity);
-                        this.InitOceanOrInlandPackages(entity);                        
+                        this.InitOceanOrInlandPackages(entity);
 
                         IShipmentsContext MyContext = ShipmentsContext.GetContext(authToken.Tenant);
-       
+
                         APIUnassignedDataHandler apiUnassignedDataHandler = new APIUnassignedDataHandler(authToken.Tenant, computingPartnerCode);
                         entity = apiUnassignedDataHandler.HandleUnassignedDirectShipmentData(entity);
 
@@ -115,6 +116,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         externalAPIShipmentValidator.ValidateShipmentClosure();
                         externalAPIShipmentValidator.ValidatePickupDeliveryPackages();
                         externalAPIShipmentValidator.ValidatePartnersDueToDirection();
+                        externalAPIShipmentValidator.ValidatePreAndOnCarrageFields();
 
                         this.SetClosurePropertiers(entityPM);
                         this.SetMasterNumberProperties(entityPM);
@@ -123,8 +125,6 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         AddressRepository addressRepository = new AddressRepository(entityPM.Tenant);
                         this.ValidateAndSetCustomerData(entityPM, addressRepository, authToken.Tenant);
                         this.ValidateCustomsFields(entityPM);
-                        this.ValidateOnCarriageDates(entityPM);
-                        this.ValidatePreCarriageDates(entityPM);
 
                         if (!IsInlandDomesticShipment(entityPM))
                         {
@@ -136,7 +136,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                                     {
                                         item.IsContainer = true;
                                     }
-                                    this.ValidateShipmentPackageDimensionsAndVolume(item,entityPM);
+                                    this.ValidateShipmentPackageDimensionsAndVolume(item, entityPM);
 
                                     if (!item.IsContainer)
                                     {
@@ -181,6 +181,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         else
                         {
                             entityPM = this.ValidateInlandDomesticShipment(entityPM);
+                            this.UpdateRoutingPartnersAddresses(entityPM);
                         }
 
                         ComputeHelper.ComputeTotals(entityPM);
@@ -188,14 +189,14 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         APIReceivablePayableHelper receivablePayableHelper = new APIReceivablePayableHelper(entityPM, authToken.Tenant);
                         receivablePayableHelper.ValidateReceivablesAndPayables();
                         receivablePayableHelper.ComputeReceivablesPayablesTotals();
-                
 
-                        if (entityPM.MainCarriageLegs != null && entityPM.MainCarriageLegs.Count > 0)
+
+                        if (!IsInlandDomesticShipment(entityPM) && entityPM.MainCarriageLegs != null && entityPM.MainCarriageLegs.Count > 0)
                         {
                             ExternalAPIMainCarriageLegsHelper externalAPIMainCarriageLegsHelper = new ExternalAPIMainCarriageLegsHelper(entityPM, authToken.Tenant);
                             externalAPIMainCarriageLegsHelper.ValidateMainCarriageLegs();
                             externalAPIMainCarriageLegsHelper.MapTransshipments();
-                        }                        
+                        }
 
                         if (!string.IsNullOrEmpty(entity.ComputingPartnerCode))
                         {
@@ -205,13 +206,13 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         }
 
                         entityPM.HasUnassignedData = apiUnassignedDataHandler.HasUnassignedData;
-                        entityPM = apiUnassignedDataHandler.AddDirectShipmentUnassignedData(entity,entityPM);
+                        entityPM = apiUnassignedDataHandler.AddDirectShipmentUnassignedData(entity, entityPM);
                         ShipmentService service = new ShipmentService(MyContext, entityPM, SecurityUtility.GetAuthenticatedUser());
                         service.Create();
 
                         if (entity.AddManualEvents != null && entity.AddManualEvents.Count > 0)
                         {
-                            EventQueryService eventQueryService = new EventQueryService(authToken.Tenant);                            
+                            EventQueryService eventQueryService = new EventQueryService(authToken.Tenant);
                             eventQueryService.CreateShipmentTraceEvents(entityPM, entity.AddManualEvents, true, computingPartnerCode);
                         }
 
@@ -289,15 +290,17 @@ namespace WebFreight.Web.ExternalAPIs.V1
                                 AddressRepository addressRepository = new AddressRepository(authToken.Tenant);
                                 this.ValidateAndSetCustomerData(directPM, addressRepository, authToken.Tenant);
                                 this.ValidateUpdateShipmentPackages(directPM);
+
+                                ExternalAPIShipmentValidator externalAPIShipmentValidator = new ExternalAPIShipmentValidator(directPM, authToken.Tenant);
+                                externalAPIShipmentValidator.ValidatePreAndOnCarrageFields();
                             }
                             else
                             {
                                 directPM = this.ValidateInlandDomesticShipment(directPM);
+                                this.UpdateRoutingPartnersAddresses(directPM);
                             }
 
                             this.ValidateCustomsFields(directPM);
-                            this.ValidateOnCarriageDates(directPM);
-                            this.ValidatePreCarriageDates(directPM);
                             this.UpdatePartners(MyContext, directPM);
                             ComputeHelper.ComputeTotals(directPM);
 
@@ -324,7 +327,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                     else
                     {
                         throw new ApplicationException("Update is not allowed");
-                    } 
+                    }
                 }
 
                 catch (Exception ex)
@@ -339,6 +342,91 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 var apiExceptionResult = ApiExceptionHandler.HandleModelException(ModelState);
                 APIHelper.AddCommunicationLog("F", entity, apiExceptionResult.Exception, "Shipment", null, "Direct API");
                 return Request.CreateResponse(apiExceptionResult.StatusCode, apiExceptionResult.Exception);
+            }
+        }
+
+        private void UpdateRoutingPartnersAddresses(ShipmentPM entityPM)
+        {
+            if (entityPM.InlandDomesticFromTypeCode == "PART" && !string.IsNullOrEmpty(entityPM.MainCarriageFromPartnerId))
+            {
+                this.SetFromPartnerAddress(entityPM);
+            }
+            else if (entityPM.InlandDomesticFromTypeCode == "PORT" && !string.IsNullOrEmpty(entityPM.MainCarriageFromPortId))
+            {
+                this.SetFromPortAddress(entityPM);
+            }
+
+            if (entityPM.InlandDomesticToTypeCode == "PART" && !string.IsNullOrEmpty(entityPM.MainCarriageToPartnerId))
+            {
+                this.SetToPartnerAddress(entityPM);
+            }
+            else if (entityPM.InlandDomesticToTypeCode == "PORT" && !string.IsNullOrEmpty(entityPM.MainCarriageToPortId))
+            {
+                this.SetToPortAddress(entityPM);
+            }
+        }
+        private void SetFromPartnerAddress(ShipmentPM entityPM)
+        {
+            CardRepository cardRepository = new CardRepository(entityPM.Tenant);
+            CardQuery cardQuery = new CardQuery(entityPM.Tenant);
+            Card card = cardRepository.GetSingleCard(entityPM.MainCarriageFromPartnerId, entityPM.Tenant);
+
+            if (card != null)
+            {
+                CardList cardList = cardQuery.GetSingleCardList(card);
+                if (cardList != null)
+                {
+                    if (!string.IsNullOrEmpty(cardList.PickAddressId))
+                    {
+                        entityPM.MainCarriageFromAddressId = cardList.PickAddressId;
+                    }
+
+                    else
+                    {
+                        entityPM.MainCarriageFromAddressId = cardList.MainAddressId;
+                    }
+                }
+            }
+        }
+        private void SetFromPortAddress(ShipmentPM entityPM) 
+        {
+            PortRepository portRepository = new PortRepository(entityPM.Tenant);
+            Port port = portRepository.GetSinglePort(entityPM.MainCarriageFromPortId, entityPM.Tenant);
+            if(port != null)
+            {
+                entityPM.MainCarriageFromPortAddress = "Port Of: " + port.EnglishName;
+            }
+        }
+        private void SetToPartnerAddress(ShipmentPM entityPM)
+        {
+            CardRepository cardRepository = new CardRepository(entityPM.Tenant);
+            CardQuery cardQuery = new CardQuery(entityPM.Tenant);
+            Card card = cardRepository.GetSingleCard(entityPM.MainCarriageToPartnerId, entityPM.Tenant);
+
+            if (card != null)
+            {
+                CardList cardList = cardQuery.GetSingleCardList(card);
+                if (cardList != null)
+                {
+                    if (!string.IsNullOrEmpty(cardList.PickAddressId))
+                    {
+                        entityPM.MainCarriageToAddressId = cardList.PickAddressId;
+                    }
+
+                    else
+                    {
+                        entityPM.MainCarriageToAddressId = cardList.MainAddressId;
+                    }
+                }
+            }
+        }
+        private void SetToPortAddress(ShipmentPM entityPM)
+        {
+            PortRepository portRepository = new PortRepository(entityPM.Tenant);
+            Port port = portRepository.GetSinglePort(entityPM.MainCarriageToPortId, entityPM.Tenant);
+            if (port != null)
+            {
+                entityPM.MainCarriageToPortAddress = "Port Of: " + port.EnglishName;
             }
         }
 
@@ -363,7 +451,6 @@ namespace WebFreight.Web.ExternalAPIs.V1
             }
             return entityPM;
         }
-
         private ShipmentPM SetInlandDomesticShipmentToPartners(ShipmentPM entityPM)
         {
             if (entityPM.InlandDomesticToTypeCode == "CASL")
@@ -385,7 +472,6 @@ namespace WebFreight.Web.ExternalAPIs.V1
             }
             return entityPM;
         }
-
         private void SetCustomerTypeCode(ShipmentPM entityPM)
         {
             if (entityPM.CustomerId == entityPM.ShipperId)
@@ -423,7 +509,6 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 entityPM.ShipmentCustomerTypeCode = "FOR";
             }
         }
-
         private void ValidateMasterNumberAndCarrier(Direct entity)
         {
             bool validate = false;
@@ -448,7 +533,6 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 throw new ApplicationException("Main Carriage Carrier is required when sending MAWB");
             }
         }
-
         private void ValidateAndSetCustomerData(ShipmentPM entityPM, AddressRepository addressRepository, int tenant)
         {
             if (!string.IsNullOrEmpty(entityPM.CustomerId))
@@ -507,7 +591,6 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 }
             }
         }
-
         private ShipmentPM ValidateInlandDomesticShipment(ShipmentPM entityPM)
         {
             ValidateInlandDomesticShipmentFromTypeCode(entityPM);
@@ -517,8 +600,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
             ValidateInlandDomesticMainCarriageDates(entityPM);
 
             return entityPM;
-        }
-
+        }        
         private void ValidateInlandDomesticShipmentToTypeCode(ShipmentPM entityPM)
         {
             bool isCityOrCountryNull = string.IsNullOrEmpty(entityPM.InlandDomesticToCity) || string.IsNullOrEmpty(entityPM.InlandDomesticToCountryId);
@@ -544,7 +626,6 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 throw new ApplicationException("Invalid InlandDomesticToTypeCode");
             }
         }
-
         private void ValidateInlandDomesticShipmentFromTypeCode(ShipmentPM entityPM)
         {
             bool isCityOrCountryNull = string.IsNullOrEmpty(entityPM.InlandDomesticFromCity) || string.IsNullOrEmpty(entityPM.InlandDomesticFromCountryId);
@@ -570,7 +651,6 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 throw new ApplicationException("Invalid InlandDomesticFromTypeCode");
             }
         }        
-
         private void ValidateCustomsFields(ShipmentPM shipmentPM)
         {
             if (!this.IsAddingCustomsFields(shipmentPM))
@@ -587,33 +667,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 throw new ApplicationException("Declaration Date Field Is Required");
             }
             shipmentPM.IncludesCustoms = true;
-        }
-     
-        private void ValidateOnCarriageDates(ShipmentPM entityPM)
-        {
-            if (!this.IsRoutingLegDatesValid(entityPM.OnCarriageETD, entityPM.OnCarriageETA))
-            {
-                throw new ApplicationException("On Carriage expected departure must be less than On Carriage expected arrival");
-            }
-
-            if (!this.IsRoutingLegDatesValid(entityPM.OnCarriageATD, entityPM.OnCarriageATA))
-            {
-                throw new ApplicationException("On Carriage actual departure must be less than On Carriage actual arrival");
-            }
-        }
-
-        private void ValidatePreCarriageDates(ShipmentPM entityPM)
-        {
-            if (!this.IsRoutingLegDatesValid(entityPM.PreCarriageETD, entityPM.PreCarriageETA))
-            {
-                throw new ApplicationException("Pre Carriage expected departure must be less than Pre Carriage expected arrival");
-            }
-
-            if (!this.IsRoutingLegDatesValid(entityPM.PreCarriageATD, entityPM.PreCarriageATA))
-            {
-                throw new ApplicationException("Pre Carriage actual departure must be less than Pre Carriage actual arrival");
-            }
-        }
+        }     
 
         private void ValidateInlandDomesticMainCarriageDates(ShipmentPM entityPM)
         {
@@ -628,7 +682,6 @@ namespace WebFreight.Web.ExternalAPIs.V1
             }
 
         }
-
         private void ValidateShipmentPackageDimensionsAndVolume(ShipmentPackagePM shipmentPackagePM, ShipmentPM entityPM)
         {
             double? calculatedVolume = ComputeHelper.ComputeVolume(shipmentPackagePM, entityPM);
@@ -639,7 +692,6 @@ namespace WebFreight.Web.ExternalAPIs.V1
             }
 
         }
-
         private void ValidateUpdateShipmentPackages(ShipmentPM entityPM)
         {
             if (!(entityPM.ShipmentPackages.Count > 0))
@@ -652,7 +704,6 @@ namespace WebFreight.Web.ExternalAPIs.V1
             }
 
         }
-
         private void ValidateShipmentPackageItem(ShipmentPackagePM item, ShipmentPM entityPM)
         {
             this.ValidateShipmentPackageDimensionsAndVolume(item, entityPM);
@@ -671,7 +722,6 @@ namespace WebFreight.Web.ExternalAPIs.V1
             item.VolumetricWeight = ComputeHelper.ComputeVolumetricWeight(item, entityPM);
             item.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
         }
-
         private void ValidateInsidePackage(ShipmentPackagePM item, ShipmentPM entityPM)
         {
             if (!(item.InsideShipmentPackages != null && item.InsideShipmentPackages.Count > 0))
@@ -718,12 +768,10 @@ namespace WebFreight.Web.ExternalAPIs.V1
 
             return isDomestic && isInland;
         }
-
         private bool IsInlandDomesticShipment(ShipmentPM entityPM)
         {
             return entityPM.DirectionId == "D" && entityPM.TransportModeId == "I";
         }
-
         private bool IsAddingCustomsFields(ShipmentPM shipmentPM)
         {
             if (shipmentPM.CustomsClearanceDate != null)
@@ -741,7 +789,6 @@ namespace WebFreight.Web.ExternalAPIs.V1
 
             return false;
         }
-
         private bool IsSentCustomerAShipmentPatrner(ShipmentPM entityPM)
         {
             if (entityPM.CustomerId == entityPM.ShipperId)
@@ -786,7 +833,6 @@ namespace WebFreight.Web.ExternalAPIs.V1
             }
             return false;
         }
-
         private bool IsRoutingLegDatesValid(DateTime? fisrtDate, DateTime? secondeDate)
         {
             bool isValid = true;
@@ -800,7 +846,6 @@ namespace WebFreight.Web.ExternalAPIs.V1
             }
             return isValid;
         }
-
         private bool IsOneOfTheDimensionsNotNull(ShipmentPackagePM shipmentPackagePM)
         {
             if (shipmentPackagePM.Width != null)

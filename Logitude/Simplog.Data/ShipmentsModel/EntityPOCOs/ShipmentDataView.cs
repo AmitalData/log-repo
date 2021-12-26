@@ -761,6 +761,9 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public DateTime? AccrualsApprovalDate { get; set; }
         public string ContainersNumbersandTypesArray { get; set; }
         public bool HasUnassignedData { get; set; }
-
+        public string OperationalStatusId { get; set; }
+        public string OperationalStatusName { get; set; }
+        public string DestinationWarehouseId { get; set; }
+        public string DestinationWarehouseName { get; set; }
     }
 }

@@ -984,6 +984,7 @@
     <Compile Include="Controllers\CargoTrackingModel\CargoTrackingIncrementalStatController.cs" />
     <Compile Include="Controllers\CargoTrackingModel\CargoTrackingMilestoneViewsController.cs" />
     <Compile Include="Controllers\CargoTrackingModel\CargoTrackingShipmentController.cs" />
+    <Compile Include="Controllers\CargoTrackingModel\CargoTrackingShipmentsDeclarationApprovalService.cs" />
     <Compile Include="Controllers\CargoTrackingModel\Generated\ListControllers\CargoTrackingCardViewsController.Generated.cs" />
     <Compile Include="Controllers\CargoTrackingModel\Generated\ListControllers\CargoTrackingCountryViewsController.Generated.cs" />
     <Compile Include="Controllers\CargoTrackingModel\Generated\ListControllers\CargoTrackingHeaderEntityTypeViewsController.Generated.cs" />
@@ -1095,6 +1096,7 @@
     <Compile Include="DataContracts\PrivateLabelsBrandingDataRequest.cs" />
     <Compile Include="DataProviders\LogitudeCRMReportDataProvider.cs" />
     <Compile Include="DataProviders\ProductItemLine.Shared.cs" />
+    <Compile Include="DataProviders\RoutingDataProvider.cs" />
     <Compile Include="DataProviders\UserDefinedReportDataProvider.cs" />
     <Compile Include="ExternalAPIs\ExternalAPIsHelpers\ExternalAPIMainCarriageLegsHelper.cs" />
     <Compile Include="ExternalAPIs\ExternalAPIsHelpers\ExternalAPIShipmentValidator.cs" />
@@ -2763,6 +2765,7 @@
     <Compile Include="Helpers\UploadTariffHelper.cs" />
     <Compile Include="Helpers\Warehouse\WarehouseRelaseService.cs" />
     <Compile Include="Helpers\WorkerRole\BIReportExecutionService.cs" />
+    <Compile Include="Helpers\WorkerRole\MultiEntityUpdate\MultiEntityUpdateCloner.cs" />
     <Compile Include="Helpers\WorkerRole\MultiEntityUpdate\MultiEntityUpdateExecutionService.cs" />
     <Compile Include="Helpers\WorkerRole\MultiEntityUpdate\MultiEntityUpdateProcessService.cs" />
     <Compile Include="Helpers\WorkerRole\MultiEntityUpdate\MultiEntityUpdateGeneralService.cs" />
@@ -3440,6 +3443,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\TimeManagementUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\WarehouseLibUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\ObjectFields\MetaDataUpdateClass.InvoiceModel.cs" />
+    <Content Include="Monitoring\AdvancedGenericInterfaceMonitoringStatus.aspx" />
     <Content Include="Monitoring\AgentSharedManifestMonitoring.aspx" />
     <Content Include="Monitoring\AnalyzeQueue.aspx" />
     <Content Include="Monitoring\AzureDevOpsQueue.aspx" />
@@ -3548,6 +3552,7 @@
     <Content Include="Monitoring\ReportExecutionLogWaitingStatus.aspx" />
     <Content Include="Monitoring\ReportExecutionRunTimeMonitoring.aspx" />
     <Content Include="Monitoring\SATCommunicationWaitingStatus.aspx" />
+    <Content Include="Monitoring\ShipmentInterfaceMonitoringStatus.aspx" />
     <Content Include="Monitoring\SignupLeadMonitoringPage.aspx" />
     <Content Include="Monitoring\StorageBackup.aspx" />
     <Content Include="QuickbooksOnlineAuth2.aspx" />
@@ -5511,6 +5516,13 @@
     <Compile Include="MetaDataUpdate\UpdateClasses\TariffModuleUpdate.cs" />
     <Compile Include="MetaDataUpdate\UpdateClasses\TimeManagementUpdate.cs" />
     <Compile Include="MetaDataUpdate\UpdateClasses\WarehouseUpdate.cs" />
+    <Compile Include="Monitoring\AdvancedGenericInterfaceMonitoringStatus.aspx.cs">
+      <DependentUpon>AdvancedGenericInterfaceMonitoringStatus.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Monitoring\AdvancedGenericInterfaceMonitoringStatus.aspx.designer.cs">
+      <DependentUpon>AdvancedGenericInterfaceMonitoringStatus.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Monitoring\AgentSharedManifestMonitoring.aspx.cs">
       <DependentUpon>AgentSharedManifestMonitoring.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -5727,6 +5739,13 @@
     </Compile>
     <Compile Include="Monitoring\SATCommunicationWaitingStatus.aspx.designer.cs">
       <DependentUpon>SATCommunicationWaitingStatus.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Monitoring\ShipmentInterfaceMonitoringStatus.aspx.cs">
+      <DependentUpon>ShipmentInterfaceMonitoringStatus.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Monitoring\ShipmentInterfaceMonitoringStatus.aspx.designer.cs">
+      <DependentUpon>ShipmentInterfaceMonitoringStatus.aspx</DependentUpon>
     </Compile>
     <Compile Include="Monitoring\SignupLeadMonitoringPage.aspx.cs">
       <DependentUpon>SignupLeadMonitoringPage.aspx</DependentUpon>

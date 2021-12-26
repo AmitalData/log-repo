@@ -26,7 +26,7 @@ SELECT        dbo.Shipments.Id, dbo.Shipments.Tenant, dbo.Shipments.ShipmentNumb
 						 dbo.Shipments.ComputedStatusId, dbo.Shipments.ComputedStatusDate, dbo.Shipments.OperationalCloseDate, dbo.Shipments.AccountingCloseDate,
 						 dbo.Shipments.CustomConnectToShipment, dbo.Shipments.ForeignPartnerCountryCode, dbo.Shipments.IsNewARInvoiceBlocked, dbo.Shipments.IsStandalonePickupDelivery, dbo.Shipments.ParentShipmentNumber,dbo.Shipments.HasUnassignedData,
                          dbo.Shipments.ParentShipmentType, dbo.Shipments.ParentShipmentDirectionId, dbo.ShipmentMasterDatas.MainCarriageFinalDestinationPortId, dbo.ShipmentMasterDatas.Transshipment3CarrierId,dbo.Shipments.IsHTSMissing ,
-                         dbo.Shipments.ApprovedCargoReadyDate ,dbo.Shipments.PlannedCargoReadyDate ,dbo.Shipments.HandlerUserId ,
+                         dbo.Shipments.ApprovedCargoReadyDate ,dbo.Shipments.PlannedCargoReadyDate ,dbo.Shipments.HandlerUserId , dbo.Shipments.DestinationWarehouseId ,
                          dbo.ShipmentMasterDatas.Transshipment2CarrierId, dbo.ShipmentMasterDatas.Transshipment1CarrierId, dbo.ShipmentMasterDatas.MainCarriageCarrierId, 
                          dbo.ShipmentMasterDatas.MainCarriageIsFromStack, dbo.ShipmentMasterDatas.Transshipment3AdditionalMAWBOBLBL, 
                          dbo.ShipmentMasterDatas.Transshipment2AdditionalMAWBOBLBL, dbo.ShipmentMasterDatas.Transshipment1AdditionalMAWBOBLBL, 
@@ -92,7 +92,8 @@ SELECT        dbo.Shipments.Id, dbo.Shipments.Tenant, dbo.Shipments.ShipmentNumb
                          dbo.Shipments.ShipperAddressId, dbo.Shipments.Notify2Id, dbo.Shipments.Notify1Id, dbo.Shipments.ConsigneeId, dbo.Shipments.CustomAgentImportId, 
                          dbo.Shipments.ShipperId, dbo.Shipments.ShipmentTypeId, dbo.Shipments.DepartmentId, dbo.Shipments.CreateDateTime, dbo.Shipments.SalesmanUserId, 
                          dbo.Shipments.IncotermId, dbo.Shipments.BranchId, dbo.Shipments.House, dbo.Shipments.ConsigneeReference2, dbo.Shipments.ConsigneeReference1, 
-						 dbo.Shipments.ConsolidatorId,dbo.Shipments.ConsolidatorAddressId,dbo.Shipments.ConsolidatorContactId,dbo.Shipments.ConsolidatorReference,             
+						 dbo.Shipments.ConsolidatorId,dbo.Shipments.ConsolidatorAddressId,dbo.Shipments.ConsolidatorContactId,dbo.Shipments.ConsolidatorReference,   
+             dbo.Shipments.OperationalStatusId,  
              dbo.ShipmentMasterDatas.OnCarriageFromPortId,  
              dbo.ShipmentMasterDatas.OnCarriageToPortId,
              dbo.ShipmentMasterDatas.PreCarriageFromPortId,  
@@ -248,9 +249,11 @@ SELECT        dbo.Shipments.Id, dbo.Shipments.Tenant, dbo.Shipments.ShipmentNumb
                          dbo.Vessels.EnglishName AS MainCarriageVesselName,dbo.Shipments.LastStatusLogDate As LastStatusLogDate,
 						 AccountManagerUserContacts.EnglishName as AccountManagerUserName,
 						 SalesmanUserContact.EnglishName as SalesmanUserName,
+             OperationalEntityStatus.Name as OperationalStatusName,
 						 CreatedByUserContact.EnglishName as CreatedByUserName,
 						 LastSentByUserContact.EnglishName as LastSentByUserName,		
              HandlerUserContact.EnglishName as HandlerUserName,
+             DestinationWarehouseCard.EnglishName as DestinationWarehouseName,
 						 ShipmentComputedFields.IsMissingDocuments as IsMissingDocument,
 						 ShipmentComputedFields.DocumentsSearchFields as DocumentsSearchFields,
 						 dbo.Shipments.ForwarderShipmentNumber as ForwarderShipmentNumber,
@@ -388,11 +391,13 @@ FROM            dbo.Shipments LEFT OUTER JOIN
                          dbo.Vessels ON dbo.ShipmentMasterDatas.MainCarriageVesselId = dbo.Vessels.Id LEFT OUTER JOIN
 						 dbo.Contacts AS AccountManagerUserContacts ON dbo.Shipments.AccountManagerUserId = AccountManagerUserContacts.Id LEFT OUTER JOIN
 						 dbo.Contacts AS SalesmanUserContact ON dbo.Shipments.SalesmanUserId = SalesmanUserContact.Id LEFT OUTER JOIN
+             dbo.EntityStatus AS OperationalEntityStatus ON dbo.Shipments.OperationalStatusId = OperationalEntityStatus.Id LEFT OUTER JOIN
 						 dbo.HybridPartners AS HybridPartner ON dbo.Shipments.ForwarderPartnerId = HybridPartner.Id LEFT OUTER JOIN
 						 dbo.EventTypes ON dbo.Shipments.LastSharedEventId = dbo.EventTypes.Id LEFT OUTER JOIN
 						 dbo.Contacts AS LastSentByUserContact ON dbo.Shipments.LastSentByUserId = LastSentByUserContact.Id LEFT OUTER JOIN
 						 dbo.Contacts AS LocalCustomsSentByUser ON dbo.Shipments.LocalCustomsSentByUserId = LocalCustomsSentByUser.Id LEFT OUTER JOIN
              dbo.Contacts AS HandlerUserContact ON dbo.Shipments.HandlerUserId = HandlerUserContact.Id LEFT OUTER JOIN
+             dbo.Cards AS DestinationWarehouseCard ON dbo.Shipments.DestinationWarehouseId = DestinationWarehouseCard.Id LEFT OUTER JOIN
 						 dbo.Contacts AS CreatedByUserContact ON dbo.Shipments.CreatedByUserId = CreatedByUserContact.Id INNER JOIN
 						 dbo.ShipmentComputedFields AS ShipmentComputedFields ON dbo.Shipments.Id = ShipmentComputedFields.Id INNER JOIN
 						 dbo.ShipmentAdditionalCloudDatas AS ShipmentAdditionalCloudDatas ON dbo.Shipments.Id = ShipmentAdditionalCloudDatas.Id LEFT OUTER JOIN

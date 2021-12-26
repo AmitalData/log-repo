@@ -365,6 +365,9 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                                   ApprovedCargoReadyDate = f.ApprovedCargoReadyDate,
                                   HandlerUserId = f.HandlerUserId,
                                   HandlerUserName = f.HandlerUserName,
+                                  DestinationWarehouseId = f.DestinationWarehouseId,
+                                  DestinationWarehouseName = f.DestinationWarehouseName,
+                                  OperationalStatusName = f.OperationalStatusName,
                               };
                        
             entityLists = genericFilter.GetFilteredQuery<ShipmentList>(listQueryOperation, entityLists);

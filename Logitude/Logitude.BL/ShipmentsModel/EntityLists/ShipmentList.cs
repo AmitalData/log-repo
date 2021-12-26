@@ -571,6 +571,7 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public string StandalonePickupDeliveryId { get; set; }
         public string GrossWeightUnitCode { get; set; }
         public string OperationalStatusId { get; set; }
+        public string OperationalStatusName { get; set; }
         public string BillingStatusId { get; set; }
         public string ShipperNotExporterReference1 { get; set; }
         public string ShipperNotExporterReference2 { get; set; } 
@@ -580,6 +581,8 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public string CustomerContactEmail { get; set; }
         public DateTime? PODReceivedDate { get; set; }
         public bool HasUnassignedData { get; set; }
+        public string DestinationWarehouseId { get; set; }
+        public string DestinationWarehouseName { get; set; }
 
     }
 }

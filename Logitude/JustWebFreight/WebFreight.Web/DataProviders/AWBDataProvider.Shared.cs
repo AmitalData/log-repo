@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 namespace WebFreight.Web.DataProviders
 {
-    public class AWBDataProvider: BaseDataProvider
+    public class AWBDataProvider : BaseDataProvider
     {
         public string BranchSignature { get; set; }
         public string MainCarriageCarrierPrefix { get; set; }        
@@ -219,12 +219,10 @@ namespace WebFreight.Web.DataProviders
         public string Notify1ContactDetails { get; set; }
         public string Notify2ContactDetails { get; set; }
         public string ShipperNotExporterContactDetails { get; set; }
-
         public string ShipperPrimaryContactName { get; set; }
         public string ShipperPrimaryContactPhone { get; set; }
         public string ConsigneePrimaryContactName { get; set; }
         public string ConsigneePrimaryContactPhone { get; set; }
-
         public string ConsolidatorName { get; set; }
         public string MainCarriageLeg2_MAWB { get; set; }
         public string AccountManagerName { get; set; }
@@ -236,6 +234,40 @@ namespace WebFreight.Web.DataProviders
         public string HouseReferenceNumber { get; set; }
         public string Notify2NameAddress { get; set; }
         public string SpecialHandlingCodes { get; set; }
+        public string PreForwardingFrom { get; set; }
+        public string PreForwardingTo { get; set; }
+        public DateTime? PreForwardingETD { get; set; }
+        public DateTime? PreForwardingETA { get; set; }
+        public DateTime? PreForwardingATD { get; set; }
+        public DateTime? PreForwardingATA { get; set; }
+        public string PreForwardingCarrierCode { get; set; }
+        public string PreForwardingCarrierNumber { get; set; }
+        public string OnForwardingFrom { get; set; }
+        public string OnForwardingTo { get; set; }
+        public DateTime? OnForwardingETD { get; set; }
+        public DateTime? OnForwardingETA { get; set; }
+        public DateTime? OnForwardingATD { get; set; }
+        public DateTime? OnForwardingATA { get; set; }
+        public string OnForwardingCarrierCode { get; set; }
+        public string OnForwardingCarrierNumber { get; set; }
+        public string PreCarriageFrom { get; set; }
+        public string PreCarriageTo { get; set; }
+        public DateTime? PreCarriageETD { get; set; }
+        public DateTime? PreCarriageETA { get; set; }
+        public DateTime? PreCarriageATD { get; set; }
+        public DateTime? PreCarriageATA { get; set; }
+        public string PreCarriageCarrierCode { get; set; }
+        public string PreCarriageCarrierNumber { get; set; }
+        public string OnCarriageFrom { get; set; }
+        public string OnCarriageTo { get; set; }
+        public DateTime? OnCarriageETD { get; set; }
+        public DateTime? OnCarriageETA { get; set; }
+        public DateTime? OnCarriageATD { get; set; }
+        public DateTime? OnCarriageATA { get; set; }
+        public string OnCarriageCarrierCode { get; set; }
+        public string OnCarriageCarrierNumber { get; set; }
+        public string CustomsDeclarationNumber { get; set; }
+
     }
 
     public class CommodityLine

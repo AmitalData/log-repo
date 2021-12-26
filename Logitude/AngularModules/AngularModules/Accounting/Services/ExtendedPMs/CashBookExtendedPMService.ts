@@ -9,15 +9,15 @@ import {CashBookLinePM} from '../../EntityPMs/CashBookLinePM';
 import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators'
- 
+
 
 @Injectable()
 export class CashBookExtendedPMService {
- 
+
     private _apiUrl: string;
     private httpClient: HttpClient;
     constructor() {
-   
+
         this.httpClient = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/CashBookOp';
     }
@@ -31,7 +31,7 @@ export class CashBookExtendedPMService {
                 return serviceResponse;
             }),
             catchError(ServiceHelper.HandleServiceError));
-    
+
     }
 
 
@@ -44,7 +44,7 @@ export class CashBookExtendedPMService {
                 return serviceResponse;
             }),
             catchError(ServiceHelper.HandleServiceError));
-      
+
     }
 
     GetCashbookUndepositedChequesCount(cashbookId: string) {
@@ -56,7 +56,7 @@ export class CashBookExtendedPMService {
                 return serviceResponse;
             }),
             catchError(ServiceHelper.HandleServiceError));
-      
+
     }
 
     GetCashbookTotalAmount(cashbookId: string, chequeFilterType: string) {
@@ -68,9 +68,22 @@ export class CashBookExtendedPMService {
                 return serviceResponse;
             }),
             catchError(ServiceHelper.HandleServiceError));
-      
+
     }
 
+
+    RecalculateCashbookTotal(cashbookId: string)
+    {
+        return this.httpClient.post(this._apiUrl + "/PostRecalculateCashbookTotal?" + "&cashbookId=" + cashbookId, null, ServiceHelper.GetHttpHeaders())
+            .pipe(
+                map(response =>
+                {
+                    var serviceResponse: ServiceResponse = new ServiceResponse();
+                        serviceResponse.Result = response;
+                    return serviceResponse;
+                }),
+                catchError(ServiceHelper.HandleServiceError));
+    }
 
     public clone(jsonPM: any) {
         var entityPM: any;

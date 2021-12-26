@@ -191,7 +191,7 @@ export class NewReportsTemplateComponent implements OnInit {
         if (SessionLocator.Tenant == 0) {
             this.ReportsTemplatePM.IsSystem = true;
         }
-
+        this.ReportsTemplatePM.Tenant = SessionLocator.Tenant;
         this.reportsTemplatePMExtendedService.CreateReportTemplate(this.ReportsTemplatePM).subscribe((res: any) => {
             var pmResponse: ServiceResponse = res;
             this.CurrentSession.StopBusyIndicator();

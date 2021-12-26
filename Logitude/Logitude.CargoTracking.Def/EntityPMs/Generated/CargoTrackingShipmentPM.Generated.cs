@@ -2826,6 +2826,98 @@ namespace Logitude.CargoTracking.Def.EntityPMs
 			
 		 }
 	   }
+	  private bool activatedForDeclarationApprove ;
+	  	  
+       
+	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool ActivatedForDeclarationApprove  
+	   {
+	    
+	     get
+		{
+		   return activatedForDeclarationApprove;
+		 }
+		 set
+		 {
+		   if(activatedForDeclarationApprove != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ActivatedForDeclarationApprove",OldValue=activatedForDeclarationApprove,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   activatedForDeclarationApprove=value;
+		   }
+			
+		 }
+	   }
+	  private bool isImporterApprovalRequried ;
+	  	  
+       
+	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsImporterApprovalRequried  
+	   {
+	    
+	     get
+		{
+		   return isImporterApprovalRequried;
+		 }
+		 set
+		 {
+		   if(isImporterApprovalRequried != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsImporterApprovalRequried",OldValue=isImporterApprovalRequried,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isImporterApprovalRequried=value;
+		   }
+			
+		 }
+	   }
+	  private string tenantDeclarationMessage ;
+	  	  
+       
+	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string TenantDeclarationMessage  
+	   {
+	    
+	     get
+		{
+		   return tenantDeclarationMessage;
+		 }
+		 set
+		 {
+		   if(tenantDeclarationMessage != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TenantDeclarationMessage",OldValue=tenantDeclarationMessage,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   tenantDeclarationMessage=value;
+		   }
+			
+		 }
+	   }
+	  private bool? isOperationalClosed ;
+	  	  
+       
+	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool? IsOperationalClosed  
+	   {
+	    
+	     get
+		{
+		   return isOperationalClosed;
+		 }
+		 set
+		 {
+		   if(isOperationalClosed != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsOperationalClosed",OldValue=isOperationalClosed,NewValue=value,PropertyType="bool?"};
+		    NotifyPropertyChanged(values);
+		   isOperationalClosed=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

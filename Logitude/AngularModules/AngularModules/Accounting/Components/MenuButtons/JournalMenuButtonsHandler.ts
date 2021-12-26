@@ -162,6 +162,8 @@ export class JournalMenuButtonsHandler {
         const AdjustmentAccountingEntity = "10";
         const ApprovedStatusCode = "2";
         const VoidedStatusCode = "3";
+        const CancelledStatusCode = "5";
+
 
         let IsVoidButtonEnabled: Boolean = this.EntityPM.AccountingEntityCode == JournalAccountingEntity ||
             this.EntityPM.AccountingEntityCode == RevaluationAccountingEntity ||
@@ -183,6 +185,9 @@ export class JournalMenuButtonsHandler {
             button.IsDisabled = true;
 
         if (this.EntityPM.StatusCode == VoidedStatusCode)
+            button.IsDisabled = true;
+
+        if (this.EntityPM.StatusCode == CancelledStatusCode)
             button.IsDisabled = true;
 
     }

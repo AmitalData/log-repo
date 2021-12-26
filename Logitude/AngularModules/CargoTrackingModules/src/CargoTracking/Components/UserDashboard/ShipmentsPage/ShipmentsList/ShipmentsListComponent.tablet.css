@@ -62,7 +62,7 @@
 /* Laptops screens */
 @media screen 
   and (min-device-width: 1200px) 
-  and (max-device-width: 1600px) 
+
   and (-webkit-min-device-pixel-ratio: 1) {
     .search-bar{
         width: 23%;
@@ -74,7 +74,7 @@
     }
 
     .multipe-select, .has-exception-checkbox-filter {
-        margin-right: 10px;
+        margin-right: 45px;
     }
     .has-exception-checkbox-filter {
         margin-right: 140px;
@@ -90,6 +90,18 @@
     .scrollable-table {
         height: 60%;
     }
+}
+@media screen 
+  and (min-width: 1200px){
+    .search-bar{
+        width: 23%;
+    }
+
+    .shipments-filters{
+        width: 77%;
+        margin-left: 0px !important;
+    }
+
 }
 
 

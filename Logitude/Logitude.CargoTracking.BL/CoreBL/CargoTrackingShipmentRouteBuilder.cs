@@ -32,7 +32,7 @@ namespace Logitude.CargoTracking.BL.EntityQueryServices
             if (shipmentPM != null)
                 BuildShipmentRoute(shipmentPM);
 
-            if(shipmentOrderPM != null)
+            if (shipmentOrderPM != null)
                 BuildShipmentOrderRoute(shipmentOrderPM);
 
             return routingSteps;
@@ -53,11 +53,11 @@ namespace Logitude.CargoTracking.BL.EntityQueryServices
                 BuildWarehouseLegStep(shipmentPM);
             }
 
-            BuildDeliveriesSteps(shipmentPM);            
+            BuildDeliveriesSteps(shipmentPM);
         }
         private void BuildShipmentOrderRoute(ShipmentOrderPM shipmentOrderPM)
         {
-            if (shipmentOrderPM.GatewayId == null)
+            if (shipmentOrderPM.GatewayId != null)
                 BuildShipmentOrderGatewayRoute(shipmentOrderPM);
             else
                 BuildShipmentOrderNonGatwayRoute(shipmentOrderPM);
@@ -72,7 +72,7 @@ namespace Logitude.CargoTracking.BL.EntityQueryServices
                     TransportModeCode = InlandTransportMode,
                     FromPortLabel = GetFromPortLabelFromPickup(delivery),
                     ToPortLabel = GetToPortLabelFromPickup(delivery),
-                    Description = delivery != null ? "Via " + delivery.CarrierLocalName : null
+                    Description = delivery != null ? delivery.CarrierTypeName + " " + delivery.CarrierLocalName : null
                 };
                 SetDeliveryDirections(delivery, step);
                 steps.Add(step);
@@ -121,9 +121,9 @@ namespace Logitude.CargoTracking.BL.EntityQueryServices
                 var step = new RoutingStep()
                 {
                     TransportModeCode = shipmentPM.TransportModeId,
-                    FromPortLabel = shipmentPM.MainCarriageFromPortCode,
-                    ToPortLabel = shipmentPM.MainCarriageToPortCode,
-                    Description = shipmentPM.MainCarriageCarrierName != null ? "Via " + shipmentPM.MainCarriageCarrierName : null
+                    FromPortLabel = mainCarrigeLeg.FromPortCode,
+                    ToPortLabel = mainCarrigeLeg.ToPortCode,
+                    Description = mainCarrigeLeg.CarrierName != null || mainCarrigeLeg.CarrierTypeName != null ? mainCarrigeLeg.CarrierTypeName +" "+ mainCarrigeLeg.CarrierName : null
                 };
                 SetMainCarriageLegDirections(mainCarrigeLeg, step);
                 steps.Add(step);
@@ -170,8 +170,8 @@ namespace Logitude.CargoTracking.BL.EntityQueryServices
                     ToolTipToPortLabel = GetToolTipToPortLabelFromPickup(pickup),
                 };
 
-                if (pickup.CarrierLocalName != null)
-                    pickupRoute.Description = "Via " + pickup.CarrierLocalName;
+                if (pickup.CarrierLocalName != null || pickup.CarrierTypeName != null )
+                    pickupRoute.Description = pickup.CarrierTypeName +" "+ pickup.CarrierLocalName;
 
                 SetPickupRouteDirections(pickup, pickupRoute);
 
@@ -218,11 +218,27 @@ namespace Logitude.CargoTracking.BL.EntityQueryServices
 
         private void BuildShipmentOrderGatewayRoute(ShipmentOrderPM shipmentOrderPM)
         {
-            BuildShipmentOrderOriginRoute(shipmentOrderPM);
+            if(shipmentOrderPM.GatewayCode == shipmentOrderPM.OriginPortCode || shipmentOrderPM.GatewayCode == shipmentOrderPM.DestinationPortCode)
+            {
+                BuildShipmentOrderOriginRouteToDestinationRoute(shipmentOrderPM);
+                return;
+            }
 
+            BuildShipmentOrderOriginRoute(shipmentOrderPM);
             BuildShipmentOrderDestinationRoute(shipmentOrderPM);
         }
+        private void BuildShipmentOrderOriginRouteToDestinationRoute(ShipmentOrderPM shipmentOrderPM)
+        {
+            var step = new RoutingStep()
+            {
+                TransportModeCode = shipmentOrderPM.TransportModeId,
+                Description = "MainCarriageLeg",
+                FromPortLabel = shipmentOrderPM.OriginPortCode,
+                ToPortLabel = shipmentOrderPM.DestinationPortCode
+            };
 
+            routingSteps.Add(step);
+        }
         private void BuildShipmentOrderDestinationRoute(ShipmentOrderPM shipmentOrderPM)
         {
             var step = new RoutingStep()
@@ -310,7 +326,7 @@ namespace Logitude.CargoTracking.BL.EntityQueryServices
             if (pickup.PickUpDeliveryFromTypeCode == PortTypeCode)
                 return pickup.FromPortCode;
             if (pickup.PickUpDeliveryFromTypeCode == PartnerTypeCode)
-                return pickup.FromLocation.Split(' ')[0];
+                return pickup.FromLocation?.Split(' ')[0];
             return pickup.FromAddressCountryCode;
         }
         private string GetFromPortLabelFromPickup(ShipmentDeliveryPM delivery)
@@ -318,13 +334,13 @@ namespace Logitude.CargoTracking.BL.EntityQueryServices
             if (delivery.PickUpDeliveryFromTypeCode == PortTypeCode)
                 return delivery.FromPortCode;
             if (delivery.PickUpDeliveryFromTypeCode == PartnerTypeCode)
-                return delivery.FromLocation.Split(' ')[0];
+                return delivery.FromLocation?.Split(' ')[0];
             return delivery.FromAddressCountryCode;
         }
         private string GetToolTipFromPortLabelFromPickup(ShipmentPickUpPM pickup)
         {
             if (pickup.PickUpDeliveryFromTypeCode == PartnerTypeCode)
-                return "Partner: \n" + pickup.FromLocation.Split('\r')[0];
+                return "Partner: \n" + pickup.FromLocation?.Split('\r')[0];
             if (pickup.PickUpDeliveryFromTypeCode == "CASL")
                 return "Address: \n" + (pickup.FromAddressCity_Dummy != null ? pickup.FromAddressCity_Dummy + ',' : "") + pickup.FromAddressCountryName;
             return null;
@@ -332,7 +348,7 @@ namespace Logitude.CargoTracking.BL.EntityQueryServices
         private string GetToolTipToPortLabelFromPickup(ShipmentPickUpPM pickup)
         {
             if (pickup.PickUpDeliveryToTypeCode == PartnerTypeCode)
-                return "Partner: \n" + pickup.ToLocation.Split('\r')[0];
+                return "Partner: \n" + pickup.ToLocation?.Split('\r')[0];
             if (pickup.PickUpDeliveryToTypeCode == "CASL")
                 return "Address: \n" + (pickup.ToAddressCity_Dummy != null ? pickup.ToAddressCity_Dummy + ',' : "") + pickup.ToAddressCountryName;
             return null;
@@ -342,7 +358,7 @@ namespace Logitude.CargoTracking.BL.EntityQueryServices
             if (pickup.PickUpDeliveryToTypeCode == PortTypeCode)
                 return pickup.ToPortCode;
             if (pickup.PickUpDeliveryToTypeCode == PartnerTypeCode)
-                return pickup.ToLocation.Split(' ')[0];
+                return pickup.ToLocation?.Split(' ')[0];
             return pickup.ToAddressCountryCode;
         }
         private string GetToPortLabelFromPickup(ShipmentDeliveryPM delivery)
@@ -350,7 +366,7 @@ namespace Logitude.CargoTracking.BL.EntityQueryServices
             if (delivery.PickUpDeliveryToTypeCode == PortTypeCode)
                 return delivery.ToPortCode;
             if (delivery.PickUpDeliveryToTypeCode == PartnerTypeCode)
-                return delivery.ToLocation.Split(' ')[0];
+                return delivery.ToLocation?.Split(' ')[0];
             return delivery.ToAddressCountryCode;
         }
     }

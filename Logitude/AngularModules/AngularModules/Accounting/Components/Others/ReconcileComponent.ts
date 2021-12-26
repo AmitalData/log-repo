@@ -350,7 +350,6 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
     SetWindowArgs(args: any) {
         if (args != null) {
             this.GLAccountPM = args.GLAccountPM;
-
             ReconcileEventManager.GLAccountReconcileMethodCode = this.GLAccountPM.ReconcileMethodCode;
 
             if (!AppTool.IsNullOrEmpty(this.GLAccountPM.CurrencyId)) {
@@ -402,9 +401,13 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
             if (s && s.Name == "InternalReconcileAPPaymentCreated") {
                 this.createdPaymentNumber = s.PaymentNumber;
                 this.showInternalReconcileAPPaymentAlert = true;
-                this.onQueryChangeEvent.emit({ Filters: new ApiQueryFilters() });
+                // this.onQueryChangeEvent.emit({ Filters: new ApiQueryFilters() });
                 this.isAllSelected= false;
+                setTimeout(() => {
+                    this.onQueryChangeEvent.emit({ Filters: new ApiQueryFilters() });
+                       }, 500);
             }
+            
         });
     }
 
@@ -1381,7 +1384,8 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
                 //    }, 5000);
 
                 //});
-
+                
+                this.onQueryChangeEvent.emit({ Filters: new ApiQueryFilters() });
                 if(_callback){
                     this.RecoPM = _callback.reconciliationPM;
                 }
@@ -1724,7 +1728,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
 
     NewAPPaymentMethod() {
         var newApPaymentPM: APPaymentPM = new APPaymentPM();
-        newApPaymentPM.ReconcileInternalTransIds = this.GetSelectedPageLinesIds();
+        newApPaymentPM.ReconcileInternalTrans = this.GetSelectedPageLines();
         newApPaymentPM.StatusCode = "DR";
         newApPaymentPM.StatusName = "Draft";
         console.log('this.GLAccountPM', this.GLAccountPM);
@@ -1755,9 +1759,9 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
         });
     }
 
-    private GetSelectedPageLinesIds()
+    private GetSelectedPageLines(): LedgerTransactionPM[]
     {
-        return this.SelectedLines.Collection.map(line => line.Id).join(',');
+        return this.SelectedLines.Collection.map(x => x.LedgerTransactionPM as LedgerTransactionPM);
     }
 
     public GetInternalReconcileAPPaymentAlertMessage(){

@@ -2282,6 +2282,7 @@ namespace WebFreight.Web.ReportsWebServices
                                                                PartnerId = d.PartnerId,
                                                                Debit = d.AmountDueInLocalCurrency == null ? null : ((d.ARInvoiceTypeCode == "CD" || d.ARInvoiceTypeCode == "CC") ? null : d.AmountDueInLocalCurrency),
                                                                Credit = d.AmountDueInLocalCurrency == null ? null : ((d.ARInvoiceTypeCode != "CD" && d.ARInvoiceTypeCode != "CC") ? null : d.AmountDueInLocalCurrency),
+                                                               ProfitExchangeRate = d.ProfitCurrencyExchangeRate,
                                                            }).ToList();
 
             List<AgingStatemantDataItem> list_APInvoice = (from d in iQueryable_APInvoice
@@ -2295,6 +2296,7 @@ namespace WebFreight.Web.ReportsWebServices
                                                                Date = d.DueDate,
                                                                Debit = d.AmountDueInLocalCurrency == null ? null : (d.AmountDueInLocalCurrency > 0 ? null : d.AmountDueInLocalCurrency),
                                                                Credit = d.AmountDueInLocalCurrency == null ? null : (d.AmountDueInLocalCurrency > 0 ? d.AmountDueInLocalCurrency : null),
+                                                               ProfitExchangeRate = d.ProfitCurrencyExchangeRate,
                                                            }).ToList();
 
             List<AgingStatemantDataItem> list_ARPayment = (from d in iQueryable_ARPayment
@@ -2308,6 +2310,7 @@ namespace WebFreight.Web.ReportsWebServices
                                                                PartnerId = d.PartnerId,
                                                                Date = d.ValueDate,
                                                                Credit = d.OpenAmount * d.PaymentCurrencyExchangeRate,
+                                                               ProfitExchangeRate = d.ProfitCurrencyExchangeRate,
                                                            }).ToList();
 
             List<AgingStatemantDataItem> list_APPayment = (from d in iQueryable_APPayment
@@ -2320,9 +2323,8 @@ namespace WebFreight.Web.ReportsWebServices
                                                                CardId = d.VendorId,
                                                                Date = d.ValueDate,
                                                                Debit = d.OpenAmount * d.PaymentCurrencyExchangeRate,
+                                                               ProfitExchangeRate = d.ProfitCurrencyExchangeRate,
                                                            }).ToList();
-
-
             this.FixValues(list_ARInvoice);
             this.FixValues(list_APInvoice);
             this.FixValues(list_ARPayment);
@@ -2443,28 +2445,28 @@ namespace WebFreight.Web.ReportsWebServices
 
                 if (currencyType == "profit")
                 {
-                    if (currencyRate != 0)
-                    {
-                        currentsum = (currentDueItems.Sum(d => (d.Debit + d.Credit) / currencyRate));
-                        sum1_30 = (Due1_30Items.Sum(d => (d.Debit + d.Credit) / currencyRate));
-                        sum31_60 = (Due31_60Items.Sum(d => (d.Debit + d.Credit) / currencyRate));
-                        sum61_90 = (Due61_90Items.Sum(d => (d.Debit + d.Credit) / currencyRate));
-                        sum91_120 = (Due91_120Items.Sum(d => (d.Debit + d.Credit) / currencyRate));
-                        over120 = (over120Items.Sum(d => (d.Debit + d.Credit) / currencyRate));
+                    //if (currencyRate != 0)
+                    //{
+                        currentsum = (currentDueItems.Sum(d => (d.Debit + d.Credit) / d.ProfitExchangeRate));
+                        sum1_30 = (Due1_30Items.Sum(d => (d.Debit + d.Credit) / d.ProfitExchangeRate));
+                        sum31_60 = (Due31_60Items.Sum(d => (d.Debit + d.Credit) / d.ProfitExchangeRate));
+                        sum61_90 = (Due61_90Items.Sum(d => (d.Debit + d.Credit) / d.ProfitExchangeRate));
+                        sum91_120 = (Due91_120Items.Sum(d => (d.Debit + d.Credit) / d.ProfitExchangeRate));
+                        over120 = (over120Items.Sum(d => (d.Debit + d.Credit) / d.ProfitExchangeRate));
 
-                        sum1_15 = (Due1_15Items.Sum(d => (d.Debit + d.Credit) / currencyRate));
-                        sum16_30 = (Due16_30Items.Sum(d => (d.Debit + d.Credit) / currencyRate));
-                        sum1_24 = (Due1_24Items.Sum(d => (d.Debit + d.Credit) / currencyRate));
-                        sum25_30 = (Due25_30Items.Sum(d => (d.Debit + d.Credit) / currencyRate));
+                        sum1_15 = (Due1_15Items.Sum(d => (d.Debit + d.Credit) / d.ProfitExchangeRate));
+                        sum16_30 = (Due16_30Items.Sum(d => (d.Debit + d.Credit) / d.ProfitExchangeRate));
+                        sum1_24 = (Due1_24Items.Sum(d => (d.Debit + d.Credit) / d.ProfitExchangeRate));
+                        sum25_30 = (Due25_30Items.Sum(d => (d.Debit + d.Credit) / d.ProfitExchangeRate));
 
-                        sum31_45 = (Due31_45Items.Sum(d => (d.Debit + d.Credit) / currencyRate));
-                        sum46_60 = (Due46_60Items.Sum(d => (d.Debit + d.Credit) / currencyRate));
+                        sum31_45 = (Due31_45Items.Sum(d => (d.Debit + d.Credit) / d.ProfitExchangeRate));
+                        sum46_60 = (Due46_60Items.Sum(d => (d.Debit + d.Credit) / d.ProfitExchangeRate));
 
-                        sum61_75 = Due61_75Items.Sum(d => (d.Debit + d.Credit) / currencyRate);
-                        sum76_90 = Due76_90Items.Sum(d => (d.Debit + d.Credit) / currencyRate);
-                        sum91_105 = Due91_105Items.Sum(d => (d.Debit + d.Credit) / currencyRate);
-                        sum106_120 = Due106_120Items.Sum(d => (d.Debit + d.Credit) / currencyRate);
-                    }
+                        sum61_75 = Due61_75Items.Sum(d => (d.Debit + d.Credit) / d.ProfitExchangeRate);
+                        sum76_90 = Due76_90Items.Sum(d => (d.Debit + d.Credit) / d.ProfitExchangeRate);
+                        sum91_105 = Due91_105Items.Sum(d => (d.Debit + d.Credit) / d.ProfitExchangeRate);
+                        sum106_120 = Due106_120Items.Sum(d => (d.Debit + d.Credit) / d.ProfitExchangeRate);
+                    //}
                 }
 
                 else
@@ -3607,6 +3609,7 @@ namespace WebFreight.Web.ReportsWebServices
             ARInvoiceQuery arInvoiceQuery = new ARInvoiceQuery(aRInvoiceRepository);
             APPaymentQuery aPPaymentQuery = new APPaymentQuery(aPPaymentRepository);
             APInvoiceQuery aPInvoiceQuery = new APInvoiceQuery(aPInvoiceRepository);
+            ShipmentRepository shipmentRepository = new ShipmentRepository(tenant);
 
             IQueryable<ARInvoiceList> iQueryableARInvoice = arInvoiceQuery.GetUnpaidARInvoices(tenant);
             IQueryable<ARPaymentList> iQueryableARPayment = arPaymentQuery.GetOpenedARPayments(tenant);
@@ -3614,6 +3617,9 @@ namespace WebFreight.Web.ReportsWebServices
             IQueryable<APInvoiceList> iQueryableAPInvoice = aPInvoiceQuery.GetUnpaidAPInvoices(tenant);
 
             iQueryableARInvoice = iQueryableARInvoice.Where(d => !d.IsConstituentInvoice);
+            List<string> shipmentsIds = iQueryableARInvoice.Select(s => s.MainEntityId).Concat(iQueryableAPInvoice.Select(s => s.MainEntityId)).ToList();
+            shipmentsIds = shipmentsIds.Distinct().ToList();
+            IQueryable<Shipment> shipments = shipmentRepository.GetShipmentsForCrossDock(shipmentsIds, tenant);
 
             #region Report Filters
             MemoryStream memorystream = new MemoryStream(xmlFilters);
@@ -3702,6 +3708,7 @@ namespace WebFreight.Web.ReportsWebServices
                     statementRecord = new StatementByInvoiceDateDataProvider.StatementByInvoiceRecord();
 
                     Card billTo = cardRepository.GetSingleCard(a.BillToId, tenant);
+                    Shipment shipment = shipments.Where(d => d.Id == a.MainEntityId).FirstOrDefault();
 
                     statementRecord.InvoiceCurrency = a.InvoiceCurrencyCode;
                     statementRecord.ShipmentNumber = a.MainEntityReference;
@@ -3784,9 +3791,12 @@ namespace WebFreight.Web.ReportsWebServices
                     {
                         statementRecord.PastAmountOver_120 = a.AmountDue;
                     }
-                    /////////////////////////////////
 
-                   
+                    if (shipment != null)
+                    {
+                        statementRecord.ShipperRef1 = shipment.ShipperReference1;
+                        statementRecord.ShipperRef2 = shipment.ShipperReference2;
+                    }
 
                     totalData.RecordList.Add(statementRecord);
                 }
@@ -3804,6 +3814,7 @@ namespace WebFreight.Web.ReportsWebServices
                     statementRecord = new StatementByInvoiceDateDataProvider.StatementByInvoiceRecord();
 
                     Card vendor = cardRepository.GetSingleCard(a.VendorId, tenant);
+                    Shipment shipment = shipments.Where(d => d.Id == a.MainEntityId).FirstOrDefault();
 
                     statementRecord.InvoiceCurrency = a.InvoiceCurrencyCode;
                     statementRecord.ShipmentNumber = a.MainEntityReference;
@@ -3863,7 +3874,6 @@ namespace WebFreight.Web.ReportsWebServices
                         statementRecord.PastAmountOver_90 = a.AmountDue * -1;
                     }
 
-
                     //////////////////////////////////////////////
                      if (((todayDate - a.DueDate.Value).TotalDays >= 1) && ((todayDate - a.DueDate.Value).TotalDays <= 15))
                     {
@@ -3890,7 +3900,12 @@ namespace WebFreight.Web.ReportsWebServices
                         statementRecord.PastAmountOver_120 = a.AmountDue * -1;
                     }
 
-                    /////////////////////////////////////////////
+                    if (shipment != null)
+                    {
+                        statementRecord.ShipperRef1 = shipment.ShipperReference1;
+                        statementRecord.ShipperRef2 = shipment.ShipperReference2;
+                    }
+                    
                     totalData.RecordList.Add(statementRecord);
                 }
             }
@@ -13038,6 +13053,7 @@ namespace WebFreight.Web.ReportsWebServices
         public double? Amount { get; set; }
         public double? Debit { get; set; }
         public double? Credit { get; set; }
+        public double? ProfitExchangeRate { get; set; }
     }
 
     public class GroupedPeriodM

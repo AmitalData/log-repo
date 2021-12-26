@@ -848,7 +848,7 @@ namespace WebFreight.Web.MetaDataUpdate
             Dictionary<string, DocumentType> currentTenantDocumentTypes = documentTypeRepository.GetDocumentTypes(tenant).ToDictionary(d => d.Code + d.ObjectTableId, a => a);
             List<DocumentTypeCustomField> tenantZeroCustomFields = TenantZeroCustomFields;
             Dictionary<string, CreditCardType> tenantZeroCreditCardTypes = TenantZeroCreditCardTypes;
-            Dictionary<string, CreditCardType> currentTenantCreditCardTypes = creditCardTypeRepositoryRepository.GetCreditCardTypes(tenant).ToDictionary(d => d.Code, a => a);
+            //Dictionary<string, CreditCardType> currentTenantCreditCardTypes = creditCardTypeRepositoryRepository.GetCreditCardTypes(tenant).ToDictionary(d => d.Code, a => a);
             Dictionary<string, MoveType> tenantZeroMoveTypes = TenantZeroMoveTypes;
             Dictionary<string, MoveType> currentTenantMoveTypes = moveTypeRepository.GetMoveTypesByTenant(tenant).ToDictionary(d => d.Code, a => a);
             Dictionary<string, EmailAlertSetting> tenantZeroEmailAlertSettings = TenantZeroEmailAlertSettings;

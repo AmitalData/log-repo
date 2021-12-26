@@ -75,13 +75,13 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 CustomerReference = !string.IsNullOrEmpty(shipmentPM.CustomerReference3) ? shipmentPM.CustomerReference3 : shipmentPM.CustomerReference1,
                 IncludePickup = shipmentPM.PrivateLabelIncludePickup,
                 IncludeDelivery = shipmentPM.PrivateLabelIncludeDelivery,
-                DangerousGoods = shipmentPM.IsDangerous,
                 ReqFlightDate = shipmentPM.RequestedFlightDate,
                 Quantity = shipmentPM.BookingNumberOfPackages,
                 Weight = shipmentPM.OrderGrossWeight,
                 Volume = shipmentPM.BookingVolume,
                 Incoterm = shipmentPM.IncotermCode,
                 Notes = shipmentPM.Notes,
+                IsDangerouseOfGoods = shipmentPM.OrderIsDangerouseGoods
             };
         }
         private static void MapExportShipmentPackages(ShipmentPM ForwarderShipment, NewAExporterShipmentAM newAExporterShipmentAM)

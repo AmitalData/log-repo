@@ -82,6 +82,7 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string MainCarriageCarrierWebSite { get; set; }
+        public string MainCarriageCarrierTypeName { get; set; }
 
         public bool IsFSRSent { get; set; }
 
@@ -1059,6 +1060,7 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string Transshipment1CarrierNumber { get; set; }
         public string Transshipment1CarrierId { get; set; }
         public string Transshipment1CarrierName { get; set; }
+        public string Transshipment1CarrierTypeName { get; set; }
         public string Transshipment1CarrierCode { get; set; }
         public string Transshipment1FromPortCode { get; set; }
         public string Transshipment1FromPortName { get; set; }
@@ -1080,6 +1082,7 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public DateTime? Transshipment2ETA { get; set; }
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string Transshipment2CarrierNumber { get; set; }
+        public string Transshipment2CarrierTypeName { get; set; }
         public string Transshipment2CarrierId { get; set; }
         public string Transshipment2CarrierName { get; set; }
         public string Transshipment2CarrierCode { get; set; }
@@ -1100,6 +1103,7 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public DateTime? Transshipment3ETA { get; set; }
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string Transshipment3CarrierNumber { get; set; }
+        public string Transshipment3CarrierTypeName { get; set; }
         public string Transshipment3CarrierId { get; set; }
         public string Transshipment3CarrierName { get; set; }
         public string Transshipment3CarrierCode { get; set; }
@@ -2442,7 +2446,7 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public bool IsShipmentComputedFieldChange { get; set; }
         public bool IsShipmentAdditionalCloudDataChange { get; set; }
         public bool IsStatusChange { get; set; }
-
+        public bool IsOperationalStatusChange { get; set; }
 
         public string PackagesTypesNames { get; set; }
         public string PackagesTypesPrintAs { get; set; }
@@ -2772,7 +2776,9 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string ShipperNotExporterReference1 { get; set; }
         public string ShipperNotExporterReference2 { get; set; }
         public string OperationalStatusId { get; set; }
+        public string OperationalStatusName { get; set; }
         public string BillingStatusId { get; set; }
+
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string AccountingClosedByUserId { get; set; }
         public string HouseMasterConcurrencyGUID { get; set; }
@@ -2782,6 +2788,8 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string UnassignedShipperAddressId { get; set; }
         public string UnassignedConsigneeAddressId { get; set; }
         public bool HasUnassignedData { get; set; }
+        public string DestinationWarehouseId { get; set; }
+        public string DestinationWarehouseName { get; set; }
         public List<TraceEventPM> EventList { get; set; }
         public List<TraceEventPM> AddManualEvents { get; set; }
     }
@@ -2803,5 +2811,6 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public DateTime? ETA { get; set; }
         public DateTime? ATD { get; set; }
         public DateTime? ATA { get; set; }
+        public string CarrierTypeName { get; set; }
     }
 }

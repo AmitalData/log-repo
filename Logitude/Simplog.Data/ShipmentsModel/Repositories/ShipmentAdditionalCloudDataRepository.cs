@@ -48,7 +48,6 @@ namespace Simplog.Data.ShipmentsModel.Repositories
             }
             return null;
         }
-
         public void Add(ShipmentAdditionalCloudData entity)
         {
             context.ShipmentAdditionalCloudDatas.Add(entity);

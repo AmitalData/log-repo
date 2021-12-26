@@ -394,7 +394,7 @@ h1{
     }
 
     .search-bar form{
-        margin-top: 12px;
+        margin-top: 3px;
     }
 
     .toolbar{
@@ -549,7 +549,17 @@ h1{
     transition: 1s all ;
     /* padding: 20px; */
 }
-.filters-sidebar::after{
+
+.clear-addvance-filter-div{
+    float: right;
+    cursor: pointer;
+}
+.clear-addvance-filter-svg{
+    /* position: relative; */
+    top: 4px;
+    /* fill: var(--MainColor); */
+}
+.filters-sidebar-close-space{
     content: "";
     background: #00000021;
     top: 0;
@@ -834,6 +844,9 @@ h1{
     margin-right: 20px;
 }
 
+::ng-deep .sort-by-div .mat-form-field-flex{
+        width: 130px !important;
+}
 .has-exception-checkbox-filter {
     display: inline-block;
     width: 220px !important;
@@ -906,4 +919,16 @@ h1{
     display: block !important;
     font-family:"Open Sans", Arial;
     font-size:14px
+}
+
+.flex-row-space-between{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.more-filter-toggle{
+    color: black;
+    font-weight: normal;
+    padding-top: 5px;
+    text-transform: capitalize;
 }

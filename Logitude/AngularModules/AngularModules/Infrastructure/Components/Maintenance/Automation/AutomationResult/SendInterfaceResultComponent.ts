@@ -123,22 +123,6 @@ export class SendInterfaceResultComponent extends BaseComponent implements OnIni
         }
     }
 
-
-    private webHookURL: string;
-    get WebHookURL() { return this.webHookURL; }
-    set WebHookURL(newValue: string) {
-        if (newValue != this.webHookURL) {
-            this.webHookURL = newValue;
-            if (this.automationSendInterface.WebHookDetails?.URL != newValue) {
-                this.automationSendInterface.WebHookDetails.URL = newValue;
-                this.SendFormatSelected = this.SendFormatLists.filter(d => d.Code == "JSON")[0];
-                this.automationSendInterface.IsChanged = true;
-            }
-
-        }
-    }
-
-
     private computingPartnerId: string;
     get ComputingPartnerId() { return this.computingPartnerId; }
     set ComputingPartnerId(newValue: string) {
@@ -176,7 +160,6 @@ export class SendInterfaceResultComponent extends BaseComponent implements OnIni
             } else this.SendViaSelected = this.SendViaClassLists[0];
 
             this.ComputingPartnerId = this.automationSendInterface.ComputingPartnerId;
-            this.WebHookURL = this.automationSendInterface.WebHookDetails?.URL;
 
         }
 
@@ -191,6 +174,20 @@ export class SendInterfaceResultComponent extends BaseComponent implements OnIni
 
     }
 
+    ShowWebHookDetails() {
+        var windowArgs: any = {};
+        windowArgs.WebHookDetails = this.automationSendInterface.WebHookDetails;
+
+        var logWindow = new LogitudeWindow();
+        logWindow.Width = 600;
+        logWindow.Height = 450;
+        logWindow.Title = "WebHook Details";
+        logWindow.WindowArgs = windowArgs;
+        logWindow.Show("./Infrastructure/Components/Maintenance/Automation/AutomationResult/WebHookAutomationDetailsComponent");
+        logWindow.WindowClosed.subscribe((message: any) => {
+            if (message == "Changed") this.automationSendInterface.IsChanged = true
+        });
+    }
 
     ShowFTPDetails() {
         var windowArgs: any = {};
@@ -210,6 +207,20 @@ export class SendInterfaceResultComponent extends BaseComponent implements OnIni
         });
     }
 
+    ShowAdvancedDetails() {
+        var windowArgs: any = {};
+        windowArgs.AdvancedAutomationSendInterfaceDetails = this.automationSendInterface.AdvancedAutomationSendInterfaceDetails;
+
+        var logWindow = new LogitudeWindow();
+        logWindow.Width = 600;
+        logWindow.Height = 450;
+        logWindow.Title = "Advanced Details";
+        logWindow.WindowArgs = windowArgs;
+        logWindow.Show("./Infrastructure/Components/Maintenance/Automation/AutomationResult/AdvancedAutomationSendInterfaceDetailsComponent");
+        logWindow.WindowClosed.subscribe((message: any) => {
+            if (message == "Changed") this.automationSendInterface.IsChanged = true
+        });
+    }
 
     AddComputingPartner() {
         var windowArgs: any = {};

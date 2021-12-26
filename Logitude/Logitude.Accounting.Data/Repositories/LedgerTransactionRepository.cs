@@ -1406,21 +1406,19 @@ on record.JournalId equals j.Id
 
             return (from a in context.LedgerTransactions
                     join j in context.Journals on a.JournalId equals j.Id
-                    join m in context.JournalAdditionalDatas on new { a.JournalId, a.JournalLineNumber } equals new { m.JournalId, m.JournalLineNumber }
+                    join m in context.JournalAdditionalDatas on a.JournalId equals m.JournalId
 
-                    where (m.TaxReportId != null )
-                            && a.DocumentDate <= endOfTaxReportDate && (j.StatusCode != JournalStatuses.Voided || (j.StatusCode == JournalStatuses.Voided && a.DocumentDate.Month != taxReportMonth.Value.Month ) ) 
-                            && (j.OriginalJournalId == null || (j.OriginalJournalId != null && a.DocumentDate.Month != taxReportMonth.Value.Month))
+                    where (m.TaxReportId != null)
+                            && a.DocumentDate <= endOfTaxReportDate
 
                             && a.Tenant == ledgerTransactionBalanceFilter.Tenant
                             && a.LocalAmountDebit != 0
-                           && a.AccountId== ledgerTransactionBalanceFilter.GLAccountId
+                           && a.AccountId == ledgerTransactionBalanceFilter.GLAccountId
                             && journalIds.Contains(a.JournalId)
-                         
-                    select a
-                    );
 
+                    select a).Distinct();
 
+           
         }
 
         public List<LedgerTransaction> GetLedgerTransactionsByJournalIds(List<string> journalIds, int tenant)
@@ -1447,8 +1445,7 @@ on record.JournalId equals j.Id
                                                         where (ledger.OppositeAccountId != setting.VATOutputGLAccountId || ledger.OppositeAccountId == null)
                                                        && ledger.Tenant == ledgerTransactionBalanceFilter.Tenant
                                                       && ledger.LocalAmountDebit != 0
-                                                      && ledger.AccountId == setting.VATInputsGLAccountId &&journal.StatusCode != JournalStatuses.Voided 
-                                                      && journal.OriginalJournalId == null
+                                                      && ledger.AccountId == setting.VATInputsGLAccountId 
                                                       && (taxreport.StatusCode != VatReportStatuses.Transmitted || additional.TaxReportId == null)
                                                       
                                                         select ledger).Distinct();

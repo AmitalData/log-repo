@@ -85,7 +85,6 @@ using Simplog.Data.InfrastructureModel;
 				   temp.Id = MyEntityPM.Id;
 				   temp.Code = MyEntityPM.Code;
 				   temp.EnglishName = MyEntityPM.EnglishName;
-				   temp.IsManualEntry = MyEntityPM.IsManualEntry;
 				   ComputingPartnerTranslationHelper helper = new ComputingPartnerTranslationHelper(Tenant); 
 				   temp.PartnerCode = helper.GetComputingPartnerCodeTranslation(MyEntityPM.Code,ComputingPartnerName,"EventType");  					
 				   return temp;
@@ -166,14 +165,6 @@ using Simplog.Data.InfrastructureModel;
 					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.EnglishName))
 					{							//throw new ApplicationException("EnglishName Can't be update"); 
 							temp.EnglishName = MyEntity.EnglishName;
-
-										}  
-
-					
-                    
-					if(!IsUpdate)// && (MyEntity.IsManualEntry != temp.IsManualEntry))
-					{							//throw new ApplicationException("IsManualEntry Can't be update"); 
-							temp.IsManualEntry = MyEntity.IsManualEntry;
 
 										}  
 

@@ -24,7 +24,7 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.QueryService
 		private ObjectTableRepository objectTableRepository;
 		private UnassignedEntityQuery unassignedEntityQuery;
 		private string customerObjectTableName  = "Customer";
-
+		private string CardTypeSameAsCustomerCode = "";
 		public APIUnassignedDataHandler(int tenant,string computingPartnerName)
 		{
 			this.tenant = tenant;
@@ -78,6 +78,7 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.QueryService
 
 			this.HandleShipmentUnassignedData(shipment.UnassignedShipperAddress, shipmentPM, CardsTypes.Shipper.ToString());
 			this.HandleShipmentUnassignedData(shipment.UnassignedConsigneeAddress,shipmentPM, CardsTypes.Consignee.ToString());
+			this.HandleUnassignedCustomerType(shipmentPM);
 
 			return shipmentPM;
 		}
@@ -87,6 +88,7 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.QueryService
 			shipmentPM.ShipmentUnassignedFields = new List<ShipmentUnassignedFieldPM>();
 			this.HandleShipmentUnassignedData(shipment.UnassignedShipperAddress, shipmentPM, CardsTypes.Shipper.ToString());
 			this.HandleShipmentUnassignedData(shipment.UnassignedConsigneeAddress, shipmentPM, CardsTypes.Consignee.ToString());
+		    this.HandleUnassignedCustomerType(shipmentPM);
 
 			return shipmentPM;
 		}
@@ -127,11 +129,11 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.QueryService
 			if (!ReceivedCodes.ContainsValue(card.Code))
 				return card;
 
-			string cardTypeSameAsCustomerCode = ReceivedCodes.FirstOrDefault(x => x.Value == card.Code).Key;
+			this.CardTypeSameAsCustomerCode = ReceivedCodes.FirstOrDefault(x => x.Value == card.Code).Key;
 
-			if (cardTypeSameAsCustomerCode == CardsTypes.Shipper.ToString())
+			if (this.CardTypeSameAsCustomerCode == CardsTypes.Shipper.ToString())
 				card.Code = shipment?.Shipper?.Code;
-			else if (cardTypeSameAsCustomerCode == CardsTypes.Consignee.ToString())
+			else if (this.CardTypeSameAsCustomerCode == CardsTypes.Consignee.ToString())
 				card.Code = shipment?.Consignee?.Code;
 
 			return card;
@@ -221,6 +223,21 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.QueryService
 				var serializer = new XmlSerializer(address.GetType());
 				serializer.Serialize(stringWriter, address);
 				return stringWriter.ToString();
+			}
+		}
+
+		private void HandleUnassignedCustomerType(ShipmentPM shipmentPM)
+        {
+			if (string.IsNullOrEmpty(this.CardTypeSameAsCustomerCode))
+				return;
+
+			if(this.CardTypeSameAsCustomerCode == CardsTypes.Shipper.ToString())
+            {
+				shipmentPM.ShipmentCustomerTypeCode = "SHI";
+			}
+			else if (this.CardTypeSameAsCustomerCode == CardsTypes.Consignee.ToString())
+			{
+				shipmentPM.ShipmentCustomerTypeCode = "CON";
 			}
 		}
 	}

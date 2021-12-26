@@ -86,8 +86,7 @@ using Simplog.Data.InfrastructureModel;
 					   					   temp.CreatedBy = UserService1.GetUserById(MyEntityPM.UserId,Tenant,ComputingPartnerName); 
 			       
 					   				   }
-				   
-				   temp.IsAddedManually = MyEntityPM.IsAddedManually;					
+				   					
 				   return temp;
 			}
             catch (Exception ex)
@@ -193,14 +192,6 @@ using Simplog.Data.InfrastructureModel;
 
 					}
 			
-					
-                    
-					if(!IsUpdate)// && (MyEntity.IsAddedManually != temp.IsAddedManually))
-					{							//throw new ApplicationException("IsAddedManually Can't be update"); 
-							temp.IsAddedManually = MyEntity.IsAddedManually;
-
-										}  
-
 										   
 					return temp;
 		    }

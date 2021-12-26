@@ -191,11 +191,14 @@ import { FTPAutomationDetailsComponent } from './Components/Maintenance/Automati
 import { ToolTipFloatDirective } from './Utilities/RTLDirectives/ToolTipFloatDirective';
 import { SendDocumentResultComponent } from './Components/Maintenance/Automation/AutomationResult/SendDocumentResultComponent';
 import { OnUpdateDocumentResultComponent } from './Components/Maintenance/Automation/AutomationResult/OnUpdateDocumentResultComponent';
+import { AdvancedAutomationSendInterfaceDetailsComponent } from './Components/Maintenance/Automation/AutomationResult/AdvancedAutomationSendInterfaceDetailsComponent';
+import { WebHookAutomationDetailsComponent } from './Components/Maintenance/Automation/AutomationResult/WebHookAutomationDetailsComponent';
 
 import { PrivateLabelLoginProcessComponent } from './Components/LoginComponent/PrivateLabelComponents/PrivateLabelLoginProcessComponent';
 import { AutomationsConditionsViewDetailsComponent } from './Components/Maintenance/Automation/AutomationsConditionsViewDetailsComponent';
 import { AutomationConditionsDetailsComponent } from './Components/Maintenance/Automation/AutomationConditionsDetailsComponent';
 import { CreateTaskResultComponent } from './Components/Maintenance/Automation/AutomationResult/CreateTaskResultComponent';
+import { EventCreationResultComponent } from './Components/Maintenance/Automation/AutomationResult/EventCreationResultComponent';
  
  
 
@@ -321,6 +324,9 @@ export const ControlsComponents =
         AutomationsConditionsViewDetailsComponent,
         CreateTaskResultComponent,
         OnUpdateDocumentResultComponent,
+        EventCreationResultComponent,
+        AdvancedAutomationSendInterfaceDetailsComponent,
+        WebHookAutomationDetailsComponent,
     ];
 export const Components =
     [
@@ -520,6 +526,9 @@ export class ModuleDeclarations {
             case 'PrivateLabelLoginProcessComponent': { myResult = PrivateLabelLoginProcessComponent; break; } 
             case 'CreateTaskResultComponent': { myResult = CreateTaskResultComponent; break; }
             case 'OnUpdateDocumentResultComponent': { myResult = OnUpdateDocumentResultComponent; break; } 
+            case 'EventCreationResultComponent': { myResult = EventCreationResultComponent; break; }
+            case 'AdvancedAutomationSendInterfaceDetailsComponent': { myResult = AdvancedAutomationSendInterfaceDetailsComponent; break; }
+            case 'WebHookAutomationDetailsComponent': { myResult = WebHookAutomationDetailsComponent; break; }
 
             case 'MultiUpdateComponent': { myResult = MultiUpdateComponent; break; }
             case 'MultiEntityUpdateBaseComponent': { myResult = MultiEntityUpdateBaseComponent; break; }

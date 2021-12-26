@@ -62,9 +62,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             container.ShipmentOnCarriageToId = containerPM.ShipmentOnCarriageToId;
             container.ShipmentLastDeliveryFrom = containerPM.ShipmentLastDeliveryFrom;
             container.ShipmentLastDeliveryTo = containerPM.ShipmentLastDeliveryTo;
-            container.OriginLocation = containerPM.OriginLocation;
-            container.EstimatedOriginPickup = containerPM.EstimatedOriginPickup;
-            container.ActualOriginPickup = containerPM.ActualOriginPickup;
+            container.OnCarriageLocation = containerPM.OnCarriageLocation;
+            container.OnCarriageETD = containerPM.OnCarriageETD;
+            container.OnCarriageATD = containerPM.OnCarriageATD;
             container.POLLocation = containerPM.POLLocation;
             container.EstimatedPOLArrival = containerPM.EstimatedPOLArrival;
             container.ActualPOLArrival = containerPM.ActualPOLArrival;
@@ -126,9 +126,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             container.ActualPODDischarge = containerPM.ActualPODDischarge;
             container.EstimatedPODDeparture = containerPM.EstimatedPODDeparture;
             container.ActualPODDeparture = containerPM.ActualPODDeparture;
-            container.DeliveryLocation = containerPM.DeliveryLocation;
-            container.EstimatedDelivery = containerPM.EstimatedDelivery;
-            container.ActualDelivery = containerPM.ActualDelivery;
+            container.PreCarriageLocation = containerPM.PreCarriageLocation;
+            container.PreCarriageATD = containerPM.PreCarriageATD;
+            container.PreCarriageETD = containerPM.PreCarriageETD;
             container.LIFLocation = containerPM.LIFLocation;
             container.EstimatedLIFArrival = containerPM.EstimatedLIFArrival;
             container.ActualLIFArrival = containerPM.ActualLIFArrival;
@@ -149,10 +149,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             container.LastFreeDayDate = containerPM.LastFreeDayDate;
             container.ShipmentStatusId = containerPM.ShipmentStatusId;
             container.EmptyPickupLocationPortId = containerPM.EmptyPickupLocationPortId;
-            container.DeliveryLocationPortId = containerPM.DeliveryLocationPortId;
+            container.PreCarriageLocationPortId = containerPM.PreCarriageLocationPortId;
             container.EmptyReturnLocationPortId = containerPM.EmptyReturnLocationPortId;
             container.AvailabilityLocationPortId = containerPM.AvailabilityLocationPortId;
-            container.OriginLocationPortId = containerPM.OriginLocationPortId;
+            container.OnCarriageLocationPortId = containerPM.OnCarriageLocationPortId;
             container.LIFLocationPortId = containerPM.LIFLocationPortId;
             container.POLLocationPortId = containerPM.POLLocationPortId;
             container.PODLocationPortId = containerPM.PODLocationPortId;
@@ -220,6 +220,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             container.IsClosed = containerPM.IsClosed;
             container.ClosedDate = containerPM.ClosedDate;
             container.StatusId = containerPM.StatusId;
+            container.IsCancelled = containerPM.IsCancelled;
+            container.CancelledDate = containerPM.CancelledDate;
+            container.ShipmentDeliveryTruckerId = containerPM.ShipmentDeliveryTruckerId;
 
             BuildSearchField(containerPM, container);
         }

@@ -131,7 +131,8 @@ namespace WebFreight.Web.App_Code
                     CustomerTenantAccessRequestQuery customerTenantAccessRequestQuery = new CustomerTenantAccessRequestQuery(entityAM.CustomerTenant);
                     var customerTenantAccessRequest = customerTenantAccessRequestQuery.GetSinglePMByCustomerTenantAndPartnerTenant(hybridPartner.Id, entityAM.CustomerTenant);
                     customerTenantAccessRequest.RequestStatus = "A";
-
+                    customerTenantAccessRequest.IsExport = entityAM.IsExportActivated;
+                    customerTenantAccessRequest.IsCustoms = entityAM.IsCustomsActivated;
 
                     var msg = "Start Sending Response To Importer Tenant " + DateTime.Now;
                     APILogsUtility.UpdateAPILogStatus(LogPM.Id, LogPM.Tenant, LogPM.Status, 1, DateTime.Now, DateTime.UtcNow, msg, LogitudeXmlSerializer.SerializeObjectToXmlString(customerTenantAccessRequest), null, null, "");

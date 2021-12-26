@@ -45,7 +45,8 @@ namespace Logitude.Accounting.Data.Repositories
             {
                 return (from a in context.GLAccounts
                         join chartOfAccount in context.ChartOfAccounts on a.ChartOfAccountsId equals chartOfAccount.Id
-                        where a.Tenant == tenant && gLAccountIdQ.Any(b => a.ParentAccountId == b) && chartOfAccount.ChartOfAccountSecurityLevel >= (userSecurityLevel ?? 0)
+                        where a.Tenant == tenant && gLAccountIdQ.Any(b => a.ParentAccountId == b) 
+                        && (chartOfAccount.ChartOfAccountSecurityLevel ?? 0) >= (userSecurityLevel ?? 0)
                         select a).ToList();
             }
             else
@@ -159,7 +160,8 @@ namespace Logitude.Accounting.Data.Repositories
                     Inactive = a.Inactive,
                     ReconcileMethodCode = a.ReconcileMethodCode,
                     ChartOfAccountsTypeCode = a.ChartOfAccountsTypeCode,
-
+                    CardsDataId = a.CardsDataId,
+                    CardsData = a.GLAccountCardsData,
                     ControlAccountId = a.ControlAccountId,
 
                     AutomaticReconcileId = a.AutomaticReconcileId,
@@ -508,8 +510,8 @@ namespace Logitude.Accounting.Data.Repositories
                         where a.Tenant == tenant && a.AccountTypeCode == accountTypeCode && a.CountryCode == "IL"
                         select a;
             return query.Where(r => !String.IsNullOrEmpty(r.VatNumber)
-            //     && !String.IsNullOrEmpty(r.DeductionFileNumber) // ironically - see 140210 
-            && !(r.Inactive.HasValue && r.Inactive.Value));
+            && !(r.Inactive.HasValue && r.Inactive.Value)
+            && !r.ExcludeFromDeductionReport);
         }
 
 
@@ -1164,6 +1166,9 @@ namespace Logitude.Accounting.Data.Repositories
         public string InternalNumber { get;  set;  }
         public string AccountTypeCode { get;  set;  }
         public string DisplayNumber { get;  set;  }
+        public string CardsDataId { get; set; }
+        public GLAccountCardsData CardsData { get; set; }
+
         public string EnglishName { get;  set;  }
         public string LocalName { get;  set;  }
         public string SearchFields { get;  set;  }

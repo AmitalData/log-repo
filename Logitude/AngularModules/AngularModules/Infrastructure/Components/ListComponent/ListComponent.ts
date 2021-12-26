@@ -982,13 +982,13 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
     }
 
     MutliUpdate() {
-        if (!IsMultiUpdateValid(this.Title, this.dataSource.rowCount)) {
+        if (!IsMultiUpdateValid(this.ObjectTable.DBTableName, this.dataSource.rowCount)) {
             return;
         }
         let newWindow = new LogitudeWindow();
         newWindow.Width = 1050;
         newWindow.Height = 700;
-        newWindow.Title = "Multi Update " + this.Title;
+        newWindow.Title = "Multi Update " + this.ObjectTable.DBTableName;
 
         let windowArgs: any = {};
         windowArgs.QueryCode = this.SelectedQueryCode;
@@ -1523,6 +1523,8 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                     if (value2 != null) {
                         filterOperator = "Between";
                     }
+                    if (value1 == '#logged-user') value1 = SessionLocator.LoggedUserId;
+
                     if (filter.DataTypeCode == "DateTime" || filter.DataTypeCode == "Date") {
 
                         var TodayDate = new Date();

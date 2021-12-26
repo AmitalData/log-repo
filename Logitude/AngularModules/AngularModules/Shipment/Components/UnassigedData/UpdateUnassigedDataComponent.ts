@@ -75,6 +75,10 @@ export class UpdateUnassigedDataComponent extends BaseComponent {
         this.UIProperties.SetEnabled("ConsigneeName", this.ObjectTableName, false);
     }
 
+    private RefreshPartnerTab() {
+        this.CurrentSession.FireEvent("ShipmentUnassignedDataChanged");
+    }
+
     private SetCardDependency() {
         this.CardDependencyProperty1 = "CS";
         this.CardDependencyProperty1IsList = false;
@@ -338,14 +342,17 @@ export class UpdateUnassigedDataComponent extends BaseComponent {
             this.SetCustomer();
 
             if (this.IsShipperVisible && !AppTool.IsNullOrEmpty(this.UpdatedShipperId)) {
-                this.UpdateShipper();                
+                this.UpdateShipper();
+                this.UpdateCustomer();
             }
 
             if (this.IsConsigneeVisible && !AppTool.IsNullOrEmpty(this.UpdatedConsigneeId)) {
-                this.UpdateConsignee();                
+                this.UpdateConsignee();
+                this.UpdateCustomer();
             }
 
             this.ComputeHasUnassignedField();
+            this.RefreshPartnerTab();
             this.CurrentSession.CloseCurrentWindowEmit("ok");
         }
     }
@@ -397,6 +404,22 @@ export class UpdateUnassigedDataComponent extends BaseComponent {
             this.EntityPM.ConsigneePickAddressId = this.consigneeCard.PickAddressId;
         }
     }
+
+    private UpdateCustomer() {
+        if (AppTool.IsNullOrEmpty(this.EntityPM.ShipmentCustomerTypeCode))
+            return;
+
+        if (this.EntityPM.ShipmentCustomerTypeCode == "SHI") {
+            this.EntityPM.CustomerId = this.UpdatedShipperId;
+            this.EntityPM.CustomerContactId = this.UpdatedShipperId;
+            this.EntityPM.CustomerAddressId = this.UpdatedShipperAddressId
+        } else if (this.EntityPM.ShipmentCustomerTypeCode == "CON"){
+            this.EntityPM.CustomerId = this.UpdatedConsigneeId;
+            this.EntityPM.CustomerContactId = this.UpdatedConsigneeId;
+            this.EntityPM.CustomerAddressId = this.UpdatedConsigneeAddressId
+        }
+    }
+
     private ComputeHasUnassignedField() {
         this.EntityPM.HasUnassignedData = false;
 

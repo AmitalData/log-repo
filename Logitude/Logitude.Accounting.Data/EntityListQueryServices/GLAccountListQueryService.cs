@@ -228,6 +228,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                    Phone = CardsDatas != null ? CardsDatas.Phone : null,
                                                    Salesman = CardsDatas != null ? CardsDatas.SalesmanUser.Contact.LocalName == null ? CardsDatas.SalesmanUser.Contact.EnglishName : CardsDatas.SalesmanUser.Contact.LocalName : null,
                                                    Collector = CardsDatas != null ? CardsDatas.CollectorUser.Contact.LocalName == null ? CardsDatas.CollectorUser.Contact.EnglishName : CardsDatas.CollectorUser.Contact.LocalName : null,
+                                                   CardCollectorId = CardsDatas != null ? CardsDatas.CollectorUser.Id : null,
 
                                                    // GLAccount Follow Up Datas
                                                    FollowupDate = FollowUpDatas != null ? FollowUpDatas.FollowUpDate : null,
@@ -437,7 +438,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                            Phone = glaccount.Phone,
                            Salesman = glaccount.Salesman,
                            Collector = glaccount.Collector,
-
+                           CardCollectorId = glaccount.CardCollectorId,
                            // GLAccount Follow Up Datas
                            FollowupDate = glaccount.FollowupDate,
                            FollowupNotes =glaccount.FollowupNotes,
@@ -629,6 +630,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                         ChartOfAccountsName = a.ChartOfAccountsEnglishName != null ? a.ChartOfAccountsEnglishName : null, //ChartOfAccountsLocalName
 
                         DeductionFileNumber = a.DeductionFileNumber,
+                        ExcludeFromDeductionReport = a.ExcludeFromDeductionReport,
 
                         // Card
                         SalesmanUserId = a.SalesmanUserId    ,

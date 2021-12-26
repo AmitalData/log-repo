@@ -1421,6 +1421,7 @@ namespace WebFreight.Web.ReportsWebServices
                 prealertDataProvider.PreForwardingCarrierCode = shipmentpm.PreForwardingCarrierCode;
                 prealertDataProvider.PreForwardingCarrierNumber = shipmentpm.PreForwardingCarrierNumber;
                 prealertDataProvider.MainCarriageATD = shipmentpm.MainCarriageATD;
+                prealertDataProvider.MainCarriageATA = shipmentpm.MainCarriageATA;
                 prealertDataProvider.Transhipment1ATD = shipmentpm.Transshipment1ATD;
                 prealertDataProvider.Transshipment1CarrierCode = shipmentpm.Transshipment1CarrierCode;
                 prealertDataProvider.Transshipment1CarrierNumber_New = shipmentpm.Transshipment1CarrierNumber;

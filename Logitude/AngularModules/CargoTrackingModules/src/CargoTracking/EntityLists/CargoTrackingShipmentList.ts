@@ -142,6 +142,10 @@ export class CargoTrackingShipmentList {
 	SupplyDateTime: Date;
 	ATAETASortingField: Date;
 	ATDETDSortingField: Date;
+	ActivatedForDeclarationApprove: boolean;
+	IsImporterApprovalRequried: boolean;
+	TenantDeclarationMessage: string;
+	IsOperationalClosed: boolean;
 	
 }
  

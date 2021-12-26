@@ -3336,7 +3336,7 @@ User/Pass",
                 }
 
                 CashbookService cashbookService = new CashbookService();
-                string res = cashbookService.RecalculateCashbookTotals(Convert.ToInt16(textBox1.Text));
+                string res = cashbookService.RecalculateCashbooksTotals(Convert.ToInt16(textBox1.Text));
 
                 SetControlPropertyValue(RecalculateCashbookLbl, "Text", "Done, updated: " + res);
 
@@ -5035,6 +5035,11 @@ User/Pass",
                 SetControlPropertyValue(UploadTimeZonesLabel, "ForeColor", Color.Green);
                 SetControlPropertyValue(UploadTimeZonesLabel, "Text", "Done in " + ts.ToString(@"hh\:mm\:ss"));
             }
+        }
+        private void button56_Click(object sender, EventArgs e)
+        {
+            FutureOpenChequesBatch FutureOpenChequesBatch = new FutureOpenChequesBatch();
+            FutureOpenChequesBatch.SetTotalFutureOpenChequesInLocalCurrency();
         }
     }
     public class TimeZoneExcelItem

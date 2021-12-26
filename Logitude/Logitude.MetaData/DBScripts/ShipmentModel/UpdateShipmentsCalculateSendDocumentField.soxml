@@ -1,7 +1,8 @@
 ﻿<Script DBType="Main" Module="Shipment" AOT="true" TargetTableName="CommunicationLogs">
-  <Sql Version="1">
+  <Sql Version="7">
     <![CDATA[
-  
+	
+	
 declare @ObjectTableId as VARCHAR(15)   set @ObjectTableId = (select id from ObjectTables where Name = 'Shipment')
 
   declare @Id as varchar(15)
@@ -41,8 +42,12 @@ declare @ObjectTableId as VARCHAR(15)   set @ObjectTableId = (select id from Obj
 	  end
 	  else set @TableName = 'ShipmentComputedFields'
 	 set @functionring = 'update ' +@TableName +' set ' + @FieldName +'= ' + ''''+ CONVERT(varchar, @FieldValue,113) +'''' +'  where id = ' + ''''+ @Id +'''' 
-	EXEC(@functionring)
- 
+
+    if(CHARINDEX('.Field', @FieldName) <= 0)
+	  begin 
+	  EXEC(@functionring)
+	  end  
+  
     FETCH NEXT FROM CommunicationLogCursor INTO @Id,@DocumentTypeId ,@FieldName ,@FieldValue , @Tenant
     END
     CLOSE CommunicationLogCursor

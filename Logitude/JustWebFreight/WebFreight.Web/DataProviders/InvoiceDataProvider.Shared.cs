@@ -291,6 +291,7 @@ namespace WebFreight.Web.DataProviders
         public string CustomsDeclarationNumber { get; set; }
         public string Origin { get; set; }
         public string FinalDestination { get; set; }
+        public DateTime? LastDeliveryATD { get; set; }
         public string LoadingPlace { get; set; }
         public string LoadingPlaceShipper { get; set; }
         public string PlaceOfDelivery { get; set; }
@@ -679,6 +680,7 @@ namespace WebFreight.Web.DataProviders
         public DateTime? MainCarriageATD { get; set; }
         public string ShipmentNumber { get; set; }
         public string ShipmentRouting { get; set; }
+        public DateTime? LastDeliveryATD { get; set; }
     }
 
     public class ReportInvoiceLine

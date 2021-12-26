@@ -559,7 +559,7 @@
 
                             </div>
 
-                            <div *ngIf="CreateBankTransferButtonFeatureEnabled" [style.float]="isRTL ? 'right' : 'left'"
+                            <div *ngIf="CreateBankTransferButtonFeatureEnabled && ObjectTableName != 'GLAccount'" [style.float]="isRTL ? 'right' : 'left'"
                                  style="margin: 3px 10px 0;height: 24px;display: flex;"  >
 
                                  <button class="Button" [disabled]="!EnableCreateBankTransferPaymentButton" (click)="CreatePaymentButtonClicked()"

@@ -228,7 +228,23 @@
     <Constraints
       Nullable="true" />
   </Column>
-  
+	<Column
+		Name="EventAutomationFailedXml"
+		ShortName="EventFailedXml"
+		Type="nvarchar"
+		Size="-1">
+		<Constraints
+		  Nullable="true" />
+	</Column>
+	<Column
+	  Name="EventAutomationSsucceedXml"
+	  ShortName="EventSsucceedXml"
+	  Type="nvarchar"
+	  Size="-1">
+		<Constraints
+		  Nullable="true" />
+	</Column>
+	
   
   <Relation
     ForeignKeyColumn="CreateByUserId"

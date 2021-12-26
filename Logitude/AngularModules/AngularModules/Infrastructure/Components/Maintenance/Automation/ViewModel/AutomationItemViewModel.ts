@@ -113,6 +113,7 @@ export class AutomationItemViewModel {
             else if (entityPM.ResultCode == "CREATETASK") this.ResultName = "Create Task";
             else if (entityPM.ResultCode == "ONUPDATEDOCUMENT") this.ResultName = "On Update Document";
 
+            else if (entityPM.ResultCode == "EVENTCREATION") this.ResultName = "Event Creation";
         }
 
         if (!FeatureLocator.HasFeaturePermession("Automation", "UPDATE")) this.IsEditAtomationEnable = false;

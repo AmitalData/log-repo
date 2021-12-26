@@ -73,10 +73,19 @@ namespace Simplog.Data.CommonDataModel.Repositories
 
  
         }
-         
+ 
+
         public CustomerTenantAccessCard GetSingle(Simplog.Server.Infrastructure.EntityKeyFields entityKeys)
         {
             throw new System.NotImplementedException();
+        }
+
+
+        public CustomerTenantAccessCard GetCustomerById(string customerId, int tenant)
+        {
+            return (from record in context.CustomerTenantAccessCards where record.CustomerId == customerId && record.Tenant == tenant select record).FirstOrDefault();
+
+
         }
 
         public void SubmitChanges()

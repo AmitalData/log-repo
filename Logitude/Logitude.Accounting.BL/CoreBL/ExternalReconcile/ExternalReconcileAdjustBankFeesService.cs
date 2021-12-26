@@ -582,7 +582,7 @@ new JournalLinePM()
         {
             AllLineAreExistAndSameBankAccount(tenant, reconcileExternalPageLineIdList, listOfpageLineList, listOfpageList);
             AllPageLineCheckInProgressByWhileStreaming(listOfpageLineList, CheckWhileStreaming);
-            if (!skipAccountValidation && adjustGLAccountId == bankAccountFromReconcileExternalPageLine.GLAccountId)
+            if (!skipAccountValidation && adjustGLAccountId == bankAccountFromReconcileExternalPageLine?.GLAccountId)
             {
                 _ErrorList.Add(M_AdjustAccoutMustBeDiffFromBank);//"החשבון להפרשים חייב להיות שונה מהבנק";
             }

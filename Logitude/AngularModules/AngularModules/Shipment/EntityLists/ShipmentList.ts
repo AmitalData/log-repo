@@ -478,6 +478,7 @@ export class ShipmentList {
 		StandalonePickupDeliveryId: string;
 		GrossWeightUnitCode: string;
 		OperationalStatusId: string;
+		OperationalStatusName: string;
 		BillingStatusId: string;
 		ShipperNotExporterReference1: string;
 		ShipperNotExporterReference2: string;
@@ -487,5 +488,7 @@ export class ShipmentList {
 		CustomerContactEmail: string;
 		PODReceivedDate: Date;
 		HasUnassignedData: boolean;
+		DestinationWarehouseId: string;
+		DestinationWarehouseName: string;
 	
 }

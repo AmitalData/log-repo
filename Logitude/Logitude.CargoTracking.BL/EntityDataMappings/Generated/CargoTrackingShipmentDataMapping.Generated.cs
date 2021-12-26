@@ -132,7 +132,8 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 	         PaymentReceivedNotes, 
 	         PoNumber, 
 	         DescriptionOfGoods, 
-	         SupplyDateTime,
+	         SupplyDateTime, 
+	         IsOperationalClosed,
 	      }
 
 
@@ -260,7 +261,11 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 	         PaymentReceivedNotes, 
 	         PoNumber, 
 	         DescriptionOfGoods, 
-	         SupplyDateTime,
+	         SupplyDateTime, 
+	         ActivatedForDeclarationApprove, 
+	         IsImporterApprovalRequried, 
+	         TenantDeclarationMessage, 
+	         IsOperationalClosed,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -807,6 +812,11 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SupplyDateTime))
             {
 				entityPOCO.SupplyDateTime = entityPM.SupplyDateTime;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsOperationalClosed))
+            {
+				entityPOCO.IsOperationalClosed = entityPM.IsOperationalClosed;
 			}
 			}
 
@@ -1358,6 +1368,11 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 					entityPM.SupplyDateTime = entityPOCO.SupplyDateTime;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsOperationalClosed))
+            {
+					entityPM.IsOperationalClosed = entityPOCO.IsOperationalClosed;
+            }
+
 		}
 
 		public void PMToOldPM(CargoTrackingShipmentPM entityPM, CargoTrackingShipmentPM oldEntityPM)
@@ -1902,6 +1917,11 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SupplyDateTime))
             {
                 oldEntityPM.SupplyDateTime = entityPM.SupplyDateTime;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsOperationalClosed))
+            {
+                oldEntityPM.IsOperationalClosed = entityPM.IsOperationalClosed;
             }
 			
 		}

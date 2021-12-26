@@ -195,6 +195,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
                 MapShipmentStatus(entityPM, entityPoco, entityMasterData);
             }
 
+            if (entityPM.IsOperationalStatusChange)
+            {
+                MapShipmentOperationalStatus(entityPM, entityPoco, entityMasterData);
+            }
+
             TenantRepository tenantRepository = new TenantRepository(entityPM.Tenant);
             Tenant currentTenant = tenantRepository.GetSingleTenant(entityPM.Tenant);
 
@@ -477,6 +482,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             entityPoco.ForwarderPickUpDeliveryType = entityPM.ForwarderPickUpDeliveryType;
             entityPoco.IsHTSMissing = entityPM.IsHTSMissing;
             entityPoco.HandlerUserId = entityPM.HandlerUserId;
+            entityPoco.DestinationWarehouseId = entityPM.DestinationWarehouseId;
             entityPoco.PlannedCargoReadyDate = entityPM.PlannedCargoReadyDate;
             entityPoco.ApprovedCargoReadyDate = entityPM.ApprovedCargoReadyDate; 
             entityPoco.PrivateLabelInvoiceNumber = entityPM.PrivateLabelInvoiceNumber; 
@@ -518,7 +524,19 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
 
             entityPM.IsStatusChange = false;
         }
+        private static void MapShipmentOperationalStatus(ShipmentPM entityPM, Shipment entityPoco, ShipmentMasterData entityMasterData)
+        {
+            entityPoco.OperationalStatusId = entityPM.OperationalStatusId;           
+            if (entityMasterData != null)
+            {
+                if (entityPM.ShipmentLevelCode == "D" || entityPM.ShipmentLevelCode == "C")
+                {
+                    entityMasterData.OperationalStatusId = entityPM.OperationalStatusId;
+                }
+            }
 
+            entityPM.IsOperationalStatusChange = false;
+        }
         private static void ValidateMAWBStackField(Shipment entityPoco, ShipmentMasterData entityMasterData)
         {
             if (entityMasterData != null)
@@ -551,11 +569,17 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             entityPoco.LocalCustomsTransmissionsStatusCode = entityPM.LocalCustomsTransmissionsStatusCode;
             entityPoco.LocalCustomsTransmissionsStatusError = entityPM.LocalCustomsTransmissionsStatusError;
             entityPoco.LocalCustomsTransmissionsStatusDate = entityPM.LocalCustomsTransmissionsStatusDate;
-            entityPoco.IncludesCustoms = entityPM.IncludesCustoms;
+            entityPoco.IncludesCustoms = GetIncludesCustomsValue(entityPM);
             entityPoco.DeclarationNumber = entityPM.DeclarationNumber;
             entityPoco.DeclarationDate = entityPM.DeclarationDate;
             entityPoco.CustomsClearanceDate = entityPM.CustomsClearanceDate;
         }
+
+        private static bool GetIncludesCustomsValue(ShipmentPM entityPM)
+        {
+            return entityPM.IncludesCustoms || !string.IsNullOrEmpty(entityPM.DeclarationNumber) || entityPM.DeclarationDate != null || entityPM.CustomsClearanceDate != null;
+        }
+
         private static void BuildRoutingField(ShipmentPM entityPM, Shipment entityPoco, ShipmentMasterData entityMasterData, IShipmentsContext objectContext)
         {
             string myRoutingField = null;
@@ -2753,9 +2777,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             AddFieldChangedProperties(changeTrackingPM, "ArrivalNoticeSentDate", changeTrackingPM.ArrivalNoticeSentDate, pm.ArrivalNoticeSentDate, "ArrivalNoticeSentDate", notifyPropertyChangeValuesList);
             AddFieldChangedProperties(changeTrackingPM, "T1ReceivedDate", changeTrackingPM.T1ReceivedDate, pm.T1ReceivedDate, "T1ReceivedDate", notifyPropertyChangeValuesList);
             AddFieldChangedProperties(changeTrackingPM, "LastUpdateDate", changeTrackingPM.LastUpdateDate, pm.LastUpdateDate, "LastUpdateDate", notifyPropertyChangeValuesList);
-            AddFieldChangedProperties(changeTrackingPM, "IsAccrualsApproved", changeTrackingPM.IsAccrualsApproved, pm.IsAccrualsApproved, "bool", notifyPropertyChangeValuesList);            
-
+            AddFieldChangedProperties(changeTrackingPM, "IsAccrualsApproved", changeTrackingPM.IsAccrualsApproved, pm.IsAccrualsApproved, "bool", notifyPropertyChangeValuesList);                      
             AddFieldChangedProperties(changeTrackingPM, "FirstPickupATD", changeTrackingPM.FirstPickupATD, pm.FirstPickupATD, "FirstPickupATD", notifyPropertyChangeValuesList);
+            AddFieldChangedProperties(changeTrackingPM, "IncludesCustoms", changeTrackingPM.IncludesCustoms, pm.IncludesCustoms, "IncludesCustoms", notifyPropertyChangeValuesList);
 
             AddCustomFieldChangedProperties(changeTrackingPM, changeTrackingPM.Field1, pm.Field1, "Field1", notifyPropertyChangeValuesList);
             AddCustomFieldChangedProperties(changeTrackingPM, changeTrackingPM.Field2, pm.Field2, "Field2", notifyPropertyChangeValuesList);
@@ -2892,6 +2916,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             shipmentPM.LastSharedEventDate = houseShipment.LastSharedEventDate;
             shipmentPM.LastSharedEventId = houseShipment.LastSharedEventId;
             shipmentPM.IsAccrualsApproved = houseShipment.IsAccrualsApproved;
+            shipmentPM.IncludesCustoms = houseShipment.IncludesCustoms;
 
             
             if (EntityChangeHelper.IsShowLogBoxAutomationFields())

@@ -7,6 +7,7 @@ using Logitude.BL.ShipmentsModel.APIDataContract.ApiV1;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.Tools.TraceEvents;
 using Logitude.Server.Tools.Helpers;
+using Logitude.Server.Tools.Models;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Data.InfrastructureModel;
@@ -49,7 +50,6 @@ namespace Logitude.BL.InfrastructureModel.APIDataContract.ApiV1
                 EventDateTime = traceEventPM.EventDateTime,
                 LogDateTime = traceEventPM.LogDateTime,
                 Notes = traceEventPM.Notes,
-                IsAddedManually = traceEventPM.IsAddedManually,
             };
 
             if (traceEventPM.UserId != null)

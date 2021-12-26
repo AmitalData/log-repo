@@ -413,6 +413,47 @@ namespace Logitude.Infrastructure.BL
                 Description = "On Update Document Automation Tab", 
 			});
 			
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "AEV", 
+                Name = "Automation Event Creation", 
+                SearchFields = "AEV,Automation Event Creation", 
+                Description = "Automation Event Creation", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "OPS", 
+                Name = "Operational Status", 
+                SearchFields = "OPS,Operational Status", 
+                Description = "Operational Status", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "CAU", 
+                Name = "Container Automation", 
+                Description = "Container Automation", 
+                SearchFields = "CAU,Container Automation", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "FHR", 
+                Name = "FixHtmlResolverVariable", 
+                SearchFields = "FHR,FixHtmlResolverVariable", 
+                Description = "Fix Html Resolver Variable", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "OPF", 
+                Name = "Open Format RTL", 
+                SearchFields = "OPF,Open Format RTL", 
+                Description = "Open Format RTL Issues", 
+			});
+			
             return all;
        }
 

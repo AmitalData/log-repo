@@ -351,6 +351,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 RunStoredProcedures();
                 BuildAgentSharedManifest();
                 RunAutomation("OnCreate");
+
                 SendAutomaticallyOceanOnsightsRequest();
                 if (UpdateByEmail != "system@tenant" + entityPM.Tenant + ".com")
                 {
@@ -623,10 +624,18 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             {
                 if (mainEntityChangeService.CheckIfUserDefinedAutomationDependencyOnLastEntityUpdate())
                 {
-                    var shipmentPM = !mainEntityChangeService.IsChild ? entityPM : ShipmentMapping.MapShipmentPMToShipmentPMForAutomation(entityPM, mainEntityChangeService.entityChangeArgs.EntityPM as ShipmentPM);
-                    mainEntityChangeService.ExecuteAutomationThatDependencyOnLastEntityUpdate(shipmentPM);
+                    ExecuteAutomationThatDependencyOnLastEntityUpdate(shipmentQuery, mainEntityChangeService);
                 }
             }
+        }
+
+        private void ExecuteAutomationThatDependencyOnLastEntityUpdate(ShipmentQuery shipmentQuery, MainEntityChangeService mainEntityChangeService)
+        {
+            var shipmentPM = !mainEntityChangeService.IsChild ? entityPM : ShipmentMapping.MapShipmentPMToShipmentPMForAutomation(entityPM, mainEntityChangeService.entityChangeArgs.EntityPM as ShipmentPM);
+            List<TraceEventPM> shipmentTraceEventPMs = shipmentPM.EventList;
+            shipmentQuery.MapEventsListForAPI(shipmentPM);
+            mainEntityChangeService.ExecuteAutomationThatDependencyOnLastEntityUpdate(shipmentPM);
+            shipmentPM.EventList = shipmentTraceEventPMs;
         }
 
         private void AddShipmentUpdateKafkaQueueMessage(string queueName)

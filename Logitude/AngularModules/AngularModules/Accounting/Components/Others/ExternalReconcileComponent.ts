@@ -201,8 +201,10 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
 
     //#region Properties
 
-    public get EnableCreateBankTransferPaymentButton() : boolean {
-        return this.CreateBankTransferButtonFeatureEnabled && this.ExtPageSelectedLines.Length > 0;
+    public get EnableCreateBankTransferPaymentButton(): boolean {
+        return this.CreateBankTransferButtonFeatureEnabled
+            && this.ExtPageSelectedLines.Length > 0
+            && this.ObjectTableName != 'GLAccount';
     }
 
     //#endregion
@@ -335,8 +337,9 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
         const pageLinesHasDifferentYears = pageLinesYears > 1;
         const hasSingleDifferentYears = this.CheckIfHasSingleDifferentYears(ledgerYears, pageLinesYears);
 
-        return bothLinesSelected &&
-            (ledgerHasDifferentYears || pageLinesHasDifferentYears || hasSingleDifferentYears);
+        return ledgerHasDifferentYears
+            || (bothLinesSelected && pageLinesHasDifferentYears)
+            || (hasSingleDifferentYears);
     }
 
     private CheckIfHasSingleDifferentYears(ledgerYears: number, pageLinesYears: number)

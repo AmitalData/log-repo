@@ -1080,8 +1080,7 @@ namespace WebFreight.Web.Helpers
                     document = new HtmlDocument();
                     document.LoadHtml(htmlString);
                     CorrectingBuildingHtml(document, htmlString);
-
-                    IEnumerable<HtmlNode> spansList  = document.DocumentNode.SelectNodes("//span")?.Where(n => n.InnerText.Contains("[") && n.InnerText.Contains("[") && (n.LastChild.Name != "span" || n.FirstChild.Name != "span"));
+                    IEnumerable<HtmlNode> spansList = spansList = GetDocumentSpanNode(tenant, document);
                     if (spansList != null)
                     {
                         foreach (HtmlNode node in spansList)
@@ -1412,6 +1411,17 @@ namespace WebFreight.Web.Helpers
                 Bcc = bcc,
                 ReplyTo = replyTo
             };
+        }
+
+        private static IEnumerable<HtmlNode> GetDocumentSpanNode(int tenant, HtmlDocument document)
+        {
+            if (FeatureToggleHelper.HasFeatureToggle("FHR", tenant))
+            {
+                return document.DocumentNode.SelectNodes("//span")?.Where(n => n.InnerText.Contains("[") && n.InnerText.Contains("[") && (n.LastChild.Name != "span" || n.FirstChild.Name != "span"));
+            }
+           
+           return document.DocumentNode.SelectNodes("//span")?.Where(n => n.InnerText.Contains("[") && n.InnerText.Contains("["));
+        
         }
 
         private HtmlEditorResolveResult MapHtmlEditorArgsToResult(HtmlEditorResolveArgs htmlEditorResolveArgs)

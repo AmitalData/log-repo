@@ -3,7 +3,7 @@ import {SessionLocator} from '../../Infrastructure/Utilities/SessionLocator';
 
 @Component({
     selector: 'CellTooltip',
-    
+
     templateUrl: './CellTooltip.html',
     inputs: ['IconWidth', 'IconHeight', 'IconPath', 'Width', 'Height', 'Head', 'Body', 'MaxHeight', 'IsOnClick', 'IsOpened','IsToRight'],
     changeDetection: ChangeDetectionStrategy.OnPush,
@@ -24,13 +24,14 @@ export class CellTooltip implements OnInit, AfterViewInit {
     public Head: string = null;
     public Body: string = null;
     public IsMouseOver: boolean = false;
+    public IsPopupMouseOver: boolean = false;
     @Output() Opened: EventEmitter<boolean> = new EventEmitter<boolean>();
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         var idIndex = this.CurrentSession.GetNewId("Tooltip");
         this.TooltipId = "Tooltip_" + idIndex;
         this.TooltipButtonId = "TooltipButton_" + idIndex;
-        this.TooltipContentId = "TooltipContent_" + idIndex; 
+        this.TooltipContentId = "TooltipContent_" + idIndex;
     }
 
     ngOnInit() {
@@ -82,6 +83,7 @@ export class CellTooltip implements OnInit, AfterViewInit {
     }
 
     mouseover() {
+        this.IsMouseOver = true;
         if (!this.IsOnClick) {
             var item = document.getElementById(this.TooltipId);
             var itemRect = item.getBoundingClientRect();
@@ -100,11 +102,19 @@ export class CellTooltip implements OnInit, AfterViewInit {
     }
 
     mouseleave() {
+        this.IsMouseOver = false;
         if (!this.IsOnClick) {
-            document.getElementById(this.TooltipContentId).style.visibility = "hidden";
+                document.getElementById(this.TooltipContentId).style.visibility = "hidden";
         }
     }
 
+    OnButtonMouseLeave(){
+        setTimeout(() => {
+            if (!this.IsOnClick && !this.IsPopupMouseOver) {
+                document.getElementById(this.TooltipContentId).style.visibility = "hidden";
+            }
+        },200)
+    }
     click() {
         if (this.IsOnClick) {
             if (document.getElementById(this.TooltipContentId).style.visibility == "visible") {

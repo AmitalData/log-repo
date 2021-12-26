@@ -112,6 +112,10 @@ export class DeliveryPackagesTabComponent {
             this.IsEditingEnabled = ShipmentTool.IsEditingEnabled(this.ShipmentPM);
         }
 
+        if (this.IsShipmentStatuesDelivered()) {
+            this.IsEditingEnabled = false;
+        }
+
         this.IsAddContainerVisible = false;
         if (this.IsFCLEntity) {
             var featureToggle: FeatureToggleList = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "OIC")[0];
@@ -133,6 +137,15 @@ export class DeliveryPackagesTabComponent {
                 this.IsEditingEnabled = false;
             }
         }
+    }
+
+    private IsShipmentStatuesDelivered() {
+        var deliverdStausName = "Delivered";
+        if (this.ShipmentPM.StatusName == (deliverdStausName)) {
+            return true;
+        }
+
+        return false;
     }
 
     public SelectedItem: DeliveryPackageItem = null;
@@ -320,7 +333,7 @@ export class DeliveryPackagesTabComponent {
         //entityArgs.IsFromStandAloneScreen  = true;
         var packagesTabComponent: PackagesTabComponent = new PackagesTabComponent(entityArgs, new EntityResourceService());
         packagesTabComponent.ngOnInit();
-        packagesTabComponent.IsEditingEnabled = AppTool.IsNullOrEmpty(this.EntityPM.StandaloneShipmentId) ? true : false;
+        packagesTabComponent.IsEditingEnabled = AppTool.IsNullOrEmpty(this.EntityPM.StandaloneShipmentId) ? this.IsEditingEnabled : false;
         var itemComponent = new ShipmentPackageItem(shipmentPackage, packagesTabComponent, false);
         logWindow.Width = 940;
         logWindow.Height = 610;

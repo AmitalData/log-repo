@@ -84,7 +84,7 @@ export class SaveAsTemplateComponent implements OnInit {
 
                 newTemplatePM.TemplateType = "M";
                 newTemplatePM.ReportId = this.SelectedTemplate.ReportId;
-
+                newTemplatePM.Tenant = SessionInfo.LoggedUserTenant;
                 
 
                 var reportsTemplatePMExtendedService: ReportsTemplatePMExtendedService = new ReportsTemplatePMExtendedService();

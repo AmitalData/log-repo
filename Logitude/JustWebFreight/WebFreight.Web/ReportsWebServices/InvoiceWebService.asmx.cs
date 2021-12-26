@@ -719,6 +719,7 @@ namespace WebFreight.Web.ReportsWebServices
                         }
                     }
                     #endregion
+
                     if (shipment.DirectionId == "E")
                     {
                         invoicedataprovider.MainCarriageExpectedDate = shipment.MainCarriageETD != null ? String.Format("{0:dd.MMM.yy}", shipment.MainCarriageETD) : "";
@@ -736,6 +737,7 @@ namespace WebFreight.Web.ReportsWebServices
                     {
                         invoicedataprovider.DeliveryETD = myLastDelivery.ETD;
                         invoicedataprovider.DeliveryAddress = myServicHelper.GetPickUpAddress(myLastDelivery);
+                        invoicedataprovider.LastDeliveryATD = myLastDelivery.ATD;
                     }
 
                     #region LoadingPlace
@@ -837,6 +839,8 @@ namespace WebFreight.Web.ReportsWebServices
                         {
                             invoicedataprovider.FinalDestination = lastDelivery.ToAddressCity + " " + lastDelivery.ToAddressCountryCode;
                         }
+
+                        invoicedataprovider.LastDeliveryATD = lastDelivery.ATD;
                     }
 
                     if (pickup != null)
@@ -995,19 +999,34 @@ namespace WebFreight.Web.ReportsWebServices
                     // Inland + Domestic
                     if (shipment.DirectionId == "D" && shipment.TransportModeId == "I")
                     {
-                        Address fromAddress = addressRepository.GetSingleAddress(shipment.MainCarriageFromAddressId, tenant);
-                        Address toAddress = addressRepository.GetSingleAddress(shipment.MainCarriageToAddressId, tenant);
+                        switch (shipment.InlandDomesticToTypeCode)
+                        {
+                            case "PART":
+                                {
+                                    invoicedataprovider.ToLocation = this.SetToLocationFromInlanDomesticPartner(shipment.MainCarriageToAddressId, tenant);                                    
+                                    break;
+                                }
 
+                            case "PORT":
+                                {
+                                    invoicedataprovider.ToLocation = shipment.MainCarriageToPortName;
+                                    break;
+                                }
+
+                            case "CASL":
+                                {
+                                    invoicedataprovider.ToLocation =  this.SetToLocationFromInlanDomesticCasual(shipment.InlandDomesticToCity, shipment.InlandDomesticToCountryId, tenant);
+                                    break;
+                                }
+                        }
+
+                        Address fromAddress = addressRepository.GetSingleAddress(shipment.MainCarriageFromAddressId, shipment.Tenant);
                         if (fromAddress != null)
                         {
                             invoicedataprovider.FromLocation = fromAddress.City + " " + (fromAddress.Country != null ? fromAddress.Country.Code : "");
                         }
 
-                        if (toAddress != null)
-                        {
-                            invoicedataprovider.ToLocation = toAddress.City + " " + (toAddress.Country != null ? toAddress.Country.Code : "");
-                            invoicedataprovider.FinalLocation = toAddress.City + " " + (toAddress.Country != null ? toAddress.Country.Code : "");
-                        }
+                        invoicedataprovider.FinalLocation = invoicedataprovider.ToLocation;
                     }
                     else
                     {
@@ -1379,29 +1398,7 @@ namespace WebFreight.Web.ReportsWebServices
                         invoicedataprovider.IssuedByUserEmail = contact.Email;
                     }
 
-                    currentInvoice.PrintByUserId = issuedByuser.Id;
-                    currentInvoice.PrintDate = TenantServerConfigration.GetCurrentDateTime(tenant);
-
-                    switch (currentInvoice.StatusCode)
-                    {
-                        case "AD":
-                        case "VD":
-                        case "PD":
-                        case "PP":
-                        case "AR":
-                        case "AC":
-                            {
-                                if (currentInvoice.IsFromInterestBatchInvoice == false)
-                                {
-                                    currentInvoice.IsPrinted = true;
-                                }
-                                
-                                break;
-                            }
-                    }
-
-                    invoiceRepository.Update(currentInvoice);
-                    invoiceRepository.SubmitChanges();
+                    this.SaveInvoice(currentInvoice, invoiceRepository);                   
                 }
                 #endregion
 
@@ -2397,6 +2394,66 @@ namespace WebFreight.Web.ReportsWebServices
             return invoicedataprovider;
         }
 
+        private string SetToLocationFromInlanDomesticPartner(string addressId, int tenant)
+        {
+            string toLocation = "";
+            AddressRepository addressRepository = new AddressRepository(tenant);            
+            Address toAddress = addressRepository.GetSingleAddress(addressId, tenant);
+            if (toAddress != null)
+            {
+                toLocation = toAddress.City + " " + (toAddress.Country != null ? toAddress.Country.Code : "");
+            }
+
+            return toLocation;
+        }
+
+        private string SetToLocationFromInlanDomesticCasual(string city, string countryId, int tenant)
+        {
+            string toLocation = city;
+
+            if (!string.IsNullOrEmpty(countryId))
+            {
+                CountryRepository countryRepository = new CountryRepository(tenant);
+                Country country = countryRepository.GetSingleCountry(countryId, tenant);
+                if(country != null)
+                {
+                    toLocation += " " + country.Code;
+                }
+            }
+
+            return toLocation;
+        }
+
+        private void SaveInvoice(ARInvoice currentInvoice, ARInvoiceRepository invoiceRepository)
+        {
+            ARInvoice savedInvoice = invoiceRepository.GetSingleInvoice(currentInvoice.Id);
+            if(savedInvoice != null)
+            {
+                savedInvoice.PrintByUserId = currentInvoice.IssuedByUserId;
+                savedInvoice.PrintDate = TenantServerConfigration.GetCurrentDateTime(currentInvoice.Tenant);
+
+                switch (currentInvoice.StatusCode)
+                {
+                    case "AD":
+                    case "VD":
+                    case "PD":
+                    case "PP":
+                    case "AR":
+                    case "AC":
+                        {
+                            if (currentInvoice.IsFromInterestBatchInvoice == false)
+                            {
+                                savedInvoice.IsPrinted = true;
+                            }
+                            break;
+                        }
+                }
+
+                invoiceRepository.Update(savedInvoice);
+                invoiceRepository.SubmitChanges();
+            }            
+        }
+
         private void FillARStockVariables(InvoiceDataProvider invoicedataprovider, ARInvoice invoice)
         {
             var arInvoiceStockLine = aRInvoiceStockLineRepository.GetSingleARInvoiceStockLine(invoice.ARInvoiceStockId, invoice.Tenant);
@@ -3033,28 +3090,7 @@ namespace WebFreight.Web.ReportsWebServices
                             invoiceDataProvider.IssuedByUserEmail = contact.Email;
                         }
 
-                        entityPOCO.PrintByUserId = issuedByuser.Id;
-                        entityPOCO.PrintDate = TenantServerConfigration.GetCurrentDateTime(tenant);
-
-                        switch (entityPOCO.StatusCode)
-                        {
-                            case "AD":
-                            case "VD":
-                            case "PD":
-                            case "PP":
-                            case "AR":
-                            case "AC":
-                                {
-                                    if (entityPOCO.IsFromInterestBatchInvoice == false)
-                                    {
-                                        entityPOCO.IsPrinted = true;
-                                    }
-                                    break;
-                                }
-                        }
-
-                        invoiceRepository.Update(entityPOCO);
-                        invoiceRepository.SubmitChanges();
+                        this.SaveInvoice(entityPOCO, invoiceRepository);
                     }
                 }
                 #endregion
@@ -3722,15 +3758,28 @@ namespace WebFreight.Web.ReportsWebServices
                                             }
                                         }
 
-                                        if (!string.IsNullOrEmpty(myShipment.MainCarriageToAddressId))
+                                        switch (myShipment.InlandDomesticToTypeCode)
                                         {
-                                            Address myAddress = addressRepository.GetSingleAddress(myShipment.MainCarriageToAddressId, tenant);
-                                            if (myAddress != null)
-                                            {
-                                                myRecord.ToLocation = myAddress.City + " " + (myAddress.Country != null ? myAddress.Country.Code : "");
-                                                myRecord.FinalDestination = myAddress.City;
-                                            }
+                                            case "PART":
+                                                {
+                                                    myRecord.ToLocation = this.SetToLocationFromInlanDomesticPartner(myShipment.MainCarriageToAddressId, tenant);
+                                                    break;
+                                                }
+
+                                            case "PORT":
+                                                {
+                                                    myRecord.ToLocation = myShipment.MainCarriageToPortName;
+                                                    break;
+                                                }
+
+                                            case "CASL":
+                                                {
+                                                    myRecord.ToLocation = this.SetToLocationFromInlanDomesticCasual(myShipment.InlandDomesticToCity, myShipment.InlandDomesticToCountryId, tenant);
+                                                    break;
+                                                }
                                         }
+
+                                        myRecord.FinalDestination = myRecord.ToLocation;
                                     }
 
                                     else
@@ -3764,6 +3813,7 @@ namespace WebFreight.Web.ReportsWebServices
 
                                     if (myDelivery != null)
                                     {
+                                        myRecord.LastDeliveryATD = myDelivery.ATD;
                                         ShipmentPickUpDeliveryPackageRepository rep = new ShipmentPickUpDeliveryPackageRepository(tenant);
                                         List<ShipmentPickUpDeliveryPackage> deliveryPackages = rep.GetPackagesByDeliveryId(myDelivery.Id, tenant).ToList();
 

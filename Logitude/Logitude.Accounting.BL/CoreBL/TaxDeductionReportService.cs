@@ -657,12 +657,13 @@ namespace Logitude.Accounting.BL.CoreBL
                 CreateDate = TenantServerConfigration.GetCurrentDateTime(tenant),
                 UpdatedByUserId = loggedUser.Id,
                 UpdateDate = TenantServerConfigration.GetCurrentDateTime(tenant),
-                FileExtension = "txt",
+                FileExtension = "",
                 SecurityId = "100",
                 FileName = name,
             };
-
-            byte[] bytearray = Encoding.Unicode.GetBytes(file);
+            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+            var winHebrewEncoding = Encoding.GetEncoding("Windows-1255");
+            byte[] bytearray = winHebrewEncoding.GetBytes(file);
             document.FileData = bytearray;
             docService.Create(document, document.FileData, loggedUser.Id);
 

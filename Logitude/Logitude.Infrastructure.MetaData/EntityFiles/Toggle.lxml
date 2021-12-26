@@ -637,6 +637,31 @@
       Name="&quot;On Update Document Automation Tab&quot;"
       SearchFields="&quot;ODA,On Update Document Automation Tab&quot;"
       Description="&quot;On Update Document Automation Tab&quot;" />
+    <Record
+      Code="&quot;AEV&quot;"
+      Name="&quot;Automation Event Creation&quot;"
+      SearchFields="&quot;AEV,Automation Event Creation&quot;"
+      Description="&quot;Automation Event Creation&quot;" />
+    <Record
+      Code="&quot;OPS&quot;"
+      Name="&quot;Operational Status&quot;"
+      SearchFields="&quot;OPS,Operational Status&quot;"
+      Description="&quot;Operational Status&quot;" />
+    <Record
+      Code="&quot;CAU&quot;"
+      Name="&quot;Container Automation&quot;"
+      Description="&quot;Container Automation&quot;"
+      SearchFields="&quot;CAU,Container Automation&quot;" />
+    <Record
+      Code="&quot;FHR&quot;"
+      Name="&quot;FixHtmlResolverVariable&quot;"
+      SearchFields="&quot;FHR,FixHtmlResolverVariable&quot;"
+      Description="&quot;Fix Html Resolver Variable&quot;" />
+    <Record
+      Code="&quot;OPF&quot;"
+      Name="&quot;Open Format RTL&quot;"
+      SearchFields="&quot;OPF,Open Format RTL&quot;"
+      Description="&quot;Open Format RTL Issues&quot;" />
   </Records>
   <DataContracts />
   <AdditionalTextCodes />

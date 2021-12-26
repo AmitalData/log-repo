@@ -892,6 +892,20 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+   Name="OperationalStatusId"
+   Type="varchar"
+   Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+   Name="BillingStatusId"
+   Type="varchar"
+   Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="Id"
     ReferencedTable="Shipments"
@@ -1110,6 +1124,16 @@
   <Relation
     ForeignKeyColumn="InlandDomesticToCountryId"
     ReferencedTable="Countries"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="OperationalStatusId"
+    ReferencedTable="EntityStatus"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="BillingStatusId"
+    ReferencedTable="EntityStatus"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Index

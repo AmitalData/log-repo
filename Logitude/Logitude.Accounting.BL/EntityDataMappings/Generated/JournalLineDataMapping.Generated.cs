@@ -87,7 +87,9 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         IsDebitAccountMulti, 
 	         ExternalReconcileNumber, 
 	         IsExternalReconcile, 
-	         ActionId,
+	         ActionId, 
+	         CreditAccountCOACode, 
+	         DebitAccountCOACode,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();

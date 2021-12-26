@@ -178,9 +178,24 @@
 
     </div>
 
+    <!-- Declaration Approval -->
+    <panel *ngIf="ShowDeclarationApproval" [ShowWhitePanelOnMobile]="true">
+
+        <div body class="declaration-approval">
+
+            <div class="declaration-approval-message">{{cargoTrackingShipmentPM.TenantDeclarationMessage}}</div>
+
+            <div class="declaration-approval-toolbar">
+                <button class="declaration-approval-toolbar-button__red animate" (click)="DenyDeclaration()">דחיה</button>
+                <button class="declaration-approval-toolbar-button__green animate" (click)="ApproveDeclaration()">אושר</button>
+            </div>
+        </div>
+
+    </panel>
+
 
     <!-- Milestones Slider -->
-    <div style="order: 2;" #SliderWrapper class="slider-wrapper" [ngClass]="NoMilstonesFound ? 'slider-wrapper no-milestones': 'slider-wrapper'"
+    <div *ngIf="!ShowDeclarationApproval" style="order: 2;" #SliderWrapper class="slider-wrapper" [ngClass]="NoMilstonesFound ? 'slider-wrapper no-milestones': 'slider-wrapper'"
          (wheel)="onMousewheelOnMilestonesSlider($event)" (pan)="logPan($event)">
 
         <!-- Milestones -->
@@ -247,21 +262,22 @@
 
     </div>
 
+    <!-- Panels Navigator -->
     <div style="order: 1;" class="PanelsNavigator">
         <div class="panels-wrapper">
-            <button [class.active]="selectedNavButton=='Overview'"
+            <button *ngIf="!ShowDeclarationApproval"  [class.active]="selectedNavButton=='Overview'"
                     (click)="PanelsNavigatorClicked('Overview')">
                 <span class="hide-mobile">{{OverviewPanelTitle }}</span>
                 <span class="mobile-only">Overview</span>
             </button>
-            <button [class.active]="selectedNavButton=='Cargo'" (click)="PanelsNavigatorClicked('Cargo')">
+            <button  *ngIf="!ShowDeclarationApproval" [class.active]="selectedNavButton=='Cargo'" (click)="PanelsNavigatorClicked('Cargo')">
                 Cargo
             </button>
             <button *ngIf="cargoTrackingShipmentPM.EntityType != 'O'" [class.active]="selectedNavButton=='CustomsDataPanel'"
                     (click)="PanelsNavigatorClicked('CustomsDataPanel')">
                 Customs
             </button>
-            <button [class.active]="selectedNavButton=='RoutingPanel'"
+            <button *ngIf="!ShowDeclarationApproval"  [class.active]="selectedNavButton=='RoutingPanel'"
                     (click)="PanelsNavigatorClicked('RoutingPanel')">
                 Routing
             </button>
@@ -269,7 +285,7 @@
                     (click)="PanelsNavigatorClicked('DocumentsPanel')">
                 Documents
             </button>
-            <button [class.active]="selectedNavButton=='PartnersPanel'"
+            <button  *ngIf="!ShowDeclarationApproval" [class.active]="selectedNavButton=='PartnersPanel'"
                     (click)="PanelsNavigatorClicked('PartnersPanel')">
                 Partners
             </button>
@@ -277,10 +293,11 @@
     </div>
 
 
-    <panel style="order: 3;margin-top: 10px" [Title]="OverviewPanelTitle" [ShowWhitePanelOnMobile]="true" [Name]="'Overview'">
+    <!-- PANELS -->
+    <panel *ngIf="!ShowDeclarationApproval" style="order: 3;margin-top: 10px" [Title]="OverviewPanelTitle" [ShowWhitePanelOnMobile]="true" [Name]="'Overview'">
 
         <div body>
-            <div class="data-cards" *ngIf="cargoTrackingShipmentPM">
+            <div class="data-cards" *ngIf="cargoTrackingShipmentPM" id="overview-data-cards">
                 <div *ngIf="cargoTrackingShipmentPM.EntityType == 'O'">
                     <div class="title">po number</div>
                     <div class="description">{{cargoTrackingShipmentPM.ShipmentOrderPONumber}}</div>
@@ -312,7 +329,7 @@
                             <custom-label *ngIf="i == 0">{{item}} </custom-label>
                         </div>
                         <custom-label *ngIf="cargoTrackingShipmentPM.EntityType == 'O' && cargoTrackingShipmentPM.PoNumber">
-                            {{cargoTrackingShipmentPM.PoNumber}} 
+                            {{cargoTrackingShipmentPM.PoNumber}}
                         </custom-label>
                         <a *ngIf="this.ShipmentReferences && this.ShipmentReferences?.length > 2"
                            (click)="OpenReferencesWindow(ShipmentReferences)"
@@ -380,10 +397,9 @@ cargoTrackingShipmentPM.ArrivalDate |
                     </div>
                 </div>
                 <!-- <div>
-                    <div class="title">shipper</div>
-                    <div class="description">{{cargoTrackingShipmentPM.ShipperName}}</div>
-                </div> -->
-
+        <div class="title">shipper</div>
+        <div class="description">{{cargoTrackingShipmentPM.ShipperName}}</div>
+    </div> -->
                 <!--<div>
         <div class="title">Incoterms</div>
         <div class="description">{{ShipmentPM?.IncotermName}}</div>
@@ -423,14 +439,25 @@ cargoTrackingShipmentPM.ArrivalDate |
                         </span>
                     </div>
                 </div>
+                <div *ngIf=" cargoTrackingShipmentPM.EntityType == 'O'">
+                    <div class="title">PO Date</div>
+                    <div class="description">
+                        {{cargoTrackingShipmentPM?.SHOPODate |date:'dd/MM/yyyy'}}
+                    </div>
+                </div>
+                <div *ngIf=" cargoTrackingShipmentPM.EntityType == 'O'">
+                    <div class="title booking-title">Booking Confirmation #</div>
+                    <div class="description">
+                        {{cargoTrackingShipmentPM?.SHOBookingConfirmationNumber}}
+                    </div>
+                </div>
 
             </div>
         </div>
 
     </panel>
 
-
-    <panel style="order: 4;" [Title]="'Cargo Info'" [Name]="'Cargo'" [HaveDetailsSection]=" cargoTrackingShipmentPM.EntityType != 'O'"
+    <panel *ngIf="!ShowDeclarationApproval" style="order: 4;" [Title]="'Cargo Information'" [Name]="'Cargo'" [HaveDetailsSection]=" cargoTrackingShipmentPM.EntityType != 'O'"
            [ShowWhitePanelOnMobile]="true"
 
            [DetailsTitle]="cargoTrackingShipmentPM.TransportModeId != 'A' ? 'Container List' : 'Packages List'"
@@ -449,8 +476,8 @@ cargoTrackingShipmentPM.ArrivalDate |
                             <div class="description TextTrimming"> {{package.PackageTypeName}}</div>
 
                             <i class="las" style="color: var(--MainColor);margin-top:5px; margin-left: 5px;"
-                                [class.la-chevron-circle-up]="ShowDetailsSection" [class.la-chevron-circle-down]="!ShowDetailsSection"
-                                *ngIf="cargoTrackingShipmentPM.Packages.length > 1 && i == 1" (click)="ShowMoreLinkClicked()"></i>
+                               [class.la-chevron-circle-up]="ShowDetailsSection" [class.la-chevron-circle-down]="!ShowDetailsSection"
+                               *ngIf="cargoTrackingShipmentPM.Packages.length > 1 && i == 1" (click)="ShowMoreLinkClicked()"></i>
                         </div>
                     </div>
                 </div>
@@ -482,8 +509,8 @@ cargoTrackingShipmentPM.ArrivalDate |
                     <div class="description TextTrimming">
                         {{cargoTrackingShipmentPM?.WarehouseLegEnglishName}}
                         <a *ngIf="cargoTrackingShipmentPM && cargoTrackingShipmentPM.WarehouseLegEnglishName && cargoTrackingShipmentPM.WarehouseLegEnglishName.length > 18"
-                            (click)="ShowMoreWindow(cargoTrackingShipmentPM.WarehouseLegEnglishName)"
-                            style="cursor: pointer;text-decoration: underline;font-size: 11px;">Show more</a>
+                           (click)="ShowMoreWindow(cargoTrackingShipmentPM.WarehouseLegEnglishName)"
+                           style="cursor: pointer;text-decoration: underline;font-size: 11px;">Show more</a>
                     </div>
                 </div>
                 <div class="hide-mobile" *ngIf="cargoTrackingShipmentPM.TransportModeId != 'A' && cargoTrackingShipmentPM.EntityType != 'O'">
@@ -506,12 +533,31 @@ cargoTrackingShipmentPM.ArrivalDate |
                         {{cargoTrackingShipmentPM?.ImportManifest}}
                     </div>
                 </div>
-                <div *ngIf=" cargoTrackingShipmentPM.EntityType == 'O'">
+                <div id="description-of-goods" *ngIf=" cargoTrackingShipmentPM.EntityType == 'O'">
                     <div class="title">Description Of Goods </div>
                     <div class="description">
                         {{cargoTrackingShipmentPM?.DescriptionOfGoods}}
                     </div>
                 </div>
+                <div *ngIf=" cargoTrackingShipmentPM.EntityType == 'O'">
+                    <div class="title">Carrier </div>
+                    <div class="description">
+                        {{cargoTrackingShipmentPM?.SHOCarrierName}}
+                    </div>
+                </div>
+                <div *ngIf=" cargoTrackingShipmentPM.EntityType == 'O'  && cargoTrackingShipmentPM?.Master !=null && cargoTrackingShipmentPM?.Master.length > 0">
+                    <div class="title">Master </div>
+                    <div class="description">
+                        {{cargoTrackingShipmentPM?.Master}}
+                    </div>
+                </div>
+                <div *ngIf=" cargoTrackingShipmentPM.EntityType == 'O'  && cargoTrackingShipmentPM?.House !=null && cargoTrackingShipmentPM?.House.length > 0">
+                            <div class="title">house </div>
+                    <div class="description">
+                        {{cargoTrackingShipmentPM?.House}}
+                    </div>
+                </div>
+
 
             </div>
         </div>
@@ -565,7 +611,7 @@ package.ShipperSeal == null ? package.CarrierSeal :
     </panel>
 
     <panel  *ngIf="cargoTrackingShipmentPM.EntityType != 'O'" style="order: 5;" [Title]="'Customs Data'" [Name]="'CustomsDataPanel'" [HaveDetailsSection]="true"
-           [ShowWhitePanelOnMobile]="true" [DetailsTitle]="'Tax Details'">
+           [AlwaysExpanded]="true" [ShowWhitePanelOnMobile]="true" [DetailsTitle]="'Tax Details'">
 
         <div body>
             <div class="no-data-available" *ngIf="!this.cargoTrackingShipmentPM.CustomsData">Customs data is not available yet</div>
@@ -663,7 +709,7 @@ package.ShipperSeal == null ? package.CarrierSeal :
 
     </panel>
 
-    <panel style="order: 6;" [Title]="'Routing'" [Name]="'RoutingPanel'" [ShowWhitePanelOnMobile]="cargoTrackingShipmentPM.RoutingSteps?.length === 0">
+    <panel *ngIf="!ShowDeclarationApproval" style="order: 6;" [Title]="'Routing'" [Name]="'RoutingPanel'" [ShowWhitePanelOnMobile]="cargoTrackingShipmentPM.RoutingSteps?.length === 0">
 
         <div body>
             <div class="slider-wrapper" id="RoutingSliderWrapper" #RoutingSliderWrapper style="background:rgba(59, 59, 59, 0.00);padding-bottom:10px"
@@ -770,7 +816,7 @@ package.ShipperSeal == null ? package.CarrierSeal :
                                                 {{step.ToPortLabel}}
                                             </div>
                                         </div>
-                                        <div class="route-description TextTrimming">{{step.Description}}</div>
+                                        <div class="route-description TextTrimming" [title]="step.Description">{{step.Description}}</div>
                                         <div class="routes">
                                             <div *ngFor="let direction of step.Directions" class="route-direction">
 
@@ -804,10 +850,10 @@ package.ShipperSeal == null ? package.CarrierSeal :
             </div>
                 </div>
 
-</panel>
+    </panel>
 
 
-    <panel  *ngIf="cargoTrackingShipmentPM.EntityType != 'O'" style="order: 5;" [Title]="'Documents'" [Name]="'DocumentsPanel'" [ShowWhitePanelOnMobile]="cargoTrackingShipmentPM.DocumentsFilings?.length === 0">
+    <panel *ngIf="cargoTrackingShipmentPM.EntityType != 'O' " style="order: 5;" [Title]="'Documents'" [Name]="'DocumentsPanel'" [ShowWhitePanelOnMobile]="cargoTrackingShipmentPM.DocumentsFilings?.length === 0">
 
         <div body>
             <div  class="no-data-available" *ngIf="cargoTrackingShipmentPM.DocumentsFilings && cargoTrackingShipmentPM.DocumentsFilings.length == 0 " style="margin-top:10px">No Documents defined for this shipment</div>
@@ -835,7 +881,7 @@ package.ShipperSeal == null ? package.CarrierSeal :
                             <svg [attr.fill]="item.IsDigitallySigned?'#c13b3b':'#cecece'" id="Capa_1" enable-background="new 0 0 512 512" height="16" viewBox="0 0 512 512" width="16" xmlns="http://www.w3.org/2000/svg"><path d="m337.903 358.822 23.413-37.992 42.252-14.41 4.681-44.377 31.789-31.295-15.114-42.006 15.114-42.007-31.788-31.295-4.681-44.376-42.252-14.41-23.413-37.993-44.285 5.347-37.619-24.008-37.619 24.01-44.284-5.347-23.413 37.992-42.252 14.41-4.681 44.376-31.789 31.295 15.114 42.007-15.114 42.007 31.788 31.294 4.681 44.377 42.252 14.41 23.413 37.992 44.285-5.346 37.619 24.009 37.619-24.009zm-211.332-170.079c0-71.367 58.062-129.429 129.429-129.429s129.429 58.062 129.429 129.429-58.062 129.429-129.429 129.429-129.429-58.062-129.429-129.429z" /><path d="m256 89.333c-54.815 0-99.41 44.595-99.41 99.41s44.595 99.41 99.41 99.41 99.41-44.595 99.41-99.41-44.595-99.41-99.41-99.41z" /><path d="m211.299 384.568-52.68 6.36-27.833-45.167-9.462-3.226-40.813 127.566 73.475-4.041 57.485 45.94 33.828-105.732z" /><path d="m381.214 345.762-27.834 45.166-52.679-6.36-34 21.7 33.828 105.732 57.485-45.94 73.475 4.041-40.813-127.566z" /></svg>
                         </td>
                         <th style="width: 50px;" class="hide-mobile" *ngIf="item.DocumentId">
-                            <a (click)="ExternalDownloadDocument(item.SecurityId)" href="javascript:;">
+                            <a (click)="DownloadDocument(item)" href="javascript:;">
                                 <svg style="width: 16px; height: 16px;" width="20px" height="19px" viewBox="0 0 20 19"
 
                                      version="1.1" xmlns="http://www.w3.org/2000/svg"
@@ -901,21 +947,21 @@ package.ShipperSeal == null ? package.CarrierSeal :
 
                     <details-menu [Show]="item.ShowDetailsMenu" [Toggle]="'ShowDetailsMenu'" [DataContext]="item"
                                   [MenuTitle]="item.DocumentTypeName" [Buttons]="[{Code: 'download', Name:'Download'}]"
-                                  (ButtonClicked)="DownloadDocument(item.DocumentId,item.DocumentTypeName)"></details-menu>
+                                  (ButtonClicked)="InternalDownloadDocument(item.DocumentId,item.DocumentTypeName)"></details-menu>
                 </div>
             </div>
         </div>
 
     </panel>
 
-    <panel style="order: 7;" [Title]="'Partners'" [Name]="'PartnersPanel'" TransparentBackground="true" [ShowWhitePanelOnMobile]="cargoTrackingShipmentPM.PartnerCards?.length === 0">
+    <panel *ngIf="!ShowDeclarationApproval" style="order: 7;" [Title]="'Partners'" [Name]="'PartnersPanel'" TransparentBackground="true" [ShowWhitePanelOnMobile]="cargoTrackingShipmentPM.PartnerCards?.length === 0">
 
         <div body>
             <div  class="no-data-available" *ngIf="cargoTrackingShipmentPM.PartnerCards?.length == 0 " style="margin-top:10px">No Partners defined for this shipment</div>
             <div class="partners-cards-wrapper">
                 <div class="card partner-card" *ngFor="let partnerCard of cargoTrackingShipmentPM.PartnerCards">
                     <div class="header">
-                        <div class="partners-buttons hide-mobile">
+                        <!-- <div class="partners-buttons hide-mobile">
                             <div class="circle-icon">
                                 <a [href]="'tel:'+partnerCard.PhoneNumber">
                                     <img src="./assets/images/icons/call-white.svg" alt="">
@@ -926,7 +972,7 @@ package.ShipperSeal == null ? package.CarrierSeal :
                                     <img src="./assets/images/icons/chat-white.svg" alt="">
                                 </a>
                             </div>
-                        </div>
+                        </div> -->
                         <div>
                             <div class="partner-type-label">{{partnerCard.Type}}</div>
                             <div class="partner-name">
@@ -946,7 +992,7 @@ package.ShipperSeal == null ? package.CarrierSeal :
 
                         <!-- <div class="partner-mobile">Phone: {{partnerCard.PhoneNumber}}</div> -->
                         <!-- <div class="partner-mobile">{{partnerCard.FaxNumber}}</div> -->
-                        <div class="partners-footer-buttons mobile-only">
+                        <!-- <div class="partners-footer-buttons mobile-only">
 
                             <div class="circle-icon-x2">
 
@@ -960,7 +1006,7 @@ package.ShipperSeal == null ? package.CarrierSeal :
                                     <img src="./assets/images/icons/chat-white.svg" alt="">
                                 </a>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                     <div></div>
                 </div>
@@ -970,5 +1016,6 @@ package.ShipperSeal == null ? package.CarrierSeal :
 
     </panel>
 
+    <br>
 
 </div>

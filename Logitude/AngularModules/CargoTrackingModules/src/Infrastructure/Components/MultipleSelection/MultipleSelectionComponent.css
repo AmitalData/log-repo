@@ -41,6 +41,7 @@ mat-option-text {
 
 ::ng-deep .cdk-overlay-pane{
     margin-left: 29px;
+    margin-top: 7px;
 }
 
 ::ng-deep .mat-form-field-appearance-fill .mat-form-field-flex {
@@ -54,6 +55,10 @@ mat-option-text {
 
 ::ng-deep .mat-form-field-underline{
 display: none;
+}
+
+::ng-deep .mat-select-arrow {
+    color: var(--MainColor);
 }
 
 ::ng-deep .mat-select-panel {

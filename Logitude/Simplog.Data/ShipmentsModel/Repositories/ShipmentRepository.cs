@@ -476,10 +476,10 @@ namespace Simplog.Data.ShipmentsModel.Repositories
                                         select a).OrderBy(d => d.Id).Skip(skip).Take(take).ToList();
             return shipments;
         }
-        public List<string> GetShipmentIdsByTenant(int tenant, int skip, int take)
+        public List<string> GetShipmentIdsByTenant(int tenant, int skip, int take, DateTime minStartDate)
         {
             List<string> shipments = (from a in context.Shipments
-                                      where a.Tenant == tenant
+                                      where a.Tenant == tenant && a.AutomaticLastUpdateDate >= minStartDate
                                       select a.Id).OrderBy(d => d).Skip(skip).Take(take).ToList();
             return shipments;
         }

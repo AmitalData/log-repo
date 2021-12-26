@@ -16,6 +16,11 @@ import {EntityArgs} from '../../../Infrastructure/DataContracts/EntityArgs';
 import {TextCodeTranslator} from '../../../Infrastructure/Utilities/TextCodeTranslator';
 import {ObjectsLocator} from '../../../Infrastructure/Locators/ObjectsLocator';
 
+const cashCashbookTypeCode = '1';
+const CashbookTotalUpdateWindow = "Adjust Cashbook Total";
+const CashbookUpdateTotalWindowWidth = 400;
+const CashbookUpdateTotalWindowHeight = 180;
+
 export class CashBookMenuButtonsHandler {
     public EntityPM: CashBookPM;
     public entityArgs: EntityArgs
@@ -72,6 +77,12 @@ export class CashBookMenuButtonsHandler {
                                 }
                                 break;
                             }
+                            case "RecalculateTotals":
+                            {
+                                button.IsHidden = !SessionLocator.LoggedUserPM.IsCustomerCare;
+                                button.IsDisabled = this.EntityPM.Inactive;
+                                break;
+                            }
                     }
                 }
             }
@@ -107,6 +118,12 @@ export class CashBookMenuButtonsHandler {
                         break;
                     }
 
+                case "RecalculateTotals":
+                    {
+                        this.RecalculateCashbookTotals();
+                        break;
+                    }
+
             }
         } else {
             this.entityArgs.EditComponent.ValidationErrorsList = [];
@@ -136,6 +153,44 @@ export class CashBookMenuButtonsHandler {
 
     }
 
+    RecalculateCashbookTotals(){
+
+        if(this.EntityPM.CashBookTypeCode == cashCashbookTypeCode){
+            this.ShowCashbookTotalUpdateWindow();
+        }else{
+            this.RecalculateTotalOfChequesCashbook();
+        }
+
+    }
+
+    private ShowCashbookTotalUpdateWindow()
+    {
+        var logitudeWindow = new LogitudeWindow();
+        logitudeWindow.Width = CashbookUpdateTotalWindowWidth;
+        logitudeWindow.Height = CashbookUpdateTotalWindowHeight;
+        logitudeWindow.Title = CashbookTotalUpdateWindow;
+        logitudeWindow.WindowArgs = { CashbookPM: this.EntityPM };
+        logitudeWindow.Show('./Accounting/Components/EditTabs/CashBook/CashbookTotalAdjustWindow');
+        logitudeWindow.WindowClosed.subscribe(() => {} );
+    }
+
+
+    private RecalculateTotalOfChequesCashbook()
+    {
+        this.StartBusyIndicator('Recalculating totals...');
+        this._CashBookExtendedPMService.RecalculateCashbookTotal(this.EntityPM.Id)
+            .subscribe((response: ServiceResponse) =>
+            {
+                if (!response.HasError) {
+                    this.ShowMessage("Total recalculated successfully");
+                    this.StopBusyIndicator();
+                }
+                else {
+                    this.ShowErrorMessage(response);
+                    this.StopBusyIndicator();
+                }
+            });
+    }
 
     private RunNewDepositForCashCashbook()
     {
@@ -204,8 +259,23 @@ export class CashBookMenuButtonsHandler {
     private StopBusyIndicator() {
         this.CurrentSession.StopBusyIndicator();
     }
-}
 
+    ShowErrorMessage(response: ServiceResponse)
+    {
+        const messageWindow = new MessageWindow();
+        messageWindow.Show("Update Total Failed, please check browser console");
+        console.error(response.ErrorsArray);
+    }
+
+    ShowMessage(message: string)
+    {
+        const messageWindow = new MessageWindow();
+        messageWindow.Show(message);
+
+    }
+}
 export class Args {
     CashBookId: string;
 }
+
+

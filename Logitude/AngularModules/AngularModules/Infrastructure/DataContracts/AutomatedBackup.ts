@@ -8,6 +8,7 @@ import {AutomationSendInterface} from './AutomationSendInterface';
 import {AutomationSendDocument} from './AutomationSendDocument';
 import { AutomationCreateTask } from './AutomationCreateTask';
 import { AutomationOnUpdateDocument } from './AutomationOnUpdateDocument';
+import { AutomationEvent } from './AutomationEvent';
 
 @Injectable() 
 
@@ -33,6 +34,7 @@ export class AutomatedBackup {
     AutomationSetValueLists: AutomationSetValue[];
     DelayAautomationConditionLists: AutomationCondition[];
     AutomationFollowUp: AutomationFollowUp;
+    AutomationEvent: AutomationEvent;
     AutomationQueuedTask: AutomationQueuedTask;
     AutomationSetSLAValue: AutomationSetSLAValue;
     AutomationSendInterface: AutomationSendInterface;

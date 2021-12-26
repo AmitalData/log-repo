@@ -41,7 +41,7 @@ namespace Simplog.Data.ShipmentsModel.Repositories
             return (from container in context.Containers.Include("CarrierCard").Include("VesselCard").Include("ShipmentOnCarriageToPort").Include("ShipmentOnCarriageFromPort").
                     Include("ShipmentTransshipment3ToPort").Include("ShipmentTransshipment3FromPort").Include("ShipmentTransshipment2ToPort").Include("ShipmentTransshipment2FromPort")
                     .Include("ShipmentTransshipment1ToPort").Include("ShipmentTransshipment1FromPort").Include("ShipmentMainCarriageToPort").Include("ShipmentMainCarriageFromPort")
-                    .Include("ShipmentPreCarriageToPort").Include("ShipmentPreCarriageFromPort").Include("ShipmentEntityStatus").Include("TerminalCard").Include("TerminalCardAddress")
+                    .Include("ShipmentPreCarriageToPort").Include("ShipmentPreCarriageFromPort").Include("ShipmentEntityStatus").Include("TerminalCard").Include("TerminalCardAddress").Include("TruckerCard")
                      .Include("ShipmentOriginAgent").Include("ShipmentDestinationAgent").Include("CustomerCard").Include("Handler").Include("Handler.Contact").Include("Shipment").Include("EntityStatus")
                     where container.Id == id && container.Tenant == tenant
                     select container).FirstOrDefault();
@@ -87,7 +87,7 @@ namespace Simplog.Data.ShipmentsModel.Repositories
         public Container GetContainerByShipmentPackagesId(string shipmentPackageId, int tenant)
         {
             return (from container in context.Containers
-                    where container.Tenant == tenant && container.ShipmentPackagesId == shipmentPackageId
+                    where container.Tenant == tenant && container.ShipmentPackagesId == shipmentPackageId && !container.IsCancelled
                     select container).FirstOrDefault();
         }
 
@@ -103,6 +103,13 @@ namespace Simplog.Data.ShipmentsModel.Repositories
             return from container in context.Containers
                    where container.Tenant == tenant && container.ShipmentId == shipmentId
                    select container;
+        }
+
+        public Container GetCancelledContainerByShipmentId(string shipmentId,string containerNumber, int tenant)
+        {
+            return (from container in context.Containers 
+                    where container.ContainerNumber == containerNumber && container.Tenant == tenant && container.ShipmentId == shipmentId && container.IsCancelled
+                    select container).FirstOrDefault();
         }
     }
 }

@@ -25,8 +25,6 @@ namespace Logitude.BL.ShipmentsModel.EntityAMs
         public string CustomerReference { get; set; }
         public bool IncludePickup { get; set; }
         public bool IncludeDelivery { get; set; }
-
-        public bool DangerousGoods { get; set; }
         public string Incoterm { get; set; }
 
         public DateTime? ReqFlightDate { get; set; }
@@ -37,6 +35,7 @@ namespace Logitude.BL.ShipmentsModel.EntityAMs
         //public bool SendUpdatesToAgentEnabled { get; set; }
 
         public string Notes { get; set; }
+        public bool IsDangerouseOfGoods { get; set; }
         public CodeProperties Agent { get; set; }
 
         public CodeProperties Consignee { get; set; }

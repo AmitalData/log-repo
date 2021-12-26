@@ -168,7 +168,7 @@ namespace WebFreight.Web.WebServices
                             HasFile = true,
                             Folder = "docsin",
                             FileName = TruncateLongString(realFileName, 120),
-                            CalculatedFileName = new DocumentTypeCalculateFileNameService(externalDocument, document.FileName).Calculate(),
+                            CalculatedFileName = new DocumentTypeCalculateFileNameService(externalDocument, TruncateLongString(realFileName, 120)).Calculate(),
 
                     };
                         docRepository.Add(document);

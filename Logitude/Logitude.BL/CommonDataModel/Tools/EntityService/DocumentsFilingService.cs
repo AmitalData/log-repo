@@ -882,7 +882,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             entityRepository.SubmitChanges();
 
             this.OpenPODDocumentUploderQueue(theEntityPm);
-            //this.OpenSendingQBODocumentsQueue(theEntityPm);
+            this.SendQueueOfEntityDocumnetsToQuickbooks(theEntityPm);
 
             RunDocumentPopulateAutomaticDatesService(theEntityPm);
             RunAutomation(theEntityPm, "OnDocumentUpdate");
@@ -929,7 +929,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                                                                   documentFiling.Tenant, null, null, null, null);
         }
 
-        private void OpenSendingQBODocumentsQueue(DocumentsFilingPM documentFiling)
+        private void SendQueueOfEntityDocumnetsToQuickbooks(DocumentsFilingPM documentFiling)
         {
             if (!IsAPDNCNDocumentUploaded(documentFiling))
             {
@@ -1278,7 +1278,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
                         if (string.IsNullOrEmpty(loggedUserId))
                         {
-                            string loggedUserEmail = HttpContext.Current.User.Identity.Name;
+                            string loggedUserEmail = (HttpContext.Current!=null && HttpContext.Current.User!=null && HttpContext.Current.User.Identity!=null) ? HttpContext.Current.User.Identity.Name :"";
                             if (string.IsNullOrEmpty(loggedUserEmail))
                             {
                                 loggedUserEmail = "system@tenant" + extDocPM.Tenant + ".com";
@@ -1579,7 +1579,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             {
                 return false;
             }
-            if (!(objectTable.Name == "APInvoice"))
+            if (!((objectTable.Name == "APInvoice") || objectTable.Name == "Shipment"))
             {
                 return false;
             }

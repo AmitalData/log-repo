@@ -3,7 +3,7 @@ import { AfterViewInit, ChangeDetectorRef } from '@angular/core';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { CargoTrackingSearchService } from 'src/CargoTracking/Services/Others/CargoTrackingSearchService';
 import { ShipmentsListComponent } from '../Components/UserDashboard/ShipmentsPage/ShipmentsList/ShipmentsListComponent';
-import { CargoTrackingShipmentFilters } from './CargoTrackingShipmentFilters';
+import { CargoTrackingShipmentSearchInput } from './CargoTrackingShipmentFilters';
 
 export class ShipmentDataSource extends DataSource<any | undefined>  {
     private pageSize = 50;
@@ -15,7 +15,7 @@ export class ShipmentDataSource extends DataSource<any | undefined>  {
     constructor(
         public ChangeDetector: ChangeDetectorRef,
         public ShipmentSearchService: CargoTrackingSearchService,
-        public ShipmentsFilters: CargoTrackingShipmentFilters,
+        public ShipmentsFilters: CargoTrackingShipmentSearchInput,
         private parent: ShipmentsListComponent,
         public ShipmentsCount = 1
     )
@@ -79,7 +79,9 @@ export class ShipmentDataSource extends DataSource<any | undefined>  {
 
     private GetShipmentsPage(page: number)
     {
-        this.ShipmentSearchService.GetUserShipments(page, this.pageSize, this.ShipmentsFilters)
+        this.ShipmentsFilters.PageIndex = page;
+        this.ShipmentsFilters.PageSize = this.pageSize;
+        this.ShipmentSearchService.GetUserShipments( this.ShipmentsFilters)
             .subscribe((shipmentsResponse: any) =>
             {
                 this.parent.ShipmentsLoadingError = "";

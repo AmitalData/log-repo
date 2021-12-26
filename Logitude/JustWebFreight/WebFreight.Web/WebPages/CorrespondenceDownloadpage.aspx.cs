@@ -46,11 +46,19 @@ namespace WebFreight.Web.WebPages
                     string securityId = filestrings[0].ToString();
                     string EntityId = filestrings[1].ToString();
                     string partnertype = filestrings[2].ToString();
+                    string forwardingShipmentEntityId = null;
                     int tenant = int.Parse(filestrings[3] + "");
+                    // cargo forwarding shipment
+                    if (filestrings.Length == 5)
+                    {
+                        forwardingShipmentEntityId = filestrings[4].ToString();
+                    }
+
+                    
                     if (!string.IsNullOrEmpty(securityId) && !string.IsNullOrEmpty(EntityId))
-                        DownloadAll(securityId, EntityId, tenant, partnertype);
+                        DownloadAll(securityId, EntityId, tenant, partnertype, forwardingShipmentEntityId);
                     else if (!string.IsNullOrEmpty(securityId) && string.IsNullOrEmpty(EntityId))
-                        DownloadAllBySecurityKey(securityId, tenant, partnertype);
+                        DownloadAllBySecurityKey(securityId, tenant, partnertype, forwardingShipmentEntityId);
 
                 }
                 else
@@ -245,7 +253,7 @@ namespace WebFreight.Web.WebPages
         }
 
 
-        private void DownloadAll(string SecurityKey, string EntityId, int tenant, string partnerType)
+        private void DownloadAll(string SecurityKey, string EntityId, int tenant, string partnerType, string forwardingShipmentEntityId)
         {
             try
             {
@@ -255,6 +263,11 @@ namespace WebFreight.Web.WebPages
                 if (shipment != null)
                 {
                     List<DocumentsFilingPM> documents = up.GetDocumentByEntityAndTenant(EntityId, tenant);
+                    if (!string.IsNullOrWhiteSpace(forwardingShipmentEntityId))
+                    {
+                        List<DocumentsFilingPM> customsForwardingShipmentdocuments = up.GetDocumentByEntityAndTenant(forwardingShipmentEntityId, tenant);
+                        documents.AddRange(customsForwardingShipmentdocuments);
+                    }
 
                     if (partnerType == "AG")
                     {
@@ -327,11 +340,11 @@ namespace WebFreight.Web.WebPages
 
             }
         }
-        private void DownloadAllBySecurityKey(string SecurityKey, int tenant, string partnerType)
+        private void DownloadAllBySecurityKey(string SecurityKey, int tenant, string partnerType, string forwardingShipmentEntityId)
         {
             Shipment shipment = GetShipmentBySecurityKey(SecurityKey, tenant);
 
-            DownloadAll(SecurityKey, shipment?.Id, tenant, partnerType);
+            DownloadAll(SecurityKey, shipment?.Id, tenant, partnerType, forwardingShipmentEntityId);
         }
 
         private static Shipment GetShipmentBySecurityKey(string SecurityKey, int tenant)

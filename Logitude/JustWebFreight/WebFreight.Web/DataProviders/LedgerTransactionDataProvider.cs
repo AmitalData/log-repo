@@ -51,6 +51,7 @@ namespace WebFreight.Web.DataProviders
         public int Tenant { get; set; }
         public string JournalId { get; set; }
         public int JournalLineNumber { get; set; }
+        public string JournalCreatedByUser { get; set; }
         public DateTime CreateDate { get; set; }
         public string ControlAccountId { get; set; }
         public string AccountId { get; set; }

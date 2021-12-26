@@ -37,6 +37,8 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
     public LogoURL: string = ""
     public MainColor: string = "#1B90CB";
     public SecondaryColor: string = "transparent";
+    public QueryFiltersHighlightColor: string = "transparent";
+
     public IsDSV: boolean = false;
     public preventSelect: boolean = false;
     public DontShowLogboxToolTip: boolean = false;
@@ -64,6 +66,8 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
   
     public isLogbox: boolean = SystemEnvironmentService.IsLogBox();
 
+    public HasQueryFiltersHighlightColor: boolean = false;
+ 
     constructor(private _entityListService: EntityListService) {
         this.InitializeServices();
         this.LoadEntityResource("Shipment"); 
@@ -80,7 +84,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
         this.customerTenantAccessRequestExtendedPMService = new CustomerTenantAccessRequestExtendedPMService();
     }
 
-
+ 
     ngOnInit() {
         this.DontShowLogboxToolTip = SessionLocator.LoggedUserPM.ShowLogBoxToolTip;
         this.ShowDirectionFilters = SessionLocator.PrivateLableSettings ? false : true;
@@ -133,6 +137,8 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
             this.LogoURL = "data:image/JPEG;base64," + SessionLocator.PrivateLableSettings.MainLogo;
             this.MainColor = SessionLocator.PrivateLableSettings.MainColor;
             this.SecondaryColor = SessionLocator.PrivateLableSettings.SecondaryColor;
+            this.QueryFiltersHighlightColor = SessionLocator.PrivateLableSettings.QueryFiltersHighlightColor;
+            if (this.QueryFiltersHighlightColor) this.HasQueryFiltersHighlightColor = true;
             this.SelectedFilter = this.AgentShipmentsLabel;
             this.setAgentLabelClass(AgentName);
             this.AgentShipmentsLabel = this.getAgentShipmentsLabel(AgentName);
@@ -381,7 +387,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
             ForwarderPartnerId: this.isPrivateLabel && !this.IsDSV ? SessionLocator.PrivateLableSettings.HybridPartnerId : '',
             DirectionOperator : 'Equal',
         };
-        if (this.isLogbox && !shipmentsQueriesCountsArgs.DirectionId) this.SetDirectionFilter(shipmentsQueriesCountsArgs);
+        if (this.isLogbox) this.SetDirectionFilter(shipmentsQueriesCountsArgs);
 
         if (this.isPrivateLabel) this.SetPrivateLabelDirectionFilters(shipmentsQueriesCountsArgs);
 
@@ -785,8 +791,50 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
 
         return logboxShipmentExportExcelArgs;
     }
+ 
 
-    MenuFiltersClicked(Selected) {
+    onMouseEnter(label, id) {
+        if (!this.HasQueryFiltersHighlightColor) return;
+        var element = document.getElementById(id);
+        if (element && (label == this.SelectedFilter)) {
+            this.SetQueryFilterOptions(element, "1"); 
+        } else if (element) { 
+            this.SetQueryFilterOptions(element, "0.5"); 
+        }
+
+    }
+
+    onMouseLeave(label, id) {
+        if (!this.HasQueryFiltersHighlightColor) return;
+        var element = document.getElementById(id);
+        if (element) {
+            this.SetQuereyFilterForHover(label, element);
+        }
+    }
+    private SetQuereyFilterForHover(label: any, element: HTMLElement) {
+        if (label == this.SelectedFilter) {
+            this.SetQueryFilterOptions(element, "1");
+        } else {
+            this.ClearQuereFilter(element);
+        }
+    }
+
+    private ClearQuereFilter(element: HTMLElement) {
+        element.style.backgroundColor = null;
+        element.style.opacity = "1";
+    }
+
+    private SetQueryFilterOptions(element: HTMLElement, opacity: string) {
+        element.style.backgroundColor = SessionLocator.PrivateLableSettings.QueryFiltersHighlightColor;
+        element.style.opacity = opacity;
+    }
+
+
+
+    MenuFiltersClicked(Selected, id) {
+
+        this.SetQueryFiltersColor(id, Selected);
+
         this.SelectedFilter = Selected;
         this.SelectedRow = null;
         this.RecentImg = Selected == "Recent" ? "./Images/LogBox/RecentW.png" : "./Images/LogBox/Recent.png";
@@ -797,9 +845,19 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
         console.log("7");
     }
 
+    private SetQueryFiltersColor(id: any, Selected: any) {
+        var element = document.getElementById(id);
+        if (this.HasQueryFiltersHighlightColor && element && (Selected == this.AgentShipmentsLabel)) {
+            element.style.backgroundColor = SessionLocator.PrivateLableSettings.QueryFiltersHighlightColor;
+            element.style.opacity = "1";
+        }
+    }
+
+
     SelectedRow: any;
     SelectedRowIndex: any;
     RowSelectedTimerToken: any;
+  
     onRowSelected(CurrentRow) {
         if (this.RowSelectedTimerToken) {
             clearTimeout(this.RowSelectedTimerToken);

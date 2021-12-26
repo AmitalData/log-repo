@@ -38,7 +38,7 @@ export class ShipmentShortTitleComponent {
             });
 
             this.SessionEvent = this.CurrentSession.SessionEvent.subscribe(s => {
-                if (s == "ShipmentUnassignedDataChanged") {
+                if (s == "ShipmentPartnersChanged") {
                     this.ComputeUnassigedValidationVisibility();
                 }
             });
@@ -128,7 +128,7 @@ export class ShipmentShortTitleComponent {
 
             if (myList.length > 0) {
                 this.IsUnassigedValidationVisible = true;
-                this.UnassigedValidationMessage = "Some fields in this shipment contain unassigned data, would you like to update them?";
+                this.UnassigedValidationMessage = "Some fields contain unassigned data, would you like to update them?";
             }            
         }
     }

@@ -90,7 +90,7 @@
                                     <td class="GridViewCell" style="width: 60px; min-width: 60px;max-width:60px ">
 
                                         <div class="CheckBox">
-                                            <input [disabled]="!IsCustomsActivated" class="CenterCenter" style="text-align:center" (click)="CheckIsImportActivated(item)" [attr.id]="'ImportCheckBox' + item.CustomerCode" type="checkbox" [(ngModel)]="item.IsCustomsActivated" />
+                                            <input [disabled]="!IsCustomsActivated || item.StatusType == 'InActive'" class="CenterCenter" style="text-align:center" (click)="CheckIsImportActivated(item)" [attr.id]="'ImportCheckBox' + item.CustomerCode" type="checkbox" [(ngModel)]="item.IsCustomsActivated" />
                                             <label class="CenterCenter" [attr.for]="'ImportCheckBox' + item.CustomerCode"></label>
                                             <HelpIcon class="tip" *ngIf="!IsCustomsActivated" [IconSize]="14" [Header]="''" [Text]="'Customs option is not activated'"></HelpIcon>
                                         </div>
@@ -101,7 +101,7 @@
                                     <td class="GridViewCell" style="width: 60px; min-width: 60px;max-width:60px ">
 
                                         <div class="CheckBox">
-                                            <input [disabled]="!IsExportActivated" class="CenterCenter" style="text-align:center" (click)="CheckIsExportActivated(item)" [attr.id]="'ExportCheckBox' + item.CustomerCode" type="checkbox" [(ngModel)]="  item.IsExportActivated" />
+                                            <input [disabled]="!IsExportActivated || item.StatusType == 'InActive'" class="CenterCenter" style="text-align:center" (click)="CheckIsExportActivated(item)" [attr.id]="'ExportCheckBox' + item.CustomerCode" type="checkbox" [(ngModel)]="  item.IsExportActivated" />
                                             <label class="CenterCenter" [attr.for]="'ExportCheckBox' + item.CustomerCode"></label>
                                             <HelpIcon class="tip" *ngIf="!IsExportActivated" [IconSize]="14" [Header]="''" [Text]="'Export option is not activated'"></HelpIcon>
 

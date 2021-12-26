@@ -82,7 +82,7 @@ export class DWQueryBuilderComponent extends DWQueryBuilderBaseComponent {
     IsLoadShipmentShipmentComputedFieldsResource: boolean = false;
     IsLoadShipmentShipmentPayableResource: boolean = false;
     IsLoadShipmentChargesTypeResource: boolean = false;
-    KPIFeatureToggle: any;
+    //KPIFeatureToggle: any;
     private ChargesFactMeasurementFields: string[] = ['Gross Weight Per Ton', 'Order Gross Weight', 'Order Gross Weight in Ton',
         'Order Volume', 'Total Volume (CBM)', 'Volumetric Weight', 'Number of Packages', 'Order Number of Packages','Gross Weight (KG)'];
 
@@ -119,7 +119,7 @@ export class DWQueryBuilderComponent extends DWQueryBuilderBaseComponent {
 
         this.InitializeService();
         this.LoadEntityResources();
-        this.KPIFeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "KPI")[0];
+        //this.KPIFeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "KPI")[0];
     }
 
     InitializeService() {
@@ -246,11 +246,11 @@ export class DWQueryBuilderComponent extends DWQueryBuilderBaseComponent {
 
     DisplayFieldInQueryBuilder(field) {
         var displayField: boolean = field.DisplayInQueryBuilder == true;
-        var fieldsNeedKPIFeature: Array<string> = ["[Booking Confirmation Sent]", "[Pre Alert Sent]", "[Delivery Notice Sent]", "[Expected Arrival Notice Sent]", "[Arrival Notice Sent]", "[T1 Received]"];
-        if (fieldsNeedKPIFeature.find(f => f == field.Code)) {
-            if (!this.KPIFeatureToggle)
-                displayField = false;
-        }
+        //var fieldsNeedKPIFeature: Array<string> = ["[Booking Confirmation Sent]", "[Pre Alert Sent]", "[Delivery Notice Sent]", "[Expected Arrival Notice Sent]", "[Arrival Notice Sent]", "[T1 Received]"];
+        //if (fieldsNeedKPIFeature.find(f => f == field.Code)) {
+        //    if (!this.KPIFeatureToggle)
+        //        displayField = false;
+        //}
         return displayField;
     }
 
