@@ -271,15 +271,21 @@ export class PrivateLabelPackageComponent {
     }
 
     private ValidateDimensionsFields(item: ShipmentOrderPackagePM) {
-        if (AppTool.IsNullOrZero(item.Quantity)) return;
-        if (this.HasDimensionsValues(item)) return;
-        this.ValidatePackageType(item);
-        this.ValidationErrorsList.push("Dimensions (L-W-H) fields are required.");
-        this.IsRquiredDimensions = true; 
+        if (AppTool.IsNullOrZero(item.Quantity)) return; 
+        this.ValidateDimensionsValues(item);
+        this.ValidatePackageType(item); 
+        
     }
 
+    private ValidateDimensionsValues(item: ShipmentOrderPackagePM) {
+        if (this.HasDimensionsValues) return;
+        this.ValidationErrorsList.push("Dimensions (L-W-H) fields are required.");
+        this.IsRquiredDimensions = true;
+    }
+
+
     private ValidatePackageType(item: ShipmentOrderPackagePM) {
-        if (AppTool.IsNullOrEmpty(item.PackageTypeId)) {
+        if (AppTool.IsNullOrEmpty(item.PackageTypeId) && this.IsPackageTypeVisible) {
             this.ValidationErrorsList.push("Package Type field is required.");
         }
     }

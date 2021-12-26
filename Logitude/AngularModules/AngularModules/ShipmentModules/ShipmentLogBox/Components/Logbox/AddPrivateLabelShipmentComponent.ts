@@ -310,8 +310,7 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
 
     SetUIProperties_Filters() {
         this.DirectionId = 'E';
-        this.TransportModeId = 'A';
-        this.ShipmentTypeId = 'FCLD';
+        this.TransportModeId = 'A'; 
     }
 
     BuildFiltersLists() { 
@@ -320,7 +319,13 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
        // this.BuildShipmentTypes();
     }
 
-    
+    ChangeTransportMode(code) {
+
+        this.TransportModeId = code;
+        if (this.TransportModeId == 'O') {
+            this.ShipmentTypeId = 'FCLD'
+        }
+    } 
     BuildShipmentTypes() {
         this.ShipmentTypesList = [];
 
@@ -370,9 +375,8 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
         }
     }
 
-    SetOrderPackagesOnFinish() {
-
-        if (this.ShipmentTypeId != 'FCLD') return; 
+    SetOrderPackagesOnFinish() { 
+        if (this.ShipmentTypeId != 'FCLD' || this.TransportModeId == 'A') return;
         this.AddShipmentOrderPackages(); 
         this.EntityPM.BookingNumberOfPackages = this.CalculateNumberOfPackages();
 
@@ -648,7 +652,7 @@ export class AddPrivateLabelShipmentComponent extends AddEditPrivateLabelShipmen
     }
 
     private SetExportShipmentType() {
-        if (this.EntityPM.DirectionId == "E") {
+        if (this.EntityPM.DirectionId == "E" && this.TransportModeId == "O") {
             this.EntityPM.ShipmentTypeId = "FCLD";
         } else {
             this.EntityPM.ShipmentTypeId = null;
