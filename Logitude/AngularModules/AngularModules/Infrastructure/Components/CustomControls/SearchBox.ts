@@ -88,6 +88,11 @@ export class SearchBox implements OnInit {
     @Input() MaxPopupItemsCount: number;
     @Input() InputType: string;
     @Input() QueryFilterItems: ApiQueryFilters;
+    private MultiGLAccountText = TextCodeTranslator.Translate("GLAccount.O.Multi");
+    private SplitGLAccountText = TextCodeTranslator.Translate("GLAccount.O.Split");
+    private MainGLAccountText = TextCodeTranslator.Translate("GLAccount.O.Main");
+
+
     LookUpTable: ObjectTablePM;
     public isRTL: boolean = false;
 

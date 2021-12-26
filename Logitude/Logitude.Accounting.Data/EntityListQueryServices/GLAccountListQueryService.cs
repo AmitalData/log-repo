@@ -29,7 +29,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
             string multi = TranslateTextsClass.Translate("GLAccounts.Q.Multi", 0);
             string active = TranslateTextsClass.Translate("GLAccounts.Q.Active", 0);
             string inactive = TranslateTextsClass.Translate("GLAccounts.Q.Inactive", 0);
-
+            var mainGLAccountIds = (from a in context.GLAccountCurrencies select a.MainGLAccountId);
             IQueryable<GLAccountList> query = (from a in iQueryable//.Include("ChartOfAccount").Include("ChartOfAccountsType")
                                                join chartOfAccount in context.ChartOfAccounts on a.ChartOfAccountsId equals chartOfAccount.Id
                                                join chartOfAccountsType in context.ChartOfAccountsTypes on a.ChartOfAccountsTypeCode equals chartOfAccountsType.Code
@@ -46,6 +46,10 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                join FollowUpDatas in context.GLAccountFollowUpDatas on a.Id equals FollowUpDatas.GlAccountId
                                                into FollowUpDatasjoin
                                                from FollowUpDatas in FollowUpDatasjoin.DefaultIfEmpty()
+
+                                               join SplitGLAccountCurrencies in context.GLAccountCurrencies on a.Id equals SplitGLAccountCurrencies.GLAccountId
+                                               into SplitGLAccountCurrenciesjoin
+                                               from SplitGLAccountCurrencies in SplitGLAccountCurrenciesjoin.DefaultIfEmpty()
 
                                                select new GLAccountList()
                                                {
@@ -220,6 +224,8 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                    LastReconciledBy = RecocileDatas.LastReconciledByUser.Contact.LocalName == null ? RecocileDatas.LastReconciledByUser.Contact.EnglishName : RecocileDatas.LastReconciledByUser.Contact.LocalName,
                                                    LastReconcileDate = RecocileDatas.LastReconcileDateTime,
 
+                                                   IsMainGLAccount = mainGLAccountIds.Contains(a.Id) ?  true : false,
+                                                   IsSplitGLAccout = SplitGLAccountCurrencies != null ? true : false,
                                                    // GLAccount Cards Datas
                                                    CreditLimit = CardsDatas != null ? CardsDatas.CreditLimit : null,
                                                    VatNumber = CardsDatas != null ? CardsDatas.VatNumber : null,
@@ -318,7 +324,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                             || (fullAccountingSettings.IsSecurityLevelActivated && (chartOfAccount.ChartOfAccountSecurityLevel <= (loggedUser.SecurityLevel ?? 0) || (loggedUser.Tenant == 0 && !loggedUser.IsDistributor)))) ? MoreDatas.TotFutureOpenChequesInLocalCur : 0,
 
                                                }) ;
-            return query;
+            return query.Distinct();
         }
         public IQueryable<GLAccountList> MapListFields(IQueryable<GLAccountList> iQueryable, User loggedUser)
         {
@@ -429,6 +435,9 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                            // GLAccount Recocile Datas
                            LastReconciledBy = glaccount.LastReconciledBy,
                            LastReconcileDate =glaccount.LastReconcileDate,
+
+                           IsMainGLAccount = glaccount.IsMainGLAccount,
+                           IsSplitGLAccout = glaccount.IsSplitGLAccout,
 
                            // GLAccount Cards Datas
                            CreditLimit = glaccount.CreditLimit,
