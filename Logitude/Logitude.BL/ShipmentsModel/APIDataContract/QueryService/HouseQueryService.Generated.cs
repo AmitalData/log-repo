@@ -777,10 +777,13 @@ using Simplog.Data.ShipmentsModel;
 					if(MyEntity.AirPackages != null && MyEntity.AirPackages.Count > 0)
 					{
 						AirPackageQueryService AirPackageService31 = new AirPackageQueryService(Tenant);
-						 								
+						  
+						if(!IsUpdate)
+						{								
 							temp.ShipmentPackages = AirPackageService31.AirPackageCustomDataMappingAndValidatin(MyEntity,MyEntity.AirPackages,Tenant,ComputingPartnerName,IsUpdate);
 
 					 
+						}  
 
 						
 					}
@@ -790,10 +793,13 @@ using Simplog.Data.ShipmentsModel;
 					if(MyEntity.OceanOrInlandPackages != null && MyEntity.OceanOrInlandPackages.Count > 0)
 					{
 						OceanOrInlandPackageQueryService OceanOrInlandPackageService31 = new OceanOrInlandPackageQueryService(Tenant);
-						 								
+						  
+						if(!IsUpdate)
+						{								
 							temp.ShipmentPackages = OceanOrInlandPackageService31.OceanOrInlandPackageCustomDataMappingAndValidatin(MyEntity,MyEntity.OceanOrInlandPackages,Tenant,ComputingPartnerName,IsUpdate);
 
 					 
+						}  
 
 						
 					}
@@ -803,10 +809,13 @@ using Simplog.Data.ShipmentsModel;
 					if(MyEntity.Containers != null && MyEntity.Containers.Count > 0)
 					{
 						ContainerQueryService ContainerService31 = new ContainerQueryService(Tenant);
-						 								
+						  
+						if(!IsUpdate)
+						{								
 							temp.ShipmentPackages = ContainerService31.ContainerCustomDataMappingAndValidatin(MyEntity,MyEntity.Containers,Tenant,ComputingPartnerName,IsUpdate);
 
 					 
+						}  
 
 						
 					}
