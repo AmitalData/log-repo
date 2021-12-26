@@ -78,3 +78,14 @@ export function CreateAddress() {
 export function AssertCreateAddress() {
     BaseAssertion.AssertStatusCode(RequestAliases.PostAddress, 200);
 }
+export function MockSave(url) {
+    cy.intercept(RestAPI.PUT, url, [true])
+    Actions.DefinePutUpdateSignaturesRequest()
+    cy.Click(BaseSelectors.RedButton + BaseSelectors.LastElement, null);
+}
+
+export function AssertMockSave() {
+    BaseAssertion.AssertElementNotExist(BaseSelectors.LogitudeWindow)
+}
+
+

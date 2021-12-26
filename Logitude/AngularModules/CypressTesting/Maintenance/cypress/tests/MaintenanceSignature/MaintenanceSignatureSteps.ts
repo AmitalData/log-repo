@@ -5,7 +5,8 @@ import { ShipmentDetails } from '../../../../Shipment/cypress/models/ShipmentDet
 import { MaintenanceSelectors } from "../../../cypress/selectors/Selectors";
 import * as MaintenanceActions from "../../actions/Actions";
 import * as Assists from "../../../../Base/cypress/assists/Assists";
-import { BaseSelectors } from "../../../../Base/cypress/selectors/BaseSelectors";
+import * as BaseActions from "../../actions/BaseActions";
+import { Urls } from "../../../cypress/constants/Urls";
 
 let signatureDetails: SignatureDetails;
 //#region Edit signature from maintenance
@@ -20,10 +21,12 @@ And("the user edits the HTML template as following", (dataTable) => {
 });
 
 When("the user saves the new Signature", () => {
-    MaintenanceActions.UpdateSignature();
+    BaseActions.MockSave(Urls.Signature)
+  //  MaintenanceActions.UpdateSignature();
 });
 
 Then("the Signature should update successfully", () => {
-    MaintenanceActions.AssertUpdateSignature()
+    BaseActions.AssertMockSave()
+    //MaintenanceActions.AssertUpdateSignature()
 });
 //#Endregion

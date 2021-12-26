@@ -842,7 +842,6 @@ export function AssertVoidInvoiceMessage(Message: string) {
 
 //#region Signature
 export function AddDataFields(signatureDetails: SignatureDetails) {
-
     if (signatureDetails.Date.toUpperCase() == Constants.Add) {
         AddDataField(MaintenanceSelectors.SignatureDate)
     }
@@ -885,30 +884,15 @@ export function AddDataFields(signatureDetails: SignatureDetails) {
     if (signatureDetails.UserSignatureImage) {
         AddDataField(MaintenanceSelectors.SignatureUserSignatureImage)
     }
-
 }
 function AddDataField(dataField: string){
-    
+
     cy.Click(BaseSelectors.Button, BaseSelectors.ContainAddDataField)
     cy.contains(dataField).click()
     cy.get(BaseSelectors.OkButton).click()
 }
-export function UpdateSignature() {
-    DefinePutUpdateSignaturesRequest();
-    cy.Click(BaseSelectors.RedButton, BaseSelectors.ContainSave);
-}
-
-function DefinePutUpdateSignaturesRequest() {
+export function DefinePutUpdateSignaturesRequest() {
     cy.DefineRequestWait(RestAPI.PUT, Urls.Signature, RequestAliases.Signature);
-}
-export function AssertUpdateSignature() {
-    AssertPutUpdateSignature();
-}
-
-function AssertPutUpdateSignature() {
-    BaseAssertion.AssertStatusCode(RequestAliases.Signature, 200).then((interception) => {
-        cy.log("Updated")
-    });
 }
 //#endregion
 //#region Customer Settings
