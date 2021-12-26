@@ -258,6 +258,11 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     CancelledDate = entityPoco.CancelledDate,
                     ShipmentDeliveryTruckerId = entityPoco.ShipmentDeliveryTruckerId,
                     ShipmentDeliveryTruckerName = entityPoco.TruckerCard != null ? entityPoco.TruckerCard.EnglishName : "",
+                    Leg1VesselId = entityPoco.Leg1VesselId,
+                    Leg2VesselId = entityPoco.Leg2VesselId,
+                    Leg3VesselId = entityPoco.Leg3VesselId,
+                    Leg4VesselId = entityPoco.Leg4VesselId,
+                    Leg5VesselId = entityPoco.Leg5VesselId,
                 };
 
                 if(entityPoco.EntityStatus != null)
@@ -522,6 +527,11 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         CancelledDate = a.CancelledDate,
                         ShipmentDeliveryTruckerId = a.ShipmentDeliveryTruckerId,
                         ShipmentDeliveryTruckerName = a.TruckerCard != null ? a.TruckerCard.EnglishName : "",
+                        Leg1VesselId = a.Leg1VesselId,
+                        Leg2VesselId = a.Leg2VesselId,
+                        Leg3VesselId = a.Leg3VesselId,
+                        Leg4VesselId = a.Leg4VesselId,
+                        Leg5VesselId = a.Leg5VesselId,
                     }).ToList();
         }
 
@@ -763,6 +773,11 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                    CancelledDate = entity.CancelledDate,
                                                    ShipmentDeliveryTruckerId = entity.ShipmentDeliveryTruckerId,
                                                    ShipmentDeliveryTruckerName = entity.TruckerCard != null ? entity.TruckerCard.EnglishName : "",
+                                                   Leg1VesselId = entity.Leg1VesselId,
+                                                   Leg2VesselId = entity.Leg2VesselId,
+                                                   Leg3VesselId = entity.Leg3VesselId,
+                                                   Leg4VesselId = entity.Leg4VesselId,
+                                                   Leg5VesselId = entity.Leg5VesselId,
                                                };
             return result;
         }
@@ -990,6 +1005,11 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     CancelledDate = container.CancelledDate,
                     ShipmentDeliveryTruckerId = container.ShipmentDeliveryTruckerId,
                     ShipmentDeliveryTruckerName = container.TruckerCard != null ? container.TruckerCard.EnglishName : "",
+                    Leg1VesselId = container.Leg1VesselId,
+                    Leg2VesselId = container.Leg2VesselId,
+                    Leg3VesselId = container.Leg3VesselId,
+                    Leg4VesselId = container.Leg4VesselId,
+                    Leg5VesselId = container.Leg5VesselId,
                 };
                 MapCustomFields(containerPM, container);
             }
@@ -1231,6 +1251,11 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     CancelledDate = entityPoco.CancelledDate,
                     ShipmentDeliveryTruckerId = entityPoco.ShipmentDeliveryTruckerId,
                     ShipmentDeliveryTruckerName = entityPoco.TruckerCard != null ? entityPoco.TruckerCard.EnglishName : "",
+                    Leg1VesselId = entityPoco.Leg1VesselId,
+                    Leg2VesselId = entityPoco.Leg2VesselId,
+                    Leg3VesselId = entityPoco.Leg3VesselId,
+                    Leg4VesselId = entityPoco.Leg4VesselId,
+                    Leg5VesselId = entityPoco.Leg5VesselId,
                 };
             }
 
@@ -1460,6 +1485,11 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     CancelledDate = container.CancelledDate,
                     ShipmentDeliveryTruckerId = container.ShipmentDeliveryTruckerId,
                     ShipmentDeliveryTruckerName = container.TruckerCard!= null ? container.TruckerCard.EnglishName : "",
+                    Leg1VesselId = container.Leg1VesselId,
+                    Leg2VesselId = container.Leg2VesselId,
+                    Leg3VesselId = container.Leg3VesselId,
+                    Leg4VesselId = container.Leg4VesselId,
+                    Leg5VesselId = container.Leg5VesselId,
                 };
                 MapCustomFields(containerPM, container);
             }

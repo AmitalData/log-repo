@@ -1211,6 +1211,31 @@ export class ContainerPM {
     public set ShipmentDeliveryTruckerName(newValue: string) { if (this.shipmentDeliveryTruckerName != newValue) { this.shipmentDeliveryTruckerName = newValue; this.MarkAsDirty("ShipmentDeliveryTruckerName"); } }
        
 	 
+    private leg1VesselId: string;
+    public get Leg1VesselId() { return this.leg1VesselId; }
+    public set Leg1VesselId(newValue: string) { if (this.leg1VesselId != newValue) { this.leg1VesselId = newValue; this.MarkAsDirty("Leg1VesselId"); } }
+       
+	 
+    private leg2VesselId: string;
+    public get Leg2VesselId() { return this.leg2VesselId; }
+    public set Leg2VesselId(newValue: string) { if (this.leg2VesselId != newValue) { this.leg2VesselId = newValue; this.MarkAsDirty("Leg2VesselId"); } }
+       
+	 
+    private leg3VesselId: string;
+    public get Leg3VesselId() { return this.leg3VesselId; }
+    public set Leg3VesselId(newValue: string) { if (this.leg3VesselId != newValue) { this.leg3VesselId = newValue; this.MarkAsDirty("Leg3VesselId"); } }
+       
+	 
+    private leg4VesselId: string;
+    public get Leg4VesselId() { return this.leg4VesselId; }
+    public set Leg4VesselId(newValue: string) { if (this.leg4VesselId != newValue) { this.leg4VesselId = newValue; this.MarkAsDirty("Leg4VesselId"); } }
+       
+	 
+    private leg5VesselId: string;
+    public get Leg5VesselId() { return this.leg5VesselId; }
+    public set Leg5VesselId(newValue: string) { if (this.leg5VesselId != newValue) { this.leg5VesselId = newValue; this.MarkAsDirty("Leg5VesselId"); } }
+       
+	 
 
     public OldEntityPM: ContainerPM;
 		

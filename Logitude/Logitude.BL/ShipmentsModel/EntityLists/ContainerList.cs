@@ -242,5 +242,11 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public string ShipmentDeliveryTruckerId { get; set; }
         public string ShipmentDeliveryTruckerName { get; set; }
 
+        public string Leg1VesselId { get; set; }
+        public string Leg2VesselId { get; set; }
+        public string Leg3VesselId { get; set; }
+        public string Leg4VesselId { get; set; }
+        public string Leg5VesselId { get; set; }
+
     }
 }
