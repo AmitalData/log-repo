@@ -33,7 +33,7 @@ using Logitude.CustomsMessaging;
 //using Logitude.CustomsMessaging.MessagingServices;
 using Unifreight.Data.AmitalModel.Repsitories;
 using Logitude.Customs.Data.EntityKeys;
-
+using Logitude.Server.Tools.Utils;
 
 namespace Logitude.Customs.BL.Messaging.U2L.CommDec
 {
@@ -251,12 +251,41 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
                 return;
 
             }
-            //Delete Supplier Invoice
 
             if (String.IsNullOrWhiteSpace(_LogitudeCommDecFile.Id))
             {
                 string existId = myQueryService.GetIdByCustomFileNo(_LogitudeCommDecFile.CustomFileNo, _tenant);
                 _LogitudeCommDecFile.Id = existId;
+            }
+
+            //Delete Supplier Invoice
+
+            if (mode == "1" || mode == "2")
+            {
+                //Delete Supplier Invoice
+                MyGenericResponseObj.Stage = "GetSingle - To delete";
+                _context = CustomContext.GetContext(ResolvedTenant());
+                var myQueryService2 = new DeclarationQueryService(_context);
+                this._MyDeclarationPM = myQueryService2.GetSingle(this._LogitudeCommDecFile.Id, true, false);
+                if (this._MyDeclarationPM == null)
+                {
+                    throw new BusinessErrorException("LOGITUDEFILE is " + this._LogitudeCommDecFile.Id + " but not found");
+                }
+                AppendLogLine("GetSingle:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
+                ICustomContext dbContext2 = CustomContext.GetContext(ResolvedTenant());
+                DeclarationUpdateService DeclarationUpdateService = new DeclarationUpdateService(dbContext2, new Dictionary<string, IContext>(), ResolvedTenant());
+                this._MyDeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
+                this._MyDeclarationPM.MarkAsChanged = true;
+
+                DeclarationUpdateService.DeclarationSupplierInvoicesFastDelete(_MyDeclarationPM, dbContext2);
+                dbContext2 = CustomContext.GetContext(ResolvedTenant());
+                DeclarationUpdateService = new DeclarationUpdateService(dbContext2, new Dictionary<string, IContext>(), ResolvedTenant());
+
+                AppendLogLine("MarkToDeleteSupplierInvoice:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
+                _MyDeclarationPM.CurrentContextTag = UpsertActionConst;
+                DeclarationUpdateService.Update(this._MyDeclarationPM, true);
+                AppendLogLine("Update:MarkToDeleteSupplierInvoice:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
+
             }
 
             /////////////////////////////////////////////////////////////
@@ -536,10 +565,10 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
                     }
                 }
             }
-
             this._LOGICUSTFILE = XmlGenericUtil<LOGICUSTFILE>.DeSerializeObject(xmlLOGICUSTFILE);
             if (_LOGICUSTFILE.LogitudeCustomsFile == null || _LOGICUSTFILE.LogitudeCustomsFile.Length != 1)
             {
+                LogMessagingUtil.Instance.AppendLine("_LOGICUSTFILE.LogitudeCustomsFile is null or longer than 1 =  " + _LOGICUSTFILE.LogitudeCustomsFile.Length);
                 MyGenericResponseObj.StatusType = GenericResponseObj.StatusEnum.BusinessError;
                 MyGenericResponseObj.Message = "customFile.LogitudeCustomsFile.Length !=1 !!!";
             }
@@ -548,6 +577,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
                 this._AmitalCustomsFile = _LOGICUSTFILE.LogitudeCustomsFile[0];
                 if (_MyDeclarationPM.IsCourierDeclaration == true)
                 {
+                    LogMessagingUtil.Instance.AppendLine(" _MyDeclarationPM.IsCourierDeclaration is not null  ");
                     UpdateNoIdUnder150();
                     CalcIsAutonomy();
                     CalcProcedureCurrentCode();
@@ -566,6 +596,18 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
                     {
                         UpdateShop();
                     }
+                    if (currentDeclarationCourierStatusPM != null && currentDeclarationCourierStatusPM.LastMileServiceType != _LogitudeCommDecFile.LastMileServiceType)
+                    {
+                        currentDeclarationCourierStatusPM.LastMileServiceType = _LogitudeCommDecFile.LastMileServiceType;
+                        if (currentDeclarationCourierStatusPM.ChangeSetOp != ChangeSetOperation.Update) currentDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
+
+                    }
+
+                    if (currentDeclarationCourierStatusPM != null && currentDeclarationCourierStatusPM.ShopId != _LogitudeCommDecFile.shopId)
+                    {
+                        UpdateShop();
+                    }
+
                     if (currentDeclarationCourierStatusPM != null && currentDeclarationCourierStatusPM.LastMileServiceType != _LogitudeCommDecFile.LastMileServiceType)
                     {
                         currentDeclarationCourierStatusPM.LastMileServiceType = _LogitudeCommDecFile.LastMileServiceType;
@@ -821,15 +863,17 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
 
                             return;
 
+
                         }
 
                     }
-
                 }
-
             }
-
         }
+
+
+
+
 
 
         private void UpdateShop()
@@ -841,28 +885,28 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
                     DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(_context);
                     currentDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(_MyDeclarationPM.Id, true, false);
                 }
-                if (currentDeclarationCourierStatusPM != null)
+
+                string shopId = null;
+                CardRepository cardRep = new CardRepository(this._MyDeclarationPM.Tenant);
+                Card card = cardRep.GetSingleCard(_LogitudeCommDecFile.shopId, this._MyDeclarationPM.Tenant);
+                if (card != null)
                 {
-                    string shopId = null;
-                    CardRepository cardRep = new CardRepository(this._MyDeclarationPM.Tenant);
-                    Card card = cardRep.GetSingleCard(_LogitudeCommDecFile.shopId, this._MyDeclarationPM.Tenant);
+                    shopId = _LogitudeCommDecFile.shopId;
+                }
+                else
+                {
+                    card = cardRep.GetSingleCardByCode(_LogitudeCommDecFile.shopId, this._MyDeclarationPM.Tenant, true);
                     if (card != null)
                     {
-                        shopId = _LogitudeCommDecFile.shopId;
+                        shopId = card.Id;
                     }
-                    else
-                    {
-                        card = cardRep.GetSingleCardByCode(_LogitudeCommDecFile.shopId, this._MyDeclarationPM.Tenant, true);
-                        if (card != null)
-                        {
-                            shopId = card.Id;
-                        }
-                    }
-                    if (!String.IsNullOrWhiteSpace(shopId) && shopId != currentDeclarationCourierStatusPM.ShopId)
-                    {
-                        if (currentDeclarationCourierStatusPM.ChangeSetOp != ChangeSetOperation.Update) currentDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
-                        currentDeclarationCourierStatusPM.ShopId = shopId;
-                    }
+                }
+                if (!String.IsNullOrWhiteSpace(shopId) && shopId != currentDeclarationCourierStatusPM.ShopId)
+                {
+                    if (currentDeclarationCourierStatusPM.ChangeSetOp != ChangeSetOperation.Update) currentDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
+                    currentDeclarationCourierStatusPM.ShopId = shopId;
+                    this.IsProcedureCurrentCodeChanged = true;
+                    if (_MyDeclarationPM.SupplierInvoices != null && _MyDeclarationPM.SupplierInvoices.Count() > 0 && _MyDeclarationPM.SupplierInvoices[0].ChangeSetOp == ChangeSetOperation.None) _MyDeclarationPM.SupplierInvoices[0].ChangeSetOp = ChangeSetOperation.Update;
                 }
             }
         }
@@ -970,6 +1014,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
                     }
                 }
             }
+
             if (originProcedureCurrentCode != this._MyDeclarationPM.ProcedureCurrentCode)
             {
                 this.IsProcedureCurrentCodeChanged = true;
@@ -983,6 +1028,8 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
                 }
             }
         }
+
+
 
         private void CalcIsAutonomy()
         {
@@ -1197,32 +1244,65 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
                                 myCourierDeclarationUpdateService.Update(_CourierDeclarationPMPMDiferentMaster, true);
 
 
-                                //CustomsRequestsSheetQueryService customsRequestsSheetQueryService = new CustomsRequestsSheetQueryService(_context);
-                                //List<CustomsRequestsSheetPM> customsRequestsSheetPMList = customsRequestsSheetQueryService.GetRequestInProgress(_tenant, "UCUDO", "", "", null, null, _CourierDeclarationPMPMDiferentMaster.CourierMasterId, true);
+                                if (false)
+                                {
 
-                                //if (customsRequestsSheetPMList == null || customsRequestsSheetPMList.Count == 0)
-                                //{
-                                //    AppendLogLine("open UCUDO");
 
-                                //    // customsRequestsSheetPMList = customsRequestsSheetQueryService.GetRequestInProgress(_tenant, "UCUW2L", "", "", null, null, _CourierDeclarationPMPMDiferentMaster.CourierMasterId, true);
-                                //    //customsRequestsSheetPMList = customsRequestsSheetPMList.Where(x => x.Id != _PBId).ToList();
-                                //    //  if (customsRequestsSheetPMList == null || customsRequestsSheetPMList.Count == 0)
-                                //    //  {
 
-                                //    var messagingService = new DCAInUCUDO_UpdateOpenDeclarationsMessagingService();
-                                //    UpdateOpenDeclarationsRequestParams requestParams2 = new UpdateOpenDeclarationsRequestParams()
-                                //    {
 
-                                //        LoggingUserId = Curruser,
-                                //        Tenant = _tenant,
-                                //        LoggingEntityId = _CourierDeclarationPMPMDiferentMaster.CourierMasterId,
 
-                                //    };
 
-                                //    string message = messagingService.CreateCRS(_tenant, Curruser, requestParams2);
-                                //    //}
-                                //}
+                                    CustomsRequestsSheetQueryService customsRequestsSheetQueryService = new CustomsRequestsSheetQueryService(_context);
+                                    List<CustomsRequestsSheetPM> customsRequestsSheetPMList = customsRequestsSheetQueryService.GetRequestInProgress(_tenant, "UCUDO", "", "", null, null, _CourierDeclarationPMPMDiferentMaster.CourierMasterId, true);
+
+                                    if (customsRequestsSheetPMList == null || customsRequestsSheetPMList.Count == 0)
+                                    {
+                                        AppendLogLine("open UCUDO  ??");
+
+                                        string GeneralKey = GetGeneralLockKey(_CourierDeclarationPMPMDiferentMaster.CourierMasterId);
+                                        var concurrentKiller = new ConcurrentKiller();
+                                        concurrentKiller.FreeLockIfCreated15MinOld(GeneralKey, _CourierDeclarationPMPMDiferentMaster.Tenant);
+                                        bool haveUCUDOInProgress = false;
+                                        try
+                                        {
+                                            concurrentKiller.LockOrCrashOnCommitDueUnique(GeneralKey, _CourierDeclarationPMPMDiferentMaster.Tenant);
+                                            haveUCUDOInProgress = false;
+                                            AppendLogLine("UCUDO:concurrentKiller: Ok");
+                                        }
+                                        catch (Exception)
+                                        {
+
+                                            AppendLogLine("UCUDO:concurrentKiller:Have in the middle in the last 15 min- not open  UCUDO");
+                                            haveUCUDOInProgress = true;
+                                        }
+
+                                        // customsRequestsSheetPMList = customsRequestsSheetQueryService.GetRequestInProgress(_tenant, "UCUW2L", "", "", null, null, _CourierDeclarationPMPMDiferentMaster.CourierMasterId, true);
+                                        //customsRequestsSheetPMList = customsRequestsSheetPMList.Where(x => x.Id != _PBId).ToList();
+                                        //  if (customsRequestsSheetPMList == null || customsRequestsSheetPMList.Count == 0)
+                                        //  {
+
+                                        //if (!haveUCUDOInProgress)
+                                        //{
+
+                                        //    var messagingService = new DCAInUCUDO_UpdateOpenDeclarationsMessagingService();
+
+                                        //    UpdateOpenDeclarationsRequestParams requestParams2 = new UpdateOpenDeclarationsRequestParams()
+                                        //    {
+
+                                        //        LoggingUserId = Curruser,
+                                        //        Tenant = _tenant,
+                                        //        LoggingEntityId = _CourierDeclarationPMPMDiferentMaster.CourierMasterId,
+
+                                        //    };
+
+                                        //    string message = messagingService.CreateCRS(_tenant, Curruser, requestParams2);
+
+                                        //}
+
+                                    }
+                                }
                             }
+
                             catch (DbEntityValidationException ex)
                             {
                                 var FormatedException = ExceptionFormatUtil.GetFormated(ex);
@@ -1374,6 +1454,10 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
             }
         }
 
+        public static string GetGeneralLockKey(string courierMasterId)
+        {
+            return $"UCUDO:{courierMasterId}";
+        }
 
         private string GetDefault(string DISTRID, string DEFID, string BRANCHID, string CARDID, int tenant)
         {

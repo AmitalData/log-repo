@@ -33,7 +33,7 @@ using Logitude.CustomsMessaging;
 using Logitude.CustomsMessaging.MessagingServices;
 using Unifreight.Data.AmitalModel.Repsitories;
 using Logitude.Customs.Data.EntityKeys;
-
+using Logitude.Server.Tools.Utils;
 
 namespace Logitude.CustomsMessaging.U2L.CommDec
 {
@@ -64,7 +64,7 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
         public bool IsAutonomy = false;
         private decimal _SupplierInvoiceAmount;
         private string mode;
-        private bool IsProcedureCurrentCodeChanged = false; 
+        private bool IsProcedureCurrentCodeChanged = false;
 
         public CommDecService()
             : base(
@@ -92,35 +92,35 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
             var user = AuthenticationUtil.ResolveUserId(_tenant);
             string defValue = GetDefault("ISRAEL", "CGG_OPN_DEC_MET", "NON", "NON", _tenant);
 
-         //   if (!string.IsNullOrEmpty(defValue) && defValue == "B")
-          //  {
-                AppendLogLine("!string.IsNullOrEmpty(defValue) && defValue=='B'");
+            //   if (!string.IsNullOrEmpty(defValue) && defValue == "B")
+            //  {
+            AppendLogLine("!string.IsNullOrEmpty(defValue) && defValue=='B'");
 
-                var messagingService = new DCAInUCUW2L_OpenDeclarationsByIntegratorInterfaceMessagingService();
-                DCAInUCUW2LRequestParams requestParams = new DCAInUCUW2LRequestParams()
-                {
-                    LOGICOMMDEC = xmlLOGICOMMDEC,
-                    MoreParams = MoreParams,
-                    LoggingUserId = user,
-                    Tenant = _tenant
-                };
+            var messagingService = new DCAInUCUW2L_OpenDeclarationsByIntegratorInterfaceMessagingService();
+            DCAInUCUW2LRequestParams requestParams = new DCAInUCUW2LRequestParams()
+            {
+                LOGICOMMDEC = xmlLOGICOMMDEC,
+                MoreParams = MoreParams,
+                LoggingUserId = user,
+                Tenant = _tenant
+            };
 
-                string message = messagingService.CreateCRS(_tenant, user, requestParams);
-                AppendLogLine("message : " + message);
+            string message = messagingService.CreateCRS(_tenant, user, requestParams);
+            AppendLogLine("message : " + message);
 
-                if (message == "SUCCESS")
-                    MyGenericResponseObj.StatusType = GenericResponseObj.StatusEnum.Success;
-                else
-                    MyGenericResponseObj.StatusType = GenericResponseObj.StatusEnum.TecinicalFailure;
+            if (message == "SUCCESS")
+                MyGenericResponseObj.StatusType = GenericResponseObj.StatusEnum.Success;
+            else
+                MyGenericResponseObj.StatusType = GenericResponseObj.StatusEnum.TecinicalFailure;
 
 
-           // }
-           // else
-          //  {
-          //      AppendLogLine("Default= WS'");
+            // }
+            // else
+            //  {
+            //      AppendLogLine("Default= WS'");
 
-           //     ProccessGenericRequestReal(xmlLOGICOMMDEC, _tenant, user, ref MoreParams, out MessageOut, out customFileNo, out decId, out courierMasterID);
-          //  }
+            //     ProccessGenericRequestReal(xmlLOGICOMMDEC, _tenant, user, ref MoreParams, out MessageOut, out customFileNo, out decId, out courierMasterID);
+            //  }
 
 
         }
@@ -130,8 +130,12 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
         //}
         public string _PBId;
 
-     
+      
 
+        public static string GetGeneralLockKey(string courierMasterId)
+        {
+            return $"UCUDO:{courierMasterId}";
+        }
 
         private string GetDefault(string DISTRID, string DEFID, string BRANCHID, string CARDID, int tenant)
         {
@@ -150,11 +154,6 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
             }
             return (myGDFDATAPM.DEFDATA);
         }
-
-     
-
-
-       
 
         public override string GetAssemblyQualifiedName()
         {
@@ -335,6 +334,7 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
         {
             throw new NotImplementedException();
         }
+
 
 
     }
