@@ -4,10 +4,13 @@ using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Customs.BL.Messaging.Customs;
 using Logitude.CustomsMessaging.Common.RequestParams;
 using Logitude.CustomsMessaging.Common.ResponseData;
+using Logitude.CustomsMessaging.RabbitMQ;
 using Logitude.CustomsMessaging.RequestServices;
 using Logitude.CustomsMessaging.ResponseServices;
 using Logitude.CustomsMessaging.Testers.Messages;
+using Logitude.Server.Tools;
 using Logitude.Server.Tools.Helpers;
+using RabbitMQ.Client;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
@@ -103,6 +106,12 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 //var responseData = messService.SendSheet(genericRequestParams);
 
                 var ourRef = "";
+
+                InterfaceManagementQueryService interfaceManagementQueryService = new InterfaceManagementQueryService(tenant);
+
+                var interfaceManagementPM = interfaceManagementQueryService.GetSingle(this.MainInterfaceCode, false, true);
+
+
                 using (var trans = TransactionFactory.GetNewTransaction())
                 {
                    
@@ -110,16 +119,99 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 var InterfaceManagementPM = InterfaceManagementQS.GetSingleInterfaceManagementwithDefinition(
                     this.MainInterfaceCode, tenant);
                 fileName = fileName.Replace("DcaPrefixName.", InterfaceManagementPM.DcaPrefixName);
-                ourRef = this.DcaReceivedCustomResponseCorrelation(InterfaceManagementPM, tenant, new Customs.BL.Utils.DCAFileModel()
-                {
-                    SelectedFileDownload = fileName,
-                    TimStamp = transmitionDateTime
-
-                }, xmlESBResponseXmlClass);
+                    if (!interfaceManagementPM.UseRabbitMQ)
+                    {
 
 
-                        trans.Complete();
-                        return "SUCCESS";
+                        ourRef = this.DcaReceivedCustomResponseCorrelation(InterfaceManagementPM, tenant, new Customs.BL.Utils.DCAFileModel()
+                        {
+                            SelectedFileDownload = fileName,
+                            TimStamp = transmitionDateTime
+
+                        }, xmlESBResponseXmlClass);
+                    }
+                    else
+                    {
+                        //todo : remove, unifreight treatment
+                        try
+                        {
+
+
+                            var _CommunicationsParams = new CommunicationsParams()
+                            {
+
+                                Tenant = tenant,
+
+                                LoggingObjectTableId = objectTableId,
+                                //LoggingEntityId = entityId,
+
+                                Subject = "פתיחת הצהרה מאינטגרטור",
+                                //LoggingEntityReference = documentsFilingPM.ExternalEntityReference,
+                                LoggingUserId = LoggingUserId,
+                                //CorrelationID = documentsFilingPM.Id,
+
+                                Status = "W",
+                                To = "RabbitMQ",
+                                CommunicationLogTypeCode = "T",
+                                FolderName = "RabbitMQ",
+                                From = "Logitude",
+                                InOut = "O",
+
+                            };
+
+
+                            var message = Encoding.UTF8.GetBytes(xmlESBResponseXmlClass);
+                            _CommunicationsParams.ByteData = message;
+                            string communicationLogId = Communications.AddCommunicationLog(_CommunicationsParams);
+
+
+
+
+                            var queuename = "UCUW2L";
+                            var args = new Dictionary<string, object>();
+
+                            //   var factory = new ConnectionFactory() { HostName = "unimq", UserName = "v5101", Password = "Aa123" };
+                            var factory = RabbitmqHelper.GetConnectionFactory();
+
+                            using (var connection = factory.CreateConnection())
+                            using (var channel = connection.CreateModel())
+                            {
+                                channel.BasicQos(0, 5, true);
+
+                                //args.Add("x-queue-mode", "lazy");
+                                //channel.QueueDeclare(queue: queuename,
+                                //                    durable: true,
+                                //                    exclusive: false,
+                                //                    autoDelete: false,
+                                //                    arguments: args);
+
+                                RabbitmqHelper.DeclareQueue(channel, queuename);
+
+
+                                var header = new Dictionary<string, object>();
+                                var prop = channel.CreateBasicProperties();
+                                prop.Persistent = true;
+                                prop.MessageId = communicationLogId;
+                                prop.DeliveryMode = 2; //persistent
+                                prop.Headers = header;
+
+                                channel.BasicPublish(exchange: "",
+                                                             routingKey: queuename,
+                                                             basicProperties: prop,
+                                                             body: message);
+
+                            }
+                        }
+                        catch (System.Exception)
+                        {
+
+                            throw;
+                        }
+
+                    }
+
+                    trans.Complete();
+                    return "SUCCESS";
                      
                   
                 }

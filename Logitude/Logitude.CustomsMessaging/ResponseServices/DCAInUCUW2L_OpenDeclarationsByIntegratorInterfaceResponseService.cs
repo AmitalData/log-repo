@@ -33,6 +33,7 @@ using Logitude.CustomsMessaging.Helpers;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.Customs.BL.Messaging.U2L.CommDec;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -55,7 +56,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             // {
             string customFileNo = "";
 
-            CommDecService CommDecService = new CommDecService();
+            Do_CommDecService CommDecService = new Do_CommDecService();
                 try {
                     string error = "";
                 string decId = "";

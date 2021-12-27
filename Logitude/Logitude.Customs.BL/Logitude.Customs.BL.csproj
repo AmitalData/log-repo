@@ -2054,6 +2054,7 @@
     <Compile Include="Messaging\CustomsAnalyzeQueue\MamanStatusAvailabilitySplitterQService.cs" />
     <Compile Include="Messaging\CustomsAnalyzeQueue\CourierOVSHAWBQService.cs" />
     <Compile Include="Messaging\CustomsAnalyzeQueue\CourierOVSSpecialActionQService.cs" />
+    <Compile Include="Messaging\CustomsAnalyzeQueue\RabbitMQ\UCUW2L_OpenDeclarationsQService.cs" />
     <Compile Include="Messaging\CustomsAnalyzeQueue\RabbitMQ\UCBUD2LT_ConnectDocToTicketQService.cs" />
     <Compile Include="Messaging\CustomsAnalyzeQueue\SetInAnalyzeQResponseService.cs" />
     <Compile Include="Messaging\Customs\ClientProgressBarIndicatorService.cs" />
@@ -2139,7 +2140,7 @@
     <Compile Include="Messaging\U2L\CellFile\CellFileUpsertService.cs" />
     <Compile Include="Messaging\U2L\CommDecReferantData\CommDecReferantDataService.cs" />
     <Compile Include="Messaging\U2L\CommMasterCourier\CommMasterCourierService.cs" />
-    <Compile Include="Messaging\U2L\CommDec\CommDecService.cs" />
+    <Compile Include="Messaging\U2L\CommDec\Do_CommDecService.cs" />
     <Compile Include="Messaging\U2L\CourierStatus\CourierStatusService.cs" />
     <Compile Include="Messaging\U2L\Courier\CourierPendingReasonService.cs" />
     <Compile Include="Messaging\U2L\DeclarationDocuments\DeclarationDocumentsService.cs" />

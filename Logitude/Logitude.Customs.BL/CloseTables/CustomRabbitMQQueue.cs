@@ -28,7 +28,15 @@ namespace Logitude.Customs.BL.CloseTables
                 Name = "קישור מסמך לטיקט",
                Priority=1,
                AnalyzeQueueService= AnalyzeMQQueueServiceEnum.UniCourierBatchSendUCBUD2LT_MsgResponseService
-            } };
+            },
+            new QueueDetails()
+            {
+                Code = "UCUW2L",
+                Name = "פתיחת הצהרה מאינטגרטור",
+                Priority=1,
+                AnalyzeQueueService= AnalyzeMQQueueServiceEnum.DCAInUCUW2L_OpenDeclarationsByIntegratorInterfaceResponseService
+            }
+            };
         
 
              return all;
@@ -42,7 +50,10 @@ namespace Logitude.Customs.BL.CloseTables
                 case AnalyzeMQQueueServiceEnum.UniCourierBatchSendUCBUD2LT_MsgResponseService:
                     return new UCBUD2LT_ConnectDocToTicketQService(queue);
                     break;
-                 default:
+                case AnalyzeMQQueueServiceEnum.DCAInUCUW2L_OpenDeclarationsByIntegratorInterfaceResponseService:
+                    return new UCUW2L_OpenDeclarationsQService(queue);
+                    break;
+                default:
 
                     throw new Exception("No analyze service define " + queue.Code);
                     break;
@@ -53,7 +64,8 @@ namespace Logitude.Customs.BL.CloseTables
     public enum AnalyzeMQQueueServiceEnum
     {
         none,
-        UniCourierBatchSendUCBUD2LT_MsgResponseService
+        UniCourierBatchSendUCBUD2LT_MsgResponseService,
+        DCAInUCUW2L_OpenDeclarationsByIntegratorInterfaceResponseService
     }
  
     public class QueueDetails
