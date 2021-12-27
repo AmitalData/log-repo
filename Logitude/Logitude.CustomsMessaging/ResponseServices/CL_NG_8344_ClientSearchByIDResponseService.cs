@@ -1,4 +1,6 @@
 ﻿using Logitude.Customs.BL.EntityQueryServices;
+using Logitude.Customs.BL.EntityUpdateServices;
+using Logitude.Customs.Data;
 using Logitude.Customs.Def.EntityPMs;
 using Logitude.CustomsMessaging.Common.RequestParams;
 using Logitude.CustomsMessaging.Common.ResponseData;
@@ -24,6 +26,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
             //Analyze message 8344- Client Search By ID Detail
 
             var clientQueryService = new ClientQueryService(requestParams.Tenant);
+            ICustomContext dbContext = CustomContext.GetContext(requestParams.Tenant);
+            var clientUpdateService = new ClientUpdateService(dbContext, new Dictionary<string, IContext>(), requestParams.Tenant);
+            var clientsPoaUpdateService = new ClientsPoaUpdateService(dbContext, new Dictionary<string, IContext>(), requestParams.Tenant);
             var setting = CustomsSettingQueryService.GetSettingByTenant(requestParams.Tenant);
             string authorizedId = setting?.CustomsAgentId;
             string authorizerId = customResponse.GeneralDetails.externalID.Value.ToString();
@@ -223,14 +228,16 @@ namespace Logitude.CustomsMessaging.ResponseServices
             if (!string.IsNullOrEmpty(authorizerId) && !string.IsNullOrEmpty(authorizedId))
             {
                 string clientId = clientQueryService.GetIdByCode(authorizerId.ToString(), requestParams.Tenant);
-                
+
                 if (!string.IsNullOrEmpty(clientId))
                 {
                     var client = clientQueryService.GetSingle(clientId, true, false);
 
                     if (client != null)
                     {
-                        client.ClientPoas.RemoveAll(cp => cp.AuthorizedExternalId == authorizedId && cp.AuthorizerExternalId == authorizerId);
+                        client.ClientPoas
+                            .Where(cp => cp.AuthorizedExternalId == authorizedId && cp.AuthorizerExternalId == authorizerId).ToList()
+                            .ForEach(entity => entity.ChangeSetOp = ChangeSetOperation.Delete);
 
                         customResponse.AuthorizedList.ToList().ForEach(poa =>
                         {
@@ -247,11 +254,14 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                 PoaAuthorizationType = poa.PoaAuthorizationTypeID.ToString(),
                                 PoaStatus = poa.poaStatus.ToString(),
                                 ClientId = clientId,
-                                ChangeSetOp = ChangeSetOperation.Insert,
                             };
 
+                            entity.ChangeSetOp = ChangeSetOperation.Insert;
                             client.ClientPoas.Add(entity);
                         });
+
+                        client.ChangeSetOp = ChangeSetOperation.Update;
+                        clientUpdateService.Update(client, true);
                     }
                 }
             }
