@@ -56,6 +56,12 @@ export class GlAccountLedgerTransactionsListTemplate {
         this.checkBoxState = isChecked;
     }
 
+
+    public get transferAccountId() : string {
+        return this.CurrentSession.TransferAccountId;
+    }
+
+
     setVariables(rowData: any, fieldName: string, MyAdditionalData: any) {
         this.rowData = rowData;
         if (this.rowData.IsChecked == true) {
