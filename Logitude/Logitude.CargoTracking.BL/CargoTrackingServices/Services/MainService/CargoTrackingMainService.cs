@@ -258,6 +258,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
                 List<DataColumn> dataColumnListCols = new List<DataColumn>();
                 bulkDataPreperation.MainDataTable = new DataTable();
                 bulkDataPreperation.Milestones = updateCargoTrackingRecords.MilestoneList;
+                bulkDataPreperation.AllTenantIds = updateCargoTrackingRecords.AllTenantIds;
                 bulkDataPreperation.MilestonesNotPermitted = updateCargoTrackingRecords.MilestonesNotPermitted;
 
                 //CreatePreOldShipmentsTable(bulkDataPreperation);
@@ -898,6 +899,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
                     BulkDataPreperation bulkDataPreperation = InitializeBulkDataPreperation(cargoTrackingDataBaseArgs);
                     bulkDataPreperation.MainDataTable = new DataTable();
                     bulkDataPreperation.Milestones = updateCargoTrackingRecords.MilestoneList;
+                    bulkDataPreperation.AllTenantIds = updateCargoTrackingRecords.AllTenantIds;
                     bulkDataPreperation.MilestonesNotPermitted = updateCargoTrackingRecords.MilestonesNotPermitted;
 
                     SyncShipmentMilstones(bulkDataPreperation);
@@ -927,6 +929,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
         {
             var cargoTrackingShipmentsService = new CargoTrackingShipmentsService();
             updateCargoTrackingRecords.MilestoneList = cargoTrackingShipmentsService.GetMilestones(updateCargoTrackingRecords.CargoTrackingUpdateDataBaseArgs.BuildCargoArgs.DestinationConnectionString);
+            updateCargoTrackingRecords.AllTenantIds = ServiceHelper.GetAllTenants(updateCargoTrackingRecords.CargoTrackingUpdateDataBaseArgs.BuildCargoArgs.SourceConnectionString); ;
             updateCargoTrackingRecords.MilestonesNotPermitted = cargoTrackingShipmentsService.GetAllNotPermittedMilestones(updateCargoTrackingRecords.CargoTrackingUpdateDataBaseArgs.BuildCargoArgs.SourceConnectionString);
 
             if (false)
