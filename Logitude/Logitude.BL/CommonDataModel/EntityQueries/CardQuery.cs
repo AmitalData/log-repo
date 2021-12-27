@@ -2215,8 +2215,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
         public List<CardList> GetCardPMsByGLAccountId(string glAccountId,int tenant)
         {
-            IQueryable<CardList> IQueryable_cards = from a in repository.context.Cards.Include("CreditLimitAmount")
-                                         where a.Tenant == tenant && a.GLAccountId == glAccountId
+            IQueryable<CardList> IQueryable_cards = from a in repository.context.Cards.Include("CreditLimitAmount").Include("PaymentTerm")
+                                                    where a.Tenant == tenant && a.GLAccountId == glAccountId
                                          select new CardList()
                                          {
                                              Id = a.Id,
@@ -2236,6 +2236,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                              SalesmanUserId = a.SalesmanUserId,
                                              CollectorId = a.CollectorId,
                                              PaymentTermId = a.PaymentTermId,
+                                             PaymentTermLocalName = a.PaymentTerm.LocalName,
+                                             PaymentTermEnglishName = a.PaymentTerm.EnglishName
                                          };
 
 

@@ -18,6 +18,8 @@ import {GLAccountListService} from '../../Services/StandardLists/GLAccountListSe
 import {GLAccountExtendedListService} from '../../Services/ExtendedLists/GLAccountExtendedListService';
 import {LedgerTransactionExtendedListService} from '../../Services/ExtendedLists/LedgerTransactionExtendedListService';
 import {ReconcileEventManager} from '../../Utilities/ReconcileEventManager';
+import { GLAccountExtendedPMService } from 'Accounting/Services/ExtendedPMs/GLAccountExtendedPMService';
+import { CardList } from 'Common/EntityLists/CardList';
 
 export class GLAccountMenuButtonsHandler {
     public EntityPM: GLAccountPM;
@@ -27,6 +29,7 @@ export class GLAccountMenuButtonsHandler {
     TotalSum: number = 0;
     private CurrentSession = SessionLocator.SelectedSession;
     _LedgerTransactionExtendedListService: LedgerTransactionExtendedListService = new LedgerTransactionExtendedListService();
+    _GLAccountExtendedPMService: GLAccountExtendedPMService = new GLAccountExtendedPMService();
     private glAccountExtendedListService: GLAccountExtendedListService = new GLAccountExtendedListService();
     gLAccountPMService: GLAccountPMService = new GLAccountPMService();
     public SetEntityPM(entityArgs: EntityArgs) {
@@ -34,9 +37,12 @@ export class GLAccountMenuButtonsHandler {
         this.entityArgs = entityArgs;
         this.EntityPM = entityArgs.EntityPM;
 
+        this.GetCards();
 
         this.Listen();
     }
+    accountCardlist: CardList[];
+
 
     private SaveCompletedEvent: any = null;
     private LoadCompletedEvent: any = null;
@@ -249,6 +255,8 @@ export class GLAccountMenuButtonsHandler {
               //  !IsEditComponent && !IsFullScreen && !IsHideWindowMargin
                  logitudeWindow.IsFullScreen= true;
 
+                this.FillPaymentTermName(windowArgs);
+
 
                 logitudeWindow.WindowArgs = windowArgs;
                 logitudeWindow.Show('./Accounting/Components/Others/ReconcileComponent');
@@ -263,6 +271,28 @@ export class GLAccountMenuButtonsHandler {
 
             }
         });
+    }
+
+    GetCards() {
+
+
+        this._GLAccountExtendedPMService.GetConnectedCardsForGLAccount(this.EntityPM.Id).subscribe((myResponse: ServiceResponse) => {
+            var connectedCards = myResponse.Result;
+            this.accountCardlist = connectedCards;
+
+        });
+    }
+
+    
+    private FillPaymentTermName(windowArgs: any)
+    {
+        let firstAccount = this.accountCardlist.length > 0 ? this.accountCardlist[0] : null;
+        let paymentTermName = '';
+        if (firstAccount) {
+            const showLocals = !SessionLocator.LoggedUserPM.DontShowLocalLabels;
+            paymentTermName = showLocals ? (firstAccount.PaymentTermLocalName || firstAccount.PaymentTermEnglishName): (firstAccount.PaymentTermEnglishName || firstAccount.PaymentTermLocalName);
+        }
+        windowArgs.PaymentTermName = paymentTermName;
     }
 
     getScreenHeight() {
