@@ -61,6 +61,15 @@ namespace Logitude.CustomsMessaging.Helpers.ClosedTable
 
     public class IncotemrsFileValidation
     {
+        public String TermsOfSaleTypeID { get; set; }
+        public Boolean IsFreightCharge { get; set; }
+        public Boolean IsPortIsraelCharge { get; set; }
+        public Boolean IsInsurance { get; set; }
+        public String CargoIdentifierTypeID { get; set; }
+        public String CargoIdentifierTypeName { get; set; }
+        public String LeadDocumentTypeID { get; set; }
+        public String LeadDocumentTypeName { get; set; }
+
     }
     public class ContainerType
     {

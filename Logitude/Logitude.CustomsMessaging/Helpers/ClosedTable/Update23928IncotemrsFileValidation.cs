@@ -37,9 +37,14 @@ namespace Logitude.CustomsMessaging.Helpers.ClosedTable
         {
             base.SetOtherFields(mehesTableRow, curDbPM);
             var gov = mehesTableRow.MyIncotemrsFileValidation ?? new IncotemrsFileValidation();
-          //  curDbPM.IsImportDeclaration = gov.IsImportDeclaration;
-            //curDbPM.IsExportDeclaration = gov.IsExportDeclaration;
+            curDbPM.TermsOfSaleTypeID = gov.TermsOfSaleTypeID;
+            curDbPM.IsFreightCharge = gov.IsFreightCharge;
+            curDbPM.IsPortIsraelCharge = gov.IsPortIsraelCharge;
+            curDbPM.IsInsurance = gov.IsInsurance;
+            curDbPM.CargoIdentifierTypeID = gov.CargoIdentifierTypeID;
+            curDbPM.CargoIdentifierTypeName = gov.CargoIdentifierTypeName;
+            curDbPM.LeadDocumentTypeID = gov.LeadDocumentTypeID;
+            curDbPM.LeadDocumentTypeName = gov.LeadDocumentTypeName;
         }
     }
 }
-

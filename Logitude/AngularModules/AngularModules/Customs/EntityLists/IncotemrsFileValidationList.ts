@@ -13,6 +13,14 @@ export class IncotemrsFileValidationList {
 	LocalName: string;
 	SearchFields: string;
 	Inactive: boolean;
+	TermsOfSaleTypeID: string;
+	IsFreightCharge: boolean;
+	IsPortIsraelCharge: boolean;
+	IsInsurance: boolean;
+	CargoIdentifierTypeID: string;
+	CargoIdentifierTypeName: string;
+	LeadDocumentTypeID: string;
+	LeadDocumentTypeName: string;
 	
 }
  
