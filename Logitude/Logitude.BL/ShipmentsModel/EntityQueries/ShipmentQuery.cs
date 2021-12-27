@@ -12507,7 +12507,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                HasUnassignedData = f.HasUnassignedData,
                                OperationalStatusId = f.OperationalStatusId,
                                OperationalStatusName = f.OperationalStatusName,
-                               PrivateLabelAgentName = string.IsNullOrEmpty(f.PrivateLabelAgentName) ? f.Agent: f.PrivateLabelAgentName,
+                               PrivateLabelAgentName = f.PrivateLabelAgentName,
                            };
             return myResult;
         }
