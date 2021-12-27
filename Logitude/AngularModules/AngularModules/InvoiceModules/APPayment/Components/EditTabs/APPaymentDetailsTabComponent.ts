@@ -1785,7 +1785,7 @@ export class APPaymentInvoiceArgs extends BaseComponent {
             }
         }
 
-        if(this.trigger.EntityPM.ReconcileInternalTrans) {
+        if(this.trigger.IsFullAccounting && this.trigger.EntityPM.ReconcileInternalTrans) {
             this.CheckBoxEnabled = false;
         }
     }
