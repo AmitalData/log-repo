@@ -85,7 +85,7 @@ namespace CommunicationWorkerRole
 
                     catch (Exception e)
                     {
-                        ExceptionHandler.HandleException(e, DateTime.Now, 0, "", "WorkerRole", "ShipmentExternalUpdateWorkerRole : Run() Method", null);
+                        ExceptionHandler.HandleException(e, DateTime.Now, 0, "", "WorkerRole", "EntityExternalUpdateWorkerRole : Run() Method", null);
                         Thread.Sleep(5000);
                     }
                 }
@@ -127,7 +127,7 @@ namespace CommunicationWorkerRole
 
         private void OnCatchAnalyzingError(Exception ex )
         {
-            ExceptionHandler.HandleException(ex, DateTime.Now, 0, "", "WorkerRole", "ShipmentExternalUpdateWorkerRole : Run() Method", null);
+            ExceptionHandler.HandleException(ex, DateTime.Now, 0, "", "WorkerRole", "EntityExternalUpdateWorkerRole : Run() Method", null);
 
             analyzeQueue.ErrorMessage = ex.Message + (ex.InnerException != null ? Environment.NewLine + "InnerException: " + ex.InnerException.Message : "");
             analyzeQueue.StackTrace = (ex.StackTrace != null ? Environment.NewLine + "Stack Trace: " + ex.StackTrace : "");
