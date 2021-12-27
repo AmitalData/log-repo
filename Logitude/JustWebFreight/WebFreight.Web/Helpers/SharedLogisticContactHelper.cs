@@ -28,6 +28,8 @@ namespace WebFreight.Web.Helpers
     public class SharedLogisticContactHelper
     {
         string ActivityDescription;
+        private static readonly string cargoTrackingDocumentCode = "CTIM";
+        private static readonly string sharedLogisticDocumentCode = "SLCIN";
 
         public void InternetAccessInvitation(SharedLogisticContactPM sharedLogisticsContact, ICommonDataContext objectContext)
         {
@@ -750,10 +752,13 @@ namespace WebFreight.Web.Helpers
                 DocumentTypeRepository documentTypeRepository = new DocumentTypeRepository(tenant);
                 if (sharedLogisticContact.IsCargoTrackingInvitation)
                 {
-                    documentType = documentTypeRepository.GetDocumentTypeByCode("CTIM", tenant);
+                    documentType = GetCargoTrackingDocumentType(tenant, documentTypeRepository);
+                }
+                else
+                {
+                    documentType = GetSharedLogisticDocumentType(tenant, sharedLogisticContact, documentTypeRepository);
                 }
 
-                documentType = GetCargoTrackingTemplateType(tenant, sharedLogisticContact, documentTypeRepository);
                 scope.Complete();
 
             }
@@ -762,9 +767,14 @@ namespace WebFreight.Web.Helpers
 
         }
 
-        private static DocumentType GetCargoTrackingTemplateType(int tenant, SharedLogisticContactPM sharedLogisticContact, DocumentTypeRepository documentTypeRepository)
+        private static DocumentType GetCargoTrackingDocumentType(int tenant, DocumentTypeRepository documentTypeRepository)
         {
-            DocumentType documentType = documentTypeRepository.GetDocumentTypeByCode("SLCIN", tenant);
+            return documentTypeRepository.GetDocumentTypeByCode(cargoTrackingDocumentCode, tenant); ;
+        }
+
+        private static DocumentType GetSharedLogisticDocumentType(int tenant, SharedLogisticContactPM sharedLogisticContact, DocumentTypeRepository documentTypeRepository)
+        {
+            DocumentType documentType = documentTypeRepository.GetDocumentTypeByCode(sharedLogisticDocumentCode, tenant);
             if (sharedLogisticContact.TemplateId != null)
             {
                 documentType.DocumentTypeDefaultHTMLTemplateId = sharedLogisticContact.TemplateId;
