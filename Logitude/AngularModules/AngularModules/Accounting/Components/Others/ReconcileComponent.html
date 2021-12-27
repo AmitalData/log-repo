@@ -1,5 +1,9 @@
 
-
+<style>
+    .TabTitle > div{
+        font-size: 18px !important;
+    }
+</style>
 <!-- Alert -->
 <!--<div class="alert-animation Alert">
     <!--<div class="alert-close" (click)="CloseAlert()">×</div>-->
@@ -36,7 +40,15 @@
 <table>
     <tr style="height:10px"></tr>
     <tr><td style="width :10px"></td>
-        <td class="TabTitle">{{Title}}</td>
+        <td class="TabTitle">
+            <div float-start>{{openTransactionLabel}}</div>
+            <div style="padding: 0 3px;" float-start> - </div>
+            <div float-start>{{displayNumber}}</div>
+            <div style="padding: 0 3px;" float-start> - </div>
+            <div float-start>{{accountName}}</div>
+            <div style="padding: 0 3px;" float-start *ngIf="paymentTermName"> - </div>
+            <div float-start *ngIf="paymentTermName">{{paymentTermName}}</div>
+        </td>
         <td>
             <div style="width: 150px" [style.float]="isRTL ? 'left' : 'right'">
                 <button class="Button" (click)="AutomaticReconcileButton()">{{'Accounting.General.O.AutomaticReconcile' | TextCodeTranslationPipe}}</button>

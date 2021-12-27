@@ -424,8 +424,8 @@ export class GLAccountOverviewComponent extends BaseComponent {
         let firstAccount = this.accountCardlist.length > 0 ? this.accountCardlist[0] : null;
         let paymentTermName = '';
         if (firstAccount) {
-            const showLocals = !SessionLocator.LoggedUserPM.DontShowLocal;
-            paymentTermName = showLocals ? firstAccount.PaymentTermLocalName : (firstAccount.PaymentTermEnglishName || firstAccount.PaymentTermLocalName);
+            const showLocals = !SessionLocator.LoggedUserPM.DontShowLocalLabels;
+            paymentTermName = showLocals ? (firstAccount.PaymentTermLocalName || firstAccount.PaymentTermEnglishName): (firstAccount.PaymentTermEnglishName || firstAccount.PaymentTermLocalName);
         }
         windowArgs.PaymentTermName = paymentTermName;
     }

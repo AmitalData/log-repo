@@ -302,18 +302,25 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
 
     }
 
+    openTransactionLabel;
+    accountName;
+    displayNumber;
+    paymentTermName;
+
+
+
     SetTitle(){
-        const openTransactionLabel = TextCodeTranslator.Translate('Reconciliation.O.OpenTransactions');
+        this.openTransactionLabel = TextCodeTranslator.Translate('Reconciliation.O.OpenTransactions');
 
-        const showLocals = SessionLocator.LoggedUserPM.DontShowLocal;
-        const name = showLocals ? this.GLAccountPM.LocalName : (this.GLAccountPM.EnglishName || this.GLAccountPM.LocalName);
-
-        let title = `${openTransactionLabel} - ${this.GLAccountPM.DisplayNumber} - ${name}`;
+        const showLocals = !SessionLocator.LoggedUserPM.DontShowLocalLabels;
+        this.accountName = showLocals ? this.GLAccountPM.LocalName : (this.GLAccountPM.EnglishName || this.GLAccountPM.LocalName);
+        this.displayNumber = this.GLAccountPM.DisplayNumber;
+        // let title = `${openTransactionLabel} - ${this.GLAccountPM.DisplayNumber} - ${name}`;
 
         if(this.windowArgs.PaymentTermName)
-            title += ' - ' + this.windowArgs.PaymentTermName;
+            this.paymentTermName = this.windowArgs.PaymentTermName;
 
-        this.Title = title;
+        // this.Title = title;
     }
 
     public GetTenant()
