@@ -2161,6 +2161,9 @@ namespace WebFreight.Web.WebServices
             }
             #endregion
 
+            myDataProvider = this.MapTransshipmentOneFields(myDataProvider,shipment);
+            myDataProvider = this.MapTransshipmentTwoFields(myDataProvider, shipment);
+
             return myDataProvider;
         }
 
@@ -2563,6 +2566,38 @@ namespace WebFreight.Web.WebServices
             }
 
             return myDataProvider;
+        }
+
+        private FBLDataProvider MapTransshipmentOneFields(FBLDataProvider fBLDataProvider,ShipmentPM shipmentPM)
+        {
+            fBLDataProvider.Transshipment1ATA = shipmentPM.Transshipment1ATA;
+            fBLDataProvider.Transshipment1ATD = shipmentPM.Transshipment1ATD;
+            fBLDataProvider.Transshipment1ETA = shipmentPM.Transshipment1ETA;
+            fBLDataProvider.Transshipment1ETD = shipmentPM.Transshipment1ETD;
+            fBLDataProvider.Transshipment1CarrierName = shipmentPM.Transshipment1CarrierName;
+            fBLDataProvider.Transshipment1CarrierNumber = shipmentPM.Transshipment1CarrierNumber;
+            fBLDataProvider.Transshipment1FromPortCode = shipmentPM.Transshipment1FromPortCode;
+            fBLDataProvider.Transshipment1FromPortName = shipmentPM.Transshipment1FromPortName;
+            fBLDataProvider.Transshipment1ToPortCode = shipmentPM.Transshipment1ToPortCode;
+            fBLDataProvider.Transshipment1ToPortName = shipmentPM.Transshipment1ToPortName;
+
+            return fBLDataProvider;
+        }
+
+        private FBLDataProvider MapTransshipmentTwoFields(FBLDataProvider fBLDataProvider, ShipmentPM shipmentPM)
+        {
+            fBLDataProvider.Transshipment2ATA = shipmentPM.Transshipment2ATA;
+            fBLDataProvider.Transshipment2ATD = shipmentPM.Transshipment2ATD;
+            fBLDataProvider.Transshipment2ETA = shipmentPM.Transshipment2ETA;
+            fBLDataProvider.Transshipment2ETD = shipmentPM.Transshipment2ETD;
+            fBLDataProvider.Transshipment2CarrierName = shipmentPM.Transshipment2CarrierName;
+            fBLDataProvider.Transshipment2CarrierNumber = shipmentPM.Transshipment2CarrierNumber;
+            fBLDataProvider.Transshipment2FromPortCode = shipmentPM.Transshipment2FromPortCode;
+            fBLDataProvider.Transshipment2FromPortName = shipmentPM.Transshipment2FromPortName;
+            fBLDataProvider.Transshipment2ToPortCode = shipmentPM.Transshipment2ToPortCode;
+            fBLDataProvider.Transshipment2ToPortName = shipmentPM.Transshipment2ToPortName;
+
+            return fBLDataProvider;
         }
     }
 }
