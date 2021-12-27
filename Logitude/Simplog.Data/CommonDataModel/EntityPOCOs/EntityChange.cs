@@ -53,6 +53,7 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public string OnUpdateDocumentAutomationFailedXml { get; set; }
         public string OnUpdateDocumentAutomationSsucceedXml { get; set; }
 
+
         public string EventAutomationFailedXml { get; set; }
         public string EventAutomationSsucceedXml { get; set; }
 

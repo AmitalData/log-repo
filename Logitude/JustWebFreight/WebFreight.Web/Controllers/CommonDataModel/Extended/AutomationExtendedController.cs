@@ -191,8 +191,12 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
 
 
 
-                System.Type[] types = new System.Type[15];
+ 
 
+
+
+
+                System.Type[] types = new System.Type[15];
                 types[0] = type1;
                 types[1] = type2;
                 types[2] = type3;

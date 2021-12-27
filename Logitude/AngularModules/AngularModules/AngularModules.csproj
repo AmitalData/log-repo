@@ -329,6 +329,8 @@
     <Content Include="Infrastructure\Components\Maintenance\Automation\AutomationConditionsDetailsComponent.html" />
     <Content Include="Infrastructure\Components\Maintenance\Automation\AutomationResult\AdvancedAutomationSendInterfaceDetailsComponent.html" />
     <Content Include="Infrastructure\Components\Maintenance\Automation\AutomationResult\CreateTaskResultComponent.html" />
+    <Content Include="Infrastructure\Components\Maintenance\Automation\DocumentAttachmentsComponent.html" />
+    <Content Include="Infrastructure\Components\Maintenance\Automation\AutomationResult\OnUpdateDocumentResultComponent.html" />
     <Content Include="Infrastructure\Components\Maintenance\Automation\AutomationResult\WebHookAutomationDetailsComponent.html" />
     <Content Include="Infrastructure\Components\Maintenance\Automation\DocumentAttachmentsComponent.html" />
     <Content Include="Infrastructure\Components\Maintenance\Automation\AutomationResult\OnUpdateDocumentResultComponent.html" />
@@ -1873,9 +1875,9 @@
     <TypeScriptCompile Include="Infrastructure\Components\Maintenance\Automation\AutomationConditionsDetailsComponent.ts" />
     <TypeScriptCompile Include="Infrastructure\Components\Maintenance\Automation\AutomationResult\AdvancedAutomationSendInterfaceDetailsComponent.ts" />
     <TypeScriptCompile Include="Infrastructure\Components\Maintenance\Automation\AutomationResult\CreateTaskResultComponent.ts" />
+    <TypeScriptCompile Include="Infrastructure\Components\Maintenance\Automation\DocumentAttachmentsComponent.ts" />
     <TypeScriptCompile Include="Infrastructure\Components\Maintenance\Automation\AutomationResult\WebHookAutomationDetailsComponent.ts" />
     <TypeScriptCompile Include="Infrastructure\Components\Maintenance\Automation\AutomationResult\FTPAutomationDetailsComponent.ts" />
-    <TypeScriptCompile Include="Infrastructure\Components\Maintenance\Automation\DocumentAttachmentsComponent.ts" />
     <TypeScriptCompile Include="Infrastructure\Components\Maintenance\Automation\AutomationResult\OnUpdateDocumentResultComponent.ts" />
     <TypeScriptCompile Include="Infrastructure\Components\Maintenance\Automation\AutomationResult\SendDocumentResultComponent.ts" />
     <TypeScriptCompile Include="Infrastructure\Components\Maintenance\Automation\AutomationResult\SendInterfaceResultComponent.ts" />

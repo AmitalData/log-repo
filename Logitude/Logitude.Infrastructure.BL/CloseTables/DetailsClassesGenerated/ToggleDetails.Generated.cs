@@ -405,6 +405,9 @@ namespace Logitude.Infrastructure.BL
                 Description = "QBO Tax Id Calculations", 
 			});
 			 
+            
+			
+			 
             all.Add(new ToggleDetails()
             {    
                 Code = "AEV", 

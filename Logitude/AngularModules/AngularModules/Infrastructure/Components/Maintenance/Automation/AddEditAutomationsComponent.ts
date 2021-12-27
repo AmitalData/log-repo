@@ -47,6 +47,7 @@ import { EntityResourceService } from '../../../../Infrastructure/Services/Entit
 import { AutomationArgs } from '../../../../Infrastructure/DataContracts/AutomationArgs';
 import { ServiceLocator } from '../../../../Infrastructure/Locators/ServiceLocator';
 import {AutomationOnUpdateDocument} from '../../../../Infrastructure/DataContracts/AutomationOnUpdateDocument';
+import { AutomationOnUpdateDocument } from '../../../../Infrastructure/DataContracts/AutomationOnUpdateDocument';
 import { UserList } from '../../../../Common/EntityLists/UserList';
 import { UserListService } from '../../../../Common/Services/StandardLists/UserListService';
 import { ChooseUserArgs } from '../../../../Infrastructure/Components/Maintenance/Automation/ChooseSpecificUserComponent';
@@ -1029,6 +1030,11 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
                     this.ResultCodeList.push(new ResultCode("Create Task in Collaboration Tool", "CREATETASK"));
                 }
 
+                if (this.CurrentEntityPM.Type == "OnDocumentUpdate") {
+                    this.FillOnDocumentUpdateResults();
+                }
+            
+
                 if (this.IsShowEventCreationResult) {
                     this.ResultCodeList.push(new ResultCode("Event Creation", "EVENTCREATION"));
                 }
@@ -1182,6 +1188,11 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
         this.IsLoadingComplete = true;
     }
 
+    FillOnDocumentUpdateResults() {
+        this.ResultCodeList = [];
+        this.ResultCodeList.push(new ResultCode("Send Document", "ONUPDATEDOCUMENT"));
+    }
+
     private MapAutomationEvent() {
         this.AutomationEvent.EventTypeId = this.AutomatedBackupClass.AutomationEvent.EventTypeId;
         this.AutomationEvent.NoteValue = this.AutomatedBackupClass.AutomationEvent.NoteValue;
@@ -1242,6 +1253,9 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
                 break;
             case "CREATETASK":
                 this.LoadCreateTaskResultComponent(resultCode);
+                break;
+            case "ONUPDATEDOCUMENT":
+                this.LoadOnUpdateDocumentResultComponent(resultCode);
                 break;
             case "EVENTCREATION":
                 this.LoadEventCreationResultComponent(resultCode);
@@ -2110,6 +2124,8 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
         }
         return isChange;
     }
+    
+    
     
 
     SaveAutomationResultEmailRecipientLists() {
