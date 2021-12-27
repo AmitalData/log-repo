@@ -7,6 +7,11 @@ using Logitude.Server.Tools;
 using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.BL.InfrastructureModel.EntityPMs;
 using System.Collections.Generic;
+using System.Xml;
+using System.Text;
+using System.IO;
+using ICSharpCode.SharpZipLib.BZip2;
+using System;
 
 namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 {
@@ -44,9 +49,70 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
             ShipmentAdditionalCloudData cloudData = GetCloudDataBySecurityKey(declarationApprovalArgs);
             if (cloudData != null)
             {
+                UpdateDeclarationVersion(cloudData);
+
                 cloudData.ApproveDateTime = TenantServerConfigration.GetCurrentDateTime(declarationApprovalArgs.Tenant);
                 SubmitCloudData(declarationApprovalArgs, cloudData);
             }
+        }
+
+        private void UpdateDeclarationVersion(ShipmentAdditionalCloudData cloudData)
+        {
+            string xmlData = DeserializeDeclarationXMLData(cloudData.DeclarationXmlData);
+            string declarationVersion = GetDeclarationVersionFromXML(xmlData);
+
+            if (declarationVersion != null)
+                cloudData.VersionApproved = declarationVersion;
+        }
+
+        private static string GetDeclarationVersionFromXML(string data_out)
+        {
+            XmlDocument xmldoc = new XmlDocument();
+            xmldoc.LoadXml(data_out);
+            XmlNodeList VersionId = xmldoc.GetElementsByTagName("version_id");
+            string declarationVersion = null;
+            if (VersionId[0] != null)
+            {
+                declarationVersion = VersionId[0].InnerText;
+            }
+
+            return declarationVersion;
+        }
+
+        private string DeserializeDeclarationXMLData(string declarationXmlData)
+        {
+            int defaultSize = 1024;
+            byte[] bytesUncompressed = new byte[defaultSize];
+            StringBuilder encodedUncompressMessage = new StringBuilder();
+            try
+            {
+                var memoryStream = new MemoryStream(Convert.FromBase64String(declarationXmlData));
+                var zipInputStream = new BZip2InputStream(memoryStream);
+                StringBuilder MyUncompressMessage = new StringBuilder();
+
+                Encoding windows1252Encoding = Encoding.GetEncoding(1255);
+                Encoding utf8Encoding = Encoding.UTF8;
+                byte[] utf8Bytes = new byte[defaultSize];
+                while (true)
+                {
+                    defaultSize = zipInputStream.Read(bytesUncompressed, 0, defaultSize);
+                    if (defaultSize > 0)
+                    {
+                        utf8Bytes = Encoding.Convert(windows1252Encoding, utf8Encoding, bytesUncompressed, 0, defaultSize);
+                        encodedUncompressMessage.Append(Encoding.UTF8.GetString(utf8Bytes));
+                        MyUncompressMessage.Append(Encoding.UTF8.GetString(bytesUncompressed, 0, defaultSize));
+                    }
+                    else
+                        break;
+                }
+            }
+            catch (Exception)
+            {
+                encodedUncompressMessage.Append(Encoding.UTF8.GetString(Convert.FromBase64String(declarationXmlData)));
+            }
+
+            var data_out = encodedUncompressMessage.ToString();
+            return data_out;
         }
 
         public void SendDeclarationApproveTask(DeclarationApprovalArgs declarationApprovalArgs)
