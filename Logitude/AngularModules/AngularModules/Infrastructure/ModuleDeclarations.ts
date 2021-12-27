@@ -193,7 +193,6 @@ import { SendDocumentResultComponent } from './Components/Maintenance/Automation
 import { OnUpdateDocumentResultComponent } from './Components/Maintenance/Automation/AutomationResult/OnUpdateDocumentResultComponent';
 import { AdvancedAutomationSendInterfaceDetailsComponent } from './Components/Maintenance/Automation/AutomationResult/AdvancedAutomationSendInterfaceDetailsComponent';
 import { WebHookAutomationDetailsComponent } from './Components/Maintenance/Automation/AutomationResult/WebHookAutomationDetailsComponent';
-import { OnUpdateDocumentResultComponent } from './Components/Maintenance/Automation/AutomationResult/OnUpdateDocumentResultComponent';
 
 import { PrivateLabelLoginProcessComponent } from './Components/LoginComponent/PrivateLabelComponents/PrivateLabelLoginProcessComponent';
 import { AutomationsConditionsViewDetailsComponent } from './Components/Maintenance/Automation/AutomationsConditionsViewDetailsComponent';
