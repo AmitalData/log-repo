@@ -126,7 +126,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     GrossWeight = shipmentPMPackage.GrossWeight,
                     Length = shipmentPMPackage.Length,
                     Width = shipmentPMPackage.Width,
-                    Height = shipmentPMPackage.Height
+                    Height = shipmentPMPackage.Height,
+                    Type = shipmentPM.TransportModeId == "O" ? shipmentPMPackage.PackageTypeCode : "",
                 });
             }
 
