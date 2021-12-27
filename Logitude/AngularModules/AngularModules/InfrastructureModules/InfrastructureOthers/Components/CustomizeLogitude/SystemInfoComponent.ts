@@ -42,7 +42,7 @@ export class SystemInfoComponent {
         this.PackageName = SessionLocator.TenantManagementJS.PackageName;
         this.NumberOfUsers = SessionLocator.TenantManagementJS.NumberOfUsers.toString();
         this.IsTrial = SessionLocator.TenantManagementJS.IsTrial ? "Yes" : "No";
-        this.TenantLocalTime = this.GetCurrentTenantDateAsUtc(SessionLocator.TenantPM.TimeZoneOffset);
+        this.TenantLocalTime = DateTool.GetCurrentDateAsUtcForAccountingValidation(SessionLocator.TenantPM.TimeZoneOffset);
         if (SessionLocator.TenantManagementJS.TemporalPackageCode) {
             this.TemporalPackageVisibility = true;
         }
@@ -91,15 +91,4 @@ export class SystemInfoComponent {
         return SessionLocator?.LoggedUserPM?.IsCustomerCare;
     }
 
-    private GetCurrentTenantDateAsUtc(timeZoneOffset: number) {
-        var myResult: Date = new Date();
-        myResult.setUTCFullYear(myResult.getFullYear());
-        myResult.setUTCMonth(myResult.getMonth());
-        myResult.setUTCDate(myResult.getDate());
-        myResult.setUTCHours(myResult.getHours() + timeZoneOffset);
-        myResult.setUTCMinutes(myResult.getMinutes());
-        myResult.setUTCSeconds(myResult.getSeconds());
-        myResult.setUTCMilliseconds(myResult.getMilliseconds());
-        return myResult;
-    }
 }
