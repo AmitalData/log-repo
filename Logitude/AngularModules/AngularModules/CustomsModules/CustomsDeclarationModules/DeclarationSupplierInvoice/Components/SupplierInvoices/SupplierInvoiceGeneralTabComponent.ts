@@ -62,6 +62,8 @@ import { CurrencyTypeListService } from '../../../../../Customs/Services/Standar
 import { GITITEMCR } from 'Customs/EntityPMs/Extended/GITITEMCR';
 import { SupplierInvioceItemCertificatPM } from '../../../../../Customs/EntityPMs/SupplierInvioceItemCertificatPM';
 import { MultiCertificateUpdateComponent } from '../../../../../CustomsModules/CustomsDeclarationModules/DeclarationSupplierInvoice/Components/SupplierInvoices/MultiCertificateUpdate/MultiCertificateUpdateComponent';
+import { TradeAgreementListService } from 'Customs/Services/StandardLists/TradeAgreementListService';
+import { TradeAgreementProtocolListService } from 'Customs/Services/StandardLists/TradeAgreementProtocolListService';
 
 
 @Component({
@@ -2902,6 +2904,7 @@ export class SupplierInvoiceItemLine extends BaseComponent {
     private declarationWebService: DeclarationWebService = new DeclarationWebService;
     private customsVendorListService: CustomsVendorListService = new CustomsVendorListService();
     private _CustomsCountryListService: CustomsCountryListService = new CustomsCountryListService();
+    private tradeAgreementProtocolListService: TradeAgreementProtocolListService = new TradeAgreementProtocolListService();
 
     public ShowClassefierRemarkInfo: boolean = false;
     public ShowClassifierRemarkTooltip: boolean = false;
@@ -3206,8 +3209,14 @@ export class SupplierInvoiceItemLine extends BaseComponent {
     public set TradeAgreementName(newValue: string) { this.entityPM.TradeAgreementName = newValue; }
 
     public get DutyRegimeProtocolCode() { return this.entityPM.DutyRegimeProtocolCode; }
-    public set DutyRegimeProtocolCode(newValue: string) { this.entityPM.DutyRegimeProtocolCode = newValue; }
+    public set DutyRegimeProtocolCode(newValue: string) { 
+        this.entityPM.DutyRegimeProtocolCode = newValue; 
+        this.tradeAgreementProtocolListService.getSingle(newValue).subscribe((res) => 
+                this.DutyRegimeProtocolLocalName = res?.Result?.LocalName);
+    }
 
+    public get DutyRegimeProtocolLocalName() { return this.entityPM.DutyRegimeProtocolLocalName; }
+    public set DutyRegimeProtocolLocalName(newValue: string) { this.entityPM.DutyRegimeProtocolLocalName = newValue; }
 
     public get InvoiceQuantity() { return this.entityPM.InvoiceQuantity; }
     public set InvoiceQuantity(newValue: number) { this.entityPM.InvoiceQuantity = newValue; }

@@ -1,0 +1,46 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using System.Runtime.Serialization; 
+
+namespace Logitude.Customs.Data.EntityLists
+{
+   [DataContract]
+   public partial class IncotemrsFileValidationList
+   {
+   
+       [Key]
+       [DataMember]
+       public string Code  { get; set; }
+       [DataMember]
+       public string EnglishName  { get; set; }
+       [DataMember]
+       public string LocalName  { get; set; }
+       [DataMember]
+       public string SearchFields  { get; set; }
+       [DataMember]
+       public bool Inactive  { get; set; }
+       [DataMember]
+       public string TermsOfSaleTypeID  { get; set; }
+       [DataMember]
+       public bool IsFreightCharge  { get; set; }
+       [DataMember]
+       public bool IsPortIsraelCharge  { get; set; }
+       [DataMember]
+       public bool IsInsurance  { get; set; }
+       [DataMember]
+       public string CargoIdentifierTypeID  { get; set; }
+       [DataMember]
+       public string CargoIdentifierTypeName  { get; set; }
+       [DataMember]
+       public string LeadDocumentTypeID  { get; set; }
+       [DataMember]
+       public string LeadDocumentTypeName  { get; set; }
+   }
+
+}
+	 
