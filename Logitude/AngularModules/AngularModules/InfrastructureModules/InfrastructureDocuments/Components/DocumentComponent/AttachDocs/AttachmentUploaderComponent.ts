@@ -89,7 +89,7 @@ export class AttachmentUploaderComponent extends BaseComponent implements OnInit
    
         this.CurrentDocument = args.CurrentDocument;
         this.EntityId = args.EntityId;
-        this.ObjectTableId = args.ObjectTableId;
+        this.ObjectTableId = AppTool.IsNullOrEmpty(args.ObjectTableId) ? args.CurrentDocument?.ObjectTableId: args.ObjectTableId;
         this.Tenant = SessionLocator.Tenant;
         this.RequsetPageName = args.RequsetPageName;
         this.TiggerViewModel = args.TiggerViewModel;
@@ -371,6 +371,7 @@ export class AttachmentUploaderComponent extends BaseComponent implements OnInit
                                     this.CurrentDocument.FileSize = result.FileSize;
                                     this.CurrentDocument.FileName = this.FileName;
                                     this.CurrentDocument.ReceivedByUserName = SessionLocator.LoggedUserPM.EnglishName;
+                                    this.CurrentDocument.ObjectTableName = this.ObjectTableName;
 
                                     if (this.RequsetPageName == "DocIn") this.CurrentDocument.IsUoloadedField = true;
 

@@ -407,6 +407,15 @@ namespace Logitude.Infrastructure.BL
 			 
             all.Add(new ToggleDetails()
             {    
+                Code = "ODA", 
+                Name = "On Update Document Automation Tab", 
+                SearchFields = "ODA,On Update Document Automation Tab", 
+                Description = "On Update Document Automation Tab", 
+			});
+			
+			 
+            all.Add(new ToggleDetails()
+            {    
                 Code = "AEV", 
                 Name = "Automation Event Creation", 
                 SearchFields = "AEV,Automation Event Creation", 

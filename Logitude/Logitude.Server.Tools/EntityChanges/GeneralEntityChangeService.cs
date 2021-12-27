@@ -2,6 +2,7 @@
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure;
+using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -108,5 +109,43 @@ namespace Logitude.Server.Tools.EntityChanges
             }
             return result;
         }
+
+        public EntityDetails GetEntityDetails(string entityId, string objectTableName, int tenant)
+        {
+            object entityPM = GetEntityPMByIdAndObjectTableName(entityId, objectTableName, tenant);
+            if (objectTableName != "Shipment") return new EntityDetails { EntityPM = entityPM, ObjectTableName = objectTableName, CombinedObjectTableName = objectTableName };
+
+            string shipmentTableName = GetShipmentTableName(entityPM);
+            if (shipmentTableName != "MasterAndHouse") return new EntityDetails { EntityPM = entityPM, ObjectTableName = shipmentTableName, CombinedObjectTableName = objectTableName };
+
+            return new EntityDetails { EntityPM = entityPM, ObjectTableName = "Master", OtherObjectTableName = "Shipment", CombinedObjectTableName = shipmentTableName };
+        }
+
+        private string GetShipmentTableName(object entityPM)
+        {
+            string shipmentLevelCode = entityPM.GetType().GetProperty("ShipmentLevelCode")?.GetValue(entityPM)?.ToString();
+            string shipmentTableName = shipmentLevelCode == "C" ? "Master" : shipmentLevelCode == "H" ? "Shipment" : "MasterAndHouse";
+            return shipmentTableName;
+        }
+
+        private object GetEntityPMByIdAndObjectTableName(string entityId, string objectTableName, int tenant)
+        {
+            object entityPM = null;
+
+            if (!string.IsNullOrEmpty(entityId))
+            {
+                entityPM = InjectionUtil.Instance.GetEntityByObjectTableNameAndEntityId(objectTableName, entityId, tenant);
+            }
+
+            return entityPM;
+        }
+    }
+
+    public class EntityDetails
+    {
+        public object EntityPM { get; set; }
+        public string ObjectTableName { get; set; }
+        public string OtherObjectTableName { get; set; }
+        public string CombinedObjectTableName { get; set; }
     }
 }
