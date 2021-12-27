@@ -49,6 +49,46 @@ export class IncotemrsFileValidationPM {
     public set Inactive(newValue: boolean) { if (this.inactive != newValue) { this.inactive = newValue; this.MarkAsDirty("Inactive"); } }
        
 	 
+    private termsOfSaleTypeID: string;
+    public get TermsOfSaleTypeID() { return this.termsOfSaleTypeID; }
+    public set TermsOfSaleTypeID(newValue: string) { if (this.termsOfSaleTypeID != newValue) { this.termsOfSaleTypeID = newValue; this.MarkAsDirty("TermsOfSaleTypeID"); } }
+       
+	 
+    private isFreightCharge: boolean;
+    public get IsFreightCharge() { return this.isFreightCharge; }
+    public set IsFreightCharge(newValue: boolean) { if (this.isFreightCharge != newValue) { this.isFreightCharge = newValue; this.MarkAsDirty("IsFreightCharge"); } }
+       
+	 
+    private isPortIsraelCharge: boolean;
+    public get IsPortIsraelCharge() { return this.isPortIsraelCharge; }
+    public set IsPortIsraelCharge(newValue: boolean) { if (this.isPortIsraelCharge != newValue) { this.isPortIsraelCharge = newValue; this.MarkAsDirty("IsPortIsraelCharge"); } }
+       
+	 
+    private isInsurance: boolean;
+    public get IsInsurance() { return this.isInsurance; }
+    public set IsInsurance(newValue: boolean) { if (this.isInsurance != newValue) { this.isInsurance = newValue; this.MarkAsDirty("IsInsurance"); } }
+       
+	 
+    private cargoIdentifierTypeID: string;
+    public get CargoIdentifierTypeID() { return this.cargoIdentifierTypeID; }
+    public set CargoIdentifierTypeID(newValue: string) { if (this.cargoIdentifierTypeID != newValue) { this.cargoIdentifierTypeID = newValue; this.MarkAsDirty("CargoIdentifierTypeID"); } }
+       
+	 
+    private cargoIdentifierTypeName: string;
+    public get CargoIdentifierTypeName() { return this.cargoIdentifierTypeName; }
+    public set CargoIdentifierTypeName(newValue: string) { if (this.cargoIdentifierTypeName != newValue) { this.cargoIdentifierTypeName = newValue; this.MarkAsDirty("CargoIdentifierTypeName"); } }
+       
+	 
+    private leadDocumentTypeID: string;
+    public get LeadDocumentTypeID() { return this.leadDocumentTypeID; }
+    public set LeadDocumentTypeID(newValue: string) { if (this.leadDocumentTypeID != newValue) { this.leadDocumentTypeID = newValue; this.MarkAsDirty("LeadDocumentTypeID"); } }
+       
+	 
+    private leadDocumentTypeName: string;
+    public get LeadDocumentTypeName() { return this.leadDocumentTypeName; }
+    public set LeadDocumentTypeName(newValue: string) { if (this.leadDocumentTypeName != newValue) { this.leadDocumentTypeName = newValue; this.MarkAsDirty("LeadDocumentTypeName"); } }
+       
+	 
 
     public OldEntityPM: IncotemrsFileValidationPM;
 		

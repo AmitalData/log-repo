@@ -24,6 +24,22 @@ namespace Logitude.Customs.Data.EntityLists
        public string SearchFields  { get; set; }
        [DataMember]
        public bool Inactive  { get; set; }
+       [DataMember]
+       public string TermsOfSaleTypeID  { get; set; }
+       [DataMember]
+       public bool IsFreightCharge  { get; set; }
+       [DataMember]
+       public bool IsPortIsraelCharge  { get; set; }
+       [DataMember]
+       public bool IsInsurance  { get; set; }
+       [DataMember]
+       public string CargoIdentifierTypeID  { get; set; }
+       [DataMember]
+       public string CargoIdentifierTypeName  { get; set; }
+       [DataMember]
+       public string LeadDocumentTypeID  { get; set; }
+       [DataMember]
+       public string LeadDocumentTypeName  { get; set; }
    }
 
 }

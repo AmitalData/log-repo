@@ -135,6 +135,190 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private string termsOfSaleTypeID ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string TermsOfSaleTypeID  
+	   {
+	    
+	     get
+		{
+		   return termsOfSaleTypeID;
+		 }
+		 set
+		 {
+		   if(termsOfSaleTypeID != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TermsOfSaleTypeID",OldValue=termsOfSaleTypeID,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   termsOfSaleTypeID=value;
+		   }
+			
+		 }
+	   }
+	  private bool isFreightCharge ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsFreightCharge  
+	   {
+	    
+	     get
+		{
+		   return isFreightCharge;
+		 }
+		 set
+		 {
+		   if(isFreightCharge != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsFreightCharge",OldValue=isFreightCharge,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isFreightCharge=value;
+		   }
+			
+		 }
+	   }
+	  private bool isPortIsraelCharge ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsPortIsraelCharge  
+	   {
+	    
+	     get
+		{
+		   return isPortIsraelCharge;
+		 }
+		 set
+		 {
+		   if(isPortIsraelCharge != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsPortIsraelCharge",OldValue=isPortIsraelCharge,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isPortIsraelCharge=value;
+		   }
+			
+		 }
+	   }
+	  private bool isInsurance ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsInsurance  
+	   {
+	    
+	     get
+		{
+		   return isInsurance;
+		 }
+		 set
+		 {
+		   if(isInsurance != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsInsurance",OldValue=isInsurance,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isInsurance=value;
+		   }
+			
+		 }
+	   }
+	  private string cargoIdentifierTypeID ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CargoIdentifierTypeID  
+	   {
+	    
+	     get
+		{
+		   return cargoIdentifierTypeID;
+		 }
+		 set
+		 {
+		   if(cargoIdentifierTypeID != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CargoIdentifierTypeID",OldValue=cargoIdentifierTypeID,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   cargoIdentifierTypeID=value;
+		   }
+			
+		 }
+	   }
+	  private string cargoIdentifierTypeName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CargoIdentifierTypeName  
+	   {
+	    
+	     get
+		{
+		   return cargoIdentifierTypeName;
+		 }
+		 set
+		 {
+		   if(cargoIdentifierTypeName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CargoIdentifierTypeName",OldValue=cargoIdentifierTypeName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   cargoIdentifierTypeName=value;
+		   }
+			
+		 }
+	   }
+	  private string leadDocumentTypeID ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string LeadDocumentTypeID  
+	   {
+	    
+	     get
+		{
+		   return leadDocumentTypeID;
+		 }
+		 set
+		 {
+		   if(leadDocumentTypeID != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="LeadDocumentTypeID",OldValue=leadDocumentTypeID,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   leadDocumentTypeID=value;
+		   }
+			
+		 }
+	   }
+	  private string leadDocumentTypeName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string LeadDocumentTypeName  
+	   {
+	    
+	     get
+		{
+		   return leadDocumentTypeName;
+		 }
+		 set
+		 {
+		   if(leadDocumentTypeName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="LeadDocumentTypeName",OldValue=leadDocumentTypeName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   leadDocumentTypeName=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

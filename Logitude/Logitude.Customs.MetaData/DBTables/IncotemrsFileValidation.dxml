@@ -39,4 +39,57 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="TermsOfSaleTypeID"
+    Type="varchar"
+    Size="2">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="IsFreightCharge"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="IsPortIsraelCharge"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="IsInsurance"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="CargoIdentifierTypeID"
+    Type="varchar"
+    Size="5">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="CargoIdentifierTypeName"
+    Type="nvarchar"
+    Size="50">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="LeadDocumentTypeID"
+    Type="varchar"
+    Size="2">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="LeadDocumentTypeName"
+    Type="nvarchar"
+    Size="50">
+    <Constraints
+      Nullable="true" />
+  </Column>
 </Table>

@@ -32,6 +32,22 @@ namespace Logitude.Customs.Data.EntityMapping
             this.Property(t => t.SearchFields).HasColumnName("SearchFields").HasMaxLength(1000).IsUnicode(true);
 
             this.Property(t => t.Inactive).HasColumnName("Inactive");
+
+            this.Property(t => t.TermsOfSaleTypeID).HasColumnName("TermsOfSaleTypeID").HasMaxLength(2).IsUnicode(false);
+
+            this.Property(t => t.IsFreightCharge).HasColumnName("IsFreightCharge");
+
+            this.Property(t => t.IsPortIsraelCharge).HasColumnName("IsPortIsraelCharge");
+
+            this.Property(t => t.IsInsurance).HasColumnName("IsInsurance");
+
+            this.Property(t => t.CargoIdentifierTypeID).HasColumnName("CargoIdentifierTypeID").HasMaxLength(5).IsUnicode(false);
+
+            this.Property(t => t.CargoIdentifierTypeName).HasColumnName("CargoIdentifierTypeName").HasMaxLength(50).IsUnicode(true);
+
+            this.Property(t => t.LeadDocumentTypeID).HasColumnName("LeadDocumentTypeID").HasMaxLength(2).IsUnicode(false);
+
+            this.Property(t => t.LeadDocumentTypeName).HasColumnName("LeadDocumentTypeName").HasMaxLength(50).IsUnicode(true);
         }
     }
 }

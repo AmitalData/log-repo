@@ -29,6 +29,22 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string SearchFields { get; set; }
         [Column("Inactive")]
 	    public bool Inactive { get; set; }
+        [Column("TermsOfSaleTypeID")]
+	    public string TermsOfSaleTypeID { get; set; }
+        [Column("IsFreightCharge")]
+	    public bool IsFreightCharge { get; set; }
+        [Column("IsPortIsraelCharge")]
+	    public bool IsPortIsraelCharge { get; set; }
+        [Column("IsInsurance")]
+	    public bool IsInsurance { get; set; }
+        [Column("CargoIdentifierTypeID")]
+	    public string CargoIdentifierTypeID { get; set; }
+        [Column("CargoIdentifierTypeName")]
+	    public string CargoIdentifierTypeName { get; set; }
+        [Column("LeadDocumentTypeID")]
+	    public string LeadDocumentTypeID { get; set; }
+        [Column("LeadDocumentTypeName")]
+	    public string LeadDocumentTypeName { get; set; }
     }
 }
 	 
