@@ -321,6 +321,10 @@ namespace Logitude.Accounting.Data.EntityLists
         public int? ChartOfAccountSecurityLevel { get; set; }
         [DataMember]
         public bool Access { get; set; }
+        [DataMember]
+        public bool IsMainGLAccount { get; set; }
+        [DataMember]
+        public bool IsSplitGLAccout { get; set; }
     }
 
 }
