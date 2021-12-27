@@ -32,6 +32,7 @@ namespace WebFreight.Web.Helpers.WorkerRole.MultiEntityUpdate
         private int numberOfExecutedEntitiesEachUpdate = 5;
         private MultiEntityUpdateGeneralService multiEntityUpdateGeneralService = null;
         private MultiEntityUpdateLogExecutionService multiEntityUpdateLogService = null;
+        private string loggedUserEmail = string.Empty;
         public MultiEntityUpdateProcessService(MultiEntityUpdateLogPM multiEntityUpdateLogPM, MultiEntityUpdateLogExecutionService multiEntityUpdateLogService, int tenant)
         {
             this.multiEntityUpdateLogPM = multiEntityUpdateLogPM;
@@ -51,6 +52,7 @@ namespace WebFreight.Web.Helpers.WorkerRole.MultiEntityUpdate
         public void Update()
         {
             multiEntityUpdateData = GetMultiEntityUpdateData();
+            loggedUserEmail = GetLoggedUserEmail();
             objectFields = objectFieldRepository.GetAutomationObjectFieldsByObjectTableId(multiEntityUpdateData.ObjectTableId, (int)tenant);
             IEnumerable<List<MultiEntityUpdateDataEntity>> listOfMultiEntityUpdateDataEntities = multiEntityUpdateGeneralService.SplitListIntoNList(multiEntityUpdateData.Entities, numberOfExecutedEntitiesEachUpdate);
             listOfMultiEntityUpdateDataEntities.ToList().ForEach(entities =>
@@ -136,7 +138,7 @@ namespace WebFreight.Web.Helpers.WorkerRole.MultiEntityUpdate
                 EntityPM = entityPM,
                 EntityName = multiEntityUpdateData.ObjectTableName,
                 Tenant = (int)tenant,
-                LoggedUserEmail = GetLoggedUserEmail()
+                LoggedUserEmail = loggedUserEmail
             };
         }
 

@@ -4386,17 +4386,19 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             List<string> shipmentMasterDataIds = shipments.Select(shipment => shipment.MasterShipmentDataId).ToList();
             List<ShipmentMasterData> shipmentMasterDatas = repository.GetShipmentMasterDatasFromIds(shipmentMasterDataIds, tenant);
             List<ShipmentPM> shipmentPMs = new List<ShipmentPM>();
+            foreach (Shipment shipment in shipments)
+            {
+                shipmentPMs.Add(new ShipmentPM() { Id = shipment.Id });
+            }
 
             Parallel.ForEach(shipments, (shipment) => {
-                ShipmentPM shipmentPM = new ShipmentPM();
+                ShipmentPM shipmentPM = shipmentPMs.Where(shipPM => shipPM.Id == shipment.Id).FirstOrDefault();
                 ShipmentMasterData masterData = shipmentMasterDatas.Where(shipmentMasterData => shipmentMasterData.Id == shipment.Id).FirstOrDefault();
                 shipmentPM = MapShipmentToShipmentPM(shipmentPM, shipment, null, masterData, true);
                 ShipmentPM securedPM = new ShipmentPM();
                 securedPM = SecuredMapping.GetMappedPM(shipmentPM, securedPM, "Shipment", tenant);
-                ShipmentPM shipmentPMWithRestrictions = BranchPermitionsFilter.AddUserBranchRestrictionFilters(new QueryOperations(), securedPM, tenant);
-                shipmentPMWithRestrictions = ProductPermitionsFilter.AddUserProductRestrictionFilters(new QueryOperations(), securedPM, tenant);
-
-                shipmentPMs.Add(shipmentPMWithRestrictions);
+                shipmentPM = BranchPermitionsFilter.AddUserBranchRestrictionFilters(new QueryOperations(), securedPM, tenant);
+                shipmentPM = ProductPermitionsFilter.AddUserProductRestrictionFilters(new QueryOperations(), securedPM, tenant);
             });
 
             return shipmentPMs;
